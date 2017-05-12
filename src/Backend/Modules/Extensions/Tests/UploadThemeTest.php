@@ -27,9 +27,7 @@ class UploadThemeTest extends WebTestCase
      */
     private $client;
 
-    /**
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->logout();
         $this->client = static::createClient();
@@ -46,7 +44,7 @@ class UploadThemeTest extends WebTestCase
      *
      * @runInSeparateProcess
      */
-    public function testUploadThemeZipWithoutInfoFile()
+    public function testUploadThemeZipWithoutInfoFile(): void
     {
         // Generate zip with no info.xml
         $this->fileName = tempnam(sys_get_temp_dir(), 'Theme');
@@ -72,7 +70,7 @@ class UploadThemeTest extends WebTestCase
      *
      * @runInSeparateProcess
      */
-    public function testUploadThemeZipGithub()
+    public function testUploadThemeZipGithub(): void
     {
         // Generate zip with no info.xml
         $this->fileName = tempnam(sys_get_temp_dir(), 'Theme');
@@ -101,7 +99,7 @@ class UploadThemeTest extends WebTestCase
      *
      * @runInSeparateProcess
      */
-    public function testUploadThemeNoParentFolder()
+    public function testUploadThemeNoParentFolder(): void
     {
         // Generate zip with no info.xml
         $this->fileName = tempnam(sys_get_temp_dir(), 'Theme');
@@ -134,7 +132,7 @@ class UploadThemeTest extends WebTestCase
         return '<?xml version="1.0" encoding="UTF-8"?><theme><name>' . $themeName . '</name><version>1.0.0</version><requirements><minimum_version>4.0.0</minimum_version></requirements><thumbnail>thumbnail.png</thumbnail><description><![CDATA[Fork CMS Test]]></description><authors><author><name>Fork CMS</name><url>http://www.fork-cms.com</url></author></authors><metanavigation supported="false" /><templates></templates></theme>';
     }
 
-    private function submitThemeUploadForm()
+    private function submitThemeUploadForm(): void
     {
         $form = $this->client->getCrawler()->selectButton('Install')->form();
 
@@ -149,7 +147,7 @@ class UploadThemeTest extends WebTestCase
         $this->submitEditForm($this->client, $form, ['form' => 'upload']);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $fs = new Filesystem();
 

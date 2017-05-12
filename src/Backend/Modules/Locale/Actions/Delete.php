@@ -32,10 +32,7 @@ class Delete extends BackendBaseActionDelete
      */
     private $filterQuery;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -65,7 +62,7 @@ class Delete extends BackendBaseActionDelete
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         $this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
         $this->filter['application'] = $this->getParameter('application');

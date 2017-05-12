@@ -27,10 +27,7 @@ class EditGroup extends BackendBaseActionEdit
      */
     private $group;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');
@@ -48,28 +45,19 @@ class EditGroup extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data for a question
-     */
-    private function getData()
+    private function getData(): void
     {
         // get general info
         $this->group = BackendProfilesModel::getGroup($this->id);
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('editGroup');
         $this->frm->addText('name', $this->group['name']);
     }
 
-    /**
-     * Parse the form.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -77,10 +65,7 @@ class EditGroup extends BackendBaseActionEdit
         $this->tpl->assign('group', $this->group);
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

@@ -3,6 +3,7 @@
 namespace Frontend\Core\Engine;
 
 use Backend\Core\Language\Language as BackendLanguage;
+use Twig_Compiler;
 
 /**
  * Twig node for writing the SEO form
@@ -23,10 +24,7 @@ class SeoFormNode extends \Twig_Node
         $this->form = $form;
     }
 
-    /**
-     * @param \Twig_Compiler $compiler
-     */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Twig_Compiler $compiler): void
     {
         $compiler
             ->addDebugInfo($this)
@@ -217,62 +215,31 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</div>\';');
     }
 
-    /**
-     * @param string $label
-     *
-     * @return string
-     */
     private function lbl(string $label): string
     {
         return ucfirst(BackendLanguage::getLabel($label));
     }
 
-    /**
-     * @param string $message string
-     *
-     * @return string
-     */
     private function msg(string $message): string
     {
         return BackendLanguage::getMessage($message);
     }
 
-    /**
-     * @param string $variable
-     *
-     * @return string
-     */
     private function hasVariable(string $variable): string
     {
         return "isset(\$context['{$variable}']) && !empty(\$context['{$variable}'])";
     }
 
-    /**
-     * @param string $variable
-     * @param string $as
-     *
-     * @return string
-     */
     private function loopTroughField(string $variable, string $as): string
     {
         return "foreach (\$context['{$variable}'] as {$as}) {";
     }
 
-    /**
-     * @param string $variable
-     *
-     * @return string
-     */
     private function getVariable(string $variable): string
     {
         return "echo \$context['{$variable}'];";
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return string
-     */
     private function getField(string $fieldName): string
     {
         $frm = "\$context['form_{$this->form}']";
@@ -280,11 +247,6 @@ class SeoFormNode extends \Twig_Node
         return 'echo ' . $frm . "->getField('" . $fieldName . "')->parse();";
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return string
-     */
     private function hasField(string $fieldName): string
     {
         $frm = "\$context['form_{$this->form}']";
@@ -292,21 +254,11 @@ class SeoFormNode extends \Twig_Node
         return $frm . "->existsField('" . $fieldName . "')";
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return string
-     */
     private function hasError(string $fieldName): string
     {
         return "\$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() ";
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return string
-     */
     private function getError(string $fieldName): string
     {
         return "echo \$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() "

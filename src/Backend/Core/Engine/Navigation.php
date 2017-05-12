@@ -19,9 +19,6 @@ final class Navigation extends Base\Object
     /** @var array */
     private $navigation;
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
@@ -33,19 +30,11 @@ final class Navigation extends Base\Object
         $this->navigation = $this->getNavigationForAllowedModulesAndActions();
     }
 
-    /**
-     * @param TwigTemplate $template
-     */
-    public function parse(TwigTemplate $template)
+    public function parse(TwigTemplate $template): void
     {
         $template->assign('navigation', $this->navigation);
     }
 
-    /**
-     * @param array $navigation
-     *
-     * @return array
-     */
     private function addActiveStateToNavigation(array $navigation): array
     {
         $selectedKey = $this->getSelectedKey($navigation);
@@ -73,11 +62,6 @@ final class Navigation extends Base\Object
         );
     }
 
-    /**
-     * @param array $navigationItem
-     *
-     * @return array
-     */
     private function getNavigationItemForCurrentlyAuthenticatedUser(array $navigationItem): array
     {
         if (!isset($navigationItem['url'], $navigationItem['label'])
@@ -97,9 +81,6 @@ final class Navigation extends Base\Object
         return [];
     }
 
-    /**
-     * @return array
-     */
     private function getNavigationForAllowedModulesAndActions(): array
     {
         $navigation = $this->getContainer()->get('cache.backend_navigation')->get();
@@ -113,9 +94,6 @@ final class Navigation extends Base\Object
         );
     }
 
-    /**
-     * @return callable
-     */
     private function getPermissionCheckerFunction(): callable
     {
         return function (array $navigationItem) {
@@ -179,7 +157,7 @@ final class Navigation extends Base\Object
      *
      * @return int|null
      */
-    private function getSelectedKey(array $navigation)
+    private function getSelectedKey(array $navigation): ?int
     {
         $url = $this->get('url');
         $activeUrl = BackendModel::camelCaseToLowerSnakeCase($url->getModule() . '/' . $url->getAction());
@@ -188,9 +166,11 @@ final class Navigation extends Base\Object
                 return $key;
             }
         }
+
+        return null;
     }
 
-    private function buildEditorLinkListIfNeeded()
+    private function buildEditorLinkListIfNeeded(): void
     {
         $editorLinkListCache = sprintf(
             '%1$s/Navigation/editor_link_list_%2$s.js',

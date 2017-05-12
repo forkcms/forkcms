@@ -75,10 +75,7 @@ class Index extends BackendBaseActionIndex
      */
     private $hasSubmissions;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->isGod = BackendAuthentication::getUser()->isGod();
@@ -89,10 +86,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // init vars
         $langWidth = (60 / count($this->filter['language']));
@@ -230,10 +224,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
         $this->frm->addDropdown(
@@ -270,10 +261,7 @@ class Index extends BackendBaseActionIndex
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -327,7 +315,7 @@ class Index extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // if no language is selected, set the working language as the selected
         if ($this->getParameter('language', 'array') == null) {

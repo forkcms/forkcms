@@ -31,10 +31,7 @@ class Analyse extends BackendBaseActionIndex
      */
     private $dgFrontend;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrids();
@@ -73,10 +70,7 @@ class Analyse extends BackendBaseActionIndex
         return $return;
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrids()
+    private function loadDataGrids(): void
     {
         /*
          * Frontend datagrid
@@ -153,10 +147,7 @@ class Analyse extends BackendBaseActionIndex
         $this->dgBackend->setPaging(false);
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

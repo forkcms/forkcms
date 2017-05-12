@@ -18,10 +18,7 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
  */
 class UpdateMarker extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 

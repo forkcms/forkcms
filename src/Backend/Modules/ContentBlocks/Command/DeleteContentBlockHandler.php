@@ -11,18 +11,12 @@ final class DeleteContentBlockHandler
     /** @var ContentBlockRepository */
     private $contentBlockRepository;
 
-    /**
-     * @param ContentBlockRepository $contentBlockRepository
-     */
     public function __construct(ContentBlockRepository $contentBlockRepository)
     {
         $this->contentBlockRepository = $contentBlockRepository;
     }
 
-    /**
-     * @param DeleteContentBlock $deleteContentBlock
-     */
-    public function handle(DeleteContentBlock $deleteContentBlock)
+    public function handle(DeleteContentBlock $deleteContentBlock): void
     {
         $this->contentBlockRepository->removeByIdAndLocale(
             $deleteContentBlock->contentBlock->getId(),

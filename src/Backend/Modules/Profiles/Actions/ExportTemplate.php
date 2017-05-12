@@ -16,10 +16,7 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
  */
 class ExportTemplate extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // define path
         $path = BACKEND_CACHE_PATH . '/Profiles/import_template.csv';

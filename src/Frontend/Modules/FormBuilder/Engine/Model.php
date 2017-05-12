@@ -9,13 +9,6 @@ use Frontend\Core\Engine\Model as FrontendModel;
  */
 class Model
 {
-    /**
-     * Get an item.
-     *
-     * @param string $id The id of the item to fetch.
-     *
-     * @return array
-     */
     public static function get(string $id): array
     {
         // get form
@@ -38,14 +31,7 @@ class Model
         return $form;
     }
 
-    /**
-     * Get all fields of a form.
-     *
-     * @param int $id The id of the form wherefore we fetch the fields.
-     *
-     * @return array
-     */
-    public static function getFields(int $id): array
+    public static function getFields(int $formId): array
     {
         // get fields
         $fields = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -53,12 +39,12 @@ class Model
              FROM forms_fields AS i
              WHERE i.form_id = ?
              ORDER BY i.sequence ASC',
-            $id,
+            $formId,
             'id'
         );
 
         if (empty($fields)) {
-            return false;
+            return [];
         }
 
         // create an array with an equal amount of questionmarks as ids provided
@@ -92,28 +78,14 @@ class Model
         return $fields;
     }
 
-    /**
-     * Insert data.
-     *
-     * @param array $data The data to insert.
-     *
-     * @return int
-     */
-    public static function insertData(array $data): int
+    public static function insertData(array $formData): int
     {
-        return FrontendModel::getContainer()->get('database')->insert('forms_data', $data);
+        return FrontendModel::getContainer()->get('database')->insert('forms_data', $formData);
     }
 
-    /**
-     * Insert data fields.
-     *
-     * @param array $data The data to insert.
-     *
-     * @return int
-     */
-    public static function insertDataField(array $data): int
+    public static function insertDataField(array $dataField): int
     {
-        return FrontendModel::getContainer()->get('database')->insert('forms_data_fields', $data);
+        return FrontendModel::getContainer()->get('database')->insert('forms_data_fields', $dataField);
     }
 
     /**

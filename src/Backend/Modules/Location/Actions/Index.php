@@ -36,10 +36,7 @@ class Index extends BackendBaseActionIndex
     protected $items = [];
     protected $settings = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->header->addJS(FrontendLocationModel::getPathToMapStyles());
         parent::execute();
@@ -64,10 +61,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the settings
-     */
-    protected function loadData()
+    protected function loadData(): void
     {
         $this->items = BackendLocationModel::getAll();
         $this->settings = BackendLocationModel::getMapSettings(0);
@@ -96,10 +90,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Loads the datagrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         $this->dataGrid = new BackendDataGridDB(
             BackendLocationModel::QRY_DATAGRID_BROWSE,
@@ -124,10 +115,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the settings form
-     */
-    protected function loadSettingsForm()
+    protected function loadSettingsForm(): void
     {
         $mapTypes = [
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
@@ -163,10 +151,7 @@ class Index extends BackendBaseActionIndex
         );
     }
 
-    /**
-     * Parse the datagrid
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

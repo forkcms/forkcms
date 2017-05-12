@@ -10,17 +10,11 @@ abstract class ContentBlockEvent extends Event
     /** @var ContentBlock */
     private $contentBlock;
 
-    /**
-     * @param ContentBlock $contentBlock
-     */
     public function __construct(ContentBlock $contentBlock)
     {
         $this->contentBlock = $contentBlock;
     }
 
-    /**
-     * @return ContentBlock
-     */
     public function getContentBlock(): ContentBlock
     {
         return $this->contentBlock;

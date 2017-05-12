@@ -19,10 +19,7 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Settings extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -33,10 +30,7 @@ class Settings extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Loads the settings form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // init settings form
         $this->frm = new BackendForm('settings');
@@ -80,10 +74,7 @@ class Settings extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Validates the settings form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             if ($this->frm->getField('send_new_profile_admin_mail')->isChecked()) {

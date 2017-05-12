@@ -18,20 +18,14 @@ use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
  */
 class TagCloud extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         // get categories
         $tags = FrontendTagsModel::getAll();

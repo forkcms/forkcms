@@ -31,10 +31,7 @@ class Index extends BackendBaseActionIndex
      */
     private $widgets = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadData();
@@ -42,10 +39,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the data
-     */
-    private function loadData()
+    private function loadData(): void
     {
         $modules = BackendModel::getModules();
         $filesystem = new Filesystem();
@@ -143,10 +137,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse the page with its widgets.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

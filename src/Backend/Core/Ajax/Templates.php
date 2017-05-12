@@ -21,10 +21,7 @@ class Templates extends AjaxAction
     /** @var array */
     private $templates;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->templates = [];
         $theme = $this->get('fork.settings')->get('Core', 'theme');
@@ -40,9 +37,6 @@ class Templates extends AjaxAction
         }
     }
 
-    /**
-     * @return Response
-     */
     public function getContent(): Response
     {
         return new Response(
@@ -54,12 +48,7 @@ class Templates extends AjaxAction
         );
     }
 
-    /**
-     * Process the content of the file.
-     *
-     * @param string $file The file to process.
-     */
-    private function processFile(string $file)
+    private function processFile(string $file): void
     {
         $filesystem = new Filesystem();
 

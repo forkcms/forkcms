@@ -21,10 +21,7 @@ use Backend\Modules\ContentBlocks\Form\ContentBlockType;
  */
 class Add extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -57,7 +54,7 @@ class Add extends BackendBaseActionAdd
             new ContentBlockCreated($createContentBlock->contentBlock)
         );
 
-        return $this->redirect(
+        $this->redirect(
             BackendModel::createURLForAction(
                 'Index',
                 null,

@@ -10,13 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LoginHandler
 {
-    /**
-     * @param Form    $form
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function process(Form $form, Request $request)
+    public function process(Form $form, Request $request): bool
     {
         if (!$request->isMethod('POST')) {
             return false;
@@ -31,13 +25,7 @@ class LoginHandler
         return false;
     }
 
-    /**
-     * @param Form    $form
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function processValidForm(Form $form, Request $request)
+    public function processValidForm(Form $form, Request $request): bool
     {
         $request->getSession()->set('installation_data', $form->getData());
 

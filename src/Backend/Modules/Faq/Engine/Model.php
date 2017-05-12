@@ -39,7 +39,7 @@ class Model
      *
      * @param int $id
      */
-    public static function delete(int $id)
+    public static function delete(int $id): void
     {
         $question = self::get($id);
 
@@ -51,12 +51,7 @@ class Model
         BackendTagsModel::saveTags($id, '', 'Faq');
     }
 
-    /**
-     * Delete a specific category
-     *
-     * @param int $id
-     */
-    public static function deleteCategory(int $id)
+    public static function deleteCategory(int $id): void
     {
         $db = BackendModel::getContainer()->get('database');
         $item = self::getCategory($id);
@@ -72,13 +67,6 @@ class Model
         BackendModel::deleteExtraById($item['extra_id']);
     }
 
-    /**
-     * Is the deletion of a category allowed?
-     *
-     * @param int $id
-     *
-     * @return bool
-     */
     public static function deleteCategoryAllowed(int $id): bool
     {
         if (!BackendModel::get('fork.settings')->get('Faq', 'allow_multiple_categories', true)
@@ -97,12 +85,7 @@ class Model
         );
     }
 
-    /**
-     * Delete the feedback
-     *
-     * @param int $itemId
-     */
-    public static function deleteFeedback(int $itemId)
+    public static function deleteFeedback(int $itemId): void
     {
         BackendModel::getContainer()->get('database')->update(
             'faq_feedback',
@@ -130,13 +113,6 @@ class Model
         );
     }
 
-    /**
-     * Does the category exist?
-     *
-     * @param int $id
-     *
-     * @return bool
-     */
     public static function existsCategory(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -166,13 +142,6 @@ class Model
         );
     }
 
-    /**
-     * Fetches all the feedback that is available
-     *
-     * @param int $limit
-     *
-     * @return array
-     */
     public static function getAllFeedback(int $limit = 5): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -184,13 +153,6 @@ class Model
         );
     }
 
-    /**
-     * Fetches all the feedback for a question
-     *
-     * @param int $id The question id.
-     *
-     * @return array
-     */
     public static function getAllFeedbackForQuestion(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -226,13 +188,6 @@ class Model
         return $items;
     }
 
-    /**
-     * Get all the categories
-     *
-     * @param bool $includeCount
-     *
-     * @return array
-     */
     public static function getCategories(bool $includeCount = false): array
     {
         $db = BackendModel::getContainer()->get('database');
@@ -257,13 +212,6 @@ class Model
         );
     }
 
-    /**
-     * Fetch a category
-     *
-     * @param int $id
-     *
-     * @return array
-     */
     public static function getCategory(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
@@ -275,11 +223,6 @@ class Model
         );
     }
 
-    /**
-     * Fetch the category count
-     *
-     * @return int
-     */
     public static function getCategoryCount(): int
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
@@ -290,13 +233,6 @@ class Model
         );
     }
 
-    /**
-     * Fetch the feedback item
-     *
-     * @param int $id
-     *
-     * @return array
-     */
     public static function getFeedback(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
@@ -307,11 +243,6 @@ class Model
         );
     }
 
-    /**
-     * Get the maximum sequence for a category
-     *
-     * @return int
-     */
     public static function getMaximumCategorySequence(): int
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
@@ -323,19 +254,19 @@ class Model
     }
 
     /**
-     * Get the max sequence id for a category
+     * Get the max sequence id for a question belonging to a category
      *
-     * @param int $id The category id.
+     * @param int $categoryId
      *
      * @return int
      */
-    public static function getMaximumSequence(int $id): int
+    public static function getMaximumSequence(int $categoryId): int
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(i.sequence)
              FROM faq_questions AS i
              WHERE i.category_id = ?',
-            [$id]
+            [$categoryId]
         );
     }
 
@@ -451,14 +382,6 @@ class Model
         return $insertId;
     }
 
-    /**
-     * Insert a category in the database
-     *
-     * @param array $item
-     * @param array $meta The metadata for the category to insert.
-     *
-     * @return int
-     */
     public static function insertCategory(array $item, array $meta = null): int
     {
         $db = BackendModel::get('database');
@@ -501,7 +424,7 @@ class Model
      *
      * @param array $item
      */
-    public static function update(array $item)
+    public static function update(array $item): void
     {
         BackendModel::getContainer()->get('database')->update(
             'faq_questions',
@@ -511,12 +434,7 @@ class Model
         );
     }
 
-    /**
-     * Update a certain category
-     *
-     * @param array $item
-     */
-    public static function updateCategory(array $item)
+    public static function updateCategory(array $item): void
     {
         // update faq category
         BackendModel::getContainer()->get('database')->update('faq_categories', $item, 'id = ?', [$item['id']]);

@@ -13,11 +13,6 @@ final class Asset
     /** @var bool */
     private $addTimestamp;
 
-    /**
-     * @param string $file
-     * @param bool $addTimestamp
-     * @param Priority|null $priority
-     */
     public function __construct(string $file, bool $addTimestamp = false, Priority $priority = null)
     {
         $this->file = $file;
@@ -25,27 +20,16 @@ final class Asset
         $this->priority = $priority ?? Priority::standard();
     }
 
-    /**
-     * @return string
-     */
     public function getFile(): string
     {
         return $this->file;
     }
 
-    /**
-     * @return Priority
-     */
     public function getPriority(): Priority
     {
         return $this->priority;
     }
 
-    /**
-     * @param string $cacheUrl
-     *
-     * @return Asset
-     */
     public function forCacheUrl(string $cacheUrl): self
     {
         $cacheAsset = clone $this;
@@ -54,9 +38,6 @@ final class Asset
         return $cacheAsset;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         if (!$this->addTimestamp) {

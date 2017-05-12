@@ -14,10 +14,7 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
  */
 class ImportLocaleCommand extends Command
 {
-    /**
-     * Configure the command options.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('forkcms:locale:import')
             ->setAliases(['locale:import'])
@@ -28,15 +25,7 @@ class ImportLocaleCommand extends Command
             ->addOption('locale', 'l', InputOption::VALUE_OPTIONAL, 'Only install for a specific locale');
     }
 
-    /**
-     * Execute the command.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @throws Exception
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         // Get input values
         $fileOption = $input->getOption('file');
@@ -61,20 +50,12 @@ class ImportLocaleCommand extends Command
         $this->importLocale($localePath, $overwriteOption, $output, $localeOption);
     }
 
-    /**
-     * @param string $localePath
-     * @param bool $overwrite
-     * @param OutputInterFace $output
-     * @param string|null $specificLocale
-     *
-     * @throws Exception
-     */
     private function importLocale(
         string $localePath,
         bool $overwrite,
         OutputInterface $output,
         string $specificLocale = null
-    ) {
+    ): void {
         // Load the xml from the file
         $xmlData = @simplexml_load_file($localePath);
 

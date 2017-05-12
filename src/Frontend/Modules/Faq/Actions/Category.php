@@ -28,10 +28,7 @@ class Category extends FrontendBaseBlock
      */
     private $record;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -41,10 +38,7 @@ class Category extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
@@ -63,10 +57,7 @@ class Category extends FrontendBaseBlock
         $this->questions = FrontendFaqModel::getAllForCategory($this->record['id']);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->breadcrumb->addElement($this->record['title']);
         $this->header->setPageTitle($this->record['title']);

@@ -33,10 +33,7 @@ class Email extends BackendBaseActionIndex
      */
     private $frm;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -45,10 +42,7 @@ class Email extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->isGod = BackendAuthentication::getUser()->isGod();
 
@@ -93,10 +87,7 @@ class Email extends BackendBaseActionIndex
         $this->tpl->assign('isGod', $this->isGod);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -104,10 +95,7 @@ class Email extends BackendBaseActionIndex
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Validates the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

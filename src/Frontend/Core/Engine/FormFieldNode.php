@@ -34,7 +34,7 @@ class FormFieldNode extends \Twig_Node
     /**
      * @param \Twig_Compiler $compiler
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(\Twig_Compiler $compiler): void
     {
         $frm = "\$context['form_{$this->form}']";
         $parseField = $frm . "->getField('{$this->field}')->parse()";

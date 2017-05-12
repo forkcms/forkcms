@@ -137,7 +137,7 @@ class Model
      *
      * @param mixed $ids The ids to delete.
      */
-    public static function delete($ids)
+    public static function delete($ids): void
     {
         // make sure $ids is an array
         $ids = (array) $ids;
@@ -201,7 +201,7 @@ class Model
      *
      * @param int $id The id of the category to delete.
      */
-    public static function deleteCategory(int $id)
+    public static function deleteCategory(int $id): void
     {
         $id = (int) $id;
         $db = BackendModel::getContainer()->get('database');
@@ -244,7 +244,7 @@ class Model
      *
      * @param array $ids The id(s) of the items(s) to delete.
      */
-    public static function deleteComments(array $ids)
+    public static function deleteComments(array $ids): void
     {
         // make sure $ids is an array
         $ids = (array) $ids;
@@ -277,10 +277,7 @@ class Model
         }
     }
 
-    /**
-     * Delete all spam
-     */
-    public static function deleteSpamComments()
+    public static function deleteSpamComments(): void
     {
         $db = BackendModel::getContainer()->get('database');
 
@@ -318,13 +315,6 @@ class Model
         );
     }
 
-    /**
-     * Checks if a category exists
-     *
-     * @param int $id The id of the category to check for existence.
-     *
-     * @return int
-     */
     public static function existsCategory(int $id): int
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -336,13 +326,6 @@ class Model
         );
     }
 
-    /**
-     * Checks if a comment exists
-     *
-     * @param int $id The id of the item to check for existence.
-     *
-     * @return int
-     */
     public static function existsComment(int $id): int
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -1158,7 +1141,7 @@ class Model
      * @param array  $ids    The id(s) of the comment(s) to change the status for.
      * @param string $status The new status.
      */
-    public static function updateCommentStatuses(array $ids, string $status)
+    public static function updateCommentStatuses(array $ids, string $status): void
     {
         // make sure $ids is an array
         $ids = (array) $ids;
@@ -1205,7 +1188,7 @@ class Model
      * @param $revision_id
      * @param $item
      */
-    public static function updateRevision($revision_id, $item)
+    public static function updateRevision($revision_id, $item): void
     {
         BackendModel::getContainer()->get('database')->update(
             'blog_posts',

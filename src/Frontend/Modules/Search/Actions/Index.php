@@ -85,10 +85,7 @@ class Index extends FrontendBaseBlock
      */
     private $term = '';
 
-    /**
-     * Display
-     */
-    private function display()
+    private function display(): void
     {
         // set variables
         $this->requestedPage = $this->URL->getParameter('page', 'int', 1);
@@ -108,24 +105,16 @@ class Index extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
-        $this->loadForm();
+        $this->buildForm();
         $this->validateForm();
         $this->display();
         $this->saveStatistics();
     }
 
-    /**
-     * Load the cached data
-     *
-     * @return bool
-     */
     private function getCachedData(): bool
     {
         // no search term = no search
@@ -161,10 +150,7 @@ class Index extends FrontendBaseBlock
         return true;
     }
 
-    /**
-     * Load the data
-     */
-    private function getRealData()
+    private function getRealData(): void
     {
         // no search term = no search
         if (!$this->term) {
@@ -218,10 +204,7 @@ class Index extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
         $this->form = new FrontendForm('search', null, 'get', null, false);
@@ -248,10 +231,7 @@ class Index extends FrontendBaseBlock
         $this->header->setCanonicalUrl($canonicalUrl);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->addJS('/js/vendors/typeahead.bundle.min.js', true, false);
         $this->addCSS('Search.css');
@@ -272,10 +252,7 @@ class Index extends FrontendBaseBlock
         $this->parsePagination();
     }
 
-    /**
-     * Save statistics
-     */
-    private function saveStatistics()
+    private function saveStatistics(): void
     {
         // no search term = no search
         if (!$this->term) {
@@ -303,10 +280,7 @@ class Index extends FrontendBaseBlock
         \SpoonSession::set('searchTerm', $this->term);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if (!$this->form->isSubmitted()) {
             return;

@@ -38,7 +38,7 @@ class Frontend extends KernelLoader implements ApplicationInterface
      * This method exists because the service container needs to be set before
      * the page's functionality gets loaded.
      */
-    public function initialize()
+    public function initialize(): void
     {
         new Url($this->getKernel());
 

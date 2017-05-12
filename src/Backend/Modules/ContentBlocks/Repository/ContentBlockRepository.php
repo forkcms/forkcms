@@ -9,12 +9,7 @@ use Doctrine\ORM\EntityRepository;
 
 class ContentBlockRepository extends EntityRepository
 {
-    /**
-     * @param ContentBlock $contentBlock
-     *
-     * We don't flush here, see http://disq.us/p/okjc6b
-     */
-    public function add(ContentBlock $contentBlock)
+    public function add(ContentBlock $contentBlock): void
     {
         // make sure the other revisions are archived
         if ($contentBlock->getStatus()->isActive() && $contentBlock->getId() !== null) {
@@ -27,13 +22,10 @@ class ContentBlockRepository extends EntityRepository
         }
 
         $this->getEntityManager()->persist($contentBlock);
+
+        // We don't flush here, see http://disq.us/p/okjc6b
     }
 
-    /**
-     * @param Locale $locale
-     *
-     * @return int
-     */
     public function getNextIdForLanguage(Locale $locale): int
     {
         return (int) $this->getEntityManager()
@@ -46,35 +38,19 @@ class ContentBlockRepository extends EntityRepository
             ->getSingleScalarResult() + 1;
     }
 
-    /**
-     * @param int $id
-     * @param Locale $locale
-     *
-     * @return ContentBlock|null
-     */
-    public function findOneByIdAndLocale($id, Locale $locale)
+    public function findOneByIdAndLocale($id, Locale $locale): ?ContentBlock
     {
         return $this->findOneBy(['id' => $id, 'status' => ContentBlockStatus::active(), 'locale' => $locale]);
     }
 
-    /**
-     * @param int $revisionId
-     * @param Locale $locale
-     *
-     * @return ContentBlock|null
-     */
-    public function findOneByRevisionIdAndLocale($revisionId, Locale $locale)
+    public function findOneByRevisionIdAndLocale($revisionId, Locale $locale): ?ContentBlock
     {
         return $this->findOneBy(
             ['revisionId' => $revisionId, 'locale' => $locale]
         );
     }
 
-    /**
-     * @param int $id
-     * @param Locale $locale
-     */
-    public function removeByIdAndLocale($id, Locale $locale)
+    public function removeByIdAndLocale($id, Locale $locale): void
     {
         array_map(
             function (ContentBlock $contentBlock) {

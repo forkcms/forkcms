@@ -64,9 +64,6 @@ class Url extends Base\Object
         return trim((string) $this->request->getRequestUri(), '/');
     }
 
-    /**
-     * @return string
-     */
     private function getLanguageFromUrl(): string
     {
         if (!array_key_exists($this->request->get('_locale'), BackendLanguage::getWorkingLanguages())) {
@@ -83,9 +80,6 @@ class Url extends Base\Object
         return $this->request->get('_locale');
     }
 
-    /**
-     * @return string
-     */
     private function getModuleFromRequest(): string
     {
         $module = $this->request->get('module');
@@ -96,12 +90,6 @@ class Url extends Base\Object
         return \SpoonFilter::toCamelCase($module);
     }
 
-    /**
-     * @param string $module
-     * @param string $language
-     *
-     * @return string
-     */
     private function getActionFromRequest(string $module, string $language): string
     {
         $action = $this->request->get('action');
@@ -112,12 +100,6 @@ class Url extends Base\Object
         return $this->getDefaultActionForModule($module, $language);
     }
 
-    /**
-     * @param string $module
-     * @param string $language
-     *
-     * @return string
-     */
     private function getDefaultActionForModule(string $module, string $language): string
     {
         // Check if we can load the config file
@@ -144,10 +126,7 @@ class Url extends Base\Object
         return $config->getDefaultAction() ?? 'Index';
     }
 
-    /**
-     * Process the query string
-     */
-    private function processQueryString()
+    private function processQueryString(): void
     {
         if ($this->request->get('_route') === 'backend_ajax') {
             $this->processAjaxRequest();
@@ -162,9 +141,6 @@ class Url extends Base\Object
         $this->processRegularRequest($module, $action, $language);
     }
 
-    /**
-     * @return array
-     */
     private function getForkData(): array
     {
         $request = $this->getContainer()->get('request');
@@ -180,7 +156,7 @@ class Url extends Base\Object
         return (array) $request->query->all();
     }
 
-    private function processAjaxRequest()
+    private function processAjaxRequest(): void
     {
         $forkData = $this->getForkData();
         $language = $forkData['language'] ?? $this->getContainer()->getParameter('site.default_language');
@@ -189,14 +165,7 @@ class Url extends Base\Object
         BackendLanguage::setWorkingLanguage($language);
     }
 
-    /**
-     * Process a regular request
-     *
-     * @param string $module The requested module.
-     * @param string $action The requested action.
-     * @param string $language The requested language.
-     */
-    private function processRegularRequest(string $module, string $action, string $language)
+    private function processRegularRequest(string $module, string $action, string $language): void
     {
         // the person isn't logged in? or the module doesn't require authentication
         if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
@@ -234,7 +203,7 @@ class Url extends Base\Object
         $this->setAction($action);
     }
 
-    private function setLocale()
+    private function setLocale(): void
     {
         $defaultLocale = $this->get('fork.settings')->get('Core', 'default_interface_language');
         $locale = $this->getInterfaceLanguage();
@@ -248,9 +217,6 @@ class Url extends Base\Object
         BackendLanguage::setLocale($locale);
     }
 
-    /**
-     * @return string
-     */
     private function getInterfaceLanguage(): string
     {
         $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
@@ -267,22 +233,12 @@ class Url extends Base\Object
         return $default;
     }
 
-    /**
-     * @param string $language
-     *
-     * @return string
-     */
     private function getBaseUrlForLanguage(string $language): string
     {
         return '/' . NAMED_APPLICATION . '/' . $language;
     }
 
-    /**
-     * @param string $language
-     * @param string $url
-     * @param int $code
-     */
-    private function redirectWithQueryString(string $language, string $url, int $code = Response::HTTP_FOUND)
+    private function redirectWithQueryString(string $language, string $url, int $code = Response::HTTP_FOUND): void
     {
         // add a / at the start if needed
         if (mb_strpos($url, '/') !== 0) {
@@ -292,11 +248,6 @@ class Url extends Base\Object
         $this->redirect($this->getBaseUrlForLanguage($language) . $this->addQueryStringToUrl($url), $code);
     }
 
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
     private function addQueryStringToUrl(string $url): string
     {
         $queryString = 'querystring=' . rawurlencode('/' . $this->getQueryString());
@@ -308,11 +259,7 @@ class Url extends Base\Object
         return $url . '?' . $queryString;
     }
 
-    /**
-     * @param string $language
-     * @param array $navigation
-     */
-    private function redirectToFistAvailableLink(string $language, array $navigation)
+    private function redirectToFistAvailableLink(string $language, array $navigation): void
     {
         foreach ($navigation as $navigationItem) {
             list($module, $action) = explode('/', $navigationItem['url']);

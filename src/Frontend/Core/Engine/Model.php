@@ -27,8 +27,8 @@ class Model extends \Common\Core\Model
     /**
      * Add parameters to an URL
      *
-     * @param string $url        The URL to append the parameters too.
-     * @param array  $parameters The parameters as key-value-pairs.
+     * @param string $url The URL to append the parameters too.
+     * @param array $parameters The parameters as key-value-pairs.
      *
      * @return string
      */
@@ -57,9 +57,9 @@ class Model extends \Common\Core\Model
     /**
      * Get plain text for a given text
      *
-     * @param string $text           The text to convert.
-     * @param bool   $includeAHrefs  Should the url be appended after the link-text?
-     * @param bool   $includeImgAlts Should the alt tag be inserted for images?
+     * @param string $text The text to convert.
+     * @param bool $includeAHrefs Should the url be appended after the link-text?
+     * @param bool $includeImgAlts Should the alt tag be inserted for images?
      *
      * @return string
      */
@@ -257,12 +257,12 @@ class Model extends \Common\Core\Model
     /**
      * General method to check if something is spam
      *
-     * @param string $content   The content that was submitted.
+     * @param string $content The content that was submitted.
      * @param string $permaLink The permanent location of the entry the comment was submitted to.
-     * @param string $author    Commenter's name.
-     * @param string $email     Commenter's email address.
-     * @param string $url       Commenter's URL.
-     * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
+     * @param string $author Commenter's name.
+     * @param string $email Commenter's email address.
+     * @param string $url Commenter's URL.
+     * @param string $type May be blank, comment, trackback, pingback, or a made up value like "registration".
      *
      * @throws \Exception
      *
@@ -298,12 +298,6 @@ class Model extends \Common\Core\Model
         }
     }
 
-    /**
-     * @param array $array
-     * @param string $key
-     *
-     * @return array
-     */
     private static function unserializeArrayContent(array $array, string $key): array
     {
         if (isset($array[$key]) && $array[$key] !== '') {

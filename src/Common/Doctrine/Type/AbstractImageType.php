@@ -8,13 +8,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 abstract class AbstractImageType extends Type
 {
-    /**
-     * @param array $fieldDeclaration
-     * @param AbstractPlatform $platform
-     *
-     * @return string
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'VARCHAR(255)';
     }
@@ -25,7 +19,7 @@ abstract class AbstractImageType extends Type
      *
      * @return AbstractImage
      */
-    public function convertToPHPValue($imageFileName, AbstractPlatform $platform)
+    public function convertToPHPValue($imageFileName, AbstractPlatform $platform): AbstractImage
     {
         return $this->createFromString($imageFileName);
     }
@@ -36,15 +30,10 @@ abstract class AbstractImageType extends Type
      *
      * @return string
      */
-    public function convertToDatabaseValue($image, AbstractPlatform $platform)
+    public function convertToDatabaseValue($image, AbstractPlatform $platform): string
     {
         return (string) $image;
     }
 
-    /**
-     * @param string $imageFileName
-     *
-     * @return AbstractImage
-     */
     abstract protected function createFromString(string $imageFileName): AbstractImage;
 }

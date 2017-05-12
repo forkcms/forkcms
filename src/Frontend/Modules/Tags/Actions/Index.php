@@ -24,28 +24,19 @@ class Index extends FrontendBaseBlock
      */
     private $tags = [];
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->loadTemplate();
         $this->getData();
         $this->parse();
     }
 
-    /**
-     * Load the data from the database.
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->tags = FrontendTagsModel::getAll();
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // make tags available
         $this->tpl->assign('tags', $this->tags);

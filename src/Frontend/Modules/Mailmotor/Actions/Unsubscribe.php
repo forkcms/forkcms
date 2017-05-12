@@ -22,10 +22,7 @@ use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
  */
 class Unsubscribe extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -72,7 +69,7 @@ class Unsubscribe extends FrontendBaseBlock
             );
         }
 
-        return $this->redirect(
+        $this->redirect(
             FrontendNavigation::getURLForBlock(
                 'Mailmotor',
                 'Unsubscribe'
@@ -98,10 +95,7 @@ class Unsubscribe extends FrontendBaseBlock
         return $email;
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // form was unsubscribed?
         if ($this->URL->getParameter('unsubscribed') === 'true') {

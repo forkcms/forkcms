@@ -34,10 +34,7 @@ class Settings extends BackendBaseActionEdit
      */
     private $settings = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -46,10 +43,7 @@ class Settings extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Loads the settings form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // init settings form
         $this->frm = new BackendForm('settings');
@@ -120,10 +114,7 @@ class Settings extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -134,10 +125,7 @@ class Settings extends BackendBaseActionEdit
         $this->tpl->assign('modules', $this->modules);
     }
 
-    /**
-     * Validates the settings form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // form is submitted
         if ($this->frm->isSubmitted()) {

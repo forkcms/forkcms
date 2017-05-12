@@ -50,9 +50,6 @@ final class SaveSettings
      */
     public $automaticallySubscribeFromFormBuilderSubmittedForm;
 
-    /**
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(ModulesSettings $modulesSettings)
     {
         // Define settings

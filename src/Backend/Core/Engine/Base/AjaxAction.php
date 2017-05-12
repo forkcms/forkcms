@@ -22,11 +22,6 @@ class AjaxAction extends Object
     const FORBIDDEN = 403;
     const ERROR = 500;
 
-    /**
-     * @param KernelInterface $kernel
-     * @param string|null $action The action to use.
-     * @param string|null $module The module to use.
-     */
     public function __construct(KernelInterface $kernel, string $action = null, string $module = null)
     {
         parent::__construct($kernel);
@@ -36,10 +31,7 @@ class AjaxAction extends Object
         }
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
     }
 
@@ -71,7 +63,7 @@ class AjaxAction extends Object
      * @param mixed $data The data to output.
      * @param string $message The text-message to send.
      */
-    public function output(int $statusCode, $data = null, string $message = null)
+    public function output(int $statusCode, $data = null, string $message = null): void
     {
         $this->content = ['code' => $statusCode, 'data' => $data, 'message' => $message];
     }

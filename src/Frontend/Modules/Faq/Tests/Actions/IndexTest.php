@@ -9,7 +9,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testFaqIndexContainsCategories()
+    public function testFaqIndexContainsCategories(): void
     {
         $client = static::createClient();
 
@@ -35,7 +35,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testFaqIndexContainsQuestions()
+    public function testFaqIndexContainsQuestions(): void
     {
         $client = static::createClient();
 

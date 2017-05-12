@@ -4,16 +4,13 @@ namespace Backend\Core\Engine;
 
 final class PasswordStrengthChecker
 {
-    const WEAK = 'weak';
-    const AVERAGE = 'average';
-    const STRONG = 'strong';
+    private const WEAK = 'weak';
+    private const AVERAGE = 'average';
+    private const STRONG = 'strong';
 
     /** @var int */
     private $score;
 
-    /**
-     * @param string $password
-     */
     public function __construct(string $password)
     {
         $this->score = 0;
@@ -26,10 +23,7 @@ final class PasswordStrengthChecker
         $this->scoreCharacterTypes($password);
     }
 
-    /**
-     * @param string $password
-     */
-    private function scoreCharacterTypes(string $password)
+    private function scoreCharacterTypes(string $password): void
     {
         // upper and lowercase?
         if (preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password)) {
@@ -47,10 +41,7 @@ final class PasswordStrengthChecker
         }
     }
 
-    /**
-     * @param string $password
-     */
-    private function scoreStringLength(string $password)
+    private function scoreStringLength(string $password): void
     {
         if (mb_strlen($password) >= 6) {
             ++$this->score;
@@ -65,11 +56,6 @@ final class PasswordStrengthChecker
         }
     }
 
-    /**
-     * @param string $password
-     *
-     * @return string
-     */
     public static function checkPassword(string $password): string
     {
         $checker = new self($password);
@@ -84,21 +70,11 @@ final class PasswordStrengthChecker
         }
     }
 
-    /**
-     * @param string $password
-     *
-     * @return bool
-     */
     private function passwordIsTooShort(string $password): bool
     {
         return mb_strlen($password) <= 4;
     }
 
-    /**
-     * @param string $password
-     *
-     * @return bool
-     */
     private function hasLessThan3UniqueCharacters(string $password): bool
     {
         $uniqueChars = [];

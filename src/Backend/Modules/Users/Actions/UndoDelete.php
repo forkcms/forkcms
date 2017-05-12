@@ -19,10 +19,7 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
  */
 class UndoDelete extends BackendBaseAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $email = $this->getParameter('email', 'string');
 

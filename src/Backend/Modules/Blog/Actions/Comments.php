@@ -56,10 +56,7 @@ class Comments extends BackendBaseActionIndex
         return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $url, $title) . '</em></p>' . "\n" . (string) $text;
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrids();
@@ -67,10 +64,7 @@ class Comments extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Loads the datagrids
-     */
-    private function loadDataGrids()
+    private function loadDataGrids(): void
     {
         /*
          * DataGrid for the published comments.
@@ -342,10 +336,7 @@ class Comments extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

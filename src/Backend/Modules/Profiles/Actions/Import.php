@@ -26,10 +26,7 @@ class Import extends BackendBaseActionAdd
      */
     private $id;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -38,10 +35,7 @@ class Import extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // get group values for dropdown
         $ddmValues = BackendProfilesModel::getGroupsForDropDown($this->id);
@@ -53,10 +47,7 @@ class Import extends BackendBaseActionAdd
         $this->frm->addCheckbox('overwrite_existing');
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();

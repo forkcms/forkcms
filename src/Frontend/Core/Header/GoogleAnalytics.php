@@ -13,19 +13,12 @@ final class GoogleAnalytics
     /** @var string */
     private $httpHost;
 
-    /**
-     * @param ModulesSettings $modulesSettings
-     * @param string $httpHost
-     */
-    public function __construct(ModulesSettings $modulesSettings, $httpHost)
+    public function __construct(ModulesSettings $modulesSettings, string $httpHost)
     {
         $this->modulesSettings = $modulesSettings;
         $this->httpHost = $httpHost;
     }
 
-    /**
-     * @return bool
-     */
     private function shouldAddGoogleAnalyticsHtml(): bool
     {
         $siteHTMLHeader = (string) $this->modulesSettings->get('Core', 'site_html_header', '');
@@ -37,17 +30,11 @@ final class GoogleAnalytics
                && mb_strpos($siteHTMLFooter, $webPropertyId) === false;
     }
 
-    /**
-     * @return bool
-     */
     private function shouldAnonymize(): bool
     {
         return $this->modulesSettings->get('Core', 'show_cookie_bar', false) && !Cookie::hasAllowedCookies();
     }
 
-    /**
-     * @return string
-     */
     private function getGoogleAnalyticsEvent(): string
     {
         if ($this->shouldAnonymize()) {
@@ -57,10 +44,7 @@ final class GoogleAnalytics
         return 'ga(\'send\', \'pageview\');';
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         if (!$this->shouldAddGoogleAnalyticsHtml()) {
             return '';

@@ -43,11 +43,6 @@ class Theme
         return $filePath;
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return string
-     */
     private static function getFilePathForCurrentTheme(string $theme, string $filePath): string
     {
         // just return the file if there is no theme or the theme is already in the file path

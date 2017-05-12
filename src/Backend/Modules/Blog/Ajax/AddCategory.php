@@ -18,10 +18,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class AddCategory extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 

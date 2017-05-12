@@ -24,10 +24,6 @@ final class FormBuilderSubmittedMailSubscriber
      */
     protected $mailer;
 
-    /**
-     * @param Swift_Mailer $mailer
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(
         Swift_Mailer $mailer,
         ModulesSettings $modulesSettings
@@ -36,10 +32,7 @@ final class FormBuilderSubmittedMailSubscriber
         $this->modulesSettings = $modulesSettings;
     }
 
-    /**
-     * @param FormBuilderSubmittedEvent $event
-     */
-    public function onFormSubmitted(FormBuilderSubmittedEvent $event)
+    public function onFormSubmitted(FormBuilderSubmittedEvent $event): void
     {
         $form = $event->getForm();
         $fieldData = $this->getEmailFields($event->getData());
@@ -127,7 +120,7 @@ final class FormBuilderSubmittedMailSubscriber
     /**
      * Converts the data to make sure it is nicely usable in the email
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return array
      */

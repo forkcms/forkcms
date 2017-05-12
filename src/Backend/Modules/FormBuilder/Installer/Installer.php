@@ -17,10 +17,7 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -62,7 +59,7 @@ class Installer extends ModuleInstaller
             'SELECT id
              FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            ['search', ModuleExtraType::WIDGET, 'form']
+            ['search', ModuleExtraType::widget(), 'form']
         );
 
         // loop languages

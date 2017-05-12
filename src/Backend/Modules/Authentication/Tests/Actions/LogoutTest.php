@@ -10,7 +10,7 @@ class LogoutTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testLogoutActionActuallyLogsYouOut()
+    public function testLogoutActionActuallyLogsYouOut(): void
     {
         $client = static::createClient();
         $this->login();
@@ -26,7 +26,7 @@ class LogoutTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testLogoutActionRedirectsYouToLoginAfterLoggingOut()
+    public function testLogoutActionRedirectsYouToLoginAfterLoggingOut(): void
     {
         $client = static::createClient();
         $this->login();

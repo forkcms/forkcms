@@ -9,7 +9,7 @@ class DetailTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testBlogPostHasDetailPage()
+    public function testBlogPostHasDetailPage(): void
     {
         $client = static::createClient();
         $this->loadFixtures(
@@ -46,7 +46,7 @@ class DetailTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testNonExistingBlogPostGives404()
+    public function testNonExistingBlogPostGives404(): void
     {
         $client = static::createClient();
 

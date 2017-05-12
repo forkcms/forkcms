@@ -61,15 +61,12 @@ class Installer extends ModuleInstaller
     /**
      * Insert an empty admin dashboard sequence
      */
-    private function insertWidget()
+    private function insertWidget(): void
     {
         $this->insertDashboardWidget('Blog', 'Comments');
     }
 
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -180,7 +177,7 @@ class Installer extends ModuleInstaller
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::WIDGET, 'Form']
+            ['Search', ModuleExtraType::widget(), 'Form']
         );
 
         // loop languages
@@ -223,12 +220,7 @@ class Installer extends ModuleInstaller
         }
     }
 
-    /**
-     * Install example data
-     *
-     * @param string $language The language to use.
-     */
-    private function installExampleData(string $language)
+    private function installExampleData(string $language): void
     {
         // get db instance
         $db = $this->getDB();

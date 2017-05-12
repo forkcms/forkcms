@@ -20,14 +20,14 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class Statistics extends Action
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->showDataGrid();
         $this->display();
     }
 
-    private function showDataGrid()
+    private function showDataGrid(): void
     {
         $dataGrid = new BackendDataGridDB(
             BackendSearchModel::QRY_DATAGRID_BROWSE_STATISTICS,
@@ -38,7 +38,7 @@ class Statistics extends Action
         $dataGrid->setHeaderLabels(['time' => \SpoonFilter::ucfirst(BL::lbl('SearchedOn'))]);
 
         // set column function
-        $dataGrid->setColumnFunction([__CLASS__, 'setReferrer'], '[data]', 'referrer');
+        $dataGrid->setColumnFunction([__CLASS__, 'parseRefererInDataGrid'], '[data]', 'referrer');
         $dataGrid->setColumnFunction(
             [new BackendDataGridFunctions(), 'getLongDate'],
             ['[time]'],
@@ -53,12 +53,7 @@ class Statistics extends Action
         $this->tpl->assign('dataGrid', $dataGrid->getContent());
     }
 
-    /**
-     * @param string $data The source data.
-     *
-     * @return string
-     */
-    public static function setReferrer(string $data): string
+    public static function parseRefererInDataGrid(string $data): string
     {
         $data = unserialize($data);
         if (!isset($data['server']['HTTP_REFERER'])) {

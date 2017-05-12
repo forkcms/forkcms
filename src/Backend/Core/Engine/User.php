@@ -79,10 +79,6 @@ class User
      */
     private $email;
 
-    /**
-     * @param int|null $userId The id of the user.
-     * @param string|null $email The e-mail address of the user.
-     */
     public function __construct(int $userId = null, string $email = null)
     {
         if ($userId !== null) {
@@ -93,49 +89,27 @@ class User
         }
     }
 
-    /**
-     * Get email
-     *
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * Get last logged in date
-     *
-     * @return int
-     */
     public function getLastLoggedInDate(): int
     {
         return $this->lastLoggedInDate;
     }
 
-    /**
-     * Get secretkey
-     *
-     * @return string
-     */
     public function getSecretKey(): string
     {
         return $this->secretKey;
     }
 
-    /**
-     * Get sessionId
-     *
-     * @return string
-     */
     public function getSessionId(): string
     {
         return $this->sessionId;
     }
 
     /**
-     * Get a setting
-     *
      * @param string $key The key for the setting to get.
      * @param mixed $defaultValue Default value, will be stored if the setting isn't set.
      *
@@ -152,54 +126,27 @@ class User
         return $this->settings[$key];
     }
 
-    /**
-     * Get all settings at once
-     *
-     * @return array
-     */
     public function getSettings(): array
     {
         return $this->settings;
     }
 
-    /**
-     * Get userid
-     *
-     * @return int
-     */
     public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * Is the current user object a authenticated user?
-     *
-     * @return bool
-     */
     public function isAuthenticated(): bool
     {
         return $this->isAuthenticated;
     }
 
-    /**
-     * Is the current user a God?
-     *
-     * @return bool
-     */
     public function isGod(): bool
     {
         return $this->isGod;
     }
 
-    /**
-     * Load a user
-     *
-     * @param int $userId The id of the user to load.
-     *
-     * @throws Exception If user cannot be loaded
-     */
-    public function loadUser(int $userId)
+    public function loadUser(int $userId): void
     {
         // get database instance
         $db = BackendModel::getContainer()->get('database');
@@ -249,7 +196,7 @@ class User
         }
     }
 
-    private function loadGroups()
+    private function loadGroups(): void
     {
         $this->groups = (array) BackendModel::get('database')->getColumn(
             'SELECT group_id
@@ -259,22 +206,12 @@ class User
         );
     }
 
-    /**
-     * @return array
-     */
     public function getGroups(): array
     {
         return $this->groups;
     }
 
-    /**
-     * Load a user by his e-mail adress
-     *
-     * @param string $email The email of the user to load.
-     *
-     * @throws Exception If user cannot be loaded
-     */
-    public function loadUserByEmail(string $email)
+    public function loadUserByEmail(string $email): void
     {
         $db = BackendModel::getContainer()->get('database');
 
@@ -295,13 +232,7 @@ class User
         $this->loadUser($userId);
     }
 
-    /**
-     * Set a setting
-     *
-     * @param string $key The key of the setting.
-     * @param mixed $value The value to store.
-     */
-    public function setSetting(string $key, $value)
+    public function setSetting(string $key, $value): void
     {
         $valueToStore = serialize($value);
 

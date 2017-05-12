@@ -77,7 +77,7 @@ class Action extends Object
     /**
      * Check if the token is ok
      */
-    public function checkToken()
+    public function checkToken(): void
     {
         $fromSession = (\SpoonSession::exists('csrf_token')) ? \SpoonSession::get('csrf_token') : '';
         $fromGet = $this->getContainer()->get('request')->query->get('token');
@@ -101,9 +101,6 @@ class Action extends Object
         );
     }
 
-    /**
-     * @return string
-     */
     protected function getBackendModulePath(): string
     {
         if ($this->URL->getModule() === 'Core') {
@@ -119,7 +116,7 @@ class Action extends Object
      *
      * @param string $template The template to use, if not provided it will be based on the action.
      */
-    public function display(string $template = null)
+    public function display(string $template = null): void
     {
         // parse header
         $this->header->parse();
@@ -135,10 +132,7 @@ class Action extends Object
         $this->content = $this->tpl->getContent($template);
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // add module js
         if (is_file($this->getBackendModulePath() . '/Js/' . $this->getModule() . '.js')) {
@@ -200,21 +194,16 @@ class Action extends Object
      * something else specify it by passing the wanted type.
      *
      * @param string $key The name of the parameter.
-     * @param string $type The return-type, possible values are: bool,
-     *                             boolean, int, integer, float, double,
-     *                             string, array.
-     * @param mixed $defaultValue The value that should be returned if the key
-     *                             is not available.
+     * @param string $returnType Possible values are: bool, boolean, int, integer, float, double, string, array.
+     * @param mixed $defaultValue The value that should be returned if the key is not available.
      *
      * @return mixed
      */
-    public function getParameter(string $key, string $type = 'string', $defaultValue = null)
+    public function getParameter(string $key, string $returnType = 'string', $defaultValue = null)
     {
-        $key = (string) $key;
-
         // parameter exists
         if (isset($this->parameters[$key]) && $this->parameters[$key] !== '') {
-            return \SpoonFilter::getValue($this->parameters[$key], null, null, $type);
+            return \SpoonFilter::getValue($this->parameters[$key], null, null, $returnType);
         }
 
         return $defaultValue;
@@ -223,7 +212,7 @@ class Action extends Object
     /**
      * Parse to template
      */
-    protected function parse()
+    protected function parse(): void
     {
     }
 

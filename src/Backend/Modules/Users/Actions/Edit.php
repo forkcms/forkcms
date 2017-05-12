@@ -45,10 +45,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $user;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
         $error = $this->getParameter('error', 'string');
@@ -83,19 +80,15 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /*
-     * Load the authenticated user in a seperate method
-     * so we can load it before the form starts loading.
+    /**
+     * Load the authenticated user in a separate method so we can load it before the form starts loading.
      */
-    private function loadAuthenticatedUser()
+    private function loadAuthenticatedUser(): void
     {
         $this->authenticatedUser = BackendAuthentication::getUser();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create user objects
         $this->user = new BackendUser($this->id);
@@ -196,10 +189,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -232,10 +222,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

@@ -55,10 +55,7 @@ class ExportAnalyse extends BackendBaseActionIndex
         );
     }
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->setFilter();
         $this->setItems();
@@ -67,7 +64,7 @@ class ExportAnalyse extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         $this->filter['language'] = (isset($_GET['language'])) ? $this->getParameter('language') : BL::getWorkingLanguage();
     }
@@ -75,7 +72,7 @@ class ExportAnalyse extends BackendBaseActionIndex
     /**
      * Build items array and group all items by application, module, type and name.
      */
-    private function setItems()
+    private function setItems(): void
     {
         $this->locale = [];
 

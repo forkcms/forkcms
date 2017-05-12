@@ -112,8 +112,12 @@ class Block extends Object
      * @param bool $minify Should the CSS be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addCSS(string $file, bool $overwritePath = false, bool $minify = true, bool $addTimestamp = false)
-    {
+    public function addCSS(
+        string $file,
+        bool $overwritePath = false,
+        bool $minify = true,
+        bool $addTimestamp = false
+    ): void {
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
@@ -136,8 +140,12 @@ class Block extends Object
      * @param bool $minify Should the file be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addJS(string $file, bool $overwritePath = false, bool $minify = true, bool $addTimestamp = false)
-    {
+    public function addJS(
+        string $file,
+        bool $overwritePath = false,
+        bool $minify = true,
+        bool $addTimestamp = false
+    ): void {
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;
@@ -158,7 +166,7 @@ class Block extends Object
      * @param string $key The key whereunder the value will be stored.
      * @param mixed $value The value to pass.
      */
-    public function addJSData(string $key, $value)
+    public function addJSData(string $key, $value): void
     {
         $this->header->addJsData($this->getModule(), $key, $value);
     }
@@ -167,7 +175,7 @@ class Block extends Object
      * Execute the action
      * If a javascript file with the name of the module or action exists it will be loaded.
      */
-    public function execute()
+    public function execute(): void
     {
         // build path to the module
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
@@ -196,11 +204,6 @@ class Block extends Object
         }
     }
 
-    /**
-     * Get the action
-     *
-     * @return string
-     */
     public function getAction(): string
     {
         return $this->action;
@@ -216,11 +219,6 @@ class Block extends Object
         return $this->tpl->getContent($this->templatePath);
     }
 
-    /**
-     * Get the module
-     *
-     * @return string
-     */
     public function getModule(): string
     {
         return $this->module;
@@ -236,33 +234,21 @@ class Block extends Object
         return $this->overwrite;
     }
 
-    /**
-     * Get template
-     *
-     * @return TwigTemplate
-     */
     public function getTemplate(): TwigTemplate
     {
         return $this->tpl;
     }
 
-    /**
-     * Get template path
-     *
-     * @return string
-     */
     public function getTemplatePath(): string
     {
         return $this->templatePath;
     }
 
     /**
-     * Load the template
-     *
      * @param string $path The path for the template to use.
      * @param bool $overwrite Should the template overwrite the default?
      */
-    protected function loadTemplate(string $path = null, bool $overwrite = false)
+    protected function loadTemplate(string $path = null, bool $overwrite = false): void
     {
         // no template given, so we should build the path
         if ($path === null) {
@@ -274,14 +260,7 @@ class Block extends Object
         $this->setTemplatePath($path);
     }
 
-    /**
-     * Parse pagination
-     *
-     * @param string $query_parameter
-     *
-     * @throws Exception
-     */
-    protected function parsePagination(string $query_parameter = 'page')
+    protected function parsePagination(string $query_parameter = 'page'): void
     {
         $pagination = null;
         $showFirstPages = false;
@@ -485,48 +464,27 @@ class Block extends Object
      *
      * @throws RedirectException
      */
-    public function redirect(string $url, int $code = 302)
+    public function redirect(string $url, int $code = RedirectResponse::HTTP_FOUND): void
     {
-        $response = new RedirectResponse($url, $code);
-
-        throw new RedirectException('Redirect', $response);
+        throw new RedirectException('Redirect', new RedirectResponse($url, $code));
     }
 
-    /**
-     * Set the action, for later use
-     *
-     * @param string $action The action to set.
-     */
     private function setAction(string $action)
     {
         $this->action = $action;
     }
 
-    /**
-     * Set the data, for later use
-     *
-     * @param string $data The data that should be available.
-     */
-    private function setData(string $data = null)
+    private function setData(string $data = null): void
     {
         // data given?
         if ($data === null) {
             return;
         }
 
-        // unserialize data
-        $data = unserialize($data);
-
-        // store
-        $this->data = $data;
+        $this->data = unserialize($data);
     }
 
-    /**
-     * Set the module, for later use
-     *
-     * @param string $module The module that should be used.
-     */
-    private function setModule(string $module)
+    private function setModule(string $module): void
     {
         $this->module = $module;
     }
@@ -536,7 +494,7 @@ class Block extends Object
      *
      * @param bool $overwrite true if the template should overwrite the current template, false if not.
      */
-    protected function setOverwrite(bool $overwrite)
+    protected function setOverwrite(bool $overwrite): void
     {
         $this->overwrite = $overwrite;
     }
@@ -546,15 +504,12 @@ class Block extends Object
      *
      * @param string $path The path to the template that should be loaded.
      */
-    protected function setTemplatePath(string $path)
+    protected function setTemplatePath(string $path): void
     {
         $this->templatePath = $path;
     }
 
-    /**
-     * @param Meta $meta
-     */
-    protected function setMeta(Meta $meta)
+    protected function setMeta(Meta $meta): void
     {
         $this->header->setPageTitle($meta->getTitle(), $meta->isTitleOverwrite());
         $this->header->addMetaDescription($meta->getDescription(), $meta->isDescriptionOverwrite());

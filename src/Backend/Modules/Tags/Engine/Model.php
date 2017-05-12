@@ -28,9 +28,9 @@ class Model
     /**
      * Delete one or more tags.
      *
-     * @param mixed $ids The ids to delete.
+     * @param int|int[] $ids The ids to delete.
      */
-    public static function delete($ids)
+    public static function delete($ids): void
     {
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -43,13 +43,6 @@ class Model
         $db->delete('modules_tags', 'tag_id IN (' . implode(',', $ids) . ')');
     }
 
-    /**
-     * Check if a tag exists.
-     *
-     * @param int $id The id to check for existence.
-     *
-     * @return bool
-     */
     public static function exists(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -60,13 +53,6 @@ class Model
         );
     }
 
-    /**
-     * Check if a tag exists
-     *
-     * @param string $tag The tag to check for existence.
-     *
-     * @return bool
-     */
     public static function existsTag(string $tag): bool
     {
         return (BackendModel::getContainer()->get('database')->getVar(
@@ -75,13 +61,6 @@ class Model
         ) != '');
     }
 
-    /**
-     * Get tag record.
-     *
-     * @param int $id The id of the record to get.
-     *
-     * @return array
-     */
     public static function get(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
@@ -92,13 +71,6 @@ class Model
         );
     }
 
-    /**
-     * Get all tags.
-     *
-     * @param string $language
-     *
-     * @return array
-     */
     public static function getAll(string $language = null): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -113,8 +85,7 @@ class Model
      * Get tags that start with the given string
      *
      * @param string $term The searchstring.
-     * @param string $language The language to use, if not provided
-     *                                use the working language.
+     * @param string $language The language to use, if not provided use the working language.
      *
      * @return array
      */
@@ -368,8 +339,10 @@ class Model
      * Remark: $tag['id'] should be available.
      *
      * @param array $tag The new data for the tag.
+     *
+     * @return int
      */
-    public static function update(array $tag)
+    public static function update(array $tag): int
     {
         return BackendModel::getContainer()->get('database')->update('tags', $tag, 'id = ?', $tag['id']);
     }

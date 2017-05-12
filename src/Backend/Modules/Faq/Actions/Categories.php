@@ -28,10 +28,7 @@ class Categories extends BackendBaseActionIndex
      */
     private $multipleCategoriesAllowed;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -41,10 +38,7 @@ class Categories extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Loads the dataGrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // are multiple categories allowed?
         $this->multipleCategoriesAllowed = $this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true);
@@ -86,10 +80,7 @@ class Categories extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

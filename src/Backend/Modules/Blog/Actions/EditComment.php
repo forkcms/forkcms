@@ -20,10 +20,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class EditComment extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -45,7 +42,7 @@ class EditComment extends BackendBaseActionEdit
      * Get the data
      * If a revision-id was specified in the URL we load the revision and not the actual data.
      */
-    private function getData()
+    private function getData(): void
     {
         // get the record
         $this->record = (array) BackendBlogModel::getComment($this->id);
@@ -56,10 +53,7 @@ class EditComment extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('editComment');
@@ -79,10 +73,7 @@ class EditComment extends BackendBaseActionEdit
         $this->tpl->assign('itemTitle', $this->record['post_title']);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers

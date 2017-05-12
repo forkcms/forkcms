@@ -30,11 +30,6 @@ class TwigTemplate extends BaseTwigTemplate
      */
     private $themePath;
 
-    /**
-     * @param Twig_Environment $environment
-     * @param TemplateNameParserInterface $parser
-     * @param FileLocatorInterface $locator
-     */
     public function __construct(
         Twig_Environment $environment,
         TemplateNameParserInterface $parser,
@@ -57,7 +52,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->connectSymfonyForms();
     }
 
-    private function addFrontendPathsToTHeTemplateLoader(string $theme)
+    private function addFrontendPathsToTHeTemplateLoader(string $theme): void
     {
         $this->themePath = FRONTEND_PATH . '/Themes/' . $theme;
         $this->environment->setLoader(
@@ -67,7 +62,7 @@ class TwigTemplate extends BaseTwigTemplate
         );
     }
 
-    private function connectSymfonyForms()
+    private function connectSymfonyForms(): void
     {
         $formEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'));
         $formEngine->setEnvironment($this->environment);
@@ -101,7 +96,7 @@ class TwigTemplate extends BaseTwigTemplate
      * @param string $name
      * @param mixed $value
      */
-    public function addGlobal(string $name, $value)
+    public function addGlobal(string $name, $value): void
     {
         $this->environment->addGlobal($name, $value);
     }
@@ -127,13 +122,7 @@ class TwigTemplate extends BaseTwigTemplate
         return $content;
     }
 
-    /**
-     * @param string $template
-     * @param array $variables
-     *
-     * @return string
-     */
-    public function render($template, array $variables = [])
+    public function render($template, array $variables = []): string
     {
         if (!empty($this->forms)) {
             foreach ($this->forms as $form) {
@@ -145,9 +134,6 @@ class TwigTemplate extends BaseTwigTemplate
         return $this->environment->render($template, $variables);
     }
 
-    /**
-     * @return array
-     */
     private function getLoadingFolders(): array
     {
         return $this->filterOutNonExistingPaths(
@@ -160,11 +146,6 @@ class TwigTemplate extends BaseTwigTemplate
         );
     }
 
-    /**
-     * @param string $fileName
-     *
-     * @return array
-     */
     private function getFormTemplates(string $fileName): array
     {
         return $this->filterOutNonExistingPaths(
@@ -175,11 +156,6 @@ class TwigTemplate extends BaseTwigTemplate
         );
     }
 
-    /**
-     * @param array $files
-     *
-     * @return array
-     */
     private function filterOutNonExistingPaths(array $files): array
     {
         $filesystem = new Filesystem();

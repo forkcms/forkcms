@@ -19,24 +19,17 @@ final class NavigationCache
      */
     protected $cache;
 
-    /**
-     * @param SpoonDatabase $database
-     * @param CacheItemPoolInterface $cache
-     */
     public function __construct(SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
         $this->database = $database;
         $this->cache = $cache;
     }
 
-    public function delete()
+    public function delete(): void
     {
         $this->cache->deleteItem(self::CACHE_KEY);
     }
 
-    /**
-     * @return array
-     */
     public function get(): array
     {
         $cachedNavigation = $this->cache->getItem(self::CACHE_KEY);
@@ -51,11 +44,6 @@ final class NavigationCache
         return $navigation;
     }
 
-    /**
-     * @param int $parentId
-     *
-     * @return array
-     */
     private function buildNavigationTree(int $parentId = 0): array
     {
         $navigationItems = $this->getNavigationItemsForParent($parentId);
@@ -73,11 +61,6 @@ final class NavigationCache
         );
     }
 
-    /**
-     * @param array $navigationItemRecord
-     *
-     * @return array
-     */
     private function buildNavigationItem(array $navigationItemRecord): array
     {
         if (empty($navigationItemRecord['url'])) {
@@ -102,11 +85,6 @@ final class NavigationCache
         return $navigationItem;
     }
 
-    /**
-     * @param int $parentId
-     *
-     * @return array
-     */
     private function getNavigationItemsForParent(int $parentId): array
     {
         return (array) $this->database->getRecords(

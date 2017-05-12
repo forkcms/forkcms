@@ -134,10 +134,7 @@ class Export extends BackendBaseActionIndex
         );
     }
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->setFilter();
         $this->setItems();
@@ -146,7 +143,7 @@ class Export extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         $this->filter['application'] = $this->getParameter('application', 'string', null);
         $this->filter['module'] = $this->getParameter('module');
@@ -169,7 +166,7 @@ class Export extends BackendBaseActionIndex
     /**
      * Build items array and group all items by application, module, type and name.
      */
-    private function setItems()
+    private function setItems(): void
     {
         list($query, $parameters) = $this->buildQuery();
 

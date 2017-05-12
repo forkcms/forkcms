@@ -179,9 +179,9 @@ class Helper
             }
 
             return $tpl->getContent(BACKEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Field.html.twig');
-        } else {
-            // empty field so return empty string
-            return '';
         }
+
+        // empty field so return empty string
+        return '';
     }
 }

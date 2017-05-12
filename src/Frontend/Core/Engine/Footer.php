@@ -18,9 +18,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
  */
 class Footer extends FrontendBaseObject
 {
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
@@ -31,7 +28,7 @@ class Footer extends FrontendBaseObject
     /**
      * Parse the footer into the template
      */
-    public function parse()
+    public function parse(): void
     {
         $footerLinks = (array) Navigation::getFooterLinks();
         $this->tpl->addGlobal('footerLinks', $footerLinks);
@@ -63,9 +60,9 @@ class Footer extends FrontendBaseObject
     /**
      * Builds the HTML needed for Facebook to be initialized
      *
-     * @param  string $facebookAppId The application id used to interact with FB
+     * @param string $facebookAppId The application id used to interact with FB
      *
-     * @return string                HTML and JS needed to initialize FB JavaScript
+     * @return string  HTML and JS needed to initialize FB JavaScript
      */
     protected function getFacebookHtml(string $facebookAppId): string
     {
@@ -99,9 +96,6 @@ class Footer extends FrontendBaseObject
         return $facebookHtml;
     }
 
-    /**
-     * @return string
-     */
     private function getFacebookLocale(): string
     {
         $specialCases = [
@@ -123,9 +117,9 @@ class Footer extends FrontendBaseObject
      * More information can be found on the offical Google documentation:
      * https://developers.google.com/webmasters/richsnippets/sitelinkssearch
      *
-     * @param  string $searchUrl The url to the search page
+     * @param string $searchUrl The url to the search page
      *
-     * @return string            The script needed for google
+     * @return string The script needed for google
      */
     protected function getSiteLinksCode(string $searchUrl): string
     {

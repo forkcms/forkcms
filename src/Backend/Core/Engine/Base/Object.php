@@ -42,35 +42,17 @@ class Object extends KernelLoader
      */
     protected $module;
 
-    /**
-     * Get the action
-     *
-     * @return string
-     */
     public function getAction(): string
     {
         return $this->action;
     }
 
-    /**
-     * Get module
-     *
-     * @return string
-     */
     public function getModule(): string
     {
         return $this->module;
     }
 
-    /**
-     * Set the action
-     *
-     * @param string $action The action to load.
-     * @param string $module The module to load.
-     *
-     * @throws Exception If module is not set or action is not allowed
-     */
-    public function setAction(string $action, string $module = null)
+    public function setAction(string $action, string $module = null): void
     {
         // set module
         if ($module !== null) {
@@ -95,14 +77,7 @@ class Object extends KernelLoader
         $this->action = \SpoonFilter::toCamelCase($action);
     }
 
-    /**
-     * Set the module
-     *
-     * @param string $module The module to load.
-     *
-     * @throws Exception If module is not allowed
-     */
-    public function setModule(string $module)
+    public function setModule(string $module): void
     {
         // is this module allowed?
         if (!Authentication::isAllowedModule($module)) {
@@ -139,24 +114,16 @@ class Object extends KernelLoader
      * Redirect to a given URL
      *
      * @param string $url The URL to redirect to.
-     * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
      *
      * @throws RedirectException
      */
-    public function redirect(string $url, int $code = 302)
+    public function redirect(string $url, int $code = Response::HTTP_FOUND): void
     {
-        $response = new RedirectResponse($url, $code);
-
-        throw new RedirectException('Redirect', $response);
+        throw new RedirectException('Redirect', new RedirectResponse($url, $code));
     }
 
-    /**
-     * Redirect to the error page
-     *
-     * @param string $type
-     * @param int $code
-     */
-    protected function redirectToErrorPage(string $type, int $code = Response::HTTP_BAD_REQUEST)
+    protected function redirectToErrorPage(string $type, int $code = Response::HTTP_BAD_REQUEST): void
     {
         $errorUrl = '/' . NAMED_APPLICATION . '/' . $this->get('request')->getLocale() . '/error?type=' . $type;
 

@@ -22,20 +22,14 @@ class Index extends BackendBaseActionIndex
     /** @var int */
     private $statusCode;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Parse the correct messages into the template
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -80,9 +74,6 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('message', BL::err(\SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
     }
 
-    /**
-     * @return Response
-     */
     public function getContent(): Response
     {
         return new Response(

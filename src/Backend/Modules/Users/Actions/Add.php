@@ -22,10 +22,7 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
  */
 class Add extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -34,10 +31,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('add');
@@ -96,10 +90,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addMultiCheckbox('groups', $groups, $checkedGroups);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

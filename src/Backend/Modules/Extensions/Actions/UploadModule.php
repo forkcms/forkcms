@@ -22,10 +22,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class UploadModule extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
@@ -40,7 +37,7 @@ class UploadModule extends BackendBaseActionAdd
             $this->tpl->assign('notWritable', true);
         } else {
             // everything allright, we can upload
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         }
@@ -224,10 +221,7 @@ class UploadModule extends BackendBaseActionAdd
         return BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH);
     }
 
-    /**
-     * Create a form and its elements.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
         $this->frm = new BackendForm('upload');
@@ -236,10 +230,7 @@ class UploadModule extends BackendBaseActionAdd
         $this->frm->addFile('file');
     }
 
-    /**
-     * Validate a submitted form and process it.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // the form is submitted
         if ($this->frm->isSubmitted()) {

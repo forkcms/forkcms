@@ -24,21 +24,12 @@ class ClientFactory
      */
     private $cacheDir;
 
-    /**
-     * @param ModulesSettings $modulesSettings
-     * @param string $cacheDir
-     */
     public function __construct(ModulesSettings $modulesSettings, string $cacheDir)
     {
         $this->settings = $modulesSettings;
         $this->cacheDir = $cacheDir;
     }
 
-    /**
-     * Creates a google client
-     *
-     * @return Google_Client
-     */
     public function createClient(): Google_Client
     {
         $config = new Google_Config();
@@ -59,9 +50,6 @@ class ClientFactory
         return $client;
     }
 
-    /**
-     * @return Google_Service_Analytics
-     */
     public function createAnalyticsService(): Google_Service_Analytics
     {
         return new Google_Service_Analytics($this->createClient());

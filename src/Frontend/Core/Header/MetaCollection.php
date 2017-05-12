@@ -10,11 +10,7 @@ final class MetaCollection
     /** @var MetaLink[] */
     private $metaLinks = [];
 
-    /**
-     * @param MetaData $metaData
-     * @param bool $overwrite
-     */
-    public function addMetaData(MetaData $metaData, bool $overwrite = false)
+    public function addMetaData(MetaData $metaData, bool $overwrite = false): void
     {
         if ($overwrite || !array_key_exists($metaData->getUniqueKey(), $this->metaData)) {
             $this->metaData[$metaData->getUniqueKey()] = $metaData;
@@ -30,21 +26,14 @@ final class MetaCollection
         $this->metaData[$metaData->getUniqueKey()]->merge($metaData);
     }
 
-    /**
-     * @param MetaLink $metaLink
-     * @param bool $overwrite
-     */
-    public function addMetaLink(MetaLink $metaLink, bool $overwrite = false)
+    public function addMetaLink(MetaLink $metaLink, bool $overwrite = false): void
     {
         if ($overwrite || !array_key_exists($metaLink->getUniqueKey(), $this->metaLinks)) {
             $this->metaLinks[$metaLink->getUniqueKey()] = $metaLink;
         }
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return implode("\n", $this->metaData) . "\n" . implode("\n", $this->metaLinks);
     }

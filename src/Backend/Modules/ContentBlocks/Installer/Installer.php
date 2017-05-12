@@ -18,10 +18,7 @@ use Backend\Modules\ContentBlocks\Entity\ContentBlock;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // add the schema of the entity to the database
         Model::get('fork.entity.create_schema')->forEntityClass(ContentBlock::class);

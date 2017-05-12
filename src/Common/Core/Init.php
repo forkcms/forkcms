@@ -34,7 +34,7 @@ abstract class Init extends KernelLoader
     /**
      * @param string $type The type of init to load, possible values are: frontend, frontend_ajax, frontend_js.
      */
-    public function initialize(string $type)
+    public function initialize(string $type): void
     {
         $type = (string) $type;
 

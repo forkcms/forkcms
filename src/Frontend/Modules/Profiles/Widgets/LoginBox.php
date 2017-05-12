@@ -24,21 +24,15 @@ class LoginBox extends FrontendBaseWidget
      */
     private $frm;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
-        $this->loadForm();
+        $this->buildForm();
         $this->parse();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // don't show the form if someone is logged in
         if (FrontendProfilesAuthentication::isLoggedIn()) {
@@ -57,10 +51,7 @@ class LoginBox extends FrontendBaseWidget
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->tpl->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
 

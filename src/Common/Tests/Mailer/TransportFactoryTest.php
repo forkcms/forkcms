@@ -10,7 +10,7 @@ use Common\Mailer\TransportFactory;
  */
 class TransportFactoryTest extends TestCase
 {
-    public function testCreatesMailTransportByDefault()
+    public function testCreatesMailTransportByDefault(): void
     {
         self::assertInstanceOf(
             'Swift_MailTransport',
@@ -18,7 +18,7 @@ class TransportFactoryTest extends TestCase
         );
     }
 
-    public function testCreatesSmtpTransportIfWanted()
+    public function testCreatesSmtpTransportIfWanted(): void
     {
         self::assertInstanceOf(
             'Swift_SmtpTransport',
@@ -26,7 +26,7 @@ class TransportFactoryTest extends TestCase
         );
     }
 
-    public function testEncryptionCanBeSet()
+    public function testEncryptionCanBeSet(): void
     {
         $transport = TransportFactory::create('smtp', null, 21, null, null, 'ssl');
         self::assertEquals(

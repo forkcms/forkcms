@@ -48,14 +48,6 @@ class Model
         );
     }
 
-    /**
-     * Get the tag for a given URL
-     *
-     * @param string $url The URL to get the tag for.
-     * @param Locale $locale
-     *
-     * @return array
-     */
     public static function get(string $url, Locale $locale = null): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
@@ -83,8 +75,6 @@ class Model
     }
 
     /**
-     * Get tags for an item
-     *
      * @param string $module The module wherein the otherId occurs.
      * @param int $otherId The id of the item.
      * @param Locale|null $locale
@@ -170,13 +160,6 @@ class Model
         return $return;
     }
 
-    /**
-     * Get the tag-id for a given URL
-     *
-     * @param string $url The URL to get the id for.
-     *
-     * @return int
-     */
     public static function getIdByURL(string $url): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
@@ -187,14 +170,7 @@ class Model
         );
     }
 
-    /**
-     * Get the modules that used a tag.
-     *
-     * @param int $id The id of the tag.
-     *
-     * @return array
-     */
-    public static function getModulesForTag(int $id): array
+    public static function getModulesForTag(int $tagId): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getColumn(
             'SELECT module
@@ -202,24 +178,17 @@ class Model
              WHERE tag_id = ?
              GROUP BY module
              ORDER BY module ASC',
-            [$id]
+            [$tagId]
         );
     }
 
-    /**
-     * Fetch a specific tag name
-     *
-     * @param int $id The id of the tag to grab the name for.
-     *
-     * @return string
-     */
-    public static function getName(int $id): string
+    public static function getName(int $tagId): string
     {
         return FrontendModel::getContainer()->get('database')->getVar(
             'SELECT tag
              FROM tags
              WHERE id = ?',
-            [$id]
+            [$tagId]
         );
     }
 

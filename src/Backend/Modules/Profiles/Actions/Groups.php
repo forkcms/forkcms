@@ -73,10 +73,7 @@ class Groups extends BackendBaseActionIndex
         return [$query, $parameters];
     }
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->setFilter();
@@ -86,10 +83,7 @@ class Groups extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid.
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // fetch query and parameters
         list($query, $parameters) = $this->buildQuery();
@@ -118,7 +112,7 @@ class Groups extends BackendBaseActionIndex
 
         // set the amount of profiles
         $this->dgGroups->setColumnFunction(
-            [__CLASS__, 'parseNumProfiles'],
+            [__CLASS__, 'parseNumProfilesInDataGrid'],
             ['[id]', '[members_count]'],
             'members_count'
         );
@@ -143,10 +137,7 @@ class Groups extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
@@ -158,10 +149,7 @@ class Groups extends BackendBaseActionIndex
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Parse & display the page.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -174,18 +162,10 @@ class Groups extends BackendBaseActionIndex
         $this->tpl->assign('sort', (string) $this->dgGroups->getSort());
 
         // parse filter
-        $this->tpl->assign($this->filter);
+        $this->tpl->assignArray($this->filter);
     }
 
-    /**
-     * Parse amount of profiles for the datagrid.
-     *
-     * @param int $groupId     Group id.
-     * @param int $numProfiles Number of profiles.
-     *
-     * @return string
-     */
-    public static function parseNumProfiles(int $groupId, int $numProfiles): string
+    public static function parseNumProfilesInDataGrid(int $groupId, int $numProfiles): string
     {
         // 1 item
         if ($numProfiles == 1) {
@@ -210,7 +190,7 @@ class Groups extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         $this->filter['name'] = $this->getParameter('name');
     }

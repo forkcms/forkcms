@@ -91,10 +91,7 @@ class ExportData extends BackendBaseAction
         return [$query, $parameters];
     }
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -113,7 +110,7 @@ class ExportData extends BackendBaseAction
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // start date is set
         if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
@@ -159,7 +156,7 @@ class ExportData extends BackendBaseAction
     /**
      * Fetch data for this form from the database and reformat to csv rows.
      */
-    private function setItems()
+    private function setItems(): void
     {
         // init header labels
         $lblSessionId = \SpoonFilter::ucfirst(BL::lbl('SessionId'));

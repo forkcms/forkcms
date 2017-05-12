@@ -9,7 +9,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAuthenticationIsNeeded()
+    public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
         $client = static::createClient();
@@ -27,7 +27,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testRedirectToSettingsActionWhenTheAnalyticsModuleIsNotConfigured()
+    public function testRedirectToSettingsActionWhenTheAnalyticsModuleIsNotConfigured(): void
     {
         $client = static::createClient();
         $this->login();

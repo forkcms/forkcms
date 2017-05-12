@@ -27,22 +27,16 @@ class Settings extends BackendBaseActionEdit
      */
     protected $isGod = false;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
-        $this->loadForm();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Loads the settings form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         $this->isGod = BackendAuthentication::getUser()->isGod();
 
@@ -99,10 +93,7 @@ class Settings extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -111,10 +102,7 @@ class Settings extends BackendBaseActionEdit
         $this->tpl->assign('isGod', $this->isGod);
     }
 
-    /**
-     * Validates the settings form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             // validation

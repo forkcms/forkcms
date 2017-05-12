@@ -21,7 +21,7 @@ class FormDate extends \SpoonFormDate
      *
      * @return bool
      */
-    public function isValid($error = null)
+    public function isValid($error = null): bool
     {
         // call parent (let them do the hard word)
         $return = parent::isValid($error);

@@ -18,10 +18,7 @@ use Common\Mailer\TransportFactory;
  */
 class TestEmailConnection extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 

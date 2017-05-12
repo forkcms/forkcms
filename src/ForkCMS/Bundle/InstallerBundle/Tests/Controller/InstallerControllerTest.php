@@ -12,7 +12,7 @@ class InstallerControllerTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testNoStepActionAction()
+    public function testNoStepActionAction(): void
     {
         $client = static::createClient(['environment' => 'test_install']);
 
@@ -33,7 +33,7 @@ class InstallerControllerTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testInstallationProcess()
+    public function testInstallationProcess(): void
     {
         $client = static::createClient();
         $container = $client->getContainer();
@@ -64,12 +64,6 @@ class InstallerControllerTest extends WebTestCase
         $this->putParametersFileBack($filesystem, $client->getContainer()->getParameter('kernel.root_dir'));
     }
 
-    /**
-     * @param Crawler $crawler
-     * @param Client $client
-     *
-     * @return Crawler
-     */
     private function runTroughStep2(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Next')->form();
@@ -99,12 +93,6 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
-    /**
-     * @param Crawler $crawler
-     * @param Client $client
-     *
-     * @return Crawler
-     */
     private function runTroughStep3(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Next')->form();
@@ -133,13 +121,6 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
-    /**
-     * @param Crawler $crawler
-     * @param Client $client
-     * @param array $installDatabaseConfig
-     *
-     * @return Crawler
-     */
     private function runTroughStep4(Crawler $crawler, Client $client, array $installDatabaseConfig): Crawler
     {
         // first submit with incorrect data
@@ -171,12 +152,6 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
-    /**
-     * @param Crawler $crawler
-     * @param Client $client
-     *
-     * @return Crawler
-     */
     private function runTroughStep5(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Finish installation')->form();

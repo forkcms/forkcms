@@ -22,10 +22,7 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  */
 class EditCategory extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -44,18 +41,12 @@ class EditCategory extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendFaqModel::getCategory($this->id);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('editCategory');
@@ -64,10 +55,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -88,10 +76,7 @@ class EditCategory extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->meta->setURLCallback(

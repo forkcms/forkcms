@@ -90,10 +90,7 @@ class Data extends BackendBaseActionIndex
         return [$query, $parameters];
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');
@@ -113,10 +110,7 @@ class Data extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendFormBuilderModel::get($this->id);
 
@@ -125,10 +119,7 @@ class Data extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         list($query, $parameters) = $this->buildQuery();
 
@@ -209,10 +200,7 @@ class Data extends BackendBaseActionIndex
         $this->dataGrid->setMassAction($ddmMassAction);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $startDate = '';
         $endDate = '';
@@ -241,10 +229,7 @@ class Data extends BackendBaseActionIndex
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -260,7 +245,7 @@ class Data extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // start date is set
         if (isset($_GET['start_date']) && $_GET['start_date'] != '') {

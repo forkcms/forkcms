@@ -20,10 +20,7 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Settings extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -32,10 +29,7 @@ class Settings extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Loads the settings form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('settings');
 
@@ -60,19 +54,13 @@ class Settings extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Parse the data
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
         $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
     }
 
-    /**
-     * Validates the settings form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();

@@ -17,14 +17,11 @@ use Backend\Core\Engine\Model;
  */
 final class Index extends ActionIndex
 {
-    /**
-     * Execute
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
-        return $this->redirect(
+        $this->redirect(
             Model::createURLForAction(
                 'Settings'
             )

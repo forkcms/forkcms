@@ -98,7 +98,7 @@ class ModuleInstaller
      * @param int $extraId The extra id to add to every page.
      * @param string $position The position to put the default extra.
      */
-    protected function addDefaultExtra(int $extraId, string $position)
+    protected function addDefaultExtra(int $extraId, string $position): void
     {
         $this->defaultExtras[] = ['id' => $extraId, 'position' => $position];
     }
@@ -109,7 +109,7 @@ class ModuleInstaller
      *
      * @param string $module The name of the module.
      */
-    protected function addModule(string $module)
+    protected function addModule(string $module): void
     {
         $this->module = (string) $module;
 
@@ -139,7 +139,7 @@ class ModuleInstaller
      * @param array $fields A key/value pair of fields to index.
      * @param string $language The frontend language for this entry.
      */
-    protected function addSearchIndex(string $module, int $otherId, array $fields, string $language)
+    protected function addSearchIndex(string $module, int $otherId, array $fields, string $language): void
     {
         // get db
         $db = $this->getDB();
@@ -186,7 +186,7 @@ class ModuleInstaller
     /**
      * Method that will be overridden by the specific installers
      */
-    protected function execute()
+    protected function execute(): void
     {
         // just a placeholder
     }
@@ -358,7 +358,7 @@ class ModuleInstaller
      * @param string $filename The full path for the XML-file.
      * @param bool $overwriteConflicts Should we overwrite when there is a conflict?
      */
-    protected function importLocale(string $filename, bool $overwriteConflicts = false)
+    protected function importLocale(string $filename, bool $overwriteConflicts = false): void
     {
         // load the file content and execute it
         $content = trim(file_get_contents($filename));
@@ -392,7 +392,7 @@ class ModuleInstaller
      *
      * @param string $filename The full path for the SQL-file.
      */
-    protected function importSQL(string $filename)
+    protected function importSQL(string $filename): void
     {
         // load the file content and execute it
         $queries = trim(file_get_contents($filename));
@@ -405,13 +405,7 @@ class ModuleInstaller
         $this->getDB()->execute($queries);
     }
 
-    /**
-     * Insert a dashboard widget
-     *
-     * @param string $module
-     * @param string $widget
-     */
-    protected function insertDashboardWidget(string $module, string $widget)
+    protected function insertDashboardWidget(string $module, string $widget): void
     {
         // get db
         $db = $this->getDB();
@@ -467,11 +461,6 @@ class ModuleInstaller
         }
     }
 
-    /**
-     * @param string $module
-     *
-     * @return int
-     */
     private function getNextSequenceForModule(string $module): int
     {
         // set next sequence number for this module
@@ -617,11 +606,7 @@ class ModuleInstaller
         return ++$maximumPageId;
     }
 
-    /**
-     * @param int $pageId
-     * @param string $language
-     */
-    private function archiveAllRevisionsOfAPageForLanguage(int $pageId, string $language)
+    private function archiveAllRevisionsOfAPageForLanguage(int $pageId, string $language): void
     {
         $this->getDB()->update(
             'pages',
@@ -631,13 +616,6 @@ class ModuleInstaller
         );
     }
 
-    /**
-     * @param string $language
-     * @param int $parentId
-     * @param string $type
-     *
-     * @return int
-     */
     private function getNextPageSequence(string $language, int $parentId, string $type): int
     {
         $maximumPageSequence = (int) $this->getDB()->getVar(
@@ -672,12 +650,6 @@ class ModuleInstaller
         return $meta;
     }
 
-    /**
-     * @param array $meta
-     * @param string $defaultValue
-     *
-     * @return int
-     */
     private function getNewMetaId(array $meta, string $defaultValue): int
     {
         $meta = $this->completeMetaRecord($meta, $defaultValue);
@@ -696,12 +668,6 @@ class ModuleInstaller
         );
     }
 
-    /**
-     * @param array $revision
-     * @param array $meta
-     *
-     * @return array
-     */
     private function completePageRevisionRecord(array $revision, array $meta = []): array
     {
         $revision['id'] = $revision['id'] ?? $this->getNextPageIdForLanguage($revision['language']);
@@ -782,12 +748,6 @@ class ModuleInstaller
         return $revision['id'];
     }
 
-    /**
-     * @param array $blocks
-     * @param int $defaultRevisionId
-     *
-     * @return array
-     */
     private function completePageBlockRecords(array $blocks, int $defaultRevisionId): array
     {
         // array of positions and linked blocks (will be used to automatically set block sequence)
@@ -833,7 +793,7 @@ class ModuleInstaller
      * @param bool $searchable Enable/disable search for this module by default?
      * @param int $weight Set default search weight for this module.
      */
-    protected function makeSearchable(string $module, bool $searchable = true, int $weight = 1)
+    protected function makeSearchable(string $module, bool $searchable = true, int $weight = 1): void
     {
         $this->getDB()->execute(
             'INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
@@ -850,7 +810,7 @@ class ModuleInstaller
      * @param string $action The action wherefore the rights have to set.
      * @param int $level The level, default is 7 (max).
      */
-    protected function setActionRights(int $groupId, string $module, string $action, int $level = 7)
+    protected function setActionRights(int $groupId, string $module, string $action, int $level = 7): void
     {
         // check if the action already exists
         $actionRightAlreadyExist = (bool) $this->getDB()->getVar(
@@ -882,7 +842,7 @@ class ModuleInstaller
      * @param int $groupId The group wherefore the rights will be set.
      * @param string $module The module too set the rights for.
      */
-    protected function setModuleRights(int $groupId, string $module)
+    protected function setModuleRights(int $groupId, string $module): void
     {
         $moduleRightAlreadyExist = (bool) $this->getDB()->getVar(
             'SELECT 1
@@ -905,11 +865,6 @@ class ModuleInstaller
         );
     }
 
-    /**
-     * @param int $parentId
-     *
-     * @return int
-     */
     private function getNextBackendNavigationSequence(int $parentId): int
     {
         // get maximum sequence for this parent
@@ -980,7 +935,7 @@ class ModuleInstaller
      * @param mixed $value The optional value.
      * @param bool $overwrite Overwrite no matter what.
      */
-    protected function setSetting(string $module, string $name, $value = null, bool $overwrite = false)
+    protected function setSetting(string $module, string $name, $value = null, bool $overwrite = false): void
     {
         $value = serialize($value);
 
@@ -1018,9 +973,6 @@ class ModuleInstaller
         );
     }
 
-    /**
-     * @return string
-     */
     private function getAndCopyRandomImage(): string
     {
         $finder = new Finder();

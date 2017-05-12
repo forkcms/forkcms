@@ -19,10 +19,7 @@ use Frontend\Modules\Mailmotor\Form\SubscribeType;
  */
 class Subscribe extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent
         parent::execute();

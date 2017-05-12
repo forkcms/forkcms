@@ -74,10 +74,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $widgetInstances;
 
-    /**
-     * Bundle all actions that need to be bundled
-     */
-    private function bundleActions()
+    private function bundleActions(): void
     {
         foreach ($this->modules as $module) {
             // loop through actions and add all classnames
@@ -121,10 +118,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->getData();
@@ -135,10 +129,7 @@ class Edit extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Get the actions
-     */
-    private function getActions()
+    private function getActions(): void
     {
         $this->actions = [];
         $filter = ['Authentication', 'Error', 'Core'];
@@ -197,10 +188,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data to edit
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->id = $this->getParameter('id');
 
@@ -220,10 +208,7 @@ class Edit extends BackendBaseActionEdit
         $this->bundleActions();
     }
 
-    /**
-     * Get the widgets
-     */
-    private function getWidgets()
+    private function getWidgets(): void
     {
         $this->widgets = [];
         $this->widgetInstances = [];
@@ -277,10 +262,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the datagrid
-     */
-    private function loadDataGrids()
+    private function loadDataGrids(): void
     {
         $this->dataGridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, [$this->id, 'N']);
 
@@ -304,10 +286,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('edit');
 
@@ -406,10 +385,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -427,7 +403,7 @@ class Edit extends BackendBaseActionEdit
      * @param \SpoonFormElement[] $actionPermissions The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
-    private function updatePermissions(array $actionPermissions, array $bundledActionPermissions)
+    private function updatePermissions(array $actionPermissions, array $bundledActionPermissions): void
     {
         $modulesDenied = [];
         $modulesGranted = [];
@@ -521,8 +497,6 @@ class Edit extends BackendBaseActionEdit
     }
 
     /**
-     * Update the widgets
-     *
      * @param \SpoonFormElement[] $widgetPresets The widgets presets.
      *
      * @return array
@@ -567,10 +541,7 @@ class Edit extends BackendBaseActionEdit
         return $userGroup;
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $bundledActionPermissions = [];

@@ -11,6 +11,9 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
+use SpoonFormButton;
+use SpoonFormFile;
+use SpoonFormTextarea;
 
 /**
  * This is our extended version of \SpoonForm
@@ -22,7 +25,7 @@ class Form extends \Common\Core\Form
      *
      * @var bool
      */
-    private $useGlobalError = true;
+    private $useGlobalError;
 
     /**
      * @param string $name           Name of the form.
@@ -75,9 +78,9 @@ class Form extends \Common\Core\Form
      *
      * @throws Exception
      *
-     * @return \SpoonFormButton
+     * @return SpoonFormButton
      */
-    public function addButton($name, $value, $type = 'submit', $class = null)
+    public function addButton($name, $value, $type = 'submit', $class = null): SpoonFormButton
     {
         $name = (string) $name;
         $value = (string) $value;
@@ -120,7 +123,7 @@ class Form extends \Common\Core\Form
         $date2 = null,
         $class = null,
         $classError = null
-    ) {
+    ): FormDate {
         $name = (string) $name;
         $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
         $type = \SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
@@ -202,9 +205,9 @@ class Form extends \Common\Core\Form
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the field contain HTML?
      *
-     * @return \SpoonFormTextarea
+     * @return SpoonFormTextarea
      */
-    public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true)
+    public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true): SpoonFormTextarea
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
@@ -243,9 +246,9 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
-     * @return \SpoonFormFile
+     * @return SpoonFormFile
      */
-    public function addFile($name, $class = null, $classError = null)
+    public function addFile($name, $class = null, $classError = null): SpoonFormFile
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'fork-form-file';
@@ -266,7 +269,7 @@ class Form extends \Common\Core\Form
      *
      * @return FormImage
      */
-    public function addImage($name, $class = null, $classError = null)
+    public function addImage($name, $class = null, $classError = null): FormImage
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'fork-form-image';
@@ -285,7 +288,7 @@ class Form extends \Common\Core\Form
      *
      * @return array
      */
-    public function getValues($excluded = ['form', 'save', 'form_token', '_utf8'])
+    public function getValues($excluded = ['form', 'save', 'form_token', '_utf8']): array
     {
         return parent::getValues($excluded);
     }
@@ -297,7 +300,7 @@ class Form extends \Common\Core\Form
      *
      * @return bool
      */
-    public function isCorrect($revalidate = true)
+    public function isCorrect($revalidate = true): bool
     {
         return parent::isCorrect($revalidate);
     }
@@ -307,7 +310,7 @@ class Form extends \Common\Core\Form
      *
      * @param TwigTemplate $tpl The template instance wherein the form will be parsed.
      */
-    public function parse($tpl)
+    public function parse($tpl): void
     {
         parent::parse($tpl);
         $this->validate();

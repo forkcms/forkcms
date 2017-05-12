@@ -22,13 +22,6 @@ final class Minifier
     /** @var string */
     private $baseCachePath;
 
-    /**
-     * @param Minify\Minify $minifyClass
-     * @param string $basePath
-     * @param string $cacheFileExtension
-     * @param string $baseCacheUrl
-     * @param string $baseCachePath
-     */
     public function __construct(
         Minify\Minify $minifyClass,
         string $basePath,
@@ -43,25 +36,11 @@ final class Minifier
         $this->baseCachePath = $baseCachePath;
     }
 
-    /**
-     * @param string $basePath
-     * @param string $baseCacheUrl
-     * @param string $baseCachePath
-     *
-     * @return Minifier
-     */
     public static function css(string $basePath, string $baseCacheUrl, string $baseCachePath): self
     {
         return new self(new Minify\CSS(), $basePath, 'css', $baseCacheUrl, $baseCachePath);
     }
 
-    /**
-     * @param string $basePath
-     * @param string $baseCacheUrl
-     * @param string $baseCachePath
-     *
-     * @return Minifier
-     */
     public static function js(string $basePath, string $baseCacheUrl, string $baseCachePath): self
     {
         return new self(new Minify\JS(), $basePath, 'js', $baseCacheUrl, $baseCachePath);

@@ -12,6 +12,7 @@ namespace Frontend\Core\Engine;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
+use SpoonFilter;
 use SpoonSession;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,11 +45,6 @@ class Url extends KernelLoader
      */
     private $parameters = [];
 
-    /**
-     * @param KernelInterface $kernel
-     *
-     * @throws RedirectException
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
@@ -95,20 +91,13 @@ class Url extends KernelLoader
      *
      * @param int $index The index (0-based).
      *
-     * @return mixed
+     * @return string|null
      */
-    public function getPage(int $index)
+    public function getPage(int $index): ?string
     {
-        if (isset($this->pages[$index])) {
-            return $this->pages[$index];
-        }
+        return $this->pages[$index] ?? null;
     }
 
-    /**
-     * Return all the pages
-     *
-     * @return array
-     */
     public function getPages(): array
     {
         return $this->pages;
@@ -131,7 +120,7 @@ class Url extends KernelLoader
     {
         // does the index exists and isn't this parameter empty
         if ($this->hasParameter($index)) {
-            return \SpoonFilter::getValue(
+            return SpoonFilter::getValue(
                 $this->parameters[$index],
                 null,
                 null,
@@ -150,16 +139,11 @@ class Url extends KernelLoader
      *
      * @return array
      */
-    public function getParameters($includeGET = true): array
+    public function getParameters(bool $includeGET = true): array
     {
         return $includeGET ? $this->parameters : array_diff_assoc($this->parameters, $this->request->query->all());
     }
 
-    /**
-     * Get the query string
-     *
-     * @return string
-     */
     public function getQueryString(): string
     {
         return rtrim($this->request->getRequestUri(), '/');
@@ -168,7 +152,7 @@ class Url extends KernelLoader
     /**
      * Check if a certain ($_GET) parameter exists
      *
-     * @param  mixed $index The index of the parameter.
+     * @param mixed $index The index of the parameter.
      *
      * @return bool
      */
@@ -177,10 +161,7 @@ class Url extends KernelLoader
         return isset($this->parameters[$index]) && $this->parameters[$index] !== '';
     }
 
-    /**
-     * Process the query string
-     */
-    private function processQueryString()
+    private function processQueryString(): void
     {
         // store the query string local, so we don't alter it.
         $queryString = trim($this->request->getPathInfo(), '/');
@@ -237,12 +218,6 @@ class Url extends KernelLoader
         }
     }
 
-    /**
-     * @param string $queryString
-     * @param string $url
-     *
-     * @return array
-     */
     private function extractParametersFromQueryString(string $queryString, string $url): array
     {
         // set parameters
@@ -261,11 +236,6 @@ class Url extends KernelLoader
         return $parameters;
     }
 
-    /**
-     * @param string $queryString
-     *
-     * @return string
-     */
     private function determineLanguage(string $queryString): string
     {
         if ($this->getContainer()->getParameter('site.multilanguage')) {
@@ -302,10 +272,7 @@ class Url extends KernelLoader
         $this->redirectToLanguage($language);
     }
 
-    /**
-     * @param string $language
-     */
-    private function setLanguageCookie(string $language)
+    private function setLanguageCookie(string $language): void
     {
         try {
             CommonCookie::set('frontend_language', $language);
@@ -314,12 +281,7 @@ class Url extends KernelLoader
         }
     }
 
-    /**
-     * @param string $language
-     *
-     * @throws RedirectException
-     */
-    private function redirectToLanguage(string $language)
+    private function redirectToLanguage(string $language): void
     {
         // trim the first / from the query string to prevent double slashes
         $url = rtrim('/' . $language . '/' . trim($this->getQueryString(), '/'), '/');
@@ -334,12 +296,7 @@ class Url extends KernelLoader
         );
     }
 
-    /**
-     * @param array $pageInfo
-     *
-     * @throws RedirectException
-     */
-    private function handleRedirects(array $pageInfo)
+    private function handleRedirects(array $pageInfo): void
     {
         // is this an internal redirect?
         if (isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] !== '') {
@@ -373,34 +330,18 @@ class Url extends KernelLoader
         }
     }
 
-    /**
-     * Set the pages
-     *
-     * @param array $pages An array of all the pages to set.
-     */
-    private function setPages(array $pages = [])
+    private function setPages(array $pages = []): void
     {
         $this->pages = $pages;
     }
 
-    /**
-     * Set the parameters
-     *
-     * @param array $parameters An array of all the parameters to set.
-     */
-    private function setParameters(array $parameters = [])
+    private function setParameters(array $parameters = []): void
     {
         foreach ($parameters as $key => $value) {
             $this->parameters[$key] = $value;
         }
     }
 
-    /**
-     * @param string $queryString
-     * @param string $language
-     *
-     * @return string
-     */
     private function determineUrl(string $queryString, string $language): string
     {
         // list of pageIds & their full URL

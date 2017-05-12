@@ -35,20 +35,14 @@ class ArticleCommentsRss extends FrontendBaseBlock
      */
     private $items;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->getData();
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
@@ -67,10 +61,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
         $this->items = FrontendBlogModel::getComments($this->record['id']);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get vars
         $title = vsprintf(FL::msg('CommentsOn'), [$this->record['title']]);

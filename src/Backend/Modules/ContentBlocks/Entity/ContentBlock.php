@@ -52,7 +52,7 @@ class ContentBlock
      *
      * @ORM\Column(type="string", length=255, options={"default" = "Default.html.twig"})
      */
-    private $template = 'Default.html.twig';
+    private $template;
 
     /**
      * @var Locale
@@ -103,17 +103,6 @@ class ContentBlock
      */
     private $editedOn;
 
-    /**
-     * @param int $id
-     * @param int $userId
-     * @param int $extraId
-     * @param string $template
-     * @param Locale $locale
-     * @param string $title
-     * @param string $text
-     * @param bool $isHidden
-     * @param ContentBlockStatus $status
-     */
     private function __construct(
         int $id,
         int $userId,
@@ -136,18 +125,6 @@ class ContentBlock
         $this->status = $status;
     }
 
-    /**
-     * @param int $id
-     * @param int $userId
-     * @param int $extraId The id of the module extra
-     * @param Locale $locale
-     * @param string $title
-     * @param string $text
-     * @param bool $isHidden
-     * @param string $template
-     *
-     * @return self
-     */
     public static function create(
         int $id,
         int $userId,
@@ -171,97 +148,61 @@ class ContentBlock
         );
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
     public function getRevisionId(): int
     {
         return $this->revisionId;
     }
 
-    /**
-     * @return int
-     */
     public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @return int
-     */
     public function getExtraId(): int
     {
         return $this->extraId;
     }
 
-    /**
-     * @return string
-     */
     public function getTemplate(): string
     {
         return $this->template;
     }
 
-    /**
-     * @return Locale
-     */
     public function getLocale(): Locale
     {
         return $this->locale;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return string
-     */
     public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @return bool
-     */
     public function isHidden(): bool
     {
         return $this->isHidden;
     }
 
-    /**
-     * @return ContentBlockStatus
-     */
     public function getStatus(): ContentBlockStatus
     {
         return $this->status;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
     }
 
-    /**
-     * @return DateTime
-     */
     public function getEditedOn(): DateTime
     {
         return $this->editedOn;
@@ -308,15 +249,6 @@ class ContentBlock
         Model::updateExtra($this->extraId, 'data', $data);
     }
 
-    /**
-     * @param string $title
-     * @param string $text
-     * @param bool $isHidden
-     * @param string $template
-     * @param int $userId
-     *
-     * @return ContentBlock
-     */
     public function update(string $title, string $text, bool $isHidden, string $template, int $userId): ContentBlock
     {
         $this->status = ContentBlockStatus::archived();

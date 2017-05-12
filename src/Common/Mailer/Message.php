@@ -12,16 +12,6 @@ use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
  */
 class Message extends \Swift_Message
 {
-    /**
-     * Create a new Message.
-     *
-     * Details may be optionally passed into the constructor.
-     *
-     * @param string $subject
-     * @param string $body
-     * @param string $contentType
-     * @param string $charset
-     */
     public function __construct(
         string $subject = null,
         string $body = null,
@@ -49,13 +39,13 @@ class Message extends \Swift_Message
     /**
      * Parses a TwigTemplate with the wanted variables
      *
-     * @param  string  $template
-     * @param  array   $variables
-     * @param  bool    $addUTM
+     * @param string $template
+     * @param array $variables
+     * @param bool $addUTM
      *
-     * @return Message
+     * @return self
      */
-    public function parseHtml(string $template, array $variables, bool $addUTM = false): Message
+    public function parseHtml(string $template, array $variables, bool $addUTM = false): self
     {
         $html = $this->getTemplateContent($template, $variables);
         $html = $this->relativeToAbsolute($html);
@@ -73,7 +63,7 @@ class Message extends \Swift_Message
     /**
      * Attach multiple attachments to this message
      *
-     * @param  array   $attachments
+     * @param array $attachments
      *
      * @return Message
      */
@@ -95,7 +85,7 @@ class Message extends \Swift_Message
     /**
      * Add plaintext content as fallback for the html
      *
-     * @param  string  $content
+     * @param string $content
      *
      * @return Message
      */
@@ -109,8 +99,8 @@ class Message extends \Swift_Message
     }
 
     /**
-     * @param  string $html    The html to convert links in.
-     * @param  string $subject The subject of the mail
+     * @param string $html The html to convert links in.
+     * @param string $subject The subject of the mail
      *
      * @return string
      */
@@ -145,8 +135,8 @@ class Message extends \Swift_Message
     /**
      * Returns the content from a given template
      *
-     * @param  string $template  The template to use.
-     * @param  array  $variables The variables to assign.
+     * @param string $template The template to use.
+     * @param array $variables The variables to assign.
      *
      * @return string
      */
@@ -175,7 +165,7 @@ class Message extends \Swift_Message
     /**
      * Converts all css to inline styles
      *
-     * @param  string $html
+     * @param string $html
      *
      * @return string
      */
@@ -191,7 +181,7 @@ class Message extends \Swift_Message
     /**
      * Replace internal links and images to absolute links
      *
-     * @param  string $html The html to convert links in.
+     * @param string $html The html to convert links in.
      *
      * @return string
      */

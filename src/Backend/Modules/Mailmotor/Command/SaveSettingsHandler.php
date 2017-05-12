@@ -18,21 +18,13 @@ final class SaveSettingsHandler
      */
     protected $modulesSettings;
 
-    /**
-     * SaveSettingsHandler constructor.
-     *
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(
         ModulesSettings $modulesSettings
     ) {
         $this->modulesSettings = $modulesSettings;
     }
 
-    /**
-     * @param SaveSettings $settings
-     */
-    public function handle(SaveSettings $settings)
+    public function handle(SaveSettings $settings): void
     {
         // Define module
         $module = 'Mailmotor';

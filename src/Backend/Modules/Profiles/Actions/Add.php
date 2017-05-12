@@ -36,10 +36,7 @@ class Add extends BackendBaseActionAdd
      */
     private $notifyProfile;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->getData();
@@ -49,10 +46,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Get data
-     */
-    public function getData()
+    public function getData(): void
     {
         $this->notifyAdmin = $this->get('fork.settings')->get(
             $this->URL->getModule(),
@@ -67,10 +61,7 @@ class Add extends BackendBaseActionAdd
         );
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // gender dropdown values
         $genderValues = [
@@ -110,10 +101,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->getField('country')->setDefaultElement('');
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -245,10 +233,7 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

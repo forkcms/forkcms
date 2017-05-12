@@ -16,14 +16,6 @@ use Common\Uri as CommonUri;
  */
 class Rss extends \SpoonFeedRSS
 {
-    /**
-     * The default constructor
-     *
-     * @param string $title The title off the feed.
-     * @param string $link The link of the feed.
-     * @param string $description The description of the feed.
-     * @param array $items An array with SpoonRSSItems.
-     */
     public function __construct(string $title, string $link, string $description, array $items = [])
     {
         // decode
@@ -70,17 +62,7 @@ class Rss extends \SpoonFeedRSS
         }
     }
 
-    /**
-     * Set the image for the feed.
-     *
-     * @param string $url URL of the image.
-     * @param string $title Title of the image.
-     * @param string $link Link of the image.
-     * @param int $width Width of the image.
-     * @param int $height Height of the image.
-     * @param string $description Description of the image.
-     */
-    public function setImage($url, $title, $link, $width = null, $height = null, $description = null)
+    public function setImage($url, $title, $link, $width = null, $height = null, $description = null): void
     {
         // add UTM-parameters
         $link = Model::addURLParameters(

@@ -24,10 +24,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Add extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -38,10 +35,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('add');
@@ -64,10 +58,7 @@ class Add extends BackendBaseActionAdd
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
     }
 
-    /**
-     * Parse the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -81,10 +72,7 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();

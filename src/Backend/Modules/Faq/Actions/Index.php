@@ -36,10 +36,7 @@ class Index extends BackendBaseActionIndex
      */
     private $emptyDatagrid;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDatagrids();
@@ -48,10 +45,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Loads the dataGrids
-     */
-    private function loadDatagrids()
+    private function loadDatagrids(): void
     {
         // load all categories
         $categories = BackendFaqModel::getCategories(true);
@@ -99,10 +93,7 @@ class Index extends BackendBaseActionIndex
         $this->emptyDatagrid->setHeaderLabels(['edit' => null, 'dragAndDropHandle' => null]);
     }
 
-    /**
-     * Parse the dataGrids and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

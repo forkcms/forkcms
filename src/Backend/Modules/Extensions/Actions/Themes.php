@@ -43,10 +43,7 @@ class Themes extends BackendBaseActionIndex
     private $installableThemes = [];
     private $installedThemes = [];
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -60,10 +57,7 @@ class Themes extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the available themes.
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // loop themes
         foreach (BackendExtensionsModel::getThemes() as $theme) {
@@ -77,10 +71,7 @@ class Themes extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('settingsThemes');
 
@@ -115,10 +106,7 @@ class Themes extends BackendBaseActionIndex
         $this->frm->addRadiobutton('installedThemes', $themes, $selected);
     }
 
-    /**
-     * Parse the form.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -128,10 +116,7 @@ class Themes extends BackendBaseActionIndex
         $this->tpl->assign('installableThemes', $this->installableThemes);
     }
 
-    /**
-     * Validates the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

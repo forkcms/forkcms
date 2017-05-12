@@ -54,10 +54,6 @@ class Config extends Object
      */
     protected $possibleAJAXActions = [];
 
-    /**
-     * @param KernelInterface $kernel
-     * @param string $module The module wherefore this is the configuration-file.
-     */
     public function __construct(KernelInterface $kernel, string $module)
     {
         parent::__construct($kernel);
@@ -65,11 +61,6 @@ class Config extends Object
         $this->setModule($module);
     }
 
-    /**
-     * Get the default action
-     *
-     * @return string
-     */
     public function getDefaultAction(): string
     {
         return $this->defaultAction;
@@ -85,11 +76,11 @@ class Config extends Object
      *
      * @throws BackendException If module is not allowed
      */
-    public function setModule(string $module)
+    public function setModule(string $module): void
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
-        if (!in_array($module, $modules)) {
+        if (!in_array($module, $modules, true)) {
             // set correct headers
             header('HTTP/1.1 403 Forbidden');
 
@@ -101,9 +92,6 @@ class Config extends Object
         $this->module = $module;
     }
 
-    /**
-     * @return array
-     */
     public function getPossibleActionTypes(): array
     {
         return [
@@ -112,11 +100,6 @@ class Config extends Object
         ];
     }
 
-    /**
-     * @param string $action
-     *
-     * @return bool
-     */
     public function isActionAvailable(string $action): bool
     {
         // Save our action
@@ -142,30 +125,18 @@ class Config extends Object
         return false;
     }
 
-    /**
-     * @param string $actionType
-     *
-     * @throws \Exception
-     *
-     * @return bool
-     */
     public function isActionDisabled(string $actionType): bool
     {
         switch ($actionType) {
             case 'actions':
-                return in_array($this->getAction(), $this->disabledActions);
+                return in_array($this->getAction(), $this->disabledActions, true);
             case 'ajax':
-                return in_array($this->action, $this->disabledAJAXActions);
+                return in_array($this->action, $this->disabledAJAXActions, true);
         }
 
         throw new \Exception($actionType . ' is not a valid action type');
     }
 
-    /**
-     * @param string $actionType
-     *
-     * @return bool
-     */
     public function isActionFilePresent(string $actionType): bool
     {
         // Create the directory string

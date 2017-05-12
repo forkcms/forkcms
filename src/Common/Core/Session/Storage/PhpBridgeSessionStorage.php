@@ -12,10 +12,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage as 
  */
 final class PhpBridgeSessionStorage extends SymfonyPhpBridgeSessionStorage
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function start()
+    public function start(): bool
     {
         if ($this->started) {
             return true;

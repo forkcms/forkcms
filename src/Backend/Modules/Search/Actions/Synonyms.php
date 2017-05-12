@@ -21,14 +21,14 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class Synonyms extends Action
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->showDataGrid();
         $this->display();
     }
 
-    private function showDataGrid()
+    private function showDataGrid(): void
     {
         $dataGrid = new BackendDataGridDB(BackendSearchModel::QRY_DATAGRID_BROWSE_SYNONYMS, [BL::getWorkingLanguage()]);
         $dataGrid->setSortingColumns(['term'], 'term');

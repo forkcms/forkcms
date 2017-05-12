@@ -207,13 +207,6 @@ class Model
         );
     }
 
-    /**
-     * Get synonyms
-     *
-     * @param string $term The term to get synonyms for.
-     *
-     * @return array
-     */
     public static function getSynonyms(string $term): array
     {
         // query db for synonyms
@@ -357,12 +350,7 @@ class Model
         );
     }
 
-    /**
-     * Save a search
-     *
-     * @param array $item The data to store.
-     */
-    public static function save(array $item)
+    public static function save(array $item): void
     {
         FrontendModel::getContainer()->get('database')->insert(
             'search_statistics',
@@ -480,7 +468,7 @@ class Model
      * @param array $otherIds An array of other_id's for this module.
      * @param bool $active Set the index to active?
      */
-    public static function statusIndex(string $module, array $otherIds, bool $active = true)
+    public static function statusIndex(string $module, array $otherIds, bool $active = true): void
     {
         if (!empty($otherIds)) {
             FrontendModel::getContainer()->get('database')->update(
@@ -495,7 +483,7 @@ class Model
     /**
      * Validate searches: check everything that has been marked as 'inactive', if should still be inactive
      */
-    public static function validateSearch()
+    public static function validateSearch(): void
     {
         // we'll iterate through the inactive search indices in little batches
         $offset = 0;

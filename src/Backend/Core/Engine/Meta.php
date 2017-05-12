@@ -133,144 +133,99 @@ class Meta
         );
     }
 
-    /**
-     * Get the current value for the meta-description;
-     *
-     * @return string|null
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         // not set so return null
         if (!isset($this->data['description'])) {
-            return;
+            return null;
         }
 
         // return value
         return $this->data['description'];
     }
 
-    /**
-     * Should the description overwrite the default
-     *
-     * @return null|bool
-     */
-    public function getDescriptionOverwrite()
+    public function getDescriptionOverwrite(): ?bool
     {
         // not set so return null
         if (!isset($this->data['description_overwrite'])) {
-            return;
+            return null;
         }
 
         // return value
         return $this->data['description_overwrite'] === 'Y';
     }
 
-    /**
-     * Get the current value for the metaId;
-     *
-     * @return null|int
-     */
-    public function getId()
+    public function getId(): ?int
     {
         // not set so return null
         if (!isset($this->data['id'])) {
-            return;
+            return null;
         }
 
         // return value
         return (int) $this->data['id'];
     }
 
-    /**
-     * Get the current value for the meta-keywords;
-     *
-     * @return null|string
-     */
-    public function getKeywords()
+    public function getKeywords(): ?string
     {
         // not set so return null
         if (!isset($this->data['keywords'])) {
-            return;
+            return null;
         }
 
         // return value
         return $this->data['keywords'];
     }
 
-    /**
-     * Should the keywords overwrite the default
-     *
-     * @return null|bool
-     */
-    public function getKeywordsOverwrite()
+    public function getKeywordsOverwrite(): ?bool
     {
         // not set so return null
         if (!isset($this->data['keywords_overwrite'])) {
-            return;
+            return null;
         }
 
         // return value
         return $this->data['keywords_overwrite'] === 'Y';
     }
 
-    /**
-     * Get the current value for the page title;
-     *
-     * @return null|string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         // not set so return null
         if (!isset($this->data['title'])) {
-            return;
+            return null;
         }
 
         // return value
         return $this->data['title'];
     }
 
-    /**
-     * Should the title overwrite the default
-     *
-     * @return null|bool
-     */
-    public function getTitleOverwrite()
+    public function getTitleOverwrite(): ?bool
     {
         // not set so return null
         if (!isset($this->data['title_overwrite'])) {
-            return;
+            return null;
         }
 
         // return value
         return $this->data['title_overwrite'] === 'Y';
     }
 
-    /**
-     * Return the current value for an URL
-     *
-     * @return null|string
-     */
-    public function getURL()
+    public function getURL(): ?string
     {
         // not set so return null
         if (!isset($this->data['url'])) {
-            return;
+            return null;
         }
 
         // return value
         return urldecode($this->data['url']);
     }
 
-    /**
-     * Should the URL overwrite the default
-     *
-     * @return null|bool
-     */
-    public function getURLOverwrite()
+    public function getURLOverwrite(): ?bool
     {
         // not set so return null
         if (!isset($this->data['url_overwrite'])) {
-            return;
+            return null;
         }
 
         // return value
@@ -282,7 +237,7 @@ class Meta
      * When an error occurs in the other fields of the form the meta-fields would be cleared
      * therefore we alter the POST so it contains the initial values.
      */
-    private function loadValuesOfDisabledFields()
+    private function loadValuesOfDisabledFields(): void
     {
         if (!isset($_POST['page_title'])) {
             $_POST['page_title'] = $this->data['title'] ?? null;
@@ -310,7 +265,7 @@ class Meta
     /**
      * Add all element into the form
      */
-    protected function loadForm()
+    protected function loadForm(): void
     {
         // is the form submitted?
         if ($this->form->isSubmitted()) {
@@ -391,7 +346,7 @@ class Meta
      *
      * @throws Exception If no meta-record exists with the provided id
      */
-    protected function loadMeta(int $id)
+    protected function loadMeta(int $id): void
     {
         $this->id = $id;
 
@@ -461,7 +416,7 @@ class Meta
      * @param string $methodName Name of the method to use.
      * @param array $parameters Parameters to parse, they will be passed after ours.
      */
-    public function setURLCallback(string $className, string $methodName, array $parameters = [])
+    public function setURLCallback(string $className, string $methodName, array $parameters = []): void
     {
         // store in property
         $this->callback = ['class' => $className, 'method' => $methodName, 'parameters' => $parameters];
@@ -474,7 +429,7 @@ class Meta
      * Validates the form
      * It checks if there is a value when a checkbox is checked
      */
-    public function validate()
+    public function validate(): void
     {
         // page title overwrite is checked
         if ($this->form->getField('page_title_overwrite')->isChecked()) {
@@ -545,17 +500,11 @@ class Meta
         }
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @return MetaEntity
-     */
     public function getMetaEntity(): MetaEntity
     {
         $this->validate();

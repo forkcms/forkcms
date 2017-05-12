@@ -20,10 +20,6 @@ class ModulesSettings
      */
     private $cache;
 
-    /**
-     * @param SpoonDatabase $database
-     * @param CacheItemPoolInterface $cache
-     */
     public function __construct(SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
         $this->database = $database;
@@ -33,9 +29,9 @@ class ModulesSettings
     /**
      * Get a module setting
      *
-     * @param  string $module       The module wherefore a setting has to be retrieved.
-     * @param  string $key          The name of the setting to be retrieved.
-     * @param  mixed  $defaultValue A fallback value
+     * @param string $module The module wherefore a setting has to be retrieved.
+     * @param string $key The name of the setting to be retrieved.
+     * @param mixed $defaultValue A fallback value
      *
      * @return mixed
      */
@@ -54,10 +50,10 @@ class ModulesSettings
      * Store a module setting
      *
      * @param string $module The module wherefore a setting has to be stored.
-     * @param string $key    The name of the setting.
-     * @param mixed  $value  The value to save
+     * @param string $key The name of the setting.
+     * @param mixed $value The value to save
      */
-    public function set(string $module, string $key, $value)
+    public function set(string $module, string $key, $value): void
     {
         $valueToStore = serialize($value);
 
@@ -88,7 +84,7 @@ class ModulesSettings
      * @param string $module
      * @param string $key
      */
-    public function delete(string $module, string $key)
+    public function delete(string $module, string $key): void
     {
         $this->database->delete(
             'modules_settings',
@@ -116,7 +112,7 @@ class ModulesSettings
     /**
      * Get all module settings for a module
      *
-     * @param  string $module The module wherefore a setting has to be retrieved.
+     * @param string $module The module wherefore a setting has to be retrieved.
      *
      * @return array
      */

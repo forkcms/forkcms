@@ -37,17 +37,13 @@ class MetaType extends AbstractType
     /** @var Meta[] */
     private $meta;
 
-    /**
-     * @param MetaRepository $metaRepository
-     * @param TranslatorInterface $translator
-     */
     public function __construct(MetaRepository $metaRepository, TranslatorInterface $translator)
     {
         $this->metaRepository = $metaRepository;
         $this->translator = $translator;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -98,10 +94,7 @@ class MetaType extends AbstractType
         }
     }
 
-    /**
-     * @return array
-     */
-    private function getSEOIndexChoiceTypeOptions()
+    private function getSEOIndexChoiceTypeOptions(): array
     {
         return [
             'expanded' => true,
@@ -110,7 +103,7 @@ class MetaType extends AbstractType
                 function ($SEOIndex) {
                     return SEOIndex::fromString($SEOIndex);
                 },
-                SEOIndex::getPossibleValues()
+                SEOIndex::POSSIBLE_VALUES
             ),
             'choices_as_values' => true,
             'choice_value' => function (SEOIndex $SEOIndex = null) {
@@ -130,10 +123,7 @@ class MetaType extends AbstractType
         ];
     }
 
-    /**
-     * @return array
-     */
-    private function getSEOFollowChoiceTypeOptions()
+    private function getSEOFollowChoiceTypeOptions(): array
     {
         return [
             'expanded' => true,
@@ -142,7 +132,7 @@ class MetaType extends AbstractType
                 function ($SEOFollow) {
                     return SEOFollow::fromString($SEOFollow);
                 },
-                SEOFollow::getPossibleValues()
+                SEOFollow::POSSIBLE_VALUES
             ),
             'choices_as_values' => true,
             'choice_value' => function (SEOFollow $SEOFollow = null) {
@@ -162,12 +152,7 @@ class MetaType extends AbstractType
         ];
     }
 
-    /**
-     * @param string $baseFieldName
-     *
-     * @return Closure
-     */
-    private function getSubmitEventFunction($baseFieldName)
+    private function getSubmitEventFunction(string $baseFieldName): callable
     {
         return function (FormEvent $event) use ($baseFieldName) {
             $metaForm = $event->getForm();
@@ -217,15 +202,12 @@ class MetaType extends AbstractType
         };
     }
 
-    protected function getOverwritableFields()
+    protected function getOverwritableFields(): array
     {
         return ['title', 'description', 'keywords', 'url'];
     }
 
-    /**
-     * @return Closure
-     */
-    private function getMetaTransformFunction()
+    private function getMetaTransformFunction(): callable
     {
         return function ($meta) {
             if (!$meta instanceof Meta) {
@@ -254,10 +236,7 @@ class MetaType extends AbstractType
         };
     }
 
-    /**
-     * @return Closure
-     */
-    private function getMetaReverseTransformFunction()
+    private function getMetaReverseTransformFunction(): callable
     {
         return function ($metaData) {
             $metaId = $metaData['id'] === null ? null : (int) $metaData['id'];
@@ -301,7 +280,7 @@ class MetaType extends AbstractType
         };
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(
             [
@@ -323,20 +302,12 @@ class MetaType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'meta';
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if ($view->parent === null) {
             throw new LogicException(

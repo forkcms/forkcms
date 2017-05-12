@@ -12,19 +12,12 @@ final class AssetCollection
     /** @var Asset[] */
     private $assets = [];
 
-    /**
-     * @param Minifier $minifier
-     */
     public function __construct(Minifier $minifier)
     {
         $this->minifier = $minifier;
     }
 
-    /**
-     * @param Asset $asset
-     * @param bool $minify
-     */
-    public function add(Asset $asset, $minify = true)
+    public function add(Asset $asset, bool $minify = true): void
     {
         if ($minify) {
             $asset = $this->minifier->minify($asset);
@@ -46,11 +39,7 @@ final class AssetCollection
         return $this->assets;
     }
 
-    /**
-     * @param BaseTwigTemplate $template
-     * @param string $key
-     */
-    public function parse(BaseTwigTemplate $template, string $key)
+    public function parse(BaseTwigTemplate $template, string $key): void
     {
         usort(
             $this->assets,

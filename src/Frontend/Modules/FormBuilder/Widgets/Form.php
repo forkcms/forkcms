@@ -104,10 +104,7 @@ class Form extends FrontendBaseWidget
         return '/' . $action;
     }
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -121,16 +118,13 @@ class Form extends FrontendBaseWidget
             $this->parseSuccessMessage();
         } else {
             // create/handle form
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         }
     }
 
-    /**
-     * Load the data.
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // fetch the item
         $this->item = FrontendFormBuilderModel::get((int) $this->data['id']);
@@ -139,10 +133,7 @@ class Form extends FrontendBaseWidget
         $this->formName = 'form' . $this->item['id'];
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
         $this->frm = new FrontendForm('form' . $this->item['id']);
@@ -312,11 +303,7 @@ class Form extends FrontendBaseWidget
         }
     }
 
-    /**
-     * @param array $item
-     * @param SpoonFormAttributes $formField
-     */
-    private function setCustomHTML5ErrorMessages(array $item, SpoonFormAttributes $formField)
+    private function setCustomHTML5ErrorMessages(array $item, SpoonFormAttributes $formField): void
     {
         foreach ($item['validations'] as $validation) {
             $formField->setAttribute(
@@ -326,10 +313,7 @@ class Form extends FrontendBaseWidget
         }
     }
 
-    /**
-     * Parse.
-     */
-    private function parse()
+    private function parse(): void
     {
         // form name
         $formName = 'form' . $this->item['id'];
@@ -387,20 +371,14 @@ class Form extends FrontendBaseWidget
         }
     }
 
-    /**
-     * Parse the success message.
-     */
-    private function parseSuccessMessage()
+    private function parseSuccessMessage(): void
     {
         // form name
         $this->tpl->assign('formName', $this->formName);
         $this->tpl->assign('successMessage', $this->item['success_message']);
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // submitted
         if ($this->frm->isSubmitted()) {

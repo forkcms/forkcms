@@ -19,10 +19,7 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
  */
 class Activate extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get activation key
         $key = $this->URL->getParameter(0);

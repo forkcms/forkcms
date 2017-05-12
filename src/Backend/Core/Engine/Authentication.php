@@ -54,7 +54,7 @@ class Authentication
     /**
      * Cleanup sessions for the current user and sessions that are invalid
      */
-    public static function cleanupOldSessions()
+    public static function cleanupOldSessions(): void
     {
         // remove all sessions that are invalid (older then 30 min)
         BackendModel::get('database')->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
@@ -113,9 +113,6 @@ class Authentication
         return self::$user;
     }
 
-    /**
-     * @return array
-     */
     public static function getAllowedActions(): array
     {
         if (!empty(self::$allowedActions)) {
@@ -190,9 +187,6 @@ class Authentication
         return false;
     }
 
-    /**
-     * @return array
-     */
     private static function getAlwaysAllowed(): array
     {
         return [
@@ -368,7 +362,7 @@ class Authentication
     /**
      * Logout the current user
      */
-    public static function logout()
+    public static function logout(): void
     {
         // remove all rows owned by the current user
         BackendModel::get('database')->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
@@ -385,7 +379,7 @@ class Authentication
      * this class. Solving the issue would be preferable to introducting
      * another method. This currently only exists to serve the test.
      */
-    public static function tearDown()
+    public static function tearDown(): void
     {
         self::$allowedActions = [];
         self::$allowedModules = [];

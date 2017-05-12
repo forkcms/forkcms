@@ -20,10 +20,7 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class AddGroup extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -32,19 +29,13 @@ class AddGroup extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('addGroup');
         $this->frm->addText('name');
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

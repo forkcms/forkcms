@@ -48,10 +48,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
      */
     private $selectedTheme;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -66,10 +63,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load necessary data.
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get data
         $this->selectedTheme = $this->getParameter('theme', 'string');
@@ -83,10 +77,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), $this->get('fork.settings')->get('Core', 'theme', 'core'));
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('add');
@@ -209,10 +200,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->tpl->assign('positions', $positions);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -220,10 +208,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -253,7 +238,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
             $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
 
             // validate the syntax
-            if ($table === false) {
+            if (empty($table)) {
                 $this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
             } else {
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);

@@ -9,7 +9,7 @@ class SettingsTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAuthenticationIsNeeded()
+    public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
         $client = static::createClient();
@@ -27,7 +27,7 @@ class SettingsTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAnalyticsSettingsWorks()
+    public function testAnalyticsSettingsWorks(): void
     {
         $client = static::createClient();
         $this->login();

@@ -58,9 +58,6 @@ final class Header extends Base\Object
      */
     private $url;
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
@@ -117,13 +114,6 @@ final class Header extends Base\Object
         $this->addCSS('debug.css', 'Core', false, true, true, Priority::debug());
     }
 
-    /**
-     * @param string $fileName
-     * @param string $module
-     * @param string $subDirectory
-     *
-     * @return string
-     */
     private function buildPathForModule(string $fileName, string $module, string $subDirectory): string
     {
         if ($module === 'Core') {
@@ -159,7 +149,7 @@ final class Header extends Base\Object
         bool $minify = true,
         bool $addTimestamp = false,
         Priority $priority = null
-    ) {
+    ): void {
         $module = $module ?? $this->url->getModule();
         $this->cssFiles->add(
             new Asset(
@@ -191,7 +181,7 @@ final class Header extends Base\Object
         bool $overwritePath = false,
         bool $addTimestamp = false,
         Priority $priority = null
-    ) {
+    ): void {
         $module = $module ?? $this->url->getModule();
 
         $this->jsFiles->add(
@@ -211,7 +201,7 @@ final class Header extends Base\Object
      * @param string $key The key whereunder the value will be stored.
      * @param mixed $value The value
      */
-    public function addJsData(string $module, string $key, $value)
+    public function addJsData(string $module, string $key, $value): void
     {
         $this->jsData->add($module, $key, $value);
     }
@@ -219,7 +209,7 @@ final class Header extends Base\Object
     /**
      * Parse the header into the template
      */
-    public function parse()
+    public function parse(): void
     {
         $this->tpl->assign('page_title', BL::getLabel($this->url->getModule()));
         $this->cssFiles->parse($this->tpl, 'cssFiles');

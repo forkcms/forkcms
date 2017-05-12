@@ -17,10 +17,7 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Import the data
-     */
-    private function importData()
+    private function importData(): void
     {
         // insert required pages
         $this->insertPages();
@@ -31,10 +28,7 @@ class Installer extends ModuleInstaller
         }
     }
 
-    /**
-     * Insert the pages
-     */
-    private function insertPages()
+    private function insertPages(): void
     {
         // get extra ids
         $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, false, 2000);
@@ -142,10 +136,7 @@ class Installer extends ModuleInstaller
         }
     }
 
-    /**
-     * Install this module.
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -171,10 +162,7 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Pages', 'pages/settings');
     }
 
-    /**
-     * Install example data
-     */
-    private function installExampleData()
+    private function installExampleData(): void
     {
         // insert/get extra ids
         $extras['blog_block'] = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog', null, null, false, 1000);
@@ -372,10 +360,7 @@ class Installer extends ModuleInstaller
         }
     }
 
-    /**
-     * Set the rights
-     */
-    private function setRights()
+    private function setRights(): void
     {
         // module rights
         $this->setModuleRights(1, $this->getModule());

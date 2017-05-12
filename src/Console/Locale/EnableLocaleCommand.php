@@ -56,12 +56,6 @@ class EnableLocaleCommand extends Command
     /** @var bool */
     private $multiLanguageIsEnabled;
 
-    /**
-     * @param ModulesSettings $settings
-     * @param array $installedModules
-     * @param bool $multiLanguageIsEnabled
-     * @param string|null $name
-     */
     public function __construct(
         ModulesSettings $settings,
         array $installedModules,
@@ -82,24 +76,13 @@ class EnableLocaleCommand extends Command
         );
     }
 
-    /**
-     * Configure the command options.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('forkcms:locale:enable')
             ->setDescription('Enable a locale');
     }
 
-    /**
-     * Execute the command.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @throws Exception
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->input = $input;
         $this->output = $output;
@@ -136,7 +119,7 @@ class EnableLocaleCommand extends Command
         }
     }
 
-    private function askToEnableTheLocaleForRedirecting()
+    private function askToEnableTheLocaleForRedirecting(): void
     {
         $enableRedirect = $this->formatter->confirm(
             'Would you like to redirect visitors based on their browser locale to this locale?'
@@ -152,9 +135,6 @@ class EnableLocaleCommand extends Command
         $this->redirectLocale = array_flip($this->redirectLocale);
     }
 
-    /**
-     * @return bool
-     */
     private function askToMakeTheLocaleAccessibleToVisitors(): bool
     {
         $makeAccessible = $this->formatter->confirm(
@@ -185,7 +165,7 @@ class EnableLocaleCommand extends Command
         return true;
     }
 
-    private function askToAddInterfaceLocale()
+    private function askToAddInterfaceLocale(): void
     {
         $addToInterfaceLocale = $this->formatter->confirm(
             'Would you like to add this locale to the interface locale?'
@@ -213,9 +193,6 @@ class EnableLocaleCommand extends Command
         $this->settings->set('Core', 'default_interface_language', $this->workingLocale);
     }
 
-    /**
-     * @return bool
-     */
     private function askToInstall(): bool
     {
         if (array_key_exists($this->workingLocale, $this->installedLocale)) {
@@ -265,10 +242,7 @@ class EnableLocaleCommand extends Command
         return true;
     }
 
-    /**
-     * @param bool $force
-     */
-    private function installWorkingLocale(bool $force = false)
+    private function installWorkingLocale(bool $force = false): void
     {
         $installLocaleCommand = $this->getApplication()->find('forkcms:locale:import');
         $installBackendLocaleCommandArguments = [
@@ -303,7 +277,7 @@ class EnableLocaleCommand extends Command
         }
     }
 
-    private function selectWorkingLocale()
+    private function selectWorkingLocale(): void
     {
         $this->workingLocale = $this->formatter->choice(
             'What locale would you like to configure',
@@ -311,7 +285,7 @@ class EnableLocaleCommand extends Command
         );
     }
 
-    private function showLocaleOverview()
+    private function showLocaleOverview(): void
     {
         $locale = array_map(
             function ($locale, $key) {
@@ -352,9 +326,6 @@ class EnableLocaleCommand extends Command
         $this->formatter->table(['key', 'locale', 'installed', 'interface', 'enabled', 'redirect'], $locale);
     }
 
-    /**
-     * @return array
-     */
     private function getInstallableLocale(): array
     {
         return [

@@ -20,10 +20,7 @@ class InstallTheme extends BackendBaseActionIndex
      */
     private $currentTheme;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->currentTheme = $this->getParameter('theme', 'string');
@@ -34,7 +31,7 @@ class InstallTheme extends BackendBaseActionIndex
             parent::execute();
 
             // make sure this theme can be installed
-            $this->validateInstall();
+            $this->validateThatTheThemeCanBeInstalled();
 
             try {
                 // do the actual install
@@ -52,10 +49,7 @@ class InstallTheme extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Validate if the theme can be installed.
-     */
-    private function validateInstall()
+    private function validateThatTheThemeCanBeInstalled(): void
     {
         // already installed
         if (BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {

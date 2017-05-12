@@ -24,7 +24,7 @@ class CreateSchema
      *
      * @param string $entityClass
      */
-    public function forEntityClass(string $entityClass)
+    public function forEntityClass(string $entityClass): void
     {
         $this->forEntityClasses([$entityClass]);
     }
@@ -36,7 +36,7 @@ class CreateSchema
      *
      * @throws ToolsException
      */
-    public function forEntityClasses(array $entityClasses)
+    public function forEntityClasses(array $entityClasses): void
     {
         $schemaTool = new SchemaTool($this->entityManager);
 

@@ -29,10 +29,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $templates = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -50,19 +47,13 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendFormBuilderModel::get($this->id);
         $this->templates = BackendFormBuilderModel::getTemplates();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('edit');
         $this->frm->addText('name', $this->record['name']);
@@ -207,10 +198,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('submit');
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         $this->parseFields();
 
@@ -226,7 +214,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Parse the default error messages
      */
-    private function parseErrorMessages()
+    private function parseErrorMessages(): void
     {
         // set frontend locale
         FL::setLocale(BL::getWorkingLanguage(), true);
@@ -235,10 +223,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('errors', BackendFormBuilderModel::getErrors());
     }
 
-    /**
-     * Parse the fields
-     */
-    private function parseFields()
+    private function parseFields(): void
     {
         $fieldsHTML = [];
 
@@ -273,10 +258,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('fields', $fieldsHTML);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();

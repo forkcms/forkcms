@@ -16,10 +16,7 @@ use Backend\Core\Installer\ModuleInstaller;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // add 'settings' as a module
         $this->addModule('Settings');

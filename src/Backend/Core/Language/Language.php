@@ -61,11 +61,6 @@ class Language
      */
     protected static $currentWorkingLanguage;
 
-    /**
-     * Get the active languages
-     *
-     * @return array
-     */
     public static function getActiveLanguages(): array
     {
         // validate the cache
@@ -103,9 +98,6 @@ class Language
         return $results;
     }
 
-    /**
-     * @return string
-     */
     public static function getCurrentModule(): string
     {
         // Needed to make it possible to use the backend language in the console.
@@ -124,14 +116,6 @@ class Language
         return 'Core';
     }
 
-    /**
-     * Get an error from the language-file
-     *
-     * @param string $key The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
     public static function getError(string $key, string $module = null): string
     {
         // do we know the module
@@ -155,21 +139,11 @@ class Language
         return '{$err' . \SpoonFilter::toCamelCase($module) . $key . '}';
     }
 
-    /**
-     * Get all the errors from the language-file
-     *
-     * @return array
-     */
     public static function getErrors(): array
     {
         return self::$err;
     }
 
-    /**
-     * Get the current interface language
-     *
-     * @return string
-     */
     public static function getInterfaceLanguage(): string
     {
         if (self::$currentInterfaceLanguage === null) {
@@ -179,11 +153,6 @@ class Language
         return self::$currentInterfaceLanguage;
     }
 
-    /**
-     * Get all the possible interface languages
-     *
-     * @return array
-     */
     public static function getInterfaceLanguages(): array
     {
         $languages = [];
@@ -201,14 +170,6 @@ class Language
         return $languages;
     }
 
-    /**
-     * Get a label from the language-file
-     *
-     * @param string $key The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
     public static function getLabel(string $key, string $module = null): string
     {
         // do we know the module
@@ -232,24 +193,11 @@ class Language
         return '{$lbl' . \SpoonFilter::toCamelCase($module) . $key . '}';
     }
 
-    /**
-     * Get all the labels from the language-file
-     *
-     * @return array
-     */
     public static function getLabels(): array
     {
         return self::$lbl;
     }
 
-    /**
-     * Get a message from the language-file
-     *
-     * @param string $key The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
     public static function getMessage(string $key, string $module = null): string
     {
         if ($module === null) {
@@ -279,21 +227,11 @@ class Language
         return '{$msg' . \SpoonFilter::toCamelCase($module) . $key . '}';
     }
 
-    /**
-     * Get the messages
-     *
-     * @return array
-     */
     public static function getMessages(): array
     {
         return self::$msg;
     }
 
-    /**
-     * Get the current working language
-     *
-     * @return string
-     */
     public static function getWorkingLanguage(): string
     {
         if (self::$currentWorkingLanguage === null) {
@@ -303,11 +241,6 @@ class Language
         return self::$currentWorkingLanguage;
     }
 
-    /**
-     * Get all possible working languages
-     *
-     * @return array
-     */
     public static function getWorkingLanguages(): array
     {
         $languages = [];
@@ -330,7 +263,7 @@ class Language
      *
      * @param string $language The language to load.
      */
-    public static function setLocale(string $language)
+    public static function setLocale(string $language): void
     {
         // validate file, generate it if needed
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.json')) {
@@ -395,49 +328,23 @@ class Language
     }
 
     /**
-     * Set the current working language
-     *
      * @param string $language The language to use, if not provided we will use the working language.
      */
-    public static function setWorkingLanguage(string $language)
+    public static function setWorkingLanguage(string $language): void
     {
         self::$currentWorkingLanguage = $language;
     }
 
-    /**
-     * Get an error from the language-file
-     *
-     * @param string $key The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
     public static function err(string $key, string $module = null): string
     {
         return self::getError($key, $module);
     }
 
-    /**
-     * Get a label from the language-file
-     *
-     * @param string $key The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
     public static function lbl(string $key, string $module = null): string
     {
         return self::getLabel($key, $module);
     }
 
-    /**
-     * Get a message from the language-file
-     *
-     * @param string $key The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
     public static function msg(string $key, string $module = null): string
     {
         return self::getMessage($key, $module);

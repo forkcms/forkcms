@@ -27,21 +27,11 @@ final class SettingsSavedEvent extends Event
      */
     protected $settings;
 
-    /**
-     * Construct
-     *
-     * @param SaveSettings $settings
-     */
     public function __construct(SaveSettings $settings)
     {
         $this->settings = $settings;
     }
 
-    /**
-     * Get settings
-     *
-     * @return SaveSettings
-     */
     public function getSettings(): SaveSettings
     {
         return $this->settings;

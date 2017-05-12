@@ -64,7 +64,7 @@ class Authentication
     /**
      * Cleanup old session records in the database.
      */
-    public static function cleanupOldSessions()
+    public static function cleanupOldSessions(): void
     {
         // remove all sessions with date older then 1 month
         FrontendModel::getContainer()->get('database')->delete(
@@ -76,8 +76,8 @@ class Authentication
     /**
      * Get the login/profile status for the given e-mail and password.
      *
-     * @param  string $email Profile email address.
-     * @param  string $password Profile password.
+     * @param string $email Profile email address.
+     * @param string $password Profile password.
      *
      * @return string One of the FrontendProfilesAuthentication::LOGIN_* constants.
      */
@@ -103,21 +103,11 @@ class Authentication
         return empty($loginStatus) ? self::LOGIN_INVALID : $loginStatus;
     }
 
-    /**
-     * Get a profile object with information about a profile.
-     *
-     * @return FrontendProfilesProfile
-     */
     public static function getProfile(): FrontendProfilesProfile
     {
         return self::$profile;
     }
 
-    /**
-     * Check if a profile is logged in.
-     *
-     * @return bool
-     */
     public static function isLoggedIn(): bool
     {
         // profile object exist? (this means the session/cookie checks have
@@ -218,14 +208,10 @@ class Authentication
     }
 
     /**
-     * Login a profile.
-     *
-     * @param  int $profileId Login the profile with this id in.
-     * @param  bool $remember Should we set a cookie for later?
-     *
-     * @return bool
+     * @param int $profileId Login the profile with this id in.
+     * @param bool $remember Should we set a cookie for later?
      */
-    public static function login(int $profileId, bool $remember = false): bool
+    public static function login(int $profileId, bool $remember = false): void
     {
         $secretKey = null;
 
@@ -272,10 +258,7 @@ class Authentication
         self::$profile = new FrontendProfilesProfile($profileId);
     }
 
-    /**
-     * Logout a profile.
-     */
-    public static function logout()
+    public static function logout(): void
     {
         // delete session records
         FrontendModel::getContainer()->get('database')->delete(
@@ -297,7 +280,7 @@ class Authentication
      * @param int $profileId Profile id for which we are changing the password.
      * @param string $password New password.
      */
-    public static function updatePassword(int $profileId, string $password)
+    public static function updatePassword(int $profileId, string $password): void
     {
         // get new salt
         $salt = FrontendProfilesModel::getRandomString();

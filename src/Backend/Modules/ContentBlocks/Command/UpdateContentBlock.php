@@ -43,9 +43,6 @@ final class UpdateContentBlock
      */
     public $userId;
 
-    /**
-     * @param ContentBlock $contentBlock
-     */
     public function __construct(ContentBlock $contentBlock)
     {
         $this->contentBlock = $contentBlock;

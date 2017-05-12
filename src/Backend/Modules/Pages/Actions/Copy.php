@@ -29,10 +29,7 @@ class Copy extends BackendBaseActionIndex
     private $from;
     private $to;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();

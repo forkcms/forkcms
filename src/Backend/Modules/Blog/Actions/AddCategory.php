@@ -21,10 +21,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class AddCategory extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -33,10 +30,7 @@ class AddCategory extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('addCategory');
         $this->frm->addText('title', null, 255, 'form-control title', 'form-control danger title');
@@ -48,10 +42,7 @@ class AddCategory extends BackendBaseActionAdd
         $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURLForCategory');
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers

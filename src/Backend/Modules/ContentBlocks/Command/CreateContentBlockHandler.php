@@ -12,18 +12,12 @@ final class CreateContentBlockHandler
     /** @var ContentBlockRepository */
     private $contentBlockRepository;
 
-    /**
-     * @param ContentBlockRepository $contentBlockRepository
-     */
     public function __construct(ContentBlockRepository $contentBlockRepository)
     {
         $this->contentBlockRepository = $contentBlockRepository;
     }
 
-    /**
-     * @param CreateContentBlock $createContentBlock
-     */
-    public function handle(CreateContentBlock $createContentBlock)
+    public function handle(CreateContentBlock $createContentBlock): void
     {
         $createContentBlock->contentBlock = ContentBlock::create(
             $this->contentBlockRepository->getNextIdForLanguage($createContentBlock->language),
@@ -39,9 +33,6 @@ final class CreateContentBlockHandler
         $this->contentBlockRepository->add($createContentBlock->contentBlock);
     }
 
-    /**
-     * @return int
-     */
     private function getNewExtraId(): int
     {
         return Model::insertExtra(

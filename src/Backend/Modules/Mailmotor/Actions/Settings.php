@@ -21,10 +21,7 @@ use Backend\Modules\Mailmotor\Form\SettingsType;
  */
 final class Settings extends ActionIndex
 {
-    /**
-     * Execute
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -55,7 +52,7 @@ final class Settings extends ActionIndex
             new SettingsSavedEvent($settings)
         );
 
-        return $this->redirect(
+        $this->redirect(
             Model::createURLForAction(
                 'Settings',
                 null,

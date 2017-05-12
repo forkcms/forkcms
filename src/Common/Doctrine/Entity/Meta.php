@@ -93,19 +93,6 @@ class Meta
      */
     private $data;
 
-    /**
-     * @param string $keywords
-     * @param bool $keywordsOverwrite
-     * @param string $description
-     * @param bool $descriptionOverwrite
-     * @param string $title
-     * @param bool $titleOverwrite
-     * @param string $url
-     * @param bool $urlOverwrite
-     * @param string $custom
-     * @param array $data
-     * @param int|null $id
-     */
     public function __construct(
         string $keywords,
         bool $keywordsOverwrite,
@@ -132,18 +119,6 @@ class Meta
         $this->id = $id;
     }
 
-    /**
-     * @param string $keywords
-     * @param bool $keywordsOverwrite
-     * @param string $description
-     * @param bool $descriptionOverwrite
-     * @param string $title
-     * @param bool $titleOverwrite
-     * @param string $url
-     * @param bool $urlOverwrite
-     * @param string $custom
-     * @param array $data
-     */
     public function update(
         string $keywords,
         bool $keywordsOverwrite,
@@ -155,7 +130,7 @@ class Meta
         bool $urlOverwrite,
         string $custom,
         array $data
-    ) {
+    ): void {
         $this->keywords = $keywords;
         $this->keywordsOverwrite = $keywordsOverwrite;
         $this->description = $description;
@@ -172,7 +147,7 @@ class Meta
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function serialiseData()
+    public function serialiseData(): void
     {
         if (!empty($this->data)) {
             if (array_key_exists('seo_index', $this->data)) {
@@ -194,7 +169,7 @@ class Meta
      * @ORM\PostUpdate
      * @ORM\PostLoad
      */
-    public function unSerialiseData()
+    public function unSerialiseData(): void
     {
         if ($this->data === null) {
             $this->data = [];
@@ -218,11 +193,6 @@ class Meta
         }
     }
 
-    /**
-     * @param BackendMeta $meta
-     *
-     * @return self
-     */
     public static function fromBackendMeta(BackendMeta $meta): self
     {
         $metaData = $meta->getData();
@@ -269,131 +239,86 @@ class Meta
         );
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getKeywords(): string
     {
         return $this->keywords;
     }
 
-    /**
-     * @return bool
-     */
     public function isKeywordsOverwrite(): bool
     {
         return $this->keywordsOverwrite;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return bool
-     */
     public function isDescriptionOverwrite(): bool
     {
         return $this->descriptionOverwrite;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return bool
-     */
     public function isTitleOverwrite(): bool
     {
         return $this->titleOverwrite;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return bool
-     */
     public function isUrlOverwrite(): bool
     {
         return $this->urlOverwrite;
     }
 
-    /**
-     * @return string
-     */
     public function getCustom(): string
     {
         return $this->custom;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @return bool
-     */
     public function hasSEOIndex(): bool
     {
         return array_key_exists('seo_index', $this->data)
                && !SEOIndex::fromString($this->data['seo_index'])->isNone();
     }
 
-    /**
-     * @return SEOIndex|null
-     */
-    public function getSEOIndex()
+    public function getSEOIndex(): ?SEOIndex
     {
         if (!$this->hasSEOIndex()) {
-            return;
+            return null;
         }
 
         return SEOIndex::fromString($this->data['seo_index']);
     }
 
-    /**
-     * @return bool
-     */
     public function hasSEOFollow(): bool
     {
         return array_key_exists('seo_follow', $this->data)
                && !SEOFollow::fromString($this->data['seo_follow'])->isNone();
     }
 
-    /**
-     * @return SEOFollow|null
-     */
-    public function getSEOFollow()
+    public function getSEOFollow(): ?SEOFollow
     {
         if (!$this->hasSEOFollow()) {
-            return;
+            return null;
         }
 
         return SEOFollow::fromString($this->data['seo_follow']);

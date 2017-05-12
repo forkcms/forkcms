@@ -30,10 +30,7 @@ class Index extends BackendBaseActionIndex
     private $dgDrafts;
     private $dgRecentlyEdited;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -52,10 +49,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid with the drafts
-     */
-    private function loadDataGridDrafts()
+    private function loadDataGridDrafts(): void
     {
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
@@ -109,10 +103,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the datagrid with the recently edited items
-     */
-    private function loadDataGridRecentlyEdited()
+    private function loadDataGridRecentlyEdited(): void
     {
         // create dgRecentlyEdited
         $this->dgRecentlyEdited = new BackendDataGridDB(
@@ -166,10 +157,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrids()
+    private function loadDataGrids(): void
     {
         // load the datagrid with the recently edited items
         $this->loadDataGridRecentlyEdited();
@@ -178,10 +166,7 @@ class Index extends BackendBaseActionIndex
         $this->loadDataGridDrafts();
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

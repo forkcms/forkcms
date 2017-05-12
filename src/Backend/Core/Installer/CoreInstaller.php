@@ -14,10 +14,7 @@ namespace Backend\Core\Installer;
  */
 class CoreInstaller extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // validate variables
         if ($this->getVariable('default_language') === null) {
@@ -46,26 +43,20 @@ class CoreInstaller extends ModuleInstaller
         $this->addModule('Error');
 
         $this->setRights();
-        $this->setSettings();
+        $this->configureDefaultSettings();
 
         // add core navigation
         $this->setNavigation(null, 'Dashboard', 'dashboard/index', null, 1);
         $this->setNavigation(null, 'Modules', null, null, 4);
     }
 
-    /**
-     * Set the rights
-     */
-    private function setRights()
+    private function setRights(): void
     {
         $this->setModuleRights(1, 'Dashboard');
         $this->setActionRights(1, 'Dashboard', 'Index');
     }
 
-    /**
-     * Store the settings
-     */
-    private function setSettings()
+    private function configureDefaultSettings(): void
     {
         // languages settings
         $this->setSetting('Core', 'languages', $this->getLanguages(), true);

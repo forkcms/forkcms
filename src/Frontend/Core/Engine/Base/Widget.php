@@ -88,8 +88,12 @@ class Widget extends Object
      * @param bool $minify Should the CSS be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addCSS(string $file, bool $overwritePath = false, bool $minify = true, bool $addTimestamp = false)
-    {
+    public function addCSS(
+        string $file,
+        bool $overwritePath = false,
+        bool $minify = true,
+        bool $addTimestamp = false
+    ): void {
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
         }
@@ -105,8 +109,12 @@ class Widget extends Object
      * @param bool $minify Should the file be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addJS(string $file, bool $overwritePath = false, bool $minify = true, bool $addTimestamp = false)
-    {
+    public function addJS(
+        string $file,
+        bool $overwritePath = false,
+        bool $minify = true,
+        bool $addTimestamp = false
+    ): void {
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;
         }
@@ -117,10 +125,10 @@ class Widget extends Object
     /**
      * Add data that should be available in JS
      *
-     * @param string $key The key whereunder the value will be stored.
+     * @param string $key The key where under the value will be stored.
      * @param mixed $value The value to pass.
      */
-    public function addJSData(string $key, $value)
+    public function addJSData(string $key, $value): void
     {
         $this->header->addJsData($this->getModule(), $key, $value);
     }
@@ -129,7 +137,7 @@ class Widget extends Object
      * Execute the action
      * If a javascript file with the name of the module or action exists it will be loaded.
      */
-    public function execute()
+    public function execute(): void
     {
         // build path to the module
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
@@ -158,11 +166,6 @@ class Widget extends Object
         }
     }
 
-    /**
-     * Get the action
-     *
-     * @return string
-     */
     public function getAction(): string
     {
         return $this->action;
@@ -184,32 +187,17 @@ class Widget extends Object
         return $this->tpl->getContent($this->templatePath);
     }
 
-    /**
-     * Get the module
-     *
-     * @return string
-     */
     public function getModule(): string
     {
         return $this->module;
     }
 
-    /**
-     * Get template
-     *
-     * @return TwigTemplate
-     */
     public function getTemplate(): TwigTemplate
     {
         return $this->tpl;
     }
 
-    /**
-     * Load the template
-     *
-     * @param string $path The path for the template to use.
-     */
-    protected function loadTemplate(string $path = null)
+    protected function loadTemplate(string $path = null): void
     {
         // no template given, so we should build the path
         if ($path === null) {
@@ -224,41 +212,22 @@ class Widget extends Object
         $this->setTemplatePath($path);
     }
 
-    /**
-     * Set the action, for later use
-     *
-     * @param string $action The action to use.
-     */
-    private function setAction(string $action)
+    private function setAction(string $action): void
     {
         $this->action = $action;
     }
 
-    /**
-     * Set the data, for later use
-     *
-     * @param string $data The data that should available.
-     */
-    private function setData(string $data = null)
+    private function setData(string $data = null): void
     {
         // data given?
         if ($data === null) {
             return;
         }
 
-        // unserialize data
-        $data = unserialize($data);
-
-        // store
-        $this->data = $data;
+        $this->data = unserialize($data);
     }
 
-    /**
-     * Set the module, for later use
-     *
-     * @param string $module The module to use.
-     */
-    private function setModule(string $module)
+    private function setModule(string $module): void
     {
         $this->module = $module;
     }
@@ -268,7 +237,7 @@ class Widget extends Object
      *
      * @param string $path The path to the template that should be loaded.
      */
-    protected function setTemplatePath(string $path)
+    protected function setTemplatePath(string $path): void
     {
         $this->templatePath = $path;
     }
@@ -281,11 +250,9 @@ class Widget extends Object
      *
      * @throws RedirectException
      */
-    public function redirect(string $url, int $code = 302)
+    public function redirect(string $url, int $code = RedirectResponse::HTTP_FOUND): void
     {
-        $response = new RedirectResponse($url, $code);
-
-        throw new RedirectException('Redirect', $response);
+        throw new RedirectException('Redirect', new RedirectResponse($url, $code));
     }
 
     /**

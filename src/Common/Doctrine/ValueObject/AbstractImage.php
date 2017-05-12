@@ -34,12 +34,7 @@ abstract class AbstractImage extends AbstractFile
      */
     const GENERATE_THUMBNAILS = true;
 
-    /**
-     * @param string|null $subDirectory
-     *
-     * @return string|null
-     */
-    public function getAbsolutePath(string $subDirectory = null)
+    public function getAbsolutePath(string $subDirectory = null): ?string
     {
         if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
             $subDirectory = 'source';
@@ -48,11 +43,6 @@ abstract class AbstractImage extends AbstractFile
         return $this->fileName === null ? null : $this->getUploadRootDir($subDirectory) . '/' . $this->fileName;
     }
 
-    /**
-     * @param string|null $subDirectory
-     *
-     * @return string
-     */
     public function getWebPath(string $subDirectory = null): string
     {
         if (self::GENERATE_THUMBNAILS && $subDirectory === null) {
@@ -73,12 +63,7 @@ abstract class AbstractImage extends AbstractFile
         return static::FALLBACK_IMAGE;
     }
 
-    /**
-     * @param string|null $subDirectory
-     *
-     * @return string
-     */
-    protected function getUploadRootDir($subDirectory = null): string
+    protected function getUploadRootDir(string $subDirectory = null): string
     {
         // the absolute directory path where uploaded
         // documents should be saved
@@ -92,7 +77,7 @@ abstract class AbstractImage extends AbstractFile
     /**
      * This function should be called for the life cycle events PostPersist() and PostUpdate()
      */
-    public function upload()
+    public function upload(): void
     {
         $file = $this->getFile();
         parent::upload();
@@ -108,7 +93,7 @@ abstract class AbstractImage extends AbstractFile
     /**
      * This will remove the old image and if needed the generated thumbnails
      */
-    protected function removeOldFile()
+    protected function removeOldFile(): void
     {
         if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
             Model::deleteThumbnails($this->getUploadRootDir(), $this->oldFileName);
@@ -122,7 +107,7 @@ abstract class AbstractImage extends AbstractFile
     /**
      * This function should be called for the life cycle event PostRemove()
      */
-    public function remove()
+    public function remove(): void
     {
         if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
             Model::deleteThumbnails($this->getUploadRootDir(), $this->fileName);
@@ -133,18 +118,12 @@ abstract class AbstractImage extends AbstractFile
         parent::remove();
     }
 
-    /**
-     * @return string
-     */
     public function getFallbackImage(): string
     {
         return static::FALLBACK_IMAGE;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function writeFileToDisk()
+    protected function writeFileToDisk(): void
     {
         $this->getFile()->move($this->getUploadRootDir(self::GENERATE_THUMBNAILS ? 'source' : null), $this->fileName);
     }

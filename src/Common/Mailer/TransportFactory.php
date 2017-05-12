@@ -38,17 +38,6 @@ class TransportFactory
         return self::getMailTransport();
     }
 
-    /**
-     * Create a new Smtp Mailer Transport instance.
-     *
-     * @param string|null $server
-     * @param string|null $port
-     * @param string|null $user
-     * @param string|null $pass
-     * @param string|null $encryption
-     *
-     * @return Swift_SmtpTransport
-     */
     private static function getSmtpTransport(
         string $server = null,
         string $port = null,
@@ -67,11 +56,6 @@ class TransportFactory
         return $transport;
     }
 
-    /**
-     * Create a new PHP Mailer Transport instance.
-     *
-     * @return Swift_MailTransport
-     */
     private static function getMailTransport(): Swift_MailTransport
     {
         return Swift_MailTransport::newInstance();

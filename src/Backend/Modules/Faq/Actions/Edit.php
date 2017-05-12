@@ -28,10 +28,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $feedback;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -50,19 +47,13 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = (array) BackendFaqModel::get($this->id);
         $this->feedback = BackendFaqModel::getAllFeedbackForQuestion($this->id);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // get values for the form
         $rbtHiddenValues[] = ['label' => BL::lbl('Hidden'), 'value' => 'Y'];
@@ -86,10 +77,7 @@ class Edit extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -105,10 +93,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('feedback', $this->feedback);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURL', [$this->record['id']]);

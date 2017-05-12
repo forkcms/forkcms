@@ -9,7 +9,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testIndexContainsBlogPosts()
+    public function testIndexContainsBlogPosts(): void
     {
         $client = static::createClient();
 
@@ -35,7 +35,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testNonExistingPageGives404()
+    public function testNonExistingPageGives404(): void
     {
         $client = static::createClient();
 

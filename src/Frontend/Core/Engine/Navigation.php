@@ -35,9 +35,6 @@ class Navigation extends FrontendBaseObject
      */
     private static $selectedPageIds = [];
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
@@ -50,11 +47,11 @@ class Navigation extends FrontendBaseObject
      * Creates a Backend URL for a given action and module
      * If you don't specify a language the current language will be used.
      *
-     * @param string $action     The action to build the URL for.
-     * @param string $module     The module to build the URL for.
-     * @param string $language   The language to use, if not provided we will use the working language.
-     * @param array  $parameters GET-parameters to use.
-     * @param bool   $urlencode  Should the parameters be urlencoded?
+     * @param string $action The action to build the URL for.
+     * @param string $module The module to build the URL for.
+     * @param string $language The language to use, if not provided we will use the working language.
+     * @param array $parameters GET-parameters to use.
+     * @param bool $urlencode Should the parameters be urlencoded?
      *
      * @return string
      */
@@ -193,12 +190,12 @@ class Navigation extends FrontendBaseObject
     /**
      * Get navigation HTML
      *
-     * @param string $type         The type of navigation the HTML should be build for.
-     * @param int    $parentId     The parentID to start of.
-     * @param int    $depth        The maximum depth to parse.
-     * @param array  $excludeIds   PageIDs to be excluded.
-     * @param string $template     The template that will be used.
-     * @param int    $depthCounter A counter that will hold the current depth.
+     * @param string $type The type of navigation the HTML should be build for.
+     * @param int $parentId The parentID to start of.
+     * @param int $depth The maximum depth to parse.
+     * @param array $excludeIds PageIDs to be excluded.
+     * @param string $template The template that will be used.
+     * @param int $depthCounter A counter that will hold the current depth.
      *
      * @throws Exception
      *
@@ -365,7 +362,7 @@ class Navigation extends FrontendBaseObject
     /**
      * Get a menuId for an specified URL
      *
-     * @param string $url      The URL wherefore you want a pageID.
+     * @param string $url The URL wherefore you want a pageID.
      * @param string $language The language wherefore the pageID should be retrieved,
      *                          if not provided we will load the language that was provided in the URL.
      *
@@ -430,7 +427,7 @@ class Navigation extends FrontendBaseObject
     /**
      * Get URL for a given pageId
      *
-     * @param int    $pageId   The pageID wherefore you want the URL.
+     * @param int $pageId The pageID wherefore you want the URL.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
      *
@@ -462,12 +459,12 @@ class Navigation extends FrontendBaseObject
     /**
      * Get the URL for a give module & action combination
      *
-     * @param string $module   The module wherefore the URL should be build.
-     * @param string $action   The specific action wherefore the URL should be build.
+     * @param string $module The module wherefore the URL should be build.
+     * @param string $action The specific action wherefore the URL should be build.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
-     * @param array $data      An array with keys and values that partially or fully match the data of the block.
-     *                         If it matches multiple versions of that block it will just return the first match.
+     * @param array $data An array with keys and values that partially or fully match the data of the block.
+     *                    If it matches multiple versions of that block it will just return the first match.
      *
      * @return string
      */
@@ -556,7 +553,7 @@ class Navigation extends FrontendBaseObject
     /**
      * Fetch the first direct link to an extra id
      *
-     * @param int    $id       The id of the extra.
+     * @param int $id The id of the extra.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
      *
@@ -600,7 +597,7 @@ class Navigation extends FrontendBaseObject
      *
      * @param mixed $pageIds This can be a single page id or this can be an array with page ids.
      */
-    public static function setExcludedPageIds($pageIds)
+    public static function setExcludedPageIds($pageIds): void
     {
         $pageIds = (array) $pageIds;
 
@@ -610,10 +607,7 @@ class Navigation extends FrontendBaseObject
         }
     }
 
-    /**
-     * Set the selected page ids
-     */
-    public function setSelectedPageIds()
+    public function setSelectedPageIds(): void
     {
         // get pages
         $pages = (array) $this->URL->getPages();

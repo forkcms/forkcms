@@ -29,7 +29,7 @@ class Model
      *
      * @param int $id The id of the record to delete.
      */
-    public static function delete(int $id)
+    public static function delete(int $id): void
     {
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -246,7 +246,7 @@ class Model
      * @param string $key
      * @param mixed $value
      */
-    public static function setMapSetting(int $mapId, string $key, $value)
+    public static function setMapSetting(int $mapId, string $key, $value): void
     {
         $value = serialize($value);
 

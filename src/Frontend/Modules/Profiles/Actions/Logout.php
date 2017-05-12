@@ -17,10 +17,7 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
  */
 class Logout extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // logout
         if (FrontendProfilesAuthentication::isLoggedIn()) {

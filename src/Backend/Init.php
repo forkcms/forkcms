@@ -17,9 +17,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class Init extends \Common\Core\Init
 {
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         $this->allowedTypes = ['Backend', 'BackendAjax', 'Console'];
@@ -27,10 +24,7 @@ class Init extends \Common\Core\Init
         parent::__construct($kernel);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function initialize(string $type)
+    public function initialize(string $type): void
     {
         parent::initialize($type);
 

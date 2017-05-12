@@ -22,11 +22,6 @@ final class SettingsStepProfileType implements SettingsStepType
     /** Google_Service_Analytics $googleServiceAnalytics */
     private $googleServiceAnalytics;
 
-    /**
-     * @param string $name
-     * @param ModulesSettings $settings
-     * @param Google_Service_Analytics $googleServiceAnalytics
-     */
     public function __construct(
         string $name,
         ModulesSettings $settings,
@@ -39,17 +34,11 @@ final class SettingsStepProfileType implements SettingsStepType
         $this->build();
     }
 
-    /**
-     * @param TwigTemplate $template
-     */
-    public function parse(TwigTemplate $template)
+    public function parse(TwigTemplate $template): void
     {
         $this->form->parse($template);
     }
 
-    /**
-     * @return bool
-     */
     public function handle(): bool
     {
         $this->form->cleanupFields();
@@ -67,10 +56,7 @@ final class SettingsStepProfileType implements SettingsStepType
         return true;
     }
 
-    /**
-     * Build up the form
-     */
-    private function build()
+    private function build(): void
     {
         $profiles = $this->googleServiceAnalytics->management_profiles->listManagementProfiles(
             $this->settings->get('Analytics', 'account'),
@@ -84,9 +70,6 @@ final class SettingsStepProfileType implements SettingsStepType
         $this->form->addDropdown('profile', $profilesForDropDown);
     }
 
-    /**
-     * @return bool
-     */
     private function isValid(): bool
     {
         $this->form->getField('profile')->isFilled(Language::err('FieldIsRequired'));

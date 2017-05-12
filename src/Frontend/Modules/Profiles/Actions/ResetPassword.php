@@ -28,10 +28,7 @@ class ResetPassword extends FrontendBaseBlock
      */
     private $frm;
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get reset key
         $key = $this->URL->getParameter(0);
@@ -50,7 +47,7 @@ class ResetPassword extends FrontendBaseBlock
             // have id?
             if ($profileId !== 0) {
                 // load
-                $this->loadForm();
+                $this->buildForm();
 
                 // validate
                 $this->validateForm();
@@ -65,10 +62,7 @@ class ResetPassword extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create the form
         $this->frm = new FrontendForm('resetPassword', null, null, 'resetPasswordForm');
@@ -85,10 +79,7 @@ class ResetPassword extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Parse the data into the template.
-     */
-    private function parse()
+    private function parse(): void
     {
         // has the password been saved?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -102,10 +93,7 @@ class ResetPassword extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {

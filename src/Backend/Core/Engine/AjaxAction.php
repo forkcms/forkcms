@@ -31,9 +31,6 @@ class AjaxAction extends Base\Object
      */
     private $ajaxAction;
 
-    /**
-     * @return Response
-     */
     public function display(): Response
     {
         $this->execute();
@@ -41,11 +38,6 @@ class AjaxAction extends Base\Object
         return $this->ajaxAction->getContent();
     }
 
-    /**
-     * @param KernelInterface $kernel
-     * @param string $action The action to use.
-     * @param string $module The module to use.
-     */
     public function __construct(KernelInterface $kernel, string $action, string $module)
     {
         parent::__construct($kernel);
@@ -59,7 +51,7 @@ class AjaxAction extends Base\Object
      * Execute the action
      * We will build the classname, require the class and call the execute method.
      */
-    private function execute()
+    private function execute(): void
     {
         $this->loadConfig();
 
@@ -84,7 +76,7 @@ class AjaxAction extends Base\Object
      * will read the folder and set possible actions
      * Other configurations will be stored in it also.
      */
-    private function loadConfig()
+    private function loadConfig(): void
     {
         // check if we can load the config file
         $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';

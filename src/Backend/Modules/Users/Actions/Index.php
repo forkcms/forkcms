@@ -21,10 +21,7 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
  */
 class Index extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrid();
@@ -32,10 +29,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid.
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // create datagrid with an overview of all active and undeleted users
         $this->dataGrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, ['N']);
@@ -71,10 +65,7 @@ class Index extends BackendBaseActionIndex
         );
     }
 
-    /**
-     * Parse the datagrid
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

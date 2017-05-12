@@ -35,10 +35,7 @@ class AskOwnQuestion extends FrontendBaseWidget
      */
     private $status;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -48,15 +45,12 @@ class AskOwnQuestion extends FrontendBaseWidget
             return;
         }
 
-        $this->loadForm();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
         $this->frm = new FrontendForm('own_question', '#' . FL::getAction('OwnQuestion'));
@@ -65,10 +59,7 @@ class AskOwnQuestion extends FrontendBaseWidget
         $this->frm->addTextarea('message')->setAttributes(['required' => null]);
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         // parse the form or a status
         if (empty($this->status)) {
@@ -81,10 +72,7 @@ class AskOwnQuestion extends FrontendBaseWidget
         $this->tpl->assign('widgetFaqOwnQuestion', true);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();

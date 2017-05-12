@@ -21,10 +21,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class Categories extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrid();
@@ -32,10 +29,7 @@ class Categories extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Loads the datagrids
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // create datagrid
         $this->dataGrid = new BackendDataGridDB(
@@ -84,10 +78,7 @@ class Categories extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

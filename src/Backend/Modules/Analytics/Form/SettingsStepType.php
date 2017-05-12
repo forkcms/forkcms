@@ -9,13 +9,7 @@ use Backend\Core\Engine\TwigTemplate;
  */
 interface SettingsStepType
 {
-    /**
-     * @param TwigTemplate $template
-     */
-    public function parse(TwigTemplate $template);
+    public function parse(TwigTemplate $template): void;
 
-    /**
-     * @return bool
-     */
     public function handle(): bool;
 }

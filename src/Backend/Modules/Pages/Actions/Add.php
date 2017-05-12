@@ -61,10 +61,7 @@ class Add extends BackendBaseActionAdd
      */
     private $templates = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
@@ -103,10 +100,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // get default template id
         $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
@@ -307,10 +301,7 @@ class Add extends BackendBaseActionAdd
         );
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -346,10 +337,7 @@ class Add extends BackendBaseActionAdd
         );
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -542,15 +530,10 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * @param bool $allowImage
-     *
-     * @return string|null
-     */
-    private function getImage(bool $allowImage)
+    private function getImage(bool $allowImage): ?string
     {
         if (!$allowImage || !$this->frm->getField('image')->isFilled()) {
-            return;
+            return null;
         }
 
         $imagePath = FRONTEND_FILES_PATH . '/pages/images';

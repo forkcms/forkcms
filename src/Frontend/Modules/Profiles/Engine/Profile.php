@@ -74,11 +74,6 @@ class Profile
      */
     private $url;
 
-    /**
-     * Constructor.
-     *
-     * @param int $profileId The profile id to load data from.
-     */
     public function __construct(int $profileId = null)
     {
         if ($profileId !== null) {
@@ -86,41 +81,21 @@ class Profile
         }
     }
 
-    /**
-     * Get display name.
-     *
-     * @return string
-     */
     public function getDisplayName(): string
     {
         return $this->displayName;
     }
 
-    /**
-     * Get email.
-     *
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * Get profile id.
-     *
-     * @return int|null
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Get registered on date.
-     *
-     * @return int
-     */
     public function getRegisteredOn(): int
     {
         return $this->registeredOn;
@@ -150,11 +125,6 @@ class Profile
         return $defaultValue;
     }
 
-    /**
-     * Get all settings.
-     *
-     * @return array
-     */
     public function getSettings(): array
     {
         // if settings array does not exist then get it first
@@ -166,21 +136,11 @@ class Profile
         return $this->settings;
     }
 
-    /**
-     * Get status.
-     *
-     * @return string
-     */
     public function getStatus(): string
     {
         return $this->status;
     }
 
-    /**
-     * Get profile url.
-     *
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
@@ -198,19 +158,14 @@ class Profile
         return isset($this->groups[$groupId]);
     }
 
-    /**
-     * Load a user profile by id.
-     *
-     * @param int $id Profile id to load.
-     */
-    private function loadProfile(int $id)
+    private function loadProfile(int $profileId): void
     {
         // get profile data
         $profileData = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.email, p.status, p.display_name, p.url, UNIX_TIMESTAMP(p.registered_on) AS registered_on
              FROM profiles AS p
              WHERE p.id = ?',
-            $id
+            $profileId
         );
 
         // set properties
@@ -227,16 +182,11 @@ class Profile
              FROM profiles_groups AS pg
              INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
              WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
-            [':id' => (int) $id]
+            [':id' => $profileId]
         );
     }
 
-    /**
-     * Load a profile by URL
-     *
-     * @param string $url
-     */
-    public function loadProfileByUrl(string $url)
+    public function loadProfileByUrl(string $url): void
     {
         // get profile data
         $profileData = (array) FrontendModel::getContainer()->get('database')->getRecord(
@@ -274,53 +224,31 @@ class Profile
         }
     }
 
-    /**
-     * Set a display name.
-     *
-     * @param string $value Display name value.
-     */
-    public function setDisplayName(string $value)
+    public function setDisplayName(string $value): void
     {
         $this->displayName = $value;
     }
 
-    /**
-     * Set a profile email.
-     *
-     * @param string $value Email address.
-     */
-    public function setEmail(string $value)
+    public function setEmail(string $value): void
     {
         $this->email = $value;
     }
 
-    /**
-     * Set a profile id.
-     *
-     * @param int $value Id of the profile.
-     */
-    private function setId(int $value)
+    private function setId(int $value): void
     {
         $this->id = $value;
     }
 
-    /**
-     * Set a register date.
-     *
-     * @param int $value Register date timestamp.
-     */
-    public function setRegisteredOn(int $value)
+    public function setRegisteredOn(int $value): void
     {
         $this->registeredOn = $value;
     }
 
     /**
-     * Set a profile setting.
-     *
      * @param string $name Setting name.
      * @param mixed $value New setting value.
      */
-    public function setSetting(string $name, $value)
+    public function setSetting(string $name, $value): void
     {
         // make sure we have the current settings in cache
         $this->getSettings();
@@ -337,7 +265,7 @@ class Profile
      *
      * @param array $values Settings in key=>value form.
      */
-    public function setSettings(array $values)
+    public function setSettings(array $values): void
     {
         // make sure we have the current settings in cache
         $this->getSettings();
@@ -351,22 +279,12 @@ class Profile
         }
     }
 
-    /**
-     * Set a profile status.
-     *
-     * @param string $value Status.
-     */
-    public function setStatus(string $value)
+    public function setStatus(string $value): void
     {
         $this->status = $value;
     }
 
-    /**
-     * Set a profile url.
-     *
-     * @param string $value Url.
-     */
-    public function setUrl(string $value)
+    public function setUrl(string $value): void
     {
         $this->url = $value;
     }

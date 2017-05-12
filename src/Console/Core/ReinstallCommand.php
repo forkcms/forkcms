@@ -13,20 +13,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class ReinstallCommand extends ContainerAwareCommand
 {
-    /**
-     * Configure the command options.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('forkcms:reinstall')
             ->setDescription('Revert Fork CMS to an uninstalled state, prompting the install wizard.');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -37,10 +30,7 @@ class ReinstallCommand extends ContainerAwareCommand
         }
     }
 
-    /**
-     * @param SymfonyStyle $io
-     */
-    private function clearDatabase(SymfonyStyle $io)
+    private function clearDatabase(SymfonyStyle $io): void
     {
         if ($io->confirm('Clear the database?')) {
             $tables = $this->getContainer()->get('database')->getColumn(
@@ -56,10 +46,7 @@ class ReinstallCommand extends ContainerAwareCommand
         }
     }
 
-    /**
-     * @param SymfonyStyle $io
-     */
-    private function removeConfiguration(SymfonyStyle $io)
+    private function removeConfiguration(SymfonyStyle $io): void
     {
         $fullPath = realpath(__DIR__ . '/../../..' . '/app/config/parameters.yml');
         if (file_exists($fullPath)) {
@@ -68,11 +55,7 @@ class ReinstallCommand extends ContainerAwareCommand
         }
     }
 
-    /**
-     * @param OutputInterface $output
-     * @param SymfonyStyle    $io
-     */
-    private function clearCache(OutputInterface $output, SymfonyStyle $io)
+    private function clearCache(OutputInterface $output, SymfonyStyle $io): void
     {
         $command = $this->getApplication()->find('forkcms:cache:clear');
         $command->run(

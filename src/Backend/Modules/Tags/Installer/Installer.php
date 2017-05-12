@@ -17,10 +17,7 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -52,7 +49,7 @@ class Installer extends ModuleInstaller
         // get search extra id
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::WIDGET, 'Form']
+            ['Search', ModuleExtraType::widget(), 'Form']
         );
 
         // loop languages

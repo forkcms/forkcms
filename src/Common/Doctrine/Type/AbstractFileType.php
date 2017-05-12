@@ -8,13 +8,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 abstract class AbstractFileType extends Type
 {
-    /**
-     * @param array $fieldDeclaration
-     * @param AbstractPlatform $platform
-     *
-     * @return string
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'VARCHAR(255)';
     }
@@ -25,7 +19,7 @@ abstract class AbstractFileType extends Type
      *
      * @return AbstractFile
      */
-    public function convertToPHPValue($fileName, AbstractPlatform $platform)
+    public function convertToPHPValue($fileName, AbstractPlatform $platform): AbstractFile
     {
         return $this->createFromString($fileName);
     }
@@ -36,15 +30,10 @@ abstract class AbstractFileType extends Type
      *
      * @return string
      */
-    public function convertToDatabaseValue($file, AbstractPlatform $platform)
+    public function convertToDatabaseValue($file, AbstractPlatform $platform): string
     {
         return (string) $file;
     }
 
-    /**
-     * @param string $fileName
-     *
-     * @return AbstractFile
-     */
     abstract protected function createFromString(string $fileName): AbstractFile;
 }

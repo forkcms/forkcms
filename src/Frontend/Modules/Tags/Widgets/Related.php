@@ -21,28 +21,25 @@ class Related extends FrontendBaseWidget
     /**
      * Records to exclude
      *
-     * @var     array
+     * @var array
      */
     private $exclude = [];
 
     /**
      * Tags on this page
      *
-     * @var     array
+     * @var array
      */
     private $tags = [];
 
     /**
      * Related records
      *
-     * @var     array
+     * @var array
      */
     private $related = [];
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->getTags();
@@ -54,7 +51,7 @@ class Related extends FrontendBaseWidget
     /**
      * Get related "things" based on tags
      */
-    private function getRelated()
+    private function getRelated(): void
     {
         // loop tags
         foreach ($this->tags as $tag) {
@@ -120,7 +117,7 @@ class Related extends FrontendBaseWidget
     /**
      * Get tags for current "page"
      */
-    private function getTags()
+    private function getTags(): void
     {
         // get page id
         $pageId = $this->getContainer()->get('page')->getId();
@@ -163,10 +160,7 @@ class Related extends FrontendBaseWidget
         }
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         // assign
         $this->tpl->assign('widgetTagsRelated', $this->related);

@@ -17,10 +17,7 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         $this->addModule('Mailmotor');
 
@@ -31,7 +28,7 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // install the mailmotor module
-        $this->installModule();
+        $this->installModuleAndActions();
 
         // install backend navigation
         $this->installBackendNavigation();
@@ -40,10 +37,7 @@ class Installer extends ModuleInstaller
         $this->installPages();
     }
 
-    /**
-     * Install the module and it's actions
-     */
-    private function installModule()
+    private function installModuleAndActions(): void
     {
         // module rights
         $this->setModuleRights(1, $this->getModule());
@@ -52,10 +46,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'Settings');
     }
 
-    /**
-     * Install backend navigation
-     */
-    private function installBackendNavigation()
+    private function installBackendNavigation(): void
     {
         // settings navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
@@ -63,10 +54,7 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, $this->getModule(), 'mailmotor/settings');
     }
 
-    /**
-     * Install the pages for this module
-     */
-    private function installPages()
+    private function installPages(): void
     {
         // add extra's
         $subscribeId = $this->insertExtra(
@@ -139,10 +127,7 @@ class Installer extends ModuleInstaller
         }
     }
 
-    /**
-     * Install settings
-     */
-    private function installSettings()
+    private function installSettings(): void
     {
         $this->setSetting($this->getModule(), 'mail_engine', null);
         $this->setSetting($this->getModule(), 'api_key', null);

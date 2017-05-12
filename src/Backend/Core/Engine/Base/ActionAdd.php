@@ -26,16 +26,13 @@ class ActionAdd extends Action
     protected $frm;
 
     /**
-     * The backends meta-object
+     * The backend meta-object
      *
      * @var Meta
      */
     protected $meta;
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

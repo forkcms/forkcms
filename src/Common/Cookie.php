@@ -19,23 +19,23 @@ class Cookie extends \SpoonCookie
     /**
      * Stores a value in a cookie, by default the cookie will expire in one day.
      *
-     * @param string $key      A name for the cookie.
-     * @param mixed  $value    The value to be stored. Keep in mind that they will be serialized.
-     * @param int    $time     The number of seconds that this cookie will be available, 30 days is the default.
-     * @param string $path     The path on the server in which the cookie will
+     * @param string $key A name for the cookie.
+     * @param mixed $value The value to be stored. Keep in mind that they will be serialized.
+     * @param int $time The number of seconds that this cookie will be available, 30 days is the default.
+     * @param string $path The path on the server in which the cookie will
      *                         be available. Use / for the entire domain, /foo
      *                         if you just want it to be available in /foo.
-     * @param string $domain   The domain that the cookie is available on. Use
+     * @param string $domain The domain that the cookie is available on. Use
      *                         .example.com to make it available on all
      *                         subdomains of example.com.
-     * @param bool   $secure   Should the cookie be transmitted over a
+     * @param bool $secure Should the cookie be transmitted over a
      *                         HTTPS-connection? If true, make sure you use
      *                         a secure connection, otherwise the cookie won't be set.
-     * @param bool   $httpOnly Should the cookie only be available through
+     * @param bool $httpOnly Should the cookie only be available through
      *                         HTTP-protocol? If true, the cookie can't be
      *                         accessed by Javascript, ...
      *
-     * @return bool    If set with success, returns true otherwise false.
+     * @return bool If set with success, returns true otherwise false.
      */
     public static function set(
         $key,
@@ -45,7 +45,7 @@ class Cookie extends \SpoonCookie
         $domain = null,
         $secure = null,
         $httpOnly = true
-    ) {
+    ): bool {
         // redefine
         $key = (string) $key;
         $value = serialize($value);
@@ -85,7 +85,7 @@ class Cookie extends \SpoonCookie
      * This overwrites the spoon cookie method and adds the same functionality
      * as in the set method to automatically set the domain.
      */
-    public static function delete()
+    public static function delete(): void
     {
         $domain = null;
         if (FrontendModel::getContainer()->has('request')) {

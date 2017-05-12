@@ -64,13 +64,6 @@ class Model
         return $url;
     }
 
-    /**
-     * Get an item
-     *
-     * @param int $id The id of the item to fetch.
-     *
-     * @return array
-     */
     public static function get(int $id): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
@@ -81,11 +74,6 @@ class Model
         );
     }
 
-    /**
-     * Get all items
-     *
-     * @return array
-     */
     public static function getAll(): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -97,7 +85,7 @@ class Model
     /**
      * Retrieve a map setting
      *
-     * @param int    $mapId
+     * @param int $mapId
      * @param string $name
      *
      * @return mixed
@@ -118,13 +106,6 @@ class Model
         return false;
     }
 
-    /**
-     * Fetch all the settings for a specific map
-     *
-     * @param int $mapId
-     *
-     * @return array
-     */
     public static function getMapSettings(int $mapId): array
     {
         $mapSettings = (array) FrontendModel::getContainer()->get('database')->getPairs(
@@ -141,13 +122,6 @@ class Model
         return $mapSettings;
     }
 
-    /**
-     * Get path to map styles
-     *
-     * @param bool $backend
-     *
-     * @return string
-     */
     public static function getPathToMapStyles(bool $backend = true): string
     {
         $path = 'src/Frontend';

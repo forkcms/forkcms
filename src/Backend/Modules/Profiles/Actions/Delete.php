@@ -18,10 +18,7 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class Delete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');

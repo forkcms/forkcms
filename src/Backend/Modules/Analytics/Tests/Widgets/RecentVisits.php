@@ -10,10 +10,7 @@ use Google_Auth_Exception;
  */
 class RecentVisits extends Widget
 {
-    /**
-     * Execute the widget
-     */
-    public function execute()
+    public function execute(): void
     {
         $startDate = strtotime('-1 week', mktime(0, 0, 0));
         $endDate = mktime(0, 0, 0);

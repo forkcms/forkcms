@@ -35,7 +35,7 @@ final class MetaLink
     /**
      * @param string[] $uniqueAttributeKeys
      */
-    private function createUniqueKey(array $uniqueAttributeKeys)
+    private function createUniqueKey(array $uniqueAttributeKeys): void
     {
         // make sure the keys are sorted alphabetically
         sort($uniqueAttributeKeys);
@@ -53,31 +53,17 @@ final class MetaLink
         );
     }
 
-    /**
-     * @return string
-     */
     public function getUniqueKey(): string
     {
         return $this->uniqueKey;
     }
 
-    /**
-     * @param string $attributeKey
-     * @param string $attributeValue
-     *
-     * @return bool
-     */
     public function hasAttributeWithValue(string $attributeKey, string $attributeValue): bool
     {
         return isset($this->attributes[$attributeKey]) && $this->attributes[$attributeKey] === $attributeValue;
     }
 
-    /**
-     * @param string $href
-     *
-     * @return self
-     */
-    public static function canonical(string $href)
+    public static function canonical(string $href): self
     {
         return new self(
             $href,
@@ -85,13 +71,7 @@ final class MetaLink
         );
     }
 
-    /**
-     * @param string $href
-     * @param string $title
-     *
-     * @return self
-     */
-    public static function rss(string $href, string $title)
+    public static function rss(string $href, string $title): self
     {
         return new self(
             $href,
@@ -99,13 +79,7 @@ final class MetaLink
         );
     }
 
-    /**
-     * @param string $href
-     * @param string $language
-     *
-     * @return self
-     */
-    public static function alternateLanguage(string $href, string $language)
+    public static function alternateLanguage(string $href, string $language): self
     {
         return new self(
             $href,
@@ -113,12 +87,7 @@ final class MetaLink
         );
     }
 
-    /**
-     * @param string $href
-     *
-     * @return self
-     */
-    public static function next(string $href)
+    public static function next(string $href): self
     {
         return new self(
             $href,
@@ -126,12 +95,7 @@ final class MetaLink
         );
     }
 
-    /**
-     * @param string $href
-     *
-     * @return self
-     */
-    public static function previous(string $href)
+    public static function previous(string $href): self
     {
         return new self(
             $href,
@@ -139,10 +103,7 @@ final class MetaLink
         );
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $html = '<link ';
         $html .= implode(

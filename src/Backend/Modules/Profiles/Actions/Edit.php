@@ -43,10 +43,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $profile;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -64,10 +61,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the profile data.
-     */
-    private function getData()
+    private function getData(): void
     {
         // get general info
         $this->profile = BackendProfilesModel::get($this->id);
@@ -79,10 +73,7 @@ class Edit extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // gender dropdown values
         $genderValues = [
@@ -139,10 +130,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->getField('country')->setDefaultElement('');
     }
 
-    /**
-     * Load the data grid with groups.
-     */
-    private function loadGroups()
+    private function loadGroups(): void
     {
         // create the data grid
         $this->dgGroups = new BackendDataGridDB(
@@ -183,10 +171,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -209,10 +194,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

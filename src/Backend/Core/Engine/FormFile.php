@@ -28,7 +28,7 @@ class FormFile extends \SpoonFormFile
      *
      * @param bool $on
      */
-    public function hideHelpTxt($on = true)
+    public function hideHelpTxt($on = true): void
     {
         $this->hideHelpTxt = $on;
     }
@@ -42,7 +42,7 @@ class FormFile extends \SpoonFormFile
      *
      * @return string
      */
-    public function parse($template = null)
+    public function parse($template = null): string
     {
         // name is required
         if ($this->attributes['name'] == '') {
@@ -93,9 +93,9 @@ class FormFile extends \SpoonFormFile
     /**
      * This function will return the errors. It is extended so we can do file checks automatically.
      *
-     * @return string
+     * @return string|null
      */
-    public function getErrors()
+    public function getErrors(): ?string
     {
         // if the image is bigger then the allowed configuration it won't show up as filled but it is submitted
         // the empty check is added because otherwise this error is shown like 7 times

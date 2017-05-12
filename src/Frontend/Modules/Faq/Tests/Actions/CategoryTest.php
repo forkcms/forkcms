@@ -9,7 +9,7 @@ class CategoryTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testCategoryHasPage()
+    public function testCategoryHasPage(): void
     {
         $client = static::createClient();
         $this->loadFixtures(
@@ -34,7 +34,7 @@ class CategoryTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testNonExistingCategoryPostGives404()
+    public function testNonExistingCategoryPostGives404(): void
     {
         $client = static::createClient();
 
@@ -45,7 +45,7 @@ class CategoryTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testCategoryPageContainsQuestion()
+    public function testCategoryPageContainsQuestion(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/en/faq/category/faqcategory-for-tests');
@@ -71,7 +71,7 @@ class CategoryTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testNonExistingPageGives404()
+    public function testNonExistingPageGives404(): void
     {
         $client = static::createClient();
 

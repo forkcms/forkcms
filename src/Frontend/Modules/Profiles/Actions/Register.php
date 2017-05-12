@@ -31,10 +31,7 @@ class Register extends FrontendBaseBlock
      */
     private $frm;
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -42,7 +39,7 @@ class Register extends FrontendBaseBlock
 
         // profile not logged in
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         } elseif ($this->URL->getParameter('sent') == true) {
@@ -54,10 +51,7 @@ class Register extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         $this->frm = new FrontendForm('register', null, null, 'registerForm');
         $this->frm->addText('display_name');
@@ -73,10 +67,7 @@ class Register extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Parse the data into the template.
-     */
-    private function parse()
+    private function parse(): void
     {
         // e-mail was sent?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -90,10 +81,7 @@ class Register extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {

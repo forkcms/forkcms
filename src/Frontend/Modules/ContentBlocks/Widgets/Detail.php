@@ -10,10 +10,7 @@ use Frontend\Core\Language\Locale;
  */
 class Detail extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 

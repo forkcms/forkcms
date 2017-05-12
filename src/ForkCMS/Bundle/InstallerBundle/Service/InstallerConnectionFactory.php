@@ -15,20 +15,12 @@ use Doctrine\DBAL\Exception\ConnectionException;
 
 class InstallerConnectionFactory extends ConnectionFactory
 {
-    /**
-     * @param array $params
-     * @param Configuration|null $config
-     * @param EventManager|null $eventManager
-     * @param array $mappingTypes
-     *
-     * @return Connection
-     */
     public function createConnection(
         array $params,
         Configuration $config = null,
         EventManager $eventManager = null,
         array $mappingTypes = []
-    ) {
+    ): Connection {
         try {
             $installationData = $this->getInstallationData();
             if ($installationData->getDbHostname() === null) {
@@ -48,9 +40,6 @@ class InstallerConnectionFactory extends ConnectionFactory
         }
     }
 
-    /**
-     * @return InstallationData
-     */
     private function getInstallationData(): InstallationData
     {
         if (InstallerController::$installationData instanceof InstallationData) {
@@ -60,18 +49,11 @@ class InstallerConnectionFactory extends ConnectionFactory
         return new InstallationData();
     }
 
-    /**
-     * @param array $params
-     * @param Configuration|null $config
-     * @param EventManager|null $eventManager
-     *
-     * @return InstallerConnection
-     */
     private function getInstallerConnection(
         array $params,
         Configuration $config = null,
         EventManager $eventManager = null
-    ) {
+    ): InstallerConnection {
         $normalConnection = DriverManager::getConnection($params, $config, $eventManager);
 
         return new InstallerConnection($params, $normalConnection->getDriver(), $config, $eventManager);

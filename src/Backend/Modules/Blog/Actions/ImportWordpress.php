@@ -9,6 +9,7 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use SimpleXMLElement;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Exception;
@@ -37,10 +38,7 @@ class ImportWordpress extends BackendBaseActionEdit
      */
     private $filesystem;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         set_time_limit(0);
@@ -51,20 +49,14 @@ class ImportWordpress extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new Form('import');
         $this->frm->addFile('wordpress');
         $this->frm->addText('filter', SITE_URL);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // Is the form submitted?
         if (!$this->frm->isSubmitted()) {
@@ -99,10 +91,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
     }
 
-    /**
-     * Process the xml
-     */
-    private function processXML()
+    private function processXML(): void
     {
         $reader = new \XMLReader();
         $reader->open(FRONTEND_FILES_PATH . '/wordpress.xml');
@@ -123,7 +112,7 @@ class ImportWordpress extends BackendBaseActionEdit
             $xmlString = $reader->readOuterXml();
 
             // Read the XML as an SimpleXML-object
-            /* @var \SimpleXMLElement $xml */
+            /* @var SimpleXMLElement $xml */
             $xml = @simplexml_load_string($xmlString);
 
             // Skip element if it isn't a valid SimpleXML-object
@@ -137,12 +126,12 @@ class ImportWordpress extends BackendBaseActionEdit
                 switch ($xml->children('wp', true)->post_type) {
                     case 'post':
                         // Process as post
-                        $this->processPost($xml);
+                        $this->importPost($xml);
                         break;
 
                     case 'attachment':
                         // Process as attachment
-                        $this->processAttachment($xml);
+                        $this->importAttachment($xml);
                         break;
 
                     default:
@@ -171,14 +160,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $reader->close();
     }
 
-    /**
-     * Import a blog post
-     *
-     * @param \SimpleXMLElement $xml
-     *
-     * @return bool
-     */
-    private function processPost(\SimpleXMLElement $xml): bool
+    private function importPost(SimpleXMLElement $xml): bool
     {
         // Are we really working with a post?
         if ($xml->children('wp', true)->post_type != 'post') {
@@ -234,7 +216,7 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // Walk through wp categories
         foreach ($xml->category as $category) {
-            /* @var \SimpleXMLElement $category */
+            /* @var SimpleXMLElement $category */
             switch ($category->attributes()->domain) {
                 case 'category':
                     $item['category_id'] = $this->handleCategory((string) $category);
@@ -255,7 +237,7 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // Walk through wp comments
         foreach ($xml->children('wp', true)->comment as $comment) {
-            /* @var \SimpleXMLElement $comment */
+            /* @var SimpleXMLElement $comment */
             $comments[] = [
                 'author' => (string) $comment->children('wp', true)->comment_author,
                 'email' => (string) $comment->children('wp', true)->comment_author_email,
@@ -271,14 +253,7 @@ class ImportWordpress extends BackendBaseActionEdit
         return true;
     }
 
-    /**
-     * Import an attachment
-     *
-     * @param \SimpleXMLElement $xml
-     *
-     * @return bool
-     */
-    private function processAttachment(\SimpleXMLElement $xml): bool
+    private function importAttachment(SimpleXMLElement $xml): bool
     {
         // Are we really working with a post?
         if ($xml->children('wp', true)->post_type !== 'attachment') {

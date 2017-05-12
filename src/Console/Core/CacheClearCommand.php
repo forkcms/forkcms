@@ -12,20 +12,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class CacheClearCommand extends Command
 {
-    /**
-     * Configure the command options.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('forkcms:cache:clear')
             ->setDescription('Clear the cache');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -53,7 +46,7 @@ class CacheClearCommand extends Command
      * @param SymfonyStyle $io
      * @param string $name
      */
-    private function removeFilesInFolder(string $path, SymfonyStyle $io, string $name)
+    private function removeFilesInFolder(string $path, SymfonyStyle $io, string $name): void
     {
         $fullPath = realpath(__DIR__ . '/../../..' . $path);
 

@@ -18,20 +18,14 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
  */
 class Categories extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         // get categories
         $categories = FrontendBlogModel::getAllCategories();

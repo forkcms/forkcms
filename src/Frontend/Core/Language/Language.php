@@ -72,7 +72,7 @@ class Language
      * @param string $language The language to build the locale-file for.
      * @param string $application The application to build the locale-file for.
      */
-    public static function buildCache(string $language, string $application)
+    public static function buildCache(string $language, string $application): void
     {
         $cacheBuilder = new CacheBuilder(Model::get('database'));
         $cacheBuilder->buildCache($language, $application);
@@ -108,11 +108,6 @@ class Language
         return '{$act' . $key . '}';
     }
 
-    /**
-     * Get all the actions
-     *
-     * @return array
-     */
     public static function getActions(): array
     {
         return Model::getContainer()->getParameter('kernel.debug') ? self::$act : array_merge(
@@ -121,11 +116,6 @@ class Language
         );
     }
 
-    /**
-     * Get the active languages
-     *
-     * @return array
-     */
     public static function getActiveLanguages(): array
     {
         // validate the cache
@@ -223,11 +213,6 @@ class Language
         return '{$err' . $key . '}';
     }
 
-    /**
-     * Get all the errors
-     *
-     * @return array
-     */
     public static function getErrors(): array
     {
         return Model::getContainer()->getParameter('kernel.debug') ? self::$err : array_merge(
@@ -266,11 +251,6 @@ class Language
         return '{$lbl' . $key . '}';
     }
 
-    /**
-     * Get all the labels
-     *
-     * @return array
-     */
     public static function getLabels(): array
     {
         return (Model::getContainer()->getParameter('kernel.debug')) ? self::$lbl : array_merge(
@@ -309,22 +289,12 @@ class Language
         return '{$msg' . $key . '}';
     }
 
-    /**
-     * Get all the messages
-     *
-     * @return array
-     */
     public static function getMessages(): array
     {
         return (Model::getContainer()->getParameter('kernel.debug') === true)
             ? self::$msg : array_merge(self::$fallbackMsg, self::$msg);
     }
 
-    /**
-     * Get the redirect languages
-     *
-     * @return array
-     */
     public static function getRedirectLanguages(): array
     {
         // validate the cache
@@ -341,14 +311,12 @@ class Language
     }
 
     /**
-     * Set locale
-     *
      * @param string $language The language to load, if not provided we will load the language based on the URL.
      * @param bool $force Force the language, so don't check if the language is active.
      *
      * @throws Exception
      */
-    public static function setLocale(string $language = null, bool $force = false)
+    public static function setLocale(string $language = null, bool $force = false): void
     {
         if ($language === null) {
             $language = LANGUAGE;

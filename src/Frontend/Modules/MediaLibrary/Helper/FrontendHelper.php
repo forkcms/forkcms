@@ -199,9 +199,7 @@ class FrontendHelper
     {
         try {
             $widget->execute();
-            $content = $widget->getContent();
-
-            return $content;
+            return $widget->getContent();
         } catch (\Exception $e) {
             // if we are debugging, we want to see the exception
             if (FrontendModel::getContainer()->getParameter('kernel.debug')) {

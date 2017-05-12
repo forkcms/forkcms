@@ -14,20 +14,12 @@ class DatabaseDataCollector extends DataCollector
      */
     private $database;
 
-    /**
-     * DatabaseDataCollector constructor.
-     *
-     * @param SpoonDatabase $database
-     */
     public function __construct(SpoonDatabase $database)
     {
         $this->database = $database;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, \Exception $exception = null): void
     {
         $this->data = [
             'queries' => array_map(
@@ -42,25 +34,16 @@ class DatabaseDataCollector extends DataCollector
         ];
     }
 
-    /**
-     * @return int
-     */
     public function getQueryCount(): int
     {
         return $this->data['queryCount'];
     }
 
-    /**
-     * @return array[]
-     */
     public function getQueries(): array
     {
         return $this->data['queries'];
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'database';

@@ -10,43 +10,22 @@ class ContentBlockStatusDBALType extends Type
 {
     const CONTENT_BLOCKS_STATUS = 'content_blocks_status';
 
-    /**
-     * @param array $fieldDeclaration
-     * @param AbstractPlatform $platform
-     *
-     * @return string
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'ENUM("' . implode('","', ContentBlockStatus::getPossibleStatuses()) . '")';
     }
 
-    /**
-     * @param string $status
-     * @param AbstractPlatform $platform
-     *
-     * @return ContentBlockStatus
-     */
-    public function convertToPHPValue($status, AbstractPlatform $platform)
+    public function convertToPHPValue($status, AbstractPlatform $platform): ContentBlockStatus
     {
         return ContentBlockStatus::fromString($status);
     }
 
-    /**
-     * @param ContentBlockStatus $status
-     * @param AbstractPlatform $platform
-     *
-     * @return string
-     */
-    public function convertToDatabaseValue($status, AbstractPlatform $platform)
+    public function convertToDatabaseValue($status, AbstractPlatform $platform): string
     {
         return (string) $status;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return self::CONTENT_BLOCKS_STATUS;
     }

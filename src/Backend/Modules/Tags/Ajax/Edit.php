@@ -19,10 +19,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Edit extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 

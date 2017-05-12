@@ -30,11 +30,7 @@ class ImageType extends AbstractType
     /** @var array */
     private $isNew = [];
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['show_remove_image']) {
             $builder->add(
@@ -114,10 +110,7 @@ class ImageType extends AbstractType
             );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(
             [
@@ -166,18 +159,12 @@ class ImageType extends AbstractType
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'fork_image';
     }
 
-    /**
-     * @return string
-     */
-    public function getParent()
+    public function getParent(): string
     {
         if (!$this instanceof self) {
             return 'fork_image';
@@ -186,12 +173,7 @@ class ImageType extends AbstractType
         return 'file';
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['show_preview'] = $options['show_preview'];
         $view->vars['show_remove_image'] = $options['show_remove_image'] && $form->getData() !== null
@@ -222,10 +204,7 @@ class ImageType extends AbstractType
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }
@@ -233,35 +212,26 @@ class ImageType extends AbstractType
     /**
      * Increases the current index
      */
-    private function nextField()
+    private function nextField(): void
     {
         ++$this->fieldOffset;
     }
 
-    /**
-     * @return CheckboxType
-     */
-    private function getRemoveField()
+    private function getRemoveField(): CheckboxType
     {
         return $this->removeFields[$this->fieldOffset];
     }
 
-    /**
-     * @return bool
-     */
-    private function isNew()
+    private function isNew(): bool
     {
         return $this->isNew[$this->fieldOffset];
     }
 
-    /**
-     * @return string|null
-     */
-    private function getUploadMaxFileSize()
+    private function getUploadMaxFileSize(): ?string
     {
         $uploadMaxFileSize = ini_get('upload_max_filesize');
         if ($uploadMaxFileSize === false) {
-            return;
+            return null;
         }
 
         // reformat if defined as an integer

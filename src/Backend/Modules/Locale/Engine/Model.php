@@ -19,25 +19,12 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Model
 {
-    /**
-     * Build the language files
-     *
-     * @param string $language    The language to build the locale-file for.
-     * @param string $application The application to build the locale-file for.
-     */
-    public static function buildCache(string $language, string $application)
+    public static function buildCache(string $language, string $application): void
     {
         $cacheBuilder = new CacheBuilder(BackendModel::get('database'));
         $cacheBuilder->buildCache($language, $application);
     }
 
-    /**
-     * Build a query for the URL based on the filter
-     *
-     * @param array $filter The filter.
-     *
-     * @return string
-     */
     public static function buildURLQueryByFilter(array $filter): string
     {
         $query = http_build_query($filter, null, '&', PHP_QUERY_RFC3986);
@@ -48,13 +35,6 @@ class Model
         return $query;
     }
 
-    /**
-     * Create an XML-string that can be used for export.
-     *
-     * @param array $items The items.
-     *
-     * @return string
-     */
     public static function createXMLForExport(array $items): string
     {
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
@@ -115,9 +95,9 @@ class Model
     /**
      * Delete (multiple) items from locale
      *
-     * @param array $ids The id(s) to delete.
+     * @param int[] $ids The id(s) to delete.
      */
-    public static function delete(array $ids)
+    public static function delete(array $ids): void
     {
         // loop and cast to integers
         foreach ($ids as &$id) {
@@ -139,13 +119,6 @@ class Model
         self::buildCache(BL::getWorkingLanguage(), 'Frontend');
     }
 
-    /**
-     * Does an id exist.
-     *
-     * @param int $id The id to check for existence.
-     *
-     * @return bool
-     */
     public static function exists(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -153,42 +126,29 @@ class Model
              FROM locale
              WHERE id = ?
              LIMIT 1',
-            [(int) $id]
+            [$id]
         );
     }
 
-    /**
-     * Does a locale exists by its name.
-     *
-     * @param string $name        The name of the locale.
-     * @param string $type        The type of the locale.
-     * @param string $module      The module wherein will be searched.
-     * @param string $language    The language to use.
-     * @param string $application The application wherein will be searched.
-     * @param int    $id          The id to exclude in the check.
-     *
-     * @return bool
-     */
-    public static function existsByName(string $name, string $type, string $module, string $language, string $application, int $id = null): bool
-    {
-        $name = (string) $name;
-        $type = (string) $type;
-        $module = (string) $module;
-        $language = (string) $language;
-        $application = (string) $application;
-        $id = ($id !== null) ? (int) $id : null;
-
+    public static function existsByName(
+        string $name,
+        string $type,
+        string $module,
+        string $language,
+        string $application,
+        int $excludedId = null
+    ): bool {
         // get db
         $db = BackendModel::getContainer()->get('database');
 
         // return
-        if ($id !== null) {
+        if ($excludedId !== null) {
             return (bool) $db->getVar(
                 'SELECT 1
                  FROM locale
                  WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?
                  LIMIT 1',
-                [$name, $type, $module, $language, $application, $id]
+                [$name, $type, $module, $language, $application, $excludedId]
             );
         }
 
@@ -201,48 +161,29 @@ class Model
         );
     }
 
-    /**
-     * Get a single item from locale.
-     *
-     * @param int $id The id of the item to get.
-     *
-     * @return array
-     */
-    public static function get($id): array
+    public static function get(int $id): array
     {
         // fetch record from db
         $record = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT * FROM locale WHERE id = ?',
-            [(int) $id]
+            [$id]
         );
 
         // actions are urlencoded
-        if ($record['type'] == 'act') {
+        if ($record['type'] === 'act') {
             $record['value'] = urldecode($record['value']);
         }
 
         return $record;
     }
 
-    /**
-     * Get a locale by its name
-     *
-     * @param string $name        The name of the locale.
-     * @param string $type        The type of the locale.
-     * @param string $module      The module wherein will be searched.
-     * @param string $language    The language to use.
-     * @param string $application The application wherein will be searched.
-     *
-     * @return bool
-     */
-    public static function getByName(string $name, string $type, string $module, string $language, string $application): bool
-    {
-        $name = (string) $name;
-        $type = (string) $type;
-        $module = (string) $module;
-        $language = (string) $language;
-        $application = (string) $application;
-
+    public static function getByName(
+        string $name,
+        string $type,
+        string $module,
+        string $language,
+        string $application
+    ): bool {
         return BackendModel::getContainer()->get('database')->getVar(
             'SELECT l.id
              FROM locale AS l
@@ -251,13 +192,6 @@ class Model
         );
     }
 
-    /**
-     * Get the languages for a multicheckbox.
-     *
-     * @param bool $includeInterfaceLanguages Should we also get the interfacelanguages?
-     *
-     * @return array
-     */
     public static function getLanguagesForMultiCheckbox(bool $includeInterfaceLanguages = false): array
     {
         // get working languages
@@ -281,22 +215,14 @@ class Model
         return $languages;
     }
 
-    /**
-     * Get the translations
-     *
-     * @param string $application The application.
-     * @param string $module      The module.
-     * @param array  $types       The types of the translations to get.
-     * @param array  $languages   The languages of the translations to get.
-     * @param string $name        The name.
-     * @param string $value       The value.
-     *
-     * @return array
-     */
-    public static function getTranslations($application, string $module, array $types, array $languages, string $name, string $value): array
-    {
-        $languages = (array) $languages;
-
+    public static function getTranslations(
+        $application,
+        string $module,
+        array $types,
+        array $languages,
+        string $name,
+        string $value
+    ): array {
         // create an array for the languages, surrounded by quotes (example: 'en')
         $aLanguages = [];
         foreach ($languages as $key => $val) {
@@ -422,13 +348,6 @@ class Model
         return $dataGridTranslations;
     }
 
-    /**
-     * Get full type name.
-     *
-     * @param string $type The type of the locale.
-     *
-     * @return string
-     */
     public static function getTypeName(string $type): string
     {
         // get full type name
@@ -450,11 +369,6 @@ class Model
         return $type;
     }
 
-    /**
-     * Get all locale types.
-     *
-     * @return array
-     */
     public static function getTypesForDropDown(): array
     {
         // fetch types
@@ -472,11 +386,6 @@ class Model
         return array_combine($types, $labels);
     }
 
-    /**
-     * Get all locale types for a multicheckbox.
-     *
-     * @return array
-     */
     public static function getTypesForMultiCheckbox(): array
     {
         // fetch types
@@ -507,27 +416,14 @@ class Model
         return $types;
     }
 
-    /**
-     * Import a locale XML file.
-     *
-     * @param \SimpleXMLElement $xml                The locale XML.
-     * @param bool              $overwriteConflicts Should we overwrite when there is a conflict?
-     * @param array             $frontendLanguages  The frontend languages to install locale for.
-     * @param array             $backendLanguages   The backend languages to install locale for.
-     * @param int               $userId             Id of the user these translations should be inserted for.
-     * @param int               $date               The date the translation has been inserted.
-     *
-     * @return array The import statistics
-     */
     public static function importXML(
         \SimpleXMLElement $xml,
         bool $overwriteConflicts = false,
-        $frontendLanguages = null,
-        $backendLanguages = null,
-        $userId = null,
-        $date = null
-    ) : array {
-        $overwriteConflicts = (bool) $overwriteConflicts;
+        array $frontendLanguages = null,
+        array $backendLanguages = null,
+        int $userId = null,
+        string $date = null
+    ): array {
         $statistics = [
             'total' => 0,
             'imported' => 0,
@@ -577,14 +473,14 @@ class Model
         // applications
         foreach ($xml as $application => $modules) {
             // application does not exist
-            if (!in_array($application, $possibleApplications)) {
+            if (!in_array($application, $possibleApplications, true)) {
                 continue;
             }
 
             // modules
             foreach ($modules as $module => $items) {
                 // module does not exist
-                if (!in_array($module, $possibleModules)) {
+                if (!in_array($module, $possibleModules, true)) {
                     continue;
                 }
 
@@ -675,13 +571,6 @@ class Model
         return $statistics;
     }
 
-    /**
-     * Insert a new locale item.
-     *
-     * @param array $item The data to insert.
-     *
-     * @return int
-     */
     public static function insert(array $item): int
     {
         // actions should be urlized
@@ -701,12 +590,7 @@ class Model
         return $item['id'];
     }
 
-    /**
-     * Update a locale item.
-     *
-     * @param array $item The new data.
-     */
-    public static function update(array $item)
+    public static function update(array $item): int
     {
         // actions should be urlized
         if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {

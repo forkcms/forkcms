@@ -107,7 +107,7 @@ class Extra extends FrontendBaseObject
      * Execute the action
      * We will build the class name, require the class and call the execute method.
      */
-    public function execute()
+    public function execute(): void
     {
         // build action-class-name
         $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
@@ -183,11 +183,6 @@ class Extra extends FrontendBaseObject
         return $this->action;
     }
 
-    /**
-     * Get the block content
-     *
-     * @return string
-     */
     public function getContent(): string
     {
         // set path to template if the widget didn't return any data
@@ -231,21 +226,11 @@ class Extra extends FrontendBaseObject
         return $this->overwrite;
     }
 
-    /**
-     * Get the assigned template.
-     *
-     * @return TwigTemplate
-     */
     public function getTemplate(): TwigTemplate
     {
         return $this->object->getTemplate();
     }
 
-    /**
-     * Get path for the template
-     *
-     * @return string
-     */
     public function getTemplatePath(): string
     {
         return $this->templatePath;
@@ -267,7 +252,7 @@ class Extra extends FrontendBaseObject
      * will read the folder and set possible actions
      * Other configurations will also be stored in it.
      */
-    public function loadConfig()
+    public function loadConfig(): void
     {
         $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
         if ($this->getModule() === 'Core') {
@@ -283,12 +268,7 @@ class Extra extends FrontendBaseObject
         $this->config = new $configClass($this->getKernel(), $this->getModule());
     }
 
-    /**
-     * Set the action
-     *
-     * @param string $action The action to load.
-     */
-    private function setAction(string $action = null)
+    private function setAction(string $action = null): void
     {
         $this->action = $action;
     }
@@ -298,17 +278,12 @@ class Extra extends FrontendBaseObject
      *
      * @param mixed $data The data that should be set.
      */
-    private function setData($data)
+    private function setData($data): void
     {
         $this->data = $data;
     }
 
-    /**
-     * Set the module
-     *
-     * @param string $module The module to load.
-     */
-    private function setModule(string $module)
+    private function setModule(string $module): void
     {
         $this->module = $module;
     }
@@ -318,17 +293,12 @@ class Extra extends FrontendBaseObject
      *
      * @param bool $overwrite Should the template overwrite the already loaded template.
      */
-    private function setOverwrite(bool $overwrite)
+    private function setOverwrite(bool $overwrite): void
     {
         $this->overwrite = $overwrite;
     }
 
-    /**
-     * Set the path for the template
-     *
-     * @param string $path The path to set.
-     */
-    private function setTemplatePath(string $path)
+    private function setTemplatePath(string $path): void
     {
         $this->templatePath = $path;
     }

@@ -22,10 +22,7 @@ use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
  */
 class Subscribe extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -86,13 +83,10 @@ class Subscribe extends FrontendBaseBlock
         $redirectLink .= $doubleOptin ? 'true' : 'false';
         $redirectLink .= '#mailmotorSubscribeForm';
 
-        return $this->redirect($redirectLink);
+        $this->redirect($redirectLink);
     }
 
-    /**
-     * Get email
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         // define email
         $email = null;
@@ -105,10 +99,7 @@ class Subscribe extends FrontendBaseBlock
         return $email;
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // form was subscribed?
         if ($this->URL->getParameter('subscribed') == 'true') {

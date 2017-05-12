@@ -25,13 +25,6 @@ class FormBuilderSubmittedEvent extends Event
      */
     protected $dataId;
 
-    /**
-     * @param array $form
-     * @param array $data
-     * @param int $dataId
-     *
-     * @internal param int $datId
-     */
     public function __construct(array $form, array $data, int $dataId)
     {
         $this->form = $form;
@@ -39,25 +32,16 @@ class FormBuilderSubmittedEvent extends Event
         $this->dataId = $dataId;
     }
 
-    /**
-     * @return array
-     */
     public function getForm(): array
     {
         return $this->form;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @return int
-     */
     public function getDataId(): int
     {
         return $this->dataId;

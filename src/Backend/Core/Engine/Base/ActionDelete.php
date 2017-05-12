@@ -33,7 +33,7 @@ class ActionDelete extends Action
      * Execute the current action
      * This method will be overwritten in most of the actions, but still be called to add general stuff
      */
-    public function execute()
+    public function execute(): void
     {
         parent::parse();
         parent::checkToken();

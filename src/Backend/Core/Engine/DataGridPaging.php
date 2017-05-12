@@ -10,11 +10,12 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Language\Language as BackendLanguage;
+use iSpoonDatagridPaging;
 
 /**
  * This is our implementation of iSpoonDatagridPaging
  */
-final class DataGridPaging implements \iSpoonDatagridPaging
+final class DataGridPaging implements iSpoonDatagridPaging
 {
     /** @var int */
     private $currentPage;

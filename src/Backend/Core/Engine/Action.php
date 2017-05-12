@@ -63,11 +63,6 @@ class Action extends Base\Object
         return $action->getContent();
     }
 
-    /**
-     * @throws Exception
-     *
-     * @return string
-     */
     private function buildActionClass(): string
     {
         $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
@@ -79,7 +74,7 @@ class Action extends Base\Object
         return $actionClass;
     }
 
-    private function assignWorkingLanguagesToTemplate()
+    private function assignWorkingLanguagesToTemplate(): void
     {
         // get working languages
         $languages = BackendLanguage::getWorkingLanguages();

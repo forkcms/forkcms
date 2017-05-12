@@ -19,8 +19,6 @@ class AppKernel extends Kernel
 {
     /**
      * Load all the bundles we'll be using in our application.
-     *
-     * @return array
      */
     public function registerBundles(): array
     {
@@ -51,10 +49,7 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-    /**
-     * @param LoaderInterface $loader
-     */
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $fs = new Filesystem();
         if ($fs->exists(__DIR__ . '/config/parameters.yml')) {

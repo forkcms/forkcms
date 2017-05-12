@@ -19,10 +19,6 @@ final class DateRangeType
     /** @var DateRange $dateRange */
     private $dateRange;
 
-    /**
-     * @param string $name
-     * @param DateRange $dateRange
-     */
     public function __construct(string $name, DateRange $dateRange)
     {
         $this->form = new Form($name);
@@ -31,19 +27,13 @@ final class DateRangeType
         $this->build();
     }
 
-    /**
-     * @param TwigTemplate $template
-     */
-    public function parse(TwigTemplate $template)
+    public function parse(TwigTemplate $template): void
     {
         $this->form->parse($template);
         $template->assign('startTimestamp', $this->dateRange->getStartDate());
         $template->assign('endTimestamp', $this->dateRange->getEndDate());
     }
 
-    /**
-     * @return bool
-     */
     public function handle(): bool
     {
         $this->form->cleanupFields();
@@ -62,10 +52,7 @@ final class DateRangeType
         return true;
     }
 
-    /**
-     * Build up the form
-     */
-    private function build()
+    private function build(): void
     {
         $this->form->addDate(
             'start_date',
@@ -83,9 +70,6 @@ final class DateRangeType
         );
     }
 
-    /**
-     * @return bool
-     */
     private function isValid(): bool
     {
         $fields = $this->form->getFields();
@@ -123,9 +107,6 @@ final class DateRangeType
         return $this->form->isCorrect();
     }
 
-    /**
-     * @return DateRange
-     */
     public function getDateRange(): DateRange
     {
         return $this->dateRange;

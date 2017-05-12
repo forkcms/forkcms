@@ -155,7 +155,7 @@ class Model extends BaseModel
      * @param string $path The path wherein the thumbnail-folders will be stored.
      * @param string $sourceFile The location of the source file.
      */
-    public static function generateThumbnails(string $path, string $sourceFile)
+    public static function generateThumbnails(string $path, string $sourceFile): void
     {
         // get folder listing
         $folders = self::getThumbnailFolders($path);
@@ -275,11 +275,6 @@ class Model extends BaseModel
         return mktime($hour, $minute, 0, $month, $day, $year);
     }
 
-    /**
-     * Get the modules
-     *
-     * @return array
-     */
     public static function getModules(): array
     {
         // validate cache
@@ -298,11 +293,6 @@ class Model extends BaseModel
         return self::$modules;
     }
 
-    /**
-     * @throws InvalidArgumentException when we don't have an akismet key
-     *
-     * @return Akismet
-     */
     protected static function getAkismet(): Akismet
     {
         $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');

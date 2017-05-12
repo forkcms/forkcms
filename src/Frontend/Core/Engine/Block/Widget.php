@@ -65,9 +65,9 @@ class Widget extends FrontendBaseObject
 
     /**
      * @param KernelInterface $kernel
-     * @param string          $module The module to load.
-     * @param string          $action The action to load.
-     * @param mixed           $data   The data that was passed from the database.
+     * @param string $module The module to load.
+     * @param string $action The action to load.
+     * @param mixed $data The data that was passed from the database.
      */
     public function __construct(KernelInterface $kernel, string $module, string $action, $data = null)
     {
@@ -86,7 +86,7 @@ class Widget extends FrontendBaseObject
      * Execute the action
      * We will build the class name, require the class and call the execute method.
      */
-    public function execute()
+    public function execute(): void
     {
         // build action-class-name
         $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Widgets\\' . $this->getAction();
@@ -129,9 +129,6 @@ class Widget extends FrontendBaseObject
         return $this->action;
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->output;
@@ -156,8 +153,6 @@ class Widget extends FrontendBaseObject
     }
 
     /**
-     * Get the data
-     *
      * @return mixed
      */
     public function getData()
@@ -165,15 +160,14 @@ class Widget extends FrontendBaseObject
         return $this->data;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCustomTemplate()
+    public function getCustomTemplate(): ?string
     {
         $data = @unserialize($this->data);
         if (is_array($data) && array_key_exists('custom_template', $data)) {
             return $this->module . '/Layout/Widgets/' . $data['custom_template'];
         }
+
+        return null;
     }
 
     /**
@@ -204,7 +198,7 @@ class Widget extends FrontendBaseObject
      * the constructor will read the folder and set possible actions
      * Other configurations will be stored in it also.
      */
-    public function loadConfig()
+    public function loadConfig(): void
     {
         $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
         if ($this->getModule() === 'Core') {
@@ -220,12 +214,7 @@ class Widget extends FrontendBaseObject
         $this->config = new $configClass($this->getKernel(), $this->getModule());
     }
 
-    /**
-     * Set the action
-     *
-     * @param string $action The action to load.
-     */
-    private function setAction(string $action = null)
+    private function setAction(string $action = null): void
     {
         $this->action = $action;
     }
@@ -235,17 +224,12 @@ class Widget extends FrontendBaseObject
      *
      * @param mixed $data The data that should be set.
      */
-    private function setData($data)
+    private function setData($data): void
     {
         $this->data = $data;
     }
 
-    /**
-     * Set the module
-     *
-     * @param string $module The module to load.
-     */
-    private function setModule(string $module)
+    private function setModule(string $module): void
     {
         $this->module = $module;
     }
@@ -256,9 +240,9 @@ class Widget extends FrontendBaseObject
      * @param string $action The action to load.
      * @param int|null $id This is not the modules_extra id but the id of the item itself
      *
-     * @return string|null if we have data it is still serialised since it will be unserialized in the constructor
+     * @return self
      */
-    public static function getForId(KernelInterface $kernel, string $module, string $action, int $id = null)
+    public static function getForId(KernelInterface $kernel, string $module, string $action, int $id = null): self
     {
         $query = 'SELECT data FROM modules_extras WHERE type = :widget AND module = :module AND action = :action';
         $parameters = [

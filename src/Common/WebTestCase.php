@@ -79,10 +79,6 @@ abstract class WebTestCase extends BaseWebTestCase
         $database->execute(trim($sql));
     }
 
-    /**
-     * @param Client $client
-     * @param array $fixtureClasses
-     */
     protected function loadFixtures(Client $client, array $fixtureClasses = [])
     {
         $database = $client->getContainer()->get('database');
@@ -142,9 +138,6 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
-    /**
-     * @param Client $client
-     */
     protected function assertIs404(Client $client)
     {
         $client->followRedirect();
@@ -166,7 +159,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Form $form
      * @param array $data
      */
-    protected function submitForm(Client $client, Form $form, array $data = [])
+    protected function submitForm(Client $client, Form $form, array $data = []): void
     {
         // Get parameters should be set manually. Symfony uses the request object,
         // but spoon still checks the $_GET and $_POST parameters
@@ -190,7 +183,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Form $form
      * @param array $data
      */
-    protected function submitEditForm(Client $client, Form $form, array $data = [])
+    protected function submitEditForm(Client $client, Form $form, array $data = []): void
     {
         $originalData = [];
         foreach ($form->all() as $fieldName => $formField) {
@@ -228,7 +221,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @param array $data
      */
-    protected function setGetParameters(array $data = [])
+    protected function setGetParameters(array $data = []): void
     {
         foreach ((array) $data as $key => $value) {
             $_GET[$key] = $value;
@@ -240,7 +233,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @param array $data
      */
-    protected function unsetGetParameters(array $data = [])
+    protected function unsetGetParameters(array $data = []): void
     {
         if (empty($data)) {
             $_GET = [];
@@ -259,7 +252,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * Logging in using the forms is tested in the Authentication module
      */
-    protected function login()
+    protected function login(): void
     {
         Authentication::tearDown();
         Authentication::loginUser('noreply@fork-cms.com', 'fork');
@@ -268,7 +261,7 @@ abstract class WebTestCase extends BaseWebTestCase
     /**
      * Log out a user
      */
-    protected function logout()
+    protected function logout(): void
     {
         Authentication::tearDown();
     }

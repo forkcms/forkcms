@@ -13,16 +13,13 @@ class Installer extends ModuleInstaller
     /**
      * Pre-insert default extras of the default theme.
      */
-    private function insertExtras()
+    private function insertExtras(): void
     {
         // insert extra ids
         $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, false, 2001);
     }
 
-    /**
-     * Insert the templates.
-     */
-    private function insertTemplates()
+    private function insertTemplates(): void
     {
         /*
          * Fallback templates
@@ -72,10 +69,7 @@ class Installer extends ModuleInstaller
         $this->setSetting('Pages', 'meta_navigation', false);
     }
 
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -137,10 +131,7 @@ class Installer extends ModuleInstaller
         }
     }
 
-    /**
-     * Set the rights
-     */
-    private function setRights()
+    private function setRights(): void
     {
         // modules
         $this->setActionRights(1, $this->getModule(), 'Modules');
@@ -161,7 +152,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'DeleteThemeTemplate');
     }
 
-    private function installForkTheme()
+    private function installForkTheme(): void
     {
         /*
          * Fallback templates

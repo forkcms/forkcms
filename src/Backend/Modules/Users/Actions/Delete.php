@@ -20,10 +20,7 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
  */
 class Delete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');

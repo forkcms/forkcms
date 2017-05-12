@@ -20,7 +20,7 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class AddSynonym extends BackendBaseActionAdd
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -29,7 +29,7 @@ class AddSynonym extends BackendBaseActionAdd
         $this->display();
     }
 
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('addItem');
 
@@ -37,7 +37,7 @@ class AddSynonym extends BackendBaseActionAdd
         $this->frm->addText('synonym', null, null, 'form-control synonymBox', 'form-control danger synonymBox');
     }
 
-    private function validateForm()
+    private function validateForm(): void
     {
         if (!$this->frm->isSubmitted()) {
             return;

@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Exception\RedirectException;
+use DateTime;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Frontend\Core\Language\Language;
@@ -27,7 +28,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a UNIX-timestamp as a date
      * syntax: {{ $var|formatdate }}
      *
-     * @param int|\DateTime $var The UNIX-timestamp to format or \DateTime
+     * @param int|DateTime $var The UNIX-timestamp to format or \DateTime
      *
      * @return string
      */
@@ -36,7 +37,7 @@ class TemplateModifiers extends BaseTwigModifiers
         // get setting
         $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_short');
 
-        if ($var instanceof \DateTime) {
+        if ($var instanceof DateTime) {
             $var = $var->getTimestamp();
         }
 
@@ -48,7 +49,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a UNIX-timestamp as a date
      * syntax: {{ $var|formatdatetime }}
      *
-     * @param int|\DateTime $var The UNIX-timestamp to format or \DateTime
+     * @param int|DateTime $var The UNIX-timestamp to format or \DateTime
      *
      * @return string
      */
@@ -57,7 +58,7 @@ class TemplateModifiers extends BaseTwigModifiers
         // get setting
         $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_long');
 
-        if ($var instanceof \DateTime) {
+        if ($var instanceof DateTime) {
             $var = $var->getTimestamp();
         }
 
@@ -114,7 +115,7 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a UNIX-timestamp as a date
      * syntax: {{ $var|formatdate }}
      *
-     * @param int|\DateTime $var The UNIX-timestamp to format or \DateTime
+     * @param int|DateTime $var The UNIX-timestamp to format or \DateTime
      *
      * @return string
      */
@@ -123,7 +124,7 @@ class TemplateModifiers extends BaseTwigModifiers
         // get setting
         $format = FrontendModel::get('fork.settings')->get('Core', 'time_format');
 
-        if ($var instanceof \DateTime) {
+        if ($var instanceof DateTime) {
             $var = $var->getTimestamp();
         }
 
@@ -176,13 +177,13 @@ class TemplateModifiers extends BaseTwigModifiers
      * Formats a timestamp as a string that indicates the time ago
      *    syntax: {{ $$timestamp|timeago }}.
      *
-     * @param int|\DateTime $timestamp A UNIX-timestamp that will be formatted as a time-ago-string.
+     * @param int|DateTime $timestamp A UNIX-timestamp that will be formatted as a time-ago-string.
      *
      * @return string
      */
     public static function timeAgo($timestamp = null): string
     {
-        if ($timestamp instanceof \DateTime) {
+        if ($timestamp instanceof DateTime) {
             $timestamp = $timestamp->getTimestamp();
         }
 

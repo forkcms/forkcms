@@ -10,12 +10,6 @@ use InvalidArgumentException;
  */
 final class InvalidInitTypeException extends InvalidArgumentException
 {
-    /**
-     * @param string $type
-     * @param array $allowedTypes
-     *
-     * @return InvalidInitTypeException
-     */
     public static function withType(string $type, array $allowedTypes): InvalidInitTypeException
     {
         return new self(

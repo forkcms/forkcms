@@ -25,12 +25,6 @@ final class SubscriptionHandler
      */
     protected $subscriber;
 
-    /**
-     * SubscriptionHandler constructor.
-     *
-     * @param Subscriber $subscriber
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(
         Subscriber $subscriber,
         ModulesSettings $modulesSettings
@@ -39,12 +33,7 @@ final class SubscriptionHandler
         $this->modulesSettings = $modulesSettings;
     }
 
-    /**
-     * Handle
-     *
-     * @param Subscription $subscription
-     */
-    public function handle(Subscription $subscription)
+    public function handle(Subscription $subscription): void
     {
         // Init variables
         $mergeFields = [];

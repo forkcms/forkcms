@@ -18,9 +18,6 @@ use Symfony\Component\Translation\IdentityTranslator;
  */
 final class Language extends IdentityTranslator
 {
-    /**
-     * @return string
-     */
     public static function get(): string
     {
         $application = 'Backend';
@@ -117,10 +114,7 @@ final class Language extends IdentityTranslator
         return self::callLanguageFunction('msg', [$key]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
     {
         $possibleActions = ['lbl', 'err', 'msg'];
         if (self::get() === FrontendLanguage::class) {

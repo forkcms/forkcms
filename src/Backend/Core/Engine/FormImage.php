@@ -10,13 +10,14 @@ namespace Backend\Core\Engine;
  */
 
 use SpoonFilter;
+use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This is our extended version of \SpoonFormFile
  */
-class FormImage extends \SpoonFormImage
+class FormImage extends SpoonFormImage
 {
     /**
      * Constructor.
@@ -56,7 +57,7 @@ class FormImage extends \SpoonFormImage
      * @param string $path
      * @param string $filename
      */
-    public function generateThumbnails($path, $filename)
+    public function generateThumbnails($path, $filename): void
     {
         $filesystem = new Filesystem();
         if (!$filesystem->exists($path . '/source')) {
@@ -71,9 +72,9 @@ class FormImage extends \SpoonFormImage
     /**
      * This function will return the errors. It is extended so we can do image checks automatically.
      *
-     * @return string
+     * @return string|null
      */
-    public function getErrors()
+    public function getErrors(): ?string
     {
         // do an image validation
         if ($this->isFilled()) {
@@ -100,7 +101,7 @@ class FormImage extends \SpoonFormImage
      *
      * @param bool $on
      */
-    public function hideHelpTxt($on = true)
+    public function hideHelpTxt($on = true): void
     {
         $this->hideHelpTxt = $on;
     }
@@ -114,7 +115,7 @@ class FormImage extends \SpoonFormImage
      *
      * @return string
      */
-    public function parse($template = null)
+    public function parse($template = null): string
     {
         // name is required
         if ($this->attributes['name'] == '') {

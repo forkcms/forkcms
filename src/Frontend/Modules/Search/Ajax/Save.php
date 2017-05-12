@@ -23,10 +23,7 @@ class Save extends FrontendBaseAJAXAction
      */
     private $statistics;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 

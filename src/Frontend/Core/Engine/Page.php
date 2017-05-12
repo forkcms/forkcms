@@ -83,9 +83,6 @@ class Page extends FrontendBaseObject
      */
     protected $statusCode = 200;
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
@@ -96,7 +93,7 @@ class Page extends FrontendBaseObject
     /**
      * Loads the actual components on the page
      */
-    public function load()
+    public function load(): void
     {
         // set tracking cookie
         Model::getVisitorId();
@@ -133,7 +130,7 @@ class Page extends FrontendBaseObject
         array_map([$this, 'processExtra'], $this->extras);
     }
 
-    private function checkAuthentication()
+    private function checkAuthentication(): void
     {
         // no authentication needed
         if (!isset($this->record['data']['auth_required'])
@@ -166,9 +163,6 @@ class Page extends FrontendBaseObject
         $this->record = Model::getPage(404);
     }
 
-    /**
-     * Display the page
-     */
     public function display(): Response
     {
         // assign the id so we can use it as an option
@@ -200,31 +194,16 @@ class Page extends FrontendBaseObject
         );
     }
 
-    /**
-     * Get the extras linked to this page
-     *
-     * @return array
-     */
     public function getExtras(): array
     {
         return $this->extras;
     }
 
-    /**
-     * Get the current page id
-     *
-     * @return int
-     */
     public function getId(): int
     {
         return $this->pageId;
     }
 
-    /**
-     * @param int $pageId
-     *
-     * @return array
-     */
     private function getPageRecord(int $pageId): array
     {
         if ($this->URL->getParameter('page_revision', 'int') === null) {
@@ -237,15 +216,6 @@ class Page extends FrontendBaseObject
         return Model::getPageRevision($this->URL->getParameter('page_revision', 'int'));
     }
 
-    /**
-     * Get page content
-     *
-     * @param int $pageId
-     *
-     * @throws RedirectException
-     *
-     * @return array
-     */
     protected function getPageContent(int $pageId): array
     {
         $record = $this->getPageRecord($pageId);
@@ -267,11 +237,6 @@ class Page extends FrontendBaseObject
         return $record;
     }
 
-    /**
-     * @param array $positions
-     *
-     * @return bool
-     */
     private function allPositionsAreEmpty(array $positions): bool
     {
         // loop positions to check if they are empty
@@ -291,30 +256,17 @@ class Page extends FrontendBaseObject
         return true;
     }
 
-    /**
-     * Get the content of the page
-     *
-     * @return array
-     */
     public function getRecord(): array
     {
         return $this->record;
     }
 
-    /**
-     * Fetch the status code for the current page.
-     *
-     * @return int
-     */
     public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    /**
-     * Parse the languages
-     */
-    protected function parseLanguages()
+    protected function parseLanguages(): void
     {
         // just execute if the site is multi-language
         if (!$this->getContainer()->getParameter('site.multilanguage') || count(Language::getActiveLanguages()) === 1) {
@@ -337,10 +289,7 @@ class Page extends FrontendBaseObject
         );
     }
 
-    /**
-     * Parse the positions to the template
-     */
-    protected function parsePositions()
+    protected function parsePositions(): void
     {
         // init array to store parsed positions data
         $positions = [];
@@ -362,12 +311,6 @@ class Page extends FrontendBaseObject
         $this->tpl->assign('positions', $positions);
     }
 
-    /**
-     * @param array $block
-     * @param array $mainVariables
-     *
-     * @return array
-     */
     private function parseBlock(array $block, array $mainVariables): array
     {
         if (!isset($block['extra'])) {
@@ -391,12 +334,7 @@ class Page extends FrontendBaseObject
         ];
     }
 
-    /**
-     * Processes the extras linked to the page
-     *
-     * @param FrontendBaseObject $extra
-     */
-    protected function processExtra(FrontendBaseObject $extra)
+    protected function processExtra(FrontendBaseObject $extra): void
     {
         $this->getContainer()->get('logger')->info(
             'Executing ' . get_class($extra) . " '{$extra->getAction()}' for module '{$extra->getModule()}'."
@@ -411,7 +349,7 @@ class Page extends FrontendBaseObject
         }
     }
 
-    private function addAlternateLinks()
+    private function addAlternateLinks(): void
     {
         // no need for alternate links if there is only one language
         if (!$this->getContainer()->getParameter('site.multilanguage')) {
@@ -421,10 +359,7 @@ class Page extends FrontendBaseObject
         array_map([$this, 'addAlternateLinkForLanguage'], Language::getActiveLanguages());
     }
 
-    /**
-     * @param string $language
-     */
-    private function addAlternateLinkForLanguage(string $language)
+    private function addAlternateLinkForLanguage(string $language): void
     {
         if ($language === LANGUAGE) {
             return;
@@ -446,7 +381,7 @@ class Page extends FrontendBaseObject
         $this->header->addLink(['rel' => 'alternate', 'hreflang' => $language, 'href' => $url]);
     }
 
-    private function assignPageMeta()
+    private function assignPageMeta(): void
     {
         // set pageTitle
         $this->header->setPageTitle(
@@ -478,10 +413,7 @@ class Page extends FrontendBaseObject
         }
     }
 
-    /**
-     * Processes the page
-     */
-    protected function processPage()
+    protected function processPage(): void
     {
         $this->assignPageMeta();
         new Navigation($this->getKernel());
@@ -524,11 +456,6 @@ class Page extends FrontendBaseObject
         }
     }
 
-    /**
-     * @param array $block
-     *
-     * @return FrontendBaseObject
-     */
     private function getExtraForBlock(array $block): FrontendBaseObject
     {
         // block
@@ -553,13 +480,7 @@ class Page extends FrontendBaseObject
         );
     }
 
-    /**
-     * @param string $url
-     * @param int $code
-     *
-     * @throws RedirectException
-     */
-    private function redirect(string $url, int $code = RedirectResponse::HTTP_FOUND)
+    private function redirect(string $url, int $code = RedirectResponse::HTTP_FOUND): void
     {
         throw new RedirectException('Redirect', new RedirectResponse($url, $code));
     }

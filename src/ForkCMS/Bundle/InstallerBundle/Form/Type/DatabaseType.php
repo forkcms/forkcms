@@ -16,10 +16,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  */
 class DatabaseType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -84,18 +81,12 @@ class DatabaseType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'install_database';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $resolver->setDefaults([
             'constraints' => [
@@ -114,12 +105,12 @@ class DatabaseType extends AbstractType
     /**
      * Validate if a database connection can be made
      *
-     * @param InstallationData          $data    The form data
+     * @param InstallationData $data The form data
      * @param ExecutionContextInterface $context The forms validation context
      *
      * @todo   Replace SpoonDatabase
      */
-    public function checkDatabaseConnection(InstallationData $data, ExecutionContextInterface $context)
+    public function checkDatabaseConnection(InstallationData $data, ExecutionContextInterface $context): void
     {
         try {
             // create instance

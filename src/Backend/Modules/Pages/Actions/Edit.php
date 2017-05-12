@@ -71,10 +71,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $templates = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -112,10 +109,7 @@ class Edit extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Load the record
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get record
         $this->id = $this->getParameter('id', 'int');
@@ -169,10 +163,7 @@ class Edit extends BackendBaseActionEdit
         $this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
     }
 
-    /**
-     * Load the datagrid with drafts
-     */
-    private function loadDrafts()
+    private function loadDrafts(): void
     {
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
@@ -224,10 +215,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // get default template id
         $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
@@ -458,7 +446,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addCheckbox('navigation_title_overwrite', ($this->record['navigation_title_overwrite'] == 'Y'));
         $this->frm->addText('navigation_title', $this->record['navigation_title']);
 
-        if ($this->showTags()) {
+        if ($this->userCanSeeAndEditTags()) {
             // tags
             $this->frm->addText(
                 'tags',
@@ -488,10 +476,7 @@ class Edit extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Load the datagrid
-     */
-    private function loadRevisions()
+    private function loadRevisions(): void
     {
         // create datagrid
         $this->dgRevisions = new BackendDataGridDB(
@@ -549,10 +534,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -571,7 +553,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL($this->record['parent_id']), '/'));
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
-        $this->tpl->assign('showTags', $this->showTags());
+        $this->tpl->assign('showTags', $this->userCanSeeAndEditTags());
 
         // init var
         $showDelete = true;
@@ -615,10 +597,7 @@ class Edit extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -764,7 +743,7 @@ class Edit extends BackendBaseActionEdit
                 // insert the blocks
                 BackendPagesModel::insertBlocks($this->blocksContent);
 
-                if ($this->showTags()) {
+                if ($this->userCanSeeAndEditTags()) {
                     // save tags
                     BackendTagsModel::saveTags(
                         $page['id'],
@@ -822,12 +801,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * @param bool $allowImage
-     *
-     * @return string|void
-     */
-    private function getImage(bool $allowImage)
+    private function getImage(bool $allowImage): ?string
     {
         $imageFilename = array_key_exists('image', (array) $this->record['data']) ? $this->record['data']['image'] : null;
 
@@ -843,7 +817,7 @@ class Edit extends BackendBaseActionEdit
         if (!$allowImage
             || ($this->frm->getField('remove_image')->isChecked() && !$this->frm->getField('image')->isFilled())
         ) {
-            return;
+            return null;
         }
 
         $imageFilename = $this->meta->getURL() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
@@ -852,12 +826,7 @@ class Edit extends BackendBaseActionEdit
         return $imageFilename;
     }
 
-    /**
-     * Check if the user has the right to see/edit tags
-     *
-     * @return bool
-     */
-    private function showTags(): bool
+    private function userCanSeeAndEditTags(): bool
     {
         return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
     }

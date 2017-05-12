@@ -27,11 +27,6 @@ final class Connector
      */
     private $settings;
 
-    /**
-     * @param Google_Service_Analytics $analytics
-     * @param CacheItemPoolInterface $cache
-     * @param ModulesSettings $settings
-     */
     public function __construct(
         Google_Service_Analytics $analytics,
         CacheItemPoolInterface $cache,

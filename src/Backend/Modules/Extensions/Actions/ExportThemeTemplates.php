@@ -37,7 +37,7 @@ class ExportThemeTemplates extends ActionEdit
     /**
      * Load the selected theme, falling back to default if none specified.
      */
-    public function execute()
+    public function execute(): void
     {
         // get data
         $this->selectedTheme = $this->getParameter('theme', 'string');
@@ -55,9 +55,6 @@ class ExportThemeTemplates extends ActionEdit
         );
     }
 
-    /**
-     * @return Response
-     */
     public function getContent(): Response
     {
         $filename = 'templates_' . BackendModel::getUTCDate('d-m-Y') . '.xml';

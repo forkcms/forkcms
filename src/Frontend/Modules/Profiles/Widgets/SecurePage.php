@@ -20,10 +20,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class SecurePage extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();

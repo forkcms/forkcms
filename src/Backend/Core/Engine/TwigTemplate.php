@@ -64,8 +64,8 @@ class TwigTemplate extends BaseTwigTemplate
      */
     public function getContent(string $template): string
     {
-        $this->parseConstants();
-        $this->parseAuthentication();
+        $this->parseUserDefinedConstants();
+        $this->parseAuthenticationSettingsForTheAuthenticatedUser();
         $this->parseAuthenticatedUser();
         $this->parseDebug();
         $this->parseTranslations();
@@ -108,7 +108,7 @@ class TwigTemplate extends BaseTwigTemplate
         );
     }
 
-    private function connectSymfonyForms()
+    private function connectSymfonyForms(): void
     {
         $formEngine = new TwigRendererEngine(['Layout/Templates/FormLayout.html.twig']);
         $formEngine->setEnvironment($this->environment);
@@ -119,21 +119,18 @@ class TwigTemplate extends BaseTwigTemplate
         );
     }
 
-    private function connectSymfonyTranslator()
+    private function connectSymfonyTranslator(): void
     {
         $twigTranslationExtensionClass = Model::getContainer()->getParameter('twig.extension.trans.class');
         $this->environment->addExtension(new $twigTranslationExtensionClass(Model::get('translator')));
     }
 
-    private function connectSpoonForm()
+    private function connectSpoonForm(): void
     {
         new FormExtension($this->environment);
     }
 
-    /**
-     * Parse all user-defined constants
-     */
-    private function parseConstants()
+    private function parseUserDefinedConstants(): void
     {
         // constants that should be protected from usage in the template
         $notPublicConstants = ['DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD'];
@@ -202,10 +199,7 @@ class TwigTemplate extends BaseTwigTemplate
         );
     }
 
-    /**
-     * Parse the settings for the authenticated user
-     */
-    private function parseAuthenticatedUser()
+    private function parseAuthenticatedUser(): void
     {
         // check if the current user is authenticated
         if (Authentication::getUser()->isAuthenticated()) {
@@ -216,11 +210,7 @@ class TwigTemplate extends BaseTwigTemplate
             $settings = (array) Authentication::getUser()->getSettings();
 
             foreach ($settings as $key => $setting) {
-                // redefine setting
-                $setting = ($setting === null) ? '' : $setting;
-
-                // assign setting
-                $this->assign('authenticatedUser' . \SpoonFilter::toCamelCase($key), $setting);
+                $this->assign('authenticatedUser' . \SpoonFilter::toCamelCase($key), $setting ?? '');
             }
 
             // check if this action is allowed
@@ -239,10 +229,7 @@ class TwigTemplate extends BaseTwigTemplate
         }
     }
 
-    /**
-     * Parse the authentication settings for the authenticated user
-     */
-    private function parseAuthentication()
+    private function parseAuthenticationSettingsForTheAuthenticatedUser(): void
     {
         // loop actions and assign to template
         foreach (Authentication::getAllowedActions() as $module => $allowedActions) {
@@ -262,10 +249,7 @@ class TwigTemplate extends BaseTwigTemplate
         }
     }
 
-    /**
-     * Assigns an option if we are in debug-mode
-     */
-    private function parseDebug()
+    private function parseDebug(): void
     {
         $this->assign('debug', Model::getContainer()->getParameter('kernel.debug'));
 
@@ -274,12 +258,7 @@ class TwigTemplate extends BaseTwigTemplate
         }
     }
 
-    /**
-     * @param array $labels
-     * @param string $module
-     * @param string $key
-     */
-    private function parseLabels(array $labels, string $module, string $key)
+    private function parseLabels(array $labels, string $module, string $key): void
     {
         $realLabels = $this->prefixArrayKeys('Core', $labels['Core']);
 
@@ -297,12 +276,6 @@ class TwigTemplate extends BaseTwigTemplate
         $this->assignArray($realLabels, $key);
     }
 
-    /**
-     * @param string $prefix
-     * @param array $array
-     *
-     * @return array
-     */
     private function prefixArrayKeys(string $prefix, array $array): array
     {
         return array_combine(
@@ -316,10 +289,7 @@ class TwigTemplate extends BaseTwigTemplate
         );
     }
 
-    /**
-     * Make the translations available in the template
-     */
-    private function parseTranslations()
+    private function parseTranslations(): void
     {
         $currentModule = BL::getCurrentModule();
         $this->parseLabels(BL::getErrors(), $currentModule, 'err');
@@ -333,10 +303,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->assignArray($this->prefixArrayKeys('locDayShort', \SpoonLocale::getWeekDays($interfaceLanguage, true)));
     }
 
-    /**
-     * Parse some vars
-     */
-    private function parseVars()
+    private function parseVars(): void
     {
         $this->assign('var', '');
         $this->assign('timestamp', time());
@@ -353,7 +320,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->assign('cookies', Model::get('request')->cookies->all());
     }
 
-    private function parseNavigation()
+    private function parseNavigation(): void
     {
         if (!Model::has('navigation')) {
             return;
@@ -365,7 +332,7 @@ class TwigTemplate extends BaseTwigTemplate
         }
     }
 
-    private function addBodyClassAndId()
+    private function addBodyClassAndId(): void
     {
         if (!Model::getContainer()->has('url')) {
             return;

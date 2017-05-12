@@ -46,10 +46,7 @@ class Index extends BackendBaseActionIndex
     private $dgPosts;
     private $dgRecent;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -76,10 +73,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Loads the datagrid with all the posts
-     */
-    private function loadDataGridAllPosts()
+    private function loadDataGridAllPosts(): void
     {
         // filter on category?
         if ($this->categoryId != null) {
@@ -152,10 +146,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Loads the datagrid with all the drafts
-     */
-    private function loadDataGridDrafts()
+    private function loadDataGridDrafts(): void
     {
         // filter on category?
         if ($this->categoryId != null) {
@@ -230,10 +221,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Loads the datagrid with the most recent posts.
-     */
-    private function loadDataGridRecentPosts()
+    private function loadDataGridRecentPosts(): void
     {
         // filter on category?
         if ($this->categoryId != null) {
@@ -300,10 +288,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Loads the datagrids for the blogposts
-     */
-    private function loadDataGrids()
+    private function loadDataGrids(): void
     {
         $this->loadDataGridAllPosts();
         $this->loadDataGridDrafts();
@@ -314,10 +299,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse all datagrids
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

@@ -18,10 +18,10 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class AjaxAction extends KernelLoader
 {
-    const OK = 200;
-    const BAD_REQUEST = 400;
-    const FORBIDDEN = 403;
-    const ERROR = 500;
+    public const OK = 200;
+    public const BAD_REQUEST = 400;
+    public const FORBIDDEN = 403;
+    public const ERROR = 500;
 
     /**
      * The current action
@@ -42,11 +42,6 @@ class AjaxAction extends KernelLoader
      */
     protected $module;
 
-    /**
-     * @param KernelInterface $kernel
-     * @param string $action The action to use.
-     * @param string $module The module to use.
-     */
     public function __construct(KernelInterface $kernel, string $action, string $module)
     {
         parent::__construct($kernel);
@@ -56,18 +51,11 @@ class AjaxAction extends KernelLoader
         $this->setAction($action);
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
+        // placeholder
     }
 
-    /**
-     * Get the action
-     *
-     * @return string
-     */
     public function getAction(): string
     {
         return $this->action;
@@ -92,11 +80,6 @@ class AjaxAction extends KernelLoader
         );
     }
 
-    /**
-     * Get the module
-     *
-     * @return string
-     */
     public function getModule(): string
     {
         return $this->module;
@@ -110,27 +93,17 @@ class AjaxAction extends KernelLoader
      * @param mixed $data The data to be returned (will be encoded as JSON).
      * @param string $message A text-message.
      */
-    public function output(int $statusCode, $data = null, string $message = null)
+    public function output(int $statusCode, $data = null, string $message = null): void
     {
         $this->content = ['code' => $statusCode, 'data' => $data, 'message' => $message];
     }
 
-    /**
-     * Set the action, for later use
-     *
-     * @param string $action The action to use.
-     */
-    protected function setAction(string $action)
+    protected function setAction(string $action): void
     {
         $this->action = $action;
     }
 
-    /**
-     * Set the module, for later use
-     *
-     * @param string $module The module to use.
-     */
-    protected function setModule(string $module)
+    protected function setModule(string $module): void
     {
         $this->module = $module;
     }

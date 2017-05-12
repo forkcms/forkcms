@@ -43,15 +43,12 @@ class ResetPassword extends BackendBaseActionAdd
      */
     private $user;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         // the user email and key provided match
-        if (!$this->isUserAllowed()) {
+        if (!$this->isThePasswordResetKeyCorrect()) {
             $this->redirect(BackendModel::createURLForAction('Index'));
         }
 
@@ -61,12 +58,7 @@ class ResetPassword extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * The user is allowed on this page
-     *
-     * @return bool
-     */
-    private function isUserAllowed(): bool
+    private function isThePasswordResetKeyCorrect(): bool
     {
         // catch the key and e-mail address from GET
         $this->email = urldecode(\SpoonFilter::getGetValue('email', null, ''));
@@ -98,10 +90,7 @@ class ResetPassword extends BackendBaseActionAdd
         return false;
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm();
         $this->frm->addPassword('backend_new_password');
@@ -111,10 +100,7 @@ class ResetPassword extends BackendBaseActionAdd
         $this->frm->getField('backend_new_password_repeated')->setAttributes(['autocomplete' => 'off']);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             // shorten fields

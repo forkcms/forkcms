@@ -20,10 +20,7 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class EditSynonym extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -35,12 +32,12 @@ class EditSynonym extends BackendBaseActionEdit
         $this->display();
     }
 
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendSearchModel::getSynonym($this->id);
     }
 
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('editItem');
         $this->frm->addText('term', $this->record['term']);
@@ -53,7 +50,7 @@ class EditSynonym extends BackendBaseActionEdit
         );
     }
 
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -61,7 +58,7 @@ class EditSynonym extends BackendBaseActionEdit
         $this->tpl->assign('term', $this->record['term']);
     }
 
-    private function validateForm()
+    private function validateForm(): void
     {
         if (!$this->frm->isSubmitted()) {
             return;
@@ -92,9 +89,6 @@ class EditSynonym extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * @return int
-     */
     private function getId(): int
     {
         $id = $this->getParameter('id', 'int');

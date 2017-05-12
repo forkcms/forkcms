@@ -35,10 +35,7 @@ class Index extends BackendBaseActionIndex
      */
     private $frmForgotPassword;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // check if the user is really logged on
         if (BackendAuthentication::getUser()->isAuthenticated()) {
@@ -50,16 +47,13 @@ class Index extends BackendBaseActionIndex
         }
 
         parent::execute();
-        $this->load();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Load the forms
-     */
-    private function load()
+    private function buildForm(): void
     {
         $this->frm = new BackendForm(null, null, 'post', true, false);
         $this->frm
@@ -76,10 +70,7 @@ class Index extends BackendBaseActionIndex
         $this->frmForgotPassword->addText('backend_email_forgot');
     }
 
-    /**
-     * Parse the action into the template
-     */
-    public function parse()
+    public function parse(): void
     {
         parent::parse();
 
@@ -90,10 +81,7 @@ class Index extends BackendBaseActionIndex
         $this->frmForgotPassword->parse($this->tpl);
     }
 
-    /**
-     * Validate the forms
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $txtEmail = $this->frm->getField('backend_email');
@@ -263,7 +251,7 @@ class Index extends BackendBaseActionIndex
      * Find out which module and action are allowed
      * and send the user on his way.
      */
-    private function redirectToAllowedModuleAndAction()
+    private function redirectToAllowedModuleAndAction(): void
     {
         $allowedModule = $this->getAllowedModule();
         $allowedAction = $this->getAllowedAction($allowedModule);

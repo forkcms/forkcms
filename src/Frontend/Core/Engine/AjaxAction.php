@@ -57,7 +57,7 @@ class AjaxAction extends FrontendBaseAJAXAction
      * will read the folder and set possible actions.
      * Other configurations will also be stored in it.
      */
-    public function loadConfig()
+    public function loadConfig(): void
     {
         $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
         if ($this->getModule() === 'Core') {

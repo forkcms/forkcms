@@ -26,20 +26,11 @@ class SettingsType extends AbstractType
      */
     protected $serviceIds;
 
-    /**
-     * SettingsType constructor.
-     *
-     * @param array $serviceIds
-     */
     public function __construct(array $serviceIds)
     {
         $this->serviceIds = $serviceIds;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $mailEngines = $this->getPossibleMailEngines();
@@ -113,9 +104,6 @@ class SettingsType extends AbstractType
         );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -131,20 +119,12 @@ class SettingsType extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'settings';
     }
 
-    /**
-     * Get mail engines.
-     *
-     * @return array
-     */
-    private function getPossibleMailEngines()
+    private function getPossibleMailEngines(): array
     {
         // init dropdown values
         $ddmValuesForMailEngines = [];

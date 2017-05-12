@@ -61,9 +61,6 @@ class Csv extends \SpoonFileCSV
         );
     }
 
-    /**
-     * @return string
-     */
     private static function getLineEnding(): string
     {
         $lineEnding = Authentication::getUser()->getSetting('csv_line_ending');

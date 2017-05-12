@@ -10,18 +10,12 @@ final class Facebook
     /** @var ModulesSettings */
     private $modulesSettings;
 
-    /**
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(ModulesSettings $modulesSettings)
     {
         $this->modulesSettings = $modulesSettings;
     }
 
-    /**
-     * @param Header $header
-     */
-    public function addOpenGraphMeta(Header $header)
+    public function addOpenGraphMeta(Header $header): void
     {
         $parseFacebook = false;
         $facebookAdminIds = $this->modulesSettings->get('Core', 'facebook_admin_ids', null);
@@ -62,9 +56,6 @@ final class Facebook
         $header->addOpenGraphImage('/facebook.png');
     }
 
-    /**
-     * @return string
-     */
     private function getLocale(): string
     {
         $specialCases = [
@@ -81,6 +72,6 @@ final class Facebook
             return str_replace(array_keys($specialCases), $specialCases, LANGUAGE);
         }
 
-        return  mb_strtolower(LANGUAGE) . '_' . mb_strtoupper(LANGUAGE);
+        return mb_strtolower(LANGUAGE) . '_' . mb_strtoupper(LANGUAGE);
     }
 }

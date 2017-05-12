@@ -17,10 +17,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
  */
 class GetInfo extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent
         parent::execute();

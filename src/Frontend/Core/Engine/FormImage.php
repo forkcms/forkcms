@@ -9,13 +9,14 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Language\Language as FL;
 
 /**
  * This is our extended version of \SpoonFormImage
  */
-class FormImage extends \SpoonFormImage
+class FormImage extends SpoonFormImage
 {
     /**
      * Constructor.
@@ -50,7 +51,7 @@ class FormImage extends \SpoonFormImage
      * @param string $path
      * @param string $filename
      */
-    public function generateThumbnails(string $path, string $filename)
+    public function generateThumbnails(string $path, string $filename): void
     {
         // create folder if needed
         $filesystem = new Filesystem();
@@ -68,9 +69,9 @@ class FormImage extends \SpoonFormImage
     /**
      * This function will return the errors. It is extended so we can do image checks automatically.
      *
-     * @return string
+     * @return string|null
      */
-    public function getErrors(): string
+    public function getErrors(): ?string
     {
         // do an image validation
         if ($this->isFilled()) {

@@ -11,10 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class LanguagesType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -72,28 +69,19 @@ class LanguagesType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'install_languages';
     }
 
-    /**
-     * @return array
-     */
-    protected function getInstallableLanguages()
+    protected function getInstallableLanguages(): array
     {
         return [
             'en' => 'English',

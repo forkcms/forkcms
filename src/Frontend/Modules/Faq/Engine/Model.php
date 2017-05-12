@@ -20,13 +20,6 @@ use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
  */
 class Model implements FrontendTagsInterface
 {
-    /**
-     * Fetch a question
-     *
-     * @param string $url
-     *
-     * @return array
-     */
     public static function get(string $url): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
@@ -42,10 +35,8 @@ class Model implements FrontendTagsInterface
     }
 
     /**
-     * Get all items in a category
-     *
-     * @param int   $categoryId
-     * @param int   $limit
+     * @param int $categoryId
+     * @param int $limit
      * @param int|int[] $excludeIds
      *
      * @return array
@@ -89,11 +80,6 @@ class Model implements FrontendTagsInterface
         return $items;
     }
 
-    /**
-     * Get all categories
-     *
-     * @return array
-     */
     public static function getCategories(): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -116,13 +102,6 @@ class Model implements FrontendTagsInterface
         return $items;
     }
 
-    /**
-     * Get a category
-     *
-     * @param string $url
-     *
-     * @return array
-     */
     public static function getCategory(string $url): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
@@ -135,13 +114,6 @@ class Model implements FrontendTagsInterface
         );
     }
 
-    /**
-     * Get a category by id
-     *
-     * @param int $id
-     *
-     * @return array
-     */
     public static function getCategoryById(int $id): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
@@ -199,13 +171,6 @@ class Model implements FrontendTagsInterface
         return self::get($itemURL)['id'];
     }
 
-    /**
-     * Get all items in a category
-     *
-     * @param int $limit
-     *
-     * @return array
-     */
     public static function getMostRead(int $limit): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -226,14 +191,7 @@ class Model implements FrontendTagsInterface
         return $items;
     }
 
-    /**
-     * Get the all questions for selected category
-     *
-     * @param int $id
-     *
-     * @return array
-     */
-    public static function getFaqsForCategory(int $id): array
+    public static function getFaqsForCategory(int $categoryId): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence, m.url
@@ -241,7 +199,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.language = ? AND i.category_id = ?
              ORDER BY i.sequence ASC',
-            [LANGUAGE, $id]
+            [LANGUAGE, $categoryId]
         );
 
         $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
@@ -256,14 +214,14 @@ class Model implements FrontendTagsInterface
     /**
      * Get related items based on tags
      *
-     * @param int $id
+     * @param int $questionId
      * @param int $limit
      *
      * @return array
      */
-    public static function getRelated(int $id, int $limit = 5): array
+    public static function getRelated(int $questionId, int $limit = 5): array
     {
-        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags((int) $id, 'Faq', 'Faq');
+        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags((int) $questionId, 'Faq', 'Faq');
 
         // there are no items, so return an empty array
         if (empty($relatedIDs)) {
@@ -289,25 +247,15 @@ class Model implements FrontendTagsInterface
         return $items;
     }
 
-    /**
-     * Increase the number of views for this item
-     *
-     * @param int $id
-     */
-    public static function increaseViewCount(int $id)
+    public static function increaseViewCount(int $questionId): void
     {
         FrontendModel::getContainer()->get('database')->execute(
             'UPDATE faq_questions SET num_views = num_views + 1 WHERE id = ?',
-            [$id]
+            [$questionId]
         );
     }
 
-    /**
-     * Saves the feedback
-     *
-     * @param array $feedback
-     */
-    public static function saveFeedback(array $feedback)
+    public static function saveFeedback(array $feedback): void
     {
         $feedback['created_on'] = FrontendModel::getUTCDate();
         unset($feedback['sentOn']);
@@ -351,13 +299,13 @@ class Model implements FrontendTagsInterface
     }
 
     /**
-     * Increase the number of views for this item
+     * Update the usefulness of the feedback
      *
-     * @param int        $id
-     * @param bool       $useful
+     * @param int $id
+     * @param bool $useful
      * @param bool|null $previousFeedback
      */
-    public static function updateFeedback(int $id, bool $useful, bool $previousFeedback = null)
+    public static function updateFeedback(int $id, bool $useful, bool $previousFeedback = null): void
     {
         // feedback hasn't changed so don't update the counters
         if ($previousFeedback !== null && $useful == $previousFeedback) {

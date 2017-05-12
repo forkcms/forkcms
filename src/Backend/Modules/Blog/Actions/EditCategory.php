@@ -21,10 +21,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class EditCategory extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');
@@ -43,18 +40,12 @@ class EditCategory extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendBlogModel::getCategory($this->id);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('editCategory');
@@ -69,10 +60,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURLForCategory', [$this->record['id']]);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -85,10 +73,7 @@ class EditCategory extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers

@@ -29,16 +29,13 @@ class ForgotPassword extends FrontendBaseBlock
      */
     private $frm;
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // only for guests
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->loadTemplate();
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         } else {
@@ -47,19 +44,13 @@ class ForgotPassword extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         $this->frm = new FrontendForm('forgotPassword', null, null, 'forgotPasswordForm');
         $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // e-mail was sent?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -74,10 +65,7 @@ class ForgotPassword extends FrontendBaseBlock
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {

@@ -18,7 +18,7 @@ use Backend\Core\Engine\Exception;
  */
 class UploadFile extends AjaxAction
 {
-    public function execute()
+    public function execute(): void
     {
         $request = $this->get('request');
 
@@ -35,7 +35,7 @@ class UploadFile extends AjaxAction
      * Extracts the uploaded file from a request. It handles both XmlHttpRequest
      * uploads and form uploads (with files in the $_FILES global)
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @throws Exception When no file could be extracted
      *
@@ -58,7 +58,7 @@ class UploadFile extends AjaxAction
      * Extracts the uploaded file name from a request. It handles both XmlHttpRequest
      * uploads and form uploads (with files in the $_FILES global)
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @throws Exception When no file could be extracted
      *
@@ -80,9 +80,9 @@ class UploadFile extends AjaxAction
     /**
      * Writes some content to a file in a given folder
      *
-     * @param  string $content
-     * @param  string $fileName
-     * @param  string $destinationFolder
+     * @param string $content
+     * @param string $fileName
+     * @param string $destinationFolder
      *
      * @return string The filename of the written file.
      */

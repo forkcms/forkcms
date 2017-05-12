@@ -29,81 +29,48 @@ class Model
      */
     private static $avatars = [];
 
-    /**
-     * Delete a setting.
-     *
-     * @param int $id Profile id.
-     * @param string $name Setting name.
-     *
-     * @return int
-     */
-    public static function deleteSetting(int $id, string $name): int
+    public static function deleteSetting(int $profileId, string $name): int
     {
         return (int) FrontendModel::getContainer()->get('database')->delete(
             'profiles_settings',
             'profile_id = ? AND name = ?',
-            [$id, $name]
+            [$profileId, $name]
         );
     }
 
-    /**
-     * Check if a profile exists by email address.
-     *
-     * @param string $email Email to check for existence.
-     * @param int $ignoreId Profile id to ignore.
-     *
-     * @return bool
-     */
-    public static function existsByEmail(string $email, int $ignoreId = null): bool
+    public static function existsByEmail(string $email, int $excludedId = null): bool
     {
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles AS p
              WHERE p.email = ? AND p.id != ?
              LIMIT 1',
-            [$email, (int) $ignoreId]
+            [$email, $excludedId]
         );
     }
 
-    /**
-     * Check if a display name exists.
-     *
-     * @param string $displayName Display name to check for existence.
-     * @param int $id Profile id to ignore.
-     *
-     * @return bool
-     */
-    public static function existsDisplayName($displayName, int $id = null): bool
+    public static function existsDisplayName($displayName, int $excludedId = null): bool
     {
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles AS p
              WHERE p.id != ? AND p.display_name = ?
              LIMIT 1',
-            [(int) $id, $displayName]
+            [$excludedId, $displayName]
         );
     }
 
-    /**
-     * Get profile by its id.
-     *
-     * @param int $profileId Id of the wanted profile.
-     *
-     * @return FrontendProfilesProfile
-     */
     public static function get(int $profileId): FrontendProfilesProfile
     {
         return new FrontendProfilesProfile($profileId);
     }
 
     /**
-     * Get avatar
-     *
      * @param int $id The id for the profile we want to get the avatar from.
      * @param string $email The email from the user we can use for gravatar.
      * @param string $size The resolution you want to use. Default: 240x240 pixels.
      *
-     * @return string $avatar            The absolute path to the avatar.
+     * @return string $avatar The absolute path to the avatar.
      */
     public static function getAvatar(int $id, string $email = null, string $size = '240x240'): string
     {
@@ -152,26 +119,11 @@ class Model
         return $avatar;
     }
 
-    /**
-     * Get an encrypted string.
-     *
-     * @param string $string String to encrypt.
-     * @param string $salt Salt to add to the string.
-     *
-     * @return string
-     */
     public static function getEncryptedString(string $string, string $salt): string
     {
         return md5(sha1(md5($string)) . sha1(md5($salt)));
     }
 
-    /**
-     * Get profile id by email.
-     *
-     * @param string $email Email address.
-     *
-     * @return int
-     */
     public static function getIdByEmail(string $email): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
@@ -181,8 +133,6 @@ class Model
     }
 
     /**
-     * Get profile id by setting.
-     *
      * @param string $name Setting name.
      * @param mixed $value Value of the setting.
      *
@@ -199,8 +149,6 @@ class Model
     }
 
     /**
-     * Generate a random string.
-     *
      * @param int $length Length of random string.
      * @param bool $numeric Use numeric characters.
      * @param bool $lowercase Use alphanumeric lowercase characters.
@@ -255,7 +203,7 @@ class Model
      *
      * @return mixed
      */
-    public static function getSetting($id, string $name)
+    public static function getSetting(int $id, string $name)
     {
         return unserialize(
             (string) FrontendModel::getContainer()->get('database')->getVar(
@@ -267,21 +215,14 @@ class Model
         );
     }
 
-    /**
-     * Get all settings for a profile.
-     *
-     * @param int $id Profile id.
-     *
-     * @return array
-     */
-    public static function getSettings(int $id): array
+    public static function getSettings(int $profileId): array
     {
         // get settings
         $settings = (array) FrontendModel::getContainer()->get('database')->getPairs(
             'SELECT ps.name, ps.value
              FROM profiles_settings AS ps
              WHERE ps.profile_id = ?',
-            $id
+            $profileId
         );
 
         // unserialize values
@@ -297,23 +238,23 @@ class Model
      * Retrieve a unique URL for a profile based on the display name.
      *
      * @param string $displayName The display name to base on.
-     * @param int $id The id of the profile to ignore.
+     * @param int $excludedId The id of the profile to ignore.
      *
      * @return string
      */
-    public static function getUrl(string $displayName, int $id = null): string
+    public static function getUrl(string $displayName, int $excludedId = null): string
     {
         // decode special chars
         $displayName = \SpoonFilter::htmlspecialcharsDecode($displayName);
 
         // urlise
-        $url = (string) CommonUri::getUrl($displayName);
+        $url = CommonUri::getUrl($displayName);
 
         // get db
         $db = FrontendModel::getContainer()->get('database');
 
         // new item
-        if ($id === null) {
+        if ($excludedId === null) {
             // get number of profiles with this URL
             $number = (int) $db->getVar(
                 'SELECT 1
@@ -324,53 +265,48 @@ class Model
             );
 
             // already exists
-            if ($number != 0) {
+            if ($number !== 0) {
                 // add number
                 $url = FrontendModel::addNumber($url);
 
                 // try again
                 return self::getUrl($url);
             }
-        } else {
-            // current profile should be excluded
-            // get number of profiles with this URL
-            $number = (int) $db->getVar(
-                'SELECT 1
-                 FROM profiles AS p
-                 WHERE p.url = ? AND p.id != ?
-                 LIMIT 1',
-                [(string) $url, (int) $id]
-            );
 
-            // already exists
-            if ($number != 0) {
-                // add number
-                $url = FrontendModel::addNumber($url);
+            return $url;
+        }
 
-                // try again
-                return self::getUrl($url, $id);
-            }
+        // current profile should be excluded
+        // get number of profiles with this URL
+        $number = (int) $db->getVar(
+            'SELECT 1
+             FROM profiles AS p
+             WHERE p.url = ? AND p.id != ?
+             LIMIT 1',
+            [$url, $excludedId]
+        );
+
+        // already exists
+        if ($number !== 0) {
+            // add number
+            $url = FrontendModel::addNumber($url);
+
+            // try again
+            return self::getUrl($url, $excludedId);
         }
 
         return $url;
     }
 
-    /**
-     * Insert a new profile.
-     *
-     * @param array $values Profile data.
-     *
-     * @return int
-     */
-    public static function insert(array $values): int
+    public static function insert(array $profile): int
     {
-        return (int) FrontendModel::getContainer()->get('database')->insert('profiles', $values);
+        return (int) FrontendModel::getContainer()->get('database')->insert('profiles', $profile);
     }
 
     /**
      * Parse the general profiles info into the template.
      */
-    public static function parse()
+    public static function parse(): void
     {
         // get the template
         $tpl = FrontendModel::getContainer()->get('templating');
@@ -427,7 +363,7 @@ class Model
      * @param string $name Setting name.
      * @param mixed $value New setting value.
      */
-    public static function setSetting(int $id, string $name, $value)
+    public static function setSetting(int $id, string $name, $value): void
     {
         // insert or update
         FrontendModel::getContainer()->get('database')->execute(
@@ -444,7 +380,7 @@ class Model
      * @param int $id Profile id.
      * @param array $values Settings in key=>value form.
      */
-    public static function setSettings(int $id, array $values)
+    public static function setSettings(int $id, array $values): void
     {
         // build parameters
         $parameters = [];
@@ -464,8 +400,6 @@ class Model
     }
 
     /**
-     * Update a profile.
-     *
      * @param int $id The profile id.
      * @param array $values The values to update.
      *

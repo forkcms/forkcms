@@ -32,10 +32,7 @@ class Location extends FrontendBaseWidget
      */
     private $item;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         // define Google Maps API key
         $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
@@ -55,10 +52,7 @@ class Location extends FrontendBaseWidget
         $this->parse();
     }
 
-    /**
-     * Load the data
-     */
-    protected function loadData()
+    protected function loadData(): void
     {
         $this->item = FrontendLocationModel::get($this->data['id']);
         $this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
@@ -83,10 +77,7 @@ class Location extends FrontendBaseWidget
         $this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, [$this->item]);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->addJSData('settings_' . $this->item['id'], $this->settings);
         $this->addJSData('items_' . $this->item['id'], [$this->item]);

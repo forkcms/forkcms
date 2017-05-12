@@ -54,19 +54,11 @@ class Ajax extends KernelLoader implements ApplicationInterface
      */
     private $response;
 
-    /**
-     * @return Response
-     */
     public function display(): Response
     {
         return $this->response;
     }
 
-    /**
-     * @param array $forkData
-     *
-     * @return array
-     */
     private function splitUpForkData(array $forkData): array
     {
         return [
@@ -80,9 +72,9 @@ class Ajax extends KernelLoader implements ApplicationInterface
      * This method exists because the service container needs to be set before
      * the request's functionality gets loaded.
      */
-    public function initialize()
+    public function initialize(): void
     {
-        list($module, $action, $language) = $this->splitUpForkData($this->getForkData());
+        [$module, $action, $language] = $this->splitUpForkData($this->getForkData());
 
         if (empty($language)) {
             $language = $this->getContainer()->getParameter('site.default_language');
@@ -106,34 +98,17 @@ class Ajax extends KernelLoader implements ApplicationInterface
         }
     }
 
-    /**
-     * Get the loaded action
-     *
-     * @return string
-     */
     public function getAction(): string
     {
         return $this->action;
     }
 
-    /**
-     * Get the loaded module
-     *
-     * @return string
-     */
     public function getModule(): string
     {
         return $this->module;
     }
 
-    /**
-     * Set action
-     *
-     * @param string $action The action that should be executed.
-     *
-     * @throws Exception
-     */
-    public function setAction(string $action)
+    public function setAction(string $action): void
     {
         // check if module is set
         if ($this->getModule() === null) {
@@ -155,7 +130,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
      *
      * @throws Exception
      */
-    public function setLanguage(string $language)
+    public function setLanguage(string $language): void
     {
         $possibleLanguages = Language::getActiveLanguages();
 
@@ -175,14 +150,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
         Language::setLocale($this->language);
     }
 
-    /**
-     * Set module
-     *
-     * @param string $module The module, wherefore an action will be executed.
-     *
-     * @throws Exception
-     */
-    public function setModule(string $module)
+    public function setModule(string $module): void
     {
         if (!in_array($module, Model::getModules())) {
             throw new Exception('Module not correct');
@@ -191,9 +159,6 @@ class Ajax extends KernelLoader implements ApplicationInterface
         $this->module = $module;
     }
 
-    /**
-     * @return array
-     */
     private function getForkData(): array
     {
         $request = $this->getContainer()->get('request');
@@ -209,11 +174,6 @@ class Ajax extends KernelLoader implements ApplicationInterface
         return (array) $request->query->all();
     }
 
-    /**
-     * @param \Exception $exception
-     *
-     * @return string
-     */
     private function getMessageFromException(\Exception $exception): string
     {
         if ($this->getContainer()->getParameter('kernel.debug')) {

@@ -24,9 +24,6 @@ class Breadcrumb extends FrontendBaseObject
      */
     private $items = [];
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
@@ -43,10 +40,7 @@ class Breadcrumb extends FrontendBaseObject
         $this->addBreadcrumbsForPages($this->URL->getPages());
     }
 
-    /**
-     * @param array $pages
-     */
-    private function addBreadcrumbsForPages(array $pages)
+    private function addBreadcrumbsForPages(array $pages): void
     {
         $breadcrumbs = $this->getBreadcrumbsForPages($pages);
 
@@ -61,11 +55,6 @@ class Breadcrumb extends FrontendBaseObject
         );
     }
 
-    /**
-     * @param array $pages
-     *
-     * @return array
-     */
     private function getBreadcrumbsForPages(array $pages): array
     {
         $breadcrumbs = [];
@@ -102,12 +91,10 @@ class Breadcrumb extends FrontendBaseObject
     }
 
     /**
-     * Add an element
-     *
      * @param string $title The label that will be used in the breadcrumb.
-     * @param string $url   The URL for this item.
+     * @param string $url The URL for this item.
      */
-    public function addElement(string $title, string $url = null)
+    public function addElement(string $title, string $url = null): void
     {
         $this->items[] = ['title' => $title, 'url' => $url];
     }
@@ -118,7 +105,7 @@ class Breadcrumb extends FrontendBaseObject
      * @param int|null $key If the key is provided it will be removed from the array,
      *                 otherwise the whole array will be cleared.
      */
-    public function clear(int $key = null)
+    public function clear(int $key = null): void
     {
         // clear all
         if ($key === null) {
@@ -162,7 +149,7 @@ class Breadcrumb extends FrontendBaseObject
     /**
      * Parse the breadcrumb into the template
      */
-    public function parse()
+    public function parse(): void
     {
         // assign
         $this->tpl->addGlobal('breadcrumb', $this->items);

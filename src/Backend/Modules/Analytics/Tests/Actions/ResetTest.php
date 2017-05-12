@@ -9,7 +9,7 @@ class ResetTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAuthenticationIsNeeded()
+    public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
         $client = static::createClient();
@@ -27,7 +27,7 @@ class ResetTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAfterResetRedirectToSettings()
+    public function testAfterResetRedirectToSettings(): void
     {
         $client = static::createClient();
         $this->login();

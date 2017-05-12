@@ -9,6 +9,8 @@ namespace Common\Core\Twig\Extensions;
  * file that was distributed with this source code.
  */
 
+use SpoonFilter;
+
 /**
  * Contains Base Frontend-related custom modifiers.
  * These filters work independent of front/backend.
@@ -240,14 +242,14 @@ class BaseTwigModifiers
         bool $closestWord = false
     ): string {
         // remove special chars, all of them, also the ones that shouldn't be there.
-        $string = \SpoonFilter::htmlentitiesDecode($string, null, ENT_QUOTES);
+        $string = SpoonFilter::htmlentitiesDecode($string, null, ENT_QUOTES);
 
         // remove HTML
         $string = strip_tags($string);
 
         // less characters
         if (mb_strlen($string) <= $length) {
-            return \SpoonFilter::htmlspecialchars($string);
+            return SpoonFilter::htmlspecialchars($string);
         }
 
         // more characters
@@ -267,6 +269,6 @@ class BaseTwigModifiers
         }
 
         // return
-        return \SpoonFilter::htmlspecialchars($string, ENT_QUOTES);
+        return SpoonFilter::htmlspecialchars($string, ENT_QUOTES);
     }
 }

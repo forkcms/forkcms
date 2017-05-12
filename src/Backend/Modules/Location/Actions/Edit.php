@@ -35,10 +35,7 @@ class Edit extends BackendBaseActionEdit
      */
     protected $settingsForm;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -72,10 +69,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function loadData()
+    private function loadData(): void
     {
         $this->record = (array) BackendLocationModel::get($this->id);
 
@@ -109,10 +103,7 @@ class Edit extends BackendBaseActionEdit
         $this->settings['directions'] = (isset($this->settings['directions'])) ? ($this->settings['directions']) : false;
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('edit');
         $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
@@ -124,10 +115,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addHidden('redirect', 'overview');
     }
 
-    /**
-     * Load the settings form
-     */
-    protected function loadSettingsForm()
+    protected function loadSettingsForm(): void
     {
         $mapTypes = [
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
@@ -166,10 +154,7 @@ class Edit extends BackendBaseActionEdit
         $this->settingsForm->addCheckbox('marker_overview', ($this->record['show_overview'] == 'Y'));
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -186,10 +171,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();

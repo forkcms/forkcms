@@ -9,7 +9,7 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAuthenticationIsNeeded()
+    public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
         $client = static::createClient();
@@ -34,7 +34,7 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testWeCanGoToEditFromTheIndexPage()
+    public function testWeCanGoToEditFromTheIndexPage(): void
     {
         $client = static::createClient();
         $this->login();
@@ -58,7 +58,7 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testEditingOurBlogPost()
+    public function testEditingOurBlogPost(): void
     {
         $client = static::createClient();
         $this->login();
@@ -97,7 +97,7 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testSubmittingInvalidData()
+    public function testSubmittingInvalidData(): void
     {
         $client = static::createClient();
         $this->login();
@@ -130,7 +130,7 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testInvalidIdShouldShowAnError()
+    public function testInvalidIdShouldShowAnError(): void
     {
         $client = static::createClient();
         $this->login();

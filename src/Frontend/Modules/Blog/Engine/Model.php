@@ -22,13 +22,6 @@ use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
  */
 class Model implements FrontendTagsInterface
 {
-    /**
-     * Get an item
-     *
-     * @param string $url The URL for the item.
-     *
-     * @return array
-     */
     public static function get(string $url): array
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
@@ -68,14 +61,6 @@ class Model implements FrontendTagsInterface
         return $return;
     }
 
-    /**
-     * Get all items (at least a chunk)
-     *
-     * @param int $limit  The number of items to get.
-     * @param int $offset The offset.
-     *
-     * @return array
-     */
     public static function getAll(int $limit = 10, int $offset = 0): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -155,11 +140,6 @@ class Model implements FrontendTagsInterface
         return $items;
     }
 
-    /**
-     * Get all categories used
-     *
-     * @return array
-     */
     public static function getAllCategories(): array
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -183,14 +163,6 @@ class Model implements FrontendTagsInterface
         return $return;
     }
 
-    /**
-     * Get all comments (at least a chunk)
-     *
-     * @param int $limit  The number of items to get.
-     * @param int $offset The offset.
-     *
-     * @return array
-     */
     public static function getAllComments(int $limit = 10, int $offset = 0): array
     {
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -216,11 +188,6 @@ class Model implements FrontendTagsInterface
         return $comments;
     }
 
-    /**
-     * Get the number of items
-     *
-     * @return int
-     */
     public static function getAllCount(): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
@@ -231,15 +198,6 @@ class Model implements FrontendTagsInterface
         );
     }
 
-    /**
-     * Get all items in a category (at least a chunk)
-     *
-     * @param string $categoryURL The URL of the category to retrieve the posts for.
-     * @param int    $limit       The number of items to get.
-     * @param int    $offset      The offset.
-     *
-     * @return array
-     */
     public static function getAllForCategory(string $categoryURL, int $limit = 10, int $offset = 0): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -319,13 +277,6 @@ class Model implements FrontendTagsInterface
         return $items;
     }
 
-    /**
-     * Get the number of items in a given category
-     *
-     * @param string $url The URL for the category.
-     *
-     * @return int
-     */
     public static function getAllForCategoryCount(string $url): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
@@ -341,9 +292,9 @@ class Model implements FrontendTagsInterface
     /**
      * Get all items between a start and end-date
      *
-     * @param int $start  The start date as a UNIX-timestamp.
-     * @param int $end    The end date as a UNIX-timestamp.
-     * @param int $limit  The number of items to get.
+     * @param int $start The start date as a UNIX-timestamp.
+     * @param int $end The end date as a UNIX-timestamp.
+     * @param int $limit The number of items to get.
      * @param int $offset The offset.
      *
      * @return array
@@ -430,7 +381,7 @@ class Model implements FrontendTagsInterface
      * Get the number of items in a date range
      *
      * @param int $start The start date as a UNIX-timestamp.
-     * @param int $end   The end date as a UNIX-timestamp.
+     * @param int $end The end date as a UNIX-timestamp.
      *
      * @return int
      */
@@ -539,14 +490,7 @@ class Model implements FrontendTagsInterface
         return $stats;
     }
 
-    /**
-     * Get the comments for an item
-     *
-     * @param int $id The ID of the item to get the comments for.
-     *
-     * @return array
-     */
-    public static function getComments(int $id): array
+    public static function getComments(int $blogPostId): array
     {
         // get the comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -555,7 +499,7 @@ class Model implements FrontendTagsInterface
              FROM blog_comments AS c
              WHERE c.post_id = ? AND c.status = ? AND c.language = ?
              ORDER BY c.id ASC',
-            [$id, 'published', LANGUAGE]
+            [$blogPostId, 'published', LANGUAGE]
         );
 
         // loop comments and create gravatar id
@@ -572,18 +516,18 @@ class Model implements FrontendTagsInterface
     /**
      * Fetch the list of tags for a list of items
      *
-     * @param array $ids The ids of the items to grab.
+     * @param array $blogPostIds The ids of the items to grab.
      *
      * @return array
      */
-    public static function getForTags(array $ids): array
+    public static function getForTags(array $blogPostIds): array
     {
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.title, i.image, m.url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ') AND i.publish_on <= ?
+             WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $blogPostIds) . ') AND i.publish_on <= ?
              ORDER BY i.publish_on DESC',
             ['active', 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
         );
@@ -632,11 +576,11 @@ class Model implements FrontendTagsInterface
     /**
      * Get an array with the previous and the next post
      *
-     * @param int $id The id of the current item.
+     * @param int $blogPostId The id of the current item.
      *
      * @return array
      */
-    public static function getNavigation(int $id): array
+    public static function getNavigation(int $blogPostId): array
     {
         // get db
         $db = FrontendModel::getContainer()->get('database');
@@ -646,7 +590,7 @@ class Model implements FrontendTagsInterface
             'SELECT i.publish_on
              FROM blog_posts AS i
              WHERE i.id = ? AND i.status = ?',
-            [$id, 'active']
+            [$blogPostId, 'active']
         );
 
         // validate
@@ -667,7 +611,7 @@ class Model implements FrontendTagsInterface
                 ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT 1',
-            [$detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, $date]
+            [$detailLink, $blogPostId, 'active', 'N', LANGUAGE, $date, $blogPostId, $date]
         );
 
         // get next post
@@ -679,7 +623,17 @@ class Model implements FrontendTagsInterface
                 ((i.publish_on = ? AND i.id > ?) OR (i.publish_on > ? AND i.publish_on <= ?))
              ORDER BY i.publish_on ASC, i.id ASC
              LIMIT 1',
-            [$detailLink, $id, 'active', 'N', LANGUAGE, $date, $id, $date, FrontendModel::getUTCDate('Y-m-d H:i')]
+            [
+                $detailLink,
+                $blogPostId,
+                'active',
+                'N',
+                LANGUAGE,
+                $date,
+                $blogPostId,
+                $date,
+                FrontendModel::getUTCDate('Y-m-d H:i'),
+            ]
         );
 
         // if empty, unset it
@@ -694,13 +648,6 @@ class Model implements FrontendTagsInterface
         return $navigation;
     }
 
-    /**
-     * Get recent comments
-     *
-     * @param int $limit The number of comments to get.
-     *
-     * @return array
-     */
     public static function getRecentComments(int $limit = 5): array
     {
         // init var
@@ -739,18 +686,10 @@ class Model implements FrontendTagsInterface
         return $comments;
     }
 
-    /**
-     * Get related items based on tags
-     *
-     * @param int $id    The id of the item to get related items for.
-     * @param int $limit The maximum number of items to retrieve.
-     *
-     * @return array
-     */
-    public static function getRelated(int $id, int $limit = 5): array
+    public static function getRelated(int $blogPostId, int $limit = 5): array
     {
         // get the related IDs
-        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'Blog', 'Blog', $limit);
+        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($blogPostId, 'Blog', 'Blog', $limit);
 
         // no items
         if (empty($relatedIDs)) {
@@ -781,15 +720,7 @@ class Model implements FrontendTagsInterface
         return $items;
     }
 
-    /**
-     * Get a revision for an item
-     *
-     * @param string $url      The URL for the item to get.
-     * @param int    $revision The revisionID.
-     *
-     * @return array
-     */
-    public static function getRevision(string $url, int $revision): array
+    public static function getRevision(string $url, int $revisionId): array
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.image,
@@ -807,7 +738,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
              LIMIT 1',
-            [LANGUAGE, $revision, $url]
+            [LANGUAGE, $revisionId, $url]
         );
 
         // unserialize
@@ -828,13 +759,6 @@ class Model implements FrontendTagsInterface
         return $return;
     }
 
-    /**
-     * Inserts a new comment
-     *
-     * @param array $comment The comment to add.
-     *
-     * @return int
-     */
     public static function insertComment(array $comment): int
     {
         // get db
@@ -866,7 +790,7 @@ class Model implements FrontendTagsInterface
      * Get moderation status for an author
      *
      * @param string $author The name for the author.
-     * @param string $email  The email address for the author.
+     * @param string $email The email address for the author.
      *
      * @return bool
      */
@@ -886,7 +810,7 @@ class Model implements FrontendTagsInterface
      *
      * @param array $comment The comment that was submitted.
      */
-    public static function notifyAdmin(array $comment)
+    public static function notifyAdmin(array $comment): void
     {
         // don't notify admin in case of spam
         if ($comment['status'] == 'spam') {

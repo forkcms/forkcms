@@ -42,10 +42,7 @@ class DetailTheme extends BackendBaseActionIndex
      */
     private $warnings = [];
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->currentTheme = $this->getParameter('theme', 'string');
@@ -67,7 +64,7 @@ class DetailTheme extends BackendBaseActionIndex
      * Load the data.
      * This will also set some warnings if needed.
      */
-    private function loadData()
+    private function loadData(): void
     {
         // inform that the theme is not installed yet
         if (!BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
@@ -102,10 +99,7 @@ class DetailTheme extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the data grid which contains the events.
-     */
-    private function loadDataGridTemplates()
+    private function loadDataGridTemplates(): void
     {
         // no hooks so don't bother
         if (!isset($this->information['templates'])) {
@@ -140,10 +134,7 @@ class DetailTheme extends BackendBaseActionIndex
         $this->dataGridTemplates->setPaging(false);
     }
 
-    /**
-     * Parse.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

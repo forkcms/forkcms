@@ -16,10 +16,7 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
  */
 class GenerateUrl extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();

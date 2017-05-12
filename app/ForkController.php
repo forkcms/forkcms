@@ -30,7 +30,7 @@ class ForkController extends Controller
     /**
      * Virtual folders mappings
      *
-     * @var    array
+     * @var array
      */
     private static $routes = [
         '' => self::DEFAULT_APPLICATION,
@@ -41,8 +41,6 @@ class ForkController extends Controller
 
     /**
      * Get the possible routes
-     *
-     * @return array
      */
     public static function getRoutes(): array
     {
@@ -51,8 +49,6 @@ class ForkController extends Controller
 
     /**
      * Runs the backend
-     *
-     * @return Response
      */
     public function backendController(): Response
     {
@@ -67,8 +63,6 @@ class ForkController extends Controller
 
     /**
      * Runs the backend ajax requests
-     *
-     * @return Response
      */
     public function backendAjaxController(): Response
     {
@@ -82,8 +76,6 @@ class ForkController extends Controller
 
     /**
      * Runs the frontend requests
-     *
-     * @return Response
      */
     public function frontendController(): Response
     {
@@ -97,8 +89,6 @@ class ForkController extends Controller
 
     /**
      * Runs the frontend ajax requests
-     *
-     * @return Response
      */
     public function frontendAjaxController(): Response
     {
@@ -112,10 +102,6 @@ class ForkController extends Controller
 
     /**
      * Runs an application and returns the Response
-     *
-     * @param ApplicationInterface $application
-     *
-     * @return Response
      */
     protected function handleApplication(ApplicationInterface $application): Response
     {
@@ -146,15 +132,7 @@ class ForkController extends Controller
         $init = new BackendInit($this->container->get('kernel'));
         $init->initialize($app);
 
-        switch ($app) {
-            case 'BackendAjax':
-                $applicationClass = BackendAjax::class;
-                break;
-            default:
-                $applicationClass = Backend::class;
-        }
-
-        return $applicationClass;
+        return $app === 'BackendAjax' ? BackendAjax::class : Backend::class;
     }
 
     /**
@@ -167,6 +145,6 @@ class ForkController extends Controller
         $init = new FrontendInit($this->container->get('kernel'));
         $init->initialize($app);
 
-        return ($app === 'FrontendAjax') ? FrontendAjax::class : Frontend::class;
+        return $app === 'FrontendAjax' ? FrontendAjax::class : Frontend::class;
     }
 }

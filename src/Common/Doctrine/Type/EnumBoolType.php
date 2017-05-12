@@ -14,13 +14,7 @@ class EnumBoolType extends Type
 {
     const ENUM_BOOL = 'enum_bool';
 
-    /**
-     * @param array $fieldDeclaration
-     * @param AbstractPlatform $platform
-     *
-     * @return string
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'ENUM("Y","N")';
     }
@@ -31,7 +25,7 @@ class EnumBoolType extends Type
      *
      * @return bool
      */
-    public function convertToPHPValue($enumBool, AbstractPlatform $platform)
+    public function convertToPHPValue($enumBool, AbstractPlatform $platform): bool
     {
         return $enumBool === 'Y';
     }
@@ -42,7 +36,7 @@ class EnumBoolType extends Type
      *
      * @return string
      */
-    public function convertToDatabaseValue($bool, AbstractPlatform $platform)
+    public function convertToDatabaseValue($bool, AbstractPlatform $platform): string
     {
         return $bool ? 'Y' : 'N';
     }

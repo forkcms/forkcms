@@ -17,10 +17,7 @@ use Backend\Core\Installer\ModuleInstaller;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         $this->addModule('Search');
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -33,7 +30,7 @@ class Installer extends ModuleInstaller
         $this->addPageSearchIndexes();
     }
 
-    private function addPageSearchIndexes()
+    private function addPageSearchIndexes(): void
     {
         $this->makeSearchable('Pages');
 
@@ -47,13 +44,13 @@ class Installer extends ModuleInstaller
         }
     }
 
-    private function setModuleSettings()
+    private function setModuleSettings(): void
     {
         $this->setSetting($this->getModule(), 'overview_num_items', 10);
         $this->setSetting($this->getModule(), 'validate_search', true);
     }
 
-    private function configureModuleRightsForGroup(int $groupId)
+    private function configureModuleRightsForGroup(int $groupId): void
     {
         $this->setModuleRights($groupId, $this->getModule());
         $this->setActionRights($groupId, $this->getModule(), 'AddSynonym');
@@ -64,7 +61,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights($groupId, $this->getModule(), 'Synonyms');
     }
 
-    private function addBackendNavigation()
+    private function addBackendNavigation(): void
     {
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationSearchId = $this->setNavigation($navigationModulesId, 'Search');
@@ -81,17 +78,14 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Search', 'search/settings');
     }
 
-    private function addModuleExtras()
+    private function addModuleExtras(): void
     {
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SearchForm', 'Form', null, false, 2001);
         $searchId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Search', null, null, false, 2000);
         $this->createSearchIndexPage($searchId);
     }
 
-    /**
-     * @param int $searchId
-     */
-    private function createSearchIndexPage(int $searchId)
+    private function createSearchIndexPage(int $searchId): void
     {
         foreach ($this->getLanguages() as $language) {
             $searchIndexAlreadyExists = (bool) $this->getDB()->getVar(
@@ -120,9 +114,6 @@ class Installer extends ModuleInstaller
         }
     }
 
-    /**
-     * @return array
-     */
     private function getActivePages(): array
     {
         return (array) $this->getDB()->getRecords(
@@ -133,11 +124,6 @@ class Installer extends ModuleInstaller
         );
     }
 
-    /**
-     * @param int $pageRevisionId
-     *
-     * @return string
-     */
     private function getContentFromBlocksForPageRevision(int $pageRevisionId): string
     {
         $blocks = (array) $this->getDB()->getColumn(
@@ -148,12 +134,7 @@ class Installer extends ModuleInstaller
         return empty($blocks) ? '' : strip_tags(implode(' ', $blocks));
     }
 
-    /**
-     * @param int $id
-     * @param string $language
-     * @param string $term
-     */
-    private function addSearchIndexForPage(int $id, string $language, string $term)
+    private function addSearchIndexForPage(int $id, string $language, string $term): void
     {
         $this->getDB()->execute(
             'INSERT INTO search_index (module, other_id, language, field, value, active)

@@ -19,7 +19,7 @@ class Installer extends ModuleInstaller
     /**
      * Insert an empty admin dashboard sequence
      */
-    private function insertDashboardSequence()
+    private function insertDashboardSequence(): void
     {
         $db = $this->getDB();
 
@@ -44,10 +44,7 @@ class Installer extends ModuleInstaller
         $this->insertDashboardWidget('Users', 'Statistics');
     }
 
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');

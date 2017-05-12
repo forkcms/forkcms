@@ -14,11 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentBlockType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
             'title',
@@ -67,29 +63,18 @@ class ContentBlockType extends AbstractType
         );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('theme');
         $resolver->setDefaults(['data_class' => CreateContentBlock::class]);
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'content_block';
     }
 
-    /**
-     * Get templates.
-     *
-     * @return array
-     */
-    private function getPossibleTemplates(string $theme)
+    private function getPossibleTemplates(string $theme): array
     {
         $templates = [];
         $finder = new Finder();

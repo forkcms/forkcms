@@ -25,19 +25,11 @@ class Ajax extends Base\Object implements ApplicationInterface
      */
     private $ajaxAction;
 
-    /**
-     * @return Response
-     */
     public function display(): Response
     {
         return $this->ajaxAction->display();
     }
 
-    /**
-     * @param array $forkData
-     *
-     * @return array
-     */
     private function splitUpForkData(array $forkData): array
     {
         $language = $forkData['language'] ?? '';
@@ -53,11 +45,6 @@ class Ajax extends Base\Object implements ApplicationInterface
         ];
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
     private function getForkDataFromRequest(Request $request): array
     {
         if ($request->request->has('fork')) {
@@ -71,7 +58,7 @@ class Ajax extends Base\Object implements ApplicationInterface
         return $this->splitUpForkData($request->query->all());
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         // check if the user is logged in
         $this->validateLogin();
@@ -100,12 +87,7 @@ class Ajax extends Base\Object implements ApplicationInterface
         }
     }
 
-    /**
-     * @param string $language
-     *
-     * @throws Exception If the provided language is not valid
-     */
-    public function setLanguage(string $language)
+    public function setLanguage(string $language): void
     {
         if (!array_key_exists($language, BackendLanguage::getWorkingLanguages())) {
             throw new Exception('Language invalid.');
@@ -118,7 +100,7 @@ class Ajax extends Base\Object implements ApplicationInterface
      * Do authentication stuff
      * This method could end the script by throwing an exception
      */
-    private function validateLogin()
+    private function validateLogin(): void
     {
         // check if the user is logged on, if not he shouldn't load any JS-file
         if (!Authentication::isLoggedIn()) {

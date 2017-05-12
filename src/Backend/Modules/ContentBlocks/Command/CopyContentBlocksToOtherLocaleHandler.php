@@ -13,18 +13,12 @@ final class CopyContentBlocksToOtherLocaleHandler
     /** @var ContentBlockRepository */
     private $contentBlockRepository;
 
-    /**
-     * @param ContentBlockRepository $contentBlockRepository
-     */
     public function __construct(ContentBlockRepository $contentBlockRepository)
     {
         $this->contentBlockRepository = $contentBlockRepository;
     }
 
-    /**
-     * @param CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale
-     */
-    public function handle(CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale)
+    public function handle(CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale): void
     {
         $fromLocaleContentBlocks = (array) $this->contentBlockRepository->findBy(
             ['locale' => $copyContentBlocksToOtherLocale->fromLocale, 'status' => ContentBlockStatus::active()]

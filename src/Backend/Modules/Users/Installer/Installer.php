@@ -20,7 +20,7 @@ class Installer extends ModuleInstaller
     /**
      * Add a GOD-user
      */
-    private function addUser()
+    private function addUser(): void
     {
         // no god user already exists
         // @todo refactor this nasty if statement...
@@ -172,10 +172,7 @@ class Installer extends ModuleInstaller
         return 'weak';
     }
 
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');

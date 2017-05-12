@@ -15,6 +15,7 @@ use SpoonDatabaseException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,11 +39,11 @@ abstract class Kernel extends BaseKernel
      *
      * @api
      */
-    public function __construct(string $environment, bool $debug)
+    public function __construct(string $environment, bool $enableDebug)
     {
         $this->request = Request::createFromGlobals();
 
-        parent::__construct($environment, $debug);
+        parent::__construct($environment, $enableDebug);
         $this->boot();
     }
 
@@ -51,7 +52,7 @@ abstract class Kernel extends BaseKernel
      *
      * @api
      */
-    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true): Response
     {
         // boot if it hasn't booted yet
         $this->boot();
@@ -62,7 +63,7 @@ abstract class Kernel extends BaseKernel
     /**
      * Boot and define the Fork Constants.
      */
-    public function boot()
+    public function boot(): void
     {
         if ($this->booted) {
             return;
@@ -79,7 +80,7 @@ abstract class Kernel extends BaseKernel
      *
      * @deprecated
      */
-    public function defineForkConstants()
+    public function defineForkConstants(): void
     {
         $container = $this->getContainer();
 
@@ -130,7 +131,7 @@ abstract class Kernel extends BaseKernel
      *
      * @return ContainerBuilder The compiled service container
      */
-    protected function buildContainer()
+    protected function buildContainer(): ContainerBuilder
     {
         $container = parent::buildContainer();
 
@@ -156,12 +157,7 @@ abstract class Kernel extends BaseKernel
         return $container;
     }
 
-    /**
-     * @param ContainerBuilder $container
-     *
-     * @return array
-     */
-    private function getInstalledModules(ContainerBuilder $container): array
+    private function getInstalledModules(ContainerBuilder $containerBuilder): array
     {
         // on installation all modules should be loaded
         if ($this->environment === 'install' || $this->environment === 'test') {
@@ -176,7 +172,7 @@ abstract class Kernel extends BaseKernel
         try {
             $moduleNames = array_merge(
                 $moduleNames,
-                (array) $container->get('database')->getColumn(
+                (array) $containerBuilder->get('database')->getColumn(
                     'SELECT name FROM modules'
                 )
             );
@@ -194,9 +190,6 @@ abstract class Kernel extends BaseKernel
         return $moduleNames;
     }
 
-    /**
-     * @return bool
-     */
     private function isInstallingModule(): bool
     {
         return preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $this->request->getRequestUri())
@@ -204,9 +197,6 @@ abstract class Kernel extends BaseKernel
                && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames());
     }
 
-    /**
-     * @return array
-     */
     private function getAllPossibleModuleNames(): array
     {
         $moduleNames = [];
@@ -221,7 +211,7 @@ abstract class Kernel extends BaseKernel
         return $moduleNames;
     }
 
-    protected function initializeContainer()
+    protected function initializeContainer(): void
     {
         // remove the cache dir when installing a module to trigger rebuilding the kernel
         if ($this->isInstallingModule()) {

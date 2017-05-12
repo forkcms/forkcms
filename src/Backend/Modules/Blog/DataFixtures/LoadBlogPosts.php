@@ -2,12 +2,11 @@
 
 namespace Backend\Modules\Blog\DataFixtures;
 
+use SpoonDatabase;
+
 class LoadBlogPosts
 {
-    /**
-     * @param \SpoonDatabase $database
-     */
-    public function load(\SpoonDatabase $database)
+    public function load(SpoonDatabase $database): void
     {
         $metaId = $database->insert(
             'meta',

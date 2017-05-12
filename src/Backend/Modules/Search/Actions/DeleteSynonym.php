@@ -18,7 +18,7 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class DeleteSynonym extends BackendBaseActionDelete
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -33,9 +33,6 @@ class DeleteSynonym extends BackendBaseActionDelete
         );
     }
 
-    /**
-     * @return int
-     */
     private function getId(): int
     {
         $id = $this->getParameter('id', 'int');

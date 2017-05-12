@@ -18,7 +18,7 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
  */
 class Form extends FrontendBaseWidget
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();

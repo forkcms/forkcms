@@ -17,10 +17,7 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
  */
 class MostReadQuestions extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent
         parent::execute();
@@ -29,10 +26,7 @@ class MostReadQuestions extends FrontendBaseWidget
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->tpl->assign(
             'widgetFaqMostRead',

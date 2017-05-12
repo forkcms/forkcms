@@ -12,36 +12,18 @@ abstract class Locale implements Serializable
      */
     protected $locale;
 
-    /**
-     * @param string $locale
-     */
     protected function __construct(string $locale)
     {
         $this->setLocale($locale);
     }
 
-    /**
-     * @param string $locale
-     *
-     * @return self
-     */
     public static function fromString(string $locale): self
     {
         return new static($locale);
     }
 
-    /**
-     * @return array
-     */
     abstract protected function getPossibleLanguages(): array;
 
-    /**
-     * @param string $locale
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return self
-     */
     protected function setLocale(string $locale): self
     {
         if (!array_key_exists($locale, $this->getPossibleLanguages())) {
@@ -53,26 +35,17 @@ abstract class Locale implements Serializable
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->locale;
     }
 
-    /**
-     * @return string
-     */
     public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * @return string
-     */
-    public function serialize()
+    public function serialize(): string
     {
         return $this->locale;
     }
@@ -87,11 +60,6 @@ abstract class Locale implements Serializable
         $this->locale = $locale;
     }
 
-    /**
-     * @param Locale $locale
-     *
-     * @return bool
-     */
     public function equals(Locale $locale): bool
     {
         return $this->locale === $locale->locale;

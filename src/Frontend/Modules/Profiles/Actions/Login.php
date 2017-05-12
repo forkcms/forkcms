@@ -28,17 +28,14 @@ class Login extends FrontendBaseBlock
      */
     private $frm;
 
-    /**
-     * Execute.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         // profile not logged in
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
             $this->loadTemplate();
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         } else {
@@ -51,10 +48,7 @@ class Login extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         $this->frm = new FrontendForm('login', null, null, 'loginForm');
         $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
@@ -62,18 +56,12 @@ class Login extends FrontendBaseBlock
         $this->frm->addCheckbox('remember', true);
     }
 
-    /**
-     * Parse the data into the template.
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {

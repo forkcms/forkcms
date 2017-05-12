@@ -14,20 +14,12 @@ final class NotImplementedUnsubscribedEvent extends Event
      */
     protected $unsubscription;
 
-    /**
-     * NotImplementedSubscriptionEvent constructor.
-     *
-     * @param Unsubscription $unsubscription
-     */
     public function __construct(
         Unsubscription $unsubscription
     ) {
         $this->unsubscription = $unsubscription;
     }
 
-    /**
-     * @return Unsubscription
-     */
     public function getUnsubscription(): Unsubscription
     {
         return $this->unsubscription;

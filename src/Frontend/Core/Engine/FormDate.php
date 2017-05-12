@@ -9,10 +9,12 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use SpoonFormDate;
+
 /**
  * This is our extended version of \SpoonFormDate
  */
-class FormDate extends \SpoonFormDate
+class FormDate extends SpoonFormDate
 {
     /**
      * Checks if this field is correctly submitted.
@@ -21,7 +23,7 @@ class FormDate extends \SpoonFormDate
      *
      * @return bool
      */
-    public function isValid($error = null)
+    public function isValid($error = null): bool
     {
         // call parent (let them do the hard word)
         $return = parent::isValid($error);

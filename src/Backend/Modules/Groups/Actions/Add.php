@@ -75,7 +75,7 @@ class Add extends BackendBaseActionAdd
     /**
      * Bundle all actions that need to be bundled
      */
-    private function bundleActions()
+    private function bundleActions(): void
     {
         foreach ($this->modules as $module) {
             // loop through actions and add all classnames
@@ -119,10 +119,7 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->getData();
@@ -132,10 +129,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Get the actions
-     */
-    private function getActions()
+    private function getActions(): void
     {
         $this->actions = [];
         $filter = ['Authentication', 'Error', 'Core'];
@@ -194,20 +188,14 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->getWidgets();
         $this->getActions();
         $this->bundleActions();
     }
 
-    /**
-     * Get the widgets
-     */
-    private function getWidgets()
+    private function getWidgets(): void
     {
         $this->widgets = [];
         $this->widgetInstances = [];
@@ -267,7 +255,7 @@ class Add extends BackendBaseActionAdd
      * @param \SpoonFormElement[] $actionPermissions The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
-    private function insertPermissions(array $actionPermissions, array $bundledActionPermissions)
+    private function insertPermissions(array $actionPermissions, array $bundledActionPermissions): void
     {
         // init vars
         $modulesDenied = [];
@@ -406,10 +394,7 @@ class Add extends BackendBaseActionAdd
         return $userGroup;
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('add');
@@ -487,10 +472,7 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $bundledActionPermissions = [];

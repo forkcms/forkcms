@@ -36,10 +36,6 @@ final class Subscription
      */
     public $interests;
 
-    /**
-     * @param Locale $locale
-     * @param null|string $email
-     */
     public function __construct(
         Locale $locale,
         string $email = null

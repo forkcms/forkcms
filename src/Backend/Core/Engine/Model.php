@@ -132,7 +132,7 @@ class Model extends \Common\Core\Model
      * @param string $type The type of extra, possible values are block, homepage, widget.
      * @param array $data Extra data that exists.
      */
-    public static function deleteExtra(string $module = null, string $type = null, array $data = null)
+    public static function deleteExtra(string $module = null, string $type = null, array $data = null): void
     {
         // init
         $query = 'SELECT i.id, i.data FROM modules_extras AS i WHERE 1';
@@ -181,7 +181,7 @@ class Model extends \Common\Core\Model
      * @param int $id The id of the extra to delete.
      * @param bool $deleteBlock Should the block be deleted? Default is false.
      */
-    public static function deleteExtraById(int $id, bool $deleteBlock = false)
+    public static function deleteExtraById(int $id, bool $deleteBlock = false): void
     {
         self::getContainer()->get('database')->delete('modules_extras', 'id = ?', $id);
 
@@ -207,8 +207,12 @@ class Model extends \Common\Core\Model
      * @param string $value The value to check the field for.
      * @param string $action In case you want to search for a certain action.
      */
-    public static function deleteExtrasForData(string $module, string $field, string $value, string $action = null)
-    {
+    public static function deleteExtrasForData(
+        string $module,
+        string $field,
+        string $value,
+        string $action = null
+    ): void {
         $ids = self::getExtrasForData($module, $field, $value, $action);
 
         // we have extras
@@ -224,7 +228,7 @@ class Model extends \Common\Core\Model
      * @param string $path The path wherein the thumbnail-folders exist.
      * @param string|null $thumbnail The filename to be deleted.
      */
-    public static function deleteThumbnails(string $path, ?string $thumbnail)
+    public static function deleteThumbnails(string $path, ?string $thumbnail): void
     {
         // if there is no image provided we can't do anything
         if ($thumbnail === null || $thumbnail === '') {
@@ -657,7 +661,7 @@ class Model extends \Common\Core\Model
         string $filename,
         string $subDirectory = '',
         array $fileSizes = null
-    ) {
+    ): void {
         if (empty($fileSizes)) {
             $model = get_class_vars('Backend' . \SpoonFilter::toCamelCase($module) . 'Model');
             $fileSizes = $model['fileSizes'];
@@ -751,7 +755,7 @@ class Model extends \Common\Core\Model
      */
     public static function isModuleInstalled(string $module): bool
     {
-        return in_array($module, self::getModules());
+        return in_array($module, self::getModules(), true);
     }
 
     /**
@@ -884,13 +888,13 @@ class Model extends \Common\Core\Model
      *
      * @throws Exception If key parameter is not allowed
      */
-    public static function updateExtra(int $id, string $key, $value)
+    public static function updateExtra(int $id, string $key, $value): void
     {
         // define allowed keys
         $allowedKeys = ['label', 'action', 'data', 'hidden', 'sequence'];
 
         // key is not allowed
-        if (!in_array($key, $allowedKeys)) {
+        if (!in_array($key, $allowedKeys, true)) {
             throw new Exception('The key ' . $key . ' can\'t be updated.');
         }
 
@@ -910,7 +914,7 @@ class Model extends \Common\Core\Model
      * @param string $key The key in the data you want to update.
      * @param string|array $value The new value.
      */
-    public static function updateExtraData(int $id, string $key, $value)
+    public static function updateExtraData(int $id, string $key, $value): void
     {
         $db = self::getContainer()->get('database');
 

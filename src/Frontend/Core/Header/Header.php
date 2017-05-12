@@ -81,9 +81,6 @@ class Header extends Object
      */
     private $contentTitle;
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
@@ -131,8 +128,12 @@ class Header extends Object
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority|null $priority Provides a way to change the order that things are loaded
      */
-    public function addCSS(string $file, bool $minify = true, bool $addTimestamp = false, Priority $priority = null)
-    {
+    public function addCSS(
+        string $file,
+        bool $minify = true,
+        bool $addTimestamp = false,
+        Priority $priority = null
+    ): void {
         if (mb_strpos($file, 'http') !== 0) {
             $file = Theme::getPath($file);
         }
@@ -148,8 +149,12 @@ class Header extends Object
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority|null $priority Provides a way to change the order that things are loaded
      */
-    public function addJS(string $file, bool $minify = true, bool $addTimestamp = false, Priority $priority = null)
-    {
+    public function addJS(
+        string $file,
+        bool $minify = true,
+        bool $addTimestamp = false,
+        Priority $priority = null
+    ): void {
         if (mb_strpos($file, 'http') !== 0) {
             $file = Theme::getPath($file);
         }
@@ -164,14 +169,12 @@ class Header extends Object
      * @param string $key The key whereunder the value will be stored.
      * @param mixed $value The value
      */
-    public function addJsData(string $module, string $key, $value)
+    public function addJsData(string $module, string $key, $value): void
     {
         $this->jsData->add($module, $key, $value);
     }
 
     /**
-     * Add link
-     *
      * @param array $attributes The attributes to parse.
      * @param bool $overwrite Should we overwrite the current value?
      * @param string[] $uniqueAttributeKeys Which keys can we use to decide if an item is unique.
@@ -180,7 +183,7 @@ class Header extends Object
         array $attributes,
         bool $overwrite = false,
         array $uniqueAttributeKeys = ['rel', 'hreflang', 'type', 'title']
-    ) {
+    ): void {
         if (!isset($attributes['href']) || empty($attributes['href'])) {
             return;
         }
@@ -191,8 +194,6 @@ class Header extends Object
     }
 
     /**
-     * Add meta data
-     *
      * @param array $attributes The attributes to parse.
      * @param bool $overwrite Should we overwrite the current value?
      * @param array $uniqueAttributeKeys Which keys can we use to decide if an item is unique.
@@ -203,7 +204,7 @@ class Header extends Object
         bool $overwrite = false,
         array $uniqueAttributeKeys = ['name'],
         string $uniqueKeySuffix = null
-    ) {
+    ): void {
         if (!isset($attributes['content']) || $attributes['content'] === '') {
             return;
         }
@@ -223,7 +224,7 @@ class Header extends Object
      * @param string $metaDescription The description.
      * @param bool $overwrite Should we overwrite the previous value?
      */
-    public function addMetaDescription(string $metaDescription, bool $overwrite = false)
+    public function addMetaDescription(string $metaDescription, bool $overwrite = false): void
     {
         $this->meta->addMetaData(MetaData::forName('description', $metaDescription), $overwrite);
     }
@@ -234,32 +235,22 @@ class Header extends Object
      * @param string $metaKeywords The keywords.
      * @param bool $overwrite Should we overwrite the previous value?
      */
-    public function addMetaKeywords($metaKeywords, bool $overwrite = false)
+    public function addMetaKeywords(string $metaKeywords, bool $overwrite = false): void
     {
         $this->meta->addMetaData(MetaData::forName('keywords', $metaKeywords), $overwrite);
     }
 
     /**
-     * Add Open Graph data
-     *
      * @param string $property The key (without og:).
      * @param string $openGraphData The value.
      * @param bool $overwrite Should we overwrite the previous value?
      */
-    public function addOpenGraphData(string $property, string $openGraphData, bool $overwrite = false)
+    public function addOpenGraphData(string $property, string $openGraphData, bool $overwrite = false): void
     {
         $this->meta->addMetaData(MetaData::forProperty('og:' . $property, $openGraphData), $overwrite);
     }
 
-    /**
-     * Add Open Graph image
-     *
-     * @param string $image The path to the image.
-     * @param bool $overwrite Should we overwrite the previous value?
-     * @param int $width The width of the image.
-     * @param int $height The height of the image.
-     */
-    public function addOpenGraphImage($image, bool $overwrite = false, int $width = 0, int $height = 0)
+    public function addOpenGraphImage($image, bool $overwrite = false, int $width = 0, int $height = 0): void
     {
         // remove site url from path
         $image = str_replace(SITE_URL, '', $image);
@@ -295,13 +286,7 @@ class Header extends Object
         }
     }
 
-    /**
-     * Add Rss link
-     *
-     * @param string $title
-     * @param string $link
-     */
-    public function addRssLink(string $title, string $link)
+    public function addRssLink(string $title, string $link): void
     {
         $this->meta->addMetaLink(MetaLink::rss($link, $title), true);
     }
@@ -311,7 +296,7 @@ class Header extends Object
      *
      * @param string $content The content (where from to extract the images).
      */
-    public function extractOpenGraphImages(string $content)
+    public function extractOpenGraphImages(string $content): void
     {
         $images = [];
 
@@ -324,21 +309,11 @@ class Header extends Object
         }
     }
 
-    /**
-     * Get the custom meta
-     *
-     * @return string
-     */
     public function getMetaCustom(): string
     {
         return (string) $this->metaCustom;
     }
 
-    /**
-     * Get the page title
-     *
-     * @return string
-     */
     public function getPageTitle(): string
     {
         return (string) $this->pageTitle;
@@ -347,7 +322,7 @@ class Header extends Object
     /**
      * Parse the header into the template
      */
-    public function parse()
+    public function parse(): void
     {
         $facebook = new Facebook($this->get('fork.settings'));
         $facebook->addOpenGraphMeta($this);
@@ -379,9 +354,6 @@ class Header extends Object
         );
     }
 
-    /**
-     * @return string
-     */
     private function getCanonical(): string
     {
         $queryString = trim($this->URL->getQueryString(), '/');
@@ -422,7 +394,7 @@ class Header extends Object
     /**
      * Parse SEO specific data
      */
-    private function parseSeo()
+    private function parseSeo(): void
     {
         if ($this->get('fork.settings')->get('Core', 'seo_noodp', false)) {
             $this->meta->addMetaData(MetaData::forName('robots', 'noodp'));
@@ -442,53 +414,35 @@ class Header extends Object
         $this->meta->addMetaLink(MetaLink::canonical(\SpoonFilter::htmlentities($this->getCanonical())));
     }
 
-    /**
-     * Set the canonical URL
-     *
-     * @param string $url The Canonical URL.
-     */
-    public function setCanonicalUrl(string $url)
+    public function setCanonicalUrl(string $canonicalUrl): void
     {
-        if (strpos($url, '/') === 0) {
-            $url = SITE_URL . $url;
+        if (strpos($canonicalUrl, '/') === 0) {
+            $canonicalUrl = SITE_URL . $canonicalUrl;
         }
 
-        $this->canonical = $url;
+        $this->canonical = $canonicalUrl;
     }
 
-    /**
-     * Set the custom meta
-     *
-     * @param string|null $meta The meta data to set.
-     */
-    public function setMetaCustom(string $meta = null)
+    public function setMetaCustom(string $meta = null): void
     {
         $this->metaCustom = $meta;
     }
 
-    /**
-     * @param string $contentTitle
-     */
-    public function setContentTitle(string $contentTitle)
+    public function setContentTitle(string $contentTitle): void
     {
         $this->contentTitle = $contentTitle;
     }
 
-    /**
-     * @return string
-     */
     public function getContentTitle(): string
     {
         return $this->contentTitle;
     }
 
     /**
-     * Set the page title
-     *
      * @param string $value The page title to be set or to be prepended.
      * @param bool $overwrite Should the existing page title be overwritten?
      */
-    public function setPageTitle(string $value, bool $overwrite = false)
+    public function setPageTitle(string $value, bool $overwrite = false): void
     {
         $this->setContentTitle($value);
 
@@ -517,8 +471,6 @@ class Header extends Object
     }
 
     /**
-     * Set Twitter Card
-     *
      * @param string $title The title (maximum 70 characters)
      * @param string $description A brief description of the card (maximum 200 characters)
      * @param string $imageURL The URL of the image (minimum 280x150 and <1MB)
@@ -533,7 +485,7 @@ class Header extends Object
         string $cardType = 'summary',
         string $siteHandle = null,
         string $creatorHandle = null
-    ) {
+    ): void {
         $this->meta->addMetaData(MetaData::forName('twitter:card', $cardType));
         $this->meta->addMetaData(MetaData::forName('twitter:title', $title));
         $this->meta->addMetaData(MetaData::forName('twitter:description', $description));

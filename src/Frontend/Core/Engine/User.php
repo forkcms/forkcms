@@ -70,49 +70,32 @@ class User
         return self::$cache[$userId];
     }
 
-    /**
-     * Get email
-     *
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
-     * Get a setting
-     *
-     * @param string $key The name of the setting.
+     * @param string $setting The name of the setting.
      *
      * @return mixed The stored value, if the setting wasn't found null will be returned
      */
-    public function getSetting(string $key)
+    public function getSetting(string $setting)
     {
         // not set? return null
-        if (!isset($this->settings[$key])) {
+        if (!isset($this->settings[$setting])) {
             return;
         }
 
         // return
-        return $this->settings[$key];
+        return $this->settings[$setting];
     }
 
-    /**
-     * Get all settings at once
-     *
-     * @return array An key-value-array with all settings for this user.
-     */
     public function getSettings(): array
     {
         return $this->settings;
     }
 
-    /**
-     * Get user id
-     *
-     * @return int
-     */
     public function getUserId(): int
     {
         return $this->userId;
@@ -125,7 +108,7 @@ class User
      *
      * @throws Exception
      */
-    public function loadUser(int $userId)
+    public function loadUser(int $userId): void
     {
         // get database instance
         $db = Model::getContainer()->get('database');

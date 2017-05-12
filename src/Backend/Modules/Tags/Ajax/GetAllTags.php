@@ -18,10 +18,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class GetAllTags extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->output(self::OK, BackendTagsModel::getAll());

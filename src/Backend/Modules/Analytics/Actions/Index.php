@@ -18,7 +18,7 @@ final class Index extends ActionIndex
      */
     private $dateRange;
 
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -33,7 +33,7 @@ final class Index extends ActionIndex
     /**
      * The form will update the date range filter if needed
      */
-    private function handleDateRangeForm()
+    private function handleDateRangeForm(): void
     {
         $dateRangeForm = new DateRangeType('date_range', $this->dateRange);
 
@@ -44,7 +44,7 @@ final class Index extends ActionIndex
         $dateRangeForm->parse($this->tpl);
     }
 
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

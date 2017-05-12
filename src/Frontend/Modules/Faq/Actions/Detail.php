@@ -51,10 +51,7 @@ class Detail extends FrontendBaseBlock
      */
     private $status;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -64,15 +61,12 @@ class Detail extends FrontendBaseBlock
         $this->loadTemplate();
         $this->getData();
         $this->updateStatistics();
-        $this->loadForm();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
@@ -113,10 +107,7 @@ class Detail extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         $this->frm = new FrontendForm('feedback');
         $this->frm->addHidden('question_id', $this->record['id']);
@@ -148,10 +139,7 @@ class Detail extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // add to breadcrumb
         if ($this->settings['allow_multiple_categories']) {
@@ -202,7 +190,7 @@ class Detail extends FrontendBaseBlock
     /**
      * Update the view count for this item
      */
-    private function updateStatistics()
+    private function updateStatistics(): void
     {
         // view has been counted
         if (\SpoonSession::exists('viewed_faq_' . $this->record['id'])) {
@@ -216,14 +204,11 @@ class Detail extends FrontendBaseBlock
         \SpoonSession::set('viewed_faq_' . $this->record['id'], true);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         $feedbackAllowed = (isset($this->settings['allow_feedback']) && $this->settings['allow_feedback']);
         if (!$feedbackAllowed) {
-            return false;
+            return;
         }
 
         if ($this->frm->isSubmitted()) {

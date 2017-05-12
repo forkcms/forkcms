@@ -27,16 +27,13 @@ class ResendActivation extends FrontendBaseBlock
      */
     private $frm;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         // profile not logged in
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->loadTemplate();
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         } else {
@@ -45,10 +42,7 @@ class ResendActivation extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create the form
         $this->frm = new FrontendForm('resendActivation', null, null, 'resendActivation');
@@ -57,10 +51,7 @@ class ResendActivation extends FrontendBaseBlock
         $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // form was sent?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -75,10 +66,7 @@ class ResendActivation extends FrontendBaseBlock
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {

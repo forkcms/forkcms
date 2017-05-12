@@ -10,7 +10,7 @@ use Backend\Core\Engine\Base\AjaxAction;
  */
 class RemoveUploadedFile extends AjaxAction
 {
-    public function execute()
+    public function execute(): void
     {
         $request = $this->get('request');
         if (!$request->request->has('file') || !$request->request->has('type')) {

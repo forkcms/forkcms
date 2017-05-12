@@ -37,25 +37,19 @@ class Modules extends BackendBaseActionIndex
     private $installedModules = [];
     private $installableModules = [];
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         $this->loadData();
-        $this->loadDataGridInstalled();
-        $this->loadDataGridInstallable();
+        $this->loadDataGridInstalledModules();
+        $this->loadDataGridInstallableModules();
 
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Load the data for the 2 data grids.
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get all manageable modules
         $modules = BackendExtensionsModel::getModules();
@@ -70,10 +64,7 @@ class Modules extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the data grid for installable modules.
-     */
-    private function loadDataGridInstallable()
+    private function loadDataGridInstallableModules(): void
     {
         // create datagrid
         $this->dataGridInstallableModules = new BackendDataGridArray($this->installableModules);
@@ -95,10 +86,7 @@ class Modules extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the data grid for installed modules.
-     */
-    private function loadDataGridInstalled()
+    private function loadDataGridInstalledModules(): void
     {
         // create datagrid
         $this->dataGridInstalledModules = new BackendDataGridArray($this->installedModules);
@@ -117,10 +105,7 @@ class Modules extends BackendBaseActionIndex
         $this->dataGridInstalledModules->setColumnFunction([new BackendExtensionsModel(), 'hasModuleWarnings'], ['[raw_name]'], ['hidden']);
     }
 
-    /**
-     * Parse the datagrids and the reports.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

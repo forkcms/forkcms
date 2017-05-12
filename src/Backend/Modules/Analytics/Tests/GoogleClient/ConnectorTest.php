@@ -9,10 +9,11 @@ use Google_Service_Analytics;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 class ConnectorTest extends TestCase
 {
-    public function testGetPageViews()
+    public function testGetPageViews(): void
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
@@ -29,7 +30,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    public function testGetVisitors()
+    public function testGetVisitors(): void
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
@@ -46,7 +47,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    public function testGetPagesPerVisit()
+    public function testGetPagesPerVisit(): void
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
@@ -63,7 +64,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    public function testGetTimeOnSite()
+    public function testGetTimeOnSite(): void
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
@@ -80,7 +81,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    public function testGetNewSessionsPercentage()
+    public function testGetNewSessionsPercentage(): void
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
@@ -97,7 +98,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    public function testGetBounceRate()
+    public function testGetBounceRate(): void
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
@@ -114,7 +115,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    public function testGetVisitorsGraphData()
+    public function testGetVisitorsGraphData(): void
     {
         ini_set('date.timezone', 'Europe/Brussels');
 
@@ -144,7 +145,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    public function testGetSourceGraphData()
+    public function testGetSourceGraphData(): void
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
@@ -170,7 +171,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    public function testGetMostVisitedPagesData()
+    public function testGetMostVisitedPagesData(): void
     {
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
@@ -196,7 +197,7 @@ class ConnectorTest extends TestCase
         );
     }
 
-    private function getModulesSettingsMock()
+    private function getModulesSettingsMock(): PHPUnit_Framework_MockObject_MockObject
     {
         return $this->getMockBuilder(ModulesSettings::class)
             ->disableOriginalConstructor()
@@ -204,7 +205,7 @@ class ConnectorTest extends TestCase
         ;
     }
 
-    private function getAnalyticsServiceMock()
+    private function getAnalyticsServiceMock(): Google_Service_Analytics
     {
         $analyticsService = new Google_Service_Analytics(new Google_Client());
 

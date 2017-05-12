@@ -41,10 +41,7 @@ class ThemeTemplates extends BackendBaseActionEdit
      */
     private $selectedTheme;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadData();
@@ -54,10 +51,7 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Load the record
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get data
         $this->selectedTheme = $this->getParameter('theme', 'string');
@@ -75,10 +69,7 @@ class ThemeTemplates extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // create datagrid
         $this->dataGrid = new BackendDataGridDB(
@@ -105,10 +96,7 @@ class ThemeTemplates extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('themes');
@@ -124,10 +112,7 @@ class ThemeTemplates extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

@@ -16,7 +16,7 @@ class IndexTest extends WebTestCase
      * If the clients could be insulated from eachother, this
      * would not be an issue.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Authentication::tearDown();
     }
@@ -24,7 +24,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testPrivateRedirectsToAuthentication()
+    public function testPrivateRedirectsToAuthentication(): void
     {
         $client = static::createClient();
         $client->followRedirects();
@@ -40,7 +40,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAuthenticationIndexWorks()
+    public function testAuthenticationIndexWorks(): void
     {
         $client = static::createClient();
 
@@ -54,7 +54,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testPrivateContainsRobotsTag()
+    public function testPrivateContainsRobotsTag(): void
     {
         $client = static::createClient();
 
@@ -68,7 +68,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAuthenticationWithWrongCredentials()
+    public function testAuthenticationWithWrongCredentials(): void
     {
         $client = static::createClient();
 
@@ -95,7 +95,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAuthenticationWithCorrectCredentials()
+    public function testAuthenticationWithCorrectCredentials(): void
     {
         $client = static::createClient();
         $client->setMaxRedirects(2);
@@ -134,7 +134,7 @@ class IndexTest extends WebTestCase
      *
      * @runInSeparateProcess
      */
-    public function testPagesUserWithCorrectCredentials()
+    public function testPagesUserWithCorrectCredentials(): void
     {
         $client = static::createClient();
         $client->setMaxRedirects(2);
@@ -170,7 +170,7 @@ class IndexTest extends WebTestCase
      *
      * @runInSeparateProcess
      */
-    public function testUsersUserWithCorrectCredentials()
+    public function testUsersUserWithCorrectCredentials(): void
     {
         $client = static::createClient();
         $client->setMaxRedirects(2);

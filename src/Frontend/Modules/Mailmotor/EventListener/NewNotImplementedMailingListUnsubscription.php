@@ -34,10 +34,6 @@ final class NewNotImplementedMailingListUnsubscription
      */
     protected $mailer;
 
-    /**
-     * @param Swift_Mailer $mailer
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(
         Swift_Mailer $mailer,
         ModulesSettings $modulesSettings
@@ -46,14 +42,9 @@ final class NewNotImplementedMailingListUnsubscription
         $this->modulesSettings = $modulesSettings;
     }
 
-    /**
-     * On NotImplementedUnsubscribedEvent
-     *
-     * @param NotImplementedUnsubscribedEvent $event
-     */
     public function onNotImplementedUnsubscribedEvent(
         NotImplementedUnsubscribedEvent $event
-    ) {
+    ): void {
         // define title
         $title = sprintf(
             Language::lbl('MailTitleUnsubscribeSubscriber'),

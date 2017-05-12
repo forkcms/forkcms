@@ -39,10 +39,7 @@ class Index extends FrontendBaseBlock
         'num_pages' => null,
     ];
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
@@ -50,10 +47,7 @@ class Index extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // requested page
         $requestedPage = $this->URL->getParameter('page', 'int', 1);
@@ -84,10 +78,7 @@ class Index extends FrontendBaseBlock
         $this->items = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');

@@ -36,17 +36,14 @@ class ChangeEmail extends FrontendBaseBlock
      */
     private $profile;
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // profile logged in
         if (FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->getData();
             $this->loadTemplate();
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         } else {
@@ -61,19 +58,13 @@ class ChangeEmail extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Get profile data.
-     */
-    private function getData()
+    private function getData(): void
     {
         // get profile
         $this->profile = FrontendProfilesAuthentication::getProfile();
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         $this->frm = new FrontendForm('updateEmail', null, null, 'updateEmailForm');
         $this->frm->addPassword('password')->setAttributes(['required' => null]);
@@ -82,10 +73,7 @@ class ChangeEmail extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Parse the data into the template.
-     */
-    private function parse()
+    private function parse(): void
     {
         // have the settings been saved?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -97,10 +85,7 @@ class ChangeEmail extends FrontendBaseBlock
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {

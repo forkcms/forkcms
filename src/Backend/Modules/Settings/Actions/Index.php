@@ -37,10 +37,7 @@ class Index extends BackendBaseActionIndex
     private $needsAkismet;
     private $needsGoogleMaps;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -58,10 +55,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // list of default domains
         $defaultDomains = [str_replace(['http://', 'www.', 'https://'], '', SITE_URL)];
@@ -246,10 +240,7 @@ class Index extends BackendBaseActionIndex
         $this->frm->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -271,7 +262,7 @@ class Index extends BackendBaseActionIndex
     /**
      * Show the warnings based on the active modules & configured settings
      */
-    private function parseWarnings()
+    private function parseWarnings(): void
     {
         // get warnings
         $warnings = BackendSettingsModel::getWarnings();
@@ -280,10 +271,7 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('warnings', $warnings);
     }
 
-    /**
-     * Validates the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

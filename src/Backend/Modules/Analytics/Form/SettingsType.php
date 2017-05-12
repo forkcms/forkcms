@@ -15,11 +15,6 @@ final class SettingsType
     /** @var SettingsStepType */
     private $form;
 
-    /**
-     * @param string $name
-     * @param ModulesSettings $settings
-     * @param Google_Service_Analytics $googleServiceAnalytics
-     */
     public function __construct(
         string $name,
         ModulesSettings $settings,
@@ -56,17 +51,11 @@ final class SettingsType
         $this->form = new Form($name);
     }
 
-    /**
-     * @param TwigTemplate $template
-     */
-    public function parse(TwigTemplate $template)
+    public function parse(TwigTemplate $template): void
     {
         $this->form->parse($template);
     }
 
-    /**
-     * @return bool
-     */
     public function handle(): bool
     {
         if ($this->form instanceof Form) {

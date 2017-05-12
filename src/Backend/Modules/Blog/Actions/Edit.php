@@ -50,10 +50,7 @@ class Edit extends BackendBaseActionEdit
      */
     protected $imageIsAllowed = true;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');
@@ -69,8 +66,8 @@ class Edit extends BackendBaseActionEdit
             }
 
             $this->getData();
-            $this->loadDrafts();
-            $this->loadRevisions();
+            $this->loadDraftDataGrid();
+            $this->loadRevisionDataGrid();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
@@ -85,7 +82,7 @@ class Edit extends BackendBaseActionEdit
      * Get the data
      * If a revision-id was specified in the URL we load the revision and not the actual data.
      */
-    private function getData()
+    private function getData(): void
     {
         $this->record = (array) BackendBlogModel::get($this->id);
         $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
@@ -123,10 +120,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the datagrid with drafts
-     */
-    private function loadDrafts()
+    private function loadDraftDataGrid(): void
     {
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
@@ -180,10 +174,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('edit');
@@ -228,10 +219,7 @@ class Edit extends BackendBaseActionEdit
         $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURL', [$this->record['id']]);
     }
 
-    /**
-     * Load the datagrid with revisions
-     */
-    private function loadRevisions()
+    private function loadRevisionDataGrid(): void
     {
         // create datagrid
         $this->dgRevisions = new BackendDataGridDB(
@@ -282,10 +270,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -317,10 +302,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

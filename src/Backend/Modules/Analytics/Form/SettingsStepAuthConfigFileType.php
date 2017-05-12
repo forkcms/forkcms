@@ -18,10 +18,6 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
     /** @var ModulesSettings */
     private $settings;
 
-    /**
-     * @param string $name
-     * @param ModulesSettings $settings
-     */
     public function __construct(string $name, ModulesSettings $settings)
     {
         $this->form = new Form($name);
@@ -30,17 +26,11 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
         $this->build();
     }
 
-    /**
-     * @param TwigTemplate $template
-     */
-    public function parse(TwigTemplate $template)
+    public function parse(TwigTemplate $template): void
     {
         $this->form->parse($template);
     }
 
-    /**
-     * @return bool
-     */
     public function handle(): bool
     {
         $this->form->cleanupFields();
@@ -65,18 +55,12 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
         return true;
     }
 
-    /**
-     * Build up the form
-     */
-    private function build()
+    private function build(): void
     {
         $this->form->addFile('certificate');
         $this->form->addText('email');
     }
 
-    /**
-     * @return bool
-     */
     private function isValid(): bool
     {
         $fileField = $this->form->getField('certificate');

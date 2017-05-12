@@ -18,10 +18,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
  */
 class Move extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent
         parent::execute();

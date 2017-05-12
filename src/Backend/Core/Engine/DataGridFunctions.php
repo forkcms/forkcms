@@ -11,6 +11,8 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
+use SpoonDate;
+use SpoonFilter;
 
 /**
  * A set of commonly used functions that will be applied on rows or columns
@@ -28,10 +30,8 @@ class DataGridFunctions
      */
     public static function cleanupPlainText(string $var): string
     {
-        $var = (string) $var;
-
         // detect links
-        $var = \SpoonFilter::replaceURLsWithAnchors($var);
+        $var = SpoonFilter::replaceURLsWithAnchors($var);
 
         // replace newlines
         $var = str_replace("\r", '', $var);
@@ -57,9 +57,6 @@ class DataGridFunctions
      */
     public static function formatFloat(float $number, int $decimals = 2): string
     {
-        $number = (float) $number;
-        $decimals = (int) $decimals;
-
         return number_format($number, $decimals, '.', ' ');
     }
 
@@ -72,8 +69,6 @@ class DataGridFunctions
      */
     public static function getDate(int $timestamp): string
     {
-        $timestamp = (int) $timestamp;
-
         // if invalid timestamp return an empty string
         if ($timestamp <= 0) {
             return '';
@@ -83,7 +78,7 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('date_format');
 
         // format the date according the user his settings
-        return \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
+        return SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -104,7 +99,7 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('datetime_format');
 
         // format the date according the user his settings
-        return \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
+        return SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -125,7 +120,7 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('time_format');
 
         // format the date according the user his settings
-        return \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
+        return SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -141,11 +136,11 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('datetime_format');
 
         // get the time ago as a string
-        $timeAgo = \SpoonDate::getTimeAgo($timestamp, BackendLanguage::getInterfaceLanguage(), $format);
+        $timeAgo = SpoonDate::getTimeAgo($timestamp, BackendLanguage::getInterfaceLanguage(), $format);
 
         return '<time data-toggle="tooltip" datetime="'
-               . \SpoonDate::getDate('Y-m-d H:i:s', $timestamp)
-               . '" title="' . \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage())
+               . SpoonDate::getDate('Y-m-d H:i:s', $timestamp)
+               . '" title="' . SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage())
                . '">' . $timeAgo . '</time>';
     }
 
@@ -303,7 +298,7 @@ class DataGridFunctions
 
         // less characters
         if (mb_strlen($string) <= $length) {
-            return \SpoonFilter::htmlspecialchars($string);
+            return SpoonFilter::htmlspecialchars($string);
         }
 
         // more characters
@@ -320,7 +315,7 @@ class DataGridFunctions
             $string .= '…';
         }
 
-        return \SpoonFilter::htmlspecialchars($string);
+        return SpoonFilter::htmlspecialchars($string);
     }
 
     /**

@@ -24,42 +24,22 @@ class BaseModel
      */
     private static $container;
 
-    /**
-     * Gets a service by id.
-     *
-     * @param string $reference The service id
-     *
-     * @return object The service
-     */
-    public static function get(string $reference)
+    public static function get(string $serviceId)
     {
-        return self::$container->get($reference);
+        return self::$container->get($serviceId);
     }
 
-    /**
-     * @return ContainerInterface
-     */
     public static function getContainer(): ContainerInterface
     {
         return self::$container;
     }
 
-    /**
-     * Returns true if the service id is defined.
-     *
-     * @param string $reference The service id
-     *
-     * @return bool true if the service id is defined, false otherwise
-     */
-    public static function has(string $reference): bool
+    public static function has(string $serviceId): bool
     {
-        return self::$container->has($reference);
+        return self::$container->has($serviceId);
     }
 
-    /**
-     * @param ContainerInterface $container
-     */
-    public static function setContainer(ContainerInterface $container = null)
+    public static function setContainer(ContainerInterface $container = null): void
     {
         self::$container = $container;
     }

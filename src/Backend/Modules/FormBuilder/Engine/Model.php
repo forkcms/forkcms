@@ -115,7 +115,7 @@ class Model
      *
      * @param int $id The id of the record to delete.
      */
-    public static function delete(int $id)
+    public static function delete(int $id): void
     {
         $db = BackendModel::getContainer()->get('database');
 
@@ -149,7 +149,7 @@ class Model
      *
      * @param array $ids Ids of data items.
      */
-    public static function deleteData(array $ids)
+    public static function deleteData(array $ids): void
     {
         $db = BackendModel::getContainer()->get('database');
 
@@ -162,7 +162,7 @@ class Model
      *
      * @param int $id Id of a field.
      */
-    public static function deleteField(int $id)
+    public static function deleteField(int $id): void
     {
         // delete linked validation
         self::deleteFieldValidation($id);
@@ -176,7 +176,7 @@ class Model
      *
      * @param int $id Id of a field.
      */
-    public static function deleteFieldValidation(int $id)
+    public static function deleteFieldValidation(int $id): void
     {
         BackendModel::getContainer()->get('database')->delete('forms_fields_validation', 'field_id = ?', $id);
     }

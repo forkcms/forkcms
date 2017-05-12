@@ -40,9 +40,9 @@ class ForkInstaller
      *        - make sure the Model::setContainer isn't needed anymore
      *
      * @param Container $container
-     * @param        $rootDir
+     * @param string $rootDir
      */
-    public function __construct(Container $container, $rootDir)
+    public function __construct(Container $container, string $rootDir)
     {
         $this->container = $container;
         $this->rootDir = $rootDir;
@@ -53,11 +53,11 @@ class ForkInstaller
     /**
      * Installs Fork
      *
-     * @param  InstallationData $data The collected data required for Fork
+     * @param InstallationData $data The collected data required for Fork
      *
-     * @return bool                   Is Fork successfully installed?
+     * @return bool Is Fork successfully installed?
      */
-    public function install(InstallationData $data)
+    public function install(InstallationData $data): bool
     {
         if (!$data->isValid()) {
             return false;
@@ -87,7 +87,7 @@ class ForkInstaller
      *
      * @return string[]
      */
-    public static function getRequiredModules()
+    public static function getRequiredModules(): array
     {
         return [
             'Locale',
@@ -107,7 +107,7 @@ class ForkInstaller
      *
      * @return string[]
      */
-    public static function getHiddenModules()
+    public static function getHiddenModules(): array
     {
         return [
             'Authentication',
@@ -116,10 +116,7 @@ class ForkInstaller
         ];
     }
 
-    /**
-     * Delete the cached data
-     */
-    private function deleteCachedData()
+    private function deleteCachedData(): void
     {
         $finder = new Finder();
         $filesystem = new Filesystem();
@@ -129,10 +126,7 @@ class ForkInstaller
         }
     }
 
-    /**
-     * @param InstallationData $data
-     */
-    protected function installCore(InstallationData $data)
+    protected function installCore(InstallationData $data): void
     {
         // install the core
         $installer = $this->getCoreInstaller($data);
@@ -145,10 +139,7 @@ class ForkInstaller
         }
     }
 
-    /**
-     * @param InstallationData $data
-     */
-    protected function buildDatabase(InstallationData $data)
+    protected function buildDatabase(InstallationData $data): void
     {
         // put a new instance of the database in the container
         $database = new \SpoonDatabase(
@@ -166,12 +157,7 @@ class ForkInstaller
         $this->container->set('database', $database);
     }
 
-    /**
-     * @param  InstallationData $data
-     *
-     * @return CoreInstaller
-     */
-    protected function getCoreInstaller(InstallationData $data)
+    protected function getCoreInstaller(InstallationData $data): CoreInstaller
     {
         // create the core installer
         return new CoreInstaller(
@@ -183,10 +169,7 @@ class ForkInstaller
         );
     }
 
-    /**
-     * @param InstallationData $data
-     */
-    protected function installModules(InstallationData $data)
+    protected function installModules(InstallationData $data): void
     {
         foreach (self::getHiddenModules() as $hiddenModule) {
             $data->addModule($hiddenModule);
@@ -220,7 +203,7 @@ class ForkInstaller
         }
     }
 
-    protected function installExtras()
+    protected function installExtras(): void
     {
         // loop default extras
         foreach ($this->defaultExtras as $extra) {
@@ -255,12 +238,7 @@ class ForkInstaller
         }
     }
 
-    /**
-     * Create locale cache files
-     *
-     * @param InstallationData $data
-     */
-    protected function createLocaleFiles(InstallationData $data)
+    protected function createLocaleFiles(InstallationData $data): void
     {
         // all available languages
         $languages = array_unique(
@@ -290,7 +268,7 @@ class ForkInstaller
      *
      * @param InstallationData $data
      */
-    protected function createYAMLConfig(InstallationData $data)
+    protected function createYAMLConfig(InstallationData $data): void
     {
         // these variables should be parsed inside the config file(s).
         $variables = $this->getConfigurationVariables($data);
@@ -315,11 +293,11 @@ class ForkInstaller
     }
 
     /**
-     * @param  InstallationData $data
+     * @param InstallationData $data
      *
      * @return array A list of variables that should be parsed into the configuration file(s).
      */
-    protected function getConfigurationVariables(InstallationData $data)
+    protected function getConfigurationVariables(InstallationData $data): array
     {
         return [
             '<debug-email>' => $data->hasDifferentDebugEmail() ?
@@ -333,7 +311,7 @@ class ForkInstaller
             '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
                 (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
                 'http',
-            '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
+            '<site-domain>' => $_SERVER['HTTP_HOST'] ?? 'fork.local',
             '<site-default-title>' => 'Fork CMS',
             '<site-multilanguage>' => $data->getLanguageType() === 'multiple' ? 'true' : 'false',
             '<site-default-language>' => $data->getDefaultLanguage(),
@@ -345,19 +323,17 @@ class ForkInstaller
     }
 
     /**
-     * @param  InstallationData $data
+     * @param InstallationData $data
      *
      * @return array A list of variables that will be used in installers.
      */
-    protected function getInstallerData(InstallationData $data)
+    protected function getInstallerData(InstallationData $data): array
     {
         return [
             'default_language' => $data->getDefaultLanguage(),
             'default_interface_language' => $data->getDefaultInterfaceLanguage(),
             'spoon_debug_email' => $data->getEmail(),
-            'site_domain' => (isset($_SERVER['HTTP_HOST'])) ?
-                $_SERVER['HTTP_HOST'] :
-                'fork.local',
+            'site_domain' => $_SERVER['HTTP_HOST'] ?? 'fork.local',
             'site_title' => 'Fork CMS',
             'smtp_server' => '',
             'smtp_port' => '',

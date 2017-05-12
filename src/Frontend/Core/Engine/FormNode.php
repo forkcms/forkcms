@@ -26,7 +26,7 @@ class FormNode extends \Twig_Node
     /**
      * @param \Twig_Compiler $compiler
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(\Twig_Compiler $compiler): void
     {
         // Set some string representations to make the code writing via the
         // compiler a bit more readable. ("a bit")

@@ -19,7 +19,7 @@ class FormEndNode extends \Twig_Node
     /**
      * @param \Twig_Compiler $compiler
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(\Twig_Compiler $compiler): void
     {
         $compiler
             ->addDebugInfo($this)

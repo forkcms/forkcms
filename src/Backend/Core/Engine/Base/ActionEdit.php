@@ -41,7 +41,7 @@ class ActionEdit extends Action
     protected $id;
 
     /**
-     * The backends meta-object
+     * The backend meta-object
      *
      * @var Meta
      */
@@ -54,10 +54,7 @@ class ActionEdit extends Action
      */
     protected $record;
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

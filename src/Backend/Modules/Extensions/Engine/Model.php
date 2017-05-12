@@ -180,7 +180,7 @@ class Model
      *
      * Note: we do not need to rebuild anything, the core will do this when noticing the cache files are missing.
      */
-    public static function clearCache()
+    public static function clearCache(): void
     {
         $finder = new Finder();
         $filesystem = new Filesystem();
@@ -203,9 +203,8 @@ class Model
      *
      * @return bool
      */
-    public static function deleteTemplate($id): bool
+    public static function deleteTemplate(int $id): bool
     {
-        $id = (int) $id;
         $templates = self::getTemplates();
 
         // we can't delete a template that doesn't exist
@@ -214,7 +213,7 @@ class Model
         }
 
         // we can't delete the last template
-        if (count($templates) == 1) {
+        if (count($templates) === 1) {
             return false;
         }
 
@@ -254,7 +253,7 @@ class Model
      */
     public static function existsModule(string $module): bool
     {
-        return is_dir(BACKEND_MODULES_PATH . '/' . (string) $module);
+        return is_dir(BACKEND_MODULES_PATH . '/' . $module);
     }
 
     /**
@@ -268,7 +267,7 @@ class Model
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.id FROM themes_templates AS i WHERE i.id = ?',
-            [(int) $id]
+            [$id]
         );
     }
 
@@ -282,14 +281,9 @@ class Model
      */
     public static function existsTheme(string $theme): bool
     {
-        return is_dir(FRONTEND_PATH . '/Themes/' . (string) $theme) || (string) $theme == 'Core';
+        return is_dir(FRONTEND_PATH . '/Themes/' . (string) $theme) || $theme === 'Core';
     }
 
-    /**
-     * Get extras
-     *
-     * @return array
-     */
     public static function getExtras(): array
     {
         $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -339,11 +333,6 @@ class Model
         return $extras;
     }
 
-    /**
-     * Get all the available extra's
-     *
-     * @return array
-     */
     public static function getExtrasData(): array
     {
         $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -540,30 +529,14 @@ class Model
         return $modules;
     }
 
-    /**
-     * Get a given template
-     *
-     * @param int $id The id of the requested template.
-     *
-     * @return array
-     */
     public static function getTemplate(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.* FROM themes_templates AS i WHERE i.id = ?',
-            [(int) $id]
+            [$id]
         );
     }
 
-    /**
-     * Get templates
-     *
-     * @param string $theme The theme we want to fetch the templates from.
-     *
-     * @throws Exception
-     *
-     * @return array
-     */
     public static function getTemplates(string $theme = null): array
     {
         $db = BackendModel::getContainer()->get('database');
@@ -623,11 +596,6 @@ class Model
         return (array) $templates;
     }
 
-    /**
-     * Fetch the list of available themes
-     *
-     * @return array
-     */
     public static function getThemes(): array
     {
         $records = [];
@@ -669,13 +637,6 @@ class Model
         return (array) $records;
     }
 
-    /**
-     * Create template XML for export
-     *
-     * @param string $theme
-     *
-     * @return string
-     */
     public static function createTemplateXmlForExport($theme): string
     {
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
@@ -718,13 +679,6 @@ class Model
         return $xml->saveXML();
     }
 
-    /**
-     * Checks if a specific module has errors or not
-     *
-     * @param string $module
-     *
-     * @return string
-     */
     public static function hasModuleWarnings(string $module): string
     {
         $moduleInformation = self::getModuleInformation($module);
@@ -732,24 +686,12 @@ class Model
         return (empty($moduleInformation['warnings'])) ? 'N' : 'Y';
     }
 
-    /**
-     * Inserts a new template
-     *
-     * @param array $template The data for the template to insert.
-     *
-     * @return int
-     */
     public static function insertTemplate(array $template): int
     {
         return (int) BackendModel::getContainer()->get('database')->insert('themes_templates', $template);
     }
 
-    /**
-     * Install a module.
-     *
-     * @param string $module The name of the module to be installed.
-     */
-    public static function installModule(string $module)
+    public static function installModule(string $module): void
     {
         $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
         $variables = [];
@@ -769,14 +711,7 @@ class Model
         self::clearCache();
     }
 
-    /**
-     * Install a theme.
-     *
-     * @param string $theme The name of the theme to be installed.
-     *
-     * @throws Exception
-     */
-    public static function installTheme(string $theme)
+    public static function installTheme(string $theme): void
     {
         $pathInfoXml = FRONTEND_PATH . '/Themes/' . $theme . '/info.xml';
         $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
@@ -829,13 +764,6 @@ class Model
         }
     }
 
-    /**
-     * Checks if a module is already installed.
-     *
-     * @param string $module
-     *
-     * @return bool
-     */
     public static function isModuleInstalled(string $module): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -843,7 +771,7 @@ class Model
              FROM modules
              WHERE name = ?
              LIMIT 1',
-            (string) $module
+            $module
         );
     }
 
@@ -861,17 +789,10 @@ class Model
              FROM pages AS i
              WHERE i.template_id = ? AND i.status = ?
              LIMIT 1',
-            [(int) $templateId, 'active']
+            [$templateId, 'active']
         );
     }
 
-    /**
-     * Checks if a theme is already installed.
-     *
-     * @param string $theme
-     *
-     * @return bool
-     */
     public static function isThemeInstalled(string $theme): bool
     {
         return (bool) BackendModeL::getContainer()->get('database')->getVar(
@@ -904,13 +825,6 @@ class Model
         return true;
     }
 
-    /**
-     * Process the module's information XML and return an array with the information.
-     *
-     * @param \SimpleXMLElement $xml
-     *
-     * @return array
-     */
     public static function processModuleXml(\SimpleXMLElement $xml): array
     {
         $information = [];
@@ -972,13 +886,6 @@ class Model
         return $information;
     }
 
-    /**
-     * Process the theme's information XML and return an array with the information.
-     *
-     * @param \SimpleXMLElement $xml
-     *
-     * @return array
-     */
     public static function processThemeXml(\SimpleXMLElement $xml): array
     {
         $information = [];
@@ -1052,13 +959,6 @@ class Model
         return self::validateThemeInformation($information);
     }
 
-    /**
-     * Convert the template syntax into an array to work with.
-     *
-     * @param string $syntax
-     *
-     * @return array
-     */
     public static function templateSyntaxToArray(string $syntax): array
     {
         $syntax = (string) $syntax;
@@ -1074,32 +974,27 @@ class Model
         }
 
         if (!isset($table[0])) {
-            return false;
+            return [];
         }
 
         $columns = count($table[0]);
 
         foreach ($table as $row) {
-            if (count($row) != $columns) {
-                return false;
+            if (count($row) !== $columns) {
+                return [];
             }
         }
 
         return $table;
     }
 
-    /**
-     * Update a template
-     *
-     * @param array $item The new data for the template.
-     */
-    public static function updateTemplate(array $item)
+    public static function updateTemplate(array $templateData): void
     {
         BackendModel::getContainer()->get('database')->update(
             'themes_templates',
-            $item,
+            $templateData,
             'id = ?',
-            [(int) $item['id']]
+            [(int) $templateData['id']]
         );
     }
 

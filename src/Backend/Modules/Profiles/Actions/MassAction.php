@@ -18,10 +18,7 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class MassAction extends BackendBaseAction
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();

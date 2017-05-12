@@ -76,7 +76,7 @@ class KernelLoader
      * This is fairly dirty, but so is having static method classes for models.
      * Consider this a temporary solution until we have genuine models available.
      */
-    public function passContainerToModels()
+    public function passContainerToModels(): void
     {
         FrontendModel::setContainer($this->getKernel()->getContainer());
 

@@ -12,10 +12,6 @@ use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
  */
 class ContentBlockRevisionDataGrid extends DataGridDB
 {
-    /**
-     * @param ContentBlock $contentBlock
-     * @param Locale $locale
-     */
     public function __construct(ContentBlock $contentBlock, Locale $locale)
     {
         parent::__construct(

@@ -82,10 +82,7 @@ class Livesuggest extends FrontendBaseAJAXAction
      */
     private $tpl;
 
-    /**
-     * Display
-     */
-    private function display()
+    private function display(): void
     {
         // set variables
         $this->requestedPage = 1;
@@ -111,10 +108,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         );
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->validateForm();
@@ -124,7 +118,7 @@ class Livesuggest extends FrontendBaseAJAXAction
     /**
      * Load the cached data
      *
-     * @todo    refactor me
+     * @todo refactor me
      *
      * @return bool
      */
@@ -163,10 +157,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         return true;
     }
 
-    /**
-     * Load the data
-     */
-    private function getRealData()
+    private function getRealData(): void
     {
         // no search term = no search
         if (!$this->term) {
@@ -218,10 +209,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->tpl = $this->get('templating');
 
@@ -238,10 +226,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         $this->parsePagination();
     }
 
-    /**
-     * Parse pagination
-     */
-    protected function parsePagination()
+    protected function parsePagination(): void
     {
         // init var
         $pagination = null;
@@ -397,10 +382,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         $this->tpl->assign('pagination', $pagination);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // set search term
         $charset = $this->getContainer()->getParameter('kernel.charset');

@@ -40,10 +40,7 @@ class Detail extends FrontendBaseBlock
      */
     private $modules;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -53,10 +50,7 @@ class Detail extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
@@ -101,10 +95,7 @@ class Detail extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // assign tag
         $this->tpl->assign('tag', $this->record);

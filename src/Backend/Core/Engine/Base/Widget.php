@@ -12,6 +12,7 @@ namespace Backend\Core\Engine\Base;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Header;
@@ -84,39 +85,24 @@ class Widget extends KernelLoader
      *
      * @param string $template The template to use.
      */
-    protected function display(string $template = null)
+    protected function display(string $template = null): void
     {
         if ($template !== null) {
             $this->templatePath = (string) $template;
         }
     }
 
-    /**
-     * Get the column
-     *
-     * @return string
-     */
     public function getColumn(): string
     {
         return $this->column;
     }
 
-    /**
-     * Get the position
-     *
-     * @return int
-     */
     public function getPosition(): int
     {
         return $this->position;
     }
 
-    /**
-     * Get the template path
-     *
-     * @return string|null
-     */
-    public function getTemplatePath()
+    public function getTemplatePath(): ?string
     {
         return $this->templatePath;
     }
@@ -147,18 +133,13 @@ class Widget extends KernelLoader
      *
      * @param string $column Possible values are: left, middle, right.
      */
-    protected function setColumn(string $column)
+    protected function setColumn(string $column): void
     {
         $allowedColumns = ['left', 'middle', 'right'];
         $this->column = \SpoonFilter::getValue($column, $allowedColumns, 'left');
     }
 
-    /**
-     * Set the position for the widget
-     *
-     * @param int $position The position for the widget.
-     */
-    protected function setPosition(int $position)
+    protected function setPosition(int $position): void
     {
         $this->position = $position;
     }
@@ -171,10 +152,13 @@ class Widget extends KernelLoader
      *
      * @throws RedirectException
      */
-    public function redirect(string $url, int $code = 302)
+    public function redirect(string $url, int $code = Response::HTTP_FOUND): void
     {
-        $response = new RedirectResponse($url, $code);
+        throw new RedirectException('Redirect', new RedirectResponse($url, $code));
+    }
 
-        throw new RedirectException('Redirect', $response);
+    public function execute(): void
+    {
+        // placeholder
     }
 }

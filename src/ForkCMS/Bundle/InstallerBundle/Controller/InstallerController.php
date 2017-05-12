@@ -5,6 +5,7 @@ namespace ForkCMS\Bundle\InstallerBundle\Controller;
 use Common\Exception\ExitException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
@@ -22,10 +23,7 @@ class InstallerController extends Controller
     /** @var InstallationData */
     public static $installationData;
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step1Action()
+    public function step1Action(): Response
     {
         $this->checkInstall();
 
@@ -44,12 +42,7 @@ class InstallerController extends Controller
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step2Action(Request $request)
+    public function step2Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -74,12 +67,7 @@ class InstallerController extends Controller
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step3Action(Request $request)
+    public function step3Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -100,12 +88,7 @@ class InstallerController extends Controller
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step4Action(Request $request)
+    public function step4Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -124,12 +107,7 @@ class InstallerController extends Controller
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step5Action(Request $request)
+    public function step5Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -148,12 +126,7 @@ class InstallerController extends Controller
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function step6Action(Request $request)
+    public function step6Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -186,17 +159,14 @@ class InstallerController extends Controller
         return $request->getSession()->get('installation_data');
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function noStepAction()
+    public function noStepAction(): RedirectResponse
     {
         $this->checkInstall();
 
         return $this->redirect($this->generateUrl('install_step1'));
     }
 
-    protected function checkInstall()
+    protected function checkInstall(): void
     {
         $filesystem = new Filesystem();
         $kernelDir = $this->container->getParameter('kernel.root_dir');

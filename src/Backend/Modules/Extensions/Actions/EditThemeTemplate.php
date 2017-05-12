@@ -35,10 +35,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
      */
     private $names = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->header->addJS('ThemeTemplate.js');
@@ -49,10 +46,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Load the record
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get record
         $this->id = $this->getParameter('id', 'int');
@@ -99,10 +93,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->tpl->assign('allowExtensionsDeleteThemeTemplate', $deleteAllowed);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('edit');
@@ -250,10 +241,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->tpl->assign('positions', $positions);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -261,10 +249,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

@@ -18,10 +18,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class MassCommentAction extends BackendBaseAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 

@@ -51,23 +51,17 @@ class Detail extends FrontendBaseBlock
      */
     private $settings;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
         $this->getData();
-        $this->loadForm();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
@@ -116,10 +110,7 @@ class Detail extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
         $this->frm = new FrontendForm('commentsForm');
@@ -137,10 +128,7 @@ class Detail extends FrontendBaseBlock
         $this->frm->addTextarea('message')->setAttributes(['required' => null]);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
@@ -283,17 +271,14 @@ class Detail extends FrontendBaseBlock
         $this->tpl->assign('navigation', $navigation);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // get settings
         $commentsAllowed = (isset($this->settings['allow_comments']) && $this->settings['allow_comments']);
 
         // comments aren't allowed so we don't have to validate
         if (!$commentsAllowed) {
-            return false;
+            return;
         }
 
         // is the form submitted

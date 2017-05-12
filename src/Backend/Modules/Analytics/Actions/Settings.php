@@ -12,7 +12,7 @@ use Backend\Modules\Analytics\Form\SettingsType;
  */
 final class Settings extends ActionIndex
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 

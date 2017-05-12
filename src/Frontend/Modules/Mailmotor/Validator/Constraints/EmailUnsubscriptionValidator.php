@@ -24,7 +24,7 @@ class EmailUnsubscriptionValidator extends ConstraintValidator
      */
     public function setSubscriber(
         Subscriber $subscriber
-    ) {
+    ): void {
         $this->subscriber = $subscriber;
     }
 
@@ -32,7 +32,7 @@ class EmailUnsubscriptionValidator extends ConstraintValidator
      * @param mixed $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         try {
             // The email doesn't exists in the mailing list

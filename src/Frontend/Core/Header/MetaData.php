@@ -38,7 +38,7 @@ final class MetaData
      * @param string[] $uniqueAttributeKeys
      * @param string|null $uniqueKeySuffix
      */
-    private function createUniqueKey(array $uniqueAttributeKeys, string $uniqueKeySuffix = null)
+    private function createUniqueKey(array $uniqueAttributeKeys, string $uniqueKeySuffix = null): void
     {
         // make sure the keys are sorted alphabetically
         sort($uniqueAttributeKeys);
@@ -60,20 +60,11 @@ final class MetaData
         }
     }
 
-    /**
-     * @return string
-     */
     public function getUniqueKey(): string
     {
         return $this->uniqueKey;
     }
 
-    /**
-     * @param string $attributeKey
-     * @param string $attributeValue
-     *
-     * @return bool
-     */
     public function hasAttributeWithValue(string $attributeKey, string $attributeValue): bool
     {
         return isset($this->attributes[$attributeKey]) && $this->attributes[$attributeKey] === $attributeValue;
@@ -84,15 +75,12 @@ final class MetaData
      *
      * @return bool
      */
-    public function shouldMergeOnDuplicateKey()
+    public function shouldMergeOnDuplicateKey(): bool
     {
         return in_array($this, ['description', 'keywords', 'robots']);
     }
 
-    /**
-     * @param self $metaData
-     */
-    public function merge(self $metaData)
+    public function merge(self $metaData): void
     {
         foreach ($metaData->attributes as $attributeKey => $attributeValue) {
             // the content should be appended, the rest of the attributes gets overwritten or added
@@ -106,38 +94,22 @@ final class MetaData
         }
     }
 
-    /**
-     * @param string $name
-     * @param string $content
-     *
-     * @return self
-     */
     public static function forName(
         string $name,
         string $content
-    ) {
+    ): self {
         return new self($content, ['name' => $name], ['name']);
     }
 
-    /**
-     * @param string $property
-     * @param string $content
-     * @param array $uniqueAttributeKeys
-     *
-     * @return self
-     */
     public static function forProperty(
         string $property,
         string $content,
         array $uniqueAttributeKeys = ['property']
-    ) {
+    ): self {
         return new self($content, ['property' => $property], $uniqueAttributeKeys);
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $html = '<meta ';
         $html .= implode(

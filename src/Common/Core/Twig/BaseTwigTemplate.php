@@ -59,22 +59,12 @@ abstract class BaseTwigTemplate extends TwigEngine
      */
     protected $forkSettings;
 
-    /**
-     * Spoon assign method.
-     *
-     * @param string $key
-     * @param mixed $values
-     */
-    public function assign(string $key, $values)
+    public function assign(string $key, $values): void
     {
         $this->variables[$key] = $values;
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     */
-    public function assignGlobal(string $key, $value)
+    public function assignGlobal(string $key, $value): void
     {
         $this->environment->addGlobal($key, $value);
     }
@@ -85,7 +75,7 @@ abstract class BaseTwigTemplate extends TwigEngine
      * @param array $variables This array with keys and values will be used to search and replace in the template file.
      * @param string|null $index
      */
-    public function assignArray(array $variables, string $index = null)
+    public function assignArray(array $variables, string $index = null): void
     {
         // artifacts?
         if (!empty($index) && isset($variables['Core'])) {
@@ -101,12 +91,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         }
     }
 
-    /**
-     * Adds a form to the template.
-     *
-     * @param SpoonForm $form The form-instance to add.
-     */
-    public function addForm(SpoonForm $form)
+    public function addForm(SpoonForm $form): void
     {
         $this->forms[$form->getName()] = $form;
     }
@@ -219,7 +204,7 @@ abstract class BaseTwigTemplate extends TwigEngine
      *
      * @param bool $enabled Enable addslashes.
      */
-    public function setAddSlashes(bool $enabled = true)
+    public function setAddSlashes(bool $enabled = true): void
     {
         $this->addSlashes = $enabled;
     }

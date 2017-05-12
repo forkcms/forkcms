@@ -18,10 +18,7 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
  */
 class Autocomplete extends FrontendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();

@@ -40,11 +40,6 @@ class SubscribeType extends AbstractType
      */
     protected $subscriber;
 
-    /**
-     * SubscribeType constructor.
-     *
-     * @param Subscriber $subscriber
-     */
     public function __construct(
         Subscriber $subscriber,
         ModulesSettings $modulesSettings
@@ -54,11 +49,7 @@ class SubscribeType extends AbstractType
         $this->interests = $this->getInterests();
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         //-- Set the default submit action, this is for the widget to work properly.
         $builder->setAction(Navigation::getURLForBlock('Mailmotor', 'Subscribe'));
@@ -96,10 +87,7 @@ class SubscribeType extends AbstractType
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getInterests()
+    public function getInterests(): array
     {
         $interests = [];
 
@@ -125,10 +113,7 @@ class SubscribeType extends AbstractType
         return $interests;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Subscription::class,
@@ -144,10 +129,7 @@ class SubscribeType extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'subscribe';
     }

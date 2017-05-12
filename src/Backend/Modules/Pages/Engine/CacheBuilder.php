@@ -31,22 +31,13 @@ class CacheBuilder
     protected $blocks;
     protected $sitemapId;
 
-    /**
-     * @param \SpoonDatabase $database
-     * @param CacheItemPoolInterface $cache
-     */
     public function __construct(\SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
         $this->database = $database;
         $this->cache = $cache;
     }
 
-    /**
-     * Builds the pages cache
-     *
-     * @param string $language The language to build the cache for.
-     */
-    public function buildCache(string $language)
+    public function buildCache(string $language): void
     {
         // kill existing caches so they can be re-generated
         $this->cache->deleteItems(['keys_' . $language, 'navigation_' . $language]);
@@ -62,11 +53,6 @@ class CacheBuilder
         );
     }
 
-    /**
-     * @param string $language
-     *
-     * @return array
-     */
     public function getKeys(string $language): array
     {
         $item = $this->cache->getItem('keys_' . $language);
@@ -81,11 +67,6 @@ class CacheBuilder
         return $keys;
     }
 
-    /**
-     * @param string $language
-     *
-     * @return array
-     */
     public function getNavigation(string $language): array
     {
         $item = $this->cache->getItem('navigation_' . $language);
@@ -136,11 +117,11 @@ class CacheBuilder
      * Fetches the pagedata for a certain page array
      * It also adds the page data to the keys array
      *
-     * @param  array &$keys
-     * @param  array $page
-     * @param  string $language
+     * @param array &$keys
+     * @param array $page
+     * @param string $language
      *
-     * @return array  An array containing more data for the page
+     * @return array An array containing more data for the page
      */
     protected function getPageData(array &$keys, array $page, string $language): array
     {
@@ -187,12 +168,6 @@ class CacheBuilder
         return $pageData;
     }
 
-    /**
-     * @param array $page
-     * @param array $pageData
-     *
-     * @return string
-     */
     protected function getPageTreeType(array $page, array &$pageData): string
     {
         // calculate tree-type
@@ -251,12 +226,7 @@ class CacheBuilder
         return $treeType;
     }
 
-    /**
-     * @param $page array
-     *
-     * @return array
-     */
-    protected function getPageExtraBlocks($page): array
+    protected function getPageExtraBlocks(array $page): array
     {
         $pageBlocks = [];
 
@@ -279,11 +249,6 @@ class CacheBuilder
         return $pageBlocks;
     }
 
-    /**
-     * Returns an array containing all extras
-     *
-     * @return array
-     */
     protected function getBlocks(): array
     {
         if (empty($this->blocks)) {
@@ -312,11 +277,6 @@ class CacheBuilder
         return $this->blocks;
     }
 
-    /**
-     * Returns an array containing all widgets
-     *
-     * @return int
-     */
     protected function getSitemapId(): int
     {
         if (empty($this->sitemapId)) {
@@ -340,16 +300,6 @@ class CacheBuilder
         return (int) $this->sitemapId;
     }
 
-    /**
-     * Get the order
-     *
-     * @param  array $navigation The navigation array.
-     * @param  string $type The type of navigation.
-     * @param  int $parentId The Id to start from.
-     * @param  array $order The array to hold the order.
-     *
-     * @return array
-     */
     protected function getOrder(
         array $navigation,
         string $type = 'page',
@@ -375,15 +325,6 @@ class CacheBuilder
         return $order;
     }
 
-    /**
-     * Save the link list
-     *
-     * @param  array $navigation The full navigation array
-     * @param  array $keys The page keys
-     * @param  string $language The language to save the file for
-     *
-     * @return string             The full content for the cache file
-     */
     protected function dumpEditorLinkList(array $navigation, array $keys, string $language): string
     {
         // get the order
@@ -463,13 +404,6 @@ class CacheBuilder
         return $editorLinkListString;
     }
 
-    /**
-     * Gets the header for cache files
-     *
-     * @param  string $itContainsMessage A message about the content of the file
-     *
-     * @return string A comment to be used in the cache file
-     */
     protected function getCacheHeader(string $itContainsMessage): string
     {
         $cacheHeader = '/**' . "\n";

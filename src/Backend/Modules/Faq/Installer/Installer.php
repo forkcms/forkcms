@@ -22,15 +22,6 @@ class Installer extends ModuleInstaller
      */
     private $defaultCategoryId;
 
-    /**
-     * Add a category for a language
-     *
-     * @param string $language
-     * @param string $title
-     * @param string $url
-     *
-     * @return int
-     */
     private function addCategory(string $language, string $title, string $url): int
     {
         // db
@@ -77,20 +68,13 @@ class Installer extends ModuleInstaller
             'modules_extras',
             $extra,
             'id = ? AND module = ? AND type = ? AND action = ?',
-            [$item['extra_id'], $this->getModule(), ModuleExtraType::WIDGET, 'category_list']
+            [$item['extra_id'], $this->getModule(), ModuleExtraType::widget(), 'category_list']
         );
 
         return $item['id'];
     }
 
-    /**
-     * Fetch the id of the first category in this language we come across
-     *
-     * @param string $language
-     *
-     * @return int
-     */
-    private function getCategory(string $language): int
+    private function getDefaultCategoryIdForLanguage(string $language): int
     {
         return (int) $this->getDB()->getVar(
             'SELECT id
@@ -103,15 +87,12 @@ class Installer extends ModuleInstaller
     /**
      * Insert an empty admin dashboard sequence
      */
-    private function insertWidget()
+    private function insertWidget(): void
     {
         $this->insertDashboardWidget($this->getModule(), 'Feedback');
     }
 
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         $this->importSQL(__DIR__ . '/Data/install.sql');
 
@@ -153,7 +134,7 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'send_email_on_new_feedback', false);
 
         foreach ($this->getLanguages() as $language) {
-            $this->defaultCategoryId = $this->getCategory($language);
+            $this->defaultCategoryId = $this->getDefaultCategoryIdForLanguage($language);
 
             // no category exists
             if ($this->defaultCategoryId === 0) {
