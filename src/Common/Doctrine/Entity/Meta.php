@@ -87,7 +87,9 @@ class Meta
     private $custom;
 
     /**
-     * @var array
+     * @var array|null|string
+     *
+     * Only can be string during persisting or updating in the database as it then contains the serialised value
      *
      * @ORM\Column(type="text", nullable=true)
      */

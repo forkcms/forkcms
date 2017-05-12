@@ -6,7 +6,7 @@ use InvalidArgumentException;
 
 final class MetaLink
 {
-    /** @var string[] */
+    /** @var array */
     private $attributes;
 
     /** @var string */

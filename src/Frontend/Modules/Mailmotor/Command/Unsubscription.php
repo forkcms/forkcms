@@ -25,7 +25,7 @@ final class Unsubscription
     public $email;
 
     /**
-     * @var string
+     * @var Locale
      */
     public $locale;
 

@@ -39,7 +39,7 @@ class ResetPassword extends BackendBaseActionAdd
     /**
      * User record
      *
-     * @var array
+     * @var BackendUser
      */
     private $user;
 

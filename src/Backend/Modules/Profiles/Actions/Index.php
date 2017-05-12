@@ -214,7 +214,7 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('sort', (string) $this->dgProfiles->getSort());
 
         // parse filter
-        $this->tpl->assign($this->filter);
+        $this->tpl->assignArray($this->filter);
     }
 
     /**

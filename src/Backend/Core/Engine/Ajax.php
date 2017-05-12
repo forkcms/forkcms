@@ -21,7 +21,7 @@ use Backend\Core\Language\Language as BackendLanguage;
 class Ajax extends Base\Object implements ApplicationInterface
 {
     /**
-     * @var AjaxAction
+     * @var AjaxAction|BackendBaseAJAXAction
      */
     private $ajaxAction;
 

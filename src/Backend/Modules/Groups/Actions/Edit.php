@@ -373,7 +373,11 @@ class Edit extends BackendBaseActionEdit
 
             // get content of datagrids
             $permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
-            $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload jsSelectAll')->parse();
+            $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox(
+                $module['label'],
+                false,
+                'inputCheckbox checkBeforeUnload jsSelectAll'
+            )->parse();
             $permissionBoxes[$key]['id'] = \SpoonFilter::toCamelCase($module['label']);
         }
 
@@ -382,7 +386,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('manage_users', ['Deny', 'Allow']);
         $this->frm->addDropdown('manage_groups', ['Deny', 'Allow']);
         $this->tpl->assign('permissions', $permissionBoxes);
-        $this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
+        $this->tpl->assign('widgets', $widgets ?? false);
     }
 
     protected function parse(): void

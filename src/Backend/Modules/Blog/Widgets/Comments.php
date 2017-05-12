@@ -27,7 +27,7 @@ class Comments extends BackendBaseWidget
     /**
      * An array that contains the number of comments / status
      *
-     * @var int
+     * @var array
      */
     private $numCommentStatus;
 

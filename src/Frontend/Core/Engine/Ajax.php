@@ -29,7 +29,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
     private $action;
 
     /**
-     * @var AjaxAction
+     * @var AjaxAction|FrontendBaseAJAXAction
      */
     private $ajaxAction;
 

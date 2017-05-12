@@ -6,7 +6,7 @@ use InvalidArgumentException;
 
 final class MetaData
 {
-    /** @var string[] */
+    /** @var array */
     private $attributes;
 
     /** @var string */

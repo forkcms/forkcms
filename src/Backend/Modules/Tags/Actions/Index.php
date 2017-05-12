@@ -34,7 +34,7 @@ class Index extends BackendBaseActionIndex
         // create datagrid
         $this->dataGrid = new BackendDataGridDB(
             BackendTagsModel::QRY_DATAGRID_BROWSE,
-            BL::getWorkingLanguage()
+            [BL::getWorkingLanguage()]
         );
 
         // header labels

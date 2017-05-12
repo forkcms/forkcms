@@ -90,14 +90,14 @@ class ContentBlock
     private $status;
 
     /**
-     * @var Datetime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime", name="created_on")
      */
     private $createdOn;
 
     /**
-     * @var Datetime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime", name="edited_on")
      */

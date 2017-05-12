@@ -76,7 +76,7 @@ class Edit extends BackendBaseActionEdit
         $filter = \SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
 
         // parse filter
-        $this->tpl->assign($filter);
+        $this->tpl->assignArray($filter);
         $this->tpl->assign('filterQuery', $this->filterQuery);
 
         // assign id, name
