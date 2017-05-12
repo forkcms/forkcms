@@ -5,8 +5,9 @@ namespace Frontend\Core\Tests\Header;
 use Frontend\Core\Header\MetaCollection;
 use Frontend\Core\Header\MetaData;
 use Frontend\Core\Header\MetaLink;
+use PHPUnit\Framework\TestCase;
 
-class MetaCollectionTest extends \PHPUnit_Framework_TestCase
+class MetaCollectionTest extends TestCase
 {
     public function testStringRepresentation(): void
     {

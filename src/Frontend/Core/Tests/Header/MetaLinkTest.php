@@ -4,13 +4,15 @@ namespace Frontend\Core\Tests\Header;
 
 use Frontend\Core\Header\MetaLink;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class MetaLinkTest extends \PHPUnit_Framework_TestCase
+class MetaLinkTest extends TestCase
 {
+    /**
+     * @expectedException InvalidArgumentException
+     */
     public function testHrefCannotBeEmpty(): void
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'The href can not be empty');
-
         new MetaLink('', []);
     }
 

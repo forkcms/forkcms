@@ -4,13 +4,15 @@ namespace Frontend\Core\Tests\Header;
 
 use Frontend\Core\Header\MetaData;
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class MetaDataTest extends \PHPUnit_Framework_TestCase
+class MetaDataTest extends TestCase
 {
+    /**
+     * @expectedException InvalidArgumentException
+     */
     public function testContentCannotBeEmpty(): void
     {
-        $this->setExpectedException(InvalidArgumentException::class, 'The content can not be empty');
-
         new MetaData('', []);
     }
 
