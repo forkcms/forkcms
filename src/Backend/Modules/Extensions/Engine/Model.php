@@ -637,7 +637,7 @@ class Model
         return (array) $records;
     }
 
-    public static function createTemplateXmlForExport($theme): string
+    public static function createTemplateXmlForExport(string $theme): string
     {
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
 

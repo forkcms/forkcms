@@ -380,7 +380,7 @@ class Model
     /**
      * Get the data for a record
      *
-     * @param int $id The Id of the page to fetch.
+     * @param int $pageId The Id of the page to fetch.
      * @param int $revisionId
      * @param string $language The language to use while fetching the page.
      *
@@ -1075,7 +1075,7 @@ class Model
     /**
      * Move a page
      *
-     * @param int $id The id for the page that has to be moved.
+     * @param int $pageId The id for the page that has to be moved.
      * @param int $droppedOnPageId The id for the page where to page has been dropped on.
      * @param string $typeOfDrop The type of drop, possible values are: before, after, inside.
      * @param string $tree The tree the item is dropped on, possible values are: main, meta, footer, root.

@@ -423,7 +423,7 @@ class Model
      * Retrieve a unique URL for a profile based on the display name.
      *
      * @param string $displayName The display name to base on.
-     * @param int $excludedProfileId.
+     * @param int|null $excludedProfileId
      *
      * @return string
      */

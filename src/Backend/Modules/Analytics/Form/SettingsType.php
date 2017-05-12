@@ -12,7 +12,7 @@ use Google_Service_Analytics;
  */
 final class SettingsType
 {
-    /** @var SettingsStepType */
+    /** @var SettingsStepType|Form */
     private $form;
 
     public function __construct(

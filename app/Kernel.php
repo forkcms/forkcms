@@ -35,7 +35,7 @@ abstract class Kernel extends BaseKernel
      * Constructor.
      *
      * @param string $environment The environment
-     * @param bool $debug Whether to enable debugging or not
+     * @param bool $enableDebug Whether to enable debugging or not
      *
      * @api
      */
