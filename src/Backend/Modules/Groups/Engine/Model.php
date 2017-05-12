@@ -200,7 +200,7 @@ class Model
             [$groupId, $settingName]
         );
 
-        if (!$setting) {
+        if (empty($setting)) {
             return [];
         }
 

@@ -133,13 +133,13 @@ class Form extends \Common\Core\Form
         $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // validate
-        if ($type == 'from' && ($date == 0 || $date == null)) {
+        if ($type === 'from' && ($date === 0 || $date === null)) {
             throw new Exception('A datefield with type "from" should have a valid date-parameter.');
         }
-        if ($type == 'till' && ($date == 0 || $date == null)) {
+        if ($type === 'till' && ($date === 0 || $date === null)) {
             throw new Exception('A datefield with type "till" should have a valid date-parameter.');
         }
-        if ($type == 'range' && ($date == 0 || $date2 == 0 || $date == null || $date2 == null)) {
+        if ($type === 'range' && ($date === 0 || $date2 === 0 || $date === null || $date2 === null)) {
             throw new Exception('A datefield with type "range" should have 2 valid date-parameters.');
         }
 

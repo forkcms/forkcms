@@ -129,13 +129,13 @@ class Form extends \Common\Core\Form
         $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputDateError';
 
         // validate
-        if ($type == 'from' && ($date == 0 || $date == null)) {
+        if ($type === 'from' && ($date === 0 || $date === null)) {
             throw new Exception('A date field with type "from" should have a valid date-parameter.');
         }
-        if ($type == 'till' && ($date == 0 || $date == null)) {
+        if ($type === 'till' && ($date === 0 || $date === null)) {
             throw new Exception('A date field with type "till" should have a valid date-parameter.');
         }
-        if ($type == 'range' && ($date == 0 || $date2 == 0 || $date == null || $date2 == null)) {
+        if ($type === 'range' && ($date === 0 || $date2 === 0 || $date === null || $date2 === null)) {
             throw new Exception('A date field with type "range" should have 2 valid date-parameters.');
         }
 

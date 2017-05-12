@@ -265,17 +265,17 @@ class DataGridFunctions
 
         $html = '<img src="' . $imagePath . '" alt="' . $title . '"';
 
-        if ($width) {
+        if ($width !== null) {
             $html .= ' width="' . $width . '"';
         }
 
-        if ($height) {
+        if ($height !== null) {
             $html .= ' height="' . $height . '"';
         }
 
         $html .= ' />';
 
-        if ($url) {
+        if ($url !== null) {
             $html = '<a href="' . $url . '" title="' . $title . '">' . $html . '</a>';
         }
 

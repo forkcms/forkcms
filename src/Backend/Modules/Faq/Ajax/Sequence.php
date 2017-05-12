@@ -33,7 +33,7 @@ class Sequence extends BackendBaseAJAXAction
             $category = BackendFaqModel::getCategory((int) $id);
 
             // update sequence
-            if ($category) {
+            if (!empty($category)) {
                 // change sequence
                 $category['sequence'] = $i + 1;
 

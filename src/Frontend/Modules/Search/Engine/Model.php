@@ -227,7 +227,7 @@ class Model
         }
 
         // found any? merge with original term
-        if ($synonyms) {
+        if (!empty($synonyms)) {
             return array_unique(
                 array_merge([$term], $synonyms)
             );
@@ -400,7 +400,7 @@ class Model
         $total = count($searchResults);
 
         // none found? return empty :(
-        if (!$searchResults) {
+        if (empty($searchResults)) {
             return [];
         }
 
@@ -501,7 +501,7 @@ class Model
             );
 
             // none found? good news!
-            if (!$searchResults) {
+            if (empty($searchResults)) {
                 return;
             }
 

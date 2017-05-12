@@ -216,7 +216,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
             }
 
             // add errors
-            if ($errors) {
+            if (!empty($errors)) {
                 $this->frm->addError(implode('<br />', array_unique($errors)));
             }
         }
@@ -322,7 +322,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 }
 
                 // add errors
-                if ($errors) {
+                if (!empty($errors)) {
                     $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
                 }
             }
