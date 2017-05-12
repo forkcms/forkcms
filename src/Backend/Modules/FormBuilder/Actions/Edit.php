@@ -307,6 +307,7 @@ class Edit extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build array
+                $values = [];
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();
                 $values['email'] = ($ddmMethod->getValue() == 'database_email' || $ddmMethod->getValue() === 'email')

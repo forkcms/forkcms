@@ -454,6 +454,7 @@ class Model
 
         // types
         $typesShort = (array) $db->getEnumValues('locale', 'type');
+        $possibleTypes = [];
         foreach ($typesShort as $type) {
             $possibleTypes[$type] = self::getTypeName($type);
         }
@@ -521,6 +522,7 @@ class Model
                         $translation = (string) $translation;
 
                         // locale item
+                        $locale = [];
                         $locale['user_id'] = $userId;
                         $locale['language'] = $language;
                         $locale['application'] = $application;

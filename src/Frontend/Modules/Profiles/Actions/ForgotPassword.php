@@ -97,12 +97,6 @@ class ForgotPassword extends FrontendBaseBlock
                 // insert forgot password key
                 FrontendProfilesModel::setSetting($profileId, 'forgot_password_key', $key);
 
-                // reset url
-                $mailValues['resetUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ResetPassword') .
-                                          '/' . $key;
-                $mailValues['firstName'] = FrontendProfilesModel::getSetting($profileId, 'first_name');
-                $mailValues['lastName'] = FrontendProfilesModel::getSetting($profileId, 'last_name');
-
                 // send email
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
@@ -112,7 +106,14 @@ class ForgotPassword extends FrontendBaseBlock
                     ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
-                        $mailValues,
+                        [
+                            'resetUrl' => SITE_URL . FrontendNavigation::getURLForBlock(
+                                'Profiles',
+                                'ResetPassword'
+                            ) . '/' . $key,
+                            'firstName' => FrontendProfilesModel::getSetting($profileId, 'first_name'),
+                            'lastName' => FrontendProfilesModel::getSetting($profileId, 'last_name'),
+                        ],
                         true
                     )
                 ;

@@ -41,9 +41,10 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add');
 
         // set hidden values
-        $rbtHiddenValues[] = ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'];
-        $rbtHiddenValues[] = ['label' => BL::lbl('Published'), 'value' => 'N'];
-
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden'), 'value' => 'Y'],
+            ['label' => BL::lbl('Published'), 'value' => 'N'],
+        ];
         // get categories
         $categories = BackendFaqModel::getCategories();
 
@@ -85,6 +86,7 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['meta_id'] = $this->meta->save();
                 $item['category_id'] = $this->frm->getField('category_id')->getValue();
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();

@@ -90,12 +90,15 @@ class EditComment extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = $this->id;
-                $item['status'] = $this->record['status'];
-                $item['author'] = $this->frm->getField('author')->getValue();
-                $item['email'] = $this->frm->getField('email')->getValue();
-                $item['website'] = ($this->frm->getField('website')->isFilled()) ? $this->frm->getField('website')->getValue() : null;
-                $item['text'] = $this->frm->getField('text')->getValue();
+                $item = [
+                    'id' => $this->id,
+                    'status' => $this->record['status'],
+                    'author' => $this->frm->getField('author')->getValue(),
+                    'email' => $this->frm->getField('email')->getValue(),
+                    'website' => $this->frm->getField('website')->isFilled()
+                        ? $this->frm->getField('website')->getValue() : null,
+                    'text' => $this->frm->getField('text')->getValue(),
+                ];
 
                 // insert the item
                 BackendBlogModel::updateComment($item);

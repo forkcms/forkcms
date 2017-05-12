@@ -78,6 +78,7 @@ class Installer extends ModuleInstaller
             $formId = $this->getDB()->insert('forms', $form);
 
             // create submit button
+            $field = [];
             $field['form_id'] = $formId;
             $field['type'] = 'submit';
             $field['settings'] = serialize(
@@ -98,6 +99,7 @@ class Installer extends ModuleInstaller
             $nameId = $this->getDB()->insert('forms_fields', $field);
 
             // name validation
+            $validate = [];
             $validate['field_id'] = $nameId;
             $validate['type'] = 'required';
             $validate['error_message'] = $this->getLocale('NameIsRequired', 'Core', $language, 'err', 'Frontend');

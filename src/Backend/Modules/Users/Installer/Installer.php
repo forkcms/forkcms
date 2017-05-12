@@ -61,6 +61,7 @@ class Installer extends ModuleInstaller
             $passwordStrength = $this->checkPassword();
 
             // build settings
+            $settings = [];
             $settings['nickname'] = serialize('Fork CMS');
             $settings['name'] = serialize('Fork');
             $settings['surname'] = serialize('CMS');
@@ -77,6 +78,7 @@ class Installer extends ModuleInstaller
             $settings['avatar'] = serialize('god.jpg');
 
             // build user
+            $user = [];
             $user['email'] = $this->getVariable('email');
             $user['password'] = sha1(md5(unserialize($settings['password_key'])) . md5($this->getVariable('password')));
             $user['active'] = 'Y';
@@ -87,6 +89,7 @@ class Installer extends ModuleInstaller
             $user['id'] = $this->getDB()->insert('users', $user);
 
             // build group
+            $group = [];
             $group['group_id'] = $this->getSetting('Users', 'default_group');
             $group['user_id'] = $user['id'];
 

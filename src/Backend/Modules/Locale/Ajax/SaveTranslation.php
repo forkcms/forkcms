@@ -56,6 +56,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         // no error?
         if (!isset($error)) {
             // build item
+            $item = [];
             $item['language'] = $language;
             $item['module'] = $module;
             $item['name'] = $name;

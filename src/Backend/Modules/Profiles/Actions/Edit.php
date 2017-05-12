@@ -268,8 +268,7 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $values['email'] = ($chkNewEmail->isChecked()) ?
-                    $txtEmail->getValue() : $this->profile['email'];
+                $values = ['email' => $chkNewEmail->isChecked() ? $txtEmail->getValue() : $this->profile['email']];
 
                 // only update if display name changed
                 if ($txtDisplayName->getValue() != $this->profile['display_name']) {

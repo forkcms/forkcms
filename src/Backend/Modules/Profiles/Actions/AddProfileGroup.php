@@ -85,6 +85,7 @@ class AddProfileGroup extends BackendBaseActionAdd
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
+                $values = [];
                 $values['profile_id'] = $this->id;
                 $values['group_id'] = $ddmGroup->getSelected();
                 $values['starts_on'] = BackendModel::getUTCDate();

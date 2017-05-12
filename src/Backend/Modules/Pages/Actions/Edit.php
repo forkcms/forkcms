@@ -295,6 +295,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // build prototype block
+        $block = [];
         $block['index'] = 0;
         $block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], true);
         $block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], 0);
@@ -316,6 +317,7 @@ class Edit extends BackendBaseActionEdit
             $i = 1;
 
             // loop submitted blocks
+            $positions = [];
             while (isset($_POST['block_position_' . $i])) {
                 // init var
                 $block = [];
@@ -676,6 +678,7 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // build page record
+                $page = [];
                 $page['id'] = $this->record['id'];
                 $page['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $page['parent_id'] = $this->record['parent_id'];

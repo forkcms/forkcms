@@ -251,13 +251,13 @@ class Model
         self::deleteMultipleGroups($userId);
 
         // loop through groups
-        foreach ($groups as $group) {
-            // add user id
-            $item['user_id'] = $userId;
-            $item['group_id'] = $group;
 
+        foreach ($groups as $group) {
             // insert item
-            BackendModel::getContainer()->get('database')->insert('users_groups', $item);
+            BackendModel::getContainer()->get('database')->insert(
+                'users_groups',
+                ['user_id' => $userId, 'group_id' => $group]
+            );
         }
     }
 

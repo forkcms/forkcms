@@ -31,6 +31,7 @@ class Installer extends ModuleInstaller
     private function insertPages(): void
     {
         // get extra ids
+        $extras = [];
         $extras['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, false, 2000);
         $extras['search_form'] = $this->insertExtra(
             'Search',
@@ -165,6 +166,7 @@ class Installer extends ModuleInstaller
     private function installExampleData(): void
     {
         // insert/get extra ids
+        $extras = [];
         $extras['blog_block'] = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog', null, null, false, 1000);
         $extras['blog_widget_recent_comments'] = $this->insertExtra(
             'Blog',

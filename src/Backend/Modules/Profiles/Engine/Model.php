@@ -669,14 +669,16 @@ class Model
         $backendURL = BackendModel::createURLForAction('Edit', 'Profiles') . '&id=' . $values['id'];
 
         // set variables
-        $variables['message'] = vsprintf(
-            BL::msg('NotificationNewProfileToAdmin', 'Profiles'),
-            [
-                $values['display_name'],
-                $values['email'],
-                $backendURL,
-            ]
-        );
+        $variables = [
+            'message' => vsprintf(
+                BL::msg('NotificationNewProfileToAdmin', 'Profiles'),
+                [
+                    $values['display_name'],
+                    $values['email'],
+                    $backendURL,
+                ]
+            ),
+        ];
 
         // define subject
         $subject = vsprintf(
@@ -707,14 +709,16 @@ class Model
         string $templatePath = null
     ): void {
         // set variables
-        $variables['message'] = vsprintf(
-            BL::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
-            [
-                $values['email'],
-                $values['unencrypted_password'],
-                SITE_URL,
-            ]
-        );
+        $variables = [
+            'message' => vsprintf(
+                BL::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
+                [
+                    $values['email'],
+                    $values['unencrypted_password'],
+                    SITE_URL,
+                ]
+            ),
+        ];
 
         // define subject
         $notificationSubject = $forUpdate ? 'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';

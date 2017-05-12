@@ -113,7 +113,7 @@ class EditProfileGroup extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $values['group_id'] = $ddmGroup->getSelected();
+                $values = ['group_id' => $ddmGroup->getSelected()];
 
                 // only format date if not empty
                 if ($txtExpirationDate->isFilled() && $txtExpirationTime->isFilled()) {

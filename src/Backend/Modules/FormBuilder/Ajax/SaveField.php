@@ -272,6 +272,7 @@ class SaveField extends BackendBaseAJAXAction
                         // required
                         if ($required == 'Y') {
                             // build array
+                            $validate = [];
                             $validate['field_id'] = $fieldId;
                             $validate['type'] = 'required';
                             $validate['error_message'] = \SpoonFilter::htmlspecialchars($requiredErrorMessage);

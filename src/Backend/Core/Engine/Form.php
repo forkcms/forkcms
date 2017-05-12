@@ -148,12 +148,14 @@ class Form extends \Common\Core\Form
         $firstday = 1;
 
         // build attributes
-        $attributes['data-mask'] = str_replace(
-            ['d', 'm', 'Y', 'j', 'n'],
-            ['dd', 'mm', 'yy', 'd', 'm'],
-            $mask
-        );
-        $attributes['data-firstday'] = $firstday;
+        $attributes = [
+            'data-mask' => str_replace(
+                ['d', 'm', 'Y', 'j', 'n'],
+                ['dd', 'mm', 'yy', 'd', 'm'],
+                $mask
+            ),
+            'data-firstday' => $firstday,
+        ];
 
         // add extra classes based on type
         switch ($type) {

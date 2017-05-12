@@ -55,6 +55,7 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['language'] = BL::getWorkingLanguage();
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['street'] = $this->frm->getField('street')->getValue();

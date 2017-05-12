@@ -148,6 +148,7 @@ class Add extends BackendBaseActionAdd
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build settings-array
+                $settings = [];
                 $settings['nickname'] = $this->frm->getField('nickname')->getValue();
                 $settings['name'] = $this->frm->getField('name')->getValue();
                 $settings['surname'] = $this->frm->getField('surname')->getValue();
@@ -168,6 +169,7 @@ class Add extends BackendBaseActionAdd
                 // init var
                 $newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
 
+                $sequences = [];
                 // loop through groups and collect all dashboard widget sequences
                 foreach ($groups as $group) {
                     $sequences[] = BackendGroupsModel::getSetting($group, 'dashboard_sequence');
@@ -189,6 +191,7 @@ class Add extends BackendBaseActionAdd
                 $settings['dashboard_sequence'] = $newSequence;
 
                 // build user-array
+                $user = [];
                 $user['email'] = $this->frm->getField('email')->getValue();
                 $user['password'] = BackendAuthentication::getEncryptedString(
                     $this->frm->getField('password')->getValue(true),

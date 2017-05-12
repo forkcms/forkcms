@@ -293,6 +293,11 @@ class Edit extends BackendBaseActionEdit
         // get selected permissions
         $actionPermissions = BackendGroupsModel::getActionPermissions($this->id);
 
+        $selectedWidgets = [];
+        $widgetBoxes = [];
+        $permissionBoxes = [];
+        $actionBoxes = [];
+
         // loop through modules
         foreach ($this->modules as $key => $module) {
             // widgets available?
@@ -531,10 +536,12 @@ class Edit extends BackendBaseActionEdit
         }
 
         // build group
+        $userGroup = [];
         $userGroup['name'] = $this->frm->getField('name')->getValue();
         $userGroup['id'] = $this->id;
 
         // build setting
+        $setting = [];
         $setting['group_id'] = $this->id;
         $setting['name'] = 'hidden_on_dashboard';
         $setting['value'] = serialize($this->hiddenOnDashboard);
@@ -556,6 +563,7 @@ class Edit extends BackendBaseActionEdit
             // get fields
             $nameField = $this->frm->getField('name');
 
+            $actionPermissions = [];
             // loop through modules
             foreach ($this->modules as $module) {
                 // loop through actions

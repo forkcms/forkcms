@@ -185,6 +185,7 @@ class Edit extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['id'] = $this->id;
                 $item['language'] = BL::getWorkingLanguage();
                 $item['extra_id'] = $this->record['extra_id'];

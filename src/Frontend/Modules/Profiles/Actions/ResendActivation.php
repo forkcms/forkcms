@@ -99,10 +99,6 @@ class ResendActivation extends FrontendBaseBlock
 
             // valid login
             if ($this->frm->isCorrect()) {
-                // activation URL
-                $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate') .
-                                               '/' . $profile->getSetting('activation_key');
-
                 // send email
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
@@ -112,7 +108,10 @@ class ResendActivation extends FrontendBaseBlock
                     ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Profiles/Layout/Templates/Mails/Register.html.twig',
-                        $mailValues,
+                        [
+                            'activationUrl' => SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate') .
+                                               '/' . $profile->getSetting('activation_key'),
+                        ],
                         true
                     )
                 ;

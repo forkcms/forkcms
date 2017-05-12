@@ -530,12 +530,11 @@ class DataGrid extends \SpoonDataGrid
             // fetch the datagrid attributes
             $attributes = $this->getAttributes();
 
-            // build array
-            $excludedData['id'] = $attributes['id'];
-            $excludedData['JSON'] = json_encode($excludedValues);
-
             // assign the stack to the datagrid template
-            $this->tpl->assign('excludedCheckboxesData', $excludedData);
+            $this->tpl->assign(
+                'excludedCheckboxesData',
+                ['id' => $attributes['id'], 'JSON' => json_encode($excludedValues)]
+            );
         }
 
         // checked IDs found
@@ -551,12 +550,11 @@ class DataGrid extends \SpoonDataGrid
             // fetch the datagrid attributes
             $attributes = $this->getAttributes();
 
-            // build array
-            $checkedData['id'] = $attributes['id'];
-            $checkedData['JSON'] = json_encode($checkedValues);
-
             // assign the stack to the datagrid template
-            $this->tpl->assign('checkedCheckboxesData', $checkedData);
+            $this->tpl->assign(
+                'checkedCheckboxesData',
+                ['id' => $attributes['id'], 'JSON' => json_encode($checkedValues)]
+            );
         }
     }
 

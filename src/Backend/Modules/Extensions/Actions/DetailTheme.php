@@ -110,6 +110,7 @@ class DetailTheme extends BackendBaseActionIndex
         $templates = [];
         foreach ($this->information['templates'] as $template) {
             // set template name & path
+            $record = [];
             $record['name'] = $template['label'];
             $record['path'] = $template['path'];
 

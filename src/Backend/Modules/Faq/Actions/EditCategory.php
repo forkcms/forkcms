@@ -93,6 +93,7 @@ class EditCategory extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['id'] = $this->id;
                 $item['language'] = $this->record['language'];
                 $item['title'] = $this->frm->getField('title')->getValue();

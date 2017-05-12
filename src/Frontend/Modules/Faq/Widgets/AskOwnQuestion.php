@@ -84,6 +84,7 @@ class AskOwnQuestion extends FrontendBaseWidget
 
             if ($this->frm->isCorrect()) {
                 $spamFilterEnabled = $this->get('fork.settings')->get('Faq', 'spamfilter');
+                $variables = [];
                 $variables['sentOn'] = time();
                 $variables['name'] = $this->frm->getField('name')->getValue();
                 $variables['email'] = $this->frm->getField('email')->getValue();

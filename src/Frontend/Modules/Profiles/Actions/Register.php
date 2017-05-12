@@ -153,10 +153,6 @@ class Register extends FrontendBaseBlock
                     // login
                     FrontendProfilesAuthentication::login($profileId);
 
-                    // activation URL
-                    $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate')
-                                                   . '/' . $settings['activation_key'];
-
                     // send email
                     $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                     $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
@@ -166,7 +162,10 @@ class Register extends FrontendBaseBlock
                         ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                         ->parseHtml(
                             '/Profiles/Layout/Templates/Mails/Register.html.twig',
-                            $mailValues,
+                            [
+                                'activationUrl' => SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate')
+                                                   . '/' . $settings['activation_key'],
+                            ],
                             true
                         )
                     ;

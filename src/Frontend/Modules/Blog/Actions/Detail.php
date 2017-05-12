@@ -324,6 +324,7 @@ class Detail extends FrontendBaseBlock
                 $text = $this->frm->getField('message')->getValue();
 
                 // build array
+                $comment = [];
                 $comment['post_id'] = $this->record['id'];
                 $comment['language'] = LANGUAGE;
                 $comment['created_on'] = FrontendModel::getUTCDate();

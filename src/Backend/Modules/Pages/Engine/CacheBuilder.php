@@ -327,6 +327,7 @@ class CacheBuilder
 
     protected function dumpEditorLinkList(array $navigation, array $keys, string $language): string
     {
+        $order = [];
         // get the order
         foreach (array_keys($navigation) as $type) {
             $order[$type] = $this->getOrder($navigation, $type, 0);

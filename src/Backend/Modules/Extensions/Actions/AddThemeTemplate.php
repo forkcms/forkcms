@@ -289,6 +289,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build array
+                $item = [];
                 $item['theme'] = $this->frm->getField('theme')->getValue();
                 $item['label'] = $this->frm->getField('label')->getValue();
                 $item['path'] = 'Core/Layout/Templates/' . $this->frm->getField('file')->getValue();

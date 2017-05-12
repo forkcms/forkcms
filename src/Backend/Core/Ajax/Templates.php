@@ -25,7 +25,7 @@ class Templates extends AjaxAction
     {
         $this->templates = [];
         $theme = $this->get('fork.settings')->get('Core', 'theme');
-        $files[] = BACKEND_PATH . '/Core/Layout/EditorTemplates/templates.js';
+        $files = [BACKEND_PATH . '/Core/Layout/EditorTemplates/templates.js'];
         $themePath = FRONTEND_PATH . '/Themes/' . $theme . '/Core/Layout/EditorTemplates/templates.js';
 
         if (is_file($themePath)) {
@@ -89,13 +89,13 @@ class Templates extends AjaxAction
                 $image = ltrim($template['image'], '/');
             }
 
-            $temp['title'] = $template['title'];
-            $temp['description'] = $template['description'] ?? '';
-            $temp['image'] = $image;
-            $temp['html'] = $template['html'];
-
             // add the template
-            $this->templates[] = $temp;
+            $this->templates[] = [
+                'title' => $template['title'],
+                'description' => $template['description'] ?? '',
+                'image' => $image,
+                'html' => $template['html'],
+            ];
         }
     }
 }

@@ -56,8 +56,10 @@ class Edit extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // get values for the form
-        $rbtHiddenValues[] = ['label' => BL::lbl('Hidden'), 'value' => 'Y'];
-        $rbtHiddenValues[] = ['label' => BL::lbl('Published'), 'value' => 'N'];
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden'), 'value' => 'Y'],
+            ['label' => BL::lbl('Published'), 'value' => 'N'],
+        ];
         $categories = BackendFaqModel::getCategories();
 
         // create form
@@ -108,6 +110,7 @@ class Edit extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['id'] = $this->id;
                 $item['meta_id'] = $this->meta->save(true);
                 $item['category_id'] = $this->frm->getField('category_id')->getValue();

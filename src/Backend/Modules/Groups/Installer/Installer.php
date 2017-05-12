@@ -24,11 +24,13 @@ class Installer extends ModuleInstaller
         $db = $this->getDB();
 
         // build groupsetting
+        $groupSetting = [];
         $groupSetting['group_id'] = 1;
         $groupSetting['name'] = 'dashboard_sequence';
         $groupSetting['value'] = serialize([]);
 
         // build usersetting
+        $userSetting = [];
         $userSetting['user_id'] = 1;
         $userSetting['name'] = 'dashboard_sequence';
         $userSetting['value'] = serialize([]);

@@ -110,6 +110,7 @@ class Edit extends BackendBaseActionEdit
         // get active groups
         $groups = BackendGroupsModel::getGroupsByUser($this->id);
 
+        $checkedGroups = [];
         // loop through groups and set checked
         foreach ($groups as $group) {
             $checkedGroups[] = $group['id'];
@@ -285,7 +286,7 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build user-array
-                $user['id'] = $this->id;
+                $user = ['id' => $this->id];
                 if (!$this->user->isGod()) {
                     $user['email'] = $fields['email']->getValue(true);
                 }
@@ -307,6 +308,7 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // build settings-array
+                $settings = [];
                 $settings['nickname'] = $fields['nickname']->getValue();
                 $settings['name'] = $fields['name']->getValue();
                 $settings['surname'] = $fields['surname']->getValue();

@@ -31,6 +31,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
 
             // is the question moved to a new category?
             if ($fromCategoryId != $toCategoryId) {
+                $item = [];
                 $item['id'] = $questionId;
                 $item['category_id'] = $toCategoryId;
 

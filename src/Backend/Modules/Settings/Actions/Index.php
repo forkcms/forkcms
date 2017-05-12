@@ -194,17 +194,19 @@ class Index extends BackendBaseActionIndex
             }
 
             // add to the list
-            $activeLanguages[] = [
-                'label' => $label,
-                'value' => $abbreviation,
-                'attributes' => $activeAttributes,
-                'variables' => ['default' => $defaultLanguage],
-            ];
-            $redirectLanguages[] = [
-                'label' => $label,
-                'value' => $abbreviation,
-                'attributes' => $redirectAttributes,
-                'variables' => ['default' => $defaultLanguage],
+            $activeLanguages = [
+                [
+                    'label' => $label,
+                    'value' => $abbreviation,
+                    'attributes' => $activeAttributes,
+                    'variables' => ['default' => $defaultLanguage],
+                ],
+                $redirectLanguages[] = [
+                    'label' => $label,
+                    'value' => $abbreviation,
+                    'attributes' => $redirectAttributes,
+                    'variables' => ['default' => $defaultLanguage],
+                ],
             ];
         }
 

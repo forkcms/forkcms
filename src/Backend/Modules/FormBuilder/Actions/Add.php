@@ -113,6 +113,7 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build array
+                $values = [];
                 $values['language'] = BL::getWorkingLanguage();
                 $values['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $values['name'] = $txtName->getValue();
@@ -137,6 +138,7 @@ class Add extends BackendBaseActionAdd
                 FL::setLocale(BL::getWorkingLanguage(), true);
 
                 // create submit button
+                $field = [];
                 $field['form_id'] = $id;
                 $field['type'] = 'submit';
                 $field['settings'] = serialize(['values' => \SpoonFilter::ucfirst(FL::getLabel('Send'))]);

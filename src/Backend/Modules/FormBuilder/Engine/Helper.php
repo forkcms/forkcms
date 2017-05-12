@@ -108,7 +108,8 @@ class Helper
                 $fieldHTML = $rbt->parse();
             } elseif ($field['type'] == 'checkbox') {
                 // rebuild values
-                foreach ($values as $value) {
+                $newValues = [];
+                foreach ((array) $values as $value) {
                     $newValues[] = ['label' => $value, 'value' => $value];
                 }
 

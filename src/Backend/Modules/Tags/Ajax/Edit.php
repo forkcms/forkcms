@@ -39,6 +39,7 @@ class Edit extends BackendBaseAJAXAction
                 if (BackendTagsModel::existsTag($tag)) {
                     $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
                 } else {
+                    $item = [];
                     $item['id'] = $id;
                     $item['tag'] = \SpoonFilter::htmlspecialchars($tag);
                     $item['url'] = BackendTagsModel::getURL(

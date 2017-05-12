@@ -31,16 +31,20 @@ class AddCategory extends BackendBaseAJAXAction
         } else {
             // get the data
             // build array
-            $item['title'] = \SpoonFilter::htmlspecialchars($categoryTitle);
-            $item['language'] = BL::getWorkingLanguage();
+            $item = [
+                'title' => \SpoonFilter::htmlspecialchars($categoryTitle),
+                'language' => BL::getWorkingLanguage(),
+            ];
 
-            $meta['keywords'] = $item['title'];
-            $meta['keywords_overwrite'] = 'N';
-            $meta['description'] = $item['title'];
-            $meta['description_overwrite'] = 'N';
-            $meta['title'] = $item['title'];
-            $meta['title_overwrite'] = 'N';
-            $meta['url'] = BackendBlogModel::getURLForCategory(\SpoonFilter::urlise($item['title']));
+            $meta = [
+                'keywords' => $item['title'],
+                'keywords_overwrite' => 'N',
+                'description' => $item['title'],
+                'description_overwrite' => 'N',
+                'title' => $item['title'],
+                'title_overwrite' => 'N',
+                'url' => BackendBlogModel::getURLForCategory(\SpoonFilter::urlise($item['title'])),
+            ];
 
             // update
             $item['id'] = BackendBlogModel::insertCategory($item, $meta);

@@ -358,6 +358,7 @@ class Model
      */
     public static function getErrors(string $type = null)
     {
+        $errors = [];
         $errors['required'] = FL::getError('FieldIsRequired');
         $errors['email'] = FL::getError('EmailIsInvalid');
         $errors['number'] = FL::getError('NumericCharactersOnly');
@@ -556,14 +557,16 @@ class Model
         $db->update('forms', $values, 'id = ?', $id);
 
         // build array
-        $extra['data'] = serialize(
-            [
-                'language' => BL::getWorkingLanguage(),
-                'extra_label' => $values['name'],
-                'id' => $id,
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $id,
-            ]
-        );
+        $extra = [
+            'data' => serialize(
+                [
+                    'language' => BL::getWorkingLanguage(),
+                    'extra_label' => $values['name'],
+                    'id' => $id,
+                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $id,
+                ]
+            ),
+        ];
 
         // update extra
         $db->update(

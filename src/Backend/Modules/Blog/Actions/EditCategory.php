@@ -87,9 +87,11 @@ class EditCategory extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = $this->id;
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['meta_id'] = $this->meta->save(true);
+                $item = [
+                    'id' => $this->id,
+                    'title' => $this->frm->getField('title')->getValue(),
+                    'meta_id' => $this->meta->save(true),
+                ];
 
                 // update the item
                 BackendBlogModel::updateCategory($item);

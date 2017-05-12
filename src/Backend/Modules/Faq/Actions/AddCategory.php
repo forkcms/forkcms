@@ -67,6 +67,7 @@ class AddCategory extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['language'] = BL::getWorkingLanguage();
                 $item['meta_id'] = $this->meta->save();

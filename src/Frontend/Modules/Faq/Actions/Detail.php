@@ -247,6 +247,7 @@ class Detail extends FrontendBaseBlock
                     $spamFilterEnabled = (isset($this->settings['spamfilter']) && $this->settings['spamfilter']);
 
                     // build array
+                    $variables = [];
                     $variables['question_id'] = $this->record['id'];
                     $variables['sentOn'] = time();
                     $variables['text'] = $text;

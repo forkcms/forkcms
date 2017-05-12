@@ -143,21 +143,20 @@ class Form extends FrontendBaseWidget
             // loop fields
             foreach ($this->item['fields'] as $field) {
                 // init
-                $item['name'] = 'field' . $field['id'];
-                $item['type'] = $field['type'];
-                $item['label'] = (isset($field['settings']['label'])) ? $field['settings']['label'] : '';
-                $item['placeholder'] = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
-                $item['classname'] = (isset($field['settings']['classname']) ? $field['settings']['classname'] : null);
-                $item['required'] = isset($field['validations']['required']);
-                $item['validations'] = isset($field['validations']) ? $field['validations'] : [];
-                $item['html'] = '';
+                $item = [
+                    'name' => 'field' . $field['id'],
+                    'type' => $field['type'],
+                    'label' => $field['settings']['label'] ?? '',
+                    'placeholder' => $field['settings']['placeholder'] ?? null,
+                    'classname' => $field['settings']['classname'] ?? null,
+                    'required' => isset($field['validations']['required']),
+                    'validations' => $field['validations'] ?? [],
+                    'html' => '',
+                ];
 
                 // form values
-                $values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);
-                $defaultValues = (isset($field['settings']['default_values']) ?
-                    $field['settings']['default_values'] :
-                    null
-                );
+                $values = $field['settings']['values'] ?? null;
+                $defaultValues = $field['settings']['default_values'] ?? null;
 
                 if ($field['type'] == 'dropdown') {
                     // values and labels are the same
@@ -439,10 +438,12 @@ class Form extends FrontendBaseWidget
             // valid form
             if ($this->frm->isCorrect()) {
                 // item
-                $data['form_id'] = $this->item['id'];
-                $data['session_id'] = \SpoonSession::getSessionId();
-                $data['sent_on'] = FrontendModel::getUTCDate();
-                $data['data'] = serialize(['server' => $_SERVER]);
+                $data = [
+                    'form_id' => $this->item['id'],
+                    'session_id' => \SpoonSession::getSessionId(),
+                    'sent_on' => FrontendModel::getUTCDate(),
+                    'data' => serialize(['server' => $_SERVER]),
+                ];
 
                 $dataId = null;
                 // insert data
@@ -461,6 +462,7 @@ class Form extends FrontendBaseWidget
                     }
 
                     // field data
+                    $fieldData = [];
                     $fieldData['data_id'] = $dataId;
                     $fieldData['label'] = $field['settings']['label'];
                     $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();

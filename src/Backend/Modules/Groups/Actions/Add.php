@@ -382,9 +382,11 @@ class Add extends BackendBaseActionAdd
         }
 
         // build group
+        $userGroup = [];
         $userGroup['name'] = $this->frm->getField('name')->getValue();
 
         // build setting
+        $setting = [];
         $setting['name'] = 'hidden_on_dashboard';
         $setting['value'] = serialize($this->hiddenOnDashboard);
 
@@ -399,6 +401,8 @@ class Add extends BackendBaseActionAdd
         // create form
         $this->frm = new BackendForm('add');
 
+        $widgetBoxes = [];
+
         // widgets available?
         if (isset($this->widgets)) {
             // loop through widgets
@@ -410,6 +414,9 @@ class Add extends BackendBaseActionAdd
                 $widgetBoxes[$j]['description'] = $widget['description'];
             }
         }
+
+        $permissionBoxes = [];
+        $actionBoxes = [];
 
         // loop through modules
         foreach ($this->modules as $key => $module) {
@@ -487,6 +494,7 @@ class Add extends BackendBaseActionAdd
             // get fields
             $nameField = $this->frm->getField('name');
 
+            $actionPermissions = [];
             foreach ($this->modules as $module) {
                 // loop through actions
                 foreach ($this->actions[$module['value']] as $action) {

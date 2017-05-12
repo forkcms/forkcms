@@ -180,8 +180,10 @@ class Edit extends BackendBaseActionEdit
         $this->frm = new BackendForm('edit');
 
         // set hidden values
-        $rbtHiddenValues[] = ['label' => BL::lbl('Hidden'), 'value' => 'Y'];
-        $rbtHiddenValues[] = ['label' => BL::lbl('Published'), 'value' => 'N'];
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'],
+            ['label' => BL::lbl('Published'), 'value' => 'N'],
+        ];
 
         // get categories
         $categories = BackendBlogModel::getCategories();
@@ -325,29 +327,28 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = $this->id;
-                $item['meta_id'] = $this->meta->save();
-
-                // this is used to let our model know the status (active, archive, draft) of the edited item
-                $item['revision_id'] = $this->record['revision_id'];
-                $item['category_id'] = (int) $this->frm->getField('category_id')->getValue();
-                $item['user_id'] = $this->frm->getField('user_id')->getValue();
-                $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['introduction'] = $this->frm->getField('introduction')->getValue();
-                $item['text'] = $this->frm->getField('text')->getValue();
-                $item['publish_on'] = BackendModel::getUTCDate(
-                    null,
-                    BackendModel::getUTCTimestamp(
-                        $this->frm->getField('publish_on_date'),
-                        $this->frm->getField('publish_on_time')
-                    )
-                );
-                $item['edited_on'] = BackendModel::getUTCDate();
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
-                $item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
-                $item['status'] = $status;
-
+                $item = [
+                    'id' => $this->id,
+                    'meta_id' => $this->meta->save(),
+                    'revision_id' => $this->record['revision_id'],
+                    'category_id' => (int) $this->frm->getField('category_id')->getValue(),
+                    'user_id' => $this->frm->getField('user_id')->getValue(),
+                    'language' => BL::getWorkingLanguage(),
+                    'title' => $this->frm->getField('title')->getValue(),
+                    'introduction' => $this->frm->getField('introduction')->getValue(),
+                    'text' => $this->frm->getField('text')->getValue(),
+                    'publish_on' => BackendModel::getUTCDate(
+                        null,
+                        BackendModel::getUTCTimestamp(
+                            $this->frm->getField('publish_on_date'),
+                            $this->frm->getField('publish_on_time')
+                        )
+                    ),
+                    'edited_on' => BackendModel::getUTCDate(),
+                    'hidden' => $this->frm->getField('hidden')->getValue(),
+                    'allow_comments' => $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N',
+                    'status' => $status,
+                ];
                 if ($this->imageIsAllowed) {
                     $item['image'] = $this->record['image'];
 

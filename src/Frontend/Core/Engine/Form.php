@@ -144,6 +144,7 @@ class Form extends \Common\Core\Form
         $firstDay = 1;
 
         // build attributes
+        $attributes = [];
         $attributes['data-mask'] = str_replace(
             ['d', 'm', 'Y', 'j', 'n'],
             ['dd', 'mm', 'yy', 'd', 'm'],

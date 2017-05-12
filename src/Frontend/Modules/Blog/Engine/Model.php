@@ -869,6 +869,7 @@ class Model implements FrontendTagsInterface
         } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation') {
             // only notify on new comments to moderate and if the comment is one to moderate
             // set variables
+            $variables = [];
             $variables['message'] = vsprintf(
                 FL::msg('BlogEmailNotificationsNewCommentToModerate'),
                 [$comment['author'], $url, $comment['post_title'], $backendURL]

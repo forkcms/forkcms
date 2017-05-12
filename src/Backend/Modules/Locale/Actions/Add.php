@@ -148,6 +148,7 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['language'] = $this->frm->getField('language')->getValue();
                 $item['application'] = $this->frm->getField('application')->getValue();

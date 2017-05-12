@@ -36,6 +36,7 @@ class Installer extends ModuleInstaller
         );
 
         // build array
+        $item = [];
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
         $item['extra_id'] = $this->insertExtra(
             $this->getModule(),
@@ -54,14 +55,16 @@ class Installer extends ModuleInstaller
         $item['id'] = (int) $db->insert('faq_categories', $item);
 
         // build data for widget
-        $extra['data'] = serialize(
-            [
-                'id' => $item['id'],
-                'extra_label' => 'Category: ' . $item['title'],
-                'language' => $item['language'],
-                'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
-            ]
-        );
+        $extra = [
+            'data' => serialize(
+                [
+                    'id' => $item['id'],
+                    'extra_label' => 'Category: ' . $item['title'],
+                    'language' => $item['language'],
+                    'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
+                ]
+            ),
+        ];
 
         // update widget
         $db->update(

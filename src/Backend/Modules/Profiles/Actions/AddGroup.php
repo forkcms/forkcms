@@ -58,7 +58,7 @@ class AddGroup extends BackendBaseActionAdd
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $values['name'] = $txtName->getValue();
+                $values = ['name' => $txtName->getValue()];
 
                 // insert values
                 $id = BackendProfilesModel::insertGroup($values);

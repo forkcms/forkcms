@@ -87,10 +87,10 @@ class EditGroup extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $values['name'] = $txtName->getValue();
+                $values = ['name' => $txtName->getValue()];
 
                 // update values
-                BackendProfilesModel::updateGroup($this->id, $values);
+                BackendProfilesModel::updateGroup($this->id, ['name' => $values]);
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(

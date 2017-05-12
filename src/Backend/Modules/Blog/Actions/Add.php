@@ -49,8 +49,10 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add');
 
         // set hidden values
-        $rbtHiddenValues[] = ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'];
-        $rbtHiddenValues[] = ['label' => BL::lbl('Published'), 'value' => 'N'];
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'],
+            ['label' => BL::lbl('Published'), 'value' => 'N'],
+        ];
 
         // get categories
         $categories = BackendBlogModel::getCategories();
@@ -118,21 +120,29 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = (int) BackendBlogModel::getMaximumId() + 1;
-                $item['meta_id'] = $this->meta->save();
-                $item['category_id'] = (int) $this->frm->getField('category_id')->getValue();
-                $item['user_id'] = $this->frm->getField('user_id')->getValue();
-                $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['introduction'] = $this->frm->getField('introduction')->getValue();
-                $item['text'] = $this->frm->getField('text')->getValue();
-                $item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($this->frm->getField('publish_on_date'), $this->frm->getField('publish_on_time')));
-                $item['created_on'] = BackendModel::getUTCDate();
+                $item = [
+                    'id' => (int) BackendBlogModel::getMaximumId() + 1,
+                    'meta_id' => $this->meta->save(),
+                    'category_id' => (int) $this->frm->getField('category_id')->getValue(),
+                    'user_id' => $this->frm->getField('user_id')->getValue(),
+                    'language' => BL::getWorkingLanguage(),
+                    'title' => $this->frm->getField('title')->getValue(),
+                    'introduction' => $this->frm->getField('introduction')->getValue(),
+                    'text' => $this->frm->getField('text')->getValue(),
+                    'publish_on' => BackendModel::getUTCDate(
+                        null,
+                        BackendModel::getUTCTimestamp(
+                            $this->frm->getField('publish_on_date'),
+                            $this->frm->getField('publish_on_time')
+                        )
+                    ),
+                    'created_on' => BackendModel::getUTCDate(),
+                    'hidden' => $this->frm->getField('hidden')->getValue(),
+                    'allow_comments' => $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N',
+                    'num_comments' => 0,
+                    'status' => $status,
+                ];
                 $item['edited_on'] = $item['created_on'];
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
-                $item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
-                $item['num_comments'] = 0;
-                $item['status'] = $status;
 
                 // insert the item
                 $item['revision_id'] = BackendBlogModel::insert($item);

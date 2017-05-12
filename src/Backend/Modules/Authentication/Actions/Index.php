@@ -214,9 +214,6 @@ class Index extends BackendBaseActionIndex
                 $user->setSetting('reset_password_key', $key);
                 $user->setSetting('reset_password_timestamp', time());
 
-                // variables to parse in the e-mail
-                $variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('ResetPassword') . '&email=' . $email . '&key=' . $key;
-
                 // send e-mail to user
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
@@ -228,7 +225,10 @@ class Index extends BackendBaseActionIndex
                     ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Authentication/Layout/Templates/Mails/ResetPassword.html.twig',
-                        $variables
+                        [
+                            'resetLink' => SITE_URL . BackendModel::createURLForAction('ResetPassword')
+                                           . '&email=' . $email . '&key=' . $key,
+                        ]
                     );
                 $this->get('mailer')->send($message);
 

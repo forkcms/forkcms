@@ -128,6 +128,7 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build tag
+                $item = [];
                 $item['id'] = $this->id;
                 $item['tag'] = $this->frm->getField('name')->getValue();
                 $item['url'] = BackendTagsModel::getURL(

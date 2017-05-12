@@ -330,6 +330,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build array
+                $item = [];
                 $item['id'] = $this->id;
                 $item['theme'] = $this->frm->getField('theme')->getValue();
                 $item['label'] = $this->frm->getField('label')->getValue();

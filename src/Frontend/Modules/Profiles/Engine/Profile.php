@@ -296,20 +296,21 @@ class Profile
      */
     public function toArray(): array
     {
-        // basis info
-        $return['display_name'] = $this->getDisplayName();
-        $return['registered_on'] = $this->getRegisteredOn();
+        $profile = [
+            'display_name' => $this->getDisplayName(),
+            'registered_on' => $this->getRegisteredOn(),
+            'url' => [
+                'dashboard' => FrontendNavigation::getURLForBlock('Profiles'),
+                'settings' => FrontendNavigation::getURLForBlock('Profiles', 'Settings'),
+                'url' => $this->getUrl(),
+            ],
+        ];
 
         // add settings
         foreach ($this->settings as $key => $value) {
-            $return['settings'][$key] = $value;
+            $profile['settings'][$key] = $value;
         }
 
-        // urls
-        $return['url']['dashboard'] = FrontendNavigation::getURLForBlock('Profiles');
-        $return['url']['settings'] = FrontendNavigation::getURLForBlock('Profiles', 'Settings');
-        $return['url']['url'] = $this->getUrl();
-
-        return $return;
+        return $profile;
     }
 }

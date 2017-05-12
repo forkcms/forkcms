@@ -80,8 +80,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         // artifacts?
         if (!empty($index) && isset($variables['Core'])) {
             unset($variables['Core']);
-            $tmp[$index] = $variables;
-            $variables = $tmp;
+            $variables = [$index => $variables];
         }
 
         // merge the variables array_merge might be to slow for bigger sites
