@@ -27,7 +27,11 @@ class Ajax extends Base\Object implements ApplicationInterface
 
     public function display(): Response
     {
-        return $this->ajaxAction->display();
+        if ($this->ajaxAction instanceof AjaxAction) {
+            return $this->ajaxAction->display();
+        }
+
+        return $this->ajaxAction->getContent();
     }
 
     private function splitUpForkData(array $forkData): array
