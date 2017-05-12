@@ -11,7 +11,7 @@ final class PasswordStrengthChecker
     /** @var int */
     private $score;
 
-    public function __construct(string $password)
+    private function __construct(string $password)
     {
         $this->score = 0;
 
