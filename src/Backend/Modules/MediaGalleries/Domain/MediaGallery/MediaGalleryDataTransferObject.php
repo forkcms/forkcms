@@ -52,12 +52,12 @@ class MediaGalleryDataTransferObject
             return;
         }
 
-        $this->userId = $mediaGallery->getUserId();
-        $this->status = $mediaGallery->getStatus();
-        $this->title = $mediaGallery->getTitle();
-        $this->text = $mediaGallery->getText();
-        $this->action = $mediaGallery->getAction();
-        $this->mediaGroup = $mediaGallery->getMediaGroup();
+        $this->userId = $this->mediaGalleryEntity->getUserId();
+        $this->status = $this->mediaGalleryEntity->getStatus();
+        $this->title = $this->mediaGalleryEntity->getTitle();
+        $this->text = $this->mediaGalleryEntity->getText();
+        $this->action = $this->mediaGalleryEntity->getAction();
+        $this->mediaGroup = $this->mediaGalleryEntity->getMediaGroup();
     }
 
     public function getMediaGalleryEntity(): MediaGallery

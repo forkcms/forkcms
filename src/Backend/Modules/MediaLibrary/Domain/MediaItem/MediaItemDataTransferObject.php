@@ -29,10 +29,10 @@ class MediaItemDataTransferObject
             return;
         }
 
-        $this->folder = $mediaItem->getFolder();
-        $this->url = $mediaItem->getUrl();
-        $this->title = $mediaItem->getTitle();
-        $this->userId = $mediaItem->getUserId();
+        $this->folder = $this->mediaItemEntity->getFolder();
+        $this->url = $this->mediaItemEntity->getUrl();
+        $this->title = $this->mediaItemEntity->getTitle();
+        $this->userId = $this->mediaItemEntity->getUserId();
     }
 
     public function getMediaItemEntity(): MediaItem

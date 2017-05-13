@@ -24,9 +24,9 @@ class MediaFolderDataTransferObject
             return;
         }
 
-        $this->name = $mediaFolder->getName();
-        $this->parent = $mediaFolder->getParent();
-        $this->userId = $mediaFolder->getUserId();
+        $this->name = $this->mediaFolderEntity->getName();
+        $this->parent = $this->mediaFolderEntity->getParent();
+        $this->userId = $this->mediaFolderEntity->getUserId();
     }
 
     public function getMediaFolderEntity(): MediaFolder
