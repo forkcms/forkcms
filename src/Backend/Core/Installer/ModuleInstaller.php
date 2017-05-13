@@ -72,6 +72,13 @@ class ModuleInstaller
     private $variables = [];
 
     /**
+     * Should example data be installed.
+     *
+     * @var bool
+     */
+    private $example;
+
+    /**
      * @param SpoonDatabase $db The database-connection.
      * @param array $languages The selected frontend languages.
      * @param array $interfaceLanguages The selected backend languages.
