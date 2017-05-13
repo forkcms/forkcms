@@ -314,7 +314,6 @@ class Form extends \Common\Core\Form
      * @param array  $values     The possible values for the radio button.
      * @param string $checked    Should the element be checked?
      * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
      * @return SpoonFormRadiobutton
      */
@@ -322,17 +321,15 @@ class Form extends \Common\Core\Form
         $name,
         array $values,
         $checked = null,
-        $class = null,
-        $classError = null
+        $class = null
     ): SpoonFormRadiobutton {
         $name = (string) $name;
         $values = (array) $values;
         $checked = ($checked !== null) ? (string) $checked : null;
         $class = ($class !== null) ? (string) $class : 'inputRadio';
-        $classError = ($classError !== null) ? (string) $classError : 'inputRadioError';
 
         // create and return a radio button
-        return parent::addRadiobutton($name, $values, $checked, $class, $classError);
+        return parent::addRadiobutton($name, $values, $checked, $class);
     }
 
     /**
