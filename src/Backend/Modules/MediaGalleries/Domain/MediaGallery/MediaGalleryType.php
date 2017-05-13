@@ -99,11 +99,7 @@ class MediaGalleryType extends AbstractType
         }
 
         // Otherwise, when you have the rights, you can edit the widgetAction
-        if (Authentication::isAllowedAction('MediaGalleryEditWidgetAction')) {
-            return true;
-        }
-
-        return false;
+        return Authentication::isAllowedAction('MediaGalleryEditWidgetAction');
     }
 
     public function getBlockPrefix(): string
