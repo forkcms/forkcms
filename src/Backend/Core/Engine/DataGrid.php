@@ -444,7 +444,8 @@ class DataGrid extends \SpoonDataGrid
 
         // redefine columns
         $columns = (array) $columns;
-        $attributes = null;
+        $attributes = [];
+        $headerAttributes = [];
 
         // based on the function we should prepopulate the attributes array
         switch ($function) {
@@ -467,7 +468,7 @@ class DataGrid extends \SpoonDataGrid
         if (!empty($headerAttributes)) {
             // loop and set attributes
             foreach ($columns as $column) {
-                $this->setColumnHeaderAttributes($column, $attributes);
+                $this->setColumnHeaderAttributes($column, $headerAttributes);
             }
         }
     }
