@@ -255,7 +255,7 @@ class Index extends BackendBaseActionIndex
     {
         $allowedModule = $this->getAllowedModule();
         $allowedAction = $this->getAllowedAction($allowedModule);
-        $allowedModuleActionUrl = $allowedModule ?
+        $allowedModuleActionUrl = $allowedModule !== false && $allowedAction !== false ?
             BackendModel::createURLForAction($allowedAction, $allowedModule) :
             BackendModel::createURLForAction('Index', 'Authentication');
 
