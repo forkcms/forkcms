@@ -43,10 +43,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $profile;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -64,10 +61,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the profile data.
-     */
-    private function getData()
+    private function getData(): void
     {
         // get general info
         $this->profile = BackendProfilesModel::get($this->id);
@@ -79,16 +73,13 @@ class Edit extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // gender dropdown values
-        $genderValues = array(
+        $genderValues = [
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
             'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
-        );
+        ];
 
         // birthdate dropdown values
         $days = range(1, 31);
@@ -139,27 +130,24 @@ class Edit extends BackendBaseActionEdit
         $this->frm->getField('country')->setDefaultElement('');
     }
 
-    /**
-     * Load the data grid with groups.
-     */
-    private function loadGroups()
+    private function loadGroups(): void
     {
         // create the data grid
         $this->dgGroups = new BackendDataGridDB(
             BackendProfilesModel::QRY_DATAGRID_BROWSE_PROFILE_GROUPS,
-            array($this->profile['id'])
+            [$this->profile['id']]
         );
 
         // sorting columns
-        $this->dgGroups->setSortingColumns(array('group_name'), 'group_name');
+        $this->dgGroups->setSortingColumns(['group_name'], 'group_name');
 
         // disable paging
         $this->dgGroups->setPaging(false);
 
         // set column function
         $this->dgGroups->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[expires_on]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[expires_on]'],
             'expires_on',
             true
         );
@@ -183,10 +171,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -209,10 +194,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -286,8 +268,7 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $values['email'] = ($chkNewEmail->isChecked()) ?
-                    $txtEmail->getValue() : $this->profile['email'];
+                $values = ['email' => $chkNewEmail->isChecked() ? $txtEmail->getValue() : $this->profile['email']];
 
                 // only update if display name changed
                 if ($txtDisplayName->getValue() != $this->profile['display_name']) {
@@ -359,12 +340,12 @@ class Edit extends BackendBaseActionEdit
                     // notify values
                     $notifyValues = array_merge(
                         $values,
-                        array(
+                        [
                             'id' => $this->id,
                             'first_name' => $txtFirstName->getValue(),
                             'last_name' => $txtLastName->getValue(),
                             'unencrypted_password' => $password,
-                        )
+                        ]
                     );
 
                     if (!isset($notifyValues['display_name'])) {

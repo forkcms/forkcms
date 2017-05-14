@@ -13,20 +13,12 @@ final class CopyContentBlocksToOtherLocaleHandler
     /** @var ContentBlockRepository */
     private $contentBlockRepository;
 
-    /**
-     * @param ContentBlockRepository $contentBlockRepository
-     */
     public function __construct(ContentBlockRepository $contentBlockRepository)
     {
         $this->contentBlockRepository = $contentBlockRepository;
     }
 
-    /**
-     * @param CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale
-     *
-     * @return ContentBlock
-     */
-    public function handle(CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale)
+    public function handle(CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale): void
     {
         $fromLocaleContentBlocks = (array) $this->contentBlockRepository->findBy(
             ['locale' => $copyContentBlocksToOtherLocale->fromLocale, 'status' => ContentBlockStatus::active()]
@@ -57,7 +49,7 @@ final class CopyContentBlocksToOtherLocaleHandler
     /**
      * @return int
      */
-    private function getNewExtraId()
+    private function getNewExtraId(): int
     {
         return Model::insertExtra(
             ModuleExtraType::widget(),

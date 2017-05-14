@@ -10,11 +10,11 @@ namespace Frontend\Modules\Mailmotor\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Locale;
 use Frontend\Modules\Mailmotor\Command\Unsubscription;
 use Frontend\Modules\Mailmotor\Event\NotImplementedUnsubscribedEvent;
+use Frontend\Modules\Mailmotor\Form\UnsubscribeType;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
@@ -22,12 +22,7 @@ use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
  */
 class Unsubscribe extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra
-     *
-     * @return void
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -36,7 +31,7 @@ class Unsubscribe extends FrontendBaseBlock
 
         // Create the form
         $form = $this->createForm(
-            $this->get('mailmotor.form.unsubscription'),
+            UnsubscribeType::class,
             new Unsubscription(
                 Locale::frontendLanguage(),
                 $email
@@ -74,7 +69,7 @@ class Unsubscribe extends FrontendBaseBlock
             );
         }
 
-        return $this->redirect(
+        $this->redirect(
             FrontendNavigation::getURLForBlock(
                 'Mailmotor',
                 'Unsubscribe'
@@ -100,12 +95,7 @@ class Unsubscribe extends FrontendBaseBlock
         return $email;
     }
 
-    /**
-     * Parse the data into the template
-     *
-     * @return void
-     */
-    private function parse()
+    private function parse(): void
     {
         // form was unsubscribed?
         if ($this->URL->getParameter('unsubscribed') === 'true') {

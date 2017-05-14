@@ -22,11 +22,8 @@ class Breadcrumb extends FrontendBaseObject
      *
      * @var array
      */
-    private $items = array();
+    private $items = [];
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
@@ -40,80 +37,93 @@ class Breadcrumb extends FrontendBaseObject
         // add homepage as first item (with correct element)
         $this->addElement($homeInfo['navigation_title'], Navigation::getURL(1));
 
-        // get other pages
-        $pages = $this->URL->getPages();
+        $this->addBreadcrumbsForPages($this->URL->getPages());
+    }
 
-        // init vars
-        $items = array();
+    private function addBreadcrumbsForPages(array $pages): void
+    {
+        $breadcrumbs = $this->getBreadcrumbsForPages($pages);
+
+        // reverse so everything is in place
+        krsort($breadcrumbs);
+
+        array_map(
+            function (array $breadcrumb) {
+                $this->addElement($breadcrumb['title'], $breadcrumb['url']);
+            },
+            $breadcrumbs
+        );
+    }
+
+    private function getBreadcrumbsForPages(array $pages): array
+    {
+        $breadcrumbs = [];
         $errorURL = Navigation::getURL(404);
 
         // loop pages
         while (!empty($pages)) {
-            // init vars
             $url = implode('/', $pages);
             $menuId = Navigation::getPageId($url);
             $pageInfo = Navigation::getPageInfo($menuId);
 
-            // do we know something about the page
-            if ($pageInfo !== false && isset($pageInfo['navigation_title'])) {
-                // only add pages that aren't direct actions
-                if ($pageInfo['tree_type'] != 'direct_action') {
-                    // get URL
-                    $pageURL = Navigation::getURL($menuId);
+            // if we don't have info for the page, a navigation title or if it is a direct action => skip the page
+            if ($pageInfo === false
+                || !isset($pageInfo['navigation_title'])
+                || $pageInfo['tree_type'] === 'direct_action') {
+                array_pop($pages);
 
-                    // if this is the error-page, so we won't show an URL.
-                    if ($pageURL == $errorURL) {
-                        $pageURL = null;
-                    }
-
-                    // add to the items
-                    $items[] = array('title' => $pageInfo['navigation_title'], 'url' => $pageURL);
-                }
+                continue;
             }
 
-            // remove element
+            $pageURL = Navigation::getURL($menuId);
+
+            // if this is the error-page, so we won't show an URL.
+            if ($pageURL === $errorURL) {
+                $pageURL = null;
+            }
+
+            $breadcrumbs[] = ['title' => $pageInfo['navigation_title'], 'url' => $pageURL];
+
             array_pop($pages);
         }
 
-        // reverse so everything is in place
-        krsort($items);
-
-        // loop and add elements
-        foreach ($items as $row) {
-            $this->addElement($row['title'], $row['url']);
-        }
+        return $breadcrumbs;
     }
 
     /**
-     * Add an element
-     *
      * @param string $title The label that will be used in the breadcrumb.
-     * @param string $url   The URL for this item.
+     * @param string $url The URL for this item.
      */
-    public function addElement($title, $url = null)
+    public function addElement(string $title, string $url = null): void
     {
-        $this->items[] = array('title' => (string) $title, 'url' => $url);
+        $this->items[] = ['title' => $title, 'url' => $url];
     }
 
     /**
      * Clear all (or a specific) elements in the breadcrumb
      *
-     * @param int $key If the key is provided it will be removed from the array,
+     * @param int|null $key If the key is provided it will be removed from the array,
      *                 otherwise the whole array will be cleared.
      */
-    public function clear($key = null)
+    public function clear(int $key = null): void
     {
-        // key given?
-        if ($key !== null) {
-            // remove specific key
-            unset($this->items[(int) $key]);
+        // clear all
+        if ($key === null) {
+            $this->items = [];
 
-            // resort, to avoid shit when parsing
-            $this->items = \SpoonFilter::arraySortKeys($this->items);
-        } else {
-            // clear all
-            $this->items = array();
+            return;
         }
+
+        // remove specific key
+        unset($this->items[$key]);
+
+        if (empty($this->items)) {
+            return;
+        }
+
+        // resort, to avoid problems when parsing
+        ksort($this->items);
+        $this->items = array_values($this->items);
     }
 
     /**
@@ -121,7 +131,7 @@ class Breadcrumb extends FrontendBaseObject
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
@@ -131,7 +141,7 @@ class Breadcrumb extends FrontendBaseObject
      *
      * @return array
      */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->items;
     }
@@ -139,7 +149,7 @@ class Breadcrumb extends FrontendBaseObject
     /**
      * Parse the breadcrumb into the template
      */
-    public function parse()
+    public function parse(): void
     {
         // assign
         $this->tpl->addGlobal('breadcrumb', $this->items);

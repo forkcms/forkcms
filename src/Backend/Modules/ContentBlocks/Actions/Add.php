@@ -21,17 +21,14 @@ use Backend\Modules\ContentBlocks\Form\ContentBlockType;
  */
 class Add extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         $form = $this->createForm(
-            new ContentBlockType(
-                $this->get('fork.settings')->get('Core', 'theme', 'core')
-            )
+            ContentBlockType::class,
+            null,
+            ['theme' => $this->get('fork.settings')->get('Core', 'theme', 'Core')]
         );
 
         $form->handleRequest($this->get('request'));
@@ -57,7 +54,7 @@ class Add extends BackendBaseActionAdd
             new ContentBlockCreated($createContentBlock->contentBlock)
         );
 
-        return $this->redirect(
+        $this->redirect(
             BackendModel::createURLForAction(
                 'Index',
                 null,

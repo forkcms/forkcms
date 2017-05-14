@@ -9,10 +9,7 @@ use Backend\Core\Installer\ModuleInstaller;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         $this->addModule('Analytics');
 
@@ -37,7 +34,7 @@ class Installer extends ModuleInstaller
         $this->insertWidgets();
     }
 
-    private function insertWidgets()
+    private function insertWidgets(): void
     {
         $this->insertDashboardWidget(
             'Analytics',

@@ -31,22 +31,25 @@ class Edit extends BackendBaseActionEdit
     /** @var ContentBlock */
     private $contentBlock;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         $this->contentBlock = $this->getContentBlock();
 
         if ($this->contentBlock === null) {
-            return $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
 
         $form = $this->createForm(
-            new ContentBlockType($this->get('fork.settings')->get('Core', 'theme', 'core'), UpdateContentBlock::class),
-            new UpdateContentBlock($this->contentBlock)
+            ContentBlockType::class,
+            new UpdateContentBlock($this->contentBlock),
+            [
+                'theme' => $this->get('fork.settings')->get('Core', 'theme', 'Core'),
+                'data_class' => UpdateContentBlock::class,
+            ]
         );
 
         $form->handleRequest($this->get('request'));
@@ -72,7 +75,7 @@ class Edit extends BackendBaseActionEdit
             new ContentBlockUpdated($updateContentBlock->contentBlock)
         );
 
-        return $this->redirect(
+        $this->redirect(
             BackendModel::createURLForAction(
                 'Index',
                 null,

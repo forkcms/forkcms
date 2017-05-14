@@ -13,7 +13,6 @@ use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -28,16 +27,13 @@ class ResendActivation extends FrontendBaseBlock
      */
     private $frm;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         // profile not logged in
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->loadTemplate();
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         } else {
@@ -46,22 +42,16 @@ class ResendActivation extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create the form
         $this->frm = new FrontendForm('resendActivation', null, null, 'resendActivation');
 
         // create & add elements
-        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // form was sent?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -76,10 +66,7 @@ class ResendActivation extends FrontendBaseBlock
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {
@@ -112,20 +99,19 @@ class ResendActivation extends FrontendBaseBlock
 
             // valid login
             if ($this->frm->isCorrect()) {
-                // activation URL
-                $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate') .
-                                               '/' . $profile->getSetting('activation_key');
-
                 // send email
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = Message::newInstance(FL::getMessage('RegisterSubject'))
-                    ->setFrom(array($from['email'] => $from['name']))
-                    ->setTo(array($profile->getEmail() => ''))
-                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->setFrom([$from['email'] => $from['name']])
+                    ->setTo([$profile->getEmail() => ''])
+                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Profiles/Layout/Templates/Mails/Register.html.twig',
-                        $mailValues,
+                        [
+                            'activationUrl' => SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate') .
+                                               '/' . $profile->getSetting('activation_key'),
+                        ],
                         true
                     )
                 ;

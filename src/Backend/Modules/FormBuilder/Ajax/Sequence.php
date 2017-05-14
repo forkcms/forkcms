@@ -17,10 +17,7 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
  */
 class Sequence extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -44,7 +41,7 @@ class Sequence extends BackendBaseAJAXAction
 
                 // from this form and not a submit button
                 if (!empty($field) && $field['form_id'] == $formId && $field['type'] != 'submit') {
-                    BackendFormBuilderModel::updateField($id, array('sequence' => ($i + 1)));
+                    BackendFormBuilderModel::updateField($id, ['sequence' => ($i + 1)]);
                 }
             }
 

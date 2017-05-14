@@ -12,13 +12,7 @@ class LocaleType extends TextType
 {
     const LOCALE = 'locale';
 
-    /**
-     * @param array $fieldDeclaration
-     * @param AbstractPlatform $platform
-     *
-     * @return string
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'VARCHAR(5)';
     }
@@ -29,9 +23,9 @@ class LocaleType extends TextType
      *
      * @return Locale
      */
-    public function convertToPHPValue($locale, AbstractPlatform $platform)
+    public function convertToPHPValue($locale, AbstractPlatform $platform): Locale
     {
-        if (APPLICATION === 'frontend') {
+        if (APPLICATION === 'Frontend') {
             return FrontendLocale::fromString($locale);
         }
 
@@ -44,15 +38,12 @@ class LocaleType extends TextType
      *
      * @return string
      */
-    public function convertToDatabaseValue($locale, AbstractPlatform $platform)
+    public function convertToDatabaseValue($locale, AbstractPlatform $platform): string
     {
         return (string) $locale;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return self::LOCALE;
     }

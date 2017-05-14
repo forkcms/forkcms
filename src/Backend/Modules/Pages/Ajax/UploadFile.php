@@ -18,7 +18,7 @@ use Backend\Core\Engine\Exception;
  */
 class UploadFile extends AjaxAction
 {
-    public function execute()
+    public function execute(): void
     {
         $request = $this->get('request');
 
@@ -35,11 +35,13 @@ class UploadFile extends AjaxAction
      * Extracts the uploaded file from a request. It handles both XmlHttpRequest
      * uploads and form uploads (with files in the $_FILES global)
      *
-     * @param  Request $request
-     * @return string The content of the uploaded file
+     * @param Request $request
+     *
      * @throws Exception When no file could be extracted
+     *
+     * @return string The content of the uploaded file
      */
-    private function getFileContentFromRequest(Request $request)
+    private function getFileContentFromRequest(Request $request): string
     {
         // ajax uploaders fallback to submitting a form with the file in the fields.
         $uploadedFiles = $request->files->all();
@@ -56,11 +58,13 @@ class UploadFile extends AjaxAction
      * Extracts the uploaded file name from a request. It handles both XmlHttpRequest
      * uploads and form uploads (with files in the $_FILES global)
      *
-     * @param  Request $request
-     * @return string The content of the uploaded file
+     * @param Request $request
+     *
      * @throws Exception When no file could be extracted
+     *
+     * @return string The content of the uploaded file
      */
-    private function getFileNameFromRequest(Request $request)
+    private function getFileNameFromRequest(Request $request): string
     {
         // ajax uploaders fallback to submitting a form with the file in the fields.
         $uploadedFiles = $request->files->all();
@@ -76,12 +80,13 @@ class UploadFile extends AjaxAction
     /**
      * Writes some content to a file in a given folder
      *
-     * @param  string $content
-     * @param  string $fileName
-     * @param  string $destinationFolder
+     * @param string $content
+     * @param string $fileName
+     * @param string $destinationFolder
+     *
      * @return string The filename of the written file.
      */
-    private function writeFile($content, $fileName, $destinationFolder)
+    private function writeFile(string $content, string $fileName, string $destinationFolder): string
     {
         $path = FRONTEND_FILES_PATH . '/' . $destinationFolder;
 

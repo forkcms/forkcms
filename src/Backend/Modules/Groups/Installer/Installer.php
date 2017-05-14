@@ -19,19 +19,21 @@ class Installer extends ModuleInstaller
     /**
      * Insert an empty admin dashboard sequence
      */
-    private function insertDashboardSequence()
+    private function insertDashboardSequence(): void
     {
         $db = $this->getDB();
 
         // build groupsetting
+        $groupSetting = [];
         $groupSetting['group_id'] = 1;
         $groupSetting['name'] = 'dashboard_sequence';
-        $groupSetting['value'] = serialize(array());
+        $groupSetting['value'] = serialize([]);
 
         // build usersetting
+        $userSetting = [];
         $userSetting['user_id'] = 1;
         $userSetting['name'] = 'dashboard_sequence';
-        $userSetting['value'] = serialize(array());
+        $userSetting['value'] = serialize([]);
 
         // insert settings
         $db->insert('groups_settings', $groupSetting);
@@ -44,10 +46,7 @@ class Installer extends ModuleInstaller
         $this->insertDashboardWidget('Users', 'Statistics');
     }
 
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -59,20 +58,20 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // module rights
-        $this->setModuleRights(1, 'Groups');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Groups', 'Index');
-        $this->setActionRights(1, 'Groups', 'Add');
-        $this->setActionRights(1, 'Groups', 'Edit');
-        $this->setActionRights(1, 'Groups', 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
 
         // set navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
-        $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', array(
+        $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', [
             'groups/add',
             'groups/edit',
-        ), 5);
+        ], 5);
 
         // insert admins dashboard sequence
         $this->insertDashboardSequence();

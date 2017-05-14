@@ -23,13 +23,4 @@ class ActionIndex extends Action
      * @var DataGridDB
      */
     protected $dataGrid;
-
-    /**
-     * Execute the current action
-     * This method will be overwritten in most of the actions, but still be called to add general stuff
-     */
-    public function execute()
-    {
-        parent::execute();
-    }
 }

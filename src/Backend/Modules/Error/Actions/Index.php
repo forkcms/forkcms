@@ -22,20 +22,14 @@ class Index extends BackendBaseActionIndex
     /** @var int */
     private $statusCode;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Parse the correct messages into the template
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -66,7 +60,7 @@ class Index extends BackendBaseActionIndex
             $extension = pathinfo($chunks[0], PATHINFO_EXTENSION);
 
             // if the file has an extension it is a non-existing-file
-            if ($extension != '' && $extension != $chunks[0]) {
+            if ($extension !== '' && $extension !== $chunks[0]) {
                 // give a nice error, so we can detect which file is missing
                 throw new ExitException(
                     'File not found',
@@ -80,10 +74,7 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('message', BL::err(\SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
     }
 
-    /**
-     * @return Response
-     */
-    public function getContent()
+    public function getContent(): Response
     {
         return new Response(
             $this->content,

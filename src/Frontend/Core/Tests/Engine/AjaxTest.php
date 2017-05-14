@@ -6,7 +6,7 @@ use Common\WebTestCase;
 
 class AjaxTest extends WebTestCase
 {
-    public function testAjaxWithoutModuleAndAction()
+    public function testAjaxWithoutModuleAndAction(): void
     {
         $client = static::createClient();
 
@@ -21,7 +21,7 @@ class AjaxTest extends WebTestCase
         );
     }
 
-    public function testAjaxWithoutModule()
+    public function testAjaxWithoutModule(): void
     {
         $client = static::createClient();
 
@@ -36,7 +36,7 @@ class AjaxTest extends WebTestCase
         );
     }
 
-    public function testAjaxWithInvalidModule()
+    public function testAjaxWithInvalidModule(): void
     {
         $client = static::createClient();
 
@@ -51,7 +51,7 @@ class AjaxTest extends WebTestCase
         );
     }
 
-    public function testAjaxWithoutAction()
+    public function testAjaxWithoutAction(): void
     {
         $client = static::createClient();
 
@@ -61,12 +61,12 @@ class AjaxTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
-            'Internal error',
+            'Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\ does not exist',
             $client->getResponse()->getContent()
         );
     }
 
-    public function testAjaxWithInvalidAction()
+    public function testAjaxWithInvalidAction(): void
     {
         $client = static::createClient();
 
@@ -76,7 +76,7 @@ class AjaxTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
-            'Internal error',
+            'Action class Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\Test does not exist',
             $client->getResponse()->getContent()
         );
     }

@@ -25,33 +25,30 @@ class ResetPassword extends BackendBaseActionAdd
     /**
      * User email
      *
-     * @var $email
+     * @var string $email
      */
     private $email;
 
     /**
      * Reset password key
      *
-     * @var $key
+     * @var string $key
      */
     private $key;
 
     /**
      * User record
      *
-     * @return array
+     * @var BackendUser
      */
     private $user;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         // the user email and key provided match
-        if (!$this->isUserAllowed()) {
+        if (!$this->isThePasswordResetKeyCorrect()) {
             $this->redirect(BackendModel::createURLForAction('Index'));
         }
 
@@ -61,12 +58,7 @@ class ResetPassword extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * The user is allowed on this page
-     *
-     * @return bool
-     */
-    private function isUserAllowed()
+    private function isThePasswordResetKeyCorrect(): bool
     {
         // catch the key and e-mail address from GET
         $this->email = urldecode(\SpoonFilter::getGetValue('email', null, ''));
@@ -85,7 +77,7 @@ class ResetPassword extends BackendBaseActionAdd
                 BackendUsersModel::deleteResetPasswordSettings($userId);
 
                 // redirect to the login form, with a timeout error
-                $this->redirect(BackendModel::createURLForAction('Index', null, null, array('reset' => 'timeout')));
+                $this->redirect(BackendModel::createURLForAction('Index', null, null, ['reset' => 'timeout']));
             }
 
             // check if the provided key matches the one in the user record
@@ -98,23 +90,17 @@ class ResetPassword extends BackendBaseActionAdd
         return false;
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm();
         $this->frm->addPassword('backend_new_password');
         $this->frm->addPassword('backend_new_password_repeated');
 
-        $this->frm->getField('backend_new_password')->setAttributes(array('autocomplete' => 'off'));
-        $this->frm->getField('backend_new_password_repeated')->setAttributes(array('autocomplete' => 'off'));
+        $this->frm->getField('backend_new_password')->setAttributes(['autocomplete' => 'off']);
+        $this->frm->getField('backend_new_password_repeated')->setAttributes(['autocomplete' => 'off']);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             // shorten fields
@@ -144,11 +130,13 @@ class ResetPassword extends BackendBaseActionAdd
                 // attempt to login the user
                 if (!BackendAuthentication::loginUser($this->user->getEmail(), $newPassword->getValue())) {
                     // redirect to the login form with an error
-                    $this->redirect(BackendModel::createURLForAction('Index', null, null, array('login' => 'failed')));
+                    $this->redirect(BackendModel::createURLForAction('Index', null, null, ['login' => 'failed']));
                 }
 
                 // redirect to the login form
-                $this->redirect(BackendModel::createURLForAction('Index', 'Dashboard', null, array('password_reset' => 'success')));
+                $this->redirect(
+                    BackendModel::createURLForAction('Index', 'Dashboard', null, ['password_reset' => 'success'])
+                );
             }
         }
     }

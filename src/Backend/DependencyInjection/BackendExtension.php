@@ -9,18 +9,12 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class BackendExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @inheritDoc
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         // Nothing needs to be loaded here
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $filesystem = new Filesystem();
         foreach ((array) $container->getParameter('installed_modules') as $module) {
@@ -40,18 +34,18 @@ class BackendExtension extends Extension implements PrependExtensionInterface
              */
             $container->prependExtensionConfig(
                 'doctrine',
-                array(
-                    'orm' => array(
-                        'mappings' => array(
-                            $module => array(
+                [
+                    'orm' => [
+                        'mappings' => [
+                            $module => [
                                 'type' => 'annotation',
                                 'is_bundle' => false,
                                 'dir' => $dir,
                                 'prefix' => 'Backend\\Modules\\' . $module . '\\Entity',
-                            ),
-                        ),
-                    ),
-                )
+                            ],
+                        ],
+                    ],
+                ]
             );
         }
     }

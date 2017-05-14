@@ -50,10 +50,7 @@ class Edit extends BackendBaseActionEdit
      */
     protected $imageIsAllowed = true;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');
@@ -69,8 +66,8 @@ class Edit extends BackendBaseActionEdit
             }
 
             $this->getData();
-            $this->loadDrafts();
-            $this->loadRevisions();
+            $this->loadDraftDataGrid();
+            $this->loadRevisionDataGrid();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
@@ -85,7 +82,7 @@ class Edit extends BackendBaseActionEdit
      * Get the data
      * If a revision-id was specified in the URL we load the revision and not the actual data.
      */
-    private function getData()
+    private function getData(): void
     {
         $this->record = (array) BackendBlogModel::get($this->id);
         $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
@@ -123,43 +120,40 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the datagrid with drafts
-     */
-    private function loadDrafts()
+    private function loadDraftDataGrid(): void
     {
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
-            array('draft', $this->record['id'], BL::getWorkingLanguage())
+            ['draft', $this->record['id'], BL::getWorkingLanguage()]
         );
 
         // hide columns
-        $this->dgDrafts->setColumnsHidden(array('id', 'revision_id'));
+        $this->dgDrafts->setColumnsHidden(['id', 'revision_id']);
 
         // disable paging
         $this->dgDrafts->setPaging(false);
 
         // set headers
-        $this->dgDrafts->setHeaderLabels(array(
+        $this->dgDrafts->setHeaderLabels([
             'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
             'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
-        ));
+        ]);
 
         // set column-functions
         $this->dgDrafts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id'
         );
         $this->dgDrafts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getTimeAgo'],
+            ['[edited_on]'],
             'edited_on'
         );
 
         // our JS needs to know an id, so we can highlight it
-        $this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
+        $this->dgDrafts->setRowAttributes(['id' => 'row-[revision_id]']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -180,17 +174,16 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('edit');
 
         // set hidden values
-        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'],
+            ['label' => BL::lbl('Published'), 'value' => 'N'],
+        ];
 
         // get categories
         $categories = BackendBlogModel::getCategories();
@@ -225,41 +218,38 @@ class Edit extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
-        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURL', array($this->record['id']));
+        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURL', [$this->record['id']]);
     }
 
-    /**
-     * Load the datagrid with revisions
-     */
-    private function loadRevisions()
+    private function loadRevisionDataGrid(): void
     {
         // create datagrid
         $this->dgRevisions = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_REVISIONS,
-            array('archived', $this->record['id'], BL::getWorkingLanguage())
+            ['archived', $this->record['id'], BL::getWorkingLanguage()]
         );
 
         // hide columns
-        $this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
+        $this->dgRevisions->setColumnsHidden(['id', 'revision_id']);
 
         // disable paging
         $this->dgRevisions->setPaging(false);
 
         // set headers
-        $this->dgRevisions->setHeaderLabels(array(
+        $this->dgRevisions->setHeaderLabels([
             'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
             'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
-        ));
+        ]);
 
         // set column-functions
         $this->dgRevisions->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id'
         );
         $this->dgRevisions->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getTimeAgo'],
+            ['[edited_on]'],
             'edited_on'
         );
 
@@ -282,10 +272,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -317,15 +304,12 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+            $status = \SpoonFilter::getPostValue('status', ['active', 'draft'], 'active');
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
@@ -343,29 +327,28 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = $this->id;
-                $item['meta_id'] = $this->meta->save();
-
-                // this is used to let our model know the status (active, archive, draft) of the edited item
-                $item['revision_id'] = $this->record['revision_id'];
-                $item['category_id'] = (int) $this->frm->getField('category_id')->getValue();
-                $item['user_id'] = $this->frm->getField('user_id')->getValue();
-                $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['introduction'] = $this->frm->getField('introduction')->getValue();
-                $item['text'] = $this->frm->getField('text')->getValue();
-                $item['publish_on'] = BackendModel::getUTCDate(
-                    null,
-                    BackendModel::getUTCTimestamp(
-                        $this->frm->getField('publish_on_date'),
-                        $this->frm->getField('publish_on_time')
-                    )
-                );
-                $item['edited_on'] = BackendModel::getUTCDate();
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
-                $item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
-                $item['status'] = $status;
-
+                $item = [
+                    'id' => $this->id,
+                    'meta_id' => $this->meta->save(),
+                    'revision_id' => $this->record['revision_id'],
+                    'category_id' => (int) $this->frm->getField('category_id')->getValue(),
+                    'user_id' => $this->frm->getField('user_id')->getValue(),
+                    'language' => BL::getWorkingLanguage(),
+                    'title' => $this->frm->getField('title')->getValue(),
+                    'introduction' => $this->frm->getField('introduction')->getValue(),
+                    'text' => $this->frm->getField('text')->getValue(),
+                    'publish_on' => BackendModel::getUTCDate(
+                        null,
+                        BackendModel::getUTCTimestamp(
+                            $this->frm->getField('publish_on_date'),
+                            $this->frm->getField('publish_on_time')
+                        )
+                    ),
+                    'edited_on' => BackendModel::getUTCDate(),
+                    'hidden' => $this->frm->getField('hidden')->getValue(),
+                    'allow_comments' => $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N',
+                    'status' => $status,
+                ];
                 if ($this->imageIsAllowed) {
                     $item['image'] = $this->record['image'];
 
@@ -374,7 +357,7 @@ class Edit extends BackendBaseActionEdit
 
                     // create folders if needed
                     $filesystem = new Filesystem();
-                    $filesystem->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
+                    $filesystem->mkdir([$imagePath . '/source', $imagePath . '/128x128']);
 
                     // If the image should be deleted, only the database entry is refreshed.
                     // The revision should keep its file.
@@ -427,7 +410,7 @@ class Edit extends BackendBaseActionEdit
                 $item['revision_id'] = BackendBlogModel::update($item);
 
                 // recalculate comment count so the new revision has the correct count
-                BackendBlogModel::reCalculateCommentCount(array($this->id));
+                BackendBlogModel::reCalculateCommentCount([$this->id]);
 
                 // save the tags
                 BackendTagsModel::saveTags(
@@ -442,7 +425,7 @@ class Edit extends BackendBaseActionEdit
                     BackendSearchModel::saveIndex(
                         $this->getModule(),
                         $item['id'],
-                        array('title' => $item['title'], 'text' => $item['text'])
+                        ['title' => $item['title'], 'text' => $item['text']]
                     );
 
                     // build URL

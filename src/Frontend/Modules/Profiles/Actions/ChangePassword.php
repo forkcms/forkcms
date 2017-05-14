@@ -12,7 +12,6 @@ namespace Frontend\Modules\Profiles\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Profile;
@@ -36,17 +35,14 @@ class ChangePassword extends FrontendBaseBlock
      */
     private $profile;
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // profile logged in
         if (FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->getData();
             $this->loadTemplate();
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         } else {
@@ -60,43 +56,34 @@ class ChangePassword extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Get profile data.
-     */
-    private function getData()
+    private function getData(): void
     {
         // get profile
         $this->profile = FrontendProfilesAuthentication::getProfile();
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         $this->frm = new FrontendForm('updatePassword', null, null, 'updatePasswordForm');
-        $this->frm->addPassword('old_password')->setAttributes(array('required' => null));
+        $this->frm->addPassword('old_password')->setAttributes(['required' => null]);
         $this->frm->addPassword('new_password')->setAttributes(
-            array(
+            [
                 'required' => null,
-                'data-role' => 'fork-new-password'
-            )
+                'data-role' => 'fork-new-password',
+            ]
         );
         $this->frm->addPassword('verify_new_password')->setAttributes(
-            array(
+            [
                 'required' => null,
-                'data-role' => 'fork-new-password'
-            )
+                'data-role' => 'fork-new-password',
+            ]
         );
         $this->frm->addCheckbox('show_password')->setAttributes(
-            array('data-role' => 'fork-toggle-visible-password')
+            ['data-role' => 'fork-toggle-visible-password']
         );
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // have the settings been saved?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -108,10 +95,7 @@ class ChangePassword extends FrontendBaseBlock
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {

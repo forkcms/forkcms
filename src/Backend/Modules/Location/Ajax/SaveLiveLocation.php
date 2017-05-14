@@ -18,10 +18,7 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
  */
 class SaveLiveLocation extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -32,26 +29,26 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         $zoomLevel = trim(\SpoonFilter::getPostValue('zoom', null, 'auto'));
         $mapType = strtoupper(trim(\SpoonFilter::getPostValue(
             'type',
-            array(
+            [
                 'roadmap',
                 'satellite',
                 'hybrid',
                 'terrain',
-                'street_view'
-            ),
+                'street_view',
+            ],
             'roadmap'
         )));
-        $mapStyle = trim(\SpoonFilter::getPostValue('style', array('standard', 'custom', 'gray', 'blue'), 'standard'));
+        $mapStyle = trim(\SpoonFilter::getPostValue('style', ['standard', 'custom', 'gray', 'blue'], 'standard'));
         $centerLat = \SpoonFilter::getPostValue('centerLat', null, 1, 'float');
         $centerlng = \SpoonFilter::getPostValue('centerLng', null, 1, 'float');
         $height = \SpoonFilter::getPostValue('height', null, $generalSettings['height'], 'int');
         $width = \SpoonFilter::getPostValue('width', null, $generalSettings['width'], 'int');
-        $showLink = \SpoonFilter::getPostValue('link', array('true', 'false'), 'false', 'string');
-        $showDirections = \SpoonFilter::getPostValue('directions', array('true', 'false'), 'false', 'string');
-        $showOverview = \SpoonFilter::getPostValue('showOverview', array('true', 'false'), 'true', 'string');
+        $showLink = \SpoonFilter::getPostValue('link', ['true', 'false'], 'false', 'string');
+        $showDirections = \SpoonFilter::getPostValue('directions', ['true', 'false'], 'false', 'string');
+        $showOverview = \SpoonFilter::getPostValue('showOverview', ['true', 'false'], 'true', 'string');
 
         // reformat
-        $center = array('lat' => $centerLat, 'lng' => $centerlng);
+        $center = ['lat' => $centerLat, 'lng' => $centerlng];
         $showLink = ($showLink == 'true');
         $showDirections = ($showDirections == 'true');
         $showOverview = ($showOverview == 'true');
@@ -77,11 +74,11 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         BackendLocationModel::setMapSetting($itemId, 'directions', $showDirections);
         BackendLocationModel::setMapSetting($itemId, 'full_url', $showLink);
 
-        $item = array(
+        $item = [
             'id' => $itemId,
             'language' => BL::getWorkingLanguage(),
             'show_overview' => ($showOverview) ? 'Y' : 'N',
-        );
+        ];
         BackendLocationModel::update($item);
 
         // output

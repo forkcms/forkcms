@@ -18,10 +18,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class DeleteCategory extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 

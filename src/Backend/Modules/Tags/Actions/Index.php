@@ -21,10 +21,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Index extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrid();
@@ -32,25 +29,22 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Loads the datagrids
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // create datagrid
         $this->dataGrid = new BackendDataGridDB(
             BackendTagsModel::QRY_DATAGRID_BROWSE,
-            BL::getWorkingLanguage()
+            [BL::getWorkingLanguage()]
         );
 
         // header labels
-        $this->dataGrid->setHeaderLabels(array(
+        $this->dataGrid->setHeaderLabels([
             'tag' => \SpoonFilter::ucfirst(BL::lbl('Name')),
             'num_tags' => \SpoonFilter::ucfirst(BL::lbl('Amount')),
-        ));
+        ]);
 
         // sorting columns
-        $this->dataGrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
+        $this->dataGrid->setSortingColumns(['tag', 'num_tags'], 'num_tags');
         $this->dataGrid->setSortParameter('desc');
 
         // add the multicheckbox column
@@ -59,19 +53,19 @@ class Index extends BackendBaseActionIndex
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
-            array('delete' => BL::lbl('Delete')),
+            ['delete' => BL::lbl('Delete')],
             'delete',
             false,
             'form-control',
             'form-control danger'
         );
-        $ddmMassAction->setOptionAttributes('delete', array(
+        $ddmMassAction->setOptionAttributes('delete', [
             'data-target' => '#confirmDelete',
-        ));
+        ]);
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // add attributes, so the inline editing has all the needed data
-        $this->dataGrid->setColumnAttributes('tag', array('data-id' => '{id:[id]}'));
+        $this->dataGrid->setColumnAttributes('tag', ['data-id' => '{id:[id]}']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -86,13 +80,10 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->tpl->assign('dataGrid', $this->dataGrid->getContent());
     }
 }

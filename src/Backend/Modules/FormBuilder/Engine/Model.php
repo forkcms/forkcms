@@ -33,7 +33,7 @@ class Model
      *
      * @return string
      */
-    public static function calculateTimeAgo($timestamp)
+    public static function calculateTimeAgo(int $timestamp): string
     {
         $secondsBetween = time() - $timestamp;
 
@@ -77,7 +77,7 @@ class Model
      *
      * @return string
      */
-    public static function createIdentifier()
+    public static function createIdentifier(): string
     {
         // get last id
         $id = (int) BackendModel::getContainer()->get('database')->getVar(
@@ -98,16 +98,16 @@ class Model
      *
      * @return bool
      */
-    private static function identifierExist($identifier)
+    private static function identifierExist(string $identifier): bool
     {
         return (int) BackendModel::getContainer()->get('database')
-            ->getVar(
-                'SELECT 1
+                ->getVar(
+                    'SELECT 1
                  FROM forms AS i
                  WHERE i.identifier = ?
                  LIMIT 1',
-                $identifier
-            ) > 0;
+                    $identifier
+                ) > 0;
     }
 
     /**
@@ -115,9 +115,8 @@ class Model
      *
      * @param int $id The id of the record to delete.
      */
-    public static function delete($id)
+    public static function delete(int $id): void
     {
-        $id = (int) $id;
         $db = BackendModel::getContainer()->get('database');
 
         // get field ids
@@ -139,7 +138,7 @@ class Model
         }
 
         // delete extra
-        BackendModel::deleteExtra('FormBuilder', 'widget', array('id' => $id));
+        BackendModel::deleteExtra('FormBuilder', 'widget', ['id' => $id]);
 
         // delete form
         $db->delete('forms', 'id = ?', $id);
@@ -150,7 +149,7 @@ class Model
      *
      * @param array $ids Ids of data items.
      */
-    public static function deleteData(array $ids)
+    public static function deleteData(array $ids): void
     {
         $db = BackendModel::getContainer()->get('database');
 
@@ -163,10 +162,8 @@ class Model
      *
      * @param int $id Id of a field.
      */
-    public static function deleteField($id)
+    public static function deleteField(int $id): void
     {
-        $id = (int) $id;
-
         // delete linked validation
         self::deleteFieldValidation($id);
 
@@ -179,9 +176,9 @@ class Model
      *
      * @param int $id Id of a field.
      */
-    public static function deleteFieldValidation($id)
+    public static function deleteFieldValidation(int $id): void
     {
-        BackendModel::getContainer()->get('database')->delete('forms_fields_validation', 'field_id = ?', (int) $id);
+        BackendModel::getContainer()->get('database')->delete('forms_fields_validation', 'field_id = ?', $id);
     }
 
     /**
@@ -191,14 +188,14 @@ class Model
      *
      * @return bool
      */
-    public static function exists($id)
+    public static function exists(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM forms AS f
              WHERE f.id = ?
              LIMIT 1',
-            (int) $id
+            $id
         );
     }
 
@@ -209,29 +206,27 @@ class Model
      *
      * @return bool
      */
-    public static function existsData($id)
+    public static function existsData(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM forms_data AS fd
              WHERE fd.id = ?
              LIMIT 1',
-            (int) $id
+            $id
         );
     }
 
     /**
      * Does a field exist (within a form).
      *
-     * @param int $id     Id of a field.
+     * @param int $id Id of a field.
      * @param int $formId Id of a form.
      *
      * @return bool
      */
-    public static function existsField($id, $formId = null)
+    public static function existsField(int $id, int $formId = null): bool
     {
-        $id = (int) $id;
-
         // exists
         if ($formId === null) {
             return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -249,7 +244,7 @@ class Model
              FROM forms_fields AS ff
              WHERE ff.id = ? AND ff.form_id = ?
              LIMIT 1',
-            array($id, (int) $formId)
+            [$id, $formId]
         );
     }
 
@@ -257,14 +252,12 @@ class Model
      * Does an identifier exist.
      *
      * @param string $identifier Identifier.
-     * @param int    $ignoreId   Field id to ignore.
+     * @param int $ignoreId Field id to ignore.
      *
      * @return bool
      */
-    public static function existsIdentifier($identifier, $ignoreId = null)
+    public static function existsIdentifier(string $identifier, int $ignoreId = null): bool
     {
-        $identifier = (string) $identifier;
-
         // exists
         if ($ignoreId === null) {
             return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -282,7 +275,7 @@ class Model
              FROM forms AS f
              WHERE f.identifier = ? AND f.id != ?
              LIMIT 1',
-            array($identifier, (int) $ignoreId)
+            [$identifier, $ignoreId]
         );
     }
 
@@ -293,7 +286,7 @@ class Model
      *
      * @return string
      */
-    public static function formatRecipients($string)
+    public static function formatRecipients(string $string): string
     {
         return implode(', ', (array) @unserialize((string) $string));
     }
@@ -305,11 +298,11 @@ class Model
      *
      * @return array
      */
-    public static function get($id)
+    public static function get(int $id): array
     {
         $return = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT f.* FROM forms AS f WHERE f.id = ?',
-            (int) $id
+            $id
         );
 
         // unserialize the emailaddresses
@@ -327,14 +320,14 @@ class Model
      *
      * @return array
      */
-    public static function getData($id)
+    public static function getData(int $id): array
     {
         // get data
         $data = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT fd.id, fd.form_id, UNIX_TIMESTAMP(fd.sent_on) AS sent_on
              FROM forms_data AS fd
              WHERE fd.id = ?',
-            (int) $id
+            $id
         );
 
         // get fields
@@ -363,8 +356,9 @@ class Model
      *
      * @return mixed
      */
-    public static function getErrors($type = null)
+    public static function getErrors(string $type = null)
     {
+        $errors = [];
         $errors['required'] = FL::getError('FieldIsRequired');
         $errors['email'] = FL::getError('EmailIsInvalid');
         $errors['number'] = FL::getError('NumericCharactersOnly');
@@ -372,20 +366,18 @@ class Model
 
         // specific type
         if ($type !== null) {
-            $type = (string) $type;
-
             return $errors[$type];
-        } else {
-            // all errors
-            $return = array();
-
-            // loop errors
-            foreach ($errors as $key => $error) {
-                $return[] = array('type' => $key, 'message' => $error);
-            }
-
-            return $return;
         }
+
+        // all errors
+        $return = [];
+
+        // loop errors
+        foreach ($errors as $key => $error) {
+            $return[] = ['type' => $key, 'message' => $error];
+        }
+
+        return $return;
     }
 
     /**
@@ -395,13 +387,13 @@ class Model
      *
      * @return array
      */
-    public static function getField($id)
+    public static function getField(int $id): array
     {
         $field = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT ff.id, ff.form_id, ff.type, ff.settings
              FROM forms_fields AS ff
              WHERE ff.id = ?',
-            (int) $id
+            $id
         );
 
         // unserialize settings
@@ -428,14 +420,14 @@ class Model
      *
      * @return array
      */
-    public static function getFields($id)
+    public static function getFields(int $id): array
     {
         $fields = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT ff.id, ff.type, ff.settings
              FROM forms_fields AS ff
              WHERE ff.form_id = ?
              ORDER BY ff.sequence ASC',
-            (int) $id
+            $id
         );
 
         foreach ($fields as &$field) {
@@ -461,20 +453,20 @@ class Model
      * Get a label/action/message from locale.
      * Used as datagridfunction.
      *
-     * @param string $name        Name of the locale item.
-     * @param string $type        Type of locale item.
+     * @param string $name Name of the locale item.
+     * @param string $type Type of locale item.
      * @param string $application Name of the application.
      *
      * @return string
      */
-    public static function getLocale($name, $type = 'label', $application = 'Backend')
+    public static function getLocale(string $name, string $type = 'label', string $application = 'Backend'): string
     {
         $name = \SpoonFilter::toCamelCase($name);
         $class = \SpoonFilter::ucfirst($application) . '\Core\Language\Language';
         $function = 'get' . \SpoonFilter::ucfirst($type);
 
         // execute and return value
-        return \SpoonFilter::ucfirst(call_user_func_array(array($class, $function), array($name)));
+        return \SpoonFilter::ucfirst(call_user_func_array([$class, $function], [$name]));
     }
 
     /**
@@ -484,13 +476,13 @@ class Model
      *
      * @return int
      */
-    public static function getMaximumSequence($formId)
+    public static function getMaximumSequence(int $formId): int
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(ff.sequence)
              FROM forms_fields AS ff
              WHERE ff.form_id = ?',
-            (int) $formId
+            $formId
         );
     }
 
@@ -501,7 +493,7 @@ class Model
      *
      * @return int
      */
-    public static function insert(array $values)
+    public static function insert(array $values): int
     {
         // define form id
         $formId = BackendModel::getContainer()->get('database')->insert('forms', $values);
@@ -512,12 +504,12 @@ class Model
             'FormBuilder',
             'Form',
             'FormBuilder',
-            array(
+            [
                 'id' => $formId,
                 'extra_label' => $values['name'],
                 'language' => $values['language'],
                 'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $formId,
-            ),
+            ],
             false,
             '400' . $formId
         );
@@ -532,7 +524,7 @@ class Model
      *
      * @return int
      */
-    public static function insertField(array $values)
+    public static function insertField(array $values): int
     {
         return BackendModel::getContainer()->get('database')->insert('forms_fields', $values);
     }
@@ -544,7 +536,7 @@ class Model
      *
      * @return int
      */
-    public static function insertFieldValidation(array $values)
+    public static function insertFieldValidation(array $values): int
     {
         return BackendModel::getContainer()->get('database')->insert('forms_fields_validation', $values);
     }
@@ -552,35 +544,36 @@ class Model
     /**
      * Update an existing item.
      *
-     * @param int   $id     The id for the item to update.
+     * @param int $id The id for the item to update.
      * @param array $values The new data.
      *
      * @return int
      */
-    public static function update($id, array $values)
+    public static function update(int $id, array $values): int
     {
-        $id = (int) $id;
         $db = BackendModel::getContainer()->get('database');
 
         // update item
         $db->update('forms', $values, 'id = ?', $id);
 
         // build array
-        $extra['data'] = serialize(
-            array(
-                'language' => BL::getWorkingLanguage(),
-                'extra_label' => $values['name'],
-                'id' => $id,
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $id,
-            )
-        );
+        $extra = [
+            'data' => serialize(
+                [
+                    'language' => BL::getWorkingLanguage(),
+                    'extra_label' => $values['name'],
+                    'id' => $id,
+                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $id,
+                ]
+            ),
+        ];
 
         // update extra
         $db->update(
             'modules_extras',
             $extra,
             'module = ? AND type = ? AND sequence = ?',
-            array('FormBuilder', 'widget', '400' . $id)
+            ['FormBuilder', 'widget', '400' . $id]
         );
 
         return $id;
@@ -589,14 +582,14 @@ class Model
     /**
      * Update a field.
      *
-     * @param int   $id     The id for the item to update.
+     * @param int $id The id for the item to update.
      * @param array $values The new data.
      *
      * @return int
      */
-    public static function updateField($id, array $values)
+    public static function updateField(int $id, array $values): int
     {
-        BackendModel::getContainer()->get('database')->update('forms_fields', $values, 'id = ?', (int) $id);
+        BackendModel::getContainer()->get('database')->update('forms_fields', $values, 'id = ?', $id);
 
         return $id;
     }
@@ -606,9 +599,9 @@ class Model
      *
      * @return array
      */
-    public static function getTemplates()
+    public static function getTemplates(): array
     {
-        $templates = array();
+        $templates = [];
         $finder = new Finder();
         $finder->name('*.html.twig');
         $finder->in(FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails');

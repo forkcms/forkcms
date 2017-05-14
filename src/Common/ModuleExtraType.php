@@ -6,68 +6,48 @@ use Common\Exception\InvalidModuleExtraType;
 
 final class ModuleExtraType
 {
-    const BLOCK = 'block';
-    const HOMEPAGE = 'homepage';
-    const WIDGET = 'widget';
+    private const BLOCK = 'block';
+    private const HOMEPAGE = 'homepage';
+    private const WIDGET = 'widget';
+    public const POSSIBLE_TYPES = [
+        self::BLOCK,
+        self::HOMEPAGE,
+        self::WIDGET,
+    ];
 
     /** @var string */
     private $type;
 
     /**
      * @param string $type
+     *
      * @throws InvalidModuleExtraType
      */
-    public function __construct($type)
+    public function __construct(string $type)
     {
-        if (!in_array($type, self::getPossibleTypes())) {
+        if (!in_array($type, self::POSSIBLE_TYPES, true)) {
             throw InvalidModuleExtraType::withType($type);
         }
 
         $this->type = $type;
     }
 
-    /**
-     * @return array
-     */
-    public static function getPossibleTypes()
-    {
-        $possibleTypes = [
-            self::BLOCK,
-            self::HOMEPAGE,
-            self::WIDGET,
-        ];
-
-        return $possibleTypes;
-    }
-
-    /**
-     * @return self
-     */
-    public static function block()
+    public static function block(): self
     {
         return new self(self::BLOCK);
     }
 
-    /**
-     * @return self
-     */
-    public static function homepage()
+    public static function homepage(): self
     {
         return new self(self::HOMEPAGE);
     }
 
-    /**
-     * @return self
-     */
-    public static function widget()
+    public static function widget(): self
     {
         return new self(self::WIDGET);
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->type;
     }

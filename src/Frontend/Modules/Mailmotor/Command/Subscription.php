@@ -36,13 +36,9 @@ final class Subscription
      */
     public $interests;
 
-    /**
-     * @param Locale $locale
-     * @param null|string $email
-     */
     public function __construct(
         Locale $locale,
-        $email = null
+        string $email = null
     ) {
         $this->locale = $locale;
         $this->email = $email;

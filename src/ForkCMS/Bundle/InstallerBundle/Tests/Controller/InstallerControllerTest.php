@@ -3,12 +3,18 @@
 namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
 use Common\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\Filesystem\Filesystem;
 
 class InstallerControllerTest extends WebTestCase
 {
-    public function testnoStepActionAction()
+    /**
+     * @runInSeparateProcess
+     */
+    public function testNoStepActionAction(): void
     {
-        $client = static::createClient();
+        $client = static::createClient(['environment' => 'test_install']);
 
         $client->request('GET', '/install');
         $client->followRedirect();
@@ -27,34 +33,38 @@ class InstallerControllerTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testInstallationProcess()
+    public function testInstallationProcess(): void
     {
         $client = static::createClient();
+        $container = $client->getContainer();
 
         // make sure we have a clean slate and our parameters file is backed up
         $this->emptyTestDatabase($client->getContainer()->get('database'));
 
+        $installDatabaseConfig = [
+            'install_database[dbHostname]' => $container->getParameter('database.host'),
+            'install_database[dbPort]' => $container->getParameter('database.port'),
+            'install_database[dbDatabase]' => $container->getParameter('database.name') . '_test',
+            'install_database[dbUsername]' => $container->getParameter('database.user'),
+            'install_database[dbPassword]' => $container->getParameter('database.password'),
+        ];
+
         // recreate the client with the empty database because we need this in our installer checks
-        $client = static::createClient();
-        $this->backupParametersFile($client->getContainer()->getParameter('kernel.root_dir'));
+        $client = static::createClient(['environment' => 'test_install']);
+        $filesystem = new Filesystem();
+        $this->backupParametersFile($filesystem, $client->getContainer()->getParameter('kernel.root_dir'));
 
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
         $crawler = $this->runTroughStep3($crawler, $client);
-        $crawler = $this->runTroughStep4($crawler, $client);
+        $crawler = $this->runTroughStep4($crawler, $client, $installDatabaseConfig);
         $this->runTroughStep5($crawler, $client);
 
         // put back our parameters file
-        $this->putParametersFileBack($client->getContainer()->getParameter('kernel.root_dir'));
+        $this->putParametersFileBack($filesystem, $client->getContainer()->getParameter('kernel.root_dir'));
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
-     *
-     * @return mixed
-     */
-    private function runTroughStep2($crawler, $client)
+    private function runTroughStep2(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Next')->form();
         $form['install_languages[languages][0]']->tick();
@@ -62,10 +72,10 @@ class InstallerControllerTest extends WebTestCase
         $form['install_languages[languages][2]']->tick();
         $client->submit(
             $form,
-            array(
+            [
                 'install_languages[language_type]' => 'multiple',
                 'install_languages[default_language]' => 'en',
-            )
+            ]
         );
 
         $crawler = $client->followRedirect();
@@ -83,16 +93,19 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
-     *
-     * @return mixed
-     */
-    private function runTroughStep3($crawler, $client)
+    private function runTroughStep3(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Next')->form();
-        $client->submit($form, array());
+        $form['install_modules[modules][9]']->tick();
+        $form['install_modules[modules][10]']->tick();
+        $form['install_modules[modules][11]']->tick();
+        $form['install_modules[modules][12]']->tick();
+        $form['install_modules[modules][13]']->tick();
+        $form['install_modules[modules][14]']->tick();
+        $form['install_modules[modules][15]']->tick();
+        $form['install_modules[modules][16]']->tick();
+        $form['install_modules[modules][17]']->tick();
+        $client->submit($form, []);
         $crawler = $client->followRedirect();
 
         // we should be redirected to step 4
@@ -108,17 +121,11 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
-     *
-     * @return mixed
-     */
-    private function runTroughStep4($crawler, $client)
+    private function runTroughStep4(Crawler $crawler, Client $client, array $installDatabaseConfig): Crawler
     {
         // first submit with incorrect data
         $form = $crawler->selectButton('Next')->form();
-        $crawler = $client->submit($form, array());
+        $crawler = $client->submit($form, []);
         self::assertGreaterThan(
             0,
             $crawler->filter('div.errorMessage:contains("Problem with database credentials")')->count()
@@ -126,16 +133,9 @@ class InstallerControllerTest extends WebTestCase
 
         // submit with correct database credentials
         $form = $crawler->selectButton('Next')->form();
-        $container = $client->getContainer();
         $client->submit(
             $form,
-            array(
-                'install_database[dbHostname]' => $container->getParameter('database.host'),
-                'install_database[dbPort]' => $container->getParameter('database.port'),
-                'install_database[dbDatabase]' => $container->getParameter('database.name') . '_test',
-                'install_database[dbUsername]' => $container->getParameter('database.user'),
-                'install_database[dbPassword]' => $container->getParameter('database.password'),
-            )
+            $installDatabaseConfig
         );
         $crawler = $client->followRedirect();
 
@@ -152,22 +152,16 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
-    /**
-     * @param \Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
-     *
-     * @return mixed
-     */
-    private function runTroughStep5($crawler, $client)
+    private function runTroughStep5(Crawler $crawler, Client $client): Crawler
     {
         $form = $crawler->selectButton('Finish installation')->form();
         $client->submit(
             $form,
-            array(
+            [
                 'install_login[email]' => 'test@test.com',
                 'install_login[password][first]' => 'password',
                 'install_login[password][second]' => 'password',
-            )
+            ]
         );
         $crawler = $client->followRedirect();
 

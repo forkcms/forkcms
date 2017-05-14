@@ -21,10 +21,7 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
  */
 class Index extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrid();
@@ -32,10 +29,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid
-     */
-    public function loadDataGrid()
+    public function loadDataGrid(): void
     {
         $this->dataGrid = new BackendDataGridDB(BackendGroupsModel::QRY_BROWSE);
 
@@ -47,10 +41,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse the datagrid
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

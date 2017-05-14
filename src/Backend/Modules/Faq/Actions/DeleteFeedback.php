@@ -18,10 +18,7 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  */
 class DeleteFeedback extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $feedbackId = $this->getParameter('id', 'int');
         $feedback = BackendFaqModel::getFeedback($feedbackId);

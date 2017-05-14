@@ -21,10 +21,7 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  */
 class AddCategory extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // only one category allowed, so we redirect
         if (!$this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true)) {
@@ -38,7 +35,7 @@ class AddCategory extends BackendBaseActionAdd
         $this->display();
     }
 
-    public function parse()
+    public function parse(): void
     {
         parent::parse();
 
@@ -49,10 +46,7 @@ class AddCategory extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('addCategory');
         $this->frm->addText('title');
@@ -60,10 +54,7 @@ class AddCategory extends BackendBaseActionAdd
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURLForCategory');
@@ -76,6 +67,7 @@ class AddCategory extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['language'] = BL::getWorkingLanguage();
                 $item['meta_id'] = $this->meta->save();

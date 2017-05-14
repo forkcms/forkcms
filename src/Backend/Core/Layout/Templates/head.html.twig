@@ -17,10 +17,10 @@
     <script src="{{ jsFile.file }}"></script>{{ CRLF }}{{ TAB }}
   {% endfor %}
 
+  {{ jsData|raw }}
+
   <script>
     //<![CDATA[
-    {{ jsData|raw }}
-
     // reports
     $(function()
     {

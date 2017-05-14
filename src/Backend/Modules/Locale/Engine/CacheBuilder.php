@@ -39,7 +39,7 @@ class CacheBuilder
      * @param string $language
      * @param string $application Backend or Frontend
      */
-    public function buildCache($language, $application)
+    public function buildCache(string $language, string $application): void
     {
         // get types
         $this->types = $this->database->getEnumValues('locale', 'type');
@@ -50,34 +50,34 @@ class CacheBuilder
     /**
      * Fetches locale for a certain language application combo
      *
-     * @param  string $language
-     * @param  string $application
+     * @param string $language
+     * @param string $application
      *
      * @return array
      */
-    protected function getLocale($language, $application)
+    protected function getLocale(string $language, string $application): array
     {
         return (array) $this->database->getRecords(
             'SELECT type, module, name, value
              FROM locale
              WHERE language = ? AND application = ?
              ORDER BY type ASC, name ASC, module ASC',
-            array($language, $application)
+            [$language, $application]
         );
     }
 
     /**
      * Builds the array that will be put in cache
      *
-     * @param  string $language
-     * @param  string $application
+     * @param string $language
+     * @param string $application
      *
      * @return array
      */
-    protected function buildJsonCache($language, $application)
+    protected function buildJsonCache(string $language, string $application): array
     {
         // init var
-        $json = array();
+        $json = [];
         foreach ($this->types as $type) {
             // loop locale
             foreach ($this->locale as $i => $item) {
@@ -103,7 +103,7 @@ class CacheBuilder
      * @param array  $json
      * @param string $language
      */
-    protected function addSpoonLocale(&$json, $language)
+    protected function addSpoonLocale(array &$json, string $language): void
     {
         // get months
         $monthsLong = \SpoonLocale::getMonths($language, false);
@@ -134,7 +134,7 @@ class CacheBuilder
      * @param string $language
      * @param string $application
      */
-    protected function dumpJsonCache($language, $application)
+    protected function dumpJsonCache(string $language, string $application): void
     {
         $filesystem = new Filesystem();
         $filesystem->dumpFile(

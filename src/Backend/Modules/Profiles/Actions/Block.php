@@ -18,10 +18,7 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class Block extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');
@@ -37,7 +34,7 @@ class Block extends BackendBaseActionDelete
             // already blocked? Prolly want to unblock then
             if ($profile['status'] === 'blocked') {
                 // set profile status to active
-                BackendProfilesModel::update($this->id, array('status' => 'active'));
+                BackendProfilesModel::update($this->id, ['status' => 'active']);
 
                 // redirect
                 $this->redirect(
@@ -50,7 +47,7 @@ class Block extends BackendBaseActionDelete
                 BackendProfilesModel::deleteSession($this->id);
 
                 // set profile status to blocked
-                BackendProfilesModel::update($this->id, array('status' => 'blocked'));
+                BackendProfilesModel::update($this->id, ['status' => 'blocked']);
 
                 // redirect
                 $this->redirect(

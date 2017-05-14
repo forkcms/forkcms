@@ -20,10 +20,7 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Settings extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -32,26 +29,23 @@ class Settings extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Loads the settings form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('settings');
 
         // add map info (widgets)
-        $this->frm->addDropdown('zoom_level_widget', array_combine(array_merge(array('auto'), range(3, 18)), array_merge(array(BL::lbl('Auto', $this->getModule())), range(3, 18))), $this->get('fork.settings')->get($this->URL->getModule(), 'zoom_level_widget', 13));
+        $this->frm->addDropdown('zoom_level_widget', array_combine(array_merge(['auto'], range(3, 18)), array_merge([BL::lbl('Auto', $this->getModule())], range(3, 18))), $this->get('fork.settings')->get($this->URL->getModule(), 'zoom_level_widget', 13));
         $this->frm->addText('width_widget', $this->get('fork.settings')->get($this->URL->getModule(), 'width_widget'));
         $this->frm->addText('height_widget', $this->get('fork.settings')->get($this->URL->getModule(), 'height_widget'));
         $this->frm->addDropdown(
             'map_type_widget',
-            array(
+            [
                 'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
                 'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
                 'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
                 'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
                 'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
-            ),
+            ],
             $this->get('fork.settings')->get(
                 $this->URL->getModule(),
                 'map_type_widget',
@@ -60,19 +54,13 @@ class Settings extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Parse the data
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
         $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
     }
 
-    /**
-     * Validates the settings form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();

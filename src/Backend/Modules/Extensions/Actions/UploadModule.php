@@ -22,10 +22,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class UploadModule extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
@@ -40,7 +37,7 @@ class UploadModule extends BackendBaseActionAdd
             $this->tpl->assign('notWritable', true);
         } else {
             // everything allright, we can upload
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         }
@@ -54,10 +51,10 @@ class UploadModule extends BackendBaseActionAdd
      *
      * @return string
      */
-    private function uploadModuleFromZip()
+    private function uploadModuleFromZip(): string
     {
         // list of validated files (these files will actually be unpacked)
-        $files = array();
+        $files = [];
 
         // shorten field variables
         /** @var $fileFile \SpoonFormFile */
@@ -79,10 +76,10 @@ class UploadModule extends BackendBaseActionAdd
         }
 
         // directories we are allowed to upload to
-        $allowedDirectories = array(
+        $allowedDirectories = [
             'src/Backend/Modules/',
             'src/Frontend/Modules/',
-        );
+        ];
 
         // name of the module we are trying to upload
         $moduleName = null;
@@ -188,21 +185,21 @@ class UploadModule extends BackendBaseActionAdd
      * Try to extract a prefix if a module has been zipped with unexpected
      * paths.
      *
-     * @param $file
+     * @param string $file
      *
      * @return string
      */
-    private function extractPrefix($file)
+    private function extractPrefix(string $file): string
     {
         $name = explode(PATH_SEPARATOR, $file['name']);
-        $prefix = array();
+        $prefix = [];
 
         foreach ($name as $element) {
             if ($element == 'src') {
                 return implode(PATH_SEPARATOR, $prefix);
-            } else {
-                $prefix[] = $element;
             }
+
+            $prefix[] = $element;
         }
 
         // If the zip has a top-level single directory, eg
@@ -215,7 +212,7 @@ class UploadModule extends BackendBaseActionAdd
      *
      * @return bool
      */
-    private function isWritable()
+    private function isWritable(): bool
     {
         if (!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) {
             return false;
@@ -224,10 +221,7 @@ class UploadModule extends BackendBaseActionAdd
         return BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH);
     }
 
-    /**
-     * Create a form and its elements.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
         $this->frm = new BackendForm('upload');
@@ -236,10 +230,7 @@ class UploadModule extends BackendBaseActionAdd
         $this->frm->addFile('file');
     }
 
-    /**
-     * Validate a submitted form and process it.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // the form is submitted
         if ($this->frm->isSubmitted()) {
@@ -247,7 +238,7 @@ class UploadModule extends BackendBaseActionAdd
             $fileFile = $this->frm->getField('file');
 
             // validate the file
-            if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
+            if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
                 $moduleName = $this->uploadModuleFromZip();
             }
 

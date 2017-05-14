@@ -29,7 +29,7 @@ class Helper
      *
      * @return string
      */
-    public static function parseField(array $field)
+    public static function parseField(array $field): string
     {
         if (!empty($field)) {
             // init
@@ -108,8 +108,9 @@ class Helper
                 $fieldHTML = $rbt->parse();
             } elseif ($field['type'] == 'checkbox') {
                 // rebuild values
-                foreach ($values as $value) {
-                    $newValues[] = array('label' => $value, 'value' => $value);
+                $newValues = [];
+                foreach ((array) $values as $value) {
+                    $newValues[] = ['label' => $value, 'value' => $value];
                 }
 
                 // create element
@@ -179,9 +180,9 @@ class Helper
             }
 
             return $tpl->getContent(BACKEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Field.html.twig');
-        } else {
-            // empty field so return empty string
-            return '';
         }
+
+        // empty field so return empty string
+        return '';
     }
 }

@@ -6,10 +6,7 @@ use Doctrine\DBAL\Connection;
 
 final class InstallerConnection extends Connection
 {
-    /**
-     * @return bool
-     */
-    public function connect()
+    public function connect(): bool
     {
         return false;
     }

@@ -45,10 +45,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $user;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
         $error = $this->getParameter('error', 'string');
@@ -83,19 +80,15 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /*
-     * Load the authenticated user in a seperate method
-     * so we can load it before the form starts loading.
+    /**
+     * Load the authenticated user in a separate method so we can load it before the form starts loading.
      */
-    private function loadAuthenticatedUser()
+    private function loadAuthenticatedUser(): void
     {
         $this->authenticatedUser = BackendAuthentication::getUser();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create user objects
         $this->user = new BackendUser($this->id);
@@ -117,6 +110,7 @@ class Edit extends BackendBaseActionEdit
         // get active groups
         $groups = BackendGroupsModel::getGroupsByUser($this->id);
 
+        $checkedGroups = [];
         // loop through groups and set checked
         foreach ($groups as $group) {
             $checkedGroups[] = $group['id'];
@@ -129,7 +123,7 @@ class Edit extends BackendBaseActionEdit
             ->setAttribute('type', 'email')
         ;
         if ($this->user->isGod()) {
-            $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
+            $this->frm->getField('email')->setAttributes(['disabled' => 'disabled']);
         }
         $this->frm->addText('name', $this->record['settings']['name'], 255);
         $this->frm->addText('surname', $this->record['settings']['surname'], 255);
@@ -144,8 +138,8 @@ class Edit extends BackendBaseActionEdit
             $this->frm->addPassword('confirm_password', null, 75);
 
             // disable autocomplete
-            $this->frm->getField('new_password')->setAttributes(array('autocomplete' => 'off'));
-            $this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
+            $this->frm->getField('new_password')->setAttributes(['autocomplete' => 'off']);
+            $this->frm->getField('confirm_password')->setAttributes(['autocomplete' => 'off']);
         }
 
         // settings
@@ -196,10 +190,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -232,10 +223,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -257,7 +245,7 @@ class Edit extends BackendBaseActionEdit
                                         'UndoDelete',
                                         null,
                                         null,
-                                        array('email' => $fields['email']->getValue())
+                                        ['email' => $fields['email']->getValue()]
                                     )
                                 )
                             );
@@ -298,7 +286,7 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build user-array
-                $user['id'] = $this->id;
+                $user = ['id' => $this->id];
                 if (!$this->user->isGod()) {
                     $user['email'] = $fields['email']->getValue(true);
                 }
@@ -313,13 +301,14 @@ class Edit extends BackendBaseActionEdit
                     BackendModel::get('database')->delete(
                         'users_sessions',
                         'user_id = ?',
-                        array(
+                        [
                             $this->user->getUserId(),
-                        )
+                        ]
                     );
                 }
 
                 // build settings-array
+                $settings = [];
                 $settings['nickname'] = $fields['nickname']->getValue();
                 $settings['name'] = $fields['name']->getValue();
                 $settings['surname'] = $fields['surname']->getValue();

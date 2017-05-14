@@ -26,20 +26,11 @@ class SettingsType extends AbstractType
      */
     protected $serviceIds;
 
-    /**
-     * SettingsType constructor.
-     *
-     * @param array $serviceIds
-     */
     public function __construct(array $serviceIds)
     {
         $this->serviceIds = $serviceIds;
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $mailEngines = $this->getPossibleMailEngines();
@@ -113,9 +104,6 @@ class SettingsType extends AbstractType
         );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -123,32 +111,23 @@ class SettingsType extends AbstractType
             'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
                 if ($data->mailEngine != 'not_implemented') {
-                    return array('Default', 'mail_engine_selected');
+                    return ['Default', 'mail_engine_selected'];
                 } else {
-                    return array('Default');
+                    return ['Default'];
                 }
             },
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'settings';
     }
 
-
-    /**
-     * Get mail engines.
-     *
-     * @return array
-     */
-    private function getPossibleMailEngines()
+    private function getPossibleMailEngines(): array
     {
         // init dropdown values
-        $ddmValuesForMailEngines = array();
+        $ddmValuesForMailEngines = [];
 
         // Add empty one
         $ddmValuesForMailEngines['not_implemented'] = ucfirst(Language::lbl('None'));
@@ -157,7 +136,7 @@ class SettingsType extends AbstractType
         foreach ($this->serviceIds as $serviceId) {
             // the pattern to find mail engines
             $pattern = '/^mailmotor.(?P<mailengine>\w+).subscriber.gateway/';
-            $matches = array();
+            $matches = [];
 
             // we found a mail-engine gateway service
             if (preg_match($pattern, $serviceId, $matches)) {

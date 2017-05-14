@@ -11,10 +11,7 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  */
 class SequenceQuestions extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -34,6 +31,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
 
             // is the question moved to a new category?
             if ($fromCategoryId != $toCategoryId) {
+                $item = [];
                 $item['id'] = $questionId;
                 $item['category_id'] = $toCategoryId;
 
@@ -41,7 +39,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
 
                 // loop id's and set new sequence
                 foreach ($toCategorySequence as $i => $id) {
-                    $item = array();
+                    $item = [];
                     $item['id'] = (int) $id;
                     $item['sequence'] = $i + 1;
 

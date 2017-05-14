@@ -18,11 +18,7 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
     /** @var ModulesSettings */
     private $settings;
 
-    /**
-     * @param string $name
-     * @param ModulesSettings $settings
-     */
-    public function __construct($name, ModulesSettings $settings)
+    public function __construct(string $name, ModulesSettings $settings)
     {
         $this->form = new Form($name);
         $this->settings = $settings;
@@ -30,18 +26,12 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
         $this->build();
     }
 
-    /**
-     * @param TwigTemplate $template
-     */
-    public function parse(TwigTemplate $template)
+    public function parse(TwigTemplate $template): void
     {
         $this->form->parse($template);
     }
 
-    /**
-     * @return bool
-     */
-    public function handle()
+    public function handle(): bool
     {
         $this->form->cleanupFields();
 
@@ -65,28 +55,19 @@ final class SettingsStepAuthConfigFileType implements SettingsStepType
         return true;
     }
 
-    /**
-     * Build up the form
-     */
-    private function build()
+    private function build(): void
     {
         $this->form->addFile('certificate');
         $this->form->addText('email');
     }
 
-    /**
-     * @return bool
-     */
-    private function isValid()
+    private function isValid(): bool
     {
         $fileField = $this->form->getField('certificate');
         $emailField = $this->form->getField('email');
 
         if ($fileField->isFilled(Language::err('FieldIsRequired'))) {
-            $fileField->isAllowedExtension(
-                ['p12'],
-                Language::err('P12Only')
-            );
+            $fileField->isAllowedExtension(['p12'], Language::err('P12Only'));
         }
         $emailField->isFilled(Language::err('FieldIsRequired'));
         $emailField->isEmail(Language::err('EmailIsInvalid'));

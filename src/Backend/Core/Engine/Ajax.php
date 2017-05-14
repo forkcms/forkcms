@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use ForkCMS\App\ApplicationInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BackendLanguage;
@@ -17,37 +18,51 @@ use Backend\Core\Language\Language as BackendLanguage;
 /**
  * This class will handle AJAX-related stuff
  */
-
 class Ajax extends Base\Object implements ApplicationInterface
 {
     /**
-     * @var AjaxAction
+     * @var AjaxAction|BackendBaseAJAXAction
      */
     private $ajaxAction;
 
-    /**
-     * @return Response
-     */
-    public function display()
+    public function display(): Response
     {
-        return $this->ajaxAction->execute();
+        if ($this->ajaxAction instanceof AjaxAction) {
+            return $this->ajaxAction->display();
+        }
+
+        return $this->ajaxAction->getContent();
     }
 
-    /**
-     * @param array $forkData
-     *
-     * @return array
-     */
-    private function splitUpForkData(array $forkData)
+    private function splitUpForkData(array $forkData): array
     {
+        $language = $forkData['language'] ?? '';
+
+        if ($language === '') {
+            $language = $this->getContainer()->getParameter('site.default_language');
+        }
+
         return [
-            isset($forkData['module']) ? $forkData['module'] : '',
-            isset($forkData['action']) ? $forkData['action'] : '',
-            isset($forkData['language']) ? $forkData['language'] : '',
+            $forkData['module'] ?? '',
+            $forkData['action'] ?? '',
+            $language,
         ];
     }
 
-    public function initialize()
+    private function getForkDataFromRequest(Request $request): array
+    {
+        if ($request->request->has('fork')) {
+            return $this->splitUpForkData((array) $request->request->get('fork'));
+        }
+
+        if ($request->query->has('fork')) {
+            return $this->splitUpForkData((array) $request->query->get('fork'));
+        }
+
+        return $this->splitUpForkData($request->query->all());
+    }
+
+    public function initialize(): void
     {
         // check if the user is logged in
         $this->validateLogin();
@@ -57,17 +72,7 @@ class Ajax extends Base\Object implements ApplicationInterface
             define('NAMED_APPLICATION', 'BackendAjax');
         }
 
-        $request = $this->get('request');
-
-        list($module, $action, $language) = $this->splitUpForkData(
-            $request->request->has('fork')
-                ? (array) $request->request->get('fork')
-                : ($request->query->has('fork') ? (array) $request->query->get('fork') : $request->query->all())
-        );
-
-        if ($language === '') {
-            $language = SITE_DEFAULT_LANGUAGE;
-        }
+        list($module, $action, $language) = $this->getForkDataFromRequest($this->get('request'));
 
         try {
             // create URL instance, since the template modifiers need this object
@@ -79,31 +84,19 @@ class Ajax extends Base\Object implements ApplicationInterface
             $this->setLanguage($language);
 
             // create a new action
-            $this->ajaxAction = new AjaxAction($this->getKernel());
-            $this->ajaxAction->setModule($this->getModule());
-            $this->ajaxAction->setAction($this->getAction());
+            $this->ajaxAction = new AjaxAction($this->getKernel(), $this->getAction(), $this->getModule());
         } catch (Exception $e) {
             $this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
             $this->ajaxAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
         }
     }
 
-    /**
-     * @param string $language
-     *
-     * @throws Exception If the provided language is not valid
-     */
-    public function setLanguage($language)
+    public function setLanguage(string $language): void
     {
-        // get the possible languages
-        $possibleLanguages = BackendLanguage::getWorkingLanguages();
-
-        // validate
-        if (!array_key_exists($language, $possibleLanguages)) {
+        if (!array_key_exists($language, BackendLanguage::getWorkingLanguages())) {
             throw new Exception('Language invalid.');
         }
 
-        // set working language
         BackendLanguage::setWorkingLanguage($language);
     }
 
@@ -111,7 +104,7 @@ class Ajax extends Base\Object implements ApplicationInterface
      * Do authentication stuff
      * This method could end the script by throwing an exception
      */
-    private function validateLogin()
+    private function validateLogin(): void
     {
         // check if the user is logged on, if not he shouldn't load any JS-file
         if (!Authentication::isLoggedIn()) {

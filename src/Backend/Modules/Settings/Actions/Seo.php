@@ -25,10 +25,7 @@ class Seo extends BackendBaseActionIndex
      */
     private $frm;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -37,10 +34,7 @@ class Seo extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('settingsSeo');
         $this->frm->addCheckbox('seo_noodp', $this->get('fork.settings')->get('Core', 'seo_noodp', false));
@@ -51,20 +45,14 @@ class Seo extends BackendBaseActionIndex
         );
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Validates the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {

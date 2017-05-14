@@ -14,10 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class LoginType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
@@ -27,13 +24,13 @@ class LoginType extends AbstractType
             ->add(
                 'password',
                 'repeated',
-                array(
+                [
                     'type' => 'password',
                     'invalid_message' => 'The passwords do not match.',
                     'required' => true,
-                    'first_options' => array('label' => 'Password'),
-                    'second_options' => array('label' => 'Confirm'),
-                )
+                    'first_options' => ['label' => 'Password'],
+                    'second_options' => ['label' => 'Confirm'],
+                ]
             )
         ;
 
@@ -52,21 +49,15 @@ class LoginType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => InstallationData::class,
             'validation_groups' => 'login',
-        ));
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'install_login';
     }

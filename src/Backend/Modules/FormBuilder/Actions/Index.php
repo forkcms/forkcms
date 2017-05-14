@@ -21,10 +21,7 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
  */
 class Index extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrid();
@@ -32,33 +29,30 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         $this->dataGrid = new BackendDataGridDB(
             BackendFormBuilderModel::QRY_BROWSE,
-            BL::getWorkingLanguage()
+            [BL::getWorkingLanguage()]
         );
-        $this->dataGrid->setHeaderLabels(array(
+        $this->dataGrid->setHeaderLabels([
             'email' => \SpoonFilter::ucfirst(BL::getLabel('Recipient')),
             'sent_forms' => '',
-        ));
-        $this->dataGrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
+        ]);
+        $this->dataGrid->setSortingColumns(['name', 'email', 'method', 'sent_forms'], 'name');
         $this->dataGrid->setColumnFunction(
-            array(new BackendFormBuilderModel(), 'formatRecipients'),
-            array('[email]'),
+            [new BackendFormBuilderModel(), 'formatRecipients'],
+            ['[email]'],
             'email'
         );
         $this->dataGrid->setColumnFunction(
-            array(__CLASS__, 'parseNumForms'),
-            array('[id]', '[sent_forms]', '[method]'),
+            [__CLASS__, 'parseNumForms'],
+            ['[id]', '[sent_forms]', '[method]'],
             'sent_forms'
         );
         $this->dataGrid->setColumnFunction(
-            array(new BackendFormBuilderModel(), 'getLocale'),
-            array('Method_[method]'),
+            [new BackendFormBuilderModel(), 'getLocale'],
+            ['Method_[method]'],
             'method'
         );
 
@@ -78,10 +72,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -98,18 +89,14 @@ class Index extends BackendBaseActionIndex
      *
      * @return string
      */
-    public static function parseNumForms($formId, $sentForms, $method)
+    public static function parseNumForms(int $formId, int $sentForms, string $method): string
     {
         if ($method === 'email') {
             return '';
         }
 
-        // redefine
-        $formId = (int) $formId;
-        $sentForms = (int) $sentForms;
-
         // one form sent
-        if ($sentForms == 1) {
+        if ($sentForms === 1) {
             $output = BL::getMessage('OneSentForm');
         } elseif ($sentForms > 1) {
             // multiple forms sent

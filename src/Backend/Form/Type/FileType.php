@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -29,11 +30,7 @@ class FileType extends AbstractType
     /** @var array */
     private $isNew = [];
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['show_remove_file']) {
             $builder->add(
@@ -87,8 +84,7 @@ class FileType extends AbstractType
                         $fileClass = $options['file_class'];
 
                         if (!$file instanceof AbstractFile) {
-                            // your editor might say the file has protected but it isn't in this case
-                            $file = $fileClass::fromUploadedFile($file->file);
+                            $file = $fileClass::fromUploadedFile($file->getFile());
                         }
 
                         $this->nextField();
@@ -114,10 +110,7 @@ class FileType extends AbstractType
             );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(
             [
@@ -134,10 +127,20 @@ class FileType extends AbstractType
             [
                 'data_class' => AbstractFile::class,
                 'empty_data' => function () {
-                    $emptyData = new StdClass();
-                    $emptyData->file = null;
+                    return new class extends StdClass {
+                        /** @var UploadedFile */
+                        protected $file;
 
-                    return $emptyData;
+                        public function setFile(UploadedFile $file = null)
+                        {
+                            $this->file = $file;
+                        }
+
+                        public function getFile()
+                        {
+                            return $this->file;
+                        }
+                    };
                 },
                 'compound' => true,
                 'preview_label' => 'lbl.ViewCurrentFile',
@@ -154,18 +157,12 @@ class FileType extends AbstractType
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'fork_file';
     }
 
-    /**
-     * @return string
-     */
-    public function getParent()
+    public function getParent(): string
     {
         if (!$this instanceof self) {
             return $this->getBlockPrefix();
@@ -174,12 +171,7 @@ class FileType extends AbstractType
         return 'file';
     }
 
-    /**
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['show_preview'] = $options['show_preview'];
         $view->vars['show_remove_file'] = $options['show_remove_file'] && $form->getData() !== null
@@ -209,10 +201,7 @@ class FileType extends AbstractType
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }
@@ -220,35 +209,26 @@ class FileType extends AbstractType
     /**
      * Increases the current index
      */
-    private function nextField()
+    private function nextField(): void
     {
         $this->fieldOffset++;
     }
 
-    /**
-     * @return CheckboxType
-     */
-    private function getRemoveField()
+    private function getRemoveField(): CheckboxType
     {
         return $this->removeFields[$this->fieldOffset];
     }
 
-    /**
-     * @return bool
-     */
-    private function isNew()
+    private function isNew(): bool
     {
         return $this->isNew[$this->fieldOffset];
     }
 
-    /**
-     * @return string|null
-     */
-    private function getUploadMaxFileSize()
+    private function getUploadMaxFileSize(): ?string
     {
         $uploadMaxFileSize = ini_get('upload_max_filesize');
         if ($uploadMaxFileSize === false) {
-            return;
+            return null;
         }
 
         // reformat if defined as an integer

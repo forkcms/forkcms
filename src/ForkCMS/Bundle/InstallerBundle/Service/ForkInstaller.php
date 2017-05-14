@@ -33,16 +33,16 @@ class ForkInstaller
     /**
      * @var array
      */
-    private $defaultExtras = array();
+    private $defaultExtras = [];
 
     /**
      * @todo: - make sure the Container doesn't have to be injected
      *        - make sure the Model::setContainer isn't needed anymore
      *
      * @param Container $container
-     * @param        $rootDir
+     * @param string $rootDir
      */
-    public function __construct(Container $container, $rootDir)
+    public function __construct(Container $container, string $rootDir)
     {
         $this->container = $container;
         $this->rootDir = $rootDir;
@@ -53,11 +53,11 @@ class ForkInstaller
     /**
      * Installs Fork
      *
-     * @param  InstallationData $data The collected data required for Fork
+     * @param InstallationData $data The collected data required for Fork
      *
-     * @return bool                   Is Fork successfully installed?
+     * @return bool Is Fork successfully installed?
      */
-    public function install(InstallationData $data)
+    public function install(InstallationData $data): bool
     {
         if (!$data->isValid()) {
             return false;
@@ -87,9 +87,9 @@ class ForkInstaller
      *
      * @return string[]
      */
-    public static function getRequiredModules()
+    public static function getRequiredModules(): array
     {
-        return array(
+        return [
             'Locale',
             'Settings',
             'Users',
@@ -99,7 +99,7 @@ class ForkInstaller
             'Search',
             'ContentBlocks',
             'Tags',
-        );
+        ];
     }
 
     /**
@@ -107,19 +107,16 @@ class ForkInstaller
      *
      * @return string[]
      */
-    public static function getHiddenModules()
+    public static function getHiddenModules(): array
     {
-        return array(
+        return [
             'Authentication',
             'Dashboard',
             'Error',
-        );
+        ];
     }
 
-    /**
-     * Delete the cached data
-     */
-    private function deleteCachedData()
+    private function deleteCachedData(): void
     {
         $finder = new Finder();
         $filesystem = new Filesystem();
@@ -129,10 +126,7 @@ class ForkInstaller
         }
     }
 
-    /**
-     * @param InstallationData $data
-     */
-    protected function installCore(InstallationData $data)
+    protected function installCore(InstallationData $data): void
     {
         // install the core
         $installer = $this->getCoreInstaller($data);
@@ -145,10 +139,7 @@ class ForkInstaller
         }
     }
 
-    /**
-     * @param InstallationData $data
-     */
-    protected function buildDatabase(InstallationData $data)
+    protected function buildDatabase(InstallationData $data): void
     {
         // put a new instance of the database in the container
         $database = new \SpoonDatabase(
@@ -161,17 +152,12 @@ class ForkInstaller
         );
         $database->execute(
             'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
-            array('charset' => 'utf8mb4')
+            ['charset' => 'utf8mb4']
         );
         $this->container->set('database', $database);
     }
 
-    /**
-     * @param  InstallationData $data
-     *
-     * @return CoreInstaller
-     */
-    protected function getCoreInstaller(InstallationData $data)
+    protected function getCoreInstaller(InstallationData $data): CoreInstaller
     {
         // create the core installer
         return new CoreInstaller(
@@ -183,10 +169,7 @@ class ForkInstaller
         );
     }
 
-    /**
-     * @param InstallationData $data
-     */
-    protected function installModules(InstallationData $data)
+    protected function installModules(InstallationData $data): void
     {
         foreach (self::getHiddenModules() as $hiddenModule) {
             $data->addModule($hiddenModule);
@@ -214,13 +197,13 @@ class ForkInstaller
                 // add the default extras
                 $moduleDefaultExtras = $installer->getDefaultExtras();
                 if (!empty($moduleDefaultExtras)) {
-                    $this->defaultExtras = array_merge($this->$defaultExtras, $moduleDefaultExtras);
+                    $this->defaultExtras = array_merge($this->defaultExtras, $moduleDefaultExtras);
                 }
             }
         }
     }
 
-    protected function installExtras()
+    protected function installExtras(): void
     {
         // loop default extras
         foreach ($this->defaultExtras as $extra) {
@@ -234,20 +217,20 @@ class ForkInstaller
                      WHERE b.extra_id = ?
                     GROUP BY b.revision_id
                  )',
-                array($extra['id'])
+                [$extra['id']]
             );
 
             // build insert array for this extra
-            $insertExtras = array();
+            $insertExtras = [];
             foreach ($revisionIds as $revisionId) {
-                $insertExtras[] = array(
+                $insertExtras[] = [
                     'revision_id' => $revisionId,
                     'position' => $extra['position'],
                     'extra_id' => $extra['id'],
                     'created_on' => gmdate('Y-m-d H:i:s'),
                     'edited_on' => gmdate('Y-m-d H:i:s'),
                     'visible' => 'Y',
-                );
+                ];
             }
 
             // insert block
@@ -255,12 +238,7 @@ class ForkInstaller
         }
     }
 
-    /**
-     * Create locale cache files
-     *
-     * @param InstallationData $data
-     */
-    protected function createLocaleFiles(InstallationData $data)
+    protected function createLocaleFiles(InstallationData $data): void
     {
         // all available languages
         $languages = array_unique(
@@ -274,7 +252,7 @@ class ForkInstaller
                 'SELECT DISTINCT application
                  FROM locale
                  WHERE language = ?',
-                array((string) $language)
+                [(string) $language]
             );
 
             // loop applications
@@ -290,15 +268,15 @@ class ForkInstaller
      *
      * @param InstallationData $data
      */
-    protected function createYAMLConfig(InstallationData $data)
+    protected function createYAMLConfig(InstallationData $data): void
     {
         // these variables should be parsed inside the config file(s).
         $variables = $this->getConfigurationVariables($data);
 
         // map the config templates to their destination filename
-        $yamlFiles = array(
+        $yamlFiles = [
             PATH_WWW . '/app/config/parameters.yml.dist' => PATH_WWW . '/app/config/parameters.yml',
-        );
+        ];
 
         foreach ($yamlFiles as $sourceFilename => $destinationFilename) {
             $yamlContent = file_get_contents($sourceFilename);
@@ -315,17 +293,16 @@ class ForkInstaller
     }
 
     /**
-     * @param  InstallationData $data
+     * @param InstallationData $data
      *
      * @return array A list of variables that should be parsed into the configuration file(s).
      */
-    protected function getConfigurationVariables(InstallationData $data)
+    protected function getConfigurationVariables(InstallationData $data): array
     {
-        return array(
+        return [
             '<debug-email>' => $data->hasDifferentDebugEmail() ?
                 $data->getDebugEmail() :
-                $data->getEmail()
-            ,
+                $data->getEmail(),
             '<database-name>' => $data->getDbDatabase(),
             '<database-host>' => addslashes($data->getDbHostname()),
             '<database-user>' => addslashes($data->getDbUsername()),
@@ -333,9 +310,8 @@ class ForkInstaller
             '<database-port>' => $data->getDbPort(),
             '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
                 (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
-                'http'
-            ,
-            '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
+                'http',
+            '<site-domain>' => $_SERVER['HTTP_HOST'] ?? 'fork.local',
             '<site-default-title>' => 'Fork CMS',
             '<site-multilanguage>' => $data->getLanguageType() === 'multiple' ? 'true' : 'false',
             '<site-default-language>' => $data->getDefaultLanguage(),
@@ -343,23 +319,21 @@ class ForkInstaller
             '<action-group-tag>' => '\@actiongroup',
             '<action-rights-level>' => 7,
             '<secret>' => Model::generateRandomString(32, true, true, true, false),
-        );
+        ];
     }
 
     /**
-     * @param  InstallationData $data
+     * @param InstallationData $data
      *
      * @return array A list of variables that will be used in installers.
      */
-    protected function getInstallerData(InstallationData $data)
+    protected function getInstallerData(InstallationData $data): array
     {
-        return array(
+        return [
             'default_language' => $data->getDefaultLanguage(),
             'default_interface_language' => $data->getDefaultInterfaceLanguage(),
             'spoon_debug_email' => $data->getEmail(),
-            'site_domain' => (isset($_SERVER['HTTP_HOST'])) ?
-                $_SERVER['HTTP_HOST'] :
-                'fork.local',
+            'site_domain' => $_SERVER['HTTP_HOST'] ?? 'fork.local',
             'site_title' => 'Fork CMS',
             'smtp_server' => '',
             'smtp_port' => '',
@@ -367,6 +341,6 @@ class ForkInstaller
             'smtp_password' => '',
             'email' => $data->getEmail(),
             'password' => $data->getPassword(),
-        );
+        ];
     }
 }

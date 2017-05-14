@@ -12,7 +12,6 @@ namespace Frontend\Modules\Profiles\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -29,10 +28,7 @@ class ResetPassword extends FrontendBaseBlock
      */
     private $frm;
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get reset key
         $key = $this->URL->getParameter(0);
@@ -51,7 +47,7 @@ class ResetPassword extends FrontendBaseBlock
             // have id?
             if ($profileId !== 0) {
                 // load
-                $this->loadForm();
+                $this->buildForm();
 
                 // validate
                 $this->validateForm();
@@ -66,30 +62,24 @@ class ResetPassword extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create the form
         $this->frm = new FrontendForm('resetPassword', null, null, 'resetPasswordForm');
 
         // create & add elements
         $this->frm->addPassword('password')->setAttributes(
-            array(
+            [
                 'required' => null,
                 'data-role' => 'fork-new-password',
-            )
+            ]
         );
         $this->frm->addCheckbox('show_password')->setAttributes(
-            array('data-role' => 'fork-toggle-visible-password')
+            ['data-role' => 'fork-toggle-visible-password']
         );
     }
 
-    /**
-     * Parse the data into the template.
-     */
-    private function parse()
+    private function parse(): void
     {
         // has the password been saved?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -103,10 +93,7 @@ class ResetPassword extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {

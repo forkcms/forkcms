@@ -34,10 +34,7 @@ class Add extends BackendBaseActionAdd
      */
     private $filterQuery;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->setFilter();
@@ -47,10 +44,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         if ($this->getParameter('id') != null) {
             // get the translation
@@ -71,7 +65,7 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add', BackendModel::createURLForAction() . $this->filterQuery);
 
         // create and add elements
-        $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $isCopy ? $translation['application'] : $this->filter['application']);
+        $this->frm->addDropdown('application', ['Backend' => 'Backend', 'Frontend' => 'Frontend'], $isCopy ? $translation['application'] : $this->filter['application']);
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $isCopy ? $translation['module'] : $this->filter['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
         $this->frm->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
@@ -79,23 +73,20 @@ class Add extends BackendBaseActionAdd
         $this->frm->addDropdown('language', BL::getWorkingLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // prevent XSS
         $filter = \SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
 
-        $this->tpl->assign($filter);
+        $this->tpl->assignArray($filter);
     }
 
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         $this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
         $this->filter['application'] = $this->getParameter('application');
@@ -108,10 +99,7 @@ class Add extends BackendBaseActionAdd
         $this->filterQuery = '&' . http_build_query($this->filter, null, '&', PHP_QUERY_RFC3986);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
@@ -160,6 +148,7 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['language'] = $this->frm->getField('language')->getValue();
                 $item['application'] = $this->frm->getField('application')->getValue();

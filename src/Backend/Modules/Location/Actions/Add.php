@@ -21,10 +21,7 @@ use Symfony\Component\Intl\Intl as Intl;
  */
 class Add extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -33,10 +30,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('add');
         $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
@@ -47,10 +41,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), 'BE');
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
@@ -64,6 +55,7 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['language'] = BL::getWorkingLanguage();
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['street'] = $this->frm->getField('street')->getValue();

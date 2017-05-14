@@ -22,22 +22,11 @@ final class SettingsSavedListener
      */
     protected $cacheDirectory;
 
-    /**
-     * SaveSettingsHandler constructor.
-     *
-     * @param string $cacheDirectory
-     */
-    public function __construct(
-        $cacheDirectory
-    ) {
+    public function __construct(string $cacheDirectory)
+    {
         $this->cacheDirectory = $cacheDirectory;
     }
 
-    /**
-     * On settings saved
-     *
-     * @param SettingsSavedEvent $event
-     */
     public function onSettingsSavedEvent(SettingsSavedEvent $event)
     {
         /**

@@ -28,10 +28,7 @@ class Categories extends BackendBaseActionIndex
      */
     private $multipleCategoriesAllowed;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -41,10 +38,7 @@ class Categories extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Loads the dataGrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // are multiple categories allowed?
         $this->multipleCategoriesAllowed = $this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true);
@@ -52,22 +46,22 @@ class Categories extends BackendBaseActionIndex
         // create dataGrid
         $this->dataGrid = new BackendDataGridDB(
             BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES,
-            BL::getWorkingLanguage()
+            [BL::getWorkingLanguage()]
         );
-        $this->dataGrid->setHeaderLabels(array('num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))));
+        $this->dataGrid->setHeaderLabels(['num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))]);
         if ($this->multipleCategoriesAllowed) {
             $this->dataGrid->enableSequenceByDragAndDrop();
         } else {
-            $this->dataGrid->setColumnsHidden(array('sequence'));
+            $this->dataGrid->setColumnsHidden(['sequence']);
         }
-        $this->dataGrid->setRowAttributes(array('id' => '[id]'));
+        $this->dataGrid->setRowAttributes(['id' => '[id]']);
         $this->dataGrid->setPaging(false);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Index')) {
             $this->dataGrid->setColumnFunction(
-                array(__CLASS__, 'setClickableCount'),
-                array('[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'),
+                [__CLASS__, 'setClickableCount'],
+                ['[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'],
                 'num_items',
                 true
             );
@@ -86,10 +80,7 @@ class Categories extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -107,16 +98,14 @@ class Categories extends BackendBaseActionIndex
      *
      * @return string
      */
-    public static function setClickableCount($count, $link)
+    public static function setClickableCount(int $count, string $link): string
     {
-        // redefine
-        $count = (int) $count;
-        $link = (string) $link;
-
         // return link in case of more than one item, one item, other
         if ($count > 1) {
             return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Questions') . '</a>';
-        } elseif ($count == 1) {
+        }
+
+        if ($count === 1) {
             return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Question') . '</a>';
         }
 

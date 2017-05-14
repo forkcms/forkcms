@@ -20,41 +20,29 @@ class Configurator
      */
     private $container;
 
-    /**
-     * Configurator constructor.
-     *
-     * @param ModulesSettings    $modulesSettings
-     * @param ContainerInterface $container
-     */
     public function __construct(ModulesSettings $modulesSettings, ContainerInterface $container)
     {
         $this->modulesSettings = $modulesSettings;
         $this->container = $container;
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         $this->configureMail();
     }
 
-    /**
-     * @param ConsoleCommandEvent $event
-     */
-    public function onConsoleCommand(ConsoleCommandEvent $event)
+    public function onConsoleCommand(ConsoleCommandEvent $event): void
     {
         $this->configureMail();
     }
 
-    private function configureMail()
+    private function configureMail(): void
     {
         try {
             $transport = TransportFactory::create(
-                $this->modulesSettings->get('Core', 'mailer_type', 'mail'),
+                (string) $this->modulesSettings->get('Core', 'mailer_type', 'mail'),
                 $this->modulesSettings->get('Core', 'smtp_server'),
-                $this->modulesSettings->get('Core', 'smtp_port', 25),
+                (int) $this->modulesSettings->get('Core', 'smtp_port', 25),
                 $this->modulesSettings->get('Core', 'smtp_username'),
                 $this->modulesSettings->get('Core', 'smtp_password'),
                 $this->modulesSettings->get('Core', 'smtp_secure_layer')

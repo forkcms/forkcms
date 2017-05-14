@@ -9,16 +9,16 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAuthenticationIsNeeded()
+    public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
         $client = static::createClient();
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
                 'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
-            )
+            ]
         );
 
         $client->setMaxRedirects(1);
@@ -34,7 +34,7 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testWeCanGoToEditFromTheIndexPage()
+    public function testWeCanGoToEditFromTheIndexPage(): void
     {
         $client = static::createClient();
         $this->login();
@@ -58,7 +58,7 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testEditingOurBlogPost()
+    public function testEditingOurBlogPost(): void
     {
         $client = static::createClient();
         $this->login();
@@ -72,9 +72,9 @@ class EditTest extends WebTestCase
         $form = $crawler->selectButton('Publish')->form();
 
         $client->setMaxRedirects(1);
-        $this->submitEditForm($client, $form, array(
+        $this->submitEditForm($client, $form, [
             'title' => 'Edited blogpost for functional tests',
-        ));
+        ]);
 
         // we should get a 200 and be redirected to the index page
         self::assertEquals(200, $client->getResponse()->getStatusCode());
@@ -97,7 +97,7 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testSubmittingInvalidData()
+    public function testSubmittingInvalidData(): void
     {
         $client = static::createClient();
         $this->login();
@@ -105,9 +105,9 @@ class EditTest extends WebTestCase
         $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
 
         $form = $crawler->selectButton('Publish')->form();
-        $this->submitEditForm($client, $form, array(
+        $this->submitEditForm($client, $form, [
             'title' => '',
-        ));
+        ]);
 
         // we should get a 200 and be redirected to the index page
         self::assertEquals(200, $client->getResponse()->getStatusCode());
@@ -130,7 +130,7 @@ class EditTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testInvalidIdShouldShowAnError()
+    public function testInvalidIdShouldShowAnError(): void
     {
         $client = static::createClient();
         $this->login();

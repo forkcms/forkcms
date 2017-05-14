@@ -31,10 +31,7 @@ class Register extends FrontendBaseBlock
      */
     private $frm;
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -42,7 +39,7 @@ class Register extends FrontendBaseBlock
 
         // profile not logged in
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         } elseif ($this->URL->getParameter('sent') == true) {
@@ -54,29 +51,23 @@ class Register extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         $this->frm = new FrontendForm('register', null, null, 'registerForm');
         $this->frm->addText('display_name');
-        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
         $this->frm->addPassword('password')->setAttributes(
-            array(
+            [
                 'required' => null,
                 'data-role' => 'fork-new-password',
-            )
+            ]
         );
         $this->frm->addCheckbox('show_password')->setAttributes(
-            array('data-role' => 'fork-toggle-visible-password')
+            ['data-role' => 'fork-toggle-visible-password']
         );
     }
 
-    /**
-     * Parse the data into the template.
-     */
-    private function parse()
+    private function parse(): void
     {
         // e-mail was sent?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -90,10 +81,7 @@ class Register extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {
@@ -121,8 +109,8 @@ class Register extends FrontendBaseBlock
             // no errors
             if ($this->frm->isCorrect()) {
                 // init values
-                $settings = array();
-                $values = array();
+                $settings = [];
+                $values = [];
 
                 // generate salt
                 $settings['salt'] = FrontendProfilesModel::getRandomString();
@@ -150,7 +138,7 @@ class Register extends FrontendBaseBlock
                     // use the profile id as url until we have an actual url
                     FrontendProfilesModel::update(
                         $profileId,
-                        array('url' => FrontendProfilesModel::getUrl($values['display_name']))
+                        ['url' => FrontendProfilesModel::getUrl($values['display_name'])]
                     );
 
                     // generate activation key
@@ -165,20 +153,19 @@ class Register extends FrontendBaseBlock
                     // login
                     FrontendProfilesAuthentication::login($profileId);
 
-                    // activation URL
-                    $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate')
-                                                   . '/' . $settings['activation_key'];
-
                     // send email
                     $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                     $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                     $message = Message::newInstance(FL::getMessage('RegisterSubject'))
-                        ->setFrom(array($from['email'] => $from['name']))
-                        ->setTo(array($txtEmail->getValue() => ''))
-                        ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                        ->setFrom([$from['email'] => $from['name']])
+                        ->setTo([$txtEmail->getValue() => ''])
+                        ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                         ->parseHtml(
                             '/Profiles/Layout/Templates/Mails/Register.html.twig',
-                            $mailValues,
+                            [
+                                'activationUrl' => SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate')
+                                                   . '/' . $settings['activation_key'],
+                            ],
                             true
                         )
                     ;

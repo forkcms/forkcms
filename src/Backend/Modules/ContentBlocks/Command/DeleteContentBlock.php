@@ -11,9 +11,6 @@ final class DeleteContentBlock
      */
     public $contentBlock;
 
-    /**
-     * @param ContentBlock $contentBlock
-     */
     public function __construct(ContentBlock $contentBlock)
     {
         $this->contentBlock = $contentBlock;

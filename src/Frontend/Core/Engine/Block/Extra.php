@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Block;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
@@ -79,20 +80,18 @@ class Extra extends FrontendBaseObject
 
     /**
      * @param KernelInterface $kernel
-     * @param string          $module The module to load.
-     * @param string          $action The action to load.
-     * @param mixed           $data   The data that was passed from the database.
+     * @param string $module The module to load.
+     * @param string|null $action The action to load.
+     * @param mixed|null $data The data that was passed from the database.
      */
-    public function __construct(KernelInterface $kernel, $module, $action, $data = null)
+    public function __construct(KernelInterface $kernel, string $module, string $action = null, $data = null)
     {
         parent::__construct($kernel);
 
         // set properties
         $this->setModule($module);
         $this->setAction($action);
-        if ($data !== null) {
-            $this->setData($data);
-        }
+        $this->setData($data);
 
         // load the config file for the required module
         $this->loadConfig();
@@ -100,9 +99,7 @@ class Extra extends FrontendBaseObject
         // is the requested action possible? If not we throw an exception.
         // We don't redirect because that could trigger a redirect loop
         if (!in_array($this->getAction(), $this->config->getPossibleActions())) {
-            $this->setAction(
-                $this->config->getDefaultAction()
-            );
+            $this->setAction($this->config->getDefaultAction());
         }
     }
 
@@ -110,29 +107,24 @@ class Extra extends FrontendBaseObject
      * Execute the action
      * We will build the class name, require the class and call the execute method.
      */
-    public function execute()
+    public function execute(): void
     {
         // build action-class-name
         $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
-        if ($this->getModule() == 'Core') {
+        if ($this->getModule() === 'Core') {
             $actionClass = 'Frontend\\Core\\Actions\\' . $this->getAction();
         }
 
         // validate if class exists (aka has correct name)
         if (!class_exists($actionClass)) {
-            throw new FrontendException(
-                'The action class couldn\'t be found: ' . $actionClass . '.'
-            );
+            throw new FrontendException('The action class couldn\'t be found: ' . $actionClass . '.');
         }
 
         // create action-object
         $this->object = new $actionClass($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
 
         // validate if the execute-method is callable
-        if (!is_callable(
-            array($this->object, 'execute')
-        )
-        ) {
+        if (!is_callable([$this->object, 'execute'])) {
             throw new FrontendException('The action file should contain a callable method "execute".');
         }
 
@@ -153,45 +145,45 @@ class Extra extends FrontendBaseObject
      *
      * @return string
      */
-    public function getAction()
+    public function getAction(): string
     {
-        // no action specified?
-        if ($this->action === null) {
-            // get first parameter
-            $actionParameter = $this->URL->getParameter(0);
+        if ($this->action !== null) {
+            return $this->action;
+        }
 
-            // unknown action and not provided in URL
-            if ($actionParameter === null) {
-                $this->setAction($this->config->getDefaultAction());
-            } else {
-                // action provided in the URL
-                // loop possible actions
-                $actionParameter = \SpoonFilter::toCamelCase($actionParameter);
-                foreach ($this->config->getPossibleActions() as $actionName) {
-                    // get action that should be passed as parameter
-                    $actionURL = \SpoonFilter::toCamelCase(rawurlencode(FL::act(\SpoonFilter::toCamelCase($actionName))));
+        // get first parameter
+        $actionParameter = $this->URL->getParameter(0);
 
-                    // the action is the requested one
-                    if ($actionURL == $actionParameter) {
-                        // set action
-                        $this->setAction($actionName);
+        // unknown action and not provided in URL
+        if ($actionParameter === null) {
+            $this->setAction($this->config->getDefaultAction());
 
-                        // stop the loop
-                        break;
-                    }
-                }
+            return $this->action;
+        }
+
+        // action provided in the URL
+        // loop possible actions
+        $actionParameter = \SpoonFilter::toCamelCase($actionParameter);
+        foreach ($this->config->getPossibleActions() as $actionName) {
+            // get action that should be passed as parameter
+            $actionURL = \SpoonFilter::toCamelCase(
+                rawurlencode(FL::act(\SpoonFilter::toCamelCase($actionName)))
+            );
+
+            // the action is the requested one
+            if ($actionURL === $actionParameter) {
+                // set action
+                $this->setAction($actionName);
+
+                // stop the loop
+                break;
             }
         }
 
         return $this->action;
     }
 
-    /**
-     * Get the block content
-     *
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): string
     {
         // set path to template if the widget didn't return any data
         if ($this->output === null) {
@@ -219,7 +211,7 @@ class Extra extends FrontendBaseObject
      *
      * @return string
      */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
@@ -229,27 +221,17 @@ class Extra extends FrontendBaseObject
      *
      * @return bool
      */
-    public function getOverwrite()
+    public function getOverwrite(): bool
     {
         return $this->overwrite;
     }
 
-    /**
-     * Get the assigned template.
-     *
-     * @return array
-     */
-    public function getTemplate()
+    public function getTemplate(): TwigTemplate
     {
         return $this->object->getTemplate();
     }
 
-    /**
-     * Get path for the template
-     *
-     * @return string
-     */
-    public function getTemplatePath()
+    public function getTemplatePath(): string
     {
         return $this->templatePath;
     }
@@ -259,7 +241,7 @@ class Extra extends FrontendBaseObject
      *
      * @return array
      */
-    public function getVariables()
+    public function getVariables(): array
     {
         return (array) $this->tpl->getAssignedVariables();
     }
@@ -270,34 +252,25 @@ class Extra extends FrontendBaseObject
      * will read the folder and set possible actions
      * Other configurations will also be stored in it.
      */
-    public function loadConfig()
+    public function loadConfig(): void
     {
         $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
-        if ($this->getModule() == 'Core') {
+        if ($this->getModule() === 'Core') {
             $configClass = 'Frontend\\Core\\Config';
         }
 
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
-            throw new FrontendException(
-                'The config file ' . $configClass . ' could not be found.'
-            );
+            throw new FrontendException('The config file ' . $configClass . ' could not be found.');
         }
 
         // create config-object, the constructor will do some magic
         $this->config = new $configClass($this->getKernel(), $this->getModule());
     }
 
-    /**
-     * Set the action
-     *
-     * @param string $action The action to load.
-     */
-    private function setAction($action = null)
+    private function setAction(string $action = null): void
     {
-        if ($action !== null) {
-            $this->action = (string) $action;
-        }
+        $this->action = $action;
     }
 
     /**
@@ -305,19 +278,14 @@ class Extra extends FrontendBaseObject
      *
      * @param mixed $data The data that should be set.
      */
-    private function setData($data)
+    private function setData($data): void
     {
         $this->data = $data;
     }
 
-    /**
-     * Set the module
-     *
-     * @param string $module The module to load.
-     */
-    private function setModule($module)
+    private function setModule(string $module): void
     {
-        $this->module = (string) $module;
+        $this->module = $module;
     }
 
     /**
@@ -325,17 +293,12 @@ class Extra extends FrontendBaseObject
      *
      * @param bool $overwrite Should the template overwrite the already loaded template.
      */
-    private function setOverwrite($overwrite)
+    private function setOverwrite(bool $overwrite): void
     {
-        $this->overwrite = (bool) $overwrite;
+        $this->overwrite = $overwrite;
     }
 
-    /**
-     * Set the path for the template
-     *
-     * @param string $path The path to set.
-     */
-    private function setTemplatePath($path)
+    private function setTemplatePath(string $path): void
     {
         $this->templatePath = $path;
     }

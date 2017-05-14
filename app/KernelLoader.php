@@ -39,7 +39,7 @@ class KernelLoader
      *
      * @return object The service
      */
-    public function get($reference)
+    public function get(string $reference)
     {
         return $this->getKernel()->getContainer()->get($reference);
     }
@@ -47,15 +47,15 @@ class KernelLoader
     /**
      * @return ContainerInterface
      */
-    public function getContainer()
+    public function getContainer(): ContainerInterface
     {
         return $this->getKernel()->getContainer();
     }
 
     /**
-     * @return Kernel
+     * @return KernelInterface
      */
-    public function getKernel()
+    public function getKernel(): KernelInterface
     {
         return $this->kernel;
     }
@@ -65,9 +65,9 @@ class KernelLoader
      *
      * @param string $reference The service id
      *
-     * @return Boolean true if the service id is defined, false otherwise
+     * @return bool true if the service id is defined, false otherwise
      */
-    public function has($reference)
+    public function has(string $reference): bool
     {
         return $this->getKernel()->getContainer()->has($reference);
     }
@@ -76,7 +76,7 @@ class KernelLoader
      * This is fairly dirty, but so is having static method classes for models.
      * Consider this a temporary solution until we have genuine models available.
      */
-    public function passContainerToModels()
+    public function passContainerToModels(): void
     {
         FrontendModel::setContainer($this->getKernel()->getContainer());
 

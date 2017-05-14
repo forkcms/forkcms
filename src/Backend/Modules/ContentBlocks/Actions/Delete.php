@@ -21,10 +21,7 @@ use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
  */
 class Delete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         /** @var ContentBlockRepository $contentBlockRepository */
         $contentBlockRepository = $this->get('content_blocks.repository.content_block');
@@ -35,7 +32,9 @@ class Delete extends BackendBaseActionDelete
         );
 
         if ($contentBlock === null) {
-            return $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
 
         // The command bus will handle the saving of the content block in the database.
@@ -46,7 +45,7 @@ class Delete extends BackendBaseActionDelete
             new ContentBlockDeleted($contentBlock)
         );
 
-        return $this->redirect(
+        $this->redirect(
             BackendModel::createURLForAction(
                 'Index',
                 null,

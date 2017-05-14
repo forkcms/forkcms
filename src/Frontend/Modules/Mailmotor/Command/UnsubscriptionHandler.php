@@ -18,23 +18,13 @@ final class UnsubscriptionHandler
      */
     protected $subscriber;
 
-    /**
-     * UnsubscriptionHandler constructor.
-     *
-     * @param Subscriber $subscriber
-     */
     public function __construct(
         Subscriber $subscriber
     ) {
         $this->subscriber = $subscriber;
     }
 
-    /**
-     * Handle
-     *
-     * @param Unsubscription $unsubscription
-     */
-    public function handle(Unsubscription $unsubscription)
+    public function handle(Unsubscription $unsubscription): void
     {
         // Unsubscribing the user, will dispatch an event
         $this->subscriber->unsubscribe(

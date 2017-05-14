@@ -11,8 +11,6 @@ use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use SpoonFormAttributes;
-use SpoonFormMultiCheckbox;
-use SpoonFormRadiobutton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -57,15 +55,15 @@ class Form extends FrontendBaseWidget
      *
      * @return string
      */
-    private function createAction()
+    private function createAction(): string
     {
         // pages
         $action = implode('/', $this->URL->getPages());
 
         // init parameters
         $parameters = $this->URL->getParameters();
-        $moduleParameters = array();
-        $getParameters = array();
+        $moduleParameters = [];
+        $getParameters = [];
 
         // sort by key (important for action order)
         ksort($parameters);
@@ -106,10 +104,7 @@ class Form extends FrontendBaseWidget
         return '/' . $action;
     }
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -123,16 +118,13 @@ class Form extends FrontendBaseWidget
             $this->parseSuccessMessage();
         } else {
             // create/handle form
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         }
     }
 
-    /**
-     * Load the data.
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // fetch the item
         $this->item = FrontendFormBuilderModel::get((int) $this->data['id']);
@@ -141,10 +133,7 @@ class Form extends FrontendBaseWidget
         $this->formName = 'form' . $this->item['id'];
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
         $this->frm = new FrontendForm('form' . $this->item['id']);
@@ -154,21 +143,20 @@ class Form extends FrontendBaseWidget
             // loop fields
             foreach ($this->item['fields'] as $field) {
                 // init
-                $item['name'] = 'field' . $field['id'];
-                $item['type'] = $field['type'];
-                $item['label'] = (isset($field['settings']['label'])) ? $field['settings']['label'] : '';
-                $item['placeholder'] = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
-                $item['classname'] = (isset($field['settings']['classname']) ? $field['settings']['classname'] : null);
-                $item['required'] = isset($field['validations']['required']);
-                $item['validations'] = isset($field['validations']) ? $field['validations'] : [];
-                $item['html'] = '';
+                $item = [
+                    'name' => 'field' . $field['id'],
+                    'type' => $field['type'],
+                    'label' => $field['settings']['label'] ?? '',
+                    'placeholder' => $field['settings']['placeholder'] ?? null,
+                    'classname' => $field['settings']['classname'] ?? null,
+                    'required' => isset($field['validations']['required']),
+                    'validations' => $field['validations'] ?? [],
+                    'html' => '',
+                ];
 
                 // form values
-                $values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);
-                $defaultValues = (isset($field['settings']['default_values']) ?
-                    $field['settings']['default_values'] :
-                    null
-                );
+                $values = $field['settings']['values'] ?? null;
+                $defaultValues = $field['settings']['default_values'] ?? null;
 
                 if ($field['type'] == 'dropdown') {
                     // values and labels are the same
@@ -202,11 +190,11 @@ class Form extends FrontendBaseWidget
                     $item['html'] = $rbt->parse();
                 } elseif ($field['type'] == 'checkbox') {
                     // reset
-                    $newValues = array();
+                    $newValues = [];
 
                     // rebuild values
                     foreach ($values as $value) {
-                        $newValues[] = array('label' => $value, 'value' => $value);
+                        $newValues[] = ['label' => $value, 'value' => $value];
                     }
 
                     // create element
@@ -263,15 +251,15 @@ class Form extends FrontendBaseWidget
                         $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery($this->get('fork.settings')->get('Core', 'date_format_short'));
 
                         $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield ' . $item['classname'])->setAttributes(
-                            array(
+                            [
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
                                 'type' => 'date',
                                 'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : ''),
-                            )
+                            ]
                         );
                     } else {
-                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname'])->setAttributes(array('type' => 'time'));
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname'])->setAttributes(['type' => 'time']);
                     }
 
                     // add required attribute
@@ -314,11 +302,7 @@ class Form extends FrontendBaseWidget
         }
     }
 
-    /**
-     * @param array $item
-     * @param SpoonFormAttributes $formField
-     */
-    private function setCustomHTML5ErrorMessages(array $item, SpoonFormAttributes $formField)
+    private function setCustomHTML5ErrorMessages(array $item, SpoonFormAttributes $formField): void
     {
         foreach ($item['validations'] as $validation) {
             $formField->setAttribute(
@@ -328,10 +312,7 @@ class Form extends FrontendBaseWidget
         }
     }
 
-    /**
-     * Parse.
-     */
-    private function parse()
+    private function parse(): void
     {
         // form name
         $formName = 'form' . $this->item['id'];
@@ -389,20 +370,14 @@ class Form extends FrontendBaseWidget
         }
     }
 
-    /**
-     * Parse the success message.
-     */
-    private function parseSuccessMessage()
+    private function parseSuccessMessage(): void
     {
         // form name
         $this->tpl->assign('formName', $this->formName);
         $this->tpl->assign('successMessage', $this->item['success_message']);
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // submitted
         if ($this->frm->isSubmitted()) {
@@ -463,10 +438,12 @@ class Form extends FrontendBaseWidget
             // valid form
             if ($this->frm->isCorrect()) {
                 // item
-                $data['form_id'] = $this->item['id'];
-                $data['session_id'] = \SpoonSession::getSessionId();
-                $data['sent_on'] = FrontendModel::getUTCDate();
-                $data['data'] = serialize(array('server' => $_SERVER));
+                $data = [
+                    'form_id' => $this->item['id'],
+                    'session_id' => \SpoonSession::getSessionId(),
+                    'sent_on' => FrontendModel::getUTCDate(),
+                    'data' => serialize(['server' => $_SERVER]),
+                ];
 
                 $dataId = null;
                 // insert data
@@ -475,7 +452,7 @@ class Form extends FrontendBaseWidget
                 }
 
                 // init fields array
-                $fields = array();
+                $fields = [];
 
                 // loop all fields
                 foreach ($this->item['fields'] as $field) {
@@ -485,12 +462,13 @@ class Form extends FrontendBaseWidget
                     }
 
                     // field data
+                    $fieldData = [];
                     $fieldData['data_id'] = $dataId;
                     $fieldData['label'] = $field['settings']['label'];
                     $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
 
                     if ($field['type'] == 'radiobutton') {
-                        $values = array();
+                        $values = [];
 
                         foreach ($field['settings']['values'] as $value) {
                             $values[$value['value']] = $value['label'];

@@ -18,10 +18,7 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
  */
 class Autocomplete extends FrontendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
@@ -29,7 +26,7 @@ class Autocomplete extends FrontendBaseAJAXAction
         // get parameters
         $charset = $this->getContainer()->getParameter('kernel.charset');
         $searchTerm = \SpoonFilter::getPostValue('term', null, '');
-        $term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities(
+        $term = ($charset === 'utf-8') ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities(
             $searchTerm
         );
         $limit = (int) $this->get('fork.settings')->get('Search', 'autocomplete_num_items', 10);

@@ -5,6 +5,7 @@ namespace ForkCMS\Bundle\InstallerBundle\Controller;
 use Common\Exception\ExitException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
@@ -19,10 +20,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InstallerController extends Controller
 {
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step1Action()
+    /** @var InstallationData */
+    public static $installationData;
+
+    public function step1Action(): Response
     {
         $this->checkInstall();
 
@@ -34,19 +35,14 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step1.html.twig',
-            array(
+            [
                 'checker' => $requirementsChecker,
                 'rootDir' => realpath($this->container->getParameter('site.path_www')),
-            )
+            ]
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step2Action(Request $request)
+    public function step2Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -65,18 +61,13 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step2.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step3Action(Request $request)
+    public function step3Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -91,18 +82,13 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step3.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step4Action(Request $request)
+    public function step4Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -115,18 +101,13 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step4.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function step5Action(Request $request)
+    public function step5Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -139,18 +120,13 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step5.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
-            )
+            ]
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function step6Action(Request $request)
+    public function step6Action(Request $request): Response
     {
         $this->checkInstall();
 
@@ -159,11 +135,11 @@ class InstallerController extends Controller
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step6.html.twig',
-            array(
+            [
                 'installStatus' => $status,
                 'installer' => $forkInstaller,
                 'data' => $this->getInstallationData($request),
-            )
+            ]
         );
     }
 
@@ -177,21 +153,20 @@ class InstallerController extends Controller
         if (!$request->getSession()->has('installation_data')) {
             $request->getSession()->set('installation_data', new InstallationData());
         }
+        // static cache
+        self::$installationData = $request->getSession()->get('installation_data');
 
         return $request->getSession()->get('installation_data');
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function noStepAction()
+    public function noStepAction(): RedirectResponse
     {
         $this->checkInstall();
 
         return $this->redirect($this->generateUrl('install_step1'));
     }
 
-    protected function checkInstall()
+    protected function checkInstall(): void
     {
         $filesystem = new Filesystem();
         $kernelDir = $this->container->getParameter('kernel.root_dir');

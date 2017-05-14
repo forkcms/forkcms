@@ -9,6 +9,7 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Language\Language as BackendLanguage;
@@ -19,16 +20,9 @@ use Backend\Core\Language\Language as BackendLanguage;
 class Action extends Base\Object
 {
     /**
-     * The config file
-     *
-     * @var Base\Config
-     */
-    private $config;
-
-    /**
      * BackendTemplate
      *
-     * @var Template
+     * @var TwigTemplate
      */
     public $tpl;
 
@@ -49,78 +43,53 @@ class Action extends Base\Object
      * Execute the action
      * We will build the classname, require the class and call the execute method.
      */
-    public function execute()
+    public function execute(): Response
     {
-        $this->loadConfig();
-
         // is the requested action available? If not we redirect to the error page.
-        if (!$this->config->isActionAvailable($this->action)) {
-            // build the url
-            $errorUrl = '/' . NAMED_APPLICATION
-                . '/' . $this->get('request')->getLocale()
-                . '/error?type=action-not-allowed';
-
-            // redirect to the error page
-            return $this->redirect($errorUrl, 307);
+        if (!$this->getConfig()->isActionAvailable($this->action)) {
+            return $this->redirectToErrorPage('action-not-allowed', 307);
         }
 
-        // build action-class
+        $actionClass = $this->buildActionClass();
+        $this->assignWorkingLanguagesToTemplate();
+
+        /** @var $action BackendBaseAction */
+        $action = new $actionClass($this->getKernel());
+        $this->getContainer()->get('logger')->info(
+            "Executing backend action '{$action->getAction()}' for module '{$action->getModule()}'."
+        );
+        $action->execute();
+
+        return $action->getContent();
+    }
+
+    private function buildActionClass(): string
+    {
         $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
-        if ($this->getModule() == 'Core') {
-            $actionClass = 'Backend\\Core\\Actions\\' . $this->getAction();
-        }
 
         if (!class_exists($actionClass)) {
             throw new Exception('The class ' . $actionClass . ' could not be found.');
         }
 
+        return $actionClass;
+    }
+
+    private function assignWorkingLanguagesToTemplate(): void
+    {
         // get working languages
         $languages = BackendLanguage::getWorkingLanguages();
-        $workingLanguages = array();
+        $workingLanguages = [];
 
         // loop languages and build an array that we can assign
         foreach ($languages as $abbreviation => $label) {
-            $workingLanguages[] = array(
+            $workingLanguages[] = [
                 'abbr' => $abbreviation,
                 'label' => $label,
-                'selected' => ($abbreviation == BackendLanguage::getWorkingLanguage()),
-            );
+                'selected' => $abbreviation === BackendLanguage::getWorkingLanguage(),
+            ];
         }
 
         // assign the languages
         $this->tpl->assign('workingLanguages', $workingLanguages);
-
-        // create action-object
-        /** @var $object BackendBaseAction */
-        $object = new $actionClass($this->getKernel());
-        $this->getContainer()->get('logger')->info(
-            "Executing backend action '{$object->getAction()}' for module '{$object->getModule()}'."
-        );
-        $object->execute();
-
-        return $object->getContent();
-    }
-
-    /**
-     * Load the config file for the requested module.
-     * In the config file we have to find disabled actions, the constructor
-     * will read the folder and set possible actions
-     * Other configurations will be stored in it also.
-     */
-    public function loadConfig()
-    {
-        // check if we can load the config file
-        $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
-        if ($this->getModule() == 'Core') {
-            $configClass = 'Backend\\Core\\Config';
-        }
-
-        // validate if class exists (aka has correct name)
-        if (!class_exists($configClass)) {
-            throw new Exception('The config file ' . $configClass . ' could not be found.');
-        }
-
-        // create config-object, the constructor will do some magic
-        $this->config = new $configClass($this->getKernel(), $this->getModule());
     }
 }

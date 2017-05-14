@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ModelTest extends TestCase
 {
-    public function testUrlIsEncoded()
+    public function testUrlIsEncoded(): void
     {
         self::assertEquals(
             'http://www.google.be/Quote',

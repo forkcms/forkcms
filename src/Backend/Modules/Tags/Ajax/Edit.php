@@ -19,10 +19,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Edit extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -42,6 +39,7 @@ class Edit extends BackendBaseAJAXAction
                 if (BackendTagsModel::existsTag($tag)) {
                     $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
                 } else {
+                    $item = [];
                     $item['id'] = $id;
                     $item['tag'] = \SpoonFilter::htmlspecialchars($tag);
                     $item['url'] = BackendTagsModel::getURL(
@@ -50,7 +48,7 @@ class Edit extends BackendBaseAJAXAction
                     );
 
                     BackendTagsModel::update($item);
-                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
+                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), [$item['tag']]));
                 }
             }
         }

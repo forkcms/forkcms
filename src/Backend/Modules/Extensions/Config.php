@@ -15,18 +15,4 @@ final class Config extends BackendBaseConfig
      * @var string
      */
     protected $defaultAction = 'Modules';
-
-    /**
-     * The disabled actions
-     *
-     * @var array
-     */
-    protected $disabledActions = array();
-
-    /**
-     * The disabled AJAX-actions
-     *
-     * @var array
-     */
-    protected $disabledAJAXActions = array();
 }

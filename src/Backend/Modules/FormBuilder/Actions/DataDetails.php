@@ -36,10 +36,7 @@ class DataDetails extends BackendBaseActionIndex
      */
     private $id;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');
@@ -57,19 +54,13 @@ class DataDetails extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->data = BackendFormBuilderModel::getData($this->id);
         $this->record = BackendFormBuilderModel::get($this->data['form_id']);
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -82,7 +73,7 @@ class DataDetails extends BackendBaseActionIndex
         $this->tpl->assign('sentOn', $this->data['sent_on']);
 
         // init
-        $data = array();
+        $data = [];
 
         // prepare data
         foreach ($this->data['fields'] as $field) {
@@ -106,7 +97,7 @@ class DataDetails extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // start date is set
         if (isset($_GET['start_date']) && $_GET['start_date'] != '') {

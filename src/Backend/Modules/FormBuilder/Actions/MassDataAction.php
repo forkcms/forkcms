@@ -18,15 +18,12 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
  */
 class MassDataAction extends BackendBaseAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', array('delete'), '');
+        $action = \SpoonFilter::getGetValue('action', ['delete'], '');
 
         // form id
         $formId = \SpoonFilter::getGetValue('form_id', null, '', 'int');

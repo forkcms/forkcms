@@ -10,8 +10,8 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Backend\Core\Engine\TwigTemplate;
+use Common\Core\Header\Priority;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
 use Backend\Core\Language\Language as BL;
@@ -28,7 +28,7 @@ class Action extends Object
      *
      * @var array
      */
-    protected $parameters = array();
+    protected $parameters = [];
 
     /**
      * The header object
@@ -77,7 +77,7 @@ class Action extends Object
     /**
      * Check if the token is ok
      */
-    public function checkToken()
+    public function checkToken(): void
     {
         $fromSession = (\SpoonSession::exists('csrf_token')) ? \SpoonSession::get('csrf_token') : '';
         $fromGet = $this->getContainer()->get('request')->query->get('token');
@@ -94,23 +94,20 @@ class Action extends Object
                 'Index',
                 null,
                 null,
-                array(
+                [
                     'error' => 'csrf',
-                )
+                ]
             )
         );
     }
 
-    /**
-     * @return string
-     */
-    protected function getBackendModulePath()
+    protected function getBackendModulePath(): string
     {
-        if ($this->URL->getModule() == 'Core') {
+        if ($this->URL->getModule() === 'Core') {
             return BACKEND_PATH . '/' . $this->URL->getModule();
-        } else {
-            return BACKEND_MODULES_PATH . '/' . $this->URL->getModule();
         }
+
+        return BACKEND_MODULES_PATH . '/' . $this->URL->getModule();
     }
 
     /**
@@ -119,7 +116,7 @@ class Action extends Object
      *
      * @param string $template The template to use, if not provided it will be based on the action.
      */
-    public function display($template = null)
+    public function display(string $template = null): void
     {
         // parse header
         $this->header->parse();
@@ -129,30 +126,14 @@ class Action extends Object
          * based on the name of the current action
          */
         if ($template === null) {
-            $template = '/'. $this->getModule() . '/Layout/Templates/' . $this->URL->getAction() . '.html.twig';
+            $template = '/' . $this->getModule() . '/Layout/Templates/' . $this->URL->getAction() . '.html.twig';
         }
 
         $this->content = $this->tpl->getContent($template);
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        // add jquery, we will need this in every action, so add it globally
-        $this->header->addJS('/js/vendors/jquery.min.js', 'Core', false, true);
-        $this->header->addJS('/js/vendors/jquery-migrate.min.js', 'Core', false, true);
-        $this->header->addJS('/js/vendors/jquery-ui.min.js', 'Core', false, true);
-        $this->header->addJS('/js/vendors/bootstrap.min.js', 'Core', false, true);
-        $this->header->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true);
-        $this->header->addJS('/js/vendors/bootstrap-tagsinput.min.js', 'Core', false, true);
-        $this->header->addJS('jquery/jquery.backend.js', 'Core');
-
-        // add items that always need to be loaded
-        $this->header->addJS('utils.js', 'Core', true, false, true);
-        $this->header->addJS('backend.js', 'Core', true, false, true);
-
         // add module js
         if (is_file($this->getBackendModulePath() . '/Js/' . $this->getModule() . '.js')) {
             $this->header->addJS($this->getModule() . '.js', null, true, false, true);
@@ -163,19 +144,13 @@ class Action extends Object
             $this->header->addJS($this->getAction() . '.js', null, true, false, true);
         }
 
-        // add core css files
-        $this->header->addCSS('/css/vendors/bootstrap-tagsinput.css', 'Core', true);
-        $this->header->addCSS('/css/vendors/bootstrap-tagsinput-typeahead.css', 'Core', true);
-        $this->header->addCSS('screen.css', 'Core');
-        $this->header->addCSS('debug.css', 'Core');
-
         // add module specific css
         if (is_file($this->getBackendModulePath() . '/Layout/Css/' . $this->getModule() . '.css')) {
             $this->header->addCSS($this->getModule() . '.css');
         }
 
         // store var so we don't have to call this function twice
-        $var = array_map('strip_tags', $this->getParameter('var', 'array', array()));
+        $var = array_map('strip_tags', $this->getParameter('var', 'array', []));
 
         // is there a report to show?
         if ($this->getParameter('report') !== null) {
@@ -218,22 +193,17 @@ class Action extends Object
      * By default we will cast the return value into a string, if you want
      * something else specify it by passing the wanted type.
      *
-     * @param string $key          The name of the parameter.
-     * @param string $type         The return-type, possible values are: bool,
-     *                             boolean, int, integer, float, double,
-     *                             string, array.
-     * @param mixed  $defaultValue The value that should be returned if the key
-     *                             is not available.
+     * @param string $key The name of the parameter.
+     * @param string $returnType Possible values are: bool, boolean, int, integer, float, double, string, array.
+     * @param mixed $defaultValue The value that should be returned if the key is not available.
      *
      * @return mixed
      */
-    public function getParameter($key, $type = 'string', $defaultValue = null)
+    public function getParameter(string $key, string $returnType = 'string', $defaultValue = null)
     {
-        $key = (string) $key;
-
         // parameter exists
-        if (isset($this->parameters[$key]) && $this->parameters[$key] != '') {
-            return \SpoonFilter::getValue($this->parameters[$key], null, null, $type);
+        if (isset($this->parameters[$key]) && $this->parameters[$key] !== '') {
+            return \SpoonFilter::getValue($this->parameters[$key], null, null, $returnType);
         }
 
         return $defaultValue;
@@ -242,20 +212,20 @@ class Action extends Object
     /**
      * Parse to template
      */
-    protected function parse()
+    protected function parse(): void
     {
     }
 
     /**
      * Creates and returns a Form instance from the type of the form.
      *
-     * @param string|FormTypeInterface $type The built type of the form
+     * @param string $type FQCN of the form type class i.e: MyClass::class
      * @param mixed $data The initial data for the form
      * @param array $options Options for the form
      *
      * @return Form
      */
-    public function createForm($type, $data = null, array $options = array())
+    public function createForm(string $type, $data = null, array $options = []): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
     }

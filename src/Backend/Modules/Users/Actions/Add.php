@@ -22,10 +22,7 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
  */
 class Add extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -34,10 +31,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('add');
@@ -60,8 +54,8 @@ class Add extends BackendBaseActionAdd
             75,
             'form-control passwordGenerator',
             'form-control danger passwordGenerator'
-        )->setAttributes(array('autocomplete' => 'off'));
-        $this->frm->addPassword('confirm_password', null, 75)->setAttributes(array('autocomplete' => 'off'));
+        )->setAttributes(['autocomplete' => 'off']);
+        $this->frm->addPassword('confirm_password', null, 75)->setAttributes(['autocomplete' => 'off']);
         $this->frm->addText('name', null, 255);
         $this->frm->addText('surname', null, 255);
         $this->frm->addText('nickname', null, 24);
@@ -96,10 +90,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addMultiCheckbox('groups', $groups, $checkedGroups);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -122,7 +113,7 @@ class Add extends BackendBaseActionAdd
                                     'UndoDelete',
                                     null,
                                     null,
-                                    array('email' => $this->frm->getField('email')->getValue())
+                                    ['email' => $this->frm->getField('email')->getValue()]
                                 )
                             )
                         );
@@ -157,6 +148,7 @@ class Add extends BackendBaseActionAdd
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build settings-array
+                $settings = [];
                 $settings['nickname'] = $this->frm->getField('nickname')->getValue();
                 $settings['name'] = $this->frm->getField('name')->getValue();
                 $settings['surname'] = $this->frm->getField('surname')->getValue();
@@ -177,6 +169,7 @@ class Add extends BackendBaseActionAdd
                 // init var
                 $newSequence = BackendGroupsModel::getSetting($groups[0], 'dashboard_sequence');
 
+                $sequences = [];
                 // loop through groups and collect all dashboard widget sequences
                 foreach ($groups as $group) {
                     $sequences[] = BackendGroupsModel::getSetting($group, 'dashboard_sequence');
@@ -198,6 +191,7 @@ class Add extends BackendBaseActionAdd
                 $settings['dashboard_sequence'] = $newSequence;
 
                 // build user-array
+                $user = [];
                 $user['email'] = $this->frm->getField('email')->getValue();
                 $user['password'] = BackendAuthentication::getEncryptedString(
                     $this->frm->getField('password')->getValue(true),

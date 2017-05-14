@@ -22,7 +22,7 @@ class UTCDateTimeType extends DateTimeType
      *
      * @return string|null
      */
-    public function convertToDatabaseValue($dateTime, AbstractPlatform $platform)
+    public function convertToDatabaseValue($dateTime, AbstractPlatform $platform): ?string
     {
         if ($dateTime instanceof DateTime) {
             $dateTime->setTimezone(self::getUtc());
@@ -39,7 +39,7 @@ class UTCDateTimeType extends DateTimeType
      *
      * @return DateTime|null
      */
-    public function convertToPHPValue($dateTimeString, AbstractPlatform $platform)
+    public function convertToPHPValue($dateTimeString, AbstractPlatform $platform): ?DateTime
     {
         if (null === $dateTimeString || $dateTimeString instanceof DateTime) {
             return $dateTimeString;
@@ -61,20 +61,21 @@ class UTCDateTimeType extends DateTimeType
         return $dateTime;
     }
 
-    /**
-     * @return DateTimeZone
-     */
-    private static function getUtc()
+    private static function getUtc(): DateTimeZone
     {
-        return self::$utc ? self::$utc : self::$utc = new DateTimeZone('UTC');
+        if (self::$utc === null) {
+            self::$utc = new DateTimeZone('UTC');
+        }
+
+        return self::$utc;
     }
 
-    /**
-     * @return DateTimeZone
-     */
-    private static function getDefaultTimeZone()
+    private static function getDefaultTimeZone(): DateTimeZone
     {
-        return self::$defaultTimeZone
-            ? self::$defaultTimeZone : self::$defaultTimeZone = new DateTimeZone(date_default_timezone_get());
+        if (self::$defaultTimeZone === null) {
+            self::$defaultTimeZone = new DateTimeZone(date_default_timezone_get());
+        }
+
+        return self::$defaultTimeZone;
     }
 }

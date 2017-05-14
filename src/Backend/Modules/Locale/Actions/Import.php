@@ -30,10 +30,7 @@ class Import extends BackendBaseActionAdd
      */
     private $filterQuery;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->setFilter();
@@ -43,10 +40,7 @@ class Import extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('import');
         $this->frm->addFile('file');
@@ -56,7 +50,7 @@ class Import extends BackendBaseActionAdd
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // get filter values
         $this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
@@ -70,10 +64,7 @@ class Import extends BackendBaseActionAdd
         $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
@@ -86,7 +77,7 @@ class Import extends BackendBaseActionAdd
             // name checks
             if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
                 // only xml files allowed
-                if ($fileFile->isAllowedExtension(array('xml'), sprintf(BL::getError('ExtensionNotAllowed'), 'xml'))) {
+                if ($fileFile->isAllowedExtension(['xml'], sprintf(BL::getError('ExtensionNotAllowed'), 'xml'))) {
                     // load xml
                     $xml = @simplexml_load_file($fileFile->getTempFileName());
 

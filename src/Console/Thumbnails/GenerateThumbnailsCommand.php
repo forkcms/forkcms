@@ -15,26 +15,20 @@ use Symfony\Component\Finder\Finder;
  */
 class GenerateThumbnailsCommand extends Command
 {
-    /**
-     * Configure the command options.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('forkcms:thumbnails:generate')
             ->setAliases(['thumbnails:generate'])
             ->setDescription('Create thumbnails')
-            ->addOption('folder', 'f', InputOption::VALUE_OPTIONAL, 'Name of the folder in /src/Frontend/Files where you want to generate thumbnails for.');
+            ->addOption(
+                'folder',
+                'f',
+                InputOption::VALUE_OPTIONAL,
+                'Name of the folder in /src/Frontend/Files where you want to generate thumbnails for.'
+            );
     }
 
-    /**
-     * Execute the command.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int|null|void
-     * @throws Exception
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         // Get input values
         $folderOption = $input->getOption('folder');
@@ -49,12 +43,7 @@ class GenerateThumbnailsCommand extends Command
         $this->generateThumbnails($folderPath, $output);
     }
 
-    /**
-     * @param string $folderPath
-     * @param OutputInterface $output
-     * @throws Exception
-     */
-    private function generateThumbnails(string $folderPath, OutputInterface $output)
+    private function generateThumbnails(string $folderPath, OutputInterface $output): void
     {
         $finder = new Finder();
         $finder->files()->in($folderPath)->name('/^.*\.(jpg|jpeg|png|gif)$/i');

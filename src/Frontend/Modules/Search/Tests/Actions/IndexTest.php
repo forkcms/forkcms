@@ -9,16 +9,16 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testSearchIndexWorks()
+    public function testSearchIndexWorks(): void
     {
         $client = static::createClient();
 
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
                 'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
-            )
+            ]
         );
 
         $client->request('GET', '/en/search');
@@ -31,7 +31,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testNotSubmittedSearchIndexDoesNotContainData()
+    public function testNotSubmittedSearchIndexDoesNotContainData(): void
     {
         $client = static::createClient();
 
@@ -51,7 +51,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testSubmittedSearchValidatesData()
+    public function testSubmittedSearchValidatesData(): void
     {
         $client = static::createClient();
 
@@ -64,7 +64,7 @@ class IndexTest extends WebTestCase
         $form = $crawler->selectButton('Search')->form();
 
         // $_GET parameters should be set manually, since Fork uses them.
-        $this->submitForm($client, $form, array('form' => 'search'));
+        $this->submitForm($client, $form, ['form' => 'search']);
 
         // result should not yet be found
         self::assertContains(
@@ -76,7 +76,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testSubmittedSearchIndexContainsData()
+    public function testSubmittedSearchIndexContainsData(): void
     {
         $client = static::createClient();
 
@@ -88,11 +88,11 @@ class IndexTest extends WebTestCase
 
         $form = $crawler->selectButton('Search')->form();
 
-        $this->submitForm($client, $form, array(
+        $this->submitForm($client, $form, [
             'q' => 'Blogpost',
             'submit' => 'Search',
             'form' => 'search',
-        ));
+        ]);
 
         // result should not yet be found
         self::assertContains(

@@ -36,10 +36,7 @@ class Add extends BackendBaseActionAdd
      */
     private $notifyProfile;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->getData();
@@ -49,10 +46,7 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Get data
-     */
-    public function getData()
+    public function getData(): void
     {
         $this->notifyAdmin = $this->get('fork.settings')->get(
             $this->URL->getModule(),
@@ -67,16 +61,13 @@ class Add extends BackendBaseActionAdd
         );
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // gender dropdown values
-        $genderValues = array(
+        $genderValues = [
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
             'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
-        );
+        ];
 
         // birthdate dropdown values
         $days = range(1, 31);
@@ -110,10 +101,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->getField('country')->setDefaultElement('');
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -175,14 +163,14 @@ class Add extends BackendBaseActionAdd
                     $txtPassword->getValue() : BackendModel::generatePassword(8);
 
                 // build item
-                $values = array(
+                $values = [
                     'email' => $txtEmail->getValue(),
                     'registered_on' => BackendModel::getUTCDate(),
                     'display_name' => $txtDisplayName->getValue(),
                     'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue()),
                     'last_login' => BackendModel::getUTCDate(null, 0),
                     'password' => BackendProfilesModel::getEncryptedString($password, $salt),
-                );
+                ];
 
                 $this->id = BackendProfilesModel::insert($values);
 
@@ -211,12 +199,12 @@ class Add extends BackendBaseActionAdd
                 // notify values
                 $notifyValues = array_merge(
                     $values,
-                    array(
+                    [
                         'id' => $this->id,
                         'first_name' => $txtFirstName->getValue(),
                         'last_name' => $txtLastName->getValue(),
                         'unencrypted_password' => $password,
-                    )
+                    ]
                 );
 
                 $redirectUrl = BackendModel::createURLForAction('Edit') .
@@ -245,10 +233,7 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

@@ -12,7 +12,7 @@ class ResponseSecurer
      *
      * @param FilterResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         $headers = [
             'X-Frame-Options' => 'deny',

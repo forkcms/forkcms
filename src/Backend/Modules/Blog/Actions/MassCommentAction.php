@@ -18,18 +18,15 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class MassCommentAction extends BackendBaseAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         // current status
-        $from = \SpoonFilter::getGetValue('from', array('published', 'moderation', 'spam'), 'published');
+        $from = \SpoonFilter::getGetValue('from', ['published', 'moderation', 'spam'], 'published');
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
+        $action = \SpoonFilter::getGetValue('action', ['published', 'moderation', 'spam', 'delete'], 'spam');
 
         // no id's provided
         if (!isset($_GET['id'])) {

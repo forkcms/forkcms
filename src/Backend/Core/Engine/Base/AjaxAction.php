@@ -10,6 +10,7 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific AJAX action
@@ -21,14 +22,17 @@ class AjaxAction extends Object
     const FORBIDDEN = 403;
     const ERROR = 500;
 
-    /**
-     * Execute the action
-     *
-     * @return Response
-     */
-    public function execute()
+    public function __construct(KernelInterface $kernel, string $action = null, string $module = null)
     {
-        return $this->getContent();
+        parent::__construct($kernel);
+
+        if ($action !== null) {
+            $this->setAction($action, $module);
+        }
+    }
+
+    public function execute(): void
+    {
     }
 
     /**
@@ -41,34 +45,26 @@ class AjaxAction extends Object
      *
      * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
-        $statusCode = (isset($this->content['code']) ? $this->content['code'] : 200);
-
         return new Response(
             json_encode($this->content),
-            $statusCode,
-            array('content-type' => 'application/json')
+            $this->content['code'] ?? self::OK,
+            ['content-type' => 'application/json']
         );
     }
 
     /**
      * Output an answer to the browser
      *
-     * @param int    $statusCode The status code for the response, use the
+     * @param int $statusCode The status code for the response, use the
      *                           available constants:
      *                           self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR
-     * @param mixed  $data       The data to output.
-     * @param string $message    The text-message to send.
+     * @param mixed $data The data to output.
+     * @param string $message The text-message to send.
      */
-    public function output($statusCode, $data = null, $message = null)
+    public function output(int $statusCode, $data = null, string $message = null): void
     {
-        $statusCode = (int) $statusCode;
-        if ($message !== null) {
-            $message = (string) $message;
-        }
-
-        $response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
-        $this->content = $response;
+        $this->content = ['code' => $statusCode, 'data' => $data, 'message' => $message];
     }
 }

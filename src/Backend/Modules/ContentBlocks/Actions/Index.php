@@ -22,10 +22,7 @@ use Backend\Modules\ContentBlocks\DataGrid\ContentBlockDataGrid;
  */
 class Index extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrid();
@@ -33,10 +30,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         $this->dataGrid = new ContentBlockDataGrid(Locale::workingLocale());
         $this->dataGrid->setSortingColumns(['title']);
@@ -53,10 +47,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

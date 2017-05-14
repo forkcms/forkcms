@@ -18,33 +18,29 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class DeleteSynonym extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        parent::execute();
 
-        // does the item exist
-        if ($this->id !== null && BackendSearchModel::existsSynonymById($this->id)) {
-            // call parent, this will probably add some general CSS/JS or other required files
-            parent::execute();
+        $id = $this->getId();
+        $synonym = (array) BackendSearchModel::getSynonym($id);
+        BackendSearchModel::deleteSynonym($id);
 
-            // get data
-            $this->record = (array) BackendSearchModel::getSynonym($this->id);
+        $this->redirect(
+            BackendModel::createURLForAction('Synonyms') . '&report=deleted-synonym&var=' . rawurlencode(
+                $synonym['term']
+            )
+        );
+    }
 
-            // delete item
-            BackendSearchModel::deleteSynonym($this->id);
+    private function getId(): int
+    {
+        $id = $this->getParameter('id', 'int');
 
-            // item was deleted, so redirect
-            $this->redirect(
-                BackendModel::createURLForAction('Synonyms') . '&report=deleted-synonym&var=' . rawurlencode(
-                    $this->record['term']
-                )
-            );
-        } else {
+        if ($id === 0 || !BackendSearchModel::existsSynonymById($id)) {
             $this->redirect(BackendModel::createURLForAction('Synonyms') . '&error=non-existing');
         }
+
+        return $id;
     }
 }

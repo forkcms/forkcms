@@ -33,13 +33,10 @@ class Index extends BackendBaseActionIndex
     /**
      * @var array
      */
-    protected $items = array();
-    protected $settings = array();
+    protected $items = [];
+    protected $settings = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->header->addJS(FrontendLocationModel::getPathToMapStyles());
         parent::execute();
@@ -64,10 +61,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the settings
-     */
-    protected function loadData()
+    protected function loadData(): void
     {
         $this->items = BackendLocationModel::getAll();
         $this->settings = BackendLocationModel::getMapSettings(0);
@@ -75,7 +69,7 @@ class Index extends BackendBaseActionIndex
 
         // if there are no markers we reset it to the birthplace of Fork
         if ($firstMarker === false) {
-            $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
+            $firstMarker = ['lat' => '51.052146', 'lng' => '3.720491'];
         }
 
         // load the settings from the general settings
@@ -96,16 +90,13 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Loads the datagrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         $this->dataGrid = new BackendDataGridDB(
             BackendLocationModel::QRY_DATAGRID_BROWSE,
-            array(BL::getWorkingLanguage())
+            [BL::getWorkingLanguage()]
         );
-        $this->dataGrid->setSortingColumns(array('address', 'title'), 'address');
+        $this->dataGrid->setSortingColumns(['address', 'title'], 'address');
         $this->dataGrid->setSortParameter('ASC');
 
         // check if this action is allowed
@@ -124,28 +115,25 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the settings form
-     */
-    protected function loadSettingsForm()
+    protected function loadSettingsForm(): void
     {
-        $mapTypes = array(
+        $mapTypes = [
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
             'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
-        );
-        $mapStyles = array(
+        ];
+        $mapStyles = [
             'standard' => BL::lbl('Default', $this->getModule()),
             'custom' => BL::lbl('Custom', $this->getModule()),
             'gray' => BL::lbl('Gray', $this->getModule()),
             'blue' => BL::lbl('Blue', $this->getModule()),
-        );
+        ];
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(1, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
+            array_merge(['auto'], range(1, 18)),
+            array_merge([BL::lbl('Auto', $this->getModule())], range(1, 18))
         );
 
         $this->form = new BackendForm('settings');
@@ -163,10 +151,7 @@ class Index extends BackendBaseActionIndex
         );
     }
 
-    /**
-     * Parse the datagrid
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

@@ -11,6 +11,9 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
+use SpoonFormButton;
+use SpoonFormFile;
+use SpoonFormTextarea;
 
 /**
  * This is our extended version of \SpoonForm
@@ -22,7 +25,7 @@ class Form extends \Common\Core\Form
      *
      * @var bool
      */
-    private $useGlobalError = true;
+    private $useGlobalError;
 
     /**
      * @param string $name           Name of the form.
@@ -73,10 +76,11 @@ class Form extends \Common\Core\Form
      * @param string $type  The type of the button (submit is default).
      * @param string $class Class(es) that will be applied on the button.
      *
-     * @return \SpoonFormButton
      * @throws Exception
+     *
+     * @return SpoonFormButton
      */
-    public function addButton($name, $value, $type = 'submit', $class = null)
+    public function addButton($name, $value, $type = 'submit', $class = null): SpoonFormButton
     {
         $name = (string) $name;
         $value = (string) $value;
@@ -119,23 +123,23 @@ class Form extends \Common\Core\Form
         $date2 = null,
         $class = null,
         $classError = null
-    ) {
+    ): FormDate {
         $name = (string) $name;
         $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
-        $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
+        $type = \SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-date inputDate';
         $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // validate
-        if ($type == 'from' && ($date == 0 || $date == null)) {
+        if ($type === 'from' && ($date === 0 || $date === null)) {
             throw new Exception('A datefield with type "from" should have a valid date-parameter.');
         }
-        if ($type == 'till' && ($date == 0 || $date == null)) {
+        if ($type === 'till' && ($date === 0 || $date === null)) {
             throw new Exception('A datefield with type "till" should have a valid date-parameter.');
         }
-        if ($type == 'range' && ($date == 0 || $date2 == 0 || $date == null || $date2 == null)) {
+        if ($type === 'range' && ($date === 0 || $date2 === 0 || $date === null || $date2 === null)) {
             throw new Exception('A datefield with type "range" should have 2 valid date-parameters.');
         }
 
@@ -144,12 +148,14 @@ class Form extends \Common\Core\Form
         $firstday = 1;
 
         // build attributes
-        $attributes['data-mask'] = str_replace(
-            array('d', 'm', 'Y', 'j', 'n'),
-            array('dd', 'mm', 'yy', 'd', 'm'),
-            $mask
-        );
-        $attributes['data-firstday'] = $firstday;
+        $attributes = [
+            'data-mask' => str_replace(
+                ['d', 'm', 'Y', 'j', 'n'],
+                ['dd', 'mm', 'yy', 'd', 'm'],
+                $mask
+            ),
+            'data-firstday' => $firstday,
+        ];
 
         // add extra classes based on type
         switch ($type) {
@@ -201,9 +207,9 @@ class Form extends \Common\Core\Form
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the field contain HTML?
      *
-     * @return \SpoonFormTextarea
+     * @return SpoonFormTextarea
      */
-    public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true)
+    public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true): SpoonFormTextarea
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
@@ -242,9 +248,9 @@ class Form extends \Common\Core\Form
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
-     * @return \SpoonFormFile
+     * @return SpoonFormFile
      */
-    public function addFile($name, $class = null, $classError = null)
+    public function addFile($name, $class = null, $classError = null): SpoonFormFile
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'fork-form-file';
@@ -265,7 +271,7 @@ class Form extends \Common\Core\Form
      *
      * @return FormImage
      */
-    public function addImage($name, $class = null, $classError = null)
+    public function addImage($name, $class = null, $classError = null): FormImage
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'fork-form-image';
@@ -284,7 +290,7 @@ class Form extends \Common\Core\Form
      *
      * @return array
      */
-    public function getValues($excluded = array('form', 'save', 'form_token', '_utf8'))
+    public function getValues($excluded = ['form', 'save', 'form_token', '_utf8']): array
     {
         return parent::getValues($excluded);
     }
@@ -296,7 +302,7 @@ class Form extends \Common\Core\Form
      *
      * @return bool
      */
-    public function isCorrect($revalidate = true)
+    public function isCorrect($revalidate = true): bool
     {
         return parent::isCorrect($revalidate);
     }
@@ -306,7 +312,7 @@ class Form extends \Common\Core\Form
      *
      * @param TwigTemplate $tpl The template instance wherein the form will be parsed.
      */
-    public function parse($tpl)
+    public function parse($tpl): void
     {
         parent::parse($tpl);
         $this->validate();

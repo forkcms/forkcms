@@ -24,10 +24,6 @@ final class FormBuilderSubmittedMailSubscriber
      */
     protected $mailer;
 
-    /**
-     * @param Swift_Mailer $mailer
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(
         Swift_Mailer $mailer,
         ModulesSettings $modulesSettings
@@ -36,10 +32,7 @@ final class FormBuilderSubmittedMailSubscriber
         $this->modulesSettings = $modulesSettings;
     }
 
-    /**
-     * @param FormBuilderSubmittedEvent $event
-     */
-    public function onFormSubmitted(FormBuilderSubmittedEvent $event)
+    public function onFormSubmitted(FormBuilderSubmittedEvent $event): void
     {
         $form = $event->getForm();
         $fieldData = $this->getEmailFields($event->getData());
@@ -66,7 +59,7 @@ final class FormBuilderSubmittedMailSubscriber
      * @param array $form
      * @param array $fieldData
      * @param string $subject
-     * @param string|null $to
+     * @param string|array|null $to
      * @param bool $isConfirmationMail
      *
      * @return Swift_Mime_SimpleMessage
@@ -74,10 +67,10 @@ final class FormBuilderSubmittedMailSubscriber
     private function getMessage(
         array $form,
         array $fieldData,
-        $subject = null,
+        string $subject = null,
         $to = null,
-        $isConfirmationMail = false
-    ) {
+        bool $isConfirmationMail = false
+    ) : Swift_Mime_SimpleMessage {
         if ($subject === null) {
             $subject = Language::getMessage('FormBuilderSubject');
         }
@@ -87,12 +80,12 @@ final class FormBuilderSubmittedMailSubscriber
         $message = Message::newInstance(sprintf($subject, $form['name']))
             ->parseHtml(
                 '/FormBuilder/Layout/Templates/Mails/' . $form['email_template'],
-                array(
+                [
                     'subject' => $subject,
                     'sentOn' => time(),
                     'name' => $form['name'],
                     'fields' => array_map(
-                        function (array $field) {
+                        function (array $field) : \Swift_Mime_SimpleMessage {
                             $field['value'] = html_entity_decode($field['value']);
 
                             return $field;
@@ -100,11 +93,11 @@ final class FormBuilderSubmittedMailSubscriber
                         $fieldData
                     ),
                     'is_confirmation_mail' => $isConfirmationMail,
-                ),
+                ],
                 true
             )
             ->setTo(($to === null) ? $form['email'] : $to)
-            ->setFrom(array($from['email'] => $from['name']))
+            ->setFrom([$from['email'] => $from['name']])
         ;
 
         // check if we have a replyTo email set
@@ -113,12 +106,12 @@ final class FormBuilderSubmittedMailSubscriber
                 $field['settings']['reply_to'] === true
             ) {
                 $email = $fieldData[$field['id']]['value'];
-                $message->setReplyTo(array($email => $email));
+                $message->setReplyTo([$email => $email]);
             }
         }
         if ($message->getReplyTo() === null) {
             $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
-            $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
+            $message->setReplyTo([$replyTo['email'] => $replyTo['name']]);
         }
 
         return $message;
@@ -127,23 +120,23 @@ final class FormBuilderSubmittedMailSubscriber
     /**
      * Converts the data to make sure it is nicely usable in the email
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return array
      */
-    protected function getEmailFields($data)
+    protected function getEmailFields(array $data): array
     {
         return array_map(
-            function ($item) {
+            function ($item) : array {
                 $value = unserialize($item['value']);
 
-                return array(
+                return [
                     'label' => $item['label'],
                     'value' => (is_array($value)
                         ? implode(',', $value)
                         : nl2br($value)
                     ),
-                );
+                ];
             },
             $data
         );

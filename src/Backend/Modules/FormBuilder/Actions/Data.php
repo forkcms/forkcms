@@ -54,9 +54,9 @@ class Data extends BackendBaseActionIndex
      *
      * @return array An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
-        $parameters = array($this->id);
+        $parameters = [$this->id];
 
         // start query, as you can see this query is build in the wrong place,
         // because of the filter it is a special case
@@ -87,13 +87,10 @@ class Data extends BackendBaseActionIndex
         }
 
         // new query
-        return array($query, $parameters);
+        return [$query, $parameters];
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');
@@ -113,10 +110,7 @@ class Data extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendFormBuilderModel::get($this->id);
 
@@ -125,10 +119,7 @@ class Data extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         list($query, $parameters) = $this->buildQuery();
 
@@ -141,19 +132,19 @@ class Data extends BackendBaseActionIndex
                 null,
                 null,
                 null,
-                array(
+                [
                     'offset' => '[offset]',
                     'order' => '[order]',
                     'sort' => '[sort]',
                     'start_date' => $this->filter['start_date'],
                     'end_date' => $this->filter['end_date'],
-                ),
+                ],
                 false
             ) . '&amp;id=' . $this->id
         );
 
         // sorting columns
-        $this->dataGrid->setSortingColumns(array('sent_on'), 'sent_on');
+        $this->dataGrid->setSortingColumns(['sent_on'], 'sent_on');
         $this->dataGrid->setSortParameter('desc');
 
         // check if this action is allowed
@@ -165,10 +156,10 @@ class Data extends BackendBaseActionIndex
                     'DataDetails',
                     null,
                     null,
-                    array(
+                    [
                         'start_date' => $this->filter['start_date'],
                         'end_date' => $this->filter['end_date'],
-                    ),
+                    ],
                     false
                 ) . '&amp;id=[id]'
             );
@@ -182,10 +173,10 @@ class Data extends BackendBaseActionIndex
                     'DataDetails',
                     null,
                     null,
-                    array(
+                    [
                         'start_date' => $this->filter['start_date'],
                         'end_date' => $this->filter['end_date'],
-                    )
+                    ]
                 ) . '&amp;id=[id]',
                 BL::getLabel('Details')
             );
@@ -193,7 +184,7 @@ class Data extends BackendBaseActionIndex
 
         // date
         $this->dataGrid->setColumnFunction(
-            array(new BackendFormBuilderModel(), 'calculateTimeAgo'),
+            [new BackendFormBuilderModel(), 'calculateTimeAgo'],
             '[sent_on]',
             'sent_on',
             false
@@ -204,15 +195,12 @@ class Data extends BackendBaseActionIndex
         $this->dataGrid->setMassActionCheckboxes('check', '[id]');
 
         // mass action
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
-        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDelete'));
+        $ddmMassAction = new \SpoonFormDropdown('action', ['delete' => BL::getLabel('Delete')], 'delete');
+        $ddmMassAction->setOptionAttributes('delete', ['data-target' => '#confirmDelete']);
         $this->dataGrid->setMassAction($ddmMassAction);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $startDate = '';
         $endDate = '';
@@ -241,10 +229,7 @@ class Data extends BackendBaseActionIndex
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -260,7 +245,7 @@ class Data extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // start date is set
         if (isset($_GET['start_date']) && $_GET['start_date'] != '') {

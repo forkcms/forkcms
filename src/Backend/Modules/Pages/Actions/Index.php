@@ -30,10 +30,7 @@ class Index extends BackendBaseActionIndex
     private $dgDrafts;
     private $dgRecentlyEdited;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -52,42 +49,39 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid with the drafts
-     */
-    private function loadDataGridDrafts()
+    private function loadDataGridDrafts(): void
     {
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
             BackendPagesModel::QRY_DATAGRID_BROWSE_DRAFTS,
-            array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage())
+            ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
         );
 
         // hide columns
-        $this->dgDrafts->setColumnsHidden(array('revision_id'));
+        $this->dgDrafts->setColumnsHidden(['revision_id']);
 
         // disable paging
         $this->dgDrafts->setPaging(false);
 
         // set column functions
         $this->dgDrafts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id',
             true
         );
         $this->dgDrafts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[edited_on]'],
             'edited_on'
         );
 
         // set headers
         $this->dgDrafts->setHeaderLabels(
-            array(
+            [
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
                  'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
-            )
+            ]
         );
 
         // check if allowed to edit
@@ -109,41 +103,38 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the datagrid with the recently edited items
-     */
-    private function loadDataGridRecentlyEdited()
+    private function loadDataGridRecentlyEdited(): void
     {
         // create dgRecentlyEdited
         $this->dgRecentlyEdited = new BackendDataGridDB(
             BackendPagesModel::QRY_BROWSE_RECENT,
-            array('active', BL::getWorkingLanguage(), 7)
+            ['active', BL::getWorkingLanguage(), 7]
         );
 
         // disable paging
         $this->dgRecentlyEdited->setPaging(false);
 
         // hide columns
-        $this->dgRecentlyEdited->setColumnsHidden(array('id'));
+        $this->dgRecentlyEdited->setColumnsHidden(['id']);
 
         // set functions
         $this->dgRecentlyEdited->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id'
         );
         $this->dgRecentlyEdited->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getTimeAgo'],
+            ['[edited_on]'],
             'edited_on'
         );
 
         // set headers
         $this->dgRecentlyEdited->setHeaderLabels(
-            array(
+            [
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
                  'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
-            )
+            ]
         );
 
         // check if allowed to edit
@@ -166,10 +157,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrids()
+    private function loadDataGrids(): void
     {
         // load the datagrid with the recently edited items
         $this->loadDataGridRecentlyEdited();
@@ -178,10 +166,7 @@ class Index extends BackendBaseActionIndex
         $this->loadDataGridDrafts();
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

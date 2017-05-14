@@ -28,13 +28,13 @@ class Model
      *
      * @param int $id The userId to delete.
      */
-    public static function delete($id)
+    public static function delete(int $id): void
     {
         BackendModel::getContainer()->get('database')->update(
             'users',
-            array('active' => 'N', 'deleted' => 'Y'),
+            ['active' => 'N', 'deleted' => 'Y'],
             'id = ?',
-            array((int) $id)
+            [$id]
         );
     }
 
@@ -43,12 +43,12 @@ class Model
      *
      * @param int $id The userId wherefore the reset-stuff should be deleted.
      */
-    public static function deleteResetPasswordSettings($id)
+    public static function deleteResetPasswordSettings(int $id): void
     {
         BackendModel::getContainer()->get('database')->delete(
             'users_settings',
             '(name = \'reset_password_key\' OR name = \'reset_password_timestamp\') AND user_id = ?',
-            array((int) $id)
+            [$id]
         );
     }
 
@@ -59,7 +59,7 @@ class Model
      *
      * @return bool
      */
-    public static function emailDeletedBefore($email)
+    public static function emailDeletedBefore(string $email): bool
     {
         // no user to ignore
         return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -67,7 +67,7 @@ class Model
              FROM users AS i
              WHERE i.email = ? AND i.deleted = ?
              LIMIT 1',
-            array((string) $email, 'Y')
+            [$email, 'Y']
         );
     }
 
@@ -79,11 +79,8 @@ class Model
      *
      * @return bool
      */
-    public static function exists($id, $active = true)
+    public static function exists(int $id, bool $active = true): bool
     {
-        $id = (int) $id;
-        $active = (bool) $active;
-
         // get db
         $db = BackendModel::getContainer()->get('database');
 
@@ -94,7 +91,7 @@ class Model
                  FROM users AS i
                  WHERE i.id = ? AND i.deleted = ?
                  LIMIT 1',
-                array($id, 'N')
+                [$id, 'N']
             );
         }
 
@@ -104,7 +101,7 @@ class Model
              FROM users AS i
              WHERE i.id = ?
              LIMIT 1',
-            array($id)
+            [$id]
         );
     }
 
@@ -117,11 +114,8 @@ class Model
      *
      * @return bool
      */
-    public static function existsEmail($email, $id = null)
+    public static function existsEmail(string $email, int $id = null): bool
     {
-        $email = (string) $email;
-        $id = ($id !== null) ? (int) $id : null;
-
         // get db
         $db = BackendModel::getContainer()->get('database');
 
@@ -132,7 +126,7 @@ class Model
                  FROM users AS i
                  WHERE i.id != ? AND i.email = ?
                  LIMIT 1',
-                array($id, $email)
+                [$id, $email]
             );
         }
 
@@ -142,22 +136,12 @@ class Model
              FROM users AS i
              WHERE i.email = ?
              LIMIT 1',
-            array($email)
+            [$email]
         );
     }
 
-    /**
-     * Get all data for a given user
-     *
-     * @param int $id The userId to get the data for.
-     *
-     * @return array
-     */
-    public static function get($id)
+    public static function get(int $id): array
     {
-        // redefine
-        $id = (int) $id;
-
         // get db
         $db = BackendModel::getContainer()->get('database');
 
@@ -166,12 +150,12 @@ class Model
             'SELECT i.id, i.email, i.password, i.active
              FROM users AS i
              WHERE i.id = ?',
-            array($id)
+            [$id]
         );
 
         // Don't add a settings element, just return an empty array here if no user is found.
         if (empty($user)) {
-            return array();
+            return [];
         }
 
         // get user-settings
@@ -179,7 +163,7 @@ class Model
             'SELECT s.name, s.value
              FROM users_settings AS s
              WHERE s.user_id = ?',
-            array($id)
+            [$id]
         );
 
         // loop settings and unserialize them
@@ -191,30 +175,20 @@ class Model
         return $user;
     }
 
-    /**
-     * Get the possible line endings for a CSV-file
-     *
-     * @return array
-     */
-    public static function getCSVLineEndings()
+    public static function getCSVLineEndings(): array
     {
-        return array(
+        return [
             '\n' => '\n',
             '\r\n' => '\r\n',
-        );
+        ];
     }
 
-    /**
-     * Get the possible CSV split characters
-     *
-     * @return array
-     */
-    public static function getCSVSplitCharacters()
+    public static function getCSVSplitCharacters(): array
     {
-        return array(
+        return [
             ';' => ';',
             ',' => ',',
-        );
+        ];
     }
 
     /**
@@ -222,10 +196,10 @@ class Model
      *
      * @return array
      */
-    public static function getDateFormats()
+    public static function getDateFormats(): array
     {
         // init var
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach ((array) BackendModel::get('fork.settings')->get('Users', 'date_formats') as $format) {
@@ -240,12 +214,7 @@ class Model
         return $possibleFormats;
     }
 
-    /**
-     * Get user groups
-     *
-     * @return array
-     */
-    public static function getGroups()
+    public static function getGroups(): array
     {
         return (array) BackendModel::getContainer()->get('database')->getPairs(
             'SELECT i.id, i.name
@@ -256,11 +225,11 @@ class Model
     /**
      * Get all module action combinations a user has access to
      *
-     * @param  int $userId The id of the user
+     * @param string $module
      *
      * @return array
      */
-    public static function getModuleGroupsRightsActions($userId)
+    public static function getModuleGroupsRightsActions(string $module): array
     {
         return (array) BackendModel::get('database')->getRecords(
             'SELECT a.module, a.action
@@ -271,7 +240,7 @@ class Model
                     AND m.module = a.module
             WHERE m.module = ?
             GROUP BY a.module, a.action',
-            $userId
+            $module
         );
     }
 
@@ -280,20 +249,23 @@ class Model
      *
      * @param string $email The email for the user.
      *
-     * @return int
+     * @return int|false
      */
-    public static function getIdByEmail($email)
+    public static function getIdByEmail(string $email)
     {
         // get user-settings
-        $userId = BackendModel::getContainer()->get('database')->getVar(
+        $userId = (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.id
              FROM users AS i
              WHERE i.email = ?',
-            array((string) $email)
+            [$email]
         );
 
-        // userId or false on error
-        return ($userId == 0) ? false : (int) $userId;
+        if ($userId === 0) {
+            return false;
+        }
+
+        return $userId;
     }
 
     /**
@@ -301,10 +273,10 @@ class Model
      *
      * @return array
      */
-    public static function getNumberFormats()
+    public static function getNumberFormats(): array
     {
         // init var
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach ((array) BackendModel::get('fork.settings')->get('Core', 'number_formats') as $format => $example) {
@@ -315,22 +287,14 @@ class Model
         return $possibleFormats;
     }
 
-    /**
-     * Fetch a user setting for a specific user
-     *
-     * @param int    $userId  The id of the user.
-     * @param string $setting The name of the setting to get.
-     *
-     * @return mixed
-     */
-    public static function getSetting($userId, $setting)
+    public static function getSetting(int $userId, string $setting)
     {
         return @unserialize(
             BackendModel::getContainer()->get('database')->getVar(
                 'SELECT value
                  FROM users_settings
                  WHERE user_id = ? AND name = ?',
-                array((int) $userId, (string) $setting)
+                [$userId, $setting]
             )
         );
     }
@@ -340,10 +304,10 @@ class Model
      *
      * @return array
      */
-    public static function getTimeFormats()
+    public static function getTimeFormats(): array
     {
         // init var
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach (BackendModel::get('fork.settings')->get('Users', 'time_formats') as $format) {
@@ -358,12 +322,7 @@ class Model
         return $possibleFormats;
     }
 
-    /**
-     * Get all users
-     *
-     * @return array
-     */
-    public static function getUsers()
+    public static function getUsers(): array
     {
         // fetch users
         $users = (array) BackendModel::getContainer()->get('database')->getPairs(
@@ -371,7 +330,7 @@ class Model
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
              WHERE i.active = ? AND i.deleted = ?',
-            array('nickname', 'Y', 'N')
+            ['nickname', 'Y', 'N']
         );
 
         // loop users & unserialize
@@ -383,30 +342,22 @@ class Model
         return $users;
     }
 
-    /**
-     * Add a new user.
-     *
-     * @param array $user     The userdata.
-     * @param array $settings The settings for the new user.
-     *
-     * @return int
-     */
-    public static function insert(array $user, array $settings)
+    public static function insert(array $user, array $settings): int
     {
         // get db
         $db = BackendModel::getContainer()->get('database');
 
         // update user
         $userId = (int) $db->insert('users', $user);
-        $userSettings = array();
+        $userSettings = [];
 
         // loop settings
         foreach ($settings as $key => $value) {
-            $userSettings[] = array(
+            $userSettings[] = [
                 'user_id' => $userId,
                 'name' => $key,
                 'value' => serialize($value),
-            );
+            ];
         }
 
         // insert all settings at once
@@ -416,40 +367,28 @@ class Model
         return $userId;
     }
 
-    /**
-     * Set a user setting for a specific user
-     *
-     * @param int    $userId  The id of the user.
-     * @param string $setting The name of the setting to set.
-     * @param string $value   The value of the setting to set.
-     *
-     * @return mixed
-     */
-    public static function setSetting($userId, $setting, $value)
+    public static function setSetting(int $userId, string $setting, string $value): void
     {
         // insert or update
         BackendModel::getContainer()->get('database')->execute(
             'INSERT INTO users_settings(user_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array($userId, $setting, serialize($value), serialize($value))
+            [$userId, $setting, serialize($value), serialize($value)]
         );
     }
 
     /**
      * Restores a user
      *
-     * @later    this method should check if all needed data is present
+     * @later this method should check if all needed data is present
      *
      * @param string $email The e-mail address of the user to restore.
      *
      * @return bool
      */
-    public static function undoDelete($email)
+    public static function undoDelete(string $email): bool
     {
-        // redefine
-        $email = (string) $email;
-
         // get db
         $db = BackendModel::getContainer()->get('database');
 
@@ -459,35 +398,35 @@ class Model
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id
              WHERE i.email = ? AND i.deleted = ?',
-            array($email, 'Y')
+            [$email, 'Y']
         );
 
         // no valid users
         if ($id === null) {
             return false;
-        } else {
-            // restore
-            $db->update('users', array('active' => 'Y', 'deleted' => 'N'), 'id = ?', (int) $id);
-
-            // return
-            return true;
         }
+
+        // restore
+        $db->update('users', ['active' => 'Y', 'deleted' => 'N'], 'id = ?', (int) $id);
+
+        // return
+        return true;
     }
 
     /**
      * Save the changes for a given user
      * Remark: $user['id'] should be available
      *
-     * @param array $user     The userdata.
+     * @param array $user The userdata.
      * @param array $settings The settings for the user.
      */
-    public static function update(array $user, array $settings)
+    public static function update(array $user, array $settings): int
     {
         // get db
         $db = BackendModel::getContainer()->get('database');
 
         // update user
-        $updated = $db->update('users', $user, 'id = ?', array($user['id']));
+        $updated = $db->update('users', $user, 'id = ?', [$user['id']]);
 
         // loop settings
         foreach ($settings as $key => $value) {
@@ -496,7 +435,7 @@ class Model
                 'INSERT INTO users_settings(user_id, name, value)
                  VALUES(?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?',
-                array($user['id'], $key, serialize($value), serialize($value))
+                [$user['id'], $key, serialize($value), serialize($value)]
             );
         }
 
@@ -506,10 +445,10 @@ class Model
     /**
      * Update the user password
      *
-     * @param BackendUser $user     An instance of BackendUser.
-     * @param string      $password The new password for the user.
+     * @param BackendUser $user An instance of BackendUser.
+     * @param string $password The new password for the user.
      */
-    public static function updatePassword(BackendUser $user, $password)
+    public static function updatePassword(BackendUser $user, string $password): void
     {
         // fetch user info
         $userId = $user->getUserId();
@@ -518,7 +457,7 @@ class Model
         // update user
         BackendModel::getContainer()->get('database')->update(
             'users',
-            array('password' => BackendAuthentication::getEncryptedString((string) $password, $key)),
+            ['password' => BackendAuthentication::getEncryptedString($password, $key)],
             'id = ?',
             $userId
         );

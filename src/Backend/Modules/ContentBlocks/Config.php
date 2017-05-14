@@ -16,5 +16,4 @@ use Backend\Core\Engine\Base\Config as BackendBaseConfig;
  */
 class Config extends BackendBaseConfig
 {
-    // Just use the defaults
 }

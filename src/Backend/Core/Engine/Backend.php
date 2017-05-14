@@ -20,14 +20,14 @@ use Symfony\Component\HttpFoundation\Response;
 class Backend extends KernelLoader implements ApplicationInterface
 {
     /**
-     * @var Base\Action
+     * @var Action
      */
     private $action;
 
     /**
      * @return Response
      */
-    public function display()
+    public function display(): Response
     {
         return $this->action->execute();
     }
@@ -36,7 +36,7 @@ class Backend extends KernelLoader implements ApplicationInterface
      * This method exists because the service container needs to be set before
      * the page's functionality gets loaded.
      */
-    public function initialize()
+    public function initialize(): void
     {
         $url = new Url($this->getKernel());
 

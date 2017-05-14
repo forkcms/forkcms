@@ -25,7 +25,7 @@ class ExportData extends BackendBaseAction
      *
      * @var array
      */
-    private $columnHeaders = array();
+    private $columnHeaders = [];
 
     /**
      * The filter.
@@ -46,17 +46,17 @@ class ExportData extends BackendBaseAction
      *
      * @var array
      */
-    private $rows = array();
+    private $rows = [];
 
     /**
      * Builds the query for this datagrid.
      *
      * @return array An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
         // init var
-        $parameters = array($this->id);
+        $parameters = [$this->id];
 
         /*
          * Start query, as you can see this query is build in the wrong place, because of the filter
@@ -88,13 +88,10 @@ class ExportData extends BackendBaseAction
             $parameters[] = BackendModel::getUTCDate(null, gmmktime(23, 59, 59, $chunks[1], $chunks[0], $chunks[2]));
         }
 
-        return array($query, $parameters);
+        return [$query, $parameters];
     }
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -113,7 +110,7 @@ class ExportData extends BackendBaseAction
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // start date is set
         if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
@@ -159,19 +156,19 @@ class ExportData extends BackendBaseAction
     /**
      * Fetch data for this form from the database and reformat to csv rows.
      */
-    private function setItems()
+    private function setItems(): void
     {
         // init header labels
         $lblSessionId = \SpoonFilter::ucfirst(BL::lbl('SessionId'));
         $lblSentOn = \SpoonFilter::ucfirst(BL::lbl('SentOn'));
-        $this->columnHeaders = array($lblSessionId, $lblSentOn);
+        $this->columnHeaders = [$lblSessionId, $lblSentOn];
 
         // fetch query and parameters
         list($query, $parameters) = $this->buildQuery();
 
         // get the data
         $records = (array) $this->get('database')->getRecords($query, $parameters);
-        $data = array();
+        $data = [];
 
         // reformat data
         foreach ($records as $row) {

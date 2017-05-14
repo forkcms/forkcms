@@ -232,3 +232,23 @@ routing.php has been renamed to ForkController because we need the classname to 
 | \BaseModel            | \ForkCMS\App\BaseModel            |
 | \ApplicationInterface | \ForkCMS\App\ApplicationInterface |
 | \AppKernel            | \ForkCMS\App\AppKernel            |
+
+## php 7 typehints and return types
+
+Since we added these everything has gotten a little more strict but it should also be more safe to use methods now
+
+## Template::assign no longer takes arrays
+
+you should use Template::assignArray for that
+
+## Cronjob action has been removed
+
+use symfony console commands instead
+
+## ModuleInstaller::insertExtra now needs the data as an array instead of a string
+
+you shouldn't pass the data serialised anymore and boolean values should be passed as booleans and not 'Y' or 'N'
+
+## new dependency injection parameters
+
+- `fork.is_installed` used to check if fork is installed 

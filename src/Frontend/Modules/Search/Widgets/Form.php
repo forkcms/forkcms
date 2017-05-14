@@ -18,45 +18,21 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
  */
 class Form extends FrontendBaseWidget
 {
-    /**
-     * @var FrontendForm
-     */
-    private $frm;
-
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
-        $this->loadForm();
-        $this->parse();
-    }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
-    {
-        $this->frm = new FrontendForm('search', FrontendNavigation::getURLForBlock('Search'), 'get', null, false);
-        $widgetField = $this->frm->addText('q_widget');
+        $this->addJS('/js/vendors/typeahead.bundle.min.js', true, false);
+        $this->addCSS('Search.css');
 
-        $widgetField->setAttributes(
-            array(
+        $form = new FrontendForm('search', FrontendNavigation::getURLForBlock('Search'), 'get', null, false);
+        $form->addText('q_widget')->setAttributes(
+            [
                 'itemprop' => 'query-input',
                 'data-role' => 'fork-widget-search-field',
-            )
+            ]
         );
-    }
-
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
-    {
-        $this->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true);
-        $this->addCSS('Search.css');
-        $this->frm->parse($this->tpl);
+        $form->parse($this->tpl);
     }
 }

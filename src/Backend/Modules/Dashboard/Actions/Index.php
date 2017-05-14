@@ -29,12 +29,9 @@ class Index extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $widgets = array();
+    private $widgets = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadData();
@@ -42,10 +39,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the data
-     */
-    private function loadData()
+    private function loadData(): void
     {
         $modules = BackendModel::getModules();
         $filesystem = new Filesystem();
@@ -129,12 +123,12 @@ class Index extends BackendBaseActionIndex
                     }
 
                     // build item
-                    $item = array(
+                    $item = [
                         'content' => $content,
                         'module' => $module,
                         'widget' => $widgetName,
                         'title' => $title,
-                    );
+                    ];
 
                     // add on new position if no position is set or if the position is already used
                     $this->widgets[] = $item;
@@ -143,10 +137,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Parse the page with its widgets.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

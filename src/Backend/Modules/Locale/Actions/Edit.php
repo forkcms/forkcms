@@ -34,10 +34,7 @@ class Edit extends BackendBaseActionEdit
      */
     private $filterQuery;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -55,21 +52,15 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendLocaleModel::get($this->id);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
-        $this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('id' => $this->id)) . $this->filterQuery);
-        $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->record['application']);
+        $this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, ['id' => $this->id]) . $this->filterQuery);
+        $this->frm->addDropdown('application', ['Backend' => 'Backend', 'Frontend' => 'Frontend'], $this->record['application']);
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
         $this->frm->addText('name', $this->record['name']);
@@ -77,10 +68,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('language', BL::getWorkingLanguages(), $this->record['language']);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -88,7 +76,7 @@ class Edit extends BackendBaseActionEdit
         $filter = \SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
 
         // parse filter
-        $this->tpl->assign($filter);
+        $this->tpl->assignArray($filter);
         $this->tpl->assign('filterQuery', $this->filterQuery);
 
         // assign id, name
@@ -99,7 +87,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         $this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
         $this->filter['application'] = $this->getParameter('application');
@@ -112,10 +100,7 @@ class Edit extends BackendBaseActionEdit
         $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
@@ -157,6 +142,7 @@ class Edit extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['id'] = $this->id;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['language'] = $this->frm->getField('language')->getValue();

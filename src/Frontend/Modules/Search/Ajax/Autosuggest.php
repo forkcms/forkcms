@@ -9,6 +9,7 @@ namespace Frontend\Modules\Search\Ajax;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Exception as FrontendException;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Language\Language as FL;
@@ -54,13 +55,13 @@ class Autosuggest extends FrontendBaseAJAXAction
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 20,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * The requested page
@@ -83,10 +84,7 @@ class Autosuggest extends FrontendBaseAJAXAction
      */
     private $length;
 
-    /**
-     * Display
-     */
-    private function display()
+    private function display(): void
     {
         // set variables
         $this->requestedPage = 1;
@@ -106,22 +104,14 @@ class Autosuggest extends FrontendBaseAJAXAction
         $this->parse();
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->validateForm();
         $this->display();
     }
 
-    /**
-     * Load the cached data
-     *
-     * @return bool
-     */
-    private function getCachedData()
+    private function getCachedData(): bool
     {
         // no search term = no search
         if (!$this->term) {
@@ -156,10 +146,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         return true;
     }
 
-    /**
-     * Load the data
-     */
-    private function getRealData()
+    private function getRealData(): void
     {
         // no search term = no search
         if (!$this->term) {
@@ -211,7 +198,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         }
     }
 
-    public function parse()
+    public function parse(): void
     {
         // more matches to be found than?
         if ($this->pagination['num_items'] > count($this->items)) {
@@ -219,11 +206,11 @@ class Autosuggest extends FrontendBaseAJAXAction
             array_pop($this->items);
 
             // add reference to full search results page
-            $this->items[] = array(
+            $this->items[] = [
                 'title' => FL::lbl('More'),
                 'text' => FL::msg('MoreResults'),
                 'full_url' => FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term,
-            );
+            ];
         }
 
         $charset = $this->getContainer()->getParameter('kernel.charset');
@@ -244,10 +231,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         $this->output(self::OK, $this->items);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // set values
         $charset = $this->getContainer()->getParameter('kernel.charset');

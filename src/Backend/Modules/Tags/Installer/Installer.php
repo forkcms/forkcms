@@ -17,10 +17,7 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -32,27 +29,27 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // module rights
-        $this->setModuleRights(1, 'Tags');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Tags', 'Autocomplete');
-        $this->setActionRights(1, 'Tags', 'Edit');
-        $this->setActionRights(1, 'Tags', 'Index');
-        $this->setActionRights(1, 'Tags', 'MassAction');
+        $this->setActionRights(1, $this->getModule(), 'Autocomplete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'MassAction');
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $this->setNavigation($navigationModulesId, 'Tags', 'tags/index', array('tags/edit'));
+        $this->setNavigation($navigationModulesId, 'Tags', 'tags/index', ['tags/edit']);
 
         // add extra
-        $tagsID = $this->insertExtra('Tags', ModuleExtraType::block(), 'Tags', null, null, 'N', 30);
-        $this->insertExtra('Tags', ModuleExtraType::widget(), 'TagCloud', 'TagCloud', null, 'N', 31);
-        $this->insertExtra('Tags', ModuleExtraType::widget(), 'Related', 'Related', null, 'N', 32);
+        $tagsID = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Tags', null, null, false, 30);
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'TagCloud', 'TagCloud', null, false, 31);
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Related', 'Related', null, false, 32);
 
         // get search extra id
         $searchId = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            array('Search', ModuleExtraType::WIDGET, 'Form')
+            ['Search', ModuleExtraType::widget(), 'Form']
         );
 
         // loop languages
@@ -65,19 +62,19 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($tagsID, $language)
+                [$tagsID, $language]
             )
             ) {
                 // insert contact page
                 $this->insertPage(
-                    array(
-                         'title' => 'Tags',
-                         'type' => 'root',
-                         'language' => $language,
-                    ),
+                    [
+                        'title' => 'Tags',
+                        'type' => 'root',
+                        'language' => $language,
+                    ],
                     null,
-                    array('extra_id' => $tagsID, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
+                    ['extra_id' => $tagsID, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
                 );
             }
         }

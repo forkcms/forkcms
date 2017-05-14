@@ -27,12 +27,9 @@ class Edit extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $templates = array();
+    private $templates = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -50,29 +47,23 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendFormBuilderModel::get($this->id);
         $this->templates = BackendFormBuilderModel::getTemplates();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('edit');
         $this->frm->addText('name', $this->record['name']);
         $this->frm->addDropdown(
             'method',
-            array(
+            [
                 'database' => BL::getLabel('MethodDatabase'),
                 'database_email' => BL::getLabel('MethodDatabaseEmail'),
                 'email' => BL::getLabel('MethodEmail'),
-            ),
+            ],
             $this->record['method']
         );
         $this->frm->addText('email', implode(',', (array) $this->record['email']));
@@ -99,11 +90,11 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('textbox_required_error_message');
         $this->frm->addDropdown(
             'textbox_validation',
-            array(
+            [
                 '' => '',
                 'email' => BL::getLabel('Email'),
                 'number' => BL::getLabel('Numeric'),
-            )
+            ]
         );
         $this->frm->addCheckbox('textbox_send_confirmation_mail_to');
         $this->frm->addText('textbox_confirmation_mail_subject');
@@ -118,7 +109,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('textarea_classname');
         $this->frm->addCheckbox('textarea_required');
         $this->frm->addText('textarea_required_error_message');
-        $this->frm->addDropdown('textarea_validation', array('' => ''));
+        $this->frm->addDropdown('textarea_validation', ['' => '']);
         $this->frm->addText('textarea_validation_parameter');
         $this->frm->addText('textarea_error_message');
 
@@ -126,48 +117,48 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('datetime_label');
         $this->frm->addDropdown(
             'datetime_value_amount',
-            array(
+            [
                 '' => '',
                 '1' => '+1',
                 '2' => '+2',
                 '3' => '+3',
                 '4' => '+4',
                 '5' => '+5',
-            )
+            ]
         );
         $this->frm->addDropdown(
             'datetime_value_type',
-            array(
+            [
                 '' => '',
                 'today' => BL::getLabel('Today'),
                 'day' => BL::getLabel('Day'),
                 'week' => BL::getLabel('Week'),
                 'month' => BL::getLabel('Month'),
                 'year' => BL::getLabel('Year'),
-            )
+            ]
         );
         $this->frm->addDropdown(
             'datetime_type',
-            array(
+            [
                 'date' => BL::getLabel('Date'),
                 'time' => BL::getLabel('Time'),
-            )
+            ]
         );
         $this->frm->addCheckbox('datetime_required');
         $this->frm->addText('datetime_required_error_message');
         $this->frm->addDropdown(
             'datetime_type',
-            array(
+            [
                 'date' => BL::getLabel('Date'),
                 'time' => BL::getLabel('Time'),
-            )
+            ]
         );
         $this->frm->addDropdown(
             'datetime_validation',
-            array(
+            [
                 '' => '',
                 'time' => BL::getLabel('Time'),
-            )
+            ]
         );
         $this->frm->addText('datetime_classname');
         $this->frm->addText('datetime_error_message');
@@ -175,7 +166,7 @@ class Edit extends BackendBaseActionEdit
         // dropdown dialog
         $this->frm->addText('dropdown_label');
         $this->frm->addText('dropdown_values');
-        $this->frm->addDropdown('dropdown_default_value', array('' => ''))->setAttribute('rel', 'dropDownValues');
+        $this->frm->addDropdown('dropdown_default_value', ['' => ''])->setAttribute('rel', 'dropDownValues');
         $this->frm->addCheckbox('dropdown_required');
         $this->frm->addText('dropdown_required_error_message');
         $this->frm->addText('dropdown_classname');
@@ -183,7 +174,7 @@ class Edit extends BackendBaseActionEdit
         // radiobutton dialog
         $this->frm->addText('radiobutton_label');
         $this->frm->addText('radiobutton_values');
-        $this->frm->addDropdown('radiobutton_default_value', array('' => ''))->setAttribute('rel', 'radioButtonValues');
+        $this->frm->addDropdown('radiobutton_default_value', ['' => ''])->setAttribute('rel', 'radioButtonValues');
         $this->frm->addCheckbox('radiobutton_required');
         $this->frm->addText('radiobutton_required_error_message');
         $this->frm->addText('radiobutton_classname');
@@ -191,7 +182,7 @@ class Edit extends BackendBaseActionEdit
         // checkbox dialog
         $this->frm->addText('checkbox_label');
         $this->frm->addText('checkbox_values');
-        $this->frm->addDropdown('checkbox_default_value', array('' => ''))->setAttribute('rel', 'checkBoxValues');
+        $this->frm->addDropdown('checkbox_default_value', ['' => ''])->setAttribute('rel', 'checkBoxValues');
         $this->frm->addCheckbox('checkbox_required');
         $this->frm->addText('checkbox_required_error_message');
         $this->frm->addText('checkbox_classname');
@@ -207,10 +198,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('submit');
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         $this->parseFields();
 
@@ -226,7 +214,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Parse the default error messages
      */
-    private function parseErrorMessages()
+    private function parseErrorMessages(): void
     {
         // set frontend locale
         FL::setLocale(BL::getWorkingLanguage(), true);
@@ -235,12 +223,9 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('errors', BackendFormBuilderModel::getErrors());
     }
 
-    /**
-     * Parse the fields
-     */
-    private function parseFields()
+    private function parseFields(): void
     {
-        $fieldsHTML = array();
+        $fieldsHTML = [];
 
         // get fields
         $fields = BackendFormBuilderModel::getFields($this->id);
@@ -273,10 +258,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('fields', $fieldsHTML);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
@@ -325,6 +307,7 @@ class Edit extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build array
+                $values = [];
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();
                 $values['email'] = ($ddmMethod->getValue() == 'database_email' || $ddmMethod->getValue() === 'email')

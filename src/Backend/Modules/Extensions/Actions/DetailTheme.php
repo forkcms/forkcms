@@ -33,19 +33,16 @@ class DetailTheme extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $information = array();
+    private $information = [];
 
     /**
      * List of warnings.
      *
      * @var array
      */
-    private $warnings = array();
+    private $warnings = [];
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->currentTheme = $this->getParameter('theme', 'string');
@@ -67,11 +64,11 @@ class DetailTheme extends BackendBaseActionIndex
      * Load the data.
      * This will also set some warnings if needed.
      */
-    private function loadData()
+    private function loadData(): void
     {
         // inform that the theme is not installed yet
         if (!BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
-            $this->warnings[] = array('message' => BL::getMessage('InformationThemeIsNotInstalled'));
+            $this->warnings[] = ['message' => BL::getMessage('InformationThemeIsNotInstalled')];
         }
 
         // path to information file
@@ -88,24 +85,21 @@ class DetailTheme extends BackendBaseActionIndex
 
                 // empty data (nothing useful)
                 if (empty($this->information)) {
-                    $this->warnings[] = array(
+                    $this->warnings[] = [
                         'message' => BL::getMessage('InformationFileIsEmpty'),
-                    );
+                    ];
                 }
             } catch (\Exception $e) {
                 // warning that the information file is corrupt
-                $this->warnings[] = array('message' => BL::getMessage('InformationFileCouldNotBeLoaded'));
+                $this->warnings[] = ['message' => BL::getMessage('InformationFileCouldNotBeLoaded')];
             }
         } else {
             // warning that the information file is missing
-            $this->warnings[] = array('message' => BL::getMessage('InformationFileIsMissing'));
+            $this->warnings[] = ['message' => BL::getMessage('InformationFileIsMissing')];
         }
     }
 
-    /**
-     * Load the data grid which contains the events.
-     */
-    private function loadDataGridTemplates()
+    private function loadDataGridTemplates(): void
     {
         // no hooks so don't bother
         if (!isset($this->information['templates'])) {
@@ -113,14 +107,15 @@ class DetailTheme extends BackendBaseActionIndex
         }
 
         // build data for display in datagrid
-        $templates = array();
+        $templates = [];
         foreach ($this->information['templates'] as $template) {
             // set template name & path
+            $record = [];
             $record['name'] = $template['label'];
             $record['path'] = $template['path'];
 
             // set positions
-            $record['positions'] = array();
+            $record['positions'] = [];
             foreach ($template['positions'] as $position) {
                 $record['positions'][] = $position['name'];
             }
@@ -134,16 +129,13 @@ class DetailTheme extends BackendBaseActionIndex
         $this->dataGridTemplates = new BackendDataGridArray($templates);
 
         // add label for path
-        $this->dataGridTemplates->setHeaderLabels(array('path' => BL::msg('PathToTemplate')));
+        $this->dataGridTemplates->setHeaderLabels(['path' => BL::msg('PathToTemplate')]);
 
         // no paging
         $this->dataGridTemplates->setPaging(false);
     }
 
-    /**
-     * Parse.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

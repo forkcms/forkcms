@@ -47,15 +47,15 @@ class Index extends BackendBaseActionIndex
      *
      * @return array        An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
         // init var
-        $parameters = array();
+        $parameters = [];
 
         // construct the query in the controller instead of the model as an allowed exception for data grid usage
         $query = 'SELECT p.id, p.email, p.display_name, p.status,
                   UNIX_TIMESTAMP(p.registered_on) AS registered_on FROM profiles AS p';
-        $where = array();
+        $where = [];
 
         // add status
         if (isset($this->filter['status'])) {
@@ -86,13 +86,10 @@ class Index extends BackendBaseActionIndex
         $query .= ' GROUP BY p.id';
 
         // query with matching parameters
-        return array($query, $parameters);
+        return [$query, $parameters];
     }
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->setFilter();
@@ -102,10 +99,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // fetch query and parameters
         list($query, $parameters) = $this->buildQuery();
@@ -119,25 +113,25 @@ class Index extends BackendBaseActionIndex
                 null,
                 null,
                 null,
-                array(
+                [
                     'offset' => '[offset]',
                     'order' => '[order]',
                     'sort' => '[sort]',
                     'email' => $this->filter['email'],
                     'status' => $this->filter['status'],
                     'group' => $this->filter['group'],
-                ),
+                ],
                 false
             )
         );
 
         // sorting columns
-        $this->dgProfiles->setSortingColumns(array('email', 'display_name', 'status', 'registered_on'), 'email');
+        $this->dgProfiles->setSortingColumns(['email', 'display_name', 'status', 'registered_on'], 'email');
 
         // set column function
         $this->dgProfiles->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[registered_on]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[registered_on]'],
             'registered_on',
             true
         );
@@ -146,22 +140,22 @@ class Index extends BackendBaseActionIndex
         $this->dgProfiles->setMassActionCheckboxes('check', '[id]');
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
-            array(
+            [
                 'addToGroup' => BL::getLabel('AddToGroup'),
                 'delete' => BL::getLabel('Delete'),
-            ),
+            ],
             'addToGroup',
             false,
             'form-control',
             'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'massAction');
-        $ddmMassAction->setOptionAttributes('addToGroup', array(
+        $ddmMassAction->setOptionAttributes('addToGroup', [
             'data-target' => '#confirmAddToGroup',
-        ));
-        $ddmMassAction->setOptionAttributes('delete', array(
+        ]);
+        $ddmMassAction->setOptionAttributes('delete', [
             'data-target' => '#confirmDelete',
-        ));
+        ]);
         $this->dgProfiles->setMassAction($ddmMassAction);
 
         // check if this action is allowed
@@ -180,10 +174,7 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
@@ -207,10 +198,7 @@ class Index extends BackendBaseActionIndex
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Parse & display the page.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -226,13 +214,13 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('sort', (string) $this->dgProfiles->getSort());
 
         // parse filter
-        $this->tpl->assign($this->filter);
+        $this->tpl->assignArray($this->filter);
     }
 
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         $this->filter['email'] = $this->getParameter('email');
         $this->filter['status'] = $this->getParameter('status');

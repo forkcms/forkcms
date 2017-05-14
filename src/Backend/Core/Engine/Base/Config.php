@@ -31,46 +31,37 @@ class Config extends Object
      *
      * @var array
      */
-    protected $disabledActions = array();
+    protected $disabledActions = [];
 
     /**
      * The disabled AJAX-actions
      *
      * @var array
      */
-    protected $disabledAJAXActions = array();
+    protected $disabledAJAXActions = [];
 
     /**
      * All the possible actions
      *
      * @var array
      */
-    protected $possibleActions = array();
+    protected $possibleActions = [];
 
     /**
      * All the possible AJAX actions
      *
      * @var array
      */
-    protected $possibleAJAXActions = array();
+    protected $possibleAJAXActions = [];
 
-    /**
-     * @param KernelInterface $kernel
-     * @param string          $module The module wherefore this is the configuration-file.
-     */
-    public function __construct(KernelInterface $kernel, $module)
+    public function __construct(KernelInterface $kernel, string $module)
     {
         parent::__construct($kernel);
 
         $this->setModule($module);
     }
 
-    /**
-     * Get the default action
-     *
-     * @return string
-     */
-    public function getDefaultAction()
+    public function getDefaultAction(): string
     {
         return $this->defaultAction;
     }
@@ -85,11 +76,11 @@ class Config extends Object
      *
      * @throws BackendException If module is not allowed
      */
-    public function setModule($module)
+    public function setModule(string $module): void
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
-        if (!in_array($module, $modules)) {
+        if (!in_array($module, $modules, true)) {
             // set correct headers
             header('HTTP/1.1 403 Forbidden');
 
@@ -101,23 +92,15 @@ class Config extends Object
         $this->module = $module;
     }
 
-    /**
-     * @return array
-     */
-    public function getPossibleActionTypes()
+    public function getPossibleActionTypes(): array
     {
-        return array(
+        return [
             'actions',
             'ajax',
-        );
+        ];
     }
 
-    /**
-     * @param string $action
-     *
-     * @return bool
-     */
-    public function isActionAvailable($action)
+    public function isActionAvailable(string $action): bool
     {
         // Save our action
         $this->action = $action;
@@ -142,31 +125,19 @@ class Config extends Object
         return false;
     }
 
-    /**
-     * @param string $actionType
-     *
-     * @throws \Exception
-     *
-     * @return bool
-     */
-    public function isActionDisabled($actionType)
+    public function isActionDisabled(string $actionType): bool
     {
         switch ($actionType) {
             case 'actions':
-                return in_array($this->getAction(), $this->disabledActions);
+                return in_array($this->getAction(), $this->disabledActions, true);
             case 'ajax':
-                return in_array($this->action, $this->disabledAJAXActions);
+                return in_array($this->action, $this->disabledAJAXActions, true);
         }
 
         throw new \Exception($actionType . ' is not a valid action type');
     }
 
-    /**
-     * @param string $actionType
-     *
-     * @return bool
-     */
-    public function isActionFilePresent($actionType)
+    public function isActionFilePresent(string $actionType): bool
     {
         // Create the directory string
         $directory = BACKEND_MODULES_PATH . '/' . $this->module . '/' . ucfirst($actionType);

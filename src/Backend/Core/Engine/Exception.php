@@ -16,10 +16,10 @@ class Exception extends \SpoonException
 {
     /**
      * @param string $message The message of the exception.
-     * @param int    $code    The numeric code of the exception.
+     * @param int $code The numeric code of the exception.
      */
-    public function __construct($message, $code = 0)
+    public function __construct(string $message, int $code = 0)
     {
-        parent::__construct((string) $message, (int) $code);
+        parent::__construct($message, $code);
     }
 }

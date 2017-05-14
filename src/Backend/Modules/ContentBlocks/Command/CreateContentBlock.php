@@ -49,9 +49,6 @@ final class CreateContentBlock
      */
     public $userId;
 
-    /**
-     * @param Locale|null $language
-     */
     public function __construct(Locale $language = null)
     {
         if ($language === null) {

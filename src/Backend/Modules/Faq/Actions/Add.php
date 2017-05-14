@@ -24,10 +24,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Add extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -38,18 +35,16 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('add');
 
         // set hidden values
-        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
-
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden'), 'value' => 'Y'],
+            ['label' => BL::lbl('Published'), 'value' => 'N'],
+        ];
         // get categories
         $categories = BackendFaqModel::getCategories();
 
@@ -64,10 +59,7 @@ class Add extends BackendBaseActionAdd
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
     }
 
-    /**
-     * Parse the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -81,10 +73,7 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
@@ -97,6 +86,7 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['meta_id'] = $this->meta->save();
                 $item['category_id'] = $this->frm->getField('category_id')->getValue();
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
@@ -121,10 +111,10 @@ class Add extends BackendBaseActionAdd
                 BackendSearchModel::saveIndex(
                     $this->getModule(),
                     $item['id'],
-                    array(
+                    [
                         'title' => $item['question'],
                         'text' => $item['answer'],
-                    )
+                    ]
                 );
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=added&var=' .

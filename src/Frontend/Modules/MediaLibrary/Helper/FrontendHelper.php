@@ -3,7 +3,7 @@
 namespace Frontend\Modules\MediaLibrary\Helper;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Frontend\Core\Engine\Header;
+use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
@@ -199,9 +199,7 @@ class FrontendHelper
     {
         try {
             $widget->execute();
-            $content = $widget->getContent();
-
-            return $content;
+            return $widget->getContent();
         } catch (\Exception $e) {
             // if we are debugging, we want to see the exception
             if (FrontendModel::getContainer()->getParameter('kernel.debug')) {

@@ -16,39 +16,36 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  */
 class DatabaseType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
                 'dbHostname',
                 'text',
-                array(
+                [
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'dbPort',
                 'text',
-                array(
+                [
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'dbDatabase',
                 'text',
-                array(
+                [
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'dbUsername',
                 'text',
-                array(
+                [
                     'required' => true,
-                )
+                ]
             )
             ->add(
                 'dbPassword',
@@ -84,42 +81,36 @@ class DatabaseType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'install_database';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
-        $resolver->setDefaults(array(
-            'constraints' => array(
+        $resolver->setDefaults([
+            'constraints' => [
                 new Callback(
-                    array(
-                        'methods' => array(
-                            array($this, 'checkDatabaseConnection'),
-                        ),
-                    )
+                    [
+                        'methods' => [
+                            [$this, 'checkDatabaseConnection'],
+                        ],
+                    ]
                 ),
-            ),
+            ],
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
-        ));
+        ]);
     }
 
     /**
      * Validate if a database connection can be made
      *
-     * @param InstallationData          $data    The form data
+     * @param InstallationData $data The form data
      * @param ExecutionContextInterface $context The forms validation context
      *
      * @todo   Replace SpoonDatabase
      */
-    public function checkDatabaseConnection(InstallationData $data, ExecutionContextInterface $context)
+    public function checkDatabaseConnection(InstallationData $data, ExecutionContextInterface $context): void
     {
         try {
             // create instance

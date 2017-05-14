@@ -3,8 +3,8 @@
 namespace Backend\Modules\ContentBlocks\Entity;
 
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
+use Common\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -52,7 +52,7 @@ class ContentBlock
      *
      * @ORM\Column(type="string", length=255, options={"default" = "Default.html.twig"})
      */
-    private $template = 'Default.html.twig';
+    private $template;
 
     /**
      * @var Locale
@@ -90,39 +90,28 @@ class ContentBlock
     private $status;
 
     /**
-     * @var Datetime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime", name="created_on")
      */
     private $createdOn;
 
     /**
-     * @var Datetime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime", name="edited_on")
      */
     private $editedOn;
 
-    /**
-     * @param int $id
-     * @param int $userId
-     * @param int $extraId
-     * @param string $template
-     * @param string $locale
-     * @param string $title
-     * @param string $text
-     * @param bool $isHidden
-     * @param ContentBlockStatus $status
-     */
     private function __construct(
-        $id,
-        $userId,
-        $extraId,
-        $template,
-        $locale,
-        $title,
-        $text,
-        $isHidden,
+        int $id,
+        int $userId,
+        int $extraId,
+        string $template,
+        Locale $locale,
+        string $title,
+        string $text,
+        bool $isHidden,
         ContentBlockStatus $status
     ) {
         $this->id = $id;
@@ -136,28 +125,16 @@ class ContentBlock
         $this->status = $status;
     }
 
-    /**
-     * @param int $id
-     * @param int $userId
-     * @param int $extraId The id of the module extra
-     * @param string $locale
-     * @param string $title
-     * @param string $text
-     * @param bool $isHidden
-     * @param string $template
-     *
-     * @return self
-     */
     public static function create(
-        $id,
-        $userId,
-        $extraId,
-        $locale,
-        $title,
-        $text,
-        $isHidden,
-        $template = self::DEFAULT_TEMPLATE
-    ) {
+        int $id,
+        int $userId,
+        int $extraId,
+        Locale $locale,
+        string $title,
+        string $text,
+        bool $isHidden,
+        string $template = self::DEFAULT_TEMPLATE
+    ) : self {
         return new self(
             $id,
             $userId,
@@ -171,98 +148,62 @@ class ContentBlock
         );
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return int
-     */
-    public function getRevisionId()
+    public function getRevisionId(): int
     {
         return $this->revisionId;
     }
 
-    /**
-     * @return int
-     */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @return int
-     */
-    public function getExtraId()
+    public function getExtraId(): int
     {
         return $this->extraId;
     }
 
-    /**
-     * @return string
-     */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->template;
     }
 
-    /**
-     * @return Locale
-     */
-    public function getLocale()
+    public function getLocale(): Locale
     {
         return $this->locale;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->isHidden;
     }
 
-    /**
-     * @return ContentBlockStatus
-     */
-    public function getStatus()
+    public function getStatus(): ContentBlockStatus
     {
         return $this->status;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedOn()
+    public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getEditedOn()
+    public function getEditedOn(): DateTime
     {
         return $this->editedOn;
     }
@@ -308,16 +249,7 @@ class ContentBlock
         Model::updateExtra($this->extraId, 'data', $data);
     }
 
-    /**
-     * @param string $title
-     * @param string $text
-     * @param bool $isHidden
-     * @param string $template
-     * @param int $userId
-     *
-     * @return ContentBlock
-     */
-    public function update($title, $text, $isHidden, $template, $userId)
+    public function update(string $title, string $text, bool $isHidden, string $template, int $userId): ContentBlock
     {
         $this->status = ContentBlockStatus::archived();
 

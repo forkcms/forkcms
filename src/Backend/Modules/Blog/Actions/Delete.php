@@ -26,10 +26,7 @@ class Delete extends BackendBaseActionDelete
      */
     private $categoryId;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');

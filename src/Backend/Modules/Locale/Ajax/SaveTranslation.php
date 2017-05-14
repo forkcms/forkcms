@@ -21,10 +21,7 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
  */
 class SaveTranslation extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $isGod = BackendAuthentication::getUser()->isGod();
@@ -41,7 +38,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         $module = \SpoonFilter::getPostValue('module', BackendModel::getModules(), null, 'string');
         $name = \SpoonFilter::getPostValue('name', null, null, 'string');
         $type = \SpoonFilter::getPostValue('type', BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type'), null, 'string');
-        $application = \SpoonFilter::getPostValue('application', array('Backend', 'Frontend'), null, 'string');
+        $application = \SpoonFilter::getPostValue('application', ['Backend', 'Frontend'], null, 'string');
         $value = \SpoonFilter::getPostValue('value', null, null, 'string');
 
         // validate values
@@ -50,7 +47,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         }
 
         // in case this is a 'act' type, there are special rules concerning possible values
-        if ($type == 'act' && !isset($error)) {
+        if ($type === 'act' && !isset($error)) {
             if (rawurlencode($value) != CommonUri::getUrl($value)) {
                 $error = BL::err('InvalidActionValue', $this->getModule());
             }
@@ -59,6 +56,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         // no error?
         if (!isset($error)) {
             // build item
+            $item = [];
             $item['language'] = $language;
             $item['module'] = $module;
             $item['name'] = $name;

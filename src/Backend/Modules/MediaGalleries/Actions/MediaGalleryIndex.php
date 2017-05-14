@@ -26,7 +26,7 @@ class MediaGalleryIndex extends BackendBaseActionIndex
             ]
         );
 
-        $this->tpl->assign('warnings', $this->getWarnings());
+        $this->tpl->assign('warnings', self::getWarnings());
         $this->tpl->assign('dataGrid', MediaGalleryDataGrid::getHtml());
         $this->tpl->assign('form', $form->createView());
 

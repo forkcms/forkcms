@@ -9,17 +9,16 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use SpoonDatagridSourceArray;
+
 /**
  * A datagrid with an array as source
  */
 class DataGridArray extends DataGrid
 {
-    /**
-     * @param array $array The data.
-     */
-    public function __construct(array $array)
+    public function __construct(array $data)
     {
-        $source = new \SpoonDatagridSourceArray($array);
+        $source = new SpoonDatagridSourceArray($data);
         parent::__construct($source);
     }
 }

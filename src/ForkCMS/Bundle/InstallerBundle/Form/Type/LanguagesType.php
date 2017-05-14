@@ -11,91 +11,79 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class LanguagesType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
                 'language_type',
                 'choice',
-                array(
+                [
                     'expanded' => true,
                     'multiple' => false,
-                    'choices' => array(
+                    'choices' => [
                         'single' => 'Just one language',
                         'multiple' => 'Multiple languages',
-                    ),
-                )
+                    ],
+                ]
             )
             ->add(
                 'languages',
                 'choice',
-                array(
+                [
                     'choices' => $this->getInstallableLanguages(),
                     'expanded' => true,
                     'multiple' => true,
-                )
+                ]
             )
             ->add(
                 'default_language',
                 'choice',
-                array(
+                [
                     'choices' => $this->getInstallableLanguages(),
-                )
+                ]
             )
             ->add(
                 'same_interface_language',
                 'checkbox',
-                array(
+                [
                     'label' => 'Use the same language(s) for the CMS interface.',
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'default_interface_language',
                 'choice',
-                array(
+                [
                     'choices' => $this->getInstallableLanguages(),
-                )
+                ]
             )
             ->add(
                 'interface_languages',
                 'choice',
-                array(
+                [
                     'choices' => $this->getInstallableLanguages(),
                     'multiple' => true,
                     'expanded' => true,
-                )
+                ]
             )
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
-        ));
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'install_languages';
     }
 
-    /**
-     * @return array
-     */
-    protected function getInstallableLanguages()
+    protected function getInstallableLanguages(): array
     {
-        return array(
+        return [
             'en' => 'English',
             'zh' => 'Chinese',
             'nl' => 'Dutch',
@@ -109,6 +97,6 @@ class LanguagesType extends AbstractType
             'es' => 'Spanish',
             'sv' => 'Swedish',
             'uk' => 'Ukrainian',
-        );
+        ];
     }
 }

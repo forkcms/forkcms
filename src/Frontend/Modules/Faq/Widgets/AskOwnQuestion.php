@@ -35,10 +35,7 @@ class AskOwnQuestion extends FrontendBaseWidget
      */
     private $status;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -48,27 +45,21 @@ class AskOwnQuestion extends FrontendBaseWidget
             return;
         }
 
-        $this->loadForm();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
         $this->frm = new FrontendForm('own_question', '#' . FL::getAction('OwnQuestion'));
-        $this->frm->addText('name')->setAttributes(array('required' => null));
-        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
-        $this->frm->addTextarea('message')->setAttributes(array('required' => null));
+        $this->frm->addText('name')->setAttributes(['required' => null]);
+        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->frm->addTextarea('message')->setAttributes(['required' => null]);
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         // parse the form or a status
         if (empty($this->status)) {
@@ -81,10 +72,7 @@ class AskOwnQuestion extends FrontendBaseWidget
         $this->tpl->assign('widgetFaqOwnQuestion', true);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
@@ -96,6 +84,7 @@ class AskOwnQuestion extends FrontendBaseWidget
 
             if ($this->frm->isCorrect()) {
                 $spamFilterEnabled = $this->get('fork.settings')->get('Faq', 'spamfilter');
+                $variables = [];
                 $variables['sentOn'] = time();
                 $variables['name'] = $this->frm->getField('name')->getValue();
                 $variables['email'] = $this->frm->getField('email')->getValue();
@@ -120,9 +109,9 @@ class AskOwnQuestion extends FrontendBaseWidget
                 $to = $this->get('fork.settings')->get('Core', 'mailer_to');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = Message::newInstance(sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']))
-                    ->setFrom(array($from['email'] => $from['name']))
-                    ->setTo(array($to['email'] => $to['name']))
-                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->setFrom([$from['email'] => $from['name']])
+                    ->setTo([$to['email'] => $to['name']])
+                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Faq/Layout/Templates/Mails/OwnQuestion.html.twig',
                         $variables,

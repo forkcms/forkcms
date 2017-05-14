@@ -2,58 +2,49 @@
 
 namespace Common\DataCollector;
 
+use SpoonDatabase;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DatabaseDataCollector extends DataCollector
 {
+    /**
+     * @var SpoonDatabase
+     */
     private $database;
 
-    /**
-     * DatabaseDataCollector constructor.
-     * @param \SpoonDatabase $database
-     */
-    public function __construct(\SpoonDatabase $database)
+    public function __construct(SpoonDatabase $database)
     {
         $this->database = $database;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, \Exception $exception = null): void
     {
-        $this->data = array(
-            'queries' => $this->database->getQueries(),
-            'queryCount' => count($this->database->getQueries()),
-        );
+        $this->data = [
+            'queries' => array_map(
+                function (array $query) {
+                    $query['query_formatted'] = \SqlFormatter::format($query['query']);
 
-        foreach ($this->data['queries'] as &$query) {
-            $query['query_formatted'] = \SqlFormatter::format($query['query']);
-        }
+                    return $query;
+                },
+                (array) $this->database->getQueries()
+            ),
+            'queryCount' => count($this->database->getQueries()),
+        ];
     }
 
-    /**
-     * @return mixed
-     */
-    public function getQueryCount()
+    public function getQueryCount(): int
     {
         return $this->data['queryCount'];
     }
 
-    /**
-     * @return mixed
-     */
-    public function getQueries()
+    public function getQueries(): array
     {
         return $this->data['queries'];
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'database';
     }

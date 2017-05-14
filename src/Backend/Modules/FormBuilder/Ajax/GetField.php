@@ -17,10 +17,7 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
  */
 class GetField extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -40,7 +37,7 @@ class GetField extends BackendBaseAJAXAction
                 $field = BackendFormBuilderModel::getField($fieldId);
 
                 if ($field['type'] == 'radiobutton') {
-                    $values = array();
+                    $values = [];
 
                     foreach ($field['settings']['values'] as $value) {
                         $values[] = $value['label'];
@@ -50,7 +47,7 @@ class GetField extends BackendBaseAJAXAction
                 }
 
                 // success output
-                $this->output(self::OK, array('field' => $field));
+                $this->output(self::OK, ['field' => $field]);
             }
         }
     }

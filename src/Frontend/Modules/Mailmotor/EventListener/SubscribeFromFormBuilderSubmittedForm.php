@@ -29,10 +29,6 @@ final class SubscribeFromFormBuilderSubmittedForm
      */
     protected $subscriber;
 
-    /**
-     * @param Subscriber $subscriber
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(
         Subscriber $subscriber,
         ModulesSettings $modulesSettings
@@ -41,14 +37,9 @@ final class SubscribeFromFormBuilderSubmittedForm
         $this->modulesSettings = $modulesSettings;
     }
 
-    /**
-     * On FormBuilderSubmittedEvent
-     *
-     * @param FormBuilderSubmittedEvent $event
-     */
     public function onFormBuilderSubmittedEvent(
         FormBuilderSubmittedEvent $event
-    ) {
+    ): void {
         if ($this->modulesSettings->get('Mailmotor', 'automatically_subscribe_from_form_builder_submitted_form', false)) {
             $form = $event->getForm();
             $data = $event->getData();
@@ -77,8 +68,8 @@ final class SubscribeFromFormBuilderSubmittedForm
                     $this->subscriber->subscribe(
                         $email,
                         $language,
-                        array(),
-                        array(),
+                        [],
+                        [],
                         false // will ignore double-optin and so subscribes the user immediately
                     );
                 }

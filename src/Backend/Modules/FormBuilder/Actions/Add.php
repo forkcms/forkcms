@@ -27,12 +27,9 @@ class Add extends BackendBaseActionAdd
      *
      * @var array
      */
-    private $templates = array();
+    private $templates = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->templates = BackendFormBuilderModel::getTemplates();
@@ -42,20 +39,17 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('add');
         $this->frm->addText('name');
         $this->frm->addDropdown(
             'method',
-            array(
+            [
                 'database' => BL::getLabel('MethodDatabase'),
                 'database_email' => BL::getLabel('MethodDatabaseEmail'),
                 'email' => BL::getLabel('MethodEmail'),
-            ),
+            ],
             'database_email'
         );
         $this->frm->addText('email');
@@ -69,10 +63,7 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
@@ -122,6 +113,7 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build array
+                $values = [];
                 $values['language'] = BL::getWorkingLanguage();
                 $values['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $values['name'] = $txtName->getValue();
@@ -146,9 +138,10 @@ class Add extends BackendBaseActionAdd
                 FL::setLocale(BL::getWorkingLanguage(), true);
 
                 // create submit button
+                $field = [];
                 $field['form_id'] = $id;
                 $field['type'] = 'submit';
-                $field['settings'] = serialize(array('values' => \SpoonFilter::ucfirst(FL::getLabel('Send'))));
+                $field['settings'] = serialize(['values' => \SpoonFilter::ucfirst(FL::getLabel('Send'))]);
                 BackendFormBuilderModel::insertField($field);
 
                 // everything is saved, so redirect to the editform

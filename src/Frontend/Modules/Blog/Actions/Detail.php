@@ -51,23 +51,17 @@ class Detail extends FrontendBaseBlock
      */
     private $settings;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
         $this->getData();
-        $this->loadForm();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
@@ -83,7 +77,7 @@ class Detail extends FrontendBaseBlock
             );
 
             // add no-index, so the draft won't get accidentally indexed
-            $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+            $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
         } else {
             // get by URL
             $this->record = FrontendBlogModel::get($this->URL->getParameter(1));
@@ -116,10 +110,7 @@ class Detail extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
         $this->frm = new FrontendForm('commentsForm');
@@ -131,16 +122,13 @@ class Detail extends FrontendBaseBlock
         $website = (CommonCookie::exists('comment_website') && \SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
 
         // create elements
-        $this->frm->addText('author', $author)->setAttributes(array('required' => null));
-        $this->frm->addText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
+        $this->frm->addText('author', $author)->setAttributes(['required' => null]);
+        $this->frm->addText('email', $email)->setAttributes(['required' => null, 'type' => 'email']);
         $this->frm->addText('website', $website, null);
-        $this->frm->addTextarea('message')->setAttributes(array('required' => null));
+        $this->frm->addTextarea('message')->setAttributes(['required' => null]);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
@@ -150,7 +138,7 @@ class Detail extends FrontendBaseBlock
         $this->header->addRssLink($rssTitle, $rssLink);
 
         // get RSS-link for the comments
-        $rssCommentTitle = vsprintf(FL::msg('CommentsOn'), array($this->record['title']));
+        $rssCommentTitle = vsprintf(FL::msg('CommentsOn'), [$this->record['title']]);
         $rssCommentsLink = FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
                            '/' . $this->record['url'];
 
@@ -213,12 +201,12 @@ class Detail extends FrontendBaseBlock
         // advanced SEO-attributes
         if (isset($this->record['meta_data']['seo_index'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index'])
+                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_index']]
             );
         }
         if (isset($this->record['meta_data']['seo_follow'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow'])
+                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']]
             );
         }
 
@@ -264,18 +252,18 @@ class Detail extends FrontendBaseBlock
         // set previous and next link for usage with Flip ahead
         if (!empty($navigation['previous'])) {
             $this->header->addLink(
-                array(
+                [
                      'rel' => 'prev',
                      'href' => SITE_URL . $navigation['previous']['url'],
-                )
+                ]
             );
         }
         if (!empty($navigation['next'])) {
             $this->header->addLink(
-                array(
+                [
                      'rel' => 'next',
                      'href' => SITE_URL . $navigation['next']['url'],
-                )
+                ]
             );
         }
 
@@ -283,17 +271,14 @@ class Detail extends FrontendBaseBlock
         $this->tpl->assign('navigation', $navigation);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // get settings
         $commentsAllowed = (isset($this->settings['allow_comments']) && $this->settings['allow_comments']);
 
         // comments aren't allowed so we don't have to validate
         if (!$commentsAllowed) {
-            return false;
+            return;
         }
 
         // is the form submitted
@@ -339,6 +324,7 @@ class Detail extends FrontendBaseBlock
                 $text = $this->frm->getField('message')->getValue();
 
                 // build array
+                $comment = [];
                 $comment['post_id'] = $this->record['id'];
                 $comment['language'] = LANGUAGE;
                 $comment['created_on'] = FrontendModel::getUTCDate();
@@ -347,7 +333,7 @@ class Detail extends FrontendBaseBlock
                 $comment['website'] = $website;
                 $comment['text'] = $text;
                 $comment['status'] = 'published';
-                $comment['data'] = serialize(array('server' => $_SERVER));
+                $comment['data'] = serialize(['server' => $_SERVER]);
 
                 // get URL for article
                 $permaLink = $this->record['full_url'];

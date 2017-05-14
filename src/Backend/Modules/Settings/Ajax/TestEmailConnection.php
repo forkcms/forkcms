@@ -18,10 +18,7 @@ use Common\Mailer\TransportFactory;
  */
 class TestEmailConnection extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -33,7 +30,7 @@ class TestEmailConnection extends BackendBaseAJAXAction
         $replyToName = \SpoonFilter::getPostValue('mailer_reply_to_name', null, '');
 
         // init validation
-        $errors = array();
+        $errors = [];
 
         // validate
         if ($fromEmail == '' || !\SpoonFilter::isEmail($fromEmail)) {
@@ -50,21 +47,21 @@ class TestEmailConnection extends BackendBaseAJAXAction
         if (!empty($errors)) {
             $this->output(
                 self::BAD_REQUEST,
-                array('errors' => $errors),
+                ['errors' => $errors],
                 'invalid fields'
             );
         } else {
             $message = \Swift_Message::newInstance('Test')
-                ->setFrom(array($fromEmail => $fromName))
-                ->setTo(array($toEmail => $toName))
-                ->setReplyTo(array($replyToEmail => $replyToName))
+                ->setFrom([$fromEmail => $fromName])
+                ->setTo([$toEmail => $toName])
+                ->setReplyTo([$replyToEmail => $replyToName])
                 ->setBody(BL::msg('TestMessage'), 'text/plain')
             ;
 
             $transport = TransportFactory::create(
-                \SpoonFilter::getPostValue('mailer_type', array('smtp', 'mail'), 'mail'),
+                \SpoonFilter::getPostValue('mailer_type', ['smtp', 'mail'], 'mail'),
                 \SpoonFilter::getPostValue('smtp_server', null, ''),
-                \SpoonFilter::getPostValue('smtp_port', null, ''),
+                \SpoonFilter::getPostValue('smtp_port', null, 25),
                 \SpoonFilter::getPostValue('smtp_username', null, ''),
                 \SpoonFilter::getPostValue('smtp_password', null, ''),
                 \SpoonFilter::getPostValue('smtp_secure_layer', null, '')

@@ -18,21 +18,13 @@ final class SaveSettingsHandler
      */
     protected $modulesSettings;
 
-    /**
-     * SaveSettingsHandler constructor.
-     *
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(
         ModulesSettings $modulesSettings
     ) {
         $this->modulesSettings = $modulesSettings;
     }
 
-    /**
-     * @param SaveSettings $settings
-     */
-    public function handle(SaveSettings $settings)
+    public function handle(SaveSettings $settings): void
     {
         // Define module
         $module = 'Mailmotor';
@@ -47,6 +39,7 @@ final class SaveSettingsHandler
         if ($settings->mailEngine === 'not_implemented') {
             $this->modulesSettings->delete($module, 'api_key');
             $this->modulesSettings->delete($module, 'list_id');
+
             return;
         }
 

@@ -137,10 +137,10 @@
      *    It's important to implement this method in an efficient way.
      *
      *
-     *  @param  f   the function that is applied for its side-effect to every element.
+     *  @param f   the function that is applied for its side-effect to every element.
      *              The result of function `f` is discarded.
      *
-     *  @tparam  U  the type parameter describing the result of function `f`.
+     *  @tparam U  the type parameter describing the result of function `f`.
      *              This result will always be ignored. Typically `U` is `Unit`,
      *              but this is not necessary.
      *
@@ -318,7 +318,7 @@
      *
      *  $mayNotTerminateInf
      *
-     *  @param   p     the predicate used to test elements.
+     *  @param  p     the predicate used to test elements.
      *  @return        `true` if the given predicate `p` holds for all elements
      *                 of this $coll, otherwise `false`.
      */
@@ -335,7 +335,7 @@
      *
      *  $mayNotTerminateInf
      *
-     *  @param   p     the predicate used to test elements.
+     *  @param  p     the predicate used to test elements.
      *  @return        `true` if the given predicate `p` holds for some of the
      *                 elements of this $coll, otherwise `false`.
      */
@@ -576,9 +576,9 @@
      *
      *  $willNotTerminateInf
      *
-     *  @param  xs     the array to fill.
-     *  @param  start  the starting index.
-     *  @param  len    the maximal number of elements to copy.
+     *  @param xs     the array to fill.
+     *  @param start  the starting index.
+     *  @param len    the maximal number of elements to copy.
      *  @tparam B      the type of the elements of the array.
      *
      *
@@ -720,10 +720,10 @@
       /** Applies a function `f` to all elements of the outer $coll containing
        *  this `WithFilter` instance that satisfy predicate `p`.
        *
-       *  @param  f   the function that is applied for its side-effect to every element.
+       *  @param f   the function that is applied for its side-effect to every element.
        *              The result of function `f` is discarded.
        *
-       *  @tparam  U  the type parameter describing the result of function `f`.
+       *  @tparam U  the type parameter describing the result of function `f`.
        *              This result will always be ignored. Typically `U` is `Unit`,
        *              but this is not necessary.
        *

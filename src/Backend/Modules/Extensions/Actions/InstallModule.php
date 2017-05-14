@@ -27,10 +27,7 @@ class InstallModule extends BackendBaseActionIndex
      */
     private $currentModule;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->currentModule = $this->getParameter('module', 'string');
@@ -41,7 +38,7 @@ class InstallModule extends BackendBaseActionIndex
             parent::execute();
 
             // make sure this module can be installed
-            $this->validateInstall();
+            $this->validateIfModuleCanBeInstalled();
 
             // do the actual install
             BackendExtensionsModel::installModule($this->currentModule);
@@ -58,10 +55,7 @@ class InstallModule extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Validate if the module can be installed.
-     */
-    private function validateInstall()
+    private function validateIfModuleCanBeInstalled(): void
     {
         // already installed
         if (BackendModel::isModuleInstalled($this->currentModule)) {

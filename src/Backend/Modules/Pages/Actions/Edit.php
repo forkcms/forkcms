@@ -34,7 +34,7 @@ class Edit extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $blocksContent = array();
+    private $blocksContent = [];
 
     /**
      * DataGrid for the drafts
@@ -48,7 +48,7 @@ class Edit extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $extras = array();
+    private $extras = [];
 
     /**
      * Is the current user a god user?
@@ -62,19 +62,16 @@ class Edit extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $positions = array();
+    private $positions = [];
 
     /**
      * The template data
      *
      * @var array
      */
-    private $templates = array();
+    private $templates = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -112,10 +109,7 @@ class Edit extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Load the record
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get record
         $this->id = $this->getParameter('id', 'int');
@@ -169,41 +163,38 @@ class Edit extends BackendBaseActionEdit
         $this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
     }
 
-    /**
-     * Load the datagrid with drafts
-     */
-    private function loadDrafts()
+    private function loadDrafts(): void
     {
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
             BackendPagesModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
-            array($this->record['id'], 'draft', BL::getWorkingLanguage())
+            [$this->record['id'], 'draft', BL::getWorkingLanguage()]
         );
 
         // hide columns
-        $this->dgDrafts->setColumnsHidden(array('id', 'revision_id'));
+        $this->dgDrafts->setColumnsHidden(['id', 'revision_id']);
 
         // disable paging
         $this->dgDrafts->setPaging(false);
 
         // set headers
         $this->dgDrafts->setHeaderLabels(
-            array(
+            [
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
                  'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
-            )
+            ]
         );
 
         // set column-functions
-        $this->dgDrafts->setColumnFunction(array(new BackendDataGridFunctions(), 'getUser'), array('[user_id]'), 'user_id');
+        $this->dgDrafts->setColumnFunction([new BackendDataGridFunctions(), 'getUser'], ['[user_id]'], 'user_id');
         $this->dgDrafts->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getTimeAgo'],
+            ['[edited_on]'],
             'edited_on'
         );
 
         // our JS needs to know an id, so we can highlight it
-        $this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
+        $this->dgDrafts->setRowAttributes(['id' => 'row-[revision_id]']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -224,10 +215,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // get default template id
         $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
@@ -244,10 +232,10 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addHidden('template_id', $this->record['template_id']);
         $this->frm->addRadiobutton(
             'hidden',
-            array(
-                 array('label' => BL::lbl('Hidden'), 'value' => 'Y'),
-                 array('label' => BL::lbl('Published'), 'value' => 'N'),
-            ),
+            [
+                 ['label' => BL::lbl('Hidden'), 'value' => 'Y'],
+                 ['label' => BL::lbl('Published'), 'value' => 'N'],
+            ],
             $this->record['hidden']
         );
 
@@ -273,12 +261,12 @@ class Edit extends BackendBaseActionEdit
             // get all groups and parse them in key value pair
             $groupItems = BackendProfilesModel::getGroups();
             if (!empty($groupItems)) {
-                $groups = array();
+                $groups = [];
                 foreach ($groupItems as $key => $item) {
-                    $groups[] = array('label' => $item, 'value' => $key);
+                    $groups[] = ['label' => $item, 'value' => $key];
                 }
                 // set checked values
-                $checkedGroups = array();
+                $checkedGroups = [];
                 if (isset($this->record['data']['auth_groups']) && is_array($this->record['data']['auth_groups'])) {
                     foreach ($this->record['data']['auth_groups'] as $group) {
                         $checkedGroups[] = $group;
@@ -292,12 +280,12 @@ class Edit extends BackendBaseActionEdit
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
             // init some vars
-            $items = array('move', 'children', 'edit', 'delete');
-            $checked = array();
-            $values = array();
+            $items = ['move', 'children', 'edit', 'delete'];
+            $checked = [];
+            $values = [];
 
             foreach ($items as $value) {
-                $values[] = array('label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
+                $values[] = ['label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value];
                 if (isset($this->record['allow_' . $value]) && $this->record['allow_' . $value] == 'Y') {
                     $checked[] = $value;
                 }
@@ -307,6 +295,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // build prototype block
+        $block = [];
         $block['index'] = 0;
         $block['formElements']['chkVisible'] = $this->frm->addCheckbox('block_visible_' . $block['index'], true);
         $block['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $block['index'], 0);
@@ -323,14 +312,15 @@ class Edit extends BackendBaseActionEdit
         // content has been submitted: re-create submitted content rather than the db-fetched content
         if (isset($_POST['block_html_0'])) {
             // init vars
-            $this->blocksContent = array();
+            $this->blocksContent = [];
             $hasBlock = false;
             $i = 1;
 
             // loop submitted blocks
+            $positions = [];
             while (isset($_POST['block_position_' . $i])) {
                 // init var
-                $block = array();
+                $block = [];
 
                 // save block position
                 $block['position'] = $_POST['block_position_' . $i];
@@ -426,19 +416,19 @@ class Edit extends BackendBaseActionEdit
         if (isset($this->record['data']['external_redirect']['url'])) {
             $redirectValue = 'external';
         }
-        $redirectValues = array(
-            array('value' => 'none', 'label' => \SpoonFilter::ucfirst(BL::lbl('None'))),
-            array(
+        $redirectValues = [
+            ['value' => 'none', 'label' => \SpoonFilter::ucfirst(BL::lbl('None'))],
+            [
                 'value' => 'internal',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
-                'variables' => array('isInternal' => true),
-            ),
-            array(
+                'variables' => ['isInternal' => true],
+            ],
+            [
                 'value' => 'external',
                 'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
-                'variables' => array('isExternal' => true),
-            ),
-        );
+                'variables' => ['isExternal' => true],
+            ],
+        ];
         $this->frm->addRadiobutton('redirect', $redirectValues, $redirectValue);
         $this->frm->addDropdown(
             'internal_redirect',
@@ -458,7 +448,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addCheckbox('navigation_title_overwrite', ($this->record['navigation_title_overwrite'] == 'Y'));
         $this->frm->addText('navigation_title', $this->record['navigation_title']);
 
-        if ($this->showTags()) {
+        if ($this->userCanSeeAndEditTags()) {
             // tags
             $this->frm->addText(
                 'tags',
@@ -484,49 +474,46 @@ class Edit extends BackendBaseActionEdit
         $this->meta->setURLCallback(
             'Backend\Modules\Pages\Engine\Model',
             'getURL',
-            array($this->record['id'], $this->record['parent_id'], $isAction)
+            [$this->record['id'], $this->record['parent_id'], $isAction]
         );
     }
 
-    /**
-     * Load the datagrid
-     */
-    private function loadRevisions()
+    private function loadRevisions(): void
     {
         // create datagrid
         $this->dgRevisions = new BackendDataGridDB(
             BackendPagesModel::QRY_BROWSE_REVISIONS,
-            array(
+            [
                  $this->id,
                  'archive',
                  BL::getWorkingLanguage(
                  ),
-            )
+            ]
         );
 
         // hide columns
-        $this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
+        $this->dgRevisions->setColumnsHidden(['id', 'revision_id']);
 
         // disable paging
         $this->dgRevisions->setPaging(false);
 
         // set headers
         $this->dgRevisions->setHeaderLabels(
-            array(
+            [
                  'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
                  'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
-            )
+            ]
         );
 
         // set functions
         $this->dgRevisions->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'),
+            [new BackendDataGridFunctions(), 'getUser'],
+            ['[user_id]'],
             'user_id'
         );
         $this->dgRevisions->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'),
+            [new BackendDataGridFunctions(), 'getTimeAgo'],
+            ['[edited_on]'],
             'edited_on'
         );
 
@@ -549,10 +536,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -571,7 +555,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL($this->record['parent_id']), '/'));
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
-        $this->tpl->assign('showTags', $this->showTags());
+        $this->tpl->assign('showTags', $this->userCanSeeAndEditTags());
 
         // init var
         $showDelete = true;
@@ -615,15 +599,12 @@ class Edit extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+            $status = \SpoonFilter::getPostValue('status', ['active', 'draft'], 'active');
 
             // validate redirect
             $redirectValue = $this->frm->getField('redirect')->getValue();
@@ -640,7 +621,7 @@ class Edit extends BackendBaseActionEdit
             $this->meta->setURLCallback(
                 'Backend\Modules\Pages\Engine\Model',
                 'getURL',
-                array($this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked())
+                [$this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked()]
             );
 
             // cleanup the submitted fields, ignore fields that were added by hackers
@@ -663,18 +644,18 @@ class Edit extends BackendBaseActionEdit
                     $data['is_action'] = true;
                 }
                 if ($redirectValue == 'internal') {
-                    $data['internal_redirect'] = array(
+                    $data['internal_redirect'] = [
                         'page_id' => $this->frm->getField('internal_redirect')->getValue(),
                         'code' => '301',
-                    );
+                    ];
                 }
                 if ($redirectValue == 'external') {
-                    $data['external_redirect'] = array(
+                    $data['external_redirect'] = [
                         'url' => BackendPagesModel::getEncodedRedirectURL(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
                         'code' => '301',
-                    );
+                    ];
                 }
                 if (array_key_exists('image', $this->templates[$templateId]['data'])) {
                     $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
@@ -697,6 +678,7 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // build page record
+                $page = [];
                 $page['id'] = $this->record['id'];
                 $page['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $page['parent_id'] = $this->record['parent_id'];
@@ -764,7 +746,7 @@ class Edit extends BackendBaseActionEdit
                 // insert the blocks
                 BackendPagesModel::insertBlocks($this->blocksContent);
 
-                if ($this->showTags()) {
+                if ($this->userCanSeeAndEditTags()) {
                     // save tags
                     BackendTagsModel::saveTags(
                         $page['id'],
@@ -791,7 +773,7 @@ class Edit extends BackendBaseActionEdit
                         BackendSearchModel::saveIndex(
                             $this->getModule(),
                             $page['id'],
-                            array('title' => $page['title'], 'text' => $text)
+                            ['title' => $page['title'], 'text' => $text]
                         );
                     } else {
                         BackendSearchModel::removeIndex(
@@ -822,11 +804,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * @param bool $allowImage
-     * @return string|null
-     */
-    private function getImage($allowImage)
+    private function getImage(bool $allowImage): ?string
     {
         $imageFilename = array_key_exists('image', (array) $this->record['data']) ? $this->record['data']['image'] : null;
 
@@ -851,12 +829,7 @@ class Edit extends BackendBaseActionEdit
         return $imageFilename;
     }
 
-    /**
-     * Check if the user has the right to see/edit tags
-     *
-     * @return bool
-     */
-    private function showTags()
+    private function userCanSeeAndEditTags(): bool
     {
         return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
     }

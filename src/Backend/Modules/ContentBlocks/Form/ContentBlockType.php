@@ -14,27 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentBlockType extends AbstractType
 {
-    /** @var string */
-    private $currentTheme;
-
-    /** @var string */
-    private $dataClass;
-
-    /**
-     * @param string $currentTheme
-     * @param string $dataClass
-     */
-    public function __construct($currentTheme, $dataClass = CreateContentBlock::class)
-    {
-        $this->currentTheme = $currentTheme;
-        $this->dataClass = $dataClass;
-    }
-
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
             'title',
@@ -52,7 +32,7 @@ class ContentBlockType extends AbstractType
             ]
         );
 
-        $templates = $this->getPossibleTemplates();
+        $templates = $this->getPossibleTemplates($options['theme']);
         // if we have multiple templates, add a dropdown to select them
         if (count($templates) > 1) {
             $builder->add(
@@ -66,7 +46,6 @@ class ContentBlockType extends AbstractType
                 ]
             );
         }
-
 
         $isVisibleOptions = [
             'label' => 'lbl.VisibleOnSite',
@@ -84,28 +63,18 @@ class ContentBlockType extends AbstractType
         );
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => $this->dataClass]);
+        $resolver->setRequired('theme');
+        $resolver->setDefaults(['data_class' => CreateContentBlock::class]);
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'content_block';
     }
 
-    /**
-     * Get templates.
-     *
-     * @return array
-     */
-    private function getPossibleTemplates()
+    private function getPossibleTemplates(string $theme): array
     {
         $templates = [];
         $finder = new Finder();
@@ -113,8 +82,8 @@ class ContentBlockType extends AbstractType
         $finder->in(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets');
 
         // if there is a custom theme we should include the templates there also
-        if ($this->currentTheme != 'core') {
-            $path = FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/Modules/ContentBlocks/Layout/Widgets';
+        if ($theme !== 'Core') {
+            $path = FRONTEND_PATH . '/Themes/' . $theme . '/Modules/ContentBlocks/Layout/Widgets';
             if (is_dir($path)) {
                 $finder->in($path);
             }

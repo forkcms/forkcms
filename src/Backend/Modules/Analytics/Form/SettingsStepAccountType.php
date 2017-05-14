@@ -26,13 +26,11 @@ final class SettingsStepAccountType implements SettingsStepType
     /** @var bool */
     private $hasAccounts;
 
-    /**
-     * @param string $name
-     * @param ModulesSettings $settings
-     * @param Google_Service_Analytics $googleServiceAnalytics
-     */
-    public function __construct($name, ModulesSettings $settings, Google_Service_Analytics $googleServiceAnalytics)
-    {
+    public function __construct(
+        string $name,
+        ModulesSettings $settings,
+        Google_Service_Analytics $googleServiceAnalytics
+    ) {
         $this->form = new Form($name);
         $this->settings = $settings;
         $this->googleServiceAnalytics = $googleServiceAnalytics;
@@ -40,10 +38,7 @@ final class SettingsStepAccountType implements SettingsStepType
         $this->build();
     }
 
-    /**
-     * @param TwigTemplate $template
-     */
-    public function parse(TwigTemplate $template)
+    public function parse(TwigTemplate $template): void
     {
         if (!$this->hasAccounts) {
             $template->assign('email', $this->settings->get('Analytics', 'email'));
@@ -53,10 +48,7 @@ final class SettingsStepAccountType implements SettingsStepType
         $this->form->parse($template);
     }
 
-    /**
-     * @return bool
-     */
-    public function handle()
+    public function handle(): bool
     {
         $this->form->cleanupFields();
 
@@ -73,10 +65,7 @@ final class SettingsStepAccountType implements SettingsStepType
         return true;
     }
 
-    /**
-     * Build up the form
-     */
-    private function build()
+    private function build(): void
     {
         try {
             $accounts = $this->googleServiceAnalytics->management_accounts->listManagementAccounts();
@@ -95,10 +84,7 @@ final class SettingsStepAccountType implements SettingsStepType
         $this->hasAccounts = true;
     }
 
-    /**
-     * @return bool
-     */
-    private function isValid()
+    private function isValid(): bool
     {
         $this->form->getField('account')->isFilled(Language::err('FieldIsRequired'));
 

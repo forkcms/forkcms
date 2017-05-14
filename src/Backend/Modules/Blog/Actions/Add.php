@@ -33,10 +33,7 @@ class Add extends BackendBaseActionAdd
      */
     protected $imageIsAllowed = true;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -45,18 +42,17 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
 
         $this->frm = new BackendForm('add');
 
         // set hidden values
-        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'],
+            ['label' => BL::lbl('Published'), 'value' => 'N'],
+        ];
 
         // get categories
         $categories = BackendBlogModel::getCategories();
@@ -84,10 +80,7 @@ class Add extends BackendBaseActionAdd
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
         $this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
@@ -102,15 +95,12 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+            $status = \SpoonFilter::getPostValue('status', ['active', 'draft'], 'active');
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
@@ -130,21 +120,29 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = (int) BackendBlogModel::getMaximumId() + 1;
-                $item['meta_id'] = $this->meta->save();
-                $item['category_id'] = (int) $this->frm->getField('category_id')->getValue();
-                $item['user_id'] = $this->frm->getField('user_id')->getValue();
-                $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['introduction'] = $this->frm->getField('introduction')->getValue();
-                $item['text'] = $this->frm->getField('text')->getValue();
-                $item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($this->frm->getField('publish_on_date'), $this->frm->getField('publish_on_time')));
-                $item['created_on'] = BackendModel::getUTCDate();
+                $item = [
+                    'id' => (int) BackendBlogModel::getMaximumId() + 1,
+                    'meta_id' => $this->meta->save(),
+                    'category_id' => (int) $this->frm->getField('category_id')->getValue(),
+                    'user_id' => $this->frm->getField('user_id')->getValue(),
+                    'language' => BL::getWorkingLanguage(),
+                    'title' => $this->frm->getField('title')->getValue(),
+                    'introduction' => $this->frm->getField('introduction')->getValue(),
+                    'text' => $this->frm->getField('text')->getValue(),
+                    'publish_on' => BackendModel::getUTCDate(
+                        null,
+                        BackendModel::getUTCTimestamp(
+                            $this->frm->getField('publish_on_date'),
+                            $this->frm->getField('publish_on_time')
+                        )
+                    ),
+                    'created_on' => BackendModel::getUTCDate(),
+                    'hidden' => $this->frm->getField('hidden')->getValue(),
+                    'allow_comments' => $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N',
+                    'num_comments' => 0,
+                    'status' => $status,
+                ];
                 $item['edited_on'] = $item['created_on'];
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
-                $item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
-                $item['num_comments'] = 0;
-                $item['status'] = $status;
 
                 // insert the item
                 $item['revision_id'] = BackendBlogModel::insert($item);
@@ -155,7 +153,7 @@ class Add extends BackendBaseActionAdd
 
                     // create folders if needed
                     $filesystem = new Filesystem();
-                    $filesystem->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
+                    $filesystem->mkdir([$imagePath . '/source', $imagePath . '/128x128']);
 
                     // image provided?
                     if ($this->frm->getField('image')->isFilled()) {
@@ -169,7 +167,7 @@ class Add extends BackendBaseActionAdd
                         $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
 
                         // add the image to the database without changing the revision id
-                        BackendBlogModel::updateRevision($item['revision_id'], array('image' => $item['image']));
+                        BackendBlogModel::updateRevision($item['revision_id'], ['image' => $item['image']]);
                     }
                 }
 
@@ -179,7 +177,7 @@ class Add extends BackendBaseActionAdd
                 // active
                 if ($item['status'] == 'active') {
                     // add search index
-                    BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
+                    BackendSearchModel::saveIndex($this->getModule(), $item['id'], ['title' => $item['title'], 'text' => $item['text']]);
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['revision_id']);

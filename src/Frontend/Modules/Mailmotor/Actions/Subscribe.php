@@ -14,6 +14,7 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Locale;
 use Frontend\Modules\Mailmotor\Command\Subscription;
 use Frontend\Modules\Mailmotor\Event\NotImplementedSubscribedEvent;
+use Frontend\Modules\Mailmotor\Form\SubscribeType;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
@@ -21,12 +22,7 @@ use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
  */
 class Subscribe extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra
-     *
-     * @return void
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -35,7 +31,7 @@ class Subscribe extends FrontendBaseBlock
 
         // Create the form
         $form = $this->createForm(
-            $this->get('mailmotor.form.subscription'),
+            SubscribeType::class,
             new Subscription(
                 Locale::frontendLanguage(),
                 $email
@@ -87,13 +83,10 @@ class Subscribe extends FrontendBaseBlock
         $redirectLink .= $doubleOptin ? 'true' : 'false';
         $redirectLink .= '#mailmotorSubscribeForm';
 
-        return $this->redirect($redirectLink);
+        $this->redirect($redirectLink);
     }
 
-    /**
-     * Get email
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         // define email
         $email = null;
@@ -106,12 +99,7 @@ class Subscribe extends FrontendBaseBlock
         return $email;
     }
 
-    /**
-     * Parse the data into the template
-     *
-     * @return void
-     */
-    private function parse()
+    private function parse(): void
     {
         // form was subscribed?
         if ($this->URL->getParameter('subscribed') == 'true') {

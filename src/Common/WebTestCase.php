@@ -4,6 +4,7 @@ namespace Common;
 
 use ForkCMS\App\AppKernel;
 use ForkCMS\App\BaseModel;
+use SpoonDatabase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\FileSystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -27,7 +28,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @return string The Kernel class name
      */
-    protected static function getKernelClass()
+    protected static function getKernelClass(): string
     {
         return AppKernel::class;
     }
@@ -36,20 +37,19 @@ abstract class WebTestCase extends BaseWebTestCase
      * Creates a Client.
      *
      * @param array $options An array of options to pass to the createKernel class
-     * @param array $server  An array of server parameters
+     * @param array $server An array of server parameters
      *
      * @return Client A Client instance
      */
-    protected static function createClient(array $options = array(), array $server = array())
+    protected static function createClient(array $options = [], array $server = []): Client
     {
         if (null !== static::$kernel) {
             static::$kernel->shutdown();
         }
 
-        static::$kernel = static::createKernel($options);
+        $client = parent::createClient($options, $server);
+        static::$kernel = $client->getKernel();
         BaseModel::setContainer(static::$kernel->getContainer());
-        $client = static::$kernel->getContainer()->get('test.client');
-        $client->setServerParameters($server);
 
         return $client;
     }
@@ -57,31 +57,29 @@ abstract class WebTestCase extends BaseWebTestCase
     /**
      * Fully empties the test database
      *
-     * @param \SpoonDatabase $database
+     * @param SpoonDatabase $database
      */
-    protected function emptyTestDatabase($database)
+    protected function emptyTestDatabase(SpoonDatabase $database)
     {
         foreach ($database->getTables() as $table) {
-            $database->drop($table);
+            $database->execute(
+                'SET FOREIGN_KEY_CHECKS = 0; DROP TABLE IF EXISTS ' . $table . '; SET FOREIGN_KEY_CHECKS = 1;'
+            );
         }
     }
 
     /**
      * Executes sql in the database
      *
-     * @param \SpoonDatabase $database
+     * @param SpoonDatabase $database
      * @param string $sql
      */
-    protected function importSQL($database, $sql)
+    protected function importSQL(SpoonDatabase $database, string $sql)
     {
         $database->execute(trim($sql));
     }
 
-    /**
-     * @param Client $client
-     * @param array $fixtureClasses
-     */
-    protected function loadFixtures($client, $fixtureClasses = array())
+    protected function loadFixtures(Client $client, array $fixtureClasses = [])
     {
         $database = $client->getContainer()->get('database');
 
@@ -104,10 +102,10 @@ abstract class WebTestCase extends BaseWebTestCase
      * Copies the parameters.yml file to a backup version
      *
      * @param string $kernelDir
+     * @param Filesystem $filesystem
      */
-    protected function backupParametersFile($kernelDir)
+    protected function backupParametersFile(Filesystem $filesystem, string $kernelDir)
     {
-        $filesystem = new Filesystem();
         if ($filesystem->exists($kernelDir . '/config/parameters.yml')) {
             $filesystem->copy(
                 $kernelDir . '/config/parameters.yml',
@@ -123,10 +121,10 @@ abstract class WebTestCase extends BaseWebTestCase
      * Puts the backed up parameters.yml file back
      *
      * @param string $kernelDir
+     * @param Filesystem $filesystem
      */
-    protected function putParametersFileBack($kernelDir)
+    protected function putParametersFileBack(Filesystem $filesystem, string $kernelDir)
     {
-        $filesystem = new Filesystem();
         if ($filesystem->exists($kernelDir . '/config/parameters.yml~backup')) {
             $filesystem->copy(
                 $kernelDir . '/config/parameters.yml~backup',
@@ -140,10 +138,7 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
-    /**
-     * @param Client $client
-     */
-    protected function assertIs404($client)
+    protected function assertIs404(Client $client)
     {
         $client->followRedirect();
         self::assertEquals(
@@ -160,11 +155,11 @@ abstract class WebTestCase extends BaseWebTestCase
      * Submits the form and mimics the GET parameters, since they aren't added
      * by default in the functional tests
      *
-     * @param  Client $client
-     * @param  Form   $form
-     * @param  array  $data
+     * @param Client $client
+     * @param Form $form
+     * @param array $data
      */
-    protected function submitForm(Client $client, Form $form, array $data = array())
+    protected function submitForm(Client $client, Form $form, array $data = []): void
     {
         // Get parameters should be set manually. Symfony uses the request object,
         // but spoon still checks the $_GET and $_POST parameters
@@ -184,13 +179,13 @@ abstract class WebTestCase extends BaseWebTestCase
     /**
      * Edits the data of a form
      *
-     * @param  Client $client
-     * @param  Form   $form
-     * @param  array  $data
+     * @param Client $client
+     * @param Form $form
+     * @param array $data
      */
-    protected function submitEditForm(Client $client, Form $form, array $data = array())
+    protected function submitEditForm(Client $client, Form $form, array $data = []): void
     {
-        $originalData = array();
+        $originalData = [];
         foreach ($form->all() as $fieldName => $formField) {
             $originalData[$fieldName] = $formField->getValue();
         }
@@ -205,15 +200,15 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @param Client $client
      * @param string $url
-     * @param array  $data
+     * @param array $data
      *
      * @return Crawler
      */
     protected function requestWithGetParameters(
         Client $client,
-        $url,
-        $data = array()
-    ) {
+        string $url,
+        array $data = []
+    ): Crawler {
         $this->setGetParameters($data);
         $request = $client->request('GET', $url, $data);
         $this->unsetGetParameters($data);
@@ -226,7 +221,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @param array $data
      */
-    protected function setGetParameters($data = array())
+    protected function setGetParameters(array $data = []): void
     {
         foreach ((array) $data as $key => $value) {
             $_GET[$key] = $value;
@@ -238,14 +233,16 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * @param array $data
      */
-    protected function unsetGetParameters($data = array())
+    protected function unsetGetParameters(array $data = []): void
     {
         if (empty($data)) {
-            $_GET = array();
-        } else {
-            foreach ($data as $key => $value) {
-                unset($_GET[$key]);
-            }
+            $_GET = [];
+
+            return;
+        }
+
+        foreach ($data as $key => $value) {
+            unset($_GET[$key]);
         }
     }
 
@@ -255,7 +252,7 @@ abstract class WebTestCase extends BaseWebTestCase
      *
      * Logging in using the forms is tested in the Authentication module
      */
-    protected function login()
+    protected function login(): void
     {
         Authentication::tearDown();
         Authentication::loginUser('noreply@fork-cms.com', 'fork');
@@ -264,7 +261,7 @@ abstract class WebTestCase extends BaseWebTestCase
     /**
      * Log out a user
      */
-    protected function logout()
+    protected function logout(): void
     {
         Authentication::tearDown();
     }

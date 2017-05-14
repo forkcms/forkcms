@@ -25,7 +25,7 @@ final class Unsubscription
     public $email;
 
     /**
-     * @var string
+     * @var Locale
      */
     public $locale;
 
@@ -33,9 +33,9 @@ final class Unsubscription
      * @param Locale $locale
      * @param null|string $email
      */
-    public function __construct(Locale $locale, $email = null)
+    public function __construct(Locale $locale, string $email = null)
     {
-        $this->locale= $locale;
+        $this->locale = $locale;
         $this->email = $email;
     }
 }

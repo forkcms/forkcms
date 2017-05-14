@@ -18,10 +18,7 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
  */
 class UpdateMarker extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -35,12 +32,12 @@ class UpdateMarker extends BackendBaseAJAXAction
             $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
         } else {
             //update
-            $updateData = array(
+            $updateData = [
                 'id' => $itemId,
                 'lat' => $lat,
                 'lng' => $lng,
                 'language' => BL::getWorkingLanguage(),
-            );
+            ];
 
             BackendLocationModel::update($updateData);
 

@@ -20,10 +20,7 @@ use Common\Uri as CommonUri;
  */
 class SaveField extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -32,7 +29,7 @@ class SaveField extends BackendBaseAJAXAction
         $fieldId = \SpoonFilter::getPostValue('field_id', null, '', 'int');
         $type = \SpoonFilter::getPostValue(
             'type',
-            array('checkbox', 'dropdown', 'datetime', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'),
+            ['checkbox', 'dropdown', 'datetime', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'],
             '',
             'string'
         );
@@ -45,24 +42,24 @@ class SaveField extends BackendBaseAJAXAction
         $defaultValues = trim(\SpoonFilter::getPostValue('default_values', null, '', 'string'));
         $placeholder = trim(\SpoonFilter::getPostValue('placeholder', null, '', 'string'));
         $classname = trim(\SpoonFilter::getPostValue('classname', null, '', 'string'));
-        $required = \SpoonFilter::getPostValue('required', array('Y', 'N'), 'N', 'string');
+        $required = \SpoonFilter::getPostValue('required', ['Y', 'N'], 'N', 'string');
         $requiredErrorMessage = trim(\SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
-        $validation = \SpoonFilter::getPostValue('validation', array('email', 'number', 'time'), '', 'string');
+        $validation = \SpoonFilter::getPostValue('validation', ['email', 'number', 'time'], '', 'string');
         $validationParameter = trim(\SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
         $errorMessage = trim(\SpoonFilter::getPostValue('error_message', null, '', 'string'));
 
         // special field for textbox
-        $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y', 'N'), 'N', 'string');
+        $replyTo = \SpoonFilter::getPostValue('reply_to', ['Y', 'N'], 'N', 'string');
         $sendConfirmationMailTo = \SpoonFilter::getPostValue(
             'send_confirmation_mail_to',
-            array('Y', 'N'),
+            ['Y', 'N'],
             'N',
             'string'
         );
         $confirmationMailSubject = trim(\SpoonFilter::getPostValue('confirmation_mail_subject', null, '', 'string'));
 
         // special fields for datetime
-        $inputType = \SpoonFilter::getPostValue('input_type', array('date', 'time'), 'date', 'string');
+        $inputType = \SpoonFilter::getPostValue('input_type', ['date', 'time'], 'date', 'string');
         $valueAmount = trim(\SpoonFilter::getPostValue('value_amount', null, '', 'string'));
         $valueType = trim(\SpoonFilter::getPostValue('value_type', null, '', 'string'));
 
@@ -86,7 +83,7 @@ class SaveField extends BackendBaseAJAXAction
                     }
 
                     // init
-                    $errors = array();
+                    $errors = [];
 
                     // validate textbox
                     if ($type == 'textbox') {
@@ -128,7 +125,7 @@ class SaveField extends BackendBaseAJAXAction
                         if ($label == '') {
                             $errors['label'] = BL::getError('LabelIsRequired');
                         }
-                        if (in_array($valueType, array('day', 'week', 'month', 'year')) && $valueAmount == '') {
+                        if (in_array($valueType, ['day', 'week', 'month', 'year']) && $valueAmount == '') {
                             $errors['default_value_error_message'] = BL::getError('ValueIsRequired');
                         }
                         if ($required == 'Y' && $requiredErrorMessage == '') {
@@ -183,7 +180,7 @@ class SaveField extends BackendBaseAJAXAction
 
                     // got errors
                     if (!empty($errors)) {
-                        $this->output(self::OK, array('errors' => $errors), 'form contains errors');
+                        $this->output(self::OK, ['errors' => $errors], 'form contains errors');
                     } else {
                         // htmlspecialchars except for paragraphs
                         if ($type != 'paragraph') {
@@ -200,13 +197,13 @@ class SaveField extends BackendBaseAJAXAction
                             $values = (array) explode('|', $values);
                         } elseif ($type == 'radiobutton') {
                             $postedValues = (array) explode('|', $values);
-                            $values = array();
+                            $values = [];
 
                             foreach ($postedValues as $postedValue) {
-                                $values[] = array(
+                                $values[] = [
                                     'value' => CommonUri::getUrl($postedValue),
                                     'label' => $postedValue,
-                                );
+                                ];
                             }
                             if ($defaultValues != '') {
                                 $defaultValues = CommonUri::getUrl($defaultValues);
@@ -217,7 +214,7 @@ class SaveField extends BackendBaseAJAXAction
                          * Save!
                          */
                         // settings
-                        $settings = array();
+                        $settings = [];
                         if ($label != '') {
                             $settings['label'] = \SpoonFilter::htmlspecialchars($label);
                         }
@@ -252,7 +249,7 @@ class SaveField extends BackendBaseAJAXAction
                         }
 
                         // build array
-                        $field = array();
+                        $field = [];
                         $field['form_id'] = $formId;
                         $field['type'] = $type;
                         $field['settings'] = (!empty($settings) ? serialize($settings) : null);
@@ -275,6 +272,7 @@ class SaveField extends BackendBaseAJAXAction
                         // required
                         if ($required == 'Y') {
                             // build array
+                            $validate = [];
                             $validate['field_id'] = $fieldId;
                             $validate['type'] = 'required';
                             $validate['error_message'] = \SpoonFilter::htmlspecialchars($requiredErrorMessage);
@@ -318,10 +316,10 @@ class SaveField extends BackendBaseAJAXAction
                         // success output
                         $this->output(
                             self::OK,
-                            array(
+                            [
                                 'field_id' => $fieldId,
                                 'field_html' => $fieldHTML,
-                            ),
+                            ],
                             'field saved'
                         );
                     }

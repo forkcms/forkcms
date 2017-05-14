@@ -46,13 +46,13 @@ class Archive extends FrontendBaseBlock
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 10,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * The requested year
@@ -68,10 +68,7 @@ class Archive extends FrontendBaseBlock
      */
     private $month;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
@@ -80,10 +77,7 @@ class Archive extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // get parameters
         $this->year = $this->URL->getParameter(1);
@@ -160,10 +154,7 @@ class Archive extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
@@ -193,12 +184,12 @@ class Archive extends FrontendBaseBlock
         // assign category
         $this->tpl->assign(
             'archive',
-            array(
+            [
                  'start_date' => $this->startDate,
                  'end_date' => $this->endDate,
                  'year' => $this->year,
                  'month' => $this->month,
-            )
+            ]
         );
 
         // assign items

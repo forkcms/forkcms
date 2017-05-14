@@ -9,16 +9,16 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testAuthenticationIsNeeded()
+    public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
         $client = static::createClient();
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
                 'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
-            )
+            ]
         );
 
         $client->setMaxRedirects(1);
@@ -34,7 +34,7 @@ class IndexTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testIndexContainsBlogPosts()
+    public function testIndexContainsBlogPosts(): void
     {
         $client = static::createClient();
         $this->login();

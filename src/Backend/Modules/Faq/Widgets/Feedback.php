@@ -23,12 +23,9 @@ class Feedback extends BackendBaseWidget
      *
      * @var array
      */
-    private $feedback = array();
+    private $feedback = [];
 
-    /**
-     * Execute the widget
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->setColumn('middle');
         $this->setPosition(0);
@@ -37,10 +34,7 @@ class Feedback extends BackendBaseWidget
         $this->display();
     }
 
-    /**
-     * Load the data
-     */
-    private function loadData()
+    private function loadData(): void
     {
         $allFeedback = BackendFaqModel::getAllFeedback();
 
@@ -52,10 +46,7 @@ class Feedback extends BackendBaseWidget
         }
     }
 
-    /**
-     * Parse into template
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->tpl->assign('faqFeedback', $this->feedback);
     }

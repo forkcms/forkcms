@@ -26,7 +26,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * The settings form
@@ -35,10 +35,7 @@ class Edit extends BackendBaseActionEdit
      */
     protected $settingsForm;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -72,10 +69,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function loadData()
+    private function loadData(): void
     {
         $this->record = (array) BackendLocationModel::get($this->id);
 
@@ -109,10 +103,7 @@ class Edit extends BackendBaseActionEdit
         $this->settings['directions'] = (isset($this->settings['directions'])) ? ($this->settings['directions']) : false;
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('edit');
         $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
@@ -124,28 +115,25 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addHidden('redirect', 'overview');
     }
 
-    /**
-     * Load the settings form
-     */
-    protected function loadSettingsForm()
+    protected function loadSettingsForm(): void
     {
-        $mapTypes = array(
+        $mapTypes = [
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
             'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
-        );
-        $mapStyles = array(
+        ];
+        $mapStyles = [
             'standard' => BL::lbl('Default', $this->getModule()),
             'custom' => BL::lbl('Custom', $this->getModule()),
             'gray' => BL::lbl('Gray', $this->getModule()),
             'blue' => BL::lbl('Blue', $this->getModule()),
-        );
+        ];
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(1, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
+            array_merge(['auto'], range(1, 18)),
+            array_merge([BL::lbl('Auto', $this->getModule())], range(1, 18))
         );
 
         $this->settingsForm = new BackendForm('settings');
@@ -166,10 +154,7 @@ class Edit extends BackendBaseActionEdit
         $this->settingsForm->addCheckbox('marker_overview', ($this->record['show_overview'] == 'Y'));
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -186,10 +171,7 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
@@ -203,6 +185,7 @@ class Edit extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = [];
                 $item['id'] = $this->id;
                 $item['language'] = BL::getWorkingLanguage();
                 $item['extra_id'] = $this->record['extra_id'];

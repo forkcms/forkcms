@@ -12,7 +12,6 @@ namespace Frontend\Modules\Profiles\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -38,17 +37,14 @@ class Settings extends FrontendBaseBlock
      */
     private $profile;
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // profile logged in
         if (FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->getData();
             $this->loadTemplate();
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         } else {
@@ -63,25 +59,19 @@ class Settings extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Get profile data.
-     */
-    private function getData()
+    private function getData(): void
     {
         // get profile
         $this->profile = FrontendProfilesAuthentication::getProfile();
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // gender dropdown values
-        $genderValues = array(
+        $genderValues = [
             'male' => \SpoonFilter::ucfirst(FL::getLabel('Male')),
             'female' => \SpoonFilter::ucfirst(FL::getLabel('Female')),
-        );
+        ];
 
         // birthdate dropdown values
         $days = range(1, 31);
@@ -142,10 +132,7 @@ class Settings extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // have the settings been saved?
         if ($this->URL->getParameter('sent') == 'true') {
@@ -171,10 +158,7 @@ class Settings extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
         if ($this->frm->isSubmitted()) {
@@ -225,8 +209,8 @@ class Settings extends FrontendBaseBlock
             // no errors
             if ($this->frm->isCorrect()) {
                 // init
-                $values = array();
-                $settings = array();
+                $values = [];
+                $settings = [];
 
                 // has there been a valid display name change request?
                 if ($this->profile->getDisplayName() !== $txtDisplayName->getValue() &&

@@ -10,10 +10,11 @@ class FormTokenParser extends \Twig_TokenParser
     /**
      * @param \Twig_Token $token
      *
-     * @return \Twig_Node
      * @throws \Twig_Error_Syntax
+     *
+     * @return \Twig_Node
      */
-    public function parse(\Twig_Token $token)
+    public function parse(\Twig_Token $token): \Twig_Node
     {
         $stream = $this->parser->getStream();
         $form = $stream->expect(\Twig_Token::NAME_TYPE)->getValue();
@@ -29,9 +30,9 @@ class FormTokenParser extends \Twig_TokenParser
                 $token->getLine(),
                 $stream->getFilename()
             );
-        } else {
-            FormState::$current = $form;
         }
+
+        FormState::$current = $form;
 
         return new FormNode($form, $token->getLine(), $this->getTag());
     }
@@ -39,7 +40,7 @@ class FormTokenParser extends \Twig_TokenParser
     /**
      * @return string
      */
-    public function getTag()
+    public function getTag(): string
     {
         return 'form';
     }

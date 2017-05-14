@@ -41,18 +41,15 @@ final class SaveSettings
     public $doubleOptIn;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public $overwriteInterests;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public $automaticallySubscribeFromFormBuilderSubmittedForm;
 
-    /**
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(ModulesSettings $modulesSettings)
     {
         // Define settings

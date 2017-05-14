@@ -20,7 +20,7 @@ class Installer extends ModuleInstaller
     /**
      * Add a GOD-user
      */
-    private function addUser()
+    private function addUser(): void
     {
         // no god user already exists
         // @todo refactor this nasty if statement...
@@ -29,7 +29,7 @@ class Installer extends ModuleInstaller
              FROM users
              WHERE is_god = ? AND deleted = ? AND active = ?
              LIMIT 1',
-            array('Y', 'N', 'Y')
+            ['Y', 'N', 'Y']
         )
         ) {
             // secret files
@@ -61,6 +61,7 @@ class Installer extends ModuleInstaller
             $passwordStrength = $this->checkPassword();
 
             // build settings
+            $settings = [];
             $settings['nickname'] = serialize('Fork CMS');
             $settings['name'] = serialize('Fork');
             $settings['surname'] = serialize('CMS');
@@ -77,6 +78,7 @@ class Installer extends ModuleInstaller
             $settings['avatar'] = serialize('god.jpg');
 
             // build user
+            $user = [];
             $user['email'] = $this->getVariable('email');
             $user['password'] = sha1(md5(unserialize($settings['password_key'])) . md5($this->getVariable('password')));
             $user['active'] = 'Y';
@@ -87,6 +89,7 @@ class Installer extends ModuleInstaller
             $user['id'] = $this->getDB()->insert('users', $user);
 
             // build group
+            $group = [];
             $group['group_id'] = $this->getSetting('Users', 'default_group');
             $group['user_id'] = $user['id'];
 
@@ -98,7 +101,7 @@ class Installer extends ModuleInstaller
                 // insert user settings
                 $this->getDB()->insert(
                     'users_settings',
-                    array('user_id' => $user['id'], 'name' => $name, 'value' => $value)
+                    ['user_id' => $user['id'], 'name' => $name, 'value' => $value]
                 );
             }
         }
@@ -109,12 +112,12 @@ class Installer extends ModuleInstaller
      *
      * @return string
      */
-    public function checkPassword()
+    public function checkPassword(): string
     {
         // init vars
         $password = $this->getVariable('password');
         $score = 0;
-        $uniqueChars = array();
+        $uniqueChars = [];
 
         // less then 4 chars is just a weak password
         if (mb_strlen($password) <= 4) {
@@ -172,10 +175,7 @@ class Installer extends ModuleInstaller
         return 'weak';
     }
 
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -187,19 +187,19 @@ class Installer extends ModuleInstaller
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // general settings
-        $this->setSetting('Users', 'default_group', 1);
-        $this->setSetting('Users', 'date_formats', array('j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y'));
-        $this->setSetting('Users', 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));
+        $this->setSetting($this->getModule(), 'default_group', 1);
+        $this->setSetting($this->getModule(), 'date_formats', ['j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y']);
+        $this->setSetting($this->getModule(), 'time_formats', ['H:i', 'H:i:s', 'g:i a', 'g:i A']);
 
         // module rights
-        $this->setModuleRights(1, 'Users');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'Users', 'Add');
-        $this->setActionRights(1, 'Users', 'Delete');
-        $this->setActionRights(1, 'Users', 'Edit');
-        $this->setActionRights(1, 'Users', 'Index');
-        $this->setActionRights(1, 'Users', 'UndoDelete');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'UndoDelete');
 
         // set navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
@@ -207,10 +207,10 @@ class Installer extends ModuleInstaller
             $navigationSettingsId,
             'Users',
             'users/index',
-            array(
+            [
                  'users/add',
                  'users/edit',
-            ),
+            ],
             4
         );
 

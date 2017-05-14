@@ -18,15 +18,12 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class MassAction extends BackendBaseAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', array('delete'), 'delete');
+        $action = \SpoonFilter::getGetValue('action', ['delete'], 'delete');
 
         // no id's provided
         if (!isset($_GET['id'])) {

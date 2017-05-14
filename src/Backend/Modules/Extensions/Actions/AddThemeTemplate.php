@@ -25,21 +25,21 @@ class AddThemeTemplate extends BackendBaseActionAdd
      *
      * @var array
      */
-    private $availableThemes = array();
+    private $availableThemes = [];
 
     /**
      * The position's default extras.
      *
      * @var array
      */
-    private $extras = array();
+    private $extras = [];
 
     /**
      * The position's names.
      *
      * @var array
      */
-    private $names = array();
+    private $names = [];
 
     /**
      * The theme we are adding a template for.
@@ -48,10 +48,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
      */
     private $selectedTheme;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -66,10 +63,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load necessary data.
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get data
         $this->selectedTheme = $this->getParameter('theme', 'string');
@@ -83,10 +77,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), $this->get('fork.settings')->get('Core', 'theme', 'core'));
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('add');
@@ -101,9 +92,9 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->frm->addCheckbox('image');
 
         // init vars
-        $positions = array();
-        $blocks = array();
-        $widgets = array();
+        $positions = [];
+        $blocks = [];
+        $widgets = [];
         $extras = BackendExtensionsModel::getExtras();
 
         // loop extras to populate the default extras
@@ -126,13 +117,13 @@ class AddThemeTemplate extends BackendBaseActionAdd
         asort($widgets, SORT_STRING);
 
         // create array
-        $defaultExtras = array(
-            '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
+        $defaultExtras = [
+            '' => [0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))],
             \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
-        );
+        ];
 
         // create default position field
-        $position = array();
+        $position = [];
         $position['i'] = 0;
         $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
         $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control danger positionBlockError');
@@ -141,16 +132,16 @@ class AddThemeTemplate extends BackendBaseActionAdd
         // content has been submitted: re-create submitted content rather than the db-fetched content
         if (isset($_POST['position_0'])) {
             // init vars
-            $this->names = array();
-            $this->extras = array();
+            $this->names = [];
+            $this->extras = [];
             $i = 1;
-            $errors = array();
+            $errors = [];
 
             // loop submitted positions
             while (isset($_POST['position_' . $i])) {
                 // init vars
                 $j = 0;
-                $extras = array();
+                $extras = [];
 
                 // gather position names
                 $name = $_POST['position_' . $i];
@@ -188,7 +179,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
             }
 
             // add errors
-            if ($errors) {
+            if (!empty($errors)) {
                 $this->frm->addError(implode('<br />', array_unique($errors)));
             }
         }
@@ -196,7 +187,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         // build blocks array
         foreach ($this->names as $i => $name) {
             // create default position field
-            $position = array();
+            $position = [];
             $position['i'] = $i + 1;
             $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'form-control positionName', 'form-control danger positionName');
             foreach ($this->extras[$name] as $extra) {
@@ -209,10 +200,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->tpl->assign('positions', $positions);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -220,10 +208,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -247,19 +232,19 @@ class AddThemeTemplate extends BackendBaseActionAdd
             }
 
             // validate syntax
-            $syntax = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
+            $syntax = trim(str_replace(["\n", "\r", ' '], '', $this->frm->getField('format')->getValue()));
 
             // init var
             $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
 
             // validate the syntax
-            if ($table === false) {
+            if (empty($table)) {
                 $this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
             } else {
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);
                 $cellCount = 0;
                 $first = true;
-                $errors = array();
+                $errors = [];
 
                 // loop rows
                 foreach ($table as $row) {
@@ -296,7 +281,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 }
 
                 // add errors
-                if ($errors) {
+                if (!empty($errors)) {
                     $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
                 }
             }
@@ -304,11 +289,12 @@ class AddThemeTemplate extends BackendBaseActionAdd
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build array
+                $item = [];
                 $item['theme'] = $this->frm->getField('theme')->getValue();
                 $item['label'] = $this->frm->getField('label')->getValue();
                 $item['path'] = 'Core/Layout/Templates/' . $this->frm->getField('file')->getValue();
                 $item['active'] = $this->frm->getField('active')->getActualValue();
-                $item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
+                $item['data']['format'] = trim(str_replace(["\n", "\r", ' '], '', $this->frm->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
                 $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;

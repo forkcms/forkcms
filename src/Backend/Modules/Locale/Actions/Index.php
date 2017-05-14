@@ -75,10 +75,7 @@ class Index extends BackendBaseActionIndex
      */
     private $hasSubmissions;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->isGod = BackendAuthentication::getUser()->isGod();
@@ -89,10 +86,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // init vars
         $langWidth = (60 / count($this->filter['language']));
@@ -118,29 +112,29 @@ class Index extends BackendBaseActionIndex
         }
 
         // create datagrids
-        $this->dgLabels = new BackendDataGridArray(isset($translations['lbl']) ? $translations['lbl'] : array());
-        $this->dgMessages = new BackendDataGridArray(isset($translations['msg']) ? $translations['msg'] : array());
-        $this->dgErrors = new BackendDataGridArray(isset($translations['err']) ? $translations['err'] : array());
-        $this->dgActions = new BackendDataGridArray(isset($translations['act']) ? $translations['act'] : array());
+        $this->dgLabels = new BackendDataGridArray(isset($translations['lbl']) ? $translations['lbl'] : []);
+        $this->dgMessages = new BackendDataGridArray(isset($translations['msg']) ? $translations['msg'] : []);
+        $this->dgErrors = new BackendDataGridArray(isset($translations['err']) ? $translations['err'] : []);
+        $this->dgActions = new BackendDataGridArray(isset($translations['act']) ? $translations['act'] : []);
 
         // put the datagrids (references) in an array so we can loop them
-        $dataGrids = array(
+        $dataGrids = [
             'lbl' => &$this->dgLabels,
             'msg' => &$this->dgMessages,
             'err' => &$this->dgErrors,
             'act' => &$this->dgActions,
-        );
+        ];
 
         // loop the datagrids (as references)
         foreach ($dataGrids as $type => &$dataGrid) {
             /** @var $dataGrid BackendDataGridArray */
-            $dataGrid->setSortingColumns(array('module', 'name', 'application'), 'name');
+            $dataGrid->setSortingColumns(['module', 'name', 'application'], 'name');
 
             // disable paging
             $dataGrid->setPaging(false);
 
             // set header label for reference code
-            $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
+            $dataGrid->setHeaderLabels(['name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))]);
 
             // hide the application when only one application is shown
             if ($this->filter['application'] != '') {
@@ -153,38 +147,38 @@ class Index extends BackendBaseActionIndex
             // set column attributes for each language
             foreach ($this->filter['language'] as $lang) {
                 // add a class for the inline edit
-                $dataGrid->setColumnAttributes($lang, array('class' => 'translationValue'));
+                $dataGrid->setColumnAttributes($lang, ['class' => 'translationValue']);
 
                 // add attributes, so the inline editing has all the needed data
                 $dataGrid->setColumnAttributes(
                     $lang,
-                    array(
+                    [
                         'data-id' => '{language: \'' .
                             $lang . '\',application: \'[application]\',module: \'[module]\',name: \'[name]\',type: \'' .
                             $type . '\'}',
-                    )
+                    ]
                 );
 
                 // escape the double quotes
                 $dataGrid->setColumnFunction(
-                    array('SpoonFilter', 'htmlentities'),
-                    array('[' . $lang . ']', null, ENT_QUOTES),
+                    ['SpoonFilter', 'htmlentities'],
+                    ['[' . $lang . ']', null, ENT_QUOTES],
                     $lang,
                     true
                 );
                 if ($type == 'act') {
-                    $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
+                    $dataGrid->setColumnFunction('urldecode', ['[' . $lang . ']'], $lang, true);
                 }
 
                 // set header labels
-                $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(mb_strtoupper($lang)))));
+                $dataGrid->setHeaderLabels([$lang => \SpoonFilter::ucfirst(BL::lbl(mb_strtoupper($lang)))]);
 
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
-                    $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
+                    $dataGrid->setColumnAttributes($lang, ['style' => 'width: ' . $langWidth . '%']);
 
                     // add id of translation for the export
-                    $dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id]'));
+                    $dataGrid->setColumnAttributes($lang, ['data-numeric-id' => '[translation_id]']);
 
                     // Hide translation_id column (only if only one language is selected
                     // because the key doesn't exist if more than 1 language is selected)
@@ -213,36 +207,33 @@ class Index extends BackendBaseActionIndex
                     }
                 } else {
                     // add id of translation for the export
-                    $dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id_' . $lang .']'));
+                    $dataGrid->setColumnAttributes($lang, ['data-numeric-id' => '[translation_id_' . $lang .']']);
                     $dataGrid->setColumnHidden('translation_id_' . $lang);
 
                     //ugly fix but the browser does funny things with the percentage when showing lots of languages
                     $dataGrid->setColumnAttributes(
                         $lang,
-                        array(
+                        [
                             'style' => 'width: ' .
                                 $langWidth .
                                 '%; max-width: '. (600 / count($this->filter['language'])) .'px;',
-                        )
+                        ]
                     );
                 }
             }
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
         $this->frm->addDropdown(
             'application',
-            array(
+            [
                 '' => '-',
                 'Backend' => 'Backend',
                 'Frontend' => 'Frontend',
-            ),
+            ],
             $this->filter['application']
         );
         $this->frm->addText('name', $this->filter['name']);
@@ -270,10 +261,7 @@ class Index extends BackendBaseActionIndex
         $this->frm->parse($this->tpl);
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -327,18 +315,18 @@ class Index extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // if no language is selected, set the working language as the selected
         if ($this->getParameter('language', 'array') == null) {
-            $_GET['language'] = array(BL::getWorkingLanguage());
-            $this->parameters['language'] = array(BL::getWorkingLanguage());
+            $_GET['language'] = [BL::getWorkingLanguage()];
+            $this->parameters['language'] = [BL::getWorkingLanguage()];
         }
 
         // if no type is selected, set labels as the selected type
         if ($this->getParameter('type', 'array') == null) {
-            $_GET['type'] = array('lbl');
-            $this->parameters['type'] = array('lbl', 'act', 'err', 'msg');
+            $_GET['type'] = ['lbl'];
+            $this->parameters['type'] = ['lbl', 'act', 'err', 'msg'];
         }
 
         // set filter

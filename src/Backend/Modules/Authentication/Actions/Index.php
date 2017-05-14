@@ -26,17 +26,16 @@ use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 class Index extends BackendBaseActionIndex
 {
     /**
-     * Form instances
-     *
      * @var BackendForm
      */
     private $frm;
-    private $frmForgotPassword;
 
     /**
-     * Execute the action
+     * @var BackendForm
      */
-    public function execute()
+    private $frmForgotPassword;
+
+    public function execute(): void
     {
         // check if the user is really logged on
         if (BackendAuthentication::getUser()->isAuthenticated()) {
@@ -48,16 +47,13 @@ class Index extends BackendBaseActionIndex
         }
 
         parent::execute();
-        $this->load();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Load the forms
-     */
-    private function load()
+    private function buildForm(): void
     {
         $this->frm = new BackendForm(null, null, 'post', true, false);
         $this->frm
@@ -74,10 +70,7 @@ class Index extends BackendBaseActionIndex
         $this->frmForgotPassword->addText('backend_email_forgot');
     }
 
-    /**
-     * Parse the action into the template
-     */
-    public function parse()
+    public function parse(): void
     {
         parent::parse();
 
@@ -88,10 +81,7 @@ class Index extends BackendBaseActionIndex
         $this->frmForgotPassword->parse($this->tpl);
     }
 
-    /**
-     * Validate the forms
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             $txtEmail = $this->frm->getField('backend_email');
@@ -224,21 +214,21 @@ class Index extends BackendBaseActionIndex
                 $user->setSetting('reset_password_key', $key);
                 $user->setSetting('reset_password_timestamp', time());
 
-                // variables to parse in the e-mail
-                $variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('ResetPassword') . '&email=' . $email . '&key=' . $key;
-
                 // send e-mail to user
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = Message::newInstance(
                     \SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject'))
                 )
-                    ->setFrom(array($from['email'] => $from['name']))
-                    ->setTo(array($email))
-                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->setFrom([$from['email'] => $from['name']])
+                    ->setTo([$email])
+                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Authentication/Layout/Templates/Mails/ResetPassword.html.twig',
-                        $variables
+                        [
+                            'resetLink' => SITE_URL . BackendModel::createURLForAction('ResetPassword')
+                                           . '&email=' . $email . '&key=' . $key,
+                        ]
                     );
                 $this->get('mailer')->send($message);
 
@@ -257,15 +247,15 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /*
+    /**
      * Find out which module and action are allowed
      * and send the user on his way.
      */
-    private function redirectToAllowedModuleAndAction()
+    private function redirectToAllowedModuleAndAction(): void
     {
         $allowedModule = $this->getAllowedModule();
         $allowedAction = $this->getAllowedAction($allowedModule);
-        $allowedModuleActionUrl = $allowedModule ?
+        $allowedModuleActionUrl = $allowedModule !== false && $allowedAction !== false ?
             BackendModel::createURLForAction($allowedAction, $allowedModule) :
             BackendModel::createURLForAction('Index', 'Authentication');
 
@@ -282,11 +272,11 @@ class Index extends BackendBaseActionIndex
     /**
      * Run through the action of a certain module and find us an action(name) this user is allowed to access.
      *
-     * @param $module
+     * @param string $module
      *
      * @return bool|string
      */
-    private function getAllowedAction($module)
+    private function getAllowedAction(string $module)
     {
         if (BackendAuthentication::isAllowedAction('Index', $module)) {
             return 'Index';
@@ -319,7 +309,7 @@ class Index extends BackendBaseActionIndex
     private function getAllowedModule()
     {
         // create filter with modules which may not be displayed
-        $filter = array('Authentication', 'Error', 'Core');
+        $filter = ['Authentication', 'Error', 'Core'];
 
         // get all modules
         $modules = array_diff(BackendModel::getModules(), $filter);

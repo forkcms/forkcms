@@ -20,7 +20,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class AddProfileGroup extends BackendBaseActionAdd
 {
-
     /**
      * The id of the profile
      *
@@ -28,10 +27,7 @@ class AddProfileGroup extends BackendBaseActionAdd
      */
     private $id;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
         $this->id = $this->getParameter('id', 'int');
@@ -48,10 +44,7 @@ class AddProfileGroup extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // get group values for dropdown
         $ddmValues = BackendProfilesModel::getGroupsForDropDown($this->id);
@@ -68,10 +61,7 @@ class AddProfileGroup extends BackendBaseActionAdd
         $this->frm->getField('group')->setDefaultElement('');
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -95,6 +85,7 @@ class AddProfileGroup extends BackendBaseActionAdd
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
+                $values = [];
                 $values['profile_id'] = $this->id;
                 $values['group_id'] = $ddmGroup->getSelected();
                 $values['starts_on'] = BackendModel::getUTCDate();

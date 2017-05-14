@@ -25,19 +25,16 @@ class Settings extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $modules = array();
+    private $modules = [];
 
     /**
      * Settings per module
      *
      * @var array
      */
-    private $settings = array();
+    private $settings = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -46,10 +43,7 @@ class Settings extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Loads the settings form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // init settings form
         $this->frm = new BackendForm('settings');
@@ -81,7 +75,7 @@ class Settings extends BackendBaseActionEdit
         );
 
         // modules that, no matter what, can not be searched
-        $disallowedModules = array('Search');
+        $disallowedModules = ['Search'];
 
         // loop modules
         foreach (BackendModel::getModulesForDropDown() as $module => $label) {
@@ -108,22 +102,19 @@ class Settings extends BackendBaseActionEdit
                 }
 
                 // add to list of modules
-                $this->modules[] = array(
+                $this->modules[] = [
                     'module' => $module,
                     'id' => $this->frm->getField('search_' . $module)->getAttribute('id'),
                     'label' => $label,
                     'chk' => $this->frm->getField('search_' . $module)->parse(),
                     'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(),
                     'txtError' => '',
-                );
+                ];
             }
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -131,13 +122,10 @@ class Settings extends BackendBaseActionEdit
         $this->frm->parse($this->tpl);
 
         // assign iteration
-        $this->tpl->assign(array('modules' => $this->modules));
+        $this->tpl->assign('modules', $this->modules);
     }
 
-    /**
-     * Validates the settings form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // form is submitted
         if ($this->frm->isSubmitted()) {
@@ -184,8 +172,7 @@ class Settings extends BackendBaseActionEdit
                     $searchable = $this->frm->getField('search_' . $module['module'])->getChecked() ? 'Y' : 'N';
                     $weight = $this->frm->getField('search_' . $module['module'] . '_weight')->getValue();
 
-                    // insert, or update
-                    BackendSearchModel::insertModuleSettings($module, $searchable, $weight);
+                    BackendSearchModel::insertModuleSettings($module['module'], $searchable, $weight);
                 }
 
                 // redirect to the settings page

@@ -13,54 +13,52 @@ class Installer extends ModuleInstaller
     /**
      * Pre-insert default extras of the default theme.
      */
-    private function insertExtras()
+    private function insertExtras(): void
     {
         // insert extra ids
-        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
+        $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, false, 2001);
     }
 
-    /**
-     * Insert the templates.
-     */
-    private function insertTemplates()
+    private function insertTemplates(): void
     {
         /*
          * Fallback templates
          */
 
         // build templates
-        $templates['core']['default'] = array(
+        $templates = [];
+        $templates['core']['default'] = [
             'theme' => 'Core',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
             'active' => 'Y',
             'data' => serialize(
-                array(
+                [
                     'format' => '[main]',
-                    'names' => array('main'),
-                )
+                    'names' => ['main'],
+                ]
             ),
-        );
+        ];
 
-        $templates['core']['home'] = array(
+        $templates['core']['home'] = [
             'theme' => 'Core',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
             'active' => 'Y',
             'data' => serialize(
-                array(
+                [
                     'format' => '[main]',
-                    'names' => array('main'),
-                )
+                    'names' => ['main'],
+                ]
             ),
-        );
+        ];
 
         // insert templates
         $this->getDB()->insert('themes_templates', $templates['core']['default']);
         $this->getDB()->insert('themes_templates', $templates['core']['home']);
 
         // search will be installed by default; already link it to this template
-        $extras['search_form'] = $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, 'N', 2001);
+        $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, false, 2001);
 
         /*
          * General theme settings
@@ -72,10 +70,7 @@ class Installer extends ModuleInstaller
         $this->setSetting('Pages', 'meta_navigation', false);
     }
 
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
@@ -93,7 +88,7 @@ class Installer extends ModuleInstaller
         $this->insertTemplates();
 
         // module rights
-        $this->setModuleRights(1, 'Extensions');
+        $this->setModuleRights(1, $this->getModule());
 
         // set rights
         $this->setRights();
@@ -105,10 +100,10 @@ class Installer extends ModuleInstaller
             $navigationModulesId,
             'Overview',
             'extensions/modules',
-            array(
+            [
                 'extensions/detail_module',
                 'extensions/upload_module',
-            )
+            ]
         );
 
         // theme navigation
@@ -117,19 +112,19 @@ class Installer extends ModuleInstaller
             $navigationThemesId,
             'ThemesSelection',
             'extensions/themes',
-            array(
+            [
                 'extensions/upload_theme',
                 'extensions/detail_theme',
-            )
+            ]
         );
         $this->setNavigation(
             $navigationThemesId,
             'Templates',
             'extensions/theme_templates',
-            array(
+            [
                 'extensions/add_theme_template',
                 'extensions/edit_theme_template',
-            )
+            ]
         );
 
         if ($this->installExample()) {
@@ -137,31 +132,28 @@ class Installer extends ModuleInstaller
         }
     }
 
-    /**
-     * Set the rights
-     */
-    private function setRights()
+    private function setRights(): void
     {
         // modules
-        $this->setActionRights(1, 'Extensions', 'Modules');
-        $this->setActionRights(1, 'Extensions', 'DetailModule');
-        $this->setActionRights(1, 'Extensions', 'InstallModule');
-        $this->setActionRights(1, 'Extensions', 'UploadModule');
+        $this->setActionRights(1, $this->getModule(), 'Modules');
+        $this->setActionRights(1, $this->getModule(), 'DetailModule');
+        $this->setActionRights(1, $this->getModule(), 'InstallModule');
+        $this->setActionRights(1, $this->getModule(), 'UploadModule');
 
         // themes
-        $this->setActionRights(1, 'Extensions', 'Themes');
-        $this->setActionRights(1, 'Extensions', 'DetailTheme');
-        $this->setActionRights(1, 'Extensions', 'InstallTheme');
-        $this->setActionRights(1, 'Extensions', 'UploadTheme');
+        $this->setActionRights(1, $this->getModule(), 'Themes');
+        $this->setActionRights(1, $this->getModule(), 'DetailTheme');
+        $this->setActionRights(1, $this->getModule(), 'InstallTheme');
+        $this->setActionRights(1, $this->getModule(), 'UploadTheme');
 
         // templates
-        $this->setActionRights(1, 'Extensions', 'ThemeTemplates');
-        $this->setActionRights(1, 'Extensions', 'AddThemeTemplate');
-        $this->setActionRights(1, 'Extensions', 'EditThemeTemplate');
-        $this->setActionRights(1, 'Extensions', 'DeleteThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'ThemeTemplates');
+        $this->setActionRights(1, $this->getModule(), 'AddThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'EditThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'DeleteThemeTemplate');
     }
 
-    private function installForkTheme()
+    private function installForkTheme(): void
     {
         /*
          * Fallback templates
@@ -179,7 +171,7 @@ class Installer extends ModuleInstaller
                     'image' => true,
                     'names' => ['main'],
                 ]
-            )
+            ),
         ];
 
         $templates['core']['home'] = [
@@ -191,11 +183,10 @@ class Installer extends ModuleInstaller
                 [
                     'format' => '[main]',
                     'image' => true,
-                    'names' => array('main'),
+                    'names' => ['main'],
                 ]
             ),
         ];
-
 
         // insert templates
         $this->getDB()->insert('themes_templates', $templates['core']['default']);

@@ -64,7 +64,7 @@ class Authentication
     /**
      * Cleanup old session records in the database.
      */
-    public static function cleanupOldSessions()
+    public static function cleanupOldSessions(): void
     {
         // remove all sessions with date older then 1 month
         FrontendModel::getContainer()->get('database')->delete(
@@ -76,16 +76,13 @@ class Authentication
     /**
      * Get the login/profile status for the given e-mail and password.
      *
-     * @param  string $email    Profile email address.
-     * @param  string $password Profile password.
+     * @param string $email Profile email address.
+     * @param string $password Profile password.
      *
      * @return string One of the FrontendProfilesAuthentication::LOGIN_* constants.
      */
-    public static function getLoginStatus($email, $password)
+    public static function getLoginStatus(string $email, string $password): string
     {
-        $email = (string) $email;
-        $password = (string) $password;
-
         // get profile id
         $profileId = FrontendProfilesModel::getIdByEmail($email);
 
@@ -100,28 +97,18 @@ class Authentication
             'SELECT p.status
              FROM profiles AS p
              WHERE p.email = ? AND p.password = ?',
-            array($email, $encryptedPassword)
+            [$email, $encryptedPassword]
         );
 
         return empty($loginStatus) ? self::LOGIN_INVALID : $loginStatus;
     }
 
-    /**
-     * Get a profile object with information about a profile.
-     *
-     * @return FrontendProfilesProfile
-     */
-    public static function getProfile()
+    public static function getProfile(): FrontendProfilesProfile
     {
         return self::$profile;
     }
 
-    /**
-     * Check if a profile is logged in.
-     *
-     * @return bool
-     */
-    public static function isLoggedIn()
+    public static function isLoggedIn(): bool
     {
         // profile object exist? (this means the session/cookie checks have
         // already happened in the current request and we cached the profile)
@@ -147,7 +134,7 @@ class Authentication
                 // update session date
                 FrontendModel::getContainer()->get('database')->update(
                     'profiles_sessions',
-                    array('date' => FrontendModel::getUTCDate()),
+                    ['date' => FrontendModel::getUTCDate()],
                     'session_id = ?',
                     $sessionId
                 );
@@ -187,11 +174,11 @@ class Authentication
                 // update session record
                 FrontendModel::getContainer()->get('database')->update(
                     'profiles_sessions',
-                    array(
+                    [
                         'session_id' => \SpoonSession::getSessionId(),
                         'secret_key' => $profileSecret,
                         'date' => FrontendModel::getUTCDate(),
-                    ),
+                    ],
                     'secret_key = ?',
                     $secret
                 );
@@ -203,7 +190,7 @@ class Authentication
                 \SpoonSession::set('frontend_profile_logged_in', true);
 
                 // update last login
-                FrontendProfilesModel::update($profileId, array('last_login' => FrontendModel::getUTCDate()));
+                FrontendProfilesModel::update($profileId, ['last_login' => FrontendModel::getUTCDate()]);
 
                 // new user object
                 self::$profile = new FrontendProfilesProfile($profileId);
@@ -221,18 +208,11 @@ class Authentication
     }
 
     /**
-     * Login a profile.
-     *
-     * @param  int  $profileId Login the profile with this id in.
-     * @param  bool $remember  Should we set a cookie for later?
-     *
-     * @return bool
+     * @param int $profileId Login the profile with this id in.
+     * @param bool $remember Should we set a cookie for later?
      */
-    public static function login($profileId, $remember = false)
+    public static function login(int $profileId, bool $remember = false): void
     {
-        // redefine vars
-        $profileId = (int) $profileId;
-        $remember = (bool) $remember;
         $secretKey = null;
 
         // cleanup old sessions
@@ -263,31 +243,28 @@ class Authentication
         // insert new session record
         FrontendModel::getContainer()->get('database')->insert(
             'profiles_sessions',
-            array(
+            [
                 'profile_id' => $profileId,
                 'session_id' => \SpoonSession::getSessionId(),
                 'secret_key' => $secretKey,
                 'date' => FrontendModel::getUTCDate(),
-            )
+            ]
         );
 
         // update last login
-        FrontendProfilesModel::update($profileId, array('last_login' => FrontendModel::getUTCDate()));
+        FrontendProfilesModel::update($profileId, ['last_login' => FrontendModel::getUTCDate()]);
 
         // load the profile object
         self::$profile = new FrontendProfilesProfile($profileId);
     }
 
-    /**
-     * Logout a profile.
-     */
-    public static function logout()
+    public static function logout(): void
     {
         // delete session records
         FrontendModel::getContainer()->get('database')->delete(
             'profiles_sessions',
             'session_id = ?',
-            array(\SpoonSession::getSessionId())
+            [\SpoonSession::getSessionId()]
         );
 
         // set is_logged_in to false
@@ -300,14 +277,11 @@ class Authentication
     /**
      * Update profile password and salt.
      *
-     * @param int    $profileId Profile id for which we are changing the password.
-     * @param string $password  New password.
+     * @param int $profileId Profile id for which we are changing the password.
+     * @param string $password New password.
      */
-    public static function updatePassword($profileId, $password)
+    public static function updatePassword(int $profileId, string $password): void
     {
-        $profileId = (int) $profileId;
-        $password = (string) $password;
-
         // get new salt
         $salt = FrontendProfilesModel::getRandomString();
 
@@ -318,6 +292,6 @@ class Authentication
         FrontendProfilesModel::setSetting($profileId, 'salt', $salt);
 
         // update password
-        FrontendProfilesModel::update($profileId, array('password' => $encryptedPassword));
+        FrontendProfilesModel::update($profileId, ['password' => $encryptedPassword]);
     }
 }

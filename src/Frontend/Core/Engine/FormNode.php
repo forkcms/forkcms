@@ -14,19 +14,19 @@ class FormNode extends \Twig_Node
 
     /**
      * @param string $form The name of the template variable to which the form is assigned
-     * @param int $lineno
+     * @param int $lineNumber
      * @param string $tag
      */
-    public function __construct($form, $lineno, $tag)
+    public function __construct(string $form, int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineno, $tag);
+        parent::__construct([], [], $lineNumber, $tag);
         $this->form = $form;
     }
 
     /**
      * @param \Twig_Compiler $compiler
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(\Twig_Compiler $compiler): void
     {
         // Set some string representations to make the code writing via the
         // compiler a bit more readable. ("a bit")
@@ -48,7 +48,6 @@ class FormNode extends \Twig_Node
             ->write('echo \'<form')
             ->raw($frmAttrMethod)
             ->raw($frmAttrAction)
-            //->raw($htmlAcceptCharset)
             ->raw("', ")
             ->raw(' ' . $frmParamsHtml)
             ->raw(', \'')

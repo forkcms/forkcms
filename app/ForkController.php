@@ -9,11 +9,16 @@ namespace ForkCMS\App;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Ajax as BackendAjax;
+use Backend\Core\Engine\Backend;
+use Frontend\Core\Engine\Ajax as FrontendAjax;
+use Frontend\Core\Engine\Frontend;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Backend\Init as BackendInit;
 use Frontend\Init as FrontendInit;
 use Common\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\Response;
+use Twig_Error;
 
 /**
  * Application routing
@@ -25,31 +30,27 @@ class ForkController extends Controller
     /**
      * Virtual folders mappings
      *
-     * @var    array
+     * @var array
      */
-    private static $routes = array(
+    private static $routes = [
         '' => self::DEFAULT_APPLICATION,
         'private' => 'Backend',
         'Backend' => 'Backend',
         'backend' => 'Backend',
-    );
+    ];
 
     /**
      * Get the possible routes
-     *
-     * @return array
      */
-    public static function getRoutes()
+    public static function getRoutes(): array
     {
         return self::$routes;
     }
 
     /**
      * Runs the backend
-     *
-     * @return Response
      */
-    public function backendController()
+    public function backendController(): Response
     {
         defined('APPLICATION') || define('APPLICATION', 'Backend');
         defined('NAMED_APPLICATION') || define('NAMED_APPLICATION', 'private');
@@ -62,10 +63,8 @@ class ForkController extends Controller
 
     /**
      * Runs the backend ajax requests
-     *
-     * @return Response
      */
-    public function backendAjaxController()
+    public function backendAjaxController(): Response
     {
         defined('APPLICATION') || define('APPLICATION', 'Backend');
 
@@ -76,26 +75,9 @@ class ForkController extends Controller
     }
 
     /**
-     * Runs the cronjobs
-     *
-     * @return Response
-     */
-    public function backendCronjobController()
-    {
-        defined('APPLICATION') || define('APPLICATION', 'Backend');
-
-        $applicationClass = $this->initializeBackend('BackendCronjob');
-        $application = new $applicationClass($this->container->get('kernel'));
-
-        return $this->handleApplication($application);
-    }
-
-    /**
      * Runs the frontend requests
-     *
-     * @return Response
      */
-    public function frontendController()
+    public function frontendController(): Response
     {
         defined('APPLICATION') || define('APPLICATION', 'Frontend');
 
@@ -107,10 +89,8 @@ class ForkController extends Controller
 
     /**
      * Runs the frontend ajax requests
-     *
-     * @return Response
      */
-    public function frontendAjaxController()
+    public function frontendAjaxController(): Response
     {
         defined('APPLICATION') || define('APPLICATION', 'Frontend');
 
@@ -122,12 +102,8 @@ class ForkController extends Controller
 
     /**
      * Runs an application and returns the Response
-     *
-     * @param ApplicationInterface $application
-     *
-     * @return Response
      */
-    protected function handleApplication(ApplicationInterface $application)
+    protected function handleApplication(ApplicationInterface $application): Response
     {
         $application->passContainerToModels();
 
@@ -151,23 +127,12 @@ class ForkController extends Controller
      *
      * @return string The name of the application class we need to instantiate.
      */
-    protected function initializeBackend($app)
+    protected function initializeBackend(string $app): string
     {
         $init = new BackendInit($this->container->get('kernel'));
         $init->initialize($app);
 
-        switch ($app) {
-            case 'BackendAjax':
-                $applicationClass = 'Backend\Core\Engine\Ajax';
-                break;
-            case 'BackendCronjob':
-                $applicationClass = 'Backend\Core\Engine\Cronjob';
-                break;
-            default:
-                $applicationClass = 'Backend\Core\Engine\Backend';
-        }
-
-        return $applicationClass;
+        return $app === 'BackendAjax' ? BackendAjax::class : Backend::class;
     }
 
     /**
@@ -175,11 +140,11 @@ class ForkController extends Controller
      *
      * @return string The name of the application class we need to instantiate.
      */
-    protected function initializeFrontend($app)
+    protected function initializeFrontend(string $app): string
     {
         $init = new FrontendInit($this->container->get('kernel'));
         $init->initialize($app);
 
-        return ($app === 'FrontendAjax') ? 'Frontend\Core\Engine\Ajax' : 'Frontend\Core\Engine\Frontend';
+        return $app === 'FrontendAjax' ? FrontendAjax::class : Frontend::class;
     }
 }

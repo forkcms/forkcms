@@ -30,8 +30,8 @@ class MediaGroupDataTransferObject
         $this->mediaGroupEntity = $mediaGroup;
 
         if ($this->hasExistingMediaGroup()) {
-            $this->id = $mediaGroup->getId();
-            $this->type = $mediaGroup->getType();
+            $this->id = $this->mediaGroupEntity->getId();
+            $this->type = $this->mediaGroupEntity->getType();
         }
     }
 

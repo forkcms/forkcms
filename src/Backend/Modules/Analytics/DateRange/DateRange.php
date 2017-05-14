@@ -27,30 +27,18 @@ final class DateRange
         $this->endDate = mktime(0, 0, 0);
     }
 
-    /**
-     * Set the new start and end date
-     *
-     * @param int $startDate
-     * @param int $endDate
-     */
-    public function update($startDate, $endDate)
+    public function update(int $startDate, int $endDate): void
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
     }
 
-    /**
-     * @return int
-     */
-    public function getStartDate()
+    public function getStartDate(): int
     {
         return $this->startDate;
     }
 
-    /**
-     * @return int
-     */
-    public function getEndDate()
+    public function getEndDate(): int
     {
         return $this->endDate;
     }

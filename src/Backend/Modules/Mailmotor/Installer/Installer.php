@@ -10,27 +10,25 @@ namespace Backend\Modules\Mailmotor\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the Mailmotor module
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
-        $this->addModule('Mailmotor', 'The module that allows you to insert/delete subscribers to/from your mailinglist.');
+        $this->addModule('Mailmotor');
 
         // install settings
         $this->installSettings();
 
         // install locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
 
         // install the mailmotor module
-        $this->installModule();
+        $this->installModuleAndActions();
 
         // install backend navigation
         $this->installBackendNavigation();
@@ -39,10 +37,7 @@ class Installer extends ModuleInstaller
         $this->installPages();
     }
 
-    /**
-     * Install the module and it's actions
-     */
-    private function installModule()
+    private function installModuleAndActions(): void
     {
         // module rights
         $this->setModuleRights(1, $this->getModule());
@@ -51,10 +46,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'Settings');
     }
 
-    /**
-     * Install backend navigation
-     */
-    private function installBackendNavigation()
+    private function installBackendNavigation(): void
     {
         // settings navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
@@ -62,20 +54,41 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, $this->getModule(), 'mailmotor/settings');
     }
 
-    /**
-     * Install the pages for this module
-     */
-    private function installPages()
+    private function installPages(): void
     {
         // add extra's
-        $subscribeId = $this->insertExtra($this->getModule(), 'block', 'SubscribeForm', 'Subscribe', null, 'N', 3001);
-        $unsubscribeId = $this->insertExtra($this->getModule(), 'block', 'UnsubscribeForm', 'Unsubscribe', null, 'N', 3002);
-        $this->insertExtra($this->getModule(), 'widget', 'SubscribeForm', 'Subscribe', null, 'N', 3003);
+        $subscribeId = $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::block(),
+            'SubscribeForm',
+            'Subscribe',
+            null,
+            false,
+            3001
+        );
+        $unsubscribeId = $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::block(),
+            'UnsubscribeForm',
+            'Unsubscribe',
+            null,
+            false,
+            3002
+        );
+        $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::widget(),
+            'SubscribeForm',
+            'Subscribe',
+            null,
+            false,
+            3003
+        );
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
             $pageId = $this->insertPage(
-                array('title' => 'Newsletters', 'language' => $language)
+                ['title' => 'Newsletters', 'language' => $language]
             );
 
             // check if a page for mailmotor subscribe already exists in this language
@@ -85,12 +98,13 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($subscribeId, $language)
-            )) {
+                [$subscribeId, $language]
+            )
+            ) {
                 $this->insertPage(
-                    array('parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language),
+                    ['parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language],
                     null,
-                    array('extra_id' => $subscribeId, 'position' => 'main')
+                    ['extra_id' => $subscribeId, 'position' => 'main']
                 );
             }
 
@@ -101,21 +115,19 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($unsubscribeId, $language)
-            )) {
+                [$unsubscribeId, $language]
+            )
+            ) {
                 $this->insertPage(
-                    array('parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language),
+                    ['parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language],
                     null,
-                    array('extra_id' => $unsubscribeId, 'position' => 'main')
+                    ['extra_id' => $unsubscribeId, 'position' => 'main']
                 );
             }
         }
     }
 
-    /**
-     * Install settings
-     */
-    private function installSettings()
+    private function installSettings(): void
     {
         $this->setSetting($this->getModule(), 'mail_engine', null);
         $this->setSetting($this->getModule(), 'api_key', null);

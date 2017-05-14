@@ -10,9 +10,9 @@ class RequirementsChecker
     /**
      * Requirements error statuses
      */
-    const STATUS_OK = 'success';
-    const STATUS_WARNING = 'warning';
-    const STATUS_ERROR = 'danger';
+    private const STATUS_OK = 'success';
+    private const STATUS_WARNING = 'warning';
+    private const STATUS_ERROR = 'danger';
 
     /**
      * The root dir of our project
@@ -38,7 +38,7 @@ class RequirementsChecker
      *
      * @return bool
      */
-    public function passes()
+    public function passes(): bool
     {
         return $this->checkRequirements();
     }
@@ -48,7 +48,7 @@ class RequirementsChecker
      *
      * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         if (empty($this->errors)) {
             $this->checkRequirements();
@@ -62,7 +62,7 @@ class RequirementsChecker
      *
      * @return bool
      */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         if (empty($this->errors)) {
             $this->checkRequirements();
@@ -74,7 +74,7 @@ class RequirementsChecker
     /**
      * Are there any issues with status warning?
      */
-    public function hasWarnings()
+    public function hasWarnings(): bool
     {
         if (empty($this->errors)) {
             $this->checkRequirements();
@@ -88,7 +88,7 @@ class RequirementsChecker
      *
      * @return bool
      */
-    protected function checkRequirements()
+    protected function checkRequirements(): bool
     {
         $this->checkPhpVersion();
         $this->checkPhpExtensions();
@@ -106,14 +106,14 @@ class RequirementsChecker
         return !$this->hasErrors() && !$this->hasWarnings();
     }
 
-    /*
+    /**
      * At first we're going to check to see if the PHP version meets the minimum
      * requirements for Fork CMS. We require at least PHP 7.0.0, because we don't
      * want to be responsible for security issues in PHP itself.
      *
      * We follow this timeline: http://php.net/supported-versions.php
      */
-    protected function checkPhpVersion()
+    protected function checkPhpVersion(): void
     {
         $this->checkRequirement(
             'phpVersion',
@@ -126,10 +126,10 @@ class RequirementsChecker
      * A couple extensions need to be loaded in order to be able to use Fork CMS. Without these
      * extensions, we can't guarantee that everything will work.
      */
-    protected function checkPhpExtensions()
+    protected function checkPhpExtensions(): void
     {
         $pcreVersion = defined('PCRE_VERSION') ? (float) PCRE_VERSION : null;
-        $extensionsArray = array(
+        $extensionsArray = [
             'extensionCURL' => extension_loaded('curl'),
             'extensionLibXML' => extension_loaded('libxml'),
             'extensionDOM' => extension_loaded('dom'),
@@ -143,7 +143,7 @@ class RequirementsChecker
             'extensionJSON' => extension_loaded('json'),
             'extensionPCRE' => (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)),
             'extensionIntl' => extension_loaded('intl'),
-        );
+        ];
 
         // not installed extensions give an error
         foreach ($extensionsArray as $errorName => $requirement) {
@@ -155,7 +155,7 @@ class RequirementsChecker
      * A couple of php.ini settings should be configured in a specific way to make sure that
      * they don't intervene with Fork CMS.
      */
-    protected function checkPhpIniSettings()
+    protected function checkPhpIniSettings(): void
     {
         $this->checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', self::STATUS_WARNING);
         $this->checkRequirement(
@@ -171,7 +171,7 @@ class RequirementsChecker
     /**
      * Some functions should be available
      */
-    protected function checkAvailableFunctions()
+    protected function checkAvailableFunctions(): void
     {
         $this->checkRequirement('functionJsonEncode', function_exists('json_encode'), self::STATUS_ERROR);
         $this->checkRequirement('functionSessionStart', function_exists('session_start'), self::STATUS_ERROR);
@@ -187,7 +187,7 @@ class RequirementsChecker
     /**
      * Fork can't be installed in subfolders, so we should check that.
      */
-    protected function checkSubFolder()
+    protected function checkSubFolder(): void
     {
         if (array_key_exists('REQUEST_URI', $_SERVER)) {
             $this->checkRequirement(
@@ -204,7 +204,7 @@ class RequirementsChecker
      * Make sure the filesystem is prepared for the installation and everything can be read/
      * written correctly.
      */
-    protected function checkFilePermissions()
+    protected function checkFilePermissions(): void
     {
         $this->checkRequirement(
             'fileSystemBackendCache',
@@ -253,7 +253,7 @@ class RequirementsChecker
         );
     }
 
-    protected function checkAvailableFiles()
+    protected function checkAvailableFiles(): void
     {
         $this->checkRequirement(
             'fileSystemParameters',
@@ -266,7 +266,7 @@ class RequirementsChecker
     /**
      * Ensure that Apache .htaccess file is written and mod_rewrite does its job
      */
-    protected function checkApacheRewrites()
+    protected function checkApacheRewrites(): void
     {
         $this->checkRequirement(
             'modRewrite',
@@ -278,13 +278,13 @@ class RequirementsChecker
     /**
      * Check if a specific requirement is satisfied
      *
-     * @param  string $name        The "name" of the check.
-     * @param  bool   $requirement The result of the check.
-     * @param  string $severity    The severity of the requirement.
+     * @param string $name        The "name" of the check.
+     * @param bool   $requirement The result of the check.
+     * @param string $severity    The severity of the requirement.
      *
      * @return bool
      */
-    protected function checkRequirement($name, $requirement, $severity = self::STATUS_ERROR)
+    protected function checkRequirement($name, $requirement, $severity = self::STATUS_ERROR): bool
     {
         // set status
         $this->errors[$name] = $requirement ? self::STATUS_OK : $severity;
@@ -295,11 +295,11 @@ class RequirementsChecker
     /**
      * Check if a directory and its sub-directories and its subdirectories and ... are writable.
      *
-     * @param  string $path The path to check.
+     * @param string $path The path to check.
      *
      * @return bool
      */
-    private function isRecursivelyWritable($path)
+    private function isRecursivelyWritable($path): bool
     {
         $path = rtrim((string) $path, '/');
 
@@ -330,11 +330,11 @@ class RequirementsChecker
      * Check if a directory is writable.
      * The default is_writable function has problems due to Windows ACLs "bug"
      *
-     * @param  string $path The path to check.
+     * @param string $path The path to check.
      *
      * @return bool
      */
-    private function isWritable($path)
+    private function isWritable($path): bool
     {
         // redefine argument
         $path = rtrim((string) $path, '/');

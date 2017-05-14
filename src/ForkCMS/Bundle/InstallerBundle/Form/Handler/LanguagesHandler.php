@@ -10,13 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LanguagesHandler
 {
-    /**
-     * @param Form    $form
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function process(Form $form, Request $request)
+    public function process(Form $form, Request $request): bool
     {
         if (!$request->isMethod('POST')) {
             return false;
@@ -31,13 +25,7 @@ class LanguagesHandler
         return false;
     }
 
-    /**
-     * @param Form    $form
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function processValidForm(Form $form, Request $request)
+    public function processValidForm(Form $form, Request $request): bool
     {
         $data = $form->getData();
 
@@ -45,7 +33,7 @@ class LanguagesHandler
         $data->setLanguages(
             ($data->getLanguageType() === 'multiple')
                 ? $data->getLanguages()
-                : array($data->getDefaultLanguage())
+                : [$data->getDefaultLanguage()]
         );
 
         // take same_interface_language field into account

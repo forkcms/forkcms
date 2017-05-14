@@ -31,7 +31,7 @@ class Object extends KernelLoader
     /**
      * The actual output
      *
-     * @var string
+     * @var mixed
      */
     protected $content;
 
@@ -42,35 +42,17 @@ class Object extends KernelLoader
      */
     protected $module;
 
-    /**
-     * Get the action
-     *
-     * @return string
-     */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
 
-    /**
-     * Get module
-     *
-     * @return string
-     */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
 
-    /**
-     * Set the action
-     *
-     * @param string $action The action to load.
-     * @param string $module The module to load.
-     *
-     * @throws Exception If module is not set or action is not allowed
-     */
-    public function setAction($action, $module = null)
+    public function setAction(string $action, string $module = null): void
     {
         // set module
         if ($module !== null) {
@@ -92,17 +74,10 @@ class Object extends KernelLoader
         }
 
         // set property
-        $this->action = (string) \SpoonFilter::toCamelCase($action);
+        $this->action = \SpoonFilter::toCamelCase($action);
     }
 
-    /**
-     * Set the module
-     *
-     * @param string $module The module to load.
-     *
-     * @throws Exception If module is not allowed
-     */
-    public function setModule($module)
+    public function setModule(string $module): void
     {
         // is this module allowed?
         if (!Authentication::isAllowedModule($module)) {
@@ -127,7 +102,7 @@ class Object extends KernelLoader
      *
      * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
         return new Response(
             $this->content,
@@ -139,14 +114,42 @@ class Object extends KernelLoader
      * Redirect to a given URL
      *
      * @param string $url The URL to redirect to.
-     * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
      *
      * @throws RedirectException
      */
-    public function redirect($url, $code = 302)
+    public function redirect(string $url, int $code = Response::HTTP_FOUND): void
     {
-        $response = new RedirectResponse($url, $code);
+        throw new RedirectException('Redirect', new RedirectResponse($url, $code));
+    }
 
-        throw new RedirectException('Redirect', $response);
+    protected function redirectToErrorPage(string $type, int $code = Response::HTTP_BAD_REQUEST): void
+    {
+        $errorUrl = '/' . NAMED_APPLICATION . '/' . $this->get('request')->getLocale() . '/error?type=' . $type;
+
+        $this->redirect($errorUrl, $code);
+    }
+
+    /**
+     * Load the config file for the requested module.
+     * In the config file we have to find disabled actions, the constructor
+     * will read the folder and set possible actions
+     * Other configurations will be stored in it also.
+     */
+    public function getConfig(): Config
+    {
+        // check if we can load the config file
+        $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
+        if ($this->getModule() === 'Core') {
+            $configClass = Config::class;
+        }
+
+        // validate if class exists (aka has correct name)
+        if (!class_exists($configClass)) {
+            throw new Exception('The config file ' . $configClass . ' could not be found.');
+        }
+
+        // create config-object, the constructor will do some magic
+        return new $configClass($this->getKernel(), $this->getModule());
     }
 }

@@ -26,10 +26,7 @@ class Import extends BackendBaseActionAdd
      */
     private $id;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -38,10 +35,7 @@ class Import extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // get group values for dropdown
         $ddmValues = BackendProfilesModel::getGroupsForDropDown($this->id);
@@ -53,55 +47,50 @@ class Import extends BackendBaseActionAdd
         $this->frm->addCheckbox('overwrite_existing');
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if (!$this->frm->isSubmitted()) {
+            return;
+        }
+        $this->frm->cleanupFields();
 
-            // get fields
-            $ddmGroup = $this->frm->getField('group');
-            $fileFile = $this->frm->getField('file');
-            $csv = array();
+        // get fields
+        $ddmGroup = $this->frm->getField('group');
+        $fileFile = $this->frm->getField('file');
+        $csv = [];
 
-            // validate input
-            $ddmGroup->isFilled(BL::getError('FieldIsRequired'));
-            if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
-                if ($fileFile->isAllowedExtension(
-                    array('csv'),
-                    sprintf(BL::getError('ExtensionNotAllowed'), 'csv')
-                )
-                ) {
-                    $csv = Csv::fileToArray($fileFile->getTempFileName());
-                    if ($csv === false) {
-                        $fileFile->addError(BL::getError('InvalidCSV'));
-                    }
+        // validate input
+        $ddmGroup->isFilled(BL::getError('FieldIsRequired'));
+        if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
+            if ($fileFile->isAllowedExtension(['csv'], sprintf(BL::getError('ExtensionNotAllowed'), 'csv'))) {
+                $csv = Csv::fileToArray($fileFile->getTempFileName());
+                if ($csv === false) {
+                    $fileFile->addError(BL::getError('InvalidCSV'));
                 }
             }
-
-            if ($this->frm->isCorrect()) {
-                // import the profiles
-                $overwrite = $this->frm->getField('overwrite_existing')->isChecked();
-                $statistics = BackendProfilesModel::importCsv(
-                    $csv,
-                    $ddmGroup->getValue(),
-                    $overwrite
-                );
-
-                // build redirect url with the right message
-                $redirectUrl = BackendModel::createURLForAction('index') . '&report=';
-                $redirectUrl .= ($overwrite) ?
-                    'profiles-imported-and-updated' :
-                    'profiles-imported'
-                ;
-                $redirectUrl .= '&var[]=' . $statistics['count']['inserted'];
-                $redirectUrl .= '&var[]=' . $statistics['count']['exists'];
-
-                // everything is saved, so redirect to the overview
-                $this->redirect($redirectUrl);
-            }
         }
+
+        if (!$this->frm->isCorrect()) {
+            return;
+        }
+
+        // import the profiles
+        $overwrite = $this->frm->getField('overwrite_existing')->isChecked();
+        $statistics = BackendProfilesModel::importCsv(
+            $csv,
+            $ddmGroup->getValue(),
+            $overwrite
+        );
+
+        // build redirect url with the right message
+        $redirectUrl = BackendModel::createURLForAction('index') . '&report=';
+        $redirectUrl .= $overwrite ?
+            'profiles-imported-and-updated' :
+            'profiles-imported';
+        $redirectUrl .= '&var[]=' . $statistics['count']['inserted'];
+        $redirectUrl .= '&var[]=' . $statistics['count']['exists'];
+
+        // everything is saved, so redirect to the overview
+        $this->redirect($redirectUrl);
     }
 }

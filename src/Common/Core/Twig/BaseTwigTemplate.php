@@ -2,7 +2,9 @@
 
 namespace Common\Core\Twig;
 
+use Common\Core\Form;
 use Common\ModulesSettings;
+use SpoonForm;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Twig_Environment;
 
@@ -20,8 +22,6 @@ use Twig_Environment;
 abstract class BaseTwigTemplate extends TwigEngine
 {
     /**
-     * Language.
-     *
      * @var string
      */
     protected $language;
@@ -43,45 +43,28 @@ abstract class BaseTwigTemplate extends TwigEngine
     /**
      * List of form objects.
      *
-     * @var array
+     * @var Form[]
      */
-    protected $forms = array();
+    protected $forms = [];
 
     /**
      * List of assigned variables.
      *
      * @var array
      */
-    protected $variables = array();
+    protected $variables = [];
 
     /**
      * @var ModulesSettings
      */
     protected $forkSettings;
 
-    /**
-     * Spoon assign method.
-     *
-     * @param string|array $key
-     * @param mixed  $values
-     */
-    public function assign($key, $values = null)
+    public function assign(string $key, $values): void
     {
-        if (is_array($key)) {
-            $this->assignArray($key);
-
-            return;
-        }
-
-        // in all other cases
         $this->variables[$key] = $values;
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     */
-    public function assignGlobal($key, $value)
+    public function assignGlobal(string $key, $value): void
     {
         $this->environment->addGlobal($key, $value);
     }
@@ -90,16 +73,14 @@ abstract class BaseTwigTemplate extends TwigEngine
      * Assign an entire array with keys & values.
      *
      * @param array $variables This array with keys and values will be used to search and replace in the template file.
-     * @param string[optional] $prefix An optional prefix eg. 'lbl' that can be used.
-     * @param string[optional] $suffix An optional suffix eg. 'msg' that can be used.
+     * @param string|null $index
      */
-    public function assignArray(array $variables, $index = null)
+    public function assignArray(array $variables, string $index = null): void
     {
         // artifacts?
         if (!empty($index) && isset($variables['Core'])) {
             unset($variables['Core']);
-            $tmp[$index] = $variables;
-            $variables = $tmp;
+            $variables = [$index => $variables];
         }
 
         // merge the variables array_merge might be to slow for bigger sites
@@ -109,12 +90,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         }
     }
 
-    /**
-     * Adds a form to the template.
-     *
-     * @param SpoonForm $form The form-instance to add.
-     */
-    public function addForm($form)
+    public function addForm(SpoonForm $form): void
     {
         $this->forms[$form->getName()] = $form;
     }
@@ -124,7 +100,7 @@ abstract class BaseTwigTemplate extends TwigEngine
      *
      * @return array
      */
-    public function getAssignedVariables()
+    public function getAssignedVariables(): array
     {
         return $this->variables;
     }
@@ -134,7 +110,7 @@ abstract class BaseTwigTemplate extends TwigEngine
      *
      * @param Twig_Environment $twig
      */
-    protected function startGlobals(&$twig)
+    protected function startGlobals(Twig_Environment $twig)
     {
         // some old globals
         $twig->addGlobal('var', '');
@@ -148,7 +124,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         $twig->addGlobal('timestamp', time());
 
         // constants that should be protected from usage in the template
-        $notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
+        $notPublicConstants = ['DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD'];
 
         // get all defined constants
         $constants = get_defined_constants(true);
@@ -227,8 +203,8 @@ abstract class BaseTwigTemplate extends TwigEngine
      *
      * @param bool $enabled Enable addslashes.
      */
-    public function setAddSlashes($enabled = true)
+    public function setAddSlashes(bool $enabled = true): void
     {
-        $this->addSlashes = (bool) $enabled;
+        $this->addSlashes = $enabled;
     }
 }

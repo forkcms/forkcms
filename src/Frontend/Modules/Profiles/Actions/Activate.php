@@ -10,7 +10,6 @@ namespace Frontend\Modules\Profiles\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -20,10 +19,7 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
  */
 class Activate extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get activation key
         $key = $this->URL->getParameter(0);
@@ -39,7 +35,7 @@ class Activate extends FrontendBaseBlock
             // have id?
             if ($profileId != null) {
                 // update status
-                FrontendProfilesModel::update($profileId, array('status' => 'active'));
+                FrontendProfilesModel::update($profileId, ['status' => 'active']);
 
                 // delete activation key
                 FrontendProfilesModel::deleteSetting($profileId, 'activation_key');

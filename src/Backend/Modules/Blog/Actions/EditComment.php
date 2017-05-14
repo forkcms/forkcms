@@ -20,10 +20,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class EditComment extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -45,7 +42,7 @@ class EditComment extends BackendBaseActionEdit
      * Get the data
      * If a revision-id was specified in the URL we load the revision and not the actual data.
      */
-    private function getData()
+    private function getData(): void
     {
         // get the record
         $this->record = (array) BackendBlogModel::getComment($this->id);
@@ -56,10 +53,7 @@ class EditComment extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
         $this->frm = new BackendForm('editComment');
@@ -79,10 +73,7 @@ class EditComment extends BackendBaseActionEdit
         $this->tpl->assign('itemTitle', $this->record['post_title']);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
@@ -99,12 +90,15 @@ class EditComment extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = $this->id;
-                $item['status'] = $this->record['status'];
-                $item['author'] = $this->frm->getField('author')->getValue();
-                $item['email'] = $this->frm->getField('email')->getValue();
-                $item['website'] = ($this->frm->getField('website')->isFilled()) ? $this->frm->getField('website')->getValue() : null;
-                $item['text'] = $this->frm->getField('text')->getValue();
+                $item = [
+                    'id' => $this->id,
+                    'status' => $this->record['status'],
+                    'author' => $this->frm->getField('author')->getValue(),
+                    'email' => $this->frm->getField('email')->getValue(),
+                    'website' => $this->frm->getField('website')->isFilled()
+                        ? $this->frm->getField('website')->getValue() : null,
+                    'text' => $this->frm->getField('text')->getValue(),
+                ];
 
                 // insert the item
                 BackendBlogModel::updateComment($item);

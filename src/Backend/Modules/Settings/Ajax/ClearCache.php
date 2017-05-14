@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 
 class ClearCache extends AjaxAction
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -18,7 +18,7 @@ class ClearCache extends AjaxAction
 
         $input = new ArrayInput(
             [
-                'command' => 'forkcms:cache:clear'
+                'command' => 'forkcms:cache:clear',
             ]
         );
 

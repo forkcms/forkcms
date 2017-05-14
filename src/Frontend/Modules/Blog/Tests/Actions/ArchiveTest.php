@@ -9,16 +9,16 @@ class ArchiveTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testArchiveContainsBlogPosts()
+    public function testArchiveContainsBlogPosts(): void
     {
         $client = static::createClient();
 
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
                 'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
-            )
+            ]
         );
 
         $client->request('GET', '/en/blog/archive/2015/02');
@@ -35,7 +35,7 @@ class ArchiveTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testArchiveWithOnlyYearsContainsBlogPosts()
+    public function testArchiveWithOnlyYearsContainsBlogPosts(): void
     {
         $client = static::createClient();
 
@@ -53,7 +53,7 @@ class ArchiveTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testArchiveWithWrongMonthsGives404()
+    public function testArchiveWithWrongMonthsGives404(): void
     {
         $client = static::createClient();
 
@@ -64,11 +64,11 @@ class ArchiveTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
-    public function testNonExistingPageGives404()
+    public function testNonExistingPageGives404(): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/archive/2015/02', array('page' => 34));
+        $client->request('GET', '/en/blog/archive/2015/02', ['page' => 34]);
         $this->assertIs404($client);
     }
 }

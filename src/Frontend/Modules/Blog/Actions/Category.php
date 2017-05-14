@@ -39,18 +39,15 @@ class Category extends FrontendBaseBlock
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 10,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
@@ -58,14 +55,11 @@ class Category extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // get categories
         $categories = FrontendBlogModel::getAllCategories();
-        $possibleCategories = array();
+        $possibleCategories = [];
         foreach ($categories as $category) {
             $possibleCategories[$category['url']] = $category['id'];
         }
@@ -113,10 +107,7 @@ class Category extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
@@ -136,12 +127,12 @@ class Category extends FrontendBaseBlock
         // advanced SEO-attributes
         if (isset($this->category['meta_data']['seo_index'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->category['meta_data']['seo_index'])
+                ['name' => 'robots', 'content' => $this->category['meta_data']['seo_index']]
             );
         }
         if (isset($this->category['meta_data']['seo_follow'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->category['meta_data']['seo_follow'])
+                ['name' => 'robots', 'content' => $this->category['meta_data']['seo_follow']]
             );
         }
 

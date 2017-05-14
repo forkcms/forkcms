@@ -29,10 +29,7 @@ class Edit extends BackendBaseActionEdit
      */
     protected $dgUsage;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->id = $this->getParameter('id', 'int');
 
@@ -50,21 +47,15 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendTagsModel::get($this->id);
     }
 
-    /**
-     * Load the datagrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // init var
-        $items = array();
+        $items = [];
 
         // get modules
         $modules = BackendModel::getModules();
@@ -78,20 +69,20 @@ class Edit extends BackendBaseActionEdit
             }
 
             // check if the getByTag-method is available
-            if (is_callable(array($className, 'getByTag'))) {
+            if (is_callable([$className, 'getByTag'])) {
                 // make the call and get the item
-                $moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
+                $moduleItems = (array) call_user_func([$className, 'getByTag'], $this->id);
 
                 // loop items
                 foreach ($moduleItems as $row) {
                     // check if needed fields are available
                     if (isset($row['url'], $row['name'], $row['module'])) {
                         // add
-                        $items[] = array(
+                        $items[] = [
                             'module' => \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module']))),
                             'name' => $row['name'],
                             'url' => $row['url'],
-                        );
+                        ];
                     }
                 }
             }
@@ -100,25 +91,19 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgUsage = new BackendDataGridArray($items);
         $this->dgUsage->setPaging(false);
-        $this->dgUsage->setColumnsHidden(array('url'));
-        $this->dgUsage->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => ''));
+        $this->dgUsage->setColumnsHidden(['url']);
+        $this->dgUsage->setHeaderLabels(['name' => \SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => '']);
         $this->dgUsage->setColumnURL('name', '[url]', \SpoonFilter::ucfirst(BL::lbl('Edit')));
         $this->dgUsage->addColumn('edit', null, \SpoonFilter::ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $this->frm = new BackendForm('edit');
         $this->frm->addText('name', $this->record['name']);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -127,13 +112,10 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('name', $this->record['name']);
 
         // assign usage-datagrid
-        $this->tpl->assign('usage', (string) $this->dgUsage->getContent());
+        $this->tpl->assign('usage', $this->dgUsage->getContent());
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
@@ -146,6 +128,7 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build tag
+                $item = [];
                 $item['id'] = $this->id;
                 $item['tag'] = $this->frm->getField('name')->getValue();
                 $item['url'] = BackendTagsModel::getURL(
