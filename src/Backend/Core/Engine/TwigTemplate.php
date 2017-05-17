@@ -30,14 +30,11 @@ class TwigTemplate extends BaseTwigTemplate
 {
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
-     *
-     * @param bool $addToReference Should the instance be added into the reference.
      */
-    public function __construct($addToReference = true)
+    public function __construct()
     {
-        if ($addToReference) {
-            Model::getContainer()->set('template', $this);
-        }
+        // We must set the template for later use
+        Model::getContainer()->set('template', $this);
 
         $this->forkSettings = Model::get('fork.settings');
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');

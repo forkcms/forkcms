@@ -62,7 +62,7 @@ class Action extends Object
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible from the action-object
-        $this->tpl = $this->getContainer()->get('template');
+        $this->tpl = new TwigTemplate();
         $this->URL = $this->getContainer()->get('url');
         $this->header = $this->getContainer()->get('header');
 

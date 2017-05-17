@@ -73,7 +73,7 @@ class Widget extends \KernelLoader
     {
         parent::__construct($kernel);
 
-        $this->tpl = $this->getContainer()->get('template');
+        $this->tpl = new TwigTemplate();
         $this->header = $this->getContainer()->get('header');
     }
 
