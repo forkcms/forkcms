@@ -20,3 +20,7 @@
 /bundles/*
 /css/*.css
 /js/*.js
+
+# Docker
+/data/*
+docker-compose.override.yml

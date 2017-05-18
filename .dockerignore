@@ -1,0 +1,10 @@
+.git
+.idea
+app/cache/*
+app/logs/*
+app/config/parameters.yml
+src/Backend/Cache/*/*
+src/Frontend/Cache/*/*
+src/Frontend/Files/*
+tests/*
+vendor/*

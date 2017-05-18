@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+    web:
+        build: .
+        working_dir: /var/www/html
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - .:/var/www/html:rw
+            - ./data/files:/var/www/html/src/Frontend/Files
+        links:
+            - db
+        environment:
+            - FORK_DEBUG=1
+            - FORK_ENV=dev
+
+    db:
+        image: "mariadb:latest"
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_DATABASE=fork_cms
+            - MYSQL_ROOT_PASSWORD=kingtriton
+            - MYSQL_USER=forkcms
+            - MYSQL_PASSWORD=forkcms
