@@ -104,7 +104,7 @@ class Meta
         bool $titleOverwrite,
         string $url,
         bool $urlOverwrite,
-        string $custom,
+        string $custom = null,
         array $data,
         int $id = null
     ) {
@@ -132,7 +132,7 @@ class Meta
         bool $urlOverwrite,
         string $custom,
         array $data
-    ): void {
+    ) {
         $this->keywords = $keywords;
         $this->keywordsOverwrite = $keywordsOverwrite;
         $this->description = $description;
@@ -149,7 +149,7 @@ class Meta
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function serialiseData(): void
+    public function serialiseData()
     {
         if (!empty($this->data)) {
             if (array_key_exists('seo_index', $this->data)) {
@@ -171,7 +171,7 @@ class Meta
      * @ORM\PostUpdate
      * @ORM\PostLoad
      */
-    public function unSerialiseData(): void
+    public function unSerialiseData()
     {
         if ($this->data === null) {
             $this->data = [];
@@ -299,7 +299,7 @@ class Meta
     public function hasSEOIndex(): bool
     {
         return array_key_exists('seo_index', $this->data)
-               && !SEOIndex::fromString($this->data['seo_index'])->isNone();
+        && !SEOIndex::fromString($this->data['seo_index'])->isNone();
     }
 
     public function getSEOIndex(): ?SEOIndex
@@ -314,7 +314,7 @@ class Meta
     public function hasSEOFollow(): bool
     {
         return array_key_exists('seo_follow', $this->data)
-               && !SEOFollow::fromString($this->data['seo_follow'])->isNone();
+        && !SEOFollow::fromString($this->data['seo_follow'])->isNone();
     }
 
     public function getSEOFollow(): ?SEOFollow
