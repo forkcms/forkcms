@@ -2,6 +2,8 @@
 
 namespace Common\Core\Header;
 
+use DateTimeImmutable;
+
 final class Asset
 {
     /** @var string */
@@ -13,7 +15,7 @@ final class Asset
     /** @var bool */
     private $addTimestamp;
 
-    /** @var \DateTime */
+    /** @var DateTimeImmutable */
     private $createdOn;
 
     public function __construct(string $file, bool $addTimestamp = false, Priority $priority = null)
@@ -21,7 +23,7 @@ final class Asset
         $this->file = $file;
         $this->addTimestamp = $addTimestamp;
         $this->priority = $priority ?? Priority::standard();
-        $this->createdOn = new \DateTime();
+        $this->createdOn = new DateTimeImmutable();
     }
 
     public function getFile(): string
@@ -34,7 +36,7 @@ final class Asset
         return $this->priority;
     }
 
-    public function getCreatedOn(): \DateTime
+    public function getCreatedOn(): DateTimeImmutable
     {
         return $this->createdOn;
     }
