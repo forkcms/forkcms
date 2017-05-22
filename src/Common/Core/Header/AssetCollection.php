@@ -39,14 +39,19 @@ final class AssetCollection
     }
 
     /**
+     * @param bool $orderAssets
      * @return Asset[]
      */
-    public function getAssets(): array
+    public function getAssets($orderAssets = false): array
     {
+        if ($orderAssets) {
+            $this->orderAssets();
+        }
+
         return $this->assets;
     }
 
-    public function parse(BaseTwigTemplate $template, string $key): void
+    private function orderAssets(): void
     {
         usort(
             $this->assets,
@@ -60,7 +65,11 @@ final class AssetCollection
                 return $comparison;
             }
         );
+    }
 
+    public function parse(BaseTwigTemplate $template, string $key): void
+    {
+        $this->orderAssets();
         $template->assignGlobal(
             $key,
             $this->assets
