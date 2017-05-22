@@ -12,6 +12,9 @@ final class AssetCollection
     /** @var Asset[] */
     private $assets = [];
 
+    /** @var array[] */
+    private $fileNames = [];
+
     public function __construct(Minifier $minifier)
     {
         $this->minifier = $minifier;
@@ -24,11 +27,15 @@ final class AssetCollection
         }
 
         // we already have it we don't need to add it again
-        if (array_key_exists($asset->getFile(), $this->assets)) {
+        if (in_array($asset->getFile(), $this->fileNames)) {
             return;
         }
 
-        $this->assets[$asset->getFile()] = $asset;
+        $sequence = (count($this->assets) > 0) ? max(array_keys($this->assets)) + 1 : 0;
+        $asset->setSequence($sequence);
+
+        $this->assets[] = $asset;
+        $this->fileNames[] = $asset->getFile();
     }
 
     /**
@@ -44,7 +51,13 @@ final class AssetCollection
         usort(
             $this->assets,
             function (Asset $asset1, Asset $asset2) {
-                return $asset1->getPriority()->compare($asset2->getPriority());
+                $comparison = $asset1->getPriority()->compare($asset2->getPriority());
+
+                if ($comparison === 0) {
+                    $comparison = $asset1->getSequence() <=> $asset2->getSequence();
+                }
+
+                return $comparison;
             }
         );
 

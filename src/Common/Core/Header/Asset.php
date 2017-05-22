@@ -13,11 +13,15 @@ final class Asset
     /** @var bool */
     private $addTimestamp;
 
+    /** @var int */
+    private $sequence;
+
     public function __construct(string $file, bool $addTimestamp = false, Priority $priority = null)
     {
         $this->file = $file;
         $this->addTimestamp = $addTimestamp;
         $this->priority = $priority ?? Priority::standard();
+        $this->sequence = 0;
     }
 
     public function getFile(): string
@@ -30,12 +34,22 @@ final class Asset
         return $this->priority;
     }
 
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
     public function forCacheUrl(string $cacheUrl): self
     {
         $cacheAsset = clone $this;
         $cacheAsset->file = $cacheUrl;
 
         return $cacheAsset;
+    }
+
+    public function setSequence(int $sequence): void
+    {
+        $this->sequence = $sequence;
     }
 
     public function __toString(): string
