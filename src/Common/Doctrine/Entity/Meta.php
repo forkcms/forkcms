@@ -286,7 +286,7 @@ class Meta
         return $this->urlOverwrite;
     }
 
-    public function getCustom(): string
+    public function getCustom(): ?string
     {
         return $this->custom;
     }
