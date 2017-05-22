@@ -13,15 +13,15 @@ final class Asset
     /** @var bool */
     private $addTimestamp;
 
-    /** @var int */
-    private $sequence;
+    /** @var \DateTime */
+    private $createdOn;
 
     public function __construct(string $file, bool $addTimestamp = false, Priority $priority = null)
     {
         $this->file = $file;
         $this->addTimestamp = $addTimestamp;
         $this->priority = $priority ?? Priority::standard();
-        $this->sequence = 0;
+        $this->createdOn = new \DateTime();
     }
 
     public function getFile(): string
@@ -34,9 +34,9 @@ final class Asset
         return $this->priority;
     }
 
-    public function getSequence(): int
+    public function getCreatedOn(): \DateTime
     {
-        return $this->sequence;
+        return $this->createdOn;
     }
 
     public function forCacheUrl(string $cacheUrl): self
@@ -45,11 +45,6 @@ final class Asset
         $cacheAsset->file = $cacheUrl;
 
         return $cacheAsset;
-    }
-
-    public function setSequence(int $sequence): void
-    {
-        $this->sequence = $sequence;
     }
 
     public function __toString(): string

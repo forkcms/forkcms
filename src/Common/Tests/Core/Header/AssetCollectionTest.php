@@ -22,9 +22,9 @@ class AssetCollectionTest extends \PHPUnit_Framework_TestCase
         $assetCollection->add($asset3, false);
 
         $unorderedAssets = $assetCollection->getAssets();
-        $this->assertEquals($asset, $unorderedAssets[0]);
-        $this->assertEquals($asset2, $unorderedAssets[1]);
-        $this->assertEquals($asset3, $unorderedAssets[2]);
+        $this->assertEquals($asset, $unorderedAssets[$asset->getFile()]);
+        $this->assertEquals($asset2, $unorderedAssets[$asset2->getFile()]);
+        $this->assertEquals($asset3, $unorderedAssets[$asset3->getFile()]);
 
         $orderedAssets = $assetCollection->getAssets(true);
         $this->assertEquals($asset, $orderedAssets[0]);
