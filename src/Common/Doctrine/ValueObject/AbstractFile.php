@@ -133,7 +133,10 @@ abstract class AbstractFile
         }
 
         // do whatever you want to generate a unique name
-        $filename = Uri::getUrl($this->namePrefix) . '_' . sha1(uniqid(mt_rand(), true));
+        $filename = sha1(uniqid(mt_rand(), true));
+        if ($this->namePrefix !== null) {
+            $filename = Uri::getUrl($this->namePrefix) . '_' . $filename;
+        }
         $this->fileName = $filename . '.' . $this->getFile()->guessExtension();
     }
 
