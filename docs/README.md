@@ -2,7 +2,7 @@
 
 [![Slack Status](https://fork-cms.herokuapp.com/badge.svg)](https://fork-cms.herokuapp.com/)
 
-This repository contains the documentation of Fork CMS. The documentation files are automatically updated on [http://docs.fork-cms.com](http://docs.fork-cms.com)
+You can find the documentation for Fork CMS here. A more user friendly version can be read on [http://docs.fork-cms.com](http://docs.fork-cms.com)
 
 ## Contributing
 
