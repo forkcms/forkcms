@@ -1300,10 +1300,10 @@ jsBackend.mediaLibraryHelper.templates =
         }
 
         html += '</div>';
-        html += '<a href="#/" class="deleteMediaItem btn btn-default" ';
+        html += '<button type="button" class="deleteMediaItem btn btn-default" ';
         html += 'title="' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '">';
         html += '<span>' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '</span>';
-        html += '</a>';
+        html += '</button>';
         html += '</li>';
 
         return html;
