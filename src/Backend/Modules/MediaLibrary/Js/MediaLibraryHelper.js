@@ -958,7 +958,8 @@ jsBackend.mediaLibraryHelper.upload =
         // redefine media folder id
         mediaFolderId = $('#uploadMediaFolderId').val();
 
-        $('#fine-uploader-gallery').fineUploader({
+        let $fineUploaderGallery = $('#fine-uploader-gallery');
+        $fineUploaderGallery.fineUploader({
             template: 'qq-template-gallery',
             thumbnails: {
                 placeholders: {
@@ -987,6 +988,8 @@ jsBackend.mediaLibraryHelper.upload =
 
                     // toggle upload box
                     jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
+
+                    $fineUploaderGallery.find('.qq-upload-success[qq-file-id=' + id + ']').hide();
                 },
                 onAllComplete: function(succeeded, failed) {
                     // clear if already exists
