@@ -80,8 +80,17 @@
         <div class="img-responsive" data-role="media-library-cropper-dialog-canvas-wrapper"></div>
       </div>
       <div class="modal-footer">
+        <div class="button-group pull-left">
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-rotate" data-degrees="-90">
+            <span class="fa fa-rotate-left"></span>{{ 'lbl.RotateLeft'|trans|ucfirst }}
+          </button>
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-rotate" data-degrees="90">
+            <span class="fa fa-rotate-right"></span>{{ 'lbl.RotateRight'|trans|ucfirst }}
+          </button>
+        </div>
         <button type="button" class="btn btn-primary" data-role="media-library-cropper-crop">
-          <span class="fa fa-plus-square"></span>{{ 'lbl.Crop'|trans|ucfirst }}</button>
+          <span class="fa fa-plus-square"></span>{{ 'lbl.Crop'|trans|ucfirst }}
+        </button>
       </div>
     </div>
   </div>

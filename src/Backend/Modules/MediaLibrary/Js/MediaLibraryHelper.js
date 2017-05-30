@@ -803,7 +803,7 @@ jsBackend.mediaLibraryHelper.cropper =
 {
     showCropper: function(resizeInfo, resolve, reject) {
         let $dialog = $('[data-role=media-library-add-dialog]').first();
-        jsBackend.mediaLibraryHelper.cropper.linkPromiseToModalEvents($dialog, resolve, reject, resizeInfo);
+        jsBackend.mediaLibraryHelper.cropper.attachEvents($dialog, resolve, reject, resizeInfo);
         jsBackend.mediaLibraryHelper.cropper.initSourceAndTargetCanvas($dialog, resizeInfo.sourceCanvas, resizeInfo.targetCanvas);
         jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo);
 
@@ -852,7 +852,8 @@ jsBackend.mediaLibraryHelper.cropper =
             $dialog.off('hidden.bs.modal.media-library-cropper.close');
 
             jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
-            $(resizeInfo).cropper('destroy');
+            $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas').cropper('destroy');
+            console.log($('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas'));
             reject('Cancel');
         };
     },
@@ -860,7 +861,7 @@ jsBackend.mediaLibraryHelper.cropper =
     getCropEventFunction: function($dialog, resizeInfo, resolve) {
         return function() {
             let context = resizeInfo.targetCanvas.getContext('2d');
-            let $cropper = $(resizeInfo.sourceCanvas);
+            let $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
             let cropBoxData = $cropper.cropper('getCroppedCanvas');
 
             // set the correct height and width on the target canvas
@@ -876,12 +877,21 @@ jsBackend.mediaLibraryHelper.cropper =
             $dialog.off('hidden.bs.modal.media-library-cropper.close');
             resolve('Confirm');
             $dialog.find('[data-role=media-library-cropper-crop]').off('click.media-library-cropper.crop');
-            $(resizeInfo).cropper('destroy');
+            $cropper.cropper('destroy');
             jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
         };
     },
 
-    linkPromiseToModalEvents: function($dialog, resolve, reject, resizeInfo) {
+    getRotateEventFunction: function(resizeInfo) {
+        return function() {
+            let $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
+            console.log($(this).data('degrees'));
+            $cropper.cropper('rotate', $(this).data('degrees'));
+            $cropper.cropper('crop');
+        }
+    },
+
+    attachEvents: function($dialog, resolve, reject, resizeInfo) {
         $dialog
             .off('hidden.bs.modal.media-library-cropper.close')
             .on(
@@ -898,6 +908,17 @@ jsBackend.mediaLibraryHelper.cropper =
             .on(
                 'click.media-library-cropper.crop',
                 jsBackend.mediaLibraryHelper.cropper.getCropEventFunction(
+                    $dialog,
+                    resizeInfo,
+                    resolve
+                )
+            );
+
+        $dialog.find('[data-role=media-library-cropper-rotate]')
+            .off('click.media-library-cropper.rotate')
+            .on(
+                'click.media-library-cropper.rotate',
+                jsBackend.mediaLibraryHelper.cropper.getRotateEventFunction(
                     $dialog,
                     resizeInfo,
                     resolve
