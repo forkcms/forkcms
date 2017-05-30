@@ -51,7 +51,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
      *    PHP server to combine all parts into one file. This is particularly useful for the concurrent chunking feature,
      *    but is now required in all cases if you are making use of this PHP example.
      */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
