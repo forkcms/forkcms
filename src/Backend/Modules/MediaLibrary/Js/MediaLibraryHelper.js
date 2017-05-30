@@ -851,12 +851,14 @@ jsBackend.mediaLibraryHelper.cropper =
 
     linkPromiseToModalEvents: function($dialog, resolve, reject, resizeInfo) {
         let closeEventFunction = function() {
-            reject('Cancel');
+            $dialog.off('hidden.bs.modal', closeEventFunction);
+
             jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
+            $(resizeInfo).cropper('destroy');
+            reject('Cancel');
         };
 
-        $dialog.find('[data-role=media-library-cropper-dismiss]').off('click', closeEventFunction).on('click', closeEventFunction);
-
+        $dialog.off('hidden.bs.modal', closeEventFunction).on('hidden.bs.modal', closeEventFunction);
         let cropEventFunction = function() {
             let context = resizeInfo.targetCanvas.getContext('2d');
             let $cropper = $(resizeInfo.sourceCanvas);
@@ -875,6 +877,7 @@ jsBackend.mediaLibraryHelper.cropper =
             $dialog.off('hidden.bs.modal', closeEventFunction);
             resolve('Confirm');
             $dialog.find('[data-role=media-library-cropper-crop]').off('click', cropEventFunction);
+            $(resizeInfo).cropper('destroy');
             jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
         };
 
