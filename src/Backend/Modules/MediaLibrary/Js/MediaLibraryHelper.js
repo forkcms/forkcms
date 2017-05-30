@@ -808,8 +808,6 @@ jsBackend.mediaLibraryHelper.cropper =
         jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo);
 
         jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
-        window.cropperResizeInfo = resizeInfo;
-        window.cropperResolve = resolve;
     },
 
     initSourceAndTargetCanvas: function($dialog, sourceCanvas, targetCanvas) {
@@ -849,17 +847,18 @@ jsBackend.mediaLibraryHelper.cropper =
         $dialog.find('[data-role=media-library-cropper-modal]').removeClass('hidden');
     },
 
-    linkPromiseToModalEvents: function($dialog, resolve, reject, resizeInfo) {
-        let closeEventFunction = function() {
-            $dialog.off('hidden.bs.modal', closeEventFunction);
+    getCloseEventFunction: function($dialog, resizeInfo, reject) {
+        return function() {
+            $dialog.off('hidden.bs.modal.media-library-cropper.close');
 
             jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
             $(resizeInfo).cropper('destroy');
             reject('Cancel');
         };
+    },
 
-        $dialog.off('hidden.bs.modal', closeEventFunction).on('hidden.bs.modal', closeEventFunction);
-        let cropEventFunction = function() {
+    getCropEventFunction: function($dialog, resizeInfo, resolve) {
+        return function() {
             let context = resizeInfo.targetCanvas.getContext('2d');
             let $cropper = $(resizeInfo.sourceCanvas);
             let cropBoxData = $cropper.cropper('getCroppedCanvas');
@@ -874,18 +873,39 @@ jsBackend.mediaLibraryHelper.cropper =
             // add the new crop
             context.drawImage($cropper.cropper('getCroppedCanvas'), 0, 0);
 
-            $dialog.off('hidden.bs.modal', closeEventFunction);
+            $dialog.off('hidden.bs.modal.media-library-cropper.close');
             resolve('Confirm');
-            $dialog.find('[data-role=media-library-cropper-crop]').off('click', cropEventFunction);
+            $dialog.find('[data-role=media-library-cropper-crop]').off('click.media-library-cropper.crop');
             $(resizeInfo).cropper('destroy');
             jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
         };
+    },
+
+    linkPromiseToModalEvents: function($dialog, resolve, reject, resizeInfo) {
+        $dialog
+            .off('hidden.bs.modal.media-library-cropper.close')
+            .on(
+                'hidden.bs.modal.media-library-cropper.close',
+                    jsBackend.mediaLibraryHelper.cropper.getCloseEventFunction(
+                    $dialog,
+                    resizeInfo,
+                    reject
+                )
+            );
 
         $dialog.find('[data-role=media-library-cropper-crop]')
-            .off('click', cropEventFunction)
-            .on('click', cropEventFunction)
+            .off('click.media-library-cropper.crop')
+            .on(
+                'click.media-library-cropper.crop',
+                jsBackend.mediaLibraryHelper.cropper.getCropEventFunction(
+                    $dialog,
+                    resizeInfo,
+                    resolve
+                )
+            );
     }
 };
+
 /**
  * All methods related to the upload
  * global: jsBackend
