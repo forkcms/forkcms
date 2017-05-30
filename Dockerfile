@@ -4,50 +4,51 @@ MAINTAINER Fork CMS <info@fork-cms.com>
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Install the dependencies and PHP extensions needed
-RUN apt-get update && \
-    apt-get install -y libpng12-dev libjpeg-dev libmcrypt-dev libicu-dev && rm -rf /var/lib/apt/lists/* && \
-    docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr && \
-    docker-php-ext-install gd mysqli opcache mcrypt intl mbstring pdo pdo_mysql zip
+# Install GD2
+RUN apt-get update && apt-get install -y \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng12-dev && \
+    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-install -j$(nproc) gd
+
+# Install pdo_mysql
+RUN docker-php-ext-install pdo_mysql
+
+# Install mbstring
+RUN docker-php-ext-install mbstring
+
+# Install zip
+RUN docker-php-ext-install zip
+
+# Install intl
+RUN apt-get update && apt-get install -y \
+    g++ \
+    libicu-dev \
+    zlib1g-dev && \
+    docker-php-ext-configure intl && \
+    docker-php-ext-install intl
+
+# Install && enable opcache
+COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache-recommended.ini
+RUN docker-php-ext-enable opcache
+
+# Install & enable Xdebug
+COPY docker/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN pecl install xdebug-2.5.0 && \
+    docker-php-ext-enable xdebug
 
 # Custom php.ini settings
 COPY docker/php/php.ini /usr/local/etc/php/
 
-# Enable Xdebug
-COPY docker/php/xdebug.ini xdebug.ini
-RUN pecl install xdebug-2.5.0 && \
-        docker-php-ext-enable xdebug && \
-        cat xdebug.ini  >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-
-# Set recommended PHP.ini settings
-# We use opcache.revalidate_freq=0 in local development!
-# See https://secure.php.net/manual/en/opcache.installation.php
-# See https://www.scalingphpbook.com/blog/2014/02/14/best-zend-opcache-settings.html
-RUN { \
-        echo 'opcache.memory_consumption=128'; \
-        echo 'opcache.interned_strings_buffer=8'; \
-        echo 'opcache.max_accelerated_files=4000'; \
-        echo 'opcache.revalidate_freq=0'; \
-        echo 'opcache.fast_shutdown=1'; \
-        echo 'opcache.enable_cli=1'; \
-    } > /usr/local/etc/php/conf.d/opcache-recommended.ini
-
+# Bundle source code into container
+COPY . /var/www/html
 WORKDIR /var/www/html
 
-# Install composer and install dependencies. Instead of copying the source files, we first copy composer.json
-# and the lock to speed-up the build. They will rarely change or invalidate the docker cache.
+# Install composer and install dependencies.
 RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/bin/ --filename=composer
-COPY composer.json .
-COPY composer.lock .
-RUN composer install --no-scripts --no-interaction --no-autoloader
-
-# Bundle source code into container. Certain files
-COPY . /var/www/html
-
-# Dump the autoloader and execute post-install scripts.
-RUN composer dump-autoload --optimize && \
-    composer run-script post-install-cmd
+RUN composer install --prefer-dist --no-scripts --no-progress --no-suggest --optimize-autoloader
 
 # Give apache write access to host
 RUN chown -R www-data:www-data /var/www/html
