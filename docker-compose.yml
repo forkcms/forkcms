@@ -21,7 +21,7 @@ services:
         ports:
             - "3306:3306"
         environment:
-            - MYSQL_DATABASE=fork_cms
             - MYSQL_ROOT_PASSWORD=kingtriton
+            - MYSQL_DATABASE=forkcms
             - MYSQL_USER=forkcms
             - MYSQL_PASSWORD=forkcms
