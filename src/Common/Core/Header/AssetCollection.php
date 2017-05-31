@@ -49,13 +49,7 @@ final class AssetCollection
         usort(
             $this->assets,
             function (Asset $asset1, Asset $asset2) {
-                $comparison = $asset1->getPriority()->compare($asset2->getPriority());
-
-                if ($comparison === 0) {
-                    $comparison = $asset1->getCreatedOn() <=> $asset2->getCreatedOn();
-                }
-
-                return $comparison;
+                return $asset1->compare($asset2);
             }
         );
     }

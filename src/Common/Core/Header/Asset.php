@@ -26,6 +26,17 @@ final class Asset
         $this->createdOn = new DateTimeImmutable();
     }
 
+    public function compare(Asset $asset)
+    {
+        $comparison = $this->priority->compare($asset->getPriority());
+
+        if ($comparison === 0) {
+            $comparison = $this->createdOn <=> $asset->getCreatedOn();
+        }
+
+        return $comparison;
+    }
+
     public function getFile(): string
     {
         return $this->file;
