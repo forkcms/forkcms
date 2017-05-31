@@ -343,8 +343,7 @@
         var $input = $(this),
             errorMessage = '',
             type = '',
-            defaults =
-            {
+            defaults = {
                 required: jsFrontend.locale.err('FieldIsRequired'),
                 email: 	  jsFrontend.locale.err('EmailIsInvalid'),
                 date: 	  jsFrontend.locale.err('DateIsInvalid'),
@@ -369,7 +368,7 @@
 
             e.target.setCustomValidity(errorMessage);
 
-            $input.on('input', function(e) {
+            $input.on('input change', function(e) {
                 e.target.setCustomValidity('');
             });
         });
