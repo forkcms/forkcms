@@ -47,11 +47,6 @@ final class Asset
         return $this->priority;
     }
 
-    public function getCreatedOn(): DateTimeImmutable
-    {
-        return $this->createdOn;
-    }
-
     public function forCacheUrl(string $cacheUrl): self
     {
         $cacheAsset = clone $this;
