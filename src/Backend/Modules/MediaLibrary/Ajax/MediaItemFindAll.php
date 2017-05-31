@@ -42,7 +42,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     {
         $aspectRatio = $this->get('request')->request->get('aspect_ratio');
 
-        if (empty($aspectRatio)) {
+        if (empty($aspectRatio) || $aspectRatio === 'false') {
             return null;
         }
 
