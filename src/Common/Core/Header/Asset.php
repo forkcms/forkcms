@@ -28,10 +28,10 @@ final class Asset
 
     public function compare(Asset $asset)
     {
-        $comparison = $this->priority->compare($asset->getPriority());
+        $comparison = $this->priority->compare($asset->priority);
 
         if ($comparison === 0) {
-            $comparison = $this->createdOn <=> $asset->getCreatedOn();
+            $comparison = $this->createdOn <=> $asset->createdOn;
         }
 
         return $comparison;
