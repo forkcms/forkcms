@@ -920,11 +920,7 @@ class Model
 
     public static function getURL(string $url, int $id = null, int $parentId = null, bool $isAction = false): string
     {
-        if ($parentId === null) {
-            $parentId = 0;
-        }
-
-        $parentIds = [$parentId];
+        $parentIds = [$parentId ?? 0];
 
         // 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
         if ($parentId == 0 || $parentId == 1 || $parentId == 2 || $parentId == 3 || $parentId == 4) {
