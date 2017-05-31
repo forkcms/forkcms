@@ -801,13 +801,46 @@ jsBackend.mediaLibraryHelper.group =
 
 jsBackend.mediaLibraryHelper.cropper =
 {
-    showCropper: function(resizeInfo, resolve, reject) {
-        let $dialog = $('[data-role=media-library-add-dialog]').first();
-        jsBackend.mediaLibraryHelper.cropper.attachEvents($dialog, resolve, reject, resizeInfo);
-        jsBackend.mediaLibraryHelper.cropper.initSourceAndTargetCanvas($dialog, resizeInfo.sourceCanvas, resizeInfo.targetCanvas);
-        jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo);
+    cropperQueue: [],
+    isCropping: false,
 
+    passToCropper: function(resizeInfo, resolve, reject) {
+        jsBackend.mediaLibraryHelper.cropper.cropperQueue.push({
+            'resizeInfo': resizeInfo,
+            'resolve': resolve,
+            'reject': reject,
+        });
+
+        // If the cropper is already handling the queue we don't need to start it a second time.
+        if (jsBackend.mediaLibraryHelper.cropper.isCropping) {
+            return;
+        }
+
+        jsBackend.mediaLibraryHelper.cropper.isCropping = true;
+        let $dialog = $('[data-role=media-library-add-dialog]').first();
         jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
+
+        jsBackend.mediaLibraryHelper.cropper.processNextImageInQueue($dialog);
+    },
+
+    processNextImageInQueue: function($dialog) {
+        let nextQueuedImage = jsBackend.mediaLibraryHelper.cropper.cropperQueue.shift();
+        jsBackend.mediaLibraryHelper.cropper.crop(
+            $dialog,
+            nextQueuedImage.resizeInfo,
+            nextQueuedImage.resolve,
+            nextQueuedImage.reject
+        );
+    },
+
+    crop: function($dialog, resizeInfo, resolve, reject) {
+        jsBackend.mediaLibraryHelper.cropper.attachEvents($dialog, resolve, reject, resizeInfo);
+        jsBackend.mediaLibraryHelper.cropper.initSourceAndTargetCanvas(
+            $dialog,
+            resizeInfo.sourceCanvas,
+            resizeInfo.targetCanvas
+        );
+        jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo);
     },
 
     initSourceAndTargetCanvas: function($dialog, sourceCanvas, targetCanvas) {
@@ -816,7 +849,6 @@ jsBackend.mediaLibraryHelper.cropper =
         targetCanvas.width = sourceCanvas.width;
 
         $dialog.find('[data-role=media-library-cropper-dialog-canvas-wrapper]').empty().append(sourceCanvas);
-        $dialog.find('[data-role=media-library-cropper-crop-preview]').empty().append(targetCanvas);
     },
 
     initCropper: function($dialog, resizeInfo) {
@@ -837,7 +869,19 @@ jsBackend.mediaLibraryHelper.cropper =
         return config;
     },
 
-    switchBackToSelectModal: function($dialog) {
+    hasNextImageInQueue: function() {
+        return jsBackend.mediaLibraryHelper.cropper.cropperQueue.length > 0;
+    },
+
+    finish: function($dialog) {
+        if (jsBackend.mediaLibraryHelper.cropper.hasNextImageInQueue()) {
+            // handle the next item
+            jsBackend.mediaLibraryHelper.cropper.processNextImageInQueue($dialog);
+
+            return;
+        }
+
+        jsBackend.mediaLibraryHelper.cropper.isCropping = false;
         $dialog.find('[data-role=media-library-select-modal]').removeClass('hidden');
         $dialog.find('[data-role=media-library-cropper-modal]').addClass('hidden');
     },
@@ -851,10 +895,9 @@ jsBackend.mediaLibraryHelper.cropper =
         return function() {
             $dialog.off('hidden.bs.modal.media-library-cropper.close');
 
-            jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
             $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas').cropper('destroy');
-            console.log($('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas'));
             reject('Cancel');
+            jsBackend.mediaLibraryHelper.cropper.finish($dialog);
         };
     },
 
@@ -878,14 +921,13 @@ jsBackend.mediaLibraryHelper.cropper =
             resolve('Confirm');
             $dialog.find('[data-role=media-library-cropper-crop]').off('click.media-library-cropper.crop');
             $cropper.cropper('destroy');
-            jsBackend.mediaLibraryHelper.cropper.switchBackToSelectModal($dialog);
+            jsBackend.mediaLibraryHelper.cropper.finish($dialog);
         };
     },
 
-    getRotateEventFunction: function(resizeInfo) {
+    getRotateEventFunction: function() {
         return function() {
             let $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
-            console.log($(this).data('degrees'));
             $cropper.cropper('rotate', $(this).data('degrees'));
             $cropper.cropper('crop');
         }
@@ -918,11 +960,7 @@ jsBackend.mediaLibraryHelper.cropper =
             .off('click.media-library-cropper.rotate')
             .on(
                 'click.media-library-cropper.rotate',
-                jsBackend.mediaLibraryHelper.cropper.getRotateEventFunction(
-                    $dialog,
-                    resizeInfo,
-                    resolve
-                )
+                jsBackend.mediaLibraryHelper.cropper.getRotateEventFunction()
             );
     }
 };
@@ -1025,7 +1063,7 @@ jsBackend.mediaLibraryHelper.upload =
             ],
             customResizer: function(resizeInfo) {
                 return new Promise(function(resolve, reject) {
-                    jsBackend.mediaLibraryHelper.cropper.showCropper(resizeInfo, resolve, reject);
+                    jsBackend.mediaLibraryHelper.cropper.passToCropper(resizeInfo, resolve, reject);
                 })
             }
         };
