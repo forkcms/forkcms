@@ -817,10 +817,21 @@ jsBackend.mediaLibraryHelper.cropper =
         }
 
         jsBackend.mediaLibraryHelper.cropper.isCropping = true;
-        let $dialog = $('[data-role=media-library-add-dialog]').first();
+        let $dialog = jsBackend.mediaLibraryHelper.cropper.getDialog();
+
         jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
 
         jsBackend.mediaLibraryHelper.cropper.processNextImageInQueue($dialog);
+    },
+
+    getDialog: function() {
+        let $dialog = $('[data-role=media-library-add-dialog]');
+
+        if ($dialog.length > 0) {
+            return $dialog.first();
+        }
+
+        return $('[data-role=media-library-cropper-dialog]').first();
     },
 
     processNextImageInQueue: function($dialog) {
@@ -882,11 +893,22 @@ jsBackend.mediaLibraryHelper.cropper =
         }
 
         jsBackend.mediaLibraryHelper.cropper.isCropping = false;
+        // check if it is a standalone dialog for the cropper
+        if ($dialog.attr('data-role') === 'media-library-cropper-dialog') {
+            $dialog.modal('hide');
+
+            return;
+        }
+
         $dialog.find('[data-role=media-library-select-modal]').removeClass('hidden');
         $dialog.find('[data-role=media-library-cropper-modal]').addClass('hidden');
     },
 
     switchToCropperModal: function($dialog) {
+        if (!$dialog.hasClass('in')) {
+            $dialog.modal('show');
+        }
+
         $dialog.find('[data-role=media-library-select-modal]').addClass('hidden');
         $dialog.find('[data-role=media-library-cropper-modal]').removeClass('hidden');
     },
