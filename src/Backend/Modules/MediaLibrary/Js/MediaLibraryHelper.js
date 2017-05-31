@@ -1014,38 +1014,21 @@ jsBackend.mediaLibraryHelper.upload =
     },
 
     /**
-    * If we work with an aspect ratio we trigger the cropper
+    * Configure the uploader to trigger the cropper
     */
     getScalingConfig: function() {
-        // default config
-        let scalingConfig = {
-            includeExif: true,
+        return {
+            includeExif: false, // needs to be false to prevent issues during the cropping process, it also is good for privacy reasons
             sendOriginal: false,
             sizes: [
-              {name: "", maxSize: 3000}
-            ]
+                {name: "", maxSize: 1} // used to trigger the cropper
+            ],
+            customResizer: function(resizeInfo) {
+                return new Promise(function(resolve, reject) {
+                    jsBackend.mediaLibraryHelper.cropper.showCropper(resizeInfo, resolve, reject);
+                })
+            }
         };
-
-        if (currentAspectRatio === false) {
-          return scalingConfig;
-        }
-
-        // if we crop this will give errors
-        scalingConfig.includeExif = false;
-
-        // trigger scaling every time
-        scalingConfig.sizes = [
-            {name: "", maxSize: 1}
-        ];
-
-        // add our custom resizer
-        scalingConfig.customResizer = function(resizeInfo) {
-            return new Promise(function(resolve, reject) {
-                jsBackend.mediaLibraryHelper.cropper.showCropper(resizeInfo, resolve, reject);
-            })
-        };
-
-        return scalingConfig;
     },
 
     /**
