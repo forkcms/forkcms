@@ -889,6 +889,8 @@ jsBackend.mediaLibraryHelper.cropper =
             // handle the next item
             jsBackend.mediaLibraryHelper.cropper.processNextImageInQueue($dialog);
 
+            jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
+
             return;
         }
 
@@ -960,7 +962,7 @@ jsBackend.mediaLibraryHelper.cropper =
             .off('hidden.bs.modal.media-library-cropper.close')
             .on(
                 'hidden.bs.modal.media-library-cropper.close',
-                    jsBackend.mediaLibraryHelper.cropper.getCloseEventFunction(
+                jsBackend.mediaLibraryHelper.cropper.getCloseEventFunction(
                     $dialog,
                     resizeInfo,
                     reject
