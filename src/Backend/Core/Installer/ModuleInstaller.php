@@ -334,7 +334,7 @@ class ModuleInstaller
 
         // if the theme is still null we should fallback to the core
         if ($theme === null) {
-            $theme = 'Core';
+            $theme = 'Fork';
         }
 
         // return best matching template id
