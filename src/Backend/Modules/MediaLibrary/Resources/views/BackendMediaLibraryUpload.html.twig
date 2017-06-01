@@ -191,7 +191,7 @@
 {# Add folder dialog #}
 {% include "MediaLibrary/Resources/views/BackendMediaLibraryUploadDialogAddFolder.html.twig" %}
 
-{# Modal with cropper #}
-<div class="modal fade" id="cropperMediaDialog" tabindex="-1" role="dialog" aria-hidden="true" data-role="media-library-cropper-dialog">
+{# Modal with cropper, don't use fade since it will mess up the initial width of the cropper #}
+<div class="modal" id="cropperMediaDialog" tabindex="-1" role="dialog" aria-hidden="true" data-role="media-library-cropper-dialog">
   {% include "MediaLibrary/Resources/views/CropperDialog.html.twig" %}
 </div>

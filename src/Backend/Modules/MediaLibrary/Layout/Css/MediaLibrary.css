@@ -166,7 +166,8 @@
 /**
  * Media Dialog
  */
-#addMediaDialog .modal-body {
+#addMediaDialog .modal-body,
+#cropperMediaDialog .modal-body {
   padding: 0;
   background: none;
   border: none;
