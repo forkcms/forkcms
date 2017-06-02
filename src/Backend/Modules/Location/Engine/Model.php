@@ -140,7 +140,7 @@ class Model
         $address = implode(' ', $item);
 
         // fetch the geo coordinates
-        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . rawurlencode($address);
+        $url = '//maps.googleapis.com/maps/api/geocode/json?address=' . rawurlencode($address);
         $geocodes = json_decode(file_get_contents($url), true);
 
         // return coordinates latitude/longitude

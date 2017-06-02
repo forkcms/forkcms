@@ -40,7 +40,7 @@ class ClientFactory
         $client->setAssertionCredentials(
             new Google_Auth_AssertionCredentials(
                 $this->settings->get('Analytics', 'email'),
-                ['https://www.googleapis.com/auth/analytics.readonly'],
+                ['//www.googleapis.com/auth/analytics.readonly'],
                 base64_decode($this->settings->get('Analytics', 'certificate'))
             )
         );
