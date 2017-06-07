@@ -165,7 +165,7 @@ class Add extends BackendBaseActionAdd
         $this->positions['fallback']['blocks'][] = $block;
 
         // content has been submitted: re-create submitted content rather than the db-fetched content
-        if (isset($_POST['block_html_0'])) {
+        if ($this->getRequest()->request->has('block_html_0')) {
             // init vars
             $this->blocksContent = [];
             $hasBlock = false;
@@ -173,17 +173,17 @@ class Add extends BackendBaseActionAdd
 
             $positions = [];
             // loop submitted blocks
-            while (isset($_POST['block_position_' . $i])) {
+            while ($this->getRequest()->request->has('block_position_' . $i)) {
                 // init var
                 $block = [];
 
                 // save block position
-                $block['position'] = $_POST['block_position_' . $i];
+                $block['position'] = $this->getRequest()->request->get('block_position_' . $i);
                 $positions[$block['position']][] = $block;
 
                 // set linked extra
-                $block['extra_id'] = $_POST['block_extra_id_' . $i];
-                $block['extra_type'] = $_POST['block_extra_type_' . $i];
+                $block['extra_id'] = $this->getRequest()->request->get('block_extra_id_' . $i);
+                $block['extra_type'] = $this->getRequest()->request->get('block_extra_type_' . $i);
 
                 // reset some stuff
                 if ($block['extra_id'] <= 0) {
@@ -193,12 +193,12 @@ class Add extends BackendBaseActionAdd
                 // init html
                 $block['html'] = null;
 
-                $html = $_POST['block_html_' . $i];
+                $html = $this->getRequest()->request->get('block_html_' . $i);
 
                 // extra-type is HTML
                 if ($block['extra_id'] === null || $block['extra_type'] == 'usertemplate') {
-                    if ($_POST['block_extra_type_' . $i] == 'usertemplate') {
-                        $block['extra_id'] = $_POST['block_extra_id_' . $i];
+                    if ($this->getRequest()->request->get('block_extra_type_' . $i) === 'usertemplate') {
+                        $block['extra_id'] = $this->getRequest()->request->get('block_extra_id_' . $i);
                     } else {
                         // reset vars
                         $block['extra_id'] = null;
@@ -220,7 +220,10 @@ class Add extends BackendBaseActionAdd
                 // set data
                 $block['created_on'] = BackendModel::getUTCDate();
                 $block['edited_on'] = $block['created_on'];
-                $block['visible'] = isset($_POST['block_visible_' . $i]) && $_POST['block_visible_' . $i] == 'Y' ? 'Y' : 'N';
+                $block['visible'] = $this->getRequest()->request->has('block_visible_' . $i)
+                    && $this->getRequest()->request->get('block_visible_' . $i) === 'Y'
+                    ? 'Y'
+                    : 'N';
                 $block['sequence'] = count($positions[$block['position']]) - 1;
 
                 // add to blocks

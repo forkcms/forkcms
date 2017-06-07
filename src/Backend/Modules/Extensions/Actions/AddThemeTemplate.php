@@ -130,7 +130,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $positions[] = $position;
 
         // content has been submitted: re-create submitted content rather than the db-fetched content
-        if (isset($_POST['position_0'])) {
+        if ($this->getRequest()->request->has('position_0')) {
             // init vars
             $this->names = [];
             $this->extras = [];
@@ -138,18 +138,18 @@ class AddThemeTemplate extends BackendBaseActionAdd
             $errors = [];
 
             // loop submitted positions
-            while (isset($_POST['position_' . $i])) {
+            while ($this->getRequest()->request->has('position_' . $i)) {
                 // init vars
                 $j = 0;
                 $extras = [];
 
                 // gather position names
-                $name = $_POST['position_' . $i];
+                $name = $this->getRequest()->request->get('position_' . $i);
 
                 // loop submitted blocks
-                while (isset($_POST['type_' . $i . '_' . $j])) {
+                while ($this->getRequest()->request->has('type_' . $i . '_' . $j)) {
                     // gather blocks id
-                    $extras[] = (int) $_POST['type_' . $i . '_' . $j];
+                    $extras[] = $this->getRequest()->request->getInt('type_' . $i . '_' . $j);
 
                     // increment counter; go fetch next block
                     ++$j;
