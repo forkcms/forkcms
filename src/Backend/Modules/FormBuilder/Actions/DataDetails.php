@@ -100,9 +100,9 @@ class DataDetails extends BackendBaseActionIndex
     private function setFilter(): void
     {
         // start date is set
-        if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
+        if ($this->getRequest()->query->has('start_date') && $this->getRequest()->query->get('start_date', '') !== '') {
             // redefine
-            $startDate = (string) $_GET['start_date'];
+            $startDate = $this->getRequest()->query->get('start_date', '');
 
             // explode date parts
             $chunks = explode('/', $startDate);
@@ -120,9 +120,9 @@ class DataDetails extends BackendBaseActionIndex
         }
 
         // end date is set
-        if (isset($_GET['end_date']) && $_GET['end_date'] != '') {
+        if ($this->getRequest()->query->has('end_date') && $this->getRequest()->query->get('end_date', '') !== '') {
             // redefine
-            $endDate = (string) $_GET['end_date'];
+            $endDate = $this->getRequest()->query->get('end_date', '');
 
             // explode date parts
             $chunks = explode('/', $endDate);

@@ -201,10 +201,12 @@ class Language
     public static function getMessage(string $key, string $module = null): string
     {
         if ($module === null) {
+            $request = Model::get('request');
+
             if (Model::getContainer()->has('url')) {
                 $module = Model::get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] !== '') {
-                $module = (string) $_GET['module'];
+            } elseif ($request->query->has('module') && $request->query->get('module', '') !== '') {
+                $module = $request->query->get('module', '');
             } else {
                 $module = 'Core';
             }
