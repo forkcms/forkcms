@@ -60,7 +60,7 @@ class Edit extends BackendBaseActionEdit
             parent::execute();
 
             // set category id
-            $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
+            $this->categoryId = $this->getRequest()->query->getInt('category');
             if ($this->categoryId == 0) {
                 $this->categoryId = null;
             }

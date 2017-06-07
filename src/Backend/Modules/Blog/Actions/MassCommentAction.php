@@ -23,18 +23,24 @@ class MassCommentAction extends BackendBaseAction
         parent::execute();
 
         // current status
-        $from = \SpoonFilter::getGetValue('from', ['published', 'moderation', 'spam'], 'published');
+        $from = $this->getRequest()->query->get('from');
+        if (!in_array($from, ['published', 'moderation', 'spam'])) {
+            $from = 'published';
+        }
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', ['published', 'moderation', 'spam', 'delete'], 'spam');
+        $action = $this->getRequest()->query->get('action');
+        if (!in_array($action, ['published', 'moderation', 'spam', 'delete'])) {
+            $action = 'spam';
+        }
 
         // no id's provided
-        if (!isset($_GET['id'])) {
+        if (!$this->getRequest()->query->has('id')) {
             $this->redirect(BackendModel::createURLForAction('Comments') . '&error=no-comments-selected');
         }
 
         // redefine id's
-        $ids = (array) $_GET['id'];
+        $ids = (array) $this->getRequest()->query->get('id');
 
         // delete comment(s)
         if ($action == 'delete') {

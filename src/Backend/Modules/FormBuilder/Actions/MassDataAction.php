@@ -23,13 +23,16 @@ class MassDataAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', ['delete'], '');
+        $action = $this->getRequest()->query->get('action');
+        if (!in_array($action, ['delete'])) {
+            $action = '';
+        }
 
         // form id
-        $formId = \SpoonFilter::getGetValue('form_id', null, '', 'int');
+        $formId = $this->getRequest()->query->getInt('form_id');
 
         // no id's provided
-        if (!isset($_GET['id'])) {
+        if (!$this->getRequest()->query->has('id')) {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-items-selected');
         } elseif ($action == '') {
             // no action provided
@@ -39,7 +42,7 @@ class MassDataAction extends BackendBaseAction
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         } else {
             // redefine id's
-            $ids = (array) $_GET['id'];
+            $ids = (array) $this->getRequest()->query->get('id');
 
             // delete comment(s)
             if ($action == 'delete') {

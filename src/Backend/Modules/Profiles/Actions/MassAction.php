@@ -24,9 +24,15 @@ class MassAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', ['addToGroup', 'delete'], '');
-        $ids = (isset($_GET['id'])) ? (array) $_GET['id'] : [];
-        $newGroupId = \SpoonFilter::getGetValue('newGroup', array_keys(BackendProfilesModel::getGroups()), '');
+        $action = $this->getRequest()->query->get('action');
+        if (!in_array($action, ['addToGroup', 'delete'])) {
+            $action = '';
+        }
+        $ids = $this->getRequest()->query->has('id') ? (array) $this->getRequest()->query->get('id') : [];
+        $newGroupId = $this->getRequest()->query->get('newGroup');
+        if (!array_key_exists($newGroupId, BackendProfilesModel::getGroups())) {
+            $newGroupId = '';
+        }
 
         // no ids provided
         if (empty($ids)) {
@@ -86,12 +92,12 @@ class MassAction extends BackendBaseAction
                 null,
                 null,
                 [
-                     'offset' => \SpoonFilter::getGetValue('offset', null, ''),
-                     'order' => \SpoonFilter::getGetValue('order', null, ''),
-                     'sort' => \SpoonFilter::getGetValue('sort', null, ''),
-                     'email' => \SpoonFilter::getGetValue('email', null, ''),
-                     'status' => \SpoonFilter::getGetValue('status', null, ''),
-                     'group' => \SpoonFilter::getGetValue('group', null, ''),
+                     'offset' => $this->getRequest()->get('offset', ''),
+                     'order' => $this->getRequest()->get('order', ''),
+                     'sort' => $this->getRequest()->get('sort', ''),
+                     'email' => $this->getRequest()->get('email', ''),
+                     'status' => $this->getRequest()->get('status', ''),
+                     'group' => $this->getRequest()->get('group', ''),
                 ]
             ) . '&report=' . $report
         );
