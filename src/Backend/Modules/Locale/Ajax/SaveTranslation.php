@@ -34,12 +34,24 @@ class SaveTranslation extends BackendBaseAJAXAction
         }
 
         // get parameters
-        $language = \SpoonFilter::getPostValue('language', array_keys($possibleLanguages), null, 'string');
-        $module = \SpoonFilter::getPostValue('module', BackendModel::getModules(), null, 'string');
-        $name = \SpoonFilter::getPostValue('name', null, null, 'string');
-        $type = \SpoonFilter::getPostValue('type', BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type'), null, 'string');
-        $application = \SpoonFilter::getPostValue('application', ['Backend', 'Frontend'], null, 'string');
-        $value = \SpoonFilter::getPostValue('value', null, null, 'string');
+        $language = $this->getRequest()->request->get('language');
+        if (!array_key_exists($language, $possibleLanguages)) {
+            $language = null;
+        }
+        $module = $this->getRequest()->request->get('module');
+        if (!in_array($module, BackendModel::getModules())) {
+            $module = null;
+        }
+        $name = $this->getRequest()->request->get('name', '');
+        $type = $this->getRequest()->request->get('type');
+        if (!in_array($type, BackendModel::get('database')->getEnumValues('locale', 'type'))) {
+            $type = null;
+        }
+        $application = $this->getRequest()->request->get('application');
+        if (!in_array($application, ['Backend', 'Frontend'])) {
+            $application = null;
+        }
+        $value = $this->getRequest()->request->get('value');
 
         // validate values
         if (trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'Frontend' && $module != 'Core')) {

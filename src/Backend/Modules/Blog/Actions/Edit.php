@@ -309,7 +309,10 @@ class Edit extends BackendBaseActionEdit
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', ['active', 'draft'], 'active');
+            $status = $this->getRequest()->request->get('status');
+            if (!in_array($status, ['active', 'draft'])) {
+                $status = 'active';
+            }
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
