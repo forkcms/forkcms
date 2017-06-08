@@ -336,8 +336,8 @@ class Model
         ];
 
         // query string
-        $queryString = self::get('Request')->query->has('queryString')
-            ? SITE_URL . '/' . urldecode(self::get('Request')->query->get('queryString'))
+        $queryString = FrontendModel::get('Request')->query->has('queryString')
+            ? SITE_URL . '/' . urldecode(FrontendModel::get('Request')->query->get('queryString'))
             : SELF;
 
         // check all ignore urls
