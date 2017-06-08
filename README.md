@@ -23,6 +23,10 @@ To install the dependencies, you can run the command below in the document-root:
 
 	composer install -o
 
+## Security
+
+If you discover any security related issues, please email core@fork-cms.com instead of using the issue tracker.
+
 ## Bugs
 
 If you encounter any bugs, please create an issue on [Github](https://github.com/forkcms/forkcms/issues).

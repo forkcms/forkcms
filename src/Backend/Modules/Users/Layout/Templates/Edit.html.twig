@@ -29,10 +29,11 @@
               <td>{{ record.email }}</td>
             </tr>
             <tr>
-              <th>{{ 'lbl.LastLogin'|trans|ucfirst }}:</th>
+              <th>{{ 'lbl.LastLogins'|trans|ucfirst }}:</th>
               <td>
+                {% if record.settings.current_login %}{{ record.settings.current_login|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}<br/>{% endif %}
                 {% if record.settings.last_login %}{{ record.settings.last_login|spoondate(authenticatedUserDateFormat, authenticatedUserTimeFormat, INTERFACE_LANGUAGE) }}{% endif %}
-                {% if not record.settings.last_login %}{{ 'lbl.NoPreviousLogin'|trans|ucfirst }}{% endif %}
+                {% if not record.settings.current_login and not record.settings.last_login %}{{ 'lbl.NoPreviousLogin'|trans|ucfirst }}{% endif %}
               </td>
             </tr>
             {% if record.settings.last_failed_login_attempt %}
