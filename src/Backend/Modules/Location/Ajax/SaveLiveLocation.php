@@ -26,7 +26,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
 
         // get parameters
         $itemId = $this->getRequest()->request->getInt('id');
-        $zoomLevel = $this->getRequest()->request->get('zoom', 'auto');
+        $zoomLevel = trim($this->getRequest()->request->get('zoom', 'auto'));
         $mapType = strtoupper(trim($this->getRequest()->request->get('type')));
         if (in_array($mapType, ['roadmap', 'satellite', 'hybrid', 'terrain', 'street_view'])) {
             $mapType = 'roadmap';
