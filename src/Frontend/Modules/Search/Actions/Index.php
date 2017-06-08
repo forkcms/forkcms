@@ -210,8 +210,13 @@ class Index extends FrontendBaseBlock
         $this->form = new FrontendForm('search', null, 'get', null, false);
 
         // could also have been submitted by our widget
-        if (!$this->getRequest()->query->has('q')) {
-            $_GET['q'] = $this->getRequest()->query->get('q_widget');
+        if ($this->getRequest()->query->has('q')) {
+            $query = $this->getRequest()->query->get('q', '');
+        } else {
+            $query = $this->getRequest()->query->get('q_widget', '');
+            // set $_GET variable to keep SpoonForm happy
+            // should be refactored out when Symfony form are implemented here
+            $_GET['q'] = $this->getRequest()->query->get('q_widget', '');
         }
 
         // create elements
@@ -225,8 +230,8 @@ class Index extends FrontendBaseBlock
 
         // since we know the term just here we should set the canonical url here
         $canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('Search');
-        if (isset($_GET['q']) && $_GET['q'] !== '') {
-            $canonicalUrl .= '?q=' . \SpoonFilter::htmlspecialchars($_GET['q']);
+        if ($query !== '') {
+            $canonicalUrl .= '?q=' . \SpoonFilter::htmlspecialchars($query);
         }
         $this->header->setCanonicalUrl($canonicalUrl);
     }
