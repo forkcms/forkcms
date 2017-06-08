@@ -14,10 +14,12 @@
   <templates>
     <template label="Default" path="Core/Layout/Templates/Default.html.twig" image="false">
       <positions>
+        <position name="top" />
         <position name="main" />
       </positions>
       <format>
-        [main]
+        [/,/,top],
+        [main,main,main]
       </format>
     </template>
   </templates>
