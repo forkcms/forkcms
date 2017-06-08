@@ -20,7 +20,7 @@ use Symfony\Component\Intl\Intl as Intl;
 class Model
 {
     const QRY_DATAGRID_BROWSE =
-        'SELECT id, title, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
+        'SELECT id, title, address
          FROM location
          WHERE language = ?';
 
@@ -97,39 +97,21 @@ class Model
     /**
      * Get coordinates latitude/longitude
      *
-     * @param string $street
-     * @param string $streetNumber
-     * @param string $city
-     * @param string $zip
+     * @param string $address
      * @param string $country
      *
      * @return array  Contains 'latitude' and 'longitude' as variables
      */
     public static function getCoordinates(
-        string $street = null,
-        string $streetNumber = null,
-        string $city = null,
-        string $zip = null,
+        string $address = null,
         string $country = null
     ): array {
         // init item
         $item = [];
 
         // building item
-        if (!empty($street)) {
-            $item[] = $street;
-        }
-
-        if (!empty($streetNumber)) {
-            $item[] = $streetNumber;
-        }
-
-        if (!empty($city)) {
-            $item[] = $city;
-        }
-
-        if (!empty($zip)) {
-            $item[] = $zip;
+        if (!empty($address)) {
+            $item[] = $address;
         }
 
         if (!empty($country)) {

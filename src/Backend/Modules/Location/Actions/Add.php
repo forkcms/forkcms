@@ -34,10 +34,7 @@ class Add extends BackendBaseActionAdd
     {
         $this->frm = new BackendForm('add');
         $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
-        $this->frm->addText('street');
-        $this->frm->addText('number');
-        $this->frm->addText('zip');
-        $this->frm->addText('city');
+        $this->frm->addTextarea('address');
         $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), 'BE');
     }
 
@@ -48,28 +45,19 @@ class Add extends BackendBaseActionAdd
 
             // validate fields
             $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->frm->getField('street')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('number')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
+            $this->frm->getField('address')->isFilled(BL::err('FieldIsRequired'));
 
             if ($this->frm->isCorrect()) {
                 // build item
                 $item = [];
                 $item['language'] = BL::getWorkingLanguage();
                 $item['title'] = $this->frm->getField('title')->getValue();
-                $item['street'] = $this->frm->getField('street')->getValue();
-                $item['number'] = $this->frm->getField('number')->getValue();
-                $item['zip'] = $this->frm->getField('zip')->getValue();
-                $item['city'] = $this->frm->getField('city')->getValue();
+                $item['address'] = $this->frm->getField('address')->getValue();
                 $item['country'] = $this->frm->getField('country')->getValue();
 
                 // define coordinates
                 $coordinates = BackendLocationModel::getCoordinates(
-                    $item['street'],
-                    $item['number'],
-                    $item['city'],
-                    $item['zip'],
+                    $item['address'],
                     $item['country']
                 );
 
