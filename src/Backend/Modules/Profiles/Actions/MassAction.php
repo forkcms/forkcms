@@ -92,12 +92,12 @@ class MassAction extends BackendBaseAction
                 null,
                 null,
                 [
-                     'offset' => $this->getRequest()->get('offset', ''),
-                     'order' => $this->getRequest()->get('order', ''),
-                     'sort' => $this->getRequest()->get('sort', ''),
-                     'email' => $this->getRequest()->get('email', ''),
-                     'status' => $this->getRequest()->get('status', ''),
-                     'group' => $this->getRequest()->get('group', ''),
+                     'offset' => $this->getRequest()->query->get('offset', ''),
+                     'order' => $this->getRequest()->query->get('order', ''),
+                     'sort' => $this->getRequest()->query->get('sort', ''),
+                     'email' => $this->getRequest()->query->get('email', ''),
+                     'status' => $this->getRequest()->query->get('status', ''),
+                     'group' => $this->getRequest()->query->get('group', ''),
                 ]
             ) . '&report=' . $report
         );
