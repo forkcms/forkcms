@@ -14,7 +14,9 @@ class RemoveUploadedFile extends AjaxAction
     {
         $request = $this->get('request');
         if (!$request->request->has('file') || !$request->request->has('type')) {
-            return $this->output(self::BAD_REQUEST, 'Missing data');
+            $this->output(self::BAD_REQUEST, 'Missing data');
+
+            return;
         }
 
         $file = pathinfo($this->get('request')->request->get('file'), PATHINFO_BASENAME);
