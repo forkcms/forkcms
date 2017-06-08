@@ -36,25 +36,31 @@ class SaveTranslation extends BackendBaseAJAXAction
         // get parameters
         $language = $this->getRequest()->request->get('language');
         if (!array_key_exists($language, $possibleLanguages)) {
-            $language = null;
+            $language = '';
         }
         $module = $this->getRequest()->request->get('module');
         if (!in_array($module, BackendModel::getModules())) {
-            $module = null;
+            $module = '';
         }
         $name = $this->getRequest()->request->get('name', '');
         $type = $this->getRequest()->request->get('type');
         if (!in_array($type, BackendModel::get('database')->getEnumValues('locale', 'type'))) {
-            $type = null;
+            $type = '';
         }
         $application = $this->getRequest()->request->get('application');
         if (!in_array($application, ['Backend', 'Frontend'])) {
-            $application = null;
+            $application = '';
         }
         $value = $this->getRequest()->request->get('value');
 
         // validate values
-        if (trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'Frontend' && $module != 'Core')) {
+        if (trim($value) === ''
+            || $language === ''
+            || $module === ''
+            || $type === ''
+            || $application === ''
+            || ($application === 'Frontend' && $module !== 'Core')
+        ) {
             $error = BL::err('InvalidValue');
         }
 
