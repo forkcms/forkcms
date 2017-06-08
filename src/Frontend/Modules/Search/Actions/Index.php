@@ -210,7 +210,7 @@ class Index extends FrontendBaseBlock
         $this->form = new FrontendForm('search', null, 'get', null, false);
 
         // could also have been submitted by our widget
-        if (!$this->getRequest()->has('q')) {
+        if (!$this->getRequest()->query->has('q')) {
             $_GET['q'] = $this->getRequest()->query->get('q_widget');
         }
 
