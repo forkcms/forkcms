@@ -52,7 +52,7 @@ class Index extends BackendBaseActionIndex
 
         // set category id
         $this->categoryId = $this->getRequest()->query->getInt('category');
-        if ($this->categoryId == 0) {
+        if ($this->categoryId === 0) {
             $this->categoryId = null;
         } else {
             // get category

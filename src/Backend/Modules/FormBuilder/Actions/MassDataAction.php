@@ -53,7 +53,7 @@ class MassDataAction extends BackendBaseAction
             $report = (count($ids) > 1) ? 'items-' : 'item-';
 
             // init var
-            if ($action == 'delete') {
+            if ($action === 'delete') {
                 $report .= 'deleted';
             }
 

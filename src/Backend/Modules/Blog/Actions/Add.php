@@ -65,7 +65,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
         $this->frm->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
         $this->frm->addDropdown('category_id', $categories, $this->getRequest()->query->getInt('category'));
-        if (count($categories) != 2) {
+        if (count($categories) !== 2) {
             $this->frm->getField('category_id')->setDefaultElement('');
         }
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());

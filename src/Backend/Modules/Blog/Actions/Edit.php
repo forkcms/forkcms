@@ -61,7 +61,7 @@ class Edit extends BackendBaseActionEdit
 
             // set category id
             $this->categoryId = $this->getRequest()->query->getInt('category');
-            if ($this->categoryId == 0) {
+            if ($this->categoryId === 0) {
                 $this->categoryId = null;
             }
 
