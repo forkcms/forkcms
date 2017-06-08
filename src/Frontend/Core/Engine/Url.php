@@ -238,7 +238,7 @@ class Url extends KernelLoader
 
     private function determineLanguage(string $queryString): string
     {
-        if ($this->getContainer()->getParameter('site.multilanguage')) {
+        if (!$this->getContainer()->getParameter('site.multilanguage')) {
             return $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         }
 
