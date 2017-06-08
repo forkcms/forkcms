@@ -56,7 +56,7 @@ final class FileManager
         string $targetDir,
         string $name,
         string $extension
-    ) : string {
+    ): string {
         $count = 1;
 
         // find unique filename
@@ -87,7 +87,7 @@ final class FileManager
         return str_pad($id % $numberOfShardingFolders, 2, '0', STR_PAD_LEFT);
     }
 
-    public function getUniqueFileName(string $directory, string $fileName) : string
+    public function getUniqueFileName(string $directory, string $fileName): string
     {
         $pathInfo = pathinfo($directory . '/' . $fileName);
         $name = $pathInfo['filename'];
