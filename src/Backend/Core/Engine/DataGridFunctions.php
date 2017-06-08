@@ -257,6 +257,10 @@ class DataGridFunctions
         int $height = null,
         string $filter = null
     ): string {
+        if ($width === 0 || $height === 0) {
+            throw new \Exception('An image must not have a width or height equal to 0, because the image will not be visible.');
+        }
+
         $imagePath = $path . '/' . $image;
 
         if ($filter !== null) {
