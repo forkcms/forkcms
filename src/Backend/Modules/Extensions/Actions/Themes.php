@@ -81,7 +81,7 @@ class Themes extends BackendBaseActionIndex
         // set selected theme
         $selected = $this->getRequest()->request->has('installedThemes')
             ? $this->getRequest()->request->get('installedThemes')
-            : $this->get('fork.settings')->get('Core', 'theme', 'core');
+            : $this->get('fork.settings')->get('Core', 'theme', 'Fork');
 
         // no themes found
         if (empty($themes)) {
