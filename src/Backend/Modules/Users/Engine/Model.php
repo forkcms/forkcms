@@ -452,17 +452,33 @@ class Model
     {
         // fetch user info
         $userId = $user->getUserId();
-        $key = $user->getSetting('password_key');
 
         // update user
         BackendModel::getContainer()->get('database')->update(
             'users',
-            ['password' => BackendAuthentication::getEncryptedString($password, $key)],
+            ['password' => BackendAuthentication::encryptPassword($password, uniqid('', true))],
             'id = ?',
             $userId
         );
 
         // remove the user settings linked to the resetting of passwords
         self::deleteResetPasswordSettings($userId);
+    }
+
+    /**
+     * Get encrypted password for an email.
+     *
+     * @param string $email
+     *
+     * @return null|string
+     */
+    public static function getEncryptedPassword(string $email): ?string
+    {
+        return BackendModel::get('database')->getVar(
+            'SELECT password
+             FROM users
+             WHERE email = :email',
+            ['email' => $email]
+        );
     }
 }

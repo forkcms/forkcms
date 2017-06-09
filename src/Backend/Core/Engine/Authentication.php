@@ -61,27 +61,31 @@ class Authentication
     }
 
     /**
-     * Returns the encrypted password for a user by giving a email/password
-     * Returns false if no user was found for this user/pass combination
+     * Encrypt the password with PHP password_hash function.
      *
-     * @param string $email The email.
-     * @param string $password The password.
+     * @param string $password
+     * @param string $salt
      *
      * @return string
      */
-    public static function getEncryptedPassword(string $email, string $password): string
+    public static function encryptPassword(string $password, string $salt): string
     {
-        // fetch user ID by email
-        $userId = BackendUsersModel::getIdByEmail($email);
+        return password_hash($password, PASSWORD_DEFAULT, ['cost' => 10, 'salt' => $salt]);
+    }
 
-        if ($userId === false) {
-            return '';
-        }
+    /**
+     * Verify the password with PHP password_verify function.
+     *
+     * @param string $email
+     * @param string $password
+     *
+     * @return bool
+     */
+    public static function verifyPassword(string $email, string $password): bool
+    {
+        $encryptedPassword = BackendUsersModel::getEncryptedPassword($email);
 
-        $user = new User($userId);
-        $key = $user->getSetting('password_key');
-
-        return self::getEncryptedString($password, $key);
+        return password_verify($password, $encryptedPassword);
     }
 
     /**
@@ -313,16 +317,37 @@ class Authentication
     {
         $db = BackendModel::get('database');
 
-        // fetch the encrypted password
-        $passwordEncrypted = static::getEncryptedPassword($login, $password);
+        // build fallback for migrating devs
+        // todo remove in next major release
+        $encryptedPassword = BackendUsersModel::getEncryptedPassword($login);
+        if (password_needs_rehash($encryptedPassword, PASSWORD_DEFAULT)) {
+            $userId = BackendUsersModel::getIdByEmail($login);
+            $user = new User($userId);
+            $user->getSetting('password_key');
+
+            // check old password
+            $encryptedPasswordOldMethod = self::getEncryptedString($password, $user->getSetting('password_key'));
+            if ($encryptedPassword !== $encryptedPasswordOldMethod) {
+                return false;
+            }
+
+            // update password to new hashing method
+            BackendUsersModel::updatePassword($user, $password);
+            // no need for saving the hash, as it is saved in the new password hash
+            $db->delete('users_settings', 'user_id = ? AND name = ?', [$userId, 'password_key']);
+        }
+
+        if (!static::verifyPassword($login, $password)) {
+            return false;
+        }
 
         // check in database (is the user active and not deleted, are the email and password correct?)
         $userId = (int) $db->getVar(
             'SELECT u.id
              FROM users AS u
-             WHERE u.email = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
+             WHERE u.email = ? AND u.active = ? AND u.deleted = ?
              LIMIT 1',
-            [$login, $passwordEncrypted, 'Y', 'N']
+            [$login, 'Y', 'N']
         );
 
         if ($userId === 0) {
