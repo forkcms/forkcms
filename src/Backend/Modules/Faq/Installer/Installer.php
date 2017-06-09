@@ -37,68 +37,6 @@ class Installer extends ModuleInstaller
         $this->configureFrontendPages();
     }
 
-    /**
-     * @todo: When FAQ entities are available, use DataFixtures instead of this method.
-     *
-     * @param string $language
-     * @param string $title
-     * @param string $url
-     * @return int
-     */
-    private function addCategory(string $language, string $title, string $url): int
-    {
-        $db = $this->getDB();
-
-        // get sequence for widget
-        $sequenceExtra = $db->getVar(
-            'SELECT MAX(i.sequence) + 1
-             FROM modules_extras AS i
-             WHERE i.module = ?',
-            ['faq']
-        );
-
-        // build array
-        $item = [];
-        $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['extra_id'] = $this->insertExtra(
-            $this->getModule(),
-            ModuleExtraType::widget(),
-            'Faq',
-            'CategoryList',
-            null,
-            false,
-            $sequenceExtra
-        );
-        $item['language'] = $language;
-        $item['title'] = $title;
-        $item['sequence'] = 1;
-
-        // insert category
-        $item['id'] = (int) $db->insert('faq_categories', $item);
-
-        // build data for widget
-        $extra = [
-            'data' => serialize(
-                [
-                    'id' => $item['id'],
-                    'extra_label' => 'Category: ' . $item['title'],
-                    'language' => $item['language'],
-                    'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
-                ]
-            ),
-        ];
-
-        // update widget
-        $db->update(
-            'modules_extras',
-            $extra,
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            [$item['extra_id'], $this->getModule(), ModuleExtraType::widget(), 'category_list']
-        );
-
-        return $item['id'];
-    }
-
     private function configureBackendActionRightsForFaqCategory(): void
     {
         $this->setActionRights(1, $this->getModule(), 'AddCategory');
@@ -180,7 +118,7 @@ class Installer extends ModuleInstaller
 
             // no category exists
             if ($this->defaultCategoryId === 0) {
-                $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+                $this->defaultCategoryId = $this->insertCategory($language, 'Default', 'default');
             }
 
             // check if a page for the faq already exists in this language
@@ -227,5 +165,67 @@ class Installer extends ModuleInstaller
              WHERE language = ?',
             [$language]
         );
+    }
+
+    /**
+     * @todo: When FAQ entities are available, use DataFixtures instead of this method.
+     *
+     * @param string $language
+     * @param string $title
+     * @param string $url
+     * @return int
+     */
+    private function insertCategory(string $language, string $title, string $url): int
+    {
+        $db = $this->getDB();
+
+        // get sequence for widget
+        $sequenceExtra = $db->getVar(
+            'SELECT MAX(i.sequence) + 1
+             FROM modules_extras AS i
+             WHERE i.module = ?',
+            ['faq']
+        );
+
+        // build array
+        $item = [];
+        $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
+        $item['extra_id'] = $this->insertExtra(
+            $this->getModule(),
+            ModuleExtraType::widget(),
+            'Faq',
+            'CategoryList',
+            null,
+            false,
+            $sequenceExtra
+        );
+        $item['language'] = $language;
+        $item['title'] = $title;
+        $item['sequence'] = 1;
+
+        // insert category
+        $item['id'] = (int) $db->insert('faq_categories', $item);
+
+        // build data for widget
+        $extra = [
+            'data' => serialize(
+                [
+                    'id' => $item['id'],
+                    'extra_label' => 'Category: ' . $item['title'],
+                    'language' => $item['language'],
+                    'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
+                ]
+            ),
+        ];
+
+        // update widget
+        $db->update(
+            'modules_extras',
+            $extra,
+            'id = ? AND module = ? AND type = ? AND action = ?',
+            [$item['extra_id'], $this->getModule(), ModuleExtraType::widget(), 'category_list']
+        );
+
+        return $item['id'];
     }
 }
