@@ -18,35 +18,38 @@ class Installer extends ModuleInstaller
 {
     public function install(): void
     {
-        // add 'settings' as a module
         $this->addModule('Settings');
-
-        // import locale
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+    }
 
-        // module rights
-        $this->setModuleRights(1, $this->getModule());
-
-        // action rights
-        $this->setActionRights(1, $this->getModule(), 'Index');
-        $this->setActionRights(1, $this->getModule(), 'Email');
-        $this->setActionRights(1, $this->getModule(), 'Seo');
-        $this->setActionRights(1, $this->getModule(), 'TestEmailConnection');
-
-        // set navigation (settings should be last tab)
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation "settings" (should be the last tab)
         $navigationSettingsId = $this->setNavigation(null, 'Settings', null, null, 999);
 
-        // general navigation
+        // Set navigation for "Settings > General"
         $this->setNavigation($navigationSettingsId, 'General', 'settings/index', null, 1);
         $navigationAdvancedId = $this->setNavigation($navigationSettingsId, 'Advanced', null, null, 2);
         $this->setNavigation($navigationAdvancedId, 'Email', 'settings/email');
         $this->setNavigation($navigationAdvancedId, 'SEO', 'settings/seo');
         $this->setNavigation($navigationAdvancedId, 'Tools', 'settings/tools');
 
-        // modules settings navigation
+        // Set navigation for "Settings > modules"
         $this->setNavigation($navigationSettingsId, 'Modules', null, null, 6);
 
-        // themes settings navigation
+        // Set navigation for "Settings > themes"
         $this->setNavigation($navigationSettingsId, 'Themes', null, null, 7);
+    }
+
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->setActionRights(1, $this->getModule(), 'Email');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Seo');
+        $this->setActionRights(1, $this->getModule(), 'TestEmailConnection');
     }
 }
