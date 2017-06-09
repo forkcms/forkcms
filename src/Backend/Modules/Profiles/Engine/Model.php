@@ -402,7 +402,7 @@ class Model
         return $string;
     }
 
-    public static function getSetting(int $profileId, string $name): string
+    public static function getSetting(int $profileId, string $name): ?string
     {
         return unserialize(
             (string) BackendModel::getContainer()->get('database')->getVar(
