@@ -83,28 +83,7 @@ class Authentication
      */
     public static function getLoginStatus(string $email, string $password): string
     {
-        // build fallback for migrating devs
-        // todo remove in next major release
-        $encryptedPassword = FrontendProfilesModel::getEncryptedPassword($email);
-        if (password_needs_rehash($encryptedPassword, PASSWORD_DEFAULT)) {
-            $profileId = FrontendProfilesModel::getIdByEmail($email);
-            if ($profileId === 0) {
-                return self::LOGIN_INVALID;
-            }
-
-            // check old password
-            $encryptedPasswordOldMethod = FrontendProfilesModel::getEncryptedString(
-                $password,
-                FrontendProfilesModel::getSetting($profileId, 'salt')
-            );
-            if ($encryptedPassword !== $encryptedPasswordOldMethod) {
-                return self::LOGIN_INVALID;
-            }
-
-            // update password to new hashing method
-            self::updatePassword($profileId, $password);
-        }
-
+        // check password
         if (!FrontendProfilesModel::verifyPassword($email, $password)) {
             return self::LOGIN_INVALID;
         }

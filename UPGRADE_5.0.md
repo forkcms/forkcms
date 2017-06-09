@@ -255,5 +255,5 @@ you shouldn't pass the data serialised anymore and boolean values should be pass
 
 ## Password hashing
 
-Password hashing moved from custom sha1 and md5 hashing to PHP password_hash method. To migrate existing users,
-you don't have to do anything, as everything is handled by the code.
+Password hashing moved from custom sha1 and md5 hashing to PHP password_hash method. To migrate existing users and
+profiles they will have to do a password reset.

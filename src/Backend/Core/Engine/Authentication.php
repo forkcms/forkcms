@@ -316,29 +316,7 @@ class Authentication
     {
         $db = BackendModel::get('database');
 
-        // build fallback for migrating devs
-        // todo remove in next major release
-        $encryptedPassword = BackendUsersModel::getEncryptedPassword($login);
-        if (password_needs_rehash($encryptedPassword, PASSWORD_DEFAULT)) {
-            $userId = BackendUsersModel::getIdByEmail($login);
-            if ($userId === false) {
-                return false;
-            }
-
-            $user = new User($userId);
-
-            // check old password
-            $encryptedPasswordOldMethod = self::getEncryptedString($password, $user->getSetting('password_key'));
-            if ($encryptedPassword !== $encryptedPasswordOldMethod) {
-                return false;
-            }
-
-            // update password to new hashing method
-            BackendUsersModel::updatePassword($user, $password);
-            // no need for saving the hash, as it is saved in the new password hash
-            $db->delete('users_settings', 'user_id = ? AND name = ?', [$userId, 'password_key']);
-        }
-
+        // check password
         if (!static::verifyPassword($login, $password)) {
             return false;
         }
