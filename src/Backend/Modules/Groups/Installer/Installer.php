@@ -16,10 +16,37 @@ use Backend\Core\Installer\ModuleInstaller;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Insert an empty admin dashboard sequence
-     */
-    private function insertDashboardSequence(): void
+    public function install(): void
+    {
+        $this->addModule('Groups');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureBackendWidgets();
+    }
+
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "settings"
+        $navigationSettingsId = $this->setNavigation(null, 'Settings');
+        $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', [
+            'groups/add',
+            'groups/edit',
+        ], 5);
+    }
+
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+    }
+
+    private function configureBackendWidgets(): void
     {
         $db = $this->getDB();
 
@@ -44,36 +71,5 @@ class Installer extends ModuleInstaller
 
         // insert default dashboard widget
         $this->insertDashboardWidget('Users', 'Statistics');
-    }
-
-    public function install(): void
-    {
-        // load install.sql
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-
-        // add 'settings' as a module
-        $this->addModule('Groups');
-
-        // import locale
-        $this->importLocale(__DIR__ . '/Data/locale.xml');
-
-        // module rights
-        $this->setModuleRights(1, $this->getModule());
-
-        // action rights
-        $this->setActionRights(1, $this->getModule(), 'Index');
-        $this->setActionRights(1, $this->getModule(), 'Add');
-        $this->setActionRights(1, $this->getModule(), 'Edit');
-        $this->setActionRights(1, $this->getModule(), 'Delete');
-
-        // set navigation
-        $navigationSettingsId = $this->setNavigation(null, 'Settings');
-        $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', [
-            'groups/add',
-            'groups/edit',
-        ], 5);
-
-        // insert admins dashboard sequence
-        $this->insertDashboardSequence();
     }
 }
