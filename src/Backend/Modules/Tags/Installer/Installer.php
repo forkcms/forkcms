@@ -65,7 +65,7 @@ class Installer extends ModuleInstaller
                 // insert contact page
                 $this->insertPage(
                     [
-                        'title' => 'Tags',
+                        'title' => $this->getModule(),
                         'type' => 'root',
                         'language' => $language,
                     ],
