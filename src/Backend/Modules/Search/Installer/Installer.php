@@ -65,8 +65,8 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SearchForm', 'Form', null, false, 2001);
         $this->searchBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Search', null, null, false, 2000);
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SearchForm', 'Form', null, false, 2001);
     }
 
     private function configureFrontendPages(): void
