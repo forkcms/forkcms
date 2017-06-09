@@ -26,7 +26,7 @@ class Installer extends ModuleInstaller
 
     private function configureBackendNavigation(): void
     {
-        // Set navigation "settings" (should be the last tab)
+        // Set navigation "Settings" (should be the last tab)
         $navigationSettingsId = $this->setNavigation(null, 'Settings', null, null, 999);
 
         // Set navigation for "Settings > General"
