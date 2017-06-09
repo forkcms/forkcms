@@ -17,15 +17,25 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Default category id
-     *
-     * @var int
-     */
+    /** @var int - Default category id */
     private $defaultCategoryId;
 
     /** @var int */
     private $blogWidgetId;
+
+    public function install(): void
+    {
+        $this->addModule('Blog');
+        $this->makeSearchable($this->getModule());
+        $this->importSQL(__DIR__ . '/Data/install.sql');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureSettings();
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureBackendWidgets();
+        $this->configureFrontendExtras();
+        $this->configureFrontendPages();
+    }
 
     /**
      * Add a category for a language
@@ -59,20 +69,6 @@ class Installer extends ModuleInstaller
             'SELECT id FROM blog_categories WHERE language = ?',
             [$language]
         );
-    }
-
-    public function install(): void
-    {
-        $this->addModule('Blog');
-        $this->makeSearchable($this->getModule());
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-        $this->importLocale(__DIR__ . '/Data/locale.xml');
-        $this->configureSettings();
-        $this->configureBackendNavigation();
-        $this->configureBackendRights();
-        $this->configureBackendWidgets();
-        $this->configureFrontendExtras();
-        $this->configureFrontendPages();
     }
 
     /**
