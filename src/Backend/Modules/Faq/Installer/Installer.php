@@ -21,7 +21,7 @@ class Installer extends ModuleInstaller
     private $defaultCategoryId;
 
     /** @var int */
-    private $faqWidgetId;
+    private $faqBlockId;
 
     public function install(): void
     {
@@ -105,7 +105,7 @@ class Installer extends ModuleInstaller
      */
     private function configureFrontendExtras(): void
     {
-        $this->faqWidgetId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Faq');
+        $this->faqBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Faq');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'MostReadQuestions', 'MostReadQuestions');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
@@ -128,7 +128,7 @@ class Installer extends ModuleInstaller
                      INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                      WHERE b.extra_id = ? AND p.language = ?
                      LIMIT 1',
-                [$this->faqWidgetId, $language]
+                [$this->faqBlockId, $language]
             );
 
             if (!$faqPageExists) {
@@ -139,7 +139,7 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $this->faqWidgetId]
+                    ['extra_id' => $this->faqBlockId]
                 );
             }
         }
