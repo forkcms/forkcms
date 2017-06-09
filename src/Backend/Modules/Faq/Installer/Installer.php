@@ -64,7 +64,7 @@ class Installer extends ModuleInstaller
     {
         // Set navigation for "Modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $navigationFaqId = $this->setNavigation($navigationModulesId, 'Faq');
+        $navigationFaqId = $this->setNavigation($navigationModulesId, $this->getModule());
         $this->setNavigation(
             $navigationFaqId,
             'Questions',
@@ -81,7 +81,7 @@ class Installer extends ModuleInstaller
         // Set navigation for "Settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
-        $this->setNavigation($navigationModulesId, 'Faq', 'faq/settings');
+        $this->setNavigation($navigationModulesId, $this->getModule(), 'faq/settings');
     }
 
     private function configureBackendRights(): void
@@ -107,7 +107,7 @@ class Installer extends ModuleInstaller
      */
     private function configureFrontendExtras(): void
     {
-        $this->faqBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Faq');
+        $this->faqBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), $this->getModule());
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'MostReadQuestions', 'MostReadQuestions');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
@@ -195,7 +195,7 @@ class Installer extends ModuleInstaller
         $item['extra_id'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::widget(),
-            'Faq',
+            $this->getModule(),
             'CategoryList',
             null,
             false,
