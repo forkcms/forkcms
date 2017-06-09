@@ -88,9 +88,11 @@ class Installer extends ModuleInstaller
     {
         $this->setModuleRights(1, $this->getModule());
 
+        // Configure backend rights for entities
         $this->configureBackendActionRightsForFaqCategory();
         $this->configureBackendActionRightsForFaqQuestion();
         $this->configureBackendActionRightsForFaqQuestionFeedback();
+
         $this->setActionRights(1, $this->getModule(), 'Settings');
     }
 
