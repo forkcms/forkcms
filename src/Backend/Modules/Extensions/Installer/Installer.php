@@ -85,6 +85,7 @@ class Installer extends ModuleInstaller
     private function configureBackendRights(): void
     {
         $this->setModuleRights(1, $this->getModule());
+
         $this->configureBackendActionRightsForModules();
         $this->configureBackendActionRightsForTemplates();
         $this->configureBackendActionRightsForThemes();
