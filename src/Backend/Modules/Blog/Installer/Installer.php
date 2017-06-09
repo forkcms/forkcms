@@ -37,23 +37,138 @@ class Installer extends ModuleInstaller
         $this->configureFrontendPages();
     }
 
-    /**
-     * Add a category for a language
-     *
-     * @param string $language The language to use.
-     * @param string $title The title of the category.
-     * @param string $url The URL for the category.
-     *
-     * @return int
-     */
-    private function addCategory(string $language, string $title, string $url): int
+    private function configureBackendActionRightsForBlogArticle(): void
     {
-        $item = [];
-        $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['language'] = $language;
-        $item['title'] = $title;
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'ImportWordpress');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+    }
 
-        return (int) $this->getDB()->insert('blog_categories', $item);
+    private function configureBackendActionRightsForBlogArticleComment(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'Comments');
+        $this->setActionRights(1, $this->getModule(), 'DeleteSpam');
+        $this->setActionRights(1, $this->getModule(), 'EditComment');
+        $this->setActionRights(1, $this->getModule(), 'MassCommentAction');
+    }
+
+    private function configureBackendActionRightsForBlogCategory(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'AddCategory');
+        $this->setActionRights(1, $this->getModule(), 'Categories');
+        $this->setActionRights(1, $this->getModule(), 'DeleteCategory');
+        $this->setActionRights(1, $this->getModule(), 'EditCategory');
+    }
+
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "modules"
+        $navigationModulesId = $this->setNavigation(null, 'Modules');
+        $navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
+        $this->setNavigation(
+            $navigationBlogId,
+            'Articles',
+            'blog/index',
+            ['blog/add', 'blog/edit', 'blog/import_wordpress']
+        );
+        $this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', ['blog/edit_comment']);
+        $this->setNavigation(
+            $navigationBlogId,
+            'Categories',
+            'blog/categories',
+            ['blog/add_category', 'blog/edit_category']
+        );
+
+        // Set navigation for "settings"
+        $navigationSettingsId = $this->setNavigation(null, 'Settings');
+        $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+        $this->setNavigation($navigationModulesId, 'Blog', 'blog/settings');
+    }
+
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        // Action rights for entities
+        $this->configureBackendActionRightsForBlogArticle();
+        $this->configureBackendActionRightsForBlogCategory();
+        $this->configureBackendActionRightsForBlogArticleComment();
+
+        $this->setActionRights(1, $this->getModule(), 'Settings');
+    }
+
+    private function configureBackendWidgets(): void
+    {
+        $this->insertDashboardWidget('Blog', 'Comments');
+    }
+
+    private function configureFrontendExtras(): void
+    {
+        $this->blogWidgetId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Blog');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentComments', 'RecentComments');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Archive', 'Archive');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList');
+    }
+
+    private function configureFrontendPages(): void
+    {
+        // get search extra id
+        $searchId = $this->getSearchModuleExtraId();
+
+        // loop languages
+        foreach ($this->getLanguages() as $language) {
+            // fetch current categoryId
+            $this->defaultCategoryId = $this->getCategory($language);
+
+            // no category exists
+            if ($this->defaultCategoryId === 0) {
+                // add category
+                $this->defaultCategoryId = $this->insertCategory($language, 'Default', 'default');
+            }
+
+            // RSS settings
+            $this->setSetting($this->getModule(), 'rss_meta_' . $language, true);
+            $this->setSetting($this->getModule(), 'rss_title_' . $language, 'RSS');
+            $this->setSetting($this->getModule(), 'rss_description_' . $language, '');
+
+            // check if a page for blog already exists in this language
+            if (!(bool) $this->getDB()->getVar(
+                'SELECT 1
+                 FROM pages AS p
+                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+                 WHERE b.extra_id = ? AND p.language = ?
+                 LIMIT 1',
+                [$this->blogWidgetId, $language]
+            )
+            ) {
+                $this->insertPage(
+                    ['title' => 'Blog', 'language' => $language],
+                    null,
+                    ['extra_id' => $this->blogWidgetId, 'position' => 'main'],
+                    ['extra_id' => $searchId, 'position' => 'top']
+                );
+            }
+
+            if ($this->installExample()) {
+                $this->installExampleData($language);
+            }
+        }
+    }
+
+    private function configureSettings(): void
+    {
+        $this->setSetting($this->getModule(), 'allow_comments', true);
+        $this->setSetting($this->getModule(), 'requires_akismet', true);
+        $this->setSetting($this->getModule(), 'spamfilter', false);
+        $this->setSetting($this->getModule(), 'moderation', true);
+        $this->setSetting($this->getModule(), 'overview_num_items', 10);
+        $this->setSetting($this->getModule(), 'recent_articles_full_num_items', 3);
+        $this->setSetting($this->getModule(), 'recent_articles_list_num_items', 5);
+        $this->setSetting($this->getModule(), 'max_num_revisions', 20);
     }
 
     /**
@@ -69,6 +184,34 @@ class Installer extends ModuleInstaller
             'SELECT id FROM blog_categories WHERE language = ?',
             [$language]
         );
+    }
+
+    private function getSearchModuleExtraId(): int
+    {
+        return (int) $this->getDB()->getVar(
+            'SELECT id FROM modules_extras
+             WHERE module = ? AND type = ? AND action = ?',
+            ['Search', ModuleExtraType::widget(), 'Form']
+        );
+    }
+
+    /**
+     * Insert a category for a language
+     *
+     * @param string $language The language to use.
+     * @param string $title The title of the category.
+     * @param string $url The URL for the category.
+     *
+     * @return int
+     */
+    private function insertCategory(string $language, string $title, string $url): int
+    {
+        $item = [];
+        $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
+        $item['language'] = $language;
+        $item['title'] = $title;
+
+        return (int) $this->getDB()->insert('blog_categories', $item);
     }
 
     /**
@@ -205,148 +348,5 @@ class Installer extends ModuleInstaller
                 ]
             );
         }
-    }
-
-    private function configureBackendActionRightsForBlogArticle(): void
-    {
-        $this->setActionRights(1, $this->getModule(), 'Add');
-        $this->setActionRights(1, $this->getModule(), 'Delete');
-        $this->setActionRights(1, $this->getModule(), 'Edit');
-        $this->setActionRights(1, $this->getModule(), 'ImportWordpress');
-        $this->setActionRights(1, $this->getModule(), 'Index');
-    }
-
-    private function configureBackendActionRightsForBlogArticleComment(): void
-    {
-        $this->setActionRights(1, $this->getModule(), 'Comments');
-        $this->setActionRights(1, $this->getModule(), 'DeleteSpam');
-        $this->setActionRights(1, $this->getModule(), 'EditComment');
-        $this->setActionRights(1, $this->getModule(), 'MassCommentAction');
-    }
-
-    private function configureBackendActionRightsForBlogCategory(): void
-    {
-        $this->setActionRights(1, $this->getModule(), 'AddCategory');
-        $this->setActionRights(1, $this->getModule(), 'Categories');
-        $this->setActionRights(1, $this->getModule(), 'DeleteCategory');
-        $this->setActionRights(1, $this->getModule(), 'EditCategory');
-    }
-
-    private function configureBackendNavigation(): void
-    {
-        // Set navigation for "modules"
-        $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
-        $this->setNavigation(
-            $navigationBlogId,
-            'Articles',
-            'blog/index',
-            ['blog/add', 'blog/edit', 'blog/import_wordpress']
-        );
-        $this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', ['blog/edit_comment']);
-        $this->setNavigation(
-            $navigationBlogId,
-            'Categories',
-            'blog/categories',
-            ['blog/add_category', 'blog/edit_category']
-        );
-
-        // Set navigation for "settings"
-        $navigationSettingsId = $this->setNavigation(null, 'Settings');
-        $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
-        $this->setNavigation($navigationModulesId, 'Blog', 'blog/settings');
-    }
-
-    private function configureBackendRights(): void
-    {
-        $this->setModuleRights(1, $this->getModule());
-
-        // Action rights for entities
-        $this->configureBackendActionRightsForBlogArticle();
-        $this->configureBackendActionRightsForBlogCategory();
-        $this->configureBackendActionRightsForBlogArticleComment();
-
-        $this->setActionRights(1, $this->getModule(), 'Settings');
-    }
-
-    private function configureBackendWidgets(): void
-    {
-        $this->insertDashboardWidget('Blog', 'Comments');
-    }
-
-    private function configureFrontendExtras(): void
-    {
-        $this->blogWidgetId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Blog');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentComments', 'RecentComments');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Archive', 'Archive');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList');
-    }
-
-    private function configureFrontendPages(): void
-    {
-        // get search extra id
-        $searchId = $this->getSearchModuleExtraId();
-
-        // loop languages
-        foreach ($this->getLanguages() as $language) {
-            // fetch current categoryId
-            $this->defaultCategoryId = $this->getCategory($language);
-
-            // no category exists
-            if ($this->defaultCategoryId === 0) {
-                // add category
-                $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
-            }
-
-            // RSS settings
-            $this->setSetting($this->getModule(), 'rss_meta_' . $language, true);
-            $this->setSetting($this->getModule(), 'rss_title_' . $language, 'RSS');
-            $this->setSetting($this->getModule(), 'rss_description_' . $language, '');
-
-            // check if a page for blog already exists in this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                [$this->blogWidgetId, $language]
-            )
-            ) {
-                $this->insertPage(
-                    ['title' => 'Blog', 'language' => $language],
-                    null,
-                    ['extra_id' => $this->blogWidgetId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
-                );
-            }
-
-            if ($this->installExample()) {
-                $this->installExampleData($language);
-            }
-        }
-    }
-
-    private function configureSettings(): void
-    {
-        $this->setSetting($this->getModule(), 'allow_comments', true);
-        $this->setSetting($this->getModule(), 'requires_akismet', true);
-        $this->setSetting($this->getModule(), 'spamfilter', false);
-        $this->setSetting($this->getModule(), 'moderation', true);
-        $this->setSetting($this->getModule(), 'overview_num_items', 10);
-        $this->setSetting($this->getModule(), 'recent_articles_full_num_items', 3);
-        $this->setSetting($this->getModule(), 'recent_articles_list_num_items', 5);
-        $this->setSetting($this->getModule(), 'max_num_revisions', 20);
-    }
-
-    private function getSearchModuleExtraId(): int
-    {
-        return (int) $this->getDB()->getVar(
-            'SELECT id FROM modules_extras
-             WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::widget(), 'Form']
-        );
     }
 }
