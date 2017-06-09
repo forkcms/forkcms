@@ -38,10 +38,10 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationAdvancedId, 'SEO', 'settings/seo');
         $this->setNavigation($navigationAdvancedId, 'Tools', 'settings/tools');
 
-        // Set navigation for "Settings > modules"
+        // Set navigation for "Settings > Modules"
         $this->setNavigation($navigationSettingsId, 'Modules', null, null, 6);
 
-        // Set navigation for "Settings > themes"
+        // Set navigation for "Settings > Themes"
         $this->setNavigation($navigationSettingsId, 'Themes', null, null, 7);
     }
 
