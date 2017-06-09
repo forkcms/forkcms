@@ -136,15 +136,7 @@ class Installer extends ModuleInstaller
             $this->setSetting($this->getModule(), 'rss_description_' . $language, '');
 
             // check if a page for blog already exists in this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                [$this->blogBlockId, $language]
-            )
-            ) {
+            if (!$this->hasPageWithBlogBlock($language)) {
                 $this->insertPage(
                     ['title' => 'Blog', 'language' => $language],
                     null,
@@ -192,6 +184,19 @@ class Installer extends ModuleInstaller
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
             ['Search', ModuleExtraType::widget(), 'Form']
+        );
+    }
+
+    private function hasPageWithBlogBlock(string $language): bool
+    {
+        // @todo: Replace with a PageRepository method when it exists.
+        return (bool) $this->getDB()->getVar(
+            'SELECT 1
+             FROM pages AS p
+             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             WHERE b.extra_id = ? AND p.language = ?
+             LIMIT 1',
+            [$this->blogBlockId, $language]
         );
     }
 
