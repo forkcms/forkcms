@@ -17,74 +17,47 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
+    /** @var int */
+    private $subscribeWidgetId;
+
+    /** @var int */
+    private $unsubscribeWidgetId;
+
     public function install(): void
     {
         $this->addModule('Mailmotor');
-
-        // install settings
-        $this->installSettings();
-
-        // install locale
         $this->importLocale(__DIR__ . '/Data/locale.xml');
-
-        // install the mailmotor module
-        $this->installModuleAndActions();
-
-        // install backend navigation
-        $this->installBackendNavigation();
-
-        // install the pages for the module
-        $this->installPages();
+        $this->configureSettings();
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureFrontendExtras();
+        $this->configureFrontendPages();
     }
 
-    private function installModuleAndActions(): void
+    private function configureBackendNavigation(): void
     {
-        // module rights
-        $this->setModuleRights(1, $this->getModule());
-
-        // action rights
-        $this->setActionRights(1, $this->getModule(), 'Settings');
-    }
-
-    private function installBackendNavigation(): void
-    {
-        // settings navigation
+        // Set navigation for "settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, $this->getModule(), 'mailmotor/settings');
     }
 
-    private function installPages(): void
+    private function configureBackendRights(): void
     {
-        // add extra's
-        $subscribeId = $this->insertExtra(
-            $this->getModule(),
-            ModuleExtraType::block(),
-            'SubscribeForm',
-            'Subscribe',
-            null,
-            false,
-            3001
-        );
-        $unsubscribeId = $this->insertExtra(
-            $this->getModule(),
-            ModuleExtraType::block(),
-            'UnsubscribeForm',
-            'Unsubscribe',
-            null,
-            false,
-            3002
-        );
-        $this->insertExtra(
-            $this->getModule(),
-            ModuleExtraType::widget(),
-            'SubscribeForm',
-            'Subscribe',
-            null,
-            false,
-            3003
-        );
+        $this->setModuleRights(1, $this->getModule());
 
+        $this->setActionRights(1, $this->getModule(), 'Settings');
+    }
+
+    private function configureFrontendExtras(): void
+    {
+        $this->subscribeWidgetId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'SubscribeForm', 'Subscribe');
+        $this->unsubscribeWidgetId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'UnsubscribeForm', 'Unsubscribe');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SubscribeForm', 'Subscribe');
+    }
+
+    private function configureFrontendPages(): void
+    {
         // loop languages
         foreach ($this->getLanguages() as $language) {
             $pageId = $this->insertPage(
@@ -98,13 +71,13 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                [$subscribeId, $language]
+                [$this->subscribeWidgetId, $language]
             )
             ) {
                 $this->insertPage(
                     ['parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language],
                     null,
-                    ['extra_id' => $subscribeId, 'position' => 'main']
+                    ['extra_id' => $this->subscribeWidgetId, 'position' => 'main']
                 );
             }
 
@@ -115,25 +88,25 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                [$unsubscribeId, $language]
+                [$this->unsubscribeWidgetId, $language]
             )
             ) {
                 $this->insertPage(
                     ['parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language],
                     null,
-                    ['extra_id' => $unsubscribeId, 'position' => 'main']
+                    ['extra_id' => $this->unsubscribeWidgetId, 'position' => 'main']
                 );
             }
         }
     }
 
-    private function installSettings(): void
+    private function configureSettings(): void
     {
-        $this->setSetting($this->getModule(), 'mail_engine', null);
         $this->setSetting($this->getModule(), 'api_key', null);
-        $this->setSetting($this->getModule(), 'list_id', null);
-        $this->setSetting($this->getModule(), 'double_opt_in', true);
-        $this->setSetting($this->getModule(), 'overwrite_interests', false);
         $this->setSetting($this->getModule(), 'automatically_subscribe_from_form_builder_submitted_form', false);
+        $this->setSetting($this->getModule(), 'double_opt_in', true);
+        $this->setSetting($this->getModule(), 'list_id', null);
+        $this->setSetting($this->getModule(), 'mail_engine', null);
+        $this->setSetting($this->getModule(), 'overwrite_interests', false);
     }
 }
