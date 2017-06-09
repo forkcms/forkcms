@@ -74,11 +74,7 @@ class Installer extends ModuleInstaller
         // loop languages
         foreach ($this->getLanguages() as $language) {
             // check if pages already exist for this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1 FROM pages WHERE language = ? AND id > ? LIMIT 1',
-                [$language, 404]
-            )
-            ) {
+            if (!(bool) $this->hasPage($language)) {
                 // re-insert homepage
                 $this->insertPage(
                     [
@@ -221,7 +217,7 @@ class Installer extends ModuleInstaller
         // loop languages
         foreach ($this->getLanguages() as $language) {
             // check if pages already exist for this language
-            if (!(bool) $this->getDB()->getVar('SELECT 1 FROM pages WHERE language = ? LIMIT 1', [$language])) {
+            if (!$this->hasPage($language)) {
                 // insert homepage
                 $this->insertPage(
                     [
@@ -304,5 +300,14 @@ class Installer extends ModuleInstaller
         }
 
         return $this->extraIds[$key];
+    }
+
+    private function hasPage(string $language): bool
+    {
+        // @todo: Replace with PageRepository method when it exists.
+        return (bool) $this->getDB()->getVar(
+            'SELECT 1 FROM pages WHERE language = ? AND id > ? LIMIT 1',
+            [$language, 404]
+        );
     }
 }
