@@ -19,7 +19,7 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('MediaLibrary');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
-        $this->createEntityTables();
+        $this->configureEntities();
         $this->configureRights();
         $this->configureSettings();
         $this->configureBackendNavigation();
@@ -64,6 +64,18 @@ class Installer extends ModuleInstaller
         );
     }
 
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                MediaFolder::class,
+                MediaGroup::class,
+                MediaGroupMediaItem::class,
+                MediaItem::class,
+            ]
+        );
+    }
+
     protected function configureRights(): void
     {
         $this->setModuleRights(1, $this->getModule());
@@ -74,18 +86,6 @@ class Installer extends ModuleInstaller
     protected function configureSettings(): void
     {
         $this->setSetting($this->getModule(), 'upload_number_of_sharding_folders', 15);
-    }
-
-    private function createEntityTables(): void
-    {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
-            [
-                MediaFolder::class,
-                MediaGroup::class,
-                MediaGroupMediaItem::class,
-                MediaItem::class,
-            ]
-        );
     }
 
     protected function loadMediaFolders(): void
