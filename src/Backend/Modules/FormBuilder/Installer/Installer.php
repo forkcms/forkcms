@@ -168,6 +168,7 @@ class Installer extends ModuleInstaller
 
     private function getSearchWidgetId(): int
     {
+        // @todo: Replace this with a ModuleExtraRepository method when it exists.
         return (int) $this->getDB()->getVar(
             'SELECT id
              FROM modules_extras
