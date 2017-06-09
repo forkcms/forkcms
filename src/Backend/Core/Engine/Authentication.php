@@ -64,13 +64,12 @@ class Authentication
      * Encrypt the password with PHP password_hash function.
      *
      * @param string $password
-     * @param string $salt
      *
      * @return string
      */
-    public static function encryptPassword(string $password, string $salt): string
+    public static function encryptPassword(string $password): string
     {
-        return password_hash($password, PASSWORD_DEFAULT, ['cost' => 10, 'salt' => $salt]);
+        return password_hash($password, PASSWORD_DEFAULT);
     }
 
     /**

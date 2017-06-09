@@ -193,8 +193,7 @@ class Add extends BackendBaseActionAdd
                 $user = [];
                 $user['email'] = $this->frm->getField('email')->getValue();
                 $user['password'] = BackendAuthentication::encryptPassword(
-                    $this->frm->getField('password')->getValue(true),
-                    uniqid('', true)
+                    $this->frm->getField('password')->getValue(true)
                 );
 
                 // save the password strength

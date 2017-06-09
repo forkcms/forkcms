@@ -456,7 +456,7 @@ class Model
         // update user
         BackendModel::getContainer()->get('database')->update(
             'users',
-            ['password' => BackendAuthentication::encryptPassword($password, uniqid('', true))],
+            ['password' => BackendAuthentication::encryptPassword($password)],
             'id = ?',
             $userId
         );
