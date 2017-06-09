@@ -20,36 +20,13 @@ class Installer extends ModuleInstaller
         $this->addModule('MediaLibrary');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->createEntityTables();
-        $this->configureModuleRights();
+        $this->configureRights();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->loadMediaFolders();
     }
 
-    protected function configureBackendNavigation(): void
-    {
-        // Navigation for "modules"
-        $this->setNavigation(
-            null,
-            $this->getModule(),
-            'media_library/media_item_index',
-            [
-                'media_library/media_item_upload',
-                'media_library/media_item_edit',
-            ],
-            3
-        );
-    }
-
-    protected function configureModuleRights(): void
-    {
-        // Set module rights
-        $this->setModuleRights(1, $this->getModule());
-        $this->configureModuleRightsForMediaItem();
-        $this->configureModuleRightsForMediaFolder();
-    }
-
-    protected function configureModuleRightsForMediaItem(): void
+    protected function configureActionRightsForMediaItem(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaItemCleanup');
@@ -62,7 +39,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
     }
 
-    protected function configureModuleRightsForMediaFolder(): void
+    protected function configureActionRightsForMediaFolder(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
@@ -71,6 +48,27 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaFolderGetCountsForGroup'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderInfo'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderMovie'); // AJAX
+    }
+
+    protected function configureBackendNavigation(): void
+    {
+        $this->setNavigation(
+            null,
+            $this->getModule(),
+            'media_library/media_item_index',
+            [
+                'media_library/media_item_upload',
+                'media_library/media_item_edit',
+            ],
+            3
+        );
+    }
+
+    protected function configureRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+        $this->configureActionRightsForMediaItem();
+        $this->configureActionRightsForMediaFolder();
     }
 
     protected function configureSettings(): void
