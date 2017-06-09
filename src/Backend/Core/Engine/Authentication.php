@@ -321,6 +321,10 @@ class Authentication
         $encryptedPassword = BackendUsersModel::getEncryptedPassword($login);
         if (password_needs_rehash($encryptedPassword, PASSWORD_DEFAULT)) {
             $userId = BackendUsersModel::getIdByEmail($login);
+            if ($userId === false) {
+                return false;
+            }
+
             $user = new User($userId);
             $user->getSetting('password_key');
 
