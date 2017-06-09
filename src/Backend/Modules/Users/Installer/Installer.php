@@ -30,7 +30,7 @@ class Installer extends ModuleInstaller
 
     private function configureBackendNavigation(): void
     {
-        // Set navigation for "settings"
+        // Set navigation for "Settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $this->setNavigation(
             $navigationSettingsId,
@@ -125,12 +125,9 @@ class Installer extends ModuleInstaller
         return 'weak';
     }
 
-    /**
-     * @todo Move this nasty query to UserRepository if it exists.
-     * @return bool
-     */
     private function hasExistingGodUser(): bool
     {
+        // @todo: Replace by UserRepository method when it exists.
         return (bool) $this->getDB()->getVar(
             'SELECT 1
              FROM users
