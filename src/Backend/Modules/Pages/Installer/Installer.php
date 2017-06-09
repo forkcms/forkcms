@@ -33,13 +33,13 @@ class Installer extends ModuleInstaller
 
     private function configureBackendNavigation(): void
     {
-        // Set navigation for "pages"
-        $this->setNavigation(null, 'Pages', 'pages/index', ['pages/add', 'pages/edit'], 2);
+        // Set navigation for "Pages"
+        $this->setNavigation(null, $this->getModule(), 'pages/index', ['pages/add', 'pages/edit'], 2);
 
-        // Set navigation for "settings"
+        // Set navigation for "Settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
-        $this->setNavigation($navigationModulesId, 'Pages', 'pages/settings');
+        $this->setNavigation($navigationModulesId, $this->getModule(), 'pages/settings');
     }
 
     private function configureBackendRights(): void
