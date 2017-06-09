@@ -111,6 +111,7 @@ class Installer extends ModuleInstaller
 
     private function getActivePages(): array
     {
+        // @todo: Replace with a PageRepository method when it exists.
         return (array) $this->getDB()->getRecords(
             'SELECT id, revision_id, language, title
              FROM pages
@@ -121,6 +122,7 @@ class Installer extends ModuleInstaller
 
     private function getContentFromBlocksForPageRevision(int $pageRevisionId): string
     {
+        // @todo: Replace with a PageBlockRepository method when it exists.
         $blocks = (array) $this->getDB()->getColumn(
             'SELECT html FROM pages_blocks WHERE revision_id = ?',
             [$pageRevisionId]
@@ -131,6 +133,7 @@ class Installer extends ModuleInstaller
 
     private function hasExistingSearchIndex(string $language): bool
     {
+        // @todo: Replace with a PageBlockRepository method when it exists.
         return (bool) $this->getDB()->getVar(
             'SELECT 1
              FROM pages AS p
@@ -143,10 +146,11 @@ class Installer extends ModuleInstaller
 
     private function insertSearchIndexForPage(int $id, string $language, string $term): void
     {
+        // @todo: Replace with a SearchRepository method when it exists.
         $this->getDB()->execute(
             'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
-                 ON DUPLICATE KEY UPDATE value = ?, active = ?',
+             VALUES (?, ?, ?, ?, ?, ?)
+             ON DUPLICATE KEY UPDATE value = ?, active = ?',
             ['Pages', $id, $language, 'title', $term, 'Y', $term, 'Y']
         );
     }
