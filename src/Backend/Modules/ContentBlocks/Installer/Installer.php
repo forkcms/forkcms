@@ -28,7 +28,7 @@ class Installer extends ModuleInstaller
         $this->configureRights();
     }
 
-    protected function configureBackendNavigation(): void
+    private function configureBackendNavigation(): void
     {
         // set navigation for "modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
@@ -40,12 +40,12 @@ class Installer extends ModuleInstaller
         );
     }
 
-    protected function configureEntities(): void
+    private function configureEntities(): void
     {
         Model::get('fork.entity.create_schema')->forEntityClass(ContentBlock::class);
     }
 
-    protected function configureRights(): void
+    private function configureRights(): void
     {
         $this->setModuleRights(1, $this->getModule());
 
@@ -55,7 +55,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'Index');
     }
 
-    protected function configureSettings(): void
+    private function configureSettings(): void
     {
         $this->setSetting($this->getModule(), 'max_num_revisions', 20);
     }
