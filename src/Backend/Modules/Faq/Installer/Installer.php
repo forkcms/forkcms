@@ -17,14 +17,36 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $defaultCategoryId;
 
+    /** @var int */
+    private $faqWidgetId;
+
+    public function install(): void
+    {
+        $this->addModule('Faq');
+        $this->makeSearchable($this->getModule());
+        $this->importSQL(__DIR__ . '/Data/install.sql');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureSettings();
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureBackendWidgets();
+        $this->configureFrontendExtras();
+        $this->configureFrontendPages();
+    }
+
+    /**
+     * @todo: When FAQ entities are available, use DataFixtures instead of this method.
+     *
+     * @param string $language
+     * @param string $title
+     * @param string $url
+     * @return int
+     */
     private function addCategory(string $language, string $title, string $url): int
     {
-        // db
         $db = $this->getDB();
 
         // get sequence for widget
@@ -77,99 +99,32 @@ class Installer extends ModuleInstaller
         return $item['id'];
     }
 
-    private function getDefaultCategoryIdForLanguage(string $language): int
+    private function configureBackendActionRightsForFaqCategory(): void
     {
-        return (int) $this->getDB()->getVar(
-            'SELECT id
-             FROM faq_categories
-             WHERE language = ?',
-            [$language]
-        );
-    }
-
-    /**
-     * Insert an empty admin dashboard sequence
-     */
-    private function insertWidget(): void
-    {
-        $this->insertDashboardWidget($this->getModule(), 'Feedback');
-    }
-
-    public function install(): void
-    {
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-
-        $this->addModule('Faq');
-
-        $this->importLocale(__DIR__ . '/Data/locale.xml');
-
-        $this->makeSearchable($this->getModule());
-        $this->setModuleRights(1, $this->getModule());
-
-        $this->setActionRights(1, $this->getModule(), 'Index');
-        $this->setActionRights(1, $this->getModule(), 'Add');
-        $this->setActionRights(1, $this->getModule(), 'Edit');
-        $this->setActionRights(1, $this->getModule(), 'Delete');
         $this->setActionRights(1, $this->getModule(), 'Sequence');
         $this->setActionRights(1, $this->getModule(), 'Categories');
         $this->setActionRights(1, $this->getModule(), 'AddCategory');
         $this->setActionRights(1, $this->getModule(), 'EditCategory');
         $this->setActionRights(1, $this->getModule(), 'DeleteCategory');
+    }
+
+    private function configureBackendActionRightsForFaqQuestion(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
         $this->setActionRights(1, $this->getModule(), 'SequenceQuestions');
+    }
+
+    private function configureBackendActionRightsForFaqQuestionFeedback(): void
+    {
         $this->setActionRights(1, $this->getModule(), 'DeleteFeedback');
-        $this->setActionRights(1, $this->getModule(), 'Settings');
+    }
 
-        $faqId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Faq');
-
-        // Register widgets
-        // Category faq widgets will be added on the fly
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'MostReadQuestions', 'MostReadQuestions');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
-
-        $this->setSetting($this->getModule(), 'overview_num_items_per_category', 10);
-        $this->setSetting($this->getModule(), 'most_read_num_items', 5);
-        $this->setSetting($this->getModule(), 'related_num_items', 5);
-        $this->setSetting($this->getModule(), 'spamfilter', false);
-        $this->setSetting($this->getModule(), 'allow_feedback', false);
-        $this->setSetting($this->getModule(), 'allow_own_question', false);
-        $this->setSetting($this->getModule(), 'allow_multiple_categories', true);
-        $this->setSetting($this->getModule(), 'send_email_on_new_feedback', false);
-
-        foreach ($this->getLanguages() as $language) {
-            $this->defaultCategoryId = $this->getDefaultCategoryIdForLanguage($language);
-
-            // no category exists
-            if ($this->defaultCategoryId === 0) {
-                $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
-            }
-
-            // check if a page for the faq already exists in this language
-            $faqPageExists = (bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                [$faqId, $language]
-            );
-
-            if (!$faqPageExists) {
-                // insert page
-                $this->insertPage(
-                    [
-                        'title' => 'FAQ',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $faqId]
-                );
-            }
-        }
-
-        $this->insertWidget();
-
-        // set navigation
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationFaqId = $this->setNavigation($navigationModulesId, 'Faq');
         $this->setNavigation(
@@ -184,8 +139,93 @@ class Installer extends ModuleInstaller
             'faq/categories',
             ['faq/add_category', 'faq/edit_category']
         );
+
+        // Set navigation for "settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, 'Faq', 'faq/settings');
+    }
+
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->configureBackendActionRightsForFaqCategory();
+        $this->configureBackendActionRightsForFaqQuestion();
+        $this->configureBackendActionRightsForFaqQuestionFeedback();
+        $this->setActionRights(1, $this->getModule(), 'Settings');
+    }
+
+    private function configureBackendWidgets(): void
+    {
+        $this->insertDashboardWidget($this->getModule(), 'Feedback');
+    }
+
+    /**
+     * Configure frontend extras
+     * Note: Category faq widgets will be added on the fly
+     */
+    private function configureFrontendExtras(): void
+    {
+        $this->faqWidgetId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Faq');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'MostReadQuestions', 'MostReadQuestions');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
+    }
+
+    private function configureFrontendPages(): void
+    {
+        foreach ($this->getLanguages() as $language) {
+            $this->defaultCategoryId = $this->getDefaultCategoryIdForLanguage($language);
+
+            // no category exists
+            if ($this->defaultCategoryId === 0) {
+                $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+            }
+
+            // check if a page for the faq already exists in this language
+            $faqPageExists = (bool) $this->getDB()->getVar(
+                'SELECT 1
+                     FROM pages AS p
+                     INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+                     WHERE b.extra_id = ? AND p.language = ?
+                     LIMIT 1',
+                [$this->faqWidgetId, $language]
+            );
+
+            if (!$faqPageExists) {
+                // insert page
+                $this->insertPage(
+                    [
+                        'title' => 'FAQ',
+                        'language' => $language,
+                    ],
+                    null,
+                    ['extra_id' => $this->faqWidgetId]
+                );
+            }
+        }
+    }
+
+    private function configureSettings(): void
+    {
+        $this->setSetting($this->getModule(), 'allow_feedback', false);
+        $this->setSetting($this->getModule(), 'allow_multiple_categories', true);
+        $this->setSetting($this->getModule(), 'allow_own_question', false);
+        $this->setSetting($this->getModule(), 'most_read_num_items', 5);
+        $this->setSetting($this->getModule(), 'overview_num_items_per_category', 10);
+        $this->setSetting($this->getModule(), 'related_num_items', 5);
+        $this->setSetting($this->getModule(), 'send_email_on_new_feedback', false);
+        $this->setSetting($this->getModule(), 'spamfilter', false);
+    }
+
+    private function getDefaultCategoryIdForLanguage(string $language): int
+    {
+        return (int) $this->getDB()->getVar(
+            'SELECT id
+             FROM faq_categories
+             WHERE language = ?',
+            [$language]
+        );
     }
 }
