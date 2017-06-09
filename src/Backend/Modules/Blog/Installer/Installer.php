@@ -21,7 +21,7 @@ class Installer extends ModuleInstaller
     private $defaultCategoryId;
 
     /** @var int */
-    private $blogWidgetId;
+    private $blogBlockId;
 
     public function install(): void
     {
@@ -106,7 +106,7 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->blogWidgetId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Blog');
+        $this->blogBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Blog');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentComments', 'RecentComments');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Archive', 'Archive');
@@ -142,13 +142,13 @@ class Installer extends ModuleInstaller
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                [$this->blogWidgetId, $language]
+                [$this->blogBlockId, $language]
             )
             ) {
                 $this->insertPage(
                     ['title' => 'Blog', 'language' => $language],
                     null,
-                    ['extra_id' => $this->blogWidgetId, 'position' => 'main'],
+                    ['extra_id' => $this->blogBlockId, 'position' => 'main'],
                     ['extra_id' => $searchId, 'position' => 'top']
                 );
             }
