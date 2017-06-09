@@ -19,52 +19,52 @@ use Backend\Core\Language\Language;
  */
 class Installer extends ModuleInstaller
 {
+    /** @var array */
+    private $extraIds;
+
     public function install(): void
     {
-        // load install.sql
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-
-        // add 'profiles' as a module
         $this->addModule('Profiles');
-
-        // import locale
+        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureSettings();
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureFrontendExtras();
+        $this->configureFrontendFilesDirectories();
+        $this->configureFrontendPages();
+    }
 
-        // general settings
-        $this->setSetting($this->getModule(), 'allow_gravatar', true);
-        $this->setSetting($this->getModule(), 'overwrite_profile_notification_email', false);
-        $this->setSetting($this->getModule(), 'profile_notification_email', null);
-        $this->setSetting($this->getModule(), 'send_mail_for_new_profile_to_admin', false);
-        $this->setSetting($this->getModule(), 'send_mail_for_new_profile_to_profile', false);
-
-        // add folders
-        $filesystem = new Filesystem();
-        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/source/');
-        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/240x240/');
-        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/64x64/');
-        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/32x32/');
-
-        // module rights
-        $this->setModuleRights(1, $this->getModule());
-
-        // action rights
-        $this->setActionRights(1, $this->getModule(), 'Add');
+    private function configureBackendActionRightsForGroup(): void
+    {
         $this->setActionRights(1, $this->getModule(), 'AddGroup');
-        $this->setActionRights(1, $this->getModule(), 'AddProfileGroup');
-        $this->setActionRights(1, $this->getModule(), 'Block');
         $this->setActionRights(1, $this->getModule(), 'DeleteGroup');
-        $this->setActionRights(1, $this->getModule(), 'DeleteProfileGroup');
-        $this->setActionRights(1, $this->getModule(), 'Delete');
         $this->setActionRights(1, $this->getModule(), 'EditGroup');
-        $this->setActionRights(1, $this->getModule(), 'EditProfileGroup');
+        $this->setActionRights(1, $this->getModule(), 'Groups');
+    }
+
+    private function configureBackendActionRightsForProfile(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Block');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
         $this->setActionRights(1, $this->getModule(), 'Edit');
         $this->setActionRights(1, $this->getModule(), 'ExportTemplate');
-        $this->setActionRights(1, $this->getModule(), 'Groups');
         $this->setActionRights(1, $this->getModule(), 'Import');
         $this->setActionRights(1, $this->getModule(), 'Index');
         $this->setActionRights(1, $this->getModule(), 'MassAction');
+    }
 
-        // set navigation
+    private function configureBackendActionRightsForProfileGroup(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'AddProfileGroup');
+        $this->setActionRights(1, $this->getModule(), 'DeleteProfileGroup');
+        $this->setActionRights(1, $this->getModule(), 'EditProfileGroup');
+    }
+
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationProfilesId = $this->setNavigation($navigationModulesId, 'Profiles');
         $this->setNavigation(
@@ -89,13 +89,24 @@ class Installer extends ModuleInstaller
             ]
         );
 
-        // settings navigation
+        // Set navigation for "settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, 'Profiles', 'profiles/settings');
+    }
 
-        // add extra
-        $activateId = $this->insertExtra(
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->configureBackendActionRightsForGroup();
+        $this->configureBackendActionRightsForProfile();
+        $this->configureBackendActionRightsForProfileGroup();
+    }
+
+    private function configureFrontendExtras(): void
+    {
+        $this->extraIds['activate'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Activate',
@@ -104,7 +115,7 @@ class Installer extends ModuleInstaller
             false,
             5000
         );
-        $forgotPasswordId = $this->insertExtra(
+        $this->extraIds['forgot_password'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ForgotPassword',
@@ -113,7 +124,7 @@ class Installer extends ModuleInstaller
             false,
             5001
         );
-        $indexId = $this->insertExtra(
+        $this->extraIds['index'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Dashboard',
@@ -122,7 +133,7 @@ class Installer extends ModuleInstaller
             false,
             5002
         );
-        $loginId = $this->insertExtra(
+        $this->extraIds['login'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Login',
@@ -131,7 +142,7 @@ class Installer extends ModuleInstaller
             false,
             5003
         );
-        $logoutId = $this->insertExtra(
+        $this->extraIds['logout'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Logout',
@@ -140,7 +151,7 @@ class Installer extends ModuleInstaller
             false,
             5004
         );
-        $changeEmailId = $this->insertExtra(
+        $this->extraIds['change_email'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ChangeEmail',
@@ -149,7 +160,7 @@ class Installer extends ModuleInstaller
             false,
             5005
         );
-        $changePasswordId = $this->insertExtra(
+        $this->extraIds['change_password'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ChangePassword',
@@ -158,7 +169,7 @@ class Installer extends ModuleInstaller
             false,
             5006
         );
-        $settingsId = $this->insertExtra(
+        $this->extraIds['settings'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Settings',
@@ -167,7 +178,7 @@ class Installer extends ModuleInstaller
             false,
             5007
         );
-        $registerId = $this->insertExtra(
+        $this->extraIds['register'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Register',
@@ -176,7 +187,7 @@ class Installer extends ModuleInstaller
             false,
             5008
         );
-        $resetPasswordId = $this->insertExtra(
+        $this->extraIds['reset_password'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ResetPassword',
@@ -185,7 +196,7 @@ class Installer extends ModuleInstaller
             false,
             5008
         );
-        $resendActivationId = $this->insertExtra(
+        $this->extraIds['resend_activation'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ResendActivation',
@@ -197,23 +208,24 @@ class Installer extends ModuleInstaller
 
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'LoginBox', 'LoginBox', null, false, 5010);
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'LoginLink', 'LoginLink', null, false, 5011);
-        $this->insertExtra(
-            $this->getModule(),
-            ModuleExtraType::widget(),
-            'SecurePage',
-            'SecurePage',
-            null,
-            false,
-            5012
-        );
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SecurePage', 'SecurePage', null, false, 5012);
+    }
+
+    private function configureFrontendFilesDirectories(): void
+    {
+        $filesystem = new Filesystem();
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/source/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/240x240/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/64x64/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/32x32/');
+    }
+
+    private function configureFrontendPages(): void
+    {
+        $originalLocale = Language::getInterfaceLanguage();
 
         // get search widget id
-        $searchId = (int) $this->getDB()->getVar(
-            'SELECT id FROM modules_extras WHERE module = ? AND action = ?',
-            ['search', 'form']
-        );
-
-        $originalLocale = Language::getInterfaceLanguage();
+        $searchExtraId = $this->getSearchWidgetId();
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -240,8 +252,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $activateId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('activate'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // forgot password page
@@ -252,8 +264,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $forgotPasswordId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('forgot_password'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // reset password page
@@ -264,8 +276,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $resetPasswordId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('reset_password'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // resend activation email page
@@ -276,8 +288,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $resendActivationId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('resend_activation'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // login page
@@ -288,8 +300,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $loginId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('login'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // register page
@@ -300,8 +312,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $registerId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('register'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // logout page
@@ -312,8 +324,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $logoutId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('logout'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // index page
@@ -324,8 +336,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $indexId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('index'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // settings page
@@ -336,8 +348,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $settingsId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('settings'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // change email page
@@ -348,8 +360,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $changeEmailId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('change_email'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
 
                 // change password page
@@ -360,8 +372,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $changePasswordId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('change_password'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
                 );
             }
         }
@@ -370,5 +382,31 @@ class Installer extends ModuleInstaller
         if (!empty($originalLocale)) {
             Language::setLocale($originalLocale);
         }
+    }
+
+    private function configureSettings(): void
+    {
+        $this->setSetting($this->getModule(), 'allow_gravatar', true);
+        $this->setSetting($this->getModule(), 'overwrite_profile_notification_email', false);
+        $this->setSetting($this->getModule(), 'profile_notification_email', null);
+        $this->setSetting($this->getModule(), 'send_mail_for_new_profile_to_admin', false);
+        $this->setSetting($this->getModule(), 'send_mail_for_new_profile_to_profile', false);
+    }
+
+    private function getExtraId(string $key): int
+    {
+        if (!array_key_exists($key, $this->extraIds)) {
+            throw new \Exception('Key not set yet, please check your installer.');
+        }
+
+        return $this->extraIds[$key];
+    }
+
+    private function getSearchWidgetId(): int
+    {
+        return (int) $this->getDB()->getVar(
+            'SELECT id FROM modules_extras WHERE module = ? AND action = ?',
+            ['Search', 'Form']
+        );
     }
 }
