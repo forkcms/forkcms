@@ -232,6 +232,18 @@ class Model
     }
 
     /**
+     * Encrypt the password with PHP password_hash function.
+     *
+     * @param string $password
+     *
+     * @return string
+     */
+    public static function encryptPassword(string $password): string
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    /**
      * Encrypt a string with a salt.
      *
      * @param string $string String to encrypt.
@@ -603,7 +615,7 @@ class Model
                 self::setSetting($id, 'salt', $salt);
 
                 // build password
-                $values['password'] = self::getEncryptedString($item['password'], $salt);
+                $values['password'] = self::encryptPassword($item['password']);
             }
 
             // update values

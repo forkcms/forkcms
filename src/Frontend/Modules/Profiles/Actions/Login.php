@@ -109,9 +109,6 @@ class Login extends FrontendBaseBlock
                 // login
                 FrontendProfilesAuthentication::login($profileId, $chkRemember->getChecked());
 
-                // update salt and password for Dieter's security features
-                FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
-
                 // query string
                 $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
 

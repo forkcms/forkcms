@@ -292,10 +292,7 @@ class Edit extends BackendBaseActionEdit
                         $txtPassword->getValue() : BackendModel::generatePassword(8);
 
                     // build password
-                    $values['password'] = BackendProfilesModel::getEncryptedString(
-                        $password,
-                        $salt
-                    );
+                    $values['password'] = BackendProfilesModel::encryptPassword($password);
                 }
 
                 // update values

@@ -118,10 +118,7 @@ class Register extends FrontendBaseBlock
 
                 // values
                 $values['email'] = $txtEmail->getValue();
-                $values['password'] = FrontendProfilesModel::getEncryptedString(
-                    $txtPassword->getValue(),
-                    $settings['salt']
-                );
+                $values['password'] = FrontendProfilesModel::encryptPassword($txtPassword->getValue());
                 $values['status'] = 'inactive';
                 $values['display_name'] = $txtDisplayName->getValue();
                 $values['registered_on'] = FrontendModel::getUTCDate();
