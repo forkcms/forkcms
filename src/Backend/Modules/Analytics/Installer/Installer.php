@@ -14,8 +14,8 @@ class Installer extends ModuleInstaller
         $this->addModule('Analytics');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->configureBackendNavigation();
+        $this->configureBackendRights();
         $this->configureBackendWidgets();
-        $this->configureRights();
     }
 
     private function configureBackendNavigation(): void
@@ -30,18 +30,18 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, $this->getModule(), 'analytics/settings');
     }
 
-    private function configureBackendWidgets(): void
-    {
-        $this->insertDashboardWidget('Analytics', 'RecentVisits');
-        $this->insertDashboardWidget('Analytics', 'TraficSources');
-    }
-
-    private function configureRights(): void
+    private function configureBackendRights(): void
     {
         $this->setModuleRights(1, $this->getModule());
 
         $this->setActionRights(1, $this->getModule(), 'Index');
         $this->setActionRights(1, $this->getModule(), 'Settings');
         $this->setActionRights(1, $this->getModule(), 'Reset');
+    }
+
+    private function configureBackendWidgets(): void
+    {
+        $this->insertDashboardWidget('Analytics', 'RecentVisits');
+        $this->insertDashboardWidget('Analytics', 'TraficSources');
     }
 }
