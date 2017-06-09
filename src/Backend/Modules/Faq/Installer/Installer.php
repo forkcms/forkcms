@@ -101,20 +101,20 @@ class Installer extends ModuleInstaller
 
     private function configureBackendActionRightsForFaqCategory(): void
     {
-        $this->setActionRights(1, $this->getModule(), 'Sequence');
-        $this->setActionRights(1, $this->getModule(), 'Categories');
         $this->setActionRights(1, $this->getModule(), 'AddCategory');
-        $this->setActionRights(1, $this->getModule(), 'EditCategory');
+        $this->setActionRights(1, $this->getModule(), 'Categories');
         $this->setActionRights(1, $this->getModule(), 'DeleteCategory');
+        $this->setActionRights(1, $this->getModule(), 'EditCategory');
+        $this->setActionRights(1, $this->getModule(), 'Sequence'); // AJAX
     }
 
     private function configureBackendActionRightsForFaqQuestion(): void
     {
-        $this->setActionRights(1, $this->getModule(), 'Index');
         $this->setActionRights(1, $this->getModule(), 'Add');
-        $this->setActionRights(1, $this->getModule(), 'Edit');
         $this->setActionRights(1, $this->getModule(), 'Delete');
-        $this->setActionRights(1, $this->getModule(), 'SequenceQuestions');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'SequenceQuestions'); // AJAX
     }
 
     private function configureBackendActionRightsForFaqQuestionFeedback(): void
