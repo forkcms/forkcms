@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
 
 /**
- * Installer for the contact module
+ * Installer for the users module
  */
 class Installer extends ModuleInstaller
 {
