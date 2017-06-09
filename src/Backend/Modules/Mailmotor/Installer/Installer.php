@@ -72,16 +72,7 @@ class Installer extends ModuleInstaller
                 );
             }
 
-            // check if a page for mailmotor unsubscribe already exists in this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                [$this->unsubscribeWidgetId, $language]
-            )
-            ) {
+            if (!$this->hasPageWithUnsubscribeBlock($language)) {
                 $this->insertPage(
                     ['parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language],
                     null,
@@ -111,6 +102,19 @@ class Installer extends ModuleInstaller
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
             [$this->subscribeBlockId, $language]
+        );
+    }
+
+    private function hasPageWithUnsubscribeBlock(string $language): bool
+    {
+        // @todo: Replace with PageRepository method when it exists.
+        return (bool) $this->getDB()->getVar(
+            'SELECT 1
+             FROM pages AS p
+             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             WHERE b.extra_id = ? AND p.language = ?
+             LIMIT 1',
+            [$this->unsubscribeBlockId, $language]
         );
     }
 }
