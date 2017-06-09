@@ -13,9 +13,9 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('Analytics');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
-        $this->configureRights();
         $this->configureBackendNavigation();
         $this->configureBackendWidgets();
+        $this->configureRights();
     }
 
     private function configureBackendNavigation(): void
