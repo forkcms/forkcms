@@ -22,11 +22,7 @@ class Installer extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
-            [
-                MediaGallery::class,
-            ]
-        );
+        Model::get('fork.entity.create_schema')->forEntityClass(MediaGallery::class);
     }
 
     protected function configureBackendNavigation(): void
