@@ -18,10 +18,10 @@ use Common\ModuleExtraType;
 class Installer extends ModuleInstaller
 {
     /** @var int */
-    private $subscribeWidgetId;
+    private $subscribeBlockId;
 
     /** @var int */
-    private $unsubscribeWidgetId;
+    private $unsubscribeBlockId;
 
     public function install(): void
     {
@@ -51,8 +51,8 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->subscribeWidgetId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'SubscribeForm', 'Subscribe');
-        $this->unsubscribeWidgetId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'UnsubscribeForm', 'Unsubscribe');
+        $this->subscribeBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'SubscribeForm', 'Subscribe');
+        $this->unsubscribeBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'UnsubscribeForm', 'Unsubscribe');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SubscribeForm', 'Subscribe');
     }
 
@@ -77,7 +77,7 @@ class Installer extends ModuleInstaller
                 $this->insertPage(
                     ['parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language],
                     null,
-                    ['extra_id' => $this->subscribeWidgetId, 'position' => 'main']
+                    ['extra_id' => $this->subscribeBlockId, 'position' => 'main']
                 );
             }
 
@@ -94,7 +94,7 @@ class Installer extends ModuleInstaller
                 $this->insertPage(
                     ['parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language],
                     null,
-                    ['extra_id' => $this->unsubscribeWidgetId, 'position' => 'main']
+                    ['extra_id' => $this->unsubscribeBlockId, 'position' => 'main']
                 );
             }
         }
