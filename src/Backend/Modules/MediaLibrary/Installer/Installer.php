@@ -52,7 +52,7 @@ class Installer extends ModuleInstaller
 
     protected function configureBackendNavigation(): void
     {
-        // Set navigation for "modules"
+        // Set navigation for "Modules"
         $this->setNavigation(
             null,
             $this->getModule(),
