@@ -25,7 +25,7 @@ class Installer extends ModuleInstaller
         $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
-        $this->configureRights();
+        $this->configureBackendRights();
     }
 
     private function configureBackendNavigation(): void
@@ -40,12 +40,7 @@ class Installer extends ModuleInstaller
         );
     }
 
-    private function configureEntities(): void
-    {
-        Model::get('fork.entity.create_schema')->forEntityClass(ContentBlock::class);
-    }
-
-    private function configureRights(): void
+    private function configureBackendRights(): void
     {
         $this->setModuleRights(1, $this->getModule());
 
@@ -53,6 +48,11 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'Delete');
         $this->setActionRights(1, $this->getModule(), 'Edit');
         $this->setActionRights(1, $this->getModule(), 'Index');
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClass(ContentBlock::class);
     }
 
     private function configureSettings(): void
