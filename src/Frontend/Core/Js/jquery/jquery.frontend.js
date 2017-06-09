@@ -345,16 +345,15 @@
             type = '',
             defaults = {
                 required: jsFrontend.locale.err('FieldIsRequired'),
-                email: 	  jsFrontend.locale.err('EmailIsInvalid'),
-                date: 	  jsFrontend.locale.err('DateIsInvalid'),
-                number:   jsFrontend.locale.err('NumberIsInvalid'),
-                value:    jsFrontend.locale.err('InvalidValue')
+                email: jsFrontend.locale.err('EmailIsInvalid'),
+                date: jsFrontend.locale.err('DateIsInvalid'),
+                number: jsFrontend.locale.err('NumberIsInvalid'),
+                value: jsFrontend.locale.err('InvalidValue')
             };
 
         options = $.extend(defaults, options);
 
         $input.on('invalid', function(e) {
-
             if ($input.context.validity.valueMissing) {
                 errorMessage = options.required;
             } else if (!$input.context.validity.valid) {
