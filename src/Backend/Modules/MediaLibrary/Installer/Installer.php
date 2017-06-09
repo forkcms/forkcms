@@ -26,7 +26,7 @@ class Installer extends ModuleInstaller
         $this->loadMediaFolders();
     }
 
-    protected function configureActionRightsForMediaItem(): void
+    protected function configureBackendActionRightsForMediaItem(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaItemCleanup');
@@ -39,7 +39,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
     }
 
-    protected function configureActionRightsForMediaFolder(): void
+    protected function configureBackendActionRightsForMediaFolder(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
@@ -68,8 +68,8 @@ class Installer extends ModuleInstaller
     protected function configureBackendRights(): void
     {
         $this->setModuleRights(1, $this->getModule());
-        $this->configureActionRightsForMediaItem();
-        $this->configureActionRightsForMediaFolder();
+        $this->configureBackendActionRightsForMediaItem();
+        $this->configureBackendActionRightsForMediaFolder();
     }
 
     private function configureEntities(): void
