@@ -326,7 +326,6 @@ class Authentication
             }
 
             $user = new User($userId);
-            $user->getSetting('password_key');
 
             // check old password
             $encryptedPasswordOldMethod = self::getEncryptedString($password, $user->getSetting('password_key'));
