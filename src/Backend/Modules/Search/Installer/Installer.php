@@ -18,7 +18,7 @@ use Backend\Core\Installer\ModuleInstaller;
 class Installer extends ModuleInstaller
 {
     /** @var int */
-    private $searchExtraId;
+    private $searchBlockId;
 
     public function install(): void
     {
@@ -66,7 +66,7 @@ class Installer extends ModuleInstaller
     private function configureFrontendExtras(): void
     {
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SearchForm', 'Form', null, false, 2001);
-        $this->searchExtraId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Search', null, null, false, 2000);
+        $this->searchBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Search', null, null, false, 2000);
     }
 
     private function configureFrontendPages(): void
@@ -84,7 +84,7 @@ class Installer extends ModuleInstaller
                     'language' => $language,
                 ],
                 null,
-                ['extra_id' => $this->searchExtraId, 'position' => 'main']
+                ['extra_id' => $this->searchBlockId, 'position' => 'main']
             );
         }
     }
@@ -137,7 +137,7 @@ class Installer extends ModuleInstaller
              INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
-            [$this->searchExtraId, $language]
+            [$this->searchBlockId, $language]
         );
     }
 
