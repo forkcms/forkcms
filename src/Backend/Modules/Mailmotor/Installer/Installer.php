@@ -64,16 +64,7 @@ class Installer extends ModuleInstaller
                 ['title' => 'Newsletters', 'language' => $language]
             );
 
-            // check if a page for mailmotor subscribe already exists in this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                [$this->subscribeWidgetId, $language]
-            )
-            ) {
+            if (!$this->hasPageWithSubscribeBlock($language)) {
                 $this->insertPage(
                     ['parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language],
                     null,
@@ -108,5 +99,18 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'list_id', null);
         $this->setSetting($this->getModule(), 'mail_engine', null);
         $this->setSetting($this->getModule(), 'overwrite_interests', false);
+    }
+
+    private function hasPageWithSubscribeBlock(string $language): bool
+    {
+        // @todo: Replace with PageRepository method when it exists.
+        return (bool) $this->getDB()->getVar(
+            'SELECT 1
+             FROM pages AS p
+             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             WHERE b.extra_id = ? AND p.language = ?
+             LIMIT 1',
+            [$this->subscribeBlockId, $language]
+        );
     }
 }
