@@ -229,18 +229,7 @@ class Installer extends ModuleInstaller
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
-            // only add pages if profiles isn't linked anywhere
-            // @todo refactor me, syntax sucks atm
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 INNER JOIN modules_extras AS e ON e.id = b.extra_id
-                 WHERE e.module = ? AND p.language = ?
-                 LIMIT 1',
-                [$this->getModule(), $language]
-            )
-            ) {
+            if (!$this->hasPageWithProfilesBlock($language)) {
                 // We must define the locale we want to insert the page into
                 Language::setLocale($language);
 
@@ -408,6 +397,20 @@ class Installer extends ModuleInstaller
         return (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND action = ?',
             ['Search', 'Form']
+        );
+    }
+
+    private function hasPageWithProfilesBlock(string $language): bool
+    {
+        // @todo: Replace this with a PageRepository method when it exists.
+        return (bool) $this->getDB()->getVar(
+            'SELECT 1
+             FROM pages AS p
+             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             INNER JOIN modules_extras AS e ON e.id = b.extra_id
+             WHERE e.module = ? AND p.language = ?
+             LIMIT 1',
+            [$this->getModule(), $language]
         );
     }
 }
