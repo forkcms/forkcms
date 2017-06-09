@@ -17,17 +17,8 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /** @var int */
-    private $searchFormWidgetId;
-
-    /** @var int */
-    private $searchWidgetId;
-
-    /** @var int */
-    private $sitemapWidgetId;
-
-    /** @var int */
-    private $subpagesWidgetId;
+    /** @var array */
+    private $extraIds;
 
     public function install(): void
     {
@@ -103,7 +94,7 @@ class Installer extends ModuleInstaller
                     ['html' => __DIR__ . '/Data/' . $language . '/sample1.txt'],
                     ['extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'],
                     ['extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'right'],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
 
                 // blog
@@ -120,7 +111,7 @@ class Installer extends ModuleInstaller
                     ['extra_id' => $extras['blog_widget_categories'], 'position' => 'left'],
                     ['extra_id' => $extras['blog_widget_archive'], 'position' => 'left'],
                     ['extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
 
                 // about us parent
@@ -133,8 +124,8 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $this->subpagesWidgetId],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('subpages')],
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
 
                 // location
@@ -149,7 +140,7 @@ class Installer extends ModuleInstaller
                     null,
                     ['html' => __DIR__ . '/Data/' . $language . '/sample1.txt'],
                     ['html' => __DIR__ . '/Data/' . $language . '/sample2.txt'],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
 
                 // about us child
@@ -164,7 +155,7 @@ class Installer extends ModuleInstaller
                     null,
                     ['html' => __DIR__ . '/Data/' . $language . '/sample1.txt'],
                     ['html' => __DIR__ . '/Data/' . $language . '/sample2.txt'],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
 
                 // history
@@ -179,7 +170,7 @@ class Installer extends ModuleInstaller
                     null,
                     ['html' => __DIR__ . '/Data/' . $language . '/sample1.txt'],
                     ['html' => __DIR__ . '/Data/' . $language . '/sample2.txt'],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
 
                 // insert lorem ipsum test page
@@ -194,7 +185,7 @@ class Installer extends ModuleInstaller
                     [
                         'html' => __DIR__ . '/Data/' . $language . '/lorem_ipsum.txt',
                     ],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
             }
         }
@@ -202,9 +193,9 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->searchWidgetId = $this->insertExtra('Search', ModuleExtraType::block(), 'Search');
-        $this->searchFormWidgetId = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form');
-        $this->sitemapWidgetId = $this->insertExtra(
+        $this->extraIds['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search');
+        $this->extraIds['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form');
+        $this->extraIds['sitemap'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::widget(),
             'Sitemap',
@@ -214,7 +205,7 @@ class Installer extends ModuleInstaller
             1
         );
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Navigation', 'PreviousNextNavigation');
-        $this->subpagesWidgetId = $this->insertExtra(
+        $this->extraIds['subpages'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::widget(),
             'Subpages',
@@ -244,7 +235,7 @@ class Installer extends ModuleInstaller
                     ],
                     null,
                     ['html' => __DIR__ . '/Data/' . $language . '/sample1.txt'],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
 
                 // insert sitemap
@@ -259,8 +250,8 @@ class Installer extends ModuleInstaller
                     ],
                     null,
                     ['html' => __DIR__ . '/Data/' . $language . '/sitemap.txt'],
-                    ['extra_id' => $this->sitemapWidgetId],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap')],
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
 
                 // insert disclaimer
@@ -278,7 +269,7 @@ class Installer extends ModuleInstaller
                         'html' => __DIR__ . '/Data/' . $language .
                             '/disclaimer.txt',
                     ],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
 
                 // insert 404
@@ -294,8 +285,8 @@ class Installer extends ModuleInstaller
                     ],
                     null,
                     ['html' => __DIR__ . '/Data/' . $language . '/404.txt'],
-                    ['extra_id' => $this->sitemapWidgetId],
-                    ['extra_id' => $this->sitemapWidgetId, 'position' => 'top']
+                    ['extra_id' => $this->getExtraId('sitemap')],
+                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
                 );
             }
         }
@@ -304,5 +295,14 @@ class Installer extends ModuleInstaller
         if ($this->installExample()) {
             $this->installExampleData();
         }
+    }
+
+    private function getExtraId(string $key): int
+    {
+        if (!array_key_exists($key, $this->extraIds)) {
+            throw new \Exception('Key not set yet, please check your installer.');
+        }
+
+        return $this->extraIds[$key];
     }
 }
