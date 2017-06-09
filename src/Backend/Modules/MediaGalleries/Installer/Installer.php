@@ -15,14 +15,23 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('MediaGalleries');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
-        $this->createEntityTables();
-        $this->configureModuleRights();
+        $this->configureEntities();
         $this->configureBackendNavigation();
+        $this->configureBackendRights();
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                MediaGallery::class,
+            ]
+        );
     }
 
     protected function configureBackendNavigation(): void
     {
-        // Navigation for "modules"
+        // Set navigation for "modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation(
             $navigationModulesId,
@@ -35,25 +44,14 @@ class Installer extends ModuleInstaller
         );
     }
 
-    protected function configureModuleRights(): void
+    protected function configureBackendRights(): void
     {
-        // Set module rights
         $this->setModuleRights(1, $this->getModule());
 
-        // Media galleries
-        $this->setActionRights(1, $this->getModule(), 'MediaGalleryIndex');
         $this->setActionRights(1, $this->getModule(), 'MediaGalleryAdd');
         $this->setActionRights(1, $this->getModule(), 'MediaGalleryDelete');
         $this->setActionRights(1, $this->getModule(), 'MediaGalleryEdit');
         $this->setActionRights(1, $this->getModule(), 'MediaGalleryEditWidgetAction');
-    }
-
-    private function createEntityTables(): void
-    {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
-            [
-                MediaGallery::class,
-            ]
-        );
+        $this->setActionRights(1, $this->getModule(), 'MediaGalleryIndex');
     }
 }
