@@ -18,7 +18,7 @@ use Common\ModuleExtraType;
 class Installer extends ModuleInstaller
 {
     /** @var int */
-    private $tagsExtraId;
+    private $tagsBlockId;
 
     public function install(): void
     {
@@ -50,7 +50,7 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->tagsExtraId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Tags', null, null, false, 30);
+        $this->tagsBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), $this->getModule(), null, null, false, 30);
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'TagCloud', 'TagCloud', null, false, 31);
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Related', 'Related', null, false, 32);
     }
@@ -70,7 +70,7 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                     ],
                     null,
-                    ['extra_id' => $this->tagsExtraId, 'position' => 'main'],
+                    ['extra_id' => $this->tagsBlockId, 'position' => 'main'],
                     ['extra_id' => $searchId, 'position' => 'top']
                 );
             }
@@ -93,7 +93,7 @@ class Installer extends ModuleInstaller
              INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
-            [$this->tagsExtraId, $language]
+            [$this->tagsBlockId, $language]
         );
     }
 }
