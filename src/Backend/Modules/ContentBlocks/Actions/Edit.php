@@ -92,7 +92,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * @return ContentBlock|null
      */
-    private function getContentBlock()
+    private function getContentBlock(): ?ContentBlock
     {
         /** @var ContentBlockRepository $contentBlockRepository */
         $contentBlockRepository = $this->get('content_blocks.repository.content_block');
@@ -112,7 +112,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Parses a data grid with the revisions in the template
      */
-    private function parseRevisionsDataGrid()
+    private function parseRevisionsDataGrid(): void
     {
         // create datagrid
         $revisions = new ContentBlockRevisionDataGrid($this->contentBlock, Locale::workingLocale());
@@ -163,7 +163,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Parse the content block and the revisions
      */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 

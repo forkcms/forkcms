@@ -208,7 +208,7 @@ class Navigation extends FrontendBaseObject
         array $excludeIds = [],
         string $template = '/Core/Layout/Templates/Navigation.html.twig',
         int $depthCounter = 1
-    ) : string {
+    ): string {
         // get navigation
         $navigation = self::getNavigation();
 
