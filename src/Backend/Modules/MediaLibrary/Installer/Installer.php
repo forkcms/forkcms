@@ -26,6 +26,17 @@ class Installer extends ModuleInstaller
         $this->loadMediaFolders();
     }
 
+    protected function configureBackendActionRightsForMediaFolder(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderEdit'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderFindAll'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderGetCountsForGroup'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderInfo'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderMovie'); // AJAX
+    }
+
     protected function configureBackendActionRightsForMediaItem(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
@@ -37,17 +48,6 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaItemIndex');
         $this->setActionRights(1, $this->getModule(), 'MediaItemMassAction');
         $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
-    }
-
-    protected function configureBackendActionRightsForMediaFolder(): void
-    {
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderEdit'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderFindAll'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderGetCountsForGroup'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderInfo'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderMovie'); // AJAX
     }
 
     protected function configureBackendNavigation(): void
@@ -68,8 +68,10 @@ class Installer extends ModuleInstaller
     protected function configureBackendRights(): void
     {
         $this->setModuleRights(1, $this->getModule());
-        $this->configureBackendActionRightsForMediaItem();
+
+        // Configure backend action rights for entities
         $this->configureBackendActionRightsForMediaFolder();
+        $this->configureBackendActionRightsForMediaItem();
     }
 
     private function configureEntities(): void
