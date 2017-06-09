@@ -30,7 +30,7 @@ class Installer extends ModuleInstaller
 
     private function configureBackendNavigation(): void
     {
-        // set navigation for "modules"
+        // Set navigation for "modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation(
             $navigationModulesId,
