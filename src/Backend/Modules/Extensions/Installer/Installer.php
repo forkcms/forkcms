@@ -15,10 +15,10 @@ class Installer extends ModuleInstaller
         $this->addModule('Extensions');
         $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureBackendNavigation();
         $this->configureBackendRights();
         $this->configureFrontendExtras();
         $this->configureFrontendForkTheme();
-        $this->configureBackendNavigation();
     }
 
     private function configureBackendActionRightsForModules(): void
