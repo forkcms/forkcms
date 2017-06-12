@@ -50,9 +50,9 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->tagsBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), $this->getModule(), null, null, false, 30);
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'TagCloud', 'TagCloud', null, false, 31);
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Related', 'Related', null, false, 32);
+        $this->tagsBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), $this->getModule());
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'TagCloud', 'TagCloud';
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Related', 'Related');
     }
 
     private function configureFrontendPages(): void
