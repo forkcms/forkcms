@@ -19,37 +19,25 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('MediaLibrary');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
-        $this->createEntityTables();
-        $this->configureModuleRights();
+        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
+        $this->configureBackendRights();
         $this->loadMediaFolders();
     }
 
-    protected function configureBackendNavigation(): void
+    protected function configureBackendActionRightsForMediaFolder(): void
     {
-        // Navigation for "modules"
-        $this->setNavigation(
-            null,
-            $this->getModule(),
-            'media_library/media_item_index',
-            [
-                'media_library/media_item_upload',
-                'media_library/media_item_edit',
-            ],
-            3
-        );
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderEdit'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderFindAll'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderGetCountsForGroup'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderInfo'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderMovie'); // AJAX
     }
 
-    protected function configureModuleRights(): void
-    {
-        // Set module rights
-        $this->setModuleRights(1, $this->getModule());
-        $this->configureModuleRightsForMediaItem();
-        $this->configureModuleRightsForMediaFolder();
-    }
-
-    protected function configureModuleRightsForMediaItem(): void
+    protected function configureBackendActionRightsForMediaItem(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaItemCleanup');
@@ -62,23 +50,31 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
     }
 
-    protected function configureModuleRightsForMediaFolder(): void
+    protected function configureBackendNavigation(): void
     {
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderAdd'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderDelete');
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderEdit'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderFindAll'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderGetCountsForGroup'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderInfo'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderMovie'); // AJAX
+        // Set navigation for "Modules"
+        $this->setNavigation(
+            null,
+            $this->getModule(),
+            'media_library/media_item_index',
+            [
+                'media_library/media_item_upload',
+                'media_library/media_item_edit',
+            ],
+            3
+        );
     }
 
-    protected function configureSettings(): void
+    protected function configureBackendRights(): void
     {
-        $this->setSetting($this->getModule(), 'upload_number_of_sharding_folders', 15);
+        $this->setModuleRights(1, $this->getModule());
+
+        // Configure backend action rights for entities
+        $this->configureBackendActionRightsForMediaFolder();
+        $this->configureBackendActionRightsForMediaItem();
     }
 
-    private function createEntityTables(): void
+    private function configureEntities(): void
     {
         Model::get('fork.entity.create_schema')->forEntityClasses(
             [
@@ -88,6 +84,11 @@ class Installer extends ModuleInstaller
                 MediaItem::class,
             ]
         );
+    }
+
+    protected function configureSettings(): void
+    {
+        $this->setSetting($this->getModule(), 'upload_number_of_sharding_folders', 15);
     }
 
     protected function loadMediaFolders(): void

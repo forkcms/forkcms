@@ -298,7 +298,7 @@ class Model
         $itemsToRemove = [];
 
         foreach ($extras as $id => &$row) {
-            $row['data'] = @unserialize($row['data']);
+            $row['data'] = $row['data'] === null ? [] : @unserialize($row['data']);
             if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
                 $itemsToRemove[] = $id;
             }

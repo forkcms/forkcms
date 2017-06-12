@@ -10,23 +10,95 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Pre-insert default extras of the default theme.
-     */
-    private function insertExtras(): void
+    public function install(): void
     {
-        // insert extra ids
-        $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, false, 2001);
+        $this->addModule('Extensions');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureFrontendExtras();
+        $this->configureFrontendForkTheme();
     }
 
-    private function insertTemplates(): void
+    private function configureBackendActionRightsForModules(): void
     {
-        /*
-         * Fallback templates
-         */
+        $this->setActionRights(1, $this->getModule(), 'DetailModule');
+        $this->setActionRights(1, $this->getModule(), 'InstallModule');
+        $this->setActionRights(1, $this->getModule(), 'Modules');
+        $this->setActionRights(1, $this->getModule(), 'UploadModule');
+    }
 
+    private function configureBackendActionRightsForTemplates(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'AddThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'DeleteThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'EditThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'ThemeTemplates');
+    }
+
+    private function configureBackendActionRightsForThemes(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'DetailTheme');
+        $this->setActionRights(1, $this->getModule(), 'InstallTheme');
+        $this->setActionRights(1, $this->getModule(), 'Themes');
+        $this->setActionRights(1, $this->getModule(), 'UploadTheme');
+    }
+
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "Settings"
+        $navigationSettingsId = $this->setNavigation(null, 'Settings');
+        $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+        $this->setNavigation(
+            $navigationModulesId,
+            'Overview',
+            'extensions/modules',
+            [
+                'extensions/detail_module',
+                'extensions/upload_module',
+            ]
+        );
+
+        // Set navigation for "Settings > Themes"
+        $navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes');
+        $this->setNavigation(
+            $navigationThemesId,
+            'ThemesSelection',
+            'extensions/themes',
+            [
+                'extensions/detail_theme',
+                'extensions/upload_theme',
+            ]
+        );
+        $this->setNavigation(
+            $navigationThemesId,
+            'Templates',
+            'extensions/theme_templates',
+            [
+                'extensions/add_theme_template',
+                'extensions/edit_theme_template',
+            ]
+        );
+    }
+
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->configureBackendActionRightsForModules();
+        $this->configureBackendActionRightsForTemplates();
+        $this->configureBackendActionRightsForThemes();
+    }
+
+    private function configureFrontendExtras(): void
+    {
+        $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form');
+    }
+
+    private function configureFrontendForkTheme(): void
+    {
         // build templates
-        $templates = [];
         $templates['fork']['default'] = [
             'theme' => 'Fork',
             'label' => 'Default',
@@ -59,12 +131,6 @@ class Installer extends ModuleInstaller
         $this->getDB()->insert('themes_templates', $templates['fork']['default']);
         $this->getDB()->insert('themes_templates', $templates['fork']['home']);
 
-        // search will be installed by default; already link it to this template
-        $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, false, 2001);
-
-        /*
-         * General theme settings
-         */
         // set the theme
         $this->setSetting('Core', 'theme', 'Fork', true);
 
@@ -73,84 +139,5 @@ class Installer extends ModuleInstaller
 
         // disable meta navigation
         $this->setSetting('Pages', 'meta_navigation', false);
-    }
-
-    public function install(): void
-    {
-        // load install.sql
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-
-        // add 'extensions' as a module
-        $this->addModule('Extensions');
-
-        // import locale
-        $this->importLocale(__DIR__ . '/Data/locale.xml');
-
-        // insert extras
-        $this->insertExtras();
-
-        // insert templates
-        $this->insertTemplates();
-
-        // module rights
-        $this->setModuleRights(1, $this->getModule());
-
-        // set rights
-        $this->setRights();
-
-        // settings navigation
-        $navigationSettingsId = $this->setNavigation(null, 'Settings');
-        $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
-        $this->setNavigation(
-            $navigationModulesId,
-            'Overview',
-            'extensions/modules',
-            [
-                'extensions/detail_module',
-                'extensions/upload_module',
-            ]
-        );
-
-        // theme navigation
-        $navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes');
-        $this->setNavigation(
-            $navigationThemesId,
-            'ThemesSelection',
-            'extensions/themes',
-            [
-                'extensions/upload_theme',
-                'extensions/detail_theme',
-            ]
-        );
-        $this->setNavigation(
-            $navigationThemesId,
-            'Templates',
-            'extensions/theme_templates',
-            [
-                'extensions/add_theme_template',
-                'extensions/edit_theme_template',
-            ]
-        );
-    }
-
-    private function setRights(): void
-    {
-        // modules
-        $this->setActionRights(1, $this->getModule(), 'Modules');
-        $this->setActionRights(1, $this->getModule(), 'DetailModule');
-        $this->setActionRights(1, $this->getModule(), 'InstallModule');
-        $this->setActionRights(1, $this->getModule(), 'UploadModule');
-
-        // themes
-        $this->setActionRights(1, $this->getModule(), 'Themes');
-        $this->setActionRights(1, $this->getModule(), 'DetailTheme');
-        $this->setActionRights(1, $this->getModule(), 'InstallTheme');
-        $this->setActionRights(1, $this->getModule(), 'UploadTheme');
-
-        // templates
-        $this->setActionRights(1, $this->getModule(), 'ThemeTemplates');
-        $this->setActionRights(1, $this->getModule(), 'AddThemeTemplate');
-        $this->setActionRights(1, $this->getModule(), 'EditThemeTemplate');
-        $this->setActionRights(1, $this->getModule(), 'DeleteThemeTemplate');
     }
 }

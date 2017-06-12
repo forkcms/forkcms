@@ -389,7 +389,7 @@ class Model extends \Common\Core\Model
             array_filter(
                 $moduleExtras,
                 function (array $data) use ($key, $value) {
-                    $data = unserialize($data);
+                    $data = $data === null ? [] : unserialize($data);
 
                     return isset($data[$key]) && $data[$key] === $value;
                 }
@@ -708,7 +708,7 @@ class Model extends \Common\Core\Model
                 'type' => $type,
                 'label' => $label ?? $module, // if label is empty, fallback to module
                 'action' => $action ?? $module, // if action is empty, fallback to module
-                'data' => serialize($data),
+                'data' => $data ===  null ? null : serialize($data),
                 'hidden' => $hidden ? 'Y' : 'N',
                 'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
             ]
@@ -894,7 +894,7 @@ class Model extends \Common\Core\Model
         // key is 'data' and value is not serialized
         if ($key === 'data' && is_array($value)) {
             // serialize value
-            $value = serialize($value);
+            $value = $value === null ? null : serialize($value);
         }
 
         self::getContainer()->get('database')->update('modules_extras', [$key => $value], 'id = ?', [$id]);
@@ -918,7 +918,7 @@ class Model extends \Common\Core\Model
             [$id]
         );
 
-        $data = unserialize($data);
+        $data = $data === null ? [] : unserialize($data);
         $data[$key] = $value;
         $db->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
     }
