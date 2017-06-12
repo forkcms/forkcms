@@ -117,7 +117,7 @@ class Installer extends ModuleInstaller
     private function configureFrontendPages(): void
     {
         // get search extra id
-        $searchId = $this->getSearchModuleExtraId();
+        $searchId = $this->getSearchWidgetId();
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -179,7 +179,7 @@ class Installer extends ModuleInstaller
         );
     }
 
-    private function getSearchModuleExtraId(): int
+    private function getSearchWidgetId(): int
     {
         // @todo: Replace this with a ModuleExtraRepository method when it exists.
         return (int) $this->getDB()->getVar(
