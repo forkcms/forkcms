@@ -172,6 +172,7 @@ class Installer extends ModuleInstaller
      */
     private function getCategory(string $language): int
     {
+        // @todo: Replace this with a BlogCategoryRepository method when it exists.
         return (int) $this->getDB()->getVar(
             'SELECT id FROM blog_categories WHERE language = ?',
             [$language]
@@ -180,6 +181,7 @@ class Installer extends ModuleInstaller
 
     private function getSearchModuleExtraId(): int
     {
+        // @todo: Replace this with a ModuleExtraRepository method when it exists.
         return (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
@@ -202,6 +204,7 @@ class Installer extends ModuleInstaller
 
     /**
      * Insert a category for a language
+     * @todo: Replace this with a BlogCategoryRepository method when it exists.
      *
      * @param string $language The language to use.
      * @param string $title The title of the category.
