@@ -599,14 +599,6 @@ class Model
     public static function getThemes(): array
     {
         $records = [];
-        $records['Core'] = [
-            'value' => 'Core',
-            'label' => BL::lbl('NoTheme'),
-            'thumbnail' => '/src/Frontend/Core/Layout/images/thumbnail.png',
-            'installed' => self::isThemeInstalled('Core'),
-            'installable' => false,
-        ];
-
         $finder = new Finder();
         foreach ($finder->directories()->in(FRONTEND_PATH . '/Themes')->depth(0) as $directory) {
             $pathInfoXml = BackendModel::getContainer()->getParameter('site.path_www') . '/src/Frontend/Themes/'
