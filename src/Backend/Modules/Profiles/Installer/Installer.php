@@ -110,105 +110,71 @@ class Installer extends ModuleInstaller
             $this->getModule(),
             ModuleExtraType::block(),
             'Activate',
-            'Activate',
-            null,
-            false,
-            5000
+            'Activate'
         );
         $this->extraIds['forgot_password'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ForgotPassword',
-            'ForgotPassword',
-            null,
-            false,
-            5001
+            'ForgotPassword'
         );
         $this->extraIds['index'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
-            'Dashboard',
-            null,
-            null,
-            false,
-            5002
+            'Dashboard'
         );
         $this->extraIds['login'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Login',
-            'Login',
-            null,
-            false,
-            5003
+            'Login'
         );
         $this->extraIds['logout'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Logout',
-            'Logout',
-            null,
-            false,
-            5004
+            'Logout'
         );
         $this->extraIds['change_email'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ChangeEmail',
-            'ChangeEmail',
-            null,
-            false,
-            5005
+            'ChangeEmail'
         );
         $this->extraIds['change_password'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ChangePassword',
-            'ChangePassword',
-            null,
-            false,
-            5006
+            'ChangePassword'
         );
         $this->extraIds['settings'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Settings',
-            'Settings',
-            null,
-            false,
-            5007
+            'Settings'
         );
         $this->extraIds['register'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'Register',
-            'Register',
-            null,
-            false,
-            5008
+            'Register'
         );
         $this->extraIds['reset_password'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ResetPassword',
-            'ResetPassword',
-            null,
-            false,
-            5008
+            'ResetPassword'
         );
         $this->extraIds['resend_activation'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::block(),
             'ResendActivation',
-            'ResendActivation',
-            null,
-            false,
-            5009
+            'ResendActivation'
         );
 
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'LoginBox', 'LoginBox', null, false, 5010);
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'LoginLink', 'LoginLink', null, false, 5011);
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SecurePage', 'SecurePage', null, false, 5012);
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'LoginBox', 'LoginBox');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'LoginLink', 'LoginLink');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SecurePage', 'SecurePage');
     }
 
     private function configureFrontendFilesDirectories(): void
