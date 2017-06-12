@@ -147,10 +147,10 @@ abstract class BaseTwigTemplate extends TwigEngine
 
         // old theme checker
         if ($this->forkSettings->get('Core', 'theme') !== null) {
-            $twig->addGlobal('THEME', $this->forkSettings->get('Core', 'theme', 'default'));
+            $twig->addGlobal('THEME', $this->forkSettings->get('Core', 'theme', 'Fork'));
             $twig->addGlobal(
                 'THEME_URL',
-                '/src/Frontend/Themes/'.$this->forkSettings->get('Core', 'theme', 'default')
+                '/src/Frontend/Themes/'.$this->forkSettings->get('Core', 'theme', 'Fork')
             );
         }
 

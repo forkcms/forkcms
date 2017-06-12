@@ -27,35 +27,37 @@ class Installer extends ModuleInstaller
 
         // build templates
         $templates = [];
-        $templates['core']['default'] = [
-            'theme' => 'Core',
+        $templates['fork']['default'] = [
+            'theme' => 'Fork',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
             'active' => 'Y',
             'data' => serialize(
                 [
                     'format' => '[main]',
+                    'image' => true,
                     'names' => ['main'],
                 ]
             ),
         ];
 
-        $templates['core']['home'] = [
-            'theme' => 'Core',
+        $templates['fork']['home'] = [
+            'theme' => 'Fork',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
             'active' => 'Y',
             'data' => serialize(
                 [
                     'format' => '[main]',
+                    'image' => true,
                     'names' => ['main'],
                 ]
             ),
         ];
 
         // insert templates
-        $this->getDB()->insert('themes_templates', $templates['core']['default']);
-        $this->getDB()->insert('themes_templates', $templates['core']['home']);
+        $this->getDB()->insert('themes_templates', $templates['fork']['default']);
+        $this->getDB()->insert('themes_templates', $templates['fork']['home']);
 
         // search will be installed by default; already link it to this template
         $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, false, 2001);
@@ -63,6 +65,9 @@ class Installer extends ModuleInstaller
         /*
          * General theme settings
          */
+        // set the theme
+        $this->setSetting('Core', 'theme', 'Fork', true);
+
         // set default template
         $this->setSetting('Pages', 'default_template', $this->getTemplateId('Default'));
 
@@ -126,10 +131,6 @@ class Installer extends ModuleInstaller
                 'extensions/edit_theme_template',
             ]
         );
-
-        if ($this->installExample()) {
-            $this->installForkTheme();
-        }
     }
 
     private function setRights(): void
@@ -151,51 +152,5 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'AddThemeTemplate');
         $this->setActionRights(1, $this->getModule(), 'EditThemeTemplate');
         $this->setActionRights(1, $this->getModule(), 'DeleteThemeTemplate');
-    }
-
-    private function installForkTheme(): void
-    {
-        /*
-         * Fallback templates
-         */
-
-        // build templates
-        $templates['core']['default'] = [
-            'theme' => 'Fork',
-            'label' => 'Default',
-            'path' => 'Core/Layout/Templates/Default.html.twig',
-            'active' => 'Y',
-            'data' => serialize(
-                [
-                    'format' => '[main]',
-                    'image' => true,
-                    'names' => ['main'],
-                ]
-            ),
-        ];
-
-        $templates['core']['home'] = [
-            'theme' => 'Fork',
-            'label' => 'Home',
-            'path' => 'Core/Layout/Templates/Home.html.twig',
-            'active' => 'Y',
-            'data' => serialize(
-                [
-                    'format' => '[main]',
-                    'image' => true,
-                    'names' => ['main'],
-                ]
-            ),
-        ];
-
-        // insert templates
-        $this->getDB()->insert('themes_templates', $templates['core']['default']);
-        $this->getDB()->insert('themes_templates', $templates['core']['home']);
-
-        // set the theme
-        $this->setSetting('Core', 'theme', 'Fork', true);
-
-        // set default template
-        $this->setSetting('Pages', 'default_template', $this->getTemplateId('Default'));
     }
 }

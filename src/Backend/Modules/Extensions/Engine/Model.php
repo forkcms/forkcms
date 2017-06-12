@@ -543,7 +543,7 @@ class Model
         $theme = \SpoonFilter::getValue(
             (string) $theme,
             null,
-            BackendModel::get('fork.settings')->get('Core', 'theme', 'Core')
+            BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork')
         );
 
         $templates = (array) $db->getRecords(

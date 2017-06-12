@@ -79,7 +79,7 @@ class Themes extends BackendBaseActionIndex
         $themes = $this->installedThemes;
 
         // set selected theme
-        $selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : $this->get('fork.settings')->get('Core', 'theme', 'core');
+        $selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : $this->get('fork.settings')->get('Core', 'theme', 'Fork');
 
         // no themes found
         if (empty($themes)) {
@@ -124,7 +124,7 @@ class Themes extends BackendBaseActionIndex
             if ($this->frm->isCorrect()) {
                 // determine themes
                 $newTheme = $this->frm->getField('installedThemes')->getValue();
-                $oldTheme = $this->get('fork.settings')->get('Core', 'theme', 'core');
+                $oldTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
 
                 // check if we actually switched themes
                 if ($newTheme != $oldTheme) {
