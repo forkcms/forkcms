@@ -19,33 +19,17 @@ class Installer extends ModuleInstaller
 {
     public function install(): void
     {
-        // load install.sql
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-
-        // add as a module
         $this->addModule('FormBuilder');
-
-        // import locale
+        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureBackendRights();
+        $this->configureBackendNavigation();
+        $this->configureFrontendPages();
+    }
 
-        // module rights
-        $this->setModuleRights(1, $this->getModule());
-
-        // action rights
-        $this->setActionRights(1, $this->getModule(), 'Add');
-        $this->setActionRights(1, $this->getModule(), 'Edit');
-        $this->setActionRights(1, $this->getModule(), 'Delete');
-        $this->setActionRights(1, $this->getModule(), 'Index');
-        $this->setActionRights(1, $this->getModule(), 'Data');
-        $this->setActionRights(1, $this->getModule(), 'DataDetails');
-        $this->setActionRights(1, $this->getModule(), 'MassDataAction');
-        $this->setActionRights(1, $this->getModule(), 'GetField');
-        $this->setActionRights(1, $this->getModule(), 'DeleteField');
-        $this->setActionRights(1, $this->getModule(), 'SaveField');
-        $this->setActionRights(1, $this->getModule(), 'Sequence');
-        $this->setActionRights(1, $this->getModule(), 'ExportData');
-
-        // set navigation
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "Modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation($navigationModulesId, 'FormBuilder', 'form_builder/index', [
             'form_builder/add',
@@ -53,14 +37,29 @@ class Installer extends ModuleInstaller
             'form_builder/data',
             'form_builder/data_details',
         ]);
+    }
 
-        // get search extra id
-        $searchId = (int) $this->getDB()->getVar(
-            'SELECT id
-             FROM modules_extras
-             WHERE module = ? AND type = ? AND action = ?',
-            ['search', ModuleExtraType::widget(), 'form']
-        );
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Data');
+        $this->setActionRights(1, $this->getModule(), 'DataDetails');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'DeleteField'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'ExportData');
+        $this->setActionRights(1, $this->getModule(), 'GetField'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'MassDataAction');
+        $this->setActionRights(1, $this->getModule(), 'SaveField'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'Sequence'); // AJAX
+    }
+
+    private function configureFrontendPages(): void
+    {
+        $searchWidgetId = $this->getSearchWidgetId();
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -162,8 +161,19 @@ class Installer extends ModuleInstaller
                 null,
                 ['html' => PATH_WWW . '/src/Backend/Modules/Pages/Installer/Data/' . $language . '/contact.txt'],
                 ['extra_id' => $extraId, 'position' => 'main'],
-                ['extra_id' => $searchId, 'position' => 'top']
+                ['extra_id' => $searchWidgetId, 'position' => 'top']
             );
         }
+    }
+
+    private function getSearchWidgetId(): int
+    {
+        // @todo: Replace this with a ModuleExtraRepository method when it exists.
+        return (int) $this->getDB()->getVar(
+            'SELECT id
+             FROM modules_extras
+             WHERE module = ? AND type = ? AND action = ?',
+            ['Search', ModuleExtraType::widget(), 'Form']
+        );
     }
 }
