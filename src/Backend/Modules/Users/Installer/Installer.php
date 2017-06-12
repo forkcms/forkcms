@@ -11,6 +11,7 @@ namespace Backend\Modules\Users\Installer;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
@@ -181,7 +182,7 @@ class Installer extends ModuleInstaller
             $group['user_id'] = $user['id'];
 
             // insert group
-            $this->getDB()->insert('users_groups', $group);
+            BackendGroupsModel::insertMultipleGroups($user['id'], [$group]);
         }
     }
 
