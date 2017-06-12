@@ -11,6 +11,7 @@ namespace Backend\Modules\Users\Installer;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * Installer for the users module
@@ -172,7 +173,7 @@ class Installer extends ModuleInstaller
             $user['is_god'] = 'Y';
 
             // insert user
-            $user['id'] = $this->getDB()->insert('users', $user);
+            $user['id'] = BackendUsersModel::insert($user, $settings);
 
             // build group
             $group = [];
@@ -181,15 +182,6 @@ class Installer extends ModuleInstaller
 
             // insert group
             $this->getDB()->insert('users_groups', $group);
-
-            // loop settings
-            foreach ($settings as $name => $value) {
-                // insert user settings
-                $this->getDB()->insert(
-                    'users_settings',
-                    ['user_id' => $user['id'], 'name' => $name, 'value' => $value]
-                );
-            }
         }
     }
 
