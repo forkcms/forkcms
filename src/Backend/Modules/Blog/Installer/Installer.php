@@ -107,11 +107,11 @@ class Installer extends ModuleInstaller
     private function configureFrontendExtras(): void
     {
         $this->blogBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Blog');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentComments', 'RecentComments');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Archive', 'Archive');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentComments', 'RecentComments');
     }
 
     private function configureFrontendPages(): void
