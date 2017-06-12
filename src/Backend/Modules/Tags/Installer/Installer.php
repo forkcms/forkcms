@@ -61,19 +61,21 @@ class Installer extends ModuleInstaller
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
-            if (!$this->hasPageWithTagsBlock($language)) {
-                // insert contact page
-                $this->insertPage(
-                    [
-                        'title' => $this->getModule(),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->tagsBlockId, 'position' => 'main'],
-                    ['extra_id' => $searchId, 'position' => 'top']
-                );
+            if ($this->hasPageWithTagsBlock($language)) {
+                continue;
             }
+
+            // insert contact page
+            $this->insertPage(
+                [
+                    'title' => $this->getModule(),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->tagsBlockId, 'position' => 'main'],
+                ['extra_id' => $searchId, 'position' => 'top']
+            );
         }
     }
 
