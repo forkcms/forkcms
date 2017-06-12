@@ -112,11 +112,11 @@ class Edit extends BackendBaseActionEdit
     private function loadData(): void
     {
         // get record
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
         $this->isGod = BackendAuthentication::getUser()->isGod();
 
         // check if something went wrong
-        if ($this->id === null || !BackendPagesModel::exists($this->id)) {
+        if ($this->id === 0 || !BackendPagesModel::exists($this->id)) {
             $this->redirect(
                 BackendModel::createURLForAction('Index') . '&error=non-existing'
             );
@@ -129,10 +129,10 @@ class Edit extends BackendBaseActionEdit
         $this->blocksContent = BackendPagesModel::getBlocks($this->id, $this->record['revision_id']);
 
         // is there a revision specified?
-        $revisionToLoad = $this->getParameter('revision', 'int');
+        $revisionToLoad = $this->getRequest()->query->getInt('revision');
 
         // if this is a valid revision
-        if ($revisionToLoad !== null) {
+        if ($revisionToLoad !== 0) {
             // overwrite the current record
             $this->record = (array) BackendPagesModel::get($this->id, $revisionToLoad);
 
@@ -144,10 +144,10 @@ class Edit extends BackendBaseActionEdit
         }
 
         // is there a revision specified?
-        $draftToLoad = $this->getParameter('draft', 'int');
+        $draftToLoad = $this->getRequest()->query->getInt('draft');
 
         // if this is a valid revision
-        if ($draftToLoad !== null) {
+        if ($draftToLoad !== 0) {
             // overwrite the current record
             $this->record = (array) BackendPagesModel::get($this->id, $draftToLoad);
 

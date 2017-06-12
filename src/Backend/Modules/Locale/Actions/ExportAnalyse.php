@@ -67,7 +67,7 @@ class ExportAnalyse extends BackendBaseActionIndex
     private function setFilter(): void
     {
         $this->filter['language'] = $this->getRequest()->query->has('language')
-            ? $this->getParameter('language')
+            ? $this->getRequest()->query->get('language')
             : BL::getWorkingLanguage();
     }
 

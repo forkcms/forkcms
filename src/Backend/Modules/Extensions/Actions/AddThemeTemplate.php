@@ -66,7 +66,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
     private function loadData(): void
     {
         // get data
-        $this->selectedTheme = $this->getParameter('theme', 'string');
+        $this->selectedTheme = $this->getRequest()->query->get('theme');
 
         // build available themes
         foreach (BackendExtensionsModel::getThemes() as $theme) {
@@ -74,7 +74,9 @@ class AddThemeTemplate extends BackendBaseActionAdd
         }
 
         // determine selected theme, based upon submitted form or default theme
-        $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), $this->get('fork.settings')->get('Core', 'theme', 'core'));
+        if (!array_key_exists($this->selectedTheme, $this->availableThemes)) {
+            $this->selectedTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+        }
     }
 
     private function loadForm(): void

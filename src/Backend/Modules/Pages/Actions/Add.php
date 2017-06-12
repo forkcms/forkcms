@@ -302,7 +302,7 @@ class Add extends BackendBaseActionAdd
         $this->meta->setURLCallback(
             'Backend\Modules\Pages\Engine\Model',
             'getURL',
-            [0, $this->getParameter('parent', 'int', null), false]
+            [0, $this->getRequest()->query->getInt('parent'), false]
         );
     }
 
@@ -318,7 +318,7 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->tpl->assign(
             'prefixURL',
-            rtrim(BackendPagesModel::getFullURL($this->getParameter('parent', 'int', 1)), '/')
+            rtrim(BackendPagesModel::getFullURL($this->getRequest()->query->getInt('parent', 1)), '/')
         );
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
         $this->tpl->assign('showTags', $this->showTags());
@@ -367,7 +367,7 @@ class Add extends BackendBaseActionAdd
             $this->meta->setURLCallback(
                 'Backend\Modules\Pages\Engine\Model',
                 'getURL',
-                [0, $this->getParameter('parent', 'int', null), $this->frm->getField('is_action')->getChecked()]
+                [0, $this->getRequest()->query->getInt('parent'), $this->frm->getField('is_action')->getChecked()]
             );
 
             // cleanup the submitted fields, ignore fields that were added by hackers
@@ -382,7 +382,7 @@ class Add extends BackendBaseActionAdd
             // no errors?
             if ($this->frm->isCorrect()) {
                 // init var
-                $parentId = $this->getParameter('parent', 'int', 0);
+                $parentId = $this->getRequest()->query->getInt('parent');
                 $parentPage = BackendPagesModel::get($parentId);
                 if (!$parentPage || !$parentPage['children_allowed']) {
                     // no children allowed

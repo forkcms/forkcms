@@ -181,10 +181,10 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 
         // open the tree on a specific page
-        if ($this->getParameter('id', 'int') !== null) {
+        if ($this->getRequest()->query->getInt('id') !== 0) {
             $this->tpl->assign(
                 'openedPageId',
-                $this->getParameter('id', 'int')
+                $this->getRequest()->query->getInt('id')
             );
         } else {
             $this->tpl->assign('openedPageId', 1);

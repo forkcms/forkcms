@@ -49,10 +49,10 @@ class EditThemeTemplate extends BackendBaseActionEdit
     private function loadData(): void
     {
         // get record
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // validate id
-        if ($this->id === null || !BackendExtensionsModel::existsTemplate($this->id)) {
+        if ($this->id === 0 || !BackendExtensionsModel::existsTemplate($this->id)) {
             $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
         }
 
