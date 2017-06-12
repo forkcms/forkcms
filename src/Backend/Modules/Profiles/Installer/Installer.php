@@ -195,142 +195,144 @@ class Installer extends ModuleInstaller
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
-            if (!$this->hasPageWithProfilesBlock($language)) {
-                // We must define the locale we want to insert the page into
-                Language::setLocale($language);
-
-                // activate page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('Activate')),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('activate'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // forgot password page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('ForgotPassword')),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('forgot_password'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // reset password page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('ResetPassword')),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('reset_password'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // resend activation email page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('ResendActivation')),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('resend_activation'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // login page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('Login')),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('login'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // register page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('Register')),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('register'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // logout page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('Logout')),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('logout'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // index page
-                $indexPageId = $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('Profile')),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('index'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // settings page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('ProfileSettings')),
-                        'parent_id' => $indexPageId,
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('settings'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // change email page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('ChangeEmail')),
-                        'parent_id' => $indexPageId,
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('change_email'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-
-                // change password page
-                $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('ChangePassword')),
-                        'parent_id' => $indexPageId,
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('change_password'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
+            if ($this->hasPageWithProfilesBlock($language)) {
+                continue;
             }
+
+            // We must define the locale we want to insert the page into
+            Language::setLocale($language);
+
+            // activate page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('Activate')),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('activate'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // forgot password page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('ForgotPassword')),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('forgot_password'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // reset password page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('ResetPassword')),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('reset_password'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // resend activation email page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('ResendActivation')),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('resend_activation'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // login page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('Login')),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('login'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // register page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('Register')),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('register'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // logout page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('Logout')),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('logout'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // index page
+            $indexPageId = $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('Profile')),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('index'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // settings page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('ProfileSettings')),
+                    'parent_id' => $indexPageId,
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('settings'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // change email page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('ChangeEmail')),
+                    'parent_id' => $indexPageId,
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('change_email'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
+
+            // change password page
+            $this->insertPage(
+                [
+                    'title' => ucfirst(Language::lbl('ChangePassword')),
+                    'parent_id' => $indexPageId,
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->getExtraId('change_password'), 'position' => 'main'],
+                ['extra_id' => $searchExtraId, 'position' => 'top']
+            );
         }
 
         // restore the original locale
