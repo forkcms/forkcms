@@ -191,25 +191,15 @@ class Installer extends ModuleInstaller
     {
         $this->extraIds['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search');
         $this->extraIds['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form');
-        $this->extraIds['sitemap'] = $this->insertExtra(
-            $this->getModule(),
-            ModuleExtraType::widget(),
-            'Sitemap',
-            'Sitemap',
-            null,
-            false,
-            1
-        );
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Navigation', 'PreviousNextNavigation');
+        $this->extraIds['sitemap'] = $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Sitemap', 'Sitemap');
         $this->extraIds['subpages'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::widget(),
             'Subpages',
             'Subpages',
-            ['template' => 'SubpagesDefault.html.twig'],
-            false,
-            2
+            ['template' => 'SubpagesDefault.html.twig']
         );
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Navigation', 'PreviousNextNavigation');
     }
 
     private function configureFrontendPages(): void
