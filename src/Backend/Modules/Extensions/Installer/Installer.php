@@ -23,25 +23,25 @@ class Installer extends ModuleInstaller
 
     private function configureBackendActionRightsForModules(): void
     {
-        $this->setActionRights(1, $this->getModule(), 'Modules');
         $this->setActionRights(1, $this->getModule(), 'DetailModule');
         $this->setActionRights(1, $this->getModule(), 'InstallModule');
+        $this->setActionRights(1, $this->getModule(), 'Modules');
         $this->setActionRights(1, $this->getModule(), 'UploadModule');
     }
 
     private function configureBackendActionRightsForTemplates(): void
     {
-        $this->setActionRights(1, $this->getModule(), 'ThemeTemplates');
         $this->setActionRights(1, $this->getModule(), 'AddThemeTemplate');
-        $this->setActionRights(1, $this->getModule(), 'EditThemeTemplate');
         $this->setActionRights(1, $this->getModule(), 'DeleteThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'EditThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'ThemeTemplates');
     }
 
     private function configureBackendActionRightsForThemes(): void
     {
-        $this->setActionRights(1, $this->getModule(), 'Themes');
         $this->setActionRights(1, $this->getModule(), 'DetailTheme');
         $this->setActionRights(1, $this->getModule(), 'InstallTheme');
+        $this->setActionRights(1, $this->getModule(), 'Themes');
         $this->setActionRights(1, $this->getModule(), 'UploadTheme');
     }
 
