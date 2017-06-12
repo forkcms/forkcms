@@ -67,8 +67,8 @@ class Installer extends ModuleInstaller
             'ThemesSelection',
             'extensions/themes',
             [
-                'extensions/upload_theme',
                 'extensions/detail_theme',
+                'extensions/upload_theme',
             ]
         );
         $this->setNavigation(
