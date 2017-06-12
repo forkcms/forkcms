@@ -207,74 +207,76 @@ class Installer extends ModuleInstaller
         // loop languages
         foreach ($this->getLanguages() as $language) {
             // check if pages already exist for this language
-            if (!$this->hasPage($language)) {
-                // insert homepage
-                $this->insertPage(
-                    [
-                        'id' => 1,
-                        'parent_id' => 0,
-                        'template_id' => $this->getTemplateId('home'),
-                        'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'allow_move' => 'N',
-                        'allow_delete' => 'N',
-                    ],
-                    null,
-                    ['html' => __DIR__ . '/Data/' . $language . '/sample1.txt'],
-                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
-                );
-
-                // insert sitemap
-                $this->insertPage(
-                    [
-                        'id' => 2,
-                        'title' => \SpoonFilter::ucfirst(
-                            $this->getLocale('Sitemap', 'Core', $language, 'lbl', 'Frontend')
-                        ),
-                        'type' => 'footer',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['html' => __DIR__ . '/Data/' . $language . '/sitemap.txt'],
-                    ['extra_id' => $this->getExtraId('sitemap')],
-                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
-                );
-
-                // insert disclaimer
-                $this->insertPage(
-                    [
-                        'id' => 3,
-                        'title' => \SpoonFilter::ucfirst(
-                            $this->getLocale('Disclaimer', 'Core', $language, 'lbl', 'Frontend')
-                        ),
-                        'type' => 'footer',
-                        'language' => $language,
-                    ],
-                    ['data' => ['seo_index' => 'noindex', 'seo_follow' => 'nofollow']],
-                    [
-                        'html' => __DIR__ . '/Data/' . $language .
-                            '/disclaimer.txt',
-                    ],
-                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
-                );
-
-                // insert 404
-                $this->insertPage(
-                    [
-                        'id' => 404,
-                        'title' => '404',
-                        'template_id' => $this->getTemplateId('error'),
-                        'type' => 'root',
-                        'language' => $language,
-                        'allow_move' => 'N',
-                        'allow_delete' => 'N',
-                    ],
-                    null,
-                    ['html' => __DIR__ . '/Data/' . $language . '/404.txt'],
-                    ['extra_id' => $this->getExtraId('sitemap')],
-                    ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
-                );
+            if ($this->hasPage($language)) {
+                continue;
             }
+
+            // insert homepage
+            $this->insertPage(
+                [
+                    'id' => 1,
+                    'parent_id' => 0,
+                    'template_id' => $this->getTemplateId('home'),
+                    'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
+                    'language' => $language,
+                    'allow_move' => 'N',
+                    'allow_delete' => 'N',
+                ],
+                null,
+                ['html' => __DIR__ . '/Data/' . $language . '/sample1.txt'],
+                ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
+            );
+
+            // insert sitemap
+            $this->insertPage(
+                [
+                    'id' => 2,
+                    'title' => \SpoonFilter::ucfirst(
+                        $this->getLocale('Sitemap', 'Core', $language, 'lbl', 'Frontend')
+                    ),
+                    'type' => 'footer',
+                    'language' => $language,
+                ],
+                null,
+                ['html' => __DIR__ . '/Data/' . $language . '/sitemap.txt'],
+                ['extra_id' => $this->getExtraId('sitemap')],
+                ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
+            );
+
+            // insert disclaimer
+            $this->insertPage(
+                [
+                    'id' => 3,
+                    'title' => \SpoonFilter::ucfirst(
+                        $this->getLocale('Disclaimer', 'Core', $language, 'lbl', 'Frontend')
+                    ),
+                    'type' => 'footer',
+                    'language' => $language,
+                ],
+                ['data' => ['seo_index' => 'noindex', 'seo_follow' => 'nofollow']],
+                [
+                    'html' => __DIR__ . '/Data/' . $language .
+                        '/disclaimer.txt',
+                ],
+                ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
+            );
+
+            // insert 404
+            $this->insertPage(
+                [
+                    'id' => 404,
+                    'title' => '404',
+                    'template_id' => $this->getTemplateId('error'),
+                    'type' => 'root',
+                    'language' => $language,
+                    'allow_move' => 'N',
+                    'allow_delete' => 'N',
+                ],
+                null,
+                ['html' => __DIR__ . '/Data/' . $language . '/404.txt'],
+                ['extra_id' => $this->getExtraId('sitemap')],
+                ['extra_id' => $this->getExtraId('sitemap'), 'position' => 'top']
+            );
         }
 
         // install example data if requested
