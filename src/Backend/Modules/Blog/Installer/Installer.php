@@ -154,13 +154,13 @@ class Installer extends ModuleInstaller
     private function configureSettings(): void
     {
         $this->setSetting($this->getModule(), 'allow_comments', true);
-        $this->setSetting($this->getModule(), 'requires_akismet', true);
-        $this->setSetting($this->getModule(), 'spamfilter', false);
+        $this->setSetting($this->getModule(), 'max_num_revisions', 20);
         $this->setSetting($this->getModule(), 'moderation', true);
         $this->setSetting($this->getModule(), 'overview_num_items', 10);
         $this->setSetting($this->getModule(), 'recent_articles_full_num_items', 3);
         $this->setSetting($this->getModule(), 'recent_articles_list_num_items', 5);
-        $this->setSetting($this->getModule(), 'max_num_revisions', 20);
+        $this->setSetting($this->getModule(), 'requires_akismet', true);
+        $this->setSetting($this->getModule(), 'spamfilter', false);
     }
 
     /**
