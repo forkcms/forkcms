@@ -61,7 +61,7 @@ class Installer extends ModuleInstaller
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
-            if (!$this->hasTagsExtra($language)) {
+            if (!$this->hasPageWithTagsBlock($language)) {
                 // insert contact page
                 $this->insertPage(
                     [
@@ -86,7 +86,7 @@ class Installer extends ModuleInstaller
         );
     }
 
-    private function hasTagsExtra(string $language): bool
+    private function hasPageWithTagsBlock(string $language): bool
     {
         // @todo: Replace with a PageRepository method when it exists.
         return (bool) $this->getDB()->getVar(
