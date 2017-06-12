@@ -56,8 +56,8 @@ class Installer extends ModuleInstaller
     {
         $this->setModuleRights(1, $this->getModule());
         $this->setActionRights(1, $this->getModule(), 'AddSynonym');
-        $this->setActionRights(1, $this->getModule(), 'EditSynonym');
         $this->setActionRights(1, $this->getModule(), 'DeleteSynonym');
+        $this->setActionRights(1, $this->getModule(), 'EditSynonym');
         $this->setActionRights(1, $this->getModule(), 'Settings');
         $this->setActionRights(1, $this->getModule(), 'Statistics');
         $this->setActionRights(1, $this->getModule(), 'Synonyms');
