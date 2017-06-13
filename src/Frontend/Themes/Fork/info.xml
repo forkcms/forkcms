@@ -12,7 +12,17 @@
   </description>
   <metanavigation supported="false" />
   <templates>
-    <template label="Default" path="Core/Layout/Templates/Default.html.twig" image="false">
+    <template label="Home" path="Core/Layout/Templates/Home.html.twig" image="true">
+      <positions>
+        <position name="top" />
+        <position name="main" />
+      </positions>
+      <format>
+        [/,/,top],
+        [main,main,main]
+      </format>
+    </template>
+    <template label="Default" path="Core/Layout/Templates/Default.html.twig" image="true">
       <positions>
         <position name="top" />
         <position name="main" />
