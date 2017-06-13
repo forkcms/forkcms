@@ -9,6 +9,7 @@ namespace Backend\Modules\Users\Installer;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
 
@@ -72,7 +73,6 @@ class Installer extends ModuleInstaller
                 unserialize($settings['date_format']) . ' ' . unserialize($settings['time_format'])
             );
             $settings['number_format'] = serialize('dot_nothing');
-            $settings['password_key'] = serialize(uniqid('', true));
             $settings['password_strength'] = serialize($passwordStrength);
             $settings['current_password_change'] = serialize(time());
             $settings['avatar'] = serialize('god.jpg');
@@ -80,7 +80,7 @@ class Installer extends ModuleInstaller
             // build user
             $user = [];
             $user['email'] = $this->getVariable('email');
-            $user['password'] = sha1(md5(unserialize($settings['password_key'])) . md5($this->getVariable('password')));
+            $user['password'] = Authentication::encryptPassword($this->getVariable('password'));
             $user['active'] = 'Y';
             $user['deleted'] = 'N';
             $user['is_god'] = 'Y';

@@ -50,7 +50,7 @@ class Login extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->frm = new FrontendForm('login', null, null, 'loginForm');
+        $this->frm = new FrontendForm('login', null, 'post', 'loginForm');
         $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
         $this->frm->addPassword('password')->setAttributes(['required' => null]);
         $this->frm->addCheckbox('remember', true);
@@ -108,9 +108,6 @@ class Login extends FrontendBaseBlock
 
                 // login
                 FrontendProfilesAuthentication::login($profileId, $chkRemember->getChecked());
-
-                // update salt and password for Dieter's security features
-                FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
 
                 // query string
                 $queryString = urldecode($this->getRequest()->query->get('queryString', SITE_URL));

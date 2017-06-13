@@ -119,6 +119,39 @@ class Model
         return $avatar;
     }
 
+    /**
+     * Encrypt the password with PHP password_hash function.
+     *
+     * @param string $password
+     *
+     * @return string
+     */
+    public static function encryptPassword(string $password): string
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    /**
+     * Verify the password with PHP password_verify function.
+     *
+     * @param string $email
+     * @param string $password
+     *
+     * @return bool
+     */
+    public static function verifyPassword(string $email, string $password): bool
+    {
+        $encryptedPassword = self::getEncryptedPassword($email);
+
+        return password_verify($password, $encryptedPassword);
+    }
+
+    /**
+     * @param string $string
+     * @param string $salt
+     *
+     * @return string
+     */
     public static function getEncryptedString(string $string, string $salt): string
     {
         return md5(sha1(md5($string)) . sha1(md5($salt)));
@@ -410,5 +443,22 @@ class Model
     public static function update(int $id, array $values): int
     {
         return (int) FrontendModel::getContainer()->get('database')->update('profiles', $values, 'id = ?', $id);
+    }
+
+    /**
+     * Get encrypted password for an email.
+     *
+     * @param string $email
+     *
+     * @return null|string
+     */
+    public static function getEncryptedPassword(string $email): ?string
+    {
+        return FrontendModel::get('database')->getVar(
+            'SELECT password
+             FROM profiles
+             WHERE email = :email',
+            ['email' => $email]
+        );
     }
 }
