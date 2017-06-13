@@ -34,6 +34,33 @@ class DeleteTest extends WebTestCase
     /**
      * @runInSeparateProcess
      */
+    public function testInvalidIdShouldShowAnError(): void
+    {
+        $client = static::createClient();
+        $this->login();
+
+        // go to edit page to get a form token
+        $crawler = $client->request('GET', '/private/en/blog/edit?token=1234&id=1');
+        $token = $crawler->filter('#blog_delete__token')->attr('value');
+
+        // do request
+        $client->request('POST', '/private/en/blog/delete', ['blog_delete' => ['_token' => $token, 'id' => 12345678]]);
+        $client->followRedirect();
+
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertContains(
+            '/private/en/blog/index',
+            $client->getHistory()->current()->getUri()
+        );
+        self::assertContains(
+            'error=non-existing',
+            $client->getHistory()->current()->getUri()
+        );
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
     public function testDeleteIsAvailableFromTheEditpage(): void
     {
         $client = static::createClient();
@@ -45,17 +72,17 @@ class DeleteTest extends WebTestCase
             $client->getResponse()->getContent()
         );
 
-        $link = $crawler->filter('a:contains("Delete")')->link();
-        $client->click($link);
+        $form = $crawler->filter('#confirmDelete')->selectButton('Delete')->form();
+        $client->submit($form);
 
         // we're now on the delete page of the blogpost with id 1
         self::assertContains(
             '/private/en/blog/delete',
             $client->getHistory()->current()->getUri()
         );
-        self::assertContains(
-            'id=1',
-            $client->getHistory()->current()->getUri()
+        self::assertEquals(
+            1,
+            $client->getRequest()->request->get('blog_delete')['id']
         );
 
         // we're redirected back to the index page after deletion
@@ -74,28 +101,6 @@ class DeleteTest extends WebTestCase
         self::assertNotContains(
             'Blogpost for functional tests',
             $client->getResponse()->getContent()
-        );
-    }
-
-    /**
-     * @runInSeparateProcess
-     */
-    public function testInvalidIdShouldShowAnError(): void
-    {
-        $client = static::createClient();
-        $this->login();
-
-        $client->request('GET', '/private/en/blog/delete?id=12345678');
-        $client->followRedirect();
-
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
-        self::assertContains(
-            '/private/en/blog/index',
-            $client->getHistory()->current()->getUri()
-        );
-        self::assertContains(
-            'error=non-existing',
-            $client->getHistory()->current()->getUri()
         );
     }
 }
