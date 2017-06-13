@@ -9,6 +9,8 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Form;
+use Backend\Modules\Blog\Form\BlogDeleteType;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
@@ -70,6 +72,7 @@ class Edit extends BackendBaseActionEdit
             $this->loadRevisionDataGrid();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
@@ -449,5 +452,14 @@ class Edit extends BackendBaseActionEdit
                 $this->redirect($redirectUrl);
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            BlogDeleteType::class,
+            ['id' => $this->record['id'], 'categoryId' => $this->categoryId]
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
