@@ -25,43 +25,55 @@ class SaveField extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $formId = \SpoonFilter::getPostValue('form_id', null, '', 'int');
-        $fieldId = \SpoonFilter::getPostValue('field_id', null, '', 'int');
-        $type = \SpoonFilter::getPostValue(
-            'type',
-            ['checkbox', 'dropdown', 'datetime', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'],
-            '',
-            'string'
-        );
-        $label = trim(\SpoonFilter::getPostValue('label', null, '', 'string'));
-        $values = trim(\SpoonFilter::getPostValue('values', null, '', 'string'));
+        $formId = $this->getRequest()->request->getInt('form_id');
+        $fieldId = $this->getRequest()->request->getInt('field_id');
+        $type = $this->getRequest()->request->get('type');
+        if (!in_array(
+            $type,
+            ['checkbox', 'dropdown', 'datetime', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox']
+        )
+        ) {
+            $type = '';
+        }
+        $label = trim($this->getRequest()->request->get('label', ''));
+        $values = trim($this->getRequest()->request->get('values', ''));
 
         // this is somewhat a nasty hack, but it makes special chars work.
         $values = \SpoonFilter::htmlspecialcharsDecode($values);
 
-        $defaultValues = trim(\SpoonFilter::getPostValue('default_values', null, '', 'string'));
-        $placeholder = trim(\SpoonFilter::getPostValue('placeholder', null, '', 'string'));
-        $classname = trim(\SpoonFilter::getPostValue('classname', null, '', 'string'));
-        $required = \SpoonFilter::getPostValue('required', ['Y', 'N'], 'N', 'string');
-        $requiredErrorMessage = trim(\SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
-        $validation = \SpoonFilter::getPostValue('validation', ['email', 'number', 'time'], '', 'string');
-        $validationParameter = trim(\SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
-        $errorMessage = trim(\SpoonFilter::getPostValue('error_message', null, '', 'string'));
+        $defaultValues = trim($this->getRequest()->request->get('default_values', ''));
+        $placeholder = trim($this->getRequest()->request->get('placeholder', ''));
+        $classname = trim($this->getRequest()->request->get('classname', ''));
+        $required = $this->getRequest()->request->get('required');
+        if (!in_array($required, ['Y', 'N'])) {
+            $required = 'N';
+        }
+        $requiredErrorMessage = trim($this->getRequest()->request->get('required_error_message', ''));
+        $validation = $this->getRequest()->request->get('validation');
+        if (!in_array($validation, ['email', 'number', 'time'])) {
+            $validation = '';
+        }
+        $validationParameter = trim($this->getRequest()->request->get('validation_parameter', ''));
+        $errorMessage = trim($this->getRequest()->request->get('error_message', ''));
 
         // special field for textbox
-        $replyTo = \SpoonFilter::getPostValue('reply_to', ['Y', 'N'], 'N', 'string');
-        $sendConfirmationMailTo = \SpoonFilter::getPostValue(
-            'send_confirmation_mail_to',
-            ['Y', 'N'],
-            'N',
-            'string'
-        );
-        $confirmationMailSubject = trim(\SpoonFilter::getPostValue('confirmation_mail_subject', null, '', 'string'));
+        $replyTo = $this->getRequest()->request->get('reply_to');
+        if (!in_array($replyTo, ['Y', 'N'])) {
+            $replyTo = 'N';
+        }
+        $sendConfirmationMailTo = $this->getRequest()->request->get('send_confirmation_mail_to');
+        if (!in_array($sendConfirmationMailTo, ['Y', 'N'])) {
+            $sendConfirmationMailTo = 'N';
+        }
+        $confirmationMailSubject = trim($this->getRequest()->request->get('confirmation_mail_subject'));
 
         // special fields for datetime
-        $inputType = \SpoonFilter::getPostValue('input_type', ['date', 'time'], 'date', 'string');
-        $valueAmount = trim(\SpoonFilter::getPostValue('value_amount', null, '', 'string'));
-        $valueType = trim(\SpoonFilter::getPostValue('value_type', null, '', 'string'));
+        $inputType = $this->getRequest()->request->get('input_type');
+        if (!in_array($inputType, ['date', 'time'])) {
+            $inputType = 'date';
+        }
+        $valueAmount = trim($this->getRequest()->request->get('value_amount'));
+        $valueType = trim($this->getRequest()->request->get('value_type'));
 
         // invalid form id
         if (!BackendFormBuilderModel::exists($formId)) {

@@ -9,6 +9,7 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -66,5 +67,15 @@ class AjaxAction extends Object
     public function output(int $statusCode, $data = null, string $message = null): void
     {
         $this->content = ['code' => $statusCode, 'data' => $data, 'message' => $message];
+    }
+
+    /**
+     * Get the request from the container.
+     *
+     * @return Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->get('request');
     }
 }

@@ -64,8 +64,8 @@ class Add extends BackendBaseActionAdd
         $this->frm->addEditor('introduction');
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
         $this->frm->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
-        $this->frm->addDropdown('category_id', $categories, \SpoonFilter::getGetValue('category', null, null, 'int'));
-        if (count($categories) != 2) {
+        $this->frm->addDropdown('category_id', $categories, $this->getRequest()->query->getInt('category'));
+        if (count($categories) !== 2) {
             $this->frm->getField('category_id')->setDefaultElement('');
         }
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
@@ -100,7 +100,10 @@ class Add extends BackendBaseActionAdd
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', ['active', 'draft'], 'active');
+            $status = $this->getRequest()->request->get('status');
+            if (!in_array($status, ['active', 'draft'])) {
+                $status = 'active';
+            }
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();

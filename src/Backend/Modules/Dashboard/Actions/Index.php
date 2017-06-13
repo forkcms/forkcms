@@ -142,7 +142,7 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // show report
-        if ($this->getParameter('password_reset') == 'success') {
+        if ($this->getRequest()->query->get('password_reset') === 'success') {
             $this->tpl->assign('reportMessage', BL::msg('PasswordResetSuccess', 'core'));
             $this->tpl->assign('report', true);
         }

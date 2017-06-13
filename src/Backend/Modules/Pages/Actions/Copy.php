@@ -35,14 +35,14 @@ class Copy extends BackendBaseActionIndex
         parent::execute();
 
         // get parameters
-        $this->from = $this->getParameter('from');
-        $this->to = $this->getParameter('to');
+        $this->from = $this->getRequest()->query->get('from', '');
+        $this->to = $this->getRequest()->query->get('to', '');
 
         // validate
-        if ($this->from == '') {
+        if ($this->from === '') {
             throw new BackendException('Specify a from-parameter.');
         }
-        if ($this->to == '') {
+        if ($this->to === '') {
             throw new BackendException('Specify a to-parameter.');
         }
 

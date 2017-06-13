@@ -41,7 +41,7 @@ class Login extends FrontendBaseBlock
         } else {
             // profile already logged in
             // query string
-            $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
+            $queryString = urldecode($this->getRequest()->query->get('queryString', SITE_URL));
 
             // redirect
             $this->redirect($queryString);
@@ -113,7 +113,7 @@ class Login extends FrontendBaseBlock
                 FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
 
                 // query string
-                $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
+                $queryString = urldecode($this->getRequest()->query->get('queryString', SITE_URL));
 
                 // redirect
                 $this->redirect($queryString);

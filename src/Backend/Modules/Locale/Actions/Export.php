@@ -145,14 +145,26 @@ class Export extends BackendBaseActionIndex
      */
     private function setFilter(): void
     {
-        $this->filter['application'] = $this->getParameter('application', 'string', null);
-        $this->filter['module'] = $this->getParameter('module');
-        $this->filter['type'] = $this->getParameter('type', 'array');
-        $this->filter['language'] = $this->getParameter('language', 'array');
-        $this->filter['name'] = $this->getParameter('name') == null ? '' : $this->getParameter('name');
-        $this->filter['value'] = $this->getParameter('value') == null ? '' : $this->getParameter('value');
+        $this->filter['language'] = $this->getRequest()->query->get('language', []);
+        if (empty($this->filter['language'])) {
+            $this->filter['language'] = BL::getWorkingLanguage();
+        }
+        $this->filter['application'] = $this->getRequest()->query->get('application');
+        $this->filter['module'] = $this->getRequest()->query->get('module');
+        $this->filter['type'] = $this->getRequest()->query->get('type', '');
+        if ($this->filter['type'] === '') {
+            $this->filter['type'] = null;
+        }
+        $this->filter['name'] = $this->getRequest()->query->get('name');
+        $this->filter['value'] = $this->getRequest()->query->get('value');
 
-        $this->filter['ids'] = in_array($this->getParameter('ids'), [null, '', false, []]) ? [] : explode('|', $this->getParameter('ids'));
+        $ids = $this->getRequest()->query->get('ids', '');
+        if ($ids === '') {
+            $ids = [];
+        } else {
+            $ids = explode('|', $ids);
+        }
+        $this->filter['ids'] = $ids;
 
         foreach ($this->filter['ids'] as $id) {
             // someone is messing with the url, clear ids

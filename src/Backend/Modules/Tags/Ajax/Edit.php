@@ -24,8 +24,8 @@ class Edit extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
-        $tag = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
+        $id = $this->getRequest()->request->getInt('id');
+        $tag = trim($this->getRequest()->request->get('value', ''));
 
         // validate id
         if ($id === 0) {

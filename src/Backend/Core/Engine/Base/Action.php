@@ -12,6 +12,7 @@ namespace Backend\Core\Engine\Base;
 use Backend\Core\Engine\TwigTemplate;
 use Common\Core\Header\Priority;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
 use Backend\Core\Language\Language as BL;
@@ -150,15 +151,19 @@ class Action extends Object
         }
 
         // store var so we don't have to call this function twice
-        $var = array_map('strip_tags', $this->getParameter('var', 'array', []));
+        $var = $this->getRequest()->query->get('var', []);
+        if ($var === '') {
+            $var = [];
+        }
+        $var = array_map('strip_tags', (array) $var);
 
         // is there a report to show?
-        if ($this->getParameter('report') !== null) {
+        if ($this->getRequest()->query->get('report', '') !== '') {
             // show the report
             $this->tpl->assign('report', true);
 
             // camelcase the string
-            $messageName = strip_tags(\SpoonFilter::toCamelCase($this->getParameter('report'), '-'));
+            $messageName = strip_tags(\SpoonFilter::toCamelCase($this->getRequest()->query->get('report'), '-'));
 
             // if we have data to use it will be passed as the var parameter
             if (!empty($var)) {
@@ -168,15 +173,15 @@ class Action extends Object
             }
 
             // highlight an element with the given id if needed
-            if ($this->getParameter('highlight')) {
-                $this->tpl->assign('highlight', strip_tags($this->getParameter('highlight')));
+            if ($this->getRequest()->query->get('highlight')) {
+                $this->tpl->assign('highlight', strip_tags($this->getRequest()->query->get('highlight')));
             }
         }
 
         // is there an error to show?
-        if ($this->getParameter('error') !== null) {
+        if ($this->getRequest()->query->get('error', '') !== '') {
             // camelcase the string
-            $errorName = strip_tags(\SpoonFilter::toCamelCase($this->getParameter('error'), '-'));
+            $errorName = strip_tags(\SpoonFilter::toCamelCase($this->getRequest()->query->get('error'), '-'));
 
             // if we have data to use it will be passed as the var parameter
             if (!empty($var)) {
@@ -185,28 +190,6 @@ class Action extends Object
                 $this->tpl->assign('errorMessage', BL::err($errorName));
             }
         }
-    }
-
-    /**
-     * Get a parameter for a given key
-     * The function will return null if the key is not available
-     * By default we will cast the return value into a string, if you want
-     * something else specify it by passing the wanted type.
-     *
-     * @param string $key The name of the parameter.
-     * @param string $returnType Possible values are: bool, boolean, int, integer, float, double, string, array.
-     * @param mixed $defaultValue The value that should be returned if the key is not available.
-     *
-     * @return mixed
-     */
-    public function getParameter(string $key, string $returnType = 'string', $defaultValue = null)
-    {
-        // parameter exists
-        if (isset($this->parameters[$key]) && $this->parameters[$key] !== '') {
-            return \SpoonFilter::getValue($this->parameters[$key], null, null, $returnType);
-        }
-
-        return $defaultValue;
     }
 
     /**
@@ -228,5 +211,15 @@ class Action extends Object
     public function createForm(string $type, $data = null, array $options = []): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
+    }
+
+    /**
+     * Get the request from the container.
+     *
+     * @return Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->get('request');
     }
 }
