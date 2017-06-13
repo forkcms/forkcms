@@ -14,6 +14,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\Command\DeleteContentBlock;
 use Backend\Modules\ContentBlocks\Event\ContentBlockDeleted;
+use Backend\Modules\ContentBlocks\Form\ContentBlockDeleteType;
 use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
 
 /**
@@ -23,11 +24,18 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
+        $deleteForm = $this->createForm(ContentBlockDeleteType::class);
+        $deleteForm->handleRequest($this->get('request'));
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
         /** @var ContentBlockRepository $contentBlockRepository */
         $contentBlockRepository = $this->get('content_blocks.repository.content_block');
 
         $contentBlock = $contentBlockRepository->findOneByIdAndLocale(
-            $this->getParameter('id', 'int'),
+            $deleteFormData['id'],
             Locale::workingLocale()
         );
 
