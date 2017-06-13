@@ -65,7 +65,7 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->selectedTheme = \SpoonFilter::getValue(
             $this->selectedTheme,
             array_keys($this->availableThemes),
-            $this->get('fork.settings')->get('Core', 'theme', 'core')
+            $this->get('fork.settings')->get('Core', 'theme', 'Fork')
         );
     }
 

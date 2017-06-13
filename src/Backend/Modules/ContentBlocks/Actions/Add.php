@@ -28,7 +28,7 @@ class Add extends BackendBaseActionAdd
         $form = $this->createForm(
             ContentBlockType::class,
             null,
-            ['theme' => $this->get('fork.settings')->get('Core', 'theme', 'Core')]
+            ['theme' => $this->get('fork.settings')->get('Core', 'theme', 'Fork')]
         );
 
         $form->handleRequest($this->get('request'));

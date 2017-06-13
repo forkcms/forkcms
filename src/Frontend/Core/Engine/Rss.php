@@ -49,7 +49,7 @@ class Rss extends \SpoonFeedRSS
         }
 
         // theme name
-        $theme = Model::get('fork.settings')->get('Core', 'theme', null);
+        $theme = Model::get('fork.settings')->get('Core', 'theme', 'Fork');
 
         // theme rss image exists
         if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/Core/images/rss_image.png')) {

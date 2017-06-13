@@ -99,7 +99,7 @@ class Installer extends ModuleInstaller
     private function configureFrontendForkTheme(): void
     {
         // build templates
-        $templates['core']['default'] = [
+        $templates['fork']['default'] = [
             'theme' => 'Fork',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
@@ -113,7 +113,7 @@ class Installer extends ModuleInstaller
             ),
         ];
 
-        $templates['core']['home'] = [
+        $templates['fork']['home'] = [
             'theme' => 'Fork',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
@@ -128,8 +128,8 @@ class Installer extends ModuleInstaller
         ];
 
         // insert templates
-        $this->getDB()->insert('themes_templates', $templates['core']['default']);
-        $this->getDB()->insert('themes_templates', $templates['core']['home']);
+        $this->getDB()->insert('themes_templates', $templates['fork']['default']);
+        $this->getDB()->insert('themes_templates', $templates['fork']['home']);
 
         // set the theme
         $this->setSetting('Core', 'theme', 'Fork', true);
