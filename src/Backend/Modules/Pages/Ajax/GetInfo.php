@@ -23,7 +23,7 @@ class GetInfo extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
+        $id = $this->getRequest()->request->getInt('id');
 
         // validate
         if ($id === 0) {

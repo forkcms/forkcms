@@ -30,10 +30,10 @@ class InstallModule extends BackendBaseActionIndex
     public function execute(): void
     {
         // get parameters
-        $this->currentModule = $this->getParameter('module', 'string');
+        $this->currentModule = $this->getRequest()->query->get('module', '');
 
         // does the item exist
-        if ($this->currentModule !== null && BackendExtensionsModel::existsModule($this->currentModule)) {
+        if ($this->currentModule !== '' && BackendExtensionsModel::existsModule($this->currentModule)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 

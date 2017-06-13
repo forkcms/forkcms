@@ -31,10 +31,10 @@ class Edit extends BackendBaseActionEdit
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendTagsModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendTagsModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadDataGrid();

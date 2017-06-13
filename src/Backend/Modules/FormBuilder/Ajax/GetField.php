@@ -22,8 +22,8 @@ class GetField extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $formId = trim(\SpoonFilter::getPostValue('form_id', null, '', 'int'));
-        $fieldId = trim(\SpoonFilter::getPostValue('field_id', null, '', 'int'));
+        $formId = trim($this->getRequest()->request->getInt('form_id'));
+        $fieldId = trim($this->getRequest()->request->getInt('field_id'));
 
         // invalid form id
         if (!BackendFormBuilderModel::exists($formId)) {

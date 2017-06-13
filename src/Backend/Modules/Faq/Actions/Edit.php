@@ -30,10 +30,10 @@ class Edit extends BackendBaseActionEdit
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendFaqModel::exists($this->id)) {
             parent::execute();
 
             $this->getData();

@@ -37,10 +37,10 @@ class Edit extends BackendBaseActionEdit
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendLocationModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendLocationModel::exists($this->id)) {
             $this->header->addJS(FrontendLocationModel::getPathToMapStyles());
             parent::execute();
 

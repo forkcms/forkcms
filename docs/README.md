@@ -76,8 +76,6 @@ Questions? Feel free to discuss on our [Slack channel](https://fork-cms.herokuap
 1. [Tags](docs/05. module guide/20. tags.md)
 1. [Search](docs/05. module guide/21. search.md)
 1. [Creating frontend-widgets](docs/05. module guide/22. creating_frontend_widgets.md)
-1. [API](docs/05. module guide/23. api.md)
-1. [How does the API work](docs/05. module guide/24. how_does_the_api_work.md)
 1. [Events publish and subscribe](docs/05. module guide/25. events_publish_and_subscribe.md)
 1. [Creating an installer](docs/05. module guide/26. creating_an_installer.md)
 1. [Creating a module.zip file](docs/05. module guide/27. creating_a_module_zip_file.md)

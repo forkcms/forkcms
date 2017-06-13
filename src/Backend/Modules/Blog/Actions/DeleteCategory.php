@@ -20,10 +20,10 @@ class DeleteCategory extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
+        if ($this->id !== 0 && BackendBlogModel::existsCategory($this->id)) {
             // get data
             $this->record = (array) BackendBlogModel::getCategory($this->id);
 
