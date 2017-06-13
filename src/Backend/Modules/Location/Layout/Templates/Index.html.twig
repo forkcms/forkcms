@@ -103,7 +103,7 @@
       lat: {{ item.lat }},
       lng: {{ item.lng }},
       title: '{{ item.title }}',
-      text: '<p>{{ item.street }} {{ item.number }}</p><p>{{ item.zip }} {{ item.city }}</p>'
+      text: '<p>{{ item.address|replace({'\r\n': ' '}) }}</p>'
     });
     {% endif %}
     {% endif %}

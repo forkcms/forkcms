@@ -252,3 +252,15 @@ you shouldn't pass the data serialised anymore and boolean values should be pass
 ## new dependency injection parameters
 
 - `fork.is_installed` used to check if fork is installed 
+
+## location address in one textarea
+
+The street, number, zip and city fields are now combined in one textarea.
+Execute the following queries to migrate:
+
+    ALTER TABLE `location` ADD `address` TEXT  NOT NULL  AFTER `title`;
+    UPDATE location SET address = CONCAT(street, " ", number, "\r\n", zip, " ", city);
+    ALTER TABLE `location` DROP `street`;
+    ALTER TABLE `location` DROP `number`;
+    ALTER TABLE `location` DROP `zip`;
+    ALTER TABLE `location` DROP `city`;

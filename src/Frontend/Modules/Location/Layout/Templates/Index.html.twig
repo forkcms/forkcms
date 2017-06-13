@@ -25,9 +25,7 @@
 
             <div itemprop="name" class="hidden"><strong>{{ locationItem.title }}</strong></div>
             <address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-              <span itemprop="streetAddress">{{ locationItem.street }} {{ locationItem.number }}</span><br>
-              <span itemprop="postalCode">{{ locationItem.zip }}</span>
-              <span itemprop="addressLocality">{{ locationItem.city }}</span><br>
+              <span itemprop="streetAddress">{{ locationItem.address }}</span><br>
               <span itemprop="addressCountry">{{ locationItem.country }}</span>
             </address>
           </div>

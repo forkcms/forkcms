@@ -107,10 +107,7 @@ class Edit extends BackendBaseActionEdit
     {
         $this->frm = new BackendForm('edit');
         $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
-        $this->frm->addText('street', $this->record['street']);
-        $this->frm->addText('number', $this->record['number']);
-        $this->frm->addText('zip', $this->record['zip']);
-        $this->frm->addText('city', $this->record['city']);
+        $this->frm->addTextarea('address', $this->record['address']);
         $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), $this->record['country']);
         $this->frm->addHidden('redirect', 'overview');
     }
@@ -178,10 +175,7 @@ class Edit extends BackendBaseActionEdit
 
             // validate fields
             $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->frm->getField('street')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('number')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
+            $this->frm->getField('address')->isFilled(BL::err('FieldIsRequired'));
 
             if ($this->frm->isCorrect()) {
                 // build item
@@ -190,20 +184,14 @@ class Edit extends BackendBaseActionEdit
                 $item['language'] = BL::getWorkingLanguage();
                 $item['extra_id'] = $this->record['extra_id'];
                 $item['title'] = $this->frm->getField('title')->getValue();
-                $item['street'] = $this->frm->getField('street')->getValue();
-                $item['number'] = $this->frm->getField('number')->getValue();
-                $item['zip'] = $this->frm->getField('zip')->getValue();
-                $item['city'] = $this->frm->getField('city')->getValue();
+                $item['address'] = $this->frm->getField('address')->getValue();
                 $item['country'] = $this->frm->getField('country')->getValue();
 
                 // check if it's necessary to geocode again
-                if ($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country']) {
+                if ($this->record['lat'] === null || $this->record['lng'] === null || $item['address'] != $this->record['address'] || $item['country'] != $this->record['country']) {
                     // define coordinates
                     $coordinates = BackendLocationModel::getCoordinates(
-                        $item['street'],
-                        $item['number'],
-                        $item['city'],
-                        $item['zip'],
+                        $item['address'],
                         $item['country']
                     );
 
