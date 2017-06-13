@@ -106,9 +106,9 @@ class Installer extends ModuleInstaller
             'active' => 'Y',
             'data' => serialize(
                 [
-                    'format' => '[main]',
+                    'format' => '[/,/,top],[main,main,main]',
                     'image' => true,
-                    'names' => ['main'],
+                    'names' => ['main', 'top'],
                 ]
             ),
         ];
@@ -120,9 +120,9 @@ class Installer extends ModuleInstaller
             'active' => 'Y',
             'data' => serialize(
                 [
-                    'format' => '[main]',
+                    'format' => '[/,/,top],[main,main,main]',
                     'image' => true,
-                    'names' => ['main'],
+                    'names' => ['main', 'top'],
                 ]
             ),
         ];
