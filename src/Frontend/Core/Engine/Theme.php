@@ -45,10 +45,8 @@ class Theme
 
     private static function getFilePathForCurrentTheme(string $theme, string $filePath): string
     {
-        // just return the file if there is no theme or the theme is already in the file path
-        if (mb_strpos($filePath, 'src/Frontend/Themes/' . $theme) !== false
-            || Model::get('fork.settings')->get('Core', 'theme', 'core') === 'core'
-        ) {
+        // just return the file if the theme is already in the file path
+        if (mb_strpos($filePath, 'src/Frontend/Themes/' . $theme) !== false) {
             return $filePath;
         }
 

@@ -224,11 +224,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
             $templateFile = $this->getContainer()->getParameter('site.path_www');
             // check if the template file exists
-            if ($this->frm->getField('theme')->getValue() == 'Core') {
-                $templateFile .= '/src/Frontend/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
-            } else {
-                $templateFile .= '/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
-            }
+            $templateFile .= '/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
             if (!is_file($templateFile)) {
                 $this->frm->getField('file')->addError(BL::err('TemplateFileNotFound'));
             }
@@ -309,7 +305,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $item['id'] = BackendExtensionsModel::insertTemplate($item);
 
                 // set default template
-                if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'core')) {
+                if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'Fork')) {
                     $this->get('fork.settings')->set($this->getModule(), 'default_template', $item['id']);
                 }
 

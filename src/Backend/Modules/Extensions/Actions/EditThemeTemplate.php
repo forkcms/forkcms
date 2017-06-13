@@ -108,7 +108,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         }
 
         // create elements
-        $this->frm->addDropdown('theme', $themes, $this->get('fork.settings')->get('Core', 'theme', 'core'));
+        $this->frm->addDropdown('theme', $themes, $this->get('fork.settings')->get('Core', 'theme', 'Fork'));
         $this->frm->addText('label', $this->record['label']);
         $this->frm->addText('file', str_replace('Core/Layout/Templates/', '', $this->record['path']));
         $this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
@@ -263,11 +263,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
             $templateFile = $this->getContainer()->getParameter('site.path_www');
             // check if the template file exists
-            if ($this->frm->getField('theme')->getValue() == 'Core') {
-                $templateFile .= '/src/Frontend/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
-            } else {
-                $templateFile .= '/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
-            }
+            $templateFile .= '/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
             if (!is_file($templateFile)) {
                 $this->frm->getField('file')->addError(BL::err('TemplateFileNotFound'));
             }
@@ -362,7 +358,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 BackendExtensionsModel::updateTemplate($item);
 
                 // set default template
-                if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'core')) {
+                if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'Fork')) {
                     $this->get('fork.settings')->set('pages', 'default_template', $item['id']);
                 }
 
