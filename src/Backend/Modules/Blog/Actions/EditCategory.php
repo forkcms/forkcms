@@ -15,6 +15,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use Backend\Modules\Blog\Form\BlogCategoryDeleteType;
 
 /**
  * This is the edit category action, it will display a form to edit an existing category.
@@ -32,6 +33,7 @@ class EditCategory extends BackendBaseActionEdit
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
@@ -103,5 +105,11 @@ class EditCategory extends BackendBaseActionEdit
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(BlogCategoryDeleteType::class, ['id' => $this->record['id']]);
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }

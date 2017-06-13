@@ -12,6 +12,7 @@ namespace Backend\Modules\Blog\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use Backend\Modules\Blog\Form\BlogCategoryDeleteType;
 
 /**
  * This action will delete a category
@@ -20,10 +21,17 @@ class DeleteCategory extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(BlogCategoryDeleteType::class);
+        $deleteForm->handleRequest($this->get('request'));
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
+        if ($this->id !== 0 && BackendBlogModel::existsCategory($this->id)) {
             // get data
             $this->record = (array) BackendBlogModel::getCategory($this->id);
 
