@@ -51,8 +51,8 @@ class Index extends BackendBaseActionIndex
         parent::execute();
 
         // set category id
-        $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-        if ($this->categoryId == 0) {
+        $this->categoryId = $this->getRequest()->query->getInt('category');
+        if ($this->categoryId === 0) {
             $this->categoryId = null;
         } else {
             // get category

@@ -386,7 +386,7 @@ class Livesuggest extends FrontendBaseAJAXAction
     {
         // set search term
         $charset = $this->getContainer()->getParameter('kernel.charset');
-        $searchTerm = \SpoonFilter::getPostValue('term', null, '');
+        $searchTerm = $this->getRequest()->request->get('term', '');
         $this->term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
         ) : \SpoonFilter::htmlentities($searchTerm);

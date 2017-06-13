@@ -190,7 +190,7 @@ class Edit extends BackendBaseActionEdit
 
     private function getData(): void
     {
-        $this->id = $this->getParameter('id');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // get dashboard sequence
         $this->hiddenOnDashboard = BackendGroupsModel::getSetting($this->id, 'hidden_on_dashboard');

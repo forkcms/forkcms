@@ -11702,6 +11702,10 @@
         <translation language="sv"><![CDATA[Vänligen ange ett smeknamn.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε ένα όνομα γιά χρήση στις δημοσιεύσεις.]]></translation>
       </item>
+      <item type="error" name="NoActionSelected">
+        <translation language="nl"><![CDATA[Geen actie geselecteerd.]]></translation>
+        <translation language="en"><![CDATA[No action selected.]]></translation>
+      </item>
       <item type="error" name="NoCommentsSelected">
         <translation language="nl"><![CDATA[Er waren geen reacties geselecteerd.]]></translation>
         <translation language="en"><![CDATA[No comments were selected.]]></translation>

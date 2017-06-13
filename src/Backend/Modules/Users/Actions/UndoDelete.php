@@ -21,10 +21,10 @@ class UndoDelete extends BackendBaseAction
 {
     public function execute(): void
     {
-        $email = $this->getParameter('email', 'string');
+        $email = $this->getRequest()->query->get('email', '');
 
         // does the user exist
-        if ($email !== null) {
+        if ($email !== '') {
             parent::execute();
 
             // delete item

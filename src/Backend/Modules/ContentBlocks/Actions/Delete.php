@@ -27,11 +27,11 @@ class Delete extends BackendBaseActionDelete
         $contentBlockRepository = $this->get('content_blocks.repository.content_block');
 
         $contentBlock = $contentBlockRepository->findOneByIdAndLocale(
-            $this->getParameter('id', 'int'),
+            $this->getRequest()->query->getInt('id'),
             Locale::workingLocale()
         );
 
-        if ($contentBlock === null) {
+        if ($contentBlock === 0) {
             $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
 
             return;

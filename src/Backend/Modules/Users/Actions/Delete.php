@@ -23,10 +23,10 @@ class Delete extends BackendBaseActionDelete
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the user exist
-        if ($this->id !== null && BackendUsersModel::exists($this->id) &&
+        if ($this->id !== 0 && BackendUsersModel::exists($this->id) &&
             BackendAuthentication::getUser()->getUserId() != $this->id
         ) {
             parent::execute();

@@ -36,10 +36,10 @@ class Edit extends BackendBaseActionEdit
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendLocaleModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendLocaleModel::exists($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->getData();
@@ -89,12 +89,18 @@ class Edit extends BackendBaseActionEdit
      */
     private function setFilter(): void
     {
-        $this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
-        $this->filter['application'] = $this->getParameter('application');
-        $this->filter['module'] = $this->getParameter('module');
-        $this->filter['type'] = $this->getParameter('type', 'array');
-        $this->filter['name'] = $this->getParameter('name');
-        $this->filter['value'] = $this->getParameter('value');
+        $this->filter['language'] = $this->getRequest()->query->get('language', []);
+        if (empty($this->filter['language'])) {
+            $this->filter['language'] = BL::getWorkingLanguage();
+        }
+        $this->filter['application'] = $this->getRequest()->query->get('application');
+        $this->filter['module'] = $this->getRequest()->query->get('module');
+        $this->filter['type'] = $this->getRequest()->query->get('type', '');
+        if ($this->filter['type'] === '') {
+            $this->filter['type'] = null;
+        }
+        $this->filter['name'] = $this->getRequest()->query->get('name');
+        $this->filter['value'] = $this->getRequest()->query->get('value');
 
         // build query for filter
         $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);

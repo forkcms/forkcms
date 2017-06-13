@@ -24,10 +24,13 @@ class Move extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
-        $droppedOn = \SpoonFilter::getPostValue('dropped_on', null, -1, 'int');
-        $typeOfDrop = \SpoonFilter::getPostValue('type', null, '');
-        $tree = \SpoonFilter::getPostValue('tree', ['main', 'meta', 'footer', 'root'], '');
+        $id = $this->getRequest()->request->getInt('id');
+        $droppedOn = $this->getRequest()->request->getInt('dropped_on', -1);
+        $typeOfDrop = $this->getRequest()->request->get('type', '');
+        $tree = $this->getRequest()->request->get('tree');
+        if (!in_array($tree, ['main', 'meta', 'footer', 'root'])) {
+            $tree = '';
+        }
 
         // init validation
         $errors = [];

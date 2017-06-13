@@ -203,8 +203,11 @@ class Language
         if ($module === null) {
             if (Model::getContainer()->has('url')) {
                 $module = Model::get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] !== '') {
-                $module = (string) $_GET['module'];
+            } elseif (Model::has('request')
+                && Model::get('request')->query->has('module')
+                && Model::get('request')->query->get('module', '') !== ''
+            ) {
+                $module = Model::get('request')->query->get('module', '');
             } else {
                 $module = 'Core';
             }
