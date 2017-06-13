@@ -20,7 +20,7 @@ class DeleteFeedback extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $feedbackId = $this->getParameter('id', 'int');
+        $feedbackId = $this->getRequest()->query->getInt('id');
         $feedback = BackendFaqModel::getFeedback($feedbackId);
 
         // there is no feedback data, so redirect

@@ -30,10 +30,10 @@ class EditGroup extends BackendBaseActionEdit
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendProfilesModel::existsGroup($this->id)) {
+        if ($this->id !== 0 && BackendProfilesModel::existsGroup($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();

@@ -102,15 +102,18 @@ class Edit extends BackendBaseActionEdit
         $contentBlockRepository = $this->get('content_blocks.repository.content_block');
 
         // specific revision?
-        $revisionId = $this->getParameter('revision', 'int');
+        $revisionId = $this->getRequest()->query->getInt('revision');
 
-        if ($revisionId !== null) {
+        if ($revisionId !== 0) {
             $this->tpl->assign('usingRevision', true);
 
             return $contentBlockRepository->findOneByRevisionIdAndLocale($revisionId, Locale::workingLocale());
         }
 
-        return $contentBlockRepository->findOneByIdAndLocale($this->getParameter('id', 'int'), Locale::workingLocale());
+        return $contentBlockRepository->findOneByIdAndLocale(
+            $this->getRequest()->query->getInt('id'),
+            Locale::workingLocale()
+        );
     }
 
     /**

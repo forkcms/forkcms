@@ -265,7 +265,7 @@ class Index extends BackendBaseActionIndex
         );
 
         $this->redirect(
-            $this->getParameter('querystring', 'string', $allowedModuleActionUrl)
+            $this->getRequest()->query->get('querystring', $allowedModuleActionUrl)
         );
     }
 

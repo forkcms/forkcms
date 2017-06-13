@@ -336,7 +336,9 @@ class Model
         ];
 
         // query string
-        $queryString = (isset($_GET['queryString'])) ? SITE_URL . '/' . urldecode($_GET['queryString']) : SELF;
+        $queryString = FrontendModel::get('Request')->query->has('queryString')
+            ? SITE_URL . '/' . urldecode(FrontendModel::get('Request')->query->get('queryString'))
+            : SITE_URL . FrontendModel::get('url')->getQueryString();
 
         // check all ignore urls
         foreach ($ignoreUrls as $url) {

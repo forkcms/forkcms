@@ -23,7 +23,7 @@ class AddCategory extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $categoryTitle = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
+        $categoryTitle = trim($this->getRequest()->request->get('value', ''));
 
         // validate
         if ($categoryTitle === '') {

@@ -40,7 +40,7 @@ class ExportThemeTemplates extends ActionEdit
     public function execute(): void
     {
         // get data
-        $this->selectedTheme = $this->getParameter('theme', 'string');
+        $this->selectedTheme = $this->getRequest()->query->get('theme');
 
         // build available themes
         foreach (Model::getThemes() as $theme) {
@@ -48,11 +48,9 @@ class ExportThemeTemplates extends ActionEdit
         }
 
         // determine selected theme, based upon submitted form or default theme
-        $this->selectedTheme = SpoonFilter::getValue(
-            $this->selectedTheme,
-            array_keys($this->availableThemes),
-            $this->get('fork.settings')->get('Core', 'theme', 'core')
-        );
+        if (!array_key_exists($this->selectedTheme, $this->availableThemes)) {
+            $this->selectedTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+        }
     }
 
     public function getContent(): Response

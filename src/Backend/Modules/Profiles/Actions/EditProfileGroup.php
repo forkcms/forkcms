@@ -35,13 +35,13 @@ class EditProfileGroup extends BackendBaseActionEdit
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
-        $this->profileId = $this->getParameter('profile_id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
+        $this->profileId = $this->getRequest()->query->getInt('profile_id');
 
         // does the item exists
-        if ($this->id !== null && BackendProfilesModel::existsProfileGroup($this->id)) {
+        if ($this->id !== 0 && BackendProfilesModel::existsProfileGroup($this->id)) {
             // does profile exists
-            if ($this->profileId !== null && BackendProfilesModel::exists($this->profileId)) {
+            if ($this->profileId !== 0 && BackendProfilesModel::exists($this->profileId)) {
                 parent::execute();
                 $this->getData();
                 $this->loadForm();

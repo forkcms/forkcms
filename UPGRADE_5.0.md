@@ -252,3 +252,13 @@ you shouldn't pass the data serialised anymore and boolean values should be pass
 ## new dependency injection parameters
 
 - `fork.is_installed` used to check if fork is installed 
+
+## Refactored out SpoonFilter::getGetValue() and SpoonFilter::getPostValue()
+
+Replaced those methods by using the Symfony Request object.
+
+`SpoonFilter::getGetValue()` will become `$this->getRequest()->query->get()`
+
+`SpoonFilter::getPostValue()` will become `$this->getRequest()->request->get()`
+
+Also removed Action::getParameter(). You should directly call the request object through `$this->getRequest()->query->get()`
