@@ -158,7 +158,6 @@ class Add extends BackendBaseActionAdd
 
             // no errors?
             if ($this->frm->isCorrect()) {
-                $salt = BackendProfilesModel::getRandomString();
                 $password = ($txtPassword->isFilled()) ?
                     $txtPassword->getValue() : BackendModel::generatePassword(8);
 
@@ -173,9 +172,6 @@ class Add extends BackendBaseActionAdd
                 ];
 
                 $this->id = BackendProfilesModel::insert($values);
-
-                // update salt
-                BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
                 // bday is filled in
                 if ($ddmYear->isFilled()) {

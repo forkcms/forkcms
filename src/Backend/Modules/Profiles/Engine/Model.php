@@ -608,12 +608,6 @@ class Model
 
             // new password filled in?
             if ($item['password']) {
-                // get new salt
-                $salt = self::getRandomString();
-
-                // update salt
-                self::setSetting($id, 'salt', $salt);
-
                 // build password
                 $values['password'] = self::encryptPassword($item['password']);
             }

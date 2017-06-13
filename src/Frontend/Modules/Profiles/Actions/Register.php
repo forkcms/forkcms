@@ -113,7 +113,6 @@ class Register extends FrontendBaseBlock
                 $values = [];
 
                 // generate salt
-                $settings['salt'] = FrontendProfilesModel::getRandomString();
                 $settings['language'] = LANGUAGE;
 
                 // values
@@ -141,7 +140,7 @@ class Register extends FrontendBaseBlock
                     // generate activation key
                     $settings['activation_key'] = FrontendProfilesModel::getEncryptedString(
                         $profileId . microtime(),
-                        $settings['salt']
+                        FrontendProfilesModel::getRandomString()
                     );
 
                     // set settings
