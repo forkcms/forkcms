@@ -21,6 +21,18 @@
           </div>
           <div id="navbar-main" class="navbar-collapse collapse">
             {{ getnavigation('page', 0, 1) }}
+
+            {# Top positions #}
+            {% if positions.top %}
+              <div class="navbar-left">
+                {% for content in positions.top %}
+                  {% if content.html %}
+                    {{ content.html|raw }}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
             <div class="navbar-right">
               {% include "Core/Layout/Templates/Languages.html.twig" %}
             </div>
