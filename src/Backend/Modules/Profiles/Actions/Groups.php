@@ -192,6 +192,6 @@ class Groups extends BackendBaseActionIndex
      */
     private function setFilter(): void
     {
-        $this->filter['name'] = $this->getParameter('name');
+        $this->filter['name'] = $this->getRequest()->query->get('name');
     }
 }

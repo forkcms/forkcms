@@ -235,11 +235,11 @@ class Autosuggest extends FrontendBaseAJAXAction
     {
         // set values
         $charset = $this->getContainer()->getParameter('kernel.charset');
-        $searchTerm = \SpoonFilter::getPostValue('term', null, '');
+        $searchTerm = $this->getRequest()->request->get('term', '');
         $this->term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
         ) : \SpoonFilter::htmlentities($searchTerm);
-        $this->length = (int) \SpoonFilter::getPostValue('length', null, 50);
+        $this->length = $this->getRequest()->request->getInt('length', 50);
 
         // validate
         if ($this->term == '') {

@@ -15,11 +15,11 @@ class SequenceQuestions extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        $questionId = \SpoonFilter::getPostValue('questionId', null, '', 'int');
-        $fromCategoryId = \SpoonFilter::getPostValue('fromCategoryId', null, '', 'int');
-        $toCategoryId = \SpoonFilter::getPostValue('toCategoryId', null, '', 'int');
-        $fromCategorySequence = \SpoonFilter::getPostValue('fromCategorySequence', null, '', 'string');
-        $toCategorySequence = \SpoonFilter::getPostValue('toCategorySequence', null, '', 'string');
+        $questionId = $this->getRequest()->request->getInt('questionId');
+        $fromCategoryId = $this->getRequest()->request->getInt('fromCategoryId');
+        $toCategoryId = $this->getRequest()->request->getInt('toCategoryId');
+        $fromCategorySequence = $this->getRequest()->request->get('fromCategorySequence', '');
+        $toCategorySequence = $this->getRequest()->request->get('toCategorySequence', '');
 
         // invalid question id
         if (!BackendFaqModel::exists($questionId)) {

@@ -257,3 +257,13 @@ you shouldn't pass the data serialised anymore and boolean values should be pass
 
 Password hashing moved from custom sha1 and md5 hashing to PHP password_hash method. To migrate existing users and
 profiles they will have to do a password reset.
+
+## Refactored out SpoonFilter::getGetValue() and SpoonFilter::getPostValue()
+
+Replaced those methods by using the Symfony Request object.
+
+`SpoonFilter::getGetValue()` will become `$this->getRequest()->query->get()`
+
+`SpoonFilter::getPostValue()` will become `$this->getRequest()->request->get()`
+
+Also removed Action::getParameter(). You should directly call the request object through `$this->getRequest()->query->get()`

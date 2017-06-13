@@ -22,10 +22,10 @@ class EditComment extends BackendBaseActionEdit
 {
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendBlogModel::existsComment($this->id)) {
+        if ($this->id !== 0 && BackendBlogModel::existsComment($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();

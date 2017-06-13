@@ -23,9 +23,9 @@ class UpdateMarker extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $itemId = trim(\SpoonFilter::getPostValue('id', null, '', 'int'));
-        $lat = \SpoonFilter::getPostValue('lat', null, null, 'float');
-        $lng = \SpoonFilter::getPostValue('lng', null, null, 'float');
+        $itemId = trim($this->getRequest()->request->getInt('id'));
+        $lat = (float) $this->getRequest()->request->get('lat');
+        $lng = (float) $this->getRequest()->request->get('lng');
 
         // validate id
         if ($itemId == 0) {

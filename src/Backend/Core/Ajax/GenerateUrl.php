@@ -22,10 +22,10 @@ class GenerateUrl extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $url = \SpoonFilter::getPostValue('url', null, '', 'string');
-        $className = \SpoonFilter::getPostValue('className', null, '', 'string');
-        $methodName = \SpoonFilter::getPostValue('methodName', null, '', 'string');
-        $parameters = \SpoonFilter::getPostValue('parameters', null, '', 'string');
+        $url = $this->getRequest()->request->get('url', '');
+        $className = $this->getRequest()->request->get('className', '');
+        $methodName = $this->getRequest()->request->get('methodName', '');
+        $parameters = $this->getRequest()->request->get('parameters', '');
 
         // cleanup values
         $parameters = @unserialize($parameters);
