@@ -263,8 +263,8 @@ class Installer extends ModuleInstaller
                     ],
                     null,
                     ['html' => __DIR__ . '/Data/' . $language . '/sample1.txt'],
-                    ['extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'],
-                    ['extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'right'],
+                    ['extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'main'],
+                    ['extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'main'],
                     ['extra_id' => $extras['search_form'], 'position' => 'top']
                 );
 
@@ -278,10 +278,10 @@ class Installer extends ModuleInstaller
                     ],
                     null,
                     ['extra_id' => $extras['blog_block']],
-                    ['extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'left'],
-                    ['extra_id' => $extras['blog_widget_categories'], 'position' => 'left'],
-                    ['extra_id' => $extras['blog_widget_archive'], 'position' => 'left'],
-                    ['extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'],
+                    ['extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'main'],
+                    ['extra_id' => $extras['blog_widget_categories'], 'position' => 'main'],
+                    ['extra_id' => $extras['blog_widget_archive'], 'position' => 'main'],
+                    ['extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'main'],
                     ['extra_id' => $extras['search_form'], 'position' => 'top']
                 );
 
