@@ -25,7 +25,7 @@ class MassAction extends BackendBaseAction
         // action to execute
         $action = $this->getRequest()->query->get('action');
         if (!in_array($action, ['delete'])) {
-            $action = 'delete';
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
         }
 
         // no id's provided

@@ -25,13 +25,13 @@ class MassCommentAction extends BackendBaseAction
         // current status
         $from = $this->getRequest()->query->get('from');
         if (!in_array($from, ['published', 'moderation', 'spam'])) {
-            $from = 'published';
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-from-selected');
         }
 
         // action to execute
         $action = $this->getRequest()->query->get('action');
         if (!in_array($action, ['published', 'moderation', 'spam', 'delete'])) {
-            $action = 'spam';
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
         }
 
         // no id's provided

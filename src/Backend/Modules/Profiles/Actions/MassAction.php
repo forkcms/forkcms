@@ -26,13 +26,10 @@ class MassAction extends BackendBaseAction
         // action to execute
         $action = $this->getRequest()->query->get('action');
         if (!in_array($action, ['addToGroup', 'delete'])) {
-            $action = '';
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
         }
         $ids = $this->getRequest()->query->has('id') ? (array) $this->getRequest()->query->get('id') : [];
         $newGroupId = $this->getRequest()->query->get('newGroup');
-        if (!array_key_exists($newGroupId, BackendProfilesModel::getGroups())) {
-            $newGroupId = '';
-        }
 
         // no ids provided
         if (empty($ids)) {
@@ -46,7 +43,7 @@ class MassAction extends BackendBaseAction
         } elseif ($action === 'addToGroup') {
             // add the profiles to the given group
             // no group id provided
-            if ($newGroupId == '') {
+            if (!array_key_exists($newGroupId, BackendProfilesModel::getGroups())) {
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&error=no-group-selected'
                 );
