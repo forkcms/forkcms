@@ -332,7 +332,7 @@ class Index extends BackendBaseActionIndex
         $this->filter['module'] = $this->getRequest()->query->get('module');
         $this->filter['type'] = $this->getRequest()->query->get('type', '');
         if ($this->filter['type'] === '') {
-            $this->filter['type'] = null;
+            $this->filter['type'] = [];
         }
         $this->filter['language'] = $this->getRequest()->query->get('language', []);
         if (empty($this->filter['language'])) {
