@@ -1,0 +1,7 @@
+services:
+    content_blocks.listener.send_custom_events:
+        class: Backend\Modules\ContentBlocks\EventListener\MediaFolderInvalidateBackendCacheSubscriber
+        arguments:
+            - "@media_library.cache.media_folder"
+        tags:
+            - { name: doctrine.event_subscriber }
