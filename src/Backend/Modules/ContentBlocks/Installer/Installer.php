@@ -20,28 +20,17 @@ class Installer extends ModuleInstaller
 {
     public function install(): void
     {
-        // add the schema of the entity to the database
-        Model::get('fork.entity.create_schema')->forEntityClass(ContentBlock::class);
-
-        // add 'content_blocks' as a module
         $this->addModule('ContentBlocks');
-
-        // import locale
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
+        $this->configureSettings();
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+    }
 
-        // general settings
-        $this->setSetting($this->getModule(), 'max_num_revisions', 20);
-
-        // module rights
-        $this->setModuleRights(1, $this->getModule());
-
-        // action rights
-        $this->setActionRights(1, $this->getModule(), 'Add');
-        $this->setActionRights(1, $this->getModule(), 'Delete');
-        $this->setActionRights(1, $this->getModule(), 'Edit');
-        $this->setActionRights(1, $this->getModule(), 'Index');
-
-        // set navigation
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "Modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation(
             $navigationModulesId,
@@ -49,5 +38,25 @@ class Installer extends ModuleInstaller
             'content_blocks/index',
             ['content_blocks/add', 'content_blocks/edit']
         );
+    }
+
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClass(ContentBlock::class);
+    }
+
+    private function configureSettings(): void
+    {
+        $this->setSetting($this->getModule(), 'max_num_revisions', 20);
     }
 }
