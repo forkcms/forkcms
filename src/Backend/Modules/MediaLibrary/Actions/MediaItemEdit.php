@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDeleteType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
 
 class MediaItemEdit extends BackendBaseActionEdit
@@ -37,6 +38,9 @@ class MediaItemEdit extends BackendBaseActionEdit
         );
 
         $form->handleRequest($this->get('request'));
+
+        $deleteForm = $this->createForm(MediaItemDeleteType::class, ['id' => $mediaItem->getId()]);
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
 
         if (!$form->isValid()) {
             $this->tpl->assign('folderId', $this->folderId);
