@@ -32,30 +32,29 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
         $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== 0 && BackendExtensionsModel::existsTemplate($this->id)) {
-            // call parent, this will probably add some general CSS/JS or other required files
-            parent::execute();
+        if ($this->id === 0 || !BackendExtensionsModel::existsTemplate($this->id)) {
+            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+        }
 
-            // init var
-            $success = false;
+        // call parent, this will probably add some general CSS/JS or other required files
+        parent::execute();
 
-            // get template (we need the title)
-            $item = BackendExtensionsModel::getTemplate($this->id);
+        // init var
+        $success = false;
 
-            // valid template?
-            if (!empty($item)) {
-                // delete the page
-                $success = BackendExtensionsModel::deleteTemplate($this->id);
-            }
+        // get template (we need the title)
+        $item = BackendExtensionsModel::getTemplate($this->id);
 
-            // page is deleted, so redirect to the overview
-            if ($success) {
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . rawurlencode($item['label']));
-            } else {
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
-            }
+        // valid template?
+        if (!empty($item)) {
+            // delete the page
+            $success = BackendExtensionsModel::deleteTemplate($this->id);
+        }
+
+        // page is deleted, so redirect to the overview
+        if ($success) {
+            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . rawurlencode($item['label']));
         } else {
-            // something went wrong
             $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
         }
     }
