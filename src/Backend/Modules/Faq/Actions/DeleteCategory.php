@@ -12,6 +12,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Backend\Modules\Faq\Form\FaqCategoryDeleteType;
 
 /**
  * This action will delete a category
@@ -20,7 +21,14 @@ class DeleteCategory extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $this->id = $this->getRequest()->query->getInt('id');
+        $deleteForm = $this->createForm(FaqCategoryDeleteType::class);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = $deleteFormData['id'];
 
         // does the item exist
         if ($this->id !== 0 && BackendFaqModel::existsCategory($this->id)) {
