@@ -1,56 +1,15 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Command;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class UpdateContentBlock
+final class UpdateContentBlock extends ContentBlockDataTransferObject
 {
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(message="err.FieldIsRequired")
-     */
-    public $title;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(message="err.FieldIsRequired")
-     */
-    public $template = ContentBlock::DEFAULT_TEMPLATE;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(message="err.FieldIsRequired")
-     */
-    public $text;
-
-    /**
-     * @var bool
-     */
-    public $isVisible = true;
-
-    /**
-     * @var ContentBlock
-     */
-    public $contentBlock;
-
-    /**
-     * @var int
-     */
-    public $userId;
-
     public function __construct(ContentBlock $contentBlock)
     {
-        $this->contentBlock = $contentBlock;
-
-        $this->isVisible = !$contentBlock->isHidden();
-        $this->title = $contentBlock->getTitle();
-        $this->text = $contentBlock->getText();
-        $this->template = $contentBlock->getTemplate();
-        $this->userId = $contentBlock->getUserId();
+        parent::__construct($contentBlock);
     }
 }

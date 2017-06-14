@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Command;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
 use Backend\Core\Engine\Model;
-use Backend\Modules\ContentBlocks\Entity\ContentBlock;
-use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use Common\ModuleExtraType;
 
 final class CreateContentBlockHandler
@@ -19,18 +19,13 @@ final class CreateContentBlockHandler
 
     public function handle(CreateContentBlock $createContentBlock): void
     {
-        $createContentBlock->contentBlock = ContentBlock::create(
-            $this->contentBlockRepository->getNextIdForLanguage($createContentBlock->language),
-            $createContentBlock->userId,
-            $this->getNewExtraId(),
-            $createContentBlock->language,
-            $createContentBlock->title,
-            $createContentBlock->text,
-            !$createContentBlock->isVisible,
-            $createContentBlock->template
-        );
+        $createContentBlock->extraId = $this->getNewExtraId();
+        $createContentBlock->id = $this->contentBlockRepository->getNextIdForLanguage($createContentBlock->locale);
 
-        $this->contentBlockRepository->add($createContentBlock->contentBlock);
+        $contentBlock = ContentBlock::fromDataTransferObject($createContentBlock);
+        $this->contentBlockRepository->add($contentBlock);
+
+        $createContentBlock->setContentBlockEntity($contentBlock);
     }
 
     private function getNewExtraId(): int

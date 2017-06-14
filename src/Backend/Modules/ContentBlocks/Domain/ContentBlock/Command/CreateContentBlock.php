@@ -1,60 +1,22 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Command;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
 use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class CreateContentBlock
+final class CreateContentBlock extends ContentBlockDataTransferObject
 {
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(message="err.FieldIsRequired")
-     */
-    public $title;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(message="err.FieldIsRequired")
-     */
-    public $template = ContentBlock::DEFAULT_TEMPLATE;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(message="err.FieldIsRequired")
-     */
-    public $text;
-
-    /**
-     * @var bool
-     */
-    public $isVisible = true;
-
-    /**
-     * @var Locale
-     */
-    public $language;
-
-    /**
-     * @var ContentBlock
-     */
-    public $contentBlock;
-
-    /**
-     * @var int
-     */
-    public $userId;
-
-    public function __construct(Locale $language = null)
+    public function __construct(Locale $locale = null)
     {
-        if ($language === null) {
-            $language = Locale::workingLocale();
+        parent::__construct();
+
+        if ($locale === null) {
+            $locale = Locale::workingLocale();
         }
 
-        $this->language = $language;
+        $this->locale = $locale;
     }
 }
