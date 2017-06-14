@@ -817,7 +817,7 @@ jsBackend.mediaLibraryHelper.cropper =
         }
 
         jsBackend.mediaLibraryHelper.cropper.isCropping = true;
-        let $dialog = jsBackend.mediaLibraryHelper.cropper.getDialog();
+        var $dialog = jsBackend.mediaLibraryHelper.cropper.getDialog();
 
         jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
 
@@ -825,7 +825,7 @@ jsBackend.mediaLibraryHelper.cropper =
     },
 
     getDialog: function() {
-        let $dialog = $('[data-role=media-library-add-dialog]');
+        var $dialog = $('[data-role=media-library-add-dialog]');
 
         if ($dialog.length > 0) {
             return $dialog.first();
@@ -835,7 +835,7 @@ jsBackend.mediaLibraryHelper.cropper =
     },
 
     processNextImageInQueue: function($dialog) {
-        let nextQueuedImage = jsBackend.mediaLibraryHelper.cropper.cropperQueue.shift();
+        var nextQueuedImage = jsBackend.mediaLibraryHelper.cropper.cropperQueue.shift();
         jsBackend.mediaLibraryHelper.cropper.crop(
             $dialog,
             nextQueuedImage.resizeInfo,
@@ -869,7 +869,7 @@ jsBackend.mediaLibraryHelper.cropper =
     },
 
     getCropperConfig: function() {
-        let config = {
+        var config = {
             autoCropArea: 1,
         };
 
@@ -927,9 +927,9 @@ jsBackend.mediaLibraryHelper.cropper =
 
     getCropEventFunction: function($dialog, resizeInfo, resolve) {
         return function() {
-            let context = resizeInfo.targetCanvas.getContext('2d');
-            let $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
-            let cropBoxData = $cropper.cropper('getCroppedCanvas');
+            var context = resizeInfo.targetCanvas.getContext('2d');
+            var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
+            var cropBoxData = $cropper.cropper('getCroppedCanvas');
 
             // set the correct height and width on the target canvas
             resizeInfo.targetCanvas.height = cropBoxData.height;
@@ -951,7 +951,7 @@ jsBackend.mediaLibraryHelper.cropper =
 
     getRotateEventFunction: function() {
         return function() {
-            let $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
+            var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
             $cropper.cropper('rotate', $(this).data('degrees'));
             $cropper.cropper('crop');
         }
@@ -1020,7 +1020,7 @@ jsBackend.mediaLibraryHelper.upload =
         // redefine media folder id
         mediaFolderId = $('#uploadMediaFolderId').val();
 
-        let $fineUploaderGallery = $('#fine-uploader-gallery');
+        var $fineUploaderGallery = $('#fine-uploader-gallery');
         $fineUploaderGallery.fineUploader({
             template: 'qq-template-gallery',
             thumbnails: {
