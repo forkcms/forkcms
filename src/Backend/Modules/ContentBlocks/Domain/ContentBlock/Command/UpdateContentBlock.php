@@ -12,4 +12,9 @@ final class UpdateContentBlock extends ContentBlockDataTransferObject
     {
         parent::__construct($contentBlock);
     }
+
+    public function setContentBlockEntity(ContentBlock $contentBlockEntity): void
+    {
+        $this->contentBlockEntity = $contentBlockEntity;
+    }
 }

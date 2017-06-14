@@ -19,4 +19,9 @@ final class CreateContentBlock extends ContentBlockDataTransferObject
 
         $this->locale = $locale;
     }
+
+    public function setContentBlockEntity(ContentBlock $contentBlockEntity): void
+    {
+        $this->contentBlockEntity = $contentBlockEntity;
+    }
 }

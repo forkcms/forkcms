@@ -10,7 +10,7 @@ class ContentBlockDataTransferObject
     /**
      * @var ContentBlock
      */
-    private $contentBlockEntity;
+    protected $contentBlockEntity;
 
     /**
      * @var int
@@ -98,10 +98,5 @@ class ContentBlockDataTransferObject
     public function hasExistingContentBlock(): bool
     {
         return $this->contentBlockEntity instanceof ContentBlock;
-    }
-
-    public function setContentBlockEntity(ContentBlock $contentBlockEntity): void
-    {
-        $this->contentBlockEntity = $contentBlockEntity;
     }
 }
