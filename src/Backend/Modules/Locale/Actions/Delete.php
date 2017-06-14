@@ -14,6 +14,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Locale\Form\LocaleDeleteType;
 
 /**
  * This action will delete a translation
@@ -34,7 +35,14 @@ class Delete extends BackendBaseActionDelete
 
     public function execute(): void
     {
-        $this->id = $this->getRequest()->query->getInt('id');
+        $deleteForm = $this->createForm(LocaleDeleteType::class);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = $deleteFormData['id'];
 
         // does the item exist
         if ($this->id !== 0 && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod()) {
