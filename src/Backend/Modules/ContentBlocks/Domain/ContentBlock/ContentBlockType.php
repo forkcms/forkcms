@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Form;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Backend\Form\Type\EditorType;
 use Backend\Modules\ContentBlocks\Command\CreateContentBlock;
