@@ -32,22 +32,22 @@ class DeleteGroup extends BackendBaseActionDelete
         $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== 0 && BackendProfilesModel::existsGroup($this->id)) {
-            // call parent, this will probably add some general CSS/JS or other required files
-            parent::execute();
-
-            // get group
-            $group = BackendProfilesModel::getGroup($this->id);
-
-            // delete group
-            BackendProfilesModel::deleteGroup($this->id);
-
-            // group was deleted, so redirect
-            $this->redirect(
-                BackendModel::createURLForAction('Groups') . '&report=deleted&var=' . rawurlencode($group['name'])
-            );
-        } else {
+        if ($this->id === 0 || !BackendProfilesModel::existsGroup($this->id)) {
             $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');
         }
+
+        // call parent, this will probably add some general CSS/JS or other required files
+        parent::execute();
+
+        // get group
+        $group = BackendProfilesModel::getGroup($this->id);
+
+        // delete group
+        BackendProfilesModel::deleteGroup($this->id);
+
+        // group was deleted, so redirect
+        $this->redirect(
+            BackendModel::createURLForAction('Groups') . '&report=deleted&var=' . rawurlencode($group['name'])
+        );
     }
 }
