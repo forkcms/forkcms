@@ -6,7 +6,7 @@ matrix:
 
 script:
   - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
-  - bin/simple-phpunit --coverage-clover=coverage.clover
+  - travis_wait 20 bin/simple-phpunit --coverage-clover=coverage.clover
 
 before_script:
   - npm install -g bower
