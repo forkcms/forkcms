@@ -11,6 +11,8 @@ jsBackend.faq.edit =
 
         // add the click handler
         //$(document).on('click', '.container', jsBackend.faq.edit.clickHandler);
+
+        $('[data-role=delete-feedback]').on('click', jsBackend.faq.edit.deleteFeedbackClick);
     },
 
     clickHandler: function(e)
@@ -40,6 +42,13 @@ jsBackend.faq.edit =
             // hide the feedback
             $(this).next('.longFeedback').hide();
         }
+    },
+
+    deleteFeedbackClick: function(event) {
+        event.preventDefault();
+
+        $('#faq_feedback_delete_id').val($(this).data('id'));
+        $('#confirmDeleteFeedback').modal('show');
     }
 };
 

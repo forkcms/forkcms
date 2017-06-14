@@ -16,6 +16,7 @@ use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Backend\Modules\Faq\Form\FaqDeleteType;
+use Backend\Modules\Faq\Form\FaqFeedbackDeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -41,6 +42,7 @@ class Edit extends BackendBaseActionEdit
             $this->loadForm();
             $this->validateForm();
             $this->loadDeleteForm();
+            $this->loadDeleteFeedbackForm();
 
             $this->parse();
             $this->display();
@@ -152,5 +154,11 @@ class Edit extends BackendBaseActionEdit
     {
         $deleteForm = $this->createForm(FaqDeleteType::class, ['id' => $this->record['id']]);
         $this->tpl->assign('deleteForm', $deleteForm->createView());
+    }
+
+    private function loadDeleteFeedbackForm(): void
+    {
+        $deleteFeedbackForm = $this->createForm(FaqFeedbackDeleteType::class);
+        $this->tpl->assign('deleteFeedbackForm', $deleteFeedbackForm->createView());
     }
 }
