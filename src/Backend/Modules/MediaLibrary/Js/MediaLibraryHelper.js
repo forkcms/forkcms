@@ -1083,7 +1083,8 @@ jsBackend.mediaLibraryHelper.upload =
             includeExif: false, // needs to be false to prevent issues during the cropping process, it also is good for privacy reasons
             sendOriginal: false,
             sizes: [
-                {name: "", maxSize: 1} // used to trigger the cropper
+                {name: "", maxSize: 1} // used to trigger the cropper, this will set the maximum resulution to 1x1 px
+                                       // It always trigger the cropper since it uses a hook for scaling pictures down
             ],
             customResizer: function(resizeInfo) {
                 return new Promise(function(resolve, reject) {
