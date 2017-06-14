@@ -551,9 +551,13 @@
       </div>
     </div>
   </div>
+  {% endform %}
 
   {# Page delete confirm block #}
   {% if item %}
+    {{ form_start(deleteForm) }}
+    {{ form_row(deleteForm._token) }}
+    {{ form_row(deleteForm.id) }}
     <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -567,15 +571,16 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">
               <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
-            <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
+            <button type="submit" class="btn btn-danger">
               <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-            </a>
+            </button>
           </div>
         </div>
       </div>
     </div>
+    {{ form_end(deleteForm) }}
   {% endif %}
-  {% endform %}
+
   <div class="_itr_22">
     <script type="text/javascript">
       //<![CDATA[

@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Pages\Form\PageDeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
@@ -22,8 +23,15 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
+        $deleteForm = $this->createForm(PageDeleteType::class);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
         // get parameters
-        $this->id = $this->getRequest()->query->getInt('id');
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
         if ($this->id !== 0 && BackendPagesModel::exists($this->id)) {

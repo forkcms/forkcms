@@ -20,6 +20,7 @@ use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Pages\Form\PageDeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
@@ -105,6 +106,7 @@ class Edit extends BackendBaseActionEdit
         $this->loadDrafts();
         $this->loadRevisions();
         $this->validateForm();
+        $this->loadDeleteForm();
         $this->parse();
         $this->display();
     }
@@ -838,5 +840,11 @@ class Edit extends BackendBaseActionEdit
     private function userCanSeeAndEditTags(): bool
     {
         return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(PageDeleteType::class, ['id' => $this->record['id']]);
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
