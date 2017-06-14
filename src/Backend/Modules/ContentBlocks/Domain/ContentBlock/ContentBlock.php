@@ -128,8 +128,6 @@ class ContentBlock
     {
         if ($dataTransferObject->hasExistingContentBlock()) {
             $dataTransferObject->getContentBlockEntity()->status = Status::archived();
-
-            return self::create($dataTransferObject);
         }
 
         return self::create($dataTransferObject);
