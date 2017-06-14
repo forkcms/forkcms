@@ -38,7 +38,7 @@ class DeleteFeedback extends BackendBaseActionDelete
 
         BackendFaqModel::deleteFeedback($feedbackId);
         $this->redirect(
-            BackendModel::createURLForAction('Edit') . '&amp;id=' .
+            BackendModel::createURLForAction('Edit') . '&id=' .
             $feedback['question_id'] . '&report=deleted#tabFeedback'
         );
     }
