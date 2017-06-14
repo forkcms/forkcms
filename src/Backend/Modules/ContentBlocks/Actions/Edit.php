@@ -25,13 +25,12 @@ use Symfony\Component\Form\Form;
 /**
  * This is the edit-action, it will display a form to edit an existing item
  */
-class ContentBlockEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     public function execute(): void
     {
         parent::execute();
 
-        /** @var ContentBlock $contentBlock */
         $contentBlock = $this->getContentBlock();
 
         $form = $this->getForm($contentBlock);
@@ -58,7 +57,7 @@ class ContentBlockEdit extends BackendBaseActionEdit
         $this->redirect(
             $this->getBackLink(
                 [
-                    'report' => 'content-block-edited',
+                    'report' => 'edited',
                     'var' => $updateContentBlock->title,
                     'highlight' => 'row-' . $contentBlock->getId(),
                 ]
@@ -69,7 +68,7 @@ class ContentBlockEdit extends BackendBaseActionEdit
     private function getBackLink(array $parameters = []): string
     {
         return BackendModel::createURLForAction(
-            'ContentBlockIndex',
+            'Index',
             null,
             null,
             $parameters
@@ -84,7 +83,7 @@ class ContentBlockEdit extends BackendBaseActionEdit
         // specific revision?
         $revisionId = $this->get('request')->query->getInt('revision');
 
-        if ($revisionId !== null) {
+        if ($revisionId !== 0) {
             $this->tpl->assign('usingRevision', true);
 
             try {

@@ -51,7 +51,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showContentBlocksContentBlockDelete %}
+          {% if showContentBlocksDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
               <span class="fa fa-trash-o"></span>
               {{ 'lbl.Delete'|trans|ucfirst }}
@@ -64,7 +64,7 @@
           </button>
         </div>
       </div>
-      {% if showContentBlocksContentBlockDelete %}
+      {% if showContentBlocksDelete %}
         <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -78,7 +78,7 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                   <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
-                <a href="{{ geturl('ContentBlockDelete') }}&amp;id={{ contentBlock.id }}" class="btn btn-danger">
+                <a href="{{ geturl('Delete') }}&amp;id={{ contentBlock.id }}" class="btn btn-danger">
                   <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                 </a>
               </div>

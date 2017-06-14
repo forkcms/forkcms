@@ -16,7 +16,7 @@ use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataGrid;
 /**
  * This is the index-action (default), it will display the overview
  */
-class ContentBlockIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     public function execute(): void
     {

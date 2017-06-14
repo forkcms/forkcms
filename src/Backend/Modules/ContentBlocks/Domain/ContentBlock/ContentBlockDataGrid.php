@@ -30,8 +30,8 @@ class ContentBlockDataGrid extends DataGridDB
         $this->setColumnFunction([TemplateModifiers::class, 'showBool'], ['[hidden]', true], 'isHidden');
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('ContentBlockEdit')) {
-            $editUrl = Model::createURLForAction('ContentBlockEdit', null, null, ['id' => '[id]'], false);
+        if (BackendAuthentication::isAllowedAction('Edit')) {
+            $editUrl = Model::createURLForAction('Edit', null, null, ['id' => '[id]'], false);
             $this->setColumnURL('title', $editUrl);
             $this->addColumn('edit', null, Language::lbl('Edit'), $editUrl, Language::lbl('Edit'));
         }

@@ -21,5 +21,5 @@ class Config extends BackendBaseConfig
      *
      * @var string
      */
-    protected $defaultAction = 'ContentBlockIndex';
+    protected $defaultAction = 'Index';
 }

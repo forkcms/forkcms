@@ -20,7 +20,7 @@ use Symfony\Component\Form\Form;
 /**
  * This is the add-action, it will display a form to create a new item
  */
-class ContentBlockAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     public function execute(): void
     {
@@ -37,7 +37,6 @@ class ContentBlockAdd extends BackendBaseActionAdd
             return;
         }
 
-        /** @var CreateContentBlock $createContentBlock */
         $createContentBlock = $this->createContentBlock($form);
 
         $this->get('event_dispatcher')->dispatch(
@@ -48,7 +47,7 @@ class ContentBlockAdd extends BackendBaseActionAdd
         $this->redirect(
             $this->getBackLink(
                 [
-                    'report' => 'content-block-added',
+                    'report' => 'added',
                     'var' => $createContentBlock->title,
                 ]
             )
@@ -57,7 +56,6 @@ class ContentBlockAdd extends BackendBaseActionAdd
 
     private function createContentBlock(Form $form): CreateContentBlock
     {
-        /** @var CreateContentBlock $createContentBlock */
         $createContentBlock = $form->getData();
         $createContentBlock->userId = Authentication::getUser()->getUserId();
 
@@ -70,7 +68,7 @@ class ContentBlockAdd extends BackendBaseActionAdd
     private function getBackLink(array $parameters = []): string
     {
         return BackendModel::createURLForAction(
-            'ContentBlockIndex',
+            'Index',
             null,
             null,
             $parameters

@@ -35,8 +35,8 @@ class Installer extends ModuleInstaller
         $this->setNavigation(
             $navigationModulesId,
             $this->getModule(),
-            'content_blocks/content_block_index',
-            ['content_blocks/content_block_add', 'content_blocks/content_block_edit']
+            'content_blocks/index',
+            ['content_blocks/add', 'content_blocks/edit']
         );
     }
 
@@ -44,10 +44,10 @@ class Installer extends ModuleInstaller
     {
         $this->setModuleRights(1, $this->getModule());
 
-        $this->setActionRights(1, $this->getModule(), 'ContentBlockAdd');
-        $this->setActionRights(1, $this->getModule(), 'ContentBlockDelete');
-        $this->setActionRights(1, $this->getModule(), 'ContentBlockEdit');
-        $this->setActionRights(1, $this->getModule(), 'ContentBlockIndex');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
     }
 
     private function configureEntities(): void

@@ -20,7 +20,7 @@ use Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotF
 /**
  * This is the delete-action, it will delete an item.
  */
-class ContentBlockDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
@@ -38,7 +38,7 @@ class ContentBlockDelete extends BackendBaseActionDelete
         $this->redirect(
             $this->getBackLink(
                 [
-                    'report' => 'content-block-deleted',
+                    'report' => 'deleted',
                     'var' => $contentBlock->getTitle(),
                 ]
             )
@@ -48,7 +48,7 @@ class ContentBlockDelete extends BackendBaseActionDelete
     private function getBackLink(array $parameters = []): string
     {
         return BackendModel::createURLForAction(
-            'ContentBlockIndex',
+            'Index',
             null,
             null,
             $parameters

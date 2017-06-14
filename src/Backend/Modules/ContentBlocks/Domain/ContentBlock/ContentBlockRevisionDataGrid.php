@@ -45,7 +45,7 @@ class ContentBlockRevisionDataGrid extends DataGridDB
         // check if this action is allowed
         if (Authentication::isAllowedAction('Edit')) {
             $editRevisionUrl = Model::createURLForAction(
-                'ContentBlockEdit',
+                'Edit',
                 null,
                 null,
                 ['id' => '[id]', 'revision' => '[revision_id]'],
