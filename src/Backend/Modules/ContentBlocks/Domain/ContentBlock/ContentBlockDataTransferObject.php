@@ -23,7 +23,7 @@ class ContentBlockDataTransferObject
     public $extraId;
 
     /**
-     * @var ?int
+     * @var int|null
      */
     public $revisionId;
 
