@@ -65,7 +65,7 @@ class ContentBlockType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('theme');
-        $resolver->setDefaults(['data_class' => CreateContentBlock::class]);
+        $resolver->setDefaults(['data_class' => ContentBlockDataTransferObject::class]);
     }
 
     public function getBlockPrefix(): string
