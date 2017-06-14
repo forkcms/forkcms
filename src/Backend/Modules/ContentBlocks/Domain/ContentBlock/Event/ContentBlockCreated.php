@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Event;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Event;
 
 final class ContentBlockCreated extends ContentBlockEvent
 {
