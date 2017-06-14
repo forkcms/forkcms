@@ -115,7 +115,7 @@ class Data extends BackendBaseActionIndex
         $this->record = BackendFormBuilderModel::get($this->id);
 
         if ($this->record['method'] === 'email') {
-            return $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
