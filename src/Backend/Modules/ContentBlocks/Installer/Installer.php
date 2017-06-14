@@ -11,7 +11,7 @@ namespace Backend\Modules\ContentBlocks\Installer;
 
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 
 /**
  * Installer for the content blocks module
@@ -35,8 +35,8 @@ class Installer extends ModuleInstaller
         $this->setNavigation(
             $navigationModulesId,
             $this->getModule(),
-            'content_blocks/index',
-            ['content_blocks/add', 'content_blocks/edit']
+            'content_blocks/content_block_index',
+            ['content_blocks/content_block_add', 'content_blocks/content_block_edit']
         );
     }
 
