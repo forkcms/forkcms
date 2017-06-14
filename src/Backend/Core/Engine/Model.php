@@ -96,7 +96,7 @@ class Model extends \Common\Core\Model
             $parameters['sort'] = $queryParameterBag->get('sort');
         }
 
-        $queryString = '?' . http_build_query($parameters, null, '&');
+        $queryString = '?' . http_build_query($parameters);
 
         if (!$encodeSquareBrackets) {
             // we use things like [id] to parse database column data in so we need to unescape those
