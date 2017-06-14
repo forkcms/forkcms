@@ -31,20 +31,19 @@ class Delete extends BackendBaseActionDelete
         $this->id = $deleteFormData['id'];
 
         // group exists and id is not null?
-        if ($this->id !== 0 && BackendGroupsModel::exists($this->id)) {
-            parent::execute();
-
-            // get record
-            $this->record = BackendGroupsModel::get($this->id);
-
-            // delete group
-            BackendGroupsModel::delete($this->id);
-
-            // item was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name']));
-        } else {
-            // no item found, redirect to the overview with an error
+        if ($this->id === 0 || !BackendGroupsModel::exists($this->id)) {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
+
+        parent::execute();
+
+        // get record
+        $this->record = BackendGroupsModel::get($this->id);
+
+        // delete group
+        BackendGroupsModel::delete($this->id);
+
+        // item was deleted, so redirect
+        $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name']));
     }
 }
