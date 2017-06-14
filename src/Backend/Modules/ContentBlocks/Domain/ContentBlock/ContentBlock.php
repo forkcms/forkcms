@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="content_blocks")
- * @ORM\Entity(repositoryClass="Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository")
+ * @ORM\Entity(repositoryClass="ContentBlockRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class ContentBlock
