@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\DataGrid;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Backend\Core\Engine\DataGridDB;
 use Backend\Core\Language\Locale;
