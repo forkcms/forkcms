@@ -12,6 +12,7 @@ namespace Backend\Modules\Extensions\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Extensions\Form\ThemeTemplateDeleteType;
 
 /**
  * This is the delete-action, it will delete a template
@@ -20,8 +21,15 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
 {
     public function execute(): void
     {
+        $deleteForm = $this->createForm(ThemeTemplateDeleteType::class);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
         // get parameters
-        $this->id = $this->getRequest()->query->getInt('id');
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
         if ($this->id !== 0 && BackendExtensionsModel::existsTemplate($this->id)) {

@@ -14,6 +14,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Extensions\Form\ThemeTemplateDeleteType;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
@@ -42,6 +43,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->loadData();
         $this->loadForm();
         $this->validateForm();
+        $this->loadDeleteForm();
         $this->parse();
         $this->display();
     }
@@ -375,5 +377,11 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(ThemeTemplateDeleteType::class, ['id' => $this->record['id']]);
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
