@@ -32,22 +32,22 @@ class Delete extends BackendBaseActionDelete
         $this->id = $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== 0 && BackendLocationModel::exists($this->id)) {
-            parent::execute();
-
-            // get all data for the item we want to edit
-            $this->record = (array) BackendLocationModel::get($this->id);
-
-            // delete item
-            BackendLocationModel::delete($this->id);
-
-            // user was deleted, so redirect
-            $this->redirect(
-                BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-                rawurlencode($this->record['title'])
-            );
-        } else {
+        if ($this->id === 0 || !BackendLocationModel::exists($this->id)) {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
+
+        parent::execute();
+
+        // get all data for the item we want to edit
+        $this->record = (array) BackendLocationModel::get($this->id);
+
+        // delete item
+        BackendLocationModel::delete($this->id);
+
+        // user was deleted, so redirect
+        $this->redirect(
+            BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
+            rawurlencode($this->record['title'])
+        );
     }
 }
