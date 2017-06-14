@@ -1076,8 +1076,8 @@ jsBackend.mediaLibraryHelper.upload =
     },
 
     /**
-    * Configure the uploader to trigger the cropper
-    */
+     * Configure the uploader to trigger the cropper
+     */
     getScalingConfig: function() {
         return {
             includeExif: false, // needs to be false to prevent issues during the cropping process, it also is good for privacy reasons
