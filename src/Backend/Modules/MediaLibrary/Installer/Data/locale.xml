@@ -244,6 +244,22 @@
         <translation language="en"><![CDATA[The following media will be connected when pressing "OK":]]></translation>
         <translation language="nl"><![CDATA[Volgende media wordt gekoppeld als je op "OK" drukt:]]></translation>
       </item>
+      <item type="label" name="Crop">
+        <translation language="en"><![CDATA[crop]]></translation>
+        <translation language="nl"><![CDATA[bijsnijden]]></translation>
+      </item>
+      <item type="label" name="RotateLeft">
+        <translation language="en"><![CDATA[rotate left]]></translation>
+        <translation language="nl"><![CDATA[draai naar links]]></translation>
+      </item>
+      <item type="label" name="RotateRight">
+        <translation language="en"><![CDATA[rotate right]]></translation>
+        <translation language="nl"><![CDATA[draai naar rechts]]></translation>
+      </item>
+      <item type="label" name="CropImage">
+        <translation language="en"><![CDATA[crop image]]></translation>
+        <translation language="nl"><![CDATA[afbeelding bijsnijden]]></translation>
+      </item>
     </Core>
     <MediaLibrary>
       <item type="label" name="Action">
@@ -265,22 +281,6 @@
       <item type="label" name="BackToOverview">
         <translation language="en"><![CDATA[back to overview]]></translation>
         <translation language="nl"><![CDATA[terug naar overzicht]]></translation>
-      </item>
-      <item type="label" name="Crop">
-        <translation language="en"><![CDATA[crop]]></translation>
-        <translation language="nl"><![CDATA[bijsnijden]]></translation>
-      </item>
-      <item type="label" name="RotateLeft">
-        <translation language="en"><![CDATA[rotate left]]></translation>
-        <translation language="nl"><![CDATA[draai naar links]]></translation>
-      </item>
-      <item type="label" name="RotateRight">
-        <translation language="en"><![CDATA[rotate right]]></translation>
-        <translation language="nl"><![CDATA[draai naar rechts]]></translation>
-      </item>
-      <item type="label" name="CropImage">
-        <translation language="en"><![CDATA[crop image]]></translation>
-        <translation language="nl"><![CDATA[afbeelding bijsnijden]]></translation>
       </item>
       <item type="message" name="CleanedUpMediaItems">
         <translation language="en"><![CDATA[Removed %1$s media items.]]></translation>
