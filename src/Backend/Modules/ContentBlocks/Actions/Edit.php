@@ -106,7 +106,7 @@ class Edit extends BackendBaseActionEdit
             ContentBlockType::class,
             new UpdateContentBlock($contentBlock),
             [
-                'theme' => $this->get('fork.settings')->get('Core', 'theme', 'Core'),
+                'theme' => $this->get('fork.settings')->get('Core', 'theme', 'Fork'),
             ]
         );
 
