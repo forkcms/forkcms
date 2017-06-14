@@ -22,7 +22,7 @@ class DeleteCategory extends BackendBaseActionDelete
     public function execute(): void
     {
         $deleteForm = $this->createForm(BlogCategoryDeleteType::class);
-        $deleteForm->handleRequest($this->get('request'));
+        $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->redirect(BackendModel::createURLForAction('Categories') . '&error=something-went-wrong');
         }
