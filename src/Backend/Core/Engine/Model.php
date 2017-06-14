@@ -96,7 +96,7 @@ class Model extends \Common\Core\Model
             $parameters['sort'] = $queryParameterBag->get('sort');
         }
 
-        $queryString = '?' . http_build_query($parameters, null, '&amp;');
+        $queryString = '?' . http_build_query($parameters);
 
         if (!$encodeSquareBrackets) {
             // we use things like [id] to parse database column data in so we need to unescape those
@@ -707,7 +707,7 @@ class Model extends \Common\Core\Model
                 'module' => $module,
                 'type' => $type,
                 'label' => $label ?? $module, // if label is empty, fallback to module
-                'action' => $action ?? $module, // if action is empty, fallback to module
+                'action' => $action ?? null,
                 'data' => $data ===  null ? null : serialize($data),
                 'hidden' => $hidden ? 'Y' : 'N',
                 'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
