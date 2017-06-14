@@ -12,6 +12,7 @@ namespace Backend\Modules\FormBuilder\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+use Backend\Modules\FormBuilder\Form\FormBuilderDeleteType;
 
 /**
  * This is the delete-action, it will delete an item.
@@ -20,8 +21,15 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
+        $deleteForm = $this->createForm(FormBuilderDeleteType::class);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
         // get parameters
-        $this->id = $this->getRequest()->query->getInt('id');
+        $this->id = $deleteFormData['id'];
 
         // does the item exist
         if ($this->id !== 0 && BackendFormBuilderModel::exists($this->id)) {
