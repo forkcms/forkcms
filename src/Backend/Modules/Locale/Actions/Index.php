@@ -338,6 +338,7 @@ class Index extends BackendBaseActionIndex
         if (empty($this->filter['language'])) {
             $this->filter['language'] = [BL::getWorkingLanguage()];
         }
+        $this->filter['language'] = (array) $this->filter['language'];
         $this->filter['name'] = $this->getRequest()->query->get('name');
         $this->filter['value'] = $this->getRequest()->query->get('value');
 
