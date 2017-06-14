@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDeleteType;
 
 /**
  * This is the class to Delete a MediaGallery
@@ -17,8 +18,15 @@ class MediaGalleryDelete extends BackendBaseActionDelete
     {
         parent::execute();
 
+        $deleteForm = $this->createForm(MediaGalleryDeleteType::class);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(Model::createURLForAction('MediaGalleryIndex') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
         /** @var MediaGallery $mediaGallery */
-        $mediaGallery = $this->getMediaGallery();
+        $mediaGallery = $this->getMediaGallery($deleteFormData['id']);
 
         /** @var DeleteMediaGallery $deleteMediaGallery */
         $deleteMediaGallery = new DeleteMediaGallery($mediaGallery);
@@ -36,13 +44,11 @@ class MediaGalleryDelete extends BackendBaseActionDelete
         );
     }
 
-    private function getMediaGallery(): MediaGallery
+    private function getMediaGallery(string $id): MediaGallery
     {
         try {
             /** @var MediaGallery|null $mediaGallery */
-            return $this->get('media_galleries.repository.gallery')->findOneById(
-                $this->getRequest()->query->getInt('id')
-            );
+            return $this->get('media_galleries.repository.gallery')->findOneById($id);
         } catch (MediaGalleryNotFound $mediaGalleryNotFound) {
             $this->redirect(
                 $this->getBackLink(
