@@ -146,7 +146,6 @@ class Installer extends ModuleInstaller
     {
         if (!$this->hasExistingGodUser()) {
             $this->loadGodUserAvatar();
-            $passwordStrength = $this->getPasswordStrength();
 
             // build settings
             $settings = [];
@@ -161,7 +160,7 @@ class Installer extends ModuleInstaller
             );
             $settings['number_format'] = serialize('dot_nothing');
             $settings['password_key'] = serialize(uniqid('', true));
-            $settings['password_strength'] = serialize($passwordStrength);
+            $settings['password_strength'] = serialize($this->getPasswordStrength());
             $settings['current_password_change'] = serialize(time());
             $settings['avatar'] = serialize('god.jpg');
 
