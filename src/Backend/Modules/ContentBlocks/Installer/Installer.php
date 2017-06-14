@@ -44,10 +44,10 @@ class Installer extends ModuleInstaller
     {
         $this->setModuleRights(1, $this->getModule());
 
-        $this->setActionRights(1, $this->getModule(), 'Add');
-        $this->setActionRights(1, $this->getModule(), 'Delete');
-        $this->setActionRights(1, $this->getModule(), 'Edit');
-        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'ContentBlockAdd');
+        $this->setActionRights(1, $this->getModule(), 'ContentBlockDelete');
+        $this->setActionRights(1, $this->getModule(), 'ContentBlockEdit');
+        $this->setActionRights(1, $this->getModule(), 'ContentBlockIndex');
     }
 
     private function configureEntities(): void
