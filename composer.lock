@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "886dac4c9c4e931cf76a6ac467829aa5",
+    "content-hash": "ffb28bb3420703a2cc6a0bee5af6671c",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1492,16 +1492,16 @@
         },
         {
             "name": "mailmotor/campaignmonitor-bundle",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/campaignmonitor-bundle.git",
-                "reference": "831b9e1a8a6d4f1fbba7fc901ff0e0db7ca9ca80"
+                "reference": "e9df4e085d6f8937749b3d0bf03831191d0ad145"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/campaignmonitor-bundle/zipball/831b9e1a8a6d4f1fbba7fc901ff0e0db7ca9ca80",
-                "reference": "831b9e1a8a6d4f1fbba7fc901ff0e0db7ca9ca80",
+                "url": "https://api.github.com/repos/mailmotor/campaignmonitor-bundle/zipball/e9df4e085d6f8937749b3d0bf03831191d0ad145",
+                "reference": "e9df4e085d6f8937749b3d0bf03831191d0ad145",
                 "shasum": ""
             },
             "require": {
@@ -1535,7 +1535,7 @@
                 "bundle",
                 "php"
             ],
-            "time": "2016-12-05T08:25:16+00:00"
+            "time": "2017-06-15T13:56:47+00:00"
         },
         {
             "name": "mailmotor/mailchimp-bundle",
