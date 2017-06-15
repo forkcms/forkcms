@@ -261,7 +261,7 @@
                     <label for="authRequired" class="control-label">{% form_field auth_required %} {{ 'msg.AuthRequired'|trans|ucfirst }}</label>
                   </li>
                   {% if authGroups %}
-                  <div class="js-authentication-groups" {% if not item.data.auth_required %} style="display: none;"{% endif %}>
+                  <div class="js-authentication-groups" {% if item.data.auth_required %} style="display: none;"{% endif %}>
                     <h4>{{ 'lbl.Groups'|trans|ucfirst }}</h4>
                     <ul class="list-unstyled">
                       {% for item in authGroups %}
