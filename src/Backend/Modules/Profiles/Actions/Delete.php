@@ -12,6 +12,7 @@ namespace Backend\Modules\Profiles\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use Backend\Modules\Profiles\Form\ProfileDeleteType;
 
 /**
  * This action will delete or restore a profile.
@@ -20,8 +21,15 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
+        $deleteForm = $this->createForm(ProfileDeleteType::class);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
         // get parameters
-        $this->id = $this->getRequest()->query->getInt('id');
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
         if ($this->id !== 0 && BackendProfilesModel::exists($this->id)) {

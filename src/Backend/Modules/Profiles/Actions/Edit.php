@@ -17,6 +17,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use Backend\Modules\Profiles\Form\ProfileDeleteType;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**
@@ -54,6 +55,7 @@ class Edit extends BackendBaseActionEdit
             $this->loadGroups();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
@@ -363,5 +365,11 @@ class Edit extends BackendBaseActionEdit
                 $this->redirect($redirectUrl);
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(ProfileDeleteType::class, ['id' => $this->profile['id']]);
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
