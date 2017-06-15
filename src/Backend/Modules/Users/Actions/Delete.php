@@ -14,6 +14,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\User as BackendUser;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use Backend\Modules\Users\Form\UserDeleteType;
 
 /**
  * This is the delete-action, it will deactivate and mark the user as deleted
@@ -22,8 +23,15 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
+        $deleteForm = $this->createForm(UserDeleteType::class);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+        }
+        $deleteFormData = $deleteForm->getData();
+
         // get parameters
-        $this->id = $this->getRequest()->query->getInt('id');
+        $this->id = (int) $deleteFormData['id'];
 
         // does the user exist
         if ($this->id !== 0 && BackendUsersModel::exists($this->id) &&
