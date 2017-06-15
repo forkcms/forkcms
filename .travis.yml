@@ -11,7 +11,7 @@ matrix:
     - php: hhvm
 
 script:
-  - bin/simple-phpunit --coverage-clover=coverage.clover
+  - travis_wait 20 bin/simple-phpunit --coverage-clover=coverage.clover
 
 before_script:
   - npm install -g bower
