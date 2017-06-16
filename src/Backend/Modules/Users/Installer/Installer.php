@@ -11,6 +11,7 @@ namespace Backend\Modules\Users\Installer;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Core\Engine\Authentication;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
@@ -167,7 +168,7 @@ class Installer extends ModuleInstaller
             // build user
             $user = [];
             $user['email'] = $this->getVariable('email');
-            $user['password'] = sha1(md5(unserialize($settings['password_key'])) . md5($this->getVariable('password')));
+            $user['password'] = Authentication::encryptPassword($this->getVariable('password'));
             $user['active'] = 'Y';
             $user['deleted'] = 'N';
             $user['is_god'] = 'Y';
