@@ -301,6 +301,7 @@ class Edit extends BackendBaseActionEdit
         $block['formElements']['chkVisible'] = $this->form->addCheckbox('block_visible_' . $block['index'], true);
         $block['formElements']['hidExtraId'] = $this->form->addHidden('block_extra_id_' . $block['index'], 0);
         $block['formElements']['hidExtraType'] = $this->form->addHidden('block_extra_type_' . $block['index'], 'rich_text');
+        $block['formElements']['hidExtraData'] = $this->form->addHidden('block_extra_data_' . $block['index']);
         $block['formElements']['hidPosition'] = $this->form->addHidden('block_position_' . $block['index'], 'fallback');
         $block['formElements']['txtHTML'] = $this->form->addTextarea(
             'block_html_' . $block['index'],
@@ -330,6 +331,7 @@ class Edit extends BackendBaseActionEdit
                 // set linked extra
                 $block['extra_id'] = $this->getRequest()->request->get('block_extra_id_' . $i);
                 $block['extra_type'] = $this->getRequest()->request->get('block_extra_type_' . $i);
+                $block['extra_data'] = $this->getRequest()->request->get('block_extra_data_' . $i);
 
                 // reset some stuff
                 if ($block['extra_id'] <= 0) {
@@ -396,6 +398,10 @@ class Edit extends BackendBaseActionEdit
             $block['formElements']['hidExtraType'] = $this->form->addHidden(
                 'block_extra_type_' . $block['index'],
                 $block['extra_type']
+            );
+            $block['formElements']['hidExtraData'] = $this->form->addHidden(
+                'block_extra_data_' . $block['index'],
+                htmlentities($block['extra_data'])
             );
             $block['formElements']['hidPosition'] = $this->form->addHidden(
                 'block_position_' . $block['index'],
