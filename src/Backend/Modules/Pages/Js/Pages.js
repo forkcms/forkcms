@@ -131,7 +131,7 @@ jsBackend.pages.extras = {
         var visible = blockVisibility.attr('checked');
 
         // add visual representation of block to template visualisation
-        var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible, selectedExtraType);
+        var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible, selectedExtraType, selectedExtraData);
 
         // block/widget = don't show editor
         if (selectedExtraType !== 'usertemplate' && typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') {
@@ -145,7 +145,7 @@ jsBackend.pages.extras = {
     },
 
     // add block visual on template
-    addBlockVisual: function(position, index, extraId, visible, extraType)
+    addBlockVisual: function(position, index, extraId, visible, extraType, extraData)
     {
         // check if the extra is valid
         if (extraType != 'usertemplate' && extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
@@ -1250,6 +1250,7 @@ jsBackend.pages.template = {
             var index = $('input[id^=blockExtraId]', this).prop('id').replace('blockExtraId', '');
             var extraId = parseInt($('input[id^=blockExtraId]', this).val());
             var extraType = $('input[id^=blockExtraType]', this).val();
+            var extraData = $('input[id^=blockExtraData]', this).val();
             var position = $('input[id^=blockPosition]', this).val();
             var visible = $('input[id^=blockVisible]', this).attr('checked');
 
@@ -1269,7 +1270,7 @@ jsBackend.pages.template = {
             }
 
             // add visual representation of block to template visualisation
-            added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible, extraType);
+            added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible, extraType, extraData);
 
             // if the visual could be not added, remove the content entirely
             if (!added) $(this).remove();
