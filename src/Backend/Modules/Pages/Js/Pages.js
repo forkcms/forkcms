@@ -165,11 +165,19 @@ jsBackend.pages.extras = {
 
         // user template
         else if (extraType == 'usertemplate') {
-            var template = jsBackend.pages.template.userTemplates[extraId];
+            if (typeof(extraData) === "string" && extraData !== '') {
+                extraData = JSON.parse(extraData);
+            }
 
             editLink = '';
             title = utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate'));
-            description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
+            if (extraData.title) {
+                title += ': ' + extraData.title;
+            }
+            description = '';
+            if (extraData.description) {
+                description += extraData.description;
+            }
         }
 
         // editor
