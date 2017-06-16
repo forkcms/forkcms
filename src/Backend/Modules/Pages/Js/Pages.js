@@ -86,7 +86,7 @@ jsBackend.pages.extras = {
     },
 
     // store the extra for real
-    addBlock: function(selectedExtraId, selectedPosition, selectedExtraType)
+    addBlock: function(selectedExtraId, selectedPosition, selectedExtraType, selectedExtraData)
     {
         selectedExtraType = selectedExtraType || 'rich_text';
 
@@ -100,6 +100,7 @@ jsBackend.pages.extras = {
         var blockHtml = $('textarea[id^=blockHtml]', block);
         var blockExtraId = $('input[id^=blockExtraId]', block);
         var blockExtraType = $('input[id^=blockExtraType]', block);
+        var blockExtraData = $('input[id^=blockExtraData]', block);
         var blockPosition = $('input[id^=blockPosition]', block);
         var blockVisibility = $('input[id^=blockVisible]', block);
 
@@ -107,6 +108,7 @@ jsBackend.pages.extras = {
         blockHtml.prop('id', blockHtml.prop('id').replace('0', index)).prop('name', blockHtml.prop('name').replace('0', index));
         blockExtraId.prop('id', blockExtraId.prop('id').replace('0', index)).prop('name', blockExtraId.prop('name').replace('0', index));
         blockExtraType.prop('id', blockExtraType.prop('id').replace('0', index)).prop('name', blockExtraType.prop('name').replace('0', index));
+        blockExtraData.prop('id', blockExtraData.prop('id').replace('0', index)).prop('name', blockExtraData.prop('name').replace('0', index));
         blockPosition.prop('id', blockPosition.prop('id').replace('0', index)).prop('name', blockPosition.prop('name').replace('0', index));
         blockVisibility.prop('id', blockVisibility.prop('id').replace('0', index)).prop('name', blockVisibility.prop('name').replace('0', index));
 
@@ -118,6 +120,9 @@ jsBackend.pages.extras = {
 
         // save extra type
         blockExtraType.val(selectedExtraType);
+
+        // save extra data
+        blockExtraData.val(JSON.stringify(selectedExtraData));
 
         // add block to dom
         block.appendTo($('#editContent'));
@@ -468,13 +473,17 @@ jsBackend.pages.extras = {
                 // is user template?
                 var isUserTemplate = (selectedExtraType == 'usertemplate');
 
+                // fetch the selected extra data
+                var selectedExtraData = $('#extraData').val();
+
                 // fetch user template id
                 if (isUserTemplate) {
                     selectedExtraId = $('#userTemplate').val();
+                    selectedExtraData = jsData.pages.userTemplates[selectedExtraId];
                 }
 
                 // add the extra
-                var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType);
+                var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType, selectedExtraData);
 
                 // add a block = template is no longer original
                 jsBackend.pages.template.original = false;
