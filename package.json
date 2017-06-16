@@ -23,5 +23,8 @@
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
     "slick-carousel": "^1.6.0"
+  },
+  "dependencies": {
+    "bootstrap-datepicker": "^1.6.4"
   }
 }
