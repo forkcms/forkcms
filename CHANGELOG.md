@@ -1,3 +1,17 @@
+4.5.4 (2017-06-16)
+------------------
+
+Bugfixes:
+
+* Github: Add mention of what to do when a security issue is found to the readme [#2030](https://github.com/forkcms/forkcms/pull/2030)
+* Github: Fixed typo in the readme [#2035](https://github.com/forkcms/forkcms/pull/2035)
+* Core: Fixed some typos in the analytics locale [#2028](https://github.com/forkcms/forkcms/pull/2028)
+* Core: Fix html5 file input revalidation not working [#2043](https://github.com/forkcms/forkcms/pull/2043)
+* Pages: Fix blog images path casing [#2104](https://github.com/forkcms/forkcms/pull/2104)
+* Pages: Fix auth tab not working correctly [#2037](https://github.com/forkcms/forkcms/pull/2037)
+* Triton: Fixed clicking on label in search widget didn't focus input field [#2048](https://github.com/forkcms/forkcms/pull/2048)
+
+
 4.5.3 (2017-04-13)
 ------------------
 
