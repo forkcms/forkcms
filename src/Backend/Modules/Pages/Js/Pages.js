@@ -402,6 +402,11 @@ jsBackend.pages.extras = {
     // save/reset the content
     setContent: function(index, content)
     {
+        // don't set content if this is a usertemplate
+        if ($('#blockExtraType' + index).val() === 'usertemplate') {
+            return false;
+        }
+
         // the content to set
         if (content != null) $('#blockHtml' + index).val(content);
 
