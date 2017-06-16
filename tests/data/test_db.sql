@@ -888,6 +888,7 @@ CREATE TABLE `pages_blocks` (
   `position` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_id` int(11) DEFAULT NULL COMMENT 'The linked extra.',
   `extra_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'rich_text',
+  `extra_data` text COLLATE utf8mb4_unicode_ci,
   `html` text COLLATE utf8mb4_unicode_ci COMMENT 'if this block is HTML this field should contain the real HTML.',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
