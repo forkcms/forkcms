@@ -32,7 +32,6 @@ class Delete extends BackendBaseActionDelete
         }
         $deleteFormData = $deleteForm->getData();
 
-        /** @var ContentBlock $contentBlock */
         $contentBlock = $this->getContentBlock((int) $deleteFormData['id']);
 
         // The command bus will handle the saving of the content block in the database.
