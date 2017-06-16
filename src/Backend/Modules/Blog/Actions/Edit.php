@@ -9,7 +9,6 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Form;
 use Backend\Modules\Blog\Form\BlogDeleteType;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;

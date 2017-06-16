@@ -10,7 +10,6 @@ namespace Backend\Modules\Blog\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 use Backend\Modules\Blog\Form\BlogDeleteType;
