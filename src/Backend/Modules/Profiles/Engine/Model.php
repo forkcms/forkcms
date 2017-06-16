@@ -232,6 +232,18 @@ class Model
     }
 
     /**
+     * Encrypt the password with PHP password_hash function.
+     *
+     * @param string $password
+     *
+     * @return string
+     */
+    public static function encryptPassword(string $password): string
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    /**
      * Encrypt a string with a salt.
      *
      * @param string $string String to encrypt.
@@ -390,7 +402,7 @@ class Model
         return $string;
     }
 
-    public static function getSetting(int $profileId, string $name): string
+    public static function getSetting(int $profileId, string $name): ?string
     {
         return unserialize(
             (string) BackendModel::getContainer()->get('database')->getVar(
@@ -596,14 +608,8 @@ class Model
 
             // new password filled in?
             if ($item['password']) {
-                // get new salt
-                $salt = self::getRandomString();
-
-                // update salt
-                self::setSetting($id, 'salt', $salt);
-
                 // build password
-                $values['password'] = self::getEncryptedString($item['password'], $salt);
+                $values['password'] = self::encryptPassword($item['password']);
             }
 
             // update values

@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Command;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
 use Backend\Core\Language\Locale;
 

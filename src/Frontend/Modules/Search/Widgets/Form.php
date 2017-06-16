@@ -27,6 +27,8 @@ class Form extends FrontendBaseWidget
         $this->addCSS('Search.css');
 
         $form = new FrontendForm('search', FrontendNavigation::getURLForBlock('Search'), 'get', null, false);
+        $form->setParameter('class', 'navbar-form');
+        $form->setParameter('role', 'search');
         $form->addText('q_widget')->setAttributes(
             [
                 'itemprop' => 'query-input',

@@ -3,9 +3,10 @@
 namespace Common;
 
 use InvalidArgumentException;
+use JsonSerializable;
 use Serializable;
 
-abstract class Locale implements Serializable
+abstract class Locale implements Serializable, JsonSerializable
 {
     /**
      * @var string
@@ -63,5 +64,10 @@ abstract class Locale implements Serializable
     public function equals(Locale $locale): bool
     {
         return $this->locale === $locale->locale;
+    }
+
+    public function jsonSerialize(): string
+    {
+        return $this->locale;
     }
 }

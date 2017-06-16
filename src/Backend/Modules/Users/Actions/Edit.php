@@ -324,10 +324,7 @@ class Edit extends BackendBaseActionEdit
 
                 // update password (only if filled in)
                 if (isset($fields['new_password']) && $fields['new_password']->isFilled()) {
-                    $user['password'] = BackendAuthentication::getEncryptedString(
-                        $fields['new_password']->getValue(),
-                        $this->record['settings']['password_key']
-                    );
+                    $user['password'] = BackendAuthentication::encryptPassword($fields['new_password']->getValue());
 
                     // the password has changed
                     if ($this->record['password'] != $user['password']) {

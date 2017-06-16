@@ -253,6 +253,11 @@ you shouldn't pass the data serialised anymore and boolean values should be pass
 
 - `fork.is_installed` used to check if fork is installed 
 
+## Password hashing
+
+Password hashing moved from custom sha1 and md5 hashing to PHP password_hash method. To migrate existing users and
+profiles they will have to do a password reset.
+
 ## Refactored out SpoonFilter::getGetValue() and SpoonFilter::getPostValue()
 
 Replaced those methods by using the Symfony Request object.

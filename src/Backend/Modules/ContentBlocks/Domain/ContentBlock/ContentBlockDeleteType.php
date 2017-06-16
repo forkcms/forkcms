@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Form;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Backend\Core\Engine\Model;
 use Symfony\Component\Form\AbstractType;
