@@ -21,10 +21,10 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendExtensionsModel::existsTemplate($this->id)) {
+        if ($this->id !== 0 && BackendExtensionsModel::existsTemplate($this->id)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 

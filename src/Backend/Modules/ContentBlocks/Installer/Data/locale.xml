@@ -57,18 +57,18 @@
         <translation language="sv"><![CDATA[Innehållsblocket "%1$s" är borttaget.]]></translation>
         <translation language="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" διεγράφη.]]></translation>
       </item>
-      <item type="message" name="EditContentBlock">
-        <translation language="nl"><![CDATA[bewerk inhoudsblok "%1$s"]]></translation>
-        <translation language="en"><![CDATA[edit content block "%1$s"]]></translation>
-        <translation language="it"><![CDATA[modifica il blocco di contenuto "%1$s"]]></translation>
-        <translation language="ru"><![CDATA[Редактировать "%1$s"]]></translation>
-        <translation language="zh"><![CDATA[编辑内容块“%1$s”]]></translation>
-        <translation language="de"><![CDATA[bearbeite Inhaltsblock "%1$s"]]></translation>
-        <translation language="hu"><![CDATA["%1$s" tartalmi blokk szerkesztése]]></translation>
-        <translation language="fr"><![CDATA[éditer le bloc de contenu "%1$s"]]></translation>
-        <translation language="es"><![CDATA[editar bloque de contenido "%1$s"]]></translation>
-        <translation language="sv"><![CDATA[ändra innehållsblock "%1$s"]]></translation>
-        <translation language="el"><![CDATA[Μεταβολή του μπλοκ περιεχομένου "%1$s"]]></translation>
+      <item type="label" name="Edit">
+        <translation language="nl"><![CDATA[bewerk inhoudsblok]]></translation>
+        <translation language="en"><![CDATA[edit content block]]></translation>
+        <translation language="it"><![CDATA[modifica il blocco di contenuto]]></translation>
+        <translation language="ru"><![CDATA[Редактировать]]></translation>
+        <translation language="zh"><![CDATA[编辑内容块]]></translation>
+        <translation language="de"><![CDATA[bearbeite Inhaltsblock]]></translation>
+        <translation language="hu"><![CDATA[tartalmi blokk szerkesztése]]></translation>
+        <translation language="fr"><![CDATA[éditer le bloc de contenu]]></translation>
+        <translation language="es"><![CDATA[editar bloque de contenido]]></translation>
+        <translation language="sv"><![CDATA[ändra innehållsblock]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή του μπλοκ περιεχομένου]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd opgeslagen.]]></translation>

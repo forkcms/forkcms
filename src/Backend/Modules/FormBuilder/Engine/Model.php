@@ -607,7 +607,7 @@ class Model
         $finder->in(FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails');
 
         // if there is a custom theme we should include the templates there also
-        $theme = BackendModel::get('fork.settings')->get('Core', 'theme', 'core');
+        $theme = BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork');
         if ($theme !== 'core') {
             $path = FRONTEND_PATH . '/Themes/' . $theme . '/Modules/FormBuilder/Layout/Templates/Mails';
             if (is_dir($path)) {

@@ -20,9 +20,9 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
-        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendFaqModel::exists($this->id)) {
             parent::execute();
             $this->record = BackendFaqModel::get($this->id);
 

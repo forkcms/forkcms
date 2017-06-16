@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\ValueObject;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use InvalidArgumentException;
 
-final class ContentBlockStatus
+final class Status
 {
     private const STATUS_ARCHIVED = 'archived';
     private const STATUS_ACTIVE = 'active';

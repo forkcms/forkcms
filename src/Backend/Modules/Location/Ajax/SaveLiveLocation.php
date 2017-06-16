@@ -25,30 +25,35 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         $generalSettings = $this->get('fork.settings')->getForModule('Location');
 
         // get parameters
-        $itemId = \SpoonFilter::getPostValue('id', null, null, 'int');
-        $zoomLevel = trim(\SpoonFilter::getPostValue('zoom', null, 'auto'));
-        $mapType = strtoupper(trim(\SpoonFilter::getPostValue(
-            'type',
-            [
-                'roadmap',
-                'satellite',
-                'hybrid',
-                'terrain',
-                'street_view',
-            ],
-            'roadmap'
-        )));
-        $mapStyle = trim(\SpoonFilter::getPostValue('style', ['standard', 'custom', 'gray', 'blue'], 'standard'));
-        $centerLat = \SpoonFilter::getPostValue('centerLat', null, 1, 'float');
-        $centerlng = \SpoonFilter::getPostValue('centerLng', null, 1, 'float');
-        $height = \SpoonFilter::getPostValue('height', null, $generalSettings['height'], 'int');
-        $width = \SpoonFilter::getPostValue('width', null, $generalSettings['width'], 'int');
-        $showLink = \SpoonFilter::getPostValue('link', ['true', 'false'], 'false', 'string');
-        $showDirections = \SpoonFilter::getPostValue('directions', ['true', 'false'], 'false', 'string');
-        $showOverview = \SpoonFilter::getPostValue('showOverview', ['true', 'false'], 'true', 'string');
+        $itemId = $this->getRequest()->request->getInt('id');
+        $zoomLevel = trim($this->getRequest()->request->get('zoom', 'auto'));
+        $mapType = strtoupper(trim($this->getRequest()->request->get('type')));
+        if (in_array($mapType, ['roadmap', 'satellite', 'hybrid', 'terrain', 'street_view'])) {
+            $mapType = 'roadmap';
+        }
+        $mapStyle = trim($this->getRequest()->request->get('style'));
+        if (!in_array($mapStyle, ['standard', 'custom', 'gray', 'blue'])) {
+            $mapStyle = 'standard';
+        }
+        $centerLat = (float) $this->getRequest()->request->get('centerLat', 1);
+        $centerLng = (float) $this->getRequest()->request->get('centerLng', 1);
+        $height = $this->getRequest()->request->getInt('height', $generalSettings['height']);
+        $width = $this->getRequest()->request->getInt('width', $generalSettings['width']);
+        $showLink = $this->getRequest()->request->get('link');
+        if (!in_array($showLink, ['true', 'false'])) {
+            $showLink = 'false';
+        }
+        $showDirections = $this->getRequest()->request->get('directions');
+        if (!in_array($showDirections, ['true', 'false'])) {
+            $showDirections = 'false';
+        }
+        $showOverview = $this->getRequest()->request->get('showOverview');
+        if (!in_array($showOverview, ['true', 'false'])) {
+            $showOverview = 'true';
+        }
 
         // reformat
-        $center = ['lat' => $centerLat, 'lng' => $centerlng];
+        $center = ['lat' => $centerLat, 'lng' => $centerLng];
         $showLink = ($showLink == 'true');
         $showDirections = ($showDirections == 'true');
         $showOverview = ($showOverview == 'true');

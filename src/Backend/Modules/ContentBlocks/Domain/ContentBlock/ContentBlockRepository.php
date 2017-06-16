@@ -1,9 +1,10 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Repository;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Modules\ContentBlocks\Entity\ContentBlock;
-use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotFound;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
 use Common\Locale;
 use Doctrine\ORM\EntityRepository;
 
@@ -21,9 +22,8 @@ class ContentBlockRepository extends EntityRepository
             );
         }
 
-        $this->getEntityManager()->persist($contentBlock);
-
         // We don't flush here, see http://disq.us/p/okjc6b
+        $this->getEntityManager()->persist($contentBlock);
     }
 
     public function getNextIdForLanguage(Locale $locale): int
@@ -38,20 +38,43 @@ class ContentBlockRepository extends EntityRepository
             ->getSingleScalarResult() + 1;
     }
 
-    public function findOneByIdAndLocale($id, Locale $locale): ?ContentBlock
+    public function findOneByIdAndLocale(?int $id, Locale $locale): ?ContentBlock
     {
-        return $this->findOneBy(['id' => $id, 'status' => ContentBlockStatus::active(), 'locale' => $locale]);
+        if ($id === null) {
+            throw ContentBlockNotFound::forEmptyId();
+        }
+
+        /** @var ContentBlock $contentBlock */
+        $contentBlock = $this->findOneBy(['id' => $id, 'status' => Status::active(), 'locale' => $locale]);
+
+        if ($contentBlock === null) {
+            throw ContentBlockNotFound::forId($id);
+        }
+
+        return $contentBlock;
     }
 
-    public function findOneByRevisionIdAndLocale($revisionId, Locale $locale): ?ContentBlock
+    public function findOneByRevisionIdAndLocale(?int $revisionId, Locale $locale): ContentBlock
     {
-        return $this->findOneBy(
+        if ($revisionId === null) {
+            throw ContentBlockNotFound::forEmptyRevisionId();
+        }
+
+        /** @var ContentBlock|null ContentBlock */
+        $contentBlock = $this->findOneBy(
             ['revisionId' => $revisionId, 'locale' => $locale]
         );
+
+        if ($contentBlock === null) {
+            throw ContentBlockNotFound::forRevisionId($revisionId);
+        }
+
+        return $contentBlock;
     }
 
     public function removeByIdAndLocale($id, Locale $locale): void
     {
+        // We don't flush here, see http://disq.us/p/okjc6b
         array_map(
             function (ContentBlock $contentBlock) {
                 $this->getEntityManager()->remove($contentBlock);

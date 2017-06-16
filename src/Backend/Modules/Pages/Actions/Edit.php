@@ -112,11 +112,11 @@ class Edit extends BackendBaseActionEdit
     private function loadData(): void
     {
         // get record
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
         $this->isGod = BackendAuthentication::getUser()->isGod();
 
         // check if something went wrong
-        if ($this->id === null || !BackendPagesModel::exists($this->id)) {
+        if ($this->id === 0 || !BackendPagesModel::exists($this->id)) {
             $this->redirect(
                 BackendModel::createURLForAction('Index') . '&error=non-existing'
             );
@@ -129,10 +129,10 @@ class Edit extends BackendBaseActionEdit
         $this->blocksContent = BackendPagesModel::getBlocks($this->id, $this->record['revision_id']);
 
         // is there a revision specified?
-        $revisionToLoad = $this->getParameter('revision', 'int');
+        $revisionToLoad = $this->getRequest()->query->getInt('revision');
 
         // if this is a valid revision
-        if ($revisionToLoad !== null) {
+        if ($revisionToLoad !== 0) {
             // overwrite the current record
             $this->record = (array) BackendPagesModel::get($this->id, $revisionToLoad);
 
@@ -144,10 +144,10 @@ class Edit extends BackendBaseActionEdit
         }
 
         // is there a revision specified?
-        $draftToLoad = $this->getParameter('draft', 'int');
+        $draftToLoad = $this->getRequest()->query->getInt('draft');
 
         // if this is a valid revision
-        if ($draftToLoad !== null) {
+        if ($draftToLoad !== 0) {
             // overwrite the current record
             $this->record = (array) BackendPagesModel::get($this->id, $draftToLoad);
 
@@ -310,7 +310,7 @@ class Edit extends BackendBaseActionEdit
         $this->positions['fallback']['blocks'][] = $block;
 
         // content has been submitted: re-create submitted content rather than the db-fetched content
-        if (isset($_POST['block_html_0'])) {
+        if ($this->getRequest()->request->has('block_html_0')) {
             // init vars
             $this->blocksContent = [];
             $hasBlock = false;
@@ -318,17 +318,17 @@ class Edit extends BackendBaseActionEdit
 
             // loop submitted blocks
             $positions = [];
-            while (isset($_POST['block_position_' . $i])) {
+            while ($this->getRequest()->request->has('block_position_' . $i)) {
                 // init var
                 $block = [];
 
                 // save block position
-                $block['position'] = $_POST['block_position_' . $i];
+                $block['position'] = $this->getRequest()->request->get('block_position_' . $i);
                 $positions[$block['position']][] = $block;
 
                 // set linked extra
-                $block['extra_id'] = $_POST['block_extra_id_' . $i];
-                $block['extra_type'] = $_POST['block_extra_type_' . $i];
+                $block['extra_id'] = $this->getRequest()->request->get('block_extra_id_' . $i);
+                $block['extra_type'] = $this->getRequest()->request->get('block_extra_type_' . $i);
 
                 // reset some stuff
                 if ($block['extra_id'] <= 0) {
@@ -338,12 +338,12 @@ class Edit extends BackendBaseActionEdit
                 // init html
                 $block['html'] = null;
 
-                $html = $_POST['block_html_' . $i];
+                $html = $this->getRequest()->request->get('block_html_' . $i);
 
                 // extra-type is HTML
                 if ($block['extra_id'] === null || $block['extra_type'] == 'usertemplate') {
-                    if ($_POST['block_extra_type_' . $i] == 'usertemplate') {
-                        $block['extra_id'] = $_POST['block_extra_id_' . $i];
+                    if ($this->getRequest()->request->get('block_extra_type_' . $i) === 'usertemplate') {
+                        $block['extra_id'] = $this->getRequest()->request->get('block_extra_id_' . $i);
                     } else {
                         // reset vars
                         $block['extra_id'] = null;
@@ -370,7 +370,10 @@ class Edit extends BackendBaseActionEdit
                 // set data
                 $block['created_on'] = BackendModel::getUTCDate();
                 $block['edited_on'] = $block['created_on'];
-                $block['visible'] = isset($_POST['block_visible_' . $i]) && $_POST['block_visible_' . $i] == 'Y' ? 'Y' : 'N';
+                $block['visible'] = $this->getRequest()->request->has('block_visible_' . $i)
+                    && $this->getRequest()->request->get('block_visible_' . $i) === 'Y'
+                    ? 'Y'
+                    : 'N';
                 $block['sequence'] = count($positions[$block['position']]) - 1;
 
                 // add to blocks
@@ -604,7 +607,10 @@ class Edit extends BackendBaseActionEdit
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', ['active', 'draft'], 'active');
+            $status = $this->getRequest()->request->get('status');
+            if (!in_array($status, ['active', 'draft'])) {
+                $status = 'active';
+            }
 
             // validate redirect
             $redirectValue = $this->frm->getField('redirect')->getValue();

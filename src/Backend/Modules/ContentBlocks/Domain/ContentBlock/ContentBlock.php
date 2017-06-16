@@ -1,16 +1,15 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Entity;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Backend\Core\Engine\Model;
-use Backend\Modules\ContentBlocks\ValueObject\ContentBlockStatus;
 use Common\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="content_blocks")
- * @ORM\Entity(repositoryClass="Backend\Modules\ContentBlocks\Repository\ContentBlockRepository")
+ * @ORM\Entity(repositoryClass="ContentBlockRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class ContentBlock
@@ -83,7 +82,7 @@ class ContentBlock
     private $isHidden;
 
     /**
-     * @var ContentBlockStatus
+     * @var Status
      *
      * @ORM\Column(type="content_blocks_status", options={"default" = "active"})
      */
@@ -112,7 +111,7 @@ class ContentBlock
         string $title,
         string $text,
         bool $isHidden,
-        ContentBlockStatus $status
+        Status $status
     ) {
         $this->id = $id;
         $this->userId = $userId;
@@ -125,26 +124,27 @@ class ContentBlock
         $this->status = $status;
     }
 
-    public static function create(
-        int $id,
-        int $userId,
-        int $extraId,
-        Locale $locale,
-        string $title,
-        string $text,
-        bool $isHidden,
-        string $template = self::DEFAULT_TEMPLATE
-    ) : self {
+    public static function fromDataTransferObject(ContentBlockDataTransferObject $dataTransferObject)
+    {
+        if ($dataTransferObject->hasExistingContentBlock()) {
+            $dataTransferObject->getContentBlockEntity()->status = Status::archived();
+        }
+
+        return self::create($dataTransferObject);
+    }
+
+    private static function create(ContentBlockDataTransferObject $dataTransferObject): self
+    {
         return new self(
-            $id,
-            $userId,
-            $extraId,
-            $template,
-            $locale,
-            $title,
-            $text,
-            $isHidden,
-            ContentBlockStatus::active()
+            $dataTransferObject->id,
+            $dataTransferObject->userId,
+            $dataTransferObject->extraId,
+            $dataTransferObject->template,
+            $dataTransferObject->locale,
+            $dataTransferObject->title,
+            $dataTransferObject->text,
+            !$dataTransferObject->isVisible,
+            Status::active()
         );
     }
 
@@ -193,7 +193,7 @@ class ContentBlock
         return $this->isHidden;
     }
 
-    public function getStatus(): ContentBlockStatus
+    public function getStatus(): Status
     {
         return $this->status;
     }
@@ -249,24 +249,13 @@ class ContentBlock
         Model::updateExtra($this->extraId, 'data', $data);
     }
 
-    public function update(string $title, string $text, bool $isHidden, string $template, int $userId): ContentBlock
-    {
-        $this->status = ContentBlockStatus::archived();
-
-        return self::create(
-            $this->id,
-            $userId,
-            $this->extraId,
-            $this->locale,
-            $title,
-            $text,
-            $isHidden,
-            $template
-        );
-    }
-
     public function archive()
     {
-        $this->status = ContentBlockStatus::archived();
+        $this->status = Status::archived();
+    }
+
+    public function getDataTransferObject(): ContentBlockDataTransferObject
+    {
+        return new ContentBlockDataTransferObject($this);
     }
 }

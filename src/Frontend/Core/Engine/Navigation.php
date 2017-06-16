@@ -70,10 +70,10 @@ class Navigation extends FrontendBaseObject
         }
 
         if ($urlencode) {
-            array_walk($parameters, 'rawurlencode');
+            $parameters = array_map('rawurlencode', $parameters);
         }
 
-        $queryString = '?' . http_build_query($parameters, null, '&amp;');
+        $queryString = '?' . http_build_query($parameters);
 
         // build the URL and return it
         return FrontendModel::get('router')->generate(

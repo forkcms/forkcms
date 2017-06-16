@@ -66,7 +66,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
     private function loadData(): void
     {
         // get data
-        $this->selectedTheme = $this->getParameter('theme', 'string');
+        $this->selectedTheme = $this->getRequest()->query->get('theme');
 
         // build available themes
         foreach (BackendExtensionsModel::getThemes() as $theme) {
@@ -74,7 +74,9 @@ class AddThemeTemplate extends BackendBaseActionAdd
         }
 
         // determine selected theme, based upon submitted form or default theme
-        $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), $this->get('fork.settings')->get('Core', 'theme', 'core'));
+        if (!array_key_exists($this->selectedTheme, $this->availableThemes)) {
+            $this->selectedTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+        }
     }
 
     private function loadForm(): void
@@ -130,7 +132,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $positions[] = $position;
 
         // content has been submitted: re-create submitted content rather than the db-fetched content
-        if (isset($_POST['position_0'])) {
+        if ($this->getRequest()->request->has('position_0')) {
             // init vars
             $this->names = [];
             $this->extras = [];
@@ -138,18 +140,18 @@ class AddThemeTemplate extends BackendBaseActionAdd
             $errors = [];
 
             // loop submitted positions
-            while (isset($_POST['position_' . $i])) {
+            while ($this->getRequest()->request->has('position_' . $i)) {
                 // init vars
                 $j = 0;
                 $extras = [];
 
                 // gather position names
-                $name = $_POST['position_' . $i];
+                $name = $this->getRequest()->request->get('position_' . $i);
 
                 // loop submitted blocks
-                while (isset($_POST['type_' . $i . '_' . $j])) {
+                while ($this->getRequest()->request->has('type_' . $i . '_' . $j)) {
                     // gather blocks id
-                    $extras[] = (int) $_POST['type_' . $i . '_' . $j];
+                    $extras[] = $this->getRequest()->request->getInt('type_' . $i . '_' . $j);
 
                     // increment counter; go fetch next block
                     ++$j;
@@ -222,11 +224,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
             $templateFile = $this->getContainer()->getParameter('site.path_www');
             // check if the template file exists
-            if ($this->frm->getField('theme')->getValue() == 'Core') {
-                $templateFile .= '/src/Frontend/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
-            } else {
-                $templateFile .= '/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
-            }
+            $templateFile .= '/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
             if (!is_file($templateFile)) {
                 $this->frm->getField('file')->addError(BL::err('TemplateFileNotFound'));
             }
@@ -307,7 +305,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $item['id'] = BackendExtensionsModel::insertTemplate($item);
 
                 // set default template
-                if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'core')) {
+                if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'Fork')) {
                     $this->get('fork.settings')->set($this->getModule(), 'default_template', $item['id']);
                 }
 

@@ -20,10 +20,10 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // group exists and id is not null?
-        if ($this->id !== null && BackendGroupsModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendGroupsModel::exists($this->id)) {
             parent::execute();
 
             // get record
