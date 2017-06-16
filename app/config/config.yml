@@ -2,6 +2,7 @@ imports:
     - { resource: console.yml }
     - { resource: parameters.yml }
     - { resource: doctrine.yml }
+    - { resource: form.yml }
 
 parameters:
     fork.is_installed: true
