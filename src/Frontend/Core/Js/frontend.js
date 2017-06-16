@@ -179,6 +179,7 @@ jsFrontend.forms =
         jsFrontend.forms.datefields();
         jsFrontend.forms.validation();
         jsFrontend.forms.filled();
+        jsFrontend.forms.datePicker();
     },
 
     // once text has been filled add another class to it (so it's possible to style it differently)
@@ -385,6 +386,16 @@ jsFrontend.forms =
                 });
             });
         }
+    },
+
+    // Add date pickers to the appropriate input elements
+    datePicker: function ()
+    {
+        $('input[data-role="fork-datepicker"]').each(
+            function (index, datePickerElement) {
+                $(datePickerElement).datepicker();
+            }
+        );
     }
 };
 
