@@ -67,10 +67,10 @@ class MediaGalleryEdit extends BackendBaseActionEdit
     private function getMediaGallery(): MediaGallery
     {
         try {
-            $id = $this->getParameter('id');
-
             /** @var MediaGallery|null $mediaGallery */
-            return $this->get('media_galleries.repository.gallery')->findOneById($id);
+            return $this->get('media_galleries.repository.gallery')->findOneById(
+                $this->getRequest()->query->getInt('id')
+            );
         } catch (MediaGalleryNotFound $mediaGalleryNotFound) {
             $this->redirect(
                 $this->getBackLink(

@@ -61,8 +61,8 @@ class ResetPassword extends BackendBaseActionAdd
     private function isThePasswordResetKeyCorrect(): bool
     {
         // catch the key and e-mail address from GET
-        $this->email = urldecode(\SpoonFilter::getGetValue('email', null, ''));
-        $this->key = \SpoonFilter::getGetValue('key', null, '');
+        $this->email = urldecode($this->getRequest()->query->get('email', ''));
+        $this->key = $this->getRequest()->query->get('key', '');
 
         // if the email or the key aren't set, redirect the user
         if ($this->email !== '' && $this->key !== '') {

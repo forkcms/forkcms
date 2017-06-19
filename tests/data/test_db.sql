@@ -2588,9 +2588,9 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `email`, `password`, `active`, `deleted`, `is_god`)
 VALUES
-  (1,'noreply@fork-cms.com','bdbadf67b9dcb8344f545e442f88b8dad343c926','Y','N','Y'),
-  (2,'pages-user@fork-cms.com','bdbadf67b9dcb8344f545e442f88b8dad343c926','Y','N','N'),
-  (3,'users-edit-user@fork-cms.com','bdbadf67b9dcb8344f545e442f88b8dad343c926','Y','N','N');
+  (1,'noreply@fork-cms.com','$2y$10$hWAUhjKF/64HZLHG/whEqu0LfHaPPCAtZc7JQUyMvIst8I9.r1p9.','Y','N','Y'),
+  (2,'pages-user@fork-cms.com','$2y$10$hWAUhjKF/64HZLHG/whEqu0LfHaPPCAtZc7JQUyMvIst8I9.r1p9.','Y','N','N'),
+  (3,'users-edit-user@fork-cms.com','$2y$10$hWAUhjKF/64HZLHG/whEqu0LfHaPPCAtZc7JQUyMvIst8I9.r1p9.','Y','N','N');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

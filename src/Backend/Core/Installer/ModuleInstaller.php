@@ -777,6 +777,11 @@ class ModuleInstaller
                     $block['html'] = file_get_contents($block['html']);
                 }
 
+                // sort array by its keys, so the array is always the same for SpoonDatabase::insert,
+                // when you don't provide an array with arrays sorted in the same order, the fields get
+                // mixed into different columns
+                ksort($block);
+
                 return $block;
             },
             $blocks

@@ -91,7 +91,7 @@ class EditSynonym extends BackendBaseActionEdit
 
     private function getId(): int
     {
-        $id = $this->getParameter('id', 'int');
+        $id = $this->getRequest()->query->getInt('id');
 
         if ($id === 0 || !BackendSearchModel::existsSynonymById($id)) {
             $this->redirect(BackendModel::createURLForAction('Synonyms') . '&error=non-existing');

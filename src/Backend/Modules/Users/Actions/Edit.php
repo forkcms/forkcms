@@ -47,8 +47,8 @@ class Edit extends BackendBaseActionEdit
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
-        $error = $this->getParameter('error', 'string');
+        $this->id = $this->getRequest()->query->getInt('id');
+        $error = $this->getRequest()->query->get('error', '');
         $this->loadAuthenticatedUser();
 
         // If id and error parameters are not set we'll assume the user logged in
@@ -56,8 +56,8 @@ class Edit extends BackendBaseActionEdit
         // When this is the case the user will be redirected to the index action of this module.
         // An action to which he may not have any user rights.
         // Redirect to the user's own profile instead to avoid unnessary words.
-        if ($this->id === null
-            && $error === null
+        if ($this->id === 0
+            && $error === ''
             && $this->authenticatedUser->getUserId()
         ) {
             $this->redirect(
@@ -322,10 +322,7 @@ class Edit extends BackendBaseActionEdit
 
                 // update password (only if filled in)
                 if (isset($fields['new_password']) && $fields['new_password']->isFilled()) {
-                    $user['password'] = BackendAuthentication::getEncryptedString(
-                        $fields['new_password']->getValue(),
-                        $this->record['settings']['password_key']
-                    );
+                    $user['password'] = BackendAuthentication::encryptPassword($fields['new_password']->getValue());
 
                     // the password has changed
                     if ($this->record['password'] != $user['password']) {

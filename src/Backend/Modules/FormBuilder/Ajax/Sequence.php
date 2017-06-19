@@ -22,8 +22,8 @@ class Sequence extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $formId = \SpoonFilter::getPostValue('form_id', null, '', 'int');
-        $newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
+        $formId = $this->getRequest()->request->getInt('form_id');
+        $newIdSequence = trim($this->getRequest()->request->get('new_id_sequence', ''));
 
         // invalid form id
         if (!BackendFormBuilderModel::exists($formId)) {

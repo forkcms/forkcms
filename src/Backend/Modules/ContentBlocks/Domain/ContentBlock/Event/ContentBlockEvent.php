@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Event;
+namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Event;
 
-use Backend\Modules\ContentBlocks\Entity\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class ContentBlockEvent extends Event

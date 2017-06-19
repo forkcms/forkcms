@@ -41,7 +41,7 @@ class MediaGalleryDelete extends BackendBaseActionDelete
         try {
             /** @var MediaGallery|null $mediaGallery */
             return $this->get('media_galleries.repository.gallery')->findOneById(
-                $this->getParameter('id', 'integer')
+                $this->getRequest()->query->getInt('id')
             );
         } catch (MediaGalleryNotFound $mediaGalleryNotFound) {
             $this->redirect(

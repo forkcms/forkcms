@@ -83,21 +83,17 @@ class Authentication
      */
     public static function getLoginStatus(string $email, string $password): string
     {
-        // get profile id
-        $profileId = FrontendProfilesModel::getIdByEmail($email);
-
-        // encrypt password
-        $encryptedPassword = FrontendProfilesModel::getEncryptedString(
-            $password,
-            FrontendProfilesModel::getSetting($profileId, 'salt')
-        );
+        // check password
+        if (!FrontendProfilesModel::verifyPassword($email, $password)) {
+            return self::LOGIN_INVALID;
+        }
 
         // get the status
         $loginStatus = FrontendModel::getContainer()->get('database')->getVar(
             'SELECT p.status
              FROM profiles AS p
-             WHERE p.email = ? AND p.password = ?',
-            [$email, $encryptedPassword]
+             WHERE p.email = ?',
+            [$email]
         );
 
         return empty($loginStatus) ? self::LOGIN_INVALID : $loginStatus;
@@ -282,14 +278,8 @@ class Authentication
      */
     public static function updatePassword(int $profileId, string $password): void
     {
-        // get new salt
-        $salt = FrontendProfilesModel::getRandomString();
-
         // encrypt password
-        $encryptedPassword = FrontendProfilesModel::getEncryptedString($password, $salt);
-
-        // update salt
-        FrontendProfilesModel::setSetting($profileId, 'salt', $salt);
+        $encryptedPassword = FrontendProfilesModel::encryptPassword($password);
 
         // update password
         FrontendProfilesModel::update($profileId, ['password' => $encryptedPassword]);

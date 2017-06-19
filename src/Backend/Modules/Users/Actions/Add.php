@@ -159,7 +159,6 @@ class Add extends BackendBaseActionAdd
                 $settings['number_format'] = $this->frm->getField('number_format')->getValue();
                 $settings['csv_split_character'] = $this->frm->getField('csv_split_character')->getValue();
                 $settings['csv_line_ending'] = $this->frm->getField('csv_line_ending')->getValue();
-                $settings['password_key'] = uniqid('', true);
                 $settings['current_password_change'] = time();
                 $settings['avatar'] = 'no-avatar.gif';
 
@@ -193,9 +192,8 @@ class Add extends BackendBaseActionAdd
                 // build user-array
                 $user = [];
                 $user['email'] = $this->frm->getField('email')->getValue();
-                $user['password'] = BackendAuthentication::getEncryptedString(
-                    $this->frm->getField('password')->getValue(true),
-                    $settings['password_key']
+                $user['password'] = BackendAuthentication::encryptPassword(
+                    $this->frm->getField('password')->getValue(true)
                 );
 
                 // save the password strength

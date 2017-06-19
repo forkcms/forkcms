@@ -1,6 +1,0 @@
-services:
-    content_blocks.repository.content_block:
-        class: Backend\Modules\ContentBlocks\Repository\ContentBlockRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - Backend\Modules\ContentBlocks\Entity\ContentBlock

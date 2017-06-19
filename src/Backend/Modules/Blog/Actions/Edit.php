@@ -53,15 +53,15 @@ class Edit extends BackendBaseActionEdit
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendBlogModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendBlogModel::exists($this->id)) {
             parent::execute();
 
             // set category id
-            $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-            if ($this->categoryId == 0) {
+            $this->categoryId = $this->getRequest()->query->getInt('category');
+            if ($this->categoryId === 0) {
                 $this->categoryId = null;
             }
 
@@ -88,10 +88,10 @@ class Edit extends BackendBaseActionEdit
         $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
 
         // is there a revision specified?
-        $revisionToLoad = $this->getParameter('revision', 'int');
+        $revisionToLoad = $this->getRequest()->query->getInt('revision');
 
         // if this is a valid revision
-        if ($revisionToLoad !== null) {
+        if ($revisionToLoad !== 0) {
             // overwrite the current record
             $this->record = (array) BackendBlogModel::getRevision($this->id, $revisionToLoad);
 
@@ -100,10 +100,10 @@ class Edit extends BackendBaseActionEdit
         }
 
         // is there a revision specified?
-        $draftToLoad = $this->getParameter('draft', 'int');
+        $draftToLoad = $this->getRequest()->query->getInt('draft');
 
         // if this is a valid revision
-        if ($draftToLoad !== null) {
+        if ($draftToLoad !== 0) {
             // overwrite the current record
             $this->record = (array) BackendBlogModel::getRevision($this->id, $draftToLoad);
 
@@ -309,7 +309,10 @@ class Edit extends BackendBaseActionEdit
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', ['active', 'draft'], 'active');
+            $status = $this->getRequest()->request->get('status');
+            if (!in_array($status, ['active', 'draft'])) {
+                $status = 'active';
+            }
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();

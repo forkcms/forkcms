@@ -45,10 +45,10 @@ class DetailTheme extends BackendBaseActionIndex
     public function execute(): void
     {
         // get parameters
-        $this->currentTheme = $this->getParameter('theme', 'string');
+        $this->currentTheme = $this->getRequest()->query->get('theme', '');
 
         // does the item exist
-        if ($this->currentTheme !== null && BackendExtensionsModel::existsTheme($this->currentTheme)) {
+        if ($this->currentTheme !== '' && BackendExtensionsModel::existsTheme($this->currentTheme)) {
             parent::execute();
             $this->loadData();
             $this->loadDataGridTemplates();

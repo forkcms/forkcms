@@ -9,6 +9,7 @@ namespace Backend\Modules\Users\Installer;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Core\Engine\Authentication;

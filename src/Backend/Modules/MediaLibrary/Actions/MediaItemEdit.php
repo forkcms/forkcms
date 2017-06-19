@@ -27,7 +27,7 @@ class MediaItemEdit extends BackendBaseActionEdit
         $mediaItem = $this->getMediaItem();
 
         // Define folder id
-        $this->folderId = $this->getParameter('folder', 'int', 0);
+        $this->folderId = $this->getRequest()->query->getInt('folder');
 
         $form = $this->createForm(
             MediaItemType::class,
@@ -81,7 +81,7 @@ class MediaItemEdit extends BackendBaseActionEdit
         try {
             // Define MediaItem from repository
             return $this->get('media_library.repository.item')->findOneById(
-                $this->getParameter('id', 'string')
+                $this->getRequest()->query->get('id')
             );
         } catch (MediaItemNotFound $mediaItemNotFound) {
             $this->redirect(

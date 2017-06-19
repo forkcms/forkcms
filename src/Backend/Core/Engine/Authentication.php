@@ -61,27 +61,30 @@ class Authentication
     }
 
     /**
-     * Returns the encrypted password for a user by giving a email/password
-     * Returns false if no user was found for this user/pass combination
+     * Encrypt the password with PHP password_hash function.
      *
-     * @param string $email The email.
-     * @param string $password The password.
+     * @param string $password
      *
      * @return string
      */
-    public static function getEncryptedPassword(string $email, string $password): string
+    public static function encryptPassword(string $password): string
     {
-        // fetch user ID by email
-        $userId = BackendUsersModel::getIdByEmail($email);
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
 
-        if ($userId === false) {
-            return '';
-        }
+    /**
+     * Verify the password with PHP password_verify function.
+     *
+     * @param string $email
+     * @param string $password
+     *
+     * @return bool
+     */
+    public static function verifyPassword(string $email, string $password): bool
+    {
+        $encryptedPassword = BackendUsersModel::getEncryptedPassword($email);
 
-        $user = new User($userId);
-        $key = $user->getSetting('password_key');
-
-        return self::getEncryptedString($password, $key);
+        return password_verify($password, $encryptedPassword);
     }
 
     /**
@@ -313,16 +316,18 @@ class Authentication
     {
         $db = BackendModel::get('database');
 
-        // fetch the encrypted password
-        $passwordEncrypted = static::getEncryptedPassword($login, $password);
+        // check password
+        if (!static::verifyPassword($login, $password)) {
+            return false;
+        }
 
         // check in database (is the user active and not deleted, are the email and password correct?)
         $userId = (int) $db->getVar(
             'SELECT u.id
              FROM users AS u
-             WHERE u.email = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
+             WHERE u.email = ? AND u.active = ? AND u.deleted = ?
              LIMIT 1',
-            [$login, $passwordEncrypted, 'Y', 'N']
+            [$login, 'Y', 'N']
         );
 
         if ($userId === 0) {
