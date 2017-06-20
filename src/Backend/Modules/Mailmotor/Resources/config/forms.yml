@@ -2,7 +2,7 @@ services:
   mailmotor.form.settings:
     class: Backend\Modules\Mailmotor\Form\SettingsType
     arguments:
-      - "@=service('service_container').getServiceIds()"
+      - "@mailmotor.manager.subscriber_gateway"
     tags:
         - {name: 'form.type'}
   mailmotor.form.subscription:

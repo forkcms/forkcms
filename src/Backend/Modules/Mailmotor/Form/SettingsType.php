@@ -11,6 +11,7 @@ namespace Backend\Modules\Mailmotor\Form;
 
 use Backend\Modules\Mailmotor\Command\SaveSettings;
 use Common\Language;
+use MailMotor\Bundle\MailMotorBundle\Manager\SubscriberGatewayManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,13 +23,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SettingsType extends AbstractType
 {
     /**
-     * @var array
+     * @var SubscriberGatewayManager
      */
-    protected $serviceIds;
+    protected $subscriberGatewayManager;
 
-    public function __construct(array $serviceIds)
+    public function __construct(SubscriberGatewayManager $subscriberGatewayManager)
     {
-        $this->serviceIds = $serviceIds;
+        $this->subscriberGatewayManager = $subscriberGatewayManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -126,28 +127,13 @@ class SettingsType extends AbstractType
 
     private function getPossibleMailEngines(): array
     {
-        // init dropdown values
         $ddmValuesForMailEngines = [];
+        $mailEnginesWithSubscriberGateway = $this->subscriberGatewayManager->getAll();
 
-        // Add empty one
-        $ddmValuesForMailEngines['not_implemented'] = ucfirst(Language::lbl('None'));
+        foreach ($mailEnginesWithSubscriberGateway as $key => $mailEngine) {
+            $label = ucfirst(($key === 'not_implemented') ? Language::lbl('None') : $key);
 
-        // loop all container services to find "mail-engine" gateway services
-        foreach ($this->serviceIds as $serviceId) {
-            // the pattern to find mail engines
-            $pattern = '/^mailmotor.(?P<mailengine>\w+).subscriber.gateway/';
-            $matches = [];
-
-            // we found a mail-engine gateway service
-            if (preg_match($pattern, $serviceId, $matches)) {
-                // we skip the fallback gateway
-                if ($matches['mailengine'] == 'not_implemented') {
-                    continue;
-                }
-
-                // add mailengine to dropdown values
-                $ddmValuesForMailEngines[$matches['mailengine']] = ucfirst($matches['mailengine']);
-            }
+            $ddmValuesForMailEngines[$key] = $label;
         }
 
         return $ddmValuesForMailEngines;
