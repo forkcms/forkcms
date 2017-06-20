@@ -46,6 +46,7 @@ class Installer extends ModuleInstaller
     {
         $this->setModuleRights(1, $this->getModule());
 
+        $this->setActionRights(1, $this->getModule(), 'Ping');
         $this->setActionRights(1, $this->getModule(), 'Settings');
     }
 
