@@ -12,6 +12,7 @@ namespace Backend\Modules\Mailmotor\Actions;
 use Backend\Core\Engine\Base\ActionIndex;
 use Backend\Core\Engine\Model;
 use Backend\Modules\Mailmotor\Command\SaveSettings;
+use Backend\Modules\Mailmotor\Event\SettingsSavedEvent;
 
 /**
  * This tests the api
@@ -49,5 +50,10 @@ final class Ping extends ActionIndex
         $saveSettings->mailEngine = 'not_implemented';
 
         $this->get('command_bus')->handle($saveSettings);
+
+        $this->get('event_dispatcher')->dispatch(
+            SettingsSavedEvent::EVENT_NAME,
+            new SettingsSavedEvent($saveSettings)
+        );
     }
 }
