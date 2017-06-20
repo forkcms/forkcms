@@ -9,12 +9,13 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Core\Language\Language as BackendLanguage;
 
-final class Navigation extends Base\Object
+final class Navigation extends KernelLoader
 {
     /** @var array */
     private $navigation;
@@ -70,7 +71,7 @@ final class Navigation extends Base\Object
             return [];
         }
 
-        list($module, $action) = explode('/', $navigationItem['url']);
+        [$module, $action] = explode('/', $navigationItem['url']);
         $module = \SpoonFilter::toCamelCase($module);
         $action = \SpoonFilter::toCamelCase($action);
 
