@@ -22,7 +22,7 @@ final class Ping extends ActionIndex
     {
         parent::execute();
 
-        // Wrong mail engine API key
+        // Successful API connection
         if ($this->get('mailmotor.subscriber')->ping()) {
             $this->redirect($this->getBackLink(['report' => 'successful-mail-engine-api-connection']));
         }
