@@ -26,28 +26,28 @@ class Delete extends BackendBaseActionDelete
         $deleteForm = $this->createForm(PageDeleteType::class);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
         }
         $deleteFormData = $deleteForm->getData();
 
-        // get parameters
         $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
         if ($this->id === 0 || !BackendPagesModel::exists($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
-        }
-        // call parent, this will probably add some general CSS/JS or other required files
-        parent::execute();
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
 
-        // init var
-        $success = false;
+            return;
+        }
+
+        parent::execute();
 
         // cannot have children
         if (BackendPagesModel::getFirstChildId($this->id) !== false) {
-            $this->redirect(
-                BackendModel::createURLForAction('Index') . '&error=non-existing'
-            );
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
 
         $revisionId = $this->getRequest()->query->getInt('revision_id');
@@ -55,30 +55,33 @@ class Delete extends BackendBaseActionDelete
             $revisionId = null;
         }
 
-        // get page (we need the title)
         $page = BackendPagesModel::get($this->id, $revisionId);
 
-        // valid page?
-        if (!empty($page)) {
-            // delete the page
-            $success = BackendPagesModel::delete($this->id, null, $revisionId);
+        if (empty($page)) {
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
 
-            // delete search indexes
-            BackendSearchModel::removeIndex($this->getModule(), $this->id);
-
-            // build cache
-            BackendPagesModel::buildCache(BL::getWorkingLanguage());
+            return;
         }
 
-        // page is deleted, so redirect to the overview
-        if ($success) {
-            $this->redirect(
-                BackendModel::createURLForAction(
-                    'Index'
-                ) . '&id=' . $page['parent_id'] . '&report=deleted&var=' . rawurlencode($page['title'])
-            );
-        } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        $success = BackendPagesModel::delete($this->id, null, $revisionId);
+
+        // delete search indexes
+        BackendSearchModel::removeIndex($this->getModule(), $this->id);
+
+        // build cache
+        BackendPagesModel::buildCache(BL::getWorkingLanguage());
+
+        if (!$success) {
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
+
+        $this->redirect(BackendModel::createURLForAction(
+            'Index',
+            null,
+            null,
+            ['id' => $page['parent_id'], 'report' => 'deleted', 'var' => $page['title']]
+        ));
     }
 }
