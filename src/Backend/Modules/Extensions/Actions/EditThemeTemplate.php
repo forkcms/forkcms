@@ -13,8 +13,8 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Extensions\Form\ThemeTemplateDeleteType;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
@@ -377,7 +377,11 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
     private function loadDeleteForm(): void
     {
-        $deleteForm = $this->createForm(ThemeTemplateDeleteType::class, ['id' => $this->record['id']]);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteThemeTemplate']
+        );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
