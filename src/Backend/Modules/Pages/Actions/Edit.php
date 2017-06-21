@@ -18,9 +18,9 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Backend\Modules\Pages\Form\PageDeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
@@ -844,7 +844,11 @@ class Edit extends BackendBaseActionEdit
 
     private function loadDeleteForm(): void
     {
-        $deleteForm = $this->createForm(PageDeleteType::class, ['id' => $this->record['id']]);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
