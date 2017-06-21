@@ -4,9 +4,9 @@ namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDeleteType;
 
 class MediaItemDelete extends BackendBaseActionDelete
 {
@@ -14,7 +14,11 @@ class MediaItemDelete extends BackendBaseActionDelete
     {
         parent::execute();
 
-        $deleteForm = $this->createForm(MediaItemDeleteType::class);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'MediaItemDelete']
+        );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->redirect(Model::createURLForAction('MediaItemIndex') . '&error=something-went-wrong');
