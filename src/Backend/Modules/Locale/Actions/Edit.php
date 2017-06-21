@@ -9,7 +9,7 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Modules\Locale\Form\LocaleDeleteType;
+use Backend\Form\Type\DeleteType;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -172,7 +172,11 @@ class Edit extends BackendBaseActionEdit
 
     private function loadDeleteForm(): void
     {
-        $deleteForm = $this->createForm(LocaleDeleteType::class, ['id' => $this->record['id']]);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }

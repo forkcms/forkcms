@@ -13,8 +13,8 @@ use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use Backend\Modules\Locale\Form\LocaleDeleteType;
 
 /**
  * This action will delete a translation
@@ -35,7 +35,11 @@ class Delete extends BackendBaseActionDelete
 
     public function execute(): void
     {
-        $deleteForm = $this->createForm(LocaleDeleteType::class);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
