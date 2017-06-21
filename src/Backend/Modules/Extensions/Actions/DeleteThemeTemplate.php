@@ -24,38 +24,55 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
         $deleteForm = $this->createForm(ThemeTemplateDeleteType::class);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createURLForAction(
+                'ThemeTemplates',
+                null,
+                null,
+                ['error' => 'something-went-wrong']
+            ));
+
+            return;
         }
         $deleteFormData = $deleteForm->getData();
 
-        // get parameters
         $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
         if ($this->id === 0 || !BackendExtensionsModel::existsTemplate($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction(
+                'ThemeTemplates',
+                null,
+                null,
+                ['error' => 'non-existing']
+            ));
+
+            return;
         }
 
-        // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        // init var
         $success = false;
-
-        // get template (we need the title)
         $item = BackendExtensionsModel::getTemplate($this->id);
-
-        // valid template?
         if (!empty($item)) {
-            // delete the page
             $success = BackendExtensionsModel::deleteTemplate($this->id);
         }
 
-        // page is deleted, so redirect to the overview
-        if ($success) {
-            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . rawurlencode($item['label']));
-        } else {
-            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+        if (!$success) {
+            $this->redirect(BackendModel::createURLForAction(
+                'ThemeTemplates',
+                null,
+                null,
+                ['error' => 'non-existing']
+            ));
+
+            return;
         }
+
+        $this->redirect(BackendModel::createURLForAction(
+            'ThemeTemplates',
+            null,
+            null,
+            ['theme' => $item['theme'], 'report' => 'deleted-template', 'var' => $item['label']]
+        ));
     }
 }
