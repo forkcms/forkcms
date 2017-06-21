@@ -16,8 +16,8 @@ use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
-use Backend\Modules\Groups\Form\GroupDeleteType;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Symfony\Component\Finder\Finder;
 
@@ -622,7 +622,11 @@ class Edit extends BackendBaseActionEdit
 
     private function loadDeleteForm(): void
     {
-        $deleteForm = $this->createForm(GroupDeleteType::class, ['id' => $this->record['id']]);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }

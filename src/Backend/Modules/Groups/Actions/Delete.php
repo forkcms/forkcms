@@ -11,8 +11,8 @@ namespace Backend\Modules\Groups\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
-use Backend\Modules\Groups\Form\GroupDeleteType;
 
 /**
  * This is the delete-action, it will delete an item.
@@ -21,7 +21,11 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $deleteForm = $this->createForm(GroupDeleteType::class);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
