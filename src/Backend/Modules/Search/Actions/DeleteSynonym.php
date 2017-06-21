@@ -26,23 +26,33 @@ class DeleteSynonym extends BackendBaseActionDelete
         $deleteForm = $this->createForm(SynonymDeleteType::class);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Synonyms') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createURLForAction(
+                'Synonyms',
+                null,
+                null,
+                ['error' => 'something-went-wrong']
+            ));
+
+            return;
         }
         $deleteFormData = $deleteForm->getData();
 
         $id = (int) $deleteFormData['id'];
 
         if ($id === 0 || !BackendSearchModel::existsSynonymById($id)) {
-            $this->redirect(BackendModel::createURLForAction('Synonyms') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Synonyms', null, null, ['error' => 'non-existing']));
+
+            return;
         }
 
         $synonym = (array) BackendSearchModel::getSynonym($id);
         BackendSearchModel::deleteSynonym($id);
 
-        $this->redirect(
-            BackendModel::createURLForAction('Synonyms') . '&report=deleted-synonym&var=' . rawurlencode(
-                $synonym['term']
-            )
-        );
+        $this->redirect(BackendModel::createURLForAction(
+            'Synonyms',
+            null,
+            null,
+            ['report' => 'deleted-synonym', 'var' => $synonym['term']]
+        ));
     }
 }
