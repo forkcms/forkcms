@@ -24,22 +24,23 @@ class Delete extends BackendBaseActionDelete
         $deleteForm = $this->createForm(ProfileDeleteType::class);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
         }
         $deleteFormData = $deleteForm->getData();
 
-        // get parameters
         $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
         if ($this->id === 0 || !BackendProfilesModel::exists($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
 
-        // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        // get profile
         $profile = BackendProfilesModel::get($this->id);
 
         // already deleted? Prolly want to undo then
@@ -47,22 +48,23 @@ class Delete extends BackendBaseActionDelete
             // set profile status to active
             BackendProfilesModel::update($this->id, ['status' => 'active']);
 
-            // redirect
-            $this->redirect(
-                BackendModel::createURLForAction('Index') . '&report=profile-undeleted&var=' . rawurlencode(
-                    $profile['email']
-                ) . '&highlight=row-' . $profile['id']
-            );
-        } else {
-            // delete profile
-            BackendProfilesModel::delete($this->id);
+            $this->redirect(BackendModel::createURLForAction(
+                'Index',
+                null,
+                null,
+                ['report' => 'profile-undeleted', 'var' => $profile['email'], 'highlight=row-' . $profile['id']]
+            ));
 
-            // redirect
-            $this->redirect(
-                BackendModel::createURLForAction('Index') . '&report=profile-deleted&var=' . rawurlencode(
-                    $profile['email']
-                ) . '&highlight=row-' . $profile['id']
-            );
+            return;
         }
+
+        BackendProfilesModel::delete($this->id);
+
+        $this->redirect(BackendModel::createURLForAction(
+            'Index',
+            null,
+            null,
+            ['report' => 'profile-deleted', 'var' => $profile['email'], 'highlight=row-' . $profile['id']]
+        ));
     }
 }
