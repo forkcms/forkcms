@@ -24,25 +24,30 @@ class Delete extends BackendBaseActionDelete
         $deleteForm = $this->createForm(FaqDeleteType::class);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
         }
         $deleteFormData = $deleteForm->getData();
 
         $this->id = $deleteFormData['id'];
 
         if ($this->id === 0 || !BackendFaqModel::exists($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
 
         parent::execute();
         $this->record = BackendFaqModel::get($this->id);
 
-        // delete item
         BackendFaqModel::delete($this->id);
 
-        $this->redirect(
-            BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-            rawurlencode($this->record['question'])
-        );
+        $this->redirect(BackendModel::createURLForAction(
+            'Index',
+            null,
+            null,
+            ['report' => 'deleted', 'var' => $this->record['question']]
+        ));
     }
 }
