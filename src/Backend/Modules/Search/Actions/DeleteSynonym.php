@@ -11,8 +11,8 @@ namespace Backend\Modules\Search\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
-use Backend\Modules\Search\Form\SynonymDeleteType;
 
 /**
  * This action will delete a synonym
@@ -23,7 +23,11 @@ class DeleteSynonym extends BackendBaseActionDelete
     {
         parent::execute();
 
-        $deleteForm = $this->createForm(SynonymDeleteType::class);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteSynonym']
+        );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->redirect(BackendModel::createURLForAction(

@@ -13,8 +13,8 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
-use Backend\Modules\Search\Form\SynonymDeleteType;
 
 /**
  * This is the edit synonym action, it will display a form to edit an existing synonym.
@@ -104,7 +104,11 @@ class EditSynonym extends BackendBaseActionEdit
 
     private function loadDeleteForm(): void
     {
-        $deleteForm = $this->createForm(SynonymDeleteType::class, ['id' => $this->record['id']]);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteSynonym']
+        );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
