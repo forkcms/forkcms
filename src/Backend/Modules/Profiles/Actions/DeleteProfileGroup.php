@@ -24,32 +24,32 @@ class DeleteProfileGroup extends BackendBaseActionDelete
         $deleteForm = $this->createForm(ProfileGroupDeleteType::class);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
         }
         $deleteFormData = $deleteForm->getData();
 
-        // get parameters
         $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
         if ($this->id === 0 || !BackendProfilesModel::existsProfileGroup($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
 
-        // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        // get profile group
         $profileGroup = BackendProfilesModel::getProfileGroup($this->id);
 
-        // delete profile group
         BackendProfilesModel::deleteProfileGroup($this->id);
 
-        // profile group was deleted, so redirect
-        $this->redirect(
-            BackendModel::createURLForAction(
-                'Edit'
-            ) . '&id=' . $profileGroup['profile_id'] . '&report=membership-deleted#tabGroups'
-        );
+        $this->redirect(BackendModel::createURLForAction(
+            'Edit',
+            null,
+            null,
+            ['id' => $profileGroup['profile_id'], 'report' => 'membership-deleted']
+        ) . '#tabGroups');
     }
 }
