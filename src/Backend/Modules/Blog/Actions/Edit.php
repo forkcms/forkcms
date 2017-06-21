@@ -460,7 +460,8 @@ class Edit extends BackendBaseActionEdit
     {
         $deleteForm = $this->createForm(
             BlogDeleteType::class,
-            ['id' => $this->record['id'], 'categoryId' => $this->categoryId]
+            ['id' => $this->record['id'], 'categoryId' => $this->categoryId],
+            ['module' => $this->getModule()]
         );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
     }

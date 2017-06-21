@@ -22,7 +22,11 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $deleteForm = $this->createForm(BlogDeleteType::class);
+        $deleteForm = $this->createForm(
+            BlogDeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
