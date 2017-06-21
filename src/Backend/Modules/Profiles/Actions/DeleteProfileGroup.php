@@ -11,8 +11,8 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
-use Backend\Modules\Profiles\Form\ProfileGroupDeleteType;
 
 /**
  * This action will delete a membership of a profile in a group.
@@ -21,7 +21,11 @@ class DeleteProfileGroup extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $deleteForm = $this->createForm(ProfileGroupDeleteType::class);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteProfileGroup']
+        );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));

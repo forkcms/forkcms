@@ -13,8 +13,8 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
-use Backend\Modules\Profiles\Form\ProfileGroupDeleteType;
 
 /**
  * This is the edit_profile_group-action, it will display a form to add a profile to a group.
@@ -146,7 +146,11 @@ class EditProfileGroup extends BackendBaseActionEdit
 
     private function loadDeleteForm(): void
     {
-        $deleteForm = $this->createForm(ProfileGroupDeleteType::class, ['id' => $this->profileGroup['id']]);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->profileGroup['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteProfileGroup']
+        );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
