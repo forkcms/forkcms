@@ -13,8 +13,8 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
-use Backend\Modules\Profiles\Form\GroupDeleteType;
 
 /**
  * This is the edit_group-action, it will display a form to edit an existing group.
@@ -106,7 +106,11 @@ class EditGroup extends BackendBaseActionEdit
 
     private function loadDeleteForm(): void
     {
-        $deleteForm = $this->createForm(GroupDeleteType::class, ['id' => $this->group['id']]);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->group['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteGroup']
+        );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
