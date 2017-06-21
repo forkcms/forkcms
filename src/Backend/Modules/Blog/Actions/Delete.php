@@ -25,42 +25,42 @@ class Delete extends BackendBaseActionDelete
         $deleteForm = $this->createForm(BlogDeleteType::class);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
         }
         $deleteFormData = $deleteForm->getData();
 
-        // get parameters
         $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
         if ($this->id === 0 || !BackendBlogModel::exists($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
 
-        // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        // set category id
         $categoryId = (int) $deleteFormData['categoryId'];
 
-        // get data
         $this->record = (array) BackendBlogModel::get($this->id);
 
-        // delete item
         BackendBlogModel::delete($this->id);
 
         // delete search indexes
         BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
-        // build redirect URL
-        $redirectUrl = BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['title']);
-
-        // append to redirect URL
+        $redirectParameters = ['report' => 'deleted', 'var' => $this->record['title']];
         if ($categoryId !== 0) {
-            $redirectUrl .= '&category=' . $categoryId;
+            $redirectParameters['category'] = $categoryId;
         }
 
-        // item was deleted, so redirect
-        $this->redirect($redirectUrl);
+        $this->redirect(BackendModel::createURLForAction(
+            'Index',
+            null,
+            null,
+            $redirectParameters
+        ));
     }
 }
