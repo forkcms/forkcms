@@ -511,21 +511,21 @@ $jumbotron-font-size:            ceil(($font-size-base * 1.5));
 //
 //## Define colors for form feedback states and, by default, alerts.
 
-$state-success-text:             $white;
-$state-success-bg:               rgba($brand-success, .9);
-$state-success-border:           darken(adjust-hue($state-success-bg, -10), 5%);
+$state-success-text:             $brand-success;
+$state-success-bg:               $brand-success;
+$state-success-border:           $brand-success;
 
-$state-info-text:                $white;
-$state-info-bg:                  rgba($brand-primary, .9);
-$state-info-border:              darken(adjust-hue($state-info-bg, -10), 7%);
+$state-info-text:                $brand-primary;
+$state-info-bg:                  $brand-primary;
+$state-info-border:              $brand-primary;
 
 $state-warning-text:             $brand-warning;
-$state-warning-bg:               rgba($brand-warning, .9);
-$state-warning-border:           darken(adjust-hue($state-warning-bg, -10), 5%);
+$state-warning-bg:               $brand-warning;
+$state-warning-border:           $brand-warning;
 
-$state-danger-text:              $white;
-$state-danger-bg:                rgba($brand-danger, .9);
-$state-danger-border:            darken(adjust-hue($state-danger-bg, -10), 5%);
+$state-danger-text:              $brand-danger;
+$state-danger-bg:                $brand-danger;
+$state-danger-border:            $brand-danger;
 
 
 //== Tooltips
@@ -639,21 +639,22 @@ $alert-padding:               15px;
 $alert-border-radius:         $border-radius-base;
 $alert-link-font-weight:      bold;
 
-$alert-success-bg:            $state-success-bg;
-$alert-success-text:          $state-success-text;
-$alert-success-border:        $state-success-border;
+$alert-success-bg:            rgba($brand-success, .9);
+$alert-success-text:          $white;
+$alert-success-border:        darken(adjust-hue($alert-success-bg, -10), 5%);
 
-$alert-info-bg:               $state-info-bg;
-$alert-info-text:             $state-info-text;
-$alert-info-border:           $state-info-border;
+$alert-info-bg:               rgba($brand-info, .9);
+$alert-info-text:             $white;
+$alert-info-border:           darken(adjust-hue($alert-info-bg, -10), 5%);
 
-$alert-warning-bg:            $state-warning-bg;
+$alert-warning-bg:            rgba($brand-warning, .9);
 $alert-warning-text:          $white;
-$alert-warning-border:        $state-warning-border;
+$alert-warning-border:        darken(adjust-hue($alert-warning-bg, -10), 5%);
 
-$alert-danger-bg:             $state-danger-bg;
-$alert-danger-text:           $state-danger-text;
-$alert-danger-border:         $state-danger-border;
+$alert-danger-bg:             rgba($brand-danger, .9);
+$alert-danger-text:           $white;
+$alert-danger-border:         darken(adjust-hue($alert-danger-bg, -10), 5%);
+
 
 
 //== Progress bars
@@ -735,11 +736,11 @@ $panel-primary-text:          $white;
 $panel-primary-border:        $brand-primary;
 $panel-primary-heading-bg:    $brand-primary;
 
-$panel-success-text:          $state-success-text;
+$panel-success-text:          $white;
 $panel-success-border:        $state-success-border;
 $panel-success-heading-bg:    $state-success-bg;
 
-$panel-info-text:             $state-info-text;
+$panel-info-text:             $white;
 $panel-info-border:           $state-info-border;
 $panel-info-heading-bg:       $state-info-bg;
 
@@ -747,7 +748,7 @@ $panel-warning-text:          $white;
 $panel-warning-border:        $state-warning-border;
 $panel-warning-heading-bg:    $state-warning-bg;
 
-$panel-danger-text:           $state-danger-text;
+$panel-danger-text:           $white;
 $panel-danger-border:         $state-danger-border;
 $panel-danger-heading-bg:     $state-danger-bg;
 
