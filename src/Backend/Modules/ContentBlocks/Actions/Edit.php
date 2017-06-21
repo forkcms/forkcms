@@ -13,9 +13,9 @@ use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDeleteType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRevisionDataGrid;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
@@ -36,7 +36,11 @@ class Edit extends BackendBaseActionEdit
 
         $form = $this->getForm($contentBlock);
 
-        $deleteForm = $this->createForm(ContentBlockDeleteType::class, ['id' => $contentBlock->getId()]);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $contentBlock->getId()],
+            ['module' => $this->getModule()]
+        );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
 
         if (!$form->isSubmitted() || !$form->isValid()) {
