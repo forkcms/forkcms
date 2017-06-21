@@ -11,8 +11,8 @@ namespace Backend\Modules\Faq\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
-use Backend\Modules\Faq\Form\FaqFeedbackDeleteType;
 
 /**
  * This is the DeleteFeedback action, it will display a form to create a new item
@@ -21,7 +21,11 @@ class DeleteFeedback extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $deleteForm = $this->createForm(FaqFeedbackDeleteType::class);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteFeedback']
+        );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));

@@ -47,8 +47,9 @@ jsBackend.faq.edit =
     deleteFeedbackClick: function(event) {
         event.preventDefault();
 
-        $('#faq_feedback_delete_id').val($(this).data('id'));
-        $('#confirmDeleteFeedback').modal('show');
+        var $modal = $('#confirmDeleteFeedback');
+        $modal.siblings('#delete_id').val($(this).data('id'));
+        $modal.modal('show');
     }
 };
 

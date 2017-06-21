@@ -14,9 +14,9 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Backend\Modules\Faq\Form\FaqDeleteType;
-use Backend\Modules\Faq\Form\FaqFeedbackDeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -158,7 +158,11 @@ class Edit extends BackendBaseActionEdit
 
     private function loadDeleteFeedbackForm(): void
     {
-        $deleteFeedbackForm = $this->createForm(FaqFeedbackDeleteType::class);
+        $deleteFeedbackForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteFeedback']
+        );
         $this->tpl->assign('deleteFeedbackForm', $deleteFeedbackForm->createView());
     }
 }
