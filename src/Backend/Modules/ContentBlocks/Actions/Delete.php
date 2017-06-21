@@ -28,7 +28,9 @@ class Delete extends BackendBaseActionDelete
         $deleteForm = $this->createForm(ContentBlockDeleteType::class);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
         $deleteFormData = $deleteForm->getData();
 
@@ -42,14 +44,7 @@ class Delete extends BackendBaseActionDelete
             new ContentBlockDeleted($contentBlock)
         );
 
-        $this->redirect(
-            $this->getBackLink(
-                [
-                    'report' => 'deleted',
-                    'var' => $contentBlock->getTitle(),
-                ]
-            )
-        );
+        $this->redirect($this->getBackLink(['report' => 'deleted', 'var' => $contentBlock->getTitle()]));
     }
 
     private function getBackLink(array $parameters = []): string
