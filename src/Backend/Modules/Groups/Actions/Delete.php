@@ -32,7 +32,7 @@ class Delete extends BackendBaseActionDelete
 
         $this->id = $deleteFormData['id'];
 
-        // group exists and id is not null?
+        // does the group exist
         if ($this->id === 0 || !BackendGroupsModel::exists($this->id)) {
             $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
 
