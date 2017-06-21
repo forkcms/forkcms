@@ -16,8 +16,8 @@ use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
-use Backend\Modules\Profiles\Form\ProfileDeleteType;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**
@@ -360,7 +360,11 @@ class Edit extends BackendBaseActionEdit
 
     private function loadDeleteForm(): void
     {
-        $deleteForm = $this->createForm(ProfileDeleteType::class, ['id' => $this->profile['id']]);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->profile['id']],
+            ['module' => $this->getModule()]
+        );
         $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
