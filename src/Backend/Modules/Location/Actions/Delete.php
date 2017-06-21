@@ -24,30 +24,32 @@ class Delete extends BackendBaseActionDelete
         $deleteForm = $this->createForm(LocationDeleteType::class);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
         }
         $deleteFormData = $deleteForm->getData();
 
-        // get parameters
-        $this->id = $deleteFormData['id'];
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
         if ($this->id === 0 || !BackendLocationModel::exists($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
         }
 
         parent::execute();
 
-        // get all data for the item we want to edit
         $this->record = (array) BackendLocationModel::get($this->id);
 
-        // delete item
         BackendLocationModel::delete($this->id);
 
-        // user was deleted, so redirect
-        $this->redirect(
-            BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-            rawurlencode($this->record['title'])
-        );
+        $this->redirect(BackendModel::createURLForAction(
+            'Index',
+            null,
+            null,
+            ['report' => 'deleted', 'var' => $this->record['title']]
+        ));
     }
 }
