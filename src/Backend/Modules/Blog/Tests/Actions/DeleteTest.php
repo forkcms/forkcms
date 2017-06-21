@@ -93,7 +93,7 @@ class DeleteTest extends WebTestCase
             $client->getHistory()->current()->getUri()
         );
         self::assertContains(
-            '&report=deleted&var=Blogpost%20for%20functional%20tests',
+            'report=deleted&var=Blogpost+for+functional+tests',
             $client->getHistory()->current()->getUri()
         );
 
