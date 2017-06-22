@@ -17,7 +17,6 @@ class DatePickerType extends DateType
      */
     private $header;
 
-
     public function __construct(ContainerInterface $container)
     {
         $this->header = $container->get('header');
@@ -30,13 +29,13 @@ class DatePickerType extends DateType
         if ($this->header instanceof BackendHeader) {
             $this->header->addJS('/js/vendors/bootstrap-datepicker.min.js', 'Core', false, true, true, Priority::core());
             $this->header->addCSS('/css/vendors/bootstrap-datepicker3.standalone.min.css', 'Core', true, true, true, Priority::core());
+
             return;
         }
 
         $this->header->addJS('/js/vendors/bootstrap-datepicker.min.js', false, true, Priority::core());
         $this->header->addCSS('/css/vendors/bootstrap-datepicker3.standalone.min.css', true, true, Priority::core());
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {
