@@ -7,6 +7,7 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
+    "bootstrap-datepicker": "^1.7.0",
     "bootstrap-sass": "~3.3",
     "bootstrap-tagsinput": "~0.7",
     "fine-uploader": "^5.14.1",
@@ -23,8 +24,5 @@
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
     "slick-carousel": "^1.6.0"
-  },
-  "dependencies": {
-    "bootstrap-datepicker": "^1.6.4"
   }
 }

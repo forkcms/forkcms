@@ -162,11 +162,9 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap-datepicker@^1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/bootstrap-datepicker/-/bootstrap-datepicker-1.6.4.tgz#889ebeced8eaa2ff15ec1f273e4b07531cc43da0"
-  dependencies:
-    jquery ">=1.7.1"
+bootstrap-datepicker@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-datepicker/-/bootstrap-datepicker-1.7.0.tgz#d639be3fcade88bc9e6f16ef7e227e50580b7668"
 
 bootstrap-sass@~3.3:
   version "3.3.7"
@@ -1175,7 +1173,7 @@ jquery-ui-dist@~1.12:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz#5c0815d3cc6f90ff5faaf5b268a6e23b4ca904fa"
 
-jquery@>=1.7.1, jquery@>=1.7.2, jquery@~2.2:
+jquery@>=1.7.2, jquery@~2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 
