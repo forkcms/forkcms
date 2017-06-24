@@ -349,6 +349,7 @@ class MetaType extends AbstractType
         }
         $view->vars['base_field_selector'] = '#' . $view->parent->children[$options['base_field_name']]->vars['id'];
         $view->vars['custom_meta_tags'] = $options['custom_meta_tags'];
+        $view->vars['generated_url_selector'] = $options['generated_url_selector'];
         $view->vars['generate_url_callback_class'] = $options['generate_url_callback_class'];
         $view->vars['generate_url_callback_method'] = $options['generate_url_callback_method'];
         $view->vars['generate_url_callback_parameters'] = serialize($options['generate_url_callback_parameters']);
