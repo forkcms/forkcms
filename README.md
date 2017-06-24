@@ -1,4 +1,4 @@
-# README
+![Fork CMS](https://raw.githubusercontent.com/forkcms/forkcms/master/docs/img/header.jpg)
 
 [![Build Status](https://travis-ci.org/forkcms/forkcms.svg?branch=testsuite)](https://travis-ci.org/forkcms/forkcms)
 [![Latest Stable Version](https://poser.pugx.org/forkcms/forkcms/v/stable.svg)](https://packagist.org/packages/forkcms/forkcms)
