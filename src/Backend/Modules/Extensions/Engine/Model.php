@@ -497,17 +497,7 @@ class Model
      */
     public static function getModulesThatRequireAkismet(): array
     {
-        /** @var ModulesSettings $moduleSettings */
-        $moduleSettings = BackendModel::get('fork.settings');
-
-        return array_filter(
-            BackendModel::getModules(),
-            function ($module) use ($moduleSettings) {
-                $requiresGoogleMaps = $moduleSettings->get($module, 'requires_akismet', false);
-
-                return $requiresGoogleMaps;
-            }
-        );
+        return self::getModulesThatRequireSetting('akismet');
     }
 
     /**
@@ -517,17 +507,7 @@ class Model
      */
     public static function getModulesThatRequireGoogleMaps(): array
     {
-        /** @var ModulesSettings $moduleSettings */
-        $moduleSettings = BackendModel::get('fork.settings');
-
-        return array_filter(
-            BackendModel::getModules(),
-            function ($module) use ($moduleSettings) {
-                $requiresGoogleMaps = $moduleSettings->get($module, 'requires_google_maps', false);
-
-                return $requiresGoogleMaps;
-            }
-        );
+        return self::getModulesThatRequireSetting('google_maps');
     }
 
     /**
@@ -537,13 +517,29 @@ class Model
      */
     public static function getModulesThatRequireGoogleRecaptcha()
     {
+        return self::getModulesThatRequireSetting('google_recaptcha');
+    }
+
+    /**
+     * Fetch the list of modules that require a certain setting. The setting is affixed by 'requires_'
+     *
+     * @param string $setting
+     *
+     * @return array
+     */
+    private static function getModulesThatRequireSetting($setting)
+    {
+        if ($setting === '') {
+            return [];
+        }
+
         /** @var ModulesSettings $moduleSettings */
         $moduleSettings = BackendModel::get('fork.settings');
 
         return array_filter(
             BackendModel::getModules(),
-            function ($module) use ($moduleSettings) {
-                $requiresGoogleRecaptcha = $moduleSettings->get($module, 'requires_google_recaptcha', false);
+            function ($module) use ($moduleSettings, $setting) {
+                $requiresGoogleRecaptcha = $moduleSettings->get($module, 'requires_' . $setting, false);
 
                 return $requiresGoogleRecaptcha;
             }
