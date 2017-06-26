@@ -102,7 +102,7 @@ class RequirementsChecker
         $this->checkFilePermissions();
         $this->checkAvailableFiles();
 
-        $this->checkApacheRewrites();
+        $this->checkServerRewrites();
 
         // error status
         return !$this->hasErrors() && !$this->hasWarnings();
@@ -278,11 +278,21 @@ class RequirementsChecker
     /**
      * Ensure that Apache .htaccess file is written and mod_rewrite does its job
      */
-    protected function checkApacheRewrites()
+    protected function checkServerRewrites()
     {
+        if (array_key_exists('SERVER_SOFTWARE', $_SERVER) && stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== 0) {
+            $this->checkRequirement(
+                'modRewrite',
+                (bool)(getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')),
+                self::STATUS_WARNING
+            );
+
+            return;
+        }
+
         $this->checkRequirement(
             'modRewrite',
-            (bool) (getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')),
+            true,
             self::STATUS_WARNING
         );
     }

@@ -6,7 +6,7 @@ use Common\WebTestCase;
 
 class InstallerControllerTest extends WebTestCase
 {
-    public function testnoStepActionAction()
+    public function testNoStepActionAction()
     {
         $client = static::createClient();
 
