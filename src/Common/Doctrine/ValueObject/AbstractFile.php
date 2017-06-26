@@ -203,7 +203,7 @@ abstract class AbstractFile
 
     public static function fromString(string $fileName): ?self
     {
-        return $fileName ? new static($fileName) : null;
+        return $fileName !== null ? new static($fileName) : null;
     }
 
     /**
