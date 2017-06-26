@@ -1,0 +1,7 @@
+services:
+  fork.datepicker.form:
+    class: Common\Form\DatePickerType
+    arguments:
+      - "@service_container"
+    tags:
+      - { name: form.type }

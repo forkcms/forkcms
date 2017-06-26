@@ -1207,6 +1207,7 @@ jsBackend.forms =
         jsBackend.forms.submitWithLinks();
         jsBackend.forms.tagsInput();
         jsBackend.forms.meta();
+        jsBackend.forms.datePicker();
     },
 
     meta: function() {
@@ -1539,6 +1540,15 @@ jsBackend.forms =
 
         // return if needed
         if (changed) return jsBackend.locale.msg('ValuesAreChanged');
+    },
+
+    // Add date pickers to the appropriate input elements
+    datePicker: function () {
+        $('input[data-role="fork-datepicker"]').each(
+            function (index, datePickerElement) {
+                $(datePickerElement).datepicker();
+            }
+        );
     }
 };
 
