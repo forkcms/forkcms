@@ -293,7 +293,6 @@ jsBackend.FormBuilder.Fields =
         });
 
         $('.jsRecaptchaTrigger').on('click', function(e) {
-            // prevent default
             e.preventDefault();
 
             jsBackend.FormBuilder.Fields.saveRecaptcha();
