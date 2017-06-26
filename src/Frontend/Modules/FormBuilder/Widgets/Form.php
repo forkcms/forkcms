@@ -343,9 +343,9 @@ class Form extends FrontendBaseWidget
 
             // loop html fields
             foreach ($this->fieldsHTML as &$field) {
-                if ($field['type'] == 'heading' || $field['type'] == 'paragraph' || $field['type'] == 'recaptcha') {
+                if (in_array($field['type'], ['heading', 'paragraph', 'recaptcha'])) {
                     $field['plaintext'] = true;
-                } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
+                } elseif (in_array($field['type'], ['checkbox', 'radiobutton'])) {
                     // name (prefixed by type)
                     $name = ($field['type'] == 'checkbox') ?
                         'chk' . \SpoonFilter::toCamelCase($field['name']) :
@@ -436,11 +436,7 @@ class Form extends FrontendBaseWidget
                 $fieldName = 'field' . $field['id'];
 
                 // skip
-                if ($field['type'] == 'submit' ||
-                    $field['type'] == 'paragraph' ||
-                    $field['type'] == 'heading' ||
-                    $field['type'] == 'recaptcha'
-                ) {
+                if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha'])) {
                     continue;
                 }
 
@@ -499,11 +495,7 @@ class Form extends FrontendBaseWidget
                 // loop all fields
                 foreach ($this->item['fields'] as $field) {
                     // skip
-                    if ($field['type'] == 'submit' ||
-                        $field['type'] == 'paragraph' ||
-                        $field['type'] == 'heading' ||
-                        $field['type'] == 'recaptcha'
-                    ) {
+                    if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha'])) {
                         continue;
                     }
 
