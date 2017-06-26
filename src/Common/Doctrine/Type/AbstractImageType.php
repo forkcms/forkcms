@@ -28,11 +28,11 @@ abstract class AbstractImageType extends Type
      * @param AbstractImage $image
      * @param AbstractPlatform $platform
      *
-     * @return string
+     * @return string|null
      */
-    public function convertToDatabaseValue($image, AbstractPlatform $platform): string
+    public function convertToDatabaseValue($image, AbstractPlatform $platform): ?string
     {
-        return (string) $image;
+        return $image ? (string) $image : null;
     }
 
     abstract protected function createFromString(string $imageFileName): AbstractImage;
