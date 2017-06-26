@@ -154,11 +154,11 @@ class Helper
             $tpl->assign('required', isset($field['validations']['required']));
 
             // plaintext items
-            if ($field['type'] == 'heading' || $field['type'] == 'paragraph' || $field['type'] == 'recaptcha') {
+            if (in_array($field['type'], ['heading', 'paragraph', 'recaptcha'])) {
                 // assign
                 $tpl->assign('content', $fieldHTML);
                 $tpl->assign('plaintext', true);
-            } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
+            } elseif (in_array($field['type'], ['checkbox', 'radiobutton'])) {
                 // name (prefixed by type)
                 $name = ($field['type'] == 'checkbox') ?
                     'chk' . \SpoonFilter::ucfirst($fieldName) :

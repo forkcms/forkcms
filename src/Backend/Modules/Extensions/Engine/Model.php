@@ -9,6 +9,7 @@ namespace Backend\Modules\Extensions\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\ModulesSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -496,17 +497,17 @@ class Model
      */
     public static function getModulesThatRequireAkismet(): array
     {
-        $modules = [];
-        $installedModules = BackendModel::getModules();
+        /** @var ModulesSettings $moduleSettings */
+        $moduleSettings = BackendModel::get('fork.settings');
 
-        foreach ($installedModules as $module) {
-            $setting = BackendModel::get('fork.settings')->get($module, 'requires_akismet', false);
-            if ($setting) {
-                $modules[] = $module;
+        return array_filter(
+            BackendModel::getModules(),
+            function ($module) use ($moduleSettings) {
+                $requiresGoogleMaps = $moduleSettings->get($module, 'requires_akismet', false);
+
+                return $requiresGoogleMaps;
             }
-        }
-
-        return $modules;
+        );
     }
 
     /**
@@ -516,17 +517,17 @@ class Model
      */
     public static function getModulesThatRequireGoogleMaps(): array
     {
-        $modules = [];
-        $installedModules = BackendModel::getModules();
+        /** @var ModulesSettings $moduleSettings */
+        $moduleSettings = BackendModel::get('fork.settings');
 
-        foreach ($installedModules as $module) {
-            $setting = BackendModel::get('fork.settings')->get($module, 'requires_google_maps', false);
-            if ($setting) {
-                $modules[] = $module;
+        return array_filter(
+            BackendModel::getModules(),
+            function ($module) use ($moduleSettings) {
+                $requiresGoogleMaps = $moduleSettings->get($module, 'requires_google_maps', false);
+
+                return $requiresGoogleMaps;
             }
-        }
-
-        return $modules;
+        );
     }
 
     /**
@@ -536,17 +537,17 @@ class Model
      */
     public static function getModulesThatRequireGoogleRecaptcha()
     {
-        $modules = array();
-        $installedModules = BackendModel::getModules();
+        /** @var ModulesSettings $moduleSettings */
+        $moduleSettings = BackendModel::get('fork.settings');
 
-        foreach ($installedModules as $module) {
-            $setting = BackendModel::get('fork.settings')->get($module, 'requires_google_recaptcha', false);
-            if ($setting) {
-                $modules[] = $module;
+        return array_filter(
+            BackendModel::getModules(),
+            function ($module) use ($moduleSettings) {
+                $requiresGoogleRecaptcha = $moduleSettings->get($module, 'requires_google_recaptcha', false);
+
+                return $requiresGoogleRecaptcha;
             }
-        }
-
-        return $modules;
+        );
     }
 
     public static function getTemplate(int $id): array
