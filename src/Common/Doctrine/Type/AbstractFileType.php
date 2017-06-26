@@ -30,7 +30,7 @@ abstract class AbstractFileType extends Type
      *
      * @return string|null
      */
-    public function convertToDatabaseValue(?$file, AbstractPlatform $platform): ?string
+    public function convertToDatabaseValue($file, AbstractPlatform $platform): ?string
     {
         return $file !== null ? (string) $file : null;
     }
