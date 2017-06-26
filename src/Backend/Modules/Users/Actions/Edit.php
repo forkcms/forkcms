@@ -9,6 +9,7 @@ namespace Backend\Modules\Users\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Form\Type\DeleteType;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -73,6 +74,7 @@ class Edit extends BackendBaseActionEdit
             $this->record = (array) BackendUsersModel::get($this->id);
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
@@ -410,5 +412,15 @@ class Edit extends BackendBaseActionEdit
                 }
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->user->getUserId()],
+            ['module' => $this->getModule()]
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }

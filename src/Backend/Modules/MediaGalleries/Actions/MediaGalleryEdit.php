@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaGalleries\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
@@ -32,6 +33,13 @@ class MediaGalleryEdit extends BackendBaseActionEdit
         );
 
         $form->handleRequest($this->get('request'));
+
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $mediaGallery->getId()],
+            ['module' => $this->getModule(), 'action' => 'MediaGalleryDelete']
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
 
         if (!$form->isValid()) {
             $this->tpl->assign('form', $form->createView());
@@ -69,7 +77,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
         try {
             /** @var MediaGallery|null $mediaGallery */
             return $this->get('media_galleries.repository.gallery')->findOneById(
-                $this->getRequest()->query->getInt('id')
+                $this->getRequest()->query->get('id')
             );
         } catch (MediaGalleryNotFound $mediaGalleryNotFound) {
             $this->redirect(

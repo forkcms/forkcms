@@ -317,27 +317,22 @@ class Index extends BackendBaseActionIndex
      */
     private function setFilter(): void
     {
-        // if no language is selected, set the working language as the selected
-        if ($this->getRequest()->query->get('language', '') === '') {
-            $_GET['language'] = [BL::getWorkingLanguage()];
-        }
-
-        // if no type is selected, set labels as the selected type
-        if ($this->getRequest()->query->get('type', '') === '') {
-            $_GET['type'] = ['lbl'];
-        }
-
         // set filter
         $this->filter['application'] = $this->getRequest()->query->get('application');
         $this->filter['module'] = $this->getRequest()->query->get('module');
         $this->filter['type'] = $this->getRequest()->query->get('type', '');
         if ($this->filter['type'] === '') {
-            $this->filter['type'] = [];
+            // if no type is selected, set labels as the selected type
+            $_GET['type'] = ['lbl'];
+            $this->filter['type'] = ['lbl'];
         }
         $this->filter['language'] = $this->getRequest()->query->get('language', []);
         if (empty($this->filter['language'])) {
+            // if no language is selected, set the working language as the selected
+            $_GET['language'] = [BL::getWorkingLanguage()];
             $this->filter['language'] = [BL::getWorkingLanguage()];
         }
+        $this->filter['language'] = (array) $this->filter['language'];
         $this->filter['name'] = $this->getRequest()->query->get('name');
         $this->filter['value'] = $this->getRequest()->query->get('value');
 

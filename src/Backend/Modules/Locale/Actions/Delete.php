@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
@@ -34,29 +35,44 @@ class Delete extends BackendBaseActionDelete
 
     public function execute(): void
     {
-        $this->id = $this->getRequest()->query->getInt('id');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== 0 && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod()) {
-            parent::execute();
+        if ($this->id === 0 || !BackendLocaleModel::exists($this->id) || !BackendAuthentication::getUser()->isGod()) {
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
 
-            // filter options
-            $this->setFilter();
-
-            // get data
-            $this->record = (array) BackendLocaleModel::get($this->id);
-
-            // delete item
-            BackendLocaleModel::delete([$this->id]);
-
-            // build redirect URL
-            $redirectUrl = BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name'] . ' (' . mb_strtoupper($this->record['language']) . ')') . $this->filterQuery;
-
-            // item was deleted, so redirect
-            $this->redirect($redirectUrl);
-        } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            return;
         }
+
+        parent::execute();
+
+        $this->setFilter();
+        $this->record = (array) BackendLocaleModel::get($this->id);
+
+        BackendLocaleModel::delete([$this->id]);
+
+        $this->redirect(BackendModel::createURLForAction(
+            'Index',
+            null,
+            null,
+            [
+                'report' => 'deleted',
+                'var' => $this->record['name'] . ' (' . mb_strtoupper($this->record['language']) . ')',
+            ]
+        ) . $this->filterQuery);
     }
 
     /**

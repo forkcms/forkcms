@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
@@ -38,6 +39,7 @@ class EditGroup extends BackendBaseActionEdit
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
@@ -100,5 +102,15 @@ class EditGroup extends BackendBaseActionEdit
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->group['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteGroup']
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }

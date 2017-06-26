@@ -12,6 +12,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockDeleted;
@@ -24,8 +25,16 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        /** @var ContentBlock $contentBlock */
-        $contentBlock = $this->getContentBlock();
+        $deleteForm = $this->createForm(DeleteType::class, null, ['module' => $this->getModule()]);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $contentBlock = $this->getContentBlock((int) $deleteFormData['id']);
 
         // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle(new DeleteContentBlock($contentBlock));
@@ -35,14 +44,7 @@ class Delete extends BackendBaseActionDelete
             new ContentBlockDeleted($contentBlock)
         );
 
-        $this->redirect(
-            $this->getBackLink(
-                [
-                    'report' => 'deleted',
-                    'var' => $contentBlock->getTitle(),
-                ]
-            )
-        );
+        $this->redirect($this->getBackLink(['report' => 'deleted', 'var' => $contentBlock->getTitle()]));
     }
 
     private function getBackLink(array $parameters = []): string
@@ -55,11 +57,11 @@ class Delete extends BackendBaseActionDelete
         );
     }
 
-    private function getContentBlock(): ContentBlock
+    private function getContentBlock(int $id): ContentBlock
     {
         try {
             return $this->get('content_blocks.repository.content_block')->findOneByIdAndLocale(
-                $this->getParameter('id', 'int'),
+                $id,
                 Locale::workingLocale()
             );
         } catch (ContentBlockNotFound $e) {

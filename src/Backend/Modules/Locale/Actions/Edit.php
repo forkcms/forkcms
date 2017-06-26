@@ -9,6 +9,7 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Form\Type\DeleteType;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -45,6 +46,7 @@ class Edit extends BackendBaseActionEdit
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
@@ -166,5 +168,15 @@ class Edit extends BackendBaseActionEdit
                 $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=edited&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }
