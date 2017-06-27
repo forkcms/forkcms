@@ -1,27 +1,39 @@
-version: '2'
+version: '3'
 
 services:
-    web:
-        build: .
+    app:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
         working_dir: /var/www/html
         ports:
             - "80:80"
             - "443:443"
-        volumes:
-            - .:/var/www/html:rw
-            - ./data/files:/var/www/html/src/Frontend/Files
+        depends_on:
+            - db
         links:
             - db
         environment:
             - FORK_DEBUG=1
             - FORK_ENV=dev
+        volumes:
+            - .:/var/www/html:cached
+            - ./data/files:/var/www/html/src/Frontend/Files:cached
 
     db:
         image: "mariadb:latest"
         ports:
             - "3306:3306"
         environment:
-            - MYSQL_ROOT_PASSWORD=kingtriton
+            # Definitely change these if you're planning on using Docker for purposes besides local development!
             - MYSQL_DATABASE=forkcms
+            - MYSQL_ROOT_PASSWORD=kingtriton
             - MYSQL_USER=forkcms
             - MYSQL_PASSWORD=forkcms
+        volumes:
+            # - db-data:/var/lib/mysql:rw
+            # Use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+            - ./docker/db/data:/var/lib/mysql:rw
+
+volumes:
+    db-data: {}

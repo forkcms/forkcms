@@ -29,26 +29,30 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-configure intl && \
     docker-php-ext-install intl
 
-# Install && enable opcache
-COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache-recommended.ini
-RUN docker-php-ext-enable opcache
+# Custom php.ini settings
+COPY docker/php/php.ini /usr/local/etc/php/
 
 # Install & enable Xdebug
 COPY docker/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN pecl install xdebug-2.5.0 && \
     docker-php-ext-enable xdebug
 
-# Custom php.ini settings
-COPY docker/php/php.ini /usr/local/etc/php/
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin/ --filename=composer
+
+WORKDIR /var/www/html
+
+COPY composer.json ./
+COPY composer.lock ./
+
+RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest && \
+    composer clear-cache
 
 # Bundle source code into container
 COPY . /var/www/html
-WORKDIR /var/www/html
 
-# Install composer and install dependencies.
-RUN curl -sS https://getcomposer.org/installer | \
-    php -- --install-dir=/usr/bin/ --filename=composer
-RUN composer install --prefer-dist --no-scripts --no-progress --no-suggest --optimize-autoloader
+RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
 
 # Give apache write access to host
 RUN chown -R www-data:www-data /var/www/html
