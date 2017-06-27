@@ -52,9 +52,11 @@ final class Settings extends ActionIndex
             new SettingsSavedEvent($settings)
         );
 
+        $redirectAction = $settings->mailEngine === 'not_implemented' ? 'Settings' : 'Ping';
+
         $this->redirect(
             Model::createURLForAction(
-                'Settings',
+                $redirectAction,
                 null,
                 null,
                 [

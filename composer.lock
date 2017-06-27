@@ -1649,22 +1649,22 @@
         },
         {
             "name": "mailmotor/campaignmonitor-bundle",
-            "version": "1.0.2",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/campaignmonitor-bundle.git",
-                "reference": "e9df4e085d6f8937749b3d0bf03831191d0ad145"
+                "reference": "d3168dbbdb6ef103ecac64b59a19f77bb4f7fa17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/campaignmonitor-bundle/zipball/e9df4e085d6f8937749b3d0bf03831191d0ad145",
-                "reference": "e9df4e085d6f8937749b3d0bf03831191d0ad145",
+                "url": "https://api.github.com/repos/mailmotor/campaignmonitor-bundle/zipball/d3168dbbdb6ef103ecac64b59a19f77bb4f7fa17",
+                "reference": "d3168dbbdb6ef103ecac64b59a19f77bb4f7fa17",
                 "shasum": ""
             },
             "require": {
                 "campaignmonitor/createsend-php": "~5.0",
-                "mailmotor/mailmotor-bundle": "^2.0",
-                "php": ">=5.3.3"
+                "mailmotor/mailmotor-bundle": "^3.0",
+                "php": "^7.1"
             },
             "type": "library",
             "autoload": {
@@ -1692,26 +1692,26 @@
                 "bundle",
                 "php"
             ],
-            "time": "2017-06-15T13:56:47+00:00"
+            "time": "2017-06-20T14:46:07+00:00"
         },
         {
             "name": "mailmotor/mailchimp-bundle",
-            "version": "2.0.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/mailchimp-bundle.git",
-                "reference": "41acc22c55846e9a1c455b750345c658b5f7d1cc"
+                "reference": "b07df3d65adc267704b7dec43e400e9318941ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/mailchimp-bundle/zipball/41acc22c55846e9a1c455b750345c658b5f7d1cc",
-                "reference": "41acc22c55846e9a1c455b750345c658b5f7d1cc",
+                "url": "https://api.github.com/repos/mailmotor/mailchimp-bundle/zipball/b07df3d65adc267704b7dec43e400e9318941ffe",
+                "reference": "b07df3d65adc267704b7dec43e400e9318941ffe",
                 "shasum": ""
             },
             "require": {
-                "mailmotor/mailmotor-bundle": "^2.0",
+                "mailmotor/mailmotor-bundle": "^3.0",
                 "pacely/mailchimp-apiv3": "~1.0",
-                "php": ">=5.3.3"
+                "php": "^7.1"
             },
             "type": "library",
             "autoload": {
@@ -1738,28 +1738,28 @@
                 "bundle",
                 "php"
             ],
-            "time": "2016-12-01T07:57:14+00:00"
+            "time": "2017-06-20T14:44:53+00:00"
         },
         {
             "name": "mailmotor/mailmotor-bundle",
-            "version": "2.0.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/mailmotor-bundle.git",
-                "reference": "e92b0945a37515940e9025be30df2d6360822797"
+                "reference": "305f7d12a320ce116bc9aece4dab9d62a3804a3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/e92b0945a37515940e9025be30df2d6360822797",
-                "reference": "e92b0945a37515940e9025be30df2d6360822797",
+                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/305f7d12a320ce116bc9aece4dab9d62a3804a3c",
+                "reference": "305f7d12a320ce116bc9aece4dab9d62a3804a3c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
-                "symfony/http-kernel": "~2.3"
+                "php": "^7.1",
+                "symfony/http-kernel": "^2.3|^3.0"
             },
             "require-dev": {
-                "symfony/framework-bundle": "~2.3"
+                "symfony/framework-bundle": "^2.3|^3.0"
             },
             "type": "library",
             "autoload": {
@@ -1779,14 +1779,14 @@
                     "role": "Developer"
                 }
             ],
-            "description": "This Symfony2 bundle loads in MailMotor as a service. So you can subscribe/unsubscribe members to any mailinglist managing API. F.e.: MailChimp, CampaignMonitor, ...",
+            "description": "This Symfony bundle loads in MailMotor as a service. So you can subscribe/unsubscribe members to any mailinglist managing API. F.e.: MailChimp, CampaignMonitor, ...",
             "homepage": "https://github.com/mailmotor/mailmotor-bundle",
             "keywords": [
-                "Symfony2",
                 "bundle",
-                "php"
+                "php",
+                "symfony"
             ],
-            "time": "2016-12-01T14:26:20+00:00"
+            "time": "2017-06-20T14:38:49+00:00"
         },
         {
             "name": "matthiasmullie/minify",
