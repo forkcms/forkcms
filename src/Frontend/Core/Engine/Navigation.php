@@ -70,10 +70,10 @@ class Navigation extends FrontendBaseObject
         }
 
         if ($urlencode) {
-            array_walk($parameters, 'rawurlencode');
+            $parameters = array_map('rawurlencode', $parameters);
         }
 
-        $queryString = '?' . http_build_query($parameters, null, '&amp;');
+        $queryString = '?' . http_build_query($parameters);
 
         // build the URL and return it
         return FrontendModel::get('router')->generate(
@@ -208,7 +208,7 @@ class Navigation extends FrontendBaseObject
         array $excludeIds = [],
         string $template = '/Core/Layout/Templates/Navigation.html.twig',
         int $depthCounter = 1
-    ) : string {
+    ): string {
         // get navigation
         $navigation = self::getNavigation();
 

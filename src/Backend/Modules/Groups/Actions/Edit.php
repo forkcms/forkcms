@@ -16,6 +16,7 @@ use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Symfony\Component\Finder\Finder;
@@ -125,6 +126,7 @@ class Edit extends BackendBaseActionEdit
         $this->loadDataGrids();
         $this->loadForm();
         $this->validateForm();
+        $this->loadDeleteForm();
         $this->parse();
         $this->display();
     }
@@ -190,7 +192,7 @@ class Edit extends BackendBaseActionEdit
 
     private function getData(): void
     {
-        $this->id = $this->getParameter('id');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // get dashboard sequence
         $this->hiddenOnDashboard = BackendGroupsModel::getSetting($this->id, 'hidden_on_dashboard');
@@ -616,5 +618,15 @@ class Edit extends BackendBaseActionEdit
                 $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }

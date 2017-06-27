@@ -11,6 +11,7 @@ namespace Backend\Modules\Groups\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
@@ -20,23 +21,39 @@ class Delete extends BackendBaseActionDelete
 {
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
 
-        // group exists and id is not null?
-        if ($this->id !== null && BackendGroupsModel::exists($this->id)) {
-            parent::execute();
-
-            // get record
-            $this->record = BackendGroupsModel::get($this->id);
-
-            // delete group
-            BackendGroupsModel::delete($this->id);
-
-            // item was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name']));
-        } else {
-            // no item found, redirect to the overview with an error
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            return;
         }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = $deleteFormData['id'];
+
+        // does the group exist
+        if ($this->id === 0 || !BackendGroupsModel::exists($this->id)) {
+            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
+        }
+
+        parent::execute();
+
+        $this->record = BackendGroupsModel::get($this->id);
+
+        BackendGroupsModel::delete($this->id);
+
+        $this->redirect(BackendModel::createURLForAction(
+            'Index',
+            null,
+            null,
+            ['report' => 'deleted', 'var' => $this->record['name']]
+        ));
     }
 }

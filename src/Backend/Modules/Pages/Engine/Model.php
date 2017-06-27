@@ -918,9 +918,9 @@ class Model
         ];
     }
 
-    public static function getURL(string $url, int $id = null, int $parentId = 0, bool $isAction = false): string
+    public static function getURL(string $url, int $id = null, int $parentId = null, bool $isAction = false): string
     {
-        $parentIds = [$parentId];
+        $parentIds = [$parentId ?? 0];
 
         // 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
         if ($parentId == 0 || $parentId == 1 || $parentId == 2 || $parentId == 3 || $parentId == 4) {
@@ -1051,7 +1051,7 @@ class Model
     public static function loadUserTemplates(): array
     {
         $themePath = FRONTEND_PATH . '/Themes/';
-        $themePath .= BackendModel::get('fork.settings')->get('Core', 'theme', 'default');
+        $themePath .= BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork');
         $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.json';
 
         $userTemplates = [];
@@ -1063,7 +1063,7 @@ class Model
             foreach ($userTemplates as &$userTemplate) {
                 $userTemplate['file'] =
                     '/src/Frontend/Themes/' .
-                    BackendModel::get('fork.settings')->get('Core', 'theme', 'default') .
+                    BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork') .
                     '/Core/Layout/Templates/UserTemplates/' .
                     $userTemplate['file'];
             }

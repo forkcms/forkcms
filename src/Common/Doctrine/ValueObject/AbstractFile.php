@@ -38,12 +38,12 @@ abstract class AbstractFile
      */
     protected $namePrefix;
 
-    protected function __construct(string $fileName)
+    protected function __construct(?string $fileName)
     {
         $this->fileName = $fileName;
     }
 
-    public function getFileName(): string
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
@@ -133,7 +133,10 @@ abstract class AbstractFile
         }
 
         // do whatever you want to generate a unique name
-        $filename = Uri::getUrl($this->namePrefix) . '_' . sha1(uniqid(mt_rand(), true));
+        $filename = sha1(uniqid(mt_rand(), true));
+        if ($this->namePrefix !== null) {
+            $filename = Uri::getUrl($this->namePrefix) . '_' . $filename;
+        }
         $this->fileName = $filename . '.' . $this->getFile()->guessExtension();
     }
 

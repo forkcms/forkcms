@@ -14,6 +14,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Language\Language as BL;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -24,14 +25,15 @@ class EditCategory extends BackendBaseActionEdit
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
+        if ($this->id !== 0 && BackendBlogModel::existsCategory($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
@@ -103,5 +105,15 @@ class EditCategory extends BackendBaseActionEdit
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteCategory']
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }

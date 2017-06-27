@@ -252,6 +252,10 @@
         <translation language="sv"><![CDATA[Det finns inga kategorier än. <en href="%1$s">Skapa en första kategori</en>.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη κατηγορίες. <a href="%1$s">Δημιουργήστε την πρώτη κατηγορία</a>.]]></translation>
       </item>
+      <item type="error" name="NoFromSelected">
+        <translation language="nl"><![CDATA[Geen oorsprong geselecteerd.]]></translation>
+        <translation language="en"><![CDATA[No origin selected.]]></translation>
+      </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.]]></translation>
         <translation language="en"><![CDATA[There are no articles yet. <a href="%1$s">Write the first article</a>.]]></translation>

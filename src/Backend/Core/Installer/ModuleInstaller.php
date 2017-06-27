@@ -334,7 +334,7 @@ class ModuleInstaller
 
         // if the theme is still null we should fallback to the core
         if ($theme === null) {
-            $theme = 'Core';
+            $theme = 'Fork';
         }
 
         // return best matching template id
@@ -776,6 +776,11 @@ class ModuleInstaller
                 if (!empty($block['html'])) {
                     $block['html'] = file_get_contents($block['html']);
                 }
+
+                // sort array by its keys, so the array is always the same for SpoonDatabase::insert,
+                // when you don't provide an array with arrays sorted in the same order, the fields get
+                // mixed into different columns
+                ksort($block);
 
                 return $block;
             },

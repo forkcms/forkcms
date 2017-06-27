@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
+use Backend\Form\Type\DeleteType;
 use Frontend\Core\Language\Language as FL;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
@@ -31,14 +32,15 @@ class Edit extends BackendBaseActionEdit
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendFormBuilderModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
@@ -332,5 +334,15 @@ class Edit extends BackendBaseActionEdit
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }

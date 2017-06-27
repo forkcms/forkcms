@@ -93,10 +93,10 @@ class ExportData extends BackendBaseAction
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendFormBuilderModel::exists($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->setItems();
@@ -113,9 +113,9 @@ class ExportData extends BackendBaseAction
     private function setFilter(): void
     {
         // start date is set
-        if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
+        if ($this->getRequest()->query->has('start_date') && $this->getRequest()->query->get('start_date', '') !== '') {
             // redefine
-            $startDate = (string) $_GET['start_date'];
+            $startDate = $this->getRequest()->query->get('start_date', '');
 
             // explode date parts
             $chunks = explode('/', $startDate);
@@ -133,9 +133,9 @@ class ExportData extends BackendBaseAction
         }
 
         // end date is set
-        if (isset($_GET['end_date']) && $_GET['end_date'] != '') {
+        if ($this->getRequest()->query->has('end_date') && $this->getRequest()->query->get('end_date', '') !== '') {
             // redefine
-            $endDate = (string) $_GET['end_date'];
+            $endDate = $this->getRequest()->query->get('end_date', '');
 
             // explode date parts
             $chunks = explode('/', $endDate);

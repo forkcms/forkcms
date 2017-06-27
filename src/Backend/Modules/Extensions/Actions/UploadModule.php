@@ -49,9 +49,9 @@ class UploadModule extends BackendBaseActionAdd
     /**
      * Process the zip-file & install the module
      *
-     * @return string
+     * @return string|null
      */
-    private function uploadModuleFromZip(): string
+    private function uploadModuleFromZip(): ?string
     {
         // list of validated files (these files will actually be unpacked)
         $files = [];
@@ -72,7 +72,7 @@ class UploadModule extends BackendBaseActionAdd
         if ($zip->numFiles == 0) {
             $fileFile->addError(BL::getError('FileIsEmpty'));
 
-            return;
+            return null;
         }
 
         // directories we are allowed to upload to
@@ -133,21 +133,21 @@ class UploadModule extends BackendBaseActionAdd
         if (count($files) == 0) {
             $fileFile->addError(BL::getError('FileContentsIsUseless'));
 
-            return;
+            return null;
         }
 
         // module already exists on the filesystem
         if (BackendExtensionsModel::existsModule($moduleName)) {
             $fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
 
-            return;
+            return null;
         }
 
         // installer in array?
         if (!in_array($prefix . 'src/Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
             $fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
 
-            return;
+            return null;
         }
 
         // unpack module files

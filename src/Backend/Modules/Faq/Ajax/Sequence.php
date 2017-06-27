@@ -22,7 +22,7 @@ class Sequence extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
+        $newIdSequence = trim($this->getRequest()->request->get('new_id_sequence', ''));
 
         // list id
         $ids = (array) explode(',', rtrim($newIdSequence, ','));

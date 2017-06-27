@@ -162,6 +162,10 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
+bootstrap-datepicker@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-datepicker/-/bootstrap-datepicker-1.7.0.tgz#d639be3fcade88bc9e6f16ef7e227e50580b7668"
+
 bootstrap-sass@~3.3:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/bootstrap-sass/-/bootstrap-sass-3.3.7.tgz#6596c7ab40f6637393323ab0bc80d064fc630498"

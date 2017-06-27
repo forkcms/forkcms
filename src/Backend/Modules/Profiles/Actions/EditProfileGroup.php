@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
@@ -35,17 +36,18 @@ class EditProfileGroup extends BackendBaseActionEdit
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
-        $this->profileId = $this->getParameter('profile_id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
+        $this->profileId = $this->getRequest()->query->getInt('profile_id');
 
         // does the item exists
-        if ($this->id !== null && BackendProfilesModel::existsProfileGroup($this->id)) {
+        if ($this->id !== 0 && BackendProfilesModel::existsProfileGroup($this->id)) {
             // does profile exists
-            if ($this->profileId !== null && BackendProfilesModel::exists($this->profileId)) {
+            if ($this->profileId !== 0 && BackendProfilesModel::exists($this->profileId)) {
                 parent::execute();
                 $this->getData();
                 $this->loadForm();
                 $this->validateForm();
+                $this->loadDeleteForm();
                 $this->parse();
                 $this->display();
             } else {
@@ -140,5 +142,15 @@ class EditProfileGroup extends BackendBaseActionEdit
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->profileGroup['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteProfileGroup']
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
     }
 }

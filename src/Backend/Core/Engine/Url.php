@@ -66,9 +66,9 @@ class Url extends Base\Object
 
     private function getLanguageFromUrl(): string
     {
-        if (!array_key_exists($this->request->get('_locale'), BackendLanguage::getWorkingLanguages())) {
+        if (!array_key_exists($this->request->attributes->get('_locale'), BackendLanguage::getWorkingLanguages())) {
             $url = $this->getBaseUrlForLanguage($this->getContainer()->getParameter('site.default_language'));
-            $url .= '/' . $this->request->get('module') . '/' . $this->request->get('action');
+            $url .= '/' . $this->request->attributes->get('module') . '/' . $this->request->attributes->get('action');
 
             if ($this->request->getQueryString() !== null) {
                 $url .= '?' . $this->request->getQueryString();
@@ -77,12 +77,12 @@ class Url extends Base\Object
             $this->redirect($url);
         }
 
-        return $this->request->get('_locale');
+        return $this->request->attributes->get('_locale');
     }
 
     private function getModuleFromRequest(): string
     {
-        $module = $this->request->get('module');
+        $module = $this->request->attributes->get('module');
         if (empty($module)) {
             return 'Dashboard';
         }
@@ -92,7 +92,7 @@ class Url extends Base\Object
 
     private function getActionFromRequest(string $module, string $language): string
     {
-        $action = $this->request->get('action');
+        $action = $this->request->attributes->get('action');
         if (!empty($action)) {
             return \SpoonFilter::toCamelCase($action);
         }
@@ -128,7 +128,7 @@ class Url extends Base\Object
 
     private function processQueryString(): void
     {
-        if ($this->request->get('_route') === 'backend_ajax') {
+        if ($this->request->attributes->get('_route') === 'backend_ajax') {
             $this->processAjaxRequest();
 
             return;
@@ -143,17 +143,15 @@ class Url extends Base\Object
 
     private function getForkData(): array
     {
-        $request = $this->getContainer()->get('request');
-
-        if ($request->request->has('fork')) {
-            return (array) $request->request->get('fork');
+        if ($this->request->request->has('fork')) {
+            return (array) $this->request->request->get('fork');
         }
 
-        if ($request->query->has('fork')) {
-            return (array) $request->query->get('fork');
+        if ($this->request->query->has('fork')) {
+            return (array) $this->request->query->get('fork');
         }
 
-        return (array) $request->query->all();
+        return (array) $this->request->query->all();
     }
 
     private function processAjaxRequest(): void

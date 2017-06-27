@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
@@ -27,7 +28,7 @@ class MediaItemEdit extends BackendBaseActionEdit
         $mediaItem = $this->getMediaItem();
 
         // Define folder id
-        $this->folderId = $this->getParameter('folder', 'int', 0);
+        $this->folderId = $this->getRequest()->query->getInt('folder');
 
         $form = $this->createForm(
             MediaItemType::class,
@@ -37,6 +38,13 @@ class MediaItemEdit extends BackendBaseActionEdit
         );
 
         $form->handleRequest($this->get('request'));
+
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $mediaItem->getId()],
+            ['module' => $this->getModule(), 'action' => 'MediaItemDelete']
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
 
         if (!$form->isValid()) {
             $this->tpl->assign('folderId', $this->folderId);
@@ -81,7 +89,7 @@ class MediaItemEdit extends BackendBaseActionEdit
         try {
             // Define MediaItem from repository
             return $this->get('media_library.repository.item')->findOneById(
-                $this->getParameter('id', 'string')
+                $this->getRequest()->query->get('id')
             );
         } catch (MediaItemNotFound $mediaItemNotFound) {
             $this->redirect(

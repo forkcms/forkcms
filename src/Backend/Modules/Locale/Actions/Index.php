@@ -284,7 +284,7 @@ class Index extends BackendBaseActionIndex
         );
 
         // is filtered?
-        if ($this->getParameter('form', 'string', '') == 'filter') {
+        if ($this->getRequest()->query->get('form') === 'filter') {
             $this->tpl->assign('filter', true);
         }
 
@@ -317,25 +317,24 @@ class Index extends BackendBaseActionIndex
      */
     private function setFilter(): void
     {
-        // if no language is selected, set the working language as the selected
-        if ($this->getParameter('language', 'array') == null) {
-            $_GET['language'] = [BL::getWorkingLanguage()];
-            $this->parameters['language'] = [BL::getWorkingLanguage()];
-        }
-
-        // if no type is selected, set labels as the selected type
-        if ($this->getParameter('type', 'array') == null) {
-            $_GET['type'] = ['lbl'];
-            $this->parameters['type'] = ['lbl', 'act', 'err', 'msg'];
-        }
-
         // set filter
-        $this->filter['application'] = $this->getParameter('application', 'string', null);
-        $this->filter['module'] = $this->getParameter('module', 'string', null);
-        $this->filter['type'] = $this->getParameter('type', 'array');
-        $this->filter['language'] = $this->getParameter('language', 'array');
-        $this->filter['name'] = $this->getParameter('name') == null ? '' : $this->getParameter('name');
-        $this->filter['value'] = $this->getParameter('value') == null ? '' : $this->getParameter('value');
+        $this->filter['application'] = $this->getRequest()->query->get('application');
+        $this->filter['module'] = $this->getRequest()->query->get('module');
+        $this->filter['type'] = $this->getRequest()->query->get('type', '');
+        if ($this->filter['type'] === '') {
+            // if no type is selected, set labels as the selected type
+            $_GET['type'] = ['lbl'];
+            $this->filter['type'] = ['lbl'];
+        }
+        $this->filter['language'] = $this->getRequest()->query->get('language', []);
+        if (empty($this->filter['language'])) {
+            // if no language is selected, set the working language as the selected
+            $_GET['language'] = [BL::getWorkingLanguage()];
+            $this->filter['language'] = [BL::getWorkingLanguage()];
+        }
+        $this->filter['language'] = (array) $this->filter['language'];
+        $this->filter['name'] = $this->getRequest()->query->get('name');
+        $this->filter['value'] = $this->getRequest()->query->get('value');
 
         // only allow values from our types checkboxes to be set
         $this->filter['type'] = array_filter(

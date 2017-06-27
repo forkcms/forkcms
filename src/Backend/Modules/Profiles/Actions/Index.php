@@ -222,8 +222,8 @@ class Index extends BackendBaseActionIndex
      */
     private function setFilter(): void
     {
-        $this->filter['email'] = $this->getParameter('email');
-        $this->filter['status'] = $this->getParameter('status');
-        $this->filter['group'] = $this->getParameter('group');
+        $this->filter['email'] = $this->getRequest()->query->get('email');
+        $this->filter['status'] = $this->getRequest()->query->get('status');
+        $this->filter['group'] = $this->getRequest()->query->get('group');
     }
 }

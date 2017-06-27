@@ -113,15 +113,11 @@ class Register extends FrontendBaseBlock
                 $values = [];
 
                 // generate salt
-                $settings['salt'] = FrontendProfilesModel::getRandomString();
                 $settings['language'] = LANGUAGE;
 
                 // values
                 $values['email'] = $txtEmail->getValue();
-                $values['password'] = FrontendProfilesModel::getEncryptedString(
-                    $txtPassword->getValue(),
-                    $settings['salt']
-                );
+                $values['password'] = FrontendProfilesModel::encryptPassword($txtPassword->getValue());
                 $values['status'] = 'inactive';
                 $values['display_name'] = $txtDisplayName->getValue();
                 $values['registered_on'] = FrontendModel::getUTCDate();
@@ -144,7 +140,7 @@ class Register extends FrontendBaseBlock
                     // generate activation key
                     $settings['activation_key'] = FrontendProfilesModel::getEncryptedString(
                         $profileId . microtime(),
-                        $settings['salt']
+                        FrontendProfilesModel::getRandomString()
                     );
 
                     // set settings

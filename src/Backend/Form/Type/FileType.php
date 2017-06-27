@@ -214,7 +214,7 @@ class FileType extends AbstractType
         $this->fieldOffset++;
     }
 
-    private function getRemoveField(): CheckboxType
+    private function getRemoveField(): ?CheckboxType
     {
         return $this->removeFields[$this->fieldOffset];
     }

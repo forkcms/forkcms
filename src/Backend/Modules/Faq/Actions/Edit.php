@@ -14,6 +14,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
@@ -30,15 +31,17 @@ class Edit extends BackendBaseActionEdit
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendFaqModel::exists($this->id)) {
             parent::execute();
 
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
+            $this->loadDeleteFeedbackForm();
 
             $this->parse();
             $this->display();
@@ -144,5 +147,25 @@ class Edit extends BackendBaseActionEdit
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
+        $this->tpl->assign('deleteForm', $deleteForm->createView());
+    }
+
+    private function loadDeleteFeedbackForm(): void
+    {
+        $deleteFeedbackForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteFeedback']
+        );
+        $this->tpl->assign('deleteFeedbackForm', $deleteFeedbackForm->createView());
     }
 }

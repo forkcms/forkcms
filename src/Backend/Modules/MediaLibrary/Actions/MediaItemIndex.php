@@ -46,7 +46,7 @@ class MediaItemIndex extends BackendBaseActionIndex
     private function getMediaFolder(): ?MediaFolder
     {
         // Define folder id
-        $id = $this->getParameter('folder', 'int', 0);
+        $id = $this->getRequest()->query->getInt('folder');
 
         try {
             /** @var MediaFolder mediaFolder */

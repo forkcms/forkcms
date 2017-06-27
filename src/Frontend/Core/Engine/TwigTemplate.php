@@ -48,7 +48,7 @@ class TwigTemplate extends BaseTwigTemplate
             return;
         }
 
-        $this->addFrontendPathsToTheTemplateLoader($container->get('fork.settings')->get('Core', 'theme', 'default'));
+        $this->addFrontendPathsToTheTemplateLoader($container->get('fork.settings')->get('Core', 'theme', 'Fork'));
         $this->connectSymfonyForms();
     }
 
