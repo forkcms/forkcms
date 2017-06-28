@@ -201,9 +201,9 @@ abstract class AbstractFile
         return (string) $this->fileName;
     }
 
-    public static function fromString(string $fileName): self
+    public static function fromString(?string $fileName): ?self
     {
-        return new static($fileName);
+        return $fileName !== null ? new static($fileName) : null;
     }
 
     /**
