@@ -16,20 +16,20 @@
  * Create a Kernel and load the DI container to be able to access the Backend Model methods and
  * the configuration. This should be refactored in time.
  */
-require_once '../../../../../../../../autoload.php';
-require_once '../../../../../../../../app/AppKernel.php';
-require_once '../../../../../../../../app/KernelLoader.php';
+require_once __DIR__ . '/../../../../../autoload.php';
 
-$env = getenv('FORK_ENV') ?: 'prod';
+// after registring autoloaders, let's add use statements for our needed classes
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\App\AppKernel;
+use ForkCMS\App\KernelLoader;
+
+$env = getenv('FORK_ENV') ? : 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
 
 $kernel = new AppKernel($env, $debug);
 $loader = new KernelLoader($kernel);
 $loader->passContainerToModels();
-
-// after registring autoloaders, let's add use statements for our needed classes
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This function must check the user session to be sure that he/she is
