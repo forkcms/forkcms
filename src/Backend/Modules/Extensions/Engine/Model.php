@@ -515,7 +515,7 @@ class Model
      *
      * @return array
      */
-    public static function getModulesThatRequireGoogleRecaptcha()
+    public static function getModulesThatRequireGoogleRecaptcha(): array
     {
         return self::getModulesThatRequireSetting('google_recaptcha');
     }
@@ -527,7 +527,7 @@ class Model
      *
      * @return array
      */
-    private static function getModulesThatRequireSetting($setting)
+    private static function getModulesThatRequireSetting(string $setting): array
     {
         if ($setting === '') {
             return [];
@@ -538,7 +538,7 @@ class Model
 
         return array_filter(
             BackendModel::getModules(),
-            function ($module) use ($moduleSettings, $setting) {
+            function (string $module) use ($moduleSettings, $setting): bool {
                 $requiresGoogleRecaptcha = $moduleSettings->get($module, 'requires_' . $setting, false);
 
                 return $requiresGoogleRecaptcha;
