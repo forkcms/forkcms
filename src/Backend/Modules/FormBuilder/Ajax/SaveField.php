@@ -30,9 +30,19 @@ class SaveField extends BackendBaseAJAXAction
         $type = $this->getRequest()->request->get('type');
         if (!in_array(
             $type,
-            ['checkbox', 'dropdown', 'datetime', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox']
-        )
-        ) {
+            [
+                'checkbox',
+                'dropdown',
+                'datetime',
+                'heading',
+                'paragraph',
+                'radiobutton',
+                'submit',
+                'textarea',
+                'textbox',
+                'recaptcha',
+            ]
+        )) {
             $type = '';
         }
         $label = trim($this->getRequest()->request->get('label', ''));

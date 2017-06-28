@@ -166,6 +166,30 @@
                   </td>
                 </tr>
               {% endif %}
+              {% if needsGoogleRecaptcha %}
+                <tr>
+                  <th>
+                    <label for="googleRecaptchaSiteKey" class="control-label">
+                      reCAPTCHA site key
+                    </label>
+                  </th>
+                  <td>{% form_field google_recaptcha_site_key %} {% form_field_error google_recaptcha_site_key %}</td>
+                  <td>
+                    <a href="https://www.google.com/recaptcha/admin">https://www.google.com/recaptcha/admin</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label for="googleRecaptchaSiteKey" class="control-label">
+                      reCAPTCHA secret key
+                    </label>
+                  </th>
+                  <td>{% form_field google_recaptcha_secret_key %} {% form_field_error google_recaptcha_secret_key %}</td>
+                  <td>
+                    <a href="https://www.google.com/recaptcha/admin">https://www.google.com/recaptcha/admin</a>
+                  </td>
+                </tr>
+              {% endif %}
               {% if needsAkismet %}
                 <tr>
                   <th><label for="akismetKey" class="control-label">Akismet key</label>

@@ -260,7 +260,7 @@ DROP TABLE IF EXISTS `forms_fields`;
 CREATE TABLE `forms_fields` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `form_id` int(11) unsigned NOT NULL,
-  `type` enum('textbox','textarea','dropdown','checkbox','radiobutton','heading','paragraph','submit') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('textbox','textarea','dropdown','checkbox','radiobutton','heading','paragraph','submit','recaptcha') COLLATE utf8mb4_unicode_ci NOT NULL,
   `settings` text COLLATE utf8mb4_unicode_ci,
   `sequence` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),

@@ -208,6 +208,12 @@ class Edit extends BackendBaseActionEdit
 
         $this->tpl->assign('id', $this->record['id']);
         $this->tpl->assign('name', $this->record['name']);
+        $recaptchaSiteKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key');
+        $recaptchaSecretKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
+
+        if (!($recaptchaSiteKey || $recaptchaSecretKey)) {
+            $this->tpl->assign('recaptchaMissing', true);
+        }
 
         // parse error messages
         $this->parseErrorMessages();

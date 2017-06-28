@@ -9,6 +9,7 @@ namespace Backend\Modules\Extensions\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\ModulesSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -496,17 +497,7 @@ class Model
      */
     public static function getModulesThatRequireAkismet(): array
     {
-        $modules = [];
-        $installedModules = BackendModel::getModules();
-
-        foreach ($installedModules as $module) {
-            $setting = BackendModel::get('fork.settings')->get($module, 'requires_akismet', false);
-            if ($setting) {
-                $modules[] = $module;
-            }
-        }
-
-        return $modules;
+        return self::getModulesThatRequireSetting('akismet');
     }
 
     /**
@@ -516,17 +507,43 @@ class Model
      */
     public static function getModulesThatRequireGoogleMaps(): array
     {
-        $modules = [];
-        $installedModules = BackendModel::getModules();
+        return self::getModulesThatRequireSetting('google_maps');
+    }
 
-        foreach ($installedModules as $module) {
-            $setting = BackendModel::get('fork.settings')->get($module, 'requires_google_maps', false);
-            if ($setting) {
-                $modules[] = $module;
-            }
+    /**
+     * Fetch the list of modules that require Google Recaptcha API key
+     *
+     * @return array
+     */
+    public static function getModulesThatRequireGoogleRecaptcha(): array
+    {
+        return self::getModulesThatRequireSetting('google_recaptcha');
+    }
+
+    /**
+     * Fetch the list of modules that require a certain setting. The setting is affixed by 'requires_'
+     *
+     * @param string $setting
+     *
+     * @return array
+     */
+    private static function getModulesThatRequireSetting(string $setting): array
+    {
+        if ($setting === '') {
+            return [];
         }
 
-        return $modules;
+        /** @var ModulesSettings $moduleSettings */
+        $moduleSettings = BackendModel::get('fork.settings');
+
+        return array_filter(
+            BackendModel::getModules(),
+            function (string $module) use ($moduleSettings, $setting): bool {
+                $requiresGoogleRecaptcha = $moduleSettings->get($module, 'requires_' . $setting, false);
+
+                return $requiresGoogleRecaptcha;
+            }
+        );
     }
 
     public static function getTemplate(int $id): array

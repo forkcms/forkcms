@@ -7,9 +7,11 @@ use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use ReCaptcha\ReCaptcha;
 use SpoonFormAttributes;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -45,6 +47,11 @@ class Form extends FrontendBaseWidget
      * @var array
      */
     private $item;
+
+    /**
+     * @var bool
+     */
+    private $hasRecaptchaField;
 
     /**
      * Create form action and strip the identifier parameter.
@@ -113,7 +120,7 @@ class Form extends FrontendBaseWidget
 
         // success message
         if ($this->URL->hasParameter('identifier')
-            && $this->URL->getParameter('identifier') == $this->item['identifier']
+            && $this->URL->getParameter('identifier') === $this->item['identifier']
         ) {
             $this->parseSuccessMessage();
         } else {
@@ -158,7 +165,7 @@ class Form extends FrontendBaseWidget
                 $values = $field['settings']['values'] ?? null;
                 $defaultValues = $field['settings']['default_values'] ?? null;
 
-                if ($field['type'] == 'dropdown') {
+                if ($field['type'] === 'dropdown') {
                     // values and labels are the same
                     $values = array_combine($values, $values);
 
@@ -182,13 +189,13 @@ class Form extends FrontendBaseWidget
                     $this->setCustomHTML5ErrorMessages($item, $ddm);
                     // get content
                     $item['html'] = $ddm->parse();
-                } elseif ($field['type'] == 'radiobutton') {
+                } elseif ($field['type'] === 'radiobutton') {
                     // create element
                     $rbt = $this->frm->addRadiobutton($item['name'], $values, $defaultValues, $item['classname']);
 
                     // get content
                     $item['html'] = $rbt->parse();
-                } elseif ($field['type'] == 'checkbox') {
+                } elseif ($field['type'] === 'checkbox') {
                     // reset
                     $newValues = [];
 
@@ -202,7 +209,7 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $chk->parse();
-                } elseif ($field['type'] == 'textbox') {
+                } elseif ($field['type'] === 'textbox') {
                     // create element
                     $txt = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname']);
 
@@ -224,9 +231,9 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $txt->parse();
-                } elseif ($field['type'] == 'datetime') {
+                } elseif ($field['type'] === 'datetime') {
                     // create element
-                    if ($field['settings']['input_type'] == 'date') {
+                    if ($field['settings']['input_type'] === 'date') {
                         // calculate default value
                         $amount = $field['settings']['value_amount'];
                         $type = $field['settings']['value_type'];
@@ -271,7 +278,7 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $datetime->parse();
-                } elseif ($field['type'] == 'textarea') {
+                } elseif ($field['type'] === 'textarea') {
                     // create element
                     $txt = $this->frm->addTextarea($item['name'], $defaultValues, $item['classname']);
                     $txt->setAttribute('cols', 30);
@@ -288,12 +295,15 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $txt->parse();
-                } elseif ($field['type'] == 'heading') {
+                } elseif ($field['type'] === 'heading') {
                     $item['html'] = '<h3>' . $values . '</h3>';
-                } elseif ($field['type'] == 'paragraph') {
+                } elseif ($field['type'] === 'paragraph') {
                     $item['html'] = $values;
-                } elseif ($field['type'] == 'submit') {
+                } elseif ($field['type'] === 'submit') {
                     $item['html'] = $values;
+                } elseif ($field['type'] === 'recaptcha') {
+                    $this->hasRecaptchaField = true;
+                    continue;
                 }
 
                 // add to list
@@ -320,6 +330,12 @@ class Form extends FrontendBaseWidget
         $this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
         $this->tpl->assign('successMessage', false);
 
+        if ($this->hasRecaptchaField) {
+            $this->header->addJS('https://www.google.com/recaptcha/api.js?hl=' . Locale::frontendLanguage());
+            $this->tpl->assign('hasRecaptchaField', true);
+            $this->tpl->assign('siteKey', FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key'));
+        }
+
         // got fields
         if (!empty($this->fieldsHTML)) {
             // value of the submit button
@@ -327,11 +343,11 @@ class Form extends FrontendBaseWidget
 
             // loop html fields
             foreach ($this->fieldsHTML as &$field) {
-                if ($field['type'] == 'heading' || $field['type'] == 'paragraph') {
+                if (in_array($field['type'], ['heading', 'paragraph', 'recaptcha'])) {
                     $field['plaintext'] = true;
-                } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
+                } elseif (in_array($field['type'], ['checkbox', 'radiobutton'])) {
                     // name (prefixed by type)
-                    $name = ($field['type'] == 'checkbox') ?
+                    $name = ($field['type'] === 'checkbox') ?
                         'chk' . \SpoonFilter::toCamelCase($field['name']) :
                         'rbt' . \SpoonFilter::toCamelCase($field['name'])
                     ;
@@ -343,7 +359,7 @@ class Form extends FrontendBaseWidget
 
                     // multiple items
                     $field['multiple'] = true;
-                } elseif ($field['type'] == 'submit') {
+                } elseif ($field['type'] === 'submit') {
                     $submitValue = $field['html'];
                 } else {
                     $field['simple'] = true;
@@ -381,6 +397,28 @@ class Form extends FrontendBaseWidget
     {
         // submitted
         if ($this->frm->isSubmitted()) {
+            if ($this->hasRecaptchaField) {
+                $request = $this->get('request')->request;
+                if (!$request->has('g-recaptcha-response')) {
+                    $this->frm->addError(FL::err('RecaptchaInvalid'));
+                }
+
+                $response = $request->get('g-recaptcha-response');
+
+                $secret = FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
+
+                if (!$secret) {
+                    $this->frm->addError(FL::err('RecaptchaInvalid'));
+                }
+
+                $recaptcha = new ReCaptcha($secret);
+
+                $response = $recaptcha->verify($response);
+
+                if (!$response->isSuccess()) {
+                    $this->frm->addError(FL::err('RecaptchaInvalid'));
+                }
+            }
             // does the key exists?
             if (\SpoonSession::exists('formbuilder_' . $this->item['id'])) {
                 // calculate difference
@@ -398,7 +436,7 @@ class Form extends FrontendBaseWidget
                 $fieldName = 'field' . $field['id'];
 
                 // skip
-                if ($field['type'] == 'submit' || $field['type'] == 'paragraph' || $field['type'] == 'heading') {
+                if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha'])) {
                     continue;
                 }
 
@@ -410,23 +448,23 @@ class Form extends FrontendBaseWidget
                     }
 
                     // required
-                    if ($rule == 'required') {
+                    if ($rule === 'required') {
                         $this->frm->getField($fieldName)->isFilled($settings['error_message']);
-                    } elseif ($rule == 'email') {
+                    } elseif ($rule === 'email') {
                         // only check this if the field is filled, if the field is required it will be validated before
                         if ($this->frm->getField($fieldName)->isFilled()) {
                             $this->frm->getField($fieldName)->isEmail(
                                 $settings['error_message']
                             );
                         }
-                    } elseif ($rule == 'number') {
+                    } elseif ($rule === 'number') {
                         // only check this if the field is filled, if the field is required it will be validated before
                         if ($this->frm->getField($fieldName)->isFilled()) {
                             $this->frm->getField($fieldName)->isNumeric(
                                 $settings['error_message']
                             );
                         }
-                    } elseif ($rule == 'time') {
+                    } elseif ($rule === 'time') {
                         $regexTime = '/^(([0-1][0-9]|2[0-3]|[0-9])|([0-1][0-9]|2[0-3]|[0-9])(:|h)[0-5]?[0-9]?)$/';
                         if (!\SpoonFilter::isValidAgainstRegexp($regexTime, $this->frm->getField($fieldName)->getValue())) {
                             $this->frm->getField($fieldName)->setError($settings['error_message']);
@@ -457,7 +495,7 @@ class Form extends FrontendBaseWidget
                 // loop all fields
                 foreach ($this->item['fields'] as $field) {
                     // skip
-                    if ($field['type'] == 'submit' || $field['type'] == 'paragraph' || $field['type'] == 'heading') {
+                    if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha'])) {
                         continue;
                     }
 
@@ -467,7 +505,7 @@ class Form extends FrontendBaseWidget
                     $fieldData['label'] = $field['settings']['label'];
                     $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
 
-                    if ($field['type'] == 'radiobutton') {
+                    if ($field['type'] === 'radiobutton') {
                         $values = [];
 
                         foreach ($field['settings']['values'] as $value) {

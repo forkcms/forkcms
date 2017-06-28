@@ -51,7 +51,7 @@ class Helper
              * Create form and parse to HTML
              */
             // dropdown
-            if ($field['type'] == 'dropdown') {
+            if ($field['type'] === 'dropdown') {
                 // values and labels are the same
                 $values = array_combine($values, $values);
 
@@ -69,9 +69,9 @@ class Helper
 
                 // get content
                 $fieldHTML = $ddm->parse();
-            } elseif ($field['type'] == 'datetime') {
+            } elseif ($field['type'] === 'datetime') {
                 // create element
-                if ($field['settings']['input_type'] == 'date') {
+                if ($field['settings']['input_type'] === 'date') {
                     // calculate default value
                     $amount = $field['settings']['value_amount'];
                     $type = $field['settings']['value_type'];
@@ -100,13 +100,13 @@ class Helper
 
                 // get content
                 $fieldHTML = $datetime->parse();
-            } elseif ($field['type'] == 'radiobutton') {
+            } elseif ($field['type'] === 'radiobutton') {
                 // create element
                 $rbt = $frm->addRadiobutton($fieldName, $values, $defaultValues);
 
                 // get content
                 $fieldHTML = $rbt->parse();
-            } elseif ($field['type'] == 'checkbox') {
+            } elseif ($field['type'] === 'checkbox') {
                 // rebuild values
                 $newValues = [];
                 foreach ((array) $values as $value) {
@@ -118,7 +118,7 @@ class Helper
 
                 // get content
                 $fieldHTML = $chk->parse();
-            } elseif ($field['type'] == 'textbox') {
+            } elseif ($field['type'] === 'textbox') {
                 // create element
                 $txt = $frm->addText($fieldName, $defaultValues);
                 $txt->setAttribute('disabled', 'disabled');
@@ -126,7 +126,7 @@ class Helper
 
                 // get content
                 $fieldHTML = $txt->parse();
-            } elseif ($field['type'] == 'textarea') {
+            } elseif ($field['type'] === 'textarea') {
                 // create element
                 $txt = $frm->addTextarea($fieldName, $defaultValues);
                 $txt->setAttribute('cols', 30);
@@ -135,10 +135,12 @@ class Helper
 
                 // get content
                 $fieldHTML = $txt->parse();
-            } elseif ($field['type'] == 'heading') {
+            } elseif ($field['type'] === 'heading') {
                 $fieldHTML = '<h3>' . $values . '</h3>';
-            } elseif ($field['type'] == 'paragraph') {
+            } elseif ($field['type'] === 'paragraph') {
                 $fieldHTML = $values;
+            } elseif ($field['type'] === 'recaptcha') {
+                $fieldHTML = '<p>reCAPTCHA</p>';
             }
 
             /*
@@ -152,13 +154,13 @@ class Helper
             $tpl->assign('required', isset($field['validations']['required']));
 
             // plaintext items
-            if ($field['type'] == 'heading' || $field['type'] == 'paragraph') {
+            if (in_array($field['type'], ['heading', 'paragraph', 'recaptcha'])) {
                 // assign
                 $tpl->assign('content', $fieldHTML);
                 $tpl->assign('plaintext', true);
-            } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
+            } elseif (in_array($field['type'], ['checkbox', 'radiobutton'])) {
                 // name (prefixed by type)
-                $name = ($field['type'] == 'checkbox') ?
+                $name = ($field['type'] === 'checkbox') ?
                     'chk' . \SpoonFilter::ucfirst($fieldName) :
                     'rbt' . \SpoonFilter::ucfirst($fieldName)
                 ;
