@@ -30,12 +30,13 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-install intl
 
 # Custom php.ini settings
-COPY docker/php/php.ini /usr/local/etc/php/
+COPY docker/php/php.ini ${PHP_INI_DIR}/php.ini
 
-# Install & enable Xdebug
-COPY docker/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN pecl install xdebug-2.5.0 && \
-    docker-php-ext-enable xdebug
+# Install and configure XDebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+COPY docker/php/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
+RUN echo 'xdebug.remote_host="${DOCKER_HOST_IP}"'
+RUN echo 'xdebug.remote_host="${DOCKER_HOST_IP}"' >> ${PHP_INI_DIR}/conf.d/xdebug.ini
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | \
@@ -43,15 +44,16 @@ RUN curl -sS https://getcomposer.org/installer | \
 
 WORKDIR /var/www/html
 
+# Install the composer dependencies (no autoloader yet as that invalidates the docker cache)
 COPY composer.json ./
 COPY composer.lock ./
-
 RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest && \
     composer clear-cache
 
 # Bundle source code into container
 COPY . /var/www/html
 
+# Dump the autoloader
 RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
 
 # Give apache write access to host
