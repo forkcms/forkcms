@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd01bd814f6d9a74a001eebb5f7d33ef",
+    "content-hash": "595280518aaf4173474777dad7b0aed2",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1787,16 +1787,16 @@
         },
         {
             "name": "mailmotor/mailmotor-bundle",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/mailmotor-bundle.git",
-                "reference": "305f7d12a320ce116bc9aece4dab9d62a3804a3c"
+                "reference": "23ab81056419006b9d7d766ac525fcf713d17081"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/305f7d12a320ce116bc9aece4dab9d62a3804a3c",
-                "reference": "305f7d12a320ce116bc9aece4dab9d62a3804a3c",
+                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/23ab81056419006b9d7d766ac525fcf713d17081",
+                "reference": "23ab81056419006b9d7d766ac525fcf713d17081",
                 "shasum": ""
             },
             "require": {
@@ -1831,7 +1831,7 @@
                 "php",
                 "symfony"
             ],
-            "time": "2017-06-20T14:38:49+00:00"
+            "time": "2017-06-29T09:47:12+00:00"
         },
         {
             "name": "matthiasmullie/minify",
