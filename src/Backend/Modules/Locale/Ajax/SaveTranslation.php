@@ -72,35 +72,34 @@ class SaveTranslation extends BackendBaseAJAXAction
             }
         }
 
-        // no error?
-        if (!isset($error)) {
-            // build item
-            $item = [];
-            $item['language'] = $language;
-            $item['module'] = $module;
-            $item['name'] = $name;
-            $item['type'] = $type;
-            $item['application'] = $application;
-            $item['value'] = $value;
-            $item['edited_on'] = BackendModel::getUTCDate();
-            $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-
-            // does the translation exist?
-            if (BackendLocaleModel::existsByName($name, $type, $module, $language, $application)) {
-                // add the id to the item
-                $item['id'] = (int) BackendLocaleModel::getByName($name, $type, $module, $language, $application);
-
-                // update in db
-                BackendLocaleModel::update($item);
-            } else {
-                // insert in db
-                BackendLocaleModel::insert($item);
-            }
-
-            // output OK
-            $this->output(self::OK);
-        } else {
-            $this->output(self::ERROR, null, $error);
+        if (isset($error)) {
+            $this->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, $error);
         }
+
+        // build item
+        $item = [];
+        $item['language'] = $language;
+        $item['module'] = $module;
+        $item['name'] = $name;
+        $item['type'] = $type;
+        $item['application'] = $application;
+        $item['value'] = $value;
+        $item['edited_on'] = BackendModel::getUTCDate();
+        $item['user_id'] = BackendAuthentication::getUser()->getUserId();
+
+        // does the translation exist?
+        if (BackendLocaleModel::existsByName($name, $type, $module, $language, $application)) {
+            // add the id to the item
+            $item['id'] = (int) BackendLocaleModel::getByName($name, $type, $module, $language, $application);
+
+            // update in db
+            BackendLocaleModel::update($item);
+        } else {
+            // insert in db
+            BackendLocaleModel::insert($item);
+        }
+
+        // output OK
+        $this->output(Response::HTTP_OK);
     }
 }
