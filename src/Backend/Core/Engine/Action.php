@@ -9,6 +9,7 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Config;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
@@ -91,5 +92,28 @@ class Action extends Base\Object
 
         // assign the languages
         $this->tpl->assign('workingLanguages', $workingLanguages);
+    }
+
+    /**
+     * Load the config file for the requested module.
+     * In the config file we have to find disabled actions, the constructor
+     * will read the folder and set possible actions
+     * Other configurations will be stored in it also.
+     */
+    public function getConfig(): Config
+    {
+        // check if we can load the config file
+        $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
+        if ($this->getModule() === 'Core') {
+            $configClass = Config::class;
+        }
+
+        // validate if class exists (aka has correct name)
+        if (!class_exists($configClass)) {
+            throw new Exception('The config file ' . $configClass . ' could not be found.');
+        }
+
+        // create config-object, the constructor will do some magic
+        return new $configClass($this->getKernel(), $this->getModule());
     }
 }

@@ -317,6 +317,7 @@ The dropped methods are:
 
 These changes are mostly internal but it might be good to know in case you did something with the Object class
 
-| Old method            | New method                                     |
-|-----------------------|------------------------------------------------|
-| `Object::getContent`    | `\Backend\Core\Engine\Base\Action::getContent`   |
+| Old method            | New method                                       |
+|-----------------------|--------------------------------------------------|
+| `Object::getContent`    | `\Backend\Core\Engine\Base\Action::getContent` |
+| `Object::getConfig`     | `\Backend\Core\Engine\Action::getConfig`       |
