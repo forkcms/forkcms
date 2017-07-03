@@ -43,29 +43,33 @@ class Move extends BackendBaseAJAXAction
         if ($droppedOn === -1) {
             $errors[] = 'no dropped_on provided';
         }
-        if ($typeOfDrop == '') {
+        if ($typeOfDrop === '') {
             $errors[] = 'no type provided';
         }
-        if ($tree == '') {
+        if ($tree === '') {
             $errors[] = 'no tree provided';
         }
 
         // got errors
         if (!empty($errors)) {
-            $this->output(self::BAD_REQUEST, ['errors' => $errors], 'not all fields were filled');
-        } else {
-            // get page
-            $success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);
+            $this->output(Response::HTTP_BAD_REQUEST, ['errors' => $errors], 'not all fields were filled');
 
-            // build cache
-            BackendPagesModel::buildCache(BL::getWorkingLanguage());
-
-            // output
-            if ($success) {
-                $this->output(self::OK, BackendPagesModel::get($id), 'page moved');
-            } else {
-                $this->output(self::ERROR, null, 'page not moved');
-            }
+            return;
         }
+
+        // get page
+        $success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);
+
+        // build cache
+        BackendPagesModel::buildCache(BL::getWorkingLanguage());
+
+        // output
+        if ($success) {
+            $this->output(Response::HTTP_OK, BackendPagesModel::get($id), 'page moved');
+
+            return;
+        }
+
+        $this->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, 'page not moved');
     }
 }

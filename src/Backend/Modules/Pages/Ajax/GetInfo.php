@@ -28,13 +28,15 @@ class GetInfo extends BackendBaseAJAXAction
 
         // validate
         if ($id === 0) {
-            $this->output(self::BAD_REQUEST, null, 'no id provided');
-        } else {
-            // get page
-            $page = BackendPagesModel::get($id);
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'no id provided');
 
-            // output
-            $this->output(self::OK, $page);
+            return;
         }
+
+        // get page
+        $page = BackendPagesModel::get($id);
+
+        // output
+        $this->output(Response::HTTP_OK, $page);
     }
 }
