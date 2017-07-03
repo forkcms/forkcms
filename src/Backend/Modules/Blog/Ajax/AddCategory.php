@@ -28,30 +28,32 @@ class AddCategory extends BackendBaseAJAXAction
 
         // validate
         if ($categoryTitle === '') {
-            $this->output(self::BAD_REQUEST, null, BL::err('TitleIsRequired'));
-        } else {
-            // get the data
-            // build array
-            $item = [
-                'title' => \SpoonFilter::htmlspecialchars($categoryTitle),
-                'language' => BL::getWorkingLanguage(),
-            ];
+            $this->output(Response::HTTP_BAD_REQUEST, null, BL::err('TitleIsRequired'));
 
-            $meta = [
-                'keywords' => $item['title'],
-                'keywords_overwrite' => 'N',
-                'description' => $item['title'],
-                'description_overwrite' => 'N',
-                'title' => $item['title'],
-                'title_overwrite' => 'N',
-                'url' => BackendBlogModel::getURLForCategory(\SpoonFilter::urlise($item['title'])),
-            ];
-
-            // update
-            $item['id'] = BackendBlogModel::insertCategory($item, $meta);
-
-            // output
-            $this->output(self::OK, $item, vsprintf(BL::msg('AddedCategory'), [$item['title']]));
+            return;
         }
+
+        // get the data
+        // build array
+        $item = [
+            'title' => \SpoonFilter::htmlspecialchars($categoryTitle),
+            'language' => BL::getWorkingLanguage(),
+        ];
+
+        $meta = [
+            'keywords' => $item['title'],
+            'keywords_overwrite' => 'N',
+            'description' => $item['title'],
+            'description_overwrite' => 'N',
+            'title' => $item['title'],
+            'title_overwrite' => 'N',
+            'url' => BackendBlogModel::getURLForCategory(\SpoonFilter::urlise($item['title'])),
+        ];
+
+        // update
+        $item['id'] = BackendBlogModel::insertCategory($item, $meta);
+
+        // output
+        $this->output(Response::HTTP_OK, $item, vsprintf(BL::msg('AddedCategory'), [$item['title']]));
     }
 }
