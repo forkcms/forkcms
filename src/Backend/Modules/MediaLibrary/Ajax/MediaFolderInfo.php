@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Common\Exception\AjaxExitException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will get the item info using Ajax
@@ -23,6 +24,6 @@ class MediaFolderInfo extends BackendBaseAJAXAction
         }
 
         // Currently always allow to be moved
-        $this->output(self::OK, ['allow_move' => 'Y']);
+        $this->output(Response::HTTP_OK, ['allow_move' => 'Y']);
     }
 }

@@ -12,6 +12,7 @@ namespace Backend\Modules\Location\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is an ajax handler

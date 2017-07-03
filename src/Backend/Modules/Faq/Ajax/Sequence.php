@@ -11,6 +11,7 @@ namespace Backend\Modules\Faq\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Reorder categories
@@ -43,6 +44,6 @@ class Sequence extends BackendBaseAJAXAction
         }
 
         // success output
-        $this->output(self::OK, null, 'sequence updated');
+        $this->output(Response::HTTP_OK, null, 'sequence updated');
     }
 }

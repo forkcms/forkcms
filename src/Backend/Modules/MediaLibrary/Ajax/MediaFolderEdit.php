@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFoun
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Common\Exception\AjaxExitException;
 use Common\Uri;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will update a folder using AJAX
@@ -24,7 +25,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
         // Output
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             $updateMediaFolder->getMediaFolderEntity(),
             sprintf(
                 Language::msg('MediaFolderIsEdited'),

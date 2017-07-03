@@ -11,6 +11,7 @@ namespace Backend\Modules\Pages\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will get the page info using Ajax

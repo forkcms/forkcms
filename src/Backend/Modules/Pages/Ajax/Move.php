@@ -12,6 +12,7 @@ namespace Backend\Modules\Pages\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will reorder moved pages using Ajax

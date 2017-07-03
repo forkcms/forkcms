@@ -11,6 +11,7 @@ namespace Backend\Modules\FormBuilder\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Re-sequence the fields via ajax.

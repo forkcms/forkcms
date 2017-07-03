@@ -19,11 +19,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class AjaxAction extends KernelLoader
 {
-    public const OK = 200;
-    public const BAD_REQUEST = 400;
-    public const FORBIDDEN = 403;
-    public const ERROR = 500;
-
     /**
      * The current action
      *
@@ -76,7 +71,7 @@ class AjaxAction extends KernelLoader
     {
         return new Response(
             json_encode($this->content),
-            $this->content['code'] ?? self::OK,
+            $this->content['code'] ?? Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
     }

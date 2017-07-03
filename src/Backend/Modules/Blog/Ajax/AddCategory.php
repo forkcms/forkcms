@@ -12,6 +12,7 @@ namespace Backend\Modules\Blog\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This add-action will create a new category using Ajax

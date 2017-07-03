@@ -8,6 +8,7 @@ use Common\Core\Model;
 use Common\Uri;
 use Backend\Core\Engine\Base\AjaxAction;
 use Backend\Core\Engine\Exception;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This action will enable you to upload files trough ajax.
@@ -28,7 +29,7 @@ class UploadFile extends AjaxAction
             $request->get('type')
         );
 
-        $this->output(self::OK, $fileName);
+        $this->output(Response::HTTP_OK, $fileName);
     }
 
     /**

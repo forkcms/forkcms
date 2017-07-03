@@ -5,6 +5,7 @@ namespace Backend\Modules\Faq\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Reorder questions

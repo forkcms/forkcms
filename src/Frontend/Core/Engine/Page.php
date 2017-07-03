@@ -81,7 +81,7 @@ class Page extends FrontendBaseObject
      *
      * @var int
      */
-    protected $statusCode = 200;
+    protected $statusCode = Response::HTTP_OK;
 
     public function __construct(KernelInterface $kernel)
     {

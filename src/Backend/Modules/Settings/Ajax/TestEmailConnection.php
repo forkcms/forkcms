@@ -12,6 +12,7 @@ namespace Backend\Modules\Settings\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Common\Mailer\TransportFactory;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This test-email-action will test the mail-connection

@@ -9,10 +9,11 @@ namespace Backend\Modules\Tags\Ajax;
  * file that was distributed with this source code.
  */
 
-use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Uri as CommonUri;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will update tags using Ajax

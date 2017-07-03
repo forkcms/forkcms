@@ -10,6 +10,7 @@ namespace Backend\Core\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This action will generate a valid url based upon the submitted url.
@@ -34,6 +35,6 @@ class GenerateUrl extends BackendBaseAJAXAction
         $url = urldecode($this->get('fork.repository.meta')->generateURL($url, $className, $methodName, $parameters));
 
         // output
-        $this->output(self::OK, $url);
+        $this->output(Response::HTTP_OK, $url);
     }
 }
