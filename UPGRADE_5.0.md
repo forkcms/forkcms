@@ -285,9 +285,23 @@ Backend\Core\Engine\Base\AjaxAction and Frontend\Core\Engine\Base\AjaxAction no 
 
 The response class has many more constants like this for all the other status codes
 
-## BackendNavigation
+## Backend Navigation
 
 `Backend\Core\Engine\Navigation` also known as the service `navigation` when you are in the backend was stripped of some functions that where available because it extended a base class. 
+This is no longer the case.
+The dropped methods are:
+* getAction
+* getModule
+* setAction
+* setModule
+* getContent
+* redirect
+* redirectToErrorPage
+* getConfig
+
+## Backend Header
+
+`Backend\Core\Engine\Header` also known as the service `header` when you are in the backend was stripped of some functions that where available because it extended a base class. 
 This is no longer the case.
 The dropped methods are:
 * getAction

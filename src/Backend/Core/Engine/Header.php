@@ -14,6 +14,7 @@ use Common\Core\Header\AssetCollection;
 use Common\Core\Header\JsData;
 use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Language\Language as BL;
 
@@ -21,7 +22,7 @@ use Backend\Core\Language\Language as BL;
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  */
-final class Header extends Base\Object
+final class Header extends KernelLoader
 {
     /**
      * The added css-files
