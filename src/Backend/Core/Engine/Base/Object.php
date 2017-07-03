@@ -29,13 +29,6 @@ class Object extends KernelLoader
     protected $action;
 
     /**
-     * The actual output
-     *
-     * @var mixed
-     */
-    protected $content;
-
-    /**
      * The current module
      *
      * @var string
@@ -90,24 +83,6 @@ class Object extends KernelLoader
 
         // set property
         $this->module = $module;
-    }
-
-    /**
-     * Since the display action in the backend is rather complicated and we
-     * want to make this work with our Kernel, I've added this getContent
-     * method to extract the output from the actual displaying.
-     *
-     * With this function we'll be able to get the content and return it as a
-     * Symfony output object.
-     *
-     * @return Response
-     */
-    public function getContent(): Response
-    {
-        return new Response(
-            $this->content,
-            200
-        );
     }
 
     /**

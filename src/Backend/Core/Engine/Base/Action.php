@@ -13,6 +13,7 @@ use Backend\Core\Engine\TwigTemplate;
 use Common\Core\Header\Priority;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
 use Backend\Core\Language\Language as BL;
@@ -51,6 +52,13 @@ class Action extends Object
      * @var Url
      */
     public $URL;
+
+    /**
+     * The actual output
+     *
+     * @var mixed
+     */
+    protected $content;
 
     /**
      * The constructor will set some properties. It populates the parameter array with urldecoded
@@ -221,5 +229,23 @@ class Action extends Object
     public function getRequest(): Request
     {
         return $this->get('request');
+    }
+
+    /**
+     * Since the display action in the backend is rather complicated and we
+     * want to make this work with our Kernel, I've added this getContent
+     * method to extract the output from the actual displaying.
+     *
+     * With this function we'll be able to get the content and return it as a
+     * Symfony output object.
+     *
+     * @return Response
+     */
+    public function getContent(): Response
+    {
+        return new Response(
+            $this->content,
+            Response::HTTP_OK
+        );
     }
 }

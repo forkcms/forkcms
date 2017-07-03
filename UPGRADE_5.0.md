@@ -312,3 +312,11 @@ The dropped methods are:
 * redirect
 * redirectToErrorPage
 * getConfig
+
+## The class `Backend\Core\Engine\Base\Object` has been removed and the methods moved to more specific classes
+
+These changes are mostly internal but it might be good to know in case you did something with the Object class
+
+| Old method            | New method                                     |
+|-----------------------|------------------------------------------------|
+| `Object::getContent`    | `\Backend\Core\Engine\Base\Action::getContent`   |
