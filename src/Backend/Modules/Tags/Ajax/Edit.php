@@ -30,28 +30,31 @@ class Edit extends BackendBaseAJAXAction
 
         // validate id
         if ($id === 0) {
-            $this->output(self::BAD_REQUEST, null, 'no id provided');
-        } else {
-            // validate tag name
-            if ($tag === '') {
-                $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
-            } else {
-                // check if tag exists
-                if (BackendTagsModel::existsTag($tag)) {
-                    $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
-                } else {
-                    $item = [];
-                    $item['id'] = $id;
-                    $item['tag'] = \SpoonFilter::htmlspecialchars($tag);
-                    $item['url'] = BackendTagsModel::getURL(
-                        CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
-                        $id
-                    );
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'no id provided');
 
-                    BackendTagsModel::update($item);
-                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), [$item['tag']]));
-                }
-            }
+            return;
         }
+        // validate tag name
+        if ($tag === '') {
+            $this->output(Response::HTTP_BAD_REQUEST, null, BL::err('NameIsRequired'));
+
+            return;
+        }
+        // check if tag exists
+        if (BackendTagsModel::existsTag($tag)) {
+            $this->output(Response::HTTP_BAD_REQUEST, null, BL::err('TagAlreadyExists'));
+
+            return;
+        }
+        $item = [];
+        $item['id'] = $id;
+        $item['tag'] = \SpoonFilter::htmlspecialchars($tag);
+        $item['url'] = BackendTagsModel::getURL(
+            CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+            $id
+        );
+
+        BackendTagsModel::update($item);
+        $this->output(Response::HTTP_OK, $item, vsprintf(BL::msg('Edited'), [$item['tag']]));
     }
 }
