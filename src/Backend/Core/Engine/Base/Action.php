@@ -11,6 +11,7 @@ namespace Backend\Core\Engine\Base;
 
 use Backend\Core\Engine\TwigTemplate;
 use Common\Core\Header\Priority;
+use Common\Exception\RedirectException;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -247,5 +248,20 @@ class Action extends Object
             $this->content,
             Response::HTTP_OK
         );
+    }
+
+    /**
+     * Redirect to a given URL
+     *
+     * This is a helper method as the actual implementation is located in the url class
+     *
+     * @param string $url The URL to redirect to.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
+     * @throws RedirectException
+     */
+    public function redirect(string $url, int $code = Response::HTTP_FOUND): void
+    {
+        $this->get('url')->redirect($url, $code);
     }
 }

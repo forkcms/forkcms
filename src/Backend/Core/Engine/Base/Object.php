@@ -84,24 +84,4 @@ class Object extends KernelLoader
         // set property
         $this->module = $module;
     }
-
-    /**
-     * Redirect to a given URL
-     *
-     * @param string $url The URL to redirect to.
-     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
-     *
-     * @throws RedirectException
-     */
-    public function redirect(string $url, int $code = Response::HTTP_FOUND): void
-    {
-        throw new RedirectException('Redirect', new RedirectResponse($url, $code));
-    }
-
-    protected function redirectToErrorPage(string $type, int $code = Response::HTTP_BAD_REQUEST): void
-    {
-        $errorUrl = '/' . NAMED_APPLICATION . '/' . $this->get('request')->getLocale() . '/error?type=' . $type;
-
-        $this->redirect($errorUrl, $code);
-    }
 }

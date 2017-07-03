@@ -13,6 +13,8 @@ use Backend\Core\Config;
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Cookie as CommonCookie;
+use Common\Exception\RedirectException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -275,5 +277,31 @@ class Url extends Base\Object
                 $this->redirectToFistAvailableLink($language, $navigationItem['children']);
             }
         }
+    }
+
+    /**
+     * Redirect to a given URL
+     *
+     * @param string $url The URL to redirect to.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
+     * @throws RedirectException
+     */
+    public function redirect(string $url, int $code = Response::HTTP_FOUND): void
+    {
+        throw new RedirectException('Redirect', new RedirectResponse($url, $code));
+    }
+
+    /**
+     * Helper method to create a redirect to the error page of the backend
+     *
+     * @param string $type
+     * @param int $code
+     */
+    public function redirectToErrorPage(string $type, int $code = Response::HTTP_BAD_REQUEST): void
+    {
+        $errorUrl = '/' . NAMED_APPLICATION . '/' . $this->get('request')->getLocale() . '/error?type=' . $type;
+
+        $this->get('url')->redirect($errorUrl, $code);
     }
 }

@@ -317,7 +317,11 @@ The dropped methods are:
 
 These changes are mostly internal but it might be good to know in case you did something with the Object class
 
-| Old method            | New method                                       |
-|-----------------------|--------------------------------------------------|
-| `Object::getContent`    | `\Backend\Core\Engine\Base\Action::getContent` |
-| `Object::getConfig`     | `\Backend\Core\Engine\Action::getConfig`       |
+| Old method                    | New method                                      |
+|-------------------------------|-------------------------------------------------|
+| `Object::getContent`          | `\Backend\Core\Engine\Base\Action::getContent`  |
+| `Object::getConfig`           | `\Backend\Core\Engine\Action::getConfig`        |
+| `Object::redirect`            | `\Backend\Core\Engine\Url::redirect`            |
+| `Object::redirectToErrorPage` | `\Backend\Core\Engine\Url::redirectToErrorPage` |
+
+ The `\Backend\Core\Engine\Base\Action` class has a redirect helper method that uses the `\Backend\Core\Engine\Url` implementation so you don't need to change anything in your code for this

@@ -48,7 +48,7 @@ class Action extends Base\Object
     {
         // is the requested action available? If not we redirect to the error page.
         if (!$this->getConfig()->isActionAvailable($this->action)) {
-            return $this->redirectToErrorPage('action-not-allowed', 307);
+            $this->get('url')->redirectToErrorPage('action-not-allowed', Response::HTTP_TEMPORARY_REDIRECT);
         }
 
         $actionClass = $this->buildActionClass();
