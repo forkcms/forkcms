@@ -20,15 +20,6 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class FileType extends AbstractType
 {
-    /** @var CheckboxType|null */
-    private $removeFields;
-
-    /** @var int in collections we need multiple references, this helps us keep track of the current one */
-    private $fieldOffset = -1;
-
-    /** @var array */
-    private $isNew = [];
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -42,13 +33,9 @@ class FileType extends AbstractType
                 [
                     'required' => false,
                     'label' => $options['remove_file_label'],
-                    'mapped' => false,
+                    'property_path' => 'pendingDeletion',
                 ]
             );
-
-            $this->removeFields[] = $builder->get('remove');
-        } else {
-            $this->removeFields[] = null;
         }
 
         $builder
@@ -75,8 +62,6 @@ class FileType extends AbstractType
             ->addModelTransformer(
                 new CallbackTransformer(
                     function (AbstractFile $file = null) {
-                        $this->isNew[] = $file === null;
-
                         return $file;
                     },
                     function ($file) use ($options) {
@@ -89,22 +74,6 @@ class FileType extends AbstractType
                         if (!$file instanceof AbstractFile) {
                             // your editor might say the file has protected but it isn't in this case
                             $file = $fileClass::fromUploadedFile($file->file);
-                        }
-
-                        $this->nextField();
-
-                        if ($this->isNew()) {
-                            if ($this->getRemoveField() !== null && $this->getRemoveField()->getData()) {
-                                return $fileClass::fromUploadedFile();
-                            }
-
-                            return clone $file;
-                        }
-
-                        if ($this->getRemoveField() !== null && $this->getRemoveField()->getData()) {
-                            $file->markForDeletion();
-
-                            return clone $file;
                         }
 
                         // return a clone to make sure that doctrine will do the lifecycle callbacks
@@ -136,6 +105,7 @@ class FileType extends AbstractType
                 'empty_data' => function () {
                     $emptyData = new StdClass();
                     $emptyData->file = null;
+                    $emptyData->pendingDeletion = false;
 
                     return $emptyData;
                 },
@@ -215,30 +185,6 @@ class FileType extends AbstractType
     public function getName()
     {
         return $this->getBlockPrefix();
-    }
-
-    /**
-     * Increases the current index
-     */
-    private function nextField()
-    {
-        $this->fieldOffset++;
-    }
-
-    /**
-     * @return CheckboxType
-     */
-    private function getRemoveField()
-    {
-        return $this->removeFields[$this->fieldOffset];
-    }
-
-    /**
-     * @return bool
-     */
-    private function isNew()
-    {
-        return $this->isNew[$this->fieldOffset];
     }
 
     /**
