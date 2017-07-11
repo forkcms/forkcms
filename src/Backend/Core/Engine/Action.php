@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Base\Config;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
@@ -18,7 +19,7 @@ use Backend\Core\Language\Language as BackendLanguage;
 /**
  * This class is the real code, it creates an action, loads the config file, ...
  */
-class Action extends Base\Object
+class Action extends KernelLoader
 {
     /**
      * BackendTemplate
@@ -44,7 +45,7 @@ class Action extends Base\Object
         // grab stuff from the reference and store them in this object (for later/easy use)
         $this->tpl = $this->getContainer()->get('template');
 
-        $this->config = Config::forModule($kernel, $this->module);
+        $this->config = Config::forModule($kernel, $this->get('url')->getModule());
     }
 
     /**
@@ -54,11 +55,11 @@ class Action extends Base\Object
     public function execute(): Response
     {
         // is the requested action available? If not we redirect to the error page.
-        if (!$this->config->isActionAvailable($this->action)) {
+        if (!$this->config->isActionAvailable($this->get('url')->getAction())) {
             $this->get('url')->redirectToErrorPage('action-not-allowed', Response::HTTP_TEMPORARY_REDIRECT);
         }
 
-        $actionClass = $this->buildActionClass();
+        $actionClass = $this->config->getActionClass('actions', $this->get('url')->getAction());
         $this->assignWorkingLanguagesToTemplate();
 
         /** @var $action BackendBaseAction */
@@ -69,17 +70,6 @@ class Action extends Base\Object
         $action->execute();
 
         return $action->getContent();
-    }
-
-    private function buildActionClass(): string
-    {
-        $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
-
-        if (!class_exists($actionClass)) {
-            throw new Exception('The class ' . $actionClass . ' could not be found.');
-        }
-
-        return $actionClass;
     }
 
     private function assignWorkingLanguagesToTemplate(): void
