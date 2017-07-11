@@ -5,6 +5,7 @@ namespace Backend\Modules\Settings\Ajax;
 use Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\HttpFoundation\Response;
 
 class ClearCache extends AjaxAction
 {
@@ -25,7 +26,7 @@ class ClearCache extends AjaxAction
         $exitCode = $application->run($input);
 
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             [
                 'exitCode' => $exitCode,
             ]

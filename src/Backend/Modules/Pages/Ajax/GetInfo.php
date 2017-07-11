@@ -11,6 +11,7 @@ namespace Backend\Modules\Pages\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will get the page info using Ajax
@@ -27,13 +28,15 @@ class GetInfo extends BackendBaseAJAXAction
 
         // validate
         if ($id === 0) {
-            $this->output(self::BAD_REQUEST, null, 'no id provided');
-        } else {
-            // get page
-            $page = BackendPagesModel::get($id);
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'no id provided');
 
-            // output
-            $this->output(self::OK, $page);
+            return;
         }
+
+        // get page
+        $page = BackendPagesModel::get($id);
+
+        // output
+        $this->output(Response::HTTP_OK, $page);
     }
 }

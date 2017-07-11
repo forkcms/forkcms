@@ -18,11 +18,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class AjaxAction extends Object
 {
-    const OK = 200;
-    const BAD_REQUEST = 400;
-    const FORBIDDEN = 403;
-    const ERROR = 500;
-
     public function __construct(KernelInterface $kernel, string $action = null, string $module = null)
     {
         parent::__construct($kernel);
@@ -50,7 +45,7 @@ class AjaxAction extends Object
     {
         return new Response(
             json_encode($this->content),
-            $this->content['code'] ?? self::OK,
+            $this->content['code'] ?? Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
     }

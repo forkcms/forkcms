@@ -15,6 +15,7 @@ use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the live suggest-action, it will output a list of results for a certain search
@@ -103,7 +104,7 @@ class Livesuggest extends FrontendBaseAJAXAction
 
         // output
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             $this->tpl->render(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
         );
     }
@@ -387,13 +388,13 @@ class Livesuggest extends FrontendBaseAJAXAction
         // set search term
         $charset = $this->getContainer()->getParameter('kernel.charset');
         $searchTerm = $this->getRequest()->request->get('term', '');
-        $this->term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars(
+        $this->term = ($charset === 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
         ) : \SpoonFilter::htmlentities($searchTerm);
 
         // validate
-        if ($this->term == '') {
-            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
+        if ($this->term === '') {
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'term-parameter is missing.');
         }
     }
 }

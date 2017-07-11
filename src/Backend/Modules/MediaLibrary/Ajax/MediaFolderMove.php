@@ -8,6 +8,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Common\Exception\AjaxExitException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will reorder moved pages using Ajax
@@ -30,7 +31,7 @@ class MediaFolderMove extends BackendBaseAJAXAction
         $this->get('command_bus')->handle($updateMediaFolder);
 
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             $mediaFolder,
             sprintf(Language::msg('MediaFolderMoved'), $mediaFolder->getName())
         );

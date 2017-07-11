@@ -12,6 +12,7 @@ namespace Frontend\Modules\Search\Ajax;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the save-action, it will save the searched term in the statistics
@@ -35,32 +36,33 @@ class Save extends FrontendBaseAJAXAction
         );
 
         // validate search term
-        if ($term == '') {
-            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
-        } else {
-            // previous search result
-            $previousTerm = \SpoonSession::exists('searchTerm') ? \SpoonSession::get('searchTerm') : '';
-            \SpoonSession::set('searchTerm', '');
+        if ($term === '') {
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'term-parameter is missing.');
 
-            // save this term?
-            if ($previousTerm != $term) {
-                // format data
-                $this->statistics = [];
-                $this->statistics['term'] = $term;
-                $this->statistics['language'] = LANGUAGE;
-                $this->statistics['time'] = FrontendModel::getUTCDate();
-                $this->statistics['data'] = serialize(['server' => $_SERVER]);
-                $this->statistics['num_results'] = FrontendSearchModel::getTotal($term);
-
-                // save data
-                FrontendSearchModel::save($this->statistics);
-            }
-
-            // save current search term in cookie
-            \SpoonSession::set('searchTerm', $term);
-
-            // output
-            $this->output(self::OK);
+            return;
         }
+        // previous search result
+        $previousTerm = \SpoonSession::exists('searchTerm') ? \SpoonSession::get('searchTerm') : '';
+        \SpoonSession::set('searchTerm', '');
+
+        // save this term?
+        if ($previousTerm !== $term) {
+            // format data
+            $this->statistics = [];
+            $this->statistics['term'] = $term;
+            $this->statistics['language'] = LANGUAGE;
+            $this->statistics['time'] = FrontendModel::getUTCDate();
+            $this->statistics['data'] = serialize(['server' => $_SERVER]);
+            $this->statistics['num_results'] = FrontendSearchModel::getTotal($term);
+
+            // save data
+            FrontendSearchModel::save($this->statistics);
+        }
+
+        // save current search term in cookie
+        \SpoonSession::set('searchTerm', $term);
+
+        // output
+        $this->output(Response::HTTP_OK);
     }
 }

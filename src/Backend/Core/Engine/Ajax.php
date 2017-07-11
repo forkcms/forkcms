@@ -87,7 +87,7 @@ class Ajax extends Base\Object implements ApplicationInterface
             $this->ajaxAction = new AjaxAction($this->getKernel(), $this->getAction(), $this->getModule());
         } catch (Exception $e) {
             $this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
-            $this->ajaxAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
+            $this->ajaxAction->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, $e->getMessage());
         }
     }
 
