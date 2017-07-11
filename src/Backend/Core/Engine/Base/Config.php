@@ -9,10 +9,11 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use ForkCMS\App\KernelLoader;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\App\KernelLoader;
+use InvalidArgumentException;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This is the base-object for config-files. The module-specific config-files
@@ -109,13 +110,7 @@ class Config extends KernelLoader
     {
         // Loop over every action type
         foreach ($this->getPossibleActionTypes() as $actionType) {
-            // If this action is disabled for this type, continue on to the next type
-            if ($this->isActionDisabled($actionType, $action)) {
-                continue;
-            }
-
-            // If the action file is missing, continue on to the next type
-            if (!$this->isActionFilePresent($actionType, $action)) {
+            if (!$this->isActionAvailableForActionType($action, $actionType)) {
                 continue;
             }
 
@@ -127,6 +122,22 @@ class Config extends KernelLoader
         return false;
     }
 
+    public function isActionAvailableForActionType(string $action, string $actionType): bool
+    {
+        // If this action is disabled for this type, continue on to the next type
+        if ($this->isActionDisabled($actionType, $action)) {
+            return false;
+        }
+
+        // If the action file is missing, continue on to the next type
+        if (!$this->actionClassExists($actionType, $action)) {
+            return false;
+        }
+
+        // The action is not disabled and the file is present, this is an available action!
+        return true;
+    }
+
     private function isActionDisabled(string $actionType, string $action): bool
     {
         switch ($actionType) {
@@ -136,20 +147,36 @@ class Config extends KernelLoader
                 return in_array($action, $this->disabledAJAXActions, true);
         }
 
-        throw new \Exception($actionType . ' is not a valid action type');
+        throw new InvalidArgumentException($actionType . ' is not a valid action type');
     }
 
-    private function isActionFilePresent(string $actionType, string $action): bool
+    private function actionClassExists(string $actionType, string $action): bool
     {
-        // Create the directory string
-        $directory = BACKEND_MODULES_PATH . '/' . $this->module . '/' . ucfirst($actionType);
+        $actionClass = $this->buildActionClass($actionType, $action);
 
-        // If the directory doesn't exist, surely the action can't exist.
-        if (!is_dir($directory)) {
-            return false;
+        return class_exists($actionClass);
+    }
+
+    public function getActionClass(string $actionType, string $action): string
+    {
+        $actionClass = $this->buildActionClass($actionType, $action);
+
+        if (!$this->actionClassExists($actionType, $action)) {
+            throw new InvalidArgumentException('The class ' . $actionClass . ' could not be found.');
         }
 
-        // Return if the file exists
-        return file_exists($directory . '/' . ucfirst($action) . '.php');
+        return $actionClass;
+    }
+
+    private function buildActionClass(string $actionType, string $action): string
+    {
+        $actionType = ucfirst($actionType);
+
+        $actionClass = 'Backend\\Modules\\' . $this->module . '\\' . $actionType . '\\' . $action;
+        if ($this->module === 'Core' && $actionType === 'Ajax') {
+            $actionClass = 'Backend\\Core\\Ajax\\' . $action;
+        }
+
+        return $actionClass;
     }
 }
