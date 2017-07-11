@@ -37,35 +37,9 @@ final class AjaxAction extends KernelLoader
     {
         parent::__construct($kernel);
 
-        $config = $this->getModuleConfig($module);
+        $config = Config::forModule($kernel, $module);
         $actionClass = $config->getActionClass('ajax', $action);
 
         $this->ajaxAction = new $actionClass($this->getKernel());
-    }
-
-    /**
-     * Load the config file for the requested module.
-     * In the config file we have to find disabled actions, the constructor
-     * will read the folder and set possible actions
-     * Other configurations will be stored in it also.
-     *
-     * @param string $module
-     *
-     * @return Config
-     */
-    private function getModuleConfig(string $module): Config
-    {
-        // check if we can load the config file
-        $configClass = 'Backend\\Modules\\' . $module . '\\Config';
-        if ($module === 'Core') {
-            $configClass = CoreConfig::class;
-        }
-
-        // validate if class exists (aka has correct name)
-        if (!class_exists($configClass)) {
-            throw new Exception('The config file ' . $configClass . ' could not be found.');
-        }
-
-        return new $configClass($this->getKernel(), $module);
     }
 }

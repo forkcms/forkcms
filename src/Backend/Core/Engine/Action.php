@@ -28,6 +28,11 @@ class Action extends Base\Object
     public $tpl;
 
     /**
+     * @var Config
+     */
+    private $config;
+
+    /**
      * You have to specify the action and module so we know what to do with this instance
      *
      * @param KernelInterface $kernel
@@ -38,6 +43,8 @@ class Action extends Base\Object
 
         // grab stuff from the reference and store them in this object (for later/easy use)
         $this->tpl = $this->getContainer()->get('template');
+
+        $this->config = Config::forModule($kernel, $this->module);
     }
 
     /**
@@ -47,7 +54,7 @@ class Action extends Base\Object
     public function execute(): Response
     {
         // is the requested action available? If not we redirect to the error page.
-        if (!$this->getConfig()->isActionAvailable($this->action)) {
+        if (!$this->config->isActionAvailable($this->action)) {
             $this->get('url')->redirectToErrorPage('action-not-allowed', Response::HTTP_TEMPORARY_REDIRECT);
         }
 
@@ -92,28 +99,5 @@ class Action extends Base\Object
 
         // assign the languages
         $this->tpl->assign('workingLanguages', $workingLanguages);
-    }
-
-    /**
-     * Load the config file for the requested module.
-     * In the config file we have to find disabled actions, the constructor
-     * will read the folder and set possible actions
-     * Other configurations will be stored in it also.
-     */
-    public function getConfig(): Config
-    {
-        // check if we can load the config file
-        $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
-        if ($this->getModule() === 'Core') {
-            $configClass = Config::class;
-        }
-
-        // validate if class exists (aka has correct name)
-        if (!class_exists($configClass)) {
-            throw new Exception('The config file ' . $configClass . ' could not be found.');
-        }
-
-        // create config-object, the constructor will do some magic
-        return new $configClass($this->getKernel(), $this->getModule(), $this->getAction());
     }
 }

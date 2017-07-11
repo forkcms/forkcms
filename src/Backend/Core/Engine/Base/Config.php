@@ -14,6 +14,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use ForkCMS\App\KernelLoader;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Backend\Core\Config as CoreConfig;
 
 /**
  * This is the base-object for config-files. The module-specific config-files
@@ -178,5 +179,32 @@ class Config extends KernelLoader
         }
 
         return $actionClass;
+    }
+
+    /**
+     * Get the config file for the requested module.
+     * In the config file we have to find disabled actions, the constructor
+     * will read the folder and set possible actions
+     * Other configurations will be stored in it also.
+     *
+     * @param KernelInterface $kernel
+     * @param string $module
+     *
+     * @return self
+     */
+    public static function forModule(KernelInterface $kernel, string $module): self
+    {
+        // check if we can load the config file
+        $configClass = 'Backend\\Modules\\' . $module . '\\Config';
+        if ($module === 'Core') {
+            $configClass = CoreConfig::class;
+        }
+
+        // validate if class exists (aka has correct name)
+        if (!class_exists($configClass)) {
+            throw new InvalidArgumentException('The config file ' . $configClass . ' could not be found.');
+        }
+
+        return new $configClass($kernel, $module);
     }
 }
