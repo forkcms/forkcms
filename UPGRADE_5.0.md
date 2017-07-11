@@ -267,3 +267,7 @@ Replaced those methods by using the Symfony Request object.
 `SpoonFilter::getPostValue()` will become `$this->getRequest()->request->get()`
 
 Also removed Action::getParameter(). You should directly call the request object through `$this->getRequest()->query->get()`
+
+## Meta URL
+
+The detail url (without slug) must be defined for meta type, so the preview url will be correct.
