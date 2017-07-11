@@ -180,10 +180,10 @@ class Installer extends ModuleInstaller
     private function configureFrontendFilesDirectories(): void
     {
         $filesystem = new Filesystem();
-        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/source/');
-        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/240x240/');
-        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/64x64/');
-        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/32x32/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/Avatars/source/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/Avatars/240x240/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/Avatars/64x64/');
+        $filesystem->mkdir(PATH_WWW . '/src/Frontend/Files/Profiles/Avatars/32x32/');
     }
 
     private function configureFrontendPages(): void
