@@ -55,11 +55,16 @@ class Config extends KernelLoader
      */
     protected $possibleAJAXActions = [];
 
+    /**
+     * @var string
+     */
+    private $module;
+
     public function __construct(KernelInterface $kernel, string $module)
     {
         parent::__construct($kernel);
 
-        $this->isModuleAvailable($module);
+        $this->setModule($module);
     }
 
     public function getDefaultAction(): string
@@ -77,7 +82,7 @@ class Config extends KernelLoader
      *
      * @throws BackendException If module is not allowed
      */
-    private function isModuleAvailable(string $module): void
+    private function setModule(string $module): void
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
@@ -88,6 +93,8 @@ class Config extends KernelLoader
             // throw exception
             throw new BackendException('Module not allowed.');
         }
+
+        $this->module = $module;
     }
 
     public function getPossibleActionTypes(): array
