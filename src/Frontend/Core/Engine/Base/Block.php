@@ -113,6 +113,7 @@ class Block extends KernelLoader
         // get objects from the reference so they are accessible
         $this->header = $this->getContainer()->get('header');
         $this->URL = $this->getContainer()->get('url');
+        $this->tpl = $this->getContainer()->get('templating');
         $this->breadcrumb = $this->getContainer()->get('breadcrumb');
 
         // set properties
