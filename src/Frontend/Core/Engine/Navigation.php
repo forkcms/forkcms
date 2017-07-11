@@ -9,17 +9,17 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
 
 /**
  * This class will be used to build the navigation
  */
-class Navigation extends FrontendBaseObject
+class Navigation extends KernelLoader
 {
     /**
      * The excluded page ids. These will not be shown in the menu.
@@ -35,9 +35,26 @@ class Navigation extends FrontendBaseObject
      */
     private static $selectedPageIds = [];
 
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $tpl;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $URL;
+
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
+
+        $this->tpl = $this->getContainer()->get('templating');
+        $this->URL = $this->getContainer()->get('url');
 
         // set selected ids
         $this->setSelectedPageIds();

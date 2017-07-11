@@ -14,8 +14,10 @@ use Common\Core\Header\AssetCollection;
 use Common\Core\Header\JsData;
 use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
-use Frontend\Core\Engine\Base\Object;
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Theme;
+use Frontend\Core\Engine\TwigTemplate;
+use Frontend\Core\Engine\Url;
 use Frontend\Core\Language\Locale;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -23,7 +25,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  */
-class Header extends Object
+class Header extends KernelLoader
 {
     /**
      * The canonical URL
@@ -81,12 +83,29 @@ class Header extends Object
      */
     private $contentTitle;
 
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $tpl;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $URL;
+
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
 
         $container = $this->getContainer();
         $container->set('header', $this);
+
+        $this->tpl = $container->get('templating');
+        $this->URL = $container->get('url');
 
         $this->cssFiles = new AssetCollection(
             Minifier::css(

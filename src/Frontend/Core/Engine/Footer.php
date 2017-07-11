@@ -9,18 +9,35 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
  */
-class Footer extends FrontendBaseObject
+class Footer extends KernelLoader
 {
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $tpl;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $URL;
+
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
+
+        $this->tpl = $this->getContainer()->get('templating');
+        $this->URL = $this->getContainer()->get('url');
 
         $this->getContainer()->set('footer', $this);
     }

@@ -9,17 +9,18 @@ namespace Frontend\Core\Engine\Block;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\TwigTemplate;
+use Frontend\Core\Engine\Url;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Base\Config;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Exception as FrontendException;
 
 /**
  * This class will handle all stuff related to widgets
  */
-class Widget extends FrontendBaseObject
+class Widget extends KernelLoader
 {
     /**
      * The current action
@@ -64,6 +65,20 @@ class Widget extends FrontendBaseObject
     private $output;
 
     /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $tpl;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $URL;
+
+    /**
      * @param KernelInterface $kernel
      * @param string $module The module to load.
      * @param string $action The action to load.
@@ -77,6 +92,8 @@ class Widget extends FrontendBaseObject
         $this->setModule($module);
         $this->setAction($action);
         $this->setData($data);
+        $this->tpl = $this->getContainer()->get('templating');
+        $this->URL = $this->getContainer()->get('url');
 
         // load the config file for the required module
         $this->loadConfig();

@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,7 +26,7 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationMod
 /**
  * Frontend page class, this class will handle everything on a page
  */
-class Page extends FrontendBaseObject
+class Page extends KernelLoader
 {
     /**
      * Breadcrumb instance
@@ -83,11 +84,27 @@ class Page extends FrontendBaseObject
      */
     protected $statusCode = Response::HTTP_OK;
 
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $tpl;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $URL;
+
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
 
         $this->getContainer()->set('page', $this);
+        $this->tpl = $this->getContainer()->get('templating');
+        $this->URL = $this->getContainer()->get('url');
     }
 
     /**
@@ -340,7 +357,7 @@ class Page extends FrontendBaseObject
             'Executing ' . get_class($extra) . " '{$extra->getAction()}' for module '{$extra->getModule()}'."
         );
 
-        // all extras extend FrontendBaseObject, which extends KernelLoader
+        // all extras extends KernelLoader
         $extra->setKernel($this->getKernel());
 
         // overwrite the template

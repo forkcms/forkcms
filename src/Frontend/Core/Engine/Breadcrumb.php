@@ -9,13 +9,13 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 
 /**
  * This class will be used to manage the breadcrumb
  */
-class Breadcrumb extends FrontendBaseObject
+class Breadcrumb extends KernelLoader
 {
     /**
      * The items in the breadcrumb
@@ -24,9 +24,26 @@ class Breadcrumb extends FrontendBaseObject
      */
     private $items = [];
 
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $tpl;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $URL;
+
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
+
+        $this->tpl = $this->getContainer()->get('templating');
+        $this->URL = $this->getContainer()->get('url');
 
         // store in reference
         $this->getContainer()->set('breadcrumb', $this);

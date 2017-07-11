@@ -12,8 +12,10 @@ namespace Frontend\Core\Engine\Base;
 use Common\Core\Header\Priority;
 use Common\Doctrine\Entity\Meta;
 use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
+use Frontend\Core\Engine\Url;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\Form\Form;
@@ -26,7 +28,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @later  Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  */
-class Block extends Object
+class Block extends KernelLoader
 {
     /**
      * The current action
@@ -83,6 +85,20 @@ class Block extends Object
      * @var string
      */
     private $templatePath;
+
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $tpl;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $URL;
 
     /**
      * @param KernelInterface $kernel
