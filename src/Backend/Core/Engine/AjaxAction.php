@@ -12,13 +12,14 @@ namespace Backend\Core\Engine;
 use Backend\Core\Engine\Base\Config;
 use Backend\Core\Config as CoreConfig;
 use Backend\Core\Engine\Base\AjaxAction as BaseAjaxAction;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...
  */
-final class AjaxAction extends Base\Object
+final class AjaxAction extends KernelLoader
 {
     /**
      * @var BaseAjaxAction
