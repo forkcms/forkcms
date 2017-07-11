@@ -323,5 +323,11 @@ These changes are mostly internal but it might be good to know in case you did s
 | `Object::getConfig`           | `\Backend\Core\Engine\Action::getConfig`        |
 | `Object::redirect`            | `\Backend\Core\Engine\Url::redirect`            |
 | `Object::redirectToErrorPage` | `\Backend\Core\Engine\Url::redirectToErrorPage` |
+| `Object::getAction`           | `\Backend\Core\Engine\Url::getAction`           |
+| `Object::getModule`           | `\Backend\Core\Engine\Url::getModule`           |
 
  The `\Backend\Core\Engine\Base\Action` class has a redirect helper method that uses the `\Backend\Core\Engine\Url` implementation so you don't need to change anything in your code for this
+
+You can no longer access module and action as a protected property on the action or ajax class but you need to use the getters as they are now only stored in the url service
+
+We did add helper getters so you can keep doing `$this->getAction()` and `$this->getModule()` as they will get the correct values from the url service

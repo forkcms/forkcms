@@ -12,6 +12,7 @@ namespace Backend\Core\Engine\Base;
 use Backend\Core\Engine\TwigTemplate;
 use Common\Core\Header\Priority;
 use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ use Backend\Core\Engine\Url;
 /**
  * This class implements a lot of functionality that can be extended by a specific action
  */
-class Action extends Object
+class Action extends KernelLoader
 {
     /**
      * The parameters (urldecoded)
@@ -76,12 +77,18 @@ class Action extends Object
         $this->URL = $this->getContainer()->get('url');
         $this->header = $this->getContainer()->get('header');
 
-        // store the current module and action (we grab them from the URL)
-        $this->setModule($this->URL->getModule());
-        $this->setAction($this->URL->getAction());
-
         // populate the parameter array
         $this->parameters = $this->get('request')->query->all();
+    }
+
+    public function getModule(): string
+    {
+        return $this->URL->getModule();
+    }
+
+    public function getAction(): string
+    {
+        return $this->URL->getAction();
     }
 
     /**
