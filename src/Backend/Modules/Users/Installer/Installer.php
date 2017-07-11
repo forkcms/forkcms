@@ -176,13 +176,11 @@ class Installer extends ModuleInstaller
             // insert user
             $user['id'] = BackendUsersModel::insert($user, $settings);
 
-            // build group
-            $group = [];
-            $group['group_id'] = $this->getSetting('Users', 'default_group');
-            $group['user_id'] = $user['id'];
+            // build groups
+            $groups = [$this->getSetting('Users', 'default_group')];
 
             // insert group
-            BackendGroupsModel::insertMultipleGroups($user['id'], [$group]);
+            BackendGroupsModel::insertMultipleGroups($user['id'], $groups);
         }
     }
 
