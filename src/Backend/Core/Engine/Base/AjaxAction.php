@@ -18,14 +18,10 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class AjaxAction extends Object
 {
-    public function __construct(KernelInterface $kernel, string $action = null, string $module = null)
-    {
-        parent::__construct($kernel);
-
-        if ($action !== null) {
-            $this->setAction($action, $module);
-        }
-    }
+    /**
+     * @var array
+     */
+    private $content;
 
     public function execute(): void
     {
@@ -53,9 +49,7 @@ class AjaxAction extends Object
     /**
      * Output an answer to the browser
      *
-     * @param int $statusCode The status code for the response, use the
-     *                           available constants:
-     *                           self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR
+     * @param int $statusCode The status code for the response, use the HTTP constants from the Symfony Response class
      * @param mixed $data The data to output.
      * @param string $message The text-message to send.
      */
@@ -72,5 +66,15 @@ class AjaxAction extends Object
     public function getRequest(): Request
     {
         return $this->get('request');
+    }
+
+    public function getAction(): string
+    {
+        return $this->get('url')->getAction();
+    }
+
+    public function getModule(): string
+    {
+        return $this->get('url')->getModule();
     }
 }
