@@ -21,7 +21,7 @@ use Frontend\Core\Language\Language as FL;
 /**
  * This class will handle all stuff related to blocks
  */
-class Extra extends KernelLoader
+class Extra extends KernelLoader implements ModuleExtra
 {
     /**
      * The current action
@@ -93,12 +93,6 @@ class Extra extends KernelLoader
      */
     protected $URL;
 
-    /**
-     * @param KernelInterface $kernel
-     * @param string $module The module to load.
-     * @param string|null $action The action to load.
-     * @param mixed|null $data The data that was passed from the database.
-     */
     public function __construct(KernelInterface $kernel, string $module, string $action = null, $data = null)
     {
         parent::__construct($kernel);
@@ -120,10 +114,6 @@ class Extra extends KernelLoader
         }
     }
 
-    /**
-     * Execute the action
-     * We will build the class name, require the class and call the execute method.
-     */
     public function execute(): void
     {
         // build action-class-name

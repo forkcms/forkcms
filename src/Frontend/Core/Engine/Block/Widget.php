@@ -20,7 +20,7 @@ use Frontend\Core\Engine\Exception as FrontendException;
 /**
  * This class will handle all stuff related to widgets
  */
-class Widget extends KernelLoader
+class Widget extends KernelLoader implements ModuleExtra
 {
     /**
      * The current action
@@ -78,13 +78,7 @@ class Widget extends KernelLoader
      */
     protected $URL;
 
-    /**
-     * @param KernelInterface $kernel
-     * @param string $module The module to load.
-     * @param string $action The action to load.
-     * @param mixed $data The data that was passed from the database.
-     */
-    public function __construct(KernelInterface $kernel, string $module, string $action, $data = null)
+    public function __construct(KernelInterface $kernel, string $module, string $action = null, $data = null)
     {
         parent::__construct($kernel);
 
@@ -99,10 +93,6 @@ class Widget extends KernelLoader
         $this->loadConfig();
     }
 
-    /**
-     * Execute the action
-     * We will build the class name, require the class and call the execute method.
-     */
     public function execute(): void
     {
         // build action-class-name
@@ -199,11 +189,6 @@ class Widget extends KernelLoader
         return $this->module;
     }
 
-    /**
-     * Get the assigned template.
-     *
-     * @return TwigTemplate
-     */
     public function getTemplate(): TwigTemplate
     {
         return $this->object->getTemplate();
