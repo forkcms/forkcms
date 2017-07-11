@@ -9,7 +9,8 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Config;
+use Backend\Core\Engine\Base\Config;
+use Backend\Core\Config as CoreConfig;
 use Backend\Core\Engine\Base\AjaxAction as BaseAjaxAction;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -17,15 +18,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 /**
  * This class is the real code, it creates an action, loads the config file, ...
  */
-class AjaxAction extends Base\Object
+final class AjaxAction extends Base\Object
 {
-    /**
-     * The config file
-     *
-     * @var Base\Config
-     */
-    private $config;
-
     /**
      * @var BaseAjaxAction
      */
@@ -33,41 +27,19 @@ class AjaxAction extends Base\Object
 
     public function display(): Response
     {
-        $this->execute();
+        $this->ajaxAction->execute();
 
         return $this->ajaxAction->getContent();
     }
 
-    public function __construct(KernelInterface $kernel, string $action, string $module)
+    public function __construct(KernelInterface $kernel, string $module, string $action)
     {
         parent::__construct($kernel);
 
-        // store the current module and action (we grab them from the URL)
-        $this->setModule($module);
-        $this->setAction($action);
-    }
+        $config = $this->getModuleConfig($module);
+        $actionClass = $config->getActionClass('ajax', $action);
 
-    /**
-     * Execute the action
-     * We will build the classname, require the class and call the execute method.
-     */
-    private function execute(): void
-    {
-        $this->loadConfig();
-
-        $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
-        if ($this->getModule() === 'Core') {
-            $actionClass = 'Backend\\Core\\Ajax\\' . $this->getAction();
-        }
-
-        if (!class_exists($actionClass)) {
-            throw new Exception('The class ' . $actionClass . ' could not be found.');
-        }
-
-        // create action-object
         $this->ajaxAction = new $actionClass($this->getKernel());
-        $this->ajaxAction->setAction($this->getAction(), $this->getModule());
-        $this->ajaxAction->execute();
     }
 
     /**
@@ -75,13 +47,17 @@ class AjaxAction extends Base\Object
      * In the config file we have to find disabled actions, the constructor
      * will read the folder and set possible actions
      * Other configurations will be stored in it also.
+     *
+     * @param string $module
+     *
+     * @return Config
      */
-    private function loadConfig(): void
+    private function getModuleConfig(string $module): Config
     {
         // check if we can load the config file
-        $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
-        if ($this->getModule() === 'Core') {
-            $configClass = Config::class;
+        $configClass = 'Backend\\Modules\\' . $module . '\\Config';
+        if ($module === 'Core') {
+            $configClass = CoreConfig::class;
         }
 
         // validate if class exists (aka has correct name)
@@ -89,7 +65,6 @@ class AjaxAction extends Base\Object
             throw new Exception('The config file ' . $configClass . ' could not be found.');
         }
 
-        // create config-object, the constructor will do some magic
-        $this->config = new $configClass($this->getKernel(), $this->getModule());
+        return new $configClass($this->getKernel(), $module);
     }
 }

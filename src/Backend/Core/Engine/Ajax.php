@@ -49,7 +49,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
             $url = new Url($this->getKernel());
 
             // create a new action
-            $this->ajaxAction = new AjaxAction($this->getKernel(), $url->getAction(), $url->getModule());
+            $this->ajaxAction = new AjaxAction($this->getKernel(), $url->getModule(), $url->getAction());
         } catch (Exception $e) {
             $this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
             $this->ajaxAction->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, $e->getMessage());
