@@ -114,6 +114,6 @@ class Action extends Base\Object
         }
 
         // create config-object, the constructor will do some magic
-        return new $configClass($this->getKernel(), $this->getModule());
+        return new $configClass($this->getKernel(), $this->getModule(), $this->getAction());
     }
 }

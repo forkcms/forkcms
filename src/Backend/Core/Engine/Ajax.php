@@ -72,12 +72,11 @@ class Ajax extends Base\Object implements ApplicationInterface
             define('NAMED_APPLICATION', 'BackendAjax');
         }
 
-        list($module, $action, $language) = $this->getForkDataFromRequest($this->get('request'));
+        [$module, $action, $language] = $this->getForkDataFromRequest($this->get('request'));
 
         try {
-            // create URL instance, since the template modifiers need this object
-            $url = new Url($this->getKernel());
-            $url->setModule($module);
+            // create URL instance, since the template modifiers need this object and it will also process the query string
+            new Url($this->getKernel());
 
             $this->setModule($module);
             $this->setAction($action);
