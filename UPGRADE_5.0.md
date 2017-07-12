@@ -271,3 +271,16 @@ Also removed Action::getParameter(). You should directly call the request object
 ## Meta URL
 
 The detail url (without slug) must be defined for meta type, so the preview url will be correct.
+
+## Use the HTTP status code constants from Symfony\Component\HttpFoundation\Response instead of our own
+
+Backend\Core\Engine\Base\AjaxAction and Frontend\Core\Engine\Base\AjaxAction no longer provide the http status code constants
+
+| Old status code       | New status code                      |
+|-----------------------|--------------------------------------|
+| self::OK              | Response::HTTP_OK                    |
+| self::BAD_REQUEST     | Response::HTTP_BAD_REQUEST           |
+| self::FORBIDDEN       | Response::HTTP_FORBIDDEN             |
+| self::ERROR           | Response::HTTP_INTERNAL_SERVER_ERROR |
+
+The response class has many more constants like this for all the other status codes

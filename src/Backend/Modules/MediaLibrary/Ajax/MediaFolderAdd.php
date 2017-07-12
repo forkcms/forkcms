@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Common\Exception\AjaxExitException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will add a new MediaFolder.
@@ -24,7 +25,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
 
         // Success message
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             $createMediaFolder->getMediaFolderEntity(),
             vsprintf(
                 Language::msg('AddedFolder'),

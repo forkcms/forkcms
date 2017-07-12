@@ -10,6 +10,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Common\Exception\AjaxExitException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will get all media items in a certain folder and from a gallery.
@@ -28,7 +29,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
 
         // Output success message with variables
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             [
                 'media' => $this->loadMediaItems($mediaFolder),
                 'folder' => $mediaFolder !== null ? $mediaFolder->getId() : null,

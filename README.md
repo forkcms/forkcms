@@ -9,7 +9,7 @@
 
 ## Installation
 
-1. Make sure your have [composer](https://getcomposer.org/) installed.
+1. Make sure you have [composer](https://getcomposer.org/) installed.
 2. Run `composer create-project forkcms/forkcms .` in your document root.
 3. Browse to your website
 4. Follow the steps on-screen
@@ -23,6 +23,10 @@ should install our dependencies. The dependencies are handled by [composer](http
 To install the dependencies, you can run the command below in the document-root:
 
 	composer install -o
+
+## Security
+
+If you discover any security related issues, please email core@fork-cms.com instead of using the issue tracker.
 
 ## Bugs
 

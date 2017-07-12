@@ -11,6 +11,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Common\Exception\AjaxExitException;
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will add a new MediaItem movie.
@@ -26,7 +27,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
         // Output success message
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             $createMediaItemFromMovieUrl->getMediaItem(),
             Language::msg('MediaUploadedSuccessful')
         );

@@ -49,7 +49,7 @@
             var $urlOverwrite = $(options.urlOverwriteSelector);
 
             // bind keypress
-            $element.bind('keyup', calculateMeta);
+            $element.bind('keyup input', utils.events.debounce(calculateMeta, 400));
 
             // bind change on the checkboxes
             if($pageTitle.length > 0 && $pageTitleOverwrite.length > 0)

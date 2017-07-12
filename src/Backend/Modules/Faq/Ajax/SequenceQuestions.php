@@ -5,6 +5,7 @@ namespace Backend\Modules\Faq\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Reorder questions
@@ -23,35 +24,26 @@ class SequenceQuestions extends BackendBaseAJAXAction
 
         // invalid question id
         if (!BackendFaqModel::exists($questionId)) {
-            $this->output(self::BAD_REQUEST, null, 'question does not exist');
-        } else {
-            // list ids
-            $fromCategorySequence = (array) explode(',', ltrim($fromCategorySequence, ','));
-            $toCategorySequence = (array) explode(',', ltrim($toCategorySequence, ','));
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'question does not exist');
 
-            // is the question moved to a new category?
-            if ($fromCategoryId != $toCategoryId) {
-                $item = [];
-                $item['id'] = $questionId;
-                $item['category_id'] = $toCategoryId;
+            return;
+        }
 
-                BackendFaqModel::update($item);
+        // list ids
+        $fromCategorySequence = (array) explode(',', ltrim($fromCategorySequence, ','));
+        $toCategorySequence = (array) explode(',', ltrim($toCategorySequence, ','));
 
-                // loop id's and set new sequence
-                foreach ($toCategorySequence as $i => $id) {
-                    $item = [];
-                    $item['id'] = (int) $id;
-                    $item['sequence'] = $i + 1;
+        // is the question moved to a new category?
+        if ($fromCategoryId != $toCategoryId) {
+            $item = [];
+            $item['id'] = $questionId;
+            $item['category_id'] = $toCategoryId;
 
-                    // update sequence if the item exists
-                    if (BackendFaqModel::exists($item['id'])) {
-                        BackendFaqModel::update($item);
-                    }
-                }
-            }
+            BackendFaqModel::update($item);
 
             // loop id's and set new sequence
-            foreach ($fromCategorySequence as $i => $id) {
+            foreach ($toCategorySequence as $i => $id) {
+                $item = [];
                 $item['id'] = (int) $id;
                 $item['sequence'] = $i + 1;
 
@@ -60,9 +52,20 @@ class SequenceQuestions extends BackendBaseAJAXAction
                     BackendFaqModel::update($item);
                 }
             }
-
-            // success output
-            $this->output(self::OK, null, Language::msg('SequenceSaved'));
         }
+
+        // loop id's and set new sequence
+        foreach ($fromCategorySequence as $i => $id) {
+            $item['id'] = (int) $id;
+            $item['sequence'] = $i + 1;
+
+            // update sequence if the item exists
+            if (BackendFaqModel::exists($item['id'])) {
+                BackendFaqModel::update($item);
+            }
+        }
+
+        // success output
+        $this->output(Response::HTTP_OK, null, Language::msg('SequenceSaved'));
     }
 }

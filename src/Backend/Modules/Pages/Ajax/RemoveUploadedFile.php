@@ -4,6 +4,7 @@ namespace Backend\Modules\Pages\Ajax;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\AjaxAction;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This action will allow you to cleanup files that were previously uploaded.
@@ -14,7 +15,7 @@ class RemoveUploadedFile extends AjaxAction
     {
         $request = $this->get('request');
         if (!$request->request->has('file') || !$request->request->has('type')) {
-            $this->output(self::BAD_REQUEST, 'Missing data');
+            $this->output(Response::HTTP_BAD_REQUEST, 'Missing data');
 
             return;
         }
@@ -29,6 +30,6 @@ class RemoveUploadedFile extends AjaxAction
             $filesystem->remove($path);
         }
 
-        $this->output(self::OK);
+        $this->output(Response::HTTP_OK);
     }
 }

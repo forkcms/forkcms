@@ -7,6 +7,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Common\Exception\AjaxExitException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will get the counts for every folder in a group.
@@ -25,7 +26,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
 
         // Output success message
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             $mediaGroup instanceof MediaGroup
                 ? $this->get('media_library.repository.folder')->getCountsForMediaGroup($mediaGroup) : []
         );
