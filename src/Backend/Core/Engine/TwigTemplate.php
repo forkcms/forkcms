@@ -132,25 +132,12 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function parseUserDefinedConstants(): void
     {
-        // constants that should be protected from usage in the template
-        $notPublicConstants = ['DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD'];
-
         // get all defined constants
         $constants = get_defined_constants(true);
 
-        // init var
-        $realConstants = [];
-
-        // remove protected constants aka constants that should not be used in the template
-        foreach ($constants['user'] as $key => $value) {
-            if (!in_array($key, $notPublicConstants)) {
-                $realConstants[$key] = $value;
-            }
-        }
-
         // we should only assign constants if there are constants to assign
-        if (!empty($realConstants)) {
-            $this->assignArray($realConstants);
+        if (!empty($constants['user'])) {
+            $this->assignArray($constants['user']);
         }
 
         // we use some abbreviations and common terms, these should also be assigned
