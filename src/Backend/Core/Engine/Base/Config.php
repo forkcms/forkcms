@@ -125,12 +125,12 @@ class Config extends KernelLoader
 
     public function isActionAvailableForActionType(string $action, string $actionType): bool
     {
-        // If this action is disabled for this type, continue on to the next type
+        // The action is disabled
         if ($this->isActionDisabled($actionType, $action)) {
             return false;
         }
 
-        // If the action file is missing, continue on to the next type
+        // The action class is missing
         if (!$this->actionClassExists($actionType, $action)) {
             return false;
         }
@@ -194,7 +194,6 @@ class Config extends KernelLoader
      */
     public static function forModule(KernelInterface $kernel, string $module): self
     {
-        // check if we can load the config file
         $configClass = 'Backend\\Modules\\' . $module . '\\Config';
         if ($module === 'Core') {
             $configClass = CoreConfig::class;
