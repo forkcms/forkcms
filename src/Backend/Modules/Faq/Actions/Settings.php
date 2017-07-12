@@ -72,7 +72,7 @@ class Settings extends BackendBaseActionEdit
         // no Akismet-key, so we can't enable spam-filter
         if ($this->get('fork.settings')->get('Core', 'akismet_key') == '') {
             $this->form->getField('spamfilter')->setAttribute('disabled', 'disabled');
-            $this->tpl->assign('noAkismetKey', true);
+            $this->template->assign('noAkismetKey', true);
         }
     }
 

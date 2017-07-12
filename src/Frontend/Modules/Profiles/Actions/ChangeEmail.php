@@ -78,11 +78,11 @@ class ChangeEmail extends FrontendBaseBlock
         // have the settings been saved?
         if ($this->url->getParameter('sent') == 'true') {
             // show success message
-            $this->tpl->assign('updateEmailSuccess', true);
+            $this->template->assign('updateEmailSuccess', true);
         }
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function validateForm(): void
@@ -124,7 +124,7 @@ class ChangeEmail extends FrontendBaseBlock
                     SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangeEmail') . '?sent=true'
                 );
             } else {
-                $this->tpl->assign('updateEmailHasFormError', true);
+                $this->template->assign('updateEmailHasFormError', true);
             }
         }
     }

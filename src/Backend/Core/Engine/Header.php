@@ -50,7 +50,7 @@ final class Header extends KernelLoader
      *
      * @var TwigTemplate
      */
-    private $tpl;
+    private $template;
 
     /**
      * URL-instance
@@ -67,7 +67,7 @@ final class Header extends KernelLoader
         $container->set('header', $this);
 
         $this->url = $container->get('url');
-        $this->tpl = $container->get('template');
+        $this->template = $container->get('template');
 
         $this->cssFiles = new AssetCollection(
             Minifier::css(
@@ -212,9 +212,9 @@ final class Header extends KernelLoader
      */
     public function parse(): void
     {
-        $this->tpl->assign('page_title', BL::getLabel($this->url->getModule()));
-        $this->cssFiles->parse($this->tpl, 'cssFiles');
-        $this->jsFiles->parse($this->tpl, 'jsFiles');
+        $this->template->assign('page_title', BL::getLabel($this->url->getModule()));
+        $this->cssFiles->parse($this->template, 'cssFiles');
+        $this->jsFiles->parse($this->template, 'jsFiles');
 
         $this->jsData->add('site', 'domain', SITE_DOMAIN);
         $this->jsData->add('editor', 'language', $this->getCKEditorLanguage());
@@ -226,7 +226,7 @@ final class Header extends KernelLoader
             $this->jsData->add('theme', 'has_css', is_file($themePath . '/Core/Layout/Css/screen.css'));
             $this->jsData->add('theme', 'has_editor_css', is_file($themePath . '/Core/Layout/Css/editor_content.css'));
         }
-        $this->tpl->assign('jsData', $this->jsData);
+        $this->template->assign('jsData', $this->jsData);
     }
 
     /**

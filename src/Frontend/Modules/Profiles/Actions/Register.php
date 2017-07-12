@@ -72,12 +72,12 @@ class Register extends FrontendBaseBlock
         // e-mail was sent?
         if ($this->url->getParameter('sent') == 'true') {
             // show message
-            $this->tpl->assign('registerIsSuccess', true);
+            $this->template->assign('registerIsSuccess', true);
 
             // hide form
-            $this->tpl->assign('registerHideForm', true);
+            $this->template->assign('registerHideForm', true);
         } else {
-            $this->form->parse($this->tpl);
+            $this->form->parse($this->template);
         }
     }
 
@@ -181,10 +181,10 @@ class Register extends FrontendBaseBlock
                     }
 
                     // show error
-                    $this->tpl->assign('registerHasFormError', true);
+                    $this->template->assign('registerHasFormError', true);
                 }
             } else {
-                $this->tpl->assign('registerHasFormError', true);
+                $this->template->assign('registerHasFormError', true);
             }
         }
     }

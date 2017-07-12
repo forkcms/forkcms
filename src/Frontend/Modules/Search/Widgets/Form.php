@@ -35,6 +35,6 @@ class Form extends FrontendBaseWidget
                 'data-role' => 'fork-widget-search-field',
             ]
         );
-        $form->parse($this->tpl);
+        $form->parse($this->template);
     }
 }

@@ -206,13 +206,13 @@ class Edit extends BackendBaseActionEdit
 
         parent::parse();
 
-        $this->tpl->assign('id', $this->record['id']);
-        $this->tpl->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->record['id']);
+        $this->template->assign('name', $this->record['name']);
         $recaptchaSiteKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key');
         $recaptchaSecretKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
 
         if (!($recaptchaSiteKey || $recaptchaSecretKey)) {
-            $this->tpl->assign('recaptchaMissing', true);
+            $this->template->assign('recaptchaMissing', true);
         }
 
         // parse error messages
@@ -228,7 +228,7 @@ class Edit extends BackendBaseActionEdit
         FL::setLocale(BL::getWorkingLanguage(), true);
 
         // assign error messages
-        $this->tpl->assign('errors', BackendFormBuilderModel::getErrors());
+        $this->template->assign('errors', BackendFormBuilderModel::getErrors());
     }
 
     private function parseFields(): void
@@ -243,7 +243,7 @@ class Edit extends BackendBaseActionEdit
             // submit button
             if ($field['type'] == 'submit') {
                 // assign
-                $this->tpl->assign('submitId', $field['id']);
+                $this->template->assign('submitId', $field['id']);
 
                 // add field
                 $btn = $this->form->addButton(
@@ -263,7 +263,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // assign iteration
-        $this->tpl->assign('fields', $fieldsHTML);
+        $this->template->assign('fields', $fieldsHTML);
     }
 
     private function validateForm(): void
@@ -349,6 +349,6 @@ class Edit extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

@@ -64,7 +64,7 @@ class Widget extends KernelLoader
      *
      * @var TwigTemplate
      */
-    public $tpl;
+    protected $template;
 
     /**
      * The constructor will set some properties, it populates the parameter array with urldecoded
@@ -76,7 +76,7 @@ class Widget extends KernelLoader
     {
         parent::__construct($kernel);
 
-        $this->tpl = $this->getContainer()->get('template');
+        $this->template = $this->getContainer()->get('template');
         $this->header = $this->getContainer()->get('header');
     }
 

@@ -91,7 +91,7 @@ class Block extends KernelLoader
      *
      * @var TwigTemplate
      */
-    protected $tpl;
+    protected $template;
 
     /**
      * URL instance
@@ -113,7 +113,7 @@ class Block extends KernelLoader
         // get objects from the reference so they are accessible
         $this->header = $this->getContainer()->get('header');
         $this->url = $this->getContainer()->get('url');
-        $this->tpl = $this->getContainer()->get('templating');
+        $this->template = $this->getContainer()->get('templating');
         $this->breadcrumb = $this->getContainer()->get('breadcrumb');
 
         // set properties
@@ -234,7 +234,7 @@ class Block extends KernelLoader
      */
     public function getContent(): string
     {
-        return $this->tpl->getContent($this->templatePath);
+        return $this->template->getContent($this->templatePath);
     }
 
     public function getModule(): string
@@ -254,7 +254,7 @@ class Block extends KernelLoader
 
     public function getTemplate(): TwigTemplate
     {
-        return $this->tpl;
+        return $this->template;
     }
 
     public function getTemplatePath(): string
@@ -471,7 +471,7 @@ class Block extends KernelLoader
         $pagination['multiple_pages'] = (int) $pagination['num_pages'] !== 1;
 
         // assign pagination
-        $this->tpl->assign('pagination', $pagination);
+        $this->template->assign('pagination', $pagination);
     }
 
     /**

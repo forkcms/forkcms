@@ -40,6 +40,6 @@ class Synonyms extends Action
             $dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editUrl, BL::lbl('Edit'));
         }
 
-        $this->tpl->assign('dataGrid', $dataGrid->getContent());
+        $this->template->assign('dataGrid', $dataGrid->getContent());
     }
 }

@@ -242,7 +242,7 @@ class Index extends FrontendBaseBlock
         $this->addCSS('Search.css');
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // no search term = no search
         if (!$this->term) {
@@ -250,8 +250,8 @@ class Index extends FrontendBaseBlock
         }
 
         // assign articles
-        $this->tpl->assign('searchResults', $this->items);
-        $this->tpl->assign('searchTerm', $this->term);
+        $this->template->assign('searchResults', $this->items);
+        $this->template->assign('searchTerm', $this->term);
 
         // parse the pagination
         $this->parsePagination();

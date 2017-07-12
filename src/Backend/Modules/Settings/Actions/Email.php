@@ -84,7 +84,7 @@ class Email extends BackendBaseActionIndex
             );
         }
 
-        $this->tpl->assign('isGod', $this->isGod);
+        $this->template->assign('isGod', $this->isGod);
     }
 
     protected function parse(): void
@@ -92,7 +92,7 @@ class Email extends BackendBaseActionIndex
         parent::parse();
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function validateForm(): void
@@ -176,8 +176,8 @@ class Email extends BackendBaseActionIndex
                 }
 
                 // assign report
-                $this->tpl->assign('report', true);
-                $this->tpl->assign('reportMessage', BL::msg('Saved'));
+                $this->template->assign('report', true);
+                $this->template->assign('reportMessage', BL::msg('Saved'));
             }
         }
     }

@@ -32,7 +32,7 @@ class Statistics extends BackendBaseWidget
         $authenticatedUser = BackendAuthentication::getUser();
 
         // check if we need to show the password strength and parse the label
-        $this->tpl->assign('showPasswordStrength', ($authenticatedUser->getSetting('password_strength') !== 'strong'));
-        $this->tpl->assign('passwordStrengthLabel', BL::lbl($authenticatedUser->getSetting('password_strength')));
+        $this->template->assign('showPasswordStrength', ($authenticatedUser->getSetting('password_strength') !== 'strong'));
+        $this->template->assign('passwordStrengthLabel', BL::lbl($authenticatedUser->getSetting('password_strength')));
     }
 }

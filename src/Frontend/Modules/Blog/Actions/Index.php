@@ -95,7 +95,7 @@ class Index extends FrontendBaseBlock
         );
 
         // assign articles
-        $this->tpl->assign('items', $this->items);
+        $this->template->assign('items', $this->items);
 
         // parse the pagination
         $this->parsePagination();

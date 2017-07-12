@@ -99,8 +99,8 @@ class Index extends BackendBaseActionIndex
 
         // parse dataGrids
         if (!empty($this->dataGrids)) {
-            $this->tpl->assign('dataGrids', $this->dataGrids);
+            $this->template->assign('dataGrids', $this->dataGrids);
         }
-        $this->tpl->assign('emptyDatagrid', $this->emptyDatagrid->getContent());
+        $this->template->assign('emptyDatagrid', $this->emptyDatagrid->getContent());
     }
 }

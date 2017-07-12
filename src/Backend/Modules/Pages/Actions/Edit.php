@@ -142,7 +142,7 @@ class Edit extends BackendBaseActionEdit
             $this->blocksContent = BackendPagesModel::getBlocks($this->id, $revisionToLoad);
 
             // show warning
-            $this->tpl->assign('appendRevision', true);
+            $this->template->assign('appendRevision', true);
         }
 
         // is there a revision specified?
@@ -157,7 +157,7 @@ class Edit extends BackendBaseActionEdit
             $this->blocksContent = BackendPagesModel::getBlocks($this->id, $draftToLoad);
 
             // show warning
-            $this->tpl->assign('appendRevision', true);
+            $this->template->assign('appendRevision', true);
         }
 
         // reset some vars
@@ -226,7 +226,7 @@ class Edit extends BackendBaseActionEdit
         $this->form = new BackendForm('edit');
 
         // assign in template
-        $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
+        $this->template->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
         $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
@@ -552,15 +552,15 @@ class Edit extends BackendBaseActionEdit
         }
 
         // parse some variables
-        $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('isGod', $this->isGod);
-        $this->tpl->assign('templates', $this->templates);
-        $this->tpl->assign('positions', $this->positions);
-        $this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
-        $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
-        $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullUrl($this->record['parent_id']), '/'));
-        $this->tpl->assign('formErrors', (string) $this->form->getErrors());
-        $this->tpl->assign('showTags', $this->userCanSeeAndEditTags());
+        $this->template->assign('item', $this->record);
+        $this->template->assign('isGod', $this->isGod);
+        $this->template->assign('templates', $this->templates);
+        $this->template->assign('positions', $this->positions);
+        $this->template->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
+        $this->template->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
+        $this->template->assign('prefixURL', rtrim(BackendPagesModel::getFullUrl($this->record['parent_id']), '/'));
+        $this->template->assign('formErrors', (string) $this->form->getErrors());
+        $this->template->assign('showTags', $this->userCanSeeAndEditTags());
 
         // init var
         $showDelete = true;
@@ -579,23 +579,23 @@ class Edit extends BackendBaseActionEdit
         }
 
         // show delete button
-        $this->tpl->assign('allowPagesDelete', $showDelete);
+        $this->template->assign('allowPagesDelete', $showDelete);
 
         // assign template
-        $this->tpl->assignArray($this->templates[$this->record['template_id']], 'template');
+        $this->template->assignArray($this->templates[$this->record['template_id']], 'template');
 
         // parse datagrids
-        $this->tpl->assign(
+        $this->template->assign(
             'revisions',
             ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false
         );
-        $this->tpl->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
+        $this->template->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 
         // parse the tree
-        $this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
+        $this->template->assign('tree', BackendPagesModel::getTreeHTML());
 
         // assign if profiles module is installed
-        $this->tpl->assign('showAuthenticationTab', BackendModel::isModuleInstalled('Profiles'));
+        $this->template->assign('showAuthenticationTab', BackendModel::isModuleInstalled('Profiles'));
 
         $this->header->addJsData(
             'pages',
@@ -849,6 +849,6 @@ class Edit extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

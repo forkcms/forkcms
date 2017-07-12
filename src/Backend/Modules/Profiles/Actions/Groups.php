@@ -146,7 +146,7 @@ class Groups extends BackendBaseActionIndex
         $this->form->addText('name', $this->filter['name']);
 
         // manually parse fields
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     protected function parse(): void
@@ -154,15 +154,15 @@ class Groups extends BackendBaseActionIndex
         parent::parse();
 
         // parse datagrid
-        $this->tpl->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
+        $this->template->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
 
         // parse paging & sorting
-        $this->tpl->assign('offset', (int) $this->dgGroups->getOffset());
-        $this->tpl->assign('order', (string) $this->dgGroups->getOrder());
-        $this->tpl->assign('sort', (string) $this->dgGroups->getSort());
+        $this->template->assign('offset', (int) $this->dgGroups->getOffset());
+        $this->template->assign('order', (string) $this->dgGroups->getOrder());
+        $this->template->assign('sort', (string) $this->dgGroups->getSort());
 
         // parse filter
-        $this->tpl->assignArray($this->filter);
+        $this->template->assignArray($this->filter);
     }
 
     public static function parseNumProfilesInDataGrid(int $groupId, int $numProfiles): string

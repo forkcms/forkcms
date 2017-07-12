@@ -48,16 +48,16 @@ class LoginBox extends FrontendBaseWidget
         $this->form->addCheckbox('remember', true);
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function parse(): void
     {
-        $this->tpl->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
+        $this->template->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
 
         if (FrontendProfilesAuthentication::isLoggedIn()) {
             $profile = FrontendProfilesAuthentication::getProfile();
-            $this->tpl->assign('profile', $profile->toArray());
+            $this->template->assign('profile', $profile->toArray());
         }
     }
 }

@@ -55,14 +55,14 @@ class ForgotPassword extends FrontendBaseBlock
         // e-mail was sent?
         if ($this->url->getParameter('sent') == 'true') {
             // show message
-            $this->tpl->assign('forgotPasswordSuccess', true);
+            $this->template->assign('forgotPasswordSuccess', true);
 
             // hide form
-            $this->tpl->assign('forgotPasswordHideForm', true);
+            $this->template->assign('forgotPasswordHideForm', true);
         }
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function validateForm(): void
@@ -122,7 +122,7 @@ class ForgotPassword extends FrontendBaseBlock
                 // redirect
                 $this->redirect(SITE_URL . $this->url->getQueryString() . '?sent=true');
             } else {
-                $this->tpl->assign('forgotPasswordHasError', true);
+                $this->template->assign('forgotPasswordHasError', true);
             }
         }
     }

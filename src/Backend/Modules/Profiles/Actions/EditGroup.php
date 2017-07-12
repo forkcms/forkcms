@@ -64,7 +64,7 @@ class EditGroup extends BackendBaseActionEdit
         parent::parse();
 
         // assign the active record and additional variables
-        $this->tpl->assign('group', $this->group);
+        $this->template->assign('group', $this->group);
     }
 
     private function validateForm(): void
@@ -111,6 +111,6 @@ class EditGroup extends BackendBaseActionEdit
             ['id' => $this->group['id']],
             ['module' => $this->getModule(), 'action' => 'DeleteGroup']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

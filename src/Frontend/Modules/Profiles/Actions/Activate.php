@@ -44,7 +44,7 @@ class Activate extends FrontendBaseBlock
                 FrontendProfilesAuthentication::login($profileId);
 
                 // show success message
-                $this->tpl->assign('activationSuccess', true);
+                $this->template->assign('activationSuccess', true);
             } else {
                 // failure
                 $this->redirect(FrontendNavigation::getUrl(404));

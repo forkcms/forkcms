@@ -177,22 +177,22 @@ class Edit extends BackendBaseActionEdit
     {
         parent::parse();
 
-        $this->tpl->assign('notifyProfile', $this->notifyProfile);
+        $this->template->assign('notifyProfile', $this->notifyProfile);
 
         // assign the active record and additional variables
-        $this->tpl->assign('profile', $this->profile);
+        $this->template->assign('profile', $this->profile);
 
         // parse data grids
-        $this->tpl->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
+        $this->template->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
 
         // show delete or undelete button?
         if ($this->profile['status'] === 'deleted') {
-            $this->tpl->assign('deleted', true);
+            $this->template->assign('deleted', true);
         }
 
         // show block or unblock button?
         if ($this->profile['status'] === 'blocked') {
-            $this->tpl->assign('blocked', true);
+            $this->template->assign('blocked', true);
         }
     }
 
@@ -365,6 +365,6 @@ class Edit extends BackendBaseActionEdit
             ['id' => $this->profile['id']],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

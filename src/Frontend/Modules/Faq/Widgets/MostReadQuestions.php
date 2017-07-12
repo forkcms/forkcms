@@ -28,7 +28,7 @@ class MostReadQuestions extends FrontendBaseWidget
 
     private function parse(): void
     {
-        $this->tpl->assign(
+        $this->template->assign(
             'widgetFaqMostRead',
             FrontendFaqModel::getMostRead($this->get('fork.settings')->get('Faq', 'most_read_num_items', 10))
         );

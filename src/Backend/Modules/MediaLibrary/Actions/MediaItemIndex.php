@@ -105,7 +105,7 @@ class MediaItemIndex extends BackendBaseActionIndex
         $mediaFolder = $this->getMediaFolder();
 
         // Assign variables
-        $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
+        $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
 
         $this->parseDataGrids($mediaFolder);
         $this->parseMediaFolders($mediaFolder);
@@ -116,8 +116,8 @@ class MediaItemIndex extends BackendBaseActionIndex
         /** @var array $dataGrids */
         $dataGrids = $this->getDataGrids($mediaFolder);
 
-        $this->tpl->assign('dataGrids', $dataGrids);
-        $this->tpl->assign('hasResults', $this->hasResults($dataGrids));
+        $this->template->assign('dataGrids', $dataGrids);
+        $this->template->assign('hasResults', $this->hasResults($dataGrids));
     }
 
     private function parseJSFiles(): void
@@ -130,8 +130,8 @@ class MediaItemIndex extends BackendBaseActionIndex
 
     private function parseMediaFolders(MediaFolder $mediaFolder = null): void
     {
-        $this->tpl->assign('mediaFolder', $mediaFolder);
-        $this->tpl->assign('mediaFolders', $this->getMediaFolders($mediaFolder));
+        $this->template->assign('mediaFolder', $mediaFolder);
+        $this->template->assign('mediaFolders', $this->getMediaFolders($mediaFolder));
         $this->header->addJsData(
             'MediaLibrary',
             'openedFolderId',

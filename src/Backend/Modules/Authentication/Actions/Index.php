@@ -75,10 +75,10 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // assign the interface language ourself, because it won't be assigned automagically
-        $this->tpl->assign('INTERFACE_LANGUAGE', BL::getInterfaceLanguage());
+        $this->template->assign('INTERFACE_LANGUAGE', BL::getInterfaceLanguage());
 
-        $this->form->parse($this->tpl);
-        $this->formForgotPassword->parse($this->tpl);
+        $this->form->parse($this->template);
+        $this->formForgotPassword->parse($this->template);
     }
 
     private function validateForm(): void
@@ -93,7 +93,7 @@ class Index extends BackendBaseActionIndex
                 $this->form->addError('fields required');
 
                 // show error
-                $this->tpl->assign('hasError', true);
+                $this->template->assign('hasError', true);
             }
 
             $this->getContainer()->get('logger')->info(
@@ -132,7 +132,7 @@ class Index extends BackendBaseActionIndex
                     }
 
                     // show error
-                    $this->tpl->assign('hasError', true);
+                    $this->template->assign('hasError', true);
                 }
             }
 
@@ -164,8 +164,8 @@ class Index extends BackendBaseActionIndex
                 );
 
                 // show error
-                $this->tpl->assign('hasTooManyAttemps', true);
-                $this->tpl->assign('hasError', false);
+                $this->template->assign('hasTooManyAttemps', true);
+                $this->template->assign('hasError', false);
             }
 
             // no errors in the form?
@@ -236,13 +236,13 @@ class Index extends BackendBaseActionIndex
                 $_POST['backend_email_forgot'] = '';
 
                 // show success message
-                $this->tpl->assign('isForgotPasswordSuccess', true);
+                $this->template->assign('isForgotPasswordSuccess', true);
 
                 // show form
-                $this->tpl->assign('showForm', true);
+                $this->template->assign('showForm', true);
             } else {
                 // errors?
-                $this->tpl->assign('showForm', true);
+                $this->template->assign('showForm', true);
             }
         }
     }

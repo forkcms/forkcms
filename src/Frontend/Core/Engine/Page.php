@@ -89,7 +89,7 @@ class Page extends KernelLoader
      *
      * @var TwigTemplate
      */
-    protected $tpl;
+    protected $template;
 
     /**
      * URL instance
@@ -103,7 +103,7 @@ class Page extends KernelLoader
         parent::__construct($kernel);
 
         $this->getContainer()->set('page', $this);
-        $this->tpl = $this->getContainer()->get('templating');
+        $this->template = $this->getContainer()->get('templating');
         $this->url = $this->getContainer()->get('url');
     }
 
@@ -183,11 +183,11 @@ class Page extends KernelLoader
     public function display(): Response
     {
         // assign the id so we can use it as an option
-        $this->tpl->addGlobal('isPage' . $this->pageId, true);
-        $this->tpl->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
+        $this->template->addGlobal('isPage' . $this->pageId, true);
+        $this->template->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
-        $this->tpl->addGlobal(
+        $this->template->addGlobal(
             'cookieBarHide',
             !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar()
         );
@@ -197,7 +197,7 @@ class Page extends KernelLoader
         // assign empty positions
         $unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
         foreach ($unusedPositions as $position) {
-            $this->tpl->assign('position' . \SpoonFilter::ucfirst($position), []);
+            $this->template->assign('position' . \SpoonFilter::ucfirst($position), []);
         }
 
         $this->header->parse();
@@ -206,7 +206,7 @@ class Page extends KernelLoader
         $this->footer->parse();
 
         return new Response(
-            $this->tpl->getContent($this->templatePath),
+            $this->template->getContent($this->templatePath),
             $this->statusCode
         );
     }
@@ -290,7 +290,7 @@ class Page extends KernelLoader
             return;
         }
 
-        $this->tpl->addGlobal(
+        $this->template->addGlobal(
             'languages',
             array_map(
                 function (string $language) {
@@ -312,7 +312,7 @@ class Page extends KernelLoader
         $positions = [];
 
         // fetch variables from main template
-        $mainVariables = $this->tpl->getAssignedVariables();
+        $mainVariables = $this->template->getAssignedVariables();
 
         // loop all positions
         foreach ($this->record['positions'] as $position => $blocks) {
@@ -322,10 +322,10 @@ class Page extends KernelLoader
             }
 
             // assign position to template
-            $this->tpl->assign('position' . \SpoonFilter::ucfirst($position), $positions[$position]);
+            $this->template->assign('position' . \SpoonFilter::ucfirst($position), $positions[$position]);
         }
 
-        $this->tpl->assign('positions', $positions);
+        $this->template->assign('positions', $positions);
     }
 
     private function parseBlock(array $block, array $mainVariables): array
@@ -436,7 +436,7 @@ class Page extends KernelLoader
         // assign content
         $pageInfo = Navigation::getPageInfo($this->record['id']);
         $this->record['has_children'] = $pageInfo['has_children'];
-        $this->tpl->addGlobal('page', $this->record);
+        $this->template->addGlobal('page', $this->record);
 
         // set template path
         $this->templatePath = $this->record['template_path'];

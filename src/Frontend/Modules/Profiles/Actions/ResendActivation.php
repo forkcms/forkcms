@@ -56,14 +56,14 @@ class ResendActivation extends FrontendBaseBlock
         // form was sent?
         if ($this->url->getParameter('sent') == 'true') {
             // show message
-            $this->tpl->assign('resendActivationSuccess', true);
+            $this->template->assign('resendActivationSuccess', true);
 
             // hide form
-            $this->tpl->assign('resendActivationHideForm', true);
+            $this->template->assign('resendActivationHideForm', true);
         }
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function validateForm(): void
@@ -120,7 +120,7 @@ class ResendActivation extends FrontendBaseBlock
                 // redirect
                 $this->redirect(SITE_URL . $this->url->getQueryString() . '?sent=true');
             } else {
-                $this->tpl->assign('resendActivationHasError', true);
+                $this->template->assign('resendActivationHasError', true);
             }
         }
     }

@@ -137,7 +137,7 @@ class Settings extends FrontendBaseBlock
         // have the settings been saved?
         if ($this->url->getParameter('sent') == 'true') {
             // show success message
-            $this->tpl->assign('updateSettingsSuccess', true);
+            $this->template->assign('updateSettingsSuccess', true);
         }
 
         // assign avatar
@@ -145,14 +145,14 @@ class Settings extends FrontendBaseBlock
         if (empty($avatar)) {
             $avatar = '';
         }
-        $this->tpl->assign('avatar', $avatar);
+        $this->template->assign('avatar', $avatar);
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // display name changes
-        $this->tpl->assign('maxDisplayNameChanges', FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES);
-        $this->tpl->assign(
+        $this->template->assign('maxDisplayNameChanges', FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES);
+        $this->template->assign(
             'displayNameChangesLeft',
             FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES - $this->profile->getSetting('display_name_changes')
         );
@@ -274,7 +274,7 @@ class Settings extends FrontendBaseBlock
                 // redirect
                 $this->redirect(SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'Settings') . '?sent=true');
             } else {
-                $this->tpl->assign('updateSettingsHasFormError', true);
+                $this->template->assign('updateSettingsHasFormError', true);
             }
         }
     }

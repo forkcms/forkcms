@@ -39,13 +39,13 @@ class MediaGalleryEdit extends BackendBaseActionEdit
             ['id' => $mediaGallery->getId()],
             ['module' => $this->getModule(), 'action' => 'MediaGalleryDelete']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
 
         if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
-            $this->tpl->assign('backLink', $this->getBackLink());
-            $this->tpl->assign('mediaGallery', $mediaGallery);
-            $this->tpl->assign('mediaGroup', $form->getData()->mediaGroup);
+            $this->template->assign('form', $form->createView());
+            $this->template->assign('backLink', $this->getBackLink());
+            $this->template->assign('mediaGallery', $mediaGallery);
+            $this->template->assign('mediaGroup', $form->getData()->mediaGroup);
 
             // Call parent
             $this->parse();

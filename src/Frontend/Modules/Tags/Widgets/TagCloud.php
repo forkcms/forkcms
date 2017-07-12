@@ -45,6 +45,6 @@ class TagCloud extends FrontendBaseWidget
         }
 
         // assign comments
-        $this->tpl->assign('widgetTagsTagCloud', $tags);
+        $this->template->assign('widgetTagsTagCloud', $tags);
     }
 }

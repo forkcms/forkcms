@@ -48,6 +48,6 @@ class Feedback extends BackendBaseWidget
 
     private function parse(): void
     {
-        $this->tpl->assign('faqFeedback', $this->feedback);
+        $this->template->assign('faqFeedback', $this->feedback);
     }
 }

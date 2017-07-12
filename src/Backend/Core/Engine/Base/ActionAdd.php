@@ -37,7 +37,7 @@ class ActionAdd extends Action
         parent::parse();
 
         if ($this->form) {
-            $this->form->parse($this->tpl);
+            $this->form->parse($this->template);
         }
     }
 }

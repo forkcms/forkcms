@@ -65,7 +65,7 @@ class Settings extends BackendBaseActionEdit
         // no Akismet-key, so we can't enable spam-filter
         if ($this->get('fork.settings')->get('Core', 'akismet_key') == '') {
             $this->form->getField('spamfilter')->setAttribute('disabled', 'disabled');
-            $this->tpl->assign('noAkismetKey', true);
+            $this->template->assign('noAkismetKey', true);
         }
 
         // add fields for comments
@@ -98,8 +98,8 @@ class Settings extends BackendBaseActionEdit
         parent::parse();
 
         // parse additional variables
-        $this->tpl->assign('commentsRSSURL', SITE_URL . BackendModel::getUrlForBlock($this->url->getModule(), 'comments_rss'));
-        $this->tpl->assign('isGod', $this->isGod);
+        $this->template->assign('commentsRSSURL', SITE_URL . BackendModel::getUrlForBlock($this->url->getModule(), 'comments_rss'));
+        $this->template->assign('isGod', $this->isGod);
     }
 
     private function validateForm(): void

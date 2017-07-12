@@ -69,7 +69,7 @@ class Widget extends KernelLoader implements ModuleExtraInterface
      *
      * @var TwigTemplate
      */
-    protected $tpl;
+    protected $template;
 
     /**
      * URL instance
@@ -86,7 +86,7 @@ class Widget extends KernelLoader implements ModuleExtraInterface
         $this->setModule($module);
         $this->setAction($action);
         $this->setData($data);
-        $this->tpl = $this->getContainer()->get('templating');
+        $this->template = $this->getContainer()->get('templating');
         $this->url = $this->getContainer()->get('url');
 
         // load the config file for the required module

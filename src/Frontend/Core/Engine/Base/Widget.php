@@ -67,7 +67,7 @@ class Widget extends KernelLoader
      *
      * @var TwigTemplate
      */
-    protected $tpl;
+    protected $template;
 
     /**
      * URL instance
@@ -88,7 +88,7 @@ class Widget extends KernelLoader
 
         // get objects from the reference so they are accessible
         $this->header = $this->getContainer()->get('header');
-        $this->tpl = $this->getContainer()->get('templating');
+        $this->template = $this->getContainer()->get('templating');
         $this->url = $this->getContainer()->get('url');
 
         // set properties
@@ -198,10 +198,10 @@ class Widget extends KernelLoader
     public function getContent(string $template = null): string
     {
         if ($template !== null) {
-            return $this->tpl->getContent($template);
+            return $this->template->getContent($template);
         }
 
-        return $this->tpl->getContent($this->templatePath);
+        return $this->template->getContent($this->templatePath);
     }
 
     public function getModule(): string
@@ -211,7 +211,7 @@ class Widget extends KernelLoader
 
     public function getTemplate(): TwigTemplate
     {
-        return $this->tpl;
+        return $this->template;
     }
 
     protected function loadTemplate(string $path = null): void

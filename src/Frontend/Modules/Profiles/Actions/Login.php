@@ -58,7 +58,7 @@ class Login extends FrontendBaseBlock
 
     private function parse(): void
     {
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function validateForm(): void
@@ -96,7 +96,7 @@ class Login extends FrontendBaseBlock
                         $this->form->addError($errorString);
 
                         // add the error to the template variables
-                        $this->tpl->assign('loginError', $errorString);
+                        $this->template->assign('loginError', $errorString);
                     }
                 }
             }

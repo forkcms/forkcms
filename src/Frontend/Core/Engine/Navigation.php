@@ -40,7 +40,7 @@ class Navigation extends KernelLoader
      *
      * @var TwigTemplate
      */
-    protected $tpl;
+    protected $template;
 
     /**
      * URL instance
@@ -53,7 +53,7 @@ class Navigation extends KernelLoader
     {
         parent::__construct($kernel);
 
-        $this->tpl = $this->getContainer()->get('templating');
+        $this->template = $this->getContainer()->get('templating');
         $this->url = $this->getContainer()->get('url');
 
         // set selected ids

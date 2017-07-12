@@ -23,7 +23,7 @@ class Gallery extends BackendBaseWidget
         }
 
         // Note: we must assign the "widget" first, before assigning variables
-        $this->tpl->assign(
+        $this->template->assign(
             'widget',
             $this->get('media_library.helper.frontend')->parseWidget(
                 $mediaGallery->getAction(),
@@ -31,7 +31,7 @@ class Gallery extends BackendBaseWidget
             )
         );
 
-        $this->tpl->assign('mediaGallery', $mediaGallery);
+        $this->template->assign('mediaGallery', $mediaGallery);
     }
 
     private function getMediaGallery(): ?MediaGallery

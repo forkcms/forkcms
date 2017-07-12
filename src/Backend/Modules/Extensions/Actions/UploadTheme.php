@@ -48,12 +48,12 @@ class UploadTheme extends BackendBaseActionAdd
 
         // Zip extension is required for theme upload
         if (!extension_loaded('zlib')) {
-            $this->tpl->assign('zlibIsMissing', true);
+            $this->template->assign('zlibIsMissing', true);
         }
 
         if (!$this->isWritable()) {
             // we need write rights to upload files
-            $this->tpl->assign('notWritable', true);
+            $this->template->assign('notWritable', true);
         } else {
             // everything allright, we can upload
             $this->buildForm();

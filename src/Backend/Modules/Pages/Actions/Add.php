@@ -109,7 +109,7 @@ class Add extends BackendBaseActionAdd
         $this->form = new BackendForm('add');
 
         // assign in template
-        $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
+        $this->template->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
         $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
@@ -311,29 +311,29 @@ class Add extends BackendBaseActionAdd
         parent::parse();
 
         // parse some variables
-        $this->tpl->assign('templates', $this->templates);
-        $this->tpl->assign('isGod', $this->isGod);
-        $this->tpl->assign('positions', $this->positions);
-        $this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
-        $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
-        $this->tpl->assign(
+        $this->template->assign('templates', $this->templates);
+        $this->template->assign('isGod', $this->isGod);
+        $this->template->assign('positions', $this->positions);
+        $this->template->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
+        $this->template->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
+        $this->template->assign(
             'prefixURL',
             rtrim(BackendPagesModel::getFullUrl($this->getRequest()->query->getInt('parent', 1)), '/')
         );
-        $this->tpl->assign('formErrors', (string) $this->form->getErrors());
-        $this->tpl->assign('showTags', $this->showTags());
+        $this->template->assign('formErrors', (string) $this->form->getErrors());
+        $this->template->assign('showTags', $this->showTags());
 
         // get default template id
         $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
 
         // assign template
-        $this->tpl->assignArray($this->templates[$defaultTemplateId], 'template');
+        $this->template->assignArray($this->templates[$defaultTemplateId], 'template');
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // parse the tree
-        $this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
+        $this->template->assign('tree', BackendPagesModel::getTreeHTML());
 
         $this->header->addJsData(
             'pages',

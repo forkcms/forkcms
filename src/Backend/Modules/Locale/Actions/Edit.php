@@ -78,12 +78,12 @@ class Edit extends BackendBaseActionEdit
         $filter = \SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
 
         // parse filter
-        $this->tpl->assignArray($filter);
-        $this->tpl->assign('filterQuery', $this->filterQuery);
+        $this->template->assignArray($filter);
+        $this->template->assign('filterQuery', $this->filterQuery);
 
         // assign id, name
-        $this->tpl->assign('name', $this->record['name']);
-        $this->tpl->assign('id', $this->record['id']);
+        $this->template->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->record['id']);
     }
 
     /**
@@ -177,6 +177,6 @@ class Edit extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

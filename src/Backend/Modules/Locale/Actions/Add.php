@@ -80,7 +80,7 @@ class Add extends BackendBaseActionAdd
         // prevent XSS
         $filter = \SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
 
-        $this->tpl->assignArray($filter);
+        $this->template->assignArray($filter);
     }
 
     /**

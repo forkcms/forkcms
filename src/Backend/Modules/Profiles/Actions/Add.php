@@ -233,6 +233,6 @@ class Add extends BackendBaseActionAdd
     {
         parent::parse();
 
-        $this->tpl->assign('notifyProfile', $this->notifyProfile);
+        $this->template->assign('notifyProfile', $this->notifyProfile);
     }
 }

@@ -36,6 +36,6 @@ class OneRandomImage extends FrontendMediaWidget
         $this->header->addOpenGraphImage($randomConnectedItem->getItem()->getAbsoluteWebPath());
 
         // Assign item (and their source and other custom resolutions)
-        $this->tpl->assign('mediaItem', $randomConnectedItem->getItem());
+        $this->template->assign('mediaItem', $randomConnectedItem->getItem());
     }
 }

@@ -56,7 +56,7 @@ class Detail extends FrontendBaseBlock
         parent::execute();
 
         // hide contentTitle, in the template the title is wrapped with an inverse-option
-        $this->tpl->assignGlobal('hideContentTitle', true);
+        $this->template->assignGlobal('hideContentTitle', true);
 
         $this->loadTemplate();
         $this->getData();
@@ -157,10 +157,10 @@ class Detail extends FrontendBaseBlock
         $this->header->setPageTitle($this->record['question']);
 
         // assign article
-        $this->tpl->assign('item', $this->record);
+        $this->template->assign('item', $this->record);
 
         // assign items in the same category and related items
-        $this->tpl->assign(
+        $this->template->assign(
             'inSameCategory',
             FrontendFaqModel::getAllForCategory(
                 $this->record['category_id'],
@@ -168,22 +168,22 @@ class Detail extends FrontendBaseBlock
                 $this->record['id']
             )
         );
-        $this->tpl->assign(
+        $this->template->assign(
             'related',
             FrontendFaqModel::getRelated($this->record['id'], $this->settings['related_num_items'])
         );
 
         // assign settings
-        $this->tpl->assign('settings', $this->settings);
+        $this->template->assign('settings', $this->settings);
 
         // parse the form
         if (empty($this->status)) {
-            $this->form->parse($this->tpl);
+            $this->form->parse($this->template);
         }
 
         // parse the form status
         if (!empty($this->status)) {
-            $this->tpl->assign($this->status, true);
+            $this->template->assign($this->status, true);
         }
     }
 
@@ -216,7 +216,7 @@ class Detail extends FrontendBaseBlock
             $useful = ($this->form->getField('useful')->getValue() == 'Y');
 
             // the form has been sent
-            $this->tpl->assign('hideFeedbackNoInfo', $useful);
+            $this->template->assign('hideFeedbackNoInfo', $useful);
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->form->cleanupFields();
@@ -293,7 +293,7 @@ class Detail extends FrontendBaseBlock
             }
         } else {
             // form hasn't been sent
-            $this->tpl->assign('hideFeedbackNoInfo', true);
+            $this->template->assign('hideFeedbackNoInfo', true);
         }
     }
 }

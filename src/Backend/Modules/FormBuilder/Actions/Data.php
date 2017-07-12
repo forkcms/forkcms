@@ -226,7 +226,7 @@ class Data extends BackendBaseActionIndex
         $this->form->addDate('end_date', $endDate);
 
         // manually parse fields
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     protected function parse(): void
@@ -234,12 +234,12 @@ class Data extends BackendBaseActionIndex
         parent::parse();
 
         // datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->template->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
         // form info
-        $this->tpl->assign('name', $this->record['name']);
-        $this->tpl->assign('id', $this->record['id']);
-        $this->tpl->assignArray($this->filter);
+        $this->template->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->record['id']);
+        $this->template->assignArray($this->filter);
     }
 
     /**

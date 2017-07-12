@@ -69,7 +69,7 @@ class Add extends BackendBaseActionAdd
 
         // parse additional variables
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
     }
 

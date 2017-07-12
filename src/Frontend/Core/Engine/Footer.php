@@ -23,7 +23,7 @@ class Footer extends KernelLoader
      *
      * @var TwigTemplate
      */
-    protected $tpl;
+    protected $template;
 
     /**
      * URL instance
@@ -36,7 +36,7 @@ class Footer extends KernelLoader
     {
         parent::__construct($kernel);
 
-        $this->tpl = $this->getContainer()->get('templating');
+        $this->template = $this->getContainer()->get('templating');
         $this->url = $this->getContainer()->get('url');
 
         $this->getContainer()->set('footer', $this);
@@ -48,7 +48,7 @@ class Footer extends KernelLoader
     public function parse(): void
     {
         $footerLinks = (array) Navigation::getFooterLinks();
-        $this->tpl->addGlobal('footerLinks', $footerLinks);
+        $this->template->addGlobal('footerLinks', $footerLinks);
 
         $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
 
@@ -71,7 +71,7 @@ class Footer extends KernelLoader
         }
 
         // assign site wide html
-        $this->tpl->addGlobal('siteHTMLFooter', $siteHTMLFooter);
+        $this->template->addGlobal('siteHTMLFooter', $siteHTMLFooter);
     }
 
     /**

@@ -56,8 +56,8 @@ class EditSynonym extends BackendBaseActionEdit
     {
         parent::parse();
 
-        $this->tpl->assign('id', $this->record['id']);
-        $this->tpl->assign('term', $this->record['term']);
+        $this->template->assign('id', $this->record['id']);
+        $this->template->assign('term', $this->record['term']);
     }
 
     private function validateForm(): void
@@ -109,6 +109,6 @@ class EditSynonym extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule(), 'action' => 'DeleteSynonym']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

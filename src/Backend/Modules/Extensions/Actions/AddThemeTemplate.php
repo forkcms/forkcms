@@ -199,7 +199,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         }
 
         // assign
-        $this->tpl->assign('positions', $positions);
+        $this->template->assign('positions', $positions);
     }
 
     protected function parse(): void
@@ -207,7 +207,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         parent::parse();
 
         // assign form errors
-        $this->tpl->assign('formErrors', (string) $this->form->getErrors());
+        $this->template->assign('formErrors', (string) $this->form->getErrors());
     }
 
     private function validateForm(): void

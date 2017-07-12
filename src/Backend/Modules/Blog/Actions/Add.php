@@ -83,7 +83,7 @@ class Add extends BackendBaseActionAdd
     protected function parse(): void
     {
         parent::parse();
-        $this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
+        $this->template->assign('imageIsAllowed', $this->imageIsAllowed);
 
         // get url
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'detail');
@@ -91,7 +91,7 @@ class Add extends BackendBaseActionAdd
 
         // parse additional variables
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
     }
 

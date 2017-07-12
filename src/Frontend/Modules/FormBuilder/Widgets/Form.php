@@ -326,14 +326,14 @@ class Form extends FrontendBaseWidget
     {
         // form name
         $formName = 'form' . $this->item['id'];
-        $this->tpl->assign('formName', $formName);
-        $this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
-        $this->tpl->assign('successMessage', false);
+        $this->template->assign('formName', $formName);
+        $this->template->assign('formAction', $this->createAction() . '#' . $formName);
+        $this->template->assign('successMessage', false);
 
         if ($this->hasRecaptchaField) {
             $this->header->addJS('https://www.google.com/recaptcha/api.js?hl=' . Locale::frontendLanguage());
-            $this->tpl->assign('hasRecaptchaField', true);
-            $this->tpl->assign('siteKey', FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key'));
+            $this->template->assign('hasRecaptchaField', true);
+            $this->template->assign('siteKey', FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key'));
         }
 
         // got fields
@@ -374,23 +374,23 @@ class Form extends FrontendBaseWidget
             }
 
             // assign
-            $this->tpl->assign('submitValue', $submitValue);
-            $this->tpl->assign('fields', $this->fieldsHTML);
+            $this->template->assign('submitValue', $submitValue);
+            $this->template->assign('fields', $this->fieldsHTML);
 
             // parse form
-            $this->form->parse($this->tpl);
-            $this->tpl->assign('formToken', $this->form->getToken());
+            $this->form->parse($this->template);
+            $this->template->assign('formToken', $this->form->getToken());
 
             // assign form error
-            $this->tpl->assign('error', ($this->form->getErrors() != '' ? $this->form->getErrors() : false));
+            $this->template->assign('error', ($this->form->getErrors() != '' ? $this->form->getErrors() : false));
         }
     }
 
     private function parseSuccessMessage(): void
     {
         // form name
-        $this->tpl->assign('formName', $this->formName);
-        $this->tpl->assign('successMessage', $this->item['success_message']);
+        $this->template->assign('formName', $this->formName);
+        $this->template->assign('successMessage', $this->item['success_message']);
     }
 
     private function validateForm(): void
@@ -557,10 +557,10 @@ class Form extends FrontendBaseWidget
                 // not correct, show errors
                 // global form errors set
                 if ($this->form->getErrors() != '') {
-                    $this->tpl->assign('formBuilderError', $this->form->getErrors());
+                    $this->template->assign('formBuilderError', $this->form->getErrors());
                 } else {
                     // general error
-                    $this->tpl->assign('formBuilderError', FL::err('FormError'));
+                    $this->template->assign('formBuilderError', FL::err('FormError'));
                 }
             }
         }

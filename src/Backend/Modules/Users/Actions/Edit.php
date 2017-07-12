@@ -202,27 +202,27 @@ class Edit extends BackendBaseActionEdit
         }
 
         // only allow deletion of other users
-        $this->tpl->assign(
+        $this->template->assign(
             'allowUsersDelete',
             $this->authenticatedUser->getUserId() != $this->id
         );
 
         // assign
-        $this->tpl->assign('record', $this->record);
-        $this->tpl->assign('id', $this->id);
+        $this->template->assign('record', $this->record);
+        $this->template->assign('id', $this->id);
 
         // assign that we're god or the same user
-        $this->tpl->assign(
+        $this->template->assign(
             'allowPasswordEdit',
             ($this->authenticatedUser->getUserId() == $this->id || $this->authenticatedUser->isGod())
         );
 
         // assign that you can edit the user rights
-        $this->tpl->assign('allowUserRights', $this->allowUserRights);
+        $this->template->assign('allowUserRights', $this->allowUserRights);
 
         // check if we need to show the password strength and parse the label
-        $this->tpl->assign('showPasswordStrength', ($this->record['settings']['password_strength'] !== 'strong'));
-        $this->tpl->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
+        $this->template->assign('showPasswordStrength', ($this->record['settings']['password_strength'] !== 'strong'));
+        $this->template->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
     }
 
     private function validateForm(): void
@@ -421,6 +421,6 @@ class Edit extends BackendBaseActionEdit
             ['id' => $this->user->getUserId()],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

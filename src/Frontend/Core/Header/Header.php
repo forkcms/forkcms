@@ -88,7 +88,7 @@ class Header extends KernelLoader
      *
      * @var TwigTemplate
      */
-    protected $tpl;
+    protected $template;
 
     /**
      * URL instance
@@ -104,7 +104,7 @@ class Header extends KernelLoader
         $container = $this->getContainer();
         $container->set('header', $this);
 
-        $this->tpl = $container->get('templating');
+        $this->template = $container->get('templating');
         $this->url = $container->get('url');
 
         $this->cssFiles = new AssetCollection(
@@ -352,10 +352,10 @@ class Header extends KernelLoader
             $this->meta->addMetaData(MetaData::forName('robots', 'noindex, nofollow'), true);
         }
 
-        $this->tpl->addGlobal('meta', $this->meta);
-        $this->tpl->addGlobal('metaCustom', $this->getMetaCustom());
-        $this->cssFiles->parse($this->tpl, 'cssFiles');
-        $this->jsFiles->parse($this->tpl, 'jsFiles');
+        $this->template->addGlobal('meta', $this->meta);
+        $this->template->addGlobal('metaCustom', $this->getMetaCustom());
+        $this->cssFiles->parse($this->template, 'cssFiles');
+        $this->jsFiles->parse($this->template, 'jsFiles');
 
         $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_header', '') . "\n";
         $siteHTMLHeader .= new GoogleAnalytics(
@@ -363,11 +363,11 @@ class Header extends KernelLoader
             $this->get('request')->getHttpHost()
         );
         $siteHTMLHeader .= "\n" . $this->jsData;
-        $this->tpl->addGlobal('siteHTMLHeader', trim($siteHTMLHeader));
+        $this->template->addGlobal('siteHTMLHeader', trim($siteHTMLHeader));
 
-        $this->tpl->addGlobal('pageTitle', $this->getPageTitle());
-        $this->tpl->addGlobal('contentTitle', $this->getContentTitle());
-        $this->tpl->addGlobal(
+        $this->template->addGlobal('pageTitle', $this->getPageTitle());
+        $this->template->addGlobal('contentTitle', $this->getContentTitle());
+        $this->template->addGlobal(
             'siteTitle',
             (string) $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
         );

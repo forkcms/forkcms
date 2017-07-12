@@ -57,7 +57,7 @@ class Settings extends BackendBaseActionEdit
     protected function parse(): void
     {
         parent::parse();
-        $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
+        $this->template->assign('godUser', BackendAuthentication::getUser()->isGod());
     }
 
     private function validateForm(): void

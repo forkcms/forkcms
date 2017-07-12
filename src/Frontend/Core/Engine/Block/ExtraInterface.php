@@ -84,7 +84,7 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
      *
      * @var TwigTemplate
      */
-    protected $tpl;
+    protected $template;
 
     /**
      * URL instance
@@ -101,7 +101,7 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
         $this->setModule($module);
         $this->setAction($action);
         $this->setData($data);
-        $this->tpl = $this->getContainer()->get('templating');
+        $this->template = $this->getContainer()->get('templating');
         $this->url = $this->getContainer()->get('url');
 
         // load the config file for the required module
@@ -250,7 +250,7 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
      */
     public function getVariables(): array
     {
-        return (array) $this->tpl->getAssignedVariables();
+        return (array) $this->template->getAssignedVariables();
     }
 
     /**

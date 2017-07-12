@@ -65,12 +65,12 @@ class DataDetails extends BackendBaseActionIndex
         parent::parse();
 
         // form info
-        $this->tpl->assign('name', $this->record['name']);
-        $this->tpl->assign('formId', $this->record['id']);
+        $this->template->assign('name', $this->record['name']);
+        $this->template->assign('formId', $this->record['id']);
 
         // sent info
-        $this->tpl->assign('id', $this->data['id']);
-        $this->tpl->assign('sentOn', $this->data['sent_on']);
+        $this->template->assign('id', $this->data['id']);
+        $this->template->assign('sentOn', $this->data['sent_on']);
 
         // init
         $data = [];
@@ -90,8 +90,8 @@ class DataDetails extends BackendBaseActionIndex
         }
 
         // assign
-        $this->tpl->assign('data', $data);
-        $this->tpl->assign('filter', $this->filter);
+        $this->template->assign('data', $data);
+        $this->template->assign('filter', $this->filter);
     }
 
     /**

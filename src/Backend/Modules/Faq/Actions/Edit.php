@@ -90,12 +90,12 @@ class Edit extends BackendBaseActionEdit
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
         $url404 = BackendModel::getUrl(404);
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
 
         // assign the active record and additional variables
-        $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('feedback', $this->feedback);
+        $this->template->assign('item', $this->record);
+        $this->template->assign('feedback', $this->feedback);
     }
 
     private function validateForm(): void
@@ -156,7 +156,7 @@ class Edit extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 
     private function loadDeleteFeedbackForm(): void
@@ -166,6 +166,6 @@ class Edit extends BackendBaseActionEdit
             null,
             ['module' => $this->getModule(), 'action' => 'DeleteFeedback']
         );
-        $this->tpl->assign('deleteFeedbackForm', $deleteFeedbackForm->createView());
+        $this->template->assign('deleteFeedbackForm', $deleteFeedbackForm->createView());
     }
 }

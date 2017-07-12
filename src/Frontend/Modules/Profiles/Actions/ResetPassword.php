@@ -84,12 +84,12 @@ class ResetPassword extends FrontendBaseBlock
         // has the password been saved?
         if ($this->url->getParameter('sent') == 'true') {
             // show message
-            $this->tpl->assign('resetPasswordSuccess', true);
+            $this->template->assign('resetPasswordSuccess', true);
 
             // hide form
-            $this->tpl->assign('resetPasswordHideForm', true);
+            $this->template->assign('resetPasswordHideForm', true);
         } else {
-            $this->form->parse($this->tpl);
+            $this->form->parse($this->template);
         }
     }
 
@@ -126,7 +126,7 @@ class ResetPassword extends FrontendBaseBlock
                     ) . '?sent=true'
                 );
             } else {
-                $this->tpl->assign('forgotPasswordHasError', true);
+                $this->template->assign('forgotPasswordHasError', true);
             }
         }
     }

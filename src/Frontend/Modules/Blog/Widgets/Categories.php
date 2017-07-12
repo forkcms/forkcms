@@ -42,6 +42,6 @@ class Categories extends FrontendBaseWidget
         }
 
         // assign comments
-        $this->tpl->assign('widgetBlogCategories', $categories);
+        $this->template->assign('widgetBlogCategories', $categories);
     }
 }

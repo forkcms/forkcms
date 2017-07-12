@@ -171,23 +171,23 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse dgRecentlyEdited
-        $this->tpl->assign(
+        $this->template->assign(
             'dgRecentlyEdited',
             ($this->dgRecentlyEdited->getNumResults() != 0) ? $this->dgRecentlyEdited->getContent() : false
         );
-        $this->tpl->assign('dgDrafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
+        $this->template->assign('dgDrafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 
         // parse the tree
-        $this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
+        $this->template->assign('tree', BackendPagesModel::getTreeHTML());
 
         // open the tree on a specific page
         if ($this->getRequest()->query->getInt('id') !== 0) {
-            $this->tpl->assign(
+            $this->template->assign(
                 'openedPageId',
                 $this->getRequest()->query->getInt('id')
             );
         } else {
-            $this->tpl->assign('openedPageId', 1);
+            $this->template->assign('openedPageId', 1);
         }
     }
 }

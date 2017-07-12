@@ -44,7 +44,7 @@ class Detail extends FrontendBaseBlock
     {
         parent::execute();
 
-        $this->tpl->assignGlobal('hideContentTitle', true);
+        $this->template->assignGlobal('hideContentTitle', true);
         $this->loadTemplate();
         $this->getData();
         $this->parse();
@@ -98,10 +98,10 @@ class Detail extends FrontendBaseBlock
     private function parse(): void
     {
         // assign tag
-        $this->tpl->assign('tag', $this->record);
+        $this->template->assign('tag', $this->record);
 
         // assign tags
-        $this->tpl->assign('tagsModules', $this->results);
+        $this->template->assign('tagsModules', $this->results);
 
         // update breadcrumb
         $this->breadcrumb->addElement($this->record['name']);

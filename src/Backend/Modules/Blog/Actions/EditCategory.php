@@ -66,10 +66,10 @@ class EditCategory extends BackendBaseActionEdit
     {
         parent::parse();
 
-        $this->tpl->assign('item', $this->record);
+        $this->template->assign('item', $this->record);
 
         // delete allowed?
-        $this->tpl->assign(
+        $this->template->assign(
             'allowBlogDeleteCategory',
             BackendBlogModel::deleteCategoryAllowed($this->id)
         );
@@ -114,6 +114,6 @@ class EditCategory extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule(), 'action' => 'DeleteCategory']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

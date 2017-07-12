@@ -119,10 +119,10 @@ class Settings extends BackendBaseActionEdit
         parent::parse();
 
         // parse form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // assign iteration
-        $this->tpl->assign('modules', $this->modules);
+        $this->template->assign('modules', $this->modules);
     }
 
     private function validateForm(): void

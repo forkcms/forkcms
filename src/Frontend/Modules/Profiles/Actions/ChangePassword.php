@@ -88,11 +88,11 @@ class ChangePassword extends FrontendBaseBlock
         // have the settings been saved?
         if ($this->url->getParameter('sent') == 'true') {
             // show success message
-            $this->tpl->assign('updatePasswordSuccess', true);
+            $this->template->assign('updatePasswordSuccess', true);
         }
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function validateForm(): void
@@ -130,7 +130,7 @@ class ChangePassword extends FrontendBaseBlock
                     SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangePassword') . '?sent=true'
                 );
             } else {
-                $this->tpl->assign('updatePasswordHasFormError', true);
+                $this->template->assign('updatePasswordHasFormError', true);
             }
         }
     }

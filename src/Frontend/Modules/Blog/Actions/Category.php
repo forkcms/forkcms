@@ -137,10 +137,10 @@ class Category extends FrontendBaseBlock
         }
 
         // assign category
-        $this->tpl->assign('category', $this->category);
+        $this->template->assign('category', $this->category);
 
         // assign articles
-        $this->tpl->assign('items', $this->items);
+        $this->template->assign('items', $this->items);
 
         // parse the pagination
         $this->parsePagination();

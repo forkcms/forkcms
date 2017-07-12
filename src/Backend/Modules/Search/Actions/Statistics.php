@@ -50,7 +50,7 @@ class Statistics extends Action
         $dataGrid->setSortingColumns(['time', 'term'], 'time');
         $dataGrid->setSortParameter('desc');
 
-        $this->tpl->assign('dataGrid', $dataGrid->getContent());
+        $this->template->assign('dataGrid', $dataGrid->getContent());
     }
 
     public static function parseRefererInDataGrid(string $data): string

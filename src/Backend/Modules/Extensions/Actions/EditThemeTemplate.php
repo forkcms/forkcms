@@ -75,7 +75,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         }
 
         // assign
-        $this->tpl->assign('template', $this->record);
+        $this->template->assign('template', $this->record);
 
         // is the template being used
         $inUse = BackendExtensionsModel::isTemplateInUse($this->id);
@@ -91,8 +91,8 @@ class EditThemeTemplate extends BackendBaseActionEdit
         }
 
         // assign
-        $this->tpl->assign('inUse', $inUse);
-        $this->tpl->assign('allowExtensionsDeleteThemeTemplate', $deleteAllowed);
+        $this->template->assign('inUse', $inUse);
+        $this->template->assign('allowExtensionsDeleteThemeTemplate', $deleteAllowed);
     }
 
     private function loadForm(): void
@@ -240,7 +240,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         }
 
         // assign
-        $this->tpl->assign('positions', $positions);
+        $this->template->assign('positions', $positions);
     }
 
     protected function parse(): void
@@ -248,7 +248,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         parent::parse();
 
         // assign form errors
-        $this->tpl->assign('formErrors', (string) $this->form->getErrors());
+        $this->template->assign('formErrors', (string) $this->form->getErrors());
     }
 
     private function validateForm(): void
@@ -382,6 +382,6 @@ class EditThemeTemplate extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule(), 'action' => 'DeleteThemeTemplate']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

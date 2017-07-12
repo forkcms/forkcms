@@ -26,7 +26,7 @@ class Action extends KernelLoader
      *
      * @var TwigTemplate
      */
-    public $tpl;
+    private $template;
 
     /**
      * @var Config
@@ -43,7 +43,7 @@ class Action extends KernelLoader
         parent::__construct($kernel);
 
         // grab stuff from the reference and store them in this object (for later/easy use)
-        $this->tpl = $this->getContainer()->get('template');
+        $this->template = $this->getContainer()->get('template');
 
         $this->config = Config::forModule($kernel, $this->get('url')->getModule());
     }
@@ -88,6 +88,6 @@ class Action extends KernelLoader
         }
 
         // assign the languages
-        $this->tpl->assign('workingLanguages', $workingLanguages);
+        $this->template->assign('workingLanguages', $workingLanguages);
     }
 }

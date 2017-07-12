@@ -161,15 +161,15 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // assign to template
-        $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('settings', $this->settings);
-        $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
+        $this->template->assign('item', $this->record);
+        $this->template->assign('settings', $this->settings);
+        $this->template->assign('godUser', BackendAuthentication::getUser()->isGod());
 
-        $this->settingsForm->parse($this->tpl);
+        $this->settingsForm->parse($this->template);
 
         // assign message if address was not be geocoded
         if ($this->record['lat'] == null || $this->record['lng'] == null) {
-            $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
+            $this->template->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
         }
     }
 
@@ -237,6 +237,6 @@ class Edit extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

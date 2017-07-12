@@ -102,9 +102,9 @@ class MediaGalleryAdd extends ActionAdd
 
     private function parseForm(Form $form): void
     {
-        $this->tpl->assign('form', $form->createView());
-        $this->tpl->assign('backLink', $this->getBackLink());
-        $this->tpl->assign('mediaGroup', $form->getData()->mediaGroup);
+        $this->template->assign('form', $form->createView());
+        $this->template->assign('backLink', $this->getBackLink());
+        $this->template->assign('mediaGroup', $form->getData()->mediaGroup);
 
         // Call parent
         $this->parse();

@@ -29,7 +29,7 @@ class Add extends BackendBaseActionAdd
         $form = $this->getForm();
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
+            $this->template->assign('form', $form->createView());
 
             $this->parse();
             $this->display();

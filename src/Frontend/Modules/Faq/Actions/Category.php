@@ -32,7 +32,7 @@ class Category extends FrontendBaseBlock
     {
         parent::execute();
 
-        $this->tpl->assignGlobal('hideContentTitle', true);
+        $this->template->assignGlobal('hideContentTitle', true);
         $this->getData();
         $this->loadTemplate();
         $this->parse();
@@ -63,7 +63,7 @@ class Category extends FrontendBaseBlock
         $this->header->setPageTitle($this->record['title']);
 
         // assign category and questions
-        $this->tpl->assign('category', $this->record);
-        $this->tpl->assign('questions', $this->questions);
+        $this->template->assign('category', $this->record);
+        $this->template->assign('questions', $this->questions);
     }
 }

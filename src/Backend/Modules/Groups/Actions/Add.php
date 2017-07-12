@@ -479,8 +479,8 @@ class Add extends BackendBaseActionAdd
         $this->form->addText('name');
         $this->form->addDropdown('manage_users', ['Deny', 'Allow']);
         $this->form->addDropdown('manage_groups', ['Deny', 'Allow']);
-        $this->tpl->assign('permissions', $permissionBoxes);
-        $this->tpl->assign('widgets', $widgets ?? false);
+        $this->template->assign('permissions', $permissionBoxes);
+        $this->template->assign('widgets', $widgets ?? false);
     }
 
     private function validateForm(): void

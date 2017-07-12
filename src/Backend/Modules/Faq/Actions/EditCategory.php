@@ -62,8 +62,8 @@ class EditCategory extends BackendBaseActionEdit
         parent::parse();
 
         // assign the data
-        $this->tpl->assign('item', $this->record);
-        $this->tpl->assign(
+        $this->template->assign('item', $this->record);
+        $this->template->assign(
             'showFaqDeleteCategory',
             (
                 BackendFaqModel::deleteCategoryAllowed($this->id) &&
@@ -74,7 +74,7 @@ class EditCategory extends BackendBaseActionEdit
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
         $url404 = BackendModel::getUrl(404);
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
     }
 
@@ -121,6 +121,6 @@ class EditCategory extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule(), 'action' => 'DeleteCategory']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

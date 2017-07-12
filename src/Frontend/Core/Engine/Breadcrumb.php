@@ -29,7 +29,7 @@ class Breadcrumb extends KernelLoader
      *
      * @var TwigTemplate
      */
-    protected $tpl;
+    protected $template;
 
     /**
      * URL instance
@@ -42,7 +42,7 @@ class Breadcrumb extends KernelLoader
     {
         parent::__construct($kernel);
 
-        $this->tpl = $this->getContainer()->get('templating');
+        $this->template = $this->getContainer()->get('templating');
         $this->url = $this->getContainer()->get('url');
 
         // store in reference
@@ -169,6 +169,6 @@ class Breadcrumb extends KernelLoader
     public function parse(): void
     {
         // assign
-        $this->tpl->addGlobal('breadcrumb', $this->items);
+        $this->template->addGlobal('breadcrumb', $this->items);
     }
 }

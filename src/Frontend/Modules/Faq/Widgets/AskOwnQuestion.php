@@ -63,13 +63,13 @@ class AskOwnQuestion extends FrontendBaseWidget
     {
         // parse the form or a status
         if (empty($this->status)) {
-            $this->form->parse($this->tpl);
+            $this->form->parse($this->template);
         } else {
-            $this->tpl->assign($this->status, true);
+            $this->template->assign($this->status, true);
         }
 
         // parse an option so the stuff can be shown
-        $this->tpl->assign('widgetFaqOwnQuestion', true);
+        $this->template->assign('widgetFaqOwnQuestion', true);
     }
 
     private function validateForm(): void

@@ -84,10 +84,10 @@ class Categories extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->template->assign('dataGrid', (string) $this->dataGrid->getContent());
 
         // check if this action is allowed
-        $this->tpl->assign('allowFaqAddCategory', $this->multipleCategoriesAllowed);
+        $this->template->assign('allowFaqAddCategory', $this->multipleCategoriesAllowed);
     }
 
     /**

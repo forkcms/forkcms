@@ -115,9 +115,9 @@ class ThemeTemplates extends BackendBaseActionEdit
         parent::parse();
 
         // assign datagrid
-        $this->tpl->assign('dataGrid', $this->dataGrid->getContent());
+        $this->template->assign('dataGrid', $this->dataGrid->getContent());
 
         // assign the selected theme, so we can propagate it to the add/edit actions.
-        $this->tpl->assign('selectedTheme', rawurlencode($this->selectedTheme));
+        $this->template->assign('selectedTheme', rawurlencode($this->selectedTheme));
     }
 }

@@ -341,15 +341,15 @@ class Comments extends BackendBaseActionIndex
         parent::parse();
 
         // published datagrid and num results
-        $this->tpl->assign('dgPublished', (string) $this->dgPublished->getContent());
-        $this->tpl->assign('numPublished', $this->dgPublished->getNumResults());
+        $this->template->assign('dgPublished', (string) $this->dgPublished->getContent());
+        $this->template->assign('numPublished', $this->dgPublished->getNumResults());
 
         // moderation datagrid and num results
-        $this->tpl->assign('dgModeration', (string) $this->dgModeration->getContent());
-        $this->tpl->assign('numModeration', $this->dgModeration->getNumResults());
+        $this->template->assign('dgModeration', (string) $this->dgModeration->getContent());
+        $this->template->assign('numModeration', $this->dgModeration->getNumResults());
 
         // spam datagrid and num results
-        $this->tpl->assign('dgSpam', (string) $this->dgSpam->getContent());
-        $this->tpl->assign('numSpam', $this->dgSpam->getNumResults());
+        $this->template->assign('dgSpam', (string) $this->dgSpam->getContent());
+        $this->template->assign('numSpam', $this->dgSpam->getNumResults());
     }
 }

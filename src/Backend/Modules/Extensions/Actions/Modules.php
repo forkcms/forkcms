@@ -110,10 +110,10 @@ class Modules extends BackendBaseActionIndex
         parent::parse();
 
         // parse data grid
-        $this->tpl->assign('dataGridInstallableModules', (string) $this->dataGridInstallableModules->getContent());
-        $this->tpl->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());
+        $this->template->assign('dataGridInstallableModules', (string) $this->dataGridInstallableModules->getContent());
+        $this->template->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());
 
         // parse installer warnings
-        $this->tpl->assign('warnings', (array) \SpoonSession::get('installer_warnings'));
+        $this->template->assign('warnings', (array) \SpoonSession::get('installer_warnings'));
     }
 }

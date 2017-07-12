@@ -213,39 +213,39 @@ class Detail extends FrontendBaseBlock
         $this->header->setCanonicalUrl($this->record['full_url']);
 
         // assign article
-        $this->tpl->assign('item', $this->record);
+        $this->template->assign('item', $this->record);
 
         // count comments
         $commentCount = count($this->comments);
 
         // assign the comments
-        $this->tpl->assign('commentsCount', $commentCount);
-        $this->tpl->assign('comments', $this->comments);
+        $this->template->assign('commentsCount', $commentCount);
+        $this->template->assign('comments', $this->comments);
 
         // options
         if ($commentCount > 1) {
-            $this->tpl->assign('blogCommentsMultiple', true);
+            $this->template->assign('blogCommentsMultiple', true);
         }
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // some options
         if ($this->url->getParameter('comment', 'string') == 'moderation') {
-            $this->tpl->assign(
+            $this->template->assign(
                 'commentIsInModeration',
                 true
             );
         }
         if ($this->url->getParameter('comment', 'string') == 'spam') {
-            $this->tpl->assign('commentIsSpam', true);
+            $this->template->assign('commentIsSpam', true);
         }
         if ($this->url->getParameter('comment', 'string') == 'true') {
-            $this->tpl->assign('commentIsAdded', true);
+            $this->template->assign('commentIsAdded', true);
         }
 
         // assign settings
-        $this->tpl->assign('settings', $this->settings);
+        $this->template->assign('settings', $this->settings);
 
         $navigation = FrontendBlogModel::getNavigation($this->record['id']);
 
@@ -268,7 +268,7 @@ class Detail extends FrontendBaseBlock
         }
 
         // assign navigation
-        $this->tpl->assign('navigation', $navigation);
+        $this->template->assign('navigation', $navigation);
     }
 
     private function validateForm(): void

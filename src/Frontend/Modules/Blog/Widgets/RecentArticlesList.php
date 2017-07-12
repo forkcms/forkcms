@@ -35,10 +35,10 @@ class RecentArticlesList extends FrontendBaseWidget
         $this->header->addRssLink($rssTitle, $rssLink);
 
         // assign comments
-        $this->tpl->assign(
+        $this->template->assign(
             'widgetBlogRecentArticlesList',
             FrontendBlogModel::getAll($this->get('fork.settings')->get('Blog', 'recent_articles_list_num_items', 5))
         );
-        $this->tpl->assign('widgetBlogRecentArticlesFullRssLink', $rssLink);
+        $this->template->assign('widgetBlogRecentArticlesFullRssLink', $rssLink);
     }
 }

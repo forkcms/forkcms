@@ -41,10 +41,10 @@ class Subscribe extends FrontendBaseBlock
         $form->handleRequest($this->get('request'));
 
         if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
+            $this->template->assign('form', $form->createView());
 
             if ($form->isSubmitted()) {
-                $this->tpl->assign('mailmotorSubscribeHasFormError', true);
+                $this->template->assign('mailmotorSubscribeHasFormError', true);
             }
 
             $this->loadTemplate();
@@ -104,11 +104,11 @@ class Subscribe extends FrontendBaseBlock
         // form was subscribed?
         if ($this->url->getParameter('subscribed') == 'true') {
             // show message
-            $this->tpl->assign('mailmotorSubscribeIsSuccess', true);
-            $this->tpl->assign('mailmotorSubscribeHasDoubleOptIn', ($this->url->getParameter('double-opt-in', 'string', 'true') === 'true'));
+            $this->template->assign('mailmotorSubscribeIsSuccess', true);
+            $this->template->assign('mailmotorSubscribeHasDoubleOptIn', ($this->url->getParameter('double-opt-in', 'string', 'true') === 'true'));
 
             // hide form
-            $this->tpl->assign('mailmotorSubscribeHideForm', true);
+            $this->template->assign('mailmotorSubscribeHideForm', true);
         }
     }
 }

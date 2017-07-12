@@ -392,20 +392,20 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('name', $this->record['name']);
         $this->form->addDropdown('manage_users', ['Deny', 'Allow']);
         $this->form->addDropdown('manage_groups', ['Deny', 'Allow']);
-        $this->tpl->assign('permissions', $permissionBoxes);
-        $this->tpl->assign('widgets', $widgets ?? false);
+        $this->template->assign('permissions', $permissionBoxes);
+        $this->template->assign('widgets', $widgets ?? false);
     }
 
     protected function parse(): void
     {
         parent::parse();
 
-        $this->tpl->assign('dataGridUsers', ($this->dataGridUsers->getNumResults() != 0) ? $this->dataGridUsers->getContent() : false);
-        $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('groupName', $this->record['name']);
+        $this->template->assign('dataGridUsers', ($this->dataGridUsers->getNumResults() != 0) ? $this->dataGridUsers->getContent() : false);
+        $this->template->assign('item', $this->record);
+        $this->template->assign('groupName', $this->record['name']);
 
         // only allow deletion of empty groups
-        $this->tpl->assign('allowGroupsDelete', $this->dataGridUsers->getNumResults() == 0);
+        $this->template->assign('allowGroupsDelete', $this->dataGridUsers->getNumResults() == 0);
     }
 
     /**
@@ -627,6 +627,6 @@ class Edit extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

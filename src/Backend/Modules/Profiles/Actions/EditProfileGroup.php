@@ -88,7 +88,7 @@ class EditProfileGroup extends BackendBaseActionEdit
         parent::parse();
 
         // assign the active record and additional variables
-        $this->tpl->assign('profileGroup', $this->profileGroup);
+        $this->template->assign('profileGroup', $this->profileGroup);
     }
 
     private function validateForm(): void
@@ -151,6 +151,6 @@ class EditProfileGroup extends BackendBaseActionEdit
             ['id' => $this->profileGroup['id']],
             ['module' => $this->getModule(), 'action' => 'DeleteProfileGroup']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

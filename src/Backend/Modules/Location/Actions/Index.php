@@ -155,12 +155,12 @@ class Index extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
-        $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
+        $this->template->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->template->assign('godUser', BackendAuthentication::getUser()->isGod());
 
         // assign to template
-        $this->tpl->assign('items', $this->items);
-        $this->tpl->assign('settings', $this->settings);
-        $this->form->parse($this->tpl);
+        $this->template->assign('items', $this->items);
+        $this->template->assign('settings', $this->settings);
+        $this->form->parse($this->template);
     }
 }

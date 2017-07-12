@@ -106,13 +106,13 @@ class DetailModule extends BackendBaseActionIndex
         parent::parse();
 
         // assign module data
-        $this->tpl->assign('name', $this->currentModule);
-        $this->tpl->assign('warnings', $this->warnings);
-        $this->tpl->assign('information', $this->information);
-        $this->tpl->assign('showInstallButton', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('InstallModule'));
+        $this->template->assign('name', $this->currentModule);
+        $this->template->assign('warnings', $this->warnings);
+        $this->template->assign('information', $this->information);
+        $this->template->assign('showInstallButton', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('InstallModule'));
 
         // data grids
-        $this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
-        $this->tpl->assign('dataGridCronjobs', (isset($this->dataGridCronjobs) && $this->dataGridCronjobs->getNumResults() > 0) ? $this->dataGridCronjobs->getContent() : false);
+        $this->template->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
+        $this->template->assign('dataGridCronjobs', (isset($this->dataGridCronjobs) && $this->dataGridCronjobs->getNumResults() > 0) ? $this->dataGridCronjobs->getContent() : false);
     }
 }

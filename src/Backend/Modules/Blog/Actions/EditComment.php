@@ -65,12 +65,12 @@ class EditComment extends BackendBaseActionEdit
         $this->form->addTextarea('text', $this->record['text']);
 
         // assign URL
-        $this->tpl->assign(
+        $this->template->assign(
             'itemURL',
             BackendModel::getUrlForBlock($this->getModule(), 'detail') . '/' .
             $this->record['post_url'] . '#comment-' . $this->record['post_id']
         );
-        $this->tpl->assign('itemTitle', $this->record['post_title']);
+        $this->template->assign('itemTitle', $this->record['post_title']);
     }
 
     private function validateForm(): void

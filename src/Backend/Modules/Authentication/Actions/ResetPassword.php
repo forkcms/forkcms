@@ -119,7 +119,7 @@ class ResetPassword extends BackendBaseActionAdd
                     $this->form->addError(BL::err('PasswordsDontMatch'));
 
                     // show error
-                    $this->tpl->assign('error', BL::err('PasswordsDontMatch'));
+                    $this->template->assign('error', BL::err('PasswordsDontMatch'));
                 }
             }
 

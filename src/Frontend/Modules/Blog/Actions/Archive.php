@@ -182,7 +182,7 @@ class Archive extends FrontendBaseBlock
         }
 
         // assign category
-        $this->tpl->assign(
+        $this->template->assign(
             'archive',
             [
                  'start_date' => $this->startDate,
@@ -193,10 +193,10 @@ class Archive extends FrontendBaseBlock
         );
 
         // assign items
-        $this->tpl->assign('items', $this->items);
+        $this->template->assign('items', $this->items);
 
         // assign allowComments
-        $this->tpl->assign('allowComments', $this->get('fork.settings')->get('Blog', 'allow_comments'));
+        $this->template->assign('allowComments', $this->get('fork.settings')->get('Blog', 'allow_comments'));
 
         // parse the pagination
         $this->parsePagination();

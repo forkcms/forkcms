@@ -41,12 +41,12 @@ class Edit extends BackendBaseActionEdit
             ['id' => $contentBlock->getId()],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
-            $this->tpl->assign('contentBlock', $contentBlock);
-            $this->tpl->assign('revisions', ContentBlockRevisionDataGrid::getHtml($contentBlock, Locale::workingLocale()));
+            $this->template->assign('form', $form->createView());
+            $this->template->assign('contentBlock', $contentBlock);
+            $this->template->assign('revisions', ContentBlockRevisionDataGrid::getHtml($contentBlock, Locale::workingLocale()));
 
             $this->parse();
             $this->display();
@@ -92,7 +92,7 @@ class Edit extends BackendBaseActionEdit
         $revisionId = $this->get('request')->query->getInt('revision');
 
         if ($revisionId !== 0) {
-            $this->tpl->assign('usingRevision', true);
+            $this->template->assign('usingRevision', true);
 
             try {
                 return $contentBlockRepository->findOneByRevisionIdAndLocale($revisionId, Locale::workingLocale());

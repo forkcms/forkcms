@@ -112,10 +112,10 @@ class Themes extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // parse not yet installed themes
-        $this->tpl->assign('installableThemes', $this->installableThemes);
+        $this->template->assign('installableThemes', $this->installableThemes);
     }
 
     private function validateForm(): void
@@ -189,8 +189,8 @@ class Themes extends BackendBaseActionIndex
                 }
 
                 // assign report
-                $this->tpl->assign('report', true);
-                $this->tpl->assign('reportMessage', BL::msg('Saved'));
+                $this->template->assign('report', true);
+                $this->template->assign('reportMessage', BL::msg('Saved'));
             }
         }
     }

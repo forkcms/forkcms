@@ -195,7 +195,7 @@ class Index extends BackendBaseActionIndex
         }
 
         // manually parse fields
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     protected function parse(): void
@@ -203,18 +203,18 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse data grid
-        $this->tpl->assign(
+        $this->template->assign(
             'dgProfiles',
             ($this->dgProfiles->getNumResults() != 0) ? $this->dgProfiles->getContent() : false
         );
 
         // parse paging & sorting
-        $this->tpl->assign('offset', (int) $this->dgProfiles->getOffset());
-        $this->tpl->assign('order', (string) $this->dgProfiles->getOrder());
-        $this->tpl->assign('sort', (string) $this->dgProfiles->getSort());
+        $this->template->assign('offset', (int) $this->dgProfiles->getOffset());
+        $this->template->assign('order', (string) $this->dgProfiles->getOrder());
+        $this->template->assign('sort', (string) $this->dgProfiles->getSort());
 
         // parse filter
-        $this->tpl->assignArray($this->filter);
+        $this->template->assignArray($this->filter);
     }
 
     /**

@@ -98,7 +98,7 @@ class Edit extends BackendBaseActionEdit
             $this->record = (array) BackendBlogModel::getRevision($this->id, $revisionToLoad);
 
             // show warning
-            $this->tpl->assign('usingRevision', true);
+            $this->template->assign('usingRevision', true);
         }
 
         // is there a revision specified?
@@ -110,10 +110,10 @@ class Edit extends BackendBaseActionEdit
             $this->record = (array) BackendBlogModel::getRevision($this->id, $draftToLoad);
 
             // show warning
-            $this->tpl->assign('usingDraft', true);
+            $this->template->assign('usingDraft', true);
 
             // assign draft
-            $this->tpl->assign('draftId', $draftToLoad);
+            $this->template->assign('draftId', $draftToLoad);
         }
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
@@ -284,25 +284,25 @@ class Edit extends BackendBaseActionEdit
 
         // parse additional variables
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
 
         // fetch proper slug
         $this->record['url'] = $this->meta->getUrl();
 
         // assign the active record and additional variables
-        $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('status', BL::lbl(\SpoonFilter::ucfirst($this->record['status'])));
+        $this->template->assign('item', $this->record);
+        $this->template->assign('status', BL::lbl(\SpoonFilter::ucfirst($this->record['status'])));
 
         // assign revisions-datagrid
-        $this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
-        $this->tpl->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
+        $this->template->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
+        $this->template->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 
-        $this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
+        $this->template->assign('imageIsAllowed', $this->imageIsAllowed);
 
         // assign category
         if ($this->categoryId !== null) {
-            $this->tpl->assign('categoryId', $this->categoryId);
+            $this->template->assign('categoryId', $this->categoryId);
         }
     }
 
@@ -463,6 +463,6 @@ class Edit extends BackendBaseActionEdit
             ['id' => $this->record['id'], 'categoryId' => $this->categoryId],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

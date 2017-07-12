@@ -261,17 +261,17 @@ class Index extends BackendBaseActionIndex
 
         // show options
         if ($this->needsAkismet) {
-            $this->tpl->assign('needsAkismet', true);
+            $this->template->assign('needsAkismet', true);
         }
         if ($this->needsGoogleMaps) {
-            $this->tpl->assign('needsGoogleMaps', true);
+            $this->template->assign('needsGoogleMaps', true);
         }
         if ($this->needsGoogleRecaptcha) {
-            $this->tpl->assign('needsGoogleRecaptcha', true);
+            $this->template->assign('needsGoogleRecaptcha', true);
         }
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // parse the warnings
         $this->parseWarnings();
@@ -286,7 +286,7 @@ class Index extends BackendBaseActionIndex
         $warnings = BackendSettingsModel::getWarnings();
 
         // assign warnings
-        $this->tpl->assign('warnings', $warnings);
+        $this->template->assign('warnings', $warnings);
     }
 
     private function validateForm(): void
@@ -527,8 +527,8 @@ class Index extends BackendBaseActionIndex
                 );
 
                 // assign report
-                $this->tpl->assign('report', true);
-                $this->tpl->assign('reportMessage', BL::msg('Saved'));
+                $this->template->assign('report', true);
+                $this->template->assign('reportMessage', BL::msg('Saved'));
             }
         }
     }

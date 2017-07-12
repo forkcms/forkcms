@@ -152,10 +152,10 @@ class Analyse extends BackendBaseActionIndex
         parent::parse();
 
         // parse datagrid
-        $this->tpl->assign('dgBackend', ($this->dgBackend->getNumResults() != 0) ? $this->dgBackend->getContent() : false);
-        $this->tpl->assign('dgFrontend', ($this->dgFrontend->getNumResults() != 0) ? $this->dgFrontend->getContent() : false);
+        $this->template->assign('dgBackend', ($this->dgBackend->getNumResults() != 0) ? $this->dgBackend->getContent() : false);
+        $this->template->assign('dgFrontend', ($this->dgFrontend->getNumResults() != 0) ? $this->dgFrontend->getContent() : false);
 
         // parse filter
-        $this->tpl->assign('language', BL::getWorkingLanguage());
+        $this->template->assign('language', BL::getWorkingLanguage());
     }
 }

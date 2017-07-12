@@ -108,11 +108,11 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // assign id, name
-        $this->tpl->assign('id', $this->id);
-        $this->tpl->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->id);
+        $this->template->assign('name', $this->record['name']);
 
         // assign usage-datagrid
-        $this->tpl->assign('usage', $this->dgUsage->getContent());
+        $this->template->assign('usage', $this->dgUsage->getContent());
     }
 
     private function validateForm(): void

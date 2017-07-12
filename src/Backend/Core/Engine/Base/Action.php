@@ -46,7 +46,7 @@ class Action extends KernelLoader
      *
      * @var TwigTemplate
      */
-    public $tpl;
+    protected $template;
 
     /**
      * A reference to the URL-instance
@@ -73,7 +73,7 @@ class Action extends KernelLoader
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible from the action-object
-        $this->tpl = $this->getContainer()->get('template');
+        $this->template = $this->getContainer()->get('template');
         $this->url = $this->getContainer()->get('url');
         $this->header = $this->getContainer()->get('header');
 
@@ -146,7 +146,7 @@ class Action extends KernelLoader
             $template = '/' . $this->getModule() . '/Layout/Templates/' . $this->url->getAction() . '.html.twig';
         }
 
-        $this->content = $this->tpl->getContent($template);
+        $this->content = $this->template->getContent($template);
     }
 
     public function execute(): void
@@ -176,21 +176,21 @@ class Action extends KernelLoader
         // is there a report to show?
         if ($this->getRequest()->query->get('report', '') !== '') {
             // show the report
-            $this->tpl->assign('report', true);
+            $this->template->assign('report', true);
 
             // camelcase the string
             $messageName = strip_tags(\SpoonFilter::toCamelCase($this->getRequest()->query->get('report'), '-'));
 
             // if we have data to use it will be passed as the var parameter
             if (!empty($var)) {
-                $this->tpl->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
+                $this->template->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
             } else {
-                $this->tpl->assign('reportMessage', BL::msg($messageName));
+                $this->template->assign('reportMessage', BL::msg($messageName));
             }
 
             // highlight an element with the given id if needed
             if ($this->getRequest()->query->get('highlight')) {
-                $this->tpl->assign('highlight', strip_tags($this->getRequest()->query->get('highlight')));
+                $this->template->assign('highlight', strip_tags($this->getRequest()->query->get('highlight')));
             }
         }
 
@@ -201,9 +201,9 @@ class Action extends KernelLoader
 
             // if we have data to use it will be passed as the var parameter
             if (!empty($var)) {
-                $this->tpl->assign('errorMessage', vsprintf(BL::err($errorName), $var));
+                $this->template->assign('errorMessage', vsprintf(BL::err($errorName), $var));
             } else {
-                $this->tpl->assign('errorMessage', BL::err($errorName));
+                $this->template->assign('errorMessage', BL::err($errorName));
             }
         }
     }

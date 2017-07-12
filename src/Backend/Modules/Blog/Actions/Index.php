@@ -304,19 +304,19 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse the datagrid for the drafts
-        $this->tpl->assign('dgDrafts', (string) $this->dgDrafts->getContent());
+        $this->template->assign('dgDrafts', (string) $this->dgDrafts->getContent());
 
         // parse the datagrid for all blogposts
-        $this->tpl->assign('dgPosts', (string) $this->dgPosts->getContent());
+        $this->template->assign('dgPosts', (string) $this->dgPosts->getContent());
 
         // parse the datagrid for the most recent blogposts
-        $this->tpl->assign('dgRecent', (is_object($this->dgRecent)) ? $this->dgRecent->getContent() : false);
+        $this->template->assign('dgRecent', (is_object($this->dgRecent)) ? $this->dgRecent->getContent() : false);
 
         // get categories
         $categories = BackendBlogModel::getCategories(true);
 
         $hasMultipleCategories = (count($categories) > 1);
-        $this->tpl->assign('hasMultipleCategories', $hasMultipleCategories);
+        $this->template->assign('hasMultipleCategories', $hasMultipleCategories);
 
         // multiple categories?
         if ($hasMultipleCategories) {
@@ -328,12 +328,12 @@ class Index extends BackendBaseActionIndex
             $form->getField('category')->setDefaultElement('');
 
             // parse the form
-            $form->parse($this->tpl);
+            $form->parse($this->template);
         }
 
         // parse category
         if (!empty($this->category)) {
-            $this->tpl->assign('filterCategory', $this->category);
+            $this->template->assign('filterCategory', $this->category);
         }
     }
 }

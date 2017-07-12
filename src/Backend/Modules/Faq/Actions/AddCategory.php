@@ -42,7 +42,7 @@ class AddCategory extends BackendBaseActionAdd
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
         $url404 = BackendModel::getUrl(404);
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
     }
 

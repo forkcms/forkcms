@@ -26,6 +26,6 @@ class RecentComments extends FrontendBaseWidget
 
     private function parse(): void
     {
-        $this->tpl->assign('widgetBlogRecentComments', FrontendBlogModel::getRecentComments(5));
+        $this->template->assign('widgetBlogRecentComments', FrontendBlogModel::getRecentComments(5));
     }
 }

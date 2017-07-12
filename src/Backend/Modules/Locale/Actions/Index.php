@@ -258,7 +258,7 @@ class Index extends BackendBaseActionIndex
         $this->form->getField('module')->setDefaultElement('-');
 
         // manually parse fields
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     protected function parse(): void
@@ -266,36 +266,36 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse datagrids
-        $this->tpl->assign(
+        $this->template->assign(
             'dgLabels',
             ($this->dgLabels->getNumResults() != 0) ? $this->dgLabels->getContent() : false
         );
-        $this->tpl->assign(
+        $this->template->assign(
             'dgMessages',
             ($this->dgMessages->getNumResults() != 0) ? $this->dgMessages->getContent() : false
         );
-        $this->tpl->assign(
+        $this->template->assign(
             'dgErrors',
             ($this->dgErrors->getNumResults() != 0) ? $this->dgErrors->getContent() : false
         );
-        $this->tpl->assign(
+        $this->template->assign(
             'dgActions',
             ($this->dgActions->getNumResults() != 0) ? $this->dgActions->getContent() : false
         );
 
         // is filtered?
         if ($this->getRequest()->query->get('form') === 'filter') {
-            $this->tpl->assign('filter', true);
+            $this->template->assign('filter', true);
         }
 
         // parse filter as query
-        $this->tpl->assign('filter', $this->filterQuery);
+        $this->template->assign('filter', $this->filterQuery);
 
         // parse isGod
-        $this->tpl->assign('isGod', $this->isGod);
+        $this->template->assign('isGod', $this->isGod);
 
         // parse noItems, if all the datagrids are empty
-        $this->tpl->assign(
+        $this->template->assign(
             'noItems',
             $this->dgLabels->getNumResults() == 0 &&
             $this->dgMessages->getNumResults() == 0 &&
@@ -303,13 +303,13 @@ class Index extends BackendBaseActionIndex
             $this->dgActions->getNumResults() == 0
         );
 
-        $this->tpl->assign(
+        $this->template->assign(
             'hasSubmissions',
             $this->hasSubmissions
         );
 
         // parse the add URL
-        $this->tpl->assign('addURL', BackendModel::createUrlForAction('Add', null, null, null) . $this->filterQuery);
+        $this->template->assign('addURL', BackendModel::createUrlForAction('Add', null, null, null) . $this->filterQuery);
     }
 
     /**
