@@ -34,9 +34,9 @@ class Settings extends BackendBaseActionEdit
         $this->frm = new BackendForm('settings');
 
         // add map info (widgets)
-        $this->frm->addDropdown('zoom_level_widget', array_combine(array_merge(['auto'], range(3, 18)), array_merge([BL::lbl('Auto', $this->getModule())], range(3, 18))), $this->get('fork.settings')->get($this->URL->getModule(), 'zoom_level_widget', 13));
-        $this->frm->addText('width_widget', $this->get('fork.settings')->get($this->URL->getModule(), 'width_widget'));
-        $this->frm->addText('height_widget', $this->get('fork.settings')->get($this->URL->getModule(), 'height_widget'));
+        $this->frm->addDropdown('zoom_level_widget', array_combine(array_merge(['auto'], range(3, 18)), array_merge([BL::lbl('Auto', $this->getModule())], range(3, 18))), $this->get('fork.settings')->get($this->url->getModule(), 'zoom_level_widget', 13));
+        $this->frm->addText('width_widget', $this->get('fork.settings')->get($this->url->getModule(), 'width_widget'));
+        $this->frm->addText('height_widget', $this->get('fork.settings')->get($this->url->getModule(), 'height_widget'));
         $this->frm->addDropdown(
             'map_type_widget',
             [
@@ -47,7 +47,7 @@ class Settings extends BackendBaseActionEdit
                 'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
             ],
             $this->get('fork.settings')->get(
-                $this->URL->getModule(),
+                $this->url->getModule(),
                 'map_type_widget',
                 'roadmap'
             )
@@ -80,10 +80,10 @@ class Settings extends BackendBaseActionEdit
                 }
 
                 // set our settings (widgets)
-                $this->get('fork.settings')->set($this->URL->getModule(), 'zoom_level_widget', (string) $this->frm->getField('zoom_level_widget')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'width_widget', $width);
-                $this->get('fork.settings')->set($this->URL->getModule(), 'height_widget', $height);
-                $this->get('fork.settings')->set($this->URL->getModule(), 'map_type_widget', (string) $this->frm->getField('map_type_widget')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'zoom_level_widget', (string) $this->frm->getField('zoom_level_widget')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'width_widget', $width);
+                $this->get('fork.settings')->set($this->url->getModule(), 'height_widget', $height);
+                $this->get('fork.settings')->set($this->url->getModule(), 'map_type_widget', (string) $this->frm->getField('map_type_widget')->getValue());
 
                 // redirect to the settings page
                 $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');

@@ -53,7 +53,7 @@ class Action extends KernelLoader
      *
      * @var Url
      */
-    public $URL;
+    protected $url;
 
     /**
      * The actual output
@@ -74,7 +74,7 @@ class Action extends KernelLoader
 
         // get objects from the reference so they are accessible from the action-object
         $this->tpl = $this->getContainer()->get('template');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
         $this->header = $this->getContainer()->get('header');
 
         // populate the parameter array
@@ -83,12 +83,12 @@ class Action extends KernelLoader
 
     public function getModule(): string
     {
-        return $this->URL->getModule();
+        return $this->url->getModule();
     }
 
     public function getAction(): string
     {
-        return $this->URL->getAction();
+        return $this->url->getAction();
     }
 
     /**
@@ -120,11 +120,11 @@ class Action extends KernelLoader
 
     protected function getBackendModulePath(): string
     {
-        if ($this->URL->getModule() === 'Core') {
-            return BACKEND_PATH . '/' . $this->URL->getModule();
+        if ($this->url->getModule() === 'Core') {
+            return BACKEND_PATH . '/' . $this->url->getModule();
         }
 
-        return BACKEND_MODULES_PATH . '/' . $this->URL->getModule();
+        return BACKEND_MODULES_PATH . '/' . $this->url->getModule();
     }
 
     /**
@@ -143,7 +143,7 @@ class Action extends KernelLoader
          * based on the name of the current action
          */
         if ($template === null) {
-            $template = '/' . $this->getModule() . '/Layout/Templates/' . $this->URL->getAction() . '.html.twig';
+            $template = '/' . $this->getModule() . '/Layout/Templates/' . $this->url->getAction() . '.html.twig';
         }
 
         $this->content = $this->tpl->getContent($template);

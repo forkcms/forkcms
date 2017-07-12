@@ -74,7 +74,7 @@ class Widget extends KernelLoader
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     /**
      * @param KernelInterface $kernel
@@ -89,7 +89,7 @@ class Widget extends KernelLoader
         // get objects from the reference so they are accessible
         $this->header = $this->getContainer()->get('header');
         $this->tpl = $this->getContainer()->get('templating');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
 
         // set properties
         $this->setModule($module);

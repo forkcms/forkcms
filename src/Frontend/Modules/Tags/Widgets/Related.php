@@ -141,7 +141,7 @@ class Related extends FrontendBaseWidget
 
             if (is_callable([$class, 'getIdForTags'])) {
                 // get record for module
-                $record = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->URL);
+                $record = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->url);
 
                 // check if record exists
                 if (!$record) {

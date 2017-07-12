@@ -98,7 +98,7 @@ class Unsubscribe extends FrontendBaseBlock
     private function parse(): void
     {
         // form was unsubscribed?
-        if ($this->URL->getParameter('unsubscribed') === 'true') {
+        if ($this->url->getParameter('unsubscribed') === 'true') {
             // show message
             $this->tpl->assign('mailmotorUnsubscribeIsSuccess', true);
 

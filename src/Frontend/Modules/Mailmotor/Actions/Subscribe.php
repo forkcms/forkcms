@@ -102,10 +102,10 @@ class Subscribe extends FrontendBaseBlock
     private function parse(): void
     {
         // form was subscribed?
-        if ($this->URL->getParameter('subscribed') == 'true') {
+        if ($this->url->getParameter('subscribed') == 'true') {
             // show message
             $this->tpl->assign('mailmotorSubscribeIsSuccess', true);
-            $this->tpl->assign('mailmotorSubscribeHasDoubleOptIn', ($this->URL->getParameter('double-opt-in', 'string', 'true') === 'true'));
+            $this->tpl->assign('mailmotorSubscribeHasDoubleOptIn', ($this->url->getParameter('double-opt-in', 'string', 'true') === 'true'));
 
             // hide form
             $this->tpl->assign('mailmotorSubscribeHideForm', true);

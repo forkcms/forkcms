@@ -66,13 +66,13 @@ class Category extends FrontendBaseBlock
 
         // requested category
         $requestedCategory = \SpoonFilter::getValue(
-            $this->URL->getParameter(1, 'string'),
+            $this->url->getParameter(1, 'string'),
             array_keys($possibleCategories),
             'false'
         );
 
         // requested page
-        $requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $requestedPage = $this->url->getParameter('page', 'int', 1);
 
         // validate category
         if ($requestedCategory == 'false') {

@@ -91,7 +91,7 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     public function __construct(KernelInterface $kernel, string $module, string $action = null, $data = null)
     {
@@ -102,7 +102,7 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
         $this->setAction($action);
         $this->setData($data);
         $this->tpl = $this->getContainer()->get('templating');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
 
         // load the config file for the required module
         $this->loadConfig();
@@ -159,7 +159,7 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
         }
 
         // get first parameter
-        $actionParameter = $this->URL->getParameter(0);
+        $actionParameter = $this->url->getParameter(0);
 
         // unknown action and not provided in URL
         if ($actionParameter === null) {

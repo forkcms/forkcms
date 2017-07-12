@@ -76,7 +76,7 @@ class ChangeEmail extends FrontendBaseBlock
     private function parse(): void
     {
         // have the settings been saved?
-        if ($this->URL->getParameter('sent') == 'true') {
+        if ($this->url->getParameter('sent') == 'true') {
             // show success message
             $this->tpl->assign('updateEmailSuccess', true);
         }

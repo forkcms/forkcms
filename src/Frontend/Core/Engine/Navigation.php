@@ -47,14 +47,14 @@ class Navigation extends KernelLoader
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
 
         $this->tpl = $this->getContainer()->get('templating');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
 
         // set selected ids
         $this->setSelectedPageIds();
@@ -627,7 +627,7 @@ class Navigation extends KernelLoader
     public function setSelectedPageIds(): void
     {
         // get pages
-        $pages = (array) $this->URL->getPages();
+        $pages = (array) $this->url->getPages();
 
         // no pages, means we're at the homepage
         if (empty($pages)) {

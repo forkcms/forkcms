@@ -42,7 +42,7 @@ class Register extends FrontendBaseBlock
             $this->buildForm();
             $this->validateForm();
             $this->parse();
-        } elseif ($this->URL->getParameter('sent') == true) {
+        } elseif ($this->url->getParameter('sent') == true) {
             // just registered so show success message
             $this->parse();
         } else {
@@ -70,7 +70,7 @@ class Register extends FrontendBaseBlock
     private function parse(): void
     {
         // e-mail was sent?
-        if ($this->URL->getParameter('sent') == 'true') {
+        if ($this->url->getParameter('sent') == 'true') {
             // show message
             $this->tpl->assign('registerIsSuccess', true);
 
@@ -168,7 +168,7 @@ class Register extends FrontendBaseBlock
                     $this->get('mailer')->send($message);
 
                     // redirect
-                    $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
+                    $this->redirect(SITE_URL . $this->url->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
                     // make sure RedirectExceptions get thrown
                     if ($e instanceof RedirectException) {

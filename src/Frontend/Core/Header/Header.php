@@ -95,7 +95,7 @@ class Header extends KernelLoader
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     public function __construct(KernelInterface $kernel)
     {
@@ -105,7 +105,7 @@ class Header extends KernelLoader
         $container->set('header', $this);
 
         $this->tpl = $container->get('templating');
-        $this->URL = $container->get('url');
+        $this->url = $container->get('url');
 
         $this->cssFiles = new AssetCollection(
             Minifier::css(
@@ -375,7 +375,7 @@ class Header extends KernelLoader
 
     private function getCanonical(): string
     {
-        $queryString = trim($this->URL->getQueryString(), '/');
+        $queryString = trim($this->url->getQueryString(), '/');
         $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString === $language) {
             $this->canonical = rtrim(SITE_URL, '/');
@@ -390,7 +390,7 @@ class Header extends KernelLoader
         }
 
         // get the chunks of the current url
-        $urlChunks = parse_url($this->URL->getQueryString());
+        $urlChunks = parse_url($this->url->getQueryString());
 
         // a canonical url should contain the domain. So make sure you
         // redirect your website to a single url with .htaccess

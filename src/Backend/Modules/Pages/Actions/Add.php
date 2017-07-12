@@ -493,7 +493,7 @@ class Add extends BackendBaseActionAdd
                     BackendTagsModel::saveTags(
                         $page['id'],
                         $this->frm->getField('tags')->getValue(),
-                        $this->URL->getModule()
+                        $this->url->getModule()
                     );
                 }
 

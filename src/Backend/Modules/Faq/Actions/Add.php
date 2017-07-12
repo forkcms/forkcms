@@ -64,7 +64,7 @@ class Add extends BackendBaseActionAdd
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
+        $url = BackendModel::getURLForBlock($this->url->getModule(), 'Detail');
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables
@@ -104,7 +104,7 @@ class Add extends BackendBaseActionAdd
                 BackendTagsModel::saveTags(
                     $item['id'],
                     $this->frm->getField('tags')->getValue(),
-                    $this->URL->getModule()
+                    $this->url->getModule()
                 );
 
                 // add search index

@@ -53,12 +53,12 @@ class Detail extends FrontendBaseBlock
     private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
+        if ($this->url->getParameter(1) === null) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // fetch record
-        $this->record = FrontendTagsModel::get($this->URL->getParameter(1));
+        $this->record = FrontendTagsModel::get($this->url->getParameter(1));
 
         // validate record
         if (empty($this->record)) {

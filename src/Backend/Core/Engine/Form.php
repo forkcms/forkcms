@@ -43,7 +43,7 @@ class Form extends \Common\Core\Form
         $useGlobalError = true
     ) {
         if (BackendModel::getContainer()->has('url')) {
-            $this->URL = BackendModel::getContainer()->get('url');
+            $this->url = BackendModel::getContainer()->get('url');
         }
         if (BackendModel::getContainer()->has('header')) {
             $this->header = BackendModel::getContainer()->get('header');
@@ -52,13 +52,13 @@ class Form extends \Common\Core\Form
 
         // build a name if there wasn't one provided
         $name = ($name === null) ? \SpoonFilter::toCamelCase(
-            $this->URL->getModule() . '_' . $this->URL->getAction(),
+            $this->url->getModule() . '_' . $this->url->getAction(),
             '_',
             true
         ) : (string) $name;
 
         // build the action if it wasn't provided
-        $action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
+        $action = ($action === null) ? '/' . $this->url->getQueryString() : (string) $action;
 
         // call the real form-class
         parent::__construct($name, $action, $method, $useToken);

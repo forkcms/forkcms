@@ -457,7 +457,7 @@ class Edit extends BackendBaseActionEdit
             // tags
             $this->frm->addText(
                 'tags',
-                BackendTagsModel::getTags($this->URL->getModule(), $this->id),
+                BackendTagsModel::getTags($this->url->getModule(), $this->id),
                 null,
                 'form-control js-tags-input',
                 'error js-tags-input'
@@ -759,7 +759,7 @@ class Edit extends BackendBaseActionEdit
                     BackendTagsModel::saveTags(
                         $page['id'],
                         $this->frm->getField('tags')->getValue(),
-                        $this->URL->getModule()
+                        $this->url->getModule()
                     );
                 }
 

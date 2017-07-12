@@ -39,7 +39,7 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addCheckbox(
             'send_new_profile_admin_mail',
             $this->get('fork.settings')->get(
-                $this->URL->getModule(),
+                $this->url->getModule(),
                 'send_new_profile_admin_mail',
                 false
             )
@@ -48,7 +48,7 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addCheckbox(
             'overwrite_profile_notification_email',
             (bool) ($this->get('fork.settings')->get(
-                $this->URL->getModule(),
+                $this->url->getModule(),
                 'profile_notification_email',
                 null
             ) !== null)
@@ -57,7 +57,7 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addText(
             'profile_notification_email',
             $this->get('fork.settings')->get(
-                $this->URL->getModule(),
+                $this->url->getModule(),
                 'profile_notification_email',
                 null
             )
@@ -67,7 +67,7 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addCheckbox(
             'send_new_profile_mail',
             $this->get('fork.settings')->get(
-                $this->URL->getModule(),
+                $this->url->getModule(),
                 'send_new_profile_mail',
                 false
             )
@@ -86,7 +86,7 @@ class Settings extends BackendBaseActionEdit
             if ($this->frm->isCorrect()) {
                 // set our settings
                 $this->get('fork.settings')->set(
-                    $this->URL->getModule(),
+                    $this->url->getModule(),
                     'send_new_profile_admin_mail',
                     (bool) $this->frm->getField('send_new_profile_admin_mail')->getValue()
                 );
@@ -98,12 +98,12 @@ class Settings extends BackendBaseActionEdit
                 }
 
                 $this->get('fork.settings')->set(
-                    $this->URL->getModule(),
+                    $this->url->getModule(),
                     'profile_notification_email',
                     $profileNotificationEmail
                 );
                 $this->get('fork.settings')->set(
-                    $this->URL->getModule(),
+                    $this->url->getModule(),
                     'send_new_profile_mail',
                     (bool) $this->frm->getField('send_new_profile_mail')->getValue()
                 );

@@ -69,12 +69,12 @@ class Detail extends FrontendBaseBlock
     private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
+        if ($this->url->getParameter(1) === null) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // get by URL
-        $this->record = FrontendFaqModel::get($this->URL->getParameter(1));
+        $this->record = FrontendFaqModel::get($this->url->getParameter(1));
 
         // anything found?
         if (empty($this->record)) {
@@ -98,7 +98,7 @@ class Detail extends FrontendBaseBlock
         }
 
         // ge status
-        $this->status = $this->URL->getParameter(2);
+        $this->status = $this->url->getParameter(2);
         if ($this->status == FL::getAction('Success')) {
             $this->status = 'success';
         }

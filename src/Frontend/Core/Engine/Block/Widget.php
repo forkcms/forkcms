@@ -76,7 +76,7 @@ class Widget extends KernelLoader implements ModuleExtraInterface
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     public function __construct(KernelInterface $kernel, string $module, string $action = null, $data = null)
     {
@@ -87,7 +87,7 @@ class Widget extends KernelLoader implements ModuleExtraInterface
         $this->setAction($action);
         $this->setData($data);
         $this->tpl = $this->getContainer()->get('templating');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
 
         // load the config file for the required module
         $this->loadConfig();

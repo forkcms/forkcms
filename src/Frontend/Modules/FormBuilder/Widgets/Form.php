@@ -65,10 +65,10 @@ class Form extends FrontendBaseWidget
     private function createAction(): string
     {
         // pages
-        $action = implode('/', $this->URL->getPages());
+        $action = implode('/', $this->url->getPages());
 
         // init parameters
-        $parameters = $this->URL->getParameters();
+        $parameters = $this->url->getParameters();
         $moduleParameters = [];
         $getParameters = [];
 
@@ -119,8 +119,8 @@ class Form extends FrontendBaseWidget
         $this->loadData();
 
         // success message
-        if ($this->URL->hasParameter('identifier')
-            && $this->URL->getParameter('identifier') === $this->item['identifier']
+        if ($this->url->hasParameter('identifier')
+            && $this->url->getParameter('identifier') === $this->item['identifier']
         ) {
             $this->parseSuccessMessage();
         } else {
@@ -544,7 +544,7 @@ class Form extends FrontendBaseWidget
                 \SpoonSession::set('formbuilder_' . $this->item['id'], time());
 
                 // redirect
-                $redirect = SITE_URL . $this->URL->getQueryString();
+                $redirect = SITE_URL . $this->url->getQueryString();
                 $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
                 $redirect .= 'identifier=' . $this->item['identifier'];
                 $redirect .= '#' . $this->formName;

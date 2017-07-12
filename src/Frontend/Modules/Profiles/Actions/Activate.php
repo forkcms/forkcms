@@ -22,7 +22,7 @@ class Activate extends FrontendBaseBlock
     public function execute(): void
     {
         // get activation key
-        $key = $this->URL->getParameter(0);
+        $key = $this->url->getParameter(0);
 
         // load template
         $this->loadTemplate();

@@ -87,7 +87,7 @@ class Edit extends BackendBaseActionEdit
     private function getData(): void
     {
         $this->record = (array) BackendBlogModel::get($this->id);
-        $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
+        $this->imageIsAllowed = $this->get('fork.settings')->get($this->url->getModule(), 'show_image_form', true);
 
         // is there a revision specified?
         $revisionToLoad = $this->getRequest()->query->getInt('revision');
@@ -183,7 +183,7 @@ class Edit extends BackendBaseActionEdit
 
         // set hidden values
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'],
+            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => 'Y'],
             ['label' => BL::lbl('Published'), 'value' => 'N'],
         ];
 
@@ -204,7 +204,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
         $this->frm->addText(
             'tags',
-            BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']),
+            BackendTagsModel::getTags($this->url->getModule(), $this->record['id']),
             null,
             'form-control js-tags-input',
             'form-control danger js-tags-input'
@@ -279,7 +279,7 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+        $url = BackendModel::getURLForBlock($this->url->getModule(), 'detail');
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables
@@ -421,7 +421,7 @@ class Edit extends BackendBaseActionEdit
                 BackendTagsModel::saveTags(
                     $item['id'],
                     $this->frm->getField('tags')->getValue(),
-                    $this->URL->getModule()
+                    $this->url->getModule()
                 );
 
                 // active

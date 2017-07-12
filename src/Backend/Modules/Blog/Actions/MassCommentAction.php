@@ -47,7 +47,7 @@ class MassCommentAction extends BackendBaseAction
             BackendBlogModel::deleteComments($ids);
         } elseif ($action == 'spam') {
             // is the spamfilter active?
-            if ($this->get('fork.settings')->get($this->URL->getModule(), 'spamfilter', false)) {
+            if ($this->get('fork.settings')->get($this->url->getModule(), 'spamfilter', false)) {
                 // get data
                 $comments = BackendBlogModel::getComments($ids);
 
@@ -85,7 +85,7 @@ class MassCommentAction extends BackendBaseAction
             // published?
             if ($action == 'published') {
                 // is the spamfilter active?
-                if ($this->get('fork.settings')->get($this->URL->getModule(), 'spamfilter', false)) {
+                if ($this->get('fork.settings')->get($this->url->getModule(), 'spamfilter', false)) {
                     // get data
                     $comments = BackendBlogModel::getComments($ids);
 

@@ -30,14 +30,14 @@ class Footer extends KernelLoader
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
 
         $this->tpl = $this->getContainer()->get('templating');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
 
         $this->getContainer()->set('footer', $this);
     }

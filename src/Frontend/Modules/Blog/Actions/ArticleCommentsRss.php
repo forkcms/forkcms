@@ -45,12 +45,12 @@ class ArticleCommentsRss extends FrontendBaseBlock
     private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
+        if ($this->url->getParameter(1) === null) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // get record
-        $this->record = FrontendBlogModel::get($this->URL->getParameter(1));
+        $this->record = FrontendBlogModel::get($this->url->getParameter(1));
 
         // anything found?
         if (empty($this->record)) {

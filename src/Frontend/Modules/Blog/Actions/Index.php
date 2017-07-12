@@ -50,7 +50,7 @@ class Index extends FrontendBaseBlock
     private function getData(): void
     {
         // requested page
-        $requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $requestedPage = $this->url->getParameter('page', 'int', 1);
 
         // set URL and limit
         $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog');

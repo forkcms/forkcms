@@ -71,7 +71,7 @@ class EditCategory extends BackendBaseActionEdit
             )
         );
 
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Category');
+        $url = BackendModel::getURLForBlock($this->url->getModule(), 'Category');
         $url404 = BackendModel::getURL(404);
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);

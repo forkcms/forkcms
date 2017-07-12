@@ -96,7 +96,7 @@ class Page extends KernelLoader
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     public function __construct(KernelInterface $kernel)
     {
@@ -104,7 +104,7 @@ class Page extends KernelLoader
 
         $this->getContainer()->set('page', $this);
         $this->tpl = $this->getContainer()->get('templating');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
     }
 
     /**
@@ -119,7 +119,7 @@ class Page extends KernelLoader
         $this->header = new Header($this->getKernel());
 
         // get page content from pageId of the requested URL
-        $this->record = $this->getPageContent(Navigation::getPageId(implode('/', $this->URL->getPages())));
+        $this->record = $this->getPageContent(Navigation::getPageId(implode('/', $this->url->getPages())));
 
         if (empty($this->record)) {
             $this->record = Model::getPage(Response::HTTP_NOT_FOUND);
@@ -159,7 +159,7 @@ class Page extends KernelLoader
 
         if (!FrontendAuthenticationModel::isLoggedIn()) {
             $this->redirect(
-                Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $this->URL->getQueryString()
+                Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $this->url->getQueryString()
             );
         }
 
@@ -223,14 +223,14 @@ class Page extends KernelLoader
 
     private function getPageRecord(int $pageId): array
     {
-        if ($this->URL->getParameter('page_revision', 'int') === null) {
+        if ($this->url->getParameter('page_revision', 'int') === null) {
             return Model::getPage($pageId);
         }
 
         // add no-index to meta-custom, so the draft won't get accidentally indexed
         $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
 
-        return Model::getPageRevision($this->URL->getParameter('page_revision', 'int'));
+        return Model::getPageRevision($this->url->getParameter('page_revision', 'int'));
     }
 
     protected function getPageContent(int $pageId): array

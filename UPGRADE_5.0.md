@@ -344,4 +344,4 @@ We did add helper getters so you can keep doing `$this->getAction()` and `$this-
 
 | Old parameter                 | New parameter                                   |
 |-------------------------------|-------------------------------------------------|
-| `Object::getContent`          | `\Backend\Core\Engine\Base\Action::getContent`  |
+| `$this->URL`                  | `$this->url`                                    |

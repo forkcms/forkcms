@@ -53,7 +53,7 @@ class ForgotPassword extends FrontendBaseBlock
     private function parse(): void
     {
         // e-mail was sent?
-        if ($this->URL->getParameter('sent') == 'true') {
+        if ($this->url->getParameter('sent') == 'true') {
             // show message
             $this->tpl->assign('forgotPasswordSuccess', true);
 
@@ -120,7 +120,7 @@ class ForgotPassword extends FrontendBaseBlock
                 $this->get('mailer')->send($message);
 
                 // redirect
-                $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
+                $this->redirect(SITE_URL . $this->url->getQueryString() . '?sent=true');
             } else {
                 $this->tpl->assign('forgotPasswordHasError', true);
             }

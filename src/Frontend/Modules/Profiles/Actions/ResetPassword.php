@@ -31,7 +31,7 @@ class ResetPassword extends FrontendBaseBlock
     public function execute(): void
     {
         // get reset key
-        $key = $this->URL->getParameter(0);
+        $key = $this->url->getParameter(0);
 
         // do we have an reset key?
         if (isset($key)) {
@@ -51,7 +51,7 @@ class ResetPassword extends FrontendBaseBlock
 
                 // validate
                 $this->validateForm();
-            } elseif ($this->URL->getParameter('sent') != 'true') {
+            } elseif ($this->url->getParameter('sent') != 'true') {
                 $this->redirect(FrontendNavigation::getURL(404));
             }
 
@@ -82,7 +82,7 @@ class ResetPassword extends FrontendBaseBlock
     private function parse(): void
     {
         // has the password been saved?
-        if ($this->URL->getParameter('sent') == 'true') {
+        if ($this->url->getParameter('sent') == 'true') {
             // show message
             $this->tpl->assign('resetPasswordSuccess', true);
 
@@ -106,7 +106,7 @@ class ResetPassword extends FrontendBaseBlock
             // valid
             if ($this->frm->isCorrect()) {
                 // get profile id
-                $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $this->URL->getParameter(0));
+                $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $this->url->getParameter(0));
 
                 // remove key (we can only update the password once with this key)
                 FrontendProfilesModel::deleteSetting($profileId, 'forgot_password_key');
@@ -121,7 +121,7 @@ class ResetPassword extends FrontendBaseBlock
 
                 // redirect
                 $this->redirect(
-                    FrontendNavigation::getURLForBlock('Profiles', 'ResetPassword') . '/' . $this->URL->getParameter(
+                    FrontendNavigation::getURLForBlock('Profiles', 'ResetPassword') . '/' . $this->url->getParameter(
                         0
                     ) . '?sent=true'
                 );

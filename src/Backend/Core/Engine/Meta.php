@@ -68,7 +68,7 @@ class Meta
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     /**
      * @param Form $form An instance of Form, the elements will be parsed in here.
@@ -90,7 +90,7 @@ class Meta
         }
 
         // get BackendURL instance
-        $this->URL = BackendModel::getContainer()->get('url');
+        $this->url = BackendModel::getContainer()->get('url');
 
         $this->custom = $showCustomMeta;
         $this->form = $form;
@@ -103,7 +103,7 @@ class Meta
 
         // set default callback
         $this->setURLCallback(
-            'Backend\\Modules\\' . $this->URL->getModule() . '\\Engine\\Model',
+            'Backend\\Modules\\' . $this->url->getModule() . '\\Engine\\Model',
             'getURL'
         );
 

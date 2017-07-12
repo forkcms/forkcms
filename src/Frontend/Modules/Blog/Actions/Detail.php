@@ -64,23 +64,23 @@ class Detail extends FrontendBaseBlock
     private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
+        if ($this->url->getParameter(1) === null) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // load revision
-        if ($this->URL->getParameter('revision', 'int') != 0) {
+        if ($this->url->getParameter('revision', 'int') != 0) {
             // get data
             $this->record = FrontendBlogModel::getRevision(
-                $this->URL->getParameter(1),
-                $this->URL->getParameter('revision', 'int')
+                $this->url->getParameter(1),
+                $this->url->getParameter('revision', 'int')
             );
 
             // add no-index, so the draft won't get accidentally indexed
             $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
         } else {
             // get by URL
-            $this->record = FrontendBlogModel::get($this->URL->getParameter(1));
+            $this->record = FrontendBlogModel::get($this->url->getParameter(1));
         }
 
         // anything found?
@@ -231,16 +231,16 @@ class Detail extends FrontendBaseBlock
         $this->frm->parse($this->tpl);
 
         // some options
-        if ($this->URL->getParameter('comment', 'string') == 'moderation') {
+        if ($this->url->getParameter('comment', 'string') == 'moderation') {
             $this->tpl->assign(
                 'commentIsInModeration',
                 true
             );
         }
-        if ($this->URL->getParameter('comment', 'string') == 'spam') {
+        if ($this->url->getParameter('comment', 'string') == 'spam') {
             $this->tpl->assign('commentIsSpam', true);
         }
-        if ($this->URL->getParameter('comment', 'string') == 'true') {
+        if ($this->url->getParameter('comment', 'string') == 'true') {
             $this->tpl->assign('commentIsAdded', true);
         }
 

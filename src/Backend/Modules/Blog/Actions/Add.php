@@ -44,13 +44,13 @@ class Add extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
+        $this->imageIsAllowed = $this->get('fork.settings')->get($this->url->getModule(), 'show_image_form', true);
 
         $this->frm = new BackendForm('add');
 
         // set hidden values
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y'],
+            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => 'Y'],
             ['label' => BL::lbl('Published'), 'value' => 'N'],
         ];
 
@@ -86,7 +86,7 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+        $url = BackendModel::getURLForBlock($this->url->getModule(), 'detail');
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables
@@ -175,7 +175,7 @@ class Add extends BackendBaseActionAdd
                 }
 
                 // save the tags
-                BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+                BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->url->getModule());
 
                 // active
                 if ($item['status'] == 'active') {

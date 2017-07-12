@@ -41,12 +41,12 @@ class Category extends FrontendBaseBlock
     private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
+        if ($this->url->getParameter(1) === null) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // get by URL
-        $this->record = FrontendFaqModel::getCategory($this->URL->getParameter(1));
+        $this->record = FrontendFaqModel::getCategory($this->url->getParameter(1));
 
         // anything found?
         if (empty($this->record)) {

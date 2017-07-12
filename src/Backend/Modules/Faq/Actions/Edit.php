@@ -73,7 +73,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
         $this->frm->addText(
             'tags',
-            BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']),
+            BackendTagsModel::getTags($this->url->getModule(), $this->record['id']),
             null,
             'form-control js-tags-input',
             'form-control danger js-tags-input'
@@ -87,7 +87,7 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
+        $url = BackendModel::getURLForBlock($this->url->getModule(), 'Detail');
         $url404 = BackendModel::getURL(404);
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);
@@ -127,7 +127,7 @@ class Edit extends BackendBaseActionEdit
                 BackendTagsModel::saveTags(
                     $item['id'],
                     $this->frm->getField('tags')->getValue(),
-                    $this->URL->getModule()
+                    $this->url->getModule()
                 );
 
                 // edit search index

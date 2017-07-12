@@ -80,8 +80,8 @@ class Archive extends FrontendBaseBlock
     private function getData(): void
     {
         // get parameters
-        $this->year = $this->URL->getParameter(1);
-        $this->month = $this->URL->getParameter(2);
+        $this->year = $this->url->getParameter(1);
+        $this->month = $this->url->getParameter(2);
 
         // redirect /2010/6 to /2010/06 to avoid duplicate content
         if ($this->month !== null && mb_strlen($this->month) != 2) {
@@ -112,7 +112,7 @@ class Archive extends FrontendBaseBlock
         }
 
         // requested page
-        $requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $requestedPage = $this->url->getParameter('page', 'int', 1);
 
         // rebuild url
         $url = $this->year;

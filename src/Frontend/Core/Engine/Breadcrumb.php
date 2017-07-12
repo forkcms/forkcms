@@ -36,14 +36,14 @@ class Breadcrumb extends KernelLoader
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
 
         $this->tpl = $this->getContainer()->get('templating');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
 
         // store in reference
         $this->getContainer()->set('breadcrumb', $this);
@@ -54,7 +54,7 @@ class Breadcrumb extends KernelLoader
         // add homepage as first item (with correct element)
         $this->addElement($homeInfo['navigation_title'], Navigation::getURL(1));
 
-        $this->addBreadcrumbsForPages($this->URL->getPages());
+        $this->addBreadcrumbsForPages($this->url->getPages());
     }
 
     private function addBreadcrumbsForPages(array $pages): void
