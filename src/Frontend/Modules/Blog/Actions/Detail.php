@@ -35,7 +35,7 @@ class Detail extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * The blogpost
@@ -113,8 +113,8 @@ class Detail extends FrontendBaseBlock
     private function buildForm(): void
     {
         // create form
-        $this->frm = new FrontendForm('commentsForm');
-        $this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
+        $this->form = new FrontendForm('commentsForm');
+        $this->form->setAction($this->form->getAction() . '#' . FL::act('Comment'));
 
         // init vars
         $author = (CommonCookie::exists('comment_author')) ? CommonCookie::get('comment_author') : null;
@@ -122,10 +122,10 @@ class Detail extends FrontendBaseBlock
         $website = (CommonCookie::exists('comment_website') && \SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
 
         // create elements
-        $this->frm->addText('author', $author)->setAttributes(['required' => null]);
-        $this->frm->addText('email', $email)->setAttributes(['required' => null, 'type' => 'email']);
-        $this->frm->addText('website', $website, null);
-        $this->frm->addTextarea('message')->setAttributes(['required' => null]);
+        $this->form->addText('author', $author)->setAttributes(['required' => null]);
+        $this->form->addText('email', $email)->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addText('website', $website, null);
+        $this->form->addTextarea('message')->setAttributes(['required' => null]);
     }
 
     private function parse(): void
@@ -228,7 +228,7 @@ class Detail extends FrontendBaseBlock
         }
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
 
         // some options
         if ($this->url->getParameter('comment', 'string') == 'moderation') {
@@ -282,9 +282,9 @@ class Detail extends FrontendBaseBlock
         }
 
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // does the key exists?
             if (\SpoonSession::exists('blog_comment_' . $this->record['id'])) {
@@ -293,35 +293,35 @@ class Detail extends FrontendBaseBlock
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
                 if ($diff < 10 && $diff != 0) {
-                    $this->frm->getField('message')->addError(FL::err('CommentTimeout'));
+                    $this->form->getField('message')->addError(FL::err('CommentTimeout'));
                 }
             }
 
             // validate required fields
-            $this->frm->getField('author')->isFilled(FL::err('AuthorIsRequired'));
-            $this->frm->getField('email')->isEmail(FL::err('EmailIsRequired'));
-            $this->frm->getField('message')->isFilled(FL::err('MessageIsRequired'));
+            $this->form->getField('author')->isFilled(FL::err('AuthorIsRequired'));
+            $this->form->getField('email')->isEmail(FL::err('EmailIsRequired'));
+            $this->form->getField('message')->isFilled(FL::err('MessageIsRequired'));
 
             // validate optional fields
-            if ($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://'
+            if ($this->form->getField('website')->isFilled() && $this->form->getField('website')->getValue() != 'http://'
             ) {
-                $this->frm->getField('website')->isURL(FL::err('InvalidURL'));
+                $this->form->getField('website')->isURL(FL::err('InvalidURL'));
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // get module setting
                 $spamFilterEnabled = (isset($this->settings['spamfilter']) && $this->settings['spamfilter']);
                 $moderationEnabled = (isset($this->settings['moderation']) && $this->settings['moderation']);
 
                 // reformat data
-                $author = $this->frm->getField('author')->getValue();
-                $email = $this->frm->getField('email')->getValue();
-                $website = $this->frm->getField('website')->getValue();
+                $author = $this->form->getField('author')->getValue();
+                $email = $this->form->getField('email')->getValue();
+                $website = $this->form->getField('website')->getValue();
                 if (trim($website) == '' || $website == 'http://') {
                     $website = null;
                 }
-                $text = $this->frm->getField('message')->getValue();
+                $text = $this->form->getField('message')->getValue();
 
                 // build array
                 $comment = [];

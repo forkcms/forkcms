@@ -48,27 +48,27 @@ class AddCategory extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('addCategory');
-        $this->frm->addText('title');
+        $this->form = new BackendForm('addCategory');
+        $this->form->addText('title');
 
-        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+        $this->meta = new BackendMeta($this->form, null, 'title', true);
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getUrlForCategory');
 
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
-                $item['title'] = $this->frm->getField('title')->getValue();
+                $item['title'] = $this->form->getField('title')->getValue();
                 $item['language'] = BL::getWorkingLanguage();
                 $item['meta_id'] = $this->meta->save();
                 $item['sequence'] = BackendFaqModel::getMaximumCategorySequence() + 1;

@@ -27,7 +27,7 @@ class ForgotPassword extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
@@ -46,8 +46,8 @@ class ForgotPassword extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->frm = new FrontendForm('forgotPassword', null, null, 'forgotPasswordForm');
-        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form = new FrontendForm('forgotPassword', null, null, 'forgotPasswordForm');
+        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
     }
 
     private function parse(): void
@@ -62,15 +62,15 @@ class ForgotPassword extends FrontendBaseBlock
         }
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
     }
 
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get field
-            $txtEmail = $this->frm->getField('email');
+            $txtEmail = $this->form->getField('email');
 
             // field is filled in?
             if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
@@ -84,7 +84,7 @@ class ForgotPassword extends FrontendBaseBlock
             }
 
             // valid login
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // get profile id
                 $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
 

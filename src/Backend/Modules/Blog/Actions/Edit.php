@@ -179,7 +179,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('edit');
+        $this->form = new BackendForm('edit');
 
         // set hidden values
         $rbtHiddenValues = [
@@ -192,32 +192,32 @@ class Edit extends BackendBaseActionEdit
         $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
-        $this->frm->addEditor('text', $this->record['text']);
-        $this->frm->addEditor('introduction', $this->record['introduction']);
-        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
-        $this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
-        $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
+        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
+        $this->form->addEditor('text', $this->record['text']);
+        $this->form->addEditor('introduction', $this->record['introduction']);
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
+        $this->form->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
+        $this->form->addDropdown('category_id', $categories, $this->record['category_id']);
         if (count($categories) != 2) {
-            $this->frm->getField('category_id')->setDefaultElement('');
+            $this->form->getField('category_id')->setDefaultElement('');
         }
-        $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
-        $this->frm->addText(
+        $this->form->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
+        $this->form->addText(
             'tags',
             BackendTagsModel::getTags($this->url->getModule(), $this->record['id']),
             null,
             'form-control js-tags-input',
             'form-control danger js-tags-input'
         );
-        $this->frm->addDate('publish_on_date', $this->record['publish_on']);
-        $this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
+        $this->form->addDate('publish_on_date', $this->record['publish_on']);
+        $this->form->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
         if ($this->imageIsAllowed) {
-            $this->frm->addImage('image');
-            $this->frm->addCheckbox('delete_image');
+            $this->form->addImage('image');
+            $this->form->addCheckbox('delete_image');
         }
 
         // meta object
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
         $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getUrl', [$this->record['id']]);
@@ -309,7 +309,7 @@ class Edit extends BackendBaseActionEdit
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get the status
             $status = $this->getRequest()->request->get('status');
             if (!in_array($status, ['active', 'draft'])) {
@@ -317,41 +317,41 @@ class Edit extends BackendBaseActionEdit
             }
 
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
-            $this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
-            $this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('text')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
+            $this->form->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
+            $this->form->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
 
             // validate meta
             $this->meta->validate();
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [
                     'id' => $this->id,
                     'meta_id' => $this->meta->save(),
                     'revision_id' => $this->record['revision_id'],
-                    'category_id' => (int) $this->frm->getField('category_id')->getValue(),
-                    'user_id' => $this->frm->getField('user_id')->getValue(),
+                    'category_id' => (int) $this->form->getField('category_id')->getValue(),
+                    'user_id' => $this->form->getField('user_id')->getValue(),
                     'language' => BL::getWorkingLanguage(),
-                    'title' => $this->frm->getField('title')->getValue(),
-                    'introduction' => $this->frm->getField('introduction')->getValue(),
-                    'text' => $this->frm->getField('text')->getValue(),
+                    'title' => $this->form->getField('title')->getValue(),
+                    'introduction' => $this->form->getField('introduction')->getValue(),
+                    'text' => $this->form->getField('text')->getValue(),
                     'publish_on' => BackendModel::getUTCDate(
                         null,
                         BackendModel::getUTCTimestamp(
-                            $this->frm->getField('publish_on_date'),
-                            $this->frm->getField('publish_on_time')
+                            $this->form->getField('publish_on_date'),
+                            $this->form->getField('publish_on_time')
                         )
                     ),
                     'edited_on' => BackendModel::getUTCDate(),
-                    'hidden' => $this->frm->getField('hidden')->getValue(),
-                    'allow_comments' => $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N',
+                    'hidden' => $this->form->getField('hidden')->getValue(),
+                    'allow_comments' => $this->form->getField('allow_comments')->getChecked() ? 'Y' : 'N',
                     'status' => $status,
                 ];
                 if ($this->imageIsAllowed) {
@@ -366,13 +366,13 @@ class Edit extends BackendBaseActionEdit
 
                     // If the image should be deleted, only the database entry is refreshed.
                     // The revision should keep its file.
-                    if ($this->frm->getField('delete_image')->isChecked()) {
+                    if ($this->form->getField('delete_image')->isChecked()) {
                         // reset the name
                         $item['image'] = null;
                     }
 
                     // new image given?
-                    if ($this->frm->getField('image')->isFilled()) {
+                    if ($this->form->getField('image')->isFilled()) {
                         // build the image name
                         // we use the previous revision-id in the filename to make the filename unique between
                         // the different revisions, to prevent that a new file would
@@ -380,10 +380,10 @@ class Edit extends BackendBaseActionEdit
                         $item['image'] = $this->meta->getUrl() .
                                          '-' . BL::getWorkingLanguage() .
                                             '-' . $item['revision_id'] .
-                                            '.' . $this->frm->getField('image')->getExtension();
+                                            '.' . $this->form->getField('image')->getExtension();
 
                         // upload the image & generate thumbnails
-                        $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
+                        $this->form->getField('image')->generateThumbnails($imagePath, $item['image']);
                     } elseif ($item['image'] != null) {
                         // generate the new filename
                         $image = new File($imagePath . '/source/' . $item['image']);
@@ -420,7 +420,7 @@ class Edit extends BackendBaseActionEdit
                 // save the tags
                 BackendTagsModel::saveTags(
                     $item['id'],
-                    $this->frm->getField('tags')->getValue(),
+                    $this->form->getField('tags')->getValue(),
                     $this->url->getModule()
                 );
 

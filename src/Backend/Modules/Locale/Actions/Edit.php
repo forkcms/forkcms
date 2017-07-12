@@ -61,13 +61,13 @@ class Edit extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('edit', BackendModel::createUrlForAction(null, null, null, ['id' => $this->id]) . $this->filterQuery);
-        $this->frm->addDropdown('application', ['Backend' => 'Backend', 'Frontend' => 'Frontend'], $this->record['application']);
-        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
-        $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
-        $this->frm->addText('name', $this->record['name']);
-        $this->frm->addTextarea('value', $this->record['value'], null, null, true);
-        $this->frm->addDropdown('language', BL::getWorkingLanguages(), $this->record['language']);
+        $this->form = new BackendForm('edit', BackendModel::createUrlForAction(null, null, null, ['id' => $this->id]) . $this->filterQuery);
+        $this->form->addDropdown('application', ['Backend' => 'Backend', 'Frontend' => 'Frontend'], $this->record['application']);
+        $this->form->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
+        $this->form->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
+        $this->form->addText('name', $this->record['name']);
+        $this->form->addTextarea('value', $this->record['value'], null, null, true);
+        $this->form->addDropdown('language', BL::getWorkingLanguages(), $this->record['language']);
     }
 
     protected function parse(): void
@@ -110,12 +110,12 @@ class Edit extends BackendBaseActionEdit
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if ($this->form->isSubmitted()) {
+            $this->form->cleanupFields();
 
             // redefine fields
-            $txtName = $this->frm->getField('name');
-            $txtValue = $this->frm->getField('value');
+            $txtName = $this->form->getField('name');
+            $txtValue = $this->form->getField('value');
 
             // name checks
             if ($txtName->isFilled(BL::err('FieldIsRequired'))) {
@@ -126,7 +126,7 @@ class Edit extends BackendBaseActionEdit
                         $txtName->setError(BL::err('InvalidName'));
                     } else {
                         // check if exists
-                        if (BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue(), $this->id)) {
+                        if (BackendLocaleModel::existsByName($txtName->getValue(), $this->form->getField('type')->getValue(), $this->form->getField('module')->getValue(), $this->form->getField('language')->getValue(), $this->form->getField('application')->getValue(), $this->id)) {
                             $txtName->setError(BL::err('AlreadyExists'));
                         }
                     }
@@ -136,7 +136,7 @@ class Edit extends BackendBaseActionEdit
             // value checks
             if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
-                if ($this->frm->getField('type')->getValue() == 'act') {
+                if ($this->form->getField('type')->getValue() == 'act') {
                     if (rawurlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
                         $txtValue->addError(BL::err('InvalidValue'));
                     }
@@ -144,21 +144,21 @@ class Edit extends BackendBaseActionEdit
             }
 
             // module should be 'Core' for any other application than backend
-            if ($this->frm->getField('application')->getValue() != 'Backend' && $this->frm->getField('module')->getValue() != 'Core') {
-                $this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore', $this->getModule()));
+            if ($this->form->getField('application')->getValue() != 'Backend' && $this->form->getField('module')->getValue() != 'Core') {
+                $this->form->getField('module')->setError(BL::err('ModuleHasToBeCore', $this->getModule()));
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
                 $item['id'] = $this->id;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['language'] = $this->frm->getField('language')->getValue();
-                $item['application'] = $this->frm->getField('application')->getValue();
-                $item['module'] = $this->frm->getField('module')->getValue();
-                $item['type'] = $this->frm->getField('type')->getValue();
-                $item['name'] = $this->frm->getField('name')->getValue();
-                $item['value'] = $this->frm->getField('value')->getValue();
+                $item['language'] = $this->form->getField('language')->getValue();
+                $item['application'] = $this->form->getField('application')->getValue();
+                $item['module'] = $this->form->getField('module')->getValue();
+                $item['type'] = $this->form->getField('type')->getValue();
+                $item['name'] = $this->form->getField('name')->getValue();
+                $item['value'] = $this->form->getField('value')->getValue();
                 $item['edited_on'] = BackendModel::getUTCDate();
 
                 // update item

@@ -28,7 +28,7 @@ class Detail extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * The faq
@@ -109,14 +109,14 @@ class Detail extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->frm = new FrontendForm('feedback');
-        $this->frm->addHidden('question_id', $this->record['id']);
-        $this->frm->addTextarea('message')->setAttributes(
+        $this->form = new FrontendForm('feedback');
+        $this->form->addHidden('question_id', $this->record['id']);
+        $this->form->addTextarea('message')->setAttributes(
             [
                 'data-role' => 'fork-feedback-improve-message',
             ]
         );
-        $this->frm->addRadiobutton(
+        $this->form->addRadiobutton(
             'useful',
             [
                  [
@@ -178,7 +178,7 @@ class Detail extends FrontendBaseBlock
 
         // parse the form
         if (empty($this->status)) {
-            $this->frm->parse($this->tpl);
+            $this->form->parse($this->tpl);
         }
 
         // parse the form status
@@ -211,24 +211,24 @@ class Detail extends FrontendBaseBlock
             return;
         }
 
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // reformat data
-            $useful = ($this->frm->getField('useful')->getValue() == 'Y');
+            $useful = ($this->form->getField('useful')->getValue() == 'Y');
 
             // the form has been sent
             $this->tpl->assign('hideFeedbackNoInfo', $useful);
 
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate required fields
             if (!$useful) {
-                $this->frm->getField('message')->isFilled(FL::err('FeedbackIsRequired'));
+                $this->form->getField('message')->isFilled(FL::err('FeedbackIsRequired'));
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // reformat data
-                $text = $this->frm->getField('message')->getValue();
+                $text = $this->form->getField('message')->getValue();
 
                 // get feedback in session
                 $previousFeedback = (\SpoonSession::exists('faq_feedback_' . $this->record['id']) ? \SpoonSession::get(

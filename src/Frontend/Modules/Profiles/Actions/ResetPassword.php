@@ -26,7 +26,7 @@ class ResetPassword extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
@@ -65,16 +65,16 @@ class ResetPassword extends FrontendBaseBlock
     private function buildForm(): void
     {
         // create the form
-        $this->frm = new FrontendForm('resetPassword', null, null, 'resetPasswordForm');
+        $this->form = new FrontendForm('resetPassword', null, null, 'resetPasswordForm');
 
         // create & add elements
-        $this->frm->addPassword('password')->setAttributes(
+        $this->form->addPassword('password')->setAttributes(
             [
                 'required' => null,
                 'data-role' => 'fork-new-password',
             ]
         );
-        $this->frm->addCheckbox('show_password')->setAttributes(
+        $this->form->addCheckbox('show_password')->setAttributes(
             ['data-role' => 'fork-toggle-visible-password']
         );
     }
@@ -89,22 +89,22 @@ class ResetPassword extends FrontendBaseBlock
             // hide form
             $this->tpl->assign('resetPasswordHideForm', true);
         } else {
-            $this->frm->parse($this->tpl);
+            $this->form->parse($this->tpl);
         }
     }
 
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get fields
-            $txtPassword = $this->frm->getField('password');
+            $txtPassword = $this->form->getField('password');
 
             // field is filled in?
             $txtPassword->isFilled(FL::getError('PasswordIsRequired'));
 
             // valid
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // get profile id
                 $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $this->url->getParameter(0));
 

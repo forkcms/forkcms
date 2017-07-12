@@ -33,7 +33,7 @@ class Helper
     {
         if (!empty($field)) {
             // init
-            $frm = new BackendForm('tmp', '');
+            $form = new BackendForm('tmp', '');
             $tpl = (BackendModel::getContainer()->has('template') ?
                 BackendModel::getContainer()->get('template') :
                 new BackendTemplate()
@@ -62,7 +62,7 @@ class Helper
                 }
 
                 // create element
-                $ddm = $frm->addDropdown($fieldName, $values, $defaultIndex);
+                $ddm = $form->addDropdown($fieldName, $values, $defaultIndex);
 
                 // empty default element
                 $ddm->setDefaultElement('');
@@ -92,9 +92,9 @@ class Helper
                         }
                     }
 
-                    $datetime = $frm->addText($fieldName, $defaultValues);
+                    $datetime = $form->addText($fieldName, $defaultValues);
                 } else {
-                    $datetime = $frm->addTime($fieldName, $defaultValues);
+                    $datetime = $form->addTime($fieldName, $defaultValues);
                 }
                 $datetime->setAttribute('disabled', 'disabled');
 
@@ -102,7 +102,7 @@ class Helper
                 $fieldHTML = $datetime->parse();
             } elseif ($field['type'] === 'radiobutton') {
                 // create element
-                $rbt = $frm->addRadiobutton($fieldName, $values, $defaultValues);
+                $rbt = $form->addRadiobutton($fieldName, $values, $defaultValues);
 
                 // get content
                 $fieldHTML = $rbt->parse();
@@ -114,13 +114,13 @@ class Helper
                 }
 
                 // create element
-                $chk = $frm->addMultiCheckbox($fieldName, $newValues, $defaultValues);
+                $chk = $form->addMultiCheckbox($fieldName, $newValues, $defaultValues);
 
                 // get content
                 $fieldHTML = $chk->parse();
             } elseif ($field['type'] === 'textbox') {
                 // create element
-                $txt = $frm->addText($fieldName, $defaultValues);
+                $txt = $form->addText($fieldName, $defaultValues);
                 $txt->setAttribute('disabled', 'disabled');
                 $txt->setAttribute('placeholder', $placeholder);
 
@@ -128,7 +128,7 @@ class Helper
                 $fieldHTML = $txt->parse();
             } elseif ($field['type'] === 'textarea') {
                 // create element
-                $txt = $frm->addTextarea($fieldName, $defaultValues);
+                $txt = $form->addTextarea($fieldName, $defaultValues);
                 $txt->setAttribute('cols', 30);
                 $txt->setAttribute('disabled', 'disabled');
                 $txt->setAttribute('placeholder', $placeholder);

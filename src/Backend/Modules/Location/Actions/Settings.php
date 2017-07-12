@@ -31,13 +31,13 @@ class Settings extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('settings');
+        $this->form = new BackendForm('settings');
 
         // add map info (widgets)
-        $this->frm->addDropdown('zoom_level_widget', array_combine(array_merge(['auto'], range(3, 18)), array_merge([BL::lbl('Auto', $this->getModule())], range(3, 18))), $this->get('fork.settings')->get($this->url->getModule(), 'zoom_level_widget', 13));
-        $this->frm->addText('width_widget', $this->get('fork.settings')->get($this->url->getModule(), 'width_widget'));
-        $this->frm->addText('height_widget', $this->get('fork.settings')->get($this->url->getModule(), 'height_widget'));
-        $this->frm->addDropdown(
+        $this->form->addDropdown('zoom_level_widget', array_combine(array_merge(['auto'], range(3, 18)), array_merge([BL::lbl('Auto', $this->getModule())], range(3, 18))), $this->get('fork.settings')->get($this->url->getModule(), 'zoom_level_widget', 13));
+        $this->form->addText('width_widget', $this->get('fork.settings')->get($this->url->getModule(), 'width_widget'));
+        $this->form->addText('height_widget', $this->get('fork.settings')->get($this->url->getModule(), 'height_widget'));
+        $this->form->addDropdown(
             'map_type_widget',
             [
                 'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
@@ -62,13 +62,13 @@ class Settings extends BackendBaseActionEdit
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if ($this->form->isSubmitted()) {
+            $this->form->cleanupFields();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // set the base values
-                $width = (int) $this->frm->getField('width_widget')->getValue();
-                $height = (int) $this->frm->getField('height_widget')->getValue();
+                $width = (int) $this->form->getField('width_widget')->getValue();
+                $height = (int) $this->form->getField('height_widget')->getValue();
 
                 if ($width > 800) {
                     $width = 800;
@@ -80,10 +80,10 @@ class Settings extends BackendBaseActionEdit
                 }
 
                 // set our settings (widgets)
-                $this->get('fork.settings')->set($this->url->getModule(), 'zoom_level_widget', (string) $this->frm->getField('zoom_level_widget')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'zoom_level_widget', (string) $this->form->getField('zoom_level_widget')->getValue());
                 $this->get('fork.settings')->set($this->url->getModule(), 'width_widget', $width);
                 $this->get('fork.settings')->set($this->url->getModule(), 'height_widget', $height);
-                $this->get('fork.settings')->set($this->url->getModule(), 'map_type_widget', (string) $this->frm->getField('map_type_widget')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'map_type_widget', (string) $this->form->getField('map_type_widget')->getValue());
 
                 // redirect to the settings page
                 $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved');

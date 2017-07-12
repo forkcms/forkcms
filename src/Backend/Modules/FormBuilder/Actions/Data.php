@@ -35,7 +35,7 @@ class Data extends BackendBaseActionIndex
      *
      * @var Form
      */
-    protected $frm;
+    protected $form;
 
     /**
      * Form id.
@@ -221,12 +221,12 @@ class Data extends BackendBaseActionIndex
             }
         }
 
-        $this->frm = new BackendForm('filter', BackendModel::createUrlForAction() . '&amp;id=' . $this->id, 'get');
-        $this->frm->addDate('start_date', $startDate);
-        $this->frm->addDate('end_date', $endDate);
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction() . '&amp;id=' . $this->id, 'get');
+        $this->form->addDate('start_date', $startDate);
+        $this->form->addDate('end_date', $endDate);
 
         // manually parse fields
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
     }
 
     protected function parse(): void

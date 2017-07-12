@@ -51,35 +51,35 @@ class ImportWordpress extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new Form('import');
-        $this->frm->addFile('wordpress');
-        $this->frm->addText('filter', SITE_URL);
+        $this->form = new Form('import');
+        $this->form->addFile('wordpress');
+        $this->form->addText('filter', SITE_URL);
     }
 
     private function validateForm(): void
     {
         // Is the form submitted?
-        if (!$this->frm->isSubmitted()) {
+        if (!$this->form->isSubmitted()) {
             return;
         }
 
         // Cleanup the submitted fields, ignore fields that were added by hackers
-        $this->frm->cleanupFields();
+        $this->form->cleanupFields();
 
         // XML provided?
-        if ($this->frm->getField('wordpress')->isFilled()) {
-            $this->frm->getField('wordpress')->isAllowedExtension(['xml'], BL::err('XMLFilesOnly'));
+        if ($this->form->getField('wordpress')->isFilled()) {
+            $this->form->getField('wordpress')->isAllowedExtension(['xml'], BL::err('XMLFilesOnly'));
         } else {
             // No file
-            $this->frm->getField('wordpress')->addError(BL::err('FieldIsRequired'));
+            $this->form->getField('wordpress')->addError(BL::err('FieldIsRequired'));
         }
 
-        if (!$this->frm->isCorrect()) {
+        if (!$this->form->isCorrect()) {
             return;
         }
 
         // Move the file
-        $this->frm->getField('wordpress')->moveFile(FRONTEND_FILES_PATH . '/wordpress.xml');
+        $this->form->getField('wordpress')->moveFile(FRONTEND_FILES_PATH . '/wordpress.xml');
 
         // Process the XML
         $this->processXML();
@@ -191,7 +191,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $item['title'] = (string) $xml->title;
         $item['text'] = $this->handleUrls(
             (string) $xml->children('content', true)->encoded,
-            $this->frm->getField('filter')->getValue()
+            $this->form->getField('filter')->getValue()
         );
         $item['created_on'] = (string) $xml->children('wp', true)->post_date;
         $item['publish_on'] = (string) $xml->children('wp', true)->post_date;

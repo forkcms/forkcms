@@ -51,10 +51,10 @@ class EditCategory extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('editCategory');
-        $this->frm->addText('title', $this->record['title']);
+        $this->form = new BackendForm('editCategory');
+        $this->form->addText('title', $this->record['title']);
 
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
     }
 
     protected function parse(): void
@@ -80,25 +80,25 @@ class EditCategory extends BackendBaseActionEdit
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             $this->meta->setUrlCallback(
                 'Backend\Modules\Faq\Engine\Model',
                 'getUrlForCategory',
                 [$this->record['id']]
             );
 
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
                 $item['id'] = $this->id;
                 $item['language'] = $this->record['language'];
-                $item['title'] = $this->frm->getField('title')->getValue();
+                $item['title'] = $this->form->getField('title')->getValue();
                 $item['extra_id'] = $this->record['extra_id'];
                 $item['meta_id'] = $this->meta->save(true);
 

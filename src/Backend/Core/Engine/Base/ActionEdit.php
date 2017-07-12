@@ -31,7 +31,7 @@ class ActionEdit extends Action
      *
      * @var Form
      */
-    protected $frm;
+    protected $form;
 
     /**
      * The id of the item to edit
@@ -58,8 +58,8 @@ class ActionEdit extends Action
     {
         parent::parse();
 
-        if ($this->frm) {
-            $this->frm->parse($this->tpl);
+        if ($this->form) {
+            $this->form->parse($this->tpl);
         }
     }
 }

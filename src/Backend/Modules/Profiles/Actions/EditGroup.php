@@ -55,8 +55,8 @@ class EditGroup extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('editGroup');
-        $this->frm->addText('name', $this->group['name']);
+        $this->form = new BackendForm('editGroup');
+        $this->form->addText('name', $this->group['name']);
     }
 
     protected function parse(): void
@@ -70,12 +70,12 @@ class EditGroup extends BackendBaseActionEdit
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $txtName = $this->frm->getField('name');
+            $txtName = $this->form->getField('name');
 
             // name filled in?
             if ($txtName->isFilled(BL::getError('NameIsRequired'))) {
@@ -87,7 +87,7 @@ class EditGroup extends BackendBaseActionEdit
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $values = ['name' => $txtName->getValue()];
 

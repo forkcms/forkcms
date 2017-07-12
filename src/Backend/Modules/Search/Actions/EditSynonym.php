@@ -41,9 +41,9 @@ class EditSynonym extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('editItem');
-        $this->frm->addText('term', $this->record['term']);
-        $this->frm->addText(
+        $this->form = new BackendForm('editItem');
+        $this->form->addText('term', $this->record['term']);
+        $this->form->addText(
             'synonym',
             $this->record['synonym'],
             null,
@@ -62,24 +62,24 @@ class EditSynonym extends BackendBaseActionEdit
 
     private function validateForm(): void
     {
-        if (!$this->frm->isSubmitted()) {
+        if (!$this->form->isSubmitted()) {
             return;
         }
-        $this->frm->cleanupFields();
-        $this->frm->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
-        $this->frm->getField('term')->isFilled(BL::err('TermIsRequired'));
-        if (BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue(), $this->id)) {
-            $this->frm->getField('term')->addError(BL::err('TermExists'));
+        $this->form->cleanupFields();
+        $this->form->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
+        $this->form->getField('term')->isFilled(BL::err('TermIsRequired'));
+        if (BackendSearchModel::existsSynonymByTerm($this->form->getField('term')->getValue(), $this->id)) {
+            $this->form->getField('term')->addError(BL::err('TermExists'));
         }
 
-        if (!$this->frm->isCorrect()) {
+        if (!$this->form->isCorrect()) {
             return;
         }
 
         $synonym = [
             'id' => $this->id,
-            'term' => $this->frm->getField('term')->getValue(),
-            'synonym' => $this->frm->getField('synonym')->getValue(),
+            'term' => $this->form->getField('term')->getValue(),
+            'synonym' => $this->form->getField('synonym')->getValue(),
         ];
 
         BackendSearchModel::updateSynonym($synonym);

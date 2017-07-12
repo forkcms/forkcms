@@ -99,8 +99,8 @@ class Edit extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('edit');
-        $this->frm->addText('name', $this->record['name']);
+        $this->form = new BackendForm('edit');
+        $this->form->addText('name', $this->record['name']);
     }
 
     protected function parse(): void
@@ -118,19 +118,19 @@ class Edit extends BackendBaseActionEdit
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+            $this->form->getField('name')->isFilled(BL::err('NameIsRequired'));
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build tag
                 $item = [];
                 $item['id'] = $this->id;
-                $item['tag'] = $this->frm->getField('name')->getValue();
+                $item['tag'] = $this->form->getField('name')->getValue();
                 $item['url'] = BackendTagsModel::getUrl(
                     CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
                     $this->id

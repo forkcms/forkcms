@@ -35,7 +35,7 @@ class Index extends BackendBaseActionIndex
      *
      * @var BackendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * @var BackendDataGridDatabase
@@ -177,25 +177,25 @@ class Index extends BackendBaseActionIndex
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
 
         // values for dropdowns
         $status = BackendProfilesModel::getStatusForDropDown();
         $groups = BackendProfilesModel::getGroups();
 
         // add fields
-        $this->frm->addText('email', $this->filter['email']);
-        $this->frm->addDropdown('status', $status, $this->filter['status']);
-        $this->frm->getField('status')->setDefaultElement('');
+        $this->form->addText('email', $this->filter['email']);
+        $this->form->addDropdown('status', $status, $this->filter['status']);
+        $this->form->getField('status')->setDefaultElement('');
 
         // add a group filter if wa have groups
         if (!empty($groups)) {
-            $this->frm->addDropdown('group', $groups, $this->filter['group']);
-            $this->frm->getField('group')->setDefaultElement('');
+            $this->form->addDropdown('group', $groups, $this->filter['group']);
+            $this->form->getField('group')->setDefaultElement('');
         }
 
         // manually parse fields
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
     }
 
     protected function parse(): void

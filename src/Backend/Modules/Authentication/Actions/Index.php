@@ -28,12 +28,12 @@ class Index extends BackendBaseActionIndex
     /**
      * @var BackendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * @var BackendForm
      */
-    private $frmForgotPassword;
+    private $formForgotPassword;
 
     public function execute(): void
     {
@@ -55,19 +55,19 @@ class Index extends BackendBaseActionIndex
 
     private function buildForm(): void
     {
-        $this->frm = new BackendForm(null, null, 'post', true, false);
-        $this->frm
+        $this->form = new BackendForm(null, null, 'post', true, false);
+        $this->form
             ->addText('backend_email')
             ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Email')))
             ->setAttribute('type', 'email')
         ;
-        $this->frm
+        $this->form
             ->addPassword('backend_password')
             ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Password')))
         ;
 
-        $this->frmForgotPassword = new BackendForm('forgotPassword');
-        $this->frmForgotPassword->addText('backend_email_forgot');
+        $this->formForgotPassword = new BackendForm('forgotPassword');
+        $this->formForgotPassword->addText('backend_email_forgot');
     }
 
     public function parse(): void
@@ -77,20 +77,20 @@ class Index extends BackendBaseActionIndex
         // assign the interface language ourself, because it won't be assigned automagically
         $this->tpl->assign('INTERFACE_LANGUAGE', BL::getInterfaceLanguage());
 
-        $this->frm->parse($this->tpl);
-        $this->frmForgotPassword->parse($this->tpl);
+        $this->form->parse($this->tpl);
+        $this->formForgotPassword->parse($this->tpl);
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $txtEmail = $this->frm->getField('backend_email');
-            $txtPassword = $this->frm->getField('backend_password');
+        if ($this->form->isSubmitted()) {
+            $txtEmail = $this->form->getField('backend_email');
+            $txtPassword = $this->form->getField('backend_password');
 
             // required fields
             if (!$txtEmail->isFilled() || !$txtPassword->isFilled()) {
                 // add error
-                $this->frm->addError('fields required');
+                $this->form->addError('fields required');
 
                 // show error
                 $this->tpl->assign('hasError', true);
@@ -101,7 +101,7 @@ class Index extends BackendBaseActionIndex
             );
 
             // invalid form-token?
-            if ($this->frm->getToken() != $this->frm->getField('form_token')->getValue()) {
+            if ($this->form->getToken() != $this->form->getField('form_token')->getValue()) {
                 // set a correct header, so bots understand they can't mess with us.
                 throw new BadRequestHttpException();
             }
@@ -110,7 +110,7 @@ class Index extends BackendBaseActionIndex
             $userId = BackendUsersModel::getIdByEmail($txtEmail->getValue());
 
             // all fields are ok?
-            if ($txtEmail->isFilled() && $txtPassword->isFilled() && $this->frm->getToken() == $this->frm->getField('form_token')->getValue()) {
+            if ($txtEmail->isFilled() && $txtPassword->isFilled() && $this->form->getToken() == $this->form->getField('form_token')->getValue()) {
                 // try to login the user
                 if (!BackendAuthentication::loginUser($txtEmail->getValue(), $txtPassword->getValue())) {
                     $this->getContainer()->get('logger')->info(
@@ -118,7 +118,7 @@ class Index extends BackendBaseActionIndex
                     );
 
                     // add error
-                    $this->frm->addError('invalid login');
+                    $this->form->addError('invalid login');
 
                     // store attempt in session
                     $current = (\SpoonSession::exists('backend_login_attempts')) ? (int) \SpoonSession::get('backend_login_attempts') : 0;
@@ -157,7 +157,7 @@ class Index extends BackendBaseActionIndex
                 }
 
                 // too many attempts
-                $this->frm->addEditor('too many attempts');
+                $this->form->addEditor('too many attempts');
 
                 $this->getContainer()->get('logger')->info(
                     "Too many login attempts for user '{$txtEmail->getValue()}'."
@@ -169,7 +169,7 @@ class Index extends BackendBaseActionIndex
             }
 
             // no errors in the form?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // cleanup sessions
                 \SpoonSession::delete('backend_login_attempts');
                 \SpoonSession::delete('backend_last_attempt');
@@ -191,20 +191,20 @@ class Index extends BackendBaseActionIndex
         }
 
         // is the form submitted
-        if ($this->frmForgotPassword->isSubmitted()) {
+        if ($this->formForgotPassword->isSubmitted()) {
             // backend email
-            $email = $this->frmForgotPassword->getField('backend_email_forgot')->getValue();
+            $email = $this->formForgotPassword->getField('backend_email_forgot')->getValue();
 
             // required fields
-            if ($this->frmForgotPassword->getField('backend_email_forgot')->isEmail(BL::err('EmailIsInvalid'))) {
+            if ($this->formForgotPassword->getField('backend_email_forgot')->isEmail(BL::err('EmailIsInvalid'))) {
                 // check if there is a user with the given emailaddress
                 if (!BackendUsersModel::existsEmail($email)) {
-                    $this->frmForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
+                    $this->formForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
                 }
             }
 
             // no errors in the form?
-            if ($this->frmForgotPassword->isCorrect()) {
+            if ($this->formForgotPassword->isCorrect()) {
                 // generate the key for the reset link and fetch the user ID for this email
                 $key = BackendAuthentication::getEncryptedString($email, uniqid('', true));
 

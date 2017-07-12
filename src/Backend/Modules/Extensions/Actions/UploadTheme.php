@@ -78,21 +78,21 @@ class UploadTheme extends BackendBaseActionAdd
     private function buildForm(): void
     {
         // create form
-        $this->frm = new BackendForm('upload');
+        $this->form = new BackendForm('upload');
 
         // create and add elements
-        $this->frm->addFile('file');
+        $this->form->addFile('file');
     }
 
     private function validateForm(): void
     {
         // The form is submitted
-        if (!$this->frm->isSubmitted()) {
+        if (!$this->form->isSubmitted()) {
             return;
         }
 
         /** @var $fileFile \SpoonFormFile */
-        $fileFile = $this->frm->getField('file');
+        $fileFile = $this->form->getField('file');
         $zip = null;
         $zipFiles = null;
 
@@ -163,7 +163,7 @@ class UploadTheme extends BackendBaseActionAdd
         }
 
         // Passed all validation
-        if ($zip !== null && $this->frm->isCorrect()) {
+        if ($zip !== null && $this->form->isCorrect()) {
             // Unpack the zip. If the files were not found inside a parent directory, we create the theme directory.
             $themePath = FRONTEND_PATH . '/Themes';
             if ($this->parentFolderName === null) {

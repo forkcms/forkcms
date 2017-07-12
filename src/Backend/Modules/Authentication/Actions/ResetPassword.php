@@ -92,20 +92,20 @@ class ResetPassword extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm();
-        $this->frm->addPassword('backend_new_password');
-        $this->frm->addPassword('backend_new_password_repeated');
+        $this->form = new BackendForm();
+        $this->form->addPassword('backend_new_password');
+        $this->form->addPassword('backend_new_password_repeated');
 
-        $this->frm->getField('backend_new_password')->setAttributes(['autocomplete' => 'off']);
-        $this->frm->getField('backend_new_password_repeated')->setAttributes(['autocomplete' => 'off']);
+        $this->form->getField('backend_new_password')->setAttributes(['autocomplete' => 'off']);
+        $this->form->getField('backend_new_password_repeated')->setAttributes(['autocomplete' => 'off']);
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // shorten fields
-            $newPassword = $this->frm->getField('backend_new_password');
-            $newPasswordRepeated = $this->frm->getField('backend_new_password_repeated');
+            $newPassword = $this->form->getField('backend_new_password');
+            $newPasswordRepeated = $this->form->getField('backend_new_password_repeated');
 
             // required fields
             $newPassword->isFilled(BL::err('PasswordIsRequired'));
@@ -116,14 +116,14 @@ class ResetPassword extends BackendBaseActionAdd
                 // the passwords entered match
                 if ($newPassword->getValue() !== $newPasswordRepeated->getValue()) {
                     // add error
-                    $this->frm->addError(BL::err('PasswordsDontMatch'));
+                    $this->form->addError(BL::err('PasswordsDontMatch'));
 
                     // show error
                     $this->tpl->assign('error', BL::err('PasswordsDontMatch'));
                 }
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // change the users password
                 BackendUsersModel::updatePassword($this->user, $newPassword->getValue());
 

@@ -66,12 +66,12 @@ class Edit extends BackendBaseActionEdit
         $categories = BackendFaqModel::getCategories();
 
         // create form
-        $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['question'], null, 'form-control title', 'form-control danger title');
-        $this->frm->addEditor('answer', $this->record['answer']);
-        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
-        $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
-        $this->frm->addText(
+        $this->form = new BackendForm('edit');
+        $this->form->addText('title', $this->record['question'], null, 'form-control title', 'form-control danger title');
+        $this->form->addEditor('answer', $this->record['answer']);
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
+        $this->form->addDropdown('category_id', $categories, $this->record['category_id']);
+        $this->form->addText(
             'tags',
             BackendTagsModel::getTags($this->url->getModule(), $this->record['id']),
             null,
@@ -79,7 +79,7 @@ class Edit extends BackendBaseActionEdit
             'form-control danger js-tags-input'
         );
 
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
     }
 
     protected function parse(): void
@@ -100,33 +100,33 @@ class Edit extends BackendBaseActionEdit
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getUrl', [$this->record['id']]);
 
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('QuestionIsRequired'));
-            $this->frm->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
-            $this->frm->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('QuestionIsRequired'));
+            $this->form->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
+            $this->form->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
                 $item['id'] = $this->id;
                 $item['meta_id'] = $this->meta->save(true);
-                $item['category_id'] = $this->frm->getField('category_id')->getValue();
+                $item['category_id'] = $this->form->getField('category_id')->getValue();
                 $item['language'] = $this->record['language'];
-                $item['question'] = $this->frm->getField('title')->getValue();
-                $item['answer'] = $this->frm->getField('answer')->getValue(true);
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
+                $item['question'] = $this->form->getField('title')->getValue();
+                $item['answer'] = $this->form->getField('answer')->getValue(true);
+                $item['hidden'] = $this->form->getField('hidden')->getValue();
 
                 // update the item
                 BackendFaqModel::update($item);
                 BackendTagsModel::saveTags(
                     $item['id'],
-                    $this->frm->getField('tags')->getValue(),
+                    $this->form->getField('tags')->getValue(),
                     $this->url->getModule()
                 );
 

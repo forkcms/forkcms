@@ -56,13 +56,13 @@ class EditComment extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('editComment');
+        $this->form = new BackendForm('editComment');
 
         // create elements
-        $this->frm->addText('author', $this->record['author']);
-        $this->frm->addText('email', $this->record['email']);
-        $this->frm->addText('website', $this->record['website'], null);
-        $this->frm->addTextarea('text', $this->record['text']);
+        $this->form->addText('author', $this->record['author']);
+        $this->form->addText('email', $this->record['email']);
+        $this->form->addText('website', $this->record['website'], null);
+        $this->form->addTextarea('text', $this->record['text']);
 
         // assign URL
         $this->tpl->assign(
@@ -75,29 +75,29 @@ class EditComment extends BackendBaseActionEdit
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('author')->isFilled(BL::err('AuthorIsRequired'));
-            $this->frm->getField('email')->isEmail(BL::err('EmailIsInvalid'));
-            $this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
-            if ($this->frm->getField('website')->isFilled()) {
-                $this->frm->getField('website')->isURL(BL::err('InvalidURL'));
+            $this->form->getField('author')->isFilled(BL::err('AuthorIsRequired'));
+            $this->form->getField('email')->isEmail(BL::err('EmailIsInvalid'));
+            $this->form->getField('text')->isFilled(BL::err('FieldIsRequired'));
+            if ($this->form->getField('website')->isFilled()) {
+                $this->form->getField('website')->isURL(BL::err('InvalidURL'));
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [
                     'id' => $this->id,
                     'status' => $this->record['status'],
-                    'author' => $this->frm->getField('author')->getValue(),
-                    'email' => $this->frm->getField('email')->getValue(),
-                    'website' => $this->frm->getField('website')->isFilled()
-                        ? $this->frm->getField('website')->getValue() : null,
-                    'text' => $this->frm->getField('text')->getValue(),
+                    'author' => $this->form->getField('author')->getValue(),
+                    'email' => $this->form->getField('email')->getValue(),
+                    'website' => $this->form->getField('website')->isFilled()
+                        ? $this->form->getField('website')->getValue() : null,
+                    'text' => $this->form->getField('text')->getValue(),
                 ];
 
                 // insert the item

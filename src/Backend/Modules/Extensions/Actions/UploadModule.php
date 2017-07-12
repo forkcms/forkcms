@@ -58,7 +58,7 @@ class UploadModule extends BackendBaseActionAdd
 
         // shorten field variables
         /** @var $fileFile \SpoonFormFile */
-        $fileFile = $this->frm->getField('file');
+        $fileFile = $this->form->getField('file');
 
         // create \ziparchive instance
         $zip = new \ZipArchive();
@@ -224,18 +224,18 @@ class UploadModule extends BackendBaseActionAdd
     private function buildForm(): void
     {
         // create form
-        $this->frm = new BackendForm('upload');
+        $this->form = new BackendForm('upload');
 
         // create and add elements
-        $this->frm->addFile('file');
+        $this->form->addFile('file');
     }
 
     private function validateForm(): void
     {
         // the form is submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // shorten field variables
-            $fileFile = $this->frm->getField('file');
+            $fileFile = $this->form->getField('file');
 
             // validate the file
             if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
@@ -243,7 +243,7 @@ class UploadModule extends BackendBaseActionAdd
             }
 
             // passed all validation
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // redirect to the install url, this is needed for doctrine modules because the container needs to
                 // load this module as an allowed module to get the entities working
                 $this->redirect(BackendModel::createUrlForAction('InstallModule') . '&module=' . $moduleName);

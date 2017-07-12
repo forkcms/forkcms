@@ -50,13 +50,13 @@ class EditCategory extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('editCategory');
+        $this->form = new BackendForm('editCategory');
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
+        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
 
         // meta object
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
         $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getUrlForCategory', [$this->record['id']]);
@@ -77,21 +77,21 @@ class EditCategory extends BackendBaseActionEdit
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
             // validate meta
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [
                     'id' => $this->id,
-                    'title' => $this->frm->getField('title')->getValue(),
+                    'title' => $this->form->getField('title')->getValue(),
                     'meta_id' => $this->meta->save(true),
                 ];
 

@@ -26,7 +26,7 @@ class Login extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
@@ -50,25 +50,25 @@ class Login extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->frm = new FrontendForm('login', null, 'post', 'loginForm');
-        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
-        $this->frm->addPassword('password')->setAttributes(['required' => null]);
-        $this->frm->addCheckbox('remember', true);
+        $this->form = new FrontendForm('login', null, 'post', 'loginForm');
+        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addPassword('password')->setAttributes(['required' => null]);
+        $this->form->addCheckbox('remember', true);
     }
 
     private function parse(): void
     {
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
     }
 
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get fields
-            $txtEmail = $this->frm->getField('email');
-            $txtPassword = $this->frm->getField('password');
-            $chkRemember = $this->frm->getField('remember');
+            $txtEmail = $this->form->getField('email');
+            $txtPassword = $this->form->getField('password');
+            $chkRemember = $this->form->getField('remember');
 
             // required fields
             $txtEmail->isFilled(FL::getError('EmailIsRequired'));
@@ -93,7 +93,7 @@ class Login extends FrontendBaseBlock
                         );
 
                         // add the error to stack
-                        $this->frm->addError($errorString);
+                        $this->form->addError($errorString);
 
                         // add the error to the template variables
                         $this->tpl->assign('loginError', $errorString);
@@ -102,7 +102,7 @@ class Login extends FrontendBaseBlock
             }
 
             // valid login
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // get profile id
                 $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
 

@@ -33,7 +33,7 @@ class Groups extends BackendBaseActionIndex
      *
      * @var BackendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * Groups data grid.
@@ -140,13 +140,13 @@ class Groups extends BackendBaseActionIndex
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
 
         // add fields
-        $this->frm->addText('name', $this->filter['name']);
+        $this->form->addText('name', $this->filter['name']);
 
         // manually parse fields
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
     }
 
     protected function parse(): void

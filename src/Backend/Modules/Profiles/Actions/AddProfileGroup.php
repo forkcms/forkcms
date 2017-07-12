@@ -50,28 +50,28 @@ class AddProfileGroup extends BackendBaseActionAdd
         $ddmValues = BackendProfilesModel::getGroupsForDropDown($this->id);
 
         // create form
-        $this->frm = new BackendForm('addProfileGroup');
+        $this->form = new BackendForm('addProfileGroup');
 
         // create elements
-        $this->frm->addDropdown('group', $ddmValues);
-        $this->frm->addDate('expiration_date');
-        $this->frm->addTime('expiration_time', '');
+        $this->form->addDropdown('group', $ddmValues);
+        $this->form->addDate('expiration_date');
+        $this->form->addTime('expiration_time', '');
 
         // set default element
-        $this->frm->getField('group')->setDefaultElement('');
+        $this->form->getField('group')->setDefaultElement('');
     }
 
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $ddmGroup = $this->frm->getField('group');
-            $txtExpirationDate = $this->frm->getField('expiration_date');
-            $txtExpirationTime = $this->frm->getField('expiration_time');
+            $ddmGroup = $this->form->getField('group');
+            $txtExpirationDate = $this->form->getField('expiration_date');
+            $txtExpirationTime = $this->form->getField('expiration_time');
 
             // fields filled?
             $ddmGroup->isFilled(BL::getError('FieldIsRequired'));
@@ -83,7 +83,7 @@ class AddProfileGroup extends BackendBaseActionAdd
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $values = [];
                 $values['profile_id'] = $this->id;

@@ -27,7 +27,7 @@ class Index extends BackendBaseActionIndex
      *
      * @var BackendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * Should we show boxes for their API keys
@@ -64,35 +64,35 @@ class Index extends BackendBaseActionIndex
         $defaultDomains = [str_replace(['http://', 'www.', 'https://'], '', SITE_URL)];
 
         // create form
-        $this->frm = new BackendForm('settingsIndex');
+        $this->form = new BackendForm('settingsIndex');
 
         // general settings
-        $this->frm->addText(
+        $this->form->addText(
             'site_title',
             $this->get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
-        $this->frm->addTextarea(
+        $this->form->addTextarea(
             'site_html_header',
             $this->get('fork.settings')->get('Core', 'site_html_header', null),
             'form-control code',
             'form-control danger code',
             true
         );
-        $this->frm->addTextarea(
+        $this->form->addTextarea(
             'site_start_of_body_scripts',
             $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null),
             'form-control code',
             'form-control danger code',
             true
         );
-        $this->frm->addTextarea(
+        $this->form->addTextarea(
             'site_html_footer',
             $this->get('fork.settings')->get('Core', 'site_html_footer', null),
             'form-control code',
             'form-control danger code',
             true
         );
-        $this->frm->addTextarea(
+        $this->form->addTextarea(
             'site_domains',
             implode("\n", (array) $this->get('fork.settings')->get('Core', 'site_domains', $defaultDomains)),
             'form-control code',
@@ -100,56 +100,56 @@ class Index extends BackendBaseActionIndex
         );
 
         // facebook settings
-        $this->frm->addText('facebook_admin_ids', $this->get('fork.settings')->get('Core', 'facebook_admin_ids', null));
-        $this->frm->addText('facebook_application_id', $this->get('fork.settings')->get('Core', 'facebook_app_id', null));
-        $this->frm->addText(
+        $this->form->addText('facebook_admin_ids', $this->get('fork.settings')->get('Core', 'facebook_admin_ids', null));
+        $this->form->addText('facebook_application_id', $this->get('fork.settings')->get('Core', 'facebook_app_id', null));
+        $this->form->addText(
             'facebook_application_secret',
             $this->get('fork.settings')->get('Core', 'facebook_app_secret', null)
         );
 
         // twitter settings
-        $this->frm->addText(
+        $this->form->addText(
             'twitter_site_name',
             ltrim($this->get('fork.settings')->get('Core', 'twitter_site_name', null), '@')
         );
 
         // ckfinder
-        $this->frm->addText(
+        $this->form->addText(
             'ckfinder_license_name',
             $this->get('fork.settings')->get('Core', 'ckfinder_license_name', null)
         );
-        $this->frm->addText(
+        $this->form->addText(
             'ckfinder_license_key',
             $this->get('fork.settings')->get('Core', 'ckfinder_license_key', null)
         );
-        $this->frm->addText(
+        $this->form->addText(
             'ckfinder_image_max_width',
             $this->get('fork.settings')->get('Core', 'ckfinder_image_max_width', 1600)
         );
-        $this->frm->addText(
+        $this->form->addText(
             'ckfinder_image_max_height',
             $this->get('fork.settings')->get('Core', 'ckfinder_image_max_height', 1200)
         );
 
         // date & time formats
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'time_format',
             BackendModel::getTimeFormats(),
             $this->get('fork.settings')->get('Core', 'time_format')
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'date_format_short',
             BackendModel::getDateFormatsShort(),
             $this->get('fork.settings')->get('Core', 'date_format_short')
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'date_format_long',
             BackendModel::getDateFormatsLong(),
             $this->get('fork.settings')->get('Core', 'date_format_long')
         );
 
         // number formats
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'number_format',
             BackendModel::getNumberFormats(),
             $this->get('fork.settings')->get('Core', 'number_format')
@@ -216,12 +216,12 @@ class Index extends BackendBaseActionIndex
         $hasMultipleLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
 
         // create multilanguage checkbox
-        $this->frm->addMultiCheckbox(
+        $this->form->addMultiCheckbox(
             'active_languages',
             $activeLanguages,
             $this->get('fork.settings')->get('Core', 'active_languages', [$hasMultipleLanguages])
         );
-        $this->frm->addMultiCheckbox(
+        $this->form->addMultiCheckbox(
             'redirect_languages',
             $redirectLanguages,
             $this->get('fork.settings')->get('Core', 'redirect_languages', [$hasMultipleLanguages])
@@ -229,30 +229,30 @@ class Index extends BackendBaseActionIndex
 
         // api keys are not required for every module
         if ($this->needsAkismet) {
-            $this->frm->addText(
+            $this->form->addText(
                 'akismet_key',
                 $this->get('fork.settings')->get('Core', 'akismet_key', null)
             );
         }
         if ($this->needsGoogleMaps) {
-            $this->frm->addText(
+            $this->form->addText(
                 'google_maps_key',
                 $this->get('fork.settings')->get('Core', 'google_maps_key', null)
             );
         }
         if ($this->needsGoogleRecaptcha) {
-            $this->frm->addText(
+            $this->form->addText(
                 'google_recaptcha_site_key',
                 $this->get('fork.settings')->get('Core', 'google_recaptcha_site_key', null)
             );
-            $this->frm->addText(
+            $this->form->addText(
                 'google_recaptcha_secret_key',
                 $this->get('fork.settings')->get('Core', 'google_recaptcha_secret_key', null)
             );
         }
 
         // cookies
-        $this->frm->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
+        $this->form->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
     }
 
     protected function parse(): void
@@ -271,7 +271,7 @@ class Index extends BackendBaseActionIndex
         }
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
 
         // parse the warnings
         $this->parseWarnings();
@@ -292,36 +292,36 @@ class Index extends BackendBaseActionIndex
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // validate required fields
-            $this->frm->getField('site_title')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('site_title')->isFilled(BL::err('FieldIsRequired'));
 
             // date & time
-            $this->frm->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('date_format_short')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('date_format_long')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('date_format_short')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('date_format_long')->isFilled(BL::err('FieldIsRequired'));
 
             // number
-            $this->frm->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
 
             // akismet key may be filled in
-            if ($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled()) {
+            if ($this->needsAkismet && $this->form->getField('akismet_key')->isFilled()) {
                 // key has changed
-                if ($this->frm->getField('akismet_key')->getValue() != $this->get('fork.settings')->get('Core', 'akismet_key', null)) {
+                if ($this->form->getField('akismet_key')->getValue() != $this->get('fork.settings')->get('Core', 'akismet_key', null)) {
                     // create instance
-                    $akismet = new Akismet($this->frm->getField('akismet_key')->getValue(), SITE_URL);
+                    $akismet = new Akismet($this->form->getField('akismet_key')->getValue(), SITE_URL);
 
                     // invalid key
                     if (!$akismet->verifyKey()) {
-                        $this->frm->getField('akismet_key')->setError(BL::err('InvalidAPIKey'));
+                        $this->form->getField('akismet_key')->setError(BL::err('InvalidAPIKey'));
                     }
                 }
             }
 
             // domains filled in
-            if ($this->frm->getField('site_domains')->isFilled()) {
+            if ($this->form->getField('site_domains')->isFilled()) {
                 // split on newlines
-                $domains = explode("\n", trim($this->frm->getField('site_domains')->getValue()));
+                $domains = explode("\n", trim($this->form->getField('site_domains')->getValue()));
 
                 // loop domains
                 foreach ($domains as $domain) {
@@ -331,7 +331,7 @@ class Index extends BackendBaseActionIndex
                     // invalid URL
                     if (!\SpoonFilter::isURL('http://' . $domain)) {
                         // set error
-                        $this->frm->getField('site_domains')->setError(BL::err('InvalidDomain'));
+                        $this->form->getField('site_domains')->setError(BL::err('InvalidDomain'));
 
                         // stop looping domains
                         break;
@@ -339,67 +339,67 @@ class Index extends BackendBaseActionIndex
                 }
             }
 
-            if ($this->frm->getField('ckfinder_image_max_width')->isFilled()) {
-                $this->frm->getField(
+            if ($this->form->getField('ckfinder_image_max_width')->isFilled()) {
+                $this->form->getField(
                     'ckfinder_image_max_width'
                 )->isInteger(BL::err('InvalidInteger'));
             }
-            if ($this->frm->getField('ckfinder_image_max_height')->isFilled()) {
-                $this->frm->getField(
+            if ($this->form->getField('ckfinder_image_max_height')->isFilled()) {
+                $this->form->getField(
                     'ckfinder_image_max_height'
                 )->isInteger(BL::err('InvalidInteger'));
             }
 
             // no errors ?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // general settings
                 $this->get('fork.settings')->set(
                     'Core',
                     'site_title_' . BL::getWorkingLanguage(),
-                    $this->frm->getField('site_title')->getValue()
+                    $this->form->getField('site_title')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'site_html_header',
-                    $this->frm->getField('site_html_header')->getValue()
+                    $this->form->getField('site_html_header')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'site_start_of_body_scripts',
-                    $this->frm->getField('site_start_of_body_scripts')->getValue()
+                    $this->form->getField('site_start_of_body_scripts')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'site_html_footer',
-                    $this->frm->getField('site_html_footer')->getValue()
+                    $this->form->getField('site_html_footer')->getValue()
                 );
 
                 // facebook settings
                 $this->get('fork.settings')->set(
                     'Core',
                     'facebook_admin_ids',
-                    ($this->frm->getField('facebook_admin_ids')->isFilled()) ? $this->frm->getField(
+                    ($this->form->getField('facebook_admin_ids')->isFilled()) ? $this->form->getField(
                         'facebook_admin_ids'
                     )->getValue() : null
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'facebook_app_id',
-                    ($this->frm->getField('facebook_application_id')->isFilled()) ? $this->frm->getField(
+                    ($this->form->getField('facebook_application_id')->isFilled()) ? $this->form->getField(
                         'facebook_application_id'
                     )->getValue() : null
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'facebook_app_secret',
-                    ($this->frm->getField('facebook_application_secret')->isFilled()) ? $this->frm->getField(
+                    ($this->form->getField('facebook_application_secret')->isFilled()) ? $this->form->getField(
                         'facebook_application_secret'
                     )->getValue() : null
                 );
 
                 // twitter settings
                 /** @var \SpoonFormText $txtTwitterSiteName */
-                $txtTwitterSiteName = $this->frm->getField('twitter_site_name');
+                $txtTwitterSiteName = $this->form->getField('twitter_site_name');
                 if ($txtTwitterSiteName->isFilled()) {
                     $this->get('fork.settings')->set(
                         'Core',
@@ -412,28 +412,28 @@ class Index extends BackendBaseActionIndex
                 $this->get('fork.settings')->set(
                     'Core',
                     'ckfinder_license_name',
-                    ($this->frm->getField('ckfinder_license_name')->isFilled()) ? $this->frm->getField(
+                    ($this->form->getField('ckfinder_license_name')->isFilled()) ? $this->form->getField(
                         'ckfinder_license_name'
                     )->getValue() : null
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'ckfinder_license_key',
-                    ($this->frm->getField('ckfinder_license_key')->isFilled()) ? $this->frm->getField(
+                    ($this->form->getField('ckfinder_license_key')->isFilled()) ? $this->form->getField(
                         'ckfinder_license_key'
                     )->getValue() : null
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'ckfinder_image_max_width',
-                    ($this->frm->getField('ckfinder_image_max_width')->isFilled()) ? $this->frm->getField(
+                    ($this->form->getField('ckfinder_image_max_width')->isFilled()) ? $this->form->getField(
                         'ckfinder_image_max_width'
                     )->getValue() : 1600
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'ckfinder_image_max_height',
-                    ($this->frm->getField('ckfinder_image_max_height')->isFilled()) ? $this->frm->getField(
+                    ($this->form->getField('ckfinder_image_max_height')->isFilled()) ? $this->form->getField(
                         'ckfinder_image_max_height'
                     )->getValue() : 1200
                 );
@@ -443,56 +443,56 @@ class Index extends BackendBaseActionIndex
                     $this->get('fork.settings')->set(
                         'Core',
                         'akismet_key',
-                        $this->frm->getField('akismet_key')->getValue()
+                        $this->form->getField('akismet_key')->getValue()
                     );
                 }
                 if ($this->needsGoogleMaps) {
                     $this->get('fork.settings')->set(
                         'Core',
                         'google_maps_key',
-                        $this->frm->getField('google_maps_key')->getValue()
+                        $this->form->getField('google_maps_key')->getValue()
                     );
                 }
                 if ($this->needsGoogleRecaptcha) {
                     $this->get('fork.settings')->set(
                         'Core',
                         'google_recaptcha_site_key',
-                        $this->frm->getField('google_recaptcha_site_key')->getValue()
+                        $this->form->getField('google_recaptcha_site_key')->getValue()
                     );
                     $this->get('fork.settings')->set(
                         'Core',
                         'google_recaptcha_secret_key',
-                        $this->frm->getField('google_recaptcha_secret_key')->getValue()
+                        $this->form->getField('google_recaptcha_secret_key')->getValue()
                     );
                 }
 
                 // date & time formats
-                $this->get('fork.settings')->set('Core', 'time_format', $this->frm->getField('time_format')->getValue());
+                $this->get('fork.settings')->set('Core', 'time_format', $this->form->getField('time_format')->getValue());
                 $this->get('fork.settings')->set(
                     'Core',
                     'date_format_short',
-                    $this->frm->getField('date_format_short')->getValue()
+                    $this->form->getField('date_format_short')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     'Core',
                     'date_format_long',
-                    $this->frm->getField('date_format_long')->getValue()
+                    $this->form->getField('date_format_long')->getValue()
                 );
 
                 // date & time formats
                 $this->get('fork.settings')->set(
                     'Core',
                     'number_format',
-                    $this->frm->getField('number_format')->getValue()
+                    $this->form->getField('number_format')->getValue()
                 );
 
                 // before we save the languages, we need to ensure that each language actually exists and may be chosen.
                 $languages = [SITE_DEFAULT_LANGUAGE];
                 $activeLanguages = array_unique(
-                    array_merge($languages, $this->frm->getField('active_languages')->getValue())
+                    array_merge($languages, $this->form->getField('active_languages')->getValue())
                 );
                 $redirectLanguages = array_unique(
-                    array_merge($languages, $this->frm->getField('redirect_languages')->getValue())
+                    array_merge($languages, $this->form->getField('redirect_languages')->getValue())
                 );
 
                 // cleanup redirect-languages, by removing the values that aren't present in the active languages
@@ -506,9 +506,9 @@ class Index extends BackendBaseActionIndex
                 $siteDomains = [];
 
                 // domains filled in
-                if ($this->frm->getField('site_domains')->isFilled()) {
+                if ($this->form->getField('site_domains')->isFilled()) {
                     // split on newlines
-                    $domains = explode("\n", trim($this->frm->getField('site_domains')->getValue()));
+                    $domains = explode("\n", trim($this->form->getField('site_domains')->getValue()));
 
                     // loop domains
                     foreach ($domains as $domain) {
@@ -523,7 +523,7 @@ class Index extends BackendBaseActionIndex
                 $this->get('fork.settings')->set(
                     'Core',
                     'show_cookie_bar',
-                    $this->frm->getField('show_cookie_bar')->getChecked()
+                    $this->form->getField('show_cookie_bar')->getChecked()
                 );
 
                 // assign report

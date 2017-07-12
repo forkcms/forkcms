@@ -32,11 +32,11 @@ class AddCategory extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('addCategory');
-        $this->frm->addText('title', null, 255, 'form-control title', 'form-control danger title');
+        $this->form = new BackendForm('addCategory');
+        $this->form->addText('title', null, 255, 'form-control title', 'form-control danger title');
 
         // meta
-        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+        $this->meta = new BackendMeta($this->form, null, 'title', true);
 
         // set callback for generating an unique URL
         $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getUrlForCategory');
@@ -44,21 +44,21 @@ class AddCategory extends BackendBaseActionAdd
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
             // validate meta
             $this->meta->validate();
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [
-                    'title' => $this->frm->getField('title')->getValue(),
+                    'title' => $this->form->getField('title')->getValue(),
                     'language' => BL::getWorkingLanguage(),
                     'meta_id' => $this->meta->save(),
                 ];

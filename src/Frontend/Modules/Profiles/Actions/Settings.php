@@ -28,7 +28,7 @@ class Settings extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * The current profile.
@@ -93,40 +93,40 @@ class Settings extends FrontendBaseBlock
         }
 
         // create the form
-        $this->frm = new FrontendForm('updateSettings', null, null, 'updateSettingsForm');
+        $this->form = new FrontendForm('updateSettings', null, null, 'updateSettingsForm');
 
         // create & add elements
-        $this->frm->addText('display_name', $this->profile->getDisplayName());
-        $this->frm->addText('first_name', $this->profile->getSetting('first_name'));
-        $this->frm->addText('last_name', $this->profile->getSetting('last_name'));
-        $this->frm->addText('email', $this->profile->getEmail());
-        $this->frm->addText('city', $this->profile->getSetting('city'));
-        $this->frm->addDropdown(
+        $this->form->addText('display_name', $this->profile->getDisplayName());
+        $this->form->addText('first_name', $this->profile->getSetting('first_name'));
+        $this->form->addText('last_name', $this->profile->getSetting('last_name'));
+        $this->form->addText('email', $this->profile->getEmail());
+        $this->form->addText('city', $this->profile->getSetting('city'));
+        $this->form->addDropdown(
             'country',
             Intl::getRegionBundle()->getCountryNames(LANGUAGE),
             $this->profile->getSetting('country')
         );
-        $this->frm->addDropdown('gender', $genderValues, $this->profile->getSetting('gender'));
-        $this->frm->addDropdown('day', array_combine($days, $days), $birthDay);
-        $this->frm->addDropdown('month', $months, $birthMonth);
-        $this->frm->addDropdown('year', array_combine($years, $years), (int) $birthYear);
+        $this->form->addDropdown('gender', $genderValues, $this->profile->getSetting('gender'));
+        $this->form->addDropdown('day', array_combine($days, $days), $birthDay);
+        $this->form->addDropdown('month', $months, $birthMonth);
+        $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear);
 
         // set default elements drop-downs
-        $this->frm->getField('gender')->setDefaultElement('');
-        $this->frm->getField('day')->setDefaultElement('');
-        $this->frm->getField('month')->setDefaultElement('');
-        $this->frm->getField('year')->setDefaultElement('');
-        $this->frm->getField('country')->setDefaultElement('');
+        $this->form->getField('gender')->setDefaultElement('');
+        $this->form->getField('day')->setDefaultElement('');
+        $this->form->getField('month')->setDefaultElement('');
+        $this->form->getField('year')->setDefaultElement('');
+        $this->form->getField('country')->setDefaultElement('');
 
         // set email disabled
-        $this->frm->getField('email')->setAttribute('disabled', 'disabled');
+        $this->form->getField('email')->setAttribute('disabled', 'disabled');
 
         // set avatar
-        $this->frm->addImage('avatar');
+        $this->form->addImage('avatar');
 
         // when user exceeded the number of name changes set field disabled
         if ($nameChanges >= FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES) {
-            $this->frm->getField(
+            $this->form->getField(
                 'display_name'
             )->setAttribute('disabled', 'disabled');
         }
@@ -148,7 +148,7 @@ class Settings extends FrontendBaseBlock
         $this->tpl->assign('avatar', $avatar);
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
 
         // display name changes
         $this->tpl->assign('maxDisplayNameChanges', FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES);
@@ -161,17 +161,17 @@ class Settings extends FrontendBaseBlock
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get fields
-            $txtDisplayName = $this->frm->getField('display_name');
-            $txtFirstName = $this->frm->getField('first_name');
-            $txtLastName = $this->frm->getField('last_name');
-            $txtCity = $this->frm->getField('city');
-            $ddmCountry = $this->frm->getField('country');
-            $ddmGender = $this->frm->getField('gender');
-            $ddmDay = $this->frm->getField('day');
-            $ddmMonth = $this->frm->getField('month');
-            $ddmYear = $this->frm->getField('year');
+            $txtDisplayName = $this->form->getField('display_name');
+            $txtFirstName = $this->form->getField('first_name');
+            $txtLastName = $this->form->getField('last_name');
+            $txtCity = $this->form->getField('city');
+            $ddmCountry = $this->form->getField('country');
+            $ddmGender = $this->form->getField('gender');
+            $ddmDay = $this->form->getField('day');
+            $ddmMonth = $this->form->getField('month');
+            $ddmYear = $this->form->getField('year');
 
             // get number of display name changes
             $nameChanges = (int) FrontendProfilesModel::getSetting($this->profile->getId(), 'display_name_changes');
@@ -204,10 +204,10 @@ class Settings extends FrontendBaseBlock
             }
 
             // validate avatar when given
-            $this->frm->getField('avatar')->isFilled();
+            $this->form->getField('avatar')->isFilled();
 
             // no errors
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // init
                 $values = [];
                 $settings = [];
@@ -256,13 +256,13 @@ class Settings extends FrontendBaseBlock
                 $settings['avatar'] = $this->profile->getSetting('avatar');
 
                 // create new filename
-                if ($this->frm->getField('avatar')->isFilled()) {
+                if ($this->form->getField('avatar')->isFilled()) {
                     // field value
                     $settings['avatar'] = \SpoonFilter::urlise($this->profile->getDisplayName()) . '.' .
-                                          $this->frm->getField('avatar')->getExtension();
+                                          $this->form->getField('avatar')->getExtension();
 
                     // move the file
-                    $this->frm->getField('avatar')->generateThumbnails(
+                    $this->form->getField('avatar')->generateThumbnails(
                         FRONTEND_FILES_PATH . '/Profiles/Avatars/',
                         $settings['avatar']
                     );

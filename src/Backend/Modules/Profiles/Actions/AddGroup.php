@@ -31,20 +31,20 @@ class AddGroup extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('addGroup');
-        $this->frm->addText('name');
+        $this->form = new BackendForm('addGroup');
+        $this->form->addText('name');
     }
 
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get field
             /** @var $txtName \SpoonFormText */
-            $txtName = $this->frm->getField('name');
+            $txtName = $this->form->getField('name');
 
             // name filled in?
             if ($txtName->isFilled(BL::getError('NameIsRequired'))) {
@@ -56,7 +56,7 @@ class AddGroup extends BackendBaseActionAdd
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $values = ['name' => $txtName->getValue()];
 

@@ -26,7 +26,7 @@ class Themes extends BackendBaseActionIndex
      *
      * @var BackendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * Theme id.
@@ -73,7 +73,7 @@ class Themes extends BackendBaseActionIndex
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('settingsThemes');
+        $this->form = new BackendForm('settingsThemes');
 
         // fetch the themes
         $themes = $this->installedThemes;
@@ -105,14 +105,14 @@ class Themes extends BackendBaseActionIndex
         }
 
         // templates
-        $this->frm->addRadiobutton('installedThemes', $themes, $selected);
+        $this->form->addRadiobutton('installedThemes', $themes, $selected);
     }
 
     protected function parse(): void
     {
         parent::parse();
 
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
 
         // parse not yet installed themes
         $this->tpl->assign('installableThemes', $this->installableThemes);
@@ -121,11 +121,11 @@ class Themes extends BackendBaseActionIndex
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // determine themes
-                $newTheme = $this->frm->getField('installedThemes')->getValue();
+                $newTheme = $this->form->getField('installedThemes')->getValue();
                 $oldTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
 
                 // check if we actually switched themes

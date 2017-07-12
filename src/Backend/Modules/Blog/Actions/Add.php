@@ -46,7 +46,7 @@ class Add extends BackendBaseActionAdd
     {
         $this->imageIsAllowed = $this->get('fork.settings')->get($this->url->getModule(), 'show_image_form', true);
 
-        $this->frm = new BackendForm('add');
+        $this->form = new BackendForm('add');
 
         // set hidden values
         $rbtHiddenValues = [
@@ -59,25 +59,25 @@ class Add extends BackendBaseActionAdd
         $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
         // create elements
-        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
-        $this->frm->addEditor('text');
-        $this->frm->addEditor('introduction');
-        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
-        $this->frm->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
-        $this->frm->addDropdown('category_id', $categories, $this->getRequest()->query->getInt('category'));
+        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
+        $this->form->addEditor('text');
+        $this->form->addEditor('introduction');
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, 'N');
+        $this->form->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
+        $this->form->addDropdown('category_id', $categories, $this->getRequest()->query->getInt('category'));
         if (count($categories) !== 2) {
-            $this->frm->getField('category_id')->setDefaultElement('');
+            $this->form->getField('category_id')->setDefaultElement('');
         }
-        $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
-        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
-        $this->frm->addDate('publish_on_date');
-        $this->frm->addTime('publish_on_time');
+        $this->form->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
+        $this->form->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
+        $this->form->addDate('publish_on_date');
+        $this->form->addTime('publish_on_time');
         if ($this->imageIsAllowed) {
-            $this->frm->addImage('image');
+            $this->form->addImage('image');
         }
 
         // meta
-        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+        $this->meta = new BackendMeta($this->form, null, 'title', true);
     }
 
     protected function parse(): void
@@ -98,7 +98,7 @@ class Add extends BackendBaseActionAdd
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get the status
             $status = $this->getRequest()->request->get('status');
             if (!in_array($status, ['active', 'draft'])) {
@@ -106,42 +106,42 @@ class Add extends BackendBaseActionAdd
             }
 
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
-            $this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
-            $this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
-            if ($this->frm->getField('category_id')->getValue() == 'new_category') {
-                $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('text')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
+            $this->form->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
+            $this->form->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
+            if ($this->form->getField('category_id')->getValue() == 'new_category') {
+                $this->form->getField('category_id')->addError(BL::err('FieldIsRequired'));
             }
 
             // validate meta
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [
                     'id' => (int) BackendBlogModel::getMaximumId() + 1,
                     'meta_id' => $this->meta->save(),
-                    'category_id' => (int) $this->frm->getField('category_id')->getValue(),
-                    'user_id' => $this->frm->getField('user_id')->getValue(),
+                    'category_id' => (int) $this->form->getField('category_id')->getValue(),
+                    'user_id' => $this->form->getField('user_id')->getValue(),
                     'language' => BL::getWorkingLanguage(),
-                    'title' => $this->frm->getField('title')->getValue(),
-                    'introduction' => $this->frm->getField('introduction')->getValue(),
-                    'text' => $this->frm->getField('text')->getValue(),
+                    'title' => $this->form->getField('title')->getValue(),
+                    'introduction' => $this->form->getField('introduction')->getValue(),
+                    'text' => $this->form->getField('text')->getValue(),
                     'publish_on' => BackendModel::getUTCDate(
                         null,
                         BackendModel::getUTCTimestamp(
-                            $this->frm->getField('publish_on_date'),
-                            $this->frm->getField('publish_on_time')
+                            $this->form->getField('publish_on_date'),
+                            $this->form->getField('publish_on_time')
                         )
                     ),
                     'created_on' => BackendModel::getUTCDate(),
-                    'hidden' => $this->frm->getField('hidden')->getValue(),
-                    'allow_comments' => $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N',
+                    'hidden' => $this->form->getField('hidden')->getValue(),
+                    'allow_comments' => $this->form->getField('allow_comments')->getChecked() ? 'Y' : 'N',
                     'num_comments' => 0,
                     'status' => $status,
                 ];
@@ -159,15 +159,15 @@ class Add extends BackendBaseActionAdd
                     $filesystem->mkdir([$imagePath . '/source', $imagePath . '/128x128']);
 
                     // image provided?
-                    if ($this->frm->getField('image')->isFilled()) {
+                    if ($this->form->getField('image')->isFilled()) {
                         // build the image name
                         $item['image'] = $this->meta->getUrl()
                             . '-' . BL::getWorkingLanguage()
                             . '-' . $item['revision_id']
-                            . '.' . $this->frm->getField('image')->getExtension();
+                            . '.' . $this->form->getField('image')->getExtension();
 
                         // upload the image & generate thumbnails
-                        $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
+                        $this->form->getField('image')->generateThumbnails($imagePath, $item['image']);
 
                         // add the image to the database without changing the revision id
                         BackendBlogModel::updateRevision($item['revision_id'], ['image' => $item['image']]);
@@ -175,7 +175,7 @@ class Add extends BackendBaseActionAdd
                 }
 
                 // save the tags
-                BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->url->getModule());
+                BackendTagsModel::saveTags($item['id'], $this->form->getField('tags')->getValue(), $this->url->getModule());
 
                 // active
                 if ($item['status'] == 'active') {

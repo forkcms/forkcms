@@ -47,7 +47,7 @@ class Index extends BackendBaseActionIndex
      *
      * @var BackendForm
      */
-    protected $frm;
+    protected $form;
 
     /**
      * Filter variables
@@ -226,8 +226,8 @@ class Index extends BackendBaseActionIndex
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
-        $this->frm->addDropdown(
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
+        $this->form->addDropdown(
             'application',
             [
                 '' => '-',
@@ -236,29 +236,29 @@ class Index extends BackendBaseActionIndex
             ],
             $this->filter['application']
         );
-        $this->frm->addText('name', $this->filter['name']);
-        $this->frm->addText('value', $this->filter['value']);
-        $this->frm->addMultiCheckbox(
+        $this->form->addText('name', $this->filter['name']);
+        $this->form->addText('value', $this->filter['value']);
+        $this->form->addMultiCheckbox(
             'language',
             BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod),
             $this->filter['language'],
             'noFocus'
         );
-        $this->frm->addMultiCheckbox(
+        $this->form->addMultiCheckbox(
             'type',
             BackendLocaleModel::getTypesForMultiCheckbox(),
             $this->filter['type'],
             'noFocus'
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'module',
             BackendModel::getModulesForDropDown(),
             $this->filter['module']
         );
-        $this->frm->getField('module')->setDefaultElement('-');
+        $this->form->getField('module')->setDefaultElement('-');
 
         // manually parse fields
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->tpl);
     }
 
     protected function parse(): void

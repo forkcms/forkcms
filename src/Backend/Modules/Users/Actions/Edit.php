@@ -107,7 +107,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // create form
-        $this->frm = new BackendForm('edit');
+        $this->form = new BackendForm('edit');
 
         // get active groups
         $groups = BackendGroupsModel::getGroupsByUser($this->id);
@@ -120,75 +120,75 @@ class Edit extends BackendBaseActionEdit
 
         // create elements
         // profile
-        $this->frm
+        $this->form
             ->addText('email', $this->record['email'], 255)
             ->setAttribute('type', 'email')
         ;
         if ($this->user->isGod()) {
-            $this->frm->getField('email')->setAttributes(['disabled' => 'disabled']);
+            $this->form->getField('email')->setAttributes(['disabled' => 'disabled']);
         }
-        $this->frm->addText('name', $this->record['settings']['name'], 255);
-        $this->frm->addText('surname', $this->record['settings']['surname'], 255);
-        $this->frm->addText('nickname', $this->record['settings']['nickname'], 24);
-        $this->frm->addImage('avatar');
+        $this->form->addText('name', $this->record['settings']['name'], 255);
+        $this->form->addText('surname', $this->record['settings']['surname'], 255);
+        $this->form->addText('nickname', $this->record['settings']['nickname'], 24);
+        $this->form->addImage('avatar');
 
         // password
         // check if we're god or same user
         if ($this->authenticatedUser->getUserId() == $this->id || $this->authenticatedUser->isGod()) {
             // allow to set new password
-            $this->frm->addPassword('new_password', null, 75);
-            $this->frm->addPassword('confirm_password', null, 75);
+            $this->form->addPassword('new_password', null, 75);
+            $this->form->addPassword('confirm_password', null, 75);
 
             // disable autocomplete
-            $this->frm->getField('new_password')->setAttributes(['autocomplete' => 'off']);
-            $this->frm->getField('confirm_password')->setAttributes(['autocomplete' => 'off']);
+            $this->form->getField('new_password')->setAttributes(['autocomplete' => 'off']);
+            $this->form->getField('confirm_password')->setAttributes(['autocomplete' => 'off']);
         }
 
         // settings
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'interface_language',
             BL::getInterfaceLanguages(),
             $this->record['settings']['interface_language']
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'date_format',
             BackendUsersModel::getDateFormats(),
             $this->user->getSetting('date_format')
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'time_format',
             BackendUsersModel::getTimeFormats(),
             $this->user->getSetting('time_format')
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'number_format',
             BackendUsersModel::getNumberFormats(),
             $this->user->getSetting('number_format', 'dot_nothing')
         );
 
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'csv_split_character',
             BackendUsersModel::getCSVSplitCharacters(),
             $this->user->getSetting('csv_split_character')
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'csv_line_ending',
             BackendUsersModel::getCSVLineEndings(),
             $this->user->getSetting('csv_line_ending')
         );
 
         // permissions
-        $this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
+        $this->form->addCheckbox('active', ($this->record['active'] == 'Y'));
 
         // only when GOD or when you can edit other users
         if ($this->allowUserRights) {
             // disable active field for current users
             if ($this->authenticatedUser->getUserId() == $this->record['id']) {
-                $this->frm->getField(
+                $this->form->getField(
                     'active'
                 )->setAttribute('disabled', 'disabled');
             }
-            $this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
+            $this->form->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
         }
     }
 
@@ -228,10 +228,10 @@ class Edit extends BackendBaseActionEdit
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
-            $fields = $this->frm->getFields();
+            $this->form->cleanupFields();
+            $fields = $this->form->getFields();
 
             // email is present
             if (!$this->user->isGod()) {
@@ -286,7 +286,7 @@ class Edit extends BackendBaseActionEdit
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build user-array
                 $user = ['id' => $this->id];
                 if (!$this->user->isGod()) {

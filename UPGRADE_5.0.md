@@ -371,6 +371,7 @@ We did add helper getters so you can keep doing `$this->getAction()` and `$this-
 | Old parameter                 | New parameter                                   |
 |-------------------------------|-------------------------------------------------|
 | `$this->URL`                  | `$this->url`                                    |
+| `$this->form`                  | `$this->form`                                   |
 
 | Old classname                                 | New classname                                   |
 |-----------------------------------------------|-------------------------------------------------|

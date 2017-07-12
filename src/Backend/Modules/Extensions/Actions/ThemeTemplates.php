@@ -97,10 +97,10 @@ class ThemeTemplates extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('themes');
+        $this->form = new BackendForm('themes');
 
         // create elements
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'theme',
             $this->availableThemes,
             $this->selectedTheme,

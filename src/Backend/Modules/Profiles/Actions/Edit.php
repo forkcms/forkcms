@@ -102,34 +102,34 @@ class Edit extends BackendBaseActionEdit
         }
 
         // create form
-        $this->frm = new BackendForm('edit');
+        $this->form = new BackendForm('edit');
 
         // create elements
-        $this->frm->addCheckbox('new_email');
-        $this->frm->addText('email', $this->profile['email']);
-        $this->frm->addCheckbox('new_password');
-        $this->frm->addPassword('password');
-        $this->frm->addPassword('password_repeat');
-        $this->frm->addText('display_name', $this->profile['display_name']);
-        $this->frm->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
-        $this->frm->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'));
-        $this->frm->addText('city', BackendProfilesModel::getSetting($this->id, 'city'));
-        $this->frm->addDropdown('gender', $genderValues, BackendProfilesModel::getSetting($this->id, 'gender'));
-        $this->frm->addDropdown('day', array_combine($days, $days), $birthDay);
-        $this->frm->addDropdown('month', $months, $birthMonth);
-        $this->frm->addDropdown('year', array_combine($years, $years), (int) $birthYear);
-        $this->frm->addDropdown(
+        $this->form->addCheckbox('new_email');
+        $this->form->addText('email', $this->profile['email']);
+        $this->form->addCheckbox('new_password');
+        $this->form->addPassword('password');
+        $this->form->addPassword('password_repeat');
+        $this->form->addText('display_name', $this->profile['display_name']);
+        $this->form->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
+        $this->form->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'));
+        $this->form->addText('city', BackendProfilesModel::getSetting($this->id, 'city'));
+        $this->form->addDropdown('gender', $genderValues, BackendProfilesModel::getSetting($this->id, 'gender'));
+        $this->form->addDropdown('day', array_combine($days, $days), $birthDay);
+        $this->form->addDropdown('month', $months, $birthMonth);
+        $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear);
+        $this->form->addDropdown(
             'country',
             Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()),
             BackendProfilesModel::getSetting($this->id, 'country')
         );
 
         // set default elements dropdowns
-        $this->frm->getField('gender')->setDefaultElement('');
-        $this->frm->getField('day')->setDefaultElement('');
-        $this->frm->getField('month')->setDefaultElement('');
-        $this->frm->getField('year')->setDefaultElement('');
-        $this->frm->getField('country')->setDefaultElement('');
+        $this->form->getField('gender')->setDefaultElement('');
+        $this->form->getField('day')->setDefaultElement('');
+        $this->form->getField('month')->setDefaultElement('');
+        $this->form->getField('year')->setDefaultElement('');
+        $this->form->getField('country')->setDefaultElement('');
     }
 
     private function loadGroups(): void
@@ -199,25 +199,25 @@ class Edit extends BackendBaseActionEdit
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $chkNewEmail = $this->frm->getField('new_email');
-            $txtEmail = $this->frm->getField('email');
-            $txtDisplayName = $this->frm->getField('display_name');
-            $chkNewPassword = $this->frm->getField('new_password');
-            $txtPassword = $this->frm->getField('password');
-            $txtPasswordRepeat = $this->frm->getField('password_repeat');
-            $txtFirstName = $this->frm->getField('first_name');
-            $txtLastName = $this->frm->getField('last_name');
-            $txtCity = $this->frm->getField('city');
-            $ddmGender = $this->frm->getField('gender');
-            $ddmDay = $this->frm->getField('day');
-            $ddmMonth = $this->frm->getField('month');
-            $ddmYear = $this->frm->getField('year');
-            $ddmCountry = $this->frm->getField('country');
+            $chkNewEmail = $this->form->getField('new_email');
+            $txtEmail = $this->form->getField('email');
+            $txtDisplayName = $this->form->getField('display_name');
+            $chkNewPassword = $this->form->getField('new_password');
+            $txtPassword = $this->form->getField('password');
+            $txtPasswordRepeat = $this->form->getField('password_repeat');
+            $txtFirstName = $this->form->getField('first_name');
+            $txtLastName = $this->form->getField('last_name');
+            $txtCity = $this->form->getField('city');
+            $ddmGender = $this->form->getField('gender');
+            $ddmDay = $this->form->getField('day');
+            $ddmMonth = $this->form->getField('month');
+            $ddmYear = $this->form->getField('year');
+            $ddmCountry = $this->form->getField('country');
 
             // email filled in?
             if ($chkNewEmail->isChecked() && $txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
@@ -268,7 +268,7 @@ class Edit extends BackendBaseActionEdit
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $values = ['email' => $chkNewEmail->isChecked() ? $txtEmail->getValue() : $this->profile['email']];
 

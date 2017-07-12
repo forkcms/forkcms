@@ -29,7 +29,7 @@ class Register extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
@@ -53,16 +53,16 @@ class Register extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->frm = new FrontendForm('register', null, null, 'registerForm');
-        $this->frm->addText('display_name');
-        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
-        $this->frm->addPassword('password')->setAttributes(
+        $this->form = new FrontendForm('register', null, null, 'registerForm');
+        $this->form->addText('display_name');
+        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addPassword('password')->setAttributes(
             [
                 'required' => null,
                 'data-role' => 'fork-new-password',
             ]
         );
-        $this->frm->addCheckbox('show_password')->setAttributes(
+        $this->form->addCheckbox('show_password')->setAttributes(
             ['data-role' => 'fork-toggle-visible-password']
         );
     }
@@ -77,18 +77,18 @@ class Register extends FrontendBaseBlock
             // hide form
             $this->tpl->assign('registerHideForm', true);
         } else {
-            $this->frm->parse($this->tpl);
+            $this->form->parse($this->tpl);
         }
     }
 
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get fields
-            $txtDisplayName = $this->frm->getField('display_name');
-            $txtEmail = $this->frm->getField('email');
-            $txtPassword = $this->frm->getField('password');
+            $txtDisplayName = $this->form->getField('display_name');
+            $txtEmail = $this->form->getField('email');
+            $txtPassword = $this->form->getField('password');
 
             // check email
             if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
@@ -107,7 +107,7 @@ class Register extends FrontendBaseBlock
             $txtDisplayName->isFilled(FL::getError('FieldIsRequired'));
 
             // no errors
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // init values
                 $settings = [];
                 $values = [];

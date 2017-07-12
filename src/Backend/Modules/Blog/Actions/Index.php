@@ -321,14 +321,14 @@ class Index extends BackendBaseActionIndex
         // multiple categories?
         if ($hasMultipleCategories) {
             // create form
-            $frm = new BackendForm('filter', null, 'get', false);
+            $form = new BackendForm('filter', null, 'get', false);
 
             // create element
-            $frm->addDropdown('category', $categories, $this->categoryId);
-            $frm->getField('category')->setDefaultElement('');
+            $form->addDropdown('category', $categories, $this->categoryId);
+            $form->getField('category')->setDefaultElement('');
 
             // parse the form
-            $frm->parse($this->tpl);
+            $form->parse($this->tpl);
         }
 
         // parse category
