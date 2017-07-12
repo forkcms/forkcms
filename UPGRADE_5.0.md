@@ -338,9 +338,34 @@ We did add helper getters so you can keep doing `$this->getAction()` and `$this-
 
 ## Removed some abbreviations and incorrect casings
 
-| Old method                    | New method                                      |
-|-------------------------------|-------------------------------------------------|
-| `Object::getContent`          | `\Backend\Core\Engine\Base\Action::getContent`  |
+| Old method                                                     | New method                                                     |
+|----------------------------------------------------------------|----------------------------------------------------------------|
+| `\Backend\Core\Engine\Meta::generateURL`                       | `\Backend\Core\Engine\Meta::generateUrl`                       |
+| `\Common\Doctrine\Repository::generateURL`                     | `\Common\Doctrine\Repository::generateUrl`                     |
+| `\Backend\Core\Engine\Model::createURLForAction`               | `\Backend\Core\Engine\Model::createUrlForAction`               |
+| `\Backend\Core\Engine\Model::getUrl`                           | `\Backend\Core\Engine\Model::getUrl`                           |
+| `\Backend\Core\Engine\Model::getUrlForBlock`                   | `\Backend\Core\Engine\Model::getUrlForBlock`                   |
+| `\Backend\Core\Engine\Meta::setURLCallback`                    | `\Backend\Core\Engine\Meta::setUrlCallback`                    |
+| `\Backend\Core\Engine\Meta::getURL`                            | `\Backend\Core\Engine\Meta::getUrl`                            |
+| `\Backend\Core\Engine\Meta::getURLOverwrite`                   | `\Backend\Core\Engine\Meta::getUrlOverwrite`                   |
+| `\Backend\Modules\Blog\Engine\Model::getURL`                   | `\Backend\Modules\Blog\Engine\Model::getUrl`                   |
+| `\Backend\Modules\Blog\Engine\Model::getURLForCategory`        | `\Backend\Modules\Blog\Engine\Model::getUrlForCategory`        |
+| `\Backend\Modules\Faq\Engine\Model::getURL`                    | `\Backend\Modules\Faq\Engine\Model::getUrl`                    |
+| `\Backend\Modules\Faq\Engine\Model::getURLForCategory`         | `\Backend\Modules\Faq\Engine\Model::getUrlForCategory`         |
+| `\Backend\Modules\Locale\Engine\Model::buildURLQueryByFilter`  | `\Backend\Modules\Locale\Engine\Model::buildUrlQueryByFilter`  |
+| `\Backend\Modules\Pages\Engine\Model::getFullURL`              | `\Backend\Modules\Pages\Engine\Model::getFullUrl`              |
+| `\Backend\Modules\Pages\Engine\Model::getEncodedRedirectURL`   | `\Backend\Modules\Pages\Engine\Model::getEncodedRedirectUrl`   |
+| `\Backend\Modules\Pages\Engine\Model::getURL`                  | `\Backend\Modules\Pages\Engine\Model::getUrl`                  |
+| `\Backend\Modules\Tags\Engine\Model::getURL`                   | `\Backend\Modules\Tags\Engine\Model::getUrl`                   |
+| `\Frontend\Core\Engine\Model::addURLParameters`                | `\Frontend\Core\Engine\Model::addUrlParameters`                |
+| `\Frontend\Core\Engine\Model::getURL`                          | `\Frontend\Core\Engine\Model::getUrl`                          |
+| `\Frontend\Core\Engine\Navigation::getURLForBlock`             | `\Frontend\Core\Engine\Navigation::getUrlForBlock`             |
+| `\Frontend\Core\Engine\Navigation::getBackendURLForBlock`      | `\Frontend\Core\Engine\Navigation::getBackendUrlForBlock`      |
+| `\Frontend\Core\Engine\Navigation::getURLForExtraId`           | `\Frontend\Core\Engine\Navigation::getUrlForExtraId`           |
+| `\Frontend\Core\Engine\TemplateModifiers::getURL`              | `\Frontend\Core\Engine\TemplateModifiers::getUrl`              |
+| `\Frontend\Core\Engine\TemplateModifiers::getURLForBlock`      | `\Frontend\Core\Engine\TemplateModifiers::getUrlForBlock`      |
+| `\Frontend\Core\Engine\TemplateModifiers::getURLForExtraId`    | `\Frontend\Core\Engine\TemplateModifiers::getUrlForExtraId`    |
+| `\Frontend\Modules\Tags\Engine\Model::getIdByURL`              | `\Frontend\Modules\Tags\Engine\Model::getIdByUrl`              |
 
 | Old parameter                 | New parameter                                   |
 |-------------------------------|-------------------------------------------------|

@@ -508,7 +508,7 @@ class Model
                 'id' => $formId,
                 'extra_label' => $values['name'],
                 'language' => $values['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $formId,
+                'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $formId,
             ],
             false,
             '400' . $formId
@@ -563,7 +563,7 @@ class Model
                     'language' => BL::getWorkingLanguage(),
                     'extra_label' => $values['name'],
                     'id' => $id,
-                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $id,
+                    'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $id,
                 ]
             ),
         ];

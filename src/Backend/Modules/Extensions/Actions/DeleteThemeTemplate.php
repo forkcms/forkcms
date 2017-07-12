@@ -28,7 +28,7 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction(
+            $this->redirect(BackendModel::createUrlForAction(
                 'ThemeTemplates',
                 null,
                 null,
@@ -43,7 +43,7 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
 
         // does the item exist
         if ($this->id === 0 || !BackendExtensionsModel::existsTemplate($this->id)) {
-            $this->redirect(BackendModel::createURLForAction(
+            $this->redirect(BackendModel::createUrlForAction(
                 'ThemeTemplates',
                 null,
                 null,
@@ -62,7 +62,7 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
         }
 
         if (!$success) {
-            $this->redirect(BackendModel::createURLForAction(
+            $this->redirect(BackendModel::createUrlForAction(
                 'ThemeTemplates',
                 null,
                 null,
@@ -72,7 +72,7 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
             return;
         }
 
-        $this->redirect(BackendModel::createURLForAction(
+        $this->redirect(BackendModel::createUrlForAction(
             'ThemeTemplates',
             null,
             null,

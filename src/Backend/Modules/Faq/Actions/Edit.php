@@ -46,7 +46,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -87,8 +87,8 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->url->getModule(), 'Detail');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
+        $url404 = BackendModel::getUrl(404);
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);
         }
@@ -101,7 +101,7 @@ class Edit extends BackendBaseActionEdit
     private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
-            $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURL', [$this->record['id']]);
+            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getUrl', [$this->record['id']]);
 
             $this->frm->cleanupFields();
 
@@ -142,7 +142,7 @@ class Edit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=saved&var=' .
+                    BackendModel::createUrlForAction('Index') . '&report=saved&var=' .
                     rawurlencode($item['question']) . '&highlight=' . $item['id']
                 );
             }

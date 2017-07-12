@@ -146,7 +146,7 @@ class Add extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the editform
                 $this->redirect(
-                    BackendModel::createURLForAction('Edit') . '&id=' . $id .
+                    BackendModel::createUrlForAction('Edit') . '&id=' . $id .
                     '&report=added&var=' . rawurlencode($values['name']) . '#tabFields'
                 );
             }

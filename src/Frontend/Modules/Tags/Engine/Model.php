@@ -100,7 +100,7 @@ class Model
         }
 
         // create link
-        $tagLink = FrontendNavigation::getURLForBlock('Tags', 'Detail');
+        $tagLink = FrontendNavigation::getUrlForBlock('Tags', 'Detail');
 
         // loop tags
         foreach ($linkedTags as $row) {
@@ -146,7 +146,7 @@ class Model
         }
 
         // create link
-        $tagLink = FrontendNavigation::getURLForBlock('Tags', 'Detail');
+        $tagLink = FrontendNavigation::getUrlForBlock('Tags', 'Detail');
 
         // loop tags
         foreach ($linkedTags as $row) {
@@ -160,7 +160,7 @@ class Model
         return $return;
     }
 
-    public static function getIdByURL(string $url): int
+    public static function getIdByUrl(string $url): int
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT id

@@ -522,7 +522,7 @@ class Model
         $html .= '  <div class="avatar av24">' . "\n";
         if ($allowed) {
             $html .= '      <a href="' .
-                     BackendModel::createURLForAction(
+                     BackendModel::createUrlForAction(
                          'Edit',
                          'Profiles'
                      ) . '&amp;id=' . $id . '">' . "\n";
@@ -533,7 +533,7 @@ class Model
         }
         $html .= '  </div>';
         $html .= '  <p><a href="' .
-                 BackendModel::createURLForAction(
+                 BackendModel::createUrlForAction(
                      'Edit',
                      'Profiles'
                  ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
@@ -672,7 +672,7 @@ class Model
         }
 
         // define backend url
-        $backendURL = BackendModel::createURLForAction('Edit', 'Profiles') . '&id=' . $values['id'];
+        $backendUrl = BackendModel::createUrlForAction('Edit', 'Profiles') . '&id=' . $values['id'];
 
         // set variables
         $variables = [
@@ -681,7 +681,7 @@ class Model
                 [
                     $values['display_name'],
                     $values['email'],
-                    $backendURL,
+                    $backendUrl,
                 ]
             ),
         ];

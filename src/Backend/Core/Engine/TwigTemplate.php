@@ -218,7 +218,7 @@ class TwigTemplate extends BaseTwigTemplate
                 // assign special vars
                 $this->assign(
                     'authenticatedUserEditUrl',
-                    Model::createURLForAction(
+                    Model::createUrlForAction(
                         'Edit',
                         'Users',
                         null,

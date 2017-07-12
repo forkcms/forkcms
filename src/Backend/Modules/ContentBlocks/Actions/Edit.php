@@ -75,7 +75,7 @@ class Edit extends BackendBaseActionEdit
 
     private function getBackLink(array $parameters = []): string
     {
-        return BackendModel::createURLForAction(
+        return BackendModel::createUrlForAction(
             'Index',
             null,
             null,

@@ -88,7 +88,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $this->filesystem->remove(FRONTEND_FILES_PATH . '/wordpress.xml');
 
         // Everything is saved, so redirect to the overview
-        $this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
+        $this->redirect(BackendModel::createUrlForAction('index') . '&report=imported');
     }
 
     private function processXML(): void
@@ -262,7 +262,7 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // Set paths
         $imagesPath = FRONTEND_FILES_PATH . '/userfiles/images/blog';
-        $imagesURL = FRONTEND_FILES_URL . '/userfiles/images/blog';
+        $imagesUrl = FRONTEND_FILES_URL . '/userfiles/images/blog';
 
         // Create directory if needed
         if (!file_exists($imagesPath) || !is_dir($imagesPath)) {
@@ -287,8 +287,8 @@ class ImportWordpress extends BackendBaseActionEdit
         }
 
         // Keep a log of downloaded files
-        $this->attachments[mb_strtolower($file)] = $imagesURL . '/' . $destinationFile;
-        $this->attachments[mb_strtolower($guid)] = $imagesURL . '/' . $destinationFile;
+        $this->attachments[mb_strtolower($file)] = $imagesUrl . '/' . $destinationFile;
+        $this->attachments[mb_strtolower($guid)] = $imagesUrl . '/' . $destinationFile;
 
         return true;
     }

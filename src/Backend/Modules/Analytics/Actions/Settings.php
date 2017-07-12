@@ -23,7 +23,7 @@ final class Settings extends ActionIndex
         );
 
         if ($settingsForm->handle()) {
-            $this->redirect(Model::createURLForAction('Settings'));
+            $this->redirect(Model::createUrlForAction('Settings'));
         }
         $settingsForm->parse($this->tpl);
 

@@ -42,7 +42,7 @@ class Category extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get by URL
@@ -50,10 +50,10 @@ class Category extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Category') . '/' . $this->record['url'];
+        $this->record['full_url'] = FrontendNavigation::getUrlForBlock('Faq', 'Category') . '/' . $this->record['url'];
         $this->questions = FrontendFaqModel::getAllForCategory($this->record['id']);
     }
 

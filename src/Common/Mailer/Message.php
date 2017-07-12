@@ -123,7 +123,7 @@ class Message extends \Swift_Message
             // loop old links
             foreach ($matches[1] as $i => $link) {
                 $searchLinks[] = $matches[0][$i];
-                $replaceLinks[] = 'href="' . Model::addURLParameters($link, $utm) . '"';
+                $replaceLinks[] = 'href="' . Model::addUrlParameters($link, $utm) . '"';
             }
 
             $html = str_replace($searchLinks, $replaceLinks, $html);

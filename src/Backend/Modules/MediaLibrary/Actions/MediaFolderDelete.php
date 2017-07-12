@@ -94,7 +94,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createURLForAction(
+        return Model::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

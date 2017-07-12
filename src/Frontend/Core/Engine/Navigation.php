@@ -72,7 +72,7 @@ class Navigation extends KernelLoader
      *
      * @return string
      */
-    public static function getBackendURLForBlock(
+    public static function getBackendUrlForBlock(
         string $action,
         string $module,
         string $language = null,
@@ -156,7 +156,7 @@ class Navigation extends KernelLoader
             // add
             $footerLinks[] = [
                 'id' => $id,
-                'url' => self::getURL($id),
+                'url' => self::getUrl($id),
                 'title' => $data['title'],
                 'navigation_title' => $data['navigation_title'],
                 'selected' => in_array($id, self::$selectedPageIds, true),
@@ -350,11 +350,11 @@ class Navigation extends KernelLoader
 
                 $navigation[$type][$parentId][$id]['parent_id'] = $parentId;
                 $navigation[$type][$parentId][$id]['depth'] = $depthCounter;
-                $navigation[$type][$parentId][$id]['link'] = static::getURL($page['page_id']);
+                $navigation[$type][$parentId][$id]['link'] = static::getUrl($page['page_id']);
 
                 // is this an internal redirect?
                 if (isset($page['redirect_page_id']) && $page['redirect_page_id'] !== '') {
-                    $navigation[$type][$parentId][$id]['link'] = static::getURL(
+                    $navigation[$type][$parentId][$id]['link'] = static::getUrl(
                         (int) $page['redirect_page_id']
                     );
                 }
@@ -450,7 +450,7 @@ class Navigation extends KernelLoader
      *
      * @return string
      */
-    public static function getURL(int $pageId, string $language = null): string
+    public static function getUrl(int $pageId, string $language = null): string
     {
         $language = $language ?? LANGUAGE;
 
@@ -462,7 +462,7 @@ class Navigation extends KernelLoader
 
         // get the URL, if it doesn't exist return 404
         if ($pageId !== 404 && !isset($keys[$pageId])) {
-            return self::getURL(404, $language);
+            return self::getUrl(404, $language);
         }
 
         if (empty($keys)) {
@@ -485,7 +485,7 @@ class Navigation extends KernelLoader
      *
      * @return string
      */
-    public static function getURLForBlock(
+    public static function getUrlForBlock(
         string $module,
         string $action = null,
         string $language = null,
@@ -493,7 +493,7 @@ class Navigation extends KernelLoader
     ): string {
         $language = $language ?? LANGUAGE;
         // init var
-        $pageIdForURL = null;
+        $pageIdForUrl = null;
 
         // get the menuItems
         $navigation = self::getNavigation($language);
@@ -521,7 +521,7 @@ class Navigation extends KernelLoader
                                 continue;
                             }
                             // exact page was found, so return
-                            return self::getURL($properties['page_id'], $language);
+                            return self::getUrl($properties['page_id'], $language);
                         }
 
                         if ($extra['module'] === $module && $extra['action'] === null) {
@@ -532,17 +532,17 @@ class Navigation extends KernelLoader
                                     continue;
                                 }
 
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
 
                             if ($data === null && $extra['data'] === null) {
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
 
                             if (!$dataMatch) {
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                             }
                         }
                     }
@@ -551,12 +551,12 @@ class Navigation extends KernelLoader
         }
 
         // pageId still null?
-        if ($pageIdForURL === null) {
-            return self::getURL(404, $language);
+        if ($pageIdForUrl === null) {
+            return self::getUrl(404, $language);
         }
 
         // build URL
-        $url = self::getURL($pageIdForURL, $language);
+        $url = self::getUrl($pageIdForUrl, $language);
 
         // append action
         if ($action !== null) {
@@ -576,7 +576,7 @@ class Navigation extends KernelLoader
      *
      * @return string
      */
-    public static function getURLForExtraId(int $id, string $language = null): string
+    public static function getUrlForExtraId(int $id, string $language = null): string
     {
         $language = $language ?? LANGUAGE;
         // get the menuItems
@@ -598,7 +598,7 @@ class Navigation extends KernelLoader
                         // direct link?
                         if ((int) $extra['id'] === $id) {
                             // exact page was found, so return
-                            return self::getURL($properties['page_id'], $language);
+                            return self::getUrl($properties['page_id'], $language);
                         }
                     }
                 }
@@ -606,7 +606,7 @@ class Navigation extends KernelLoader
         }
 
         // fallback
-        return self::getURL(404, $language);
+        return self::getUrl(404, $language);
     }
 
     /**

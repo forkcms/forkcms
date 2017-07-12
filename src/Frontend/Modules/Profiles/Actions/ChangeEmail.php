@@ -49,10 +49,10 @@ class ChangeEmail extends FrontendBaseBlock
         } else {
             // profile not logged in
             $this->redirect(
-                FrontendNavigation::getURLForBlock(
+                FrontendNavigation::getUrlForBlock(
                     'Profiles',
                     'Login'
-                ) . '?queryString=' . FrontendNavigation::getURLForBlock('Profiles', 'ChangeEmail'),
+                ) . '?queryString=' . FrontendNavigation::getUrlForBlock('Profiles', 'ChangeEmail'),
                 307
             );
         }
@@ -121,7 +121,7 @@ class ChangeEmail extends FrontendBaseBlock
 
                 // redirect
                 $this->redirect(
-                    SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ChangeEmail') . '?sent=true'
+                    SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangeEmail') . '?sent=true'
                 );
             } else {
                 $this->tpl->assign('updateEmailHasFormError', true);

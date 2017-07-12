@@ -76,7 +76,7 @@ class Edit extends BackendBaseActionEdit
             $this->display();
         } else {
             // no item found, throw an exception, because somebody is fucking with our URL
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -118,7 +118,7 @@ class Edit extends BackendBaseActionEdit
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -162,7 +162,7 @@ class Edit extends BackendBaseActionEdit
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
             );
 
             // add use column
@@ -170,7 +170,7 @@ class Edit extends BackendBaseActionEdit
                 'use_draft',
                 null,
                 BL::lbl('UseThisDraft'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
                 BL::lbl('UseThisDraft')
             );
         }
@@ -220,7 +220,7 @@ class Edit extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
-        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURL', [$this->record['id']]);
+        $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getUrl', [$this->record['id']]);
     }
 
     private function loadRevisionDataGrid(): void
@@ -260,7 +260,7 @@ class Edit extends BackendBaseActionEdit
             // set column URLs
             $this->dgRevisions->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]'
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]'
             );
 
             // add use column
@@ -268,7 +268,7 @@ class Edit extends BackendBaseActionEdit
                 'use_revision',
                 null,
                 BL::lbl('UseThisVersion'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]',
                 BL::lbl('UseThisVersion')
             );
         }
@@ -279,8 +279,8 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->url->getModule(), 'detail');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'detail');
+        $url404 = BackendModel::getUrl(404);
 
         // parse additional variables
         if ($url404 != $url) {
@@ -288,7 +288,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // fetch proper slug
-        $this->record['url'] = $this->meta->getURL();
+        $this->record['url'] = $this->meta->getUrl();
 
         // assign the active record and additional variables
         $this->tpl->assign('item', $this->record);
@@ -377,8 +377,8 @@ class Edit extends BackendBaseActionEdit
                         // we use the previous revision-id in the filename to make the filename unique between
                         // the different revisions, to prevent that a new file would
                         // overwrite images of previous revisions that have the same title, and thus, the same filename
-                        $item['image'] = $this->meta->getURL() .
-                                            '-' . BL::getWorkingLanguage() .
+                        $item['image'] = $this->meta->getUrl() .
+                                         '-' . BL::getWorkingLanguage() .
                                             '-' . $item['revision_id'] .
                                             '.' . $this->frm->getField('image')->getExtension();
 
@@ -387,8 +387,8 @@ class Edit extends BackendBaseActionEdit
                     } elseif ($item['image'] != null) {
                         // generate the new filename
                         $image = new File($imagePath . '/source/' . $item['image']);
-                        $newName = $this->meta->getURL() .
-                                            '-' . BL::getWorkingLanguage() .
+                        $newName = $this->meta->getUrl() .
+                                   '-' . BL::getWorkingLanguage() .
                                             '-' . $item['revision_id'] .
                                             '.' . $image->getExtension();
 
@@ -434,12 +434,12 @@ class Edit extends BackendBaseActionEdit
                     );
 
                     // build URL
-                    $redirectUrl = BackendModel::createURLForAction('Index') .
+                    $redirectUrl = BackendModel::createUrlForAction('Index') .
                                    '&report=edited&var=' . rawurlencode($item['title']) .
                                    '&id=' . $this->id . '&highlight=row-' . $item['revision_id'];
                 } elseif ($item['status'] == 'draft') {
                     // draft: everything is saved, so redirect to the edit action
-                    $redirectUrl = BackendModel::createURLForAction('Edit') .
+                    $redirectUrl = BackendModel::createUrlForAction('Edit') .
                                    '&report=saved-as-draft&var=' . rawurlencode($item['title']) .
                                    '&id=' . $item['id'] . '&draft=' . $item['revision_id'] .
                                    '&highlight=row-' . $item['revision_id'];

@@ -191,7 +191,7 @@ class Index extends BackendBaseActionIndex
                             'copy',
                             null,
                             BL::lbl('Copy'),
-                            BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
+                            BackendModel::createUrlForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
 
@@ -202,7 +202,7 @@ class Index extends BackendBaseActionIndex
                             'edit',
                             null,
                             BL::lbl('Edit'),
-                            BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
+                            BackendModel::createUrlForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
                 } else {
@@ -226,7 +226,7 @@ class Index extends BackendBaseActionIndex
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
+        $this->frm = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
         $this->frm->addDropdown(
             'application',
             [
@@ -309,7 +309,7 @@ class Index extends BackendBaseActionIndex
         );
 
         // parse the add URL
-        $this->tpl->assign('addURL', BackendModel::createURLForAction('Add', null, null, null) . $this->filterQuery);
+        $this->tpl->assign('addURL', BackendModel::createUrlForAction('Add', null, null, null) . $this->filterQuery);
     }
 
     /**
@@ -360,6 +360,6 @@ class Index extends BackendBaseActionIndex
         );
 
         // build query for filter
-        $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
+        $this->filterQuery = BackendLocaleModel::buildUrlQueryByFilter($this->filter);
     }
 }

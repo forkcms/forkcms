@@ -62,7 +62,7 @@ class Edit extends BackendBaseActionEdit
             && $this->authenticatedUser->getUserId()
         ) {
             $this->redirect(
-                BackendModel::createURLForAction(
+                BackendModel::createUrlForAction(
                     'Edit'
                 ) . '&id=' . $this->authenticatedUser->getUserId()
             );
@@ -78,7 +78,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -103,7 +103,7 @@ class Edit extends BackendBaseActionEdit
         if (!$this->authenticatedUser->isGod()
             && ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('Add'))
         ) {
-            $this->redirect(BackendModel::createURLForAction('Error') . '&type=not-allowed');
+            $this->redirect(BackendModel::createUrlForAction('Error') . '&type=not-allowed');
         }
 
         // create form
@@ -243,7 +243,7 @@ class Edit extends BackendBaseActionEdit
                             $fields['email']->addError(
                                 sprintf(
                                     BL::err('EmailWasDeletedBefore'),
-                                    BackendModel::createURLForAction(
+                                    BackendModel::createUrlForAction(
                                         'UndoDelete',
                                         null,
                                         null,
@@ -398,14 +398,14 @@ class Edit extends BackendBaseActionEdit
                 if (!BackendAuthentication::isAllowedAction('Index')) {
                     // everything is saved, so redirect to the edit page
                     $this->redirect(
-                        BackendModel::createURLForAction(
+                        BackendModel::createUrlForAction(
                             'Edit'
                         ) . '&id=' . $this->id . '&report=edited&var=' . $settings['nickname']
                     );
                 } else {
                     // everything is saved, so redirect to the overview
                     $this->redirect(
-                        BackendModel::createURLForAction(
+                        BackendModel::createUrlForAction(
                             'Index'
                         ) . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']
                     );

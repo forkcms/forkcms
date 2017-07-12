@@ -83,7 +83,7 @@ class Import extends BackendBaseActionAdd
         );
 
         // build redirect url with the right message
-        $redirectUrl = BackendModel::createURLForAction('index') . '&report=';
+        $redirectUrl = BackendModel::createUrlForAction('index') . '&report=';
         $redirectUrl .= $overwrite ?
             'profiles-imported-and-updated' :
             'profiles-imported';

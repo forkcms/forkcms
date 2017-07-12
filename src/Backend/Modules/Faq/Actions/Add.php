@@ -64,8 +64,8 @@ class Add extends BackendBaseActionAdd
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->url->getModule(), 'Detail');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
+        $url404 = BackendModel::getUrl(404);
 
         // parse additional variables
         if ($url404 != $url) {
@@ -117,7 +117,7 @@ class Add extends BackendBaseActionAdd
                     ]
                 );
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=added&var=' .
+                    BackendModel::createUrlForAction('Index') . '&report=added&var=' .
                     rawurlencode($item['question']) . '&highlight=' . $item['id']
                 );
             }

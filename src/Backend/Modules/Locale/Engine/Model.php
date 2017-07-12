@@ -25,7 +25,7 @@ class Model
         $cacheBuilder->buildCache($language, $application);
     }
 
-    public static function buildURLQueryByFilter(array $filter): string
+    public static function buildUrlQueryByFilter(array $filter): string
     {
         $query = http_build_query($filter, null, '&', PHP_QUERY_RFC3986);
         if ($query != '') {

@@ -38,7 +38,7 @@ class ResendActivation extends FrontendBaseBlock
             $this->parse();
         } else {
             // profile logged in
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
     }
 
@@ -109,7 +109,7 @@ class ResendActivation extends FrontendBaseBlock
                     ->parseHtml(
                         '/Profiles/Layout/Templates/Mails/Register.html.twig',
                         [
-                            'activationUrl' => SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate') .
+                            'activationUrl' => SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'Activate') .
                                                '/' . $profile->getSetting('activation_key'),
                         ],
                         true

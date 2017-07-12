@@ -130,7 +130,7 @@ class Index extends BackendBaseActionIndex
             // set column URLs
             $this->dgPosts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId
             );
 
@@ -139,7 +139,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
                 BL::lbl('Edit')
             );
@@ -203,7 +203,7 @@ class Index extends BackendBaseActionIndex
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' .
                 $this->categoryId
             );
@@ -213,7 +213,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' .
                 $this->categoryId,
                 BL::lbl('Edit')
@@ -272,7 +272,7 @@ class Index extends BackendBaseActionIndex
             // set colum URLs
             $this->dgRecent->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId
             );
 
@@ -281,7 +281,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
                 BL::lbl('Edit')
             );

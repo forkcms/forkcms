@@ -30,7 +30,7 @@ class SecurePage extends FrontendBaseWidget
             $queryString = $this->url->getQueryString();
             throw new RedirectException(
                 'Redirect',
-                new RedirectResponse(Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
+                new RedirectResponse(Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
             );
         }
     }

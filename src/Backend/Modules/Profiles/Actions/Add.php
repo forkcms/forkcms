@@ -203,8 +203,8 @@ class Add extends BackendBaseActionAdd
                     ]
                 );
 
-                $redirectUrl = BackendModel::createURLForAction('Edit') .
-                    '&id=' . $this->id .
+                $redirectUrl = BackendModel::createUrlForAction('Edit') .
+                               '&id=' . $this->id .
                     '&var=' . rawurlencode($values['display_name']) .
                     '&report='
                 ;

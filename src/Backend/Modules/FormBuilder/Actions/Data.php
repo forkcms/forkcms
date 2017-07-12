@@ -106,7 +106,7 @@ class Data extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, throw an exceptions, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -115,7 +115,7 @@ class Data extends BackendBaseActionIndex
         $this->record = BackendFormBuilderModel::get($this->id);
 
         if ($this->record['method'] === 'email') {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -128,7 +128,7 @@ class Data extends BackendBaseActionIndex
 
         // overrule default URL
         $this->dataGrid->setURL(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 null,
                 null,
                 null,
@@ -152,7 +152,7 @@ class Data extends BackendBaseActionIndex
             // set colum URLs
             $this->dataGrid->setColumnURL(
                 'sent_on',
-                BackendModel::createURLForAction(
+                BackendModel::createUrlForAction(
                     'DataDetails',
                     null,
                     null,
@@ -169,7 +169,7 @@ class Data extends BackendBaseActionIndex
                 'details',
                 null,
                 BL::getLabel('Details'),
-                BackendModel::createURLForAction(
+                BackendModel::createUrlForAction(
                     'DataDetails',
                     null,
                     null,
@@ -221,7 +221,7 @@ class Data extends BackendBaseActionIndex
             }
         }
 
-        $this->frm = new BackendForm('filter', BackendModel::createURLForAction() . '&amp;id=' . $this->id, 'get');
+        $this->frm = new BackendForm('filter', BackendModel::createUrlForAction() . '&amp;id=' . $this->id, 'get');
         $this->frm->addDate('start_date', $startDate);
         $this->frm->addDate('end_date', $endDate);
 

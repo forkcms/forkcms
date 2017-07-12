@@ -166,7 +166,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term;
 
         // populate calculated fields in pagination
         $this->pagination['limit'] = $this->limit;
@@ -248,7 +248,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             case (!isset($this->pagination['num_pages'])):
                 throw new FrontendException('no num_pages available in the pagination-property.');
             case (!isset($this->pagination['url'])):
-                throw new FrontendException('no URL available in the pagination-property.');
+                throw new FrontendException('no url available in the pagination-property.');
         }
 
         // should we use a questionmark or an ampersand

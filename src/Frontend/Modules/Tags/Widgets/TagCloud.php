@@ -34,7 +34,7 @@ class TagCloud extends FrontendBaseWidget
         $tags = array_slice($tags, 0, 10);
 
         // build link
-        $link = FrontendNavigation::getURLForBlock('Tags', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Tags', 'Detail');
 
         // any tags?
         if (!empty($tags)) {

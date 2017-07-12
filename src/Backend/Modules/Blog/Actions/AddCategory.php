@@ -39,7 +39,7 @@ class AddCategory extends BackendBaseActionAdd
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
 
         // set callback for generating an unique URL
-        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURLForCategory');
+        $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getUrlForCategory');
     }
 
     private function validateForm(): void
@@ -68,7 +68,7 @@ class AddCategory extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&report=added-category&var=' .
+                    BackendModel::createUrlForAction('Categories') . '&report=added-category&var=' .
                     rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }

@@ -79,7 +79,7 @@ class Analyse extends BackendBaseActionIndex
         $this->dgFrontend = new BackendDataGridArray($nonExistingFrontendLocale);
 
         // overrule default URL
-        $this->dgFrontend->setURL(BackendModel::createURLForAction(null, null, null, ['offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'], false));
+        $this->dgFrontend->setURL(BackendModel::createUrlForAction(null, null, null, ['offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'], false));
 
         // sorting columns
         $this->dgFrontend->setSortingColumns(['language', 'application', 'module', 'type', 'name'], 'name');
@@ -87,7 +87,7 @@ class Analyse extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Add')) {
             // set column URLs
-            $this->dgFrontend->setColumnURL('name', BackendModel::createURLForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
+            $this->dgFrontend->setColumnURL('name', BackendModel::createUrlForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
         }
 
         // set column functions
@@ -116,7 +116,7 @@ class Analyse extends BackendBaseActionIndex
         $this->dgBackend = new BackendDataGridArray($getNonExistingBackendLocale);
 
         // overrule default URL
-        $this->dgBackend->setURL(BackendModel::createURLForAction(null, null, null, ['offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'], false));
+        $this->dgBackend->setURL(BackendModel::createUrlForAction(null, null, null, ['offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'], false));
 
         // sorting columns
         $this->dgBackend->setSortingColumns(['language', 'application', 'module', 'type', 'name'], 'name');
@@ -124,7 +124,7 @@ class Analyse extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Add')) {
             // set column URLs
-            $this->dgBackend->setColumnURL('name', BackendModel::createURLForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
+            $this->dgBackend->setColumnURL('name', BackendModel::createUrlForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
         }
 
         // set column functions

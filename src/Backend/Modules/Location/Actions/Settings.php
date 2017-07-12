@@ -86,7 +86,7 @@ class Settings extends BackendBaseActionEdit
                 $this->get('fork.settings')->set($this->url->getModule(), 'map_type_widget', (string) $this->frm->getField('map_type_widget')->getValue());
 
                 // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
+                $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved');
             }
         }
     }

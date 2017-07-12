@@ -39,7 +39,7 @@ class EditCategory extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Categories') . '&error=non-existing');
         }
     }
 
@@ -71,8 +71,8 @@ class EditCategory extends BackendBaseActionEdit
             )
         );
 
-        $url = BackendModel::getURLForBlock($this->url->getModule(), 'Category');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
+        $url404 = BackendModel::getUrl(404);
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);
         }
@@ -81,9 +81,9 @@ class EditCategory extends BackendBaseActionEdit
     private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
-            $this->meta->setURLCallback(
+            $this->meta->setUrlCallback(
                 'Backend\Modules\Faq\Engine\Model',
-                'getURLForCategory',
+                'getUrlForCategory',
                 [$this->record['id']]
             );
 
@@ -107,7 +107,7 @@ class EditCategory extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
+                    BackendModel::createUrlForAction('Categories') . '&report=edited-category&var=' .
                     rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }

@@ -199,12 +199,12 @@ class Block extends KernelLoader
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
         // build URL to the module
-        $frontendModuleURL = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
+        $frontendModuleUrl = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getModule() . '.js',
+                $frontendModuleUrl . '/' . $this->getModule() . '.js',
                 true,
                 true,
                 Priority::module()
@@ -214,7 +214,7 @@ class Block extends KernelLoader
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getAction() . '.js',
+                $frontendModuleUrl . '/' . $this->getAction() . '.js',
                 true,
                 true,
                 Priority::module()
@@ -302,7 +302,7 @@ class Block extends KernelLoader
             throw new Exception('no num_pages available in the pagination-property.');
         }
         if (!isset($this->pagination['url'])) {
-            throw new Exception('no URL available in the pagination-property.');
+            throw new Exception('no url available in the pagination-property.');
         }
 
         // should we use a questionmark or an ampersand

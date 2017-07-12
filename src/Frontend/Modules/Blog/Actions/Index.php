@@ -53,7 +53,7 @@ class Index extends FrontendBaseBlock
         $requestedPage = $this->url->getParameter('page', 'int', 1);
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog');
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Blog');
         $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
@@ -67,7 +67,7 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // populate calculated fields in pagination
@@ -81,7 +81,7 @@ class Index extends FrontendBaseBlock
     private function parse(): void
     {
         // get RSS-link
-        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
+        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed
         $this->header->addLink(

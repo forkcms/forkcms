@@ -141,7 +141,7 @@ class Model
      *
      * @return string
      */
-    public static function getURL(string $url, int $id = null): string
+    public static function getUrl(string $url, int $id = null): string
     {
         $url = CommonUri::getUrl($url);
         $language = BL::getWorkingLanguage();
@@ -166,7 +166,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new url
-                $url = self::getURL($url, $id);
+                $url = self::getUrl($url, $id);
             }
         } else {
             // specific id given
@@ -185,7 +185,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new url
-                $url = self::getURL($url, $id);
+                $url = self::getUrl($url, $id);
             }
         }
 
@@ -209,7 +209,7 @@ class Model
                 'language' => $language ?? BL::getWorkingLanguage(),
                 'tag' => $tag,
                 'number' => 0,
-                'url' => self::getURL($tag),
+                'url' => self::getUrl($tag),
             ]
         );
     }

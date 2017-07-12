@@ -104,7 +104,7 @@ class MediaItemEdit extends BackendBaseActionEdit
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createURLForAction(
+        return Model::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

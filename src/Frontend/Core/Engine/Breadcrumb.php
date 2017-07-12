@@ -52,7 +52,7 @@ class Breadcrumb extends KernelLoader
         $homeInfo = Navigation::getPageInfo(1);
 
         // add homepage as first item (with correct element)
-        $this->addElement($homeInfo['navigation_title'], Navigation::getURL(1));
+        $this->addElement($homeInfo['navigation_title'], Navigation::getUrl(1));
 
         $this->addBreadcrumbsForPages($this->url->getPages());
     }
@@ -75,7 +75,7 @@ class Breadcrumb extends KernelLoader
     private function getBreadcrumbsForPages(array $pages): array
     {
         $breadcrumbs = [];
-        $errorURL = Navigation::getURL(404);
+        $errorUrl = Navigation::getUrl(404);
 
         // loop pages
         while (!empty($pages)) {
@@ -92,14 +92,14 @@ class Breadcrumb extends KernelLoader
                 continue;
             }
 
-            $pageURL = Navigation::getURL($menuId);
+            $pageUrl = Navigation::getUrl($menuId);
 
             // if this is the error-page, so we won't show an URL.
-            if ($pageURL === $errorURL) {
-                $pageURL = null;
+            if ($pageUrl === $errorUrl) {
+                $pageUrl = null;
             }
 
-            $breadcrumbs[] = ['title' => $pageInfo['navigation_title'], 'url' => $pageURL];
+            $breadcrumbs[] = ['title' => $pageInfo['navigation_title'], 'url' => $pageUrl];
 
             array_pop($pages);
         }

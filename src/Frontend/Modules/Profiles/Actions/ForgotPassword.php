@@ -40,7 +40,7 @@ class ForgotPassword extends FrontendBaseBlock
             $this->parse();
         } else {
             // already logged in, redirect to settings
-            $this->redirect(FrontendNavigation::getURLForBlock('Profiles', 'Settings'));
+            $this->redirect(FrontendNavigation::getUrlForBlock('Profiles', 'Settings'));
         }
     }
 
@@ -107,7 +107,7 @@ class ForgotPassword extends FrontendBaseBlock
                     ->parseHtml(
                         '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
                         [
-                            'resetUrl' => SITE_URL . FrontendNavigation::getURLForBlock(
+                            'resetUrl' => SITE_URL . FrontendNavigation::getUrlForBlock(
                                 'Profiles',
                                 'ResetPassword'
                             ) . '/' . $key,

@@ -11,7 +11,7 @@ namespace Frontend\Modules\Pages\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url as FrontendURL;
+use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
@@ -43,7 +43,7 @@ class Model implements FrontendTagsInterface
         if (!empty($items)) {
             // reset url
             foreach ($items as &$row) {
-                $row['full_url'] = FrontendNavigation::getURL($row['id'], LANGUAGE);
+                $row['full_url'] = FrontendNavigation::getUrl($row['id'], LANGUAGE);
             }
         }
 
@@ -55,11 +55,11 @@ class Model implements FrontendTagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $url The current URL.
+     * @param FrontendUrl $url The current URL.
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $url): int
+    public static function getIdForTags(FrontendUrl $url): int
     {
         return FrontendNavigation::getPageId($url->getQueryString());
     }
@@ -88,7 +88,7 @@ class Model implements FrontendTagsInterface
         if (!empty($items)) {
             foreach ($items as &$row) {
                 // reset url
-                $row['full_url'] = FrontendNavigation::getURL($row['id'], LANGUAGE);
+                $row['full_url'] = FrontendNavigation::getUrl($row['id'], LANGUAGE);
 
                 // unserialize page data and template data
                 if (!empty($row['data'])) {
@@ -144,7 +144,7 @@ class Model implements FrontendTagsInterface
                 )
             );
 
-            $item['full_url'] = FrontendNavigation::getURL($item['id']);
+            $item['full_url'] = FrontendNavigation::getUrl($item['id']);
         }
 
         return $items;

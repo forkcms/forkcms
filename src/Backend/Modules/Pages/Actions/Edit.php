@@ -120,7 +120,7 @@ class Edit extends BackendBaseActionEdit
         // check if something went wrong
         if ($this->id === 0 || !BackendPagesModel::exists($this->id)) {
             $this->redirect(
-                BackendModel::createURLForAction('Index') . '&error=non-existing'
+                BackendModel::createUrlForAction('Index') . '&error=non-existing'
             );
         }
 
@@ -161,7 +161,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // reset some vars
-        $this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
+        $this->record['full_url'] = BackendPagesModel::getFullUrl($this->record['id']);
         $this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
     }
 
@@ -203,7 +203,7 @@ class Edit extends BackendBaseActionEdit
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
             );
 
             // add use column
@@ -211,7 +211,7 @@ class Edit extends BackendBaseActionEdit
                 'use_draft',
                 null,
                 BL::lbl('UseThisDraft'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
                 BL::lbl('UseThisDraft')
             );
         }
@@ -476,9 +476,9 @@ class Edit extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
         // set callback for generating an unique URL
-        $this->meta->setURLCallback(
+        $this->meta->setUrlCallback(
             'Backend\Modules\Pages\Engine\Model',
-            'getURL',
+            'getUrl',
             [$this->record['id'], $this->record['parent_id'], $isAction]
         );
     }
@@ -527,7 +527,7 @@ class Edit extends BackendBaseActionEdit
             // set column URLs
             $this->dgRevisions->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]'
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]'
             );
 
             // add use column
@@ -535,7 +535,7 @@ class Edit extends BackendBaseActionEdit
                 'use_revision',
                 null,
                 BL::lbl('UseThisVersion'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]',
                 BL::lbl('UseThisVersion')
             );
         }
@@ -546,7 +546,7 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // set
-        $this->record['url'] = $this->meta->getURL();
+        $this->record['url'] = $this->meta->getUrl();
         if ($this->id == 1) {
             $this->record['url'] = '';
         }
@@ -558,7 +558,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('positions', $this->positions);
         $this->tpl->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
-        $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL($this->record['parent_id']), '/'));
+        $this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullUrl($this->record['parent_id']), '/'));
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
         $this->tpl->assign('showTags', $this->userCanSeeAndEditTags());
 
@@ -626,9 +626,9 @@ class Edit extends BackendBaseActionEdit
             }
 
             // set callback for generating an unique URL
-            $this->meta->setURLCallback(
+            $this->meta->setUrlCallback(
                 'Backend\Modules\Pages\Engine\Model',
-                'getURL',
+                'getUrl',
                 [$this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked()]
             );
 
@@ -659,7 +659,7 @@ class Edit extends BackendBaseActionEdit
                 }
                 if ($redirectValue == 'external') {
                     $data['external_redirect'] = [
-                        'url' => BackendPagesModel::getEncodedRedirectURL(
+                        'url' => BackendPagesModel::getEncodedRedirectUrl(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
                         'code' => '301',
@@ -792,7 +792,7 @@ class Edit extends BackendBaseActionEdit
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(
-                        BackendModel::createURLForAction(
+                        BackendModel::createUrlForAction(
                             'Edit'
                         ) . '&id=' . $page['id'] . '&report=edited&var=' . rawurlencode(
                             $page['title']
@@ -801,7 +801,7 @@ class Edit extends BackendBaseActionEdit
                 } elseif ($page['status'] == 'draft') {
                     // everything is saved, so redirect to the edit action
                     $this->redirect(
-                        BackendModel::createURLForAction(
+                        BackendModel::createUrlForAction(
                             'Edit'
                         ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . rawurlencode(
                             $page['title']
@@ -831,7 +831,7 @@ class Edit extends BackendBaseActionEdit
             return null;
         }
 
-        $imageFilename = $this->meta->getURL() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
+        $imageFilename = $this->meta->getUrl() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
         $this->frm->getField('image')->generateThumbnails($imagePath, $imageFilename);
 
         return $imageFilename;

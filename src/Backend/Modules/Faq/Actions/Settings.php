@@ -126,7 +126,7 @@ class Settings extends BackendBaseActionEdit
                 }
 
                 // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
+                $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved');
             }
         }
     }

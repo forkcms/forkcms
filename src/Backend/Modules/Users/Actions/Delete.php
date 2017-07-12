@@ -30,7 +30,7 @@ class Delete extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
 
             return;
         }
@@ -43,7 +43,7 @@ class Delete extends BackendBaseActionDelete
             || !BackendUsersModel::exists($this->id)
             || BackendAuthentication::getUser()->getUserId() === $this->id
         ) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -54,14 +54,14 @@ class Delete extends BackendBaseActionDelete
 
         // God-users can't be deleted
         if ($user->isGod()) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'cant-delete-god']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'cant-delete-god']));
 
             return;
         }
 
         BackendUsersModel::delete($this->id);
 
-        $this->redirect(BackendModel::createURLForAction(
+        $this->redirect(BackendModel::createUrlForAction(
             'Index',
             null,
             null,

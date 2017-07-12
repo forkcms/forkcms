@@ -48,7 +48,7 @@ class Categories extends BackendBaseActionIndex
         // convert the count into a readable and clickable one
         $this->dataGrid->setColumnFunction(
             [__CLASS__, 'setClickableCount'],
-            ['[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'],
+            ['[num_items]', BackendModel::createUrlForAction('Index') . '&amp;category=[id]'],
             'num_items',
             true
         );
@@ -64,7 +64,7 @@ class Categories extends BackendBaseActionIndex
             // set column URLs
             $this->dataGrid->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]'
             );
 
             // add column
@@ -72,7 +72,7 @@ class Categories extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }

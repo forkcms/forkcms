@@ -7,15 +7,15 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 class MovieStorageProvider implements StorageProviderInterface
 {
     /** @var string */
-    protected $linkURL;
+    protected $linkUrl;
 
     /** @var string */
-    protected $includeURL;
+    protected $includeUrl;
 
-    public function __construct(string $linkURL, string $includeURL)
+    public function __construct(string $linkUrl, string $includeUrl)
     {
-        $this->linkURL = $linkURL;
-        $this->includeURL = $includeURL;
+        $this->linkUrl = $linkUrl;
+        $this->includeUrl = $includeUrl;
     }
 
     public function getAbsolutePath(MediaItem $mediaItem): string
@@ -30,7 +30,7 @@ class MovieStorageProvider implements StorageProviderInterface
 
     public function getIncludeHTML(MediaItem $mediaItem): string
     {
-        return '<iframe src="' . $this->includeURL . $mediaItem->getUrl() . ' width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+        return '<iframe src="' . $this->includeUrl . $mediaItem->getUrl() . ' width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
     }
 
     public function getLinkHTML(MediaItem $mediaItem): string
@@ -40,6 +40,6 @@ class MovieStorageProvider implements StorageProviderInterface
 
     public function getWebPath(MediaItem $mediaItem): string
     {
-        return $this->linkURL . $mediaItem->getUrl();
+        return $this->linkUrl . $mediaItem->getUrl();
     }
 }

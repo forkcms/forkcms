@@ -492,7 +492,7 @@ class Header extends KernelLoader
     /**
      * @param string $title The title (maximum 70 characters)
      * @param string $description A brief description of the card (maximum 200 characters)
-     * @param string $imageURL The URL of the image (minimum 280x150 and <1MB)
+     * @param string $imageUrl The URL of the image (minimum 280x150 and <1MB)
      * @param string $cardType The cardtype, possible types: https://dev.twitter.com/cards/types
      * @param string $siteHandle (optional)  Twitter handle of the site
      * @param string $creatorHandle (optional) Twitter handle of the author
@@ -500,7 +500,7 @@ class Header extends KernelLoader
     public function setTwitterCard(
         string $title,
         string $description,
-        string $imageURL,
+        string $imageUrl,
         string $cardType = 'summary',
         string $siteHandle = null,
         string $creatorHandle = null
@@ -508,7 +508,7 @@ class Header extends KernelLoader
         $this->meta->addMetaData(MetaData::forName('twitter:card', $cardType));
         $this->meta->addMetaData(MetaData::forName('twitter:title', $title));
         $this->meta->addMetaData(MetaData::forName('twitter:description', $description));
-        $this->meta->addMetaData(MetaData::forName('twitter:image', $imageURL));
+        $this->meta->addMetaData(MetaData::forName('twitter:image', $imageUrl));
 
         if ($siteHandle !== null) {
             $this->meta->addMetaData(MetaData::forName('twitter:site', $siteHandle));

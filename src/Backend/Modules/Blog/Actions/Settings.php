@@ -98,7 +98,7 @@ class Settings extends BackendBaseActionEdit
         parent::parse();
 
         // parse additional variables
-        $this->tpl->assign('commentsRSSURL', SITE_URL . BackendModel::getURLForBlock($this->url->getModule(), 'comments_rss'));
+        $this->tpl->assign('commentsRSSURL', SITE_URL . BackendModel::getUrlForBlock($this->url->getModule(), 'comments_rss'));
         $this->tpl->assign('isGod', $this->isGod);
     }
 
@@ -129,7 +129,7 @@ class Settings extends BackendBaseActionEdit
                 }
 
                 // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
+                $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved');
             }
         }
     }

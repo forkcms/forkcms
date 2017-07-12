@@ -86,7 +86,7 @@ class Meta
     ) {
         // check if URL is available from the reference
         if (!BackendModel::getContainer()->has('url')) {
-            throw new Exception('URL should be available in the reference.');
+            throw new Exception('url service should be available in the container.');
         }
 
         // get BackendURL instance
@@ -102,9 +102,9 @@ class Meta
         }
 
         // set default callback
-        $this->setURLCallback(
+        $this->setUrlCallback(
             'Backend\\Modules\\' . $this->url->getModule() . '\\Engine\\Model',
-            'getURL'
+            'getUrl'
         );
 
         // load the form
@@ -123,9 +123,9 @@ class Meta
      * @deprecated use the generateUrl method on the meta repository
      * This class will be removed when all modules run on doctrine
      */
-    public function generateURL(string $url): string
+    public function generateUrl(string $url): string
     {
-        return Model::get('fork.repository.meta')->generateURL(
+        return Model::get('fork.repository.meta')->generateUrl(
             $url,
             $this->callback['class'],
             $this->callback['method'],
@@ -210,7 +210,7 @@ class Meta
         return $this->data['title_overwrite'] === 'Y';
     }
 
-    public function getURL(): ?string
+    public function getUrl(): ?string
     {
         // not set so return null
         if (!isset($this->data['url'])) {
@@ -221,7 +221,7 @@ class Meta
         return urldecode($this->data['url']);
     }
 
-    public function getURLOverwrite(): ?bool
+    public function getUrlOverwrite(): ?bool
     {
         // not set so return null
         if (!isset($this->data['url_overwrite'])) {
@@ -416,7 +416,7 @@ class Meta
      * @param string $methodName Name of the method to use.
      * @param array $parameters Parameters to parse, they will be passed after ours.
      */
-    public function setURLCallback(string $className, string $methodName, array $parameters = []): void
+    public function setUrlCallback(string $className, string $methodName, array $parameters = []): void
     {
         // store in property
         $this->callback = ['class' => $className, 'method' => $methodName, 'parameters' => $parameters];
@@ -450,7 +450,7 @@ class Meta
         if ($this->form->getField('url_overwrite')->isChecked()) {
             $this->form->getField('url')->isFilled(BackendLanguage::err('FieldIsRequired'));
             $url = \SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue());
-            $generatedUrl = $this->generateURL($url);
+            $generatedUrl = $this->generateUrl($url);
 
             // check if urls are different
             if (CommonUri::getUrl($url) !== $generatedUrl) {
@@ -480,7 +480,7 @@ class Meta
             $this->form->getField($this->baseFieldName)->getValue()
         );
         $this->data['title_overwrite'] = $this->form->getField('page_title_overwrite')->getActualValue();
-        $this->data['url'] = $this->generateURL(
+        $this->data['url'] = $this->generateUrl(
             $this->form->getField('url_overwrite')->getActualValue(
                 \SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue()),
                 \SpoonFilter::htmlspecialcharsDecode($this->form->getField($this->baseFieldName)->getValue())

@@ -46,7 +46,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get record
@@ -54,7 +54,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get articles
@@ -65,9 +65,9 @@ class ArticleCommentsRss extends FrontendBaseBlock
     {
         // get vars
         $title = vsprintf(FL::msg('CommentsOn'), [$this->record['title']]);
-        $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
+        $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'ArticleCommentsRss') .
                 '/' . $this->record['url'];
-        $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $detailLink = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $description = null;
 
         // create new rss instance

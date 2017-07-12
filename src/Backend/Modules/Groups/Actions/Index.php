@@ -35,9 +35,9 @@ class Index extends BackendBaseActionIndex
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
-            $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
-            $this->dataGrid->setColumnURL('num_users', BackendModel::createURLForAction('Edit') . '&amp;id=[id]#tabUsers');
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL('name', BackendModel::createUrlForAction('Edit') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL('num_users', BackendModel::createUrlForAction('Edit') . '&amp;id=[id]#tabUsers');
+            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createUrlForAction('Edit') . '&amp;id=[id]');
         }
     }
 

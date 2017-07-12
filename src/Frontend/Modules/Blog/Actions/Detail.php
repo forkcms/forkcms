@@ -65,7 +65,7 @@ class Detail extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // load revision
@@ -85,7 +85,7 @@ class Detail extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get comments
@@ -98,9 +98,9 @@ class Detail extends FrontendBaseBlock
         $this->settings = $this->get('fork.settings')->getForModule('Blog');
 
         // overwrite URLs
-        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') .
+        $this->record['category_full_url'] = FrontendNavigation::getUrlForBlock('Blog', 'Category') .
                                              '/' . $this->record['category_url'];
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' . $this->record['url'];
+        $this->record['full_url'] = FrontendNavigation::getUrlForBlock('Blog', 'Detail') . '/' . $this->record['url'];
         $this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
         $this->record['comments_count'] = count($this->comments);
 
@@ -132,14 +132,14 @@ class Detail extends FrontendBaseBlock
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
-        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
+        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed
         $this->header->addRssLink($rssTitle, $rssLink);
 
         // get RSS-link for the comments
         $rssCommentTitle = vsprintf(FL::msg('CommentsOn'), [$this->record['title']]);
-        $rssCommentsLink = FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
+        $rssCommentsLink = FrontendNavigation::getUrlForBlock('Blog', 'ArticleCommentsRss') .
                            '/' . $this->record['url'];
 
         // add RSS-feed into the metaCustom
@@ -171,15 +171,15 @@ class Detail extends FrontendBaseBlock
         );
 
         // Twitter Card
-        $imgURL = FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image'];
-        $this->header->setTwitterCard($this->record['title'], $this->record['meta_description'], $imgURL);
+        $imgUrl = FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image'];
+        $this->header->setTwitterCard($this->record['title'], $this->record['meta_description'], $imgUrl);
 
         // when there are 2 or more categories with at least one item in it,
         // the category will be added in the breadcrumb
         if (count(FrontendBlogModel::getAllCategories()) > 1) {
             $this->breadcrumb->addElement(
                 $this->record['category_title'],
-                FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $this->record['category_url']
+                FrontendNavigation::getUrlForBlock('Blog', 'Category') . '/' . $this->record['category_url']
             );
         }
 

@@ -363,9 +363,9 @@ class Model
 
         // ignore these urls in the query string
         $ignoreUrls = [
-            FrontendNavigation::getURLForBlock('Profiles', 'Login'),
-            FrontendNavigation::getURLForBlock('Profiles', 'Register'),
-            FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword'),
+            FrontendNavigation::getUrlForBlock('Profiles', 'Login'),
+            FrontendNavigation::getUrlForBlock('Profiles', 'Register'),
+            FrontendNavigation::getUrlForBlock('Profiles', 'ForgotPassword'),
         ];
 
         // query string
@@ -386,9 +386,9 @@ class Model
         $queryString = ($queryString != '') ? '?queryString=' . rawurlencode($queryString) : '';
 
         // useful urls
-        $tpl->assign('loginUrl', FrontendNavigation::getURLForBlock('Profiles', 'Login') . $queryString);
-        $tpl->assign('registerUrl', FrontendNavigation::getURLForBlock('Profiles', 'Register'));
-        $tpl->assign('forgotPasswordUrl', FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword'));
+        $tpl->assign('loginUrl', FrontendNavigation::getUrlForBlock('Profiles', 'Login') . $queryString);
+        $tpl->assign('registerUrl', FrontendNavigation::getUrlForBlock('Profiles', 'Register'));
+        $tpl->assign('forgotPasswordUrl', FrontendNavigation::getUrlForBlock('Profiles', 'ForgotPassword'));
     }
 
     /**

@@ -55,7 +55,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
         // validate id
         if ($this->id === 0 || !BackendExtensionsModel::existsTemplate($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('ThemeTemplates') . '&error=non-existing');
         }
 
         // get the record
@@ -370,7 +370,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 }
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createUrlForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
             }
         }
     }

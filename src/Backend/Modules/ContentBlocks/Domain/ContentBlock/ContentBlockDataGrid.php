@@ -31,7 +31,7 @@ class ContentBlockDataGrid extends DataGridDB
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
-            $editUrl = Model::createURLForAction('Edit', null, null, ['id' => '[id]'], false);
+            $editUrl = Model::createUrlForAction('Edit', null, null, ['id' => '[id]'], false);
             $this->setColumnURL('title', $editUrl);
             $this->addColumn('edit', null, Language::lbl('Edit'), $editUrl, Language::lbl('Edit'));
         }

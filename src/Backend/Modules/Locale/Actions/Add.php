@@ -55,14 +55,14 @@ class Add extends BackendBaseActionAdd
                 // we are copying the given translation
                 $isCopy = true;
             } else {
-                $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing' . $this->filterQuery);
+                $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing' . $this->filterQuery);
             }
         } else {
             $isCopy = false;
         }
 
         // create form
-        $this->frm = new BackendForm('add', BackendModel::createURLForAction() . $this->filterQuery);
+        $this->frm = new BackendForm('add', BackendModel::createUrlForAction() . $this->filterQuery);
 
         // create and add elements
         $this->frm->addDropdown('application', ['Backend' => 'Backend', 'Frontend' => 'Frontend'], $isCopy ? $translation['application'] : $this->filter['application']);
@@ -168,7 +168,7 @@ class Add extends BackendBaseActionAdd
                 $item['id'] = BackendLocaleModel::insert($item);
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=added&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
+                $this->redirect(BackendModel::createUrlForAction('Index', null, null, null) . '&report=added&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
             }
         }
     }

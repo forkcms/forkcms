@@ -94,7 +94,7 @@ class AskOwnQuestion extends FrontendBaseWidget
                     // if the comment is spam alter the comment status so it will appear in the spam queue
                     if (FrontendModel::isSpam(
                         $variables['message'],
-                        SITE_URL . FrontendNavigation::getURLForBlock('Faq'),
+                        SITE_URL . FrontendNavigation::getUrlForBlock('Faq'),
                         $variables['name'],
                         $variables['email']
                     )

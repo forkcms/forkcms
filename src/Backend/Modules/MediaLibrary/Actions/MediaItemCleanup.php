@@ -26,7 +26,7 @@ class MediaItemCleanup extends BackendBaseActionIndex
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createURLForAction(
+        return Model::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

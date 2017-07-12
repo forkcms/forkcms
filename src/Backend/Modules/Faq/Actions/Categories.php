@@ -61,7 +61,7 @@ class Categories extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('Index')) {
             $this->dataGrid->setColumnFunction(
                 [__CLASS__, 'setClickableCount'],
-                ['[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'],
+                ['[num_items]', BackendModel::createUrlForAction('Index') . '&amp;category=[id]'],
                 'num_items',
                 true
             );
@@ -69,12 +69,12 @@ class Categories extends BackendBaseActionIndex
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('EditCategory')) {
-            $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL('title', BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]');
             $this->dataGrid->addColumn(
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }

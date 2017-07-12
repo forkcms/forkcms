@@ -107,7 +107,7 @@ class Action extends KernelLoader
         \SpoonSession::set('csrf_token', '');
 
         $this->redirect(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 'Index',
                 null,
                 null,

@@ -67,7 +67,7 @@ class Add extends BackendBaseActionAdd
 
     private function getBackLink(array $parameters = []): string
     {
-        return BackendModel::createURLForAction(
+        return BackendModel::createUrlForAction(
             'Index',
             null,
             null,

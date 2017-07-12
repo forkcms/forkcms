@@ -44,8 +44,8 @@ class CommentsRss extends FrontendBaseBlock
     {
         // get vars
         $title = \SpoonFilter::ucfirst(FL::msg('BlogAllComments'));
-        $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog');
-        $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog');
+        $detailLink = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $description = null;
 
         // create new rss instance

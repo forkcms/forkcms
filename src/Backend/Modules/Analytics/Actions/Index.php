@@ -54,7 +54,7 @@ final class Index extends ActionIndex
             || $this->get('fork.settings')->get($this->getModule(), 'web_property_id') === null
             || $this->get('fork.settings')->get($this->getModule(), 'profile') === null
         ) {
-            $this->redirect(Model::createURLForAction('Settings'));
+            $this->redirect(Model::createUrlForAction('Settings'));
         }
 
         $this->header->addJS('highcharts.js', 'Core', false);

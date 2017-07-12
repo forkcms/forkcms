@@ -109,7 +109,7 @@ class Index extends BackendBaseActionIndex
 
         // overrule default URL
         $this->dgProfiles->setURL(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 null,
                 null,
                 null,
@@ -161,14 +161,14 @@ class Index extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
-            $this->dgProfiles->setColumnURL('email', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
+            $this->dgProfiles->setColumnURL('email', BackendModel::createUrlForAction('Edit') . '&amp;id=[id]');
 
             // add columns
             $this->dgProfiles->addColumn(
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('Edit', null, null, null) . '&amp;id=[id]',
+                BackendModel::createUrlForAction('Edit', null, null, null) . '&amp;id=[id]',
                 BL::getLabel('Edit')
             );
         }
@@ -177,7 +177,7 @@ class Index extends BackendBaseActionIndex
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
+        $this->frm = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
 
         // values for dropdowns
         $status = BackendProfilesModel::getStatusForDropDown();

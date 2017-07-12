@@ -85,7 +85,7 @@ class EditSynonym extends BackendBaseActionEdit
         BackendSearchModel::updateSynonym($synonym);
 
         $this->redirect(
-            BackendModel::createURLForAction('Synonyms') . '&report=edited-synonym&var=' . rawurlencode(
+            BackendModel::createUrlForAction('Synonyms') . '&report=edited-synonym&var=' . rawurlencode(
                 $synonym['term']
             ) . '&highlight=row-' . $synonym['id']
         );
@@ -96,7 +96,7 @@ class EditSynonym extends BackendBaseActionEdit
         $id = $this->getRequest()->query->getInt('id');
 
         if ($id === 0 || !BackendSearchModel::existsSynonymById($id)) {
-            $this->redirect(BackendModel::createURLForAction('Synonyms') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Synonyms') . '&error=non-existing');
         }
 
         return $id;

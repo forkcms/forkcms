@@ -109,7 +109,7 @@ class Add extends BackendBaseActionAdd
                         $this->frm->getField('email')->addError(
                             sprintf(
                                 BL::err('EmailWasDeletedBefore'),
-                                BackendModel::createURLForAction(
+                                BackendModel::createUrlForAction(
                                     'UndoDelete',
                                     null,
                                     null,
@@ -252,7 +252,7 @@ class Add extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction(
+                    BackendModel::createUrlForAction(
                         'Index'
                     ) . '&report=added&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']
                 );

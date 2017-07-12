@@ -28,7 +28,7 @@ class Delete extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
 
             return;
         }
@@ -37,7 +37,7 @@ class Delete extends BackendBaseActionDelete
         $this->id = $deleteFormData['id'];
 
         if ($this->id === 0 || !BackendFaqModel::exists($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -47,7 +47,7 @@ class Delete extends BackendBaseActionDelete
 
         BackendFaqModel::delete($this->id);
 
-        $this->redirect(BackendModel::createURLForAction(
+        $this->redirect(BackendModel::createUrlForAction(
             'Index',
             null,
             null,

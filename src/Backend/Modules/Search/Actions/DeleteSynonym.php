@@ -30,7 +30,7 @@ class DeleteSynonym extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction(
+            $this->redirect(BackendModel::createUrlForAction(
                 'Synonyms',
                 null,
                 null,
@@ -44,7 +44,7 @@ class DeleteSynonym extends BackendBaseActionDelete
         $id = (int) $deleteFormData['id'];
 
         if ($id === 0 || !BackendSearchModel::existsSynonymById($id)) {
-            $this->redirect(BackendModel::createURLForAction('Synonyms', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('Synonyms', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -52,7 +52,7 @@ class DeleteSynonym extends BackendBaseActionDelete
         $synonym = (array) BackendSearchModel::getSynonym($id);
         BackendSearchModel::deleteSynonym($id);
 
-        $this->redirect(BackendModel::createURLForAction(
+        $this->redirect(BackendModel::createUrlForAction(
             'Synonyms',
             null,
             null,

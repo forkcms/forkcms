@@ -21,7 +21,7 @@ class MediaGalleryIndex extends BackendBaseActionIndex
             TypeType::class,
             null,
             [
-                'action' => BackendModel::createURLForAction('MediaGalleryAdd'),
+                'action' => BackendModel::createUrlForAction('MediaGalleryAdd'),
                 'method' => 'GET',
             ]
         );
@@ -46,7 +46,7 @@ class MediaGalleryIndex extends BackendBaseActionIndex
             [
                 'message' => sprintf(
                     Language::err('MediaLibraryModuleRequired', 'MediaGalleries'),
-                    BackendModel::createURLForAction('Modules', 'Extensions')
+                    BackendModel::createUrlForAction('Modules', 'Extensions')
                 ),
             ],
         ];

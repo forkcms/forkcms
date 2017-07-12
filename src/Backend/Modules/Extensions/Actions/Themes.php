@@ -85,7 +85,7 @@ class Themes extends BackendBaseActionIndex
 
         // no themes found
         if (empty($themes)) {
-            $this->redirect(BackendModel::createURLForAction('Edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
+            $this->redirect(BackendModel::createUrlForAction('Edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
         }
 
         // loop the templates
@@ -137,7 +137,7 @@ class Themes extends BackendBaseActionIndex
                     // check if templates already exist
                     if (empty($newTemplates)) {
                         // templates do not yet exist; don't switch
-                        $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-templates-available');
+                        $this->redirect(BackendModel::createUrlForAction('Themes') . '&error=no-templates-available');
 
                         return;
                     }

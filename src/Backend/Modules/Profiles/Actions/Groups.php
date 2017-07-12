@@ -93,7 +93,7 @@ class Groups extends BackendBaseActionIndex
 
         // overrule default URL
         $this->dgGroups->setURL(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 null,
                 null,
                 null,
@@ -121,18 +121,18 @@ class Groups extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('Index')) {
             $this->dgGroups->setColumnURL(
                 'members_count',
-                BackendModel::createURLForAction('Index') . '&amp;group=[id]'
+                BackendModel::createUrlForAction('Index') . '&amp;group=[id]'
             );
         }
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('EditGroup')) {
-            $this->dgGroups->setColumnURL('name', BackendModel::createURLForAction('EditGroup') . '&amp;id=[id]');
+            $this->dgGroups->setColumnURL('name', BackendModel::createUrlForAction('EditGroup') . '&amp;id=[id]');
             $this->dgGroups->addColumn(
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('EditGroup') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('EditGroup') . '&amp;id=[id]'
             );
         }
     }
@@ -140,7 +140,7 @@ class Groups extends BackendBaseActionIndex
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
+        $this->frm = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
 
         // add fields
         $this->frm->addText('name', $this->filter['name']);
@@ -179,7 +179,7 @@ class Groups extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('Edit')) {
             // complete output
             $output = '<a href="' .
-                      BackendModel::createURLForAction(
+                      BackendModel::createUrlForAction(
                           'Index'
                       ) . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
         }

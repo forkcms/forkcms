@@ -54,7 +54,7 @@ class MediaGalleryDataGrid extends DataGridDB
 
         if (Authentication::isAllowedAction('MediaGalleryEdit')) {
             // Define edit url
-            $editUrl = Model::createURLForAction('MediaGalleryEdit', null, null, ['id' => '[id]'], false);
+            $editUrl = Model::createUrlForAction('MediaGalleryEdit', null, null, ['id' => '[id]'], false);
             $this->setColumnURL('title', $editUrl);
             $this->addColumn('edit', null, Language::lbl('Edit'), $editUrl, Language::lbl('MediaGalleryEdit'));
         }

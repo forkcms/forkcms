@@ -186,7 +186,7 @@ class UploadTheme extends BackendBaseActionAdd
 
             // Redirect with fireworks
             $this->redirect(
-                BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $this->themeName
+                BackendModel::createUrlForAction('Themes') . '&report=theme-installed&var=' . $this->themeName
             );
         }
     }

@@ -89,7 +89,7 @@ class Login extends FrontendBaseBlock
                         // get the error string to use
                         $errorString = sprintf(
                             FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
-                            FrontendNavigation::getURLForBlock('Profiles', 'ResendActivation')
+                            FrontendNavigation::getUrlForBlock('Profiles', 'ResendActivation')
                         );
 
                         // add the error to stack

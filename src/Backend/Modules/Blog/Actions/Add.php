@@ -86,8 +86,8 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
 
         // get url
-        $url = BackendModel::getURLForBlock($this->url->getModule(), 'detail');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'detail');
+        $url404 = BackendModel::getUrl(404);
 
         // parse additional variables
         if ($url404 != $url) {
@@ -161,7 +161,7 @@ class Add extends BackendBaseActionAdd
                     // image provided?
                     if ($this->frm->getField('image')->isFilled()) {
                         // build the image name
-                        $item['image'] = $this->meta->getURL()
+                        $item['image'] = $this->meta->getUrl()
                             . '-' . BL::getWorkingLanguage()
                             . '-' . $item['revision_id']
                             . '.' . $this->frm->getField('image')->getExtension();
@@ -183,10 +183,10 @@ class Add extends BackendBaseActionAdd
                     BackendSearchModel::saveIndex($this->getModule(), $item['id'], ['title' => $item['title'], 'text' => $item['text']]);
 
                     // everything is saved, so redirect to the overview
-                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
+                    $this->redirect(BackendModel::createUrlForAction('Index') . '&report=added&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
                 } elseif ($item['status'] == 'draft') {
                     // draft: everything is saved, so redirect to the edit action
-                    $this->redirect(BackendModel::createURLForAction('Edit') . '&report=saved-as-draft&var=' . rawurlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
+                    $this->redirect(BackendModel::createUrlForAction('Edit') . '&report=saved-as-draft&var=' . rawurlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
                 }
             }
         }

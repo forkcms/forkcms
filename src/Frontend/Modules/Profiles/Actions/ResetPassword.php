@@ -52,13 +52,13 @@ class ResetPassword extends FrontendBaseBlock
                 // validate
                 $this->validateForm();
             } elseif ($this->url->getParameter('sent') != 'true') {
-                $this->redirect(FrontendNavigation::getURL(404));
+                $this->redirect(FrontendNavigation::getUrl(404));
             }
 
             // parse
             $this->parse();
         } else {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
     }
 
@@ -121,7 +121,7 @@ class ResetPassword extends FrontendBaseBlock
 
                 // redirect
                 $this->redirect(
-                    FrontendNavigation::getURLForBlock('Profiles', 'ResetPassword') . '/' . $this->url->getParameter(
+                    FrontendNavigation::getUrlForBlock('Profiles', 'ResetPassword') . '/' . $this->url->getParameter(
                         0
                     ) . '?sent=true'
                 );

@@ -34,7 +34,7 @@ class EditComment extends BackendBaseActionEdit
             $this->display();
         } else {
             // no item found, throw an exception, because somebody is fucking with our URL
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -49,7 +49,7 @@ class EditComment extends BackendBaseActionEdit
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -67,7 +67,7 @@ class EditComment extends BackendBaseActionEdit
         // assign URL
         $this->tpl->assign(
             'itemURL',
-            BackendModel::getURLForBlock($this->getModule(), 'detail') . '/' .
+            BackendModel::getUrlForBlock($this->getModule(), 'detail') . '/' .
             $this->record['post_url'] . '#comment-' . $this->record['post_id']
         );
         $this->tpl->assign('itemTitle', $this->record['post_title']);
@@ -105,7 +105,7 @@ class EditComment extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Comments') . '&report=edited-comment&id=' .
+                    BackendModel::createUrlForAction('Comments') . '&report=edited-comment&id=' .
                     $item['id'] . '&highlight=row-' . $item['id'] . '#tab' .
                     \SpoonFilter::toCamelCase($item['status'])
                 );

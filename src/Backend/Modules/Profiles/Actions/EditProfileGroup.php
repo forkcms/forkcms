@@ -51,10 +51,10 @@ class EditProfileGroup extends BackendBaseActionEdit
                 $this->parse();
                 $this->display();
             } else {
-                $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+                $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
             }
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -134,7 +134,7 @@ class EditProfileGroup extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction(
+                    BackendModel::createUrlForAction(
                         'Edit'
                     ) . '&id=' . $this->profileId . '&report=membership-saved&var=' . rawurlencode(
                         $values['group_id']

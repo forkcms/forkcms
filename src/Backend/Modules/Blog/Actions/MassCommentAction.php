@@ -25,18 +25,18 @@ class MassCommentAction extends BackendBaseAction
         // current status
         $from = $this->getRequest()->query->get('from');
         if (!in_array($from, ['published', 'moderation', 'spam'])) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-from-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-from-selected');
         }
 
         // action to execute
         $action = $this->getRequest()->query->get('action');
         if (!in_array($action, ['published', 'moderation', 'spam', 'delete'])) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
         }
 
         // no id's provided
         if (!$this->getRequest()->query->has('id')) {
-            $this->redirect(BackendModel::createURLForAction('Comments') . '&error=no-comments-selected');
+            $this->redirect(BackendModel::createUrlForAction('Comments') . '&error=no-comments-selected');
         }
 
         // redefine id's
@@ -140,6 +140,6 @@ class MassCommentAction extends BackendBaseAction
         }
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('Comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
+        $this->redirect(BackendModel::createUrlForAction('Comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
     }
 }

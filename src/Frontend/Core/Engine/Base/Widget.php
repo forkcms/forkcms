@@ -160,12 +160,12 @@ class Widget extends KernelLoader
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
         // build URL to the module
-        $frontendModuleURL = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
+        $frontendModuleUrl = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getModule() . '.js',
+                $frontendModuleUrl . '/' . $this->getModule() . '.js',
                 true,
                 true,
                 Priority::widget()
@@ -175,7 +175,7 @@ class Widget extends KernelLoader
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getAction() . '.js',
+                $frontendModuleUrl . '/' . $this->getAction() . '.js',
                 true,
                 true,
                 Priority::widget()

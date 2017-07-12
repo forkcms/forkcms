@@ -246,7 +246,7 @@ class UploadModule extends BackendBaseActionAdd
             if ($this->frm->isCorrect()) {
                 // redirect to the install url, this is needed for doctrine modules because the container needs to
                 // load this module as an allowed module to get the entities working
-                $this->redirect(BackendModel::createURLForAction('InstallModule') . '&module=' . $moduleName);
+                $this->redirect(BackendModel::createUrlForAction('InstallModule') . '&module=' . $moduleName);
             }
         }
     }

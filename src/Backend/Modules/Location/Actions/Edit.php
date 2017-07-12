@@ -50,7 +50,7 @@ class Edit extends BackendBaseActionEdit
 
             // check Google Maps API key, otherwise redirect to settings
             if ($apikey === null) {
-                $this->redirect(BackendModel::createURLForAction('Index', 'Settings'));
+                $this->redirect(BackendModel::createUrlForAction('Index', 'Settings'));
             }
 
             // add js
@@ -67,7 +67,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -77,7 +77,7 @@ class Edit extends BackendBaseActionEdit
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
 
         $this->settings = BackendLocationModel::getMapSettings($this->id);
@@ -222,9 +222,9 @@ class Edit extends BackendBaseActionEdit
 
                 // redirect to the overview
                 if ($this->frm->getField('redirect')->getValue() == 'overview') {
-                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['id']);
+                    $this->redirect(BackendModel::createUrlForAction('Index') . '&report=edited&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['id']);
                 } else {
-                    $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
+                    $this->redirect(BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
                 }
             }
         }

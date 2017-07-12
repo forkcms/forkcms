@@ -35,7 +35,7 @@ class Synonyms extends Action
         $dataGrid->setColumnFunction('str_replace', [',', ', ', '[synonym]'], 'synonym', true);
 
         if (BackendAuthentication::isAllowedAction('EditSynonym')) {
-            $editUrl = BackendModel::createURLForAction('EditSynonym') . '&amp;id=[id]';
+            $editUrl = BackendModel::createUrlForAction('EditSynonym') . '&amp;id=[id]';
             $dataGrid->setColumnURL('term', $editUrl);
             $dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editUrl, BL::lbl('Edit'));
         }

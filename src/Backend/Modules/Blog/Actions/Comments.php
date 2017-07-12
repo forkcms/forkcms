@@ -50,7 +50,7 @@ class Comments extends BackendBaseActionIndex
     public static function addPostData(string $text, string $title, string $url, int $id): string
     {
         // reset URL
-        $url = BackendModel::getURLForBlock('Blog', 'Detail') . '/' . $url . '#comment-' . $id;
+        $url = BackendModel::getUrlForBlock('Blog', 'Detail') . '/' . $url . '#comment-' . $id;
 
         // build HTML
         return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $url, $title) . '</em></p>' . "\n" . (string) $text;
@@ -142,7 +142,7 @@ class Comments extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditComment') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditComment') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
@@ -153,7 +153,7 @@ class Comments extends BackendBaseActionIndex
                 'mark_as_spam',
                 null,
                 BL::lbl('MarkAsSpam'),
-                BackendModel::createURLForAction('MassCommentAction') .
+                BackendModel::createUrlForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=spam',
                 BL::lbl('MarkAsSpam')
             );
@@ -237,7 +237,7 @@ class Comments extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditComment') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditComment') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
@@ -248,7 +248,7 @@ class Comments extends BackendBaseActionIndex
                 'approve',
                 null,
                 BL::lbl('Approve'),
-                BackendModel::createURLForAction('MassCommentAction') .
+                BackendModel::createUrlForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=published',
                 BL::lbl('Approve')
             );
@@ -329,7 +329,7 @@ class Comments extends BackendBaseActionIndex
                 'approve',
                 null,
                 BL::lbl('Approve'),
-                BackendModel::createURLForAction('MassCommentAction') .
+                BackendModel::createUrlForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=spam&amp;action=published',
                 BL::lbl('Approve')
             );

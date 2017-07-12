@@ -67,7 +67,7 @@ class Import extends BackendBaseActionAdd
         $this->filter['value'] = $this->getRequest()->query->get('value');
 
         // build query for filter
-        $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
+        $this->filterQuery = BackendLocaleModel::buildUrlQueryByFilter($this->filter);
     }
 
     private function validateForm(): void
@@ -99,7 +99,7 @@ class Import extends BackendBaseActionAdd
                 $statistics = BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
 
                 // everything is imported, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=imported&var=' . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery);
+                $this->redirect(BackendModel::createUrlForAction('Index') . '&report=imported&var=' . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery);
             }
         }
     }

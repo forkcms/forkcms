@@ -28,7 +28,7 @@ class DeleteCategory extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction(
+            $this->redirect(BackendModel::createUrlForAction(
                 'Categories',
                 null,
                 null,
@@ -43,7 +43,7 @@ class DeleteCategory extends BackendBaseActionDelete
 
         // does the item exist
         if ($this->id === 0 || !BackendBlogModel::existsCategory($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Categories', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('Categories', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -52,7 +52,7 @@ class DeleteCategory extends BackendBaseActionDelete
 
         // allowed to delete the category?
         if (!BackendBlogModel::deleteCategoryAllowed($this->id)) {
-            $this->redirect(BackendModel::createURLForAction(
+            $this->redirect(BackendModel::createUrlForAction(
                 'Categories',
                 null,
                 null,
@@ -66,7 +66,7 @@ class DeleteCategory extends BackendBaseActionDelete
 
         BackendBlogModel::deleteCategory($this->id);
 
-        $this->redirect(BackendModel::createURLForAction(
+        $this->redirect(BackendModel::createUrlForAction(
             'Categories',
             null,
             null,

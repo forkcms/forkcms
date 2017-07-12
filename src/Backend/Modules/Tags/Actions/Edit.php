@@ -43,7 +43,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -131,7 +131,7 @@ class Edit extends BackendBaseActionEdit
                 $item = [];
                 $item['id'] = $this->id;
                 $item['tag'] = $this->frm->getField('name')->getValue();
-                $item['url'] = BackendTagsModel::getURL(
+                $item['url'] = BackendTagsModel::getUrl(
                     CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
                     $this->id
                 );
@@ -141,7 +141,7 @@ class Edit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Index') . '&report=edited&var=' . rawurlencode(
                         $item['tag']
                     ) . '&highlight=row-' . $item['id']
                 );

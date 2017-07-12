@@ -53,7 +53,7 @@ class Subscribe extends FrontendBaseBlock
             return;
         }
 
-        $redirectLink = FrontendNavigation::getURLForBlock(
+        $redirectLink = FrontendNavigation::getUrlForBlock(
             'Mailmotor',
             'Subscribe'
         ) . '?subscribed=true';

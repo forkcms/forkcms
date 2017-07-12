@@ -159,7 +159,7 @@ class Page extends KernelLoader
 
         if (!FrontendAuthenticationModel::isLoggedIn()) {
             $this->redirect(
-                Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $this->url->getQueryString()
+                Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $this->url->getQueryString()
             );
         }
 
@@ -247,7 +247,7 @@ class Page extends KernelLoader
 
             // check if we actually have a first child
             if (Navigation::getFirstChildId($record['id']) !== false) {
-                $this->redirect(Navigation::getURL($firstChildId), RedirectResponse::HTTP_MOVED_PERMANENTLY);
+                $this->redirect(Navigation::getUrl($firstChildId), RedirectResponse::HTTP_MOVED_PERMANENTLY);
             }
         }
 
@@ -379,11 +379,11 @@ class Page extends KernelLoader
             return;
         }
 
-        $url = Navigation::getURL($this->pageId, $language);
+        $url = Navigation::getUrl($this->pageId, $language);
 
         // Ignore 404 links
         if ($this->pageId !== Response::HTTP_NOT_FOUND
-            && $url === Navigation::getURL(Response::HTTP_NOT_FOUND, $language)) {
+            && $url === Navigation::getUrl(Response::HTTP_NOT_FOUND, $language)) {
             return;
         }
 

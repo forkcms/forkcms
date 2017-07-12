@@ -543,7 +543,7 @@ class Add extends BackendBaseActionAdd
                 $this->insertPermissions($actionPermissions, $bundledActionPermissions);
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(BackendModel::createUrlForAction('Index') . '&report=added&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
             }
         }
     }

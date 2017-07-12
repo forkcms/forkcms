@@ -299,9 +299,9 @@ class Add extends BackendBaseActionAdd
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
 
         // set callback for generating an unique URL
-        $this->meta->setURLCallback(
+        $this->meta->setUrlCallback(
             'Backend\Modules\Pages\Engine\Model',
-            'getURL',
+            'getUrl',
             [0, $this->getRequest()->query->getInt('parent'), false]
         );
     }
@@ -318,7 +318,7 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->tpl->assign(
             'prefixURL',
-            rtrim(BackendPagesModel::getFullURL($this->getRequest()->query->getInt('parent', 1)), '/')
+            rtrim(BackendPagesModel::getFullUrl($this->getRequest()->query->getInt('parent', 1)), '/')
         );
         $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
         $this->tpl->assign('showTags', $this->showTags());
@@ -364,9 +364,9 @@ class Add extends BackendBaseActionAdd
             }
 
             // set callback for generating an unique URL
-            $this->meta->setURLCallback(
+            $this->meta->setUrlCallback(
                 'Backend\Modules\Pages\Engine\Model',
-                'getURL',
+                'getUrl',
                 [0, $this->getRequest()->query->getInt('parent'), $this->frm->getField('is_action')->getChecked()]
             );
 
@@ -404,7 +404,7 @@ class Add extends BackendBaseActionAdd
                 }
                 if ($redirectValue == 'external') {
                     $data['external_redirect'] = [
-                        'url' => BackendPagesModel::getEncodedRedirectURL(
+                        'url' => BackendPagesModel::getEncodedRedirectUrl(
                             $this->frm->getField('external_redirect')->getValue()
                         ),
                         'code' => '301',
@@ -519,7 +519,7 @@ class Add extends BackendBaseActionAdd
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(
-                        BackendModel::createURLForAction(
+                        BackendModel::createUrlForAction(
                             'Edit'
                         ) . '&id=' . $page['id'] . '&report=added&var=' . rawurlencode(
                             $page['title']
@@ -528,7 +528,7 @@ class Add extends BackendBaseActionAdd
                 } elseif ($page['status'] == 'draft') {
                     // everything is saved, so redirect to the edit action
                     $this->redirect(
-                        BackendModel::createURLForAction(
+                        BackendModel::createUrlForAction(
                             'Edit'
                         ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . rawurlencode(
                             $page['title']
@@ -546,7 +546,7 @@ class Add extends BackendBaseActionAdd
         }
 
         $imagePath = FRONTEND_FILES_PATH . '/pages/images';
-        $imageFilename = $this->meta->getURL() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
+        $imageFilename = $this->meta->getUrl() . '_' . time() . '.' . $this->frm->getField('image')->getExtension();
         $this->frm->getField('image')->generateThumbnails($imagePath, $imageFilename);
 
         return $imageFilename;

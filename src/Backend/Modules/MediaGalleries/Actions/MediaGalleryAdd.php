@@ -52,7 +52,7 @@ class MediaGalleryAdd extends ActionAdd
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createURLForAction(
+        return Model::createUrlForAction(
             'MediaGalleryIndex',
             null,
             null,

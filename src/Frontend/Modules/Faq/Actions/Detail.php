@@ -70,7 +70,7 @@ class Detail extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get by URL
@@ -78,13 +78,13 @@ class Detail extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // overwrite URLs
-        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Category') .
+        $this->record['category_full_url'] = FrontendNavigation::getUrlForBlock('Faq', 'Category') .
                                              '/' . $this->record['category_url'];
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Detail') . '/' . $this->record['url'];
+        $this->record['full_url'] = FrontendNavigation::getUrlForBlock('Faq', 'Detail') . '/' . $this->record['url'];
 
         // get tags
         $this->record['tags'] = FrontendTagsModel::getForItem('Faq', $this->record['id']);

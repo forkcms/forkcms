@@ -248,7 +248,7 @@ class Model
                 $saveWorkingLanguage = BL::getWorkingLanguage();
 
                 // If we don't set the working language to the target language,
-                // BackendTagsModel::getURL() will use the current working
+                // BackendTagsModel::getUrl() will use the current working
                 // language, possibly causing unnecessary '-2' suffixes in
                 // tags.url
                 BL::setWorkingLanguage($toLanguage);
@@ -480,7 +480,7 @@ class Model
 
         // loop items
         foreach ($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction(
+            $row['url'] = BackendModel::createUrlForAction(
                 'Edit',
                 'Pages',
                 null,
@@ -520,7 +520,7 @@ class Model
         return false;
     }
 
-    public static function getFullURL(int $id): string
+    public static function getFullUrl(int $id): string
     {
         $keys = static::getCacheBuilder()->getKeys(BL::getWorkingLanguage());
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
@@ -693,7 +693,7 @@ class Model
 
                 // insert link
                 $html .= '    <a href="' .
-                         BackendModel::createURLForAction(
+                         BackendModel::createUrlForAction(
                              'Edit',
                              null,
                              null,
@@ -783,7 +783,7 @@ class Model
         // create homepage anchor from title
         $homePage = self::get(1);
         $html .= '            <a href="' .
-                 BackendModel::createURLForAction(
+                 BackendModel::createUrlForAction(
                      'Edit',
                      null,
                      null,
@@ -814,7 +814,7 @@ class Model
 
                     // insert link
                     $html .= '            <a href="' .
-                             BackendModel::createURLForAction(
+                             BackendModel::createUrlForAction(
                                  'Edit',
                                  null,
                                  null,
@@ -850,7 +850,7 @@ class Model
 
                 // insert link
                 $html .= '            <a href="' .
-                         BackendModel::createURLForAction(
+                         BackendModel::createUrlForAction(
                              'Edit',
                              null,
                              null,
@@ -885,7 +885,7 @@ class Model
 
                 // insert link
                 $html .= '            <a href="' .
-                         BackendModel::createURLForAction(
+                         BackendModel::createUrlForAction(
                              'Edit',
                              null,
                              null,
@@ -918,7 +918,7 @@ class Model
         ];
     }
 
-    public static function getURL(string $url, int $id = null, int $parentId = null, bool $isAction = false): string
+    public static function getUrl(string $url, int $id = null, int $parentId = null, bool $isAction = false): string
     {
         $parentIds = [$parentId ?? 0];
 
@@ -953,7 +953,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($url, null, $parentId, $isAction);
+                return self::getUrl($url, null, $parentId, $isAction);
             }
         } else {
             // one item should be ignored
@@ -972,12 +972,12 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($url, $id, $parentId, $isAction);
+                return self::getUrl($url, $id, $parentId, $isAction);
             }
         }
 
         // get full URL
-        $fullURL = self::getFullURL($parentId) . '/' . $url;
+        $fullUrl = self::getFullUrl($parentId) . '/' . $url;
 
         // get info about parent page
         $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
@@ -996,26 +996,26 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($url, $id, $parentId, $isAction);
+                return self::getUrl($url, $id, $parentId, $isAction);
             }
         }
 
         // check if folder exists
-        if (is_dir(PATH_WWW . '/' . $fullURL) || is_file(PATH_WWW . '/' . $fullURL)) {
+        if (is_dir(PATH_WWW . '/' . $fullUrl) || is_file(PATH_WWW . '/' . $fullUrl)) {
             // add a number
             $url = BackendModel::addNumber($url);
 
             // recall this method, but with a new URL
-            return self::getURL($url, $id, $parentId, $isAction);
+            return self::getUrl($url, $id, $parentId, $isAction);
         }
 
         // check if it is an application
-        if (array_key_exists(trim($fullURL, '/'), ForkController::getRoutes())) {
+        if (array_key_exists(trim($fullUrl, '/'), ForkController::getRoutes())) {
             // add a number
             $url = BackendModel::addNumber($url);
 
             // recall this method, but with a new URL
-            return self::getURL($url, $id, $parentId, $isAction);
+            return self::getUrl($url, $id, $parentId, $isAction);
         }
 
         // return the unique URL!
@@ -1221,8 +1221,8 @@ class Model
             return false;
         }
 
-        // get current URL
-        $currentURL = (string) $db->getVar(
+        // get current url
+        $currentUrl = (string) $db->getVar(
             'SELECT url
              FROM meta AS m
              WHERE m.id = ?',
@@ -1230,15 +1230,15 @@ class Model
         );
 
         // rebuild url
-        $newURL = self::getURL(
-            $currentURL,
+        $newUrl = self::getUrl(
+            $currentUrl,
             $pageId,
             $newParent,
             (isset($page['data']['is_action']) && $page['data']['is_action'] == 'Y')
         );
 
         // store
-        $db->update('meta', ['url' => $newURL], 'id = ?', [$page['meta_id']]);
+        $db->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
 
         // return
         return true;
@@ -1388,19 +1388,20 @@ class Model
         }
     }
 
-    public static function getEncodedRedirectURL(string $redirectURL): string
+    public static function getEncodedRedirectUrl(string $redirectUrl): string
     {
-        preg_match('!(http[s]?)://(.*)!i', $redirectURL, $matches);
-        $URLChunks = explode('/', $matches[2]);
-        if (!empty($URLChunks)) {
+        preg_match('!(http[s]?)://(.*)!i', $redirectUrl, $matches);
+        $urlChunks = explode('/', $matches[2]);
+        if (!empty($urlChunks)) {
             // skip domain name
-            $domain = array_shift($URLChunks);
-            foreach ($URLChunks as &$URLChunk) {
-                $URLChunk = rawurlencode($URLChunk);
+            $domain = array_shift($urlChunks);
+            foreach ($urlChunks as &$urlChunk) {
+                $urlChunk = rawurlencode($urlChunk);
             }
-            $redirectURL = $matches[1] . '://' . $domain . '/' . implode('/', $URLChunks);
+            unset($urlChunk);
+            $redirectUrl = $matches[1] . '://' . $domain . '/' . implode('/', $urlChunks);
         }
 
-        return $redirectURL;
+        return $redirectUrl;
     }
 }

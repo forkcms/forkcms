@@ -70,7 +70,7 @@ class Unsubscribe extends FrontendBaseBlock
         }
 
         $this->redirect(
-            FrontendNavigation::getURLForBlock(
+            FrontendNavigation::getUrlForBlock(
                 'Mailmotor',
                 'Unsubscribe'
             )

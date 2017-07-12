@@ -60,7 +60,7 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function createURLForAction(
+    public static function createUrlForAction(
         string $action = null,
         string $module = null,
         string $language = null,
@@ -79,7 +79,7 @@ class Model extends \Common\Core\Model
 
         // error checking
         if ($action === null || $module === null) {
-            throw new \Exception('Action and Module must not be empty when creating an URL.');
+            throw new \Exception('Action and Module must not be empty when creating an url.');
         }
 
         $parameters['token'] = self::getToken();
@@ -522,7 +522,7 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function getURL(int $pageId, string $language = null): string
+    public static function getUrl(int $pageId, string $language = null): string
     {
         if ($language === null) {
             $language = BackendLanguage::getWorkingLanguage();
@@ -536,7 +536,7 @@ class Model extends \Common\Core\Model
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
-            return self::getURL(404, $language);
+            return self::getUrl(404, $language);
         }
 
         // return the unique URL!
@@ -555,7 +555,7 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function getURLForBlock(
+    public static function getUrlForBlock(
         string $module,
         string $action = null,
         string $language = null,
@@ -565,7 +565,7 @@ class Model extends \Common\Core\Model
             $language = BackendLanguage::getWorkingLanguage();
         }
 
-        $pageIdForURL = null;
+        $pageIdForUrl = null;
         $navigation = self::getNavigation($language);
 
         $dataMatch = false;
@@ -593,7 +593,7 @@ class Model extends \Common\Core\Model
                             }
 
                             // exact page was found, so return
-                            return self::getURL($properties['page_id'], $language);
+                            return self::getUrl($properties['page_id'], $language);
                         }
 
                         if ($extra['module'] === $module && $extra['action'] === null) {
@@ -604,17 +604,17 @@ class Model extends \Common\Core\Model
                                     continue;
                                 }
 
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
 
                             if ($data === null && $extra['data'] === null) {
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
 
                             if (!$dataMatch) {
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                             }
                         }
                     }
@@ -623,11 +623,11 @@ class Model extends \Common\Core\Model
         }
 
         // Page not found so return the 404 url
-        if ($pageIdForURL === null) {
-            return self::getURL(404, $language);
+        if ($pageIdForUrl === null) {
+            return self::getUrl(404, $language);
         }
 
-        $url = self::getURL($pageIdForURL, $language);
+        $url = self::getUrl($pageIdForUrl, $language);
 
         // set locale with force
         FrontendLanguage::setLocale($language, true);

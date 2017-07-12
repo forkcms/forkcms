@@ -63,8 +63,8 @@ class Footer extends KernelLoader
 
         // add Google sitelinks search box code if wanted.
         if ($this->get('fork.settings')->get('Search', 'use_sitelinks_search_box', true)) {
-            $searchUrl = FrontendNavigation::getURLForBlock('Search');
-            $url404 = FrontendNavigation::getURL(404);
+            $searchUrl = FrontendNavigation::getUrlForBlock('Search');
+            $url404 = FrontendNavigation::getUrl(404);
             if ($searchUrl !== $url404) {
                 $siteHTMLFooter .= $this->getSiteLinksCode($searchUrl);
             }

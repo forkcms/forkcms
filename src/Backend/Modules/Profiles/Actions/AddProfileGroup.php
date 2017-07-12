@@ -40,7 +40,7 @@ class AddProfileGroup extends BackendBaseActionAdd
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -104,7 +104,7 @@ class AddProfileGroup extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction(
+                    BackendModel::createUrlForAction(
                         'Edit'
                     ) . '&id=' . $values['profile_id'] . '&report=membership-added&highlight=row-' . $id . '#tabGroups'
                 );

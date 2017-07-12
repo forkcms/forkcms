@@ -50,7 +50,7 @@ class DataDetails extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, redirect with an error, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 

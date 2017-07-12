@@ -47,7 +47,7 @@ class AddCategory extends BackendBaseAJAXAction
             'description_overwrite' => 'N',
             'title' => $item['title'],
             'title_overwrite' => 'N',
-            'url' => BackendBlogModel::getURLForCategory(\SpoonFilter::urlise($item['title'])),
+            'url' => BackendBlogModel::getUrlForCategory(\SpoonFilter::urlise($item['title'])),
         ];
 
         // update

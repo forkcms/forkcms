@@ -46,7 +46,7 @@ class Index extends BackendBaseActionIndex
 
         // check Google Maps API key, otherwise redirect to settings
         if ($apikey === null) {
-            $this->redirect(BackendModel::createURLForAction('Index', 'Settings'));
+            $this->redirect(BackendModel::createUrlForAction('Index', 'Settings'));
         }
 
         // add js
@@ -103,13 +103,13 @@ class Index extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]'
             );
             $this->dataGrid->addColumn(
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }

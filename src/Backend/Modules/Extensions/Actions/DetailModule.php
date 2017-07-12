@@ -66,7 +66,7 @@ class DetailModule extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&error=non-existing');
         }
     }
 

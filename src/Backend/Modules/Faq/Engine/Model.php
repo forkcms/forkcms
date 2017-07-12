@@ -182,7 +182,7 @@ class Model
         );
 
         foreach ($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction('Edit', 'Faq', null, ['id' => $row['url']]);
+            $row['url'] = BackendModel::createUrlForAction('Edit', 'Faq', null, ['id' => $row['url']]);
         }
 
         return $items;
@@ -278,7 +278,7 @@ class Model
      *
      * @return string
      */
-    public static function getURL(string $url, int $id = null): string
+    public static function getUrl(string $url, int $id = null): string
     {
         $url = CommonUri::getUrl((string) $url);
         $db = BackendModel::get('database');
@@ -296,7 +296,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url);
+                return self::getUrl($url);
             }
         } else {
             // current category should be excluded
@@ -311,7 +311,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url, $id);
+                return self::getUrl($url, $id);
             }
         }
 
@@ -326,7 +326,7 @@ class Model
      *
      * @return string
      */
-    public static function getURLForCategory(string $url, int $id = null): string
+    public static function getUrlForCategory(string $url, int $id = null): string
     {
         $url = CommonUri::getUrl($url);
         $db = BackendModel::get('database');
@@ -344,7 +344,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url);
+                return self::getUrlForCategory($url);
             }
 
             return $url;
@@ -362,7 +362,7 @@ class Model
         ) {
             $url = BackendModel::addNumber($url);
 
-            return self::getURLForCategory($url, $id);
+            return self::getUrlForCategory($url, $id);
         }
 
         return $url;
@@ -408,7 +408,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Category', 'Faq')) . ': ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction(
+                'edit_url' => BackendModel::createUrlForAction(
                     'EditCategory',
                     'Faq',
                     $item['language']
@@ -447,7 +447,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id'],
+                'edit_url' => BackendModel::createUrlForAction('EditCategory') . '&id=' . $item['id'],
             ]
         );
     }

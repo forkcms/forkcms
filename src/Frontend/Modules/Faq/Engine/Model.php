@@ -11,7 +11,7 @@ namespace Frontend\Modules\Faq\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url as FrontendURL;
+use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -70,7 +70,7 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
         // build the item urls
         foreach ($items as &$item) {
@@ -92,7 +92,7 @@ class Model implements FrontendTagsInterface
         );
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Category');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Category');
 
         // build the item url
         foreach ($items as &$item) {
@@ -145,7 +145,7 @@ class Model implements FrontendTagsInterface
         );
 
         if (!empty($items)) {
-            $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+            $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
             // build the item urls
             foreach ($items as &$row) {
@@ -160,15 +160,15 @@ class Model implements FrontendTagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $url
+     * @param FrontendUrl $url
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $url): int
+    public static function getIdForTags(FrontendUrl $url): int
     {
-        $itemURL = (string) $url->getParameter(1);
+        $itemUrl = (string) $url->getParameter(1);
 
-        return self::get($itemURL)['id'];
+        return self::get($itemUrl)['id'];
     }
 
     public static function getMostRead(int $limit): array
@@ -183,7 +183,7 @@ class Model implements FrontendTagsInterface
             [LANGUAGE, 'N', $limit]
         );
 
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
         foreach ($items as &$item) {
             $item['full_url'] = $link . '/' . $item['url'];
         }
@@ -202,7 +202,7 @@ class Model implements FrontendTagsInterface
             [LANGUAGE, $categoryId]
         );
 
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
         foreach ($items as &$item) {
             $item['full_url'] = $link . '/' . $item['url'];
@@ -228,7 +228,7 @@ class Model implements FrontendTagsInterface
             return [];
         }
 
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.question, m.url
              FROM faq_questions AS i
@@ -290,7 +290,7 @@ class Model implements FrontendTagsInterface
         );
 
         // prepare items for search
-        $detailUrl = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $detailUrl = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
         foreach ($items as &$item) {
             $item['full_url'] = $detailUrl . '/' . $item['url'];
         }

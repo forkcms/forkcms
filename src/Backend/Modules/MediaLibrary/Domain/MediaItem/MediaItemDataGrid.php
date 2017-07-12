@@ -112,7 +112,7 @@ class MediaItemDataGrid extends DataGridDB
 
     private function setExtras(Type $type, int $folderId = null): void
     {
-        $editActionUrl = Model::createURLForAction('MediaItemEdit');
+        $editActionUrl = Model::createUrlForAction('MediaItemEdit');
         $this->setHeaderLabels($this->getColumnHeaderLabels($type));
         $this->setActiveTab('tab' . ucfirst((string) $type));
         $this->setColumnsHidden($this->getColumnsThatNeedToBeHidden($type));
@@ -159,7 +159,7 @@ class MediaItemDataGrid extends DataGridDB
                     Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
-                    Model::createURLForAction('MediaItemEdit') . '&id=[id]' . '&folder=' . $folderId,
+                    Model::createUrlForAction('MediaItemEdit') . '&id=[id]' . '&folder=' . $folderId,
                     0,
                     0,
                     'media_library_backend_thumbnail',

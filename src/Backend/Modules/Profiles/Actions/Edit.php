@@ -59,7 +59,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -159,7 +159,7 @@ class Edit extends BackendBaseActionEdit
             // set column URLs
             $this->dgGroups->setColumnURL(
                 'group_name',
-                BackendModel::createURLForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id
+                BackendModel::createUrlForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id
             );
 
             // edit column
@@ -167,7 +167,7 @@ class Edit extends BackendBaseActionEdit
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id,
+                BackendModel::createUrlForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id,
                 BL::getLabel('Edit')
             );
         }
@@ -315,8 +315,8 @@ class Edit extends BackendBaseActionEdit
                 $displayName = (isset($values['display_name'])) ?
                     $values['display_name'] : $this->profile['display_name'];
 
-                $redirectUrl = BackendModel::createURLForAction('Index') .
-                    '&var=' . rawurlencode($values['email']) .
+                $redirectUrl = BackendModel::createUrlForAction('Index') .
+                               '&var=' . rawurlencode($values['email']) .
                     '&highlight=row-' . $this->id .
                     '&var=' . rawurlencode($displayName) .
                     '&report='

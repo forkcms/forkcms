@@ -113,7 +113,7 @@ class Model
                 $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSTitle', 'Blog'),
-                        BackendModel::createURLForAction('Settings', 'Blog')
+                        BackendModel::createUrlForAction('Settings', 'Blog')
                     ),
                 ];
             }
@@ -123,7 +123,7 @@ class Model
                 $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSDescription', 'Blog'),
-                        BackendModel::createURLForAction('Settings', 'Blog')
+                        BackendModel::createUrlForAction('Settings', 'Blog')
                     ),
                 ];
             }
@@ -421,7 +421,7 @@ class Model
 
         // overwrite the url
         foreach ($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction('Edit', 'Blog', null, ['id' => $row['url']]);
+            $row['url'] = BackendModel::createUrlForAction('Edit', 'Blog', null, ['id' => $row['url']]);
         }
 
         return $items;
@@ -573,7 +573,7 @@ class Model
         );
 
         // overwrite url
-        $baseUrl = BackendModel::getURLForBlock('Blog', 'detail');
+        $baseUrl = BackendModel::getUrlForBlock('Blog', 'detail');
 
         foreach ($comments as &$row) {
             $row['full_url'] = $baseUrl . '/' . $row['url'];
@@ -619,7 +619,7 @@ class Model
      *
      * @return string
      */
-    public static function getURL(string $url, int $id = null): string
+    public static function getUrl(string $url, int $id = null): string
     {
         $url = (string) $url;
 
@@ -640,7 +640,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url);
+                return self::getUrl($url);
             }
         } else {
             // current category should be excluded
@@ -655,7 +655,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url, $id);
+                return self::getUrl($url, $id);
             }
         }
 
@@ -670,7 +670,7 @@ class Model
      *
      * @return string
      */
-    public static function getURLForCategory($url, int $id = null): string
+    public static function getUrlForCategory($url, int $id = null): string
     {
         // redefine URL
         $url = (string) $url;
@@ -692,7 +692,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url);
+                return self::getUrlForCategory($url);
             }
         } else {
             // current category should be excluded
@@ -707,7 +707,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url, $id);
+                return self::getUrlForCategory($url, $id);
             }
         }
 
@@ -821,7 +821,7 @@ class Model
             $meta['title_overwrite'] = 'N';
         }
         if (!isset($meta['url'])) {
-            $meta['url'] = self::getURL($item['title']);
+            $meta['url'] = self::getUrl($item['title']);
         }
         if (!isset($meta['url_overwrite'])) {
             $meta['url_overwrite'] = 'N';

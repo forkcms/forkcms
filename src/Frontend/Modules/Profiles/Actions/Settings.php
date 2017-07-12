@@ -50,10 +50,10 @@ class Settings extends FrontendBaseBlock
         } else {
             // profile not logged in
             $this->redirect(
-                FrontendNavigation::getURLForBlock(
+                FrontendNavigation::getUrlForBlock(
                     'Profiles',
                     'Login'
-                ) . '?queryString=' . FrontendNavigation::getURLForBlock('Profiles', 'Settings'),
+                ) . '?queryString=' . FrontendNavigation::getUrlForBlock('Profiles', 'Settings'),
                 307
             );
         }
@@ -272,7 +272,7 @@ class Settings extends FrontendBaseBlock
                 $this->profile->setSettings($settings);
 
                 // redirect
-                $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Settings') . '?sent=true');
+                $this->redirect(SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'Settings') . '?sent=true');
             } else {
                 $this->tpl->assign('updateSettingsHasFormError', true);
             }

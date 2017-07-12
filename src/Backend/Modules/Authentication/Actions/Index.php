@@ -226,7 +226,7 @@ class Index extends BackendBaseActionIndex
                     ->parseHtml(
                         '/Authentication/Layout/Templates/Mails/ResetPassword.html.twig',
                         [
-                            'resetLink' => SITE_URL . BackendModel::createURLForAction('ResetPassword')
+                            'resetLink' => SITE_URL . BackendModel::createUrlForAction('ResetPassword')
                                            . '&email=' . $email . '&key=' . $key,
                         ]
                     );
@@ -256,8 +256,8 @@ class Index extends BackendBaseActionIndex
         $allowedModule = $this->getAllowedModule();
         $allowedAction = $this->getAllowedAction($allowedModule);
         $allowedModuleActionUrl = $allowedModule !== false && $allowedAction !== false ?
-            BackendModel::createURLForAction($allowedAction, $allowedModule) :
-            BackendModel::createURLForAction('Index', 'Authentication');
+            BackendModel::createUrlForAction($allowedAction, $allowedModule) :
+            BackendModel::createUrlForAction('Index', 'Authentication');
 
         $userEmail = BackendAuthentication::getUser()->getEmail();
         $this->getContainer()->get('logger')->info(

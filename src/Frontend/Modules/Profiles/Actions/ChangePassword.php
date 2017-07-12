@@ -47,10 +47,10 @@ class ChangePassword extends FrontendBaseBlock
             $this->parse();
         } else {
             $this->redirect(
-                FrontendNavigation::getURLForBlock(
+                FrontendNavigation::getUrlForBlock(
                     'Profiles',
                     'Login'
-                ) . '?queryString=' . FrontendNavigation::getURLForBlock('Profiles', 'ChangePassword'),
+                ) . '?queryString=' . FrontendNavigation::getUrlForBlock('Profiles', 'ChangePassword'),
                 307
             );
         }
@@ -127,7 +127,7 @@ class ChangePassword extends FrontendBaseBlock
 
                 // redirect
                 $this->redirect(
-                    SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ChangePassword') . '?sent=true'
+                    SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangePassword') . '?sent=true'
                 );
             } else {
                 $this->tpl->assign('updatePasswordHasFormError', true);

@@ -40,7 +40,7 @@ class Feedback extends BackendBaseWidget
 
         // build the urls
         foreach ($allFeedback as $feedback) {
-            $feedback['full_url'] = BackendModel::createURLForAction('Edit', 'Faq') .
+            $feedback['full_url'] = BackendModel::createUrlForAction('Edit', 'Faq') .
                                     '&id=' . $feedback['question_id'] . '#tabFeedback';
             $this->feedback[] = $feedback;
         }

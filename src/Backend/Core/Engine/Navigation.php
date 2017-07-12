@@ -126,14 +126,14 @@ final class Navigation extends KernelLoader
      * Try to determine the selected state
      *
      * @param array $navigationItem
-     * @param string $activeURL
+     * @param string $activeUrl
      *
      * @return bool
      */
-    private function navigationItemMatchesActiveUrl(array $navigationItem, string $activeURL): bool
+    private function navigationItemMatchesActiveUrl(array $navigationItem, string $activeUrl): bool
     {
-        if ($navigationItem['url'] === $activeURL
-            || (isset($navigationItem['selected_for']) && in_array($activeURL, $navigationItem['selected_for'], true))
+        if ($navigationItem['url'] === $activeUrl
+            || (isset($navigationItem['selected_for']) && in_array($activeUrl, $navigationItem['selected_for'], true))
         ) {
             return true;
         }
@@ -143,7 +143,7 @@ final class Navigation extends KernelLoader
         }
 
         foreach ($navigationItem['children'] as $childNavigationItem) {
-            if ($this->navigationItemMatchesActiveUrl($childNavigationItem, $activeURL)) {
+            if ($this->navigationItemMatchesActiveUrl($childNavigationItem, $activeUrl)) {
                 return true;
             }
         }

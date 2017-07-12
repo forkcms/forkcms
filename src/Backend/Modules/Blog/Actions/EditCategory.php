@@ -38,7 +38,7 @@ class EditCategory extends BackendBaseActionEdit
             $this->display();
         } else {
             // no item found, throw an exception, because somebody is fucking with our URL
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -59,7 +59,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
-        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURLForCategory', [$this->record['id']]);
+        $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getUrlForCategory', [$this->record['id']]);
     }
 
     protected function parse(): void
@@ -100,7 +100,7 @@ class EditCategory extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
+                    BackendModel::createUrlForAction('Categories') . '&report=edited-category&var=' .
                     rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }

@@ -156,7 +156,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('AkismetKey'),
-                    BackendModel::createURLForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings')
                 ),
             ];
         }
@@ -168,7 +168,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('GoogleMapsKey'),
-                    BackendModel::createURLForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings')
                 ),
             ];
         }
@@ -306,7 +306,7 @@ class Model
 
             // set URL if needed, we use '' instead of null, because otherwise the module of the current action (modules) is used.
             if (!isset($row['data']['url'])) {
-                $row['data']['url'] = BackendModel::createURLForAction('', $row['module']);
+                $row['data']['url'] = BackendModel::createUrlForAction('', $row['module']);
             }
 
             $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));
@@ -356,7 +356,7 @@ class Model
 
             // set URL if needed
             if (!isset($row['data']['url'])) {
-                $row['data']['url'] = BackendModel::createURLForAction(
+                $row['data']['url'] = BackendModel::createUrlForAction(
                     'Index',
                     $row['module']
                 );

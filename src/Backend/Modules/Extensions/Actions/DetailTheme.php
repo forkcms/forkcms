@@ -56,7 +56,7 @@ class DetailTheme extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Themes') . '&error=non-existing');
         }
     }
 

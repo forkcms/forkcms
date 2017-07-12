@@ -80,7 +80,7 @@ class ThemeTemplates extends BackendBaseActionEdit
             // set colum URLs
             $this->dataGrid->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('EditThemeTemplate') . '&amp;id=[id]'
             );
 
             // add edit column
@@ -88,7 +88,7 @@ class ThemeTemplates extends BackendBaseActionEdit
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditThemeTemplate') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }

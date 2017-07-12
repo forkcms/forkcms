@@ -159,7 +159,7 @@ class Register extends FrontendBaseBlock
                         ->parseHtml(
                             '/Profiles/Layout/Templates/Mails/Register.html.twig',
                             [
-                                'activationUrl' => SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate')
+                                'activationUrl' => SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'Activate')
                                                    . '/' . $settings['activation_key'],
                             ],
                             true

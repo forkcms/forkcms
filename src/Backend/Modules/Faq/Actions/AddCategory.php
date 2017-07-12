@@ -25,7 +25,7 @@ class AddCategory extends BackendBaseActionAdd
     {
         // only one category allowed, so we redirect
         if (!$this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true)) {
-            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=only-one-category-allowed');
+            $this->redirect(BackendModel::createUrlForAction('Categories') . '&error=only-one-category-allowed');
         }
 
         parent::execute();
@@ -39,8 +39,8 @@ class AddCategory extends BackendBaseActionAdd
     {
         parent::parse();
 
-        $url = BackendModel::getURLForBlock($this->url->getModule(), 'Category');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
+        $url404 = BackendModel::getUrl(404);
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);
         }
@@ -57,7 +57,7 @@ class AddCategory extends BackendBaseActionAdd
     private function validateForm(): void
     {
         if ($this->frm->isSubmitted()) {
-            $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURLForCategory');
+            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getUrlForCategory');
 
             $this->frm->cleanupFields();
 
@@ -78,7 +78,7 @@ class AddCategory extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&report=added-category&var=' .
+                    BackendModel::createUrlForAction('Categories') . '&report=added-category&var=' .
                     rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }
