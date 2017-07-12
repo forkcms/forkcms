@@ -19,7 +19,7 @@ use Symfony\Component\Intl\Intl as Intl;
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
+    const QUERY_DATAGRID_BROWSE =
         'SELECT id, title, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
          FROM location
          WHERE language = ?';

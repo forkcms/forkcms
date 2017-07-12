@@ -18,7 +18,7 @@ use Backend\Core\Engine\User as BackendUser;
  */
 class Model
 {
-    const QRY_BROWSE =
+    const QUERY_BROWSE =
         'SELECT i.id
          FROM users AS i
          WHERE i.deleted = ?';

@@ -45,7 +45,7 @@ class Categories extends BackendBaseActionIndex
 
         // create dataGrid
         $this->dataGrid = new BackendDataGridDatabase(
-            BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES,
+            BackendFaqModel::QUERY_DATAGRID_BROWSE_CATEGORIES,
             [BL::getWorkingLanguage()]
         );
         $this->dataGrid->setHeaderLabels(['num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))]);

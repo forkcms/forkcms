@@ -31,7 +31,7 @@ class Index extends BackendBaseActionIndex
 
     public function loadDataGrid(): void
     {
-        $this->dataGrid = new BackendDataGridDatabase(BackendGroupsModel::QRY_BROWSE);
+        $this->dataGrid = new BackendDataGridDatabase(BackendGroupsModel::QUERY_BROWSE);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {

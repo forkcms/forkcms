@@ -70,7 +70,7 @@ class Comments extends BackendBaseActionIndex
          * DataGrid for the published comments.
          */
         $this->dgPublished = new BackendDataGridDatabase(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_COMMENTS,
             ['published', BL::getWorkingLanguage(), 'active']
         );
 
@@ -165,7 +165,7 @@ class Comments extends BackendBaseActionIndex
 
         // datagrid for the comments that are awaiting moderation
         $this->dgModeration = new BackendDataGridDatabase(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_COMMENTS,
             ['moderation', BL::getWorkingLanguage(), 'active']
         );
 
@@ -258,7 +258,7 @@ class Comments extends BackendBaseActionIndex
          * DataGrid for the comments that are marked as spam
          */
         $this->dgSpam = new BackendDataGridDatabase(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_COMMENTS,
             ['spam', BL::getWorkingLanguage(), 'active']
         );
 

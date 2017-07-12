@@ -20,13 +20,13 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
+    const QUERY_DATAGRID_BROWSE =
         'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
          FROM faq_questions AS i
          WHERE i.language = ? AND i.category_id = ?
          ORDER BY i.sequence ASC';
 
-    const QRY_DATAGRID_BROWSE_CATEGORIES =
+    const QUERY_DATAGRID_BROWSE_CATEGORIES =
         'SELECT i.id, i.title, COUNT(p.id) AS num_items, i.sequence
          FROM faq_categories AS i
          LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND p.language = i.language

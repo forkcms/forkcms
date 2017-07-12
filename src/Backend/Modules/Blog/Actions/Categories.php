@@ -33,7 +33,7 @@ class Categories extends BackendBaseActionIndex
     {
         // create datagrid
         $this->dataGrid = new BackendDataGridDatabase(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES,
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_CATEGORIES,
             ['active', BL::getWorkingLanguage()]
         );
 

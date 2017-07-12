@@ -30,7 +30,7 @@ class Statistics extends Action
     private function showDataGrid(): void
     {
         $dataGrid = new BackendDataGridDatabase(
-            BackendSearchModel::QRY_DATAGRID_BROWSE_STATISTICS,
+            BackendSearchModel::QUERY_DATAGRID_BROWSE_STATISTICS,
             [BL::getWorkingLanguage()]
         );
         $dataGrid->setColumnsHidden(['data']);

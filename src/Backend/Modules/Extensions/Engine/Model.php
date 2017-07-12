@@ -29,7 +29,7 @@ class Model
      *
      * @var string
      */
-    const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
+    const QUERY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
                                   FROM themes_templates AS i
                                   WHERE i.theme = ?
                                   ORDER BY i.label ASC';
@@ -660,7 +660,7 @@ class Model
 
         $database = BackendModel::getContainer()->get('database');
 
-        $records = $database->getRecords(self::QRY_BROWSE_TEMPLATES, [$theme]);
+        $records = $database->getRecords(self::QUERY_BROWSE_TEMPLATES, [$theme]);
 
         foreach ($records as $row) {
             $template = self::getTemplate($row['id']);

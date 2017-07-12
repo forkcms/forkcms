@@ -32,7 +32,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGrid(): void
     {
         $this->dataGrid = new BackendDataGridDatabase(
-            BackendFormBuilderModel::QRY_BROWSE,
+            BackendFormBuilderModel::QUERY_BROWSE,
             [BL::getWorkingLanguage()]
         );
         $this->dataGrid->setHeaderLabels([

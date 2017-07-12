@@ -32,7 +32,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGrid(): void
     {
         // create datagrid with an overview of all active and undeleted users
-        $this->dataGrid = new BackendDataGridDatabase(BackendUsersModel::QRY_BROWSE, ['N']);
+        $this->dataGrid = new BackendDataGridDatabase(BackendUsersModel::QUERY_BROWSE, ['N']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {

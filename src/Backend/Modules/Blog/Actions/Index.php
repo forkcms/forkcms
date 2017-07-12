@@ -79,7 +79,7 @@ class Index extends BackendBaseActionIndex
         if ($this->categoryId != null) {
             // create datagrid
             $this->dgPosts = new BackendDataGridDatabase(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY,
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_FOR_CATEGORY,
                 [$this->categoryId, 'active', BL::getWorkingLanguage()]
             );
 
@@ -88,7 +88,7 @@ class Index extends BackendBaseActionIndex
         } else {
             // create datagrid
             $this->dgPosts = new BackendDataGridDatabase(
-                BackendBlogModel::QRY_DATAGRID_BROWSE,
+                BackendBlogModel::QUERY_DATAGRID_BROWSE,
                 ['active', BL::getWorkingLanguage()]
             );
         }
@@ -152,7 +152,7 @@ class Index extends BackendBaseActionIndex
         if ($this->categoryId != null) {
             // create datagrid
             $this->dgDrafts = new BackendDataGridDatabase(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY,
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY,
                 [
                     $this->categoryId,
                     'draft',
@@ -166,7 +166,7 @@ class Index extends BackendBaseActionIndex
         } else {
             // create datagrid
             $this->dgDrafts = new BackendDataGridDatabase(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS,
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_DRAFTS,
                 ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
             );
         }
@@ -227,7 +227,7 @@ class Index extends BackendBaseActionIndex
         if ($this->categoryId != null) {
             // create datagrid
             $this->dgRecent = new BackendDataGridDatabase(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY,
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY,
                 [$this->categoryId, 'active', BL::getWorkingLanguage(), 4]
             );
 
@@ -236,7 +236,7 @@ class Index extends BackendBaseActionIndex
         } else {
             // create datagrid
             $this->dgRecent = new BackendDataGridDatabase(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT,
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_RECENT,
                 ['active', BL::getWorkingLanguage(), 4]
             );
         }

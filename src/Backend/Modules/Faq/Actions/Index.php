@@ -53,7 +53,7 @@ class Index extends BackendBaseActionIndex
         // loop categories and create a dataGrid for each one
         foreach ($categories as $categoryId => $categoryTitle) {
             $dataGrid = new BackendDataGridDatabase(
-                BackendFaqModel::QRY_DATAGRID_BROWSE,
+                BackendFaqModel::QUERY_DATAGRID_BROWSE,
                 [BL::getWorkingLanguage(), $categoryId]
             );
             $dataGrid->enableSequenceByDragAndDrop();

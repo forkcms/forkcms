@@ -126,7 +126,7 @@ class Edit extends BackendBaseActionEdit
     {
         // create datagrid
         $this->dgDrafts = new BackendDataGridDatabase(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
             ['draft', $this->record['id'], BL::getWorkingLanguage()]
         );
 
@@ -227,7 +227,7 @@ class Edit extends BackendBaseActionEdit
     {
         // create datagrid
         $this->dgRevisions = new BackendDataGridDatabase(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_REVISIONS,
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_REVISIONS,
             ['archived', $this->record['id'], BL::getWorkingLanguage()]
         );
 

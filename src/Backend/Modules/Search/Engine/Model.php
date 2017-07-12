@@ -19,12 +19,12 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE_SYNONYMS =
+    const QUERY_DATAGRID_BROWSE_SYNONYMS =
         'SELECT i.id, i.term, i.synonym
          FROM search_synonyms AS i
          WHERE i.language = ?';
 
-    const QRY_DATAGRID_BROWSE_STATISTICS =
+    const QUERY_DATAGRID_BROWSE_STATISTICS =
         'SELECT UNIX_TIMESTAMP(i.time) AS time, i.term, i.data
          FROM search_statistics AS i
          WHERE i.language = ?';

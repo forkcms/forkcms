@@ -33,7 +33,7 @@ class Model
      *
      * @var string
      */
-    const QRY_DATAGRID_BROWSE_PROFILE_GROUPS =
+    const QUERY_DATAGRID_BROWSE_PROFILE_GROUPS =
         'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on
          FROM profiles_groups AS g
          INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id AND

@@ -19,7 +19,7 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
+    const QUERY_DATAGRID_BROWSE =
         'SELECT i.id, i.tag, i.number AS num_tags
          FROM tags AS i
          WHERE i.language = ?

@@ -20,7 +20,7 @@ use Symfony\Component\Finder\Finder;
  */
 class Model
 {
-    const QRY_BROWSE =
+    const QUERY_BROWSE =
         'SELECT i.id, i.name, i.email, i.method,
          (SELECT COUNT(fd.form_id) FROM forms_data AS fd WHERE fd.form_id = i.id) AS sent_forms
          FROM forms AS i

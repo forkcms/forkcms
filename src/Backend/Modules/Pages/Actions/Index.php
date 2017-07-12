@@ -53,7 +53,7 @@ class Index extends BackendBaseActionIndex
     {
         // create datagrid
         $this->dgDrafts = new BackendDataGridDatabase(
-            BackendPagesModel::QRY_DATAGRID_BROWSE_DRAFTS,
+            BackendPagesModel::QUERY_DATAGRID_BROWSE_DRAFTS,
             ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
         );
 
@@ -107,7 +107,7 @@ class Index extends BackendBaseActionIndex
     {
         // create dgRecentlyEdited
         $this->dgRecentlyEdited = new BackendDataGridDatabase(
-            BackendPagesModel::QRY_BROWSE_RECENT,
+            BackendPagesModel::QUERY_BROWSE_RECENT,
             ['active', BL::getWorkingLanguage(), 7]
         );
 

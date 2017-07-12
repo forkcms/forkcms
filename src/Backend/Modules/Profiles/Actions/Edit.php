@@ -136,7 +136,7 @@ class Edit extends BackendBaseActionEdit
     {
         // create the data grid
         $this->dgGroups = new BackendDataGridDatabase(
-            BackendProfilesModel::QRY_DATAGRID_BROWSE_PROFILE_GROUPS,
+            BackendProfilesModel::QUERY_DATAGRID_BROWSE_PROFILE_GROUPS,
             [$this->profile['id']]
         );
 

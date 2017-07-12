@@ -26,14 +26,14 @@ use Frontend\Core\Language\Language as FrontendLanguage;
  */
 class Model
 {
-    const QRY_BROWSE_RECENT =
+    const QUERY_BROWSE_RECENT =
         'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
          WHERE i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC
          LIMIT ?';
 
-    const QRY_DATAGRID_BROWSE_DRAFTS =
+    const QUERY_DATAGRID_BROWSE_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
          INNER JOIN
@@ -45,19 +45,19 @@ class Model
          ) AS p
          WHERE i.revision_id = p.revision_id';
 
-    const QRY_BROWSE_REVISIONS =
+    const QUERY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
          WHERE i.id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
-    const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
+    const QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
          WHERE i.id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
-    const QRY_BROWSE_TEMPLATES =
+    const QUERY_BROWSE_TEMPLATES =
         'SELECT i.id, i.label AS title
          FROM pages_templates AS i
          WHERE i.theme = ?

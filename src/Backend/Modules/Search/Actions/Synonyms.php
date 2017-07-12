@@ -30,7 +30,7 @@ class Synonyms extends Action
 
     private function showDataGrid(): void
     {
-        $dataGrid = new BackendDataGridDatabase(BackendSearchModel::QRY_DATAGRID_BROWSE_SYNONYMS, [BL::getWorkingLanguage()]);
+        $dataGrid = new BackendDataGridDatabase(BackendSearchModel::QUERY_DATAGRID_BROWSE_SYNONYMS, [BL::getWorkingLanguage()]);
         $dataGrid->setSortingColumns(['term'], 'term');
         $dataGrid->setColumnFunction('str_replace', [',', ', ', '[synonym]'], 'synonym', true);
 

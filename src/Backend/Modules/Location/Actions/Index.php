@@ -93,7 +93,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGrid(): void
     {
         $this->dataGrid = new BackendDataGridDatabase(
-            BackendLocationModel::QRY_DATAGRID_BROWSE,
+            BackendLocationModel::QUERY_DATAGRID_BROWSE,
             [BL::getWorkingLanguage()]
         );
         $this->dataGrid->setSortingColumns(['address', 'title'], 'address');

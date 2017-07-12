@@ -20,24 +20,24 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
+    const QUERY_DATAGRID_BROWSE =
         'SELECT i.hidden, i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
          FROM blog_posts AS i
          WHERE i.status = ? AND i.language = ?';
 
-    const QRY_DATAGRID_BROWSE_FOR_CATEGORY =
+    const QUERY_DATAGRID_BROWSE_FOR_CATEGORY =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
          FROM blog_posts AS i
          WHERE i.category_id = ? AND i.status = ? AND i.language = ?';
 
-    const QRY_DATAGRID_BROWSE_CATEGORIES =
+    const QUERY_DATAGRID_BROWSE_CATEGORIES =
         'SELECT i.id, i.title, COUNT(p.id) AS num_items
          FROM blog_categories AS i
          LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND p.status = ? AND p.language = i.language
          WHERE i.language = ?
          GROUP BY i.id';
 
-    const QRY_DATAGRID_BROWSE_COMMENTS =
+    const QUERY_DATAGRID_BROWSE_COMMENTS =
         'SELECT
              i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
              p.id AS post_id, p.title AS post_title, m.url AS post_url
@@ -47,7 +47,7 @@ class Model
          WHERE i.status = ? AND i.language = ? AND p.status = ?
          GROUP BY i.id';
 
-    const QRY_DATAGRID_BROWSE_DRAFTS =
+    const QUERY_DATAGRID_BROWSE_DRAFTS =
         'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
          FROM blog_posts AS i
          INNER JOIN
@@ -59,7 +59,7 @@ class Model
          ) AS p
          WHERE i.revision_id = p.revision_id';
 
-    const QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY =
+    const QUERY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY =
         'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
          FROM blog_posts AS i
          INNER JOIN
@@ -71,27 +71,27 @@ class Model
          ) AS p
          WHERE i.revision_id = p.revision_id';
 
-    const QRY_DATAGRID_BROWSE_RECENT =
+    const QUERY_DATAGRID_BROWSE_RECENT =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
          FROM blog_posts AS i
          WHERE i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC
          LIMIT ?';
 
-    const QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY =
+    const QUERY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
          FROM blog_posts AS i
          WHERE i.category_id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC
          LIMIT ?';
 
-    const QRY_DATAGRID_BROWSE_REVISIONS =
+    const QUERY_DATAGRID_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM blog_posts AS i
          WHERE i.status = ? AND i.id = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
-    const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
+    const QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM blog_posts AS i
          WHERE i.status = ? AND i.id = ? AND i.language = ?

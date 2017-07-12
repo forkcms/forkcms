@@ -71,7 +71,7 @@ class ThemeTemplates extends BackendBaseActionEdit
     {
         // create datagrid
         $this->dataGrid = new BackendDataGridDatabase(
-            BackendExtensionsModel::QRY_BROWSE_TEMPLATES,
+            BackendExtensionsModel::QUERY_BROWSE_TEMPLATES,
             [$this->selectedTheme]
         );
 

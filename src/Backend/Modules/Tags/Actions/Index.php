@@ -33,7 +33,7 @@ class Index extends BackendBaseActionIndex
     {
         // create datagrid
         $this->dataGrid = new BackendDataGridDatabase(
-            BackendTagsModel::QRY_DATAGRID_BROWSE,
+            BackendTagsModel::QUERY_DATAGRID_BROWSE,
             [BL::getWorkingLanguage()]
         );
 
