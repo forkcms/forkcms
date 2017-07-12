@@ -29,7 +29,7 @@ class InstallerConnectionFactory extends ConnectionFactory
 
             $params['host'] = $installationData->getDatabaseHostname();
             $params['port'] = $installationData->getDatabasePort();
-            $params['db'] = $installationData->getDatabaseDatabase();
+            $params['dbname'] = $installationData->getDatabaseName();
             $params['user'] = $installationData->getDatabaseUsername();
             $params['password'] = $installationData->getDatabasePassword();
 

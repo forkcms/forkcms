@@ -17,13 +17,6 @@ use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 class ForkInstaller
 {
     /**
-     * The root dir of our project
-     *
-     * @var string
-     */
-    private $rootDir;
-
-    /**
      * The Dependency injection container
      *
      * @var Container
@@ -40,12 +33,10 @@ class ForkInstaller
      *        - make sure the Model::setContainer isn't needed anymore
      *
      * @param Container $container
-     * @param string $rootDir
      */
-    public function __construct(Container $container, string $rootDir)
+    public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->rootDir = $rootDir;
 
         Model::setContainer($container);
     }
@@ -147,7 +138,7 @@ class ForkInstaller
             $data->getDatabaseHostname(),
             $data->getDatabaseUsername(),
             $data->getDatabasePassword(),
-            $data->getDatabaseDatabase(),
+            $data->getDatabaseName(),
             $data->getDatabasePort()
         );
         $database->execute(
@@ -303,7 +294,7 @@ class ForkInstaller
             '<debug-email>' => $data->hasDifferentDebugEmail() ?
                 $data->getDebugEmail() :
                 $data->getEmail(),
-            '<database-name>' => $data->getDatabaseDatabase(),
+            '<database-name>' => $data->getDatabaseName(),
             '<database-host>' => addslashes($data->getDatabaseHostname()),
             '<database-user>' => addslashes($data->getDatabaseUsername()),
             '<database-password>' => addslashes($data->getDatabasePassword()),

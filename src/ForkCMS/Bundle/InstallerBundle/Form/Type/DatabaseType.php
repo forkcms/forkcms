@@ -34,7 +34,7 @@ class DatabaseType extends AbstractType
                 ]
             )
             ->add(
-                'databaseDatabase',
+                'databaseName',
                 'text',
                 [
                     'required' => true,
@@ -72,7 +72,7 @@ class DatabaseType extends AbstractType
                     array_pop($chunks);
 
                     // create base
-                    $data->setDatabaseDatabase(implode('_', $chunks));
+                    $data->setDatabaseName(implode('_', $chunks));
                     $data->setDatabaseUsername(implode('_', $chunks));
 
                     $event->setData($data);
@@ -119,7 +119,7 @@ class DatabaseType extends AbstractType
                 $data->getDatabaseHostname(),
                 $data->getDatabaseUsername(),
                 $data->getDatabasePassword(),
-                $data->getDatabaseDatabase(),
+                $data->getDatabaseName(),
                 $data->getDatabasePort()
             );
 

@@ -35,7 +35,7 @@ class InstallationData
      *
      * @var string
      */
-    protected $databaseDatabase;
+    protected $databaseName;
 
     /**
      * The port for the database
@@ -210,21 +210,21 @@ class InstallationData
      *
      * @return string|null
      */
-    public function getDatabaseDatabase(): ?string
+    public function getDatabaseName(): ?string
     {
-        return $this->databaseDatabase;
+        return $this->databaseName;
     }
 
     /**
      * Sets the The database name.
      *
-     * @param string $databaseDatabase the database database
+     * @param string $databaseName the database name
      *
      * @return self
      */
-    public function setDatabaseDatabase($databaseDatabase): self
+    public function setDatabaseName($databaseName): self
     {
-        $this->databaseDatabase = $databaseDatabase;
+        $this->databaseName = $databaseName;
 
         return $this;
     }
@@ -594,7 +594,7 @@ class InstallationData
         return !(
             empty($this->databaseHostname)
             || empty($this->databaseUsername)
-            || empty($this->databaseDatabase)
+            || empty($this->databaseName)
             || empty($this->databasePort)
 
             || empty($this->languages)

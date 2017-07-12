@@ -44,7 +44,7 @@ class InstallerControllerTest extends WebTestCase
         $installDatabaseConfig = [
             'install_database[databaseHostname]' => $container->getParameter('database.host'),
             'install_database[databasePort]' => $container->getParameter('database.port'),
-            'install_database[databaseDatabase]' => $container->getParameter('database.name') . '_test',
+            'install_database[databaseName]' => $container->getParameter('database.name') . '_test',
             'install_database[databaseUsername]' => $container->getParameter('database.user'),
             'install_database[databasePassword]' => $container->getParameter('database.password'),
         ];
