@@ -11,7 +11,7 @@ namespace Backend\Modules\Pages\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -25,7 +25,7 @@ class Index extends BackendBaseActionIndex
     /**
      * DataGrids
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgDrafts;
     private $dgRecentlyEdited;
@@ -52,7 +52,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGridDrafts(): void
     {
         // create datagrid
-        $this->dgDrafts = new BackendDataGridDB(
+        $this->dgDrafts = new BackendDataGridDatabase(
             BackendPagesModel::QRY_DATAGRID_BROWSE_DRAFTS,
             ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
         );
@@ -106,7 +106,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGridRecentlyEdited(): void
     {
         // create dgRecentlyEdited
-        $this->dgRecentlyEdited = new BackendDataGridDB(
+        $this->dgRecentlyEdited = new BackendDataGridDatabase(
             BackendPagesModel::QRY_BROWSE_RECENT,
             ['active', BL::getWorkingLanguage(), 7]
         );

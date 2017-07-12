@@ -582,11 +582,11 @@ class Model implements FrontendTagsInterface
      */
     public static function getNavigation(int $blogPostId): array
     {
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // get date for current item
-        $date = (string) $db->getVar(
+        $date = (string) $database->getVar(
             'SELECT i.publish_on
              FROM blog_posts AS i
              WHERE i.id = ? AND i.status = ?',
@@ -603,7 +603,7 @@ class Model implements FrontendTagsInterface
         $detailLink = FrontendNavigation::getUrlForBlock('Blog', 'Detail') . '/';
 
         // get previous post
-        $navigation['previous'] = $db->getRecord(
+        $navigation['previous'] = $database->getRecord(
             'SELECT i.id, i.title, CONCAT(?, m.url) AS url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
@@ -615,7 +615,7 @@ class Model implements FrontendTagsInterface
         );
 
         // get next post
-        $navigation['next'] = $db->getRecord(
+        $navigation['next'] = $database->getRecord(
             'SELECT i.id, i.title, CONCAT(?, m.url) AS url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
@@ -761,11 +761,11 @@ class Model implements FrontendTagsInterface
 
     public static function insertComment(array $comment): int
     {
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // insert comment
-        $comment['id'] = (int) $db->insert('blog_comments', $comment);
+        $comment['id'] = (int) $database->insert('blog_comments', $comment);
 
         // recalculate if published
         if ($comment['status'] == 'published') {
@@ -780,7 +780,7 @@ class Model implements FrontendTagsInterface
             );
 
             // update num comments
-            $db->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
+            $database->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
         }
 
         return $comment['id'];

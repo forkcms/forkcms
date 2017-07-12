@@ -11,7 +11,7 @@ namespace Backend\Modules\Tags\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
@@ -32,7 +32,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGrid(): void
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(
+        $this->dataGrid = new BackendDataGridDatabase(
             BackendTagsModel::QRY_DATAGRID_BROWSE,
             [BL::getWorkingLanguage()]
         );

@@ -164,7 +164,7 @@ class Add extends BackendBaseActionAdd
         // add default block to "fallback" position, the only one which we can rest assured to exist
         $this->positions['fallback']['blocks'][] = $block;
 
-        // content has been submitted: re-create submitted content rather than the db-fetched content
+        // content has been submitted: re-create submitted content rather than the database-fetched content
         if ($this->getRequest()->request->has('block_html_0')) {
             // init vars
             $this->blocksContent = [];

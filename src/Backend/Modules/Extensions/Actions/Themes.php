@@ -61,7 +61,7 @@ class Themes extends BackendBaseActionIndex
     {
         // loop themes
         foreach (BackendExtensionsModel::getThemes() as $theme) {
-            // themes that are already installed = have at least 1 template in DB
+            // themes that are already installed = have at least 1 template in database
             if ($theme['installed']) {
                 $this->installedThemes[] = $theme;
             } elseif ($theme['installable']) {

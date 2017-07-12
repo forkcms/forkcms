@@ -11,7 +11,7 @@ namespace Backend\Modules\FormBuilder\Actions;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
@@ -124,7 +124,7 @@ class Data extends BackendBaseActionIndex
         list($query, $parameters) = $this->buildQuery();
 
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB($query, $parameters);
+        $this->dataGrid = new BackendDataGridDatabase($query, $parameters);
 
         // overrule default URL
         $this->dataGrid->setURL(

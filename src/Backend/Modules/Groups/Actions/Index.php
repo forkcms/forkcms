@@ -11,7 +11,7 @@ namespace Backend\Modules\Groups\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
@@ -31,7 +31,7 @@ class Index extends BackendBaseActionIndex
 
     public function loadDataGrid(): void
     {
-        $this->dataGrid = new BackendDataGridDB(BackendGroupsModel::QRY_BROWSE);
+        $this->dataGrid = new BackendDataGridDatabase(BackendGroupsModel::QRY_BROWSE);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {

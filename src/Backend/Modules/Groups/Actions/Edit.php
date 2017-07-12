@@ -12,7 +12,7 @@ namespace Backend\Modules\Groups\Actions;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -50,7 +50,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * The users datagrid
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dataGridUsers;
 
@@ -266,7 +266,7 @@ class Edit extends BackendBaseActionEdit
 
     private function loadDataGrids(): void
     {
-        $this->dataGridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, [$this->id, 'N']);
+        $this->dataGridUsers = new BackendDataGridDatabase(BackendGroupsModel::QRY_ACTIVE_USERS, [$this->id, 'N']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit', 'Users')) {

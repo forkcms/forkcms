@@ -12,9 +12,9 @@ namespace Backend\Core\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
- * A datagrid with a DB-connection as source
+ * A datagrid with a database-connection as source
  */
-class DataGridDB extends DataGrid
+class DataGridDatabase extends DataGrid
 {
     /**
      * @param string $query The query to retrieve the data.

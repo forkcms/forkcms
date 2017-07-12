@@ -14,7 +14,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
@@ -40,7 +40,7 @@ class Index extends BackendBaseActionIndex
     /**
      * DataGrids
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgDrafts;
     private $dgPosts;
@@ -78,7 +78,7 @@ class Index extends BackendBaseActionIndex
         // filter on category?
         if ($this->categoryId != null) {
             // create datagrid
-            $this->dgPosts = new BackendDataGridDB(
+            $this->dgPosts = new BackendDataGridDatabase(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY,
                 [$this->categoryId, 'active', BL::getWorkingLanguage()]
             );
@@ -87,7 +87,7 @@ class Index extends BackendBaseActionIndex
             $this->dgPosts->setURL('&amp;category=' . $this->categoryId, true);
         } else {
             // create datagrid
-            $this->dgPosts = new BackendDataGridDB(
+            $this->dgPosts = new BackendDataGridDatabase(
                 BackendBlogModel::QRY_DATAGRID_BROWSE,
                 ['active', BL::getWorkingLanguage()]
             );
@@ -151,7 +151,7 @@ class Index extends BackendBaseActionIndex
         // filter on category?
         if ($this->categoryId != null) {
             // create datagrid
-            $this->dgDrafts = new BackendDataGridDB(
+            $this->dgDrafts = new BackendDataGridDatabase(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY,
                 [
                     $this->categoryId,
@@ -165,7 +165,7 @@ class Index extends BackendBaseActionIndex
             $this->dgDrafts->setURL('&amp;category=' . $this->categoryId, true);
         } else {
             // create datagrid
-            $this->dgDrafts = new BackendDataGridDB(
+            $this->dgDrafts = new BackendDataGridDatabase(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS,
                 ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
             );
@@ -226,7 +226,7 @@ class Index extends BackendBaseActionIndex
         // filter on category?
         if ($this->categoryId != null) {
             // create datagrid
-            $this->dgRecent = new BackendDataGridDB(
+            $this->dgRecent = new BackendDataGridDatabase(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY,
                 [$this->categoryId, 'active', BL::getWorkingLanguage(), 4]
             );
@@ -235,7 +235,7 @@ class Index extends BackendBaseActionIndex
             $this->dgRecent->setURL('&amp;category=' . $this->categoryId, true);
         } else {
             // create datagrid
-            $this->dgRecent = new BackendDataGridDB(
+            $this->dgRecent = new BackendDataGridDatabase(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT,
                 ['active', BL::getWorkingLanguage(), 4]
             );

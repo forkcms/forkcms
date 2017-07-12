@@ -144,11 +144,11 @@ class ForkInstaller
         // put a new instance of the database in the container
         $database = new \SpoonDatabase(
             'mysql',
-            $data->getDbHostname(),
-            $data->getDbUsername(),
-            $data->getDbPassword(),
-            $data->getDbDatabase(),
-            $data->getDbPort()
+            $data->getDatabaseHostname(),
+            $data->getDatabaseUsername(),
+            $data->getDatabasePassword(),
+            $data->getDatabaseDatabase(),
+            $data->getDatabasePort()
         );
         $database->execute(
             'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
@@ -303,11 +303,11 @@ class ForkInstaller
             '<debug-email>' => $data->hasDifferentDebugEmail() ?
                 $data->getDebugEmail() :
                 $data->getEmail(),
-            '<database-name>' => $data->getDbDatabase(),
-            '<database-host>' => addslashes($data->getDbHostname()),
-            '<database-user>' => addslashes($data->getDbUsername()),
-            '<database-password>' => addslashes($data->getDbPassword()),
-            '<database-port>' => $data->getDbPort(),
+            '<database-name>' => $data->getDatabaseDatabase(),
+            '<database-host>' => addslashes($data->getDatabaseHostname()),
+            '<database-user>' => addslashes($data->getDatabaseUsername()),
+            '<database-password>' => addslashes($data->getDatabasePassword()),
+            '<database-port>' => $data->getDatabasePort(),
             '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
                 (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
                 'http',

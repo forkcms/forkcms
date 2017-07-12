@@ -126,13 +126,13 @@ class Model
      */
     public static function getForMultipleItems(string $module, array $otherIds, Locale $locale = null): array
     {
-        $db = FrontendModel::getContainer()->get('database');
+        $database = FrontendModel::getContainer()->get('database');
 
         // init var
         $return = [];
 
         // get tags
-        $linkedTags = (array) $db->getRecords(
+        $linkedTags = (array) $database->getRecords(
             'SELECT mt.other_id, t.tag AS name, t.url
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id

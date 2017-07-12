@@ -338,8 +338,8 @@ class Model extends \Common\Core\Model
 
     public static function getExtras(array $ids): array
     {
-        // get db
-        $db = self::getContainer()->get('database');
+        // get database
+        $database = self::getContainer()->get('database');
 
         array_walk($ids, 'intval');
 
@@ -347,7 +347,7 @@ class Model extends \Common\Core\Model
         $extraIdPlaceHolders = array_fill(0, count($ids), '?');
 
         // get extras
-        return (array) $db->getRecords(
+        return (array) $database->getRecords(
             'SELECT i.*
              FROM modules_extras AS i
              WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
@@ -909,9 +909,9 @@ class Model extends \Common\Core\Model
      */
     public static function updateExtraData(int $id, string $key, $value): void
     {
-        $db = self::getContainer()->get('database');
+        $database = self::getContainer()->get('database');
 
-        $data = (string) $db->getVar(
+        $data = (string) $database->getVar(
             'SELECT i.data
              FROM modules_extras AS i
              WHERE i.id = ?',
@@ -920,6 +920,6 @@ class Model extends \Common\Core\Model
 
         $data = $data === null ? [] : unserialize($data);
         $data[$key] = $value;
-        $db->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
+        $database->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
     }
 }

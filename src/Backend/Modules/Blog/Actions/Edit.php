@@ -18,7 +18,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -40,7 +40,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * DataGrid for the drafts
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgDrafts;
 
@@ -125,7 +125,7 @@ class Edit extends BackendBaseActionEdit
     private function loadDraftDataGrid(): void
     {
         // create datagrid
-        $this->dgDrafts = new BackendDataGridDB(
+        $this->dgDrafts = new BackendDataGridDatabase(
             BackendBlogModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
             ['draft', $this->record['id'], BL::getWorkingLanguage()]
         );
@@ -226,7 +226,7 @@ class Edit extends BackendBaseActionEdit
     private function loadRevisionDataGrid(): void
     {
         // create datagrid
-        $this->dgRevisions = new BackendDataGridDB(
+        $this->dgRevisions = new BackendDataGridDatabase(
             BackendBlogModel::QRY_DATAGRID_BROWSE_REVISIONS,
             ['archived', $this->record['id'], BL::getWorkingLanguage()]
         );

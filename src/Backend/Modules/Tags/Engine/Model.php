@@ -32,15 +32,15 @@ class Model
      */
     public static function delete($ids): void
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // make sure $ids is an array
         $ids = (array) $ids;
 
         // delete tags
-        $db->delete('tags', 'id IN (' . implode(',', $ids) . ')');
-        $db->delete('modules_tags', 'tag_id IN (' . implode(',', $ids) . ')');
+        $database->delete('tags', 'id IN (' . implode(',', $ids) . ')');
+        $database->delete('modules_tags', 'tag_id IN (' . implode(',', $ids) . ')');
     }
 
     public static function exists(int $id): bool
@@ -146,13 +146,13 @@ class Model
         $url = CommonUri::getUrl($url);
         $language = BL::getWorkingLanguage();
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // no specific id
         if ($id === null) {
             // get number of tags with the specified url
-            $number = (int) $db->getVar(
+            $number = (int) $database->getVar(
                 'SELECT 1
                  FROM tags AS i
                  WHERE i.url = ? AND i.language = ?
@@ -171,7 +171,7 @@ class Model
         } else {
             // specific id given
             // get number of tags with the specified url
-            $number = (int) $db->getVar(
+            $number = (int) $database->getVar(
                 'SELECT 1
                  FROM tags AS i
                  WHERE i.url = ? AND i.language = ? AND i.id != ?
@@ -235,11 +235,11 @@ class Model
         // make sure the list of tags contains only unique and non-empty elements
         $tags = array_filter(array_unique($tags));
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get current tags for item
-        $currentTags = (array) $db->getPairs(
+        $currentTags = (array) $database->getPairs(
             'SELECT i.tag, i.id
              FROM tags AS i
              INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
@@ -249,7 +249,7 @@ class Model
 
         // remove old links
         if (!empty($currentTags)) {
-            $db->delete(
+            $database->delete(
                 'modules_tags',
                 'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ? AND module = ?',
                 [$otherId, $module]
@@ -274,7 +274,7 @@ class Model
             $placeholders = array_fill(0, count($tags), '?');
 
             // get tag ids
-            $tagsAndIds = (array) $db->getPairs(
+            $tagsAndIds = (array) $database->getPairs(
                 'SELECT i.tag, i.id
                  FROM tags AS i
                  WHERE i.tag IN (' . implode(',', $placeholders) . ') AND i.language = ?',
@@ -300,7 +300,7 @@ class Model
 
                 // not linked before so increment the counter
                 if (!isset($currentTags[$tag])) {
-                    $db->execute(
+                    $database->execute(
                         'UPDATE tags SET number = number + 1 WHERE id = ?',
                         $tagId
                     );
@@ -312,7 +312,7 @@ class Model
 
             // insert the rows at once if there are items to insert
             if (!empty($rowsToInsert)) {
-                $db->insert('modules_tags', $rowsToInsert);
+                $database->insert('modules_tags', $rowsToInsert);
             }
         }
 
@@ -323,7 +323,7 @@ class Model
         foreach ($currentTags as $tag => $tagId) {
             // if the tag can't be found in the new tags we lower the number of tags by one
             if (array_search($tag, $tags) === false) {
-                $db->execute(
+                $database->execute(
                     'UPDATE tags SET number = number - 1 WHERE id = ?',
                     $tagId
                 );
@@ -331,7 +331,7 @@ class Model
         }
 
         // remove all tags that don't have anything linked
-        $db->delete('tags', 'number = ?', 0);
+        $database->delete('tags', 'number = ?', 0);
     }
 
     /**

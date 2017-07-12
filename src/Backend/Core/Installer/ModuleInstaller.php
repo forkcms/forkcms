@@ -27,7 +27,7 @@ class ModuleInstaller
      *
      * @var SpoonDatabase
      */
-    private $db;
+    private $database;
 
     /**
      * The module name.
@@ -79,20 +79,20 @@ class ModuleInstaller
     private $example;
 
     /**
-     * @param SpoonDatabase $db The database-connection.
+     * @param SpoonDatabase $database The database-connection.
      * @param array $languages The selected frontend languages.
      * @param array $interfaceLanguages The selected backend languages.
      * @param bool $example Should example data be installed.
      * @param array $variables The passed variables.
      */
     public function __construct(
-        SpoonDatabase $db,
+        SpoonDatabase $database,
         array $languages,
         array $interfaceLanguages,
         bool $example = false,
         array $variables = []
     ) {
-        $this->db = $db;
+        $this->database = $database;
         $this->languages = $languages;
         $this->interfaceLanguages = $interfaceLanguages;
         $this->example = $example;
@@ -121,7 +121,7 @@ class ModuleInstaller
         $this->module = (string) $module;
 
         // module does not yet exists
-        if (!(bool) $this->getDB()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $this->module)) {
+        if (!(bool) $this->getDatabase()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $this->module)) {
             // build item
             $item = [
                 'name' => $this->module,
@@ -129,13 +129,13 @@ class ModuleInstaller
             ];
 
             // insert module
-            $this->getDB()->insert('modules', $item);
+            $this->getDatabase()->insert('modules', $item);
 
             return;
         }
 
         // activate and update description
-        $this->getDB()->update('modules', ['installed_on' => gmdate('Y-m-d H:i:s')], 'name = ?', $this->module);
+        $this->getDatabase()->update('modules', ['installed_on' => gmdate('Y-m-d H:i:s')], 'name = ?', $this->module);
     }
 
     /**
@@ -148,13 +148,13 @@ class ModuleInstaller
      */
     protected function addSearchIndex(string $module, int $otherId, array $fields, string $language): void
     {
-        // get db
-        $db = $this->getDB();
+        // get database
+        $database = $this->getDatabase();
 
         // validate cache
         if (empty(self::$modules)) {
             // get all modules
-            self::$modules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
+            self::$modules = (array) $database->getColumn('SELECT m.name FROM modules AS m');
         }
 
         // module exists?
@@ -172,8 +172,8 @@ class ModuleInstaller
             // reformat value
             $value = strip_tags((string) $value);
 
-            // insert in db
-            $db->execute(
+            // insert in database
+            $database->execute(
                 'INSERT INTO search_index (module, other_id, language, field, value, active)
                  VALUES (?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
@@ -203,9 +203,9 @@ class ModuleInstaller
      *
      * @return SpoonDatabase
      */
-    protected function getDB(): SpoonDatabase
+    protected function getDatabase(): SpoonDatabase
     {
-        return $this->db;
+        return $this->database;
     }
 
     /**
@@ -237,7 +237,7 @@ class ModuleInstaller
     {
         try {
             // fetch default user id
-            return (int) $this->getDB()->getVar(
+            return (int) $this->getDatabase()->getVar(
                 'SELECT id
                  FROM users
                  WHERE is_god = ? AND active = ? AND deleted = ?
@@ -287,7 +287,7 @@ class ModuleInstaller
         string $type = 'lbl',
         string $application = 'Backend'
     ): string {
-        $translation = (string) $this->getDB()->getVar(
+        $translation = (string) $this->getDatabase()->getVar(
             'SELECT value
              FROM locale
              WHERE name = ? AND module = ? AND language = ? AND type = ? AND application = ?',
@@ -308,7 +308,7 @@ class ModuleInstaller
     protected function getSetting(string $module, string $name)
     {
         return unserialize(
-            $this->getDB()->getVar(
+            $this->getDatabase()->getVar(
                 'SELECT value
                  FROM modules_settings
                  WHERE module = ? AND name = ?',
@@ -338,7 +338,7 @@ class ModuleInstaller
         }
 
         // return best matching template id
-        return (int) $this->getDB()->getVar(
+        return (int) $this->getDatabase()->getVar(
             'SELECT id FROM themes_templates
              WHERE theme = ?
              ORDER BY path LIKE ? DESC, id ASC
@@ -409,20 +409,20 @@ class ModuleInstaller
             return;
         }
 
-        $this->getDB()->execute($queries);
+        $this->getDatabase()->execute($queries);
     }
 
     protected function insertDashboardWidget(string $module, string $widget): void
     {
-        // get db
-        $db = $this->getDB();
+        // get database
+        $database = $this->getDatabase();
 
         // fetch current settings
-        $groupSettings = (array) $db->getRecords(
+        $groupSettings = (array) $database->getRecords(
             'SELECT * FROM groups_settings WHERE name = ?',
             ['dashboard_sequence']
         );
-        $userSettings = (array) $db->getRecords(
+        $userSettings = (array) $database->getRecords(
             'SELECT * FROM users_settings WHERE name = ?',
             ['dashboard_sequence']
         );
@@ -438,8 +438,8 @@ class ModuleInstaller
             // re-serialize value
             $settings['value'] = serialize($settings['value']);
 
-            // update in db
-            $db->update(
+            // update in database
+            $database->update(
                 'groups_settings',
                 $settings,
                 'group_id = ? AND name = ?',
@@ -458,8 +458,8 @@ class ModuleInstaller
             // re-serialize value
             $settings['value'] = serialize($settings['value']);
 
-            // update in db
-            $db->update(
+            // update in database
+            $database->update(
                 'users_settings',
                 $settings,
                 'user_id = ? AND name = ?',
@@ -471,7 +471,7 @@ class ModuleInstaller
     private function getNextSequenceForModule(string $module): int
     {
         // set next sequence number for this module
-        $sequence = (int) $this->getDB()->getVar(
+        $sequence = (int) $this->getDatabase()->getVar(
             'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
             [$module]
         );
@@ -481,7 +481,7 @@ class ModuleInstaller
             return $sequence;
         }
 
-        return (int) $this->getDB()->getVar(
+        return (int) $this->getDatabase()->getVar(
             'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
         );
     }
@@ -541,14 +541,14 @@ class ModuleInstaller
         if ($data === null) {
             $query .= ' AND data IS NULL';
 
-            return (int) $this->getDB()->getVar($query, $parameters);
+            return (int) $this->getDatabase()->getVar($query, $parameters);
         }
 
         $query .= ' AND data = ?';
         $parameters[] = serialize($data);
 
         // get id (if it already exists)
-        return (int) $this->getDB()->getVar($query, $parameters);
+        return (int) $this->getDatabase()->getVar($query, $parameters);
     }
 
     /**
@@ -579,7 +579,7 @@ class ModuleInstaller
         string $custom = null,
         $data = null
     ): int {
-        return (int) $this->getDB()->insert(
+        return (int) $this->getDatabase()->insert(
             'meta',
             [
                 'keywords' => $keywords,
@@ -605,7 +605,7 @@ class ModuleInstaller
      */
     private function getNextPageIdForLanguage(string $language): int
     {
-        $maximumPageId = (int) $this->getDB()->getVar(
+        $maximumPageId = (int) $this->getDatabase()->getVar(
             'SELECT MAX(id) FROM pages WHERE language = ?',
             [$language]
         );
@@ -615,7 +615,7 @@ class ModuleInstaller
 
     private function archiveAllRevisionsOfAPageForLanguage(int $pageId, string $language): void
     {
-        $this->getDB()->update(
+        $this->getDatabase()->update(
             'pages',
             ['status' => 'archive'],
             'id = ? AND language = ?',
@@ -625,7 +625,7 @@ class ModuleInstaller
 
     private function getNextPageSequence(string $language, int $parentId, string $type): int
     {
-        $maximumPageSequence = (int) $this->getDB()->getVar(
+        $maximumPageSequence = (int) $this->getDatabase()->getVar(
             'SELECT MAX(sequence) FROM pages WHERE language = ? AND parent_id = ? AND type = ?',
             [$language, $parentId, $type]
         );
@@ -740,13 +740,13 @@ class ModuleInstaller
         $revision = $this->completePageRevisionRecord($revision, (array) $meta);
 
         // insert page
-        $revision['revision_id'] = $this->getDB()->insert('pages', $revision);
+        $revision['revision_id'] = $this->getDatabase()->insert('pages', $revision);
 
         if (empty($blocks)) {
             return $revision['id'];
         }
 
-        $this->getDB()->insert(
+        $this->getDatabase()->insert(
             'pages_blocks',
             $this->completePageBlockRecords($blocks, $revision['revision_id'])
         );
@@ -807,7 +807,7 @@ class ModuleInstaller
      */
     protected function makeSearchable(string $module, bool $searchable = true, int $weight = 1): void
     {
-        $this->getDB()->execute(
+        $this->getDatabase()->execute(
             'INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
              ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
             [$module, $searchable ? 'Y' : 'N', $weight, $searchable, $weight]
@@ -825,7 +825,7 @@ class ModuleInstaller
     protected function setActionRights(int $groupId, string $module, string $action, int $level = 7): void
     {
         // check if the action already exists
-        $actionRightAlreadyExist = (bool) $this->getDB()->getVar(
+        $actionRightAlreadyExist = (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM groups_rights_actions
              WHERE group_id = ? AND module = ? AND action = ?
@@ -837,7 +837,7 @@ class ModuleInstaller
             return;
         }
 
-        $this->getDB()->insert(
+        $this->getDatabase()->insert(
             'groups_rights_actions',
             [
                 'group_id' => $groupId,
@@ -856,7 +856,7 @@ class ModuleInstaller
      */
     protected function setModuleRights(int $groupId, string $module): void
     {
-        $moduleRightAlreadyExist = (bool) $this->getDB()->getVar(
+        $moduleRightAlreadyExist = (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM groups_rights_modules
              WHERE group_id = ? AND module = ?
@@ -868,7 +868,7 @@ class ModuleInstaller
             return;
         }
 
-        $this->getDB()->insert(
+        $this->getDatabase()->insert(
             'groups_rights_modules',
             [
                 'group_id' => $groupId,
@@ -880,7 +880,7 @@ class ModuleInstaller
     private function getNextBackendNavigationSequence(int $parentId): int
     {
         // get maximum sequence for this parent
-        $currentMaxBackendNavigationSequence = (int) $this->getDB()->getVar(
+        $currentMaxBackendNavigationSequence = (int) $this->getDatabase()->getVar(
             'SELECT MAX(sequence)
              FROM backend_navigation
              WHERE parent_id = ?',
@@ -914,7 +914,7 @@ class ModuleInstaller
         $sequence = $sequence ?? $this->getNextBackendNavigationSequence($parentId);
 
         // get the id for this url
-        $id = (int) $this->getDB()->getVar(
+        $id = (int) $this->getDatabase()->getVar(
             'SELECT id
              FROM backend_navigation
              WHERE parent_id = ? AND label = ? AND url ' . ($url === null ? 'IS' : '=') . ' ?',
@@ -927,7 +927,7 @@ class ModuleInstaller
         }
 
         // doesn't exist yet, add it
-        return (int) $this->getDB()->insert(
+        return (int) $this->getDatabase()->insert(
             'backend_navigation',
             [
                 'parent_id' => $parentId,
@@ -952,7 +952,7 @@ class ModuleInstaller
         $value = serialize($value);
 
         if ($overwrite) {
-            $this->getDB()->execute(
+            $this->getDatabase()->execute(
                 'INSERT INTO modules_settings (module, name, value)
                  VALUES (?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?',
@@ -963,7 +963,7 @@ class ModuleInstaller
         }
 
         // check if this setting already exists
-        $moduleSettingAlreadyExists = (bool) $this->getDB()->getVar(
+        $moduleSettingAlreadyExists = (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM modules_settings
              WHERE module = ? AND name = ?
@@ -975,7 +975,7 @@ class ModuleInstaller
             return;
         }
 
-        $this->getDB()->insert(
+        $this->getDatabase()->insert(
             'modules_settings',
             [
                 'module' => $module,

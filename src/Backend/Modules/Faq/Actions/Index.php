@@ -12,7 +12,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -52,7 +52,7 @@ class Index extends BackendBaseActionIndex
 
         // loop categories and create a dataGrid for each one
         foreach ($categories as $categoryId => $categoryTitle) {
-            $dataGrid = new BackendDataGridDB(
+            $dataGrid = new BackendDataGridDatabase(
                 BackendFaqModel::QRY_DATAGRID_BROWSE,
                 [BL::getWorkingLanguage(), $categoryId]
             );

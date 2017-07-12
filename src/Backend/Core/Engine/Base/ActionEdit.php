@@ -9,7 +9,7 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\DataGridDB;
+use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Meta;
 
@@ -22,7 +22,7 @@ class ActionEdit extends Action
     /**
      * DataGrid with the revisions
      *
-     * @var DataGridDB
+     * @var DataGridDatabase
      */
     protected $dgRevisions;
 

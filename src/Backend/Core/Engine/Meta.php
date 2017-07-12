@@ -394,17 +394,17 @@ class Meta
         }
 
         // build meta
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         if ($this->id !== null && $update === true) {
-            $db->update('meta', $this->data, 'id = ?', [$this->id]);
+            $database->update('meta', $this->data, 'id = ?', [$this->id]);
 
             return $this->id;
         }
 
         unset($this->data['id']);
 
-        return (int) $db->insert('meta', $this->data);
+        return (int) $database->insert('meta', $this->data);
     }
 
     /**

@@ -92,10 +92,10 @@ class SaveTranslation extends BackendBaseAJAXAction
             // add the id to the item
             $item['id'] = (int) BackendLocaleModel::getByName($name, $type, $module, $language, $application);
 
-            // update in db
+            // update in database
             BackendLocaleModel::update($item);
         } else {
-            // insert in db
+            // insert in database
             BackendLocaleModel::insert($item);
         }
 

@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use Backend\Core\Engine\DataGridDB;
+use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
@@ -11,7 +11,7 @@ use SpoonFormDropdown;
 /**
  * @TODO replace with a doctrine implementation of the data grid
  */
-class MediaItemDataGrid extends DataGridDB
+class MediaItemDataGrid extends DataGridDatabase
 {
     public function __construct(Type $type, int $folderId = null)
     {
@@ -68,7 +68,7 @@ class MediaItemDataGrid extends DataGridDB
         return ['storageType', 'shardingFolderName', 'type', 'mime', 'url'];
     }
 
-    public static function getDataGrid(Type $type, int $folderId = null): DataGridDB
+    public static function getDataGrid(Type $type, int $folderId = null): DataGridDatabase
     {
         return new self($type, $folderId);
     }

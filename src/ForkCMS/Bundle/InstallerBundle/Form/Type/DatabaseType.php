@@ -20,35 +20,35 @@ class DatabaseType extends AbstractType
     {
         $builder
             ->add(
-                'dbHostname',
+                'databaseHostname',
                 'text',
                 [
                     'required' => true,
                 ]
             )
             ->add(
-                'dbPort',
+                'databasePort',
                 'text',
                 [
                     'required' => true,
                 ]
             )
             ->add(
-                'dbDatabase',
+                'databaseDatabase',
                 'text',
                 [
                     'required' => true,
                 ]
             )
             ->add(
-                'dbUsername',
+                'databaseUsername',
                 'text',
                 [
                     'required' => true,
                 ]
             )
             ->add(
-                'dbPassword',
+                'databasePassword',
                 'password'
             )
         ;
@@ -59,21 +59,21 @@ class DatabaseType extends AbstractType
             function (FormEvent $event) {
                 $data = $event->getData();
 
-                $dbHostname = $data->getDbHostname();
-                if (empty($dbHostname) && isset($_SERVER['HTTP_HOST'])) {
-                    // guess db & username
+                $databaseHostname = $data->getDatabaseHostname();
+                if (empty($databaseHostname) && isset($_SERVER['HTTP_HOST'])) {
+                    // guess database & username
                     $host = $_SERVER['HTTP_HOST'];
                     $chunks = explode('.', $host);
 
                     // seems like windows can't handle localhost...
-                    $data->setDbHostname((mb_substr(PHP_OS, 0, 3) == 'WIN') ? '127.0.0.1' : 'localhost');
+                    $data->setDatabaseHostname((mb_substr(PHP_OS, 0, 3) == 'WIN') ? '127.0.0.1' : 'localhost');
 
                     // remove tld
                     array_pop($chunks);
 
                     // create base
-                    $data->setDbDatabase(implode('_', $chunks));
-                    $data->setDbUsername(implode('_', $chunks));
+                    $data->setDatabaseDatabase(implode('_', $chunks));
+                    $data->setDatabaseUsername(implode('_', $chunks));
 
                     $event->setData($data);
                 }
@@ -114,24 +114,24 @@ class DatabaseType extends AbstractType
     {
         try {
             // create instance
-            $db = new \SpoonDatabase(
+            $database = new \SpoonDatabase(
                 'mysql',
-                $data->getDbHostname(),
-                $data->getDbUsername(),
-                $data->getDbPassword(),
-                $data->getDbDatabase(),
-                $data->getDbPort()
+                $data->getDatabaseHostname(),
+                $data->getDatabaseUsername(),
+                $data->getDatabasePassword(),
+                $data->getDatabaseDatabase(),
+                $data->getDatabasePort()
             );
 
             // test table
             $table = 'test' . time();
 
             // attempt to create table
-            $db->execute('DROP TABLE IF EXISTS ' . $table);
-            $db->execute('CREATE TABLE ' . $table . ' (id int(11) NOT NULL) ENGINE=MyISAM');
+            $database->execute('DROP TABLE IF EXISTS ' . $table);
+            $database->execute('CREATE TABLE ' . $table . ' (id int(11) NOT NULL) ENGINE=MyISAM');
 
             // drop table
-            $db->drop($table);
+            $database->drop($table);
         } catch (\Exception $e) {
             $context->addViolation('Problem with database credentials');
         }

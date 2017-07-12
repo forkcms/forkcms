@@ -113,7 +113,7 @@ class Model
 
     public static function insertSynonym(array $synonym): int
     {
-        // insert into db
+        // insert into database
         $id = BackendModel::getContainer()->get('database')->insert('search_synonyms', $synonym);
 
         // invalidate the cache for search
@@ -178,8 +178,8 @@ class Model
 
         $language = $language ?? BL::getWorkingLanguage();
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // insert search index
         foreach ($fields as $field => $value) {
@@ -187,7 +187,7 @@ class Model
             $value = strip_tags((string) $value);
 
             // update search index
-            $db->execute(
+            $database->execute(
                 'INSERT INTO search_index (module, other_id, language, field, value, active)
                  VALUES (?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
@@ -200,7 +200,7 @@ class Model
     }
 
     /**
-     * @param array $synonym The data to update in the db.
+     * @param array $synonym The data to update in the database.
      */
     public static function updateSynonym(array $synonym): void
     {

@@ -11,7 +11,7 @@ namespace Backend\Modules\Location\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -92,7 +92,7 @@ class Index extends BackendBaseActionIndex
 
     private function loadDataGrid(): void
     {
-        $this->dataGrid = new BackendDataGridDB(
+        $this->dataGrid = new BackendDataGridDatabase(
             BackendLocationModel::QRY_DATAGRID_BROWSE,
             [BL::getWorkingLanguage()]
         );

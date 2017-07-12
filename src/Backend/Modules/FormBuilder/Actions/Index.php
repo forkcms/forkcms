@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
@@ -31,7 +31,7 @@ class Index extends BackendBaseActionIndex
 
     private function loadDataGrid(): void
     {
-        $this->dataGrid = new BackendDataGridDB(
+        $this->dataGrid = new BackendDataGridDatabase(
             BackendFormBuilderModel::QRY_BROWSE,
             [BL::getWorkingLanguage()]
         );

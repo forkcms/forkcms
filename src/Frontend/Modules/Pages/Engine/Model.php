@@ -114,14 +114,14 @@ class Model implements FrontendTagsInterface
      */
     public static function search(array $ids): array
     {
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // define ids to ignore
         $ignore = [404];
 
         // get items
-        $items = (array) $db->getRecords(
+        $items = (array) $database->getRecords(
             'SELECT p.id, p.title, m.url, p.revision_id AS text
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
@@ -136,7 +136,7 @@ class Model implements FrontendTagsInterface
         foreach ($items as &$item) {
             $item['text'] = implode(
                 ' ',
-                (array) $db->getColumn(
+                (array) $database->getColumn(
                     'SELECT pb.html
                      FROM pages_blocks AS pb
                      WHERE pb.revision_id = ?',

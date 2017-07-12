@@ -11,7 +11,7 @@ namespace Backend\Modules\Faq\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -44,7 +44,7 @@ class Categories extends BackendBaseActionIndex
         $this->multipleCategoriesAllowed = $this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true);
 
         // create dataGrid
-        $this->dataGrid = new BackendDataGridDB(
+        $this->dataGrid = new BackendDataGridDatabase(
             BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES,
             [BL::getWorkingLanguage()]
         );

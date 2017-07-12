@@ -31,8 +31,8 @@ class Model
      */
     public static function delete(int $id): void
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get item
         $item = self::get($id);
@@ -40,8 +40,8 @@ class Model
         BackendModel::deleteExtraById($item['extra_id']);
 
         // delete location and its settings
-        $db->delete('location', 'id = ? AND language = ?', [$id, BL::getWorkingLanguage()]);
-        $db->delete('location_settings', 'map_id = ?', [$id]);
+        $database->delete('location', 'id = ? AND language = ?', [$id, BL::getWorkingLanguage()]);
+        $database->delete('location_settings', 'map_id = ?', [$id]);
     }
 
     /**
@@ -212,7 +212,7 @@ class Model
      */
     public static function insert(array $item): int
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
@@ -222,7 +222,7 @@ class Model
 
         // insert new location
         $item['created_on'] = $item['edited_on'] = BackendModel::getUTCDate();
-        $item['id'] = $db->insert('location', $item);
+        $item['id'] = $database->insert('location', $item);
 
         // update extra (item id is now known)
         BackendModel::updateExtra(

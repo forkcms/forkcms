@@ -111,10 +111,10 @@ class User
     public function loadUser(int $userId): void
     {
         // get database instance
-        $db = Model::getContainer()->get('database');
+        $database = Model::getContainer()->get('database');
 
         // get user-data
-        $userData = (array) $db->getRecord(
+        $userData = (array) $database->getRecord(
             'SELECT u.id, u.email
              FROM users AS u
              WHERE u.id = ?
@@ -132,7 +132,7 @@ class User
         $this->email = (string) $userData['email'];
 
         // get settings
-        $settings = (array) $db->getPairs(
+        $settings = (array) $database->getPairs(
             'SELECT us.name, us.value
              FROM users_settings AS us
              WHERE us.user_id = ?',

@@ -340,14 +340,15 @@ We did add helper getters so you can keep doing `$this->getAction()` and `$this-
 
 | Old method                                                     | New method                                                     |
 |----------------------------------------------------------------|----------------------------------------------------------------|
-| `\Backend\Core\Engine\Meta::generateURL`                       | `\Backend\Core\Engine\Meta::generateUrl`                       |
 | `\Common\Doctrine\Repository::generateURL`                     | `\Common\Doctrine\Repository::generateUrl`                     |
+| `\Backend\Core\Engine\Meta::generateURL`                       | `\Backend\Core\Engine\Meta::generateUrl`                       |
 | `\Backend\Core\Engine\Model::createURLForAction`               | `\Backend\Core\Engine\Model::createUrlForAction`               |
 | `\Backend\Core\Engine\Model::getUrl`                           | `\Backend\Core\Engine\Model::getUrl`                           |
 | `\Backend\Core\Engine\Model::getUrlForBlock`                   | `\Backend\Core\Engine\Model::getUrlForBlock`                   |
 | `\Backend\Core\Engine\Meta::setURLCallback`                    | `\Backend\Core\Engine\Meta::setUrlCallback`                    |
 | `\Backend\Core\Engine\Meta::getURL`                            | `\Backend\Core\Engine\Meta::getUrl`                            |
 | `\Backend\Core\Engine\Meta::getURLOverwrite`                   | `\Backend\Core\Engine\Meta::getUrlOverwrite`                   |
+| `\Backend\Core\Installer\ModuleInstaller::getDB`               | `\Backend\Core\Installer\ModuleInstaller::getDatabase`         |
 | `\Backend\Modules\Blog\Engine\Model::getURL`                   | `\Backend\Modules\Blog\Engine\Model::getUrl`                   |
 | `\Backend\Modules\Blog\Engine\Model::getURLForCategory`        | `\Backend\Modules\Blog\Engine\Model::getUrlForCategory`        |
 | `\Backend\Modules\Faq\Engine\Model::getURL`                    | `\Backend\Modules\Faq\Engine\Model::getUrl`                    |
@@ -370,3 +371,7 @@ We did add helper getters so you can keep doing `$this->getAction()` and `$this-
 | Old parameter                 | New parameter                                   |
 |-------------------------------|-------------------------------------------------|
 | `$this->URL`                  | `$this->url`                                    |
+
+| Old classname                                 | New classname                                   |
+|-----------------------------------------------|-------------------------------------------------|
+| `\Backend\Core\Engine\Model\DataGridDB`       | `\Backend\Core\Engine\Model\DataGridDatabase`   |

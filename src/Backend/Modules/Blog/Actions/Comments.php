@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
@@ -23,17 +23,17 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 class Comments extends BackendBaseActionIndex
 {
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgPublished;
 
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgModeration;
 
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgSpam;
 
@@ -69,7 +69,7 @@ class Comments extends BackendBaseActionIndex
         /*
          * DataGrid for the published comments.
          */
-        $this->dgPublished = new BackendDataGridDB(
+        $this->dgPublished = new BackendDataGridDatabase(
             BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
             ['published', BL::getWorkingLanguage(), 'active']
         );
@@ -164,7 +164,7 @@ class Comments extends BackendBaseActionIndex
          */
 
         // datagrid for the comments that are awaiting moderation
-        $this->dgModeration = new BackendDataGridDB(
+        $this->dgModeration = new BackendDataGridDatabase(
             BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
             ['moderation', BL::getWorkingLanguage(), 'active']
         );
@@ -257,7 +257,7 @@ class Comments extends BackendBaseActionIndex
         /*
          * DataGrid for the comments that are marked as spam
          */
-        $this->dgSpam = new BackendDataGridDB(
+        $this->dgSpam = new BackendDataGridDatabase(
             BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
             ['spam', BL::getWorkingLanguage(), 'active']
         );

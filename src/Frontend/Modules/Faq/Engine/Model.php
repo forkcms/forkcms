@@ -312,18 +312,18 @@ class Model implements FrontendTagsInterface
             return;
         }
 
-        $db = FrontendModel::getContainer()->get('database');
+        $database = FrontendModel::getContainer()->get('database');
 
         // update counter with current feedback (increase)
         if ($useful) {
-            $db->execute(
+            $database->execute(
                 'UPDATE faq_questions
                  SET num_usefull_yes = num_usefull_yes + 1
                  WHERE id = ?',
                 [$id]
             );
         } else {
-            $db->execute(
+            $database->execute(
                 'UPDATE faq_questions
                  SET num_usefull_no = num_usefull_no + 1
                  WHERE id = ?',
@@ -333,14 +333,14 @@ class Model implements FrontendTagsInterface
 
         // update counter with previous feedback (decrease)
         if ($previousFeedback) {
-            $db->execute(
+            $database->execute(
                 'UPDATE faq_questions
                  SET num_usefull_yes = num_usefull_yes - 1
                  WHERE id = ?',
                 [$id]
             );
         } elseif ($previousFeedback !== null) {
-            $db->execute(
+            $database->execute(
                 'UPDATE faq_questions
                  SET num_usefull_no = num_usefull_no - 1
                  WHERE id = ?',

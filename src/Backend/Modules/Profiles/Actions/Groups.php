@@ -11,7 +11,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -38,7 +38,7 @@ class Groups extends BackendBaseActionIndex
     /**
      * Groups data grid.
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgGroups;
 
@@ -89,7 +89,7 @@ class Groups extends BackendBaseActionIndex
         list($query, $parameters) = $this->buildQuery();
 
         // create datagrid
-        $this->dgGroups = new BackendDataGridDB($query, $parameters);
+        $this->dgGroups = new BackendDataGridDatabase($query, $parameters);
 
         // overrule default URL
         $this->dgGroups->setURL(

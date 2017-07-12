@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
@@ -30,7 +30,7 @@ class ThemeTemplates extends BackendBaseActionEdit
     private $availableThemes;
 
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dataGrid;
 
@@ -70,7 +70,7 @@ class ThemeTemplates extends BackendBaseActionEdit
     private function loadDataGrid(): void
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(
+        $this->dataGrid = new BackendDataGridDatabase(
             BackendExtensionsModel::QRY_BROWSE_TEMPLATES,
             [$this->selectedTheme]
         );

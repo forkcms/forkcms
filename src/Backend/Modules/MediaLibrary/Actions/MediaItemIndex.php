@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\DataGridDB;
+use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
@@ -25,7 +25,7 @@ class MediaItemIndex extends BackendBaseActionIndex
     {
         return array_map(
             function ($type) use ($mediaFolder) {
-                /** @var DataGridDB $dataGrid */
+                /** @var DataGridDatabase $dataGrid */
                 $dataGrid = MediaItemDataGrid::getDataGrid(
                     Type::fromString($type),
                     ($mediaFolder !== null) ? $mediaFolder->getId() : null

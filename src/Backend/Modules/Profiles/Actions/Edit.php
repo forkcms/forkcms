@@ -11,7 +11,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
@@ -28,7 +28,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Groups data grid.
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgGroups;
 
@@ -135,7 +135,7 @@ class Edit extends BackendBaseActionEdit
     private function loadGroups(): void
     {
         // create the data grid
-        $this->dgGroups = new BackendDataGridDB(
+        $this->dgGroups = new BackendDataGridDatabase(
             BackendProfilesModel::QRY_DATAGRID_BROWSE_PROFILE_GROUPS,
             [$this->profile['id']]
         );

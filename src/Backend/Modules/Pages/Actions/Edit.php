@@ -12,7 +12,7 @@ namespace Backend\Modules\Pages\Actions;
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
@@ -40,7 +40,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * DataGrid for the drafts
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgDrafts;
 
@@ -168,7 +168,7 @@ class Edit extends BackendBaseActionEdit
     private function loadDrafts(): void
     {
         // create datagrid
-        $this->dgDrafts = new BackendDataGridDB(
+        $this->dgDrafts = new BackendDataGridDatabase(
             BackendPagesModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
             [$this->record['id'], 'draft', BL::getWorkingLanguage()]
         );
@@ -311,7 +311,7 @@ class Edit extends BackendBaseActionEdit
         // add default block to "fallback" position, the only one which we can rest assured to exist
         $this->positions['fallback']['blocks'][] = $block;
 
-        // content has been submitted: re-create submitted content rather than the db-fetched content
+        // content has been submitted: re-create submitted content rather than the database-fetched content
         if ($this->getRequest()->request->has('block_html_0')) {
             // init vars
             $this->blocksContent = [];
@@ -486,7 +486,7 @@ class Edit extends BackendBaseActionEdit
     private function loadRevisions(): void
     {
         // create datagrid
-        $this->dgRevisions = new BackendDataGridDB(
+        $this->dgRevisions = new BackendDataGridDatabase(
             BackendPagesModel::QRY_BROWSE_REVISIONS,
             [
                  $this->id,

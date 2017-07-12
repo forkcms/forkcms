@@ -81,8 +81,8 @@ class Model
 
     public static function copy(string $fromLanguage, string $toLanguage): void
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // copy contentBlocks and get copied contentBlockIds
         $copyContentBlocks = new CopyContentBlocksToOtherLocale(Locale::fromString($toLanguage), Locale::fromString($fromLanguage));
@@ -93,7 +93,7 @@ class Model
         $contentBlockOldIds = array_keys($contentBlockIds);
 
         // get all old pages
-        $ids = $db->getColumn(
+        $ids = $database->getColumn(
             'SELECT id
              FROM pages AS i
              WHERE i.language = ? AND i.status = ?',
@@ -108,7 +108,7 @@ class Model
                 $id = (int) $id;
 
                 // get revision ids
-                $revisionIDs = (array) $db->getColumn(
+                $revisionIDs = (array) $database->getColumn(
                     'SELECT i.revision_id
                      FROM pages AS i
                      WHERE i.id = ? AND i.language = ?',
@@ -116,7 +116,7 @@ class Model
                 );
 
                 // get meta ids
-                $metaIDs = (array) $db->getColumn(
+                $metaIDs = (array) $database->getColumn(
                     'SELECT i.meta_id
                      FROM pages AS i
                      WHERE i.id = ? AND i.language = ?',
@@ -125,12 +125,12 @@ class Model
 
                 // delete meta records
                 if (!empty($metaIDs)) {
-                    $db->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
+                    $database->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
                 }
 
                 // delete blocks and their revisions
                 if (!empty($revisionIDs)) {
-                    $db->delete(
+                    $database->delete(
                         'pages_blocks',
                         'revision_id IN (' . implode(',', $revisionIDs) . ')'
                     );
@@ -138,13 +138,13 @@ class Model
 
                 // delete page and the revisions
                 if (!empty($revisionIDs)) {
-                    $db->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
+                    $database->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
                 }
             }
         }
 
         // delete search indexes
-        $db->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
+        $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
 
         // get all active pages
         $ids = BackendModel::getContainer()->get('database')->getColumn(
@@ -160,7 +160,7 @@ class Model
             $sourceData = self::get($id, null, $fromLanguage);
 
             // get and build meta
-            $meta = $db->getRecord(
+            $meta = $database->getRecord(
                 'SELECT *
                  FROM meta
                  WHERE id = ?',
@@ -178,7 +178,7 @@ class Model
             $page['user_id'] = BackendAuthentication::getUser()->getUserId();
             $page['parent_id'] = $sourceData['parent_id'];
             $page['template_id'] = $sourceData['template_id'];
-            $page['meta_id'] = (int) $db->insert('meta', $meta);
+            $page['meta_id'] = (int) $database->insert('meta', $meta);
             $page['language'] = $toLanguage;
             $page['type'] = $sourceData['type'];
             $page['title'] = $sourceData['title'];
@@ -314,8 +314,8 @@ class Model
     {
         $language = $language ?? BL::getWorkingLanguage();
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get record
         $page = self::get($id, $revisionId, $language);
@@ -329,7 +329,7 @@ class Model
         }
 
         // get revision ids
-        $revisionIDs = (array) $db->getColumn(
+        $revisionIDs = (array) $database->getColumn(
             'SELECT i.revision_id
              FROM pages AS i
              WHERE i.id = ? AND i.language = ?',
@@ -337,7 +337,7 @@ class Model
         );
 
         // get meta ids
-        $metaIDs = (array) $db->getColumn(
+        $metaIDs = (array) $database->getColumn(
             'SELECT i.meta_id
              FROM pages AS i
              WHERE i.id = ? AND i.language = ?',
@@ -346,17 +346,17 @@ class Model
 
         // delete meta records
         if (!empty($metaIDs)) {
-            $db->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
+            $database->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
         }
 
         // delete blocks and their revisions
         if (!empty($revisionIDs)) {
-            $db->delete('pages_blocks', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
+            $database->delete('pages_blocks', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
         }
 
         // delete page and the revisions
         if (!empty($revisionIDs)) {
-            $db->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
+            $database->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
         }
 
         // delete tags
@@ -933,13 +933,13 @@ class Model
             ];
         }
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // no specific id
         if ($id === null) {
             // no items?
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM pages AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -958,7 +958,7 @@ class Model
         } else {
             // one item should be ignored
             // there are items so, call this method again.
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM pages AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -1034,8 +1034,8 @@ class Model
      */
     public static function insertBlocks(array $blocks)
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // loop blocks
         foreach ($blocks as $block) {
@@ -1044,7 +1044,7 @@ class Model
             }
 
             // insert blocks
-            $db->insert('pages_blocks', $block);
+            $database->insert('pages_blocks', $block);
         }
     }
 
@@ -1094,8 +1094,8 @@ class Model
         $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'inside');
         $language = $language ?? BL::getWorkingLanguage();
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // reset type of drop for special pages
         if ($droppedOnPageId == 1) {
@@ -1151,7 +1151,7 @@ class Model
         // calculate new sequence for items that should be moved inside
         if ($typeOfDrop == 'inside') {
             // get highest sequence + 1
-            $newSequence = (int) $db->getVar(
+            $newSequence = (int) $database->getVar(
                 'SELECT MAX(i.sequence)
                  FROM pages AS i
                  WHERE i.id = ? AND i.language = ? AND i.status = ?',
@@ -1159,7 +1159,7 @@ class Model
             ) + 1;
 
             // update
-            $db->update(
+            $database->update(
                 'pages',
                 ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
                 'id = ? AND language = ? AND status = ?',
@@ -1168,7 +1168,7 @@ class Model
         } elseif ($typeOfDrop == 'before') {
             // calculate new sequence for items that should be moved before
             // get new sequence
-            $newSequence = (int) $db->getVar(
+            $newSequence = (int) $database->getVar(
                 'SELECT i.sequence
                  FROM pages AS i
                  WHERE i.id = ? AND i.language = ? AND i.status = ?
@@ -1177,7 +1177,7 @@ class Model
             ) - 1;
 
             // increment all pages with a sequence that is higher or equal to the current sequence;
-            $db->execute(
+            $database->execute(
                 'UPDATE pages
                  SET sequence = sequence + 1
                  WHERE parent_id = ? AND language = ? AND sequence >= ?',
@@ -1185,7 +1185,7 @@ class Model
             );
 
             // update
-            $db->update(
+            $database->update(
                 'pages',
                 ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
                 'id = ? AND language = ? AND status = ?',
@@ -1194,7 +1194,7 @@ class Model
         } elseif ($typeOfDrop == 'after') {
             // calculate new sequence for items that should be moved after
             // get new sequence
-            $newSequence = (int) $db->getVar(
+            $newSequence = (int) $database->getVar(
                 'SELECT i.sequence
                 FROM pages AS i
                 WHERE i.id = ? AND i.language = ? AND i.status = ?
@@ -1203,7 +1203,7 @@ class Model
             ) + 1;
 
             // increment all pages with a sequence that is higher then the current sequence;
-            $db->execute(
+            $database->execute(
                 'UPDATE pages
                  SET sequence = sequence + 1
                  WHERE parent_id = ? AND language = ? AND sequence > ?',
@@ -1211,7 +1211,7 @@ class Model
             );
 
             // update
-            $db->update(
+            $database->update(
                 'pages',
                 ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
                 'id = ? AND language = ? AND status = ?',
@@ -1222,7 +1222,7 @@ class Model
         }
 
         // get current url
-        $currentUrl = (string) $db->getVar(
+        $currentUrl = (string) $database->getVar(
             'SELECT url
              FROM meta AS m
              WHERE m.id = ?',
@@ -1238,7 +1238,7 @@ class Model
         );
 
         // store
-        $db->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
+        $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
 
         // return
         return true;
@@ -1246,19 +1246,19 @@ class Model
 
     public static function update(array $page): int
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // update old revisions
         if ($page['status'] != 'draft') {
-            $db->update(
+            $database->update(
                 'pages',
                 ['status' => 'archive'],
                 'id = ? AND language = ?',
                 [(int) $page['id'], $page['language']]
             );
         } else {
-            $db->delete(
+            $database->delete(
                 'pages',
                 'id = ? AND user_id = ? AND status = ? AND language = ?',
                 [(int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft', $page['language']]
@@ -1266,13 +1266,13 @@ class Model
         }
 
         // insert
-        $page['revision_id'] = (int) $db->insert('pages', $page);
+        $page['revision_id'] = (int) $database->insert('pages', $page);
 
         // how many revisions should we keep
         $rowsToKeep = (int) BackendModel::get('fork.settings')->get('Pages', 'max_num_revisions', 20);
 
         // get revision-ids for items to keep
-        $revisionIdsToKeep = (array) $db->getColumn(
+        $revisionIdsToKeep = (array) $database->getColumn(
             'SELECT i.revision_id
              FROM pages AS i
              WHERE i.id = ? AND i.status = ?
@@ -1284,7 +1284,7 @@ class Model
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
             // because blocks are linked by revision we should get all revisions we want to delete
-            $revisionsToDelete = (array) $db->getColumn(
+            $revisionsToDelete = (array) $database->getColumn(
                 'SELECT i.revision_id
                  FROM pages AS i
                  WHERE i.id = ? AND i.status = ? AND i.revision_id NOT IN(' . implode(', ', $revisionIdsToKeep) . ')',
@@ -1293,8 +1293,8 @@ class Model
 
             // any revisions to delete
             if (!empty($revisionsToDelete)) {
-                $db->delete('pages', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
-                $db->delete('pages_blocks', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
+                $database->delete('pages', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
+                $database->delete('pages_blocks', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
             }
         }
 

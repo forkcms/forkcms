@@ -131,7 +131,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control danger positionBlockError');
         $positions[] = $position;
 
-        // content has been submitted: re-create submitted content rather than the db-fetched content
+        // content has been submitted: re-create submitted content rather than the database-fetched content
         if ($this->getRequest()->request->has('position_0')) {
             // init vars
             $this->names = [];

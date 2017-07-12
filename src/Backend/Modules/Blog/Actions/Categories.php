@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -32,7 +32,7 @@ class Categories extends BackendBaseActionIndex
     private function loadDataGrid(): void
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(
+        $this->dataGrid = new BackendDataGridDatabase(
             BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES,
             ['active', BL::getWorkingLanguage()]
         );
