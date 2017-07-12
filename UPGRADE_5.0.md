@@ -299,6 +299,8 @@ The dropped methods are:
 * redirectToErrorPage
 * getConfig
 
+See the `Backend\Core\Engine\Base\Object` table below to find their new location.
+
 ## Backend Header
 
 `Backend\Core\Engine\Header` also known as the service `header` when you are in the backend was stripped of some functions that where available because it extended a base class. 
@@ -312,6 +314,8 @@ The dropped methods are:
 * redirect
 * redirectToErrorPage
 * getConfig
+
+See the `Backend\Core\Engine\Base\Object` table below to find their new location.
 
 ## The class `Backend\Core\Engine\Base\Object` has been removed and the methods moved to more specific classes
 
