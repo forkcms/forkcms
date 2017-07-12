@@ -290,6 +290,7 @@ class MetaType extends AbstractType
                 'generate_url_callback_class',
                 'generate_url_callback_method',
                 'generate_url_callback_parameters',
+                'detail_url',
             ]
         );
         $resolver->setDefaults(
@@ -324,5 +325,6 @@ class MetaType extends AbstractType
         $view->vars['generate_url_callback_method'] = $options['generate_url_callback_method'];
         $view->vars['generated_url_selector'] = $options['generated_url_selector'];
         $view->vars['generate_url_callback_parameters'] = serialize($options['generate_url_callback_parameters']);
+        $view->vars['detail_url'] = $options['detail_url'];
     }
 }

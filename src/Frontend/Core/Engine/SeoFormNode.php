@@ -127,8 +127,9 @@ class SeoFormNode extends \Twig_Node
 
         $compiler
             ->write('echo \'<span id="urlFirstPart">\';')
-            ->write('if (' . $this->hasVariable('detailUrl') . ') {')
-            ->write($this->getVariable('detailUrl'))
+            ->write('if (' . $this->hasVariable('detailURL') . ') {')
+            ->write($this->getVariable('detailURL'))
+            ->write('echo "/";')
             ->write('} else {')
             ->write('echo "' . SITE_URL . '/' . ' ' . '";')
             ->write('}')

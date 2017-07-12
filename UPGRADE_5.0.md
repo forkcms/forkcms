@@ -268,6 +268,10 @@ Replaced those methods by using the Symfony Request object.
 
 Also removed Action::getParameter(). You should directly call the request object through `$this->getRequest()->query->get()`
 
+## Meta URL
+
+The detail url (without slug) must be defined for meta type, so the preview url will be correct.
+
 ## Use the HTTP status code constants from Symfony\Component\HttpFoundation\Response instead of our own
 
 Backend\Core\Engine\Base\AjaxAction and Frontend\Core\Engine\Base\AjaxAction no longer provide the http status code constants

@@ -199,7 +199,7 @@
                 </p>
                 {{ form_label(form.url) }}
                 <div class="form-inline">
-                  <span id="urlFirstPart">{{ SITE_URL }}/ </span>{{ form_widget(form.url) }}
+                  <span id="urlFirstPart">{{ form.vars.detail_url }}/ </span>{{ form_widget(form.url) }}
                 </div>
                 {{ form_errors(form.url) }}
                 <p class="help-block">{{ 'msg.HelpMetaURL'|trans|raw }}</p>
