@@ -19,14 +19,14 @@ interface ModuleExtraInterface
      * Execute the extra
      * We will build the class name, initialise the class and call the execute method.
      */
-    public function execute():void;
+    public function execute(): void;
 
     /**
      * Get the assigned template.
      *
      * @return TwigTemplate
      */
-    public function getTemplate():TwigTemplate;
+    public function getTemplate(): TwigTemplate;
 
     /**
      * The content that will be parsed into the template
