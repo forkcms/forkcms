@@ -10,7 +10,7 @@ use Common\ModulesSettings;
 /**
  * A form to change the settings of the analytics module
  */
-final class SettingsStepAuthConfigFileType implements SettingsStepType
+final class SettingsStepAuthConfigFileTypeInterface implements SettingsStepTypeInterface
 {
     /** @var Form */
     private $form;

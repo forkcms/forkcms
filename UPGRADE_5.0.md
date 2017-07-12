@@ -335,3 +335,13 @@ These changes are mostly internal but it might be good to know in case you did s
 You can no longer access module and action as a protected property on the action or ajax class but you need to use the getters as they are now only stored in the url service
 
 We did add helper getters so you can keep doing `$this->getAction()` and `$this->getModule()` as they will get the correct values from the url service
+
+## Removed some abbreviations and incorrect casings
+
+| Old method                    | New method                                      |
+|-------------------------------|-------------------------------------------------|
+| `Object::getContent`          | `\Backend\Core\Engine\Base\Action::getContent`  |
+
+| Old parameter                 | New parameter                                   |
+|-------------------------------|-------------------------------------------------|
+| `Object::getContent`          | `\Backend\Core\Engine\Base\Action::getContent`  |

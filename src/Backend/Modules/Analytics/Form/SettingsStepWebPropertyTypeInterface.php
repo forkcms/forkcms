@@ -11,7 +11,7 @@ use Google_Service_Analytics;
 /**
  * A form to change the settings of the analytics module
  */
-final class SettingsStepProfileType implements SettingsStepType
+final class SettingsStepWebPropertyTypeInterface implements SettingsStepTypeInterface
 {
     /** @var Form */
     private $form;
@@ -49,8 +49,8 @@ final class SettingsStepProfileType implements SettingsStepType
 
         $this->settings->set(
             'Analytics',
-            'profile',
-            $this->form->getField('profile')->getValue()
+            'web_property_id',
+            $this->form->getField('web_property_id')->getValue()
         );
 
         return true;
@@ -58,21 +58,20 @@ final class SettingsStepProfileType implements SettingsStepType
 
     private function build(): void
     {
-        $profiles = $this->googleServiceAnalytics->management_profiles->listManagementProfiles(
-            $this->settings->get('Analytics', 'account'),
-            $this->settings->get('Analytics', 'web_property_id')
+        $properties = $this->googleServiceAnalytics->management_webproperties->listManagementWebproperties(
+            $this->settings->get('Analytics', 'account')
         );
 
-        $profilesForDropDown = [];
-        foreach ($profiles->getItems() as $property) {
-            $profilesForDropDown[$property->getId()] = $property->getName();
+        $propertiesForDropDown = [];
+        foreach ($properties->getItems() as $property) {
+            $propertiesForDropDown[$property->getId()] = $property->getName();
         }
-        $this->form->addDropdown('profile', $profilesForDropDown);
+        $this->form->addDropdown('web_property_id', $propertiesForDropDown);
     }
 
     private function isValid(): bool
     {
-        $this->form->getField('profile')->isFilled(Language::err('FieldIsRequired'));
+        $this->form->getField('web_property_id')->isFilled(Language::err('FieldIsRequired'));
 
         return $this->form->isCorrect();
     }

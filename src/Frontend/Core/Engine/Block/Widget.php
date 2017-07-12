@@ -20,7 +20,7 @@ use Frontend\Core\Engine\Exception as FrontendException;
 /**
  * This class will handle all stuff related to widgets
  */
-class Widget extends KernelLoader implements ModuleExtra
+class Widget extends KernelLoader implements ModuleExtraInterface
 {
     /**
      * The current action

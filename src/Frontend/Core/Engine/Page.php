@@ -11,14 +11,14 @@ namespace Frontend\Core\Engine;
 
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
-use Frontend\Core\Engine\Block\ModuleExtra;
+use Frontend\Core\Engine\Block\ModuleExtraInterface;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Common\Cookie as CommonCookie;
-use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
+use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Backend\Core\Engine\Model as BackendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
@@ -351,7 +351,7 @@ class Page extends KernelLoader
         ];
     }
 
-    protected function processExtra(ModuleExtra $extra): void
+    protected function processExtra(ModuleExtraInterface $extra): void
     {
         $this->getContainer()->get('logger')->info(
             'Executing ' . get_class($extra) . " '{$extra->getAction()}' for module '{$extra->getModule()}'."
@@ -470,7 +470,7 @@ class Page extends KernelLoader
         }
     }
 
-    private function getExtraForBlock(array $block): ModuleExtra
+    private function getExtraForBlock(array $block): ModuleExtraInterface
     {
         // block
         if ($block['extra_type'] === 'block') {

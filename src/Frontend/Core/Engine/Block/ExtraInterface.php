@@ -21,7 +21,7 @@ use Frontend\Core\Language\Language as FL;
 /**
  * This class will handle all stuff related to blocks
  */
-class Extra extends KernelLoader implements ModuleExtra
+class ExtraInterface extends KernelLoader implements ModuleExtraInterface
 {
     /**
      * The current action

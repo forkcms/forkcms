@@ -5,7 +5,7 @@ namespace Frontend\Core\Engine\Block;
 use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-interface ModuleExtra
+interface ModuleExtraInterface
 {
     /**
      * @param KernelInterface $kernel
