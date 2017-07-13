@@ -183,6 +183,9 @@ jsBackend.mediaLibraryHelper.group =
             // define groupId
             currentMediaGroupId = $(this).data('i');
             currentAspectRatio = $(this).data('aspectRatio');
+            if (currentAspectRatio === undefined) {
+                currentAspectRatio = false;
+            }
 
             // get current media for group
             currentMediaItemIds = ($('#group-' + currentMediaGroupId + ' .mediaIds').first().val() != '')
@@ -819,7 +822,9 @@ jsBackend.mediaLibraryHelper.cropper =
         jsBackend.mediaLibraryHelper.cropper.isCropping = true;
         var $dialog = jsBackend.mediaLibraryHelper.cropper.getDialog();
 
-        jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
+        if ($('[data-role="enable-cropper-checkbox"]').is(':checked')) {
+            jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
+        }
 
         jsBackend.mediaLibraryHelper.cropper.processNextImageInQueue($dialog);
     },
@@ -851,7 +856,14 @@ jsBackend.mediaLibraryHelper.cropper =
             resizeInfo.sourceCanvas,
             resizeInfo.targetCanvas
         );
-        jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo);
+
+        var readyCallback = undefined;
+        // if we don't want to show the cropper we just crop without showing it
+        if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
+            readyCallback = jsBackend.mediaLibraryHelper.cropper.getCropEventFunction($dialog, resizeInfo, resolve);
+        }
+
+        jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo, readyCallback);
     },
 
     initSourceAndTargetCanvas: function($dialog, sourceCanvas, targetCanvas) {
@@ -862,16 +874,20 @@ jsBackend.mediaLibraryHelper.cropper =
         $dialog.find('[data-role=media-library-cropper-dialog-canvas-wrapper]').empty().append(sourceCanvas);
     },
 
-    initCropper: function($dialog, resizeInfo) {
+    initCropper: function($dialog, resizeInfo, readyCallback) {
         $(resizeInfo.sourceCanvas)
             .addClass('img-responsive')
-            .cropper(jsBackend.mediaLibraryHelper.cropper.getCropperConfig());
+            .cropper(jsBackend.mediaLibraryHelper.cropper.getCropperConfig(readyCallback));
     },
 
-    getCropperConfig: function() {
+    getCropperConfig: function(readyCallback) {
         var config = {
             autoCropArea: 1,
         };
+
+        if (readyCallback !== undefined) {
+            config.ready = readyCallback;
+        }
 
         if (currentAspectRatio !== false) {
             config.aspectRatio = currentAspectRatio;
@@ -1015,10 +1031,32 @@ jsBackend.mediaLibraryHelper.upload =
         });
     },
 
+    toggleCropper: function() {
+        // the cropper is mandatory
+        var $formGroup = $('[data-role="cropper-is-mandatory-form-group"]');
+        var $warning = $('[data-role="cropper-is-mandatory-message"]');
+        var $checkbox = $('[data-role="enable-cropper-checkbox"]');
+
+        if (currentAspectRatio === false) {
+            $formGroup.removeClass('has-warning');
+            $warning.addClass('hidden');
+            $checkbox.removeClass('disabled').attr('disabled', false).attr('checked', false);
+
+            return;
+        }
+
+        $formGroup.addClass('has-warning');
+        $warning.removeClass('hidden');
+        $checkbox.addClass('disabled').attr('disabled', true).attr('checked', true);
+    },
+
     init: function()
     {
         // redefine media folder id
         mediaFolderId = $('#uploadMediaFolderId').val();
+
+        // check if we need to cropper is mandatory
+        jsBackend.mediaLibraryHelper.upload.toggleCropper();
 
         var $fineUploaderGallery = $('#fine-uploader-gallery');
         $fineUploaderGallery.fineUploader({

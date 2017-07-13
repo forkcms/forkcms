@@ -131,6 +131,17 @@
         <p>2) {{ 'msg.MediaChoseToUpload'|trans }}</p>
       </div>
       <div id="fine-uploader-gallery"></div>
+      <div class="panel-footer">
+        <div class="form-group" data-role="cropper-is-mandatory-form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" data-role="enable-cropper-checkbox">
+              {{ 'lbl.EnableCropper'|trans|ucfirst }}
+              <span class="help-block hidden" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

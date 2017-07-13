@@ -26,6 +26,14 @@
         <translation language="en"><![CDATA[add movie]]></translation>
         <translation language="nl"><![CDATA[video toevoegen]]></translation>
       </item>
+      <item type="label" name="EnableCropper">
+        <translation language="en"><![CDATA[enable cropper]]></translation>
+        <translation language="nl"><![CDATA[activeer cropper]]></translation>
+      </item>
+      <item type="message" name="TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat">
+        <translation language="en"><![CDATA[The cropper is mandatory because the images need to have a certain aspect ratio.]]></translation>
+        <translation language="nl"><![CDATA[De cropper is verplicht omdat de afbeeldingen een bepaalde aspect ratio moeten hebben.]]></translation>
+      </item>
       <item type="label" name="MediaAudio">
         <translation language="de"><![CDATA[audio]]></translation>
         <translation language="en"><![CDATA[audio]]></translation>
