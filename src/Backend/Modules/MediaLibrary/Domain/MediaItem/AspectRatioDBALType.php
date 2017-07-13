@@ -14,8 +14,8 @@ final class AspectRatioDBALType extends DecimalType
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
-        $fieldDeclaration['precision'] = 21;
-        $fieldDeclaration['scale'] = 11;
+        $fieldDeclaration['precision'] = 13;
+        $fieldDeclaration['scale'] = 2;
 
         return parent::getSQLDeclaration($fieldDeclaration, $platform);
     }

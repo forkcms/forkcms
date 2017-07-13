@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 final class AspectRatio
 {
-    private const PRECISION = 11;
+    private const PRECISION = 2;
 
     /** @var float */
     private $aspectRatio;
