@@ -946,16 +946,22 @@ jsBackend.mediaLibraryHelper.cropper =
             var context = resizeInfo.targetCanvas.getContext('2d');
             var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
             var cropBoxData = $cropper.cropper('getCroppedCanvas');
+            var zoomTo = 1;
+
+            // limit the width and height of the images to 3000 so they are not too big for the LiipImagine bundle
+            if (cropBoxData.height > 3000 || cropBoxData.width > 3000) {
+                zoomTo = 3000/((cropBoxData.height >= cropBoxData.width) ? cropBoxData.height : cropBoxData.width);
+            }
 
             // set the correct height and width on the target canvas
-            resizeInfo.targetCanvas.height = cropBoxData.height;
-            resizeInfo.targetCanvas.width = cropBoxData.width;
+            resizeInfo.targetCanvas.height = Math.round(cropBoxData.height * zoomTo);
+            resizeInfo.targetCanvas.width = Math.round(cropBoxData.width * zoomTo);
 
             // make sure we start with a blank slate
             context.clearRect(0, 0, resizeInfo.targetCanvas.width, resizeInfo.targetCanvas.height);
 
             // add the new crop
-            context.drawImage($cropper.cropper('getCroppedCanvas'), 0, 0);
+            context.drawImage($cropper.cropper('getCroppedCanvas'), 0, 0, resizeInfo.targetCanvas.width, resizeInfo.targetCanvas.height);
 
             $dialog.off('hidden.bs.modal.media-library-cropper.close');
             resolve('Confirm');
