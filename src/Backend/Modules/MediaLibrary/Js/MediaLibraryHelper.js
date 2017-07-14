@@ -987,6 +987,14 @@ jsBackend.mediaLibraryHelper.cropper =
         }
     },
 
+    getResetEventFunction: function() {
+        return function() {
+            var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
+            $cropper.cropper('reset');
+            $cropper.cropper('crop');
+        }
+    },
+
     attachEvents: function($dialog, resolve, reject, resizeInfo) {
         $dialog
             .off('hidden.bs.modal.media-library-cropper.close')
@@ -1022,6 +1030,12 @@ jsBackend.mediaLibraryHelper.cropper =
             .on(
                 'click.media-library-cropper.zoom',
                 jsBackend.mediaLibraryHelper.cropper.getZoomEventFunction()
+            );
+        $dialog.find('[data-role=media-library-cropper-reset]')
+            .off('click.media-library-cropper.zoom')
+            .on(
+                'click.media-library-cropper.zoom',
+                jsBackend.mediaLibraryHelper.cropper.getResetEventFunction()
             );
     }
 };
