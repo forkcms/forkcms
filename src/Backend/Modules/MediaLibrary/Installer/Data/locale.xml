@@ -418,6 +418,10 @@
         <translation language="en"><![CDATA[move media]]></translation>
         <translation language="nl"><![CDATA[media verplaatsen]]></translation>
       </item>
+      <item type="message" name="MoveMediaFoldersNotPossible">
+        <translation language="en"><![CDATA[It's not possible to move media folders.]]></translation>
+        <translation language="nl"><![CDATA[Het is niet mogelijk om media folders te verplaatsen.]]></translation>
+      </item>
       <item type="message" name="MoveMediaToFolder">
         <translation language="en"><![CDATA[Move media to this folder:]]></translation>
         <translation language="nl"><![CDATA[Verplaats deze media naar volgende map:]]></translation>
