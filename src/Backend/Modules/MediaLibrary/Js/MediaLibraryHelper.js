@@ -883,6 +883,8 @@ jsBackend.mediaLibraryHelper.cropper =
     getCropperConfig: function(readyCallback) {
         var config = {
             autoCropArea: 1,
+            zoomOnWheel: false,
+            zoomOnTouch: false,
         };
 
         if (readyCallback !== undefined) {
