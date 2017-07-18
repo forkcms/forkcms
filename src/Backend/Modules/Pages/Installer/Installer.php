@@ -297,7 +297,7 @@ class Installer extends ModuleInstaller
     private function hasPage(string $language): bool
     {
         // @todo: Replace with PageRepository method when it exists.
-        return (bool) $this->getDB()->getVar(
+        return (bool) $this->getDatabase()->getVar(
             'SELECT 1 FROM pages WHERE language = ? AND id > ? LIMIT 1',
             [$language, 404]
         );

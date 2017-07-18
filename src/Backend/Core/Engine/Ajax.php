@@ -10,7 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use ForkCMS\App\ApplicationInterface;
-use Symfony\Component\HttpFoundation\Request;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BackendLanguage;
@@ -18,7 +18,7 @@ use Backend\Core\Language\Language as BackendLanguage;
 /**
  * This class will handle AJAX-related stuff
  */
-class Ajax extends Base\Object implements ApplicationInterface
+class Ajax extends KernelLoader implements ApplicationInterface
 {
     /**
      * @var AjaxAction|BackendBaseAJAXAction
@@ -34,34 +34,6 @@ class Ajax extends Base\Object implements ApplicationInterface
         return $this->ajaxAction->getContent();
     }
 
-    private function splitUpForkData(array $forkData): array
-    {
-        $language = $forkData['language'] ?? '';
-
-        if ($language === '') {
-            $language = $this->getContainer()->getParameter('site.default_language');
-        }
-
-        return [
-            $forkData['module'] ?? '',
-            $forkData['action'] ?? '',
-            $language,
-        ];
-    }
-
-    private function getForkDataFromRequest(Request $request): array
-    {
-        if ($request->request->has('fork')) {
-            return $this->splitUpForkData((array) $request->request->get('fork'));
-        }
-
-        if ($request->query->has('fork')) {
-            return $this->splitUpForkData((array) $request->query->get('fork'));
-        }
-
-        return $this->splitUpForkData($request->query->all());
-    }
-
     public function initialize(): void
     {
         // check if the user is logged in
@@ -72,32 +44,16 @@ class Ajax extends Base\Object implements ApplicationInterface
             define('NAMED_APPLICATION', 'BackendAjax');
         }
 
-        list($module, $action, $language) = $this->getForkDataFromRequest($this->get('request'));
-
         try {
-            // create URL instance, since the template modifiers need this object
+            // process the query string
             $url = new Url($this->getKernel());
-            $url->setModule($module);
-
-            $this->setModule($module);
-            $this->setAction($action);
-            $this->setLanguage($language);
 
             // create a new action
-            $this->ajaxAction = new AjaxAction($this->getKernel(), $this->getAction(), $this->getModule());
+            $this->ajaxAction = new AjaxAction($this->getKernel(), $url->getModule(), $url->getAction());
         } catch (Exception $e) {
             $this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
             $this->ajaxAction->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, $e->getMessage());
         }
-    }
-
-    public function setLanguage(string $language): void
-    {
-        if (!array_key_exists($language, BackendLanguage::getWorkingLanguages())) {
-            throw new Exception('Language invalid.');
-        }
-
-        BackendLanguage::setWorkingLanguage($language);
     }
 
     /**

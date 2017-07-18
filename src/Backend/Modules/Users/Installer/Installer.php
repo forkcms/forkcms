@@ -131,7 +131,7 @@ class Installer extends ModuleInstaller
     private function hasExistingGodUser(): bool
     {
         // @todo: Replace by UserRepository method when it exists.
-        return (bool) $this->getDB()->getVar(
+        return (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM users
              WHERE is_god = ? AND deleted = ? AND active = ?

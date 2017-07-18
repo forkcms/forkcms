@@ -80,7 +80,7 @@ class Installer extends ModuleInstaller
             $form['identifier'] = 'contact-' . $language;
             $form['created_on'] = gmdate('Y-m-d H:i:s');
             $form['edited_on'] = gmdate('Y-m-d H:i:s');
-            $formId = $this->getDB()->insert('forms', $form);
+            $formId = $this->getDatabase()->insert('forms', $form);
 
             // create submit button
             $field = [];
@@ -91,7 +91,7 @@ class Installer extends ModuleInstaller
                     'values' => \SpoonFilter::ucfirst($this->getLocale('Send', 'Core', $language, 'lbl', 'Frontend')),
                 ]
             );
-            $this->getDB()->insert('forms_fields', $field);
+            $this->getDatabase()->insert('forms_fields', $field);
 
             // create name field
             $field['form_id'] = $formId;
@@ -101,14 +101,14 @@ class Installer extends ModuleInstaller
                     'label' => \SpoonFilter::ucfirst($this->getLocale('Name', 'Core', $language, 'lbl', 'Frontend')),
                 ]
             );
-            $nameId = $this->getDB()->insert('forms_fields', $field);
+            $nameId = $this->getDatabase()->insert('forms_fields', $field);
 
             // name validation
             $validate = [];
             $validate['field_id'] = $nameId;
             $validate['type'] = 'required';
             $validate['error_message'] = $this->getLocale('NameIsRequired', 'Core', $language, 'err', 'Frontend');
-            $this->getDB()->insert('forms_fields_validation', $validate);
+            $this->getDatabase()->insert('forms_fields_validation', $validate);
 
             // create email field
             $field['form_id'] = $formId;
@@ -118,13 +118,13 @@ class Installer extends ModuleInstaller
                     'label' => \SpoonFilter::ucfirst($this->getLocale('Email', 'Core', $language, 'lbl', 'Frontend')),
                 ]
             );
-            $emailId = $this->getDB()->insert('forms_fields', $field);
+            $emailId = $this->getDatabase()->insert('forms_fields', $field);
 
             // email validation
             $validate['field_id'] = $emailId;
             $validate['type'] = 'email';
             $validate['error_message'] = $this->getLocale('EmailIsInvalid', 'Core', $language, 'err', 'Frontend');
-            $this->getDB()->insert('forms_fields_validation', $validate);
+            $this->getDatabase()->insert('forms_fields_validation', $validate);
 
             // create message field
             $field['form_id'] = $formId;
@@ -134,13 +134,13 @@ class Installer extends ModuleInstaller
                     'label' => \SpoonFilter::ucfirst($this->getLocale('Message', 'Core', $language, 'lbl', 'Frontend')),
                 ]
             );
-            $messageId = $this->getDB()->insert('forms_fields', $field);
+            $messageId = $this->getDatabase()->insert('forms_fields', $field);
 
             // name validation
             $validate['field_id'] = $messageId;
             $validate['type'] = 'required';
             $validate['error_message'] = $this->getLocale('MessageIsRequired', 'Core', $language, 'err', 'Frontend');
-            $this->getDB()->insert('forms_fields_validation', $validate);
+            $this->getDatabase()->insert('forms_fields_validation', $validate);
 
             // insert extra
             $extraId = $this->insertExtra(
@@ -175,7 +175,7 @@ class Installer extends ModuleInstaller
     private function getSearchWidgetId(): int
     {
         // @todo: Replace this with a ModuleExtraRepository method when it exists.
-        return (int) $this->getDB()->getVar(
+        return (int) $this->getDatabase()->getVar(
             'SELECT id
              FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',

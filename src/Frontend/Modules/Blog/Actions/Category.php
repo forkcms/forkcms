@@ -66,24 +66,24 @@ class Category extends FrontendBaseBlock
 
         // requested category
         $requestedCategory = \SpoonFilter::getValue(
-            $this->URL->getParameter(1, 'string'),
+            $this->url->getParameter(1, 'string'),
             array_keys($possibleCategories),
             'false'
         );
 
         // requested page
-        $requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $requestedPage = $this->url->getParameter('page', 'int', 1);
 
         // validate category
         if ($requestedCategory == 'false') {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // set category
         $this->category = $categories[$possibleCategories[$requestedCategory]];
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $requestedCategory;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Blog', 'Category') . '/' . $requestedCategory;
         $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
@@ -92,7 +92,7 @@ class Category extends FrontendBaseBlock
 
         // redirect if the request page doesn't exists
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // populate calculated fields in pagination
@@ -111,7 +111,7 @@ class Category extends FrontendBaseBlock
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
-        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
+        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed
         $this->header->addRssLink($rssTitle, $rssLink);
@@ -137,10 +137,10 @@ class Category extends FrontendBaseBlock
         }
 
         // assign category
-        $this->tpl->assign('category', $this->category);
+        $this->template->assign('category', $this->category);
 
         // assign articles
-        $this->tpl->assign('items', $this->items);
+        $this->template->assign('items', $this->items);
 
         // parse the pagination
         $this->parsePagination();

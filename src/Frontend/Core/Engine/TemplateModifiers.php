@@ -288,15 +288,15 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // init var
-        $parentURL = '';
+        $parentUrl = '';
 
         // build url
         for ($i = 0; $i < $startDepth - 1; ++$i) {
-            $parentURL .= $chunks[$i] . '/';
+            $parentUrl .= $chunks[$i] . '/';
         }
 
         // get parent ID
-        $parentID = Navigation::getPageId($parentURL);
+        $parentID = Navigation::getPageId($parentUrl);
 
         try {
             // get HTML
@@ -323,9 +323,9 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function getURL(int $pageId, string $language = null): string
+    public static function getUrl(int $pageId, string $language = null): string
     {
-        return Navigation::getURL($pageId, $language);
+        return Navigation::getUrl($pageId, $language);
     }
 
     /**
@@ -340,13 +340,13 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function getURLForBlock(
+    public static function getUrlForBlock(
         string $module,
         string $action = null,
         string $language = null,
         array $data = null
     ): string {
-        return Navigation::getURLForBlock($module, $action, $language, $data);
+        return Navigation::getUrlForBlock($module, $action, $language, $data);
     }
 
     /**
@@ -358,9 +358,9 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function getURLForExtraId(int $extraId, string $language = null): string
+    public static function getUrlForExtraId(int $extraId, string $language = null): string
     {
-        return Navigation::getURLForExtraId($extraId, $language);
+        return Navigation::getUrlForExtraId($extraId, $language);
     }
 
     /**

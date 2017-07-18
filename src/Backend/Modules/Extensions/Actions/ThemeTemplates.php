@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
@@ -30,7 +30,7 @@ class ThemeTemplates extends BackendBaseActionEdit
     private $availableThemes;
 
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dataGrid;
 
@@ -70,8 +70,8 @@ class ThemeTemplates extends BackendBaseActionEdit
     private function loadDataGrid(): void
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(
-            BackendExtensionsModel::QRY_BROWSE_TEMPLATES,
+        $this->dataGrid = new BackendDataGridDatabase(
+            BackendExtensionsModel::QUERY_BROWSE_TEMPLATES,
             [$this->selectedTheme]
         );
 
@@ -80,7 +80,7 @@ class ThemeTemplates extends BackendBaseActionEdit
             // set colum URLs
             $this->dataGrid->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('EditThemeTemplate') . '&amp;id=[id]'
             );
 
             // add edit column
@@ -88,7 +88,7 @@ class ThemeTemplates extends BackendBaseActionEdit
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditThemeTemplate') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
@@ -97,10 +97,10 @@ class ThemeTemplates extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('themes');
+        $this->form = new BackendForm('themes');
 
         // create elements
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'theme',
             $this->availableThemes,
             $this->selectedTheme,
@@ -115,9 +115,9 @@ class ThemeTemplates extends BackendBaseActionEdit
         parent::parse();
 
         // assign datagrid
-        $this->tpl->assign('dataGrid', $this->dataGrid->getContent());
+        $this->template->assign('dataGrid', $this->dataGrid->getContent());
 
         // assign the selected theme, so we can propagate it to the add/edit actions.
-        $this->tpl->assign('selectedTheme', rawurlencode($this->selectedTheme));
+        $this->template->assign('selectedTheme', rawurlencode($this->selectedTheme));
     }
 }

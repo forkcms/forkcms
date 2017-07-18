@@ -34,15 +34,15 @@ class UndoDelete extends BackendBaseAction
 
                 // item was deleted, so redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('edit') . '&id=' . $user->getUserId(
+                    BackendModel::createUrlForAction('edit') . '&id=' . $user->getUserId(
                     ) . '&report=restored&var=' . $user->getSetting('nickname') . '&highlight=row-' . $user->getUserId()
                 );
             } else {
                 // invalid user
-                $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+                $this->redirect(BackendModel::createUrlForAction('index') . '&error=non-existing');
             }
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('index') . '&error=non-existing');
         }
     }
 }

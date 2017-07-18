@@ -82,7 +82,7 @@ class Installer extends ModuleInstaller
     private function getSearchWidgetId(): int
     {
         // @todo: Replace with a ModuleExtraRepository method when it exists.
-        return (int) $this->getDB()->getVar(
+        return (int) $this->getDatabase()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
             ['Search', ModuleExtraType::widget(), 'Form']
         );
@@ -91,7 +91,7 @@ class Installer extends ModuleInstaller
     private function hasPageWithTagsBlock(string $language): bool
     {
         // @todo: Replace with a PageRepository method when it exists.
-        return (bool) $this->getDB()->getVar(
+        return (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM pages AS p
              INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id

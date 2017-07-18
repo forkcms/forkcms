@@ -39,7 +39,7 @@ class Index extends FrontendBaseBlock
     private function parse(): void
     {
         // make tags available
-        $this->tpl->assign('tags', $this->tags);
+        $this->template->assign('tags', $this->tags);
 
         // tag-pages don't have any SEO-value, so don't index them
         $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, follow'], true);

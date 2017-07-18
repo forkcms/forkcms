@@ -149,10 +149,10 @@ class User
     public function loadUser(int $userId): void
     {
         // get database instance
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         // get user-data
-        $userData = (array) $db->getRecord(
+        $userData = (array) $database->getRecord(
             'SELECT u.id, u.email, u.is_god, us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
              FROM users AS u
              LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
@@ -178,7 +178,7 @@ class User
         $this->loadGroups();
 
         // get settings
-        $settings = (array) $db->getPairs(
+        $settings = (array) $database->getPairs(
             'SELECT us.name, us.value
              FROM users_settings AS us
              WHERE us.user_id = ?',
@@ -213,9 +213,9 @@ class User
 
     public function loadUserByEmail(string $email): void
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
-        $userId = (int) $db->getVar(
+        $userId = (int) $database->getVar(
             'SELECT u.id
              FROM users AS u
              LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
@@ -236,11 +236,11 @@ class User
     {
         $valueToStore = serialize($value);
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // store
-        $db->execute(
+        $database->execute(
             'INSERT INTO users_settings(user_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',

@@ -11,7 +11,7 @@ namespace Backend\Modules\Search\Actions;
 
 use Backend\Core\Engine\Base\Action;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -30,16 +30,16 @@ class Synonyms extends Action
 
     private function showDataGrid(): void
     {
-        $dataGrid = new BackendDataGridDB(BackendSearchModel::QRY_DATAGRID_BROWSE_SYNONYMS, [BL::getWorkingLanguage()]);
+        $dataGrid = new BackendDataGridDatabase(BackendSearchModel::QUERY_DATAGRID_BROWSE_SYNONYMS, [BL::getWorkingLanguage()]);
         $dataGrid->setSortingColumns(['term'], 'term');
         $dataGrid->setColumnFunction('str_replace', [',', ', ', '[synonym]'], 'synonym', true);
 
         if (BackendAuthentication::isAllowedAction('EditSynonym')) {
-            $editUrl = BackendModel::createURLForAction('EditSynonym') . '&amp;id=[id]';
+            $editUrl = BackendModel::createUrlForAction('EditSynonym') . '&amp;id=[id]';
             $dataGrid->setColumnURL('term', $editUrl);
             $dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editUrl, BL::lbl('Edit'));
         }
 
-        $this->tpl->assign('dataGrid', $dataGrid->getContent());
+        $this->template->assign('dataGrid', $dataGrid->getContent());
     }
 }

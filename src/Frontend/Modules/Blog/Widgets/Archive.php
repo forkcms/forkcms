@@ -26,6 +26,6 @@ class Archive extends FrontendBaseWidget
 
     private function parse(): void
     {
-        $this->tpl->assign('widgetBlogArchive', FrontendBlogModel::getArchiveNumbers());
+        $this->template->assign('widgetBlogArchive', FrontendBlogModel::getArchiveNumbers());
     }
 }

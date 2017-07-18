@@ -21,7 +21,7 @@ class Index extends BackendBaseActionIndex
     public function execute(): void
     {
         parent::execute();
-        $this->tpl->assign('dataGrid', ContentBlockDataGrid::getHtml(Locale::workingLocale()));
+        $this->template->assign('dataGrid', ContentBlockDataGrid::getHtml(Locale::workingLocale()));
         $this->parse();
         $this->display();
     }

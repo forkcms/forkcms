@@ -41,10 +41,10 @@ class FrontendMediaWidget extends FrontendBaseWidget
         );
 
         // Assign items (and their source and other custom resolutions)
-        $this->tpl->assign('mediaItems', $this->mediaGroup->getConnectedMediaItems());
+        $this->template->assign('mediaItems', $this->mediaGroup->getConnectedMediaItems());
 
         if (isset($this->data['title'])) {
-            $this->tpl->assign(
+            $this->template->assign(
                 'title',
                 $this->data['title']
             );

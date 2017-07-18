@@ -284,3 +284,96 @@ Backend\Core\Engine\Base\AjaxAction and Frontend\Core\Engine\Base\AjaxAction no 
 | self::ERROR           | Response::HTTP_INTERNAL_SERVER_ERROR |
 
 The response class has many more constants like this for all the other status codes
+
+## Backend Navigation
+
+`Backend\Core\Engine\Navigation` also known as the service `navigation` when you are in the backend was stripped of some functions that where available because it extended a base class. 
+This is no longer the case.
+The dropped methods are:
+* getAction
+* getModule
+* setAction
+* setModule
+* getContent
+* redirect
+* redirectToErrorPage
+* getConfig
+
+See the `Backend\Core\Engine\Base\Object` table below to find their new location.
+
+## Backend Header
+
+`Backend\Core\Engine\Header` also known as the service `header` when you are in the backend was stripped of some functions that where available because it extended a base class. 
+This is no longer the case.
+The dropped methods are:
+* getAction
+* getModule
+* setAction
+* setModule
+* getContent
+* redirect
+* redirectToErrorPage
+* getConfig
+
+See the `Backend\Core\Engine\Base\Object` table below to find their new location.
+
+## The class `Backend\Core\Engine\Base\Object` has been removed and the methods moved to more specific classes
+
+These changes are mostly internal but it might be good to know in case you did something with the Object class
+
+| Old method                    | New method                                      |
+|-------------------------------|-------------------------------------------------|
+| `Object::getContent`          | `\Backend\Core\Engine\Base\Action::getContent`  |
+| `Object::getConfig`           | `\Backend\Core\Engine\Action::getConfig`        |
+| `Object::redirect`            | `\Backend\Core\Engine\Url::redirect`            |
+| `Object::redirectToErrorPage` | `\Backend\Core\Engine\Url::redirectToErrorPage` |
+| `Object::getAction`           | `\Backend\Core\Engine\Url::getAction`           |
+| `Object::getModule`           | `\Backend\Core\Engine\Url::getModule`           |
+
+ The `\Backend\Core\Engine\Base\Action` class has a redirect helper method that uses the `\Backend\Core\Engine\Url` implementation so you don't need to change anything in your code for this
+
+You can no longer access module and action as a protected property on the action or ajax class but you need to use the getters as they are now only stored in the url service
+
+We did add helper getters so you can keep doing `$this->getAction()` and `$this->getModule()` as they will get the correct values from the url service
+
+## Removed some abbreviations and incorrect casings
+
+| Old method                                                     | New method                                                     |
+|----------------------------------------------------------------|----------------------------------------------------------------|
+| `\Common\Doctrine\Repository::generateURL`                     | `\Common\Doctrine\Repository::generateUrl`                     |
+| `\Backend\Core\Engine\Meta::generateURL`                       | `\Backend\Core\Engine\Meta::generateUrl`                       |
+| `\Backend\Core\Engine\Model::createURLForAction`               | `\Backend\Core\Engine\Model::createUrlForAction`               |
+| `\Backend\Core\Engine\Model::getUrl`                           | `\Backend\Core\Engine\Model::getUrl`                           |
+| `\Backend\Core\Engine\Model::getUrlForBlock`                   | `\Backend\Core\Engine\Model::getUrlForBlock`                   |
+| `\Backend\Core\Engine\Meta::setURLCallback`                    | `\Backend\Core\Engine\Meta::setUrlCallback`                    |
+| `\Backend\Core\Engine\Meta::getURL`                            | `\Backend\Core\Engine\Meta::getUrl`                            |
+| `\Backend\Core\Engine\Meta::getURLOverwrite`                   | `\Backend\Core\Engine\Meta::getUrlOverwrite`                   |
+| `\Backend\Core\Installer\ModuleInstaller::getDB`               | `\Backend\Core\Installer\ModuleInstaller::getDatabase`         |
+| `\Backend\Modules\Blog\Engine\Model::getURL`                   | `\Backend\Modules\Blog\Engine\Model::getUrl`                   |
+| `\Backend\Modules\Blog\Engine\Model::getURLForCategory`        | `\Backend\Modules\Blog\Engine\Model::getUrlForCategory`        |
+| `\Backend\Modules\Faq\Engine\Model::getURL`                    | `\Backend\Modules\Faq\Engine\Model::getUrl`                    |
+| `\Backend\Modules\Faq\Engine\Model::getURLForCategory`         | `\Backend\Modules\Faq\Engine\Model::getUrlForCategory`         |
+| `\Backend\Modules\Locale\Engine\Model::buildURLQueryByFilter`  | `\Backend\Modules\Locale\Engine\Model::buildUrlQueryByFilter`  |
+| `\Backend\Modules\Pages\Engine\Model::getFullURL`              | `\Backend\Modules\Pages\Engine\Model::getFullUrl`              |
+| `\Backend\Modules\Pages\Engine\Model::getEncodedRedirectURL`   | `\Backend\Modules\Pages\Engine\Model::getEncodedRedirectUrl`   |
+| `\Backend\Modules\Pages\Engine\Model::getURL`                  | `\Backend\Modules\Pages\Engine\Model::getUrl`                  |
+| `\Backend\Modules\Tags\Engine\Model::getURL`                   | `\Backend\Modules\Tags\Engine\Model::getUrl`                   |
+| `\Frontend\Core\Engine\Model::addURLParameters`                | `\Frontend\Core\Engine\Model::addUrlParameters`                |
+| `\Frontend\Core\Engine\Model::getURL`                          | `\Frontend\Core\Engine\Model::getUrl`                          |
+| `\Frontend\Core\Engine\Navigation::getURLForBlock`             | `\Frontend\Core\Engine\Navigation::getUrlForBlock`             |
+| `\Frontend\Core\Engine\Navigation::getBackendURLForBlock`      | `\Frontend\Core\Engine\Navigation::getBackendUrlForBlock`      |
+| `\Frontend\Core\Engine\Navigation::getURLForExtraId`           | `\Frontend\Core\Engine\Navigation::getUrlForExtraId`           |
+| `\Frontend\Core\Engine\TemplateModifiers::getURL`              | `\Frontend\Core\Engine\TemplateModifiers::getUrl`              |
+| `\Frontend\Core\Engine\TemplateModifiers::getURLForBlock`      | `\Frontend\Core\Engine\TemplateModifiers::getUrlForBlock`      |
+| `\Frontend\Core\Engine\TemplateModifiers::getURLForExtraId`    | `\Frontend\Core\Engine\TemplateModifiers::getUrlForExtraId`    |
+| `\Frontend\Modules\Tags\Engine\Model::getIdByURL`              | `\Frontend\Modules\Tags\Engine\Model::getIdByUrl`              |
+
+| Old parameter                 | New parameter                                   |
+|-------------------------------|-------------------------------------------------|
+| `$this->URL`                  | `$this->url`                                    |
+| `$this->frm`                  | `$this->form`                                   |
+| `$this->tpl`                  | `$this->template`                               |
+
+| Old classname                                 | New classname                                   |
+|-----------------------------------------------|-------------------------------------------------|
+| `\Backend\Core\Engine\Model\DataGridDB`       | `\Backend\Core\Engine\Model\DataGridDatabase`   |

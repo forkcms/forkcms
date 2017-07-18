@@ -32,7 +32,7 @@ class Analyse extends BackendBaseWidget
 
         // assign warnings
         if (!empty($warnings)) {
-            $this->tpl->assign('warnings', $warnings);
+            $this->template->assign('warnings', $warnings);
         }
     }
 }

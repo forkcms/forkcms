@@ -19,7 +19,7 @@ class RecentVisits extends Widget
         try {
             $analytics = $this->get('analytics.connector');
 
-            $this->tpl->assign(
+            $this->template->assign(
                 'visitors_graph_data',
                 $analytics->getVisitorsGraphData($startDate, $endDate)
             );

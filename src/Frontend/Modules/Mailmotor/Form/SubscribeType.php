@@ -52,7 +52,7 @@ class SubscribeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         //-- Set the default submit action, this is for the widget to work properly.
-        $builder->setAction(Navigation::getURLForBlock('Mailmotor', 'Subscribe'));
+        $builder->setAction(Navigation::getUrlForBlock('Mailmotor', 'Subscribe'));
 
         $builder->add(
             'email',

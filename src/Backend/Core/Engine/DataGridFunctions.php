@@ -167,7 +167,7 @@ class DataGridFunctions
             $html = '<div class="fork-data-grid-avatar">' . "\n";
             if ($allowed) {
                 $html .= '     <a href="' .
-                    BackendModel::createURLForAction(
+                    BackendModel::createUrlForAction(
                         'Edit',
                         'Users'
                     ) . '&amp;id=' . $id . '">' . "\n";

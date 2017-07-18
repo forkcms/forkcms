@@ -43,7 +43,7 @@ class Autocomplete extends FrontendBaseAJAXAction
         $matches = FrontendSearchModel::getStartsWith($term, LANGUAGE, $limit);
 
         // get search url
-        $url = FrontendNavigation::getURLForBlock('Search');
+        $url = FrontendNavigation::getUrlForBlock('Search');
 
         // loop items and set search url
         foreach ($matches as &$match) {

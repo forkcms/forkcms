@@ -25,7 +25,7 @@ class ResendActivation extends FrontendBaseBlock
     /**
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
@@ -38,40 +38,40 @@ class ResendActivation extends FrontendBaseBlock
             $this->parse();
         } else {
             // profile logged in
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
     }
 
     private function buildForm(): void
     {
         // create the form
-        $this->frm = new FrontendForm('resendActivation', null, null, 'resendActivation');
+        $this->form = new FrontendForm('resendActivation', null, null, 'resendActivation');
 
         // create & add elements
-        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
     }
 
     private function parse(): void
     {
         // form was sent?
-        if ($this->URL->getParameter('sent') == 'true') {
+        if ($this->url->getParameter('sent') == 'true') {
             // show message
-            $this->tpl->assign('resendActivationSuccess', true);
+            $this->template->assign('resendActivationSuccess', true);
 
             // hide form
-            $this->tpl->assign('resendActivationHideForm', true);
+            $this->template->assign('resendActivationHideForm', true);
         }
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get field
-            $txtEmail = $this->frm->getField('email');
+            $txtEmail = $this->form->getField('email');
 
             // field is filled in?
             if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
@@ -98,7 +98,7 @@ class ResendActivation extends FrontendBaseBlock
             }
 
             // valid login
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // send email
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
@@ -109,7 +109,7 @@ class ResendActivation extends FrontendBaseBlock
                     ->parseHtml(
                         '/Profiles/Layout/Templates/Mails/Register.html.twig',
                         [
-                            'activationUrl' => SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate') .
+                            'activationUrl' => SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'Activate') .
                                                '/' . $profile->getSetting('activation_key'),
                         ],
                         true
@@ -118,9 +118,9 @@ class ResendActivation extends FrontendBaseBlock
                 $this->get('mailer')->send($message);
 
                 // redirect
-                $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
+                $this->redirect(SITE_URL . $this->url->getQueryString() . '?sent=true');
             } else {
-                $this->tpl->assign('resendActivationHasError', true);
+                $this->template->assign('resendActivationHasError', true);
             }
         }
     }

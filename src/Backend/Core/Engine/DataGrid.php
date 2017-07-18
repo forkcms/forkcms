@@ -567,7 +567,7 @@ class DataGrid extends \SpoonDataGrid
         // default URL
         if (BackendModel::getContainer()->get('url')) {
             $this->setURL(
-                BackendModel::createURLForAction(
+                BackendModel::createUrlForAction(
                     null,
                     null,
                     null,

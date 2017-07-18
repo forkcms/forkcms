@@ -6,13 +6,12 @@ use Backend\Core\Engine\Form;
 use Backend\Core\Language\Language;
 use Backend\Core\Engine\TwigTemplate;
 use Common\ModulesSettings;
-use Google_Service_Exception;
 use Google_Service_Analytics;
 
 /**
  * A form to change the settings of the analytics module
  */
-final class SettingsStepAccountType implements SettingsStepType
+final class SettingsStepProfileTypeInterface implements SettingsStepTypeInterface
 {
     /** @var Form */
     private $form;
@@ -22,9 +21,6 @@ final class SettingsStepAccountType implements SettingsStepType
 
     /** Google_Service_Analytics $googleServiceAnalytics */
     private $googleServiceAnalytics;
-
-    /** @var bool */
-    private $hasAccounts;
 
     public function __construct(
         string $name,
@@ -40,11 +36,6 @@ final class SettingsStepAccountType implements SettingsStepType
 
     public function parse(TwigTemplate $template): void
     {
-        if (!$this->hasAccounts) {
-            $template->assign('email', $this->settings->get('Analytics', 'email'));
-            $template->assign('noAccounts', true);
-        }
-
         $this->form->parse($template);
     }
 
@@ -58,8 +49,8 @@ final class SettingsStepAccountType implements SettingsStepType
 
         $this->settings->set(
             'Analytics',
-            'account',
-            $this->form->getField('account')->getValue()
+            'profile',
+            $this->form->getField('profile')->getValue()
         );
 
         return true;
@@ -67,26 +58,21 @@ final class SettingsStepAccountType implements SettingsStepType
 
     private function build(): void
     {
-        try {
-            $accounts = $this->googleServiceAnalytics->management_accounts->listManagementAccounts();
-        } catch (Google_Service_Exception $e) {
-            $this->hasAccounts = false;
+        $profiles = $this->googleServiceAnalytics->management_profiles->listManagementProfiles(
+            $this->settings->get('Analytics', 'account'),
+            $this->settings->get('Analytics', 'web_property_id')
+        );
 
-            return;
+        $profilesForDropDown = [];
+        foreach ($profiles->getItems() as $property) {
+            $profilesForDropDown[$property->getId()] = $property->getName();
         }
-
-        $accountsForDropDown = [];
-        foreach ($accounts->getItems() as $account) {
-            $accountsForDropDown[$account->getId()] = $account->getName();
-        }
-        $this->form->addDropdown('account', $accountsForDropDown);
-
-        $this->hasAccounts = true;
+        $this->form->addDropdown('profile', $profilesForDropDown);
     }
 
     private function isValid(): bool
     {
-        $this->form->getField('account')->isFilled(Language::err('FieldIsRequired'));
+        $this->form->getField('profile')->isFilled(Language::err('FieldIsRequired'));
 
         return $this->form->isCorrect();
     }

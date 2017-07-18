@@ -29,7 +29,7 @@ class Register extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
@@ -42,7 +42,7 @@ class Register extends FrontendBaseBlock
             $this->buildForm();
             $this->validateForm();
             $this->parse();
-        } elseif ($this->URL->getParameter('sent') == true) {
+        } elseif ($this->url->getParameter('sent') == true) {
             // just registered so show success message
             $this->parse();
         } else {
@@ -53,16 +53,16 @@ class Register extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->frm = new FrontendForm('register', null, null, 'registerForm');
-        $this->frm->addText('display_name');
-        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
-        $this->frm->addPassword('password')->setAttributes(
+        $this->form = new FrontendForm('register', null, null, 'registerForm');
+        $this->form->addText('display_name');
+        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addPassword('password')->setAttributes(
             [
                 'required' => null,
                 'data-role' => 'fork-new-password',
             ]
         );
-        $this->frm->addCheckbox('show_password')->setAttributes(
+        $this->form->addCheckbox('show_password')->setAttributes(
             ['data-role' => 'fork-toggle-visible-password']
         );
     }
@@ -70,25 +70,25 @@ class Register extends FrontendBaseBlock
     private function parse(): void
     {
         // e-mail was sent?
-        if ($this->URL->getParameter('sent') == 'true') {
+        if ($this->url->getParameter('sent') == 'true') {
             // show message
-            $this->tpl->assign('registerIsSuccess', true);
+            $this->template->assign('registerIsSuccess', true);
 
             // hide form
-            $this->tpl->assign('registerHideForm', true);
+            $this->template->assign('registerHideForm', true);
         } else {
-            $this->frm->parse($this->tpl);
+            $this->form->parse($this->template);
         }
     }
 
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get fields
-            $txtDisplayName = $this->frm->getField('display_name');
-            $txtEmail = $this->frm->getField('email');
-            $txtPassword = $this->frm->getField('password');
+            $txtDisplayName = $this->form->getField('display_name');
+            $txtEmail = $this->form->getField('email');
+            $txtPassword = $this->form->getField('password');
 
             // check email
             if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
@@ -107,7 +107,7 @@ class Register extends FrontendBaseBlock
             $txtDisplayName->isFilled(FL::getError('FieldIsRequired'));
 
             // no errors
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // init values
                 $settings = [];
                 $values = [];
@@ -159,7 +159,7 @@ class Register extends FrontendBaseBlock
                         ->parseHtml(
                             '/Profiles/Layout/Templates/Mails/Register.html.twig',
                             [
-                                'activationUrl' => SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate')
+                                'activationUrl' => SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'Activate')
                                                    . '/' . $settings['activation_key'],
                             ],
                             true
@@ -168,7 +168,7 @@ class Register extends FrontendBaseBlock
                     $this->get('mailer')->send($message);
 
                     // redirect
-                    $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
+                    $this->redirect(SITE_URL . $this->url->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
                     // make sure RedirectExceptions get thrown
                     if ($e instanceof RedirectException) {
@@ -181,10 +181,10 @@ class Register extends FrontendBaseBlock
                     }
 
                     // show error
-                    $this->tpl->assign('registerHasFormError', true);
+                    $this->template->assign('registerHasFormError', true);
                 }
             } else {
-                $this->tpl->assign('registerHasFormError', true);
+                $this->template->assign('registerHasFormError', true);
             }
         }
     }

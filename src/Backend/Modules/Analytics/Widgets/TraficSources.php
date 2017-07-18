@@ -19,7 +19,7 @@ class TraficSources extends Widget
         try {
             $analytics = $this->get('analytics.connector');
 
-            $this->tpl->assign(
+            $this->template->assign(
                 'source_graph_data',
                 $analytics->getSourceGraphData($startDate, $endDate)
             );

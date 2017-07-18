@@ -70,7 +70,7 @@ class Index extends FrontendBaseBlock
         $this->addJSData('settings', $this->settings);
         $this->addJSData('items', $this->items);
 
-        $this->tpl->assign('locationItems', $this->items);
-        $this->tpl->assign('locationSettings', $this->settings);
+        $this->template->assign('locationItems', $this->items);
+        $this->template->assign('locationSettings', $this->settings);
     }
 }

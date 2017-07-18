@@ -68,7 +68,7 @@ class MediaItemMassAction extends BackendBaseAction
             $parameters['folder'] = $mediaFolder->getId();
         }
 
-        $URL = Model::createURLForAction(
+        $url = Model::createUrlForAction(
             'MediaItemIndex',
             null,
             null,
@@ -76,10 +76,10 @@ class MediaItemMassAction extends BackendBaseAction
         );
 
         if ($selectedType instanceof Type) {
-            $URL .= '#tab' . ucfirst((string) $selectedType);
+            $url .= '#tab' . ucfirst((string) $selectedType);
         }
 
-        return $URL;
+        return $url;
     }
 
     private function getCurrentMediaFolder(): ?MediaFolder

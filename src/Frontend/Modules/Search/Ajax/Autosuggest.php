@@ -155,7 +155,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term;
         $this->pagination['limit'] = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
 
         // populate calculated fields in pagination
@@ -210,7 +210,7 @@ class Autosuggest extends FrontendBaseAJAXAction
             $this->items[] = [
                 'title' => FL::lbl('More'),
                 'text' => FL::msg('MoreResults'),
-                'full_url' => FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term,
+                'full_url' => FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term,
             ];
         }
 

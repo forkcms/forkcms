@@ -9,18 +9,19 @@ namespace Frontend\Core\Engine\Block;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\TwigTemplate;
+use Frontend\Core\Engine\Url;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Language\Language as FL;
 
 /**
  * This class will handle all stuff related to blocks
  */
-class Extra extends FrontendBaseObject
+class ExtraInterface extends KernelLoader implements ModuleExtraInterface
 {
     /**
      * The current action
@@ -79,11 +80,19 @@ class Extra extends FrontendBaseObject
     protected $templatePath = '';
 
     /**
-     * @param KernelInterface $kernel
-     * @param string $module The module to load.
-     * @param string|null $action The action to load.
-     * @param mixed|null $data The data that was passed from the database.
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
      */
+    protected $template;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $url;
+
     public function __construct(KernelInterface $kernel, string $module, string $action = null, $data = null)
     {
         parent::__construct($kernel);
@@ -92,6 +101,8 @@ class Extra extends FrontendBaseObject
         $this->setModule($module);
         $this->setAction($action);
         $this->setData($data);
+        $this->template = $this->getContainer()->get('templating');
+        $this->url = $this->getContainer()->get('url');
 
         // load the config file for the required module
         $this->loadConfig();
@@ -103,10 +114,6 @@ class Extra extends FrontendBaseObject
         }
     }
 
-    /**
-     * Execute the action
-     * We will build the class name, require the class and call the execute method.
-     */
     public function execute(): void
     {
         // build action-class-name
@@ -152,7 +159,7 @@ class Extra extends FrontendBaseObject
         }
 
         // get first parameter
-        $actionParameter = $this->URL->getParameter(0);
+        $actionParameter = $this->url->getParameter(0);
 
         // unknown action and not provided in URL
         if ($actionParameter === null) {
@@ -166,12 +173,12 @@ class Extra extends FrontendBaseObject
         $actionParameter = \SpoonFilter::toCamelCase($actionParameter);
         foreach ($this->config->getPossibleActions() as $actionName) {
             // get action that should be passed as parameter
-            $actionURL = \SpoonFilter::toCamelCase(
+            $actionUrl = \SpoonFilter::toCamelCase(
                 rawurlencode(FL::act(\SpoonFilter::toCamelCase($actionName)))
             );
 
             // the action is the requested one
-            if ($actionURL === $actionParameter) {
+            if ($actionUrl === $actionParameter) {
                 // set action
                 $this->setAction($actionName);
 
@@ -243,7 +250,7 @@ class Extra extends FrontendBaseObject
      */
     public function getVariables(): array
     {
-        return (array) $this->tpl->getAssignedVariables();
+        return (array) $this->template->getAssignedVariables();
     }
 
     /**

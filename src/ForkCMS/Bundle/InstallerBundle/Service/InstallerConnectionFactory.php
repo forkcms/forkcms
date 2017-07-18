@@ -23,15 +23,15 @@ class InstallerConnectionFactory extends ConnectionFactory
     ): Connection {
         try {
             $installationData = $this->getInstallationData();
-            if ($installationData->getDbHostname() === null) {
+            if ($installationData->getDatabaseHostname() === null) {
                 return $this->getInstallerConnection($params, $config, $eventManager);
             }
 
-            $params['host'] = $installationData->getDbHostname();
-            $params['port'] = $installationData->getDbPort();
-            $params['dbname'] = $installationData->getDbDatabase();
-            $params['user'] = $installationData->getDbUsername();
-            $params['password'] = $installationData->getDbPassword();
+            $params['host'] = $installationData->getDatabaseHostname();
+            $params['port'] = $installationData->getDatabasePort();
+            $params['dbname'] = $installationData->getDatabaseName();
+            $params['user'] = $installationData->getDatabaseUsername();
+            $params['password'] = $installationData->getDatabasePassword();
 
             //continue with regular connection creation using new params
             return parent::createConnection($params, $config, $eventManager, $mappingTypes);

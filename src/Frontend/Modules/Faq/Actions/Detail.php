@@ -28,7 +28,7 @@ class Detail extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * The faq
@@ -56,7 +56,7 @@ class Detail extends FrontendBaseBlock
         parent::execute();
 
         // hide contentTitle, in the template the title is wrapped with an inverse-option
-        $this->tpl->assignGlobal('hideContentTitle', true);
+        $this->template->assignGlobal('hideContentTitle', true);
 
         $this->loadTemplate();
         $this->getData();
@@ -69,22 +69,22 @@ class Detail extends FrontendBaseBlock
     private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+        if ($this->url->getParameter(1) === null) {
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get by URL
-        $this->record = FrontendFaqModel::get($this->URL->getParameter(1));
+        $this->record = FrontendFaqModel::get($this->url->getParameter(1));
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // overwrite URLs
-        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Category') .
+        $this->record['category_full_url'] = FrontendNavigation::getUrlForBlock('Faq', 'Category') .
                                              '/' . $this->record['category_url'];
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Detail') . '/' . $this->record['url'];
+        $this->record['full_url'] = FrontendNavigation::getUrlForBlock('Faq', 'Detail') . '/' . $this->record['url'];
 
         // get tags
         $this->record['tags'] = FrontendTagsModel::getForItem('Faq', $this->record['id']);
@@ -98,7 +98,7 @@ class Detail extends FrontendBaseBlock
         }
 
         // ge status
-        $this->status = $this->URL->getParameter(2);
+        $this->status = $this->url->getParameter(2);
         if ($this->status == FL::getAction('Success')) {
             $this->status = 'success';
         }
@@ -109,14 +109,14 @@ class Detail extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->frm = new FrontendForm('feedback');
-        $this->frm->addHidden('question_id', $this->record['id']);
-        $this->frm->addTextarea('message')->setAttributes(
+        $this->form = new FrontendForm('feedback');
+        $this->form->addHidden('question_id', $this->record['id']);
+        $this->form->addTextarea('message')->setAttributes(
             [
                 'data-role' => 'fork-feedback-improve-message',
             ]
         );
-        $this->frm->addRadiobutton(
+        $this->form->addRadiobutton(
             'useful',
             [
                  [
@@ -157,10 +157,10 @@ class Detail extends FrontendBaseBlock
         $this->header->setPageTitle($this->record['question']);
 
         // assign article
-        $this->tpl->assign('item', $this->record);
+        $this->template->assign('item', $this->record);
 
         // assign items in the same category and related items
-        $this->tpl->assign(
+        $this->template->assign(
             'inSameCategory',
             FrontendFaqModel::getAllForCategory(
                 $this->record['category_id'],
@@ -168,22 +168,22 @@ class Detail extends FrontendBaseBlock
                 $this->record['id']
             )
         );
-        $this->tpl->assign(
+        $this->template->assign(
             'related',
             FrontendFaqModel::getRelated($this->record['id'], $this->settings['related_num_items'])
         );
 
         // assign settings
-        $this->tpl->assign('settings', $this->settings);
+        $this->template->assign('settings', $this->settings);
 
         // parse the form
         if (empty($this->status)) {
-            $this->frm->parse($this->tpl);
+            $this->form->parse($this->template);
         }
 
         // parse the form status
         if (!empty($this->status)) {
-            $this->tpl->assign($this->status, true);
+            $this->template->assign($this->status, true);
         }
     }
 
@@ -211,24 +211,24 @@ class Detail extends FrontendBaseBlock
             return;
         }
 
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // reformat data
-            $useful = ($this->frm->getField('useful')->getValue() == 'Y');
+            $useful = ($this->form->getField('useful')->getValue() == 'Y');
 
             // the form has been sent
-            $this->tpl->assign('hideFeedbackNoInfo', $useful);
+            $this->template->assign('hideFeedbackNoInfo', $useful);
 
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate required fields
             if (!$useful) {
-                $this->frm->getField('message')->isFilled(FL::err('FeedbackIsRequired'));
+                $this->form->getField('message')->isFilled(FL::err('FeedbackIsRequired'));
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // reformat data
-                $text = $this->frm->getField('message')->getValue();
+                $text = $this->form->getField('message')->getValue();
 
                 // get feedback in session
                 $previousFeedback = (\SpoonSession::exists('faq_feedback_' . $this->record['id']) ? \SpoonSession::get(
@@ -293,7 +293,7 @@ class Detail extends FrontendBaseBlock
             }
         } else {
             // form hasn't been sent
-            $this->tpl->assign('hideFeedbackNoInfo', true);
+            $this->template->assign('hideFeedbackNoInfo', true);
         }
     }
 }

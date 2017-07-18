@@ -25,7 +25,7 @@ class AddCategory extends BackendBaseActionAdd
     {
         // only one category allowed, so we redirect
         if (!$this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true)) {
-            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=only-one-category-allowed');
+            $this->redirect(BackendModel::createUrlForAction('Categories') . '&error=only-one-category-allowed');
         }
 
         parent::execute();
@@ -39,36 +39,36 @@ class AddCategory extends BackendBaseActionAdd
     {
         parent::parse();
 
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Category');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
+        $url404 = BackendModel::getUrl(404);
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
     }
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('addCategory');
-        $this->frm->addText('title');
+        $this->form = new BackendForm('addCategory');
+        $this->form->addText('title');
 
-        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+        $this->meta = new BackendMeta($this->form, null, 'title', true);
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURLForCategory');
+        if ($this->form->isSubmitted()) {
+            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getUrlForCategory');
 
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
-                $item['title'] = $this->frm->getField('title')->getValue();
+                $item['title'] = $this->form->getField('title')->getValue();
                 $item['language'] = BL::getWorkingLanguage();
                 $item['meta_id'] = $this->meta->save();
                 $item['sequence'] = BackendFaqModel::getMaximumCategorySequence() + 1;
@@ -78,7 +78,7 @@ class AddCategory extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&report=added-category&var=' .
+                    BackendModel::createUrlForAction('Categories') . '&report=added-category&var=' .
                     rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }

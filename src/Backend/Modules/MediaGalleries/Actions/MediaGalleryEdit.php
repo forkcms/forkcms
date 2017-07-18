@@ -39,13 +39,13 @@ class MediaGalleryEdit extends BackendBaseActionEdit
             ['id' => $mediaGallery->getId()],
             ['module' => $this->getModule(), 'action' => 'MediaGalleryDelete']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
 
         if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
-            $this->tpl->assign('backLink', $this->getBackLink());
-            $this->tpl->assign('mediaGallery', $mediaGallery);
-            $this->tpl->assign('mediaGroup', $form->getData()->mediaGroup);
+            $this->template->assign('form', $form->createView());
+            $this->template->assign('backLink', $this->getBackLink());
+            $this->template->assign('mediaGallery', $mediaGallery);
+            $this->template->assign('mediaGroup', $form->getData()->mediaGroup);
 
             // Call parent
             $this->parse();
@@ -92,7 +92,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createURLForAction(
+        return Model::createUrlForAction(
             'MediaGalleryIndex',
             null,
             null,

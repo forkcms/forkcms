@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use Backend\Core\Engine\DataGridDB;
+use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
@@ -11,7 +11,7 @@ use SpoonFormDropdown;
 /**
  * @TODO replace with a doctrine implementation of the data grid
  */
-class MediaItemDataGrid extends DataGridDB
+class MediaItemDataGrid extends DataGridDatabase
 {
     public function __construct(Type $type, int $folderId = null)
     {
@@ -68,7 +68,7 @@ class MediaItemDataGrid extends DataGridDB
         return ['storageType', 'shardingFolderName', 'type', 'mime', 'url'];
     }
 
-    public static function getDataGrid(Type $type, int $folderId = null): DataGridDB
+    public static function getDataGrid(Type $type, int $folderId = null): DataGridDatabase
     {
         return new self($type, $folderId);
     }
@@ -112,7 +112,7 @@ class MediaItemDataGrid extends DataGridDB
 
     private function setExtras(Type $type, int $folderId = null): void
     {
-        $editActionUrl = Model::createURLForAction('MediaItemEdit');
+        $editActionUrl = Model::createUrlForAction('MediaItemEdit');
         $this->setHeaderLabels($this->getColumnHeaderLabels($type));
         $this->setActiveTab('tab' . ucfirst((string) $type));
         $this->setColumnsHidden($this->getColumnsThatNeedToBeHidden($type));
@@ -159,7 +159,7 @@ class MediaItemDataGrid extends DataGridDB
                     Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
-                    Model::createURLForAction('MediaItemEdit') . '&id=[id]' . '&folder=' . $folderId,
+                    Model::createUrlForAction('MediaItemEdit') . '&id=[id]' . '&folder=' . $folderId,
                     0,
                     0,
                     'media_library_backend_thumbnail',

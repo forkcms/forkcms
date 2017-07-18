@@ -7,7 +7,7 @@ use Backend\Core\Engine\TwigTemplate;
 /**
  * An interface so we can split the settings form up into multiple forms
  */
-interface SettingsStepType
+interface SettingsStepTypeInterface
 {
     public function parse(TwigTemplate $template): void;
 

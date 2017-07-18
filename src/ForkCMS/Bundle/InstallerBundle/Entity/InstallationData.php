@@ -14,35 +14,35 @@ class InstallationData
      *
      * @var string
      */
-    protected $dbHostname;
+    protected $databaseHostname;
 
     /**
      * The username for the database
      *
      * @var string
      */
-    protected $dbUsername;
+    protected $databaseUsername;
 
     /**
      * The password for the database
      *
      * @var string
      */
-    protected $dbPassword;
+    protected $databasePassword;
 
     /**
      * The database name
      *
      * @var string
      */
-    protected $dbDatabase;
+    protected $databaseName;
 
     /**
      * The port for the database
      *
      * @var int
      */
-    protected $dbPort = 3306;
+    protected $databasePort = 3306;
 
     /**
      * The type of language setup: single or multiple
@@ -138,21 +138,21 @@ class InstallationData
      *
      * @return string|null
      */
-    public function getDbHostname(): ?string
+    public function getDatabaseHostname(): ?string
     {
-        return $this->dbHostname;
+        return $this->databaseHostname;
     }
 
     /**
      * Sets the The host of the database.
      *
-     * @param string $dbHostname the db hostname
+     * @param string $databaseHostname the database hostname
      *
      * @return self
      */
-    public function setDbHostname($dbHostname): self
+    public function setDatabaseHostname($databaseHostname): self
     {
-        $this->dbHostname = $dbHostname;
+        $this->databaseHostname = $databaseHostname;
 
         return $this;
     }
@@ -162,21 +162,21 @@ class InstallationData
      *
      * @return string|null
      */
-    public function getDbUsername(): ?string
+    public function getDatabaseUsername(): ?string
     {
-        return $this->dbUsername;
+        return $this->databaseUsername;
     }
 
     /**
      * Sets the The username for the database.
      *
-     * @param string $dbUsername the db username
+     * @param string $databaseUsername the database username
      *
      * @return self
      */
-    public function setDbUsername($dbUsername): self
+    public function setDatabaseUsername($databaseUsername): self
     {
-        $this->dbUsername = $dbUsername;
+        $this->databaseUsername = $databaseUsername;
 
         return $this;
     }
@@ -186,21 +186,21 @@ class InstallationData
      *
      * @return string|null
      */
-    public function getDbPassword(): ?string
+    public function getDatabasePassword(): ?string
     {
-        return $this->dbPassword;
+        return $this->databasePassword;
     }
 
     /**
      * Sets the The password for the database.
      *
-     * @param string $dbPassword the db password
+     * @param string $databasePassword the database password
      *
      * @return self
      */
-    public function setDbPassword($dbPassword): self
+    public function setDatabasePassword($databasePassword): self
     {
-        $this->dbPassword = $dbPassword;
+        $this->databasePassword = $databasePassword;
 
         return $this;
     }
@@ -210,21 +210,21 @@ class InstallationData
      *
      * @return string|null
      */
-    public function getDbDatabase(): ?string
+    public function getDatabaseName(): ?string
     {
-        return $this->dbDatabase;
+        return $this->databaseName;
     }
 
     /**
      * Sets the The database name.
      *
-     * @param string $dbDatabase the db database
+     * @param string $databaseName the database name
      *
      * @return self
      */
-    public function setDbDatabase($dbDatabase): self
+    public function setDatabaseName($databaseName): self
     {
-        $this->dbDatabase = $dbDatabase;
+        $this->databaseName = $databaseName;
 
         return $this;
     }
@@ -234,21 +234,21 @@ class InstallationData
      *
      * @return int
      */
-    public function getDbPort(): int
+    public function getDatabasePort(): int
     {
-        return $this->dbPort;
+        return $this->databasePort;
     }
 
     /**
      * Sets the The port for the database.
      *
-     * @param int $dbPort the db port
+     * @param int $databasePort the database port
      *
      * @return self
      */
-    public function setDbPort($dbPort): self
+    public function setDatabasePort($databasePort): self
     {
-        $this->dbPort = $dbPort;
+        $this->databasePort = $databasePort;
 
         return $this;
     }
@@ -592,10 +592,10 @@ class InstallationData
     public function isValid(): bool
     {
         return !(
-            empty($this->dbHostname)
-            || empty($this->dbUsername)
-            || empty($this->dbDatabase)
-            || empty($this->dbPort)
+            empty($this->databaseHostname)
+            || empty($this->databaseUsername)
+            || empty($this->databaseName)
+            || empty($this->databasePort)
 
             || empty($this->languages)
             || empty($this->interfaceLanguages)

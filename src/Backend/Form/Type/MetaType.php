@@ -183,7 +183,7 @@ class MetaType extends AbstractType
                 }
             );
 
-            $generatedUrl = $this->metaRepository->generateURL(
+            $generatedUrl = $this->metaRepository->generateUrl(
                 SpoonFilter::htmlspecialcharsDecode($metaData['url']),
                 $metaForm->getConfig()->getOption('generate_url_callback_class'),
                 $metaForm->getConfig()->getOption('generate_url_callback_method'),

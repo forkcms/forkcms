@@ -25,7 +25,7 @@ class Rss extends \SpoonFeedRSS
         // call the parent
         parent::__construct(
             $title,
-            Model::addURLParameters(
+            Model::addUrlParameters(
                 $link,
                 ['utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title)]
             ),
@@ -65,7 +65,7 @@ class Rss extends \SpoonFeedRSS
     public function setImage($url, $title, $link, $width = null, $height = null, $description = null): void
     {
         // add UTM-parameters
-        $link = Model::addURLParameters(
+        $link = Model::addUrlParameters(
             $link,
             [
                 'utm_source' => 'feed',

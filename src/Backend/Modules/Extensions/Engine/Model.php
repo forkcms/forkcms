@@ -29,7 +29,7 @@ class Model
      *
      * @var string
      */
-    const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
+    const QUERY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
                                   FROM themes_templates AS i
                                   WHERE i.theme = ?
                                   ORDER BY i.label ASC';
@@ -156,7 +156,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('AkismetKey'),
-                    BackendModel::createURLForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings')
                 ),
             ];
         }
@@ -168,7 +168,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('GoogleMapsKey'),
-                    BackendModel::createURLForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings')
                 ),
             ];
         }
@@ -226,9 +226,9 @@ class Model
             return false;
         }
 
-        $db = BackendModel::getContainer()->get('database');
-        $db->delete('themes_templates', 'id = ?', $id);
-        $ids = (array) $db->getColumn(
+        $database = BackendModel::getContainer()->get('database');
+        $database->delete('themes_templates', 'id = ?', $id);
+        $ids = (array) $database->getColumn(
             'SELECT i.revision_id
              FROM pages AS i
              WHERE i.template_id = ? AND i.status != ?',
@@ -237,8 +237,8 @@ class Model
 
         if (!empty($ids)) {
             // delete those pages and the linked blocks
-            $db->delete('pages', 'revision_id IN(' . implode(',', $ids) . ')');
-            $db->delete('pages_blocks', 'revision_id IN(' . implode(',', $ids) . ')');
+            $database->delete('pages', 'revision_id IN(' . implode(',', $ids) . ')');
+            $database->delete('pages_blocks', 'revision_id IN(' . implode(',', $ids) . ')');
         }
 
         return true;
@@ -306,7 +306,7 @@ class Model
 
             // set URL if needed, we use '' instead of null, because otherwise the module of the current action (modules) is used.
             if (!isset($row['data']['url'])) {
-                $row['data']['url'] = BackendModel::createURLForAction('', $row['module']);
+                $row['data']['url'] = BackendModel::createUrlForAction('', $row['module']);
             }
 
             $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));
@@ -356,7 +356,7 @@ class Model
 
             // set URL if needed
             if (!isset($row['data']['url'])) {
-                $row['data']['url'] = BackendModel::createURLForAction(
+                $row['data']['url'] = BackendModel::createUrlForAction(
                     'Index',
                     $row['module']
                 );
@@ -556,14 +556,14 @@ class Model
 
     public static function getTemplates(string $theme = null): array
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
         $theme = \SpoonFilter::getValue(
             (string) $theme,
             null,
             BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork')
         );
 
-        $templates = (array) $db->getRecords(
+        $templates = (array) $database->getRecords(
             'SELECT i.id, i.label, i.path, i.data
             FROM themes_templates AS i
             WHERE i.theme = ? AND i.active = ?
@@ -658,9 +658,9 @@ class Model
         $root = $xml->createElement('templates');
         $xml->appendChild($root);
 
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
-        $records = $db->getRecords(self::QRY_BROWSE_TEMPLATES, [$theme]);
+        $records = $database->getRecords(self::QUERY_BROWSE_TEMPLATES, [$theme]);
 
         foreach ($records as $row) {
             $template = self::getTemplate($row['id']);

@@ -229,7 +229,7 @@ class ContentBlock
      */
     private function updateWidget()
     {
-        $editUrl = Model::createURLForAction('Edit', 'ContentBlocks', (string) $this->locale) . '&id=' . $this->id;
+        $editUrl = Model::createUrlForAction('Edit', 'ContentBlocks', (string) $this->locale) . '&id=' . $this->id;
 
         // update data for the extra
         // @TODO replace this with an implementation with doctrine

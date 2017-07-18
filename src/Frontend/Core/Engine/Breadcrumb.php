@@ -9,13 +9,13 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 
 /**
  * This class will be used to manage the breadcrumb
  */
-class Breadcrumb extends FrontendBaseObject
+class Breadcrumb extends KernelLoader
 {
     /**
      * The items in the breadcrumb
@@ -24,9 +24,26 @@ class Breadcrumb extends FrontendBaseObject
      */
     private $items = [];
 
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $template;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $url;
+
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
+
+        $this->template = $this->getContainer()->get('templating');
+        $this->url = $this->getContainer()->get('url');
 
         // store in reference
         $this->getContainer()->set('breadcrumb', $this);
@@ -35,9 +52,9 @@ class Breadcrumb extends FrontendBaseObject
         $homeInfo = Navigation::getPageInfo(1);
 
         // add homepage as first item (with correct element)
-        $this->addElement($homeInfo['navigation_title'], Navigation::getURL(1));
+        $this->addElement($homeInfo['navigation_title'], Navigation::getUrl(1));
 
-        $this->addBreadcrumbsForPages($this->URL->getPages());
+        $this->addBreadcrumbsForPages($this->url->getPages());
     }
 
     private function addBreadcrumbsForPages(array $pages): void
@@ -58,7 +75,7 @@ class Breadcrumb extends FrontendBaseObject
     private function getBreadcrumbsForPages(array $pages): array
     {
         $breadcrumbs = [];
-        $errorURL = Navigation::getURL(404);
+        $errorUrl = Navigation::getUrl(404);
 
         // loop pages
         while (!empty($pages)) {
@@ -75,14 +92,14 @@ class Breadcrumb extends FrontendBaseObject
                 continue;
             }
 
-            $pageURL = Navigation::getURL($menuId);
+            $pageUrl = Navigation::getUrl($menuId);
 
             // if this is the error-page, so we won't show an URL.
-            if ($pageURL === $errorURL) {
-                $pageURL = null;
+            if ($pageUrl === $errorUrl) {
+                $pageUrl = null;
             }
 
-            $breadcrumbs[] = ['title' => $pageInfo['navigation_title'], 'url' => $pageURL];
+            $breadcrumbs[] = ['title' => $pageInfo['navigation_title'], 'url' => $pageUrl];
 
             array_pop($pages);
         }
@@ -152,6 +169,6 @@ class Breadcrumb extends FrontendBaseObject
     public function parse(): void
     {
         // assign
-        $this->tpl->addGlobal('breadcrumb', $this->items);
+        $this->template->addGlobal('breadcrumb', $this->items);
     }
 }

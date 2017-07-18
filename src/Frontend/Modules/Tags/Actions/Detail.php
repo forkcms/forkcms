@@ -44,7 +44,7 @@ class Detail extends FrontendBaseBlock
     {
         parent::execute();
 
-        $this->tpl->assignGlobal('hideContentTitle', true);
+        $this->template->assignGlobal('hideContentTitle', true);
         $this->loadTemplate();
         $this->getData();
         $this->parse();
@@ -53,16 +53,16 @@ class Detail extends FrontendBaseBlock
     private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+        if ($this->url->getParameter(1) === null) {
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // fetch record
-        $this->record = FrontendTagsModel::get($this->URL->getParameter(1));
+        $this->record = FrontendTagsModel::get($this->url->getParameter(1));
 
         // validate record
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // fetch modules
@@ -98,10 +98,10 @@ class Detail extends FrontendBaseBlock
     private function parse(): void
     {
         // assign tag
-        $this->tpl->assign('tag', $this->record);
+        $this->template->assign('tag', $this->record);
 
         // assign tags
-        $this->tpl->assign('tagsModules', $this->results);
+        $this->template->assign('tagsModules', $this->results);
 
         // update breadcrumb
         $this->breadcrumb->addElement($this->record['name']);

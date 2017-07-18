@@ -9,17 +9,18 @@ namespace Frontend\Core\Engine\Block;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\TwigTemplate;
+use Frontend\Core\Engine\Url;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Base\Config;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Exception as FrontendException;
 
 /**
  * This class will handle all stuff related to widgets
  */
-class Widget extends FrontendBaseObject
+class Widget extends KernelLoader implements ModuleExtraInterface
 {
     /**
      * The current action
@@ -64,12 +65,20 @@ class Widget extends FrontendBaseObject
     private $output;
 
     /**
-     * @param KernelInterface $kernel
-     * @param string $module The module to load.
-     * @param string $action The action to load.
-     * @param mixed $data The data that was passed from the database.
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
      */
-    public function __construct(KernelInterface $kernel, string $module, string $action, $data = null)
+    protected $template;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $url;
+
+    public function __construct(KernelInterface $kernel, string $module, string $action = null, $data = null)
     {
         parent::__construct($kernel);
 
@@ -77,15 +86,13 @@ class Widget extends FrontendBaseObject
         $this->setModule($module);
         $this->setAction($action);
         $this->setData($data);
+        $this->template = $this->getContainer()->get('templating');
+        $this->url = $this->getContainer()->get('url');
 
         // load the config file for the required module
         $this->loadConfig();
     }
 
-    /**
-     * Execute the action
-     * We will build the class name, require the class and call the execute method.
-     */
     public function execute(): void
     {
         // build action-class-name
@@ -182,11 +189,6 @@ class Widget extends FrontendBaseObject
         return $this->module;
     }
 
-    /**
-     * Get the assigned template.
-     *
-     * @return TwigTemplate
-     */
     public function getTemplate(): TwigTemplate
     {
         return $this->object->getTemplate();
