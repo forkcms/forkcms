@@ -15,7 +15,7 @@ class MailmotorCompilerPass implements CompilerPassInterface
                 // we must set these parameters to be usable
                 $container->setParameter(
                     'mailmotor.mail_engine',
-                    $container->get('fork.settings')->get('Mailmotor', 'mail_engine')
+                    $container->get('fork.settings')->get('Mailmotor', 'mail_engine', 'not_implemented')
                 );
                 $container->setParameter(
                     'mailmotor.api_key',

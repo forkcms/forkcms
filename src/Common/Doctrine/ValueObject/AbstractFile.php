@@ -226,4 +226,26 @@ abstract class AbstractFile
 
         return $this;
     }
+
+    /**
+     * @internal Used by the form types
+     *
+     * @param bool $isPendingDeletion
+     */
+    public function setPendingDeletion($isPendingDeletion)
+    {
+        if ($isPendingDeletion) {
+            $this->markForDeletion();
+        }
+    }
+
+    /**
+     * @internal Used by the form types
+     *
+     * @return bool
+     */
+    public function isPendingDeletion()
+    {
+        return strlen($this->oldFileName) > 0 && $this->fileName === null;
+    }
 }
