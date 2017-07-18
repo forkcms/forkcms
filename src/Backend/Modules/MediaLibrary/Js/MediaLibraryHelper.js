@@ -40,14 +40,15 @@ var media = {};
 var mediaFolders = false;
 var mediaGroups = {};
 var currentMediaGroupId = 0;
-var mediaFolderId = 0;
+var mediaFolderId = undefined;
+var currentAspectRatio = false;
 var currentMediaItemIds = [];
 jsBackend.mediaLibraryHelper.group =
 {
     init: function()
     {
         // start or not
-        if ($('#addMediaDialog').length == 0) {
+        if ($('[data-role=media-library-add-dialog]').length == 0) {
             return false;
         }
 
@@ -148,7 +149,7 @@ jsBackend.mediaLibraryHelper.group =
      */
     addMediaDialog : function()
     {
-        var $addMediaDialog = $('#addMediaDialog');
+        var $addMediaDialog = $('[data-role=media-library-add-dialog]');
         var $addMediaSubmit = $('#addMediaSubmit');
 
         $addMediaSubmit.on('click', function() {
@@ -174,13 +175,17 @@ jsBackend.mediaLibraryHelper.group =
             e.preventDefault();
 
             // redefine folderId when clicked on other group
-            if ($(this).data('i') != currentMediaGroupId) {
+            if ($(this).data('i') != currentMediaGroupId || $(this).data('aspectRatio') != currentAspectRatio) {
                 // clear folders cache
                 jsBackend.mediaLibraryHelper.group.clearFoldersCache();
             }
 
             // define groupId
             currentMediaGroupId = $(this).data('i');
+            currentAspectRatio = $(this).data('aspectRatio');
+            if (currentAspectRatio === undefined) {
+                currentAspectRatio = false;
+            }
 
             // get current media for group
             currentMediaItemIds = ($('#group-' + currentMediaGroupId + ' .mediaIds').first().val() != '')
@@ -200,9 +205,6 @@ jsBackend.mediaLibraryHelper.group =
 
             // toggle upload boxes
             jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
-
-            // select first tab
-            $('#addMediaDialog').find('.ui-tabs a').first().tab('show');
 
             // open dialog
             $addMediaDialog.modal('show');
@@ -482,7 +484,8 @@ jsBackend.mediaLibraryHelper.group =
                     action: 'MediaItemFindAll'
                 },
                 group_id: (mediaGroups[currentMediaGroupId]) ? mediaGroups[currentMediaGroupId].id : null,
-                folder_id: mediaFolderId
+                folder_id: mediaFolderId,
+                aspect_ratio: currentAspectRatio
             },
             success: function(json, textStatus) {
                 if (json.code != 200) {
@@ -799,6 +802,246 @@ jsBackend.mediaLibraryHelper.group =
     }
 };
 
+jsBackend.mediaLibraryHelper.cropper =
+{
+    cropperQueue: [],
+    isCropping: false,
+
+    passToCropper: function(resizeInfo, resolve, reject) {
+        jsBackend.mediaLibraryHelper.cropper.cropperQueue.push({
+            'resizeInfo': resizeInfo,
+            'resolve': resolve,
+            'reject': reject,
+        });
+
+        // If the cropper is already handling the queue we don't need to start it a second time.
+        if (jsBackend.mediaLibraryHelper.cropper.isCropping) {
+            return;
+        }
+
+        jsBackend.mediaLibraryHelper.cropper.isCropping = true;
+        var $dialog = jsBackend.mediaLibraryHelper.cropper.getDialog();
+
+        if ($('[data-role="enable-cropper-checkbox"]').is(':checked')) {
+            jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
+        }
+
+        jsBackend.mediaLibraryHelper.cropper.processNextImageInQueue($dialog);
+    },
+
+    getDialog: function() {
+        var $dialog = $('[data-role=media-library-add-dialog]');
+
+        if ($dialog.length > 0) {
+            return $dialog.first();
+        }
+
+        return $('[data-role=media-library-cropper-dialog]').first();
+    },
+
+    processNextImageInQueue: function($dialog) {
+        var nextQueuedImage = jsBackend.mediaLibraryHelper.cropper.cropperQueue.shift();
+        jsBackend.mediaLibraryHelper.cropper.crop(
+            $dialog,
+            nextQueuedImage.resizeInfo,
+            nextQueuedImage.resolve,
+            nextQueuedImage.reject
+        );
+    },
+
+    crop: function($dialog, resizeInfo, resolve, reject) {
+        jsBackend.mediaLibraryHelper.cropper.attachEvents($dialog, resolve, reject, resizeInfo);
+        jsBackend.mediaLibraryHelper.cropper.initSourceAndTargetCanvas(
+            $dialog,
+            resizeInfo.sourceCanvas,
+            resizeInfo.targetCanvas
+        );
+
+        var readyCallback = undefined;
+        // if we don't want to show the cropper we just crop without showing it
+        if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
+            readyCallback = jsBackend.mediaLibraryHelper.cropper.getCropEventFunction($dialog, resizeInfo, resolve);
+        }
+
+        jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo, readyCallback);
+    },
+
+    initSourceAndTargetCanvas: function($dialog, sourceCanvas, targetCanvas) {
+        // set the initial height and width on the target canvas
+        targetCanvas.height = sourceCanvas.height;
+        targetCanvas.width = sourceCanvas.width;
+
+        $dialog.find('[data-role=media-library-cropper-dialog-canvas-wrapper]').empty().append(sourceCanvas);
+    },
+
+    initCropper: function($dialog, resizeInfo, readyCallback) {
+        $(resizeInfo.sourceCanvas)
+            .addClass('img-responsive')
+            .cropper(jsBackend.mediaLibraryHelper.cropper.getCropperConfig(readyCallback));
+    },
+
+    getCropperConfig: function(readyCallback) {
+        var config = {
+            autoCropArea: 1,
+            zoomOnWheel: false,
+            zoomOnTouch: false,
+        };
+
+        if (readyCallback !== undefined) {
+            config.ready = readyCallback;
+        }
+
+        if (currentAspectRatio !== false) {
+            config.aspectRatio = currentAspectRatio;
+        }
+
+        return config;
+    },
+
+    hasNextImageInQueue: function() {
+        return jsBackend.mediaLibraryHelper.cropper.cropperQueue.length > 0;
+    },
+
+    finish: function($dialog) {
+        if (jsBackend.mediaLibraryHelper.cropper.hasNextImageInQueue()) {
+            // handle the next item
+            jsBackend.mediaLibraryHelper.cropper.processNextImageInQueue($dialog);
+
+            jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
+
+            return;
+        }
+
+        jsBackend.mediaLibraryHelper.cropper.isCropping = false;
+        // check if it is a standalone dialog for the cropper
+        if ($dialog.attr('data-role') === 'media-library-cropper-dialog') {
+            $dialog.modal('hide');
+
+            return;
+        }
+
+        $dialog.find('[data-role=media-library-select-modal]').removeClass('hidden');
+        $dialog.find('[data-role=media-library-cropper-modal]').addClass('hidden');
+    },
+
+    switchToCropperModal: function($dialog) {
+        if (!$dialog.hasClass('in')) {
+            $dialog.modal('show');
+        }
+
+        $dialog.find('[data-role=media-library-select-modal]').addClass('hidden');
+        $dialog.find('[data-role=media-library-cropper-modal]').removeClass('hidden');
+    },
+
+    getCloseEventFunction: function($dialog, resizeInfo, reject) {
+        return function() {
+            $dialog.off('hidden.bs.modal.media-library-cropper.close');
+
+            $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas').cropper('destroy');
+            reject('Cancel');
+            jsBackend.mediaLibraryHelper.cropper.finish($dialog);
+        };
+    },
+
+    getCropEventFunction: function($dialog, resizeInfo, resolve) {
+        return function() {
+            var context = resizeInfo.targetCanvas.getContext('2d');
+            var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
+            var cropBoxData = $cropper.cropper('getCroppedCanvas');
+            var zoomTo = 1;
+
+            // limit the width and height of the images to 3000 so they are not too big for the LiipImagine bundle
+            if (cropBoxData.height > 3000 || cropBoxData.width > 3000) {
+                zoomTo = 3000/((cropBoxData.height >= cropBoxData.width) ? cropBoxData.height : cropBoxData.width);
+            }
+
+            // set the correct height and width on the target canvas
+            resizeInfo.targetCanvas.height = Math.round(cropBoxData.height * zoomTo);
+            resizeInfo.targetCanvas.width = Math.round(cropBoxData.width * zoomTo);
+
+            // make sure we start with a blank slate
+            context.clearRect(0, 0, resizeInfo.targetCanvas.width, resizeInfo.targetCanvas.height);
+
+            // add the new crop
+            context.drawImage($cropper.cropper('getCroppedCanvas'), 0, 0, resizeInfo.targetCanvas.width, resizeInfo.targetCanvas.height);
+
+            $dialog.off('hidden.bs.modal.media-library-cropper.close');
+            resolve('Confirm');
+            $dialog.find('[data-role=media-library-cropper-crop]').off('click.media-library-cropper.crop');
+            $cropper.cropper('destroy');
+            jsBackend.mediaLibraryHelper.cropper.finish($dialog);
+        };
+    },
+
+    getRotateEventFunction: function() {
+        return function() {
+            var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
+            $cropper.cropper('rotate', $(this).data('degrees'));
+            $cropper.cropper('crop');
+        }
+    },
+
+    getZoomEventFunction: function() {
+        return function() {
+            var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
+            $cropper.cropper('zoom', $(this).data('zoom'));
+            $cropper.cropper('crop');
+        }
+    },
+
+    getResetEventFunction: function() {
+        return function() {
+            var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas');
+            $cropper.cropper('reset');
+            $cropper.cropper('crop');
+        }
+    },
+
+    attachEvents: function($dialog, resolve, reject, resizeInfo) {
+        $dialog
+            .off('hidden.bs.modal.media-library-cropper.close')
+            .on(
+                'hidden.bs.modal.media-library-cropper.close',
+                jsBackend.mediaLibraryHelper.cropper.getCloseEventFunction(
+                    $dialog,
+                    resizeInfo,
+                    reject
+                )
+            );
+
+        $dialog.find('[data-role=media-library-cropper-crop]')
+            .off('click.media-library-cropper.crop')
+            .on(
+                'click.media-library-cropper.crop',
+                jsBackend.mediaLibraryHelper.cropper.getCropEventFunction(
+                    $dialog,
+                    resizeInfo,
+                    resolve
+                )
+            );
+
+        $dialog.find('[data-role=media-library-cropper-rotate]')
+            .off('click.media-library-cropper.rotate')
+            .on(
+                'click.media-library-cropper.rotate',
+                jsBackend.mediaLibraryHelper.cropper.getRotateEventFunction()
+            );
+
+        $dialog.find('[data-role=media-library-cropper-zoom]')
+            .off('click.media-library-cropper.zoom')
+            .on(
+                'click.media-library-cropper.zoom',
+                jsBackend.mediaLibraryHelper.cropper.getZoomEventFunction()
+            );
+        $dialog.find('[data-role=media-library-cropper-reset]')
+            .off('click.media-library-cropper.zoom')
+            .on(
+                'click.media-library-cropper.zoom',
+                jsBackend.mediaLibraryHelper.cropper.getResetEventFunction()
+            );
+    }
+};
+
 /**
  * All methods related to the upload
  * global: jsBackend
@@ -825,12 +1068,35 @@ jsBackend.mediaLibraryHelper.upload =
         });
     },
 
+    toggleCropper: function() {
+        // the cropper is mandatory
+        var $formGroup = $('[data-role="cropper-is-mandatory-form-group"]');
+        var $warning = $('[data-role="cropper-is-mandatory-message"]');
+        var $checkbox = $('[data-role="enable-cropper-checkbox"]');
+
+        if (currentAspectRatio === false) {
+            $formGroup.removeClass('has-warning');
+            $warning.addClass('hidden');
+            $checkbox.removeClass('disabled').attr('disabled', false).attr('checked', false);
+
+            return;
+        }
+
+        $formGroup.addClass('has-warning');
+        $warning.removeClass('hidden');
+        $checkbox.addClass('disabled').attr('disabled', true).attr('checked', true);
+    },
+
     init: function()
     {
         // redefine media folder id
         mediaFolderId = $('#uploadMediaFolderId').val();
 
-        $('#fine-uploader-gallery').fineUploader({
+        // check if we need to cropper is mandatory
+        jsBackend.mediaLibraryHelper.upload.toggleCropper();
+
+        var $fineUploaderGallery = $('#fine-uploader-gallery');
+        $fineUploaderGallery.fineUploader({
             template: 'qq-template-gallery',
             thumbnails: {
                 placeholders: {
@@ -841,15 +1107,9 @@ jsBackend.mediaLibraryHelper.upload =
             validation: {
                 allowedExtensions: jsBackend.data.get('MediaLibrary.mediaAllowedExtensions')
             },
-            scaling: {
-                includeExif: true,
-                sendOriginal: false,
-                sizes: [
-                    {name: "", maxSize: 3000}
-                ]
-            },
+            scaling: jsBackend.mediaLibraryHelper.upload.getScalingConfig(),
             callbacks: {
-                onUpload: function() {
+                onUpload: function(event) {
                     // redefine media folder id
                     mediaFolderId = $('#uploadMediaFolderId').val();
 
@@ -865,6 +1125,8 @@ jsBackend.mediaLibraryHelper.upload =
 
                     // toggle upload box
                     jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
+
+                    $fineUploaderGallery.find('.qq-upload-success[qq-file-id=' + id + ']').hide();
                 },
                 onAllComplete: function(succeeded, failed) {
                     // clear if already exists
@@ -886,6 +1148,25 @@ jsBackend.mediaLibraryHelper.upload =
                 }
             }
         });
+    },
+
+    /**
+     * Configure the uploader to trigger the cropper
+     */
+    getScalingConfig: function() {
+        return {
+            includeExif: false, // needs to be false to prevent issues during the cropping process, it also is good for privacy reasons
+            sendOriginal: false,
+            sizes: [
+                {name: "", maxSize: 1} // used to trigger the cropper, this will set the maximum resulution to 1x1 px
+                                       // It always trigger the cropper since it uses a hook for scaling pictures down
+            ],
+            customResizer: function(resizeInfo) {
+                return new Promise(function(resolve, reject) {
+                    jsBackend.mediaLibraryHelper.cropper.passToCropper(resizeInfo, resolve, reject);
+                })
+            }
+        };
     },
 
     /**
@@ -1187,10 +1468,10 @@ jsBackend.mediaLibraryHelper.templates =
         }
 
         html += '</div>';
-        html += '<a href="#/" class="deleteMediaItem btn btn-default" ';
+        html += '<button type="button" class="deleteMediaItem btn btn-default" ';
         html += 'title="' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '">';
         html += '<span>' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '</span>';
-        html += '</a>';
+        html += '</button>';
         html += '</li>';
 
         return html;

@@ -10,6 +10,7 @@
     "bootstrap-datepicker": "^1.7.0",
     "bootstrap-sass": "~3.3",
     "bootstrap-tagsinput": "~0.7",
+    "cropper": "^3.0.0-rc.2",
     "fine-uploader": "^5.14.1",
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
