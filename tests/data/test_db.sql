@@ -2498,7 +2498,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `search_modules`;
 CREATE TABLE `search_modules` (
   `module` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `searchable` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `searchable` VARCHAR(1) NOT NULL DEFAULT 'N',
   `weight` int(11) NOT NULL,
   PRIMARY KEY (`module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
