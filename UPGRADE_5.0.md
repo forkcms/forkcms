@@ -302,4 +302,5 @@ We made the changes in de code and you can find the migration queries below
 - `ALTER TABLE faq_questions MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
 - `ALTER TABLE forms MODIFY method VARCHAR(255) NOT NULL default 'database_email';`
 - `ALTER TABLE forms_fields MODIFY type VARCHAR(255) NOT NULL;`
+- `ALTER TABLE forms_fields_validation MODIFY type VARCHAR(255) NOT NULL;`
 
