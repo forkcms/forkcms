@@ -324,4 +324,5 @@ ALTER TABLE pages_blocks MODIFY visible VARCHAR(1) NOT NULL DEFAULT 'Y';
 ALTER TABLE profiles MODIFY status VARCHAR(255) NOT NULL;
 ALTER TABLE search_index MODIFY active VARCHAR(1) NOT NULL DEFAULT 'N';
 ALTER TABLE search_modules MODIFY searchable VARCHAR(1) NOT NULL DEFAULT 'N';
+ALTER TABLE themes_templates MODIFY active VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT 'Is this template active (as in: will it be used).';
 ```
