@@ -305,3 +305,7 @@ We made the changes in de code and you can find the migration queries below
 - `ALTER TABLE forms_fields_validation MODIFY type VARCHAR(255) NOT NULL;`
 - `ALTER TABLE locale MODIFY type VARCHAR(110) NOT NULL DEFAULT 'lbl';` (we cant do 255 because that is too big for the index)
 - `ALTER TABLE location MODIFY show_overview VARCHAR(1) NOT NULL DEFAULT 'Y';`
+- `ALTER TABLE meta MODIFY keywords_overwrite VARCHAR(1) NOT NULL default 'N';`
+- `ALTER TABLE meta MODIFY description_overwrite VARCHAR(1) NOT NULL default 'N';`
+- `ALTER TABLE meta MODIFY title_overwrite VARCHAR(1) NOT NULL default 'N';`
+- `ALTER TABLE meta MODIFY url_overwrite VARCHAR(1) NOT NULL default 'N';`
