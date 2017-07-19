@@ -2576,9 +2576,9 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'will be case-sensitive',
-  `active` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'is this user active?',
-  `deleted` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the user deleted?',
-  `is_god` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `active`  VARCHAR(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'is this user active?',
+  `deleted`  VARCHAR(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the user deleted?',
+  `is_god`  VARCHAR(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The backend users';
 
