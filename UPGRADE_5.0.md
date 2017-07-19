@@ -291,23 +291,25 @@ Because doctrine doesn't support enums out of the box and adding, removing, or c
 
 We made the changes in de code and you can find the migration queries below
 
-- `ALTER TABLE blog_comments MODIFY type VARCHAR(255) NOT NULL default 'comment';`
-- `ALTER TABLE blog_comments MODIFY status VARCHAR(249) NOT NULL default 'moderation';` (we cant do 255 because that is too big for the index)
-- `ALTER TABLE blog_posts MODIFY status VARCHAR(244) NOT NULL;` (we cant do 255 because that is too big for the index)
-- `ALTER TABLE blog_posts MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
-- `ALTER TABLE blog_posts MODIFY allow_comments VARCHAR(1) NOT NULL default 'N';`
-- `ALTER TABLE content_blocks MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
-- `ALTER TABLE content_blocks MODIFY status VARCHAR(255) NOT NULL DEFAULT 'active' COMMENT '(DC2Type:content_blocks_status)';`
-- `ALTER TABLE faq_feedback MODIFY processed VARCHAR(1) NOT NULL default 'N';`
-- `ALTER TABLE faq_questions MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
-- `ALTER TABLE forms MODIFY method VARCHAR(255) NOT NULL default 'database_email';`
-- `ALTER TABLE forms_fields MODIFY type VARCHAR(255) NOT NULL;`
-- `ALTER TABLE forms_fields_validation MODIFY type VARCHAR(255) NOT NULL;`
-- `ALTER TABLE locale MODIFY type VARCHAR(110) NOT NULL DEFAULT 'lbl';` (we cant do 255 because that is too big for the index)
-- `ALTER TABLE location MODIFY show_overview VARCHAR(1) NOT NULL DEFAULT 'Y';`
-- `ALTER TABLE meta MODIFY keywords_overwrite VARCHAR(1) NOT NULL default 'N';`
-- `ALTER TABLE meta MODIFY description_overwrite VARCHAR(1) NOT NULL default 'N';`
-- `ALTER TABLE meta MODIFY title_overwrite VARCHAR(1) NOT NULL default 'N';`
-- `ALTER TABLE meta MODIFY url_overwrite VARCHAR(1) NOT NULL default 'N';`
-- `ALTER TABLE modules_extras MODIFY type VARCHAR(255) NOT NULL;`
-- `ALTER TABLE modules_extras MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
+```mysql
+ALTER TABLE blog_comments MODIFY type VARCHAR(255) NOT NULL default 'comment';
+ALTER TABLE blog_comments MODIFY status VARCHAR(249) NOT NULL default 'moderation'; -- (we cant do 255 because that is too big for the index)
+ALTER TABLE blog_posts MODIFY status VARCHAR(244) NOT NULL; -- (we cant do 255 because that is too big for the index)
+ALTER TABLE blog_posts MODIFY hidden VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE blog_posts MODIFY allow_comments VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE content_blocks MODIFY hidden VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE content_blocks MODIFY status VARCHAR(255) NOT NULL DEFAULT 'active' COMMENT '(DC2Type:content_blocks_status)';
+ALTER TABLE faq_feedback MODIFY processed VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE faq_questions MODIFY hidden VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE forms MODIFY method VARCHAR(255) NOT NULL default 'database_email';
+ALTER TABLE forms_fields MODIFY type VARCHAR(255) NOT NULL;
+ALTER TABLE forms_fields_validation MODIFY type VARCHAR(255) NOT NULL;
+ALTER TABLE locale MODIFY type VARCHAR(110) NOT NULL DEFAULT 'lbl'; -- (we cant do 255 because that is too big for the index)
+ALTER TABLE location MODIFY show_overview VARCHAR(1) NOT NULL DEFAULT 'Y';
+ALTER TABLE meta MODIFY keywords_overwrite VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE meta MODIFY description_overwrite VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE meta MODIFY title_overwrite VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE meta MODIFY url_overwrite VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE modules_extras MODIFY type VARCHAR(255) NOT NULL;
+ALTER TABLE modules_extras MODIFY hidden VARCHAR(1) NOT NULL default 'N';
+```
