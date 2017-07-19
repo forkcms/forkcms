@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Backend\Core\Engine\Authentication;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

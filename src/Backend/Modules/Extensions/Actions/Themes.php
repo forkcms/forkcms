@@ -26,7 +26,7 @@ class Themes extends BackendBaseActionIndex
      *
      * @var BackendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * Theme id.
@@ -61,7 +61,7 @@ class Themes extends BackendBaseActionIndex
     {
         // loop themes
         foreach (BackendExtensionsModel::getThemes() as $theme) {
-            // themes that are already installed = have at least 1 template in DB
+            // themes that are already installed = have at least 1 template in database
             if ($theme['installed']) {
                 $this->installedThemes[] = $theme;
             } elseif ($theme['installable']) {
@@ -73,7 +73,7 @@ class Themes extends BackendBaseActionIndex
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('settingsThemes');
+        $this->form = new BackendForm('settingsThemes');
 
         // fetch the themes
         $themes = $this->installedThemes;
@@ -85,7 +85,7 @@ class Themes extends BackendBaseActionIndex
 
         // no themes found
         if (empty($themes)) {
-            $this->redirect(BackendModel::createURLForAction('Edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
+            $this->redirect(BackendModel::createUrlForAction('Edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
         }
 
         // loop the templates
@@ -105,27 +105,27 @@ class Themes extends BackendBaseActionIndex
         }
 
         // templates
-        $this->frm->addRadiobutton('installedThemes', $themes, $selected);
+        $this->form->addRadiobutton('installedThemes', $themes, $selected);
     }
 
     protected function parse(): void
     {
         parent::parse();
 
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // parse not yet installed themes
-        $this->tpl->assign('installableThemes', $this->installableThemes);
+        $this->template->assign('installableThemes', $this->installableThemes);
     }
 
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // determine themes
-                $newTheme = $this->frm->getField('installedThemes')->getValue();
+                $newTheme = $this->form->getField('installedThemes')->getValue();
                 $oldTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
 
                 // check if we actually switched themes
@@ -137,7 +137,7 @@ class Themes extends BackendBaseActionIndex
                     // check if templates already exist
                     if (empty($newTemplates)) {
                         // templates do not yet exist; don't switch
-                        $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-templates-available');
+                        $this->redirect(BackendModel::createUrlForAction('Themes') . '&error=no-templates-available');
 
                         return;
                     }
@@ -189,8 +189,8 @@ class Themes extends BackendBaseActionIndex
                 }
 
                 // assign report
-                $this->tpl->assign('report', true);
-                $this->tpl->assign('reportMessage', BL::msg('Saved'));
+                $this->template->assign('report', true);
+                $this->template->assign('reportMessage', BL::msg('Saved'));
             }
         }
     }

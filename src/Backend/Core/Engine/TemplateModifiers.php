@@ -150,7 +150,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function getURL(
+    public static function getUrl(
         string $action = null,
         string $module = null,
         string $suffix = null,
@@ -160,7 +160,7 @@ class TemplateModifiers extends BaseTwigModifiers
             $language = BackendLanguage::getWorkingLanguage();
         }
 
-        return BackendModel::createURLForAction($action, $module, $language) . $suffix;
+        return BackendModel::createUrlForAction($action, $module, $language) . $suffix;
     }
 
     /**

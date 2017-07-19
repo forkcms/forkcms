@@ -1,6 +1,6 @@
 {# Add new media dialog #}
-<div class="modal fade" id="addMediaDialog" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade" id="addMediaDialog" tabindex="-1" role="dialog" aria-hidden="true" data-role="media-library-add-dialog">
+  <div class="modal-dialog modal-lg" data-role="media-library-select-modal">
     <div class="modal-content">
       <div class="modal-header">
         <span class="modal-title h4">{{ 'lbl.MediaConnect'|trans|ucfirst }}</span>
@@ -71,4 +71,5 @@
       </div>
     </div>
   </div>
+  {% include "MediaLibrary/Resources/views/CropperDialog.html.twig" %}
 </div>

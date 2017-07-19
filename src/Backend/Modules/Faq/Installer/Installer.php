@@ -124,7 +124,7 @@ class Installer extends ModuleInstaller
             }
 
             // check if a page for the faq already exists in this language
-            $faqPageExists = (bool) $this->getDB()->getVar(
+            $faqPageExists = (bool) $this->getDatabase()->getVar(
                 'SELECT 1
                  FROM pages AS p
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
@@ -161,7 +161,7 @@ class Installer extends ModuleInstaller
 
     private function getDefaultCategoryIdForLanguage(string $language): int
     {
-        return (int) $this->getDB()->getVar(
+        return (int) $this->getDatabase()->getVar(
             'SELECT id
              FROM faq_categories
              WHERE language = ?',
@@ -179,10 +179,10 @@ class Installer extends ModuleInstaller
      */
     private function insertCategory(string $language, string $title, string $url): int
     {
-        $db = $this->getDB();
+        $database = $this->getDatabase();
 
         // get sequence for widget
-        $sequenceExtra = $db->getVar(
+        $sequenceExtra = $database->getVar(
             'SELECT MAX(i.sequence) + 1
              FROM modules_extras AS i
              WHERE i.module = ?',
@@ -206,7 +206,7 @@ class Installer extends ModuleInstaller
         $item['sequence'] = 1;
 
         // insert category
-        $item['id'] = (int) $db->insert('faq_categories', $item);
+        $item['id'] = (int) $database->insert('faq_categories', $item);
 
         // build data for widget
         $extra = [
@@ -221,7 +221,7 @@ class Installer extends ModuleInstaller
         ];
 
         // update widget
-        $db->update(
+        $database->update(
             'modules_extras',
             $extra,
             'id = ? AND module = ? AND type = ? AND action = ?',

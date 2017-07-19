@@ -47,7 +47,7 @@ class Index extends BackendBaseActionIndex
      *
      * @var BackendForm
      */
-    protected $frm;
+    protected $form;
 
     /**
      * Filter variables
@@ -191,7 +191,7 @@ class Index extends BackendBaseActionIndex
                             'copy',
                             null,
                             BL::lbl('Copy'),
-                            BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
+                            BackendModel::createUrlForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
 
@@ -202,7 +202,7 @@ class Index extends BackendBaseActionIndex
                             'edit',
                             null,
                             BL::lbl('Edit'),
-                            BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
+                            BackendModel::createUrlForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
                 } else {
@@ -226,8 +226,8 @@ class Index extends BackendBaseActionIndex
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
-        $this->frm->addDropdown(
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
+        $this->form->addDropdown(
             'application',
             [
                 '' => '-',
@@ -236,29 +236,29 @@ class Index extends BackendBaseActionIndex
             ],
             $this->filter['application']
         );
-        $this->frm->addText('name', $this->filter['name']);
-        $this->frm->addText('value', $this->filter['value']);
-        $this->frm->addMultiCheckbox(
+        $this->form->addText('name', $this->filter['name']);
+        $this->form->addText('value', $this->filter['value']);
+        $this->form->addMultiCheckbox(
             'language',
             BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod),
             $this->filter['language'],
             'noFocus'
         );
-        $this->frm->addMultiCheckbox(
+        $this->form->addMultiCheckbox(
             'type',
             BackendLocaleModel::getTypesForMultiCheckbox(),
             $this->filter['type'],
             'noFocus'
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'module',
             BackendModel::getModulesForDropDown(),
             $this->filter['module']
         );
-        $this->frm->getField('module')->setDefaultElement('-');
+        $this->form->getField('module')->setDefaultElement('-');
 
         // manually parse fields
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     protected function parse(): void
@@ -266,36 +266,36 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse datagrids
-        $this->tpl->assign(
+        $this->template->assign(
             'dgLabels',
             ($this->dgLabels->getNumResults() != 0) ? $this->dgLabels->getContent() : false
         );
-        $this->tpl->assign(
+        $this->template->assign(
             'dgMessages',
             ($this->dgMessages->getNumResults() != 0) ? $this->dgMessages->getContent() : false
         );
-        $this->tpl->assign(
+        $this->template->assign(
             'dgErrors',
             ($this->dgErrors->getNumResults() != 0) ? $this->dgErrors->getContent() : false
         );
-        $this->tpl->assign(
+        $this->template->assign(
             'dgActions',
             ($this->dgActions->getNumResults() != 0) ? $this->dgActions->getContent() : false
         );
 
         // is filtered?
         if ($this->getRequest()->query->get('form') === 'filter') {
-            $this->tpl->assign('filter', true);
+            $this->template->assign('filter', true);
         }
 
         // parse filter as query
-        $this->tpl->assign('filter', $this->filterQuery);
+        $this->template->assign('filter', $this->filterQuery);
 
         // parse isGod
-        $this->tpl->assign('isGod', $this->isGod);
+        $this->template->assign('isGod', $this->isGod);
 
         // parse noItems, if all the datagrids are empty
-        $this->tpl->assign(
+        $this->template->assign(
             'noItems',
             $this->dgLabels->getNumResults() == 0 &&
             $this->dgMessages->getNumResults() == 0 &&
@@ -303,13 +303,13 @@ class Index extends BackendBaseActionIndex
             $this->dgActions->getNumResults() == 0
         );
 
-        $this->tpl->assign(
+        $this->template->assign(
             'hasSubmissions',
             $this->hasSubmissions
         );
 
         // parse the add URL
-        $this->tpl->assign('addURL', BackendModel::createURLForAction('Add', null, null, null) . $this->filterQuery);
+        $this->template->assign('addURL', BackendModel::createUrlForAction('Add', null, null, null) . $this->filterQuery);
     }
 
     /**
@@ -360,6 +360,6 @@ class Index extends BackendBaseActionIndex
         );
 
         // build query for filter
-        $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
+        $this->filterQuery = BackendLocaleModel::buildUrlQueryByFilter($this->filter);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Core\Engine\DataGridDB;
+use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\TemplateModifiers;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model;
@@ -12,7 +12,7 @@ use Backend\Core\Language\Locale;
 /**
  * @TODO replace with a doctrine implementation of the data grid
  */
-class ContentBlockDataGrid extends DataGridDB
+class ContentBlockDataGrid extends DataGridDatabase
 {
     public function __construct(Locale $locale)
     {
@@ -31,7 +31,7 @@ class ContentBlockDataGrid extends DataGridDB
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
-            $editUrl = Model::createURLForAction('Edit', null, null, ['id' => '[id]'], false);
+            $editUrl = Model::createUrlForAction('Edit', null, null, ['id' => '[id]'], false);
             $this->setColumnURL('title', $editUrl);
             $this->addColumn('edit', null, Language::lbl('Edit'), $editUrl, Language::lbl('Edit'));
         }

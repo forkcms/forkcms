@@ -26,7 +26,7 @@ You must have Fork CMS installed for the functional tests to be able to run.
 # run all tests (so on an installed fork)
 bin/phpunit
 
-# only run unit tests (requires no db setup)
+# only run unit tests (requires no database setup)
 bin/phpunit --testsuite=unit
 ```
 

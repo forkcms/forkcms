@@ -10,7 +10,7 @@ namespace Backend\Modules\Search\Actions;
  */
 
 use Backend\Core\Engine\Base\Action;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -29,8 +29,8 @@ class Statistics extends Action
 
     private function showDataGrid(): void
     {
-        $dataGrid = new BackendDataGridDB(
-            BackendSearchModel::QRY_DATAGRID_BROWSE_STATISTICS,
+        $dataGrid = new BackendDataGridDatabase(
+            BackendSearchModel::QUERY_DATAGRID_BROWSE_STATISTICS,
             [BL::getWorkingLanguage()]
         );
         $dataGrid->setColumnsHidden(['data']);
@@ -50,7 +50,7 @@ class Statistics extends Action
         $dataGrid->setSortingColumns(['time', 'term'], 'time');
         $dataGrid->setSortParameter('desc');
 
-        $this->tpl->assign('dataGrid', $dataGrid->getContent());
+        $this->template->assign('dataGrid', $dataGrid->getContent());
     }
 
     public static function parseRefererInDataGrid(string $data): string

@@ -11,7 +11,7 @@ namespace Backend\Modules\Pages\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -25,7 +25,7 @@ class Index extends BackendBaseActionIndex
     /**
      * DataGrids
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgDrafts;
     private $dgRecentlyEdited;
@@ -52,8 +52,8 @@ class Index extends BackendBaseActionIndex
     private function loadDataGridDrafts(): void
     {
         // create datagrid
-        $this->dgDrafts = new BackendDataGridDB(
-            BackendPagesModel::QRY_DATAGRID_BROWSE_DRAFTS,
+        $this->dgDrafts = new BackendDataGridDatabase(
+            BackendPagesModel::QUERY_DATAGRID_BROWSE_DRAFTS,
             ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
         );
 
@@ -89,7 +89,7 @@ class Index extends BackendBaseActionIndex
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
             );
 
             // add edit column
@@ -97,7 +97,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
                 BL::lbl('Edit')
             );
         }
@@ -106,8 +106,8 @@ class Index extends BackendBaseActionIndex
     private function loadDataGridRecentlyEdited(): void
     {
         // create dgRecentlyEdited
-        $this->dgRecentlyEdited = new BackendDataGridDB(
-            BackendPagesModel::QRY_BROWSE_RECENT,
+        $this->dgRecentlyEdited = new BackendDataGridDatabase(
+            BackendPagesModel::QUERY_BROWSE_RECENT,
             ['active', BL::getWorkingLanguage(), 7]
         );
 
@@ -142,7 +142,7 @@ class Index extends BackendBaseActionIndex
             // set column URL
             $this->dgRecentlyEdited->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
 
@@ -151,7 +151,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
@@ -171,23 +171,23 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse dgRecentlyEdited
-        $this->tpl->assign(
+        $this->template->assign(
             'dgRecentlyEdited',
             ($this->dgRecentlyEdited->getNumResults() != 0) ? $this->dgRecentlyEdited->getContent() : false
         );
-        $this->tpl->assign('dgDrafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
+        $this->template->assign('dgDrafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 
         // parse the tree
-        $this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
+        $this->template->assign('tree', BackendPagesModel::getTreeHTML());
 
         // open the tree on a specific page
         if ($this->getRequest()->query->getInt('id') !== 0) {
-            $this->tpl->assign(
+            $this->template->assign(
                 'openedPageId',
                 $this->getRequest()->query->getInt('id')
             );
         } else {
-            $this->tpl->assign('openedPageId', 1);
+            $this->template->assign('openedPageId', 1);
         }
     }
 }

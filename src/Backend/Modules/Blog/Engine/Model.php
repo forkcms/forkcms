@@ -20,24 +20,24 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
+    const QUERY_DATAGRID_BROWSE =
         'SELECT i.hidden, i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
          FROM blog_posts AS i
          WHERE i.status = ? AND i.language = ?';
 
-    const QRY_DATAGRID_BROWSE_FOR_CATEGORY =
+    const QUERY_DATAGRID_BROWSE_FOR_CATEGORY =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
          FROM blog_posts AS i
          WHERE i.category_id = ? AND i.status = ? AND i.language = ?';
 
-    const QRY_DATAGRID_BROWSE_CATEGORIES =
+    const QUERY_DATAGRID_BROWSE_CATEGORIES =
         'SELECT i.id, i.title, COUNT(p.id) AS num_items
          FROM blog_categories AS i
          LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND p.status = ? AND p.language = i.language
          WHERE i.language = ?
          GROUP BY i.id';
 
-    const QRY_DATAGRID_BROWSE_COMMENTS =
+    const QUERY_DATAGRID_BROWSE_COMMENTS =
         'SELECT
              i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
              p.id AS post_id, p.title AS post_title, m.url AS post_url
@@ -47,7 +47,7 @@ class Model
          WHERE i.status = ? AND i.language = ? AND p.status = ?
          GROUP BY i.id';
 
-    const QRY_DATAGRID_BROWSE_DRAFTS =
+    const QUERY_DATAGRID_BROWSE_DRAFTS =
         'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
          FROM blog_posts AS i
          INNER JOIN
@@ -59,7 +59,7 @@ class Model
          ) AS p
          WHERE i.revision_id = p.revision_id';
 
-    const QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY =
+    const QUERY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY =
         'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
          FROM blog_posts AS i
          INNER JOIN
@@ -71,27 +71,27 @@ class Model
          ) AS p
          WHERE i.revision_id = p.revision_id';
 
-    const QRY_DATAGRID_BROWSE_RECENT =
+    const QUERY_DATAGRID_BROWSE_RECENT =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
          FROM blog_posts AS i
          WHERE i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC
          LIMIT ?';
 
-    const QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY =
+    const QUERY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
          FROM blog_posts AS i
          WHERE i.category_id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC
          LIMIT ?';
 
-    const QRY_DATAGRID_BROWSE_REVISIONS =
+    const QUERY_DATAGRID_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM blog_posts AS i
          WHERE i.status = ? AND i.id = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
-    const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
+    const QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM blog_posts AS i
          WHERE i.status = ? AND i.id = ? AND i.language = ?
@@ -113,7 +113,7 @@ class Model
                 $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSTitle', 'Blog'),
-                        BackendModel::createURLForAction('Settings', 'Blog')
+                        BackendModel::createUrlForAction('Settings', 'Blog')
                     ),
                 ];
             }
@@ -123,7 +123,7 @@ class Model
                 $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSDescription', 'Blog'),
-                        BackendModel::createURLForAction('Settings', 'Blog')
+                        BackendModel::createUrlForAction('Settings', 'Blog')
                     ),
                 ];
             }
@@ -155,11 +155,11 @@ class Model
         // create an string with an equal amount of questionmarks as ids provided
         $idPlaceHolders = implode(', ', array_fill(0, count($ids), '?'));
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get used meta ids
-        $metaIds = (array) $db->getColumn(
+        $metaIds = (array) $database->getColumn(
             'SELECT meta_id
              FROM blog_posts AS p
              WHERE id IN (' . $idPlaceHolders . ') AND language = ?',
@@ -168,23 +168,23 @@ class Model
 
         // delete meta
         if (!empty($metaIds)) {
-            $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
+            $database->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
         }
 
         // delete image files
-        $images = $db->getColumn('SELECT image FROM blog_posts WHERE id IN (' . $idPlaceHolders . ')', $ids);
+        $images = $database->getColumn('SELECT image FROM blog_posts WHERE id IN (' . $idPlaceHolders . ')', $ids);
 
         foreach ($images as $image) {
             BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $image);
         }
 
         // delete records
-        $db->delete(
+        $database->delete(
             'blog_posts',
             'id IN (' . $idPlaceHolders . ') AND language = ?',
             array_merge($ids, [BL::getWorkingLanguage()])
         );
-        $db->delete(
+        $database->delete(
             'blog_comments',
             'post_id IN (' . $idPlaceHolders . ') AND language = ?',
             array_merge($ids, [BL::getWorkingLanguage()])
@@ -204,20 +204,20 @@ class Model
     public static function deleteCategory(int $id): void
     {
         $id = (int) $id;
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         // get item
         $item = self::getCategory($id);
 
         if (!empty($item)) {
             // delete meta
-            $db->delete('meta', 'id = ?', [$item['meta_id']]);
+            $database->delete('meta', 'id = ?', [$item['meta_id']]);
 
             // delete category
-            $db->delete('blog_categories', 'id = ?', [$id]);
+            $database->delete('blog_categories', 'id = ?', [$id]);
 
             // update category for the posts that might be in this category
-            $db->update('blog_posts', ['category_id' => null], 'category_id = ?', [$id]);
+            $database->update('blog_posts', ['category_id' => null], 'category_id = ?', [$id]);
         }
     }
 
@@ -257,11 +257,11 @@ class Model
         // create an array with an equal amount of questionmarks as ids provided
         $idPlaceHolders = array_fill(0, count($ids), '?');
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get ids
-        $itemIds = (array) $db->getColumn(
+        $itemIds = (array) $database->getColumn(
             'SELECT i.post_id
              FROM blog_comments AS i
              WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')',
@@ -269,7 +269,7 @@ class Model
         );
 
         // update record
-        $db->delete('blog_comments', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
+        $database->delete('blog_comments', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
 
         // recalculate the comment count
         if (!empty($itemIds)) {
@@ -279,10 +279,10 @@ class Model
 
     public static function deleteSpamComments(): void
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         // get ids
-        $itemIds = (array) $db->getColumn(
+        $itemIds = (array) $database->getColumn(
             'SELECT i.post_id
              FROM blog_comments AS i
              WHERE status = ? AND i.language = ?',
@@ -290,7 +290,7 @@ class Model
         );
 
         // update record
-        $db->delete('blog_comments', 'status = ? AND language = ?', ['spam', BL::getWorkingLanguage()]);
+        $database->delete('blog_comments', 'status = ? AND language = ?', ['spam', BL::getWorkingLanguage()]);
 
         // recalculate the comment count
         if (!empty($itemIds)) {
@@ -421,7 +421,7 @@ class Model
 
         // overwrite the url
         foreach ($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction('Edit', 'Blog', null, ['id' => $row['url']]);
+            $row['url'] = BackendModel::createUrlForAction('Edit', 'Blog', null, ['id' => $row['url']]);
         }
 
         return $items;
@@ -436,10 +436,10 @@ class Model
      */
     public static function getCategories(bool $includeCount = false): array
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         if ($includeCount) {
-            return (array) $db->getPairs(
+            return (array) $database->getPairs(
                 'SELECT i.id, CONCAT(i.title, " (", COUNT(p.category_id) ,")") AS title
                  FROM blog_categories AS i
                  LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND i.language = p.language AND p.status = ?
@@ -449,7 +449,7 @@ class Model
             );
         }
 
-        return (array) $db->getPairs(
+        return (array) $database->getPairs(
             'SELECT i.id, i.title
              FROM blog_categories AS i
              WHERE i.language = ?',
@@ -573,7 +573,7 @@ class Model
         );
 
         // overwrite url
-        $baseUrl = BackendModel::getURLForBlock('Blog', 'detail');
+        $baseUrl = BackendModel::getUrlForBlock('Blog', 'detail');
 
         foreach ($comments as &$row) {
             $row['full_url'] = $baseUrl . '/' . $row['url'];
@@ -619,17 +619,17 @@ class Model
      *
      * @return string
      */
-    public static function getURL(string $url, int $id = null): string
+    public static function getUrl(string $url, int $id = null): string
     {
         $url = (string) $url;
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // new item
         if ($id === null) {
             // already exists
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM blog_posts AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -640,11 +640,11 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url);
+                return self::getUrl($url);
             }
         } else {
             // current category should be excluded
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM blog_posts AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -655,7 +655,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url, $id);
+                return self::getUrl($url, $id);
             }
         }
 
@@ -670,18 +670,18 @@ class Model
      *
      * @return string
      */
-    public static function getURLForCategory($url, int $id = null): string
+    public static function getUrlForCategory($url, int $id = null): string
     {
         // redefine URL
         $url = (string) $url;
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // new category
         if ($id === null) {
             // already exists
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM blog_categories AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -692,11 +692,11 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url);
+                return self::getUrlForCategory($url);
             }
         } else {
             // current category should be excluded
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM blog_categories AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -707,7 +707,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url, $id);
+                return self::getUrlForCategory($url, $id);
             }
         }
 
@@ -821,7 +821,7 @@ class Model
             $meta['title_overwrite'] = 'N';
         }
         if (!isset($meta['url'])) {
-            $meta['url'] = self::getURL($item['title']);
+            $meta['url'] = self::getUrl($item['title']);
         }
         if (!isset($meta['url_overwrite'])) {
             $meta['url_overwrite'] = 'N';
@@ -830,10 +830,10 @@ class Model
             $meta['data'] = serialize(['seo_index' => 'index', 'seo_follow' => 'follow']);
         }
 
-        // Write meta to db
+        // Write meta to database
         $item['meta_id'] = BackendModel::getContainer()->get('database')->insert('meta', $meta);
 
-        // Write post to db
+        // Write post to database
         $item['revision_id'] = self::insert($item);
 
         // Any tags?
@@ -886,16 +886,16 @@ class Model
      */
     public static function insertCategory(array $item, array $meta = null): int
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // meta given?
         if ($meta !== null) {
-            $item['meta_id'] = $db->insert('meta', $meta);
+            $item['meta_id'] = $database->insert('meta', $meta);
         }
 
         // create category
-        $item['id'] = $db->insert('blog_categories', $item);
+        $item['id'] = $database->insert('blog_categories', $item);
 
         // return the id
         return $item['id'];
@@ -910,11 +910,11 @@ class Model
      */
     public static function insertComment(array $comment): int
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // insert comment
-        $comment['id'] = (int) $db->insert('blog_comments', $comment);
+        $comment['id'] = (int) $database->insert('blog_comments', $comment);
 
         // recalculate if published
         if ($comment['status'] == 'published') {
@@ -929,7 +929,7 @@ class Model
             );
 
             // update num comments
-            $db->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
+            $database->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
         }
 
         return $comment['id'];
@@ -952,11 +952,11 @@ class Model
         // make unique ids
         $ids = array_unique($ids);
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get counts
-        $commentCounts = (array) $db->getPairs(
+        $commentCounts = (array) $database->getPairs(
             'SELECT i.post_id, COUNT(i.id) AS comment_count
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
@@ -970,7 +970,7 @@ class Model
             $count = (isset($commentCounts[$id])) ? (int) $commentCounts[$id] : 0;
 
             // update
-            $db->update(
+            $database->update(
                 'blog_posts',
                 ['num_comments' => $count],
                 'id = ? AND language = ?',
@@ -990,11 +990,11 @@ class Model
      */
     public static function update(array $item): int
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
         // check if new version is active
         if ($item['status'] == 'active') {
             // archive all older active versions
-            $db->update(
+            $database->update(
                 'blog_posts',
                 ['status' => 'archived'],
                 'id = ? AND status = ?',
@@ -1010,7 +1010,7 @@ class Model
 
             // if it used to be a draft that we're now publishing, remove drafts
             if ($revision['status'] == 'draft') {
-                $db->delete(
+                $database->delete(
                     'blog_posts',
                     'id = ? AND status = ?',
                     [$item['id'], $revision['status']]
@@ -1028,7 +1028,7 @@ class Model
         $archiveType = ($item['status'] == 'active' ? 'archived' : $item['status']);
 
         // get revision-ids for items to keep
-        $revisionIdsToKeep = (array) $db->getColumn(
+        $revisionIdsToKeep = (array) $database->getColumn(
             'SELECT i.revision_id
              FROM blog_posts AS i
              WHERE i.id = ? AND i.status = ? AND i.language = ?
@@ -1040,7 +1040,7 @@ class Model
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
             // get meta-ids that will be deleted
-            $metasIdsToRemove = (array) $db->getColumn(
+            $metasIdsToRemove = (array) $database->getColumn(
                 'SELECT i.meta_id
                  FROM blog_posts AS i
                  WHERE i.id = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
@@ -1048,14 +1048,14 @@ class Model
             );
 
             // get all the images of the revisions that will NOT be deleted
-            $imagesToKeep = $db->getColumn(
+            $imagesToKeep = $database->getColumn(
                 'SELECT image FROM blog_posts
                  WHERE id = ? AND revision_id IN (' . implode(', ', $revisionIdsToKeep) . ')',
                 [$item['id']]
             );
 
             // get the images of the revisions that will be deleted
-            $imagesOfDeletedRevisions = $db->getColumn(
+            $imagesOfDeletedRevisions = $database->getColumn(
                 'SELECT image FROM blog_posts
                 WHERE id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
                 [$item['id'], $archiveType]
@@ -1068,14 +1068,14 @@ class Model
                 }
             }
 
-            $db->delete(
+            $database->delete(
                 'blog_posts',
                 'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
                 [$item['id'], $archiveType]
             );
 
             if (!empty($metasIdsToRemove)) {
-                $db->delete(
+                $database->delete(
                     'meta',
                     'id IN (' . implode(', ', $metasIdsToRemove) . ')'
                 );
@@ -1099,11 +1099,11 @@ class Model
      */
     public static function updateCategory(array $item, array $meta = null): int
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // update category
-        $updated = $db->update('blog_categories', $item, 'id = ?', [(int) $item['id']]);
+        $updated = $database->update('blog_categories', $item, 'id = ?', [(int) $item['id']]);
 
         // meta passed?
         if ($meta !== null) {
@@ -1111,7 +1111,7 @@ class Model
             $category = self::getCategory($item['id']);
 
             // update the meta
-            $db->update('meta', $meta, 'id = ?', [(int) $category['meta_id']]);
+            $database->update('meta', $meta, 'id = ?', [(int) $category['meta_id']]);
         }
 
         return $updated;

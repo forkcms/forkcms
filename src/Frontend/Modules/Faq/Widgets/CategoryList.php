@@ -28,8 +28,8 @@ class CategoryList extends FrontendBaseWidget
 
     private function parse(): void
     {
-        $this->tpl->assign('widgetFaqCategory', FrontendFaqModel::getCategoryById($this->data['id']));
-        $this->tpl->assign(
+        $this->template->assign('widgetFaqCategory', FrontendFaqModel::getCategoryById($this->data['id']));
+        $this->template->assign(
             'widgetFaqCategoryList',
             FrontendFaqModel::getAllForCategory(
                 $this->data['id'],

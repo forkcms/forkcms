@@ -25,13 +25,13 @@ class MassAction extends BackendBaseAction
         // action to execute
         $action = $this->getRequest()->query->get('action');
         if (!in_array($action, ['delete'])) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
         }
 
         // no id's provided
         if (!$this->getRequest()->query->has('id')) {
             $this->redirect(
-                BackendModel::createURLForAction('Index') . '&error=no-selection'
+                BackendModel::createUrlForAction('Index') . '&error=no-selection'
             );
         } else {
             // at least one id
@@ -46,7 +46,7 @@ class MassAction extends BackendBaseAction
 
         // redirect
         $this->redirect(
-            BackendModel::createURLForAction('Index') . '&report=deleted'
+            BackendModel::createUrlForAction('Index') . '&report=deleted'
         );
     }
 }

@@ -22,7 +22,7 @@ final class Index extends ActionIndex
         parent::execute();
 
         $this->redirect(
-            Model::createURLForAction(
+            Model::createUrlForAction(
                 'Settings'
             )
         );

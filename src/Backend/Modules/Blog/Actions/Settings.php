@@ -40,56 +40,56 @@ class Settings extends BackendBaseActionEdit
     {
         $this->isGod = BackendAuthentication::getUser()->isGod();
 
-        $this->frm = new BackendForm('settings');
+        $this->form = new BackendForm('settings');
 
         // add fields for pagination
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'overview_number_of_items',
             array_combine(range(1, 30), range(1, 30)),
-            $this->get('fork.settings')->get($this->URL->getModule(), 'overview_num_items', 10)
+            $this->get('fork.settings')->get($this->url->getModule(), 'overview_num_items', 10)
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'recent_articles_full_number_of_items',
             array_combine(range(1, 10), range(1, 10)),
-            $this->get('fork.settings')->get($this->URL->getModule(), 'recent_articles_full_num_items', 5)
+            $this->get('fork.settings')->get($this->url->getModule(), 'recent_articles_full_num_items', 5)
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'recent_articles_list_number_of_items',
             array_combine(range(1, 10), range(1, 10)),
-            $this->get('fork.settings')->get($this->URL->getModule(), 'recent_articles_list_num_items', 5)
+            $this->get('fork.settings')->get($this->url->getModule(), 'recent_articles_list_num_items', 5)
         );
 
         // add fields for spam
-        $this->frm->addCheckbox('spamfilter', $this->get('fork.settings')->get($this->URL->getModule(), 'spamfilter', false));
+        $this->form->addCheckbox('spamfilter', $this->get('fork.settings')->get($this->url->getModule(), 'spamfilter', false));
 
         // no Akismet-key, so we can't enable spam-filter
         if ($this->get('fork.settings')->get('Core', 'akismet_key') == '') {
-            $this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');
-            $this->tpl->assign('noAkismetKey', true);
+            $this->form->getField('spamfilter')->setAttribute('disabled', 'disabled');
+            $this->template->assign('noAkismetKey', true);
         }
 
         // add fields for comments
-        $this->frm->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->URL->getModule(), 'allow_comments', false));
-        $this->frm->addCheckbox('moderation', $this->get('fork.settings')->get($this->URL->getModule(), 'moderation', false));
+        $this->form->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->url->getModule(), 'allow_comments', false));
+        $this->form->addCheckbox('moderation', $this->get('fork.settings')->get($this->url->getModule(), 'moderation', false));
 
         // add fields for notifications
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'notify_by_email_on_new_comment_to_moderate',
-            $this->get('fork.settings')->get($this->URL->getModule(), 'notify_by_email_on_new_comment_to_moderate', false)
+            $this->get('fork.settings')->get($this->url->getModule(), 'notify_by_email_on_new_comment_to_moderate', false)
         );
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'notify_by_email_on_new_comment',
-            $this->get('fork.settings')->get($this->URL->getModule(), 'notify_by_email_on_new_comment', false)
+            $this->get('fork.settings')->get($this->url->getModule(), 'notify_by_email_on_new_comment', false)
         );
 
         // add fields for RSS
-        $this->frm->addCheckbox('rss_meta', $this->get('fork.settings')->get($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), true));
-        $this->frm->addText('rss_title', $this->get('fork.settings')->get($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage()));
-        $this->frm->addTextarea('rss_description', $this->get('fork.settings')->get($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage()));
+        $this->form->addCheckbox('rss_meta', $this->get('fork.settings')->get($this->url->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), true));
+        $this->form->addText('rss_title', $this->get('fork.settings')->get($this->url->getModule(), 'rss_title_' . BL::getWorkingLanguage()));
+        $this->form->addTextarea('rss_description', $this->get('fork.settings')->get($this->url->getModule(), 'rss_description_' . BL::getWorkingLanguage()));
 
         // god user?
         if ($this->isGod) {
-            $this->frm->addCheckbox('show_image_form', $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true));
+            $this->form->addCheckbox('show_image_form', $this->get('fork.settings')->get($this->url->getModule(), 'show_image_form', true));
         }
     }
 
@@ -98,38 +98,38 @@ class Settings extends BackendBaseActionEdit
         parent::parse();
 
         // parse additional variables
-        $this->tpl->assign('commentsRSSURL', SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'comments_rss'));
-        $this->tpl->assign('isGod', $this->isGod);
+        $this->template->assign('commentsRSSURL', SITE_URL . BackendModel::getUrlForBlock($this->url->getModule(), 'comments_rss'));
+        $this->template->assign('isGod', $this->isGod);
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // validation
-            $this->frm->getField('rss_title')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('rss_title')->isFilled(BL::err('FieldIsRequired'));
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // set our settings
-                $this->get('fork.settings')->set($this->URL->getModule(), 'overview_num_items', (int) $this->frm->getField('overview_number_of_items')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'recent_articles_full_num_items', (int) $this->frm->getField('recent_articles_full_number_of_items')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'recent_articles_list_num_items', (int) $this->frm->getField('recent_articles_list_number_of_items')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'spamfilter', (bool) $this->frm->getField('spamfilter')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'allow_comments', (bool) $this->frm->getField('allow_comments')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'moderation', (bool) $this->frm->getField('moderation')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'notify_by_email_on_new_comment_to_moderate', (bool) $this->frm->getField('notify_by_email_on_new_comment_to_moderate')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'notify_by_email_on_new_comment', (bool) $this->frm->getField('notify_by_email_on_new_comment')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
-                $this->get('fork.settings')->set($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'overview_num_items', (int) $this->form->getField('overview_number_of_items')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'recent_articles_full_num_items', (int) $this->form->getField('recent_articles_full_number_of_items')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'recent_articles_list_num_items', (int) $this->form->getField('recent_articles_list_number_of_items')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'spamfilter', (bool) $this->form->getField('spamfilter')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'allow_comments', (bool) $this->form->getField('allow_comments')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'moderation', (bool) $this->form->getField('moderation')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'notify_by_email_on_new_comment_to_moderate', (bool) $this->form->getField('notify_by_email_on_new_comment_to_moderate')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'notify_by_email_on_new_comment', (bool) $this->form->getField('notify_by_email_on_new_comment')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'rss_title_' . BL::getWorkingLanguage(), $this->form->getField('rss_title')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->form->getField('rss_description')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->form->getField('rss_meta')->getValue());
                 if ($this->isGod) {
-                    $this->get('fork.settings')->set($this->URL->getModule(), 'show_image_form', (bool) $this->frm->getField('show_image_form')->getChecked());
+                    $this->get('fork.settings')->set($this->url->getModule(), 'show_image_form', (bool) $this->form->getField('show_image_form')->getChecked());
                 }
                 if ($this->get('fork.settings')->get('Core', 'akismet_key') === null) {
-                    $this->get('fork.settings')->set($this->URL->getModule(), 'spamfilter', false);
+                    $this->get('fork.settings')->set($this->url->getModule(), 'spamfilter', false);
                 }
 
                 // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
+                $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved');
             }
         }
     }

@@ -21,7 +21,7 @@ class MediaItemDelete extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(Model::createURLForAction('MediaItemIndex') . '&error=something-went-wrong');
+            $this->redirect(Model::createUrlForAction('MediaItemIndex') . '&error=something-went-wrong');
         }
         $deleteFormData = $deleteForm->getData();
 
@@ -59,7 +59,7 @@ class MediaItemDelete extends BackendBaseActionDelete
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createURLForAction(
+        return Model::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

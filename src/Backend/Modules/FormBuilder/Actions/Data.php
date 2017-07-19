@@ -11,7 +11,7 @@ namespace Backend\Modules\FormBuilder\Actions;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
@@ -35,7 +35,7 @@ class Data extends BackendBaseActionIndex
      *
      * @var Form
      */
-    protected $frm;
+    protected $form;
 
     /**
      * Form id.
@@ -106,7 +106,7 @@ class Data extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, throw an exceptions, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -115,7 +115,7 @@ class Data extends BackendBaseActionIndex
         $this->record = BackendFormBuilderModel::get($this->id);
 
         if ($this->record['method'] === 'email') {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -124,11 +124,11 @@ class Data extends BackendBaseActionIndex
         list($query, $parameters) = $this->buildQuery();
 
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB($query, $parameters);
+        $this->dataGrid = new BackendDataGridDatabase($query, $parameters);
 
         // overrule default URL
         $this->dataGrid->setURL(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 null,
                 null,
                 null,
@@ -152,7 +152,7 @@ class Data extends BackendBaseActionIndex
             // set colum URLs
             $this->dataGrid->setColumnURL(
                 'sent_on',
-                BackendModel::createURLForAction(
+                BackendModel::createUrlForAction(
                     'DataDetails',
                     null,
                     null,
@@ -169,7 +169,7 @@ class Data extends BackendBaseActionIndex
                 'details',
                 null,
                 BL::getLabel('Details'),
-                BackendModel::createURLForAction(
+                BackendModel::createUrlForAction(
                     'DataDetails',
                     null,
                     null,
@@ -221,12 +221,12 @@ class Data extends BackendBaseActionIndex
             }
         }
 
-        $this->frm = new BackendForm('filter', BackendModel::createURLForAction() . '&amp;id=' . $this->id, 'get');
-        $this->frm->addDate('start_date', $startDate);
-        $this->frm->addDate('end_date', $endDate);
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction() . '&amp;id=' . $this->id, 'get');
+        $this->form->addDate('start_date', $startDate);
+        $this->form->addDate('end_date', $endDate);
 
         // manually parse fields
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     protected function parse(): void
@@ -234,12 +234,12 @@ class Data extends BackendBaseActionIndex
         parent::parse();
 
         // datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->template->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
         // form info
-        $this->tpl->assign('name', $this->record['name']);
-        $this->tpl->assign('id', $this->record['id']);
-        $this->tpl->assignArray($this->filter);
+        $this->template->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->record['id']);
+        $this->template->assignArray($this->filter);
     }
 
     /**

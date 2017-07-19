@@ -27,7 +27,7 @@ class ForgotPassword extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
@@ -40,37 +40,37 @@ class ForgotPassword extends FrontendBaseBlock
             $this->parse();
         } else {
             // already logged in, redirect to settings
-            $this->redirect(FrontendNavigation::getURLForBlock('Profiles', 'Settings'));
+            $this->redirect(FrontendNavigation::getUrlForBlock('Profiles', 'Settings'));
         }
     }
 
     private function buildForm(): void
     {
-        $this->frm = new FrontendForm('forgotPassword', null, null, 'forgotPasswordForm');
-        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form = new FrontendForm('forgotPassword', null, null, 'forgotPasswordForm');
+        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
     }
 
     private function parse(): void
     {
         // e-mail was sent?
-        if ($this->URL->getParameter('sent') == 'true') {
+        if ($this->url->getParameter('sent') == 'true') {
             // show message
-            $this->tpl->assign('forgotPasswordSuccess', true);
+            $this->template->assign('forgotPasswordSuccess', true);
 
             // hide form
-            $this->tpl->assign('forgotPasswordHideForm', true);
+            $this->template->assign('forgotPasswordHideForm', true);
         }
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get field
-            $txtEmail = $this->frm->getField('email');
+            $txtEmail = $this->form->getField('email');
 
             // field is filled in?
             if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
@@ -84,7 +84,7 @@ class ForgotPassword extends FrontendBaseBlock
             }
 
             // valid login
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // get profile id
                 $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
 
@@ -107,7 +107,7 @@ class ForgotPassword extends FrontendBaseBlock
                     ->parseHtml(
                         '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
                         [
-                            'resetUrl' => SITE_URL . FrontendNavigation::getURLForBlock(
+                            'resetUrl' => SITE_URL . FrontendNavigation::getUrlForBlock(
                                 'Profiles',
                                 'ResetPassword'
                             ) . '/' . $key,
@@ -120,9 +120,9 @@ class ForgotPassword extends FrontendBaseBlock
                 $this->get('mailer')->send($message);
 
                 // redirect
-                $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
+                $this->redirect(SITE_URL . $this->url->getQueryString() . '?sent=true');
             } else {
-                $this->tpl->assign('forgotPasswordHasError', true);
+                $this->template->assign('forgotPasswordHasError', true);
             }
         }
     }

@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Backend\Core\Engine\Header;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type as MediaItemPossibleType;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupPossibleType;
@@ -83,6 +84,10 @@ class MediaGroupType extends AbstractType
         }
 
         $view->vars['label'] = $options['label'];
+
+        if ($options['aspect_ratio'] instanceof AspectRatio) {
+            $view->vars['aspectRatio'] = $options['aspect_ratio']->asFloat();
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -92,11 +97,15 @@ class MediaGroupType extends AbstractType
                 'label',
             ]
         );
+
         $resolver->setDefaults(
             [
                 'label' => Language::lbl('ConnectedMedia'),
+                'aspect_ratio' => null,
             ]
         );
+
+        $resolver->setAllowedTypes('aspect_ratio', ['null', AspectRatio::class]);
     }
 
     public function getBlockPrefix(): string
@@ -172,7 +181,9 @@ class MediaGroupType extends AbstractType
 
         // Add "fine-uploader" css/js
         $header->addCSS('/css/vendors/fine-uploader/fine-uploader-new.min.css', null, true, false);
+        $header->addCSS('/css/vendors/cropper.css', null, true, true);
         $header->addJS('/js/vendors/jquery.fine-uploader.min.js', null, false, true);
+        $header->addJS('/js/vendors/cropper.js', null, true, true);
 
         $header->addCSS('MediaLibrary.css', 'MediaLibrary', false, true);
         $header->addJS('MediaLibraryFolders.js', 'MediaLibrary', true);

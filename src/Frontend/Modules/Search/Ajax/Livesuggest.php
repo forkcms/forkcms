@@ -81,7 +81,7 @@ class Livesuggest extends FrontendBaseAJAXAction
     /**
      * @var TwigTemplate
      */
-    private $tpl;
+    private $template;
 
     private function display(): void
     {
@@ -105,7 +105,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         // output
         $this->output(
             Response::HTTP_OK,
-            $this->tpl->render(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
+            $this->template->render(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
         );
     }
 
@@ -166,7 +166,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term;
 
         // populate calculated fields in pagination
         $this->pagination['limit'] = $this->limit;
@@ -212,7 +212,7 @@ class Livesuggest extends FrontendBaseAJAXAction
 
     private function parse(): void
     {
-        $this->tpl = $this->get('templating');
+        $this->template = $this->get('templating');
 
         // no search term = no search
         if (!$this->term) {
@@ -220,8 +220,8 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // assign articles
-        $this->tpl->assign('searchResults', $this->items);
-        $this->tpl->assign('searchTerm', $this->term);
+        $this->template->assign('searchResults', $this->items);
+        $this->template->assign('searchTerm', $this->term);
 
         // parse the pagination
         $this->parsePagination();
@@ -248,7 +248,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             case (!isset($this->pagination['num_pages'])):
                 throw new FrontendException('no num_pages available in the pagination-property.');
             case (!isset($this->pagination['url'])):
-                throw new FrontendException('no URL available in the pagination-property.');
+                throw new FrontendException('no url available in the pagination-property.');
         }
 
         // should we use a questionmark or an ampersand
@@ -380,7 +380,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         $pagination['multiple_pages'] = ($pagination['num_pages'] == 1) ? false : true;
 
         // assign pagination
-        $this->tpl->assign('pagination', $pagination);
+        $this->template->assign('pagination', $pagination);
     }
 
     private function validateForm(): void

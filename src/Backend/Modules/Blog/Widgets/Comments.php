@@ -48,11 +48,11 @@ class Comments extends BackendBaseWidget
 
     private function parse(): void
     {
-        $this->tpl->assign('blogComments', $this->comments);
+        $this->template->assign('blogComments', $this->comments);
 
         // comments to moderate
         if (isset($this->numCommentStatus['moderation']) && (int) $this->numCommentStatus['moderation'] > 0) {
-            $this->tpl->assign('blogNumCommentsToModerate', $this->numCommentStatus['moderation']);
+            $this->template->assign('blogNumCommentsToModerate', $this->numCommentStatus['moderation']);
         }
     }
 }

@@ -32,7 +32,7 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function addURLParameters(string $url, array $parameters): string
+    public static function addUrlParameters(string $url, array $parameters): string
     {
         if (empty($parameters)) {
             return $url;

@@ -18,6 +18,6 @@ final class Reset extends ActionDelete
         $this->get('fork.settings')->delete($this->getModule(), 'web_property_id');
         $this->get('fork.settings')->delete($this->getModule(), 'profile');
 
-        $this->redirect(Model::createURLForAction('Settings'));
+        $this->redirect(Model::createUrlForAction('Settings'));
     }
 }

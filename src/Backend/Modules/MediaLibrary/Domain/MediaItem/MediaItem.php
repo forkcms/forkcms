@@ -118,6 +118,13 @@ class MediaItem implements JsonSerializable
     protected $height;
 
     /**
+     * @var AspectRatio
+     *
+     * @ORM\Column(type="media_item_aspect_ratio", nullable=true)
+     */
+    protected $aspectRatio;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
@@ -373,6 +380,8 @@ class MediaItem implements JsonSerializable
         $this->width = $width;
         $this->height = $height;
 
+        $this->refreshAspectRatio();
+
         return $this;
     }
 
@@ -434,6 +443,11 @@ class MediaItem implements JsonSerializable
         );
     }
 
+    public function getAspectRatio(): AspectRatio
+    {
+        return $this->aspectRatio;
+    }
+
     public function getWebPath(string $liipImagineBundleFilter = null): string
     {
         /** @var StorageProviderInterface $storage */
@@ -446,12 +460,25 @@ class MediaItem implements JsonSerializable
         return $storage->getWebPathWithFilter($this, $liipImagineBundleFilter);
     }
 
+    private function refreshAspectRatio(): void
+    {
+        if ($this->height === null || $this->width === null) {
+            $this->aspectRatio = null;
+
+            return;
+        }
+
+        $this->aspectRatio = AspectRatio::fromWidthAndHeight($this->width, $this->height);
+    }
+
     /**
      * @ORM\PrePersist
      */
     public function onPrePersist()
     {
         $this->createdOn = $this->editedOn = new \Datetime();
+
+        $this->refreshAspectRatio();
     }
 
     /**
@@ -460,5 +487,7 @@ class MediaItem implements JsonSerializable
     public function onPreUpdate()
     {
         $this->editedOn = new \Datetime();
+
+        $this->refreshAspectRatio();
     }
 }

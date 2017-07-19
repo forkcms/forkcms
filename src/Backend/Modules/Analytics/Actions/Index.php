@@ -41,7 +41,7 @@ final class Index extends ActionIndex
             $this->dateRange = $dateRangeForm->getDateRange();
         }
 
-        $dateRangeForm->parse($this->tpl);
+        $dateRangeForm->parse($this->template);
     }
 
     protected function parse(): void
@@ -54,7 +54,7 @@ final class Index extends ActionIndex
             || $this->get('fork.settings')->get($this->getModule(), 'web_property_id') === null
             || $this->get('fork.settings')->get($this->getModule(), 'profile') === null
         ) {
-            $this->redirect(Model::createURLForAction('Settings'));
+            $this->redirect(Model::createUrlForAction('Settings'));
         }
 
         $this->header->addJS('highcharts.js', 'Core', false);
@@ -71,7 +71,7 @@ final class Index extends ActionIndex
         ];
 
         foreach ($analyticsTemplateToFunctionMap as $templateVariableName => $functionName) {
-            $this->tpl->assign(
+            $this->template->assign(
                 $templateVariableName,
                 $analytics->$functionName($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
             );
@@ -80,6 +80,6 @@ final class Index extends ActionIndex
         $dataGrid = new DataGridArray(
             $analytics->getMostVisitedPagesData($this->dateRange->getStartDate(), $this->dateRange->getEndDate())
         );
-        $this->tpl->assign('dataGridMostViewedPages', $dataGrid->getContent());
+        $this->template->assign('dataGridMostViewedPages', $dataGrid->getContent());
     }
 }

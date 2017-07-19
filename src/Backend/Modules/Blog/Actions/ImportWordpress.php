@@ -51,35 +51,35 @@ class ImportWordpress extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new Form('import');
-        $this->frm->addFile('wordpress');
-        $this->frm->addText('filter', SITE_URL);
+        $this->form = new Form('import');
+        $this->form->addFile('wordpress');
+        $this->form->addText('filter', SITE_URL);
     }
 
     private function validateForm(): void
     {
         // Is the form submitted?
-        if (!$this->frm->isSubmitted()) {
+        if (!$this->form->isSubmitted()) {
             return;
         }
 
         // Cleanup the submitted fields, ignore fields that were added by hackers
-        $this->frm->cleanupFields();
+        $this->form->cleanupFields();
 
         // XML provided?
-        if ($this->frm->getField('wordpress')->isFilled()) {
-            $this->frm->getField('wordpress')->isAllowedExtension(['xml'], BL::err('XMLFilesOnly'));
+        if ($this->form->getField('wordpress')->isFilled()) {
+            $this->form->getField('wordpress')->isAllowedExtension(['xml'], BL::err('XMLFilesOnly'));
         } else {
             // No file
-            $this->frm->getField('wordpress')->addError(BL::err('FieldIsRequired'));
+            $this->form->getField('wordpress')->addError(BL::err('FieldIsRequired'));
         }
 
-        if (!$this->frm->isCorrect()) {
+        if (!$this->form->isCorrect()) {
             return;
         }
 
         // Move the file
-        $this->frm->getField('wordpress')->moveFile(FRONTEND_FILES_PATH . '/wordpress.xml');
+        $this->form->getField('wordpress')->moveFile(FRONTEND_FILES_PATH . '/wordpress.xml');
 
         // Process the XML
         $this->processXML();
@@ -88,7 +88,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $this->filesystem->remove(FRONTEND_FILES_PATH . '/wordpress.xml');
 
         // Everything is saved, so redirect to the overview
-        $this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
+        $this->redirect(BackendModel::createUrlForAction('index') . '&report=imported');
     }
 
     private function processXML(): void
@@ -191,7 +191,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $item['title'] = (string) $xml->title;
         $item['text'] = $this->handleUrls(
             (string) $xml->children('content', true)->encoded,
-            $this->frm->getField('filter')->getValue()
+            $this->form->getField('filter')->getValue()
         );
         $item['created_on'] = (string) $xml->children('wp', true)->post_date;
         $item['publish_on'] = (string) $xml->children('wp', true)->post_date;
@@ -262,7 +262,7 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // Set paths
         $imagesPath = FRONTEND_FILES_PATH . '/userfiles/images/blog';
-        $imagesURL = FRONTEND_FILES_URL . '/userfiles/images/blog';
+        $imagesUrl = FRONTEND_FILES_URL . '/userfiles/images/blog';
 
         // Create directory if needed
         if (!file_exists($imagesPath) || !is_dir($imagesPath)) {
@@ -287,8 +287,8 @@ class ImportWordpress extends BackendBaseActionEdit
         }
 
         // Keep a log of downloaded files
-        $this->attachments[mb_strtolower($file)] = $imagesURL . '/' . $destinationFile;
-        $this->attachments[mb_strtolower($guid)] = $imagesURL . '/' . $destinationFile;
+        $this->attachments[mb_strtolower($file)] = $imagesUrl . '/' . $destinationFile;
+        $this->attachments[mb_strtolower($guid)] = $imagesUrl . '/' . $destinationFile;
 
         return true;
     }
@@ -306,9 +306,9 @@ class ImportWordpress extends BackendBaseActionEdit
     private function handleUser(string $username = ''): int
     {
         // Does someone with this username exist?
-        /* @var \SpoonDatabase $db */
-        $db = BackendModel::getContainer()->get('database');
-        $id = (int) $db->getVar(
+        /* @var \SpoonDatabase $database */
+        $database = BackendModel::getContainer()->get('database');
+        $id = (int) $database->getVar(
             'SELECT id FROM users WHERE email=? AND active=? AND deleted=?',
             [mb_strtolower($this->authors[(string) $username]['email']), 'Y', 'N']
         );
@@ -392,9 +392,9 @@ class ImportWordpress extends BackendBaseActionEdit
     private function handleCategory(string $category = ''): int
     {
         // Does a category with this name exist?
-        /* @var \SpoonDatabase $db */
-        $db = BackendModel::getContainer()->get('database');
-        $id = (int) $db->getVar(
+        /* @var \SpoonDatabase $database */
+        $database = BackendModel::getContainer()->get('database');
+        $id = (int) $database->getVar(
             'SELECT id FROM blog_categories WHERE title=? AND language=?',
             [$category, BL::getWorkingLanguage()]
         );

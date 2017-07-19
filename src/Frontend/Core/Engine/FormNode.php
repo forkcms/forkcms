@@ -30,32 +30,32 @@ class FormNode extends \Twig_Node
     {
         // Set some string representations to make the code writing via the
         // compiler a bit more readable. ("a bit")
-        $frm = "\$context['form_{$this->form}']";
-        $frmAction = $frm . '->getAction()';
-        $frmMethod = $frm . '->getMethod()';
-        $frmName = $frm . '->getName()';
-        $frmToken = $frm . '->getToken()';
-        $frmUseToken = $frm . '->getUseToken()';
-        $frmParamsHtml = $frm . '->getParametersHTML()';
-        $frmAttrAction = ' action="\', ' . $frmAction . ', \'"';
-        $frmAttrMethod = ' method="\', ' . $frmMethod . ', \'"';
-        $hiddenFormName = '<input type="hidden" name="form" value="\', ' . $frmName . ', \'" id="form\', ucfirst(' . $frmName . '), \'" />';
-        $hiddenFormToken = '<input type="hidden" name="form_token" value="\', ' . $frmToken . ', \'" id="formToken\', ucfirst(' . $frmName . '), \'" />';
+        $form = "\$context['form_{$this->form}']";
+        $formAction = $form . '->getAction()';
+        $formMethod = $form . '->getMethod()';
+        $formName = $form . '->getName()';
+        $formToken = $form . '->getToken()';
+        $formUseToken = $form . '->getUseToken()';
+        $formParamsHtml = $form . '->getParametersHTML()';
+        $formAttrAction = ' action="\', ' . $formAction . ', \'"';
+        $formAttrMethod = ' method="\', ' . $formMethod . ', \'"';
+        $hiddenFormName = '<input type="hidden" name="form" value="\', ' . $formName . ', \'" id="form\', ucfirst(' . $formName . '), \'" />';
+        $hiddenFormToken = '<input type="hidden" name="form_token" value="\', ' . $formToken . ', \'" id="formToken\', ucfirst(' . $formName . '), \'" />';
 
         $compiler
             ->addDebugInfo($this)
 
             ->write('echo \'<form')
-            ->raw($frmAttrMethod)
-            ->raw($frmAttrAction)
+            ->raw($formAttrMethod)
+            ->raw($formAttrAction)
             ->raw("', ")
-            ->raw(' ' . $frmParamsHtml)
+            ->raw(' ' . $formParamsHtml)
             ->raw(', \'')
             ->raw('>\'')
             ->raw(";\n")
 
             ->write("echo '$hiddenFormName';\n")
-            ->write("if($frmUseToken) echo '$hiddenFormToken';")
+            ->write("if($formUseToken) echo '$hiddenFormToken';")
         ;
     }
 }

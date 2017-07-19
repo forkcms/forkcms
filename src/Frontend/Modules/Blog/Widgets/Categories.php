@@ -33,7 +33,7 @@ class Categories extends FrontendBaseWidget
         // any categories?
         if (!empty($categories)) {
             // build link
-            $link = FrontendNavigation::getURLForBlock('Blog', 'Category');
+            $link = FrontendNavigation::getUrlForBlock('Blog', 'Category');
 
             // loop and reset url
             foreach ($categories as &$row) {
@@ -42,6 +42,6 @@ class Categories extends FrontendBaseWidget
         }
 
         // assign comments
-        $this->tpl->assign('widgetBlogCategories', $categories);
+        $this->template->assign('widgetBlogCategories', $categories);
     }
 }

@@ -42,11 +42,11 @@ class InstallerControllerTest extends WebTestCase
         $this->emptyTestDatabase($client->getContainer()->get('database'));
 
         $installDatabaseConfig = [
-            'install_database[dbHostname]' => $container->getParameter('database.host'),
-            'install_database[dbPort]' => $container->getParameter('database.port'),
-            'install_database[dbDatabase]' => $container->getParameter('database.name') . '_test',
-            'install_database[dbUsername]' => $container->getParameter('database.user'),
-            'install_database[dbPassword]' => $container->getParameter('database.password'),
+            'install_database[databaseHostname]' => $container->getParameter('database.host'),
+            'install_database[databasePort]' => $container->getParameter('database.port'),
+            'install_database[databaseName]' => $container->getParameter('database.name') . '_test',
+            'install_database[databaseUsername]' => $container->getParameter('database.user'),
+            'install_database[databasePassword]' => $container->getParameter('database.password'),
         ];
 
         // recreate the client with the empty database because we need this in our installer checks

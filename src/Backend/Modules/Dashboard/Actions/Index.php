@@ -143,11 +143,11 @@ class Index extends BackendBaseActionIndex
 
         // show report
         if ($this->getRequest()->query->get('password_reset') === 'success') {
-            $this->tpl->assign('reportMessage', BL::msg('PasswordResetSuccess', 'core'));
-            $this->tpl->assign('report', true);
+            $this->template->assign('reportMessage', BL::msg('PasswordResetSuccess', 'core'));
+            $this->template->assign('report', true);
         }
 
         // assign
-        $this->tpl->assign('widgets', $this->widgets);
+        $this->template->assign('widgets', $this->widgets);
     }
 }

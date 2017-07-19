@@ -6,12 +6,13 @@ use Backend\Core\Engine\Form;
 use Backend\Core\Language\Language;
 use Backend\Core\Engine\TwigTemplate;
 use Common\ModulesSettings;
+use Google_Service_Exception;
 use Google_Service_Analytics;
 
 /**
  * A form to change the settings of the analytics module
  */
-final class SettingsStepWebPropertyType implements SettingsStepType
+final class SettingsStepAccountTypeInterface implements SettingsStepTypeInterface
 {
     /** @var Form */
     private $form;
@@ -21,6 +22,9 @@ final class SettingsStepWebPropertyType implements SettingsStepType
 
     /** Google_Service_Analytics $googleServiceAnalytics */
     private $googleServiceAnalytics;
+
+    /** @var bool */
+    private $hasAccounts;
 
     public function __construct(
         string $name,
@@ -36,6 +40,11 @@ final class SettingsStepWebPropertyType implements SettingsStepType
 
     public function parse(TwigTemplate $template): void
     {
+        if (!$this->hasAccounts) {
+            $template->assign('email', $this->settings->get('Analytics', 'email'));
+            $template->assign('noAccounts', true);
+        }
+
         $this->form->parse($template);
     }
 
@@ -49,8 +58,8 @@ final class SettingsStepWebPropertyType implements SettingsStepType
 
         $this->settings->set(
             'Analytics',
-            'web_property_id',
-            $this->form->getField('web_property_id')->getValue()
+            'account',
+            $this->form->getField('account')->getValue()
         );
 
         return true;
@@ -58,20 +67,26 @@ final class SettingsStepWebPropertyType implements SettingsStepType
 
     private function build(): void
     {
-        $properties = $this->googleServiceAnalytics->management_webproperties->listManagementWebproperties(
-            $this->settings->get('Analytics', 'account')
-        );
+        try {
+            $accounts = $this->googleServiceAnalytics->management_accounts->listManagementAccounts();
+        } catch (Google_Service_Exception $e) {
+            $this->hasAccounts = false;
 
-        $propertiesForDropDown = [];
-        foreach ($properties->getItems() as $property) {
-            $propertiesForDropDown[$property->getId()] = $property->getName();
+            return;
         }
-        $this->form->addDropdown('web_property_id', $propertiesForDropDown);
+
+        $accountsForDropDown = [];
+        foreach ($accounts->getItems() as $account) {
+            $accountsForDropDown[$account->getId()] = $account->getName();
+        }
+        $this->form->addDropdown('account', $accountsForDropDown);
+
+        $this->hasAccounts = true;
     }
 
     private function isValid(): bool
     {
-        $this->form->getField('web_property_id')->isFilled(Language::err('FieldIsRequired'));
+        $this->form->getField('account')->isFilled(Language::err('FieldIsRequired'));
 
         return $this->form->isCorrect();
     }

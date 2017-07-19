@@ -96,7 +96,7 @@ class Installer extends ModuleInstaller
     private function hasPageWithSubscribeBlock(string $language): bool
     {
         // @todo: Replace with PageRepository method when it exists.
-        return (bool) $this->getDB()->getVar(
+        return (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM pages AS p
              INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
@@ -109,7 +109,7 @@ class Installer extends ModuleInstaller
     private function hasPageWithUnsubscribeBlock(string $language): bool
     {
         // @todo: Replace with PageRepository method when it exists.
-        return (bool) $this->getDB()->getVar(
+        return (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM pages AS p
              INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id

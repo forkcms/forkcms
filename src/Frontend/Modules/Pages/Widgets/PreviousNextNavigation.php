@@ -93,6 +93,6 @@ class PreviousNextNavigation extends FrontendBaseWidget
 
     private function parse(): void
     {
-        $this->tpl->assign('widgetPagesNavigation', $this->navigation);
+        $this->template->assign('widgetPagesNavigation', $this->navigation);
     }
 }

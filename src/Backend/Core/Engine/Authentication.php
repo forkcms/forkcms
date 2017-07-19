@@ -229,10 +229,10 @@ class Authentication
 
         // do we already know something?
         if (empty(self::$allowedModules)) {
-            $db = BackendModel::get('database');
+            $database = BackendModel::get('database');
 
             // get allowed modules
-            $allowedModules = (array) $db->getColumn(
+            $allowedModules = (array) $database->getColumn(
                 'SELECT DISTINCT grm.module
                  FROM users_sessions AS us
                  INNER JOIN users AS u ON us.user_id = u.id
@@ -268,10 +268,10 @@ class Authentication
             return false;
         }
 
-        $db = BackendModel::get('database');
+        $database = BackendModel::get('database');
 
         // get the row from the tables
-        $sessionData = $db->getRecord(
+        $sessionData = $database->getRecord(
             'SELECT us.id, us.user_id
              FROM users_sessions AS us
              WHERE us.session_id = ? AND us.secret_key = ?
@@ -282,7 +282,7 @@ class Authentication
         // if we found a matching row, we know the user is logged in, so we update his session
         if ($sessionData !== null) {
             // update the session in the table
-            $db->update(
+            $database->update(
                 'users_sessions',
                 ['date' => BackendModel::getUTCDate()],
                 'id = ?',
@@ -314,7 +314,7 @@ class Authentication
      */
     public static function loginUser(string $login, string $password): bool
     {
-        $db = BackendModel::get('database');
+        $database = BackendModel::get('database');
 
         // check password
         if (!static::verifyPassword($login, $password)) {
@@ -322,7 +322,7 @@ class Authentication
         }
 
         // check in database (is the user active and not deleted, are the email and password correct?)
-        $userId = (int) $db->getVar(
+        $userId = (int) $database->getVar(
             'SELECT u.id
              FROM users AS u
              WHERE u.email = ? AND u.active = ? AND u.deleted = ?
@@ -351,7 +351,7 @@ class Authentication
         ];
 
         // insert a new row in the session-table
-        $db->insert('users_sessions', $session);
+        $database->insert('users_sessions', $session);
 
         // store some values in the session
         SpoonSession::set('backend_logged_in', true);

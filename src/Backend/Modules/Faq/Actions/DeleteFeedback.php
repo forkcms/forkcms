@@ -28,7 +28,7 @@ class DeleteFeedback extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
 
             return;
         }
@@ -39,11 +39,11 @@ class DeleteFeedback extends BackendBaseActionDelete
 
         // there is no feedback data, so redirect
         if (empty($feedback)) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
         }
 
         BackendFaqModel::deleteFeedback($feedbackId);
-        $this->redirect(BackendModel::createURLForAction(
+        $this->redirect(BackendModel::createUrlForAction(
             'Edit',
             null,
             null,

@@ -51,10 +51,10 @@ class EditProfileGroup extends BackendBaseActionEdit
                 $this->parse();
                 $this->display();
             } else {
-                $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+                $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
             }
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -69,18 +69,18 @@ class EditProfileGroup extends BackendBaseActionEdit
         $ddmValues = BackendProfilesModel::getGroupsForDropDown($this->profileId, $this->id);
 
         // create form
-        $this->frm = new BackendForm('editProfileGroup');
+        $this->form = new BackendForm('editProfileGroup');
 
         // create elements
-        $this->frm->addDropdown('group', $ddmValues, $this->profileGroup['group_id']);
-        $this->frm->addDate('expiration_date', $this->profileGroup['expires_on']);
-        $this->frm->addTime(
+        $this->form->addDropdown('group', $ddmValues, $this->profileGroup['group_id']);
+        $this->form->addDate('expiration_date', $this->profileGroup['expires_on']);
+        $this->form->addTime(
             'expiration_time',
             ($this->profileGroup['expires_on'] !== null) ? date('H:i', $this->profileGroup['expires_on']) : ''
         );
 
         // set default element
-        $this->frm->getField('group')->setDefaultElement('');
+        $this->form->getField('group')->setDefaultElement('');
     }
 
     protected function parse(): void
@@ -88,20 +88,20 @@ class EditProfileGroup extends BackendBaseActionEdit
         parent::parse();
 
         // assign the active record and additional variables
-        $this->tpl->assign('profileGroup', $this->profileGroup);
+        $this->template->assign('profileGroup', $this->profileGroup);
     }
 
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $ddmGroup = $this->frm->getField('group');
-            $txtExpirationDate = $this->frm->getField('expiration_date');
-            $txtExpirationTime = $this->frm->getField('expiration_time');
+            $ddmGroup = $this->form->getField('group');
+            $txtExpirationDate = $this->form->getField('expiration_date');
+            $txtExpirationTime = $this->form->getField('expiration_time');
 
             // fields filled?
             $ddmGroup->isFilled(BL::getError('GroupIsRequired'));
@@ -113,7 +113,7 @@ class EditProfileGroup extends BackendBaseActionEdit
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $values = ['group_id' => $ddmGroup->getSelected()];
 
@@ -134,7 +134,7 @@ class EditProfileGroup extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction(
+                    BackendModel::createUrlForAction(
                         'Edit'
                     ) . '&id=' . $this->profileId . '&report=membership-saved&var=' . rawurlencode(
                         $values['group_id']
@@ -151,6 +151,6 @@ class EditProfileGroup extends BackendBaseActionEdit
             ['id' => $this->profileGroup['id']],
             ['module' => $this->getModule(), 'action' => 'DeleteProfileGroup']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

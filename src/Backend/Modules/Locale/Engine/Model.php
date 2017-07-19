@@ -35,7 +35,7 @@ class Model
         $cacheBuilder->buildCache($language, $application);
     }
 
-    public static function buildURLQueryByFilter(array $filter): string
+    public static function buildUrlQueryByFilter(array $filter): string
     {
         $query = http_build_query($filter, null, '&', PHP_QUERY_RFC3986);
         if ($query != '') {
@@ -148,12 +148,12 @@ class Model
         string $application,
         int $excludedId = null
     ): bool {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // return
         if ($excludedId !== null) {
-            return (bool) $db->getVar(
+            return (bool) $database->getVar(
                 'SELECT 1
                  FROM locale
                  WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?
@@ -173,7 +173,7 @@ class Model
 
     public static function get(int $id): array
     {
-        // fetch record from db
+        // fetch record from database
         $record = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT * FROM locale WHERE id = ?',
             [$id]
@@ -244,8 +244,8 @@ class Model
             $types[$key] = '\'' . $val . '\'';
         }
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // build the query
         $query =
@@ -273,7 +273,7 @@ class Model
         }
 
         // get the translations
-        $translations = (array) $db->getRecords($query, $parameters);
+        $translations = (array) $database->getRecords($query, $parameters);
 
         // create an array for the sorted translations
         $sortedTranslations = [];
@@ -448,11 +448,11 @@ class Model
         }
 
         // get database instance
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         // possible values
         $possibleApplications = ['Frontend', 'Backend'];
-        $possibleModules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
+        $possibleModules = (array) $database->getColumn('SELECT m.name FROM modules AS m');
 
         // types
         $possibleTypes = [];
@@ -467,7 +467,7 @@ class Model
         ];
 
         // current locale items (used to check for conflicts)
-        $currentLocale = (array) $db->getColumn(
+        $currentLocale = (array) $database->getColumn(
             'SELECT CONCAT(application, module, type, language, name)
              FROM locale'
         );
@@ -537,7 +537,7 @@ class Model
                         if (!in_array($application . $module . $type . $language . $name, $currentLocale)
                             || $overwriteConflicts
                         ) {
-                            $db->execute(
+                            $database->execute(
                                 'INSERT INTO locale (user_id, language, application, module, type, name, value, edited_on)
                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                                  ON DUPLICATE KEY UPDATE user_id = ?, value = ?, edited_on = ?',

@@ -30,7 +30,7 @@
             </label>
             <p class="help-block">If you are working locally, your hostname is probably <strong>localhost</strong>.</p>
             <div class="form-group form-inline">
-              {{ form_widget(form.dbHostname) }} : {{ form_widget(form.dbPort) }}
+              {{ form_widget(form.databaseHostname) }} : {{ form_widget(form.databasePort) }}
             </div>
           </div>
           <div class="form-group">
@@ -39,21 +39,21 @@
               <abbr title="Required field">*</abbr>
             </label>
             <p class="help-block">Make sure this database is empty!</p>
-            {{ form_widget(form.dbDatabase) }}
+            {{ form_widget(form.databaseName) }}
           </div>
           <div class="form-group">
             <label for="username">
               Username
               <abbr title="Required field">*</abbr>
             </label>
-            {{ form_widget(form.dbUsername) }}
+            {{ form_widget(form.databaseUsername) }}
           </div>
           <div class="form-group">
             <label for="password">
               Password
               <abbr title="Required field">*</abbr>
             </label>
-            {{ form_widget(form.dbPassword) }}
+            {{ form_widget(form.databasePassword) }}
           </div>
         </div>
         <div class="panel-footer">

@@ -383,7 +383,7 @@ class Add extends BackendBaseActionAdd
 
         // build group
         $userGroup = [];
-        $userGroup['name'] = $this->frm->getField('name')->getValue();
+        $userGroup['name'] = $this->form->getField('name')->getValue();
 
         // build setting
         $setting = [];
@@ -399,7 +399,7 @@ class Add extends BackendBaseActionAdd
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('add');
+        $this->form = new BackendForm('add');
 
         $widgetBoxes = [];
 
@@ -408,7 +408,7 @@ class Add extends BackendBaseActionAdd
             // loop through widgets
             foreach ($this->widgets as $j => $widget) {
                 // add widget checkboxes
-                $widgetBoxes[$j]['check'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['checkbox_name'], true)->parse() . '</span>';
+                $widgetBoxes[$j]['check'] = '<span>' . $this->form->addCheckbox('widgets_' . $widget['checkbox_name'], true)->parse() . '</span>';
                 $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BL::lbl($widget['module_name']));
                 $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['checkbox_name']) . '">' . $widget['label'] . '</label>';
                 $widgetBoxes[$j]['description'] = $widget['description'];
@@ -433,7 +433,7 @@ class Add extends BackendBaseActionAdd
                     // bundle not yet in array?
                     if (!in_array($action['group'], $addedBundles)) {
                         // assign bundled action boxes
-                        $actionBoxes[$key]['actions'][$i]['check'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($action['group']))->parse();
+                        $actionBoxes[$key]['actions'][$i]['check'] = $this->form->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($action['group']))->parse();
                         $actionBoxes[$key]['actions'][$i]['action'] = \SpoonFilter::ucfirst($action['group']);
                         $actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
@@ -442,7 +442,7 @@ class Add extends BackendBaseActionAdd
                     }
                 } else {
                     // assign action boxes
-                    $actionBoxes[$key]['actions'][$i]['check'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
+                    $actionBoxes[$key]['actions'][$i]['check'] = $this->form->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
                     $actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . \SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
                     $actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
                 }
@@ -467,7 +467,7 @@ class Add extends BackendBaseActionAdd
 
             // get content of datagrids
             $permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
-            $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox(
+            $permissionBoxes[$key]['chk'] = $this->form->addCheckbox(
                 $module['label'],
                 false,
                 'inputCheckbox checkBeforeUnload jsSelectAll'
@@ -476,23 +476,23 @@ class Add extends BackendBaseActionAdd
         }
 
         // create elements
-        $this->frm->addText('name');
-        $this->frm->addDropdown('manage_users', ['Deny', 'Allow']);
-        $this->frm->addDropdown('manage_groups', ['Deny', 'Allow']);
-        $this->tpl->assign('permissions', $permissionBoxes);
-        $this->tpl->assign('widgets', $widgets ?? false);
+        $this->form->addText('name');
+        $this->form->addDropdown('manage_users', ['Deny', 'Allow']);
+        $this->form->addDropdown('manage_groups', ['Deny', 'Allow']);
+        $this->template->assign('permissions', $permissionBoxes);
+        $this->template->assign('widgets', $widgets ?? false);
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             $bundledActionPermissions = [];
 
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $nameField = $this->frm->getField('name');
+            $nameField = $this->form->getField('name');
 
             $actionPermissions = [];
             foreach ($this->modules as $module) {
@@ -500,18 +500,18 @@ class Add extends BackendBaseActionAdd
                 foreach ($this->actions[$module['value']] as $action) {
                     // collect permissions if not bundled
                     if (!array_key_exists('group', $action)) {
-                        $actionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . $action['label']);
+                        $actionPermissions[] = $this->form->getField('actions_' . $module['label'] . '_' . $action['label']);
                     }
                 }
 
                 // loop through bundled actions
                 foreach ($this->actionGroups as $key => $group) {
                     // loop through all fields
-                    foreach ($this->frm->getFields() as $field) {
+                    foreach ($this->form->getFields() as $field) {
                         // field exists?
                         if ($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($key)) {
                             // add to bundled actions
-                            $bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($key));
+                            $bundledActionPermissions[] = $this->form->getField('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($key));
                         }
                     }
                 }
@@ -520,7 +520,7 @@ class Add extends BackendBaseActionAdd
             // loop through widgets and collect presets
             $widgetPresets = [];
             foreach ($this->widgets as $widget) {
-                $widgetPresets[] = $this->frm->getField('widgets_' . $widget['checkbox_name']);
+                $widgetPresets[] = $this->form->getField('widgets_' . $widget['checkbox_name']);
             }
 
             // validate fields
@@ -532,7 +532,7 @@ class Add extends BackendBaseActionAdd
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // insert widgets
                 $group = $this->insertWidgets($widgetPresets);
 
@@ -543,7 +543,7 @@ class Add extends BackendBaseActionAdd
                 $this->insertPermissions($actionPermissions, $bundledActionPermissions);
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(BackendModel::createUrlForAction('Index') . '&report=added&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
             }
         }
     }

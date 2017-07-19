@@ -11,8 +11,11 @@ namespace Backend\Core\Engine\Base;
 
 use Backend\Core\Engine\TwigTemplate;
 use Common\Core\Header\Priority;
+use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
 use Backend\Core\Language\Language as BL;
@@ -22,7 +25,7 @@ use Backend\Core\Engine\Url;
 /**
  * This class implements a lot of functionality that can be extended by a specific action
  */
-class Action extends Object
+class Action extends KernelLoader
 {
     /**
      * The parameters (urldecoded)
@@ -43,14 +46,21 @@ class Action extends Object
      *
      * @var TwigTemplate
      */
-    public $tpl;
+    protected $template;
 
     /**
      * A reference to the URL-instance
      *
      * @var Url
      */
-    public $URL;
+    protected $url;
+
+    /**
+     * The actual output
+     *
+     * @var mixed
+     */
+    protected $content;
 
     /**
      * The constructor will set some properties. It populates the parameter array with urldecoded
@@ -63,16 +73,22 @@ class Action extends Object
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible from the action-object
-        $this->tpl = $this->getContainer()->get('template');
-        $this->URL = $this->getContainer()->get('url');
+        $this->template = $this->getContainer()->get('template');
+        $this->url = $this->getContainer()->get('url');
         $this->header = $this->getContainer()->get('header');
-
-        // store the current module and action (we grab them from the URL)
-        $this->setModule($this->URL->getModule());
-        $this->setAction($this->URL->getAction());
 
         // populate the parameter array
         $this->parameters = $this->get('request')->query->all();
+    }
+
+    public function getModule(): string
+    {
+        return $this->url->getModule();
+    }
+
+    public function getAction(): string
+    {
+        return $this->url->getAction();
     }
 
     /**
@@ -91,7 +107,7 @@ class Action extends Object
         \SpoonSession::set('csrf_token', '');
 
         $this->redirect(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 'Index',
                 null,
                 null,
@@ -104,11 +120,11 @@ class Action extends Object
 
     protected function getBackendModulePath(): string
     {
-        if ($this->URL->getModule() === 'Core') {
-            return BACKEND_PATH . '/' . $this->URL->getModule();
+        if ($this->url->getModule() === 'Core') {
+            return BACKEND_PATH . '/' . $this->url->getModule();
         }
 
-        return BACKEND_MODULES_PATH . '/' . $this->URL->getModule();
+        return BACKEND_MODULES_PATH . '/' . $this->url->getModule();
     }
 
     /**
@@ -127,10 +143,10 @@ class Action extends Object
          * based on the name of the current action
          */
         if ($template === null) {
-            $template = '/' . $this->getModule() . '/Layout/Templates/' . $this->URL->getAction() . '.html.twig';
+            $template = '/' . $this->getModule() . '/Layout/Templates/' . $this->url->getAction() . '.html.twig';
         }
 
-        $this->content = $this->tpl->getContent($template);
+        $this->content = $this->template->getContent($template);
     }
 
     public function execute(): void
@@ -160,21 +176,21 @@ class Action extends Object
         // is there a report to show?
         if ($this->getRequest()->query->get('report', '') !== '') {
             // show the report
-            $this->tpl->assign('report', true);
+            $this->template->assign('report', true);
 
             // camelcase the string
             $messageName = strip_tags(\SpoonFilter::toCamelCase($this->getRequest()->query->get('report'), '-'));
 
             // if we have data to use it will be passed as the var parameter
             if (!empty($var)) {
-                $this->tpl->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
+                $this->template->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
             } else {
-                $this->tpl->assign('reportMessage', BL::msg($messageName));
+                $this->template->assign('reportMessage', BL::msg($messageName));
             }
 
             // highlight an element with the given id if needed
             if ($this->getRequest()->query->get('highlight')) {
-                $this->tpl->assign('highlight', strip_tags($this->getRequest()->query->get('highlight')));
+                $this->template->assign('highlight', strip_tags($this->getRequest()->query->get('highlight')));
             }
         }
 
@@ -185,9 +201,9 @@ class Action extends Object
 
             // if we have data to use it will be passed as the var parameter
             if (!empty($var)) {
-                $this->tpl->assign('errorMessage', vsprintf(BL::err($errorName), $var));
+                $this->template->assign('errorMessage', vsprintf(BL::err($errorName), $var));
             } else {
-                $this->tpl->assign('errorMessage', BL::err($errorName));
+                $this->template->assign('errorMessage', BL::err($errorName));
             }
         }
     }
@@ -221,5 +237,38 @@ class Action extends Object
     public function getRequest(): Request
     {
         return $this->get('request');
+    }
+
+    /**
+     * Since the display action in the backend is rather complicated and we
+     * want to make this work with our Kernel, I've added this getContent
+     * method to extract the output from the actual displaying.
+     *
+     * With this function we'll be able to get the content and return it as a
+     * Symfony output object.
+     *
+     * @return Response
+     */
+    public function getContent(): Response
+    {
+        return new Response(
+            $this->content,
+            Response::HTTP_OK
+        );
+    }
+
+    /**
+     * Redirect to a given URL
+     *
+     * This is a helper method as the actual implementation is located in the url class
+     *
+     * @param string $url The URL to redirect to.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
+     * @throws RedirectException
+     */
+    public function redirect(string $url, int $code = Response::HTTP_FOUND): void
+    {
+        $this->get('url')->redirect($url, $code);
     }
 }

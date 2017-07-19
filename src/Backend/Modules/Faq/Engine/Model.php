@@ -20,13 +20,13 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
+    const QUERY_DATAGRID_BROWSE =
         'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
          FROM faq_questions AS i
          WHERE i.language = ? AND i.category_id = ?
          ORDER BY i.sequence ASC';
 
-    const QRY_DATAGRID_BROWSE_CATEGORIES =
+    const QUERY_DATAGRID_BROWSE_CATEGORIES =
         'SELECT i.id, i.title, COUNT(p.id) AS num_items, i.sequence
          FROM faq_categories AS i
          LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND p.language = i.language
@@ -43,26 +43,26 @@ class Model
     {
         $question = self::get($id);
 
-        /** @var $db \SpoonDatabase */
-        $db = BackendModel::getContainer()->get('database');
-        $db->delete('faq_questions', 'id = ?', [$id]);
-        $db->delete('meta', 'id = ?', [(int) $question['meta_id']]);
+        /** @var $database \SpoonDatabase */
+        $database = BackendModel::getContainer()->get('database');
+        $database->delete('faq_questions', 'id = ?', [$id]);
+        $database->delete('meta', 'id = ?', [(int) $question['meta_id']]);
 
         BackendTagsModel::saveTags($id, '', 'Faq');
     }
 
     public static function deleteCategory(int $id): void
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
         $item = self::getCategory($id);
 
         if (empty($item)) {
             return;
         }
 
-        $db->delete('meta', 'id = ?', [$item['meta_id']]);
-        $db->delete('faq_categories', 'id = ?', [$id]);
-        $db->update('faq_questions', ['category_id' => null], 'category_id = ?', [$id]);
+        $database->delete('meta', 'id = ?', [$item['meta_id']]);
+        $database->delete('faq_categories', 'id = ?', [$id]);
+        $database->update('faq_questions', ['category_id' => null], 'category_id = ?', [$id]);
 
         BackendModel::deleteExtraById($item['extra_id']);
     }
@@ -182,7 +182,7 @@ class Model
         );
 
         foreach ($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction('Edit', 'Faq', null, ['id' => $row['url']]);
+            $row['url'] = BackendModel::createUrlForAction('Edit', 'Faq', null, ['id' => $row['url']]);
         }
 
         return $items;
@@ -190,10 +190,10 @@ class Model
 
     public static function getCategories(bool $includeCount = false): array
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         if ($includeCount) {
-            return (array) $db->getPairs(
+            return (array) $database->getPairs(
                 'SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
                  FROM faq_categories AS i
                  LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND i.language = p.language
@@ -204,7 +204,7 @@ class Model
             );
         }
 
-        return (array) $db->getPairs(
+        return (array) $database->getPairs(
             'SELECT i.id, i.title
              FROM faq_categories AS i
              WHERE i.language = ?',
@@ -278,14 +278,14 @@ class Model
      *
      * @return string
      */
-    public static function getURL(string $url, int $id = null): string
+    public static function getUrl(string $url, int $id = null): string
     {
         $url = CommonUri::getUrl((string) $url);
-        $db = BackendModel::get('database');
+        $database = BackendModel::get('database');
 
         // new item
         if ($id === null) {
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM faq_questions AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -296,11 +296,11 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url);
+                return self::getUrl($url);
             }
         } else {
             // current category should be excluded
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM faq_questions AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -311,7 +311,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url, $id);
+                return self::getUrl($url, $id);
             }
         }
 
@@ -326,14 +326,14 @@ class Model
      *
      * @return string
      */
-    public static function getURLForCategory(string $url, int $id = null): string
+    public static function getUrlForCategory(string $url, int $id = null): string
     {
         $url = CommonUri::getUrl($url);
-        $db = BackendModel::get('database');
+        $database = BackendModel::get('database');
 
         // new category
         if ($id === null) {
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM faq_categories AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -344,14 +344,14 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url);
+                return self::getUrlForCategory($url);
             }
 
             return $url;
         }
 
         // current category should be excluded
-        if ((bool) $db->getVar(
+        if ((bool) $database->getVar(
             'SELECT 1
                  FROM faq_categories AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
@@ -362,7 +362,7 @@ class Model
         ) {
             $url = BackendModel::addNumber($url);
 
-            return self::getURLForCategory($url, $id);
+            return self::getUrlForCategory($url, $id);
         }
 
         return $url;
@@ -384,11 +384,11 @@ class Model
 
     public static function insertCategory(array $item, array $meta = null): int
     {
-        $db = BackendModel::get('database');
+        $database = BackendModel::get('database');
 
         // insert the meta if possible
         if ($meta !== null) {
-            $item['meta_id'] = $db->insert('meta', $meta);
+            $item['meta_id'] = $database->insert('meta', $meta);
         }
 
         // insert extra
@@ -398,7 +398,7 @@ class Model
             'CategoryList'
         );
 
-        $item['id'] = $db->insert('faq_categories', $item);
+        $item['id'] = $database->insert('faq_categories', $item);
 
         // update extra (item id is now known)
         BackendModel::updateExtra(
@@ -408,7 +408,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Category', 'Faq')) . ': ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction(
+                'edit_url' => BackendModel::createUrlForAction(
                     'EditCategory',
                     'Faq',
                     $item['language']
@@ -447,7 +447,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id'],
+                'edit_url' => BackendModel::createUrlForAction('EditCategory') . '&id=' . $item['id'],
             ]
         );
     }

@@ -209,7 +209,7 @@ class Model
 
     public static function getSynonyms(string $term): array
     {
-        // query db for synonyms
+        // query database for synonyms
         $synonyms = FrontendModel::getContainer()->get('database')->getVar(
             'SELECT synonym
              FROM search_synonyms

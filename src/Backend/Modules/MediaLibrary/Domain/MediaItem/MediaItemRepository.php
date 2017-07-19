@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Doctrine\ORM\EntityRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 
@@ -40,5 +41,19 @@ final class MediaItemRepository extends EntityRepository
     {
         // We don't flush here, see http://disq.us/p/okjc6b
         $this->getEntityManager()->remove($mediaItem);
+    }
+
+    public function findByFolderAndAspectRatio(MediaFolder $mediaFolder, ?AspectRatio $aspectRatio): array
+    {
+        $condition = ['folder' => $mediaFolder];
+
+        if ($aspectRatio instanceof AspectRatio) {
+            $condition['aspectRatio'] = $aspectRatio;
+        }
+
+        return $this->findBy(
+            $condition,
+            ['title' => 'ASC']
+        );
     }
 }

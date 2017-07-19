@@ -13,7 +13,7 @@ use Common\Mailer\Message;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url as FrontendURL;
+use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -92,8 +92,8 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
-        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'Category');
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
+        $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
         $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
         // loop
@@ -198,7 +198,7 @@ class Model implements FrontendTagsInterface
         );
     }
 
-    public static function getAllForCategory(string $categoryURL, int $limit = 10, int $offset = 0): array
+    public static function getAllForCategory(string $categoryUrl, int $limit = 10, int $offset = 0): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
@@ -217,7 +217,7 @@ class Model implements FrontendTagsInterface
                 LANGUAGE,
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i'),
-                $categoryURL,
+                $categoryUrl,
                 $offset,
                 $limit,
             ],
@@ -230,8 +230,8 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
-        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'Category');
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
+        $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
         $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
         // loop
@@ -332,7 +332,7 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
         // loop
@@ -421,7 +421,7 @@ class Model implements FrontendTagsInterface
 
         // init vars
         $stats = [];
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Archive');
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Archive');
         $firstYear = (int) date('Y');
         $lastYear = 0;
 
@@ -535,7 +535,7 @@ class Model implements FrontendTagsInterface
         // has items
         if (!empty($items)) {
             // init var
-            $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+            $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
             $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
             // reset url
@@ -560,17 +560,17 @@ class Model implements FrontendTagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $url The current URL.
+     * @param FrontendUrl $url The current URL.
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $url): int
+    public static function getIdForTags(FrontendUrl $url): int
     {
         // select the proper part of the full URL
-        $itemURL = (string) $url->getParameter(1);
+        $itemUrl = (string) $url->getParameter(1);
 
         // return the item
-        return self::get($itemURL)['id'];
+        return self::get($itemUrl)['id'];
     }
 
     /**
@@ -582,11 +582,11 @@ class Model implements FrontendTagsInterface
      */
     public static function getNavigation(int $blogPostId): array
     {
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // get date for current item
-        $date = (string) $db->getVar(
+        $date = (string) $database->getVar(
             'SELECT i.publish_on
              FROM blog_posts AS i
              WHERE i.id = ? AND i.status = ?',
@@ -600,10 +600,10 @@ class Model implements FrontendTagsInterface
 
         // init var
         $navigation = [];
-        $detailLink = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/';
+        $detailLink = FrontendNavigation::getUrlForBlock('Blog', 'Detail') . '/';
 
         // get previous post
-        $navigation['previous'] = $db->getRecord(
+        $navigation['previous'] = $database->getRecord(
             'SELECT i.id, i.title, CONCAT(?, m.url) AS url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
@@ -615,7 +615,7 @@ class Model implements FrontendTagsInterface
         );
 
         // get next post
-        $navigation['next'] = $db->getRecord(
+        $navigation['next'] = $database->getRecord(
             'SELECT i.id, i.title, CONCAT(?, m.url) AS url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
@@ -673,7 +673,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get link
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
 
         // loop comments
         foreach ($comments as &$row) {
@@ -697,7 +697,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get link
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
 
         // get items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -761,11 +761,11 @@ class Model implements FrontendTagsInterface
 
     public static function insertComment(array $comment): int
     {
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // insert comment
-        $comment['id'] = (int) $db->insert('blog_comments', $comment);
+        $comment['id'] = (int) $database->insert('blog_comments', $comment);
 
         // recalculate if published
         if ($comment['status'] == 'published') {
@@ -780,7 +780,7 @@ class Model implements FrontendTagsInterface
             );
 
             // update num comments
-            $db->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
+            $database->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
         }
 
         return $comment['id'];
@@ -830,9 +830,9 @@ class Model implements FrontendTagsInterface
         );
 
         // create URLs
-        $url = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' .
+        $url = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail') . '/' .
                $comment['post_url'] . '#comment-' . $comment['id'];
-        $backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'Blog') . '#tabModeration';
+        $backendUrl = SITE_URL . FrontendNavigation::getBackendUrlForBlock('comments', 'Blog') . '#tabModeration';
 
         // notify on all comments
         if ($notifyByMailOnComment) {
@@ -842,7 +842,7 @@ class Model implements FrontendTagsInterface
             if ($comment['status'] == 'moderation') {
                 $variables['message'] = vsprintf(
                     FL::msg('BlogEmailNotificationsNewCommentToModerate'),
-                    [$comment['author'], $url, $comment['post_title'], $backendURL]
+                    [$comment['author'], $url, $comment['post_title'], $backendUrl]
                 );
             } elseif ($comment['status'] == 'published') {
                 // comment was published
@@ -872,7 +872,7 @@ class Model implements FrontendTagsInterface
             $variables = [];
             $variables['message'] = vsprintf(
                 FL::msg('BlogEmailNotificationsNewCommentToModerate'),
-                [$comment['author'], $url, $comment['post_title'], $backendURL]
+                [$comment['author'], $url, $comment['post_title'], $backendUrl]
             );
 
             $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
@@ -917,7 +917,7 @@ class Model implements FrontendTagsInterface
         );
 
         // prepare items for search
-        $detailUrl = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $detailUrl = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         foreach ($items as &$item) {
             $item['full_url'] = $detailUrl . '/' . $item['url'];
         }

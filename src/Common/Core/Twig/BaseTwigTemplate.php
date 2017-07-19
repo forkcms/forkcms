@@ -123,17 +123,12 @@ abstract class BaseTwigTemplate extends TwigEngine
 
         $twig->addGlobal('timestamp', time());
 
-        // constants that should be protected from usage in the template
-        $notPublicConstants = ['DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD'];
-
         // get all defined constants
         $constants = get_defined_constants(true);
 
         // remove protected constants aka constants that should not be used in the template
         foreach ($constants['user'] as $key => $value) {
-            if (!in_array($key, $notPublicConstants)) {
-                $twig->addGlobal($key, $value);
-            }
+            $twig->addGlobal($key, $value);
         }
 
         /* Setup Backend for the Twig environment. */

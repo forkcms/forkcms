@@ -42,9 +42,9 @@ class Import extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('import');
-        $this->frm->addFile('file');
-        $this->frm->addCheckbox('overwrite');
+        $this->form = new BackendForm('import');
+        $this->form->addFile('file');
+        $this->form->addCheckbox('overwrite');
     }
 
     /**
@@ -67,18 +67,18 @@ class Import extends BackendBaseActionAdd
         $this->filter['value'] = $this->getRequest()->query->get('value');
 
         // build query for filter
-        $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
+        $this->filterQuery = BackendLocaleModel::buildUrlQueryByFilter($this->filter);
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if ($this->form->isSubmitted()) {
+            $this->form->cleanupFields();
 
             // redefine fields
             /** @var $fileFile \SpoonFormFile */
-            $fileFile = $this->frm->getField('file');
-            $chkOverwrite = $this->frm->getField('overwrite');
+            $fileFile = $this->form->getField('file');
+            $chkOverwrite = $this->form->getField('overwrite');
 
             // name checks
             if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
@@ -94,12 +94,12 @@ class Import extends BackendBaseActionAdd
                 }
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // import
                 $statistics = BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
 
                 // everything is imported, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=imported&var=' . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery);
+                $this->redirect(BackendModel::createUrlForAction('Index') . '&report=imported&var=' . ($statistics['imported'] . '/' . $statistics['total']) . $this->filterQuery);
             }
         }
     }

@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -32,8 +32,8 @@ class Categories extends BackendBaseActionIndex
     private function loadDataGrid(): void
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES,
+        $this->dataGrid = new BackendDataGridDatabase(
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_CATEGORIES,
             ['active', BL::getWorkingLanguage()]
         );
 
@@ -48,7 +48,7 @@ class Categories extends BackendBaseActionIndex
         // convert the count into a readable and clickable one
         $this->dataGrid->setColumnFunction(
             [__CLASS__, 'setClickableCount'],
-            ['[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'],
+            ['[num_items]', BackendModel::createUrlForAction('Index') . '&amp;category=[id]'],
             'num_items',
             true
         );
@@ -64,7 +64,7 @@ class Categories extends BackendBaseActionIndex
             // set column URLs
             $this->dataGrid->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]'
             );
 
             // add column
@@ -72,7 +72,7 @@ class Categories extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
@@ -82,7 +82,7 @@ class Categories extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', $this->dataGrid->getContent());
+        $this->template->assign('dataGrid', $this->dataGrid->getContent());
     }
 
     /**

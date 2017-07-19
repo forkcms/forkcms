@@ -21,14 +21,14 @@ class MediaGalleryIndex extends BackendBaseActionIndex
             TypeType::class,
             null,
             [
-                'action' => BackendModel::createURLForAction('MediaGalleryAdd'),
+                'action' => BackendModel::createUrlForAction('MediaGalleryAdd'),
                 'method' => 'GET',
             ]
         );
 
-        $this->tpl->assign('warnings', self::getWarnings());
-        $this->tpl->assign('dataGrid', MediaGalleryDataGrid::getHtml());
-        $this->tpl->assign('form', $form->createView());
+        $this->template->assign('warnings', self::getWarnings());
+        $this->template->assign('dataGrid', MediaGalleryDataGrid::getHtml());
+        $this->template->assign('form', $form->createView());
 
         $this->parse();
         $this->display();
@@ -46,7 +46,7 @@ class MediaGalleryIndex extends BackendBaseActionIndex
             [
                 'message' => sprintf(
                     Language::err('MediaLibraryModuleRequired', 'MediaGalleries'),
-                    BackendModel::createURLForAction('Modules', 'Extensions')
+                    BackendModel::createUrlForAction('Modules', 'Extensions')
                 ),
             ],
         ];

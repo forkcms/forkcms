@@ -28,7 +28,7 @@ class Delete extends BackendBaseActionDelete
         $deleteForm = $this->createForm(DeleteType::class, null, ['module' => $this->getModule()]);
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -49,7 +49,7 @@ class Delete extends BackendBaseActionDelete
 
     private function getBackLink(array $parameters = []): string
     {
-        return BackendModel::createURLForAction(
+        return BackendModel::createUrlForAction(
             'Index',
             null,
             null,

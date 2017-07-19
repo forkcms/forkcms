@@ -48,7 +48,7 @@ class Installer extends ModuleInstaller
 
     private function configureBackendWidgets(): void
     {
-        $db = $this->getDB();
+        $database = $this->getDatabase();
 
         // build groupsetting
         $groupSetting = [];
@@ -63,8 +63,8 @@ class Installer extends ModuleInstaller
         $userSetting['value'] = serialize([]);
 
         // insert settings
-        $db->insert('groups_settings', $groupSetting);
-        $db->insert('users_settings', $userSetting);
+        $database->insert('groups_settings', $groupSetting);
+        $database->insert('users_settings', $userSetting);
 
         // insert default dashboard widget
         $this->insertDashboardWidget('Settings', 'Analyse');

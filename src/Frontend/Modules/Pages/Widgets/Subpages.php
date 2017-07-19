@@ -56,6 +56,6 @@ class Subpages extends FrontendBaseWidget
 
     private function parse(): void
     {
-        $this->tpl->assign('widgetSubpages', $this->items);
+        $this->template->assign('widgetSubpages', $this->items);
     }
 }

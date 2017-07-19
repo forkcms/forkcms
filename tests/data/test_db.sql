@@ -2151,7 +2151,7 @@ VALUES
   (2,'Search','block','Search',NULL,NULL,'N',2000),
   (3,'Pages','widget','Sitemap','Sitemap',NULL,'N',1),
   (4,'Pages','widget','Navigation','PreviousNextNavigation',NULL,'N',2),
-  (5,'Pages','widget','Subpages','Subpages','a:1:{s:8:\"template\";s:19:\"SubpagesDefault.tpl\";}','N',2),
+  (5,'Pages','widget','Subpages','Subpages','a:1:{s:8:\"template\";s:25:\"SubpagesDefault.html.twig\";}','N',2),
   (6,'Tags','block','Tags',NULL,NULL,'N',30),
   (7,'Tags','widget','TagCloud','TagCloud',NULL,'N',31),
   (8,'Tags','widget','Related','Related',NULL,'N',32),
