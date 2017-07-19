@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS `blog_comments` (
  `email` varchar(255) NOT NULL,
  `website` text,
  `text` text NOT NULL,
- `type` enum('comment','trackback') NOT NULL default 'comment',
- `status` enum('published','moderation','spam') NOT NULL default 'moderation',
+ `type` VARCHAR(255) NOT NULL default 'comment',
+ `status` VARCHAR(249) NOT NULL default 'moderation',
  `data` text COMMENT 'Serialized array with extra data',
  PRIMARY KEY (`id`),
  KEY `idx_post_id_status` (`post_id`,`status`)

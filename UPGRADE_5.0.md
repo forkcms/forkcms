@@ -284,3 +284,12 @@ Backend\Core\Engine\Base\AjaxAction and Frontend\Core\Engine\Base\AjaxAction no 
 | self::ERROR           | Response::HTTP_INTERNAL_SERVER_ERROR |
 
 The response class has many more constants like this for all the other status codes
+
+## Bye bye enums
+
+Because doctrine doesn't support enums out of the box and adding, removing, or changing an enum value is a lot of work we changed them all to varchars
+
+We made the changes in de code and you can find the migration queries below
+
+- `ALTER TABLE blog_comments MODIFY type VARCHAR(255) NOT NULL default 'comment';`
+- `ALTER TABLE blog_comments MODIFY status VARCHAR(249) NOT NULL default 'moderation';` (we cant do 255 because that is too big for the index)
