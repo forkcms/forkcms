@@ -296,3 +296,6 @@ We made the changes in de code and you can find the migration queries below
 - `ALTER TABLE blog_posts MODIFY status VARCHAR(244) NOT NULL;` (we cant do 255 because that is too big for the index)
 - `ALTER TABLE blog_posts MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
 - `ALTER TABLE blog_posts MODIFY allow_comments VARCHAR(1) NOT NULL default 'N';`
+- `ALTER TABLE content_blocks MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
+- `ALTER TABLE content_blocks MODIFY status VARCHAR(255) NOT NULL DEFAULT 'active' COMMENT '(DC2Type:content_blocks_status)';`
+
