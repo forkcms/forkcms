@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `locale` (
  `language` varchar(5) NOT NULL,
  `application` varchar(255) NOT NULL,
  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
- `type` enum('act','err','lbl','msg') NOT NULL default 'lbl',
+ `type` VARCHAR(110) NOT NULL default 'lbl',
  `name` varchar(255) NOT NULL,
  `value` text,
  `edited_on` datetime NOT NULL,

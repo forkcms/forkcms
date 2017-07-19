@@ -521,7 +521,7 @@ CREATE TABLE `locale` (
   `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `module` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `type` enum('act','err','lbl','msg') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'lbl',
+  `type` VARCHAR(110) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'lbl',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci,
   `edited_on` datetime NOT NULL,

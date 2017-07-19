@@ -303,4 +303,5 @@ We made the changes in de code and you can find the migration queries below
 - `ALTER TABLE forms MODIFY method VARCHAR(255) NOT NULL default 'database_email';`
 - `ALTER TABLE forms_fields MODIFY type VARCHAR(255) NOT NULL;`
 - `ALTER TABLE forms_fields_validation MODIFY type VARCHAR(255) NOT NULL;`
+- `ALTER TABLE locale MODIFY type VARCHAR(110) NOT NULL DEFAULT 'lbl';` (we cant do 255 because that is too big for the index)
 
