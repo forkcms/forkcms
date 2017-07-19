@@ -24,7 +24,6 @@ class CacheBuilder
     /**
      * @var array
      */
-    protected $types;
     protected $locale;
 
     /**
@@ -41,8 +40,6 @@ class CacheBuilder
      */
     public function buildCache(string $language, string $application): void
     {
-        // get types
-        $this->types = $this->database->getEnumValues('locale', 'type');
         $this->locale = $this->getLocale($language, $application);
         $this->dumpJsonCache($language, $application);
     }
@@ -78,7 +75,7 @@ class CacheBuilder
     {
         // init var
         $json = [];
-        foreach ($this->types as $type) {
+        foreach (Model::TYPES as $type) {
             // loop locale
             foreach ($this->locale as $i => $item) {
                 // types match
