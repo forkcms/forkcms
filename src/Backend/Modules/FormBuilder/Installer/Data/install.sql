@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `forms_data_fields` (
 CREATE TABLE IF NOT EXISTS `forms_fields` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `form_id` int(11) unsigned NOT NULL,
-  `type` enum('textbox','textarea', 'datetime', 'dropdown','checkbox','radiobutton','heading','paragraph','submit','recaptcha') NOT NULL,
+  `type` varchar(255) NOT NULL,
   `settings` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `sequence` int(11) NULL,
   PRIMARY KEY  (`id`),
