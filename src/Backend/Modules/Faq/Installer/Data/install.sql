@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `faq_questions` (
   `num_views` int(11) NOT NULL default '0',
   `num_usefull_yes` int(11) NOT NULL default '0',
   `num_usefull_no` int(11) NOT NULL default '0',
-  `hidden` enum('N','Y') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'N',
+  `hidden` VARCHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL default 'N',
   `sequence` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `fk_faq_questions_faq_categories` (`hidden`,`language`)
