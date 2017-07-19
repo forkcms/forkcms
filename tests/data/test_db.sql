@@ -2353,7 +2353,7 @@ CREATE TABLE `pages_blocks` (
   `html` text COLLATE utf8mb4_unicode_ci COMMENT 'if this block is HTML this field should contain the real HTML.',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
-  `visible` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visible` VARCHAR(1) NOT NULL DEFAULT 'Y',
   `sequence` int(11) NOT NULL,
   KEY `idx_rev_status` (`revision_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
