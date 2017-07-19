@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `location` (
  `country` varchar(255) NOT NULL,
  `lat` float default NULL,
  `lng` float default NULL,
- `show_overview` enum('N','Y') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+ `show_overview` VARCHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
  `created_on` datetime NOT NULL,
  `edited_on` datetime NOT NULL,
  PRIMARY KEY (`id`)

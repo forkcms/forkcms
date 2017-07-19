@@ -2029,7 +2029,7 @@ CREATE TABLE `location` (
   `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lat` float DEFAULT NULL,
   `lng` float DEFAULT NULL,
-  `show_overview` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
+  `show_overview` VARCHAR(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Y',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
