@@ -2133,11 +2133,11 @@ DROP TABLE IF EXISTS `modules_extras`;
 CREATE TABLE `modules_extras` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the extra.',
   `module` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT 'The name of the module this extra belongs to.',
-  `type` enum('homepage','block','widget') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The type of the block.',
+  `type` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The type of the block.',
   `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The label for this extra. It will be used for displaying purposes.',
   `action` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `data` text COLLATE utf8mb4_unicode_ci COMMENT 'A serialized value with the optional parameters',
-  `hidden` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'Should the extra be shown in the backend?',
+  `hidden` VARCHAR(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'Should the extra be shown in the backend?',
   `sequence` int(11) NOT NULL COMMENT 'The sequence in the backend.',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='The possible extras';

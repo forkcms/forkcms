@@ -309,3 +309,5 @@ We made the changes in de code and you can find the migration queries below
 - `ALTER TABLE meta MODIFY description_overwrite VARCHAR(1) NOT NULL default 'N';`
 - `ALTER TABLE meta MODIFY title_overwrite VARCHAR(1) NOT NULL default 'N';`
 - `ALTER TABLE meta MODIFY url_overwrite VARCHAR(1) NOT NULL default 'N';`
+- `ALTER TABLE modules_extras MODIFY type VARCHAR(255) NOT NULL;`
+- `ALTER TABLE modules_extras MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
