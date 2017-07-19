@@ -192,7 +192,7 @@ CREATE TABLE `faq_feedback` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `question_id` int(11) unsigned NOT NULL,
   `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `processed` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `processed` VARCHAR(1) NOT NULL default 'N',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)

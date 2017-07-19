@@ -298,4 +298,5 @@ We made the changes in de code and you can find the migration queries below
 - `ALTER TABLE blog_posts MODIFY allow_comments VARCHAR(1) NOT NULL default 'N';`
 - `ALTER TABLE content_blocks MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
 - `ALTER TABLE content_blocks MODIFY status VARCHAR(255) NOT NULL DEFAULT 'active' COMMENT '(DC2Type:content_blocks_status)';`
+- `ALTER TABLE faq_feedback MODIFY processed VARCHAR(1) NOT NULL default 'N';`
 

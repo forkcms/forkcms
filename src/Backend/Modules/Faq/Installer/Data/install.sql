@@ -31,7 +31,7 @@ CREATE TABLE `faq_feedback` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `question_id` int(11) unsigned NOT NULL,
   `text` text NOT NULL,
-  `processed` enum('N','Y') NOT NULL default 'N',
+  `processed` VARCHAR(1) NOT NULL default 'N',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY  (`id`)
