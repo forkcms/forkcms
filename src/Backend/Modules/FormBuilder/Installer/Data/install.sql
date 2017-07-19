@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `forms` (
   `language` varchar(5) NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
-  `method` enum('database','database_email','email') NOT NULL default 'database_email',
+  `method` VARCHAR(255) NOT NULL default 'database_email',
   `email` text,
   `success_message` text,
   `identifier` varchar(255) NOT NULL,
