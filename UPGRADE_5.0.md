@@ -293,3 +293,6 @@ We made the changes in de code and you can find the migration queries below
 
 - `ALTER TABLE blog_comments MODIFY type VARCHAR(255) NOT NULL default 'comment';`
 - `ALTER TABLE blog_comments MODIFY status VARCHAR(249) NOT NULL default 'moderation';` (we cant do 255 because that is too big for the index)
+- `ALTER TABLE blog_posts MODIFY status VARCHAR(244) NOT NULL;` (we cant do 255 because that is too big for the index)
+- `ALTER TABLE blog_posts MODIFY hidden VARCHAR(1) NOT NULL default 'N';`
+- `ALTER TABLE blog_posts MODIFY allow_comments VARCHAR(1) NOT NULL default 'N';`

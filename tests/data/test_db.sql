@@ -131,7 +131,6 @@ CREATE TABLE `blog_comments` (
   `website` text COLLATE utf8mb4_unicode_ci,
   `type` VARCHAR(255) NOT NULL default 'comment',
   `status` VARCHAR(249) NOT NULL default 'moderation',
-  `status` enum('published','moderation','spam') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'moderation',
   `data` text COLLATE utf8mb4_unicode_ci COMMENT 'Serialized array with extra data',
   PRIMARY KEY (`id`),
   KEY `idx_post_id_status` (`post_id`,`status`)
@@ -149,12 +148,12 @@ CREATE TABLE `blog_posts` (
   `introduction` text COLLATE utf8mb4_unicode_ci,
   `text` text COLLATE utf8mb4_unicode_ci,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('active','archived','draft') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` VARCHAR(244) COLLATE utf8mb4_unicode_ci NOT NULL,
   `publish_on` datetime NOT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   `hidden` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
-  `allow_comments` enum('N','Y') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N',
+  `allow_comments` VARCHAR(1) NOT NULL default 'N',
   `num_comments` int(11) NOT NULL,
   PRIMARY KEY (`revision_id`),
   KEY `idx_status_language_hidden` (`status`,`language`,`hidden`)
