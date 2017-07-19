@@ -19,6 +19,9 @@ doctrine:
                     enum: string
         types:
             enum_bool: Common\Doctrine\Type\EnumBoolType
+            seo_follow: Common\Doctrine\Type\SEOFollowType
+            seo_index: Common\Doctrine\Type\SEOIndexType
+            enum_bool: Common\Doctrine\Type\EnumBoolType
             locale: Common\Doctrine\Type\LocaleType
             datetime: Common\Doctrine\Type\UTCDateTimeType
             datetimetz: Common\Doctrine\Type\UTCDateTimeType
