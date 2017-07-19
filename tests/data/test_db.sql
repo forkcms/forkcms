@@ -2419,7 +2419,7 @@ CREATE TABLE `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('active','inactive','deleted','blocked') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registered_on` datetime NOT NULL,

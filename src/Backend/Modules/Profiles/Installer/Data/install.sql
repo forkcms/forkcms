@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `status` enum('active','inactive','deleted','blocked') NOT NULL,
+  `status` VARCHAR(255) NOT NULL,
   `display_name` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `registered_on` datetime NOT NULL,
