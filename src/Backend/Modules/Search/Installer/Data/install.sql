@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `search_index` (
  `field` varchar(64) CHARACTER SET utf8 NOT NULL,
  `value` text NOT NULL,
  `language` varchar(5) CHARACTER SET utf8 NOT NULL,
- `active` enum('N','Y') NOT NULL default 'N',
+ `active` VARCHAR(1) NOT NULL default 'N',
  PRIMARY KEY (`module`,`other_id`,`field`,`language`),
  FULLTEXT KEY `value` (`value`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Search index';
