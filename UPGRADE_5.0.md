@@ -312,4 +312,12 @@ ALTER TABLE meta MODIFY title_overwrite VARCHAR(1) NOT NULL default 'N';
 ALTER TABLE meta MODIFY url_overwrite VARCHAR(1) NOT NULL default 'N';
 ALTER TABLE modules_extras MODIFY type VARCHAR(255) NOT NULL;
 ALTER TABLE modules_extras MODIFY hidden VARCHAR(1) NOT NULL default 'N';
+ALTER TABLE pages MODIFY type VARCHAR(255) NOT NULL DEFAULT 'root' COMMENT 'page, header, footer, ...';
+ALTER TABLE pages MODIFY status VARCHAR(243) NOT NULL DEFAULT 'active' COMMENT 'is this the active, archive or draft version';
+ALTER TABLE pages MODIFY navigation_title_overwrite VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT 'should we override the navigation title';
+ALTER TABLE pages MODIFY hidden VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT 'is the page hidden?';
+ALTER TABLE pages MODIFY allow_move VARCHAR(1) NOT NULL DEFAULT 'Y';
+ALTER TABLE pages MODIFY allow_children VARCHAR(1) NOT NULL DEFAULT 'Y';
+ALTER TABLE pages MODIFY allow_edit VARCHAR(1) NOT NULL DEFAULT 'Y';
+ALTER TABLE pages MODIFY allow_delete VARCHAR(1) NOT NULL DEFAULT 'Y';
 ```
