@@ -255,10 +255,10 @@ class Meta
             $_POST['meta_custom'] = $this->data['custom'] ?? null;
         }
         if (!isset($_POST['seo_index'])) {
-            $_POST['seo_index'] = $this->data['data']['seo_index'] ?? 'none';
+            $_POST['seo_index'] = $this->data['seo_index'] ?? 'none';
         }
         if (!isset($_POST['seo_follow'])) {
-            $_POST['seo_follow'] = $this->data['data']['seo_follow'] ?? 'none';
+            $_POST['seo_follow'] = $this->data['seo_follow'] ?? 'none';
         }
     }
 
@@ -312,7 +312,7 @@ class Meta
         $this->form->addRadiobutton(
             'seo_index',
             $indexValues,
-            $this->data['data']['seo_index'] ?? 'none'
+            $this->data['seo_index'] ?? 'none'
         );
         $followValues = [
             ['value' => 'none', 'label' => BackendLanguage::getLabel('None')],
@@ -322,7 +322,7 @@ class Meta
         $this->form->addRadiobutton(
             'seo_follow',
             $followValues,
-            $this->data['data']['seo_follow'] ?? 'none'
+            $this->data['seo_follow'] ?? 'none'
         );
 
         // should we add the meta-custom field
@@ -489,14 +489,14 @@ class Meta
         $this->data['url_overwrite'] = $this->form->getField('url_overwrite')->getActualValue();
         $this->data['custom'] = $this->custom && $this->form->getField('meta_custom')->isFilled()
             ? $this->form->getField('meta_custom')->getValue() : null;
-        $this->data['data']['seo_index'] = $this->form->getField('seo_index')->getValue();
-        $this->data['data']['seo_follow'] = $this->form->getField('seo_follow')->getValue();
+        $this->data['seo_index'] = $this->form->getField('seo_index')->getValue();
+        $this->data['seo_follow'] = $this->form->getField('seo_follow')->getValue();
 
-        if ($this->data['data']['seo_index'] === 'none') {
-            unset($this->data['data']['seo_index']);
+        if ($this->data['seo_index'] === 'none') {
+            unset($this->data['seo_index']);
         }
-        if ($this->data['data']['seo_follow'] === 'none') {
-            unset($this->data['data']['seo_follow']);
+        if ($this->data['seo_follow'] === 'none') {
+            unset($this->data['seo_follow']);
         }
     }
 

@@ -80,7 +80,7 @@ class Meta
     private $urlOverwrite;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="text", nullable=true)
      */
@@ -95,6 +95,20 @@ class Meta
      */
     private $data;
 
+    /**
+     * @var SEOFollow|null
+     *
+     * @ORM\Column(type="seo_follow", name="seo_follow", nullable=true)
+     */
+    private $seoFollow;
+
+    /**
+     * @var SEOIndex|null
+     *
+     * @ORM\Column(type="seo_index", name="seo_index", nullable=true)
+     */
+    private $seoIndex;
+
     public function __construct(
         string $keywords,
         bool $keywordsOverwrite,
@@ -105,7 +119,9 @@ class Meta
         string $url,
         bool $urlOverwrite,
         string $custom = null,
-        array $data,
+        SEOFollow $seoFollow = null,
+        SEOIndex $seoIndex = null,
+        array $data = [],
         int $id = null
     ) {
         $this->keywords = $keywords;
@@ -118,6 +134,8 @@ class Meta
         $this->urlOverwrite = $urlOverwrite;
         $this->custom = $custom;
         $this->data = $data;
+        $this->seoFollow = $seoFollow;
+        $this->seoIndex = $seoIndex;
         $this->id = $id;
     }
 
@@ -131,7 +149,9 @@ class Meta
         string $url,
         bool $urlOverwrite,
         string $custom,
-        array $data
+        SEOFollow $seoFollow = null,
+        SEOIndex $seoIndex = null,
+        array $data = []
     ) {
         $this->keywords = $keywords;
         $this->keywordsOverwrite = $keywordsOverwrite;
@@ -143,6 +163,8 @@ class Meta
         $this->urlOverwrite = $urlOverwrite;
         $this->custom = $custom;
         $this->data = $data;
+        $this->seoFollow = $seoFollow;
+        $this->seoIndex = $seoIndex;
     }
 
     /**
@@ -152,12 +174,6 @@ class Meta
     public function serialiseData()
     {
         if (!empty($this->data)) {
-            if (array_key_exists('seo_index', $this->data)) {
-                $this->data['seo_index'] = (string) $this->data['seo_index'];
-            }
-            if (array_key_exists('seo_follow', $this->data)) {
-                $this->data['seo_follow'] = (string) $this->data['seo_follow'];
-            }
             $this->data = serialize($this->data);
 
             return;
@@ -179,20 +195,7 @@ class Meta
             return;
         }
 
-        // backwards compatible fix for when the seo is saved with the serialized value objects
-        // @todo remove this for when all the modules use doctrine
-        $this->data = preg_replace(
-            '$O\\:3[67]\\:"Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))"\\:1\\:{s\\:4[68]\\:"\\x00Common\\\\Doctrine\\\\ValueObject\\\\(?:(?:SEOIndex)|(?:SEOFollow))\\x00(?:(?:SEOIndex)|(?:SEOFollow))";(s\\:\d+\\:".+?";)}$',
-            '$1',
-            $this->data
-        );
         $this->data = unserialize($this->data);
-        if (array_key_exists('seo_index', $this->data)) {
-            $this->data['seo_index'] = SEOIndex::fromString($this->data['seo_index']);
-        }
-        if (array_key_exists('seo_follow', $this->data)) {
-            $this->data['seo_follow'] = SEOFollow::fromString($this->data['seo_follow']);
-        }
     }
 
     public static function fromBackendMeta(BackendMeta $meta): self
@@ -209,6 +212,8 @@ class Meta
             $metaData['url'],
             $metaData['url_overwrite'] === 'Y',
             $metaData['custom'],
+            array_key_exists('SEOFollow', $metaData) ? SEOFollow::fromString((string) $metaData['SEOFollow']) : null,
+            array_key_exists('SEOIndex', $metaData) ? SEOIndex::fromString((string) $metaData['SEOIndex']) : null,
             $metaData['data'] ?? [],
             $meta->getId()
         );
@@ -233,10 +238,9 @@ class Meta
             $metaData['url'],
             $metaData['urlOverwrite'],
             $metaData['custom'] ?? null,
-            [
-                'seo_index' => SEOIndex::fromString($metaData['SEOIndex']),
-                'seo_follow' => SEOFollow::fromString($metaData['SEOFollow']),
-            ],
+            SEOFollow::fromString((string) $metaData['SEOFollow']),
+            SEOIndex::fromString((string) $metaData['SEOIndex']),
+            [],
             (int) $metaData['id']
         );
     }
@@ -298,8 +302,7 @@ class Meta
 
     public function hasSEOIndex(): bool
     {
-        return array_key_exists('seo_index', $this->data)
-        && !SEOIndex::fromString($this->data['seo_index'])->isNone();
+        return $this->seoIndex instanceof SEOIndex && !$this->seoIndex->isNone();
     }
 
     public function getSEOIndex(): ?SEOIndex
@@ -308,13 +311,12 @@ class Meta
             return null;
         }
 
-        return SEOIndex::fromString($this->data['seo_index']);
+        return $this->seoIndex;
     }
 
     public function hasSEOFollow(): bool
     {
-        return array_key_exists('seo_follow', $this->data)
-        && !SEOFollow::fromString($this->data['seo_follow'])->isNone();
+        return $this->seoFollow instanceof SEOFollow && !$this->seoFollow->isNone();
     }
 
     public function getSEOFollow(): ?SEOFollow
@@ -323,6 +325,6 @@ class Meta
             return null;
         }
 
-        return SEOFollow::fromString($this->data['seo_follow']);
+        return $this->seoFollow;
     }
 }

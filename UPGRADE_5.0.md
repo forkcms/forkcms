@@ -422,3 +422,29 @@ ALTER TABLE users MODIFY active VARCHAR(1) NOT NULL DEFAULT 'Y' COMMENT 'is this
 ALTER TABLE users MODIFY deleted VARCHAR(1) NOT NULL DEFAULT 'N' COMMENT 'is the user deleted?';
 ALTER TABLE users MODIFY is_god VARCHAR(1) NOT NULL DEFAULT 'N';
 ```
+
+## SEOIndex and SEOFollow are now fields in the meta table
+
+The public api didn't change for the Meta entity but if you use the array you will now find `seo_follow` and `seo_index` in the `meta` array instead of the `meta['data']` array
+
+```mysql
+ALTER TABLE meta ADD seo_follow VARCHAR(255) DEFAULT NULL COMMENT '(DC2Type:seo_follow)', ADD seo_index VARCHAR(255) DEFAULT NULL COMMENT '(DC2Type:seo_index)';
+UPDATE meta
+SET seo_index = "noindex"
+WHERE data IS NOT NULL AND data LIKE '%seo_index";s:7:"noindex"%';
+UPDATE meta
+SET seo_index = "index"
+WHERE data IS NOT NULL AND data LIKE '%seo_index";s:5:"index"%';
+UPDATE meta
+SET seo_index = "none"
+WHERE data IS NOT NULL AND data LIKE '%seo_index";s:4:"none"%';
+UPDATE meta
+SET seo_follow = "nofollow"
+WHERE data IS NOT NULL AND data LIKE '%seo_follow";s:8:"nofollow"%';
+UPDATE meta
+SET seo_follow = "follow"
+WHERE data IS NOT NULL AND data LIKE '%seo_follow";s:6:"follow"%';
+UPDATE meta
+SET seo_follow = "none"
+WHERE data IS NOT NULL AND data LIKE '%seo_follow";s:4:"none"%';
+```
