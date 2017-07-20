@@ -143,11 +143,6 @@ class CacheBuilder
         // add it
         $keys[$page['id']] = trim($url . '/' . $page['url'], '/');
 
-        // unserialize
-        if (isset($page['meta_data'])) {
-            $page['meta_data'] = @unserialize($page['meta_data']);
-        }
-
         // build navigation array
         $pageData = [
             'page_id' => (int) $page['id'],
@@ -155,11 +150,11 @@ class CacheBuilder
             'full_url' => $languageUrl . $keys[$page['id']],
             'title' => $page['title'],
             'navigation_title' => $page['navigation_title'],
-            'has_extra' => (bool) ($page['has_extra'] == 'Y'),
-            'no_follow' => (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow'),
-            'hidden' => (bool) ($page['hidden'] == 'Y'),
+            'has_extra' => $page['has_extra'] === 'Y',
+            'no_follow' => $page['seo_follow'] === 'nofollow',
+            'hidden' => $page['hidden'] === 'Y',
             'extra_blocks' => null,
-            'has_children' => (bool) ($page['has_children'] == 'Y'),
+            'has_children' => $page['has_children'] === 'Y',
         ];
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);

@@ -177,7 +177,7 @@ class Page extends KernelLoader
         }
 
         // turns out the logged in profile isn't in a group that is allowed to see the page
-        $this->record = Model::getPage(404);
+        $this->record = Model::getPage(Response::HTTP_NOT_FOUND);
     }
 
     public function display(): Response
@@ -415,14 +415,14 @@ class Page extends KernelLoader
         $this->header->setMetaCustom($this->record['meta_custom']);
 
         // advanced SEO-attributes
-        if (isset($this->record['meta_data']['seo_index'])) {
+        if (isset($this->record['meta_seo_index'])) {
             $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_index']]
+                ['name' => 'robots', 'content' => $this->record['meta_seo_index']]
             );
         }
-        if (isset($this->record['meta_data']['seo_follow'])) {
+        if (isset($this->record['meta_seo_follow'])) {
             $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']]
+                ['name' => 'robots', 'content' => $this->record['meta_seo_follow']]
             );
         }
     }

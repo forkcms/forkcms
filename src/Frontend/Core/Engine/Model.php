@@ -166,7 +166,7 @@ class Model extends \Common\Core\Model
                  m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
                  m.custom AS meta_custom,
                  m.url, m.url_overwrite,
-                 m.data AS meta_data,
+                 m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index,
                  t.path AS template_path, t.data AS template_data
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
