@@ -42,8 +42,8 @@ class Add extends BackendBaseActionAdd
 
         // set hidden values
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden'), 'value' => 'Y'],
-            ['label' => BL::lbl('Published'), 'value' => 'N'],
+            ['label' => BL::lbl('Hidden'), 'value' => true],
+            ['label' => BL::lbl('Published'), 'value' => false],
         ];
         // get categories
         $categories = BackendFaqModel::getCategories();
@@ -51,7 +51,7 @@ class Add extends BackendBaseActionAdd
         // create elements
         $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->form->addEditor('answer');
-        $this->form->addRadiobutton('hidden', $rbtHiddenValues, 'N');
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, false);
         $this->form->addDropdown('category_id', $categories);
         $this->form->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
 

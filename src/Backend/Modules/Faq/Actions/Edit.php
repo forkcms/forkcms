@@ -60,8 +60,8 @@ class Edit extends BackendBaseActionEdit
     {
         // get values for the form
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden'), 'value' => 'Y'],
-            ['label' => BL::lbl('Published'), 'value' => 'N'],
+            ['label' => BL::lbl('Hidden'), 'value' => true],
+            ['label' => BL::lbl('Published'), 'value' => false],
         ];
         $categories = BackendFaqModel::getCategories();
 

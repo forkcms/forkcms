@@ -89,7 +89,7 @@ class Model
     {
         BackendModel::getContainer()->get('database')->update(
             'faq_feedback',
-            ['processed' => 'Y', 'edited_on' => \SpoonDate::getDate('Y-m-d H:i:s')],
+            ['processed' => true, 'edited_on' => \SpoonDate::getDate('Y-m-d H:i:s')],
             'id = ?',
             $itemId
         );
@@ -149,7 +149,7 @@ class Model
              FROM faq_feedback AS f
              WHERE f.processed = ?
              LIMIT ?',
-            ['N', $limit]
+            [false, $limit]
         );
     }
 
@@ -159,7 +159,7 @@ class Model
             'SELECT f.*
              FROM faq_feedback AS f
              WHERE f.question_id = ? AND f.processed = ?',
-            [$id, 'N']
+            [$id, false]
         );
     }
 
