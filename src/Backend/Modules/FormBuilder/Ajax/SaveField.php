@@ -55,10 +55,7 @@ class SaveField extends BackendBaseAJAXAction
         $defaultValues = trim($this->getRequest()->request->get('default_values', ''));
         $placeholder = trim($this->getRequest()->request->get('placeholder', ''));
         $classname = trim($this->getRequest()->request->get('classname', ''));
-        $required = $this->getRequest()->request->get('required');
-        if (!in_array($required, ['Y', 'N'])) {
-            $required = 'N';
-        }
+        $required = $this->getRequest()->request->getBoolean('required');
         $requiredErrorMessage = trim($this->getRequest()->request->get('required_error_message', ''));
         $validation = $this->getRequest()->request->get('validation');
         if (!in_array($validation, ['email', 'number', 'time'])) {
@@ -68,14 +65,8 @@ class SaveField extends BackendBaseAJAXAction
         $errorMessage = trim($this->getRequest()->request->get('error_message', ''));
 
         // special field for textbox
-        $replyTo = $this->getRequest()->request->get('reply_to');
-        if (!in_array($replyTo, ['Y', 'N'])) {
-            $replyTo = 'N';
-        }
-        $sendConfirmationMailTo = $this->getRequest()->request->get('send_confirmation_mail_to');
-        if (!in_array($sendConfirmationMailTo, ['Y', 'N'])) {
-            $sendConfirmationMailTo = 'N';
-        }
+        $replyTo = $this->getRequest()->request->getBoolean('reply_to');
+        $sendConfirmationMailTo = $this->getRequest()->request->getBoolean('send_confirmation_mail_to');
         $confirmationMailSubject = trim($this->getRequest()->request->get('confirmation_mail_subject'));
 
         // special fields for datetime
@@ -119,21 +110,21 @@ class SaveField extends BackendBaseAJAXAction
             if ($label === '') {
                 $errors['label'] = BL::getError('LabelIsRequired');
             }
-            if ($required === 'Y' && $requiredErrorMessage === '') {
+            if ($required && $requiredErrorMessage === '') {
                 $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
             }
             if ($validation !== '' && $errorMessage === '') {
                 $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
             }
-            if ($replyTo === 'Y' && $validation !== 'email') {
+            if ($replyTo && $validation !== 'email') {
                 $errors['reply_to_error_message'] = BL::getError('EmailValidationIsRequired');
             }
-            if ($sendConfirmationMailTo === 'Y' && $validation !== 'email') {
+            if ($sendConfirmationMailTo && $validation !== 'email') {
                 $errors['send_confirmation_mail_to_error_message'] = BL::getError(
                     'ActivateEmailValidationToUseThisOption'
                 );
             }
-            if ($sendConfirmationMailTo === 'Y' && empty($confirmationMailSubject)) {
+            if ($sendConfirmationMailTo && empty($confirmationMailSubject)) {
                 $errors['confirmation_mail_subject_error_message'] = BL::getError(
                     'ConfirmationSubjectIsEmpty'
                 );
@@ -143,7 +134,7 @@ class SaveField extends BackendBaseAJAXAction
             if ($label === '') {
                 $errors['label'] = BL::getError('LabelIsRequired');
             }
-            if ($required === 'Y' && $requiredErrorMessage === '') {
+            if ($required && $requiredErrorMessage === '') {
                 $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
             }
             if ($validation !== '' && $errorMessage === '') {
@@ -157,7 +148,7 @@ class SaveField extends BackendBaseAJAXAction
             if (in_array($valueType, ['day', 'week', 'month', 'year']) && $valueAmount === '') {
                 $errors['default_value_error_message'] = BL::getError('ValueIsRequired');
             }
-            if ($required === 'Y' && $requiredErrorMessage === '') {
+            if ($required && $requiredErrorMessage === '') {
                 $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
             }
             if ($validation !== '' && $errorMessage === '') {
@@ -180,7 +171,7 @@ class SaveField extends BackendBaseAJAXAction
             if ($label === '') {
                 $errors['label'] = BL::getError('LabelIsRequired');
             }
-            if ($required === 'Y' && $requiredErrorMessage === '') {
+            if ($required && $requiredErrorMessage === '') {
                 $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
             }
             if ($values === '') {
@@ -191,7 +182,7 @@ class SaveField extends BackendBaseAJAXAction
             if ($label === '') {
                 $errors['label'] = BL::getError('LabelIsRequired');
             }
-            if ($required === 'Y' && $requiredErrorMessage === '') {
+            if ($required && $requiredErrorMessage === '') {
                 $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
             }
             if ($values === '') {
@@ -202,7 +193,7 @@ class SaveField extends BackendBaseAJAXAction
             if ($label === '') {
                 $errors['label'] = BL::getError('LabelIsRequired');
             }
-            if ($required === 'Y' && $requiredErrorMessage === '') {
+            if ($required && $requiredErrorMessage === '') {
                 $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
             }
         }
@@ -265,8 +256,8 @@ class SaveField extends BackendBaseAJAXAction
 
         // reply-to, only for textboxes
         if ($type === 'textbox') {
-            $settings['reply_to'] = ($replyTo === 'Y');
-            $settings['send_confirmation_mail_to'] = ($sendConfirmationMailTo === 'Y');
+            $settings['reply_to'] = $replyTo;
+            $settings['send_confirmation_mail_to'] = $sendConfirmationMailTo;
             $settings['confirmation_mail_subject'] = $confirmationMailSubject;
         }
 
@@ -302,7 +293,7 @@ class SaveField extends BackendBaseAJAXAction
         }
 
         // required
-        if ($required === 'Y') {
+        if ($required) {
             // build array
             $validate = [];
             $validate['field_id'] = $fieldId;
