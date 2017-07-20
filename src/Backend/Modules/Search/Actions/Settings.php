@@ -86,7 +86,7 @@ class Settings extends BackendBaseActionEdit
                 // add field to decide whether or not this module is searchable
                 $this->form->addCheckbox(
                     'search_' . $module,
-                    isset($this->settings[$module]) ? $this->settings[$module]['searchable'] == 'Y' : false
+                    isset($this->settings[$module]) ? $this->settings[$module]['searchable'] : false
                 );
 
                 // add field to decide weight for this module
@@ -96,7 +96,7 @@ class Settings extends BackendBaseActionEdit
                 );
 
                 // field disabled?
-                if (!isset($this->settings[$module]) || $this->settings[$module]['searchable'] != 'Y') {
+                if (!isset($this->settings[$module]) || !$this->settings[$module]['searchable']) {
                     $this->form->getField('search_' . $module . '_weight')->setAttribute('disabled', 'disabled');
                     $this->form->getField('search_' . $module . '_weight')->setAttribute('class', 'form-control disabled');
                 }
@@ -169,7 +169,7 @@ class Settings extends BackendBaseActionEdit
 
                 // module search
                 foreach ((array) $this->modules as $module) {
-                    $searchable = $this->form->getField('search_' . $module['module'])->getChecked() ? 'Y' : 'N';
+                    $searchable = $this->form->getField('search_' . $module['module'])->getChecked();
                     $weight = $this->form->getField('search_' . $module['module'] . '_weight')->getValue();
 
                     BackendSearchModel::insertModuleSettings($module['module'], $searchable, $weight);
