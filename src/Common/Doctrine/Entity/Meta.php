@@ -204,13 +204,13 @@ class Meta
 
         return new self(
             $metaData['keywords'],
-            $metaData['keywords_overwrite'] === 'Y',
+            $metaData['keywords_overwrite'],
             $metaData['description'],
-            $metaData['description_overwrite'] === 'Y',
+            $metaData['description_overwrite'],
             $metaData['title'],
-            $metaData['title_overwrite'] === 'Y',
+            $metaData['title_overwrite'],
             $metaData['url'],
-            $metaData['url_overwrite'] === 'Y',
+            $metaData['url_overwrite'],
             $metaData['custom'],
             array_key_exists('SEOFollow', $metaData) ? SEOFollow::fromString((string) $metaData['SEOFollow']) : null,
             array_key_exists('SEOIndex', $metaData) ? SEOIndex::fromString((string) $metaData['SEOIndex']) : null,
