@@ -78,7 +78,7 @@ class Model
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT * FROM location WHERE language = ? AND show_overview = ?',
-            [LANGUAGE, 'Y']
+            [LANGUAGE, true]
         );
     }
 
