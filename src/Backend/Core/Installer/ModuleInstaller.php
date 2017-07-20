@@ -563,6 +563,8 @@ class ModuleInstaller
      * @param bool $titleOverwrite Should the page title be overwritten?
      * @param bool $urlOverwrite Should the URL be overwritten?
      * @param string $custom Any custom meta-data.
+     * @param string $seoFollow Any custom meta-data.
+     * @param string $seoIndex Any custom meta-data.
      * @param array $data Any custom meta-data.
      *
      * @return int
@@ -577,7 +579,9 @@ class ModuleInstaller
         bool $titleOverwrite = false,
         bool $urlOverwrite = false,
         string $custom = null,
-        $data = null
+        string $seoFollow = null,
+        string $seoIndex = null,
+        array $data = null
     ): int {
         return (int) $this->getDatabase()->insert(
             'meta',
@@ -591,6 +595,8 @@ class ModuleInstaller
                 'url' => CommonUri::getUrl($url),
                 'url_overwrite' => $urlOverwrite ? 'Y' : 'N',
                 'custom' => $custom,
+                'seo_follow' => $seoFollow,
+                'seo_index' => $seoIndex,
                 'data' => $data !== null ? serialize($data) : null,
             ]
         );
@@ -652,6 +658,8 @@ class ModuleInstaller
         $meta['url'] = $meta['url'] ?? $defaultValue;
         $meta['url_overwrite'] = $meta['url_overwrite'] ?? false;
         $meta['custom'] = $meta['custom'] ?? null;
+        $meta['seo_follow'] = $meta['seo_follow'] ?? null;
+        $meta['seo_index'] = $meta['seo_index'] ?? null;
         $meta['data'] = $meta['data'] ?? null;
 
         return $meta;
@@ -671,6 +679,8 @@ class ModuleInstaller
             $meta['title_overwrite'],
             $meta['url_overwrite'],
             $meta['custom'],
+            $meta['seo_follow'],
+            $meta['seo_index'],
             $meta['data']
         );
     }

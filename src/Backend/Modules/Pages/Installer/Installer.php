@@ -177,7 +177,7 @@ class Installer extends ModuleInstaller
                         'language' => $language,
                         'hidden' => 'Y',
                     ],
-                    ['data' => ['seo_index' => 'noindex', 'seo_follow' => 'nofollow']],
+                    ['seo_index' => 'noindex', 'seo_follow' => 'nofollow'],
                     [
                         'html' => __DIR__ . '/Data/' . $language . '/lorem_ipsum.txt',
                     ],
@@ -253,7 +253,7 @@ class Installer extends ModuleInstaller
                     'type' => 'footer',
                     'language' => $language,
                 ],
-                ['data' => ['seo_index' => 'noindex', 'seo_follow' => 'nofollow']],
+                ['seo_index' => 'noindex', 'seo_follow' => 'nofollow'],
                 [
                     'html' => __DIR__ . '/Data/' . $language .
                         '/disclaimer.txt',

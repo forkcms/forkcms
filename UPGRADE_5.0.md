@@ -448,3 +448,5 @@ UPDATE meta
 SET seo_follow = "none"
 WHERE data IS NOT NULL AND data LIKE '%seo_follow";s:4:"none"%';
 ```
+
+In the installer the method `insertMeta` has a new signature so we can add the seo_follow and seo_index
