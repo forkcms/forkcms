@@ -101,7 +101,6 @@ class Detail extends FrontendBaseBlock
         $this->record['category_full_url'] = FrontendNavigation::getUrlForBlock('Blog', 'Category') .
                                              '/' . $this->record['category_url'];
         $this->record['full_url'] = FrontendNavigation::getUrlForBlock('Blog', 'Detail') . '/' . $this->record['url'];
-        $this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
         $this->record['comments_count'] = count($this->comments);
 
         // reset allow comments
@@ -166,7 +165,7 @@ class Detail extends FrontendBaseBlock
         );
         $this->header->addOpenGraphData(
             'description',
-            ($this->record['meta_description_overwrite'] == 'Y') ? $this->record['meta_description'] : $this->record['title'],
+            $this->record['meta_description_overwrite'] ? $this->record['meta_description'] : $this->record['title'],
             true
         );
 
@@ -187,14 +186,14 @@ class Detail extends FrontendBaseBlock
         $this->breadcrumb->addElement($this->record['title']);
 
         // set meta
-        $this->header->setPageTitle($this->record['meta_title'], ($this->record['meta_title_overwrite'] == 'Y'));
+        $this->header->setPageTitle($this->record['meta_title'], $this->record['meta_title_overwrite']);
         $this->header->addMetaDescription(
             $this->record['meta_description'],
-            ($this->record['meta_description_overwrite'] == 'Y')
+            $this->record['meta_description_overwrite']
         );
         $this->header->addMetaKeywords(
             $this->record['meta_keywords'],
-            ($this->record['meta_keywords_overwrite'] == 'Y')
+            $this->record['meta_keywords_overwrite']
         );
         $this->header->setMetaCustom($this->record['meta_custom']);
 

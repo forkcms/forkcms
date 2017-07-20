@@ -50,8 +50,8 @@ class Add extends BackendBaseActionAdd
 
         // set hidden values
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => 'Y'],
-            ['label' => BL::lbl('Published'), 'value' => 'N'],
+            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => true],
+            ['label' => BL::lbl('Published'), 'value' => false],
         ];
 
         // get categories
@@ -62,7 +62,7 @@ class Add extends BackendBaseActionAdd
         $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->form->addEditor('text');
         $this->form->addEditor('introduction');
-        $this->form->addRadiobutton('hidden', $rbtHiddenValues, 'N');
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, false);
         $this->form->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
         $this->form->addDropdown('category_id', $categories, $this->getRequest()->query->getInt('category'));
         if (count($categories) !== 2) {
@@ -141,7 +141,7 @@ class Add extends BackendBaseActionAdd
                     ),
                     'created_on' => BackendModel::getUTCDate(),
                     'hidden' => $this->form->getField('hidden')->getValue(),
-                    'allow_comments' => $this->form->getField('allow_comments')->getChecked() ? 'Y' : 'N',
+                    'allow_comments' => $this->form->getField('allow_comments')->getChecked(),
                     'num_comments' => 0,
                     'status' => $status,
                 ];

@@ -762,10 +762,10 @@ class Model
             $item['user_id'] = BackendAuthentication::getUser()->getUserId();
         }
         if (!isset($item['hidden'])) {
-            $item['hidden'] = 'N';
+            $item['hidden'] = false;
         }
         if (!isset($item['allow_comments'])) {
-            $item['allow_comments'] = 'Y';
+            $item['allow_comments'] = true;
         }
         if (!isset($item['num_comments'])) {
             $item['num_comments'] = 0;
@@ -794,7 +794,7 @@ class Model
 
         // Set drafts hidden
         if (strtotime((string) $item['publish_on']) > time()) {
-            $item['hidden'] = 'Y';
+            $item['hidden'] = true;
             $item['status'] = 'draft';
         }
 
@@ -806,25 +806,25 @@ class Model
             $meta['keywords'] = $item['title'];
         }
         if (!isset($meta['keywords_overwrite'])) {
-            $meta['keywords_overwrite'] = 'N';
+            $meta['keywords_overwrite'] = false;
         }
         if (!isset($meta['description'])) {
             $meta['description'] = $item['title'];
         }
         if (!isset($meta['description_overwrite'])) {
-            $meta['description_overwrite'] = 'N';
+            $meta['description_overwrite'] = false;
         }
         if (!isset($meta['title'])) {
             $meta['title'] = $item['title'];
         }
         if (!isset($meta['title_overwrite'])) {
-            $meta['title_overwrite'] = 'N';
+            $meta['title_overwrite'] = false;
         }
         if (!isset($meta['url'])) {
             $meta['url'] = self::getUrl($item['title']);
         }
         if (!isset($meta['url_overwrite'])) {
-            $meta['url_overwrite'] = 'N';
+            $meta['url_overwrite'] = false;
         }
         if (!isset($meta['seo_index'])) {
             $meta['seo_index'] = 'index';
