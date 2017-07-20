@@ -450,3 +450,58 @@ WHERE data IS NOT NULL AND data LIKE '%seo_follow";s:4:"none"%';
 ```
 
 In the installer the method `insertMeta` has a new signature so we can add the seo_follow and seo_index
+
+## Move from Y and N to true booleans
+
+We used to use Y and N as booleans, since doctrine uses 1(true) and 0(false) we switched to that, if you use it somewhere in your code you will have to update them to the corresponding booleans
+
+```mysql
+UPDATE blog_posts SET hidden = CASE WHEN hidden = "Y" THEN 1 ELSE 0 END;
+ALTER TABLE blog_posts MODIFY hidden TINYINT(1) DEFAULT '0' NOT NULL;
+UPDATE blog_posts SET allow_comments = CASE WHEN allow_comments = "Y" THEN 1 ELSE 0 END;
+ALTER TABLE blog_posts MODIFY allow_comments TINYINT(1) NOT NULL default '0';
+UPDATE content_blocks SET hidden = CASE WHEN hidden= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE content_blocks MODIFY hidden TINYINT(1) NOT NULL default '0';
+UPDATE faq_feedback SET processed = CASE WHEN processed= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE faq_feedback MODIFY processed TINYINT(1) NOT NULL default '0';
+UPDATE faq_questions SET hidden = CASE WHEN hidden= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE faq_questions MODIFY hidden TINYINT(1) NOT NULL default '0';
+UPDATE location SET show_overview = CASE WHEN show_overview= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE location MODIFY show_overview TINYINT(1) NOT NULL DEFAULT '1';
+UPDATE meta SET keywords_overwrite = CASE WHEN keywords_overwrite= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE meta MODIFY keywords_overwrite TINYINT(1) NOT NULL default '0';
+UPDATE meta SET description_overwrite = CASE WHEN description_overwrite= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE meta MODIFY description_overwrite TINYINT(1) NOT NULL default '0';
+UPDATE meta SET title_overwrite = CASE WHEN title_overwrite= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE meta MODIFY title_overwrite TINYINT(1) NOT NULL default '0';
+UPDATE meta SET url_overwrite = CASE WHEN url_overwrite= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE meta MODIFY url_overwrite TINYINT(1) NOT NULL default '0';
+UPDATE modules_extras SET hidden = CASE WHEN hidden= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE modules_extras MODIFY hidden TINYINT(1) NOT NULL default '0';
+UPDATE pages SET navigation_title_overwrite = CASE WHEN navigation_title_overwrite= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE pages MODIFY navigation_title_overwrite TINYINT(1) NOT NULL DEFAULT '0' COMMENT 'should we override the navigation title';
+UPDATE pages SET allow_move = CASE WHEN allow_move= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE pages MODIFY allow_move TINYINT(1) NOT NULL DEFAULT '1';
+UPDATE pages SET allow_children = CASE WHEN allow_children= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE pages MODIFY allow_children TINYINT(1) NOT NULL DEFAULT '1';
+UPDATE pages SET hidden = CASE WHEN hidden= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE pages MODIFY hidden TINYINT(1) NOT NULL DEFAULT '1';
+UPDATE pages SET allow_edit = CASE WHEN allow_edit= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE pages MODIFY allow_edit TINYINT(1) NOT NULL DEFAULT '1';
+UPDATE pages SET allow_delete = CASE WHEN allow_delete= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE pages MODIFY allow_delete TINYINT(1) NOT NULL DEFAULT '1';
+UPDATE pages_blocks SET visible = CASE WHEN visible= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE pages_blocks MODIFY visible TINYINT(1) NOT NULL DEFAULT '1';
+UPDATE search_index SET active = CASE WHEN active= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE search_index MODIFY active TINYINT(1) NOT NULL DEFAULT '0';
+UPDATE search_modules SET searchable = CASE WHEN searchable= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE search_modules MODIFY searchable TINYINT(1) NOT NULL DEFAULT '0';
+UPDATE themes_templates SET active = CASE WHEN active= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE themes_templates MODIFY active TINYINT(1) NOT NULL DEFAULT '1' COMMENT 'Is this template active (as in: will it be used).';
+UPDATE users SET active = CASE WHEN active= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE users MODIFY active TINYINT(1) NOT NULL DEFAULT '1' COMMENT 'is this user active?';
+UPDATE users SET deleted = CASE WHEN deleted= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE users MODIFY deleted TINYINT(1) NOT NULL DEFAULT '0' COMMENT 'is the user deleted?';
+UPDATE users SET is_god = CASE WHEN is_god= "Y" THEN 1 ELSE 0 END;
+ALTER TABLE users MODIFY is_god TINYINT(1) NOT NULL DEFAULT '0';
+```
