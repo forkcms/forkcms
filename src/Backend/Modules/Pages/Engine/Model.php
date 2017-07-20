@@ -324,7 +324,7 @@ class Model
         if (empty($page)) {
             return false;
         }
-        if ($page['allow_delete'] == 'N') {
+        if (!$page['allow_delete']) {
             return false;
         }
 
@@ -417,24 +417,24 @@ class Model
 
         // can't be deleted
         if (in_array($return['id'], [1, 404])) {
-            $return['allow_delete'] = 'N';
+            $return['allow_delete'] = false;
         }
 
         // can't be moved
         if (in_array($return['id'], [1, 404])) {
-            $return['allow_move'] = 'N';
+            $return['allow_move'] = false;
         }
 
         // can't have children
         if (in_array($return['id'], [404])) {
-            $return['allow_move'] = 'N';
+            $return['allow_move'] = false;
         }
 
         // convert into bools for use in template engine
-        $return['move_allowed'] = (bool) ($return['allow_move'] == 'Y');
-        $return['children_allowed'] = (bool) ($return['allow_children'] == 'Y');
-        $return['edit_allowed'] = (bool) ($return['allow_edit'] == 'Y');
-        $return['delete_allowed'] = (bool) ($return['allow_delete'] == 'Y');
+        $return['move_allowed'] = (bool) $return['allow_move'];
+        $return['children_allowed'] = (bool) $return['allow_children'];
+        $return['edit_allowed'] = (bool) $return['allow_edit'];
+        $return['delete_allowed'] = (bool) $return['allow_delete'];
 
         // unserialize data
         if ($return['data'] !== null) {
@@ -983,7 +983,7 @@ class Model
         $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
 
         // does the parent have extras?
-        if ($parentPageInfo['has_extra'] == 'Y' && !$isAction) {
+        if (!$isAction && $parentPageInfo['has_extra']) {
             // set locale
             FrontendLanguage::setLocale(BL::getWorkingLanguage(), true);
 
@@ -1122,9 +1122,9 @@ class Model
         // calculate new parent for items that should be moved inside
         if ($droppedOnPageId == 0) {
             $newParent = 0;
-        } elseif ($typeOfDrop == 'inside') {
+        } elseif ($typeOfDrop === 'inside') {
             // check if item allows children
-            if ($droppedOnPage['allow_children'] != 'Y') {
+            if (!$droppedOnPage['allow_children']) {
                 return false;
             }
 
@@ -1137,7 +1137,7 @@ class Model
 
         // decide new type
         if ($droppedOnPageId == 0) {
-            if ($tree == 'footer') {
+            if ($tree === 'footer') {
                 $newType = 'footer';
             } else {
                 $newType = 'meta';
@@ -1234,7 +1234,7 @@ class Model
             $currentUrl,
             $pageId,
             $newParent,
-            (isset($page['data']['is_action']) && $page['data']['is_action'] == 'Y')
+            isset($page['data']['is_action']) && $page['data']['is_action']
         );
 
         // store
@@ -1368,7 +1368,7 @@ class Model
                             'html' => '',
                             'created_on' => BackendModel::getUTCDate(),
                             'edited_on' => BackendModel::getUTCDate(),
-                            'visible' => 'Y',
+                            'visible' => true,
                             'sequence' => count($defaultBlocks[$position]) - 1,
                         ];
                     }
