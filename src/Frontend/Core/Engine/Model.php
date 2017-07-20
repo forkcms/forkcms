@@ -180,7 +180,7 @@ class Model extends \Common\Core\Model
             return [];
         }
 
-        if (!$allowHidden && (int) $pageRevision['id'] !== 404 && $pageRevision['hidden'] === 'Y') {
+        if (!$allowHidden && (int) $pageRevision['id'] !== 404 && $pageRevision['hidden']) {
             return self::getPage(404);
         }
 
@@ -202,12 +202,12 @@ class Model extends \Common\Core\Model
     {
         $positions = [];
         $where = 'pb.revision_id = ?';
-        $parameters = ['N', $revisionId];
+        $parameters = [false, $revisionId];
 
         if (!$allowHidden) {
             $where .= ' AND p.status = ? AND pb.visible = ?';
             $parameters[] = 'active';
-            $parameters[] = 'Y';
+            $parameters[] = true;
         }
 
         // get blocks

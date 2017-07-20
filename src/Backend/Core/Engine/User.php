@@ -173,7 +173,7 @@ class User
         $this->secretKey = $userData['secret_key'];
         $this->lastLoggedInDate = (int) $userData['date'];
         $this->isAuthenticated = true;
-        $this->isGod = $userData['is_god'] === 'Y';
+        $this->isGod = (bool) $userData['is_god'];
 
         $this->loadGroups();
 

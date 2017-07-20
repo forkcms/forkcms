@@ -400,17 +400,17 @@ class Page extends KernelLoader
         // set pageTitle
         $this->header->setPageTitle(
             $this->record['meta_title'],
-            $this->record['meta_title_overwrite'] === 'Y'
+            $this->record['meta_title_overwrite']
         );
 
         // set meta-data
         $this->header->addMetaDescription(
             $this->record['meta_description'],
-            $this->record['meta_description_overwrite'] === 'Y'
+            $this->record['meta_description_overwrite']
         );
         $this->header->addMetaKeywords(
             $this->record['meta_keywords'],
-            $this->record['meta_keywords_overwrite'] === 'Y'
+            $this->record['meta_keywords_overwrite']
         );
         $this->header->setMetaCustom($this->record['meta_custom']);
 

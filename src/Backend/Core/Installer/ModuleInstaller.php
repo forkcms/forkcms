@@ -177,7 +177,7 @@ class ModuleInstaller
                 'INSERT INTO search_index (module, other_id, language, field, value, active)
                  VALUES (?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                [(string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y']
+                [(string) $module, (int) $otherId, (string) $language, (string) $field, $value, true, $value, true]
             );
         }
 
@@ -242,7 +242,7 @@ class ModuleInstaller
                  FROM users
                  WHERE is_god = ? AND active = ? AND deleted = ?
                  ORDER BY id ASC',
-                ['Y', 'Y', 'N']
+                [true, true, false]
             );
         } catch (\Exception $e) {
             return 1;
@@ -587,13 +587,13 @@ class ModuleInstaller
             'meta',
             [
                 'keywords' => $keywords,
-                'keywords_overwrite' => $keywordsOverwrite ? 'Y' : 'N',
+                'keywords_overwrite' => $keywordsOverwrite,
                 'description' => $description,
-                'description_overwrite' => $descriptionOverwrite ? 'Y' : 'N',
+                'description_overwrite' => $descriptionOverwrite,
                 'title' => $title,
-                'title_overwrite' => $titleOverwrite ? 'Y' : 'N',
+                'title_overwrite' => $titleOverwrite,
                 'url' => CommonUri::getUrl($url),
-                'url_overwrite' => $urlOverwrite ? 'Y' : 'N',
+                'url_overwrite' => $urlOverwrite,
                 'custom' => $custom,
                 'seo_follow' => $seoFollow,
                 'seo_index' => $seoIndex,
@@ -693,17 +693,17 @@ class ModuleInstaller
         $revision['type'] = $revision['type'] ?? 'page';
         $revision['parent_id'] = $revision['parent_id'] ?? ($revision['type'] === 'page' ? 1 : 0);
         $revision['navigation_title'] = $revision['navigation_title'] ?? $revision['title'];
-        $revision['navigation_title_overwrite'] = $revision['navigation_title_overwrite'] ?? 'N';
-        $revision['hidden'] = $revision['hidden'] ?? 'N';
+        $revision['navigation_title_overwrite'] = $revision['navigation_title_overwrite'] ?? false;
+        $revision['hidden'] = $revision['hidden'] ?? false;
         $revision['status'] = $revision['status'] ?? 'active';
         $revision['publish_on'] = $revision['publish_on'] ?? gmdate('Y-m-d H:i:s');
         $revision['created_on'] = $revision['created_on'] ?? gmdate('Y-m-d H:i:s');
         $revision['edited_on'] = $revision['edited_on'] ?? gmdate('Y-m-d H:i:s');
         $revision['data'] = $revision['data'] ?? null;
-        $revision['allow_move'] = $revision['allow_move'] ?? 'Y';
-        $revision['allow_children'] = $revision['allow_children'] ?? 'Y';
-        $revision['allow_edit'] = $revision['allow_edit'] ?? 'Y';
-        $revision['allow_delete'] = $revision['allow_delete'] ?? 'Y';
+        $revision['allow_move'] = $revision['allow_move'] ?? true;
+        $revision['allow_children'] = $revision['allow_children'] ?? true;
+        $revision['allow_edit'] = $revision['allow_edit'] ?? true;
+        $revision['allow_delete'] = $revision['allow_delete'] ?? true;
         $revision['sequence'] = $revision['sequence'] ?? $this->getNextPageSequence(
             $revision['language'],
             $revision['parent_id'],
@@ -778,7 +778,7 @@ class ModuleInstaller
                 $block['created_on'] = $block['created_on'] ?? gmdate('Y-m-d H:i:s');
                 $block['edited_on'] = $block['edited_on'] ?? gmdate('Y-m-d H:i:s');
                 $block['extra_id'] = $block['extra_id'] ?? null;
-                $block['visible'] = $block['visible'] ?? 'Y';
+                $block['visible'] = $block['visible'] ?? true;
                 $block['sequence'] = $block['sequence'] ?? count($positions[$block['position']]) - 1;
                 $block['html'] = $block['html'] ?? '';
 
@@ -820,7 +820,7 @@ class ModuleInstaller
         $this->getDatabase()->execute(
             'INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
              ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
-            [$module, $searchable ? 'Y' : 'N', $weight, $searchable, $weight]
+            [$module, $searchable, $weight, $searchable, $weight]
         );
     }
 

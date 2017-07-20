@@ -327,7 +327,7 @@ class Authentication
              FROM users AS u
              WHERE u.email = ? AND u.active = ? AND u.deleted = ?
              LIMIT 1',
-            [$login, 'Y', 'N']
+            [$login, true, false]
         );
 
         if ($userId === 0) {
