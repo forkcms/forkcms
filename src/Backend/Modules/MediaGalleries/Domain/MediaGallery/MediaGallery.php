@@ -263,7 +263,7 @@ class MediaGallery
         Model::updateExtra(
             $this->moduleExtraId,
             'hidden',
-            'N'
+            false
         );
     }
 
