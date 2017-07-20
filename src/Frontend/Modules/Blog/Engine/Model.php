@@ -33,7 +33,7 @@ class Model implements FrontendTagsInterface
              m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
              m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.custom AS meta_custom,
              m.url,
-             m.data AS meta_data
+             m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_posts AS i
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
@@ -143,7 +143,8 @@ class Model implements FrontendTagsInterface
     public static function getAllCategories(): array
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data
+            'SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data,
+                 m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_categories AS c
              INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
              INNER JOIN meta AS m ON c.meta_id = m.id
@@ -731,7 +732,7 @@ class Model implements FrontendTagsInterface
              m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
              m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.custom AS meta_custom,
              m.url,
-             m.data AS meta_data
+             m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_posts AS i
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id

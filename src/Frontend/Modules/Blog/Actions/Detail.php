@@ -199,14 +199,14 @@ class Detail extends FrontendBaseBlock
         $this->header->setMetaCustom($this->record['meta_custom']);
 
         // advanced SEO-attributes
-        if (isset($this->record['meta_data']['seo_index'])) {
+        if (isset($this->record['meta_seo_index'])) {
             $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_index']]
+                ['name' => 'robots', 'content' => $this->record['meta_seo_index']]
             );
         }
-        if (isset($this->record['meta_data']['seo_follow'])) {
+        if (isset($this->record['meta_seo_follow'])) {
             $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']]
+                ['name' => 'robots', 'content' => $this->record['meta_seo_follow']]
             );
         }
 

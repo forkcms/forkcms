@@ -826,8 +826,11 @@ class Model
         if (!isset($meta['url_overwrite'])) {
             $meta['url_overwrite'] = 'N';
         }
-        if (!isset($meta['data'])) {
-            $meta['data'] = serialize(['seo_index' => 'index', 'seo_follow' => 'follow']);
+        if (!isset($meta['seo_index'])) {
+            $meta['seo_index'] = 'index';
+        }
+        if (!isset($meta['seo_follow'])) {
+            $meta['seo_follow'] = 'follow';
         }
 
         // Write meta to database

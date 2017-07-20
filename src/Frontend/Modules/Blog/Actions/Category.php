@@ -125,14 +125,14 @@ class Category extends FrontendBaseBlock
         $this->header->setPageTitle($this->category['label']);
 
         // advanced SEO-attributes
-        if (isset($this->category['meta_data']['seo_index'])) {
+        if (isset($this->category['meta_seo_index'])) {
             $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $this->category['meta_data']['seo_index']]
+                ['name' => 'robots', 'content' => $this->category['meta_seo_index']]
             );
         }
-        if (isset($this->category['meta_data']['seo_follow'])) {
+        if (isset($this->category['meta_seo_follow'])) {
             $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $this->category['meta_data']['seo_follow']]
+                ['name' => 'robots', 'content' => $this->category['meta_seo_follow']]
             );
         }
 
