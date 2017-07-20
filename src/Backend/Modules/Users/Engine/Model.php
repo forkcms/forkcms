@@ -32,7 +32,7 @@ class Model
     {
         BackendModel::getContainer()->get('database')->update(
             'users',
-            ['active' => 'N', 'deleted' => 'Y'],
+            ['active' => false, 'deleted' => true],
             'id = ?',
             [$id]
         );
@@ -67,7 +67,7 @@ class Model
              FROM users AS i
              WHERE i.email = ? AND i.deleted = ?
              LIMIT 1',
-            [$email, 'Y']
+            [$email, true]
         );
     }
 
@@ -91,7 +91,7 @@ class Model
                  FROM users AS i
                  WHERE i.id = ? AND i.deleted = ?
                  LIMIT 1',
-                [$id, 'N']
+                [$id, false]
             );
         }
 
@@ -330,7 +330,7 @@ class Model
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
              WHERE i.active = ? AND i.deleted = ?',
-            ['nickname', 'Y', 'N']
+            ['nickname', true, false]
         );
 
         // loop users & unserialize
@@ -398,7 +398,7 @@ class Model
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id
              WHERE i.email = ? AND i.deleted = ?',
-            [$email, 'Y']
+            [$email, true]
         );
 
         // no valid users
@@ -407,7 +407,7 @@ class Model
         }
 
         // restore
-        $database->update('users', ['active' => 'Y', 'deleted' => 'N'], 'id = ?', (int) $id);
+        $database->update('users', ['active' => true, 'deleted' => false], 'id = ?', (int) $id);
 
         // return
         return true;

@@ -158,7 +158,7 @@ class Index extends BackendBaseActionIndex
         // create a list of the languages
         foreach ($this->get('fork.settings')->get('Core', 'languages', ['en']) as $abbreviation) {
             // is this the default language
-            $defaultLanguage = ($abbreviation == SITE_DEFAULT_LANGUAGE) ? true : false;
+            $defaultLanguage = $abbreviation === SITE_DEFAULT_LANGUAGE;
 
             // attributes
             $activeAttributes = [];
