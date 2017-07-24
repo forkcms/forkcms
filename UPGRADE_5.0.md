@@ -135,20 +135,20 @@ You should use `Common\Uri::getUrl()` instead.
 number is the correct name for input fields so we should mimic that
 
 run the following queries to update your database
-
-    ALTER TABLE forms_fields_validation CHANGE `type` `type` enum('required','email','number','time') COLLATE utf8mb4_unicode_ci NOT NULL;
-    UPDATE `forms_fields_validation` SET `type` = "number" WHERE `type` = "";
-
+```mysql
+ALTER TABLE forms_fields_validation CHANGE `type` `type` enum('required','email','number','time') COLLATE utf8mb4_unicode_ci NOT NULL;
+UPDATE `forms_fields_validation` SET `type` = "number" WHERE `type` = "";
+```
 ### set subject and template for formbuilder
 
 You can now set the subject and the template for the form with formbuilder.
 
 You do need to run the following queries for that.
-
-    ALTER TABLE forms ADD email_template VARCHAR(255) DEFAULT "Form.html.twig";
-    ALTER TABLE forms ADD email_subject VARCHAR(255) NULL;
-    ALTER TABLE forms MODIFY `method` enum('database','database_email','email') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email';
-
+```mysql
+ALTER TABLE forms ADD email_template VARCHAR(255) DEFAULT "Form.html.twig";
+ALTER TABLE forms ADD email_subject VARCHAR(255) NULL;
+ALTER TABLE forms MODIFY `method` enum('database','database_email','email') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'database_email';
+```
 ## Removed constants
 
 They where in the upgrade guide of 4.0 but now we no longer assign them.
@@ -196,25 +196,26 @@ site.path_library is removed.
 
 In order to use constraints in mysql 5.5 we need to use InnoDB
 Execute the following queries to migrate
-
-    RENAME TABLE meta TO old_meta;
-    CREATE TABLE `meta` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-      `keywords_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
-      `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-      `description_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
-      `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-      `title_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
-      `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-      `url_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
-      `custom` longtext COLLATE utf8mb4_unicode_ci,
-      `data` longtext COLLATE utf8mb4_unicode_ci,
-      PRIMARY KEY (`id`),
-      KEY `idx_url` (`url`(191))
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    INSERT INTO meta SELECT * FROM old_meta;
-    DROP TABLE old_meta;
+```mysql
+RENAME TABLE meta TO old_meta;
+CREATE TABLE `meta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `keywords` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keywords_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url_overwrite` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'N' COMMENT '(DC2Type:enum_bool)',
+  `custom` longtext COLLATE utf8mb4_unicode_ci,
+  `data` longtext COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `idx_url` (`url`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO meta SELECT * FROM old_meta;
+DROP TABLE old_meta;
+```
 
 ## PSR-4
 
