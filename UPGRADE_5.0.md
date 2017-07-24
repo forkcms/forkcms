@@ -456,6 +456,8 @@ In the installer the method `insertMeta` has a new signature so we can add the s
 
 We used to use Y and N as booleans, since doctrine uses 1(true) and 0(false) we switched to that, if you use it somewhere in your code you will have to update them to the corresponding booleans
 
+The DBALType `enum_bool` has also been removed because of this
+
 ```mysql
 UPDATE blog_posts SET hidden = CASE WHEN hidden = "Y" THEN 1 ELSE 0 END;
 ALTER TABLE blog_posts MODIFY hidden TINYINT(1) DEFAULT '0' NOT NULL;

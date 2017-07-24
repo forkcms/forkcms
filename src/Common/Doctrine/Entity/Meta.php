@@ -33,7 +33,7 @@ class Meta
     /**
      * @var bool
      *
-     * @ORM\Column(type="enum_bool", name="keywords_overwrite", options={"default" = "N"})
+     * @ORM\Column(type="boolean", name="keywords_overwrite", options={"default" = false})
      */
     private $keywordsOverwrite;
 
@@ -47,7 +47,7 @@ class Meta
     /**
      * @var bool
      *
-     * @ORM\Column(type="enum_bool", name="description_overwrite", options={"default" = "N"})
+     * @ORM\Column(type="boolean", name="description_overwrite", options={"default" = false})
      */
     private $descriptionOverwrite;
 
@@ -61,7 +61,7 @@ class Meta
     /**
      * @var bool
      *
-     * @ORM\Column(type="enum_bool", name="title_overwrite", options={"default" = "N"})
+     * @ORM\Column(type="boolean", name="title_overwrite", options={"default" = false})
      */
     private $titleOverwrite;
 
@@ -75,7 +75,7 @@ class Meta
     /**
      * @var bool
      *
-     * @ORM\Column(type="enum_bool", name="url_overwrite", options={"default" = "N"})
+     * @ORM\Column(type="boolean", name="url_overwrite", options={"default" = false})
      */
     private $urlOverwrite;
 
