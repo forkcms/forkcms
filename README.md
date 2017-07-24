@@ -43,12 +43,12 @@ Because we support multiple php versions it gave some issues. Therefore we use t
 
 Running the tests:
 
-    ./bin/simple-phpunit
+    composer test
 
 Running only the unit tests or the functional tests
 
-     ./bin/simple-phpunit --testsuite=functional
-     ./bin/simple-phpunit --testsuite=unit
+     composer test -- --testsuite=functional
+     composer test -- --testsuite=unit
 
 ## Styling the backend
 
