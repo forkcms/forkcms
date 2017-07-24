@@ -118,10 +118,10 @@ class Add extends BackendBaseActionAdd
         $this->form->addRadiobutton(
             'hidden',
             [
-                ['label' => BL::lbl('Hidden'), 'value' => true],
-                ['label' => BL::lbl('Published'), 'value' => true],
+                ['label' => BL::lbl('Hidden'), 'value' => 1],
+                ['label' => BL::lbl('Published'), 'value' => 0],
             ],
-            false
+            0
         );
 
         // image related fields

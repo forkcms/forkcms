@@ -121,7 +121,7 @@ class Detail extends FrontendBaseBlock
             [
                  [
                      'label' => FL::lbl('Yes'),
-                     'value' => true,
+                     'value' => 1,
                      'attributes' => [
                          'data-role' => 'fork-feedback-useful',
                          'data-response' => 'yes',
@@ -129,7 +129,7 @@ class Detail extends FrontendBaseBlock
                  ],
                  [
                      'label' => FL::lbl('No'),
-                     'value' => false,
+                     'value' => 0,
                      'attributes' => [
                          'data-role' => 'fork-feedback-useful',
                          'data-response' => 'no',

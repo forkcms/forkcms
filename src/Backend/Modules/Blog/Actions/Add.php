@@ -50,8 +50,8 @@ class Add extends BackendBaseActionAdd
 
         // set hidden values
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => true],
-            ['label' => BL::lbl('Published'), 'value' => false],
+            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => 1],
+            ['label' => BL::lbl('Published'), 'value' => 0],
         ];
 
         // get categories

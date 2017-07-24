@@ -234,8 +234,8 @@ class Edit extends BackendBaseActionEdit
         $this->form->addRadiobutton(
             'hidden',
             [
-                 ['label' => BL::lbl('Hidden'), 'value' => true],
-                 ['label' => BL::lbl('Published'), 'value' => false],
+                 ['label' => BL::lbl('Hidden'), 'value' => 1],
+                 ['label' => BL::lbl('Published'), 'value' => 0],
             ],
             $this->record['hidden']
         );
