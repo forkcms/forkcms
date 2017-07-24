@@ -202,6 +202,7 @@ class Add extends BackendBaseActionAdd
                 if ($block['extra_id'] === null || $block['extra_type'] == 'usertemplate') {
                     if ($this->getRequest()->request->get('block_extra_type_' . $i) === 'usertemplate') {
                         $block['extra_id'] = $this->getRequest()->request->get('block_extra_id_' . $i);
+                        $_POST['block_extra_data_' . $i] = htmlspecialchars($_POST['block_extra_data_' . $i]);
                     } else {
                         // reset vars
                         $block['extra_id'] = null;
