@@ -24,6 +24,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use SpoonFormHidden;
 
 /**
  * This is the edit-action, it will display a form to update an item
@@ -399,10 +400,13 @@ class Edit extends BackendBaseActionEdit
                 'block_extra_type_' . $block['index'],
                 $block['extra_type']
             );
-            $block['formElements']['hidExtraData'] = $this->form->addHidden(
-                'block_extra_data_' . $block['index'],
-                htmlentities($block['extra_data'])
+            $this->form->add(
+                $this->getHiddenJsonField(
+                    'block_extra_data_' . $block['index'],
+                    $block['extra_data']
+                )
             );
+            $block['formElements']['hidExtraData'] = $this->form->getField('block_extra_data_' . $block['index']);
             $block['formElements']['hidPosition'] = $this->form->addHidden(
                 'block_position_' . $block['index'],
                 $block['position']
@@ -856,5 +860,15 @@ class Edit extends BackendBaseActionEdit
             ['module' => $this->getModule()]
         );
         $this->template->assign('deleteForm', $deleteForm->createView());
+    }
+
+    private function getHiddenJsonField(string $name, string $json): SpoonFormHidden
+    {
+        return new class($name, htmlspecialchars($json)) extends SpoonFormHidden {
+            public function getValue($allowHTML = null)
+            {
+                return parent::getValue(true);
+            }
+        };
     }
 }
