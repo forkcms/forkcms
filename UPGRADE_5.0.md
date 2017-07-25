@@ -508,3 +508,12 @@ ALTER TABLE users MODIFY deleted TINYINT(1) NOT NULL DEFAULT '0' COMMENT 'is the
 UPDATE users SET is_god = CASE WHEN is_god= "Y" THEN 1 ELSE 0 END;
 ALTER TABLE users MODIFY is_god TINYINT(1) NOT NULL DEFAULT '0';
 ```
+
+## Move some form types to the common namespace so that they also can be used in the frontend
+
+Now that the frontend is also bootstrap we won't need to maintain duplicate form templates.
+The following form types have been moved
+
+| Old classname                       | New classname                 |
+|-------------------------------------|-------------------------------|
+| `\Backend\Form\Type\FileType`       | `\Common\Form\FileType`       |

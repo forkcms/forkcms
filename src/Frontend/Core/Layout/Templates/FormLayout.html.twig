@@ -37,3 +37,29 @@
     {% if form.parent %}</span>{% else %}</div>{% endif %}
   {%- endif %}
 {%- endblock form_errors %}
+
+{% block fork_file_widget %}
+  {% spaceless %}
+    <div class="form-group">
+      {{ form_widget(form.file) }}
+      {% if help_text_message %}
+        <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
+      {% endif %}
+      {{ form_errors(form.file) }}
+    </div>
+    {% set show_preview = show_preview and data is not null and data.fileName is not empty %}
+    {% if show_preview or show_remove_file %}
+      <div class="form-group">
+        {% if show_preview and preview_url %}
+          <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank">
+            <i class="fa fa-eye"></i>
+            {{ preview_label|trans|ucfirst }}
+          </a>
+        {% endif %}
+        {% if show_remove_file %}
+          {{ form_widget(form.remove) }}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endspaceless %}
+{% endblock %}
