@@ -20,6 +20,7 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use SpoonFormHidden;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -156,6 +157,7 @@ class Add extends BackendBaseActionAdd
         $block['formElements']['chkVisible'] = $this->form->addCheckbox('block_visible_' . $block['index'], true);
         $block['formElements']['hidExtraId'] = $this->form->addHidden('block_extra_id_' . $block['index'], 0);
         $block['formElements']['hidExtraType'] = $this->form->addHidden('block_extra_type_' . $block['index'], 'rich_text');
+        $block['formElements']['hidExtraData'] = $this->form->addHidden('block_extra_data_' . $block['index']);
         $block['formElements']['hidPosition'] = $this->form->addHidden('block_position_' . $block['index'], 'fallback');
         $block['formElements']['txtHTML'] = $this->form->addTextarea(
             'block_html_' . $block['index']
@@ -184,6 +186,7 @@ class Add extends BackendBaseActionAdd
                 // set linked extra
                 $block['extra_id'] = $this->getRequest()->request->get('block_extra_id_' . $i);
                 $block['extra_type'] = $this->getRequest()->request->get('block_extra_type_' . $i);
+                $block['extra_data'] = $this->getRequest()->request->get('block_extra_data_' . $i);
 
                 // reset some stuff
                 if ($block['extra_id'] <= 0) {
@@ -199,6 +202,7 @@ class Add extends BackendBaseActionAdd
                 if ($block['extra_id'] === null || $block['extra_type'] == 'usertemplate') {
                     if ($this->getRequest()->request->get('block_extra_type_' . $i) === 'usertemplate') {
                         $block['extra_id'] = $this->getRequest()->request->get('block_extra_id_' . $i);
+                        $_POST['block_extra_data_' . $i] = htmlspecialchars($_POST['block_extra_data_' . $i]);
                     } else {
                         // reset vars
                         $block['extra_id'] = null;
@@ -246,6 +250,13 @@ class Add extends BackendBaseActionAdd
                 'block_extra_type_' . $block['index'],
                 $block['extra_type']
             );
+            $this->form->add(
+                $this->getHiddenJsonField(
+                    'block_extra_data_' . $block['index'],
+                    $block['extra_data']
+                )
+            );
+            $block['formElements']['hidExtraData'] = $this->form->getField('block_extra_data_' . $block['index']);
             $block['formElements']['hidPosition'] = $this->form->addHidden(
                 'block_position_' . $block['index'],
                 $block['position']
@@ -561,5 +572,15 @@ class Add extends BackendBaseActionAdd
     private function showTags(): bool
     {
         return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
+    }
+
+    private function getHiddenJsonField(string $name, string $json): SpoonFormHidden
+    {
+        return new class($name, htmlspecialchars($json)) extends SpoonFormHidden {
+            public function getValue($allowHTML = null)
+            {
+                return parent::getValue(true);
+            }
+        };
     }
 }
