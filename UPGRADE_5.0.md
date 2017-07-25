@@ -273,11 +273,12 @@ Also removed Action::getParameter(). You should directly call the request object
 
 The directories now have the same name as the module
 
-| Old directory                        | New directory                   |
-|--------------------------------------|---------------------------------|
-| `src/Frontend/Files/backend_users`   | `src/Frontend/Files/Users`      |
-| `src/Frontend/Files/blog`            | `src/Frontend/Files/Blog`       |
-| `src/Frontend/Files/pages`           | `src/Frontend/Files/Pages`      |
+| Old directory                        | New directory                            |
+|--------------------------------------|------------------------------------------|
+| `src/Frontend/Files/backend_users`   | `src/Frontend/Files/Users`               |
+| `src/Frontend/Files/blog`            | `src/Frontend/Files/Blog`                |
+| `src/Frontend/Files/pages`           | `src/Frontend/Files/Pages`               |
+| `src/Frontend/Files/UserTemplate`    | `src/Frontend/Files/Pages/UserTemplate` |
 
 ## Meta URL
 
