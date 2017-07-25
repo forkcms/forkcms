@@ -22,7 +22,7 @@
         "symfony/assetic-bundle": "^2.7",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/monolog-bundle": "^2.8",
-        "spoon/library": "^2.3",
+        "spoon/library": "dev-3.0.0-dev as 3.0.0",
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
         "league/flysystem": "~1.0",
