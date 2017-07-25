@@ -75,15 +75,15 @@ class TwigFilters
 
         $twig->addFunction(new Twig_SimpleFunction(
             'geturl',
-            $app.'::getURL'
+            $app.'::getUrl'
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'geturlforextraid',
-            $app.'::getURLForExtraId'
+            $app.'::getUrlForExtraId'
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'geturlforblock',
-            $app.'::getURLForBlock'
+            $app.'::getUrlForBlock'
         ));
 
         // boolean functions

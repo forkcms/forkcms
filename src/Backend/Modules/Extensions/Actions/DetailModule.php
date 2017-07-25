@@ -46,10 +46,10 @@ class DetailModule extends BackendBaseActionIndex
     public function execute(): void
     {
         // get parameters
-        $this->currentModule = $this->getParameter('module', 'string');
+        $this->currentModule = $this->getRequest()->query->get('module', '');
 
         // does the item exist
-        if ($this->currentModule !== null && BackendExtensionsModel::existsModule($this->currentModule)) {
+        if ($this->currentModule !== '' && BackendExtensionsModel::existsModule($this->currentModule)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -66,7 +66,7 @@ class DetailModule extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&error=non-existing');
         }
     }
 
@@ -106,13 +106,13 @@ class DetailModule extends BackendBaseActionIndex
         parent::parse();
 
         // assign module data
-        $this->tpl->assign('name', $this->currentModule);
-        $this->tpl->assign('warnings', $this->warnings);
-        $this->tpl->assign('information', $this->information);
-        $this->tpl->assign('showInstallButton', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('InstallModule'));
+        $this->template->assign('name', $this->currentModule);
+        $this->template->assign('warnings', $this->warnings);
+        $this->template->assign('information', $this->information);
+        $this->template->assign('showInstallButton', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('InstallModule'));
 
         // data grids
-        $this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
-        $this->tpl->assign('dataGridCronjobs', (isset($this->dataGridCronjobs) && $this->dataGridCronjobs->getNumResults() > 0) ? $this->dataGridCronjobs->getContent() : false);
+        $this->template->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
+        $this->template->assign('dataGridCronjobs', (isset($this->dataGridCronjobs) && $this->dataGridCronjobs->getNumResults() > 0) ? $this->dataGridCronjobs->getContent() : false);
     }
 }

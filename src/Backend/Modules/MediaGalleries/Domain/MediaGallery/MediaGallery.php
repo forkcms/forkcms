@@ -250,7 +250,7 @@ class MediaGallery
             [
                 'gallery_id' => $this->id,
                 'extra_label' => $this->getExtraLabel(),
-                'edit_url' => Model::createURLForAction(
+                'edit_url' => Model::createUrlForAction(
                     'MediaGalleryEdit',
                     'MediaGalleries',
                     null,
@@ -263,7 +263,7 @@ class MediaGallery
         Model::updateExtra(
             $this->moduleExtraId,
             'hidden',
-            'N'
+            false
         );
     }
 

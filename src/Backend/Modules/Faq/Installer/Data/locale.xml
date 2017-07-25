@@ -190,6 +190,10 @@
         <translation language="sv"><![CDATA[Vänligen välj en kategori.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ επιλέξτε μία κατηγορία.]]></translation>
       </item>
+      <item type="message" name="ConfirmDeleteFeedback">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze feedback wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete this feedback?]]></translation>
+      </item>
       <item type="error" name="DeleteCategoryNotAllowed">
         <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
         <translation language="en"><![CDATA[It is not allowed to delete the category "%1$s".]]></translation>

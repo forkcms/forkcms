@@ -23,17 +23,20 @@ class MassAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', ['delete'], 'delete');
+        $action = $this->getRequest()->query->get('action');
+        if (!in_array($action, ['delete'])) {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
+        }
 
         // no id's provided
-        if (!isset($_GET['id'])) {
+        if (!$this->getRequest()->query->has('id')) {
             $this->redirect(
-                BackendModel::createURLForAction('Index') . '&error=no-selection'
+                BackendModel::createUrlForAction('Index') . '&error=no-selection'
             );
         } else {
             // at least one id
             // redefine id's
-            $aIds = (array) $_GET['id'];
+            $aIds = (array) $this->getRequest()->query->get('id');
 
             // delete comment(s)
             if ($action == 'delete') {
@@ -43,7 +46,7 @@ class MassAction extends BackendBaseAction
 
         // redirect
         $this->redirect(
-            BackendModel::createURLForAction('Index') . '&report=deleted'
+            BackendModel::createUrlForAction('Index') . '&report=deleted'
         );
     }
 }

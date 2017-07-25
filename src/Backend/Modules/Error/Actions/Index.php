@@ -34,7 +34,7 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // grab the error-type from the parameters
-        $errorType = $this->getParameter('type');
+        $errorType = $this->getRequest()->query->get('type');
 
         // set correct headers
         switch ($errorType) {
@@ -52,9 +52,9 @@ class Index extends BackendBaseActionIndex
         }
 
         // querystring provided?
-        if ($this->getParameter('querystring') !== null) {
+        if ($this->getRequest()->query->get('querystring', '') !== '') {
             // split into file and parameters
-            $chunks = explode('?', $this->getParameter('querystring'));
+            $chunks = explode('?', $this->getRequest()->query->get('querystring'));
 
             // get extension
             $extension = pathinfo($chunks[0], PATHINFO_EXTENSION);
@@ -64,14 +64,14 @@ class Index extends BackendBaseActionIndex
                 // give a nice error, so we can detect which file is missing
                 throw new ExitException(
                     'File not found',
-                    'Requested file (' . htmlspecialchars($this->getParameter('querystring')) . ') not found.',
+                    'Requested file (' . htmlspecialchars($this->getRequest()->query->get('querystring')) . ') not found.',
                     Response::HTTP_NOT_FOUND
                 );
             }
         }
 
         // assign the correct message into the template
-        $this->tpl->assign('message', BL::err(\SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
+        $this->template->assign('message', BL::err(\SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
     }
 
     public function getContent(): Response

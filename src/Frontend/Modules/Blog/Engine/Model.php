@@ -13,7 +13,7 @@ use Common\Mailer\Message;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url as FrontendURL;
+use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -33,14 +33,14 @@ class Model implements FrontendTagsInterface
              m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
              m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.custom AS meta_custom,
              m.url,
-             m.data AS meta_data
+             m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_posts AS i
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
              LIMIT 1',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url]
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i'), $url]
         );
 
         // unserialize
@@ -50,7 +50,7 @@ class Model implements FrontendTagsInterface
 
         // image?
         if (isset($return['image'])) {
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             foreach ($folders as $folder) {
                 $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
@@ -78,7 +78,7 @@ class Model implements FrontendTagsInterface
             [
                 'active',
                 LANGUAGE,
-                'N',
+                false,
                 FrontendModel::getUTCDate('Y-m-d H:i'),
                 $offset,
                 $limit,
@@ -92,9 +92,9 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
-        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'Category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
+        $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
+        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -111,7 +111,7 @@ class Model implements FrontendTagsInterface
             }
 
             // allow comments as boolean
-            $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+            $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
             if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
@@ -143,13 +143,14 @@ class Model implements FrontendTagsInterface
     public static function getAllCategories(): array
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data
+            'SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data,
+                 m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_categories AS c
              INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY c.id',
-            [LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i')],
+            [LANGUAGE, 'active', false, FrontendModel::getUTCDate('Y-m-d H:i')],
             'id'
         );
 
@@ -194,11 +195,11 @@ class Model implements FrontendTagsInterface
             'SELECT COUNT(i.id) AS count
              FROM blog_posts AS i
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i')]
         );
     }
 
-    public static function getAllForCategory(string $categoryURL, int $limit = 10, int $offset = 0): array
+    public static function getAllForCategory(string $categoryUrl, int $limit = 10, int $offset = 0): array
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
@@ -215,9 +216,9 @@ class Model implements FrontendTagsInterface
             [
                 'active',
                 LANGUAGE,
-                'N',
+                false,
                 FrontendModel::getUTCDate('Y-m-d H:i'),
-                $categoryURL,
+                $categoryUrl,
                 $offset,
                 $limit,
             ],
@@ -230,9 +231,9 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
-        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'Category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
+        $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
+        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -249,7 +250,7 @@ class Model implements FrontendTagsInterface
             }
 
             // allow comments as boolean
-            $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+            $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
             if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
@@ -285,7 +286,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url]
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i'), $url]
         );
     }
 
@@ -317,7 +318,7 @@ class Model implements FrontendTagsInterface
             [
                 'active',
                 LANGUAGE,
-                'N',
+                false,
                 FrontendModel::getUTCDate('Y-m-d H:i', $start),
                 FrontendModel::getUTCDate('Y-m-d H:i', $end),
                 $offset,
@@ -332,8 +333,8 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
+        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -349,7 +350,7 @@ class Model implements FrontendTagsInterface
             }
 
             // allow comments as boolean
-            $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+            $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
             if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
@@ -395,7 +396,7 @@ class Model implements FrontendTagsInterface
             [
                 'active',
                 LANGUAGE,
-                'N',
+                false,
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $start),
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $end),
             ]
@@ -416,12 +417,12 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY month',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i')]
         );
 
         // init vars
         $stats = [];
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Archive');
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Archive');
         $firstYear = (int) date('Y');
         $lastYear = 0;
 
@@ -529,14 +530,14 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $blogPostIds) . ') AND i.publish_on <= ?
              ORDER BY i.publish_on DESC',
-            ['active', 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
+            ['active', false, FrontendModel::getUTCDate('Y-m-d H:i')]
         );
 
         // has items
         if (!empty($items)) {
             // init var
-            $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
+            $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             // reset url
             foreach ($items as &$row) {
@@ -560,17 +561,17 @@ class Model implements FrontendTagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $url The current URL.
+     * @param FrontendUrl $url The current URL.
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $url): int
+    public static function getIdForTags(FrontendUrl $url): int
     {
         // select the proper part of the full URL
-        $itemURL = (string) $url->getParameter(1);
+        $itemUrl = (string) $url->getParameter(1);
 
         // return the item
-        return self::get($itemURL)['id'];
+        return self::get($itemUrl)['id'];
     }
 
     /**
@@ -582,11 +583,11 @@ class Model implements FrontendTagsInterface
      */
     public static function getNavigation(int $blogPostId): array
     {
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // get date for current item
-        $date = (string) $db->getVar(
+        $date = (string) $database->getVar(
             'SELECT i.publish_on
              FROM blog_posts AS i
              WHERE i.id = ? AND i.status = ?',
@@ -600,10 +601,10 @@ class Model implements FrontendTagsInterface
 
         // init var
         $navigation = [];
-        $detailLink = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/';
+        $detailLink = FrontendNavigation::getUrlForBlock('Blog', 'Detail') . '/';
 
         // get previous post
-        $navigation['previous'] = $db->getRecord(
+        $navigation['previous'] = $database->getRecord(
             'SELECT i.id, i.title, CONCAT(?, m.url) AS url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
@@ -611,11 +612,11 @@ class Model implements FrontendTagsInterface
                 ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT 1',
-            [$detailLink, $blogPostId, 'active', 'N', LANGUAGE, $date, $blogPostId, $date]
+            [$detailLink, $blogPostId, 'active', false, LANGUAGE, $date, $blogPostId, $date]
         );
 
         // get next post
-        $navigation['next'] = $db->getRecord(
+        $navigation['next'] = $database->getRecord(
             'SELECT i.id, i.title, CONCAT(?, m.url) AS url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
@@ -627,7 +628,7 @@ class Model implements FrontendTagsInterface
                 $detailLink,
                 $blogPostId,
                 'active',
-                'N',
+                false,
                 LANGUAGE,
                 $date,
                 $blogPostId,
@@ -664,7 +665,7 @@ class Model implements FrontendTagsInterface
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
              LIMIT ?',
-            ['published', 'active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit]
+            ['published', 'active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i'), $limit]
         );
 
         // validate
@@ -673,7 +674,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get link
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
 
         // loop comments
         foreach ($comments as &$row) {
@@ -697,7 +698,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get link
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
 
         // get items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -708,7 +709,7 @@ class Model implements FrontendTagsInterface
             implode(',', $relatedIDs) . ')
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit],
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i'), $limit],
             'id'
         );
 
@@ -731,7 +732,7 @@ class Model implements FrontendTagsInterface
              m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
              m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.custom AS meta_custom,
              m.url,
-             m.data AS meta_data
+             m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_posts AS i
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
@@ -748,7 +749,7 @@ class Model implements FrontendTagsInterface
 
         // image?
         if (isset($return['image'])) {
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             foreach ($folders as $folder) {
                 $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
@@ -761,11 +762,11 @@ class Model implements FrontendTagsInterface
 
     public static function insertComment(array $comment): int
     {
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // insert comment
-        $comment['id'] = (int) $db->insert('blog_comments', $comment);
+        $comment['id'] = (int) $database->insert('blog_comments', $comment);
 
         // recalculate if published
         if ($comment['status'] == 'published') {
@@ -780,7 +781,7 @@ class Model implements FrontendTagsInterface
             );
 
             // update num comments
-            $db->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
+            $database->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
         }
 
         return $comment['id'];
@@ -830,9 +831,9 @@ class Model implements FrontendTagsInterface
         );
 
         // create URLs
-        $url = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' .
+        $url = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail') . '/' .
                $comment['post_url'] . '#comment-' . $comment['id'];
-        $backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'Blog') . '#tabModeration';
+        $backendUrl = SITE_URL . FrontendNavigation::getBackendUrlForBlock('comments', 'Blog') . '#tabModeration';
 
         // notify on all comments
         if ($notifyByMailOnComment) {
@@ -842,7 +843,7 @@ class Model implements FrontendTagsInterface
             if ($comment['status'] == 'moderation') {
                 $variables['message'] = vsprintf(
                     FL::msg('BlogEmailNotificationsNewCommentToModerate'),
-                    [$comment['author'], $url, $comment['post_title'], $backendURL]
+                    [$comment['author'], $url, $comment['post_title'], $backendUrl]
                 );
             } elseif ($comment['status'] == 'published') {
                 // comment was published
@@ -872,7 +873,7 @@ class Model implements FrontendTagsInterface
             $variables = [];
             $variables['message'] = vsprintf(
                 FL::msg('BlogEmailNotificationsNewCommentToModerate'),
-                [$comment['author'], $url, $comment['post_title'], $backendURL]
+                [$comment['author'], $url, $comment['post_title'], $backendUrl]
             );
 
             $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
@@ -912,12 +913,12 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')',
-            ['active', 'N', LANGUAGE, date('Y-m-d H:i')],
+            ['active', false, LANGUAGE, date('Y-m-d H:i')],
             'id'
         );
 
         // prepare items for search
-        $detailUrl = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $detailUrl = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         foreach ($items as &$item) {
             $item['full_url'] = $detailUrl . '/' . $item['url'];
         }

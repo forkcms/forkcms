@@ -39,10 +39,10 @@ class DataDetails extends BackendBaseActionIndex
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendFormBuilderModel::existsData($this->id)) {
+        if ($this->id !== 0 && BackendFormBuilderModel::existsData($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->getData();
@@ -50,7 +50,7 @@ class DataDetails extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, redirect with an error, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -65,12 +65,12 @@ class DataDetails extends BackendBaseActionIndex
         parent::parse();
 
         // form info
-        $this->tpl->assign('name', $this->record['name']);
-        $this->tpl->assign('formId', $this->record['id']);
+        $this->template->assign('name', $this->record['name']);
+        $this->template->assign('formId', $this->record['id']);
 
         // sent info
-        $this->tpl->assign('id', $this->data['id']);
-        $this->tpl->assign('sentOn', $this->data['sent_on']);
+        $this->template->assign('id', $this->data['id']);
+        $this->template->assign('sentOn', $this->data['sent_on']);
 
         // init
         $data = [];
@@ -90,8 +90,8 @@ class DataDetails extends BackendBaseActionIndex
         }
 
         // assign
-        $this->tpl->assign('data', $data);
-        $this->tpl->assign('filter', $this->filter);
+        $this->template->assign('data', $data);
+        $this->template->assign('filter', $this->filter);
     }
 
     /**
@@ -100,9 +100,9 @@ class DataDetails extends BackendBaseActionIndex
     private function setFilter(): void
     {
         // start date is set
-        if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
+        if ($this->getRequest()->query->has('start_date') && $this->getRequest()->query->get('start_date', '') !== '') {
             // redefine
-            $startDate = (string) $_GET['start_date'];
+            $startDate = $this->getRequest()->query->get('start_date', '');
 
             // explode date parts
             $chunks = explode('/', $startDate);
@@ -120,9 +120,9 @@ class DataDetails extends BackendBaseActionIndex
         }
 
         // end date is set
-        if (isset($_GET['end_date']) && $_GET['end_date'] != '') {
+        if ($this->getRequest()->query->has('end_date') && $this->getRequest()->query->get('end_date', '') !== '') {
             // redefine
-            $endDate = (string) $_GET['end_date'];
+            $endDate = $this->getRequest()->query->get('end_date', '');
 
             // explode date parts
             $chunks = explode('/', $endDate);

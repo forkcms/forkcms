@@ -29,7 +29,7 @@ class Form extends \SpoonForm
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     /**
      * Adds a single checkbox.

@@ -38,10 +38,10 @@ class Subscribe extends FrontendBaseWidget
         $form->handleRequest($this->get('request'));
 
         if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
+            $this->template->assign('form', $form->createView());
 
             if ($form->isSubmitted()) {
-                $this->tpl->assign('mailmotorSubscribeHasFormError', true);
+                $this->template->assign('mailmotorSubscribeHasFormError', true);
             }
 
             return;

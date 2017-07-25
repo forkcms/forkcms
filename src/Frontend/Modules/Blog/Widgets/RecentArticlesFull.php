@@ -29,16 +29,16 @@ class RecentArticlesFull extends FrontendBaseWidget
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
-        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
+        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed
         $this->header->addRssLink($rssTitle, $rssLink);
 
         // assign comments
-        $this->tpl->assign(
+        $this->template->assign(
             'widgetBlogRecentArticlesFull',
             FrontendBlogModel::getAll($this->get('fork.settings')->get('Blog', 'recent_articles_full_num_items', 5))
         );
-        $this->tpl->assign('widgetBlogRecentArticlesFullRssLink', $rssLink);
+        $this->template->assign('widgetBlogRecentArticlesFullRssLink', $rssLink);
     }
 }

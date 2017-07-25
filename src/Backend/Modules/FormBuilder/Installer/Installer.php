@@ -19,33 +19,23 @@ class Installer extends ModuleInstaller
 {
     public function install(): void
     {
-        // load install.sql
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-
-        // add as a module
         $this->addModule('FormBuilder');
-
-        // import locale
+        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureSettings();
+        $this->configureBackendRights();
+        $this->configureBackendNavigation();
+        $this->configureFrontendPages();
+    }
 
-        // module rights
-        $this->setModuleRights(1, $this->getModule());
+    private function configureSettings(): void
+    {
+        $this->setSetting($this->getModule(), 'requires_google_recaptcha', true);
+    }
 
-        // action rights
-        $this->setActionRights(1, $this->getModule(), 'Add');
-        $this->setActionRights(1, $this->getModule(), 'Edit');
-        $this->setActionRights(1, $this->getModule(), 'Delete');
-        $this->setActionRights(1, $this->getModule(), 'Index');
-        $this->setActionRights(1, $this->getModule(), 'Data');
-        $this->setActionRights(1, $this->getModule(), 'DataDetails');
-        $this->setActionRights(1, $this->getModule(), 'MassDataAction');
-        $this->setActionRights(1, $this->getModule(), 'GetField');
-        $this->setActionRights(1, $this->getModule(), 'DeleteField');
-        $this->setActionRights(1, $this->getModule(), 'SaveField');
-        $this->setActionRights(1, $this->getModule(), 'Sequence');
-        $this->setActionRights(1, $this->getModule(), 'ExportData');
-
-        // set navigation
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "Modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation($navigationModulesId, 'FormBuilder', 'form_builder/index', [
             'form_builder/add',
@@ -53,14 +43,29 @@ class Installer extends ModuleInstaller
             'form_builder/data',
             'form_builder/data_details',
         ]);
+    }
 
-        // get search extra id
-        $searchId = (int) $this->getDB()->getVar(
-            'SELECT id
-             FROM modules_extras
-             WHERE module = ? AND type = ? AND action = ?',
-            ['search', ModuleExtraType::widget(), 'form']
-        );
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Data');
+        $this->setActionRights(1, $this->getModule(), 'DataDetails');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'DeleteField'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'ExportData');
+        $this->setActionRights(1, $this->getModule(), 'GetField'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'MassDataAction');
+        $this->setActionRights(1, $this->getModule(), 'SaveField'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'Sequence'); // AJAX
+    }
+
+    private function configureFrontendPages(): void
+    {
+        $searchWidgetId = $this->getSearchWidgetId();
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -75,7 +80,7 @@ class Installer extends ModuleInstaller
             $form['identifier'] = 'contact-' . $language;
             $form['created_on'] = gmdate('Y-m-d H:i:s');
             $form['edited_on'] = gmdate('Y-m-d H:i:s');
-            $formId = $this->getDB()->insert('forms', $form);
+            $formId = $this->getDatabase()->insert('forms', $form);
 
             // create submit button
             $field = [];
@@ -86,7 +91,7 @@ class Installer extends ModuleInstaller
                     'values' => \SpoonFilter::ucfirst($this->getLocale('Send', 'Core', $language, 'lbl', 'Frontend')),
                 ]
             );
-            $this->getDB()->insert('forms_fields', $field);
+            $this->getDatabase()->insert('forms_fields', $field);
 
             // create name field
             $field['form_id'] = $formId;
@@ -96,14 +101,14 @@ class Installer extends ModuleInstaller
                     'label' => \SpoonFilter::ucfirst($this->getLocale('Name', 'Core', $language, 'lbl', 'Frontend')),
                 ]
             );
-            $nameId = $this->getDB()->insert('forms_fields', $field);
+            $nameId = $this->getDatabase()->insert('forms_fields', $field);
 
             // name validation
             $validate = [];
             $validate['field_id'] = $nameId;
             $validate['type'] = 'required';
             $validate['error_message'] = $this->getLocale('NameIsRequired', 'Core', $language, 'err', 'Frontend');
-            $this->getDB()->insert('forms_fields_validation', $validate);
+            $this->getDatabase()->insert('forms_fields_validation', $validate);
 
             // create email field
             $field['form_id'] = $formId;
@@ -113,13 +118,13 @@ class Installer extends ModuleInstaller
                     'label' => \SpoonFilter::ucfirst($this->getLocale('Email', 'Core', $language, 'lbl', 'Frontend')),
                 ]
             );
-            $emailId = $this->getDB()->insert('forms_fields', $field);
+            $emailId = $this->getDatabase()->insert('forms_fields', $field);
 
             // email validation
             $validate['field_id'] = $emailId;
             $validate['type'] = 'email';
             $validate['error_message'] = $this->getLocale('EmailIsInvalid', 'Core', $language, 'err', 'Frontend');
-            $this->getDB()->insert('forms_fields_validation', $validate);
+            $this->getDatabase()->insert('forms_fields_validation', $validate);
 
             // create message field
             $field['form_id'] = $formId;
@@ -129,13 +134,13 @@ class Installer extends ModuleInstaller
                     'label' => \SpoonFilter::ucfirst($this->getLocale('Message', 'Core', $language, 'lbl', 'Frontend')),
                 ]
             );
-            $messageId = $this->getDB()->insert('forms_fields', $field);
+            $messageId = $this->getDatabase()->insert('forms_fields', $field);
 
             // name validation
             $validate['field_id'] = $messageId;
             $validate['type'] = 'required';
             $validate['error_message'] = $this->getLocale('MessageIsRequired', 'Core', $language, 'err', 'Frontend');
-            $this->getDB()->insert('forms_fields_validation', $validate);
+            $this->getDatabase()->insert('forms_fields_validation', $validate);
 
             // insert extra
             $extraId = $this->insertExtra(
@@ -162,8 +167,19 @@ class Installer extends ModuleInstaller
                 null,
                 ['html' => PATH_WWW . '/src/Backend/Modules/Pages/Installer/Data/' . $language . '/contact.txt'],
                 ['extra_id' => $extraId, 'position' => 'main'],
-                ['extra_id' => $searchId, 'position' => 'top']
+                ['extra_id' => $searchWidgetId, 'position' => 'top']
             );
         }
+    }
+
+    private function getSearchWidgetId(): int
+    {
+        // @todo: Replace this with a ModuleExtraRepository method when it exists.
+        return (int) $this->getDatabase()->getVar(
+            'SELECT id
+             FROM modules_extras
+             WHERE module = ? AND type = ? AND action = ?',
+            ['Search', ModuleExtraType::widget(), 'Form']
+        );
     }
 }

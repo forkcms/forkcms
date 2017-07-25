@@ -8,6 +8,6 @@ class YoutubeStorageProvider extends MovieStorageProvider
 {
     public function getIncludeHTML(MediaItem $mediaItem): string
     {
-        return '<iframe width="560" height="315" src="' . $this->includeURL . $mediaItem->getUrl() . '" frameborder="0" allowfullscreen></iframe>';
+        return '<iframe width="560" height="315" src="' . $this->includeUrl . $mediaItem->getUrl() . '" frameborder="0" allowfullscreen></iframe>';
     }
 }

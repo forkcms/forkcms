@@ -19,6 +19,6 @@ class Detail extends FrontendBaseWidget
             Locale::frontendLanguage()
         );
 
-        $this->tpl->assign('widgetContentBlocks', $contentBlock);
+        $this->template->assign('widgetContentBlocks', $contentBlock);
     }
 }

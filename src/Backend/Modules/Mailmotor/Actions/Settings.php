@@ -33,7 +33,7 @@ final class Settings extends ActionIndex
         $form->handleRequest($this->get('request'));
 
         if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
+            $this->template->assign('form', $form->createView());
 
             $this->parse();
             $this->display();
@@ -52,9 +52,11 @@ final class Settings extends ActionIndex
             new SettingsSavedEvent($settings)
         );
 
+        $redirectAction = $settings->mailEngine === 'not_implemented' ? 'Settings' : 'Ping';
+
         $this->redirect(
-            Model::createURLForAction(
-                'Settings',
+            Model::createUrlForAction(
+                $redirectAction,
                 null,
                 null,
                 [

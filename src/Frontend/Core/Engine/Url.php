@@ -197,7 +197,7 @@ class Url extends KernelLoader
         // invalid page, or parameters but no extra
         if ($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra'])) {
             // get 404 URL
-            $url = Navigation::getURL(404);
+            $url = Navigation::getUrl(404);
 
             // remove language
             if ($hasMultiLanguages) {
@@ -301,16 +301,16 @@ class Url extends KernelLoader
         // is this an internal redirect?
         if (isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] !== '') {
             // get url for item
-            $newPageURL = Navigation::getURL((int) $pageInfo['redirect_page_id']);
-            $errorURL = Navigation::getURL(404);
+            $newPageUrl = Navigation::getUrl((int) $pageInfo['redirect_page_id']);
+            $errorURL = Navigation::getUrl(404);
 
             // not an error?
-            if ($newPageURL !== $errorURL) {
+            if ($newPageUrl !== $errorURL) {
                 // redirect
                 throw new RedirectException(
                     'Redirect',
                     new RedirectResponse(
-                        $newPageURL,
+                        $newPageUrl,
                         $pageInfo['redirect_code']
                     )
                 );
@@ -363,7 +363,7 @@ class Url extends KernelLoader
         // if it's the homepage AND parameters were given (not allowed!)
         if ($url === '' && $queryString !== '') {
             // get 404 URL
-            $url = Navigation::getURL(404);
+            $url = Navigation::getUrl(404);
 
             // remove language
             if ($this->getContainer()->getParameter('site.multilanguage')) {

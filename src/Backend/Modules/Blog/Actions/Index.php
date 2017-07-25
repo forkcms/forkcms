@@ -14,7 +14,7 @@ use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
@@ -40,7 +40,7 @@ class Index extends BackendBaseActionIndex
     /**
      * DataGrids
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgDrafts;
     private $dgPosts;
@@ -51,8 +51,8 @@ class Index extends BackendBaseActionIndex
         parent::execute();
 
         // set category id
-        $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-        if ($this->categoryId == 0) {
+        $this->categoryId = $this->getRequest()->query->getInt('category');
+        if ($this->categoryId === 0) {
             $this->categoryId = null;
         } else {
             // get category
@@ -78,8 +78,8 @@ class Index extends BackendBaseActionIndex
         // filter on category?
         if ($this->categoryId != null) {
             // create datagrid
-            $this->dgPosts = new BackendDataGridDB(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY,
+            $this->dgPosts = new BackendDataGridDatabase(
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_FOR_CATEGORY,
                 [$this->categoryId, 'active', BL::getWorkingLanguage()]
             );
 
@@ -87,8 +87,8 @@ class Index extends BackendBaseActionIndex
             $this->dgPosts->setURL('&amp;category=' . $this->categoryId, true);
         } else {
             // create datagrid
-            $this->dgPosts = new BackendDataGridDB(
-                BackendBlogModel::QRY_DATAGRID_BROWSE,
+            $this->dgPosts = new BackendDataGridDatabase(
+                BackendBlogModel::QUERY_DATAGRID_BROWSE,
                 ['active', BL::getWorkingLanguage()]
             );
         }
@@ -130,7 +130,7 @@ class Index extends BackendBaseActionIndex
             // set column URLs
             $this->dgPosts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId
             );
 
@@ -139,7 +139,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
                 BL::lbl('Edit')
             );
@@ -151,8 +151,8 @@ class Index extends BackendBaseActionIndex
         // filter on category?
         if ($this->categoryId != null) {
             // create datagrid
-            $this->dgDrafts = new BackendDataGridDB(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY,
+            $this->dgDrafts = new BackendDataGridDatabase(
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY,
                 [
                     $this->categoryId,
                     'draft',
@@ -165,8 +165,8 @@ class Index extends BackendBaseActionIndex
             $this->dgDrafts->setURL('&amp;category=' . $this->categoryId, true);
         } else {
             // create datagrid
-            $this->dgDrafts = new BackendDataGridDB(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS,
+            $this->dgDrafts = new BackendDataGridDatabase(
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_DRAFTS,
                 ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
             );
         }
@@ -203,7 +203,7 @@ class Index extends BackendBaseActionIndex
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' .
                 $this->categoryId
             );
@@ -213,7 +213,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' .
                 $this->categoryId,
                 BL::lbl('Edit')
@@ -226,8 +226,8 @@ class Index extends BackendBaseActionIndex
         // filter on category?
         if ($this->categoryId != null) {
             // create datagrid
-            $this->dgRecent = new BackendDataGridDB(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY,
+            $this->dgRecent = new BackendDataGridDatabase(
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY,
                 [$this->categoryId, 'active', BL::getWorkingLanguage(), 4]
             );
 
@@ -235,8 +235,8 @@ class Index extends BackendBaseActionIndex
             $this->dgRecent->setURL('&amp;category=' . $this->categoryId, true);
         } else {
             // create datagrid
-            $this->dgRecent = new BackendDataGridDB(
-                BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT,
+            $this->dgRecent = new BackendDataGridDatabase(
+                BackendBlogModel::QUERY_DATAGRID_BROWSE_RECENT,
                 ['active', BL::getWorkingLanguage(), 4]
             );
         }
@@ -272,7 +272,7 @@ class Index extends BackendBaseActionIndex
             // set colum URLs
             $this->dgRecent->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId
             );
 
@@ -281,7 +281,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') .
+                BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
                 BL::lbl('Edit')
             );
@@ -304,36 +304,36 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse the datagrid for the drafts
-        $this->tpl->assign('dgDrafts', (string) $this->dgDrafts->getContent());
+        $this->template->assign('dgDrafts', (string) $this->dgDrafts->getContent());
 
         // parse the datagrid for all blogposts
-        $this->tpl->assign('dgPosts', (string) $this->dgPosts->getContent());
+        $this->template->assign('dgPosts', (string) $this->dgPosts->getContent());
 
         // parse the datagrid for the most recent blogposts
-        $this->tpl->assign('dgRecent', (is_object($this->dgRecent)) ? $this->dgRecent->getContent() : false);
+        $this->template->assign('dgRecent', (is_object($this->dgRecent)) ? $this->dgRecent->getContent() : false);
 
         // get categories
         $categories = BackendBlogModel::getCategories(true);
 
         $hasMultipleCategories = (count($categories) > 1);
-        $this->tpl->assign('hasMultipleCategories', $hasMultipleCategories);
+        $this->template->assign('hasMultipleCategories', $hasMultipleCategories);
 
         // multiple categories?
         if ($hasMultipleCategories) {
             // create form
-            $frm = new BackendForm('filter', null, 'get', false);
+            $form = new BackendForm('filter', null, 'get', false);
 
             // create element
-            $frm->addDropdown('category', $categories, $this->categoryId);
-            $frm->getField('category')->setDefaultElement('');
+            $form->addDropdown('category', $categories, $this->categoryId);
+            $form->getField('category')->setDefaultElement('');
 
             // parse the form
-            $frm->parse($this->tpl);
+            $form->parse($this->template);
         }
 
         // parse category
         if (!empty($this->category)) {
-            $this->tpl->assign('filterCategory', $this->category);
+            $this->template->assign('filterCategory', $this->category);
         }
     }
 }

@@ -33,7 +33,7 @@ class RssItem extends \SpoonFeedRSSItem
         $this->utm['utm_campaign'] = CommonUri::getUrl($title);
 
         // call parent
-        parent::__construct($title, Model::addURLParameters($link, $this->utm), $content);
+        parent::__construct($title, Model::addUrlParameters($link, $this->utm), $content);
 
         // set some properties
         $this->setGuid($link, true);
@@ -73,7 +73,7 @@ class RssItem extends \SpoonFeedRSSItem
         // loop old links
         foreach ((array) $matches[1] as $i => $link) {
             $searchLinks[] = $matches[0][$i];
-            $replaceLinks[] = 'href="' . Model::addURLParameters($link, $this->utm) . '"';
+            $replaceLinks[] = 'href="' . Model::addUrlParameters($link, $this->utm) . '"';
         }
 
         // replace

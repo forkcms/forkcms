@@ -12,6 +12,7 @@ namespace Backend\Modules\Settings\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Common\Mailer\TransportFactory;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This test-email-action will test the mail-connection
@@ -22,12 +23,12 @@ class TestEmailConnection extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        $fromEmail = \SpoonFilter::getPostValue('mailer_from_email', null, '');
-        $fromName = \SpoonFilter::getPostValue('mailer_from_name', null, '');
-        $toEmail = \SpoonFilter::getPostValue('mailer_to_email', null, '');
-        $toName = \SpoonFilter::getPostValue('mailer_to_name', null, '');
-        $replyToEmail = \SpoonFilter::getPostValue('mailer_reply_to_email', null, '');
-        $replyToName = \SpoonFilter::getPostValue('mailer_reply_to_name', null, '');
+        $fromEmail = $this->getRequest()->request->get('mailer_from_email', '');
+        $fromName = $this->getRequest()->request->get('mailer_from_name', '');
+        $toEmail = $this->getRequest()->request->get('mailer_to_email', '');
+        $toName = $this->getRequest()->request->get('mailer_to_name', '');
+        $replyToEmail = $this->getRequest()->request->get('mailer_reply_to_email', '');
+        $replyToName = $this->getRequest()->request->get('mailer_reply_to_name', '');
 
         // init validation
         $errors = [];
@@ -46,37 +47,45 @@ class TestEmailConnection extends BackendBaseAJAXAction
         // got errors?
         if (!empty($errors)) {
             $this->output(
-                self::BAD_REQUEST,
+                Response::HTTP_BAD_REQUEST,
                 ['errors' => $errors],
                 'invalid fields'
             );
-        } else {
-            $message = \Swift_Message::newInstance('Test')
-                ->setFrom([$fromEmail => $fromName])
-                ->setTo([$toEmail => $toName])
-                ->setReplyTo([$replyToEmail => $replyToName])
-                ->setBody(BL::msg('TestMessage'), 'text/plain')
-            ;
 
-            $transport = TransportFactory::create(
-                \SpoonFilter::getPostValue('mailer_type', ['smtp', 'mail'], 'mail'),
-                \SpoonFilter::getPostValue('smtp_server', null, ''),
-                \SpoonFilter::getPostValue('smtp_port', null, 25),
-                \SpoonFilter::getPostValue('smtp_username', null, ''),
-                \SpoonFilter::getPostValue('smtp_password', null, ''),
-                \SpoonFilter::getPostValue('smtp_secure_layer', null, '')
-            );
-            $mailer = \Swift_Mailer::newInstance($transport);
+            return;
+        }
 
-            try {
-                if ($mailer->send($message)) {
-                    $this->output(self::OK, null, '');
-                } else {
-                    $this->output(self::ERROR, null, 'unknown');
-                }
-            } catch (\Exception $e) {
-                $this->output(self::ERROR, null, $e->getMessage());
+        $message = \Swift_Message::newInstance('Test')
+            ->setFrom([$fromEmail => $fromName])
+            ->setTo([$toEmail => $toName])
+            ->setReplyTo([$replyToEmail => $replyToName])
+            ->setBody(BL::msg('TestMessage'), 'text/plain')
+        ;
+
+        $mailerType = $this->getRequest()->request->get('mailer_type');
+        if (!in_array($mailerType, ['smtp', 'mail'])) {
+            $mailerType = 'mail';
+        }
+        $transport = TransportFactory::create(
+            $mailerType,
+            $this->getRequest()->request->get('smtp_server', ''),
+            $this->getRequest()->request->getInt('smtp_port', 25),
+            $this->getRequest()->request->get('smtp_username', ''),
+            $this->getRequest()->request->get('smtp_password', ''),
+            $this->getRequest()->request->get('smtp_secure_layer', '')
+        );
+        $mailer = \Swift_Mailer::newInstance($transport);
+
+        try {
+            if ($mailer->send($message)) {
+                $this->output(Response::HTTP_OK, null, '');
+
+                return;
             }
+
+            $this->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, 'unknown');
+        } catch (\Exception $e) {
+            $this->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, $e->getMessage());
         }
     }
 }

@@ -61,27 +61,30 @@ class Authentication
     }
 
     /**
-     * Returns the encrypted password for a user by giving a email/password
-     * Returns false if no user was found for this user/pass combination
+     * Encrypt the password with PHP password_hash function.
      *
-     * @param string $email The email.
-     * @param string $password The password.
+     * @param string $password
      *
      * @return string
      */
-    public static function getEncryptedPassword(string $email, string $password): string
+    public static function encryptPassword(string $password): string
     {
-        // fetch user ID by email
-        $userId = BackendUsersModel::getIdByEmail($email);
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
 
-        if ($userId === false) {
-            return '';
-        }
+    /**
+     * Verify the password with PHP password_verify function.
+     *
+     * @param string $email
+     * @param string $password
+     *
+     * @return bool
+     */
+    public static function verifyPassword(string $email, string $password): bool
+    {
+        $encryptedPassword = BackendUsersModel::getEncryptedPassword($email);
 
-        $user = new User($userId);
-        $key = $user->getSetting('password_key');
-
-        return self::getEncryptedString($password, $key);
+        return password_verify($password, $encryptedPassword);
     }
 
     /**
@@ -226,10 +229,10 @@ class Authentication
 
         // do we already know something?
         if (empty(self::$allowedModules)) {
-            $db = BackendModel::get('database');
+            $database = BackendModel::get('database');
 
             // get allowed modules
-            $allowedModules = (array) $db->getColumn(
+            $allowedModules = (array) $database->getColumn(
                 'SELECT DISTINCT grm.module
                  FROM users_sessions AS us
                  INNER JOIN users AS u ON us.user_id = u.id
@@ -265,10 +268,10 @@ class Authentication
             return false;
         }
 
-        $db = BackendModel::get('database');
+        $database = BackendModel::get('database');
 
         // get the row from the tables
-        $sessionData = $db->getRecord(
+        $sessionData = $database->getRecord(
             'SELECT us.id, us.user_id
              FROM users_sessions AS us
              WHERE us.session_id = ? AND us.secret_key = ?
@@ -279,7 +282,7 @@ class Authentication
         // if we found a matching row, we know the user is logged in, so we update his session
         if ($sessionData !== null) {
             // update the session in the table
-            $db->update(
+            $database->update(
                 'users_sessions',
                 ['date' => BackendModel::getUTCDate()],
                 'id = ?',
@@ -311,18 +314,20 @@ class Authentication
      */
     public static function loginUser(string $login, string $password): bool
     {
-        $db = BackendModel::get('database');
+        $database = BackendModel::get('database');
 
-        // fetch the encrypted password
-        $passwordEncrypted = static::getEncryptedPassword($login, $password);
+        // check password
+        if (!static::verifyPassword($login, $password)) {
+            return false;
+        }
 
         // check in database (is the user active and not deleted, are the email and password correct?)
-        $userId = (int) $db->getVar(
+        $userId = (int) $database->getVar(
             'SELECT u.id
              FROM users AS u
-             WHERE u.email = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
+             WHERE u.email = ? AND u.active = ? AND u.deleted = ?
              LIMIT 1',
-            [$login, $passwordEncrypted, 'Y', 'N']
+            [$login, true, false]
         );
 
         if ($userId === 0) {
@@ -346,7 +351,7 @@ class Authentication
         ];
 
         // insert a new row in the session-table
-        $db->insert('users_sessions', $session);
+        $database->insert('users_sessions', $session);
 
         // store some values in the session
         SpoonSession::set('backend_logged_in', true);

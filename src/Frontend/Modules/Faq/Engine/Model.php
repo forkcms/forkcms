@@ -11,7 +11,7 @@ namespace Frontend\Modules\Faq\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url as FrontendURL;
+use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -30,7 +30,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE m.url = ? AND i.language = ? AND i.hidden = ?
              ORDER BY i.sequence',
-            [$url, LANGUAGE, 'N']
+            [$url, LANGUAGE, false]
         );
     }
 
@@ -55,7 +55,7 @@ class Model implements FrontendTagsInterface
                  AND i.id NOT IN (' . implode(',', $excludeIds) . ')
              ORDER BY i.sequence
              LIMIT ?',
-                [$categoryId, LANGUAGE, 'N', $limit]
+                [$categoryId, LANGUAGE, false, $limit]
             );
         } else {
             $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -65,12 +65,12 @@ class Model implements FrontendTagsInterface
                  WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
                  AND i.id NOT IN (' . implode(',', $excludeIds) . ')
              ORDER BY i.sequence',
-                [$categoryId, LANGUAGE, 'N']
+                [$categoryId, LANGUAGE, false]
             );
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
         // build the item urls
         foreach ($items as &$item) {
@@ -92,7 +92,7 @@ class Model implements FrontendTagsInterface
         );
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Category');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Category');
 
         // build the item url
         foreach ($items as &$item) {
@@ -141,11 +141,11 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.hidden = ? AND i.id IN (' . implode(',', $ids) . ')
              ORDER BY i.question',
-            ['N']
+            [false]
         );
 
         if (!empty($items)) {
-            $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+            $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
             // build the item urls
             foreach ($items as &$row) {
@@ -160,15 +160,15 @@ class Model implements FrontendTagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $url
+     * @param FrontendUrl $url
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $url): int
+    public static function getIdForTags(FrontendUrl $url): int
     {
-        $itemURL = (string) $url->getParameter(1);
+        $itemUrl = (string) $url->getParameter(1);
 
-        return self::get($itemURL)['id'];
+        return self::get($itemUrl)['id'];
     }
 
     public static function getMostRead(int $limit): array
@@ -180,10 +180,10 @@ class Model implements FrontendTagsInterface
              WHERE i.num_views > 0 AND i.language = ? AND i.hidden = ?
              ORDER BY (i.num_usefull_yes + i.num_usefull_no) DESC
              LIMIT ?',
-            [LANGUAGE, 'N', $limit]
+            [LANGUAGE, false, $limit]
         );
 
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
         foreach ($items as &$item) {
             $item['full_url'] = $link . '/' . $item['url'];
         }
@@ -202,7 +202,7 @@ class Model implements FrontendTagsInterface
             [LANGUAGE, $categoryId]
         );
 
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
         foreach ($items as &$item) {
             $item['full_url'] = $link . '/' . $item['url'];
@@ -228,7 +228,7 @@ class Model implements FrontendTagsInterface
             return [];
         }
 
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.question, m.url
              FROM faq_questions AS i
@@ -236,7 +236,7 @@ class Model implements FrontendTagsInterface
              WHERE i.language = ? AND i.hidden = ? AND i.id IN(' . implode(',', $relatedIDs) . ')
              ORDER BY i.question
              LIMIT ?',
-            [LANGUAGE, 'N', $limit],
+            [LANGUAGE, false, $limit],
             'id'
         );
 
@@ -285,12 +285,12 @@ class Model implements FrontendTagsInterface
              INNER JOIN faq_categories AS c ON c.id = i.category_id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.hidden = ? AND i.language = ? AND i.id IN (' . implode(',', $ids) . ')',
-            ['N', LANGUAGE],
+            [false, LANGUAGE],
             'id'
         );
 
         // prepare items for search
-        $detailUrl = FrontendNavigation::getURLForBlock('Faq', 'Detail');
+        $detailUrl = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
         foreach ($items as &$item) {
             $item['full_url'] = $detailUrl . '/' . $item['url'];
         }
@@ -312,18 +312,18 @@ class Model implements FrontendTagsInterface
             return;
         }
 
-        $db = FrontendModel::getContainer()->get('database');
+        $database = FrontendModel::getContainer()->get('database');
 
         // update counter with current feedback (increase)
         if ($useful) {
-            $db->execute(
+            $database->execute(
                 'UPDATE faq_questions
                  SET num_usefull_yes = num_usefull_yes + 1
                  WHERE id = ?',
                 [$id]
             );
         } else {
-            $db->execute(
+            $database->execute(
                 'UPDATE faq_questions
                  SET num_usefull_no = num_usefull_no + 1
                  WHERE id = ?',
@@ -333,14 +333,14 @@ class Model implements FrontendTagsInterface
 
         // update counter with previous feedback (decrease)
         if ($previousFeedback) {
-            $db->execute(
+            $database->execute(
                 'UPDATE faq_questions
                  SET num_usefull_yes = num_usefull_yes - 1
                  WHERE id = ?',
                 [$id]
             );
         } elseif ($previousFeedback !== null) {
-            $db->execute(
+            $database->execute(
                 'UPDATE faq_questions
                  SET num_usefull_no = num_usefull_no - 1
                  WHERE id = ?',

@@ -49,13 +49,13 @@ class Add extends BackendBaseActionAdd
     public function getData(): void
     {
         $this->notifyAdmin = $this->get('fork.settings')->get(
-            $this->URL->getModule(),
+            $this->url->getModule(),
             'send_new_profile_admin_mail',
             false
         );
 
         $this->notifyProfile = $this->get('fork.settings')->get(
-            $this->URL->getModule(),
+            $this->url->getModule(),
             'send_new_profile_mail',
             false
         );
@@ -75,51 +75,51 @@ class Add extends BackendBaseActionAdd
         $years = range(date('Y'), 1900);
 
         // create form
-        $this->frm = new BackendForm('add');
+        $this->form = new BackendForm('add');
 
         // create elements
-        $this->frm
+        $this->form
             ->addText('email')
             ->setAttribute('type', 'email')
         ;
-        $this->frm->addPassword('password');
-        $this->frm->addText('display_name');
-        $this->frm->addText('first_name');
-        $this->frm->addText('last_name');
-        $this->frm->addText('city');
-        $this->frm->addDropdown('gender', $genderValues);
-        $this->frm->addDropdown('day', array_combine($days, $days));
-        $this->frm->addDropdown('month', $months);
-        $this->frm->addDropdown('year', array_combine($years, $years));
-        $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()));
+        $this->form->addPassword('password');
+        $this->form->addText('display_name');
+        $this->form->addText('first_name');
+        $this->form->addText('last_name');
+        $this->form->addText('city');
+        $this->form->addDropdown('gender', $genderValues);
+        $this->form->addDropdown('day', array_combine($days, $days));
+        $this->form->addDropdown('month', $months);
+        $this->form->addDropdown('year', array_combine($years, $years));
+        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()));
 
         // set default elements dropdowns
-        $this->frm->getField('gender')->setDefaultElement('');
-        $this->frm->getField('day')->setDefaultElement('');
-        $this->frm->getField('month')->setDefaultElement('');
-        $this->frm->getField('year')->setDefaultElement('');
-        $this->frm->getField('country')->setDefaultElement('');
+        $this->form->getField('gender')->setDefaultElement('');
+        $this->form->getField('day')->setDefaultElement('');
+        $this->form->getField('month')->setDefaultElement('');
+        $this->form->getField('year')->setDefaultElement('');
+        $this->form->getField('country')->setDefaultElement('');
     }
 
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $txtEmail = $this->frm->getField('email');
-            $txtDisplayName = $this->frm->getField('display_name');
-            $txtPassword = $this->frm->getField('password');
-            $txtFirstName = $this->frm->getField('first_name');
-            $txtLastName = $this->frm->getField('last_name');
-            $txtCity = $this->frm->getField('city');
-            $ddmGender = $this->frm->getField('gender');
-            $ddmDay = $this->frm->getField('day');
-            $ddmMonth = $this->frm->getField('month');
-            $ddmYear = $this->frm->getField('year');
-            $ddmCountry = $this->frm->getField('country');
+            $txtEmail = $this->form->getField('email');
+            $txtDisplayName = $this->form->getField('display_name');
+            $txtPassword = $this->form->getField('password');
+            $txtFirstName = $this->form->getField('first_name');
+            $txtLastName = $this->form->getField('last_name');
+            $txtCity = $this->form->getField('city');
+            $ddmGender = $this->form->getField('gender');
+            $ddmDay = $this->form->getField('day');
+            $ddmMonth = $this->form->getField('month');
+            $ddmYear = $this->form->getField('year');
+            $ddmCountry = $this->form->getField('country');
 
             // email filled in?
             if ($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
@@ -157,8 +157,7 @@ class Add extends BackendBaseActionAdd
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
-                $salt = BackendProfilesModel::getRandomString();
+            if ($this->form->isCorrect()) {
                 $password = ($txtPassword->isFilled()) ?
                     $txtPassword->getValue() : BackendModel::generatePassword(8);
 
@@ -169,13 +168,10 @@ class Add extends BackendBaseActionAdd
                     'display_name' => $txtDisplayName->getValue(),
                     'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue()),
                     'last_login' => BackendModel::getUTCDate(null, 0),
-                    'password' => BackendProfilesModel::getEncryptedString($password, $salt),
+                    'password' => BackendProfilesModel::encryptPassword($password),
                 ];
 
                 $this->id = BackendProfilesModel::insert($values);
-
-                // update salt
-                BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
                 // bday is filled in
                 if ($ddmYear->isFilled()) {
@@ -207,8 +203,8 @@ class Add extends BackendBaseActionAdd
                     ]
                 );
 
-                $redirectUrl = BackendModel::createURLForAction('Edit') .
-                    '&id=' . $this->id .
+                $redirectUrl = BackendModel::createUrlForAction('Edit') .
+                               '&id=' . $this->id .
                     '&var=' . rawurlencode($values['display_name']) .
                     '&report='
                 ;
@@ -237,6 +233,6 @@ class Add extends BackendBaseActionAdd
     {
         parent::parse();
 
-        $this->tpl->assign('notifyProfile', $this->notifyProfile);
+        $this->template->assign('notifyProfile', $this->notifyProfile);
     }
 }

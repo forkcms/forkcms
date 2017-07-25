@@ -26,13 +26,15 @@ class Form extends FrontendBaseWidget
         $this->addJS('/js/vendors/typeahead.bundle.min.js', true, false);
         $this->addCSS('Search.css');
 
-        $form = new FrontendForm('search', FrontendNavigation::getURLForBlock('Search'), 'get', null, false);
+        $form = new FrontendForm('search', FrontendNavigation::getUrlForBlock('Search'), 'get', null, false);
+        $form->setParameter('class', 'navbar-form');
+        $form->setParameter('role', 'search');
         $form->addText('q_widget')->setAttributes(
             [
                 'itemprop' => 'query-input',
                 'data-role' => 'fork-widget-search-field',
             ]
         );
-        $form->parse($this->tpl);
+        $form->parse($this->template);
     }
 }

@@ -1,0 +1,28 @@
+services:
+    content_blocks.handler.create_content_block:
+        class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlockHandler
+        arguments:
+            - "@content_blocks.repository.content_block"
+        tags:
+            - { name: command_handler, handles: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlock }
+
+    content_blocks.handler.update_content_block:
+        class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlockHandler
+        arguments:
+            - "@content_blocks.repository.content_block"
+        tags:
+            - { name: command_handler, handles: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock }
+
+    content_blocks.handler.delete_content_block:
+        class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlockHandler
+        arguments:
+            - "@content_blocks.repository.content_block"
+        tags:
+            - { name: command_handler, handles: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlock }
+
+    content_blocks.handler.copy_content_blocks_to_other_locale:
+        class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocaleHandler
+        arguments:
+            - "@content_blocks.repository.content_block"
+        tags:
+            - { name: command_handler, handles: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale }

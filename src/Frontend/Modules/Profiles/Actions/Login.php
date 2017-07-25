@@ -26,7 +26,7 @@ class Login extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
@@ -41,7 +41,7 @@ class Login extends FrontendBaseBlock
         } else {
             // profile already logged in
             // query string
-            $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
+            $queryString = urldecode($this->getRequest()->query->get('queryString', SITE_URL));
 
             // redirect
             $this->redirect($queryString);
@@ -50,25 +50,25 @@ class Login extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->frm = new FrontendForm('login', null, null, 'loginForm');
-        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
-        $this->frm->addPassword('password')->setAttributes(['required' => null]);
-        $this->frm->addCheckbox('remember', true);
+        $this->form = new FrontendForm('login', null, 'post', 'loginForm');
+        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addPassword('password')->setAttributes(['required' => null]);
+        $this->form->addCheckbox('remember', true);
     }
 
     private function parse(): void
     {
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get fields
-            $txtEmail = $this->frm->getField('email');
-            $txtPassword = $this->frm->getField('password');
-            $chkRemember = $this->frm->getField('remember');
+            $txtEmail = $this->form->getField('email');
+            $txtPassword = $this->form->getField('password');
+            $chkRemember = $this->form->getField('remember');
 
             // required fields
             $txtEmail->isFilled(FL::getError('EmailIsRequired'));
@@ -89,31 +89,28 @@ class Login extends FrontendBaseBlock
                         // get the error string to use
                         $errorString = sprintf(
                             FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
-                            FrontendNavigation::getURLForBlock('Profiles', 'ResendActivation')
+                            FrontendNavigation::getUrlForBlock('Profiles', 'ResendActivation')
                         );
 
                         // add the error to stack
-                        $this->frm->addError($errorString);
+                        $this->form->addError($errorString);
 
                         // add the error to the template variables
-                        $this->tpl->assign('loginError', $errorString);
+                        $this->template->assign('loginError', $errorString);
                     }
                 }
             }
 
             // valid login
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // get profile id
                 $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
 
                 // login
                 FrontendProfilesAuthentication::login($profileId, $chkRemember->getChecked());
 
-                // update salt and password for Dieter's security features
-                FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
-
                 // query string
-                $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
+                $queryString = urldecode($this->getRequest()->query->get('queryString', SITE_URL));
 
                 // redirect
                 $this->redirect($queryString);

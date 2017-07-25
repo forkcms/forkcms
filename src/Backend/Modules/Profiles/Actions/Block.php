@@ -21,10 +21,10 @@ class Block extends BackendBaseActionDelete
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendProfilesModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendProfilesModel::exists($this->id)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -38,7 +38,7 @@ class Block extends BackendBaseActionDelete
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-unblocked&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Index') . '&report=profile-unblocked&var=' . rawurlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $this->id
                 );
@@ -51,13 +51,13 @@ class Block extends BackendBaseActionDelete
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-blocked&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Index') . '&report=profile-blocked&var=' . rawurlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $this->id
                 );
             }
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 }

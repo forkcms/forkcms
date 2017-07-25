@@ -6,7 +6,7 @@
     {% include "Core/Layout/Templates/Cookies.html.twig" %}
   {% endblock %}
 
-  <div class="header header-blue" style="background-image: url('{{ FRONTEND_FILES_URL }}/pages/images/source/{{ page.data.image }}');">
+  <div class="header header-blue" style="background-image: url('{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ page.data.image }}');">
     {% block navigation %}
       <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -21,6 +21,18 @@
           </div>
           <div id="navbar-main" class="navbar-collapse collapse">
             {{ getnavigation('page', 0, 1) }}
+
+            {# Top positions #}
+            {% if positions.top %}
+              <div class="navbar-left">
+                {% for content in positions.top %}
+                  {% if content.html %}
+                    {{ content.html|raw }}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
             <div class="navbar-right">
               {% include "Core/Layout/Templates/Languages.html.twig" %}
             </div>

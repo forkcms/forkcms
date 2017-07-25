@@ -22,7 +22,7 @@
         "symfony/assetic-bundle": "^2.7",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/monolog-bundle": "^2.8",
-        "spoon/library": "^2.3",
+        "spoon/library": "dev-3.0.0-dev as 3.0.0",
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
         "league/flysystem": "~1.0",
@@ -30,13 +30,14 @@
         "doctrine/orm": "^2.5",
         "simple-bus/symfony-bridge": "^4.1",
         "simple-bus/doctrine-orm-bridge": "^4.0",
-        "mailmotor/mailchimp-bundle": "^2.0",
-        "mailmotor/campaignmonitor-bundle": "^1.0",
-        "mailmotor/mailmotor-bundle": "^2.0",
+        "mailmotor/mailchimp-bundle": "^3.0",
+        "mailmotor/campaignmonitor-bundle": "^2.0",
+        "mailmotor/mailmotor-bundle": "^3.0",
         "ramsey/uuid": "^3.5",
         "ramsey/uuid-doctrine": "^1.2",
         "liip/imagine-bundle": "^1.7",
-        "swiftmailer/swiftmailer": "^5.4.6"
+        "swiftmailer/swiftmailer": "^5.4.6",
+        "google/recaptcha": "~1.1"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
@@ -52,6 +53,7 @@
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {
+        "test": "./bin/simple-phpunit",
         "post-install-cmd": [
             "php app/console assetic:dump .",
             "php app/console forkcms:cache:clear",

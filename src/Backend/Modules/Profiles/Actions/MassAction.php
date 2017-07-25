@@ -24,13 +24,16 @@ class MassAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', ['addToGroup', 'delete'], '');
-        $ids = (isset($_GET['id'])) ? (array) $_GET['id'] : [];
-        $newGroupId = \SpoonFilter::getGetValue('newGroup', array_keys(BackendProfilesModel::getGroups()), '');
+        $action = $this->getRequest()->query->get('action');
+        if (!in_array($action, ['addToGroup', 'delete'])) {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
+        }
+        $ids = $this->getRequest()->query->has('id') ? (array) $this->getRequest()->query->get('id') : [];
+        $newGroupId = $this->getRequest()->query->get('newGroup');
 
         // no ids provided
         if (empty($ids)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-profiles-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-profiles-selected');
         }
 
         // delete the given profiles
@@ -40,9 +43,9 @@ class MassAction extends BackendBaseAction
         } elseif ($action === 'addToGroup') {
             // add the profiles to the given group
             // no group id provided
-            if ($newGroupId == '') {
+            if (!array_key_exists($newGroupId, BackendProfilesModel::getGroups())) {
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&error=no-group-selected'
+                    BackendModel::createUrlForAction('Index') . '&error=no-group-selected'
                 );
             }
 
@@ -73,7 +76,7 @@ class MassAction extends BackendBaseAction
             $report = 'added-to-group';
         } else {
             // unknown action
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=unknown-action');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=unknown-action');
         }
 
         // report
@@ -81,17 +84,17 @@ class MassAction extends BackendBaseAction
 
         // redirect
         $this->redirect(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 'Index',
                 null,
                 null,
                 [
-                     'offset' => \SpoonFilter::getGetValue('offset', null, ''),
-                     'order' => \SpoonFilter::getGetValue('order', null, ''),
-                     'sort' => \SpoonFilter::getGetValue('sort', null, ''),
-                     'email' => \SpoonFilter::getGetValue('email', null, ''),
-                     'status' => \SpoonFilter::getGetValue('status', null, ''),
-                     'group' => \SpoonFilter::getGetValue('group', null, ''),
+                     'offset' => $this->getRequest()->query->get('offset', ''),
+                     'order' => $this->getRequest()->query->get('order', ''),
+                     'sort' => $this->getRequest()->query->get('sort', ''),
+                     'email' => $this->getRequest()->query->get('email', ''),
+                     'status' => $this->getRequest()->query->get('status', ''),
+                     'group' => $this->getRequest()->query->get('group', ''),
                 ]
             ) . '&report=' . $report
         );

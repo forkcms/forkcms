@@ -25,7 +25,7 @@ class Rss extends \SpoonFeedRSS
         // call the parent
         parent::__construct(
             $title,
-            Model::addURLParameters(
+            Model::addUrlParameters(
                 $link,
                 ['utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title)]
             ),
@@ -49,7 +49,7 @@ class Rss extends \SpoonFeedRSS
         }
 
         // theme name
-        $theme = Model::get('fork.settings')->get('Core', 'theme', null);
+        $theme = Model::get('fork.settings')->get('Core', 'theme', 'Fork');
 
         // theme rss image exists
         if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/Core/images/rss_image.png')) {
@@ -65,7 +65,7 @@ class Rss extends \SpoonFeedRSS
     public function setImage($url, $title, $link, $width = null, $height = null, $description = null): void
     {
         // add UTM-parameters
-        $link = Model::addURLParameters(
+        $link = Model::addUrlParameters(
             $link,
             [
                 'utm_source' => 'feed',

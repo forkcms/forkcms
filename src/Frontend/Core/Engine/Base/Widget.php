@@ -11,11 +11,13 @@ namespace Frontend\Core\Engine\Base;
 
 use Common\Core\Header\Priority;
 use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
+use Frontend\Core\Engine\Url;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -23,7 +25,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @later  Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  */
-class Widget extends Object
+class Widget extends KernelLoader
 {
     /**
      * The current action
@@ -61,6 +63,20 @@ class Widget extends Object
     public $templatePath;
 
     /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $template;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $url;
+
+    /**
      * @param KernelInterface $kernel
      * @param string $module The module to use.
      * @param string $action The action to use.
@@ -72,7 +88,8 @@ class Widget extends Object
 
         // get objects from the reference so they are accessible
         $this->header = $this->getContainer()->get('header');
-        $this->URL = $this->getContainer()->get('url');
+        $this->template = $this->getContainer()->get('templating');
+        $this->url = $this->getContainer()->get('url');
 
         // set properties
         $this->setModule($module);
@@ -143,12 +160,12 @@ class Widget extends Object
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
         // build URL to the module
-        $frontendModuleURL = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
+        $frontendModuleUrl = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getModule() . '.js',
+                $frontendModuleUrl . '/' . $this->getModule() . '.js',
                 true,
                 true,
                 Priority::widget()
@@ -158,7 +175,7 @@ class Widget extends Object
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getAction() . '.js',
+                $frontendModuleUrl . '/' . $this->getAction() . '.js',
                 true,
                 true,
                 Priority::widget()
@@ -181,10 +198,10 @@ class Widget extends Object
     public function getContent(string $template = null): string
     {
         if ($template !== null) {
-            return $this->tpl->getContent($template);
+            return $this->template->getContent($template);
         }
 
-        return $this->tpl->getContent($this->templatePath);
+        return $this->template->getContent($this->templatePath);
     }
 
     public function getModule(): string
@@ -194,7 +211,7 @@ class Widget extends Object
 
     public function getTemplate(): TwigTemplate
     {
-        return $this->tpl;
+        return $this->template;
     }
 
     protected function loadTemplate(string $path = null): void
@@ -267,5 +284,15 @@ class Widget extends Object
     public function createForm(string $type, $data = null, array $options = []): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
+    }
+
+    /**
+     * Get the request from the container.
+     *
+     * @return Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->get('request');
     }
 }

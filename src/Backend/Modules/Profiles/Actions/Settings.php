@@ -33,41 +33,41 @@ class Settings extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // init settings form
-        $this->frm = new BackendForm('settings');
+        $this->form = new BackendForm('settings');
 
         // send email for new profile to admin
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'send_new_profile_admin_mail',
             $this->get('fork.settings')->get(
-                $this->URL->getModule(),
+                $this->url->getModule(),
                 'send_new_profile_admin_mail',
                 false
             )
         );
 
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'overwrite_profile_notification_email',
             (bool) ($this->get('fork.settings')->get(
-                $this->URL->getModule(),
+                $this->url->getModule(),
                 'profile_notification_email',
                 null
             ) !== null)
         );
 
-        $this->frm->addText(
+        $this->form->addText(
             'profile_notification_email',
             $this->get('fork.settings')->get(
-                $this->URL->getModule(),
+                $this->url->getModule(),
                 'profile_notification_email',
                 null
             )
         );
 
         // send email for new profile to profile
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'send_new_profile_mail',
             $this->get('fork.settings')->get(
-                $this->URL->getModule(),
+                $this->url->getModule(),
                 'send_new_profile_mail',
                 false
             )
@@ -76,40 +76,40 @@ class Settings extends BackendBaseActionEdit
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            if ($this->frm->getField('send_new_profile_admin_mail')->isChecked()) {
-                if ($this->frm->getField('overwrite_profile_notification_email')->isChecked()) {
-                    $this->frm->getField('profile_notification_email')->isEmail(BL::msg('EmailIsRequired'));
+        if ($this->form->isSubmitted()) {
+            if ($this->form->getField('send_new_profile_admin_mail')->isChecked()) {
+                if ($this->form->getField('overwrite_profile_notification_email')->isChecked()) {
+                    $this->form->getField('profile_notification_email')->isEmail(BL::msg('EmailIsRequired'));
                 }
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // set our settings
                 $this->get('fork.settings')->set(
-                    $this->URL->getModule(),
+                    $this->url->getModule(),
                     'send_new_profile_admin_mail',
-                    (bool) $this->frm->getField('send_new_profile_admin_mail')->getValue()
+                    (bool) $this->form->getField('send_new_profile_admin_mail')->getValue()
                 );
 
                 $profileNotificationEmail = null;
 
-                if ($this->frm->getField('overwrite_profile_notification_email')->isChecked()) {
-                    $profileNotificationEmail = $this->frm->getField('profile_notification_email')->getValue();
+                if ($this->form->getField('overwrite_profile_notification_email')->isChecked()) {
+                    $profileNotificationEmail = $this->form->getField('profile_notification_email')->getValue();
                 }
 
                 $this->get('fork.settings')->set(
-                    $this->URL->getModule(),
+                    $this->url->getModule(),
                     'profile_notification_email',
                     $profileNotificationEmail
                 );
                 $this->get('fork.settings')->set(
-                    $this->URL->getModule(),
+                    $this->url->getModule(),
                     'send_new_profile_mail',
-                    (bool) $this->frm->getField('send_new_profile_mail')->getValue()
+                    (bool) $this->form->getField('send_new_profile_mail')->getValue()
                 );
 
                 // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved-settings');
+                $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved-settings');
             }
         }
     }

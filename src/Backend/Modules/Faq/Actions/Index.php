@@ -12,7 +12,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -52,8 +52,8 @@ class Index extends BackendBaseActionIndex
 
         // loop categories and create a dataGrid for each one
         foreach ($categories as $categoryId => $categoryTitle) {
-            $dataGrid = new BackendDataGridDB(
-                BackendFaqModel::QRY_DATAGRID_BROWSE,
+            $dataGrid = new BackendDataGridDatabase(
+                BackendFaqModel::QUERY_DATAGRID_BROWSE,
                 [BL::getWorkingLanguage(), $categoryId]
             );
             $dataGrid->enableSequenceByDragAndDrop();
@@ -63,12 +63,12 @@ class Index extends BackendBaseActionIndex
 
             // check if this action is allowed
             if (BackendAuthentication::isAllowedAction('Edit')) {
-                $dataGrid->setColumnURL('question', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
+                $dataGrid->setColumnURL('question', BackendModel::createUrlForAction('Edit') . '&amp;id=[id]');
                 $dataGrid->addColumn(
                     'edit',
                     null,
                     BL::lbl('Edit'),
-                    BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                    BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
                     BL::lbl('Edit')
                 );
             }
@@ -99,8 +99,8 @@ class Index extends BackendBaseActionIndex
 
         // parse dataGrids
         if (!empty($this->dataGrids)) {
-            $this->tpl->assign('dataGrids', $this->dataGrids);
+            $this->template->assign('dataGrids', $this->dataGrids);
         }
-        $this->tpl->assign('emptyDatagrid', $this->emptyDatagrid->getContent());
+        $this->template->assign('emptyDatagrid', $this->emptyDatagrid->getContent());
     }
 }

@@ -16,14 +16,14 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Model
 {
-    const QRY_BROWSE =
+    const QUERY_BROWSE =
         'SELECT g.id, g.name, COUNT(u.id) AS num_users
          FROM groups AS g
          LEFT OUTER JOIN users_groups AS ug ON g.id = ug.group_id
          LEFT OUTER JOIN users AS u ON u.id = ug.user_id
          GROUP BY g.id';
 
-    const QRY_ACTIVE_USERS =
+    const QUERY_ACTIVE_USERS =
         'SELECT u.id, u.email
          FROM users AS u
          INNER JOIN users_groups AS ug ON u.id = ug.user_id
@@ -218,7 +218,7 @@ class Model
              FROM users AS i
              INNER JOIN users_groups AS ug ON i.id = ug.user_id
              WHERE ug.group_id = ? AND i.deleted = ? AND i.active = ?',
-            [$groupId, 'N', 'Y']
+            [$groupId, false, true]
         );
     }
 

@@ -28,6 +28,6 @@ class Categories extends FrontendBaseWidget
 
     private function parse(): void
     {
-        $this->tpl->assign('widgetFaqCategories', FrontendFaqModel::getCategories());
+        $this->template->assign('widgetFaqCategories', FrontendFaqModel::getCategories());
     }
 }

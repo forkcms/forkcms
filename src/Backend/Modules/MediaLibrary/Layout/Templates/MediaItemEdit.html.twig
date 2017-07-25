@@ -4,7 +4,7 @@
   <div class="sub-navigation">
     <div id="mediaTree" class="pages-tree">
       <div class="alert alert-warning visible-xs visible-sm">
-        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MovePagesNotPossible'|trans|ucfirst }}</p>
+        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
       </div>
       <div id="tree">
         {{ tree|raw }}
@@ -62,8 +62,12 @@
       </div>
     </div>
   </div>
+  {{ form_end(form) }}
 
   {% if showMediaLibraryMediaItemDelete %}
+    {{ form_start(deleteForm) }}
+    {{ form_row(deleteForm._token) }}
+    {{ form_row(deleteForm.id) }}
     <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="blog-delete" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -77,13 +81,13 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">
               <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
-            <a href="{{ geturl('MediaItemDelete') }}&amp;id={{ mediaItem.id }}{% if categoryId %}&amp;category={{ categoryId }}{% endif %}" class="btn btn-danger">
+            <button type="submit" class="btn btn-danger">
               <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-            </a>
+            </button>
           </div>
         </div>
       </div>
     </div>
+    {{ form_end(deleteForm) }}
   {% endif %}
-  {{ form_end(form) }}
 {% endblock %}

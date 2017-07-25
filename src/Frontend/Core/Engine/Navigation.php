@@ -9,17 +9,17 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
 
 /**
  * This class will be used to build the navigation
  */
-class Navigation extends FrontendBaseObject
+class Navigation extends KernelLoader
 {
     /**
      * The excluded page ids. These will not be shown in the menu.
@@ -35,9 +35,26 @@ class Navigation extends FrontendBaseObject
      */
     private static $selectedPageIds = [];
 
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $template;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $url;
+
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
+
+        $this->template = $this->getContainer()->get('templating');
+        $this->url = $this->getContainer()->get('url');
 
         // set selected ids
         $this->setSelectedPageIds();
@@ -55,7 +72,7 @@ class Navigation extends FrontendBaseObject
      *
      * @return string
      */
-    public static function getBackendURLForBlock(
+    public static function getBackendUrlForBlock(
         string $action,
         string $module,
         string $language = null,
@@ -70,10 +87,10 @@ class Navigation extends FrontendBaseObject
         }
 
         if ($urlencode) {
-            array_walk($parameters, 'rawurlencode');
+            $parameters = array_map('rawurlencode', $parameters);
         }
 
-        $queryString = '?' . http_build_query($parameters, null, '&amp;');
+        $queryString = '?' . http_build_query($parameters);
 
         // build the URL and return it
         return FrontendModel::get('router')->generate(
@@ -139,7 +156,7 @@ class Navigation extends FrontendBaseObject
             // add
             $footerLinks[] = [
                 'id' => $id,
-                'url' => self::getURL($id),
+                'url' => self::getUrl($id),
                 'title' => $data['title'],
                 'navigation_title' => $data['navigation_title'],
                 'selected' => in_array($id, self::$selectedPageIds, true),
@@ -208,7 +225,7 @@ class Navigation extends FrontendBaseObject
         array $excludeIds = [],
         string $template = '/Core/Layout/Templates/Navigation.html.twig',
         int $depthCounter = 1
-    ) : string {
+    ): string {
         // get navigation
         $navigation = self::getNavigation();
 
@@ -333,11 +350,11 @@ class Navigation extends FrontendBaseObject
 
                 $navigation[$type][$parentId][$id]['parent_id'] = $parentId;
                 $navigation[$type][$parentId][$id]['depth'] = $depthCounter;
-                $navigation[$type][$parentId][$id]['link'] = static::getURL($page['page_id']);
+                $navigation[$type][$parentId][$id]['link'] = static::getUrl($page['page_id']);
 
                 // is this an internal redirect?
                 if (isset($page['redirect_page_id']) && $page['redirect_page_id'] !== '') {
-                    $navigation[$type][$parentId][$id]['link'] = static::getURL(
+                    $navigation[$type][$parentId][$id]['link'] = static::getUrl(
                         (int) $page['redirect_page_id']
                     );
                 }
@@ -433,7 +450,7 @@ class Navigation extends FrontendBaseObject
      *
      * @return string
      */
-    public static function getURL(int $pageId, string $language = null): string
+    public static function getUrl(int $pageId, string $language = null): string
     {
         $language = $language ?? LANGUAGE;
 
@@ -445,7 +462,7 @@ class Navigation extends FrontendBaseObject
 
         // get the URL, if it doesn't exist return 404
         if ($pageId !== 404 && !isset($keys[$pageId])) {
-            return self::getURL(404, $language);
+            return self::getUrl(404, $language);
         }
 
         if (empty($keys)) {
@@ -468,7 +485,7 @@ class Navigation extends FrontendBaseObject
      *
      * @return string
      */
-    public static function getURLForBlock(
+    public static function getUrlForBlock(
         string $module,
         string $action = null,
         string $language = null,
@@ -476,7 +493,7 @@ class Navigation extends FrontendBaseObject
     ): string {
         $language = $language ?? LANGUAGE;
         // init var
-        $pageIdForURL = null;
+        $pageIdForUrl = null;
 
         // get the menuItems
         $navigation = self::getNavigation($language);
@@ -504,7 +521,7 @@ class Navigation extends FrontendBaseObject
                                 continue;
                             }
                             // exact page was found, so return
-                            return self::getURL($properties['page_id'], $language);
+                            return self::getUrl($properties['page_id'], $language);
                         }
 
                         if ($extra['module'] === $module && $extra['action'] === null) {
@@ -515,17 +532,17 @@ class Navigation extends FrontendBaseObject
                                     continue;
                                 }
 
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
 
                             if ($data === null && $extra['data'] === null) {
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
 
                             if (!$dataMatch) {
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                             }
                         }
                     }
@@ -534,12 +551,12 @@ class Navigation extends FrontendBaseObject
         }
 
         // pageId still null?
-        if ($pageIdForURL === null) {
-            return self::getURL(404, $language);
+        if ($pageIdForUrl === null) {
+            return self::getUrl(404, $language);
         }
 
         // build URL
-        $url = self::getURL($pageIdForURL, $language);
+        $url = self::getUrl($pageIdForUrl, $language);
 
         // append action
         if ($action !== null) {
@@ -559,7 +576,7 @@ class Navigation extends FrontendBaseObject
      *
      * @return string
      */
-    public static function getURLForExtraId(int $id, string $language = null): string
+    public static function getUrlForExtraId(int $id, string $language = null): string
     {
         $language = $language ?? LANGUAGE;
         // get the menuItems
@@ -581,7 +598,7 @@ class Navigation extends FrontendBaseObject
                         // direct link?
                         if ((int) $extra['id'] === $id) {
                             // exact page was found, so return
-                            return self::getURL($properties['page_id'], $language);
+                            return self::getUrl($properties['page_id'], $language);
                         }
                     }
                 }
@@ -589,7 +606,7 @@ class Navigation extends FrontendBaseObject
         }
 
         // fallback
-        return self::getURL(404, $language);
+        return self::getUrl(404, $language);
     }
 
     /**
@@ -610,7 +627,7 @@ class Navigation extends FrontendBaseObject
     public function setSelectedPageIds(): void
     {
         // get pages
-        $pages = (array) $this->URL->getPages();
+        $pages = (array) $this->url->getPages();
 
         // no pages, means we're at the homepage
         if (empty($pages)) {

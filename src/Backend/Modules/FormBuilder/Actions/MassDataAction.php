@@ -23,23 +23,26 @@ class MassDataAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', ['delete'], '');
+        $action = $this->getRequest()->query->get('action');
+        if (!in_array($action, ['delete'])) {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
+        }
 
         // form id
-        $formId = \SpoonFilter::getGetValue('form_id', null, '', 'int');
+        $formId = $this->getRequest()->query->getInt('form_id');
 
         // no id's provided
-        if (!isset($_GET['id'])) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-items-selected');
+        if (!$this->getRequest()->query->has('id')) {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-items-selected');
         } elseif ($action == '') {
             // no action provided
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
         } elseif (!BackendFormBuilderModel::exists($formId)) {
             // valid form id
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         } else {
             // redefine id's
-            $ids = (array) $_GET['id'];
+            $ids = (array) $this->getRequest()->query->get('id');
 
             // delete comment(s)
             if ($action == 'delete') {
@@ -50,12 +53,12 @@ class MassDataAction extends BackendBaseAction
             $report = (count($ids) > 1) ? 'items-' : 'item-';
 
             // init var
-            if ($action == 'delete') {
+            if ($action === 'delete') {
                 $report .= 'deleted';
             }
 
             // redirect
-            $this->redirect(BackendModel::createURLForAction('Data') . '&id=' . $formId . '&report=' . $report);
+            $this->redirect(BackendModel::createUrlForAction('Data') . '&id=' . $formId . '&report=' . $report);
         }
     }
 }

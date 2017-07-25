@@ -9,6 +9,7 @@ namespace Backend\Modules\Extensions\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\ModulesSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -28,7 +29,7 @@ class Model
      *
      * @var string
      */
-    const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
+    const QUERY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
                                   FROM themes_templates AS i
                                   WHERE i.theme = ?
                                   ORDER BY i.label ASC';
@@ -155,7 +156,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('AkismetKey'),
-                    BackendModel::createURLForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings')
                 ),
             ];
         }
@@ -167,7 +168,7 @@ class Model
             $warnings[] = [
                 'message' => sprintf(
                     BL::err('GoogleMapsKey'),
-                    BackendModel::createURLForAction('Index', 'Settings')
+                    BackendModel::createUrlForAction('Index', 'Settings')
                 ),
             ];
         }
@@ -225,9 +226,9 @@ class Model
             return false;
         }
 
-        $db = BackendModel::getContainer()->get('database');
-        $db->delete('themes_templates', 'id = ?', $id);
-        $ids = (array) $db->getColumn(
+        $database = BackendModel::getContainer()->get('database');
+        $database->delete('themes_templates', 'id = ?', $id);
+        $ids = (array) $database->getColumn(
             'SELECT i.revision_id
              FROM pages AS i
              WHERE i.template_id = ? AND i.status != ?',
@@ -236,8 +237,8 @@ class Model
 
         if (!empty($ids)) {
             // delete those pages and the linked blocks
-            $db->delete('pages', 'revision_id IN(' . implode(',', $ids) . ')');
-            $db->delete('pages_blocks', 'revision_id IN(' . implode(',', $ids) . ')');
+            $database->delete('pages', 'revision_id IN(' . implode(',', $ids) . ')');
+            $database->delete('pages_blocks', 'revision_id IN(' . implode(',', $ids) . ')');
         }
 
         return true;
@@ -292,20 +293,20 @@ class Model
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',
-            ['N'],
+            [false],
             'id'
         );
         $itemsToRemove = [];
 
         foreach ($extras as $id => &$row) {
-            $row['data'] = @unserialize($row['data']);
+            $row['data'] = $row['data'] === null ? [] : @unserialize($row['data']);
             if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
                 $itemsToRemove[] = $id;
             }
 
             // set URL if needed, we use '' instead of null, because otherwise the module of the current action (modules) is used.
             if (!isset($row['data']['url'])) {
-                $row['data']['url'] = BackendModel::createURLForAction('', $row['module']);
+                $row['data']['url'] = BackendModel::createUrlForAction('', $row['module']);
             }
 
             $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));
@@ -341,7 +342,7 @@ class Model
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',
-            ['N']
+            [false]
         );
         $values = [];
 
@@ -355,7 +356,7 @@ class Model
 
             // set URL if needed
             if (!isset($row['data']['url'])) {
-                $row['data']['url'] = BackendModel::createURLForAction(
+                $row['data']['url'] = BackendModel::createUrlForAction(
                     'Index',
                     $row['module']
                 );
@@ -496,17 +497,7 @@ class Model
      */
     public static function getModulesThatRequireAkismet(): array
     {
-        $modules = [];
-        $installedModules = BackendModel::getModules();
-
-        foreach ($installedModules as $module) {
-            $setting = BackendModel::get('fork.settings')->get($module, 'requires_akismet', false);
-            if ($setting) {
-                $modules[] = $module;
-            }
-        }
-
-        return $modules;
+        return self::getModulesThatRequireSetting('akismet');
     }
 
     /**
@@ -516,17 +507,43 @@ class Model
      */
     public static function getModulesThatRequireGoogleMaps(): array
     {
-        $modules = [];
-        $installedModules = BackendModel::getModules();
+        return self::getModulesThatRequireSetting('google_maps');
+    }
 
-        foreach ($installedModules as $module) {
-            $setting = BackendModel::get('fork.settings')->get($module, 'requires_google_maps', false);
-            if ($setting) {
-                $modules[] = $module;
-            }
+    /**
+     * Fetch the list of modules that require Google Recaptcha API key
+     *
+     * @return array
+     */
+    public static function getModulesThatRequireGoogleRecaptcha(): array
+    {
+        return self::getModulesThatRequireSetting('google_recaptcha');
+    }
+
+    /**
+     * Fetch the list of modules that require a certain setting. The setting is affixed by 'requires_'
+     *
+     * @param string $setting
+     *
+     * @return array
+     */
+    private static function getModulesThatRequireSetting(string $setting): array
+    {
+        if ($setting === '') {
+            return [];
         }
 
-        return $modules;
+        /** @var ModulesSettings $moduleSettings */
+        $moduleSettings = BackendModel::get('fork.settings');
+
+        return array_filter(
+            BackendModel::getModules(),
+            function (string $module) use ($moduleSettings, $setting): bool {
+                $requiresGoogleRecaptcha = $moduleSettings->get($module, 'requires_' . $setting, false);
+
+                return $requiresGoogleRecaptcha;
+            }
+        );
     }
 
     public static function getTemplate(int $id): array
@@ -539,19 +556,19 @@ class Model
 
     public static function getTemplates(string $theme = null): array
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
         $theme = \SpoonFilter::getValue(
             (string) $theme,
             null,
-            BackendModel::get('fork.settings')->get('Core', 'theme', 'Core')
+            BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork')
         );
 
-        $templates = (array) $db->getRecords(
+        $templates = (array) $database->getRecords(
             'SELECT i.id, i.label, i.path, i.data
             FROM themes_templates AS i
             WHERE i.theme = ? AND i.active = ?
             ORDER BY i.label ASC',
-            [$theme, 'Y'],
+            [$theme, true],
             'id'
         );
 
@@ -599,14 +616,6 @@ class Model
     public static function getThemes(): array
     {
         $records = [];
-        $records['Core'] = [
-            'value' => 'Core',
-            'label' => BL::lbl('NoTheme'),
-            'thumbnail' => '/src/Frontend/Core/Layout/images/thumbnail.png',
-            'installed' => self::isThemeInstalled('Core'),
-            'installable' => false,
-        ];
-
         $finder = new Finder();
         foreach ($finder->directories()->in(FRONTEND_PATH . '/Themes')->depth(0) as $directory) {
             $pathInfoXml = BackendModel::getContainer()->getParameter('site.path_www') . '/src/Frontend/Themes/'
@@ -649,9 +658,9 @@ class Model
         $root = $xml->createElement('templates');
         $xml->appendChild($root);
 
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
-        $records = $db->getRecords(self::QRY_BROWSE_TEMPLATES, [$theme]);
+        $records = $database->getRecords(self::QUERY_BROWSE_TEMPLATES, [$theme]);
 
         foreach ($records as $row) {
             $template = self::getTemplate($row['id']);
@@ -683,7 +692,7 @@ class Model
     {
         $moduleInformation = self::getModuleInformation($module);
 
-        return (empty($moduleInformation['warnings'])) ? 'N' : 'Y';
+        return !empty($moduleInformation['warnings']);
     }
 
     public static function insertTemplate(array $template): int
@@ -726,7 +735,7 @@ class Model
             $item['theme'] = $information['name'];
             $item['label'] = $template['label'];
             $item['path'] = $template['path'];
-            $item['active'] = 'Y';
+            $item['active'] = true;
             $item['data']['format'] = $template['format'];
             $item['data']['image'] = $template['image'];
 
@@ -744,7 +753,7 @@ class Model
                         'SELECT i.id
                          FROM modules_extras AS i
                          WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
-                        ['widget', $widget['module'], $widget['action'], 'N']
+                        ['widget', $widget['module'], $widget['action'], false]
                     );
 
                     // add extra to defaults

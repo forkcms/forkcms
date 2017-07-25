@@ -31,10 +31,10 @@ class Edit extends BackendBaseActionEdit
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendTagsModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendTagsModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadDataGrid();
@@ -43,7 +43,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -99,8 +99,8 @@ class Edit extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('edit');
-        $this->frm->addText('name', $this->record['name']);
+        $this->form = new BackendForm('edit');
+        $this->form->addText('name', $this->record['name']);
     }
 
     protected function parse(): void
@@ -108,30 +108,30 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // assign id, name
-        $this->tpl->assign('id', $this->id);
-        $this->tpl->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->id);
+        $this->template->assign('name', $this->record['name']);
 
         // assign usage-datagrid
-        $this->tpl->assign('usage', $this->dgUsage->getContent());
+        $this->template->assign('usage', $this->dgUsage->getContent());
     }
 
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+            $this->form->getField('name')->isFilled(BL::err('NameIsRequired'));
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build tag
                 $item = [];
                 $item['id'] = $this->id;
-                $item['tag'] = $this->frm->getField('name')->getValue();
-                $item['url'] = BackendTagsModel::getURL(
+                $item['tag'] = $this->form->getField('name')->getValue();
+                $item['url'] = BackendTagsModel::getUrl(
                     CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
                     $this->id
                 );
@@ -141,7 +141,7 @@ class Edit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Index') . '&report=edited&var=' . rawurlencode(
                         $item['tag']
                     ) . '&highlight=row-' . $item['id']
                 );

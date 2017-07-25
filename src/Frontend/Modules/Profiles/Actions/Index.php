@@ -34,10 +34,10 @@ class Index extends FrontendBaseBlock
         } else {
             // profile not logged in
             $this->redirect(
-                FrontendNavigation::getURLForBlock(
+                FrontendNavigation::getUrlForBlock(
                     'Profiles',
                     'Login'
-                ) . '?queryString=' . FrontendNavigation::getURLForBlock('Profiles'),
+                ) . '?queryString=' . FrontendNavigation::getUrlForBlock('Profiles'),
                 307
             );
         }

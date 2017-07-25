@@ -127,8 +127,9 @@ class SeoFormNode extends \Twig_Node
 
         $compiler
             ->write('echo \'<span id="urlFirstPart">\';')
-            ->write('if (' . $this->hasVariable('detailUrl') . ') {')
-            ->write($this->getVariable('detailUrl'))
+            ->write('if (' . $this->hasVariable('detailURL') . ') {')
+            ->write($this->getVariable('detailURL'))
+            ->write('echo "/";')
             ->write('} else {')
             ->write('echo "' . SITE_URL . '/' . ' ' . '";')
             ->write('}')
@@ -242,16 +243,16 @@ class SeoFormNode extends \Twig_Node
 
     private function getField(string $fieldName): string
     {
-        $frm = "\$context['form_{$this->form}']";
+        $form = "\$context['form_{$this->form}']";
 
-        return 'echo ' . $frm . "->getField('" . $fieldName . "')->parse();";
+        return 'echo ' . $form . "->getField('" . $fieldName . "')->parse();";
     }
 
     private function hasField(string $fieldName): string
     {
-        $frm = "\$context['form_{$this->form}']";
+        $form = "\$context['form_{$this->form}']";
 
-        return $frm . "->existsField('" . $fieldName . "')";
+        return $form . "->existsField('" . $fieldName . "')";
     }
 
     private function hasError(string $fieldName): string

@@ -41,11 +41,15 @@ jsBackend.FormBuilder =
         $selectMethod = $('select#method');
         $emailWrapper = $('#emailWrapper');
 
-        // show email field
-        if ($selectMethod.val() == 'database_email') $emailWrapper.slideDown();
+        if ($selectMethod.val() == 'database_email') {
+            // show email field
+            $emailWrapper.slideDown();
+
+            return;
+        }
 
         // hide email field
-        else $emailWrapper.slideUp();
+        $emailWrapper.slideUp();
     }
 };
 
@@ -105,6 +109,7 @@ jsBackend.FormBuilder.Fields =
                 // if a modal window is open we prevent the event from propagating
                 if ($(this).css('display') != 'none') {
                     $(this).find('.jsFieldDialogSubmit').trigger('click');
+
                     return false;
                 }
             });
@@ -143,10 +148,10 @@ jsBackend.FormBuilder.Fields =
                                 // no items message
                                 jsBackend.FormBuilder.Fields.toggleNoItems();
                             });
+                        } else {
+                            // show error message
+                            jsBackend.messages.add('danger', textStatus);
                         }
-
-                        // show error message
-                        else jsBackend.messages.add('danger', textStatus);
 
                         // alert the user
                         if (data.code != 200 && jsBackend.debug) {
@@ -218,8 +223,7 @@ jsBackend.FormBuilder.Fields =
                             showIconOnly: true,
                             afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
                         });
-                    }
-                    else if (id == 'radiobuttonDialog') {
+                    } else if (id == 'radiobuttonDialog') {
                         $('input#radiobuttonValues').multipleTextbox({
                             splitChar: '|',
                             emptyMessage: jsBackend.locale.msg('NoValues'),
@@ -228,8 +232,7 @@ jsBackend.FormBuilder.Fields =
                             showIconOnly: true,
                             afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
                         });
-                    }
-                    else if (id == 'checkboxDialog') {
+                    } else if (id == 'checkboxDialog') {
                         $('input#checkboxValues').multipleTextbox({
                             splitChar: '|',
                             emptyMessage: jsBackend.locale.msg('NoValues'),
@@ -238,10 +241,9 @@ jsBackend.FormBuilder.Fields =
                             showIconOnly: true,
                             afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
                         });
-                    }
-                    else if(id == 'datetimeDialog') {
+                    } else if (id == 'datetimeDialog') {
                         $('#datetimeType').change(function() {
-                            if($(this).val() === 'time') {
+                            if ($(this).val() === 'time') {
                                 $('#datetimeDialog').find('.jsDefaultValue').hide();
                                 $('#datetimeValidation').val('time');
                             } else {
@@ -250,7 +252,7 @@ jsBackend.FormBuilder.Fields =
                         });
 
                         $('#datetimeValueType').change(function() {
-                            if($(this).val() === 'today') {
+                            if ($(this).val() === 'today') {
                                 $('#datetimeValueAmount').prop('disabled', true).val('');
                             } else {
                                 $('#datetimeValueAmount').prop('disabled', false);
@@ -259,7 +261,9 @@ jsBackend.FormBuilder.Fields =
                     }
 
                     // focus on first input element
-                    if ($(this).find(':input:visible').length > 0) $(this).find(':input:visible')[0].focus();
+                    if ($(this).find(':input:visible').length > 0) {
+                        $(this).find(':input:visible')[0].focus();
+                    }
 
                     // toggle error messages
                     jsBackend.FormBuilder.Fields.toggleValidationErrors(id);
@@ -290,6 +294,12 @@ jsBackend.FormBuilder.Fields =
             if (id !== '') {
                 $('#' + id).modal('show');
             }
+        });
+
+        $('.jsRecaptchaTrigger').on('click', function(e) {
+            e.preventDefault();
+
+            jsBackend.FormBuilder.Fields.saveRecaptcha();
         });
     },
 
@@ -327,7 +337,9 @@ jsBackend.FormBuilder.Fields =
                         }
 
                         // alert the user
-                        if (data.code != 200 && jsBackend.debug) alert(data.message);
+                        if (data.code != 200 && jsBackend.debug) {
+                            alert(data.message);
+                        }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         // revert
@@ -337,7 +349,9 @@ jsBackend.FormBuilder.Fields =
                         jsBackend.messages.add('danger', 'alter sequence failed.');
 
                         // alert the user
-                        if (jsBackend.debug) alert(textStatus);
+                        if (jsBackend.debug) {
+                            alert(textStatus);
+                        }
                     }
                 });
             }
@@ -376,8 +390,12 @@ jsBackend.FormBuilder.Fields =
                         // success
                         if (data.code == 200) {
                             // init default values
-                            if (data.data.field.settings == null) data.data.field.settings = {};
-                            if (data.data.field.settings.default_values == null) data.data.field.settings.default_values = '';
+                            if (data.data.field.settings == null) {
+                                data.data.field.settings = {};
+                            }
+                            if (data.data.field.settings.default_values == null) {
+                                data.data.field.settings.default_values = '';
+                            }
 
                             // textbox edit
                             if (data.data.field.type == 'textbox') {
@@ -387,55 +405,66 @@ jsBackend.FormBuilder.Fields =
                                 $('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
                                 $('#textboxPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
                                 $('#textboxClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
-                                if (data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
-                                if (data.data.field.settings.send_confirmation_mail_to && data.data.field.settings.send_confirmation_mail_to == true) $('#textboxSendConfirmationMailTo').prop('checked', true);
+                                if (data.data.field.settings.reply_to
+                                    && data.data.field.settings.reply_to == true
+                                ) {
+                                    $('#textboxReplyTo').prop('checked', true);
+                                }
+                                if (data.data.field.settings.send_confirmation_mail_to
+                                    && data.data.field.settings.send_confirmation_mail_to == true
+                                ) {
+                                    $('#textboxSendConfirmationMailTo').prop('checked', true);
+                                }
                                 $('#textboxConfirmationMailSubject').val(utils.string.htmlDecode(data.data.field.settings.confirmation_mail_subject));
-                                $.each(data.data.field.validations, function (k, v) {
-                                    // required checkbox
-                                    if (k == 'required') {
-                                        $('#textboxRequired').prop('checked', true);
-                                        $('#textboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
-                                    }
+                                $.each(
+                                    data.data.field.validations,
+                                    function (k, v) {
+                                        // required checkbox
+                                        if (k == 'required') {
+                                            $('#textboxRequired').prop('checked', true);
+                                            $('#textboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 
-                                    // dropdown
-                                    else {
+                                            return;
+                                        }
+
+                                        // dropdown
                                         $('#textboxValidation').val(v.type);
                                         $('#textboxErrorMessage').val(utils.string.htmlDecode(v.error_message));
+
                                     }
-                                });
+                                );
 
                                 // show dialog
                                 $('#textboxDialog').modal('show');
-                            }
-
-                            // textarea edit
-                            else if (data.data.field.type == 'textarea') {
+                            } else if (data.data.field.type == 'textarea') {
+                                // textarea edit
                                 // fill in form
                                 $('#textareaId').val(data.data.field.id);
                                 $('#textareaLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
                                 $('#textareaValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
                                 $('#textareaPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
                                 $('#textareaClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
-                                $.each(data.data.field.validations, function (k, v) {
-                                    // required checkbox
-                                    if (k == 'required') {
-                                        $('#textareaRequired').prop('checked', true);
-                                        $('#textareaRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
-                                    }
+                                $.each(
+                                    data.data.field.validations,
+                                    function (k, v) {
+                                        // required checkbox
+                                        if (k == 'required') {
+                                            $('#textareaRequired').prop('checked', true);
+                                            $('#textareaRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 
-                                    // dropdown
-                                    else {
+                                            return;
+                                        }
+
+                                        // dropdown
                                         $('#textareaValidation').val(v.type);
                                         $('#textareaErrorMessage').val(utils.string.htmlDecode(v.error_message));
                                     }
-                                });
+                                );
 
                                 // show dialog
                                 $('#textareaDialog').modal('show');
-                            }
-
-                            // datetime edit
-                            else if (data.data.field.type == 'datetime') {
+                            } else if (data.data.field.type == 'datetime') {
+                                // datetime edit
                                 // fill in form
                                 $('#datetimeId').val(data.data.field.id);
                                 $('#datetimeLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
@@ -443,44 +472,48 @@ jsBackend.FormBuilder.Fields =
                                 $('#datetimeValueType').val(utils.string.htmlDecode(data.data.field.settings.value_type));
                                 $('#datetimeType').val(utils.string.htmlDecode(data.data.field.settings.input_type));
                                 $('#datetimeClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
-                                $.each(data.data.field.validations, function (k, v) {
-                                    // required checkbox
-                                    if (k == 'required') {
-                                        $('#datetimeRequired').prop('checked', true);
-                                        $('#datetimeRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
-                                    }
+                                $.each(
+                                    data.data.field.validations,
+                                    function (k, v) {
+                                        // required checkbox
+                                        if (k == 'required') {
+                                            $('#datetimeRequired').prop('checked', true);
+                                            $('#datetimeRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 
-                                    // dropdown
-                                    else {
+                                            return;
+                                        }
+
+                                        // dropdown
                                         $('#datetimeValidation').val(v.type);
                                         $('#datetimeErrorMessage').val(utils.string.htmlDecode(v.error_message));
                                     }
-                                });
+                                );
 
                                 // show dialog
                                 $('#datetimeDialog').modal('show');
-                            }
-
-                            // dropdown edit
-                            else if (data.data.field.type == 'dropdown') {
+                            } else if (data.data.field.type == 'dropdown') {
+                                // dropdown edit
                                 // fill in form
                                 $('#dropdownId').val(data.data.field.id);
                                 $('#dropdownLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
                                 $('#dropdownValues').val(data.data.field.settings.values.join('|'));
                                 $('#dropdownClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
-                                $.each(data.data.field.validations, function (k, v) {
-                                    // required checkbox
-                                    if (k == 'required') {
-                                        $('#dropdownRequired').prop('checked', true);
-                                        $('#dropdownRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
-                                    }
+                                $.each(
+                                    data.data.field.validations,
+                                    function (k, v) {
+                                        // required checkbox
+                                        if (k == 'required') {
+                                            $('#dropdownRequired').prop('checked', true);
+                                            $('#dropdownRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 
-                                    // dropdown
-                                    else {
+                                            return;
+                                        }
+
+                                        // dropdown
                                         $('#dropdownValidation').val(v.type);
                                         $('#dropdownErrorMessage').val(utils.string.htmlDecode(v.error_message));
                                     }
-                                });
+                                );
 
                                 // dirty method to init the selected element
                                 if (typeof data.data.field.settings.default_values != 'undefined') {
@@ -493,28 +526,29 @@ jsBackend.FormBuilder.Fields =
 
                                 // show dialog
                                 $('#dropdownDialog').modal('show');
-                            }
-
-                            // radiobutton edit
-                            else if (data.data.field.type == 'radiobutton') {
+                            } else if (data.data.field.type == 'radiobutton') {
+                                // radiobutton edit
                                 // fill in form
                                 $('#radiobuttonId').val(data.data.field.id);
                                 $('#radiobuttonLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
                                 $('#radiobuttonValues').val(data.data.field.settings.values.join('|'));
                                 $('#radiobuttonClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
-                                $.each(data.data.field.validations, function (k, v) {
-                                    // required checkbox
-                                    if (k == 'required') {
-                                        $('#radiobuttonRequired').prop('checked', true);
-                                        $('#radiobuttonRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
-                                    }
+                                $.each(
+                                    data.data.field.validations,
+                                    function (k, v) {
+                                        // required checkbox
+                                        if (k == 'required') {
+                                            $('#radiobuttonRequired').prop('checked', true);
+                                            $('#radiobuttonRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 
-                                    // dropdown
-                                    else {
+                                            return;
+                                        }
+
+                                        // dropdown
                                         $('#radiobuttonValidation').val(v.type);
                                         $('#radiobuttonErrorMessage').val(utils.string.htmlDecode(v.error_message));
                                     }
-                                });
+                                );
 
                                 // dirty method to init the selected element
                                 if (typeof data.data.field.settings.default_values != 'undefined') {
@@ -527,28 +561,29 @@ jsBackend.FormBuilder.Fields =
 
                                 // show dialog
                                 $('#radiobuttonDialog').modal('show');
-                            }
-
-                            // checkbox edit
-                            else if (data.data.field.type == 'checkbox') {
+                            } else if (data.data.field.type == 'checkbox') {
+                                // checkbox edit
                                 // fill in form
                                 $('#checkboxId').val(data.data.field.id);
                                 $('#checkboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
                                 $('#checkboxValues').val(data.data.field.settings.values.join('|'));
                                 $('#checkboxClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
-                                $.each(data.data.field.validations, function (k, v) {
-                                    // required checkbox
-                                    if (k == 'required') {
-                                        $('#checkboxRequired').prop('checked', true);
-                                        $('#checkboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
-                                    }
+                                $.each(
+                                    data.data.field.validations,
+                                    function (k, v) {
+                                        // required checkbox
+                                        if (k == 'required') {
+                                            $('#checkboxRequired').prop('checked', true);
+                                            $('#checkboxRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
 
-                                    // dropdown
-                                    else {
-                                        $('#checkboxValidation').val(v.type);
-                                        $('#checkboxErrorMessage').val(utils.string.htmlDecode(v.error_message));
+                                            return;
+                                        }
+
+                                            // dropdown
+                                            $('#checkboxValidation').val(v.type);
+                                            $('#checkboxErrorMessage').val(utils.string.htmlDecode(v.error_message));
                                     }
-                                });
+                                );
 
                                 // dirty method to init the selected element
                                 if (typeof data.data.field.settings.default_values != 'undefined') {
@@ -561,30 +596,24 @@ jsBackend.FormBuilder.Fields =
 
                                 // show dialog
                                 $('#checkboxDialog').modal('show');
-                            }
-
-                            // heading edit
-                            else if (data.data.field.type == 'heading') {
+                            } else if (data.data.field.type == 'heading') {
+                                // heading edit
                                 // fill in form
                                 $('#headingId').val(data.data.field.id);
                                 $('#heading').val(utils.string.htmlDecode(data.data.field.settings.values));
 
                                 // show dialog
                                 $('#headingDialog').modal('show');
-                            }
-
-                            // paragraph edit
-                            else if (data.data.field.type == 'paragraph') {
+                            } else if (data.data.field.type == 'paragraph') {
+                                // paragraph edit
                                 // fill in form
                                 $('#paragraphId').val(data.data.field.id);
                                 $('#paragraph').val(data.data.field.settings.values);
 
                                 // show dialog
                                 $('#paragraphDialog').modal('show');
-                            }
-
-                            // submit edit
-                            else if (data.data.field.type == 'submit') {
+                            } else if (data.data.field.type == 'submit') {
+                                // submit edit
                                 // fill in form
                                 $('#submitId').val(data.data.field.id);
                                 $('#submit').val(utils.string.htmlDecode(data.data.field.settings.values));
@@ -595,10 +624,10 @@ jsBackend.FormBuilder.Fields =
 
                             // validation form
                             jsBackend.FormBuilder.Fields.handleValidation('.jsValidation');
+                        } else {
+                            // show error message
+                            jsBackend.messages.add('danger', textStatus);
                         }
-
-                        // show error message
-                        else jsBackend.messages.add('danger', textStatus);
 
                         // alert the user
                         if (data.code != 200 && jsBackend.debug) {
@@ -652,8 +681,9 @@ jsBackend.FormBuilder.Fields =
             if ($(wrapper).find('.jsValidationRequiredErrorMessage input:visible:first').val() === '') {
                 $(wrapper).find('.jsValidationRequiredErrorMessage input:visible:first').val(jsBackend.FormBuilder.Fields.defaultErrorMessages.required);
             }
+        } else {
+            $(wrapper).find('.jsValidationRequiredErrorMessage').slideUp();
         }
-        else $(wrapper).find('.jsValidationRequiredErrorMessage').slideUp();
 
         // toggle validation error message
         if ($(validation).val() !== '') {
@@ -662,8 +692,9 @@ jsBackend.FormBuilder.Fields =
 
             // default error message
             $(wrapper).find('.jsValidationErrorMessage input:visible:first').val(jsBackend.FormBuilder.Fields.defaultErrorMessages[$(validation).val()]);
+        } else {
+            $(wrapper).find('.jsValidationErrorMessage').slideUp();
         }
-        else $(wrapper).find('.jsValidationErrorMessage').slideUp();
     },
 
     /**
@@ -725,7 +756,7 @@ jsBackend.FormBuilder.Fields =
         var label = $('#checkboxLabel').val();
         var values = $('#checkboxValues').val();
         var defaultValue = $('#checkboxDefaultValue').val();
-        var required = ($('#checkboxRequired').is(':checked') ? 'Y' : 'N');
+        var required = $('#checkboxRequired').is(':checked');
         var requiredErrorMessage = $('#checkboxRequiredErrorMessage').val();
         var classname = $('#checkboxClassname').val();
 
@@ -766,20 +797,16 @@ jsBackend.FormBuilder.Fields =
 
                         // toggle error messages
                         jsBackend.FormBuilder.Fields.toggleValidationErrors('checkboxDialog');
-                    }
-
-                    // saved!
-                    else {
+                    } else {
+                        // saved!
                         // append field html
                         jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                         // close console box
                         $('#checkboxDialog').modal('hide');
                     }
-                }
-
-                // show error message
-                else {
+                } else {
+                    // show error message
                     jsBackend.messages.add('danger', textStatus);
                 }
 
@@ -802,7 +829,7 @@ jsBackend.FormBuilder.Fields =
         var value_amount = $('#datetimeValueAmount').val();
         var value_type = $('#datetimeValueType').val();
         var input_type = $('#datetimeType').val();
-        var required = ($('#datetimeRequired').is(':checked') ? 'Y' : 'N');
+        var required = $('#datetimeRequired').is(':checked');
         var requiredErrorMessage = $('#datetimeRequiredErrorMessage').val();
         var validation = $('#datetimeValidation').val();
         var errorMessage = $('#datetimeErrorMessage').val();
@@ -849,19 +876,16 @@ jsBackend.FormBuilder.Fields =
 
                             // toggle error messages
                             jsBackend.FormBuilder.Fields.toggleValidationErrors('datetimeDialog');
-                        }
-                        // saved!
-                        else {
+                        } else {
+                            // saved!
                             // append field html
                             jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                             // close console box
                             $('#datetimeDialog').modal('hide');
                         }
-                    }
-
-                    // show error message
-                    else {
+                    } else {
+                        // show error message
                         jsBackend.messages.add('error', textStatus);
                     }
 
@@ -883,7 +907,7 @@ jsBackend.FormBuilder.Fields =
         var label = $('#dropdownLabel').val();
         var values = $('#dropdownValues').val();
         var defaultValue = $('#dropdownDefaultValue').val();
-        var required = ($('#dropdownRequired').is(':checked') ? 'Y' : 'N');
+        var required = $('#dropdownRequired').is(':checked');
         var requiredErrorMessage = $('#dropdownRequiredErrorMessage').val();
         var classname = $('#dropdownClassname').val();
 
@@ -924,20 +948,16 @@ jsBackend.FormBuilder.Fields =
 
                         // toggle error messages
                         jsBackend.FormBuilder.Fields.toggleValidationErrors('dropdownDialog');
-                    }
-
-                    // saved!
-                    else {
+                    } else {
+                        // saved!
                         // append field html
                         jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                         // close console box
                         $('#dropdownDialog').modal('hide');
                     }
-                }
-
-                // show error message
-                else {
+                } else {
+                    // show error message
                     jsBackend.messages.add('danger', textStatus);
                 }
 
@@ -975,24 +995,22 @@ jsBackend.FormBuilder.Fields =
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
                         // assign errors
-                        if (typeof data.data.errors.values != 'undefined') $('#headingError').html(data.data.errors.values);
+                        if (typeof data.data.errors.values != 'undefined') {
+                            $('#headingError').html(data.data.errors.values);
+                        }
 
                         // toggle error messages
                         jsBackend.FormBuilder.Fields.toggleValidationErrors('headingDialog');
-                    }
-
-                    // saved!
-                    else {
+                    } else {
+                        // saved!
                         // append field html
                         jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                         // close console box
                         $('#headingDialog').modal('hide');
                     }
-                }
-
-                // show error message
-                else {
+                } else {
+                    // show error message
                     jsBackend.messages.add('danger', textStatus);
                 }
 
@@ -1030,24 +1048,24 @@ jsBackend.FormBuilder.Fields =
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
                         // assign error
-                        if (typeof data.data.errors.values != 'undefined') $('#paragraphError').html(data.data.errors.values);
+                        if (typeof data.data.errors.values != 'undefined') {
+                            $('#paragraphError').html(data.data.errors.values);
+                        }
 
                         // toggle error messages
                         jsBackend.FormBuilder.Fields.toggleValidationErrors('paragraphDialog');
-                    }
-
-                    // saved!
-                    else {
+                    } else {
+                        // saved!
                         // append field html
                         jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                         // close console box
                         $('#paragraphDialog').modal('hide');
                     }
+                } else {
+                    // show error message
+                    jsBackend.messages.add('danger', textStatus);
                 }
-
-                // show error message
-                else jsBackend.messages.add('danger', textStatus);
 
                 // alert the user
                 if (data.code != 200 && jsBackend.debug) alert(data.message);
@@ -1065,7 +1083,7 @@ jsBackend.FormBuilder.Fields =
         var label = $('#radiobuttonLabel').val();
         var values = $('#radiobuttonValues').val();
         var defaultValue = $('#radiobuttonDefaultValue').val();
-        var required = ($('#radiobuttonRequired').is(':checked') ? 'Y' : 'N');
+        var required = $('#radiobuttonRequired').is(':checked');
         var requiredErrorMessage = $('#radiobuttonRequiredErrorMessage').val();
         var classname = $('#radiobuttonClassname').val();
 
@@ -1094,35 +1112,38 @@ jsBackend.FormBuilder.Fields =
                         if (typeof data.data.errors.label != 'undefined') {
                             $('#radiobuttonLabelError').html(data.data.errors.label);
                         }
+
                         if (typeof data.data.errors.values != 'undefined') {
                             $('#radiobuttonValuesError').html(data.data.errors.values);
                         }
+
                         if (typeof data.data.errors.required_error_message != 'undefined') {
                             $('#radiobuttonRequiredErrorMessageError').html(data.data.errors.required_error_message);
                         }
+
                         if (typeof data.data.errors.error_message != 'undefined') {
                             $('#radiobuttonErrorMessageError').html(data.data.errors.error_message);
                         }
 
                         // toggle error messages
                         jsBackend.FormBuilder.Fields.toggleValidationErrors('radiobuttonDialog');
-                    }
-
-                    // saved!
-                    else {
+                    } else {
+                        // saved!
                         // append field html
                         jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                         // close console box
                         $('#radiobuttonDialog').modal('hide');
                     }
+                } else {
+                    // show error message
+                    jsBackend.messages.add('danger', textStatus);
                 }
 
-                // show error message
-                else jsBackend.messages.add('danger', textStatus);
-
                 // alert the user
-                if (data.code != 200 && jsBackend.debug) alert(data.message);
+                if (data.code != 200 && jsBackend.debug) {
+                    alert(data.message);
+                }
             }
         });
     },
@@ -1150,14 +1171,14 @@ jsBackend.FormBuilder.Fields =
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
                         // assign errors
-                        if (typeof data.data.errors.values != 'undefined') $('#submitError').html(data.data.errors.values);
+                        if (typeof data.data.errors.values != 'undefined') {
+                            $('#submitError').html(data.data.errors.values);
+                        }
 
                         // toggle error messages
                         jsBackend.FormBuilder.Fields.toggleValidationErrors('submitDialog');
-                    }
-
-                    // saved!
-                    else {
+                    } else {
+                        // saved!
                         // set value
                         $('#submitField').val(value);
 
@@ -1167,13 +1188,44 @@ jsBackend.FormBuilder.Fields =
 
                     // toggle error messages
                     jsBackend.FormBuilder.Fields.toggleValidationErrors('submitDialog');
+                } else {
+                    // show error message
+                    jsBackend.messages.add('danger', textStatus);
                 }
 
-                // show error message
-                else jsBackend.messages.add('danger', textStatus);
+                // alert the user
+                if (data.code != 200 && jsBackend.debug) {
+                    alert(data.message);
+                }
+            }
+        });
+    },
+
+    /**
+     * Handle recaptcha save
+     */
+    saveRecaptcha: function () {
+
+        // make the call
+        $.ajax({
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
+                type: 'recaptcha'
+            }),
+            success: function (data, textStatus) {
+                // success
+                if (data.code == 200) {
+                    // append field html
+                    jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
+                } else {
+                    // show error message
+                    jsBackend.messages.add('danger', textStatus);
+                }
 
                 // alert the user
-                if (data.code != 200 && jsBackend.debug) alert(data.message);
+                if (data.code != 200 && jsBackend.debug) {
+                    alert(data.message);
+                }
             }
         });
     },
@@ -1188,7 +1240,7 @@ jsBackend.FormBuilder.Fields =
         var label = $('#textareaLabel').val();
         var value = $('#textareaValue').val();
         var placeholder = $('#textareaPlaceholder').val();
-        var required = ($('#textareaRequired').is(':checked') ? 'Y' : 'N');
+        var required = $('#textareaRequired').is(':checked');
         var requiredErrorMessage = $('#textareaRequiredErrorMessage').val();
         var validation = $('#textareaValidation').val();
         var validationParameter = $('#textareaValidationParameter').val();
@@ -1232,29 +1284,29 @@ jsBackend.FormBuilder.Fields =
                         if (typeof data.data.errors.validation_parameter != 'undefined') {
                             $('#textareaValidationParameterError').html(data.data.errors.validation_parameter);
                         }
-                        if(typeof data.data.errors.reply_to_error_message != 'undefined') {
+                        if (typeof data.data.errors.reply_to_error_message != 'undefined') {
                             $('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message);
                         }
 
                         // toggle error messages
                         jsBackend.FormBuilder.Fields.toggleValidationErrors('textareaDialog');
-                    }
-
-                    // saved!
-                    else {
+                    } else {
+                        // saved!
                         // append field html
                         jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                         // close console box
                         $('#textareaDialog').modal('hide');
                     }
+                } else {
+                    // show error message
+                    jsBackend.messages.add('danger', textStatus);
                 }
 
-                // show error message
-                else jsBackend.messages.add('danger', textStatus);
-
                 // alert the user
-                if (data.code != 200 && jsBackend.debug) alert(data.message);
+                if (data.code != 200 && jsBackend.debug) {
+                    alert(data.message);
+                }
             }
         });
     },
@@ -1269,10 +1321,10 @@ jsBackend.FormBuilder.Fields =
         var label = $('#textboxLabel').val();
         var value = $('#textboxValue').val();
         var placeholder = $('#textboxPlaceholder').val();
-        var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
-        var sendConfirmationMailTo = ($('#textboxSendConfirmationMailTo').is(':checked') ? 'Y' : 'N');
+        var replyTo = $('#textboxReplyTo').is(':checked');
+        var sendConfirmationMailTo = ($('#textboxSendConfirmationMailTo').is(':checked');
         var confirmationMailSubject = $('#textboxConfirmationMailSubject').val();
-        var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
+        var required = $('#textboxRequired').is(':checked');
         var requiredErrorMessage = $('#textboxRequiredErrorMessage').val();
         var validation = $('#textboxValidation').val();
         var validationParameter = $('#textboxValidationParameter').val();
@@ -1322,32 +1374,32 @@ jsBackend.FormBuilder.Fields =
                         if (typeof data.data.errors.reply_to_error_message != 'undefined') {
                             $('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message);
                         }
-                        if(typeof data.data.errors.send_confirmation_mail_to_error_message != 'undefined') {
+                        if (typeof data.data.errors.send_confirmation_mail_to_error_message != 'undefined') {
                             $('#textboxSendConfirmationMailToErrorMessageError').html(data.data.errors.send_confirmation_mail_to_error_message);
                         }
-                        if(typeof data.data.errors.confirmation_mail_subject_error_message != 'undefined') {
+                        if (typeof data.data.errors.confirmation_mail_subject_error_message != 'undefined') {
                             $('#textboxConfirmationMailSubjectErrorMessageError').html(data.data.errors.confirmation_mail_subject_error_message);
                         }
 
                         // toggle error messages
                         jsBackend.FormBuilder.Fields.toggleValidationErrors('textboxDialog');
-                    }
-
-                    // saved!
-                    else {
+                    } else {
+                        // saved!
                         // append field html
                         jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                         // close console box
                         $('#textboxDialog').modal('hide');
                     }
+                } else {
+                    // show error message
+                    jsBackend.messages.add('danger', textStatus);
                 }
 
-                // show error message
-                else jsBackend.messages.add('danger', textStatus);
-
                 // alert the user
-                if (data.code != 200 && jsBackend.debug) alert(data.message);
+                if (data.code != 200 && jsBackend.debug) {
+                    alert(data.message);
+                }
             }
         });
     },
@@ -1363,15 +1415,15 @@ jsBackend.FormBuilder.Fields =
 
             // remove old one
             $('#fieldHolder-' + fieldId + ':first').remove();
-        }
-
-        // new item
-        else {
+        } else {
+            // new item
             // already field items so add after them
-            if ($('#fieldsHolder .jsField').length >= 1) $('#fieldsHolder .jsField:last').after(fieldHTML);
-
-            // first field so add in beginning
-            else $('#fieldsHolder').prepend(fieldHTML);
+            if ($('#fieldsHolder .jsField').length >= 1) {
+                $('#fieldsHolder .jsField:last').after(fieldHTML);
+            } else {
+                // first field so add in beginning
+                $('#fieldsHolder').prepend(fieldHTML);
+            }
         }
 
         // highlight
@@ -1386,10 +1438,12 @@ jsBackend.FormBuilder.Fields =
         var rowCount = $('#fieldsHolder .jsField').length;
 
         // got items (always 1 item in it)
-        if (rowCount >= 1) $('#noFields').hide();
-
-        // no items
-        else $('#noFields').show();
+        if (rowCount >= 1) {
+            $('#noFields').hide();
+        } else {
+            // no items
+            $('#noFields').show();
+        }
     },
 
     /**
@@ -1416,10 +1470,12 @@ jsBackend.FormBuilder.Fields =
         // loop error fields
         $("#" + id).find('.jsFieldError').each(function () {
             // has a message
-            if ($(this).html() !== '') $(this).show();
-
-            // no message
-            else $(this).hide();
+            if ($(this).html() !== '') {
+                $(this).show();
+            } else {
+                // no message
+                $(this).hide();
+            }
         });
     }
 };

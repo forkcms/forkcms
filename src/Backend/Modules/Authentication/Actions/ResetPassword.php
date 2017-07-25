@@ -49,7 +49,7 @@ class ResetPassword extends BackendBaseActionAdd
 
         // the user email and key provided match
         if (!$this->isThePasswordResetKeyCorrect()) {
-            $this->redirect(BackendModel::createURLForAction('Index'));
+            $this->redirect(BackendModel::createUrlForAction('Index'));
         }
 
         $this->loadForm();
@@ -61,8 +61,8 @@ class ResetPassword extends BackendBaseActionAdd
     private function isThePasswordResetKeyCorrect(): bool
     {
         // catch the key and e-mail address from GET
-        $this->email = urldecode(\SpoonFilter::getGetValue('email', null, ''));
-        $this->key = \SpoonFilter::getGetValue('key', null, '');
+        $this->email = urldecode($this->getRequest()->query->get('email', ''));
+        $this->key = $this->getRequest()->query->get('key', '');
 
         // if the email or the key aren't set, redirect the user
         if ($this->email !== '' && $this->key !== '') {
@@ -77,7 +77,7 @@ class ResetPassword extends BackendBaseActionAdd
                 BackendUsersModel::deleteResetPasswordSettings($userId);
 
                 // redirect to the login form, with a timeout error
-                $this->redirect(BackendModel::createURLForAction('Index', null, null, ['reset' => 'timeout']));
+                $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['reset' => 'timeout']));
             }
 
             // check if the provided key matches the one in the user record
@@ -92,20 +92,20 @@ class ResetPassword extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm();
-        $this->frm->addPassword('backend_new_password');
-        $this->frm->addPassword('backend_new_password_repeated');
+        $this->form = new BackendForm();
+        $this->form->addPassword('backend_new_password');
+        $this->form->addPassword('backend_new_password_repeated');
 
-        $this->frm->getField('backend_new_password')->setAttributes(['autocomplete' => 'off']);
-        $this->frm->getField('backend_new_password_repeated')->setAttributes(['autocomplete' => 'off']);
+        $this->form->getField('backend_new_password')->setAttributes(['autocomplete' => 'off']);
+        $this->form->getField('backend_new_password_repeated')->setAttributes(['autocomplete' => 'off']);
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // shorten fields
-            $newPassword = $this->frm->getField('backend_new_password');
-            $newPasswordRepeated = $this->frm->getField('backend_new_password_repeated');
+            $newPassword = $this->form->getField('backend_new_password');
+            $newPasswordRepeated = $this->form->getField('backend_new_password_repeated');
 
             // required fields
             $newPassword->isFilled(BL::err('PasswordIsRequired'));
@@ -116,26 +116,26 @@ class ResetPassword extends BackendBaseActionAdd
                 // the passwords entered match
                 if ($newPassword->getValue() !== $newPasswordRepeated->getValue()) {
                     // add error
-                    $this->frm->addError(BL::err('PasswordsDontMatch'));
+                    $this->form->addError(BL::err('PasswordsDontMatch'));
 
                     // show error
-                    $this->tpl->assign('error', BL::err('PasswordsDontMatch'));
+                    $this->template->assign('error', BL::err('PasswordsDontMatch'));
                 }
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // change the users password
                 BackendUsersModel::updatePassword($this->user, $newPassword->getValue());
 
                 // attempt to login the user
                 if (!BackendAuthentication::loginUser($this->user->getEmail(), $newPassword->getValue())) {
                     // redirect to the login form with an error
-                    $this->redirect(BackendModel::createURLForAction('Index', null, null, ['login' => 'failed']));
+                    $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['login' => 'failed']));
                 }
 
                 // redirect to the login form
                 $this->redirect(
-                    BackendModel::createURLForAction('Index', 'Dashboard', null, ['password_reset' => 'success'])
+                    BackendModel::createUrlForAction('Index', 'Dashboard', null, ['password_reset' => 'success'])
                 );
             }
         }

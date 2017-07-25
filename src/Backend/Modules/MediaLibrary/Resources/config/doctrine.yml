@@ -4,6 +4,7 @@ doctrine:
       uuid: Ramsey\Uuid\Doctrine\UuidType
       media_item_storage_type: Backend\Modules\MediaLibrary\Domain\MediaItem\StorageTypeDBALType
       media_item_type: Backend\Modules\MediaLibrary\Domain\MediaItem\TypeDBALType
+      media_item_aspect_ratio: Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatioDBALType
       media_group_type: Backend\Modules\MediaLibrary\Domain\MediaGroup\TypeDBALType
   orm:
     mappings:

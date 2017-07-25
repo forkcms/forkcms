@@ -183,7 +183,7 @@ class MetaType extends AbstractType
                 }
             );
 
-            $generatedUrl = $this->metaRepository->generateURL(
+            $generatedUrl = $this->metaRepository->generateUrl(
                 SpoonFilter::htmlspecialcharsDecode($metaData['url']),
                 $metaForm->getConfig()->getOption('generate_url_callback_class'),
                 $metaForm->getConfig()->getOption('generate_url_callback_method'),
@@ -230,8 +230,8 @@ class MetaType extends AbstractType
                 'custom' => $meta->getCustom(),
                 'url' => $meta->getUrl(),
                 'urlOverwrite' => $meta->isUrlOverwrite(),
-                'SEOIndex' => $meta->getSEOIndex() === null ? SEOIndex::none() : $meta->getSEOIndex(),
-                'SEOFollow' => $meta->getSEOFollow() === null ? SEOFollow::none() : $meta->getSEOFollow(),
+                'SEOIndex' => $meta->getSEOIndex() ?? SEOIndex::none(),
+                'SEOFollow' => $meta->getSEOFollow() ?? SEOFollow::none(),
             ];
         };
     }
@@ -251,12 +251,11 @@ class MetaType extends AbstractType
                     $metaData['titleOverwrite'],
                     $metaData['url'],
                     $metaData['urlOverwrite'],
-                    array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
-                    [
-                        'seo_index' => SEOIndex::fromString($metaData['SEOIndex']),
-                        'seo_follow' => SEOFollow::fromString($metaData['SEOFollow']),
-                    ],
-                    $metaData['id'] = $metaId
+                    $metaData['custom'] ?? null,
+                    SEOFollow::fromString((string) $metaData['SEOFollow']),
+                    SEOIndex::fromString((string) $metaData['SEOIndex']),
+                    [],
+                    $metaId
                 );
             }
 
@@ -270,10 +269,8 @@ class MetaType extends AbstractType
                 $metaData['url'],
                 $metaData['urlOverwrite'],
                 array_key_exists('custom', $metaData) ? $metaData['custom'] : null,
-                [
-                    'seo_index' => SEOIndex::fromString($metaData['SEOIndex']),
-                    'seo_follow' => SEOFollow::fromString($metaData['SEOFollow']),
-                ]
+                SEOFollow::fromString((string) $metaData['SEOFollow']),
+                SEOIndex::fromString((string) $metaData['SEOIndex'])
             );
 
             return $this->meta[$metaId];
@@ -290,6 +287,7 @@ class MetaType extends AbstractType
                 'generate_url_callback_class',
                 'generate_url_callback_method',
                 'generate_url_callback_parameters',
+                'detail_url',
             ]
         );
         $resolver->setDefaults(
@@ -324,5 +322,6 @@ class MetaType extends AbstractType
         $view->vars['generate_url_callback_method'] = $options['generate_url_callback_method'];
         $view->vars['generated_url_selector'] = $options['generated_url_selector'];
         $view->vars['generate_url_callback_parameters'] = serialize($options['generate_url_callback_parameters']);
+        $view->vars['detail_url'] = $options['detail_url'];
     }
 }

@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaGalleries\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
@@ -33,11 +34,18 @@ class MediaGalleryEdit extends BackendBaseActionEdit
 
         $form->handleRequest($this->get('request'));
 
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $mediaGallery->getId()],
+            ['module' => $this->getModule(), 'action' => 'MediaGalleryDelete']
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
+
         if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
-            $this->tpl->assign('backLink', $this->getBackLink());
-            $this->tpl->assign('mediaGallery', $mediaGallery);
-            $this->tpl->assign('mediaGroup', $form->getData()->mediaGroup);
+            $this->template->assign('form', $form->createView());
+            $this->template->assign('backLink', $this->getBackLink());
+            $this->template->assign('mediaGallery', $mediaGallery);
+            $this->template->assign('mediaGroup', $form->getData()->mediaGroup);
 
             // Call parent
             $this->parse();
@@ -67,10 +75,10 @@ class MediaGalleryEdit extends BackendBaseActionEdit
     private function getMediaGallery(): MediaGallery
     {
         try {
-            $id = $this->getParameter('id');
-
             /** @var MediaGallery|null $mediaGallery */
-            return $this->get('media_galleries.repository.gallery')->findOneById($id);
+            return $this->get('media_galleries.repository.gallery')->findOneById(
+                $this->getRequest()->query->get('id')
+            );
         } catch (MediaGalleryNotFound $mediaGalleryNotFound) {
             $this->redirect(
                 $this->getBackLink(
@@ -84,7 +92,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createURLForAction(
+        return Model::createUrlForAction(
             'MediaGalleryIndex',
             null,
             null,

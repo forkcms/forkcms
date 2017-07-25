@@ -119,6 +119,39 @@ class Model
         return $avatar;
     }
 
+    /**
+     * Encrypt the password with PHP password_hash function.
+     *
+     * @param string $password
+     *
+     * @return string
+     */
+    public static function encryptPassword(string $password): string
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    /**
+     * Verify the password with PHP password_verify function.
+     *
+     * @param string $email
+     * @param string $password
+     *
+     * @return bool
+     */
+    public static function verifyPassword(string $email, string $password): bool
+    {
+        $encryptedPassword = self::getEncryptedPassword($email);
+
+        return password_verify($password, $encryptedPassword);
+    }
+
+    /**
+     * @param string $string
+     * @param string $salt
+     *
+     * @return string
+     */
     public static function getEncryptedString(string $string, string $salt): string
     {
         return md5(sha1(md5($string)) . sha1(md5($salt)));
@@ -250,13 +283,13 @@ class Model
         // urlise
         $url = CommonUri::getUrl($displayName);
 
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // new item
         if ($excludedId === null) {
             // get number of profiles with this URL
-            $number = (int) $db->getVar(
+            $number = (int) $database->getVar(
                 'SELECT 1
                  FROM profiles AS p
                  WHERE p.url = ?
@@ -278,7 +311,7 @@ class Model
 
         // current profile should be excluded
         // get number of profiles with this URL
-        $number = (int) $db->getVar(
+        $number = (int) $database->getVar(
             'SELECT 1
              FROM profiles AS p
              WHERE p.url = ? AND p.id != ?
@@ -330,13 +363,15 @@ class Model
 
         // ignore these urls in the query string
         $ignoreUrls = [
-            FrontendNavigation::getURLForBlock('Profiles', 'Login'),
-            FrontendNavigation::getURLForBlock('Profiles', 'Register'),
-            FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword'),
+            FrontendNavigation::getUrlForBlock('Profiles', 'Login'),
+            FrontendNavigation::getUrlForBlock('Profiles', 'Register'),
+            FrontendNavigation::getUrlForBlock('Profiles', 'ForgotPassword'),
         ];
 
         // query string
-        $queryString = (isset($_GET['queryString'])) ? SITE_URL . '/' . urldecode($_GET['queryString']) : SELF;
+        $queryString = FrontendModel::get('Request')->query->has('queryString')
+            ? SITE_URL . '/' . urldecode(FrontendModel::get('Request')->query->get('queryString'))
+            : SITE_URL . FrontendModel::get('url')->getQueryString();
 
         // check all ignore urls
         foreach ($ignoreUrls as $url) {
@@ -351,9 +386,9 @@ class Model
         $queryString = ($queryString != '') ? '?queryString=' . rawurlencode($queryString) : '';
 
         // useful urls
-        $tpl->assign('loginUrl', FrontendNavigation::getURLForBlock('Profiles', 'Login') . $queryString);
-        $tpl->assign('registerUrl', FrontendNavigation::getURLForBlock('Profiles', 'Register'));
-        $tpl->assign('forgotPasswordUrl', FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword'));
+        $tpl->assign('loginUrl', FrontendNavigation::getUrlForBlock('Profiles', 'Login') . $queryString);
+        $tpl->assign('registerUrl', FrontendNavigation::getUrlForBlock('Profiles', 'Register'));
+        $tpl->assign('forgotPasswordUrl', FrontendNavigation::getUrlForBlock('Profiles', 'ForgotPassword'));
     }
 
     /**
@@ -408,5 +443,22 @@ class Model
     public static function update(int $id, array $values): int
     {
         return (int) FrontendModel::getContainer()->get('database')->update('profiles', $values, 'id = ?', $id);
+    }
+
+    /**
+     * Get encrypted password for an email.
+     *
+     * @param string $email
+     *
+     * @return null|string
+     */
+    public static function getEncryptedPassword(string $email): ?string
+    {
+        return FrontendModel::get('database')->getVar(
+            'SELECT password
+             FROM profiles
+             WHERE email = :email',
+            ['email' => $email]
+        );
     }
 }

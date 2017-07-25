@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
@@ -30,18 +31,19 @@ class EditGroup extends BackendBaseActionEdit
     public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendProfilesModel::existsGroup($this->id)) {
+        if ($this->id !== 0 && BackendProfilesModel::existsGroup($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Groups') . '&error=non-existing');
         }
     }
 
@@ -53,8 +55,8 @@ class EditGroup extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('editGroup');
-        $this->frm->addText('name', $this->group['name']);
+        $this->form = new BackendForm('editGroup');
+        $this->form->addText('name', $this->group['name']);
     }
 
     protected function parse(): void
@@ -62,18 +64,18 @@ class EditGroup extends BackendBaseActionEdit
         parent::parse();
 
         // assign the active record and additional variables
-        $this->tpl->assign('group', $this->group);
+        $this->template->assign('group', $this->group);
     }
 
     private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $txtName = $this->frm->getField('name');
+            $txtName = $this->form->getField('name');
 
             // name filled in?
             if ($txtName->isFilled(BL::getError('NameIsRequired'))) {
@@ -85,7 +87,7 @@ class EditGroup extends BackendBaseActionEdit
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $values = ['name' => $txtName->getValue()];
 
@@ -94,11 +96,21 @@ class EditGroup extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Groups') . '&report=group-saved&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Groups') . '&report=group-saved&var=' . rawurlencode(
                         $values['name']
                     ) . '&highlight=row-' . $this->id
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->group['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteGroup']
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

@@ -19,7 +19,7 @@ use Symfony\Component\Intl\Intl as Intl;
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
+    const QUERY_DATAGRID_BROWSE =
         'SELECT id, title, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
          FROM location
          WHERE language = ?';
@@ -31,8 +31,8 @@ class Model
      */
     public static function delete(int $id): void
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get item
         $item = self::get($id);
@@ -40,8 +40,8 @@ class Model
         BackendModel::deleteExtraById($item['extra_id']);
 
         // delete location and its settings
-        $db->delete('location', 'id = ? AND language = ?', [$id, BL::getWorkingLanguage()]);
-        $db->delete('location_settings', 'map_id = ?', [$id]);
+        $database->delete('location', 'id = ? AND language = ?', [$id, BL::getWorkingLanguage()]);
+        $database->delete('location_settings', 'map_id = ?', [$id]);
     }
 
     /**
@@ -90,7 +90,7 @@ class Model
             'SELECT i.*
              FROM location AS i
              WHERE i.language = ? AND i.show_overview = ?',
-            [BL::getWorkingLanguage(), 'Y']
+            [BL::getWorkingLanguage(), true]
         );
     }
 
@@ -212,7 +212,7 @@ class Model
      */
     public static function insert(array $item): int
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
@@ -222,7 +222,7 @@ class Model
 
         // insert new location
         $item['created_on'] = $item['edited_on'] = BackendModel::getUTCDate();
-        $item['id'] = $db->insert('location', $item);
+        $item['id'] = $database->insert('location', $item);
 
         // update extra (item id is now known)
         BackendModel::updateExtra(
@@ -232,7 +232,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
+                'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
             ]
         );
 
@@ -280,7 +280,7 @@ class Model
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
                     'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
+                    'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
                 ]
             );
         }

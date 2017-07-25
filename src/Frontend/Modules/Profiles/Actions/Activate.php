@@ -22,7 +22,7 @@ class Activate extends FrontendBaseBlock
     public function execute(): void
     {
         // get activation key
-        $key = $this->URL->getParameter(0);
+        $key = $this->url->getParameter(0);
 
         // load template
         $this->loadTemplate();
@@ -44,13 +44,13 @@ class Activate extends FrontendBaseBlock
                 FrontendProfilesAuthentication::login($profileId);
 
                 // show success message
-                $this->tpl->assign('activationSuccess', true);
+                $this->template->assign('activationSuccess', true);
             } else {
                 // failure
-                $this->redirect(FrontendNavigation::getURL(404));
+                $this->redirect(FrontendNavigation::getUrl(404));
             }
         } else {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
     }
 }

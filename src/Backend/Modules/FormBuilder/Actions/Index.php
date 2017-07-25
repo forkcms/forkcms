@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
@@ -31,8 +31,8 @@ class Index extends BackendBaseActionIndex
 
     private function loadDataGrid(): void
     {
-        $this->dataGrid = new BackendDataGridDB(
-            BackendFormBuilderModel::QRY_BROWSE,
+        $this->dataGrid = new BackendDataGridDatabase(
+            BackendFormBuilderModel::QUERY_BROWSE,
             [BL::getWorkingLanguage()]
         );
         $this->dataGrid->setHeaderLabels([
@@ -60,13 +60,13 @@ class Index extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL(
                 'name',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]'
             );
             $this->dataGrid->addColumn(
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
                 BL::getLabel('Edit')
             );
         }
@@ -77,7 +77,7 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // add datagrid
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->template->assign('dataGrid', (string) $this->dataGrid->getContent());
     }
 
     /**
@@ -109,7 +109,7 @@ class Index extends BackendBaseActionIndex
         // check if data action is allowed
         if (BackendAuthentication::isAllowedAction('Data', 'FormBuilder')) {
             // output
-            $output = '<a href="' . BackendModel::createURLForAction('Data') .
+            $output = '<a href="' . BackendModel::createUrlForAction('Data') .
                       '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';
         }
 

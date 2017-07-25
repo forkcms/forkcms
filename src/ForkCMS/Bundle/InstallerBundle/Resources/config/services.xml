@@ -9,7 +9,6 @@
 
         <service id="forkcms.installer" class="ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller">
             <argument type="service" id="service_container"/>
-            <argument>%kernel.root_dir%/../</argument>
         </service>
     </services>
 </container>

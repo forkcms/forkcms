@@ -3,6 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will get all media items for a group,
@@ -16,7 +17,7 @@ class MediaItemGetAllById extends BackendBaseAJAXAction
 
         // Output success message with variables
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             [
                 'items' => $this->getMediaItems(),
             ]

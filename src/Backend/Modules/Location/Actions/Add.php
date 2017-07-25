@@ -32,37 +32,37 @@ class Add extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('add');
-        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
-        $this->frm->addText('street');
-        $this->frm->addText('number');
-        $this->frm->addText('zip');
-        $this->frm->addText('city');
-        $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), 'BE');
+        $this->form = new BackendForm('add');
+        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
+        $this->form->addText('street');
+        $this->form->addText('number');
+        $this->form->addText('zip');
+        $this->form->addText('city');
+        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), 'BE');
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if ($this->form->isSubmitted()) {
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->frm->getField('street')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('number')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('street')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('number')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('zip')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
                 $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['street'] = $this->frm->getField('street')->getValue();
-                $item['number'] = $this->frm->getField('number')->getValue();
-                $item['zip'] = $this->frm->getField('zip')->getValue();
-                $item['city'] = $this->frm->getField('city')->getValue();
-                $item['country'] = $this->frm->getField('country')->getValue();
+                $item['title'] = $this->form->getField('title')->getValue();
+                $item['street'] = $this->form->getField('street')->getValue();
+                $item['number'] = $this->form->getField('number')->getValue();
+                $item['zip'] = $this->form->getField('zip')->getValue();
+                $item['city'] = $this->form->getField('city')->getValue();
+                $item['country'] = $this->form->getField('country')->getValue();
 
                 // define coordinates
                 $coordinates = BackendLocationModel::getCoordinates(
@@ -82,7 +82,7 @@ class Add extends BackendBaseActionAdd
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] .
+                    BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'] .
                     '&report=added&var=' . rawurlencode($item['title'])
                 );
             }

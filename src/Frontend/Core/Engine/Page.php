@@ -10,14 +10,15 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
+use Frontend\Core\Engine\Block\ModuleExtraInterface;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Common\Cookie as CommonCookie;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
-use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
+use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Backend\Core\Engine\Model as BackendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
@@ -25,7 +26,7 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationMod
 /**
  * Frontend page class, this class will handle everything on a page
  */
-class Page extends FrontendBaseObject
+class Page extends KernelLoader
 {
     /**
      * Breadcrumb instance
@@ -81,13 +82,29 @@ class Page extends FrontendBaseObject
      *
      * @var int
      */
-    protected $statusCode = 200;
+    protected $statusCode = Response::HTTP_OK;
+
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $template;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $url;
 
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
 
         $this->getContainer()->set('page', $this);
+        $this->template = $this->getContainer()->get('templating');
+        $this->url = $this->getContainer()->get('url');
     }
 
     /**
@@ -102,7 +119,7 @@ class Page extends FrontendBaseObject
         $this->header = new Header($this->getKernel());
 
         // get page content from pageId of the requested URL
-        $this->record = $this->getPageContent(Navigation::getPageId(implode('/', $this->URL->getPages())));
+        $this->record = $this->getPageContent(Navigation::getPageId(implode('/', $this->url->getPages())));
 
         if (empty($this->record)) {
             $this->record = Model::getPage(Response::HTTP_NOT_FOUND);
@@ -142,7 +159,7 @@ class Page extends FrontendBaseObject
 
         if (!FrontendAuthenticationModel::isLoggedIn()) {
             $this->redirect(
-                Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $this->URL->getQueryString()
+                Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $this->url->getQueryString()
             );
         }
 
@@ -160,17 +177,17 @@ class Page extends FrontendBaseObject
         }
 
         // turns out the logged in profile isn't in a group that is allowed to see the page
-        $this->record = Model::getPage(404);
+        $this->record = Model::getPage(Response::HTTP_NOT_FOUND);
     }
 
     public function display(): Response
     {
         // assign the id so we can use it as an option
-        $this->tpl->addGlobal('isPage' . $this->pageId, true);
-        $this->tpl->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
+        $this->template->addGlobal('isPage' . $this->pageId, true);
+        $this->template->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
-        $this->tpl->addGlobal(
+        $this->template->addGlobal(
             'cookieBarHide',
             !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar()
         );
@@ -180,7 +197,7 @@ class Page extends FrontendBaseObject
         // assign empty positions
         $unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
         foreach ($unusedPositions as $position) {
-            $this->tpl->assign('position' . \SpoonFilter::ucfirst($position), []);
+            $this->template->assign('position' . \SpoonFilter::ucfirst($position), []);
         }
 
         $this->header->parse();
@@ -189,7 +206,7 @@ class Page extends FrontendBaseObject
         $this->footer->parse();
 
         return new Response(
-            $this->tpl->getContent($this->templatePath),
+            $this->template->getContent($this->templatePath),
             $this->statusCode
         );
     }
@@ -206,14 +223,14 @@ class Page extends FrontendBaseObject
 
     private function getPageRecord(int $pageId): array
     {
-        if ($this->URL->getParameter('page_revision', 'int') === null) {
+        if ($this->url->getParameter('page_revision', 'int') === null) {
             return Model::getPage($pageId);
         }
 
         // add no-index to meta-custom, so the draft won't get accidentally indexed
         $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
 
-        return Model::getPageRevision($this->URL->getParameter('page_revision', 'int'));
+        return Model::getPageRevision($this->url->getParameter('page_revision', 'int'));
     }
 
     protected function getPageContent(int $pageId): array
@@ -230,7 +247,7 @@ class Page extends FrontendBaseObject
 
             // check if we actually have a first child
             if (Navigation::getFirstChildId($record['id']) !== false) {
-                $this->redirect(Navigation::getURL($firstChildId), RedirectResponse::HTTP_MOVED_PERMANENTLY);
+                $this->redirect(Navigation::getUrl($firstChildId), RedirectResponse::HTTP_MOVED_PERMANENTLY);
             }
         }
 
@@ -273,7 +290,7 @@ class Page extends FrontendBaseObject
             return;
         }
 
-        $this->tpl->addGlobal(
+        $this->template->addGlobal(
             'languages',
             array_map(
                 function (string $language) {
@@ -295,7 +312,7 @@ class Page extends FrontendBaseObject
         $positions = [];
 
         // fetch variables from main template
-        $mainVariables = $this->tpl->getAssignedVariables();
+        $mainVariables = $this->template->getAssignedVariables();
 
         // loop all positions
         foreach ($this->record['positions'] as $position => $blocks) {
@@ -305,10 +322,10 @@ class Page extends FrontendBaseObject
             }
 
             // assign position to template
-            $this->tpl->assign('position' . \SpoonFilter::ucfirst($position), $positions[$position]);
+            $this->template->assign('position' . \SpoonFilter::ucfirst($position), $positions[$position]);
         }
 
-        $this->tpl->assign('positions', $positions);
+        $this->template->assign('positions', $positions);
     }
 
     private function parseBlock(array $block, array $mainVariables): array
@@ -334,14 +351,11 @@ class Page extends FrontendBaseObject
         ];
     }
 
-    protected function processExtra(FrontendBaseObject $extra): void
+    protected function processExtra(ModuleExtraInterface $extra): void
     {
         $this->getContainer()->get('logger')->info(
             'Executing ' . get_class($extra) . " '{$extra->getAction()}' for module '{$extra->getModule()}'."
         );
-
-        // all extras extend FrontendBaseObject, which extends KernelLoader
-        $extra->setKernel($this->getKernel());
 
         // overwrite the template
         if (is_callable([$extra, 'getOverwrite']) && $extra->getOverwrite()) {
@@ -365,11 +379,11 @@ class Page extends FrontendBaseObject
             return;
         }
 
-        $url = Navigation::getURL($this->pageId, $language);
+        $url = Navigation::getUrl($this->pageId, $language);
 
         // Ignore 404 links
         if ($this->pageId !== Response::HTTP_NOT_FOUND
-            && $url === Navigation::getURL(Response::HTTP_NOT_FOUND, $language)) {
+            && $url === Navigation::getUrl(Response::HTTP_NOT_FOUND, $language)) {
             return;
         }
 
@@ -386,29 +400,29 @@ class Page extends FrontendBaseObject
         // set pageTitle
         $this->header->setPageTitle(
             $this->record['meta_title'],
-            $this->record['meta_title_overwrite'] === 'Y'
+            $this->record['meta_title_overwrite']
         );
 
         // set meta-data
         $this->header->addMetaDescription(
             $this->record['meta_description'],
-            $this->record['meta_description_overwrite'] === 'Y'
+            $this->record['meta_description_overwrite']
         );
         $this->header->addMetaKeywords(
             $this->record['meta_keywords'],
-            $this->record['meta_keywords_overwrite'] === 'Y'
+            $this->record['meta_keywords_overwrite']
         );
         $this->header->setMetaCustom($this->record['meta_custom']);
 
         // advanced SEO-attributes
-        if (isset($this->record['meta_data']['seo_index'])) {
+        if (isset($this->record['meta_seo_index'])) {
             $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_index']]
+                ['name' => 'robots', 'content' => $this->record['meta_seo_index']]
             );
         }
-        if (isset($this->record['meta_data']['seo_follow'])) {
+        if (isset($this->record['meta_seo_follow'])) {
             $this->header->addMetaData(
-                ['name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']]
+                ['name' => 'robots', 'content' => $this->record['meta_seo_follow']]
             );
         }
     }
@@ -422,7 +436,7 @@ class Page extends FrontendBaseObject
         // assign content
         $pageInfo = Navigation::getPageInfo($this->record['id']);
         $this->record['has_children'] = $pageInfo['has_children'];
-        $this->tpl->addGlobal('page', $this->record);
+        $this->template->addGlobal('page', $this->record);
 
         // set template path
         $this->templatePath = $this->record['template_path'];
@@ -456,7 +470,7 @@ class Page extends FrontendBaseObject
         }
     }
 
-    private function getExtraForBlock(array $block): FrontendBaseObject
+    private function getExtraForBlock(array $block): ModuleExtraInterface
     {
         // block
         if ($block['extra_type'] === 'block') {

@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
+use Backend\Form\Type\DeleteType;
 use Frontend\Core\Language\Language as FL;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
@@ -31,19 +32,20 @@ class Edit extends BackendBaseActionEdit
 
     public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendFormBuilderModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
             // no item found, throw an exceptions, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -55,9 +57,9 @@ class Edit extends BackendBaseActionEdit
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('edit');
-        $this->frm->addText('name', $this->record['name']);
-        $this->frm->addDropdown(
+        $this->form = new BackendForm('edit');
+        $this->form->addText('name', $this->record['name']);
+        $this->form->addDropdown(
             'method',
             [
                 'database' => BL::getLabel('MethodDatabase'),
@@ -66,29 +68,29 @@ class Edit extends BackendBaseActionEdit
             ],
             $this->record['method']
         );
-        $this->frm->addText('email', implode(',', (array) $this->record['email']));
-        $this->frm->addText('email_subject', $this->record['email_subject']);
+        $this->form->addText('email', implode(',', (array) $this->record['email']));
+        $this->form->addText('email_subject', $this->record['email_subject']);
 
         // if we have multiple templates, add a dropdown to select them
         if (count($this->templates) > 1) {
-            $this->frm->addDropdown(
+            $this->form->addDropdown(
                 'template',
                 array_combine($this->templates, $this->templates),
                 $this->record['email_template']
             );
         }
-        $this->frm->addText('identifier', $this->record['identifier']);
-        $this->frm->addEditor('success_message', $this->record['success_message']);
+        $this->form->addText('identifier', $this->record['identifier']);
+        $this->form->addEditor('success_message', $this->record['success_message']);
 
         // textfield dialog
-        $this->frm->addText('textbox_label');
-        $this->frm->addText('textbox_value');
-        $this->frm->addText('textbox_placeholder');
-        $this->frm->addText('textbox_classname');
-        $this->frm->addCheckbox('textbox_required');
-        $this->frm->addCheckbox('textbox_reply_to');
-        $this->frm->addText('textbox_required_error_message');
-        $this->frm->addDropdown(
+        $this->form->addText('textbox_label');
+        $this->form->addText('textbox_value');
+        $this->form->addText('textbox_placeholder');
+        $this->form->addText('textbox_classname');
+        $this->form->addCheckbox('textbox_required');
+        $this->form->addCheckbox('textbox_reply_to');
+        $this->form->addText('textbox_required_error_message');
+        $this->form->addDropdown(
             'textbox_validation',
             [
                 '' => '',
@@ -96,26 +98,26 @@ class Edit extends BackendBaseActionEdit
                 'number' => BL::getLabel('Numeric'),
             ]
         );
-        $this->frm->addCheckbox('textbox_send_confirmation_mail_to');
-        $this->frm->addText('textbox_confirmation_mail_subject');
-        $this->frm->addText('textbox_validation_parameter');
-        $this->frm->addText('textbox_error_message');
+        $this->form->addCheckbox('textbox_send_confirmation_mail_to');
+        $this->form->addText('textbox_confirmation_mail_subject');
+        $this->form->addText('textbox_validation_parameter');
+        $this->form->addText('textbox_error_message');
 
         // textarea dialog
-        $this->frm->addText('textarea_label');
-        $this->frm->addTextarea('textarea_value');
-        $this->frm->getField('textarea_value')->setAttribute('cols', 30);
-        $this->frm->addText('textarea_placeholder');
-        $this->frm->addText('textarea_classname');
-        $this->frm->addCheckbox('textarea_required');
-        $this->frm->addText('textarea_required_error_message');
-        $this->frm->addDropdown('textarea_validation', ['' => '']);
-        $this->frm->addText('textarea_validation_parameter');
-        $this->frm->addText('textarea_error_message');
+        $this->form->addText('textarea_label');
+        $this->form->addTextarea('textarea_value');
+        $this->form->getField('textarea_value')->setAttribute('cols', 30);
+        $this->form->addText('textarea_placeholder');
+        $this->form->addText('textarea_classname');
+        $this->form->addCheckbox('textarea_required');
+        $this->form->addText('textarea_required_error_message');
+        $this->form->addDropdown('textarea_validation', ['' => '']);
+        $this->form->addText('textarea_validation_parameter');
+        $this->form->addText('textarea_error_message');
 
         // datetime dialog
-        $this->frm->addText('datetime_label');
-        $this->frm->addDropdown(
+        $this->form->addText('datetime_label');
+        $this->form->addDropdown(
             'datetime_value_amount',
             [
                 '' => '',
@@ -126,7 +128,7 @@ class Edit extends BackendBaseActionEdit
                 '5' => '+5',
             ]
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'datetime_value_type',
             [
                 '' => '',
@@ -137,65 +139,65 @@ class Edit extends BackendBaseActionEdit
                 'year' => BL::getLabel('Year'),
             ]
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'datetime_type',
             [
                 'date' => BL::getLabel('Date'),
                 'time' => BL::getLabel('Time'),
             ]
         );
-        $this->frm->addCheckbox('datetime_required');
-        $this->frm->addText('datetime_required_error_message');
-        $this->frm->addDropdown(
+        $this->form->addCheckbox('datetime_required');
+        $this->form->addText('datetime_required_error_message');
+        $this->form->addDropdown(
             'datetime_type',
             [
                 'date' => BL::getLabel('Date'),
                 'time' => BL::getLabel('Time'),
             ]
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'datetime_validation',
             [
                 '' => '',
                 'time' => BL::getLabel('Time'),
             ]
         );
-        $this->frm->addText('datetime_classname');
-        $this->frm->addText('datetime_error_message');
+        $this->form->addText('datetime_classname');
+        $this->form->addText('datetime_error_message');
 
         // dropdown dialog
-        $this->frm->addText('dropdown_label');
-        $this->frm->addText('dropdown_values');
-        $this->frm->addDropdown('dropdown_default_value', ['' => ''])->setAttribute('rel', 'dropDownValues');
-        $this->frm->addCheckbox('dropdown_required');
-        $this->frm->addText('dropdown_required_error_message');
-        $this->frm->addText('dropdown_classname');
+        $this->form->addText('dropdown_label');
+        $this->form->addText('dropdown_values');
+        $this->form->addDropdown('dropdown_default_value', ['' => ''])->setAttribute('rel', 'dropDownValues');
+        $this->form->addCheckbox('dropdown_required');
+        $this->form->addText('dropdown_required_error_message');
+        $this->form->addText('dropdown_classname');
 
         // radiobutton dialog
-        $this->frm->addText('radiobutton_label');
-        $this->frm->addText('radiobutton_values');
-        $this->frm->addDropdown('radiobutton_default_value', ['' => ''])->setAttribute('rel', 'radioButtonValues');
-        $this->frm->addCheckbox('radiobutton_required');
-        $this->frm->addText('radiobutton_required_error_message');
-        $this->frm->addText('radiobutton_classname');
+        $this->form->addText('radiobutton_label');
+        $this->form->addText('radiobutton_values');
+        $this->form->addDropdown('radiobutton_default_value', ['' => ''])->setAttribute('rel', 'radioButtonValues');
+        $this->form->addCheckbox('radiobutton_required');
+        $this->form->addText('radiobutton_required_error_message');
+        $this->form->addText('radiobutton_classname');
 
         // checkbox dialog
-        $this->frm->addText('checkbox_label');
-        $this->frm->addText('checkbox_values');
-        $this->frm->addDropdown('checkbox_default_value', ['' => ''])->setAttribute('rel', 'checkBoxValues');
-        $this->frm->addCheckbox('checkbox_required');
-        $this->frm->addText('checkbox_required_error_message');
-        $this->frm->addText('checkbox_classname');
+        $this->form->addText('checkbox_label');
+        $this->form->addText('checkbox_values');
+        $this->form->addDropdown('checkbox_default_value', ['' => ''])->setAttribute('rel', 'checkBoxValues');
+        $this->form->addCheckbox('checkbox_required');
+        $this->form->addText('checkbox_required_error_message');
+        $this->form->addText('checkbox_classname');
 
         // heading dialog
-        $this->frm->addText('heading');
+        $this->form->addText('heading');
 
         // paragraph dialog
-        $this->frm->addEditor('paragraph');
-        $this->frm->getField('paragraph')->setAttribute('cols', 30);
+        $this->form->addEditor('paragraph');
+        $this->form->getField('paragraph')->setAttribute('cols', 30);
 
         // submit dialog
-        $this->frm->addText('submit');
+        $this->form->addText('submit');
     }
 
     protected function parse(): void
@@ -204,8 +206,14 @@ class Edit extends BackendBaseActionEdit
 
         parent::parse();
 
-        $this->tpl->assign('id', $this->record['id']);
-        $this->tpl->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->record['id']);
+        $this->template->assign('name', $this->record['name']);
+        $recaptchaSiteKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key');
+        $recaptchaSecretKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
+
+        if (!($recaptchaSiteKey || $recaptchaSecretKey)) {
+            $this->template->assign('recaptchaMissing', true);
+        }
 
         // parse error messages
         $this->parseErrorMessages();
@@ -220,7 +228,7 @@ class Edit extends BackendBaseActionEdit
         FL::setLocale(BL::getWorkingLanguage(), true);
 
         // assign error messages
-        $this->tpl->assign('errors', BackendFormBuilderModel::getErrors());
+        $this->template->assign('errors', BackendFormBuilderModel::getErrors());
     }
 
     private function parseFields(): void
@@ -235,10 +243,10 @@ class Edit extends BackendBaseActionEdit
             // submit button
             if ($field['type'] == 'submit') {
                 // assign
-                $this->tpl->assign('submitId', $field['id']);
+                $this->template->assign('submitId', $field['id']);
 
                 // add field
-                $btn = $this->frm->addButton(
+                $btn = $this->form->addButton(
                     'submit_field',
                     \SpoonFilter::htmlspecialcharsDecode($field['settings']['values']),
                     'button',
@@ -255,21 +263,21 @@ class Edit extends BackendBaseActionEdit
         }
 
         // assign iteration
-        $this->tpl->assign('fields', $fieldsHTML);
+        $this->template->assign('fields', $fieldsHTML);
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if ($this->form->isSubmitted()) {
+            $this->form->cleanupFields();
 
             // shorten the fields
-            $txtName = $this->frm->getField('name');
-            $txtEmail = $this->frm->getField('email');
-            $txtEmailSubject = $this->frm->getField('email_subject');
-            $ddmMethod = $this->frm->getField('method');
-            $txtSuccessMessage = $this->frm->getField('success_message');
-            $txtIdentifier = $this->frm->getField('identifier');
+            $txtName = $this->form->getField('name');
+            $txtEmail = $this->form->getField('email');
+            $txtEmailSubject = $this->form->getField('email_subject');
+            $ddmMethod = $this->form->getField('method');
+            $txtSuccessMessage = $this->form->getField('success_message');
+            $txtIdentifier = $this->form->getField('identifier');
 
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
@@ -305,7 +313,7 @@ class Edit extends BackendBaseActionEdit
                 }
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build array
                 $values = [];
                 $values['name'] = $txtName->getValue();
@@ -313,7 +321,7 @@ class Edit extends BackendBaseActionEdit
                 $values['email'] = ($ddmMethod->getValue() == 'database_email' || $ddmMethod->getValue() === 'email')
                     ? serialize($emailAddresses) : null;
                 $values['email_template'] = count($this->templates) > 1
-                    ? $this->frm->getField('template')->getValue() : $this->templates[0];
+                    ? $this->form->getField('template')->getValue() : $this->templates[0];
                 $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
@@ -327,10 +335,20 @@ class Edit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' .
+                    BackendModel::createUrlForAction('Index') . '&report=edited&var=' .
                     rawurlencode($values['name']) . '&highlight=row-' . $id
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

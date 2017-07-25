@@ -12,7 +12,7 @@ use Google_Service_Analytics;
  */
 final class SettingsType
 {
-    /** @var SettingsStepType|Form */
+    /** @var SettingsStepTypeInterface|Form */
     private $form;
 
     public function __construct(
@@ -22,28 +22,28 @@ final class SettingsType
     ) {
         // we don't even have a auth config file yet, let the user upload it
         if ($settings->get('Analytics', 'certificate') === null) {
-            $this->form = new SettingsStepAuthConfigFileType($name, $settings);
+            $this->form = new SettingsStepAuthConfigFileTypeInterface($name, $settings);
 
             return;
         }
 
         // we are authenticated! Let's see which account the user wants to use
         if ($settings->get('Analytics', 'account') === null) {
-            $this->form = new SettingsStepAccountType($name, $settings, $googleServiceAnalytics);
+            $this->form = new SettingsStepAccountTypeInterface($name, $settings, $googleServiceAnalytics);
 
             return;
         }
 
         // we have an account, but don't know which property to track
         if ($settings->get('Analytics', 'web_property_id') === null) {
-            $this->form = new SettingsStepWebPropertyType($name, $settings, $googleServiceAnalytics);
+            $this->form = new SettingsStepWebPropertyTypeInterface($name, $settings, $googleServiceAnalytics);
 
             return;
         }
 
         // we have an account, but don't know which property to track
         if ($settings->get('Analytics', 'profile') === null) {
-            $this->form = new SettingsStepProfileType($name, $settings, $googleServiceAnalytics);
+            $this->form = new SettingsStepProfileTypeInterface($name, $settings, $googleServiceAnalytics);
 
             return;
         }

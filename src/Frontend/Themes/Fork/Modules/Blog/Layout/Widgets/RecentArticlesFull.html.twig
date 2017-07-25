@@ -78,7 +78,7 @@
 
             <div class="block-article-body" itemprop="articleBody">
               {% if post.image %}
-                <img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ post.image }}" alt="{{ post.title }}" />
+                <img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ post.image }}" alt="{{ post.title }}" />
               {% endif %}
               {% if not post.introduction %}
                 {{ post.text|raw }}

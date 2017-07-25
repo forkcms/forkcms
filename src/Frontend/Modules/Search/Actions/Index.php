@@ -88,7 +88,7 @@ class Index extends FrontendBaseBlock
     private function display(): void
     {
         // set variables
-        $this->requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $this->requestedPage = $this->url->getParameter('page', 'int', 1);
         $this->limit = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
@@ -158,7 +158,7 @@ class Index extends FrontendBaseBlock
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term;
 
         // populate calculated fields in pagination
         $this->pagination['limit'] = $this->limit;
@@ -185,7 +185,7 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($this->requestedPage < 1 || $this->requestedPage > $this->pagination['num_pages']) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // debug mode = no cache
@@ -210,8 +210,13 @@ class Index extends FrontendBaseBlock
         $this->form = new FrontendForm('search', null, 'get', null, false);
 
         // could also have been submitted by our widget
-        if (!\SpoonFilter::getGetValue('q', null, '')) {
-            $_GET['q'] = \SpoonFilter::getGetValue('q_widget', null, '');
+        if ($this->getRequest()->query->has('q')) {
+            $query = $this->getRequest()->query->get('q', '');
+        } else {
+            $query = $this->getRequest()->query->get('q_widget', '');
+            // set $_GET variable to keep SpoonForm happy
+            // should be refactored out when Symfony form are implemented here
+            $_GET['q'] = $this->getRequest()->query->get('q_widget', '');
         }
 
         // create elements
@@ -224,9 +229,9 @@ class Index extends FrontendBaseBlock
         );
 
         // since we know the term just here we should set the canonical url here
-        $canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('Search');
-        if (isset($_GET['q']) && $_GET['q'] !== '') {
-            $canonicalUrl .= '?q=' . \SpoonFilter::htmlspecialchars($_GET['q']);
+        $canonicalUrl = SITE_URL . FrontendNavigation::getUrlForBlock('Search');
+        if ($query !== '') {
+            $canonicalUrl .= '?q=' . \SpoonFilter::htmlspecialchars($query);
         }
         $this->header->setCanonicalUrl($canonicalUrl);
     }
@@ -237,7 +242,7 @@ class Index extends FrontendBaseBlock
         $this->addCSS('Search.css');
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // no search term = no search
         if (!$this->term) {
@@ -245,8 +250,8 @@ class Index extends FrontendBaseBlock
         }
 
         // assign articles
-        $this->tpl->assign('searchResults', $this->items);
-        $this->tpl->assign('searchTerm', $this->term);
+        $this->template->assign('searchResults', $this->items);
+        $this->template->assign('searchTerm', $this->term);
 
         // parse the pagination
         $this->parsePagination();
