@@ -517,3 +517,4 @@ The following form types have been moved
 | Old classname                       | New classname                 |
 |-------------------------------------|-------------------------------|
 | `\Backend\Form\Type\FileType`       | `\Common\Form\FileType`       |
+| `\Backend\Form\Type\ImageType`      | `\Common\Form\ImageType`      |
