@@ -191,7 +191,7 @@ class Model
                 'INSERT INTO search_index (module, other_id, language, field, value, active)
                  VALUES (?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                [$module, $otherId, $language, (string) $field, $value, 'Y', $value, 'Y']
+                [$module, $otherId, $language, (string) $field, $value, true, $value, true]
             );
         }
 

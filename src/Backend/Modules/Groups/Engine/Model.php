@@ -218,7 +218,7 @@ class Model
              FROM users AS i
              INNER JOIN users_groups AS ug ON i.id = ug.user_id
              WHERE ug.group_id = ? AND i.deleted = ? AND i.active = ?',
-            [$groupId, 'N', 'Y']
+            [$groupId, false, true]
         );
     }
 

@@ -33,14 +33,14 @@ class Model implements FrontendTagsInterface
              m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
              m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.custom AS meta_custom,
              m.url,
-             m.data AS meta_data
+             m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_posts AS i
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
              LIMIT 1',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url]
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i'), $url]
         );
 
         // unserialize
@@ -78,7 +78,7 @@ class Model implements FrontendTagsInterface
             [
                 'active',
                 LANGUAGE,
-                'N',
+                false,
                 FrontendModel::getUTCDate('Y-m-d H:i'),
                 $offset,
                 $limit,
@@ -111,7 +111,7 @@ class Model implements FrontendTagsInterface
             }
 
             // allow comments as boolean
-            $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+            $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
             if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
@@ -143,13 +143,14 @@ class Model implements FrontendTagsInterface
     public static function getAllCategories(): array
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data
+            'SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data,
+                 m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_categories AS c
              INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY c.id',
-            [LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i')],
+            [LANGUAGE, 'active', false, FrontendModel::getUTCDate('Y-m-d H:i')],
             'id'
         );
 
@@ -194,7 +195,7 @@ class Model implements FrontendTagsInterface
             'SELECT COUNT(i.id) AS count
              FROM blog_posts AS i
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i')]
         );
     }
 
@@ -215,7 +216,7 @@ class Model implements FrontendTagsInterface
             [
                 'active',
                 LANGUAGE,
-                'N',
+                false,
                 FrontendModel::getUTCDate('Y-m-d H:i'),
                 $categoryUrl,
                 $offset,
@@ -249,7 +250,7 @@ class Model implements FrontendTagsInterface
             }
 
             // allow comments as boolean
-            $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+            $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
             if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
@@ -285,7 +286,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON c.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $url]
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i'), $url]
         );
     }
 
@@ -317,7 +318,7 @@ class Model implements FrontendTagsInterface
             [
                 'active',
                 LANGUAGE,
-                'N',
+                false,
                 FrontendModel::getUTCDate('Y-m-d H:i', $start),
                 FrontendModel::getUTCDate('Y-m-d H:i', $end),
                 $offset,
@@ -349,7 +350,7 @@ class Model implements FrontendTagsInterface
             }
 
             // allow comments as boolean
-            $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
+            $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
             if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
@@ -395,7 +396,7 @@ class Model implements FrontendTagsInterface
             [
                 'active',
                 LANGUAGE,
-                'N',
+                false,
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $start),
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $end),
             ]
@@ -416,7 +417,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY month',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i')]
         );
 
         // init vars
@@ -529,7 +530,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $blogPostIds) . ') AND i.publish_on <= ?
              ORDER BY i.publish_on DESC',
-            ['active', 'N', FrontendModel::getUTCDate('Y-m-d H:i')]
+            ['active', false, FrontendModel::getUTCDate('Y-m-d H:i')]
         );
 
         // has items
@@ -611,7 +612,7 @@ class Model implements FrontendTagsInterface
                 ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT 1',
-            [$detailLink, $blogPostId, 'active', 'N', LANGUAGE, $date, $blogPostId, $date]
+            [$detailLink, $blogPostId, 'active', false, LANGUAGE, $date, $blogPostId, $date]
         );
 
         // get next post
@@ -627,7 +628,7 @@ class Model implements FrontendTagsInterface
                 $detailLink,
                 $blogPostId,
                 'active',
-                'N',
+                false,
                 LANGUAGE,
                 $date,
                 $blogPostId,
@@ -664,7 +665,7 @@ class Model implements FrontendTagsInterface
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
              LIMIT ?',
-            ['published', 'active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit]
+            ['published', 'active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i'), $limit]
         );
 
         // validate
@@ -708,7 +709,7 @@ class Model implements FrontendTagsInterface
             implode(',', $relatedIDs) . ')
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?',
-            ['active', LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i'), $limit],
+            ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i'), $limit],
             'id'
         );
 
@@ -731,7 +732,7 @@ class Model implements FrontendTagsInterface
              m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
              m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.custom AS meta_custom,
              m.url,
-             m.data AS meta_data
+             m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_posts AS i
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
@@ -912,7 +913,7 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')',
-            ['active', 'N', LANGUAGE, date('Y-m-d H:i')],
+            ['active', false, LANGUAGE, date('Y-m-d H:i')],
             'id'
         );
 

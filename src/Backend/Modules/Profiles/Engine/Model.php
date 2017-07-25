@@ -22,6 +22,16 @@ use Backend\Core\Engine\Exception as BackendException;
 class Model
 {
     /**
+     * @var array The possible status
+     */
+    public const POSSIBLE_STATUS = [
+        'active',
+        'inactive',
+        'deleted',
+        'blocked',
+    ];
+
+    /**
      * Cache avatars
      *
      * @param string
@@ -416,11 +426,7 @@ class Model
 
     public static function getStatusForDropDown(): array
     {
-        // fetch types
-        $status = BackendModel::getContainer()->get('database')->getEnumValues('profiles', 'status');
-
-        // init
-        $labels = $status;
+        $labels = static::POSSIBLE_STATUS;
 
         // loop and build labels
         foreach ($labels as &$row) {
@@ -428,7 +434,7 @@ class Model
         }
 
         // build array
-        return array_combine($status, $labels);
+        return array_combine(static::POSSIBLE_STATUS, $labels);
     }
 
     /**

@@ -181,8 +181,8 @@ class ImportWordpress extends BackendBaseActionEdit
             'future' => 'publish',
         ];
         $commentStatusses = [
-            'open' => 'Y',
-            'closed' => 'N',
+            'open' => true,
+            'closed' => false,
         ];
 
         // Prepare item
@@ -201,10 +201,10 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // Some status corrections
         if ($item['status'] === 'draft') {
-            $item['hidden'] = 'Y';
+            $item['hidden'] = true;
         } elseif ($item['status'] === 'private') {
             $item['status'] = 'publish';
-            $item['hidden'] = 'Y';
+            $item['hidden'] = true;
         }
 
         // Prepare meta
@@ -310,7 +310,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $database = BackendModel::getContainer()->get('database');
         $id = (int) $database->getVar(
             'SELECT id FROM users WHERE email=? AND active=? AND deleted=?',
-            [mb_strtolower($this->authors[(string) $username]['email']), 'Y', 'N']
+            [mb_strtolower($this->authors[(string) $username]['email']), true, false]
         );
 
         // We found an id!

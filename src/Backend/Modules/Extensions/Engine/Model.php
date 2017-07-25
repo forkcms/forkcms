@@ -293,7 +293,7 @@ class Model
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',
-            ['N'],
+            [false],
             'id'
         );
         $itemsToRemove = [];
@@ -342,7 +342,7 @@ class Model
              INNER JOIN modules AS m ON i.module = m.name
              WHERE i.hidden = ?
              ORDER BY i.module, i.sequence',
-            ['N']
+            [false]
         );
         $values = [];
 
@@ -568,7 +568,7 @@ class Model
             FROM themes_templates AS i
             WHERE i.theme = ? AND i.active = ?
             ORDER BY i.label ASC',
-            [$theme, 'Y'],
+            [$theme, true],
             'id'
         );
 
@@ -692,7 +692,7 @@ class Model
     {
         $moduleInformation = self::getModuleInformation($module);
 
-        return (empty($moduleInformation['warnings'])) ? 'N' : 'Y';
+        return !empty($moduleInformation['warnings']);
     }
 
     public static function insertTemplate(array $template): int
@@ -735,7 +735,7 @@ class Model
             $item['theme'] = $information['name'];
             $item['label'] = $template['label'];
             $item['path'] = $template['path'];
-            $item['active'] = 'Y';
+            $item['active'] = true;
             $item['data']['format'] = $template['format'];
             $item['data']['image'] = $template['image'];
 
@@ -753,7 +753,7 @@ class Model
                         'SELECT i.id
                          FROM modules_extras AS i
                          WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
-                        ['widget', $widget['module'], $widget['action'], 'N']
+                        ['widget', $widget['module'], $widget['action'], false]
                     );
 
                     // add extra to defaults

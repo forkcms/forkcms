@@ -136,7 +136,7 @@ class Installer extends ModuleInstaller
              FROM users
              WHERE is_god = ? AND deleted = ? AND active = ?
              LIMIT 1',
-            ['Y', 'N', 'Y']
+            [true, false, true]
         );
     }
 
@@ -167,9 +167,9 @@ class Installer extends ModuleInstaller
             $user = [];
             $user['email'] = $this->getVariable('email');
             $user['password'] = BackendProfilesModel::encryptPassword($this->getVariable('password'));
-            $user['active'] = 'Y';
-            $user['deleted'] = 'N';
-            $user['is_god'] = 'Y';
+            $user['active'] = true;
+            $user['deleted'] = false;
+            $user['is_god'] = true;
 
             // insert user
             $user['id'] = BackendUsersModel::insert($user, $settings);

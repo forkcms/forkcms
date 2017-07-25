@@ -183,8 +183,8 @@ class Edit extends BackendBaseActionEdit
 
         // set hidden values
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => 'Y'],
-            ['label' => BL::lbl('Published'), 'value' => 'N'],
+            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => 1],
+            ['label' => BL::lbl('Published'), 'value' => 0],
         ];
 
         // get categories
@@ -196,7 +196,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addEditor('text', $this->record['text']);
         $this->form->addEditor('introduction', $this->record['introduction']);
         $this->form->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
-        $this->form->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
+        $this->form->addCheckbox('allow_comments', $this->record['allow_comments']);
         $this->form->addDropdown('category_id', $categories, $this->record['category_id']);
         if (count($categories) != 2) {
             $this->form->getField('category_id')->setDefaultElement('');
@@ -351,7 +351,7 @@ class Edit extends BackendBaseActionEdit
                     ),
                     'edited_on' => BackendModel::getUTCDate(),
                     'hidden' => $this->form->getField('hidden')->getValue(),
-                    'allow_comments' => $this->form->getField('allow_comments')->getChecked() ? 'Y' : 'N',
+                    'allow_comments' => $this->form->getField('allow_comments')->getChecked(),
                     'status' => $status,
                 ];
                 if ($this->imageIsAllowed) {

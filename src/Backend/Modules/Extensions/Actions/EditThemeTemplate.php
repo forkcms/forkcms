@@ -333,7 +333,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $item['theme'] = $this->form->getField('theme')->getValue();
                 $item['label'] = $this->form->getField('label')->getValue();
                 $item['path'] = 'Core/Layout/Templates/' . $this->form->getField('file')->getValue();
-                $item['active'] = $this->form->getField('active')->getActualValue();
+                $item['active'] = $this->form->getField('active')->isChecked();
 
                 // copy data from previous version, otherwise default_extras from other languages are overwritten
                 $item['data'] = $this->record['data'];

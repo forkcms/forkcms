@@ -193,12 +193,12 @@ class DataGridFunctions
      * 'visible', 'hidden', 'active', 'published'
      *
      * @param string $type The type of column. This is given since some columns can have different meanings than others.
-     * @param string $value
+     * @param string|bool $value
      * @param array $attributes
      *
      * @return array
      */
-    public static function greyOut(string $type, string $value, array $attributes = []): array
+    public static function greyOut(string $type, $value, array $attributes = []): array
     {
         $grayedOutClass = 'fork-data-grid-grayed-out grayedOut';
         $greyOut = false;
@@ -207,7 +207,7 @@ class DataGridFunctions
             case 'visible':
             case 'active':
             case 'published':
-                if ($value === 'N') {
+                if (!$value) {
                     $greyOut = true;
                 }
                 break;
@@ -217,7 +217,7 @@ class DataGridFunctions
                 }
                 break;
             case 'hidden':
-                if ($value === 'Y') {
+                if ($value) {
                     $greyOut = true;
                 }
                 break;

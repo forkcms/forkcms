@@ -162,7 +162,6 @@ class Edit extends BackendBaseActionEdit
 
         // reset some vars
         $this->record['full_url'] = BackendPagesModel::getFullUrl($this->record['id']);
-        $this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
     }
 
     private function loadDrafts(): void
@@ -235,8 +234,8 @@ class Edit extends BackendBaseActionEdit
         $this->form->addRadiobutton(
             'hidden',
             [
-                 ['label' => BL::lbl('Hidden'), 'value' => 'Y'],
-                 ['label' => BL::lbl('Published'), 'value' => 'N'],
+                 ['label' => BL::lbl('Hidden'), 'value' => 1],
+                 ['label' => BL::lbl('Published'), 'value' => 0],
             ],
             $this->record['hidden']
         );
@@ -288,7 +287,7 @@ class Edit extends BackendBaseActionEdit
 
             foreach ($items as $value) {
                 $values[] = ['label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value];
-                if (isset($this->record['allow_' . $value]) && $this->record['allow_' . $value] == 'Y') {
+                if (isset($this->record['allow_' . $value]) && $this->record['allow_' . $value]) {
                     $checked[] = $value;
                 }
             }
@@ -372,10 +371,7 @@ class Edit extends BackendBaseActionEdit
                 // set data
                 $block['created_on'] = BackendModel::getUTCDate();
                 $block['edited_on'] = $block['created_on'];
-                $block['visible'] = $this->getRequest()->request->has('block_visible_' . $i)
-                    && $this->getRequest()->request->get('block_visible_' . $i) === 'Y'
-                    ? 'Y'
-                    : 'N';
+                $block['visible'] = $this->getRequest()->request->getBoolean('block_visible_' . $i);
                 $block['sequence'] = count($positions[$block['position']]) - 1;
 
                 // add to blocks
@@ -391,7 +387,7 @@ class Edit extends BackendBaseActionEdit
             $block['index'] = $i + 1;
             $block['formElements']['chkVisible'] = $this->form->addCheckbox(
                 'block_visible_' . $block['index'],
-                $block['visible'] == 'Y'
+                $block['visible']
             );
             $block['formElements']['hidExtraId'] = $this->form->addHidden(
                 'block_extra_id_' . $block['index'],
@@ -450,7 +446,7 @@ class Edit extends BackendBaseActionEdit
         );
 
         // page info
-        $this->form->addCheckbox('navigation_title_overwrite', ($this->record['navigation_title_overwrite'] == 'Y'));
+        $this->form->addCheckbox('navigation_title_overwrite', $this->record['navigation_title_overwrite']);
         $this->form->addText('navigation_title', $this->record['navigation_title']);
 
         if ($this->userCanSeeAndEditTags()) {
@@ -465,7 +461,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // a specific action
-        $isAction = (isset($this->record['data']['is_action']) && $this->record['data']['is_action'] == true) ? true : false;
+        $isAction = isset($this->record['data']['is_action']) && $this->record['data']['is_action'];
         $this->form->addCheckbox('is_action', $isAction);
 
         // extra
@@ -696,7 +692,7 @@ class Edit extends BackendBaseActionEdit
                 $page['type'] = $this->record['type'];
                 $page['title'] = $this->form->getField('title')->getValue();
                 $page['navigation_title'] = ($this->form->getField('navigation_title')->getValue() != '') ? $this->form->getField('navigation_title')->getValue() : $this->form->getField('title')->getValue();
-                $page['navigation_title_overwrite'] = $this->form->getField('navigation_title_overwrite')->getActualValue();
+                $page['navigation_title_overwrite'] = $this->form->getField('navigation_title_overwrite')->isChecked();
                 $page['hidden'] = $this->form->getField('hidden')->getValue();
                 $page['status'] = $status;
                 $page['publish_on'] = BackendModel::getUTCDate(null, $this->record['publish_on']);
@@ -710,22 +706,26 @@ class Edit extends BackendBaseActionEdit
                 $page['data'] = ($data !== null) ? serialize($data) : null;
 
                 if ($this->isGod) {
-                    $page['allow_move'] = (in_array(
+                    $page['allow_move'] = in_array(
                         'move',
-                        (array) $this->form->getField('allow')->getValue()
-                    )) ? 'Y' : 'N';
-                    $page['allow_children'] = (in_array(
+                        (array) $this->form->getField('allow')->getValue(),
+                        true
+                    );
+                    $page['allow_children'] = in_array(
                         'children',
-                        (array) $this->form->getField('allow')->getValue()
-                    )) ? 'Y' : 'N';
-                    $page['allow_edit'] = (in_array(
+                        (array) $this->form->getField('allow')->getValue(),
+                        true
+                    );
+                    $page['allow_edit'] = in_array(
                         'edit',
-                        (array) $this->form->getField('allow')->getValue()
-                    )) ? 'Y' : 'N';
-                    $page['allow_delete'] = (in_array(
+                        (array) $this->form->getField('allow')->getValue(),
+                        true
+                    );
+                    $page['allow_delete'] = in_array(
                         'delete',
-                        (array) $this->form->getField('allow')->getValue()
-                    )) ? 'Y' : 'N';
+                        (array) $this->form->getField('allow')->getValue(),
+                        true
+                    );
                 }
 
                 // set navigation title

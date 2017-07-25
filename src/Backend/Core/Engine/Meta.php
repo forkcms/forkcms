@@ -152,7 +152,7 @@ class Meta
         }
 
         // return value
-        return $this->data['description_overwrite'] === 'Y';
+        return (bool) $this->data['description_overwrite'];
     }
 
     public function getId(): ?int
@@ -185,7 +185,7 @@ class Meta
         }
 
         // return value
-        return $this->data['keywords_overwrite'] === 'Y';
+        return (bool) $this->data['keywords_overwrite'];
     }
 
     public function getTitle(): ?string
@@ -207,7 +207,7 @@ class Meta
         }
 
         // return value
-        return $this->data['title_overwrite'] === 'Y';
+        return (bool) $this->data['title_overwrite'];
     }
 
     public function getUrl(): ?string
@@ -229,7 +229,7 @@ class Meta
         }
 
         // return value
-        return $this->data['url_overwrite'] === 'Y';
+        return (bool) $this->data['url_overwrite'];
     }
 
     /**
@@ -255,10 +255,10 @@ class Meta
             $_POST['meta_custom'] = $this->data['custom'] ?? null;
         }
         if (!isset($_POST['seo_index'])) {
-            $_POST['seo_index'] = $this->data['data']['seo_index'] ?? 'none';
+            $_POST['seo_index'] = $this->data['seo_index'] ?? 'none';
         }
         if (!isset($_POST['seo_follow'])) {
-            $_POST['seo_follow'] = $this->data['data']['seo_follow'] ?? 'none';
+            $_POST['seo_follow'] = $this->data['seo_follow'] ?? 'none';
         }
     }
 
@@ -275,14 +275,14 @@ class Meta
         // add page title elements into the form
         $this->form->addCheckbox(
             'page_title_overwrite',
-            isset($this->data['title_overwrite']) && $this->data['title_overwrite'] === 'Y'
+            isset($this->data['title_overwrite']) && $this->data['title_overwrite']
         );
         $this->form->addText('page_title', $this->data['title'] ?? null);
 
         // add meta description elements into the form
         $this->form->addCheckbox(
             'meta_description_overwrite',
-            isset($this->data['description_overwrite']) && $this->data['description_overwrite'] === 'Y'
+            isset($this->data['description_overwrite']) && $this->data['description_overwrite']
         );
         $this->form->addText(
             'meta_description',
@@ -292,14 +292,14 @@ class Meta
         // add meta keywords elements into the form
         $this->form->addCheckbox(
             'meta_keywords_overwrite',
-            isset($this->data['keywords_overwrite']) && $this->data['keywords_overwrite'] === 'Y'
+            isset($this->data['keywords_overwrite']) && $this->data['keywords_overwrite']
         );
         $this->form->addText('meta_keywords', $this->data['keywords'] ?? null);
 
         // add URL elements into the form
         $this->form->addCheckbox(
             'url_overwrite',
-            isset($this->data['url_overwrite']) && $this->data['url_overwrite'] === 'Y'
+            isset($this->data['url_overwrite']) && $this->data['url_overwrite']
         );
         $this->form->addText('url', isset($this->data['url']) ? urldecode($this->data['url']) : null);
 
@@ -312,7 +312,7 @@ class Meta
         $this->form->addRadiobutton(
             'seo_index',
             $indexValues,
-            $this->data['data']['seo_index'] ?? 'none'
+            $this->data['seo_index'] ?? 'none'
         );
         $followValues = [
             ['value' => 'none', 'label' => BackendLanguage::getLabel('None')],
@@ -322,7 +322,7 @@ class Meta
         $this->form->addRadiobutton(
             'seo_follow',
             $followValues,
-            $this->data['data']['seo_follow'] ?? 'none'
+            $this->data['seo_follow'] ?? 'none'
         );
 
         // should we add the meta-custom field
@@ -469,34 +469,34 @@ class Meta
             $this->form->getField('meta_keywords')->getValue(),
             $this->form->getField($this->baseFieldName)->getValue()
         );
-        $this->data['keywords_overwrite'] = $this->form->getField('meta_keywords_overwrite')->getActualValue();
+        $this->data['keywords_overwrite'] = $this->form->getField('meta_keywords_overwrite')->isChecked();
         $this->data['description'] = $this->form->getField('meta_description_overwrite')->getActualValue(
             $this->form->getField('meta_description')->getValue(),
             $this->form->getField($this->baseFieldName)->getValue()
         );
-        $this->data['description_overwrite'] = $this->form->getField('meta_description_overwrite')->getActualValue();
+        $this->data['description_overwrite'] = $this->form->getField('meta_description_overwrite')->isChecked();
         $this->data['title'] = $this->form->getField('page_title_overwrite')->getActualValue(
             $this->form->getField('page_title')->getValue(),
             $this->form->getField($this->baseFieldName)->getValue()
         );
-        $this->data['title_overwrite'] = $this->form->getField('page_title_overwrite')->getActualValue();
+        $this->data['title_overwrite'] = $this->form->getField('page_title_overwrite')->isChecked();
         $this->data['url'] = $this->generateUrl(
             $this->form->getField('url_overwrite')->getActualValue(
                 \SpoonFilter::htmlspecialcharsDecode($this->form->getField('url')->getValue()),
                 \SpoonFilter::htmlspecialcharsDecode($this->form->getField($this->baseFieldName)->getValue())
             )
         );
-        $this->data['url_overwrite'] = $this->form->getField('url_overwrite')->getActualValue();
+        $this->data['url_overwrite'] = $this->form->getField('url_overwrite')->isChecked();
         $this->data['custom'] = $this->custom && $this->form->getField('meta_custom')->isFilled()
             ? $this->form->getField('meta_custom')->getValue() : null;
-        $this->data['data']['seo_index'] = $this->form->getField('seo_index')->getValue();
-        $this->data['data']['seo_follow'] = $this->form->getField('seo_follow')->getValue();
+        $this->data['seo_index'] = $this->form->getField('seo_index')->getValue();
+        $this->data['seo_follow'] = $this->form->getField('seo_follow')->getValue();
 
-        if ($this->data['data']['seo_index'] === 'none') {
-            unset($this->data['data']['seo_index']);
+        if ($this->data['seo_index'] === 'none') {
+            unset($this->data['seo_index']);
         }
-        if ($this->data['data']['seo_follow'] === 'none') {
-            unset($this->data['data']['seo_follow']);
+        if ($this->data['seo_follow'] === 'none') {
+            unset($this->data['seo_follow']);
         }
     }
 

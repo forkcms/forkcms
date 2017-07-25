@@ -14,7 +14,7 @@ jsFrontend.faq.feedback = {
       var $wrapperForm = $(this.form);
 
       // init useful status
-      var useful = $("input[data-role=fork-feedback-useful]:checked").val() === 'Y';
+      var useful = $("input[data-role=fork-feedback-useful]:checked").val();
 
       // show or hide the form
       if (useful) {

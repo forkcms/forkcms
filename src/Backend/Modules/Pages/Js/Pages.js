@@ -1391,7 +1391,7 @@ jsBackend.pages.tree = {
                     result = false;
                 }
                 else {
-                    if (json.data.allow_move == 'Y') result = true;
+                    if (json.data.allow_move) result = true;
                 }
             }
         });
