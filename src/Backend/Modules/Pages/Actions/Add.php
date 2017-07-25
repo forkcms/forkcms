@@ -546,7 +546,7 @@ class Add extends BackendBaseActionAdd
             return null;
         }
 
-        $imagePath = FRONTEND_FILES_PATH . '/pages/images';
+        $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
         $imageFilename = $this->meta->getUrl() . '_' . time() . '.' . $this->form->getField('image')->getExtension();
         $this->form->getField('image')->generateThumbnails($imagePath, $imageFilename);
 

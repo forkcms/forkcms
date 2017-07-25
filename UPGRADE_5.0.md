@@ -277,6 +277,7 @@ The directories now have the same name as the module
 |--------------------------------------|---------------------------------|
 | `src/Frontend/Files/backend_users`   | `src/Frontend/Files/Users`      |
 | `src/Frontend/Files/blog`            | `src/Frontend/Files/Blog`       |
+| `src/Frontend/Files/pages`           | `src/Frontend/Files/Pages`      |
 
 ## Meta URL
 

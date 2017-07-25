@@ -820,7 +820,7 @@ class Edit extends BackendBaseActionEdit
             return $imageFilename;
         }
 
-        $imagePath = FRONTEND_FILES_PATH . '/pages/images';
+        $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
 
         // delete the current image
         BackendModel::deleteThumbnails($imagePath, (string) $imageFilename);

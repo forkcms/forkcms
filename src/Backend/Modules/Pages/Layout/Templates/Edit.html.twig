@@ -289,7 +289,7 @@
                 </div>
                 <div class="form-group">
                   {% if item.data.image %}
-                    <img src="{{ FRONTEND_FILES_URL }}/pages/images/source/{{ item.data.image }}" class="img-responsive" />
+                    <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive" />
                     <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
                     {% form_field_error remove_image %}
                   {% endif %}
