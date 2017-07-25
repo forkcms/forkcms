@@ -215,7 +215,7 @@ class Add extends BackendBaseActionAdd
 
                     // resize (128x128)
                     $this->form->getField('avatar')->createThumbnail(
-                        FRONTEND_FILES_PATH . '/backend_users/avatars/128x128/' . $filename,
+                        FRONTEND_FILES_PATH . '/Users/avatars/128x128/' . $filename,
                         128,
                         128,
                         true,
@@ -225,7 +225,7 @@ class Add extends BackendBaseActionAdd
 
                     // resize (64x64)
                     $this->form->getField('avatar')->createThumbnail(
-                        FRONTEND_FILES_PATH . '/backend_users/avatars/64x64/' . $filename,
+                        FRONTEND_FILES_PATH . '/Users/avatars/64x64/' . $filename,
                         64,
                         64,
                         true,
@@ -235,7 +235,7 @@ class Add extends BackendBaseActionAdd
 
                     // resize (32x32)
                     $this->form->getField('avatar')->createThumbnail(
-                        FRONTEND_FILES_PATH . '/backend_users/avatars/32x32/' . $filename,
+                        FRONTEND_FILES_PATH . '/Users/avatars/32x32/' . $filename,
                         32,
                         32,
                         true,

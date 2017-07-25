@@ -269,6 +269,14 @@ Replaced those methods by using the Symfony Request object.
 
 Also removed Action::getParameter(). You should directly call the request object through `$this->getRequest()->query->get()`
 
+## Standardise the FRONTEND_FILES directory names
+
+The directories now have the same name as the module
+
+| Old directory                        | New directory                   |
+|--------------------------------------|---------------------------------|
+| `src/Frontend/Files/backend_users`   | `src/Frontend/Files/Users`      |
+
 ## Meta URL
 
 The detail url (without slug) must be defined for meta type, so the preview url will be correct.
