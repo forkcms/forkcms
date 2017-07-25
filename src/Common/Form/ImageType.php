@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Form\Type;
+namespace Common\Form;
 
 use Common\Doctrine\ValueObject\AbstractImage;
 use stdClass;
