@@ -175,7 +175,7 @@ class Model
         $images = $database->getColumn('SELECT image FROM blog_posts WHERE id IN (' . $idPlaceHolders . ')', $ids);
 
         foreach ($images as $image) {
-            BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $image);
+            BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/Blog/images', $image);
         }
 
         // delete records
@@ -1067,7 +1067,7 @@ class Model
             // make sure that an image that will be deleted, is not used by a revision that is not to be deleted
             foreach ($imagesOfDeletedRevisions as $imageOfDeletedRevision) {
                 if (!in_array($imageOfDeletedRevision, $imagesToKeep)) {
-                    BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $imageOfDeletedRevision);
+                    BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/Blog/images', $imageOfDeletedRevision);
                 }
             }
 
