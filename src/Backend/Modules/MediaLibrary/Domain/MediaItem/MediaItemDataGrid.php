@@ -159,7 +159,7 @@ class MediaItemDataGrid extends DataGridDatabase
                     Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
-                    Model::createURLForAction('MediaItemEdit') . '&id=[id]' . '&folder=' . $folderId,
+                    Model::createUrlForAction('MediaItemEdit') . '&id=[id]' . '&folder=' . $folderId,
                     null,
                     null,
                     'media_library_backend_thumbnail',
