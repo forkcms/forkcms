@@ -518,3 +518,4 @@ The following form types have been moved
 |-------------------------------------|-------------------------------|
 | `\Backend\Form\Type\FileType`       | `\Common\Form\FileType`       |
 | `\Backend\Form\Type\ImageType`      | `\Common\Form\ImageType`      |
+| `\Backend\Form\Type\CollectionType` | `\Common\Form\CollectionType` |
