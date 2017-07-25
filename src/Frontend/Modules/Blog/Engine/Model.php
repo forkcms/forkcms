@@ -50,7 +50,7 @@ class Model implements FrontendTagsInterface
 
         // image?
         if (isset($return['image'])) {
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             foreach ($folders as $folder) {
                 $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
@@ -94,7 +94,7 @@ class Model implements FrontendTagsInterface
         // init var
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -233,7 +233,7 @@ class Model implements FrontendTagsInterface
         // init var
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $categoryLink = FrontendNavigation::getUrlForBlock('Blog', 'Category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -334,7 +334,7 @@ class Model implements FrontendTagsInterface
 
         // init var
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -537,7 +537,7 @@ class Model implements FrontendTagsInterface
         if (!empty($items)) {
             // init var
             $link = FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             // reset url
             foreach ($items as &$row) {
@@ -749,7 +749,7 @@ class Model implements FrontendTagsInterface
 
         // image?
         if (isset($return['image'])) {
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             foreach ($folders as $folder) {
                 $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];

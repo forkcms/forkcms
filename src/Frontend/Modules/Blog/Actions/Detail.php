@@ -147,7 +147,7 @@ class Detail extends FrontendBaseBlock
         // add specified image
         if (isset($this->record['image']) && $this->record['image'] != '') {
             $this->header->addOpenGraphImage(
-                FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']
+                FRONTEND_FILES_URL . '/Blog/images/source/' . $this->record['image']
             );
         }
 
@@ -170,7 +170,7 @@ class Detail extends FrontendBaseBlock
         );
 
         // Twitter Card
-        $imgUrl = FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image'];
+        $imgUrl = FRONTEND_FILES_URL . '/Blog/images/source/' . $this->record['image'];
         $this->header->setTwitterCard($this->record['title'], $this->record['meta_description'], $imgUrl);
 
         // when there are 2 or more categories with at least one item in it,

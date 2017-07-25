@@ -1010,7 +1010,7 @@ class ModuleInstaller
         $fileSystem = new Filesystem();
         $fileSystem->copy(
             $randomImage->getRealPath(),
-            __DIR__ . '/../../../Frontend/Files/pages/images/source/' . $randomName
+            __DIR__ . '/../../../Frontend/Files/Pages/images/source/' . $randomName
         );
 
         return $randomName;

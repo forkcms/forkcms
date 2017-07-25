@@ -858,7 +858,7 @@ jsBackend.pages.extras = {
 
                     $('#user-template-image-' + key + ' img').attr(
                         'src',
-                        '/src/Frontend/Files/UserTemplate/' + response.data
+                        '/src/Frontend/Files/Pages/UserTemplate/' + response.data
                     );
 
                     // send a request to remove the old image if the old image doesn't have the same name
@@ -910,7 +910,7 @@ jsBackend.pages.extras = {
 
                     $('#user-template-image-background-' + key + ' img').attr(
                         'src',
-                        '/src/Frontend/Files/UserTemplate/' + response.data
+                        '/src/Frontend/Files/Pages/UserTemplate/' + response.data
                     );
 
                     // send a request to remove the old image if the old image doesn't have the same name

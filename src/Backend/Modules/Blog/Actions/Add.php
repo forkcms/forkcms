@@ -152,7 +152,7 @@ class Add extends BackendBaseActionAdd
 
                 if ($this->imageIsAllowed) {
                     // the image path
-                    $imagePath = FRONTEND_FILES_PATH . '/blog/images';
+                    $imagePath = FRONTEND_FILES_PATH . '/Blog/images';
 
                     // create folders if needed
                     $filesystem = new Filesystem();
