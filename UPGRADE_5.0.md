@@ -543,4 +543,11 @@ UPDATE modules_settings SET value = 's:8:"sendmail";' WHERE name = 'mailer_type'
 
 ## Symfony has been updated to 3.3
 
-All things symfony have been updated to the latest stable versions
+All things symfony have been updated to the latest stable versions.
+Consult the upgrade guides of symfony to see what changed. If you don't have deprecation notices on 2.8 you can just upgrade.
+
+- [upgrade from 2.x to 3.0 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.0.md)
+- [upgrade from 3.0 to 3.1 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.1.md)
+- [upgrade from 3.1 to 3.2 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.2.md)
+- [upgrade from 3.2 to 3.3 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.3.md)
+
