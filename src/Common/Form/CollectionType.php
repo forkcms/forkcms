@@ -39,12 +39,12 @@ class CollectionType extends AbstractType
                 'prototype_name' => '__name__',
                 'add_button_text' => 'lbl.Add',
                 'delete_button_text' => 'lbl.Delete',
-                'options' => [],
+                'entry_options' => [],
                 'type' => TextType::class,
             ]
         );
         $resolver->setNormalizer(
-            'options',
+            'entry_options',
             function (Options $options, $value) {
                 $value['block_name'] = 'entry';
 
