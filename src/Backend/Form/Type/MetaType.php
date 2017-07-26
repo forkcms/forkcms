@@ -2,7 +2,6 @@
 
 namespace Backend\Form\Type;
 
-use Closure;
 use Common\Doctrine\Entity\Meta;
 use Common\Doctrine\Repository\MetaRepository;
 use Common\Doctrine\ValueObject\SEOFollow;

@@ -10,7 +10,6 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Backend\Core\Engine\TwigTemplate;
-use Common\Core\Header\Priority;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\Form\Form;
