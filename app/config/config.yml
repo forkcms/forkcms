@@ -54,7 +54,7 @@ monolog:
         #     content_type: text/html
 
 swiftmailer:
-    transport: "mail"
+    transport: "sendmail"
 
 liip_imagine:
     resolvers:

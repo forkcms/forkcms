@@ -40,7 +40,7 @@ class Configurator
     {
         try {
             $transport = TransportFactory::create(
-                (string) $this->modulesSettings->get('Core', 'mailer_type', 'mail'),
+                (string) $this->modulesSettings->get('Core', 'mailer_type', 'sendmail'),
                 $this->modulesSettings->get('Core', 'smtp_server'),
                 (int) $this->modulesSettings->get('Core', 'smtp_port', 25),
                 $this->modulesSettings->get('Core', 'smtp_username'),

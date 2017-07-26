@@ -35,7 +35,7 @@ class ConfiguratorTest extends TestCase
             ->method('set')
             ->with(
                 $this->equalTo('swiftmailer.mailer.default.transport'),
-                $this->isInstanceOf('\Swift_MailTransport')
+                $this->isInstanceOf('\Swift_SendmailTransport')
             )
         ;
 

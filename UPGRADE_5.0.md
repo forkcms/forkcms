@@ -532,6 +532,15 @@ The following form types have been moved
 | `\Backend\Form\Type\ImageType`      | `\Common\Form\ImageType`      |
 | `\Backend\Form\Type\CollectionType` | `\Common\Form\CollectionType` |
 
+## Swiftmailer
+
+The default used to be `mail` but that has been removed in favour of `sendmail`.
+It works more or less the same. More information can be found at the [documentation of swiftmailer](https://swiftmailer.symfony.com/docs/sending.html#the-sendmail-transport)
+
+```mysql
+UPDATE modules_settings SET value = 's:8:"sendmail";' WHERE name = 'mailer_type' AND value = 's:4:"mail";';
+```
+
 ## Symfony has been updated to 3.3
 
 All things symfony have been updated to the latest stable versions

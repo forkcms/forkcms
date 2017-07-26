@@ -63,8 +63,8 @@ class TestEmailConnection extends BackendBaseAJAXAction
         ;
 
         $mailerType = $this->getRequest()->request->get('mailer_type');
-        if (!in_array($mailerType, ['smtp', 'mail'])) {
-            $mailerType = 'mail';
+        if (!in_array($mailerType, ['smtp', 'sendmail'])) {
+            $mailerType = 'sendmail';
         }
         $transport = TransportFactory::create(
             $mailerType,
