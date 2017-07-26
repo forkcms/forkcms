@@ -81,7 +81,7 @@ class DatabaseType extends AbstractType
         );
     }
 
-    public function getName(): string
+    public function getBlockPrefix(): string
     {
         return 'install_database';
     }

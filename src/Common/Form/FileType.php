@@ -183,11 +183,6 @@ class FileType extends AbstractType
         );
     }
 
-    public function getName(): string
-    {
-        return $this->getBlockPrefix();
-    }
-
     private function getUploadMaxFileSize(): ?string
     {
         $uploadMaxFileSize = ini_get('upload_max_filesize');
