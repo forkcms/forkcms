@@ -369,8 +369,8 @@ class Model
         ];
 
         // query string
-        $queryString = FrontendModel::get('Request')->query->has('queryString')
-            ? SITE_URL . '/' . urldecode(FrontendModel::get('Request')->query->get('queryString'))
+        $queryString = FrontendModel::getRequest()->query->has('queryString')
+            ? SITE_URL . '/' . urldecode(FrontendModel::getRequest()->query->get('queryString'))
             : SITE_URL . FrontendModel::get('url')->getQueryString();
 
         // check all ignore urls
@@ -383,7 +383,7 @@ class Model
         }
 
         // no need to add this if its empty
-        $queryString = ($queryString != '') ? '?queryString=' . rawurlencode($queryString) : '';
+        $queryString = ($queryString !== '') ? '?queryString=' . rawurlencode($queryString) : '';
 
         // useful urls
         $tpl->assign('loginUrl', FrontendNavigation::getUrlForBlock('Profiles', 'Login') . $queryString);

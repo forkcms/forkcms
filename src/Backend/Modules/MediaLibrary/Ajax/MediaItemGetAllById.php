@@ -27,7 +27,7 @@ class MediaItemGetAllById extends BackendBaseAJAXAction
     protected function getMediaItems(): array
     {
         /** @var array $ids */
-        $ids = explode(',', $this->get('request')->request->get('media_ids'));
+        $ids = explode(',', $this->getRequest()->request->get('media_ids'));
 
         // We have no ids
         if ($ids === null) {

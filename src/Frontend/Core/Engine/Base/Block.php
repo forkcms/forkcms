@@ -15,6 +15,7 @@ use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
+use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
@@ -568,6 +569,6 @@ class Block extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return Model::getRequest();
     }
 }

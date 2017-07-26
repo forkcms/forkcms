@@ -165,7 +165,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
 
     private function getForkData(): array
     {
-        $request = $this->getContainer()->get('request');
+        $request = Model::getRequest();
 
         if ($request->request->has('fork')) {
             return (array) $request->request->get('fork');

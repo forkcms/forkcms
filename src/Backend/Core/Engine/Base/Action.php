@@ -77,7 +77,7 @@ class Action extends KernelLoader
         $this->header = $this->getContainer()->get('header');
 
         // populate the parameter array
-        $this->parameters = $this->get('request')->query->all();
+        $this->parameters = $this->getRequest()->query->all();
     }
 
     public function getModule(): string
@@ -96,9 +96,9 @@ class Action extends KernelLoader
     public function checkToken(): void
     {
         $fromSession = (\SpoonSession::exists('csrf_token')) ? \SpoonSession::get('csrf_token') : '';
-        $fromGet = $this->getContainer()->get('request')->query->get('token');
+        $fromGet = $this->getRequest()->query->get('token');
 
-        if ($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) {
+        if ($fromSession !== '' && $fromGet !== '' && $fromSession === $fromGet) {
             return;
         }
 
@@ -235,7 +235,7 @@ class Action extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return BackendModel::getRequest();
     }
 
     /**

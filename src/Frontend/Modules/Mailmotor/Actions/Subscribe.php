@@ -38,7 +38,7 @@ class Subscribe extends FrontendBaseBlock
             )
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->template->assign('form', $form->createView());
@@ -92,8 +92,8 @@ class Subscribe extends FrontendBaseBlock
         $email = null;
 
         // request contains an email
-        if ($this->get('request')->request->get('email') != null) {
-            $email = $this->get('request')->request->get('email');
+        if ($this->getRequest()->request->get('email') != null) {
+            $email = $this->getRequest()->request->get('email');
         }
 
         return $email;

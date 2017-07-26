@@ -83,7 +83,7 @@ class Model extends \Common\Core\Model
         }
 
         $parameters['token'] = self::getToken();
-        $queryParameterBag = self::getContainer()->get('request')->query;
+        $queryParameterBag = self::getRequest()->query;
 
         // add offset, order & sort (only if not yet manually added)
         if (!isset($parameters['offset']) && $queryParameterBag->has('offset')) {

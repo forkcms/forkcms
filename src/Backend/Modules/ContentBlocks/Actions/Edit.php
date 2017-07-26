@@ -89,7 +89,7 @@ class Edit extends BackendBaseActionEdit
         $contentBlockRepository = $this->get('content_blocks.repository.content_block');
 
         // specific revision?
-        $revisionId = $this->get('request')->query->getInt('revision');
+        $revisionId = $this->getRequest()->query->getInt('revision');
 
         if ($revisionId !== 0) {
             $this->template->assign('usingRevision', true);
@@ -102,7 +102,10 @@ class Edit extends BackendBaseActionEdit
         }
 
         try {
-            return $contentBlockRepository->findOneByIdAndLocale($this->get('request')->query->getInt('id'), Locale::workingLocale());
+            return $contentBlockRepository->findOneByIdAndLocale(
+                $this->getRequest()->query->getInt('id'),
+                Locale::workingLocale()
+            );
         } catch (ContentBlockNotFound $e) {
             $this->redirect($this->getBackLink(['error' => 'non-existing']));
         }
@@ -118,7 +121,7 @@ class Edit extends BackendBaseActionEdit
             ]
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         return $form;
     }

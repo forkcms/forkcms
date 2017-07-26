@@ -304,7 +304,7 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        $this->assign('cookies', Model::get('request')->cookies->all());
+        $this->assign('cookies', Model::getRequest()->cookies->all());
     }
 
     private function parseNavigation(): void

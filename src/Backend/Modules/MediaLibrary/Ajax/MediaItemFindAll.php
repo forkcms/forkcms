@@ -41,7 +41,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
 
     private function getAspectRatio(): ?AspectRatio
     {
-        $aspectRatio = $this->get('request')->request->get('aspect_ratio');
+        $aspectRatio = $this->getRequest()->request->get('aspect_ratio');
 
         if (empty($aspectRatio) || $aspectRatio === 'false') {
             return null;
@@ -53,7 +53,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     private function getMediaFolder(): ?MediaFolder
     {
         /** @var int $id */
-        $id = $this->get('request')->request->getInt('folder_id', 0);
+        $id = $this->getRequest()->request->getInt('folder_id', 0);
 
         if ($id === 0) {
             return null;
@@ -99,7 +99,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     private function getMediaGroup(): ?MediaGroup
     {
         /** @var string $id */
-        $id = $this->get('request')->request->get('group_id', '');
+        $id = $this->getRequest()->request->get('group_id', '');
 
         if ($id === '') {
             return null;

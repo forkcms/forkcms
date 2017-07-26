@@ -11,8 +11,10 @@ namespace Common\Core;
 
 use ForkCMS\App\BaseModel;
 use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Request;
 use TijsVerkoyen\Akismet\Akismet;
 
 /**
@@ -291,6 +293,21 @@ class Model extends BaseModel
         }
 
         return self::$modules;
+    }
+
+    public static function getRequest(): Request
+    {
+        if (!self::requestIsAvailable()) {
+            throw new RuntimeException('No request available');
+        }
+
+        return self::getContainer()->get('request_stack')->getCurrentRequest();
+    }
+
+    public static function requestIsAvailable(): bool
+    {
+        return self::getContainer()->has('request_stack')
+               && self::getContainer()->get('request_stack')->getCurrentRequest() !== null;
     }
 
     protected static function getAkismet(): Akismet

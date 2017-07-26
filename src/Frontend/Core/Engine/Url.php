@@ -32,13 +32,6 @@ class Url extends KernelLoader
     private $pages = [];
 
     /**
-     * The Symfony request object
-     *
-     * @var Request
-     */
-    private $request;
-
-    /**
      * The parameters
      *
      * @var array
@@ -52,24 +45,21 @@ class Url extends KernelLoader
         // add ourself to the reference so other classes can retrieve us
         $this->getContainer()->set('url', $this);
 
-        // fetch the request object from the container
-        $this->request = $this->get('request');
-
         // if there is a trailing slash we permanent redirect to the page without slash
-        if (mb_strlen($this->request->getRequestUri()) !== 1 &&
-            mb_substr($this->request->getRequestUri(), -1) === '/'
+        if (mb_strlen(Model::getRequest()->getRequestUri()) !== 1 &&
+            mb_substr(Model::getRequest()->getRequestUri(), -1) === '/'
         ) {
             throw new RedirectException(
                 'Redirect',
                 new RedirectResponse(
-                    mb_substr($this->request->getRequestUri(), 0, -1),
+                    mb_substr(Model::getRequest()->getRequestUri(), 0, -1),
                     301
                 )
             );
         }
 
         // set query-string and parameters for later use
-        $this->parameters = $this->request->query->all();
+        $this->parameters = Model::getRequest()->query->all();
 
         // process URL
         $this->processQueryString();
@@ -83,7 +73,7 @@ class Url extends KernelLoader
     public function getDomain(): string
     {
         // replace
-        return str_replace('www.', '', $this->request->getHttpHost());
+        return str_replace('www.', '', Model::getRequest()->getHttpHost());
     }
 
     /**
@@ -141,12 +131,12 @@ class Url extends KernelLoader
      */
     public function getParameters(bool $includeGET = true): array
     {
-        return $includeGET ? $this->parameters : array_diff_assoc($this->parameters, $this->request->query->all());
+        return $includeGET ? $this->parameters : array_diff_assoc($this->parameters, Model::getRequest()->query->all());
     }
 
     public function getQueryString(): string
     {
-        return rtrim($this->request->getRequestUri(), '/');
+        return rtrim(Model::getRequest()->getRequestUri(), '/');
     }
 
     /**
@@ -164,7 +154,7 @@ class Url extends KernelLoader
     private function processQueryString(): void
     {
         // store the query string local, so we don't alter it.
-        $queryString = trim($this->request->getPathInfo(), '/');
+        $queryString = trim(Model::getRequest()->getPathInfo(), '/');
 
         $hasMultiLanguages = $this->getContainer()->getParameter('site.multilanguage');
         $language = $this->determineLanguage($queryString);

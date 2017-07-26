@@ -398,7 +398,7 @@ class Form extends FrontendBaseWidget
         // submitted
         if ($this->form->isSubmitted()) {
             if ($this->hasRecaptchaField) {
-                $request = $this->get('request')->request;
+                $request = $this->getRequest()->request;
                 if (!$request->has('g-recaptcha-response')) {
                     $this->form->addError(FL::err('RecaptchaInvalid'));
                 }

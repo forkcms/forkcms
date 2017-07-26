@@ -27,7 +27,7 @@ class MediaItemUpload extends BackendBaseActionAdd
     protected function getMediaFolder(): ?MediaFolder
     {
         /** @var int $id */
-        $id = $this->get('request')->query->get('folder');
+        $id = $this->getRequest()->query->get('folder');
 
         try {
             return $this->get('media_library.repository.folder')->findOneById($id);

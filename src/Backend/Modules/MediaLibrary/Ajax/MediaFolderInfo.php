@@ -17,7 +17,7 @@ class MediaFolderInfo extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $id = $this->get('request')->request->getInt('id', 0);
+        $id = $this->getRequest()->request->getInt('id', 0);
 
         if ($id === 0) {
             throw new AjaxExitException('no id provided');

@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine\Base;
  */
 
 use ForkCMS\App\KernelLoader;
+use Frontend\Core\Engine\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -111,6 +112,6 @@ class AjaxAction extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return Model::getRequest();
     }
 }

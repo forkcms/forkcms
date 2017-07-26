@@ -116,7 +116,7 @@ You can use `Backend\Core\Engine\Base\Config->isActionAvailable($action)` instea
 
 ## `Frontend\Core\Engine\Url->getHost()` and `Backend\Core\Engine\Url->getHost()` are removed
 
-You should use `$request->getHttpHost()` instead. The request-object is available in the container.
+You should use `$request->getHttpHost()` instead. You can request the current request object from the [Common/Frontend/Backend] model with the method `getRequest`.
 
 
 ## `Frontend\Core\Engine\TemplateCustom` is removed
@@ -551,3 +551,6 @@ Consult the upgrade guides of symfony to see what changed. If you don't have dep
 - [upgrade from 3.1 to 3.2 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.2.md)
 - [upgrade from 3.2 to 3.3 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.3.md)
 
+### Requests
+
+Because the current request is no longer directly accessible from the container we added some helper methods to the [Common/Frontend/Backend] model class, `Model::requestIsAvailable()` and `Model::getRequest()`

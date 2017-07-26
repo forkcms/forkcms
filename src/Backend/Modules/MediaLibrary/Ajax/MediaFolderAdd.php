@@ -60,7 +60,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
     protected function getFolderName(MediaFolder $parent = null): string
     {
         // Define name
-        $name = $this->get('request')->request->get('name');
+        $name = $this->getRequest()->request->get('name');
 
         // We don't have a name
         if ($name === null) {
@@ -78,7 +78,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
     protected function getParent(): ?MediaFolder
     {
         // Get parameters
-        $parentId = $this->get('request')->request->getInt('parent_id');
+        $parentId = $this->getRequest()->request->getInt('parent_id');
 
         if ($parentId === 0) {
             return null;

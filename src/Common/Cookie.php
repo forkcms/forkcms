@@ -54,8 +54,8 @@ class Cookie extends \SpoonCookie
         $httpOnly = (bool) $httpOnly;
 
         // when the domain isn't passed and the url-object is available we can set the cookies for all subdomains
-        if ($domain === null && FrontendModel::getContainer()->has('request')) {
-            $domain = '.' . FrontendModel::getContainer()->get('request')->getHost();
+        if ($domain === null && FrontendModel::requestIsAvailable()) {
+            $domain = '.' . FrontendModel::getRequest()->getHost();
         }
 
         // when the secure-parameter isn't set
@@ -88,8 +88,8 @@ class Cookie extends \SpoonCookie
     public static function delete(): void
     {
         $domain = null;
-        if (FrontendModel::getContainer()->has('request')) {
-            $domain = '.' . FrontendModel::getContainer()->get('request')->getHost();
+        if (FrontendModel::requestIsAvailable()) {
+            $domain = '.' . FrontendModel::getRequest()->getHost();
         }
 
         foreach (func_get_args() as $argument) {

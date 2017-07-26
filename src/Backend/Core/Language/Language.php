@@ -109,8 +109,8 @@ class Language
             return Model::get('url')->getModule();
         }
 
-        if (Model::getContainer()->has('request') && Model::getContainer()->get('request')->query->has('module')) {
-            return Model::getContainer()->get('request')->query->get('module');
+        if (Model::requestIsAvailable() && Model::getRequest()->query->has('module')) {
+            return Model::getRequest()->query->get('module');
         }
 
         return 'Core';
@@ -118,10 +118,7 @@ class Language
 
     public static function getError(string $key, string $module = null): string
     {
-        // do we know the module
-        if ($module === null) {
-            $module = self::getCurrentModule();
-        }
+        $module = $module ?? self::getCurrentModule();
 
         $key = \SpoonFilter::toCamelCase($key);
 
@@ -172,10 +169,7 @@ class Language
 
     public static function getLabel(string $key, string $module = null): string
     {
-        // do we know the module
-        if ($module === null) {
-            $module = self::getCurrentModule();
-        }
+        $module = $module ?? self::getCurrentModule();
 
         $key = \SpoonFilter::toCamelCase($key);
 
@@ -200,21 +194,8 @@ class Language
 
     public static function getMessage(string $key, string $module = null): string
     {
-        if ($module === null) {
-            if (Model::getContainer()->has('url')) {
-                $module = Model::get('url')->getModule();
-            } elseif (Model::has('request')
-                && Model::get('request')->query->has('module')
-                && Model::get('request')->query->get('module', '') !== ''
-            ) {
-                $module = Model::get('request')->query->get('module', '');
-            } else {
-                $module = 'Core';
-            }
-        }
-
         $key = \SpoonFilter::toCamelCase((string) $key);
-        $module = (string) $module;
+        $module = $module ?? self::getCurrentModule();
 
         // check if the message exists
         if (isset(self::$msg[$module][$key])) {

@@ -9,6 +9,7 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -170,6 +171,6 @@ class Widget extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return Model::getRequest();
     }
 }

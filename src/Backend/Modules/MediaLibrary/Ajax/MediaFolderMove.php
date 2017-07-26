@@ -39,7 +39,7 @@ class MediaFolderMove extends BackendBaseAJAXAction
 
     private function getMediaFolder(): MediaFolder
     {
-        $id = $this->get('request')->request->getInt('id', 0);
+        $id = $this->getRequest()->request->getInt('id', 0);
 
         if ($id === 0) {
             throw new AjaxExitException('no id provided');
@@ -55,7 +55,7 @@ class MediaFolderMove extends BackendBaseAJAXAction
 
     private function getMediaFolderWhereDroppedOn(string $typeOfDrop): ?MediaFolder
     {
-        $id = $this->get('request')->request->getInt('dropped_on', -1);
+        $id = $this->getRequest()->request->getInt('dropped_on', -1);
 
         if ($id === -1) {
             return null;
@@ -77,7 +77,7 @@ class MediaFolderMove extends BackendBaseAJAXAction
 
     private function getTypeOfDrop(): string
     {
-        $typeOfDrop = $this->get('request')->request->get('type');
+        $typeOfDrop = $this->getRequest()->request->get('type');
 
         if ($typeOfDrop === null) {
             throw new AjaxExitException('no type provided');

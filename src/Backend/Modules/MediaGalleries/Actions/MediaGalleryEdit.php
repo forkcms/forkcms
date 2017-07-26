@@ -32,7 +32,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
             ]
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         $deleteForm = $this->createForm(
             DeleteType::class,
