@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -75,7 +75,7 @@ class ModulesType extends AbstractType
         );
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver): void
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
