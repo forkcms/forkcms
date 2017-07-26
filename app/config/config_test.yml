@@ -18,15 +18,15 @@ doctrine:
     dbal:
         connections:
             default:
-                dbname: %database.name%_test
+                dbname: "%database.name%_test"
 
 services:
     database:
         class: SpoonDatabase
         arguments:
-            - %database.driver%
-            - %database.host%
-            - %database.user%
-            - %database.password%
-            - %database.name%_test
-            - %database.port%
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%_test"
+            - "%database.port%"

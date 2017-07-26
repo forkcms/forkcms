@@ -4,7 +4,7 @@ imports:
     - { resource: doctrine.yml }
 
 framework:
-    secret:          %kernel.secret%
+    secret:          "%kernel.secret%"
     router:
         resource: "%kernel.root_dir%/config/routing_install.yml"
         strict_requirements: ~

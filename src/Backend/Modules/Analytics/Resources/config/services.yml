@@ -3,7 +3,7 @@ services:
         class: Backend\Modules\Analytics\GoogleClient\ClientFactory
         arguments:
             - "@fork.settings"
-            - %kernel.cache_dir%
+            - "%kernel.cache_dir%"
 
     analytics.google_analytics_service:
         class: Google_Service_Analytics

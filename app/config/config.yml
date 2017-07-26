@@ -10,7 +10,7 @@ parameters:
     session.storage.php_bridge.class: Common\Core\Session\Storage\PhpBridgeSessionStorage
 
 framework:
-    secret:          %kernel.secret%
+    secret: "%kernel.secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
@@ -42,7 +42,7 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  %site.path_www%/app/logs/%kernel.environment%.log
+            path:  "%site.path_www%/app/logs/%kernel.environment%.log"
             level: error
         # swift:
         #     type:       swift_mailer
@@ -60,12 +60,12 @@ liip_imagine:
     resolvers:
        default:
           web_path:
-            web_root: %kernel.root_dir%/../
+            web_root: "%kernel.root_dir%/../"
             cache_prefix: src/Frontend/Files/Cache
     loaders:
         default:
             filesystem:
-                data_root: %kernel.root_dir%/../
+                data_root: "%kernel.root_dir%/../"
     cache: default
     data_loader: default
 
@@ -108,18 +108,18 @@ services:
     database:
         class: SpoonDatabase
         arguments:
-            - %database.driver%
-            - %database.host%
-            - %database.user%
-            - %database.password%
-            - %database.name%
-            - %database.port%
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%"
+            - "%database.port%"
         calls:
             - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
             # The following line removes the ONLY_FULL_GROUP_BY from the sessions sql_mode, it was added in 5.7
             # and caused some queries to break.
             - [ execute, [ 'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'] ]
-            - [ setDebug, [ %kernel.debug% ]]
+            - [ setDebug, [ "%kernel.debug%" ]]
     mailer_configurator:
         class: Common\Mailer\Configurator
         tags:
@@ -132,7 +132,7 @@ services:
     cache.filesystem.adapter:
         class: League\Flysystem\Adapter\Local
         arguments:
-            - %kernel.cache_dir%
+            - "%kernel.cache_dir%"
     cache.filesystem.filesystem:
         class: League\Flysystem\Filesystem
         arguments:
