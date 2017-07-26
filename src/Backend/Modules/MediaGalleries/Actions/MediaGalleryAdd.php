@@ -23,7 +23,7 @@ class MediaGalleryAdd extends ActionAdd
         /** @var Form $form */
         $form = $this->getForm();
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->parseForm($form);
 
             return;

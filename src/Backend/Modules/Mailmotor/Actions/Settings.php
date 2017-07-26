@@ -32,7 +32,7 @@ final class Settings extends ActionIndex
 
         $form->handleRequest($this->get('request'));
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->template->assign('form', $form->createView());
 
             $this->parse();
