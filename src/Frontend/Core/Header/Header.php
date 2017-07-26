@@ -353,8 +353,8 @@ class Header extends KernelLoader
             $this->meta->addMetaData(MetaData::forName('robots', 'noindex, nofollow'), true);
         }
 
-        $this->template->addGlobal('meta', $this->meta);
-        $this->template->addGlobal('metaCustom', $this->getMetaCustom());
+        $this->template->assignGlobal('meta', $this->meta);
+        $this->template->assignGlobal('metaCustom', $this->getMetaCustom());
         $this->cssFiles->parse($this->template, 'cssFiles');
         $this->jsFiles->parse($this->template, 'jsFiles');
 
@@ -364,11 +364,11 @@ class Header extends KernelLoader
             Model::getRequest()->getHttpHost()
         );
         $siteHTMLHeader .= "\n" . $this->jsData;
-        $this->template->addGlobal('siteHTMLHeader', trim($siteHTMLHeader));
+        $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHeader));
 
-        $this->template->addGlobal('pageTitle', $this->getPageTitle());
-        $this->template->addGlobal('contentTitle', $this->getContentTitle());
-        $this->template->addGlobal(
+        $this->template->assignGlobal('pageTitle', $this->getPageTitle());
+        $this->template->assignGlobal('contentTitle', $this->getContentTitle());
+        $this->template->assignGlobal(
             'siteTitle',
             (string) $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
         );

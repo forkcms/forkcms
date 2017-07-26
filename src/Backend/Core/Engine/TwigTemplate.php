@@ -73,12 +73,6 @@ class TwigTemplate extends BaseTwigTemplate
         $this->parseVars();
         $this->startGlobals($this->environment);
 
-        if (count($this->forms) > 0) {
-            foreach ($this->forms as $form) {
-                $this->environment->addGlobal('form_' . $form->getName(), $form);
-            }
-        }
-
         return $this->render(str_replace(BACKEND_MODULES_PATH, '', $template), $this->variables);
     }
 

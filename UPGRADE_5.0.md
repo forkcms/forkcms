@@ -554,3 +554,10 @@ Consult the upgrade guides of symfony to see what changed. If you don't have dep
 ### Requests
 
 Because the current request is no longer directly accessible from the container we added some helper methods to the [Common/Frontend/Backend] model class, `Model::requestIsAvailable()` and `Model::getRequest()`
+
+### Twig
+
+You can't assign globals to twig after initialisation anymore.
+Because of that we removed the `addGlobal` function from `\Frontend\Core\Engine\TwigTemplate`
+
+If you want to add a global anyway you should use assignGlobal as it uses a custom workaround.

@@ -100,17 +100,6 @@ class TwigTemplate extends BaseTwigTemplate
     }
 
     /**
-     * Adds a global variable to the template
-     *
-     * @param string $name
-     * @param mixed $value
-     */
-    public function addGlobal(string $name, $value): void
-    {
-        $this->environment->addGlobal($name, $value);
-    }
-
-    /**
      * Fetch the parsed content from this template.
      *
      * @param string $template The location of the template file, used to display this template.
@@ -129,18 +118,6 @@ class TwigTemplate extends BaseTwigTemplate
         $this->variables = [];
 
         return $content;
-    }
-
-    public function render($template, array $variables = []): string
-    {
-        if (!empty($this->forms)) {
-            foreach ($this->forms as $form) {
-                // using assign to pass the form as global
-                $this->environment->addGlobal('form_' . $form->getName(), $form);
-            }
-        }
-
-        return $this->environment->render($template, $variables);
     }
 
     private function getLoadingFolders(): array

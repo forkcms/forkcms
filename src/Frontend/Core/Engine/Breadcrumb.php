@@ -169,6 +169,6 @@ class Breadcrumb extends KernelLoader
     public function parse(): void
     {
         // assign
-        $this->template->addGlobal('breadcrumb', $this->items);
+        $this->template->assignGlobal('breadcrumb', $this->items);
     }
 }
