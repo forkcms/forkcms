@@ -23,8 +23,8 @@ class LanguagesType extends AbstractType
                     'expanded' => true,
                     'multiple' => false,
                     'choices' => [
-                        'single' => 'Just one language',
-                        'multiple' => 'Multiple languages',
+                        'Just one language' => 'single',
+                        'Multiple languages' => 'multiple',
                     ],
                 ]
             )
@@ -86,19 +86,19 @@ class LanguagesType extends AbstractType
     protected function getInstallableLanguages(): array
     {
         return [
-            'en' => 'English',
-            'zh' => 'Chinese',
-            'nl' => 'Dutch',
-            'fr' => 'French',
-            'de' => 'German',
-            'el' => 'Greek',
-            'hu' => 'Hungarian',
-            'it' => 'Italian',
-            'lt' => 'Lithuanian',
-            'ru' => 'Russian',
-            'es' => 'Spanish',
-            'sv' => 'Swedish',
-            'uk' => 'Ukrainian',
+            'English' => 'en',
+            'Chinese' => 'zh',
+            'Dutch' => 'nl',
+            'French' => 'fr',
+            'German' => 'de',
+            'Greek' => 'el',
+            'Hungarian' => 'hu',
+            'Italian' => 'it',
+            'Lithuanian' => 'lt',
+            'Russian' => 'ru',
+            'Spanish' => 'es',
+            'Swedish' => 'sv',
+            'Ukrainian' => 'uk',
         ];
     }
 }

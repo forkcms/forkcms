@@ -133,7 +133,7 @@ class SettingsType extends AbstractType
         foreach ($mailEnginesWithSubscriberGateway as $key => $mailEngine) {
             $label = ucfirst(($key === 'not_implemented') ? Language::lbl('None') : $key);
 
-            $ddmValuesForMailEngines[$key] = $label;
+            $ddmValuesForMailEngines[$label] = $key;
         }
 
         return $ddmValuesForMailEngines;
