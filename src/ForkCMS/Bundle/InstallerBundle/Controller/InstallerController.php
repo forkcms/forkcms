@@ -53,7 +53,7 @@ class InstallerController extends Controller
         }
 
         // show language information form.
-        $form = $this->createForm(new LanguagesType(), $this->getInstallationData($request));
+        $form = $this->createForm(LanguagesType::class, $this->getInstallationData($request));
         $handler = new LanguagesHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step3'));
@@ -74,7 +74,7 @@ class InstallerController extends Controller
         // @todo: check if all data from step 2 is available
 
         // show modules form
-        $form = $this->createForm(new ModulesType(), $this->getInstallationData($request));
+        $form = $this->createForm(ModulesType::class, $this->getInstallationData($request));
         $handler = new ModulesHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step4'));
@@ -93,7 +93,7 @@ class InstallerController extends Controller
         $this->checkInstall();
 
         // show database form
-        $form = $this->createForm(new DatabaseType(), $this->getInstallationData($request));
+        $form = $this->createForm(DatabaseType::class, $this->getInstallationData($request));
         $handler = new DatabaseHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step5'));
@@ -112,7 +112,7 @@ class InstallerController extends Controller
         $this->checkInstall();
 
         // show database form
-        $form = $this->createForm(new LoginType(), $this->getInstallationData($request));
+        $form = $this->createForm(LoginType::class, $this->getInstallationData($request));
         $handler = new LoginHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step6'));
