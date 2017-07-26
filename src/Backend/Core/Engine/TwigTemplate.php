@@ -13,6 +13,7 @@ use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Twig_Environment;
 use Twig_Extension_Debug;
+use Twig_FactoryRuntimeLoader;
 use Twig_Loader_Filesystem;
 
 /*
@@ -110,13 +111,21 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function connectSymfonyForms(): void
     {
-        $formEngine = new TwigRendererEngine(['Layout/Templates/FormLayout.html.twig']);
-        $formEngine->setEnvironment($this->environment);
-        $this->environment->addExtension(
-            new SymfonyFormExtension(
-                new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+        $rendererEngine = new TwigRendererEngine(['Layout/Templates/FormLayout.html.twig'], $this->environment);
+        $csrfTokenManager = Model::get('security.csrf.token_manager');
+        $this->environment->addRuntimeLoader(
+            new Twig_FactoryRuntimeLoader(
+                [
+                    TwigRenderer::class => function () use ($rendererEngine, $csrfTokenManager) {
+                        return new TwigRenderer($rendererEngine, $csrfTokenManager);
+                    },
+                ]
             )
         );
+
+        if (!$this->environment->hasExtension(SymfonyFormExtension::class)) {
+            $this->environment->addExtension(new SymfonyFormExtension());
+        }
     }
 
     private function connectSymfonyTranslator(): void
