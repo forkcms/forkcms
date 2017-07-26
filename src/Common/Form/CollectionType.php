@@ -40,7 +40,7 @@ class CollectionType extends AbstractType
                 'add_button_text' => 'lbl.Add',
                 'delete_button_text' => 'lbl.Delete',
                 'entry_options' => [],
-                'type' => TextType::class,
+                'entry_type' => TextType::class,
             ]
         );
         $resolver->setNormalizer(
