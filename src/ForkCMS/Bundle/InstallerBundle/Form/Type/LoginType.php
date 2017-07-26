@@ -4,6 +4,8 @@ namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -19,11 +21,11 @@ class LoginType extends AbstractType
         $builder
             ->add(
                 'email',
-                'email'
+                EmailType::class
             )
             ->add(
                 'password',
-                'repeated',
+                RepeatedType::class,
                 [
                     'type' => 'password',
                     'invalid_message' => 'The passwords do not match.',

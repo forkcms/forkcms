@@ -4,6 +4,8 @@ namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -21,35 +23,35 @@ class DatabaseType extends AbstractType
         $builder
             ->add(
                 'databaseHostname',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                 ]
             )
             ->add(
                 'databasePort',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                 ]
             )
             ->add(
                 'databaseName',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                 ]
             )
             ->add(
                 'databaseUsername',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                 ]
             )
             ->add(
                 'databasePassword',
-                'password'
+                PasswordType::class
             )
         ;
 

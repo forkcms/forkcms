@@ -3,6 +3,9 @@
 namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,7 +25,7 @@ class ModulesType extends AbstractType
         $builder
             ->add(
                 'modules',
-                'choice',
+                ChoiceType::class,
                 [
                     'choices' => $this->getInstallableModules(),
                     'expanded' => true,
@@ -31,7 +34,7 @@ class ModulesType extends AbstractType
             )
             ->add(
                 'example_data',
-                'checkbox',
+                CheckboxType::class,
                 [
                     'label' => 'Install example data',
                     'required' => false,
@@ -39,7 +42,7 @@ class ModulesType extends AbstractType
             )
             ->add(
                 'different_debug_email',
-                'checkbox',
+                CheckboxType::class,
                 [
                     'label' => 'Use a specific debug email address',
                     'required' => false,
@@ -47,7 +50,7 @@ class ModulesType extends AbstractType
             )
             ->add(
                 'debug_email',
-                'email',
+                EmailType::class,
                 [
                     'required' => false,
                 ]

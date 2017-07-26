@@ -3,6 +3,8 @@
 namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,7 +18,7 @@ class LanguagesType extends AbstractType
         $builder
             ->add(
                 'language_type',
-                'choice',
+                ChoiceType::class,
                 [
                     'expanded' => true,
                     'multiple' => false,
@@ -28,7 +30,7 @@ class LanguagesType extends AbstractType
             )
             ->add(
                 'languages',
-                'choice',
+                ChoiceType::class,
                 [
                     'choices' => $this->getInstallableLanguages(),
                     'expanded' => true,
@@ -37,14 +39,14 @@ class LanguagesType extends AbstractType
             )
             ->add(
                 'default_language',
-                'choice',
+                ChoiceType::class,
                 [
                     'choices' => $this->getInstallableLanguages(),
                 ]
             )
             ->add(
                 'same_interface_language',
-                'checkbox',
+                CheckboxType::class,
                 [
                     'label' => 'Use the same language(s) for the CMS interface.',
                     'required' => false,
@@ -52,14 +54,14 @@ class LanguagesType extends AbstractType
             )
             ->add(
                 'default_interface_language',
-                'choice',
+                ChoiceType::class,
                 [
                     'choices' => $this->getInstallableLanguages(),
                 ]
             )
             ->add(
                 'interface_languages',
-                'choice',
+                ChoiceType::class,
                 [
                     'choices' => $this->getInstallableLanguages(),
                     'multiple' => true,

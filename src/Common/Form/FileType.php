@@ -147,10 +147,10 @@ class FileType extends AbstractType
     public function getParent(): string
     {
         if (!$this instanceof self) {
-            return $this->getBlockPrefix();
+            return self::class;
         }
 
-        return 'file';
+        return SymfonyFileType::class;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
