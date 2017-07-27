@@ -9,7 +9,7 @@ namespace Backend\Modules\Mailmotor\EventListener;
  * file that was distributed with this source code.
  */
 
-use Backend\Modules\Mailmotor\Event\SettingsSavedEvent;
+use Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**

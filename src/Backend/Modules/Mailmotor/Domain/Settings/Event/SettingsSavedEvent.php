@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Mailmotor\Event;
+namespace Backend\Modules\Mailmotor\Domain\Settings\Event;
 
 /*
  * This file is part of the Fork CMS Mailmotor Module from SIESQO.
@@ -9,7 +9,7 @@ namespace Backend\Modules\Mailmotor\Event;
  * file that was distributed with this source code.
  */
 
-use Backend\Modules\Mailmotor\Command\SaveSettings;
+use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
