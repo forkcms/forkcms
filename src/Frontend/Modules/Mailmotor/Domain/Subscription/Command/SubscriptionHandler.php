@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Modules\Mailmotor\Command;
+namespace Frontend\Modules\Mailmotor\Domain\Subscription\Command;
 
 /*
  * This file is part of the Fork CMS Mailmotor Module from SIESQO.

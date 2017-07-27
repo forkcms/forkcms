@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Modules\Mailmotor\Form;
+namespace Frontend\Modules\Mailmotor\Domain\Subscription;
 
 /*
  * This file is part of the Fork CMS Mailmotor Module from SIESQO.
@@ -9,7 +9,7 @@ namespace Frontend\Modules\Mailmotor\Form;
  * file that was distributed with this source code.
  */
 
-use Frontend\Modules\Mailmotor\Command\Unsubscription;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Unsubscription;
 use Common\Language;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

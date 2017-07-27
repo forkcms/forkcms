@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Modules\Mailmotor\Event;
+namespace Frontend\Modules\Mailmotor\Domain\Subscription\Event;
 
-use Frontend\Modules\Mailmotor\Command\Subscription;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use Symfony\Component\EventDispatcher\Event;
 
 final class NotImplementedSubscribedEvent extends Event
