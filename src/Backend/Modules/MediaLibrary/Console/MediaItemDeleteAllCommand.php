@@ -10,8 +10,8 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
  * Delete all media items Console Command
- * Example: "app/console media_library:delete:items", will only delete all not-connected MediaItems
- * Example: "app/console media_library:delete:items --all", will delete all MediaItems (even the connected ones)
+ * Example: "bin/console media_library:delete:items", will only delete all not-connected MediaItems
+ * Example: "bin/console media_library:delete:items --all", will delete all MediaItems (even the connected ones)
  */
 class MediaItemDeleteAllCommand extends ContainerAwareCommand
 {

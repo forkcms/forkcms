@@ -91,7 +91,7 @@ If you want to convert a Spoon template to Twig its better to take a look at:
 
 ## install_locale.php-script is removed
 
-Use `php app/console forkcms:locale:import` instead.
+Use `php bin/console forkcms:locale:import` instead.
 
 
 ## `sprintf`-filter is removed
@@ -561,3 +561,7 @@ You can't assign globals to twig after initialisation anymore.
 Because of that we removed the `addGlobal` function from `\Frontend\Core\Engine\TwigTemplate`
 
 If you want to add a global anyway you should use assignGlobal as it uses a custom workaround.
+
+### Console
+
+Moved `app/console` to `bin/console`

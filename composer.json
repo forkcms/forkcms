@@ -55,14 +55,14 @@
     "scripts": {
         "test": "./bin/simple-phpunit",
         "post-install-cmd": [
-            "php app/console assetic:dump .",
-            "php app/console forkcms:cache:clear",
-            "php app/console cache:clear"
+            "php bin/console assetic:dump .",
+            "php bin/console forkcms:cache:clear",
+            "php bin/console cache:clear"
         ],
         "post-update-cmd": [
-            "php app/console assetic:dump .",
-            "php app/console forkcms:cache:clear",
-            "php app/console cache:clear"
+            "php bin/console assetic:dump .",
+            "php bin/console forkcms:cache:clear",
+            "php bin/console cache:clear"
         ]
     },
     "autoload": {
