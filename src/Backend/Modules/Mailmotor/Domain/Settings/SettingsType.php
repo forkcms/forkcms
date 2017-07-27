@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Mailmotor\Form;
+namespace Backend\Modules\Mailmotor\Domain\Settings;
 
 /*
  * This file is part of the Fork CMS Mailmotor Module from SIESQO.
@@ -9,7 +9,7 @@ namespace Backend\Modules\Mailmotor\Form;
  * file that was distributed with this source code.
  */
 
-use Backend\Modules\Mailmotor\Command\SaveSettings;
+use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
 use Common\Language;
 use MailMotor\Bundle\MailMotorBundle\Manager\SubscriberGatewayManager;
 use Symfony\Component\Form\AbstractType;
