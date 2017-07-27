@@ -6,7 +6,6 @@ imports:
 
 parameters:
     fork.is_installed: true
-    translator.identity.class: Common\Language
     session.storage.php_bridge.class: Common\Core\Session\Storage\PhpBridgeSessionStorage
 
 framework:
@@ -172,3 +171,8 @@ services:
             - "@twig"
             - "@templating.name_parser"
             - "@templating.locator"
+
+    translator:
+        class: Common\Language
+        arguments:
+            - "@translator.selector"
