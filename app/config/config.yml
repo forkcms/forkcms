@@ -12,7 +12,7 @@ parameters:
 framework:
     secret: "%kernel.secret%"
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: "%kernel.project_dir%/app/config/routing.yml"
         strict_requirements: ~
     form:            ~
     validation:
@@ -60,12 +60,12 @@ liip_imagine:
     resolvers:
        default:
           web_path:
-            web_root: "%kernel.root_dir%/../"
+            web_root: "%kernel.project_dir%/"
             cache_prefix: src/Frontend/Files/Cache
     loaders:
         default:
             filesystem:
-                data_root: "%kernel.root_dir%/../"
+                data_root: "%kernel.project_dir%/"
     cache: default
     data_loader: default
 

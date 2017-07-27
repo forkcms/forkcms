@@ -35,7 +35,7 @@ doctrine:
                     common:
                         type: annotation
                         is_bundle: false
-                        dir: "%kernel.root_dir%/../src/Common/Doctrine/Entity"
+                        dir: "%kernel.project_dir%/src/Common/Doctrine/Entity"
                         alias: Common
                         prefix: Common\Doctrine\Entity
 

@@ -85,7 +85,7 @@ abstract class WebTestCase extends BaseWebTestCase
 
         // make sure our database has a clean state (freshly installed Fork)
         $this->emptyTestDatabase($database);
-        $kernelDir = $client->getContainer()->getParameter('kernel.root_dir');
+        $kernelDir = $client->getContainer()->getParameter('kernel.project_dir') . '/app';
         $this->importSQL(
             $client->getContainer()->get('database'),
             file_get_contents($kernelDir . '/../tests/data/test_db.sql')

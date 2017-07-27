@@ -169,7 +169,7 @@ class InstallerController extends Controller
     protected function checkInstall(): void
     {
         $filesystem = new Filesystem();
-        $kernelDir = $this->container->getParameter('kernel.root_dir');
+        $kernelDir = $this->container->getParameter('kernel.project_dir') . '/app';
         $parameterFile = $kernelDir . 'config/parameters.yml';
         if ($filesystem->exists($parameterFile)) {
             throw new ExitException(

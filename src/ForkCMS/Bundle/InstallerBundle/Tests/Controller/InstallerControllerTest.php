@@ -52,7 +52,7 @@ class InstallerControllerTest extends WebTestCase
         // recreate the client with the empty database because we need this in our installer checks
         $client = static::createClient(['environment' => 'test_install']);
         $filesystem = new Filesystem();
-        $this->backupParametersFile($filesystem, $client->getContainer()->getParameter('kernel.root_dir'));
+        $this->backupParametersFile($filesystem, $client->getContainer()->getParameter('kernel.project_dir') . '/app');
 
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
@@ -61,7 +61,7 @@ class InstallerControllerTest extends WebTestCase
         $this->runTroughStep5($crawler, $client);
 
         // put back our parameters file
-        $this->putParametersFileBack($filesystem, $client->getContainer()->getParameter('kernel.root_dir'));
+        $this->putParametersFileBack($filesystem, $client->getContainer()->getParameter('kernel.project_dir') . '/app');
     }
 
     private function runTroughStep2(Crawler $crawler, Client $client): Crawler
