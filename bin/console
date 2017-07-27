@@ -22,7 +22,7 @@ $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?:
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
 
 // Fork has not yet been installed
-$parametersFile = __DIR__ . '/config/parameters.yml';
+$parametersFile = __DIR__ . '/../app/config/parameters.yml';
 if (!file_exists($parametersFile)) {
     $env = 'install';
 }
