@@ -226,4 +226,9 @@ abstract class Kernel extends BaseKernel
     {
         return dirname(__DIR__).'/var/logs/' . $this->environment;
     }
+
+    public function getCacheDir(): string
+    {
+        return dirname(__DIR__) . '/var/cache/' . $this->environment;
+    }
 }

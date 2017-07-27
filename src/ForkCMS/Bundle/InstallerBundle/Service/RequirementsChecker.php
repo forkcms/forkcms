@@ -238,7 +238,7 @@ class RequirementsChecker
         );
         $this->checkRequirement(
             'fileSystemAppCache',
-            $this->isRecursivelyWritable($this->rootDir . 'app/cache/'),
+            $this->isRecursivelyWritable($this->rootDir . 'var/cache/'),
             self::STATUS_ERROR
         );
         $this->checkRequirement(

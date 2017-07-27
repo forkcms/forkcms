@@ -13,7 +13,7 @@
 .settings
 .*.swp
 .DS_Store
-/app/cache/*
+/var/cache/*
 /var/logs/*
 /app/sessions/*
 /bin/*

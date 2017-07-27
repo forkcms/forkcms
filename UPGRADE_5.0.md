@@ -569,3 +569,7 @@ Moved `app/console` to `bin/console`
 ### Logs
 
 Moved `app/logs` to `var/logs`
+
+### Cache
+
+Moved `app/cache` to `var/cache`
