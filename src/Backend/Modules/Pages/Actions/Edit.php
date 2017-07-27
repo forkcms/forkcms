@@ -863,7 +863,7 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('deleteForm', $deleteForm->createView());
     }
 
-    private function getHiddenJsonField(string $name, string $json): SpoonFormHidden
+    private function getHiddenJsonField(string $name, ?string $json): SpoonFormHidden
     {
         return new class($name, htmlspecialchars($json)) extends SpoonFormHidden {
             public function getValue($allowHTML = null)

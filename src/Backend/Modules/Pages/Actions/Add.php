@@ -574,7 +574,7 @@ class Add extends BackendBaseActionAdd
         return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
     }
 
-    private function getHiddenJsonField(string $name, string $json): SpoonFormHidden
+    private function getHiddenJsonField(string $name, ?string $json): SpoonFormHidden
     {
         return new class($name, htmlspecialchars($json)) extends SpoonFormHidden {
             public function getValue($allowHTML = null)
