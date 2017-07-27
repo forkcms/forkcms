@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "527e7f951991c493c964de3f65506683",
+    "content-hash": "a932d1253c415ef169468573c502d512",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2899,12 +2899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "5dafd7b2081095fd8d94715019ddcf85e15e7c21"
+                "reference": "39253301ea5acb763f2ce12ae0d90f62b3ce143a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/5dafd7b2081095fd8d94715019ddcf85e15e7c21",
-                "reference": "5dafd7b2081095fd8d94715019ddcf85e15e7c21",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/39253301ea5acb763f2ce12ae0d90f62b3ce143a",
+                "reference": "39253301ea5acb763f2ce12ae0d90f62b3ce143a",
                 "shasum": ""
             },
             "require": {
@@ -2926,7 +2926,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2017-07-25 13:33:11"
+            "time": "2017-07-27 13:02:47"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -22,7 +22,6 @@
         "symfony/assetic-bundle": "^2.8",
         "symfony/swiftmailer-bundle": "^3.0",
         "symfony/monolog-bundle": "^3.1",
-        "spoon/library": "dev-3.0.0-dev as 3.0.0",
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
         "league/flysystem": "~1.0",
@@ -37,7 +36,8 @@
         "ramsey/uuid-doctrine": "^1.2",
         "liip/imagine-bundle": "^1.7",
         "swiftmailer/swiftmailer": "^6.0",
-        "google/recaptcha": "~1.1"
+        "google/recaptcha": "~1.1",
+        "spoon/library": "dev-3.0.0-dev as 3.0.0"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
