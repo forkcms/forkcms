@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Modules\Mailmotor\Form;
+namespace Frontend\Modules\Mailmotor\Domain\Subscription;
 
 /*
  * This file is part of the Fork CMS Mailmotor Module from SIESQO.
@@ -11,7 +11,7 @@ namespace Frontend\Modules\Mailmotor\Form;
 
 use Common\ModulesSettings;
 use Frontend\Core\Engine\Navigation;
-use Frontend\Modules\Mailmotor\Command\Subscription;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use Common\Language;

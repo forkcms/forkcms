@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Mailmotor\Command;
+namespace Backend\Modules\Mailmotor\Domain\Settings\Command;
 
 /*
  * This file is part of the Fork CMS Mailmotor Module from SIESQO.
