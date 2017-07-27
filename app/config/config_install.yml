@@ -29,7 +29,7 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  %site.path_www%/app/logs/logs.log
+            path:  %site.path_www%/var/logs/logs.log
             level: debug
 
 parameters:

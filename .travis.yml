@@ -21,6 +21,6 @@ after_success:
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 after_failure:
-  - cat app/logs/test.log
+  - cat var/logs/test.log
 
 sudo: false

@@ -42,7 +42,7 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  "%site.path_www%/app/logs/%kernel.environment%.log"
+            path:  "%site.path_www%/var/logs/%kernel.environment%.log"
             level: error
         # swift:
         #     type:       swift_mailer

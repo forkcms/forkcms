@@ -243,7 +243,7 @@ class RequirementsChecker
         );
         $this->checkRequirement(
             'fileSystemAppLogs',
-            $this->isRecursivelyWritable($this->rootDir . 'app/logs/'),
+            $this->isRecursivelyWritable($this->rootDir . 'var/logs/'),
             self::STATUS_ERROR
         );
         $this->checkRequirement(

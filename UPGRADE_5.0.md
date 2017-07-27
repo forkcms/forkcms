@@ -565,3 +565,7 @@ If you want to add a global anyway you should use assignGlobal as it uses a cust
 ### Console
 
 Moved `app/console` to `bin/console`
+
+### Logs
+
+Moved `app/logs` to `var/logs`
