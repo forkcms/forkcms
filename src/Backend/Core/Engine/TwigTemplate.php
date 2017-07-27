@@ -3,15 +3,16 @@
 namespace Backend\Core\Engine;
 
 use Backend\Core\Language\Language as BL;
-use Frontend\Core\Engine\FormExtension;
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
+use Frontend\Core\Engine\FormExtension;
 use ReflectionClass;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
 use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_FactoryRuntimeLoader;
@@ -41,7 +42,7 @@ class TwigTemplate extends BaseTwigTemplate
         parent::__construct(
             $this->buildTwigEnvironmentForTheBackend(),
             $container->get('templating.name_parser'),
-            $container->get('templating.locator')
+            new TemplateLocator($container->get('file_locator'), $container->getParameter('kernel.cache_dir'))
         );
 
         if ($addToReference) {
