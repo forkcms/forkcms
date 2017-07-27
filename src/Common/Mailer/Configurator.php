@@ -48,7 +48,7 @@ class Configurator
                 $this->modulesSettings->get('Core', 'smtp_secure_layer')
             );
             $this->container->set(
-                'swiftmailer.mailer.default.transport',
+                'swiftmailer.transport',
                 $transport
             );
         } catch (PDOException $e) {
