@@ -160,6 +160,9 @@ services:
             - "@database"
             - "@cache.pool"
 
+    fork.cookie:
+        class: Common\Core\Header\Cookie
+
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
         tags:

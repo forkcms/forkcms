@@ -573,3 +573,10 @@ Moved `app/logs` to `var/logs`
 ### Cache
 
 Moved `app/cache` to `var/cache`
+
+## Cookies
+
+We don't use SpoonCookie anymore and therefore also the class Common\Cookie has been removed.
+You can now use the new cookie service `fork.cookie`
+
+The values of cookies are also no longer automatically serialized.
