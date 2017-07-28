@@ -163,6 +163,13 @@ services:
     fork.cookie:
         class: Common\Core\Header\Cookie
 
+    fork.cookie_setter:
+        class: Common\EventListener\ForkCookieSetter
+        arguments:
+            - "@fork.cookie"
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
         tags:

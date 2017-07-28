@@ -4,6 +4,7 @@ namespace Common\Core\Header;
 
 use Common\Core\Model;
 use Symfony\Component\HttpFoundation\Cookie as SymfonyCookie;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 final class Cookie
@@ -165,7 +166,7 @@ final class Cookie
      */
     public function hasAllowedCookies(): bool
     {
-        return $this->getSerialized('cookie_bar_agree', 'N') === 'N';
+        return $this->get('cookie_bar_agree', 'N') === 'N';
     }
 
     /**
@@ -175,6 +176,13 @@ final class Cookie
      */
     public function hasHiddenCookieBar(): bool
     {
-        return $this->getSerialized('cookie_bar_hide', 'N') === 'N';
+        return $this->get('cookie_bar_hide', 'N') === 'N';
+    }
+
+    public function attachToResponse(Response $response): void
+    {
+        foreach ($this->newCookiesHeaderBag->getCookies() as $cookie) {
+            $response->headers->setCookie($cookie);
+        }
     }
 }
