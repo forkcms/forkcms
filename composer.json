@@ -57,12 +57,14 @@
         "post-install-cmd": [
             "php bin/console assetic:dump .",
             "php bin/console forkcms:cache:clear",
-            "php bin/console cache:clear"
+            "php bin/console cache:clear --no-warmup",
+            "php bin/console cache:warmup"
         ],
         "post-update-cmd": [
             "php bin/console assetic:dump .",
             "php bin/console forkcms:cache:clear",
-            "php bin/console cache:clear"
+            "php bin/console cache:clear --no-warmup",
+            "php bin/console cache:warmup"
         ]
     },
     "autoload": {
