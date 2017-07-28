@@ -26,7 +26,7 @@ final class Cookie
      *
      * @param string $name The name of the cookie
      * @param string|null $value The value of the cookie
-     * @param int $expire The time the cookie expires, defaults to 30 days
+     * @param int $expire The number of seconds before the cookie expires, defaults to 30 days
      * @param string $path The path on the server in which the cookie will be available on
      * @param string|null $domain The domain that the cookie is available to
      * @param bool|null $secure Whether the cookie should only be transmitted over a secure HTTPS connection from the client. When null is past it will be secure only when set on https
@@ -49,7 +49,7 @@ final class Cookie
             new SymfonyCookie(
                 $name,
                 $value,
-                $expire,
+                time() + $expire,
                 $path,
                 $this->normalizeDomain($domain),
                 $this->normalizeSecure($secure),
