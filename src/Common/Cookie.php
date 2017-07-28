@@ -14,7 +14,7 @@ use Frontend\Core\Engine\Model as FrontendModel;
 /**
  * This is our extended version of SpoonCookie
  */
-class Cookie extends \SpoonCookie
+class Cookie
 {
     /**
      * Stores a value in a cookie, by default the cookie will expire in one day.
@@ -126,5 +126,55 @@ class Cookie extends \SpoonCookie
     public static function hasHiddenCookieBar(): bool
     {
         return (self::exists('cookie_bar_hide') && self::get('cookie_bar_hide'));
+    }
+
+    public static function exists()
+    {
+        // loop all arguments
+        foreach (func_get_args() as $argument) {
+            // array element
+            if (is_array($argument)) {
+                // loop the keys
+                foreach ($argument as $key) {
+                    // does NOT exist
+                    if (!isset($_COOKIE[(string) $key])) {
+                        return false;
+                    }
+                }
+            } // other type(s)
+            else {
+                // does NOT exist
+                if (!isset($_COOKIE[(string) $argument])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public static function get($key)
+    {
+        // redefine key
+        $key = (string) $key;
+
+        // cookie doesn't exist
+        if (!self::exists($key)) {
+            return false;
+        }
+
+        // fetch base value
+        $value = (get_magic_quotes_gpc()) ? stripslashes($_COOKIE[$key]) : $_COOKIE[$key];
+
+        // unserialize
+        $actualValue = @unserialize($value);
+
+        // unserialize failed
+        if ($actualValue === false && serialize(false) != $value) {
+            throw new SpoonCookieException(
+                'The value of the cookie "' . $key . '" could not be retrieved. This might indicate that it has been tampered with OR the cookie was initially not set using SpoonCookie.'
+            );
+        }
+        // everything is fine
     }
 }
