@@ -6,9 +6,6 @@ use Common\WebTestCase;
 
 class IndexTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
@@ -24,9 +21,6 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRedirectToSettingsActionWhenTheAnalyticsModuleIsNotConfigured(): void
     {
         $client = static::createClient();

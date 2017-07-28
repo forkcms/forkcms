@@ -6,9 +6,6 @@ use Common\WebTestCase;
 
 class SettingsTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
@@ -24,9 +21,6 @@ class SettingsTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testAnalyticsSettingsWorks(): void
     {
         $client = static::createClient();

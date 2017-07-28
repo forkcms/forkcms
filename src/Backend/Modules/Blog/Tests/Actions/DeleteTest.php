@@ -6,9 +6,6 @@ use Common\WebTestCase;
 
 class DeleteTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
@@ -31,9 +28,6 @@ class DeleteTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testInvalidIdShouldShowAnError(): void
     {
         $client = static::createClient();
@@ -58,9 +52,6 @@ class DeleteTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testDeleteIsAvailableFromTheEditpage(): void
     {
         $client = static::createClient();

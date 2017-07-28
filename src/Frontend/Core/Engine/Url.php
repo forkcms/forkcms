@@ -266,7 +266,7 @@ class Url extends KernelLoader
     {
         try {
             CommonCookie::set('frontend_language', $language);
-        } catch (\SpoonCookieException $e) {
+        } catch (\InvalidArgumentException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
     }

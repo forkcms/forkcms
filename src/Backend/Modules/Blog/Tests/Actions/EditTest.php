@@ -6,9 +6,6 @@ use Common\WebTestCase;
 
 class EditTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationIsNeeded(): void
     {
         $this->logout();
@@ -31,9 +28,6 @@ class EditTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testWeCanGoToEditFromTheIndexPage(): void
     {
         $client = static::createClient();
@@ -55,9 +49,6 @@ class EditTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testEditingOurBlogPost(): void
     {
         $client = static::createClient();
@@ -94,9 +85,6 @@ class EditTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSubmittingInvalidData(): void
     {
         $client = static::createClient();
@@ -127,9 +115,6 @@ class EditTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testInvalidIdShouldShowAnError(): void
     {
         $client = static::createClient();

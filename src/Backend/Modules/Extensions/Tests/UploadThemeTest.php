@@ -41,8 +41,6 @@ class UploadThemeTest extends WebTestCase
 
     /**
      * Test that we cannot upload a theme without info.xml file
-     *
-     * @runInSeparateProcess
      */
     public function testUploadThemeZipWithoutInfoFile(): void
     {
@@ -67,8 +65,6 @@ class UploadThemeTest extends WebTestCase
 
     /**
      * Test if we can upload a theme with a zip that contains a subfolder containing the themefiles.
-     *
-     * @runInSeparateProcess
      */
     public function testUploadThemeZipGithub(): void
     {
@@ -96,8 +92,6 @@ class UploadThemeTest extends WebTestCase
 
     /**
      * Test if we can upload a theme with a zip that contains only the files (not wrapped in a parent folder).
-     *
-     * @runInSeparateProcess
      */
     public function testUploadThemeNoParentFolder(): void
     {

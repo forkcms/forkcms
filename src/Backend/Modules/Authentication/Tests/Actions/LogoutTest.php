@@ -7,9 +7,6 @@ use Backend\Core\Engine\Authentication as Authentication;
 
 class LogoutTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testLogoutActionActuallyLogsYouOut(): void
     {
         $client = static::createClient();
@@ -23,9 +20,6 @@ class LogoutTest extends WebTestCase
         self::assertFalse(Authentication::isLoggedIn());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testLogoutActionRedirectsYouToLoginAfterLoggingOut(): void
     {
         $client = static::createClient();

@@ -9,9 +9,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class InstallerControllerTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testNoStepActionAction(): void
     {
         $client = static::createClient(['environment' => 'test_install']);
@@ -30,9 +27,6 @@ class InstallerControllerTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testInstallationProcess(): void
     {
         $client = static::createClient();
