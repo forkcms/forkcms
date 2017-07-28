@@ -250,10 +250,11 @@ class Url extends KernelLoader
             return $language;
         }
 
-        if (CommonCookie::exists('frontend_language')
-            && in_array(CommonCookie::get('frontend_language'), $redirectLanguages)
+        $cookie = $this->getContainer()->get('fork.cookie');
+        if ($cookie->has('frontend_language')
+            && in_array($cookie->get('frontend_language'), $redirectLanguages, true)
         ) {
-            $this->redirectToLanguage((string) CommonCookie::get('frontend_language'));
+            $this->redirectToLanguage($cookie->get('frontend_language'));
         }
 
         // default browser language
@@ -265,8 +266,8 @@ class Url extends KernelLoader
     private function setLanguageCookie(string $language): void
     {
         try {
-            CommonCookie::set('frontend_language', $language);
-        } catch (\InvalidArgumentException $e) {
+            self::getContainer()->get('fork.cookie')->set('frontend_language', $language);
+        } catch (\RuntimeException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
     }

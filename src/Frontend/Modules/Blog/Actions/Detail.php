@@ -115,10 +115,13 @@ class Detail extends FrontendBaseBlock
         $this->form = new FrontendForm('commentsForm');
         $this->form->setAction($this->form->getAction() . '#' . FL::act('Comment'));
 
+        $cookie = FrontendModel::getContainer()->get('fork.cookie');
         // init vars
-        $author = (CommonCookie::exists('comment_author')) ? CommonCookie::get('comment_author') : null;
-        $email = (CommonCookie::exists('comment_email') && \SpoonFilter::isEmail(CommonCookie::get('comment_email'))) ? CommonCookie::get('comment_email') : null;
-        $website = (CommonCookie::exists('comment_website') && \SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
+        $author = $cookie->get('comment_author');
+        $email = ($cookie->has('comment_email') && \SpoonFilter::isEmail($cookie->get('comment_email')))
+            ? $cookie->get('comment_email') : null;
+        $website = ($cookie->has('comment_website') && \SpoonFilter::isURL($cookie->get('comment_website')))
+            ? $cookie->get('comment_website') : 'http://';
 
         // create elements
         $this->form->addText('author', $author)->setAttributes(['required' => null]);
@@ -399,10 +402,11 @@ class Detail extends FrontendBaseBlock
 
                 // store author-data in cookies
                 try {
-                    CommonCookie::set('comment_author', $author);
-                    CommonCookie::set('comment_email', $email);
-                    CommonCookie::set('comment_website', $website);
-                } catch (\Exception $e) {
+                    $cookie = FrontendModel::getContainer()->get('fork.cookie');
+                    $cookie->set('comment_author', $author);
+                    $cookie->set('comment_email', $email);
+                    $cookie->set('comment_website', $website);
+                } catch (\RuntimeException $e) {
                     // settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
                 }
 

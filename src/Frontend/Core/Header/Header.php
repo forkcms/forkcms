@@ -361,7 +361,8 @@ class Header extends KernelLoader
         $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_header', '') . "\n";
         $siteHTMLHeader .= new GoogleAnalytics(
             $this->get('fork.settings'),
-            Model::getRequest()->getHttpHost()
+            Model::getRequest()->getHttpHost(),
+            $this->get('fork.cookie')
         );
         $siteHTMLHeader .= "\n" . $this->jsData;
         $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHeader));

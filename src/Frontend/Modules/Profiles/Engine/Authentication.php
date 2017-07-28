@@ -140,15 +140,13 @@ class Authentication
 
                 // logged in
                 return true;
-            } else {
-                // invalid session
-                \SpoonSession::set('frontend_profile_logged_in', false);
             }
-        } elseif (CommonCookie::exists('frontend_profile_secret_key') &&
-                  CommonCookie::get('frontend_profile_secret_key') != ''
-        ) {
+
+            // invalid session
+            \SpoonSession::set('frontend_profile_logged_in', false);
+        } elseif (FrontendModel::getContainer()->get('fork.cookie')->get('frontend_profile_secret_key', '') !== '') {
             // secret
-            $secret = (string) CommonCookie::get('frontend_profile_secret_key');
+            $secret = FrontendModel::getContainer()->get('fork.cookie')->get('frontend_profile_secret_key');
 
             // get profile id
             $profileId = (int) FrontendModel::getContainer()->get('database')->getVar(
@@ -180,7 +178,7 @@ class Authentication
                 );
 
                 // set new cookie
-                CommonCookie::set('frontend_profile_secret_key', $profileSecret);
+                FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $profileSecret);
 
                 // set is_logged_in to true
                 \SpoonSession::set('frontend_profile_logged_in', true);
@@ -193,10 +191,10 @@ class Authentication
 
                 // logged in
                 return true;
-            } else {
-                // invalid cookie
-                CommonCookie::delete('frontend_profile_secret_key');
             }
+
+            // invalid cookie
+            FrontendModel::getContainer()->get('fork.cookie')->delete('frontend_profile_secret_key');
         }
 
         // no one is logged in
@@ -226,7 +224,7 @@ class Authentication
             );
 
             // set cookie
-            CommonCookie::set('frontend_profile_secret_key', $secretKey);
+            FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $secretKey);
         }
 
         // delete all records for this session to prevent duplicate keys (this should never happen)
@@ -266,8 +264,7 @@ class Authentication
         // set is_logged_in to false
         \SpoonSession::set('frontend_profile_logged_in', false);
 
-        // delete cookie
-        CommonCookie::delete('frontend_profile_secret_key');
+        FrontendModel::getContainer()->get('fork.cookie')->delete('frontend_profile_secret_key');
     }
 
     /**

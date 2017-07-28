@@ -268,9 +268,9 @@ class Language
         try {
             // Needed to make it possible to use the backend language in the console.
             if (defined('APPLICATION') && APPLICATION !== 'Console') {
-                CommonCookie::set('interface_language', $language);
+                Model::getContainer()->get('fork.cookie')->set('interface_language', $language);
             }
-        } catch (\SpoonCookieException $e) {
+        } catch (\RuntimeException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
 
