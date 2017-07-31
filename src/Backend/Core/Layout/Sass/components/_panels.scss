@@ -110,11 +110,6 @@
   }
 }
 
-.panel-select label {
-  cursor: pointer;
-  margin-bottom: 1px;
-}
-
 .panel-primary label,
 .panel-default label {
   width: 100%;
@@ -129,7 +124,7 @@
   }
 }
 
-.panel-primary label {
+.panel-primary {
   background-color: $white;
 
   .panel-heading {

@@ -106,30 +106,40 @@
           <div id="installedThemes" class="selectThumbList list-unstyled list-inline">
             <div class="row">
               {% for installedTheme in installedThemes %}
-                <div class="col-md-4 js-theme">
+                <div class="col-md-4">
                   <div class="panel panel-select {% if installedTheme.selected %}panel-primary{% else %}panel-default{% endif %}">
-                    <label for="{{ installedTheme.id }}">
-                      <span class="hidden">{{ installedTheme.rbtInstalledThemes|raw }}</span>
+                    <span class="hidden">
+                      {{ installedTheme.rbtInstalledThemes|raw }}
+                      <label for="{{ installedTheme.id }}"></label>
+                    </span>
 
-                      <div class="panel-heading">
-                        <h3 class="panel-title">{{ installedTheme.label|ucfirst }}</h3>
-                      </div>
-                      <div class="panel-body">
-                        <img src="{{ installedTheme.thumbnail }}" class="img-thumbnail" alt="{{ installedTheme.label|ucfirst }}" />
-                      </div>
-                      <div class="panel-footer">
-                        {% if showExtensionsDetailTheme %}
-                          <div class="btn-toolbar">
-                            <div class="btn-group pull-right" role="group">
-                              <a href="{{ geturl('detail_theme') }}&theme={{ installedTheme.value }}" class="btn btn-default" role="button" title="{{ installedTheme.label|ucfirst }}">
-                                <span class="fa fa-eye"></span>&nbsp;
-                                <span>{{ 'lbl.Details'|trans|ucfirst }}</span>
-                              </a>
-                            </div>
+                    <div class="panel-heading">
+                      <h3 class="panel-title">{{ installedTheme.label|ucfirst }}</h3>
+                    </div>
+                    <div class="panel-body">
+                      <img src="{{ installedTheme.thumbnail }}" class="img-thumbnail" alt="{{ installedTheme.label|ucfirst }}" />
+                    </div>
+                    <div class="panel-footer">
+                      {% if showExtensionsDetailTheme %}
+                        <div class="btn-toolbar">
+                          <div class="btn-group pull-right" role="group">
+                            <a href="{{ geturl('detail_theme') }}&theme={{ installedTheme.value }}" class="btn btn-default" role="button" title="{{ installedTheme.label|ucfirst }}">
+                              <span class="fa fa-eye"></span>&nbsp;
+                              <span>{{ 'lbl.Details'|trans|ucfirst }}</span>
+                            </a>
+                            <a href="#" class="btn js-theme-selector {% if installedTheme.selected %}btn-primary{% else %}btn-default{% endif %}">
+                              <div class="selected-theme{% if not installedTheme.selected %} hidden{% endif %}">
+                                <span class="fa fa-check"></span>
+                                <span>{{ 'lbl.SelectedTheme'|trans|ucfirst }}</span>
+                              </div>
+                              <div class="available-theme{% if installedTheme.selected %} hidden{% endif %}">
+                                <span>{{ 'lbl.UseThisTheme'|trans|ucfirst }}</span>
+                              </div>
+                            </a>
                           </div>
-                        {% endif %}
-                      </div>
-                    </label>
+                        </div>
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
               {% endfor %}
