@@ -167,7 +167,7 @@ class Model
      */
     public static function saveIndex(string $module, int $otherId, array $fields, string $language = null): void
     {
-        if (BackendModel::isModuleInstalled('Search')) {
+        if (!BackendModel::isModuleInstalled('Search')) {
             return;
         }
 
