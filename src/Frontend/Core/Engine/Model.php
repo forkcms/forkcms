@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use InvalidArgumentException;
-use Common\Cookie as CommonCookie;
 
 /**
  * In this file we store all generic functions that we will be using in the frontend.

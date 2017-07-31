@@ -15,9 +15,7 @@ use Frontend\Core\Language\Language;
 use SpoonFilter;
 use SpoonSession;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Common\Cookie as CommonCookie;
 
 /**
  * This class will handle the incoming URL.

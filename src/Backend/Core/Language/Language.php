@@ -10,7 +10,6 @@ namespace Backend\Core\Language;
  */
 
 use Backend\Core\Engine\Model;
-use Common\Cookie as CommonCookie;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
