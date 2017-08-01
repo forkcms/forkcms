@@ -121,10 +121,10 @@ class Index extends BackendBaseActionIndex
                     $this->form->addError('invalid login');
 
                     // store attempt in session
-                    $current = (\SpoonSession::exists('backend_login_attempts')) ? (int) \SpoonSession::get('backend_login_attempts') : 0;
+                    $current = (int) BackendModel::getSession()->get('backend_login_attempts', 0);
 
                     // increment and store
-                    \SpoonSession::set('backend_login_attempts', ++$current);
+                    BackendModel::getSession()->set('backend_login_attempts', ++$current);
 
                     // save the failed login attempt in the user's settings
                     if ($userId !== false) {
@@ -137,12 +137,12 @@ class Index extends BackendBaseActionIndex
             }
 
             // check sessions
-            if (\SpoonSession::exists('backend_login_attempts') && (int) \SpoonSession::get('backend_login_attempts') >= 5) {
+            if (BackendModel::getSession()->get('backend_login_attempts', 0) >= 5) {
                 // get previous attempt
-                $previousAttempt = (\SpoonSession::exists('backend_last_attempt')) ? \SpoonSession::get('backend_last_attempt') : time();
+                $previousAttempt = BackendModel::getSession()->get('backend_last_attempt', time());
 
                 // calculate timeout
-                $timeout = 5 * ((\SpoonSession::get('backend_login_attempts') - 4));
+                $timeout = 5 * (BackendModel::getSession()->get('backend_login_attempts') - 4);
 
                 // too soon!
                 if (time() < $previousAttempt + $timeout) {
@@ -151,10 +151,9 @@ class Index extends BackendBaseActionIndex
 
                     // set a correct header, so bots understand they can't mess with us.
                     throw new ServiceUnavailableHttpException();
-                } else {
-                    // increment and store
-                    \SpoonSession::set('backend_last_attempt', time());
                 }
+                // increment and store
+                BackendModel::getSession()->set('backend_last_attempt', time());
 
                 // too many attempts
                 $this->form->addEditor('too many attempts');
@@ -171,8 +170,8 @@ class Index extends BackendBaseActionIndex
             // no errors in the form?
             if ($this->form->isCorrect()) {
                 // cleanup sessions
-                \SpoonSession::delete('backend_login_attempts');
-                \SpoonSession::delete('backend_last_attempt');
+                BackendModel::getSession()->remove('backend_login_attempts');
+                BackendModel::getSession()->remove('backend_last_attempt');
 
                 // save the login timestamp in the user's settings
                 $lastLogin = BackendUsersModel::getSetting($userId, 'current_login');
