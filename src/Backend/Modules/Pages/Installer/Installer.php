@@ -197,7 +197,7 @@ class Installer extends ModuleInstaller
         // loop languages
         foreach ($this->getLanguages() as $language) {
             // insert modules page
-            $this->insertPage(
+            $modulesPageId = $this->insertPage(
                 [
                     'id' => 4,
                     'title' => \SpoonFilter::ucfirst(
@@ -239,7 +239,7 @@ class Installer extends ModuleInstaller
                             $this->getLocale('Blog', 'Core', $language, 'lbl', 'Frontend')
                         ),
                         'language' => $language,
-                        'parent_id' => 4,
+                        'parent_id' => $modulesPageId,
                     ],
                     null,
                     ['extra_id' => $extras['blog_block']],
@@ -256,7 +256,7 @@ class Installer extends ModuleInstaller
                         [
                             'title' => 'FAQ',
                             'language' => $language,
-                            'parent_id' => 4,
+                            'parent_id' => $modulesPageId,
                         ],
                         null,
                         ['extra_id' => $extras['faq_block']]
@@ -269,7 +269,7 @@ class Installer extends ModuleInstaller
                         [
                             'title' => 'Newsletters',
                             'language' => $language,
-                            'parent_id' => 4,
+                            'parent_id' => $modulesPageId,
                         ]
                     );
                     $this->insertPage(
@@ -289,7 +289,7 @@ class Installer extends ModuleInstaller
                     [
                         'title' => 'Tags',
                         'language' => $language,
-                        'parent_id' => 4,
+                        'parent_id' => $modulesPageId,
                     ],
                     null,
                     ['extra_id' => $extras['tags_block'], 'position' => 'main'],
@@ -302,7 +302,7 @@ class Installer extends ModuleInstaller
                         [
                             'title' => 'Profiles',
                             'language' => $language,
-                            'parent_id' => 4,
+                            'parent_id' => $modulesPageId,
                         ],
                         null,
                         ['extra_id' => $this->getExtraId('subpages')],
