@@ -121,7 +121,7 @@ class Detail extends FrontendBaseBlock
             [
                  [
                      'label' => FL::lbl('Yes'),
-                     'value' => 'Y',
+                     'value' => 1,
                      'attributes' => [
                          'data-role' => 'fork-feedback-useful',
                          'data-response' => 'yes',
@@ -129,7 +129,7 @@ class Detail extends FrontendBaseBlock
                  ],
                  [
                      'label' => FL::lbl('No'),
-                     'value' => 'N',
+                     'value' => 0,
                      'attributes' => [
                          'data-role' => 'fork-feedback-useful',
                          'data-response' => 'no',
@@ -213,7 +213,7 @@ class Detail extends FrontendBaseBlock
 
         if ($this->form->isSubmitted()) {
             // reformat data
-            $useful = ($this->form->getField('useful')->getValue() == 'Y');
+            $useful = $this->form->getField('useful')->isChecked();
 
             // the form has been sent
             $this->template->assign('hideFeedbackNoInfo', $useful);

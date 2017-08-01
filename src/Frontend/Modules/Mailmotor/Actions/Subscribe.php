@@ -12,9 +12,9 @@ namespace Frontend\Modules\Mailmotor\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Locale;
-use Frontend\Modules\Mailmotor\Command\Subscription;
-use Frontend\Modules\Mailmotor\Event\NotImplementedSubscribedEvent;
-use Frontend\Modules\Mailmotor\Form\SubscribeType;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedSubscribedEvent;
+use Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**

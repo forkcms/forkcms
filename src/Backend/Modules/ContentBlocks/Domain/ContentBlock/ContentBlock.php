@@ -77,7 +77,7 @@ class ContentBlock
     /**
      * @var bool
      *
-     * @ORM\Column(type="enum_bool", name="hidden", options={"default" = "N"})
+     * @ORM\Column(type="boolean", name="hidden", options={"default" = false})
      */
     private $isHidden;
 

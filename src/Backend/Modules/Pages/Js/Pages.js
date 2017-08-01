@@ -86,7 +86,7 @@ jsBackend.pages.extras = {
     },
 
     // store the extra for real
-    addBlock: function(selectedExtraId, selectedPosition, selectedExtraType)
+    addBlock: function(selectedExtraId, selectedPosition, selectedExtraType, selectedExtraData)
     {
         selectedExtraType = selectedExtraType || 'rich_text';
 
@@ -100,6 +100,7 @@ jsBackend.pages.extras = {
         var blockHtml = $('textarea[id^=blockHtml]', block);
         var blockExtraId = $('input[id^=blockExtraId]', block);
         var blockExtraType = $('input[id^=blockExtraType]', block);
+        var blockExtraData = $('input[id^=blockExtraData]', block);
         var blockPosition = $('input[id^=blockPosition]', block);
         var blockVisibility = $('input[id^=blockVisible]', block);
 
@@ -107,6 +108,7 @@ jsBackend.pages.extras = {
         blockHtml.prop('id', blockHtml.prop('id').replace('0', index)).prop('name', blockHtml.prop('name').replace('0', index));
         blockExtraId.prop('id', blockExtraId.prop('id').replace('0', index)).prop('name', blockExtraId.prop('name').replace('0', index));
         blockExtraType.prop('id', blockExtraType.prop('id').replace('0', index)).prop('name', blockExtraType.prop('name').replace('0', index));
+        blockExtraData.prop('id', blockExtraData.prop('id').replace('0', index)).prop('name', blockExtraData.prop('name').replace('0', index));
         blockPosition.prop('id', blockPosition.prop('id').replace('0', index)).prop('name', blockPosition.prop('name').replace('0', index));
         blockVisibility.prop('id', blockVisibility.prop('id').replace('0', index)).prop('name', blockVisibility.prop('name').replace('0', index));
 
@@ -119,6 +121,9 @@ jsBackend.pages.extras = {
         // save extra type
         blockExtraType.val(selectedExtraType);
 
+        // save extra data
+        blockExtraData.val(JSON.stringify(selectedExtraData));
+
         // add block to dom
         block.appendTo($('#editContent'));
 
@@ -126,7 +131,7 @@ jsBackend.pages.extras = {
         var visible = blockVisibility.attr('checked');
 
         // add visual representation of block to template visualisation
-        var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible, selectedExtraType);
+        var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible, selectedExtraType, selectedExtraData);
 
         // block/widget = don't show editor
         if (selectedExtraType !== 'usertemplate' && typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') {
@@ -140,7 +145,7 @@ jsBackend.pages.extras = {
     },
 
     // add block visual on template
-    addBlockVisual: function(position, index, extraId, visible, extraType)
+    addBlockVisual: function(position, index, extraId, visible, extraType, extraData)
     {
         // check if the extra is valid
         if (extraType != 'usertemplate' && extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
@@ -160,11 +165,19 @@ jsBackend.pages.extras = {
 
         // user template
         else if (extraType == 'usertemplate') {
-            var template = jsBackend.pages.template.userTemplates[extraId];
+            if (typeof(extraData) === "string" && extraData !== '') {
+                extraData = JSON.parse(extraData);
+            }
 
             editLink = '';
             title = utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate'));
-            description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
+            if (extraData.title) {
+                title += ': ' + extraData.title;
+            }
+            description = '';
+            if (extraData.description) {
+                description += extraData.description;
+            }
         }
 
         // editor
@@ -389,6 +402,11 @@ jsBackend.pages.extras = {
     // save/reset the content
     setContent: function(index, content)
     {
+        // don't set content if this is a usertemplate
+        if ($('#blockExtraType' + index).val() === 'usertemplate') {
+            return false;
+        }
+
         // the content to set
         if (content != null) $('#blockHtml' + index).val(content);
 
@@ -468,13 +486,17 @@ jsBackend.pages.extras = {
                 // is user template?
                 var isUserTemplate = (selectedExtraType == 'usertemplate');
 
+                // fetch the selected extra data
+                var selectedExtraData = $('#extraData').val();
+
                 // fetch user template id
                 if (isUserTemplate) {
                     selectedExtraId = $('#userTemplate').val();
+                    selectedExtraData = jsData.pages.userTemplates[selectedExtraId];
                 }
 
                 // add the extra
-                var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType);
+                var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType, selectedExtraData);
 
                 // add a block = template is no longer original
                 jsBackend.pages.template.original = false;
@@ -836,7 +858,7 @@ jsBackend.pages.extras = {
 
                     $('#user-template-image-' + key + ' img').attr(
                         'src',
-                        '/src/Frontend/Files/UserTemplate/' + response.data
+                        '/src/Frontend/Files/Pages/UserTemplate/' + response.data
                     );
 
                     // send a request to remove the old image if the old image doesn't have the same name
@@ -888,7 +910,7 @@ jsBackend.pages.extras = {
 
                     $('#user-template-image-background-' + key + ' img').attr(
                         'src',
-                        '/src/Frontend/Files/UserTemplate/' + response.data
+                        '/src/Frontend/Files/Pages/UserTemplate/' + response.data
                     );
 
                     // send a request to remove the old image if the old image doesn't have the same name
@@ -1241,6 +1263,7 @@ jsBackend.pages.template = {
             var index = $('input[id^=blockExtraId]', this).prop('id').replace('blockExtraId', '');
             var extraId = parseInt($('input[id^=blockExtraId]', this).val());
             var extraType = $('input[id^=blockExtraType]', this).val();
+            var extraData = $('input[id^=blockExtraData]', this).val();
             var position = $('input[id^=blockPosition]', this).val();
             var visible = $('input[id^=blockVisible]', this).attr('checked');
 
@@ -1260,7 +1283,7 @@ jsBackend.pages.template = {
             }
 
             // add visual representation of block to template visualisation
-            added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible, extraType);
+            added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible, extraType, extraData);
 
             // if the visual could be not added, remove the content entirely
             if (!added) $(this).remove();
@@ -1391,7 +1414,7 @@ jsBackend.pages.tree = {
                     result = false;
                 }
                 else {
-                    if (json.data.allow_move == 'Y') result = true;
+                    if (json.data.allow_move) result = true;
                 }
             }
         });

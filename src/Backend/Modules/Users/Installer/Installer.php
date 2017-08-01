@@ -136,7 +136,7 @@ class Installer extends ModuleInstaller
              FROM users
              WHERE is_god = ? AND deleted = ? AND active = ?
              LIMIT 1',
-            ['Y', 'N', 'Y']
+            [true, false, true]
         );
     }
 
@@ -167,9 +167,9 @@ class Installer extends ModuleInstaller
             $user = [];
             $user['email'] = $this->getVariable('email');
             $user['password'] = BackendProfilesModel::encryptPassword($this->getVariable('password'));
-            $user['active'] = 'Y';
-            $user['deleted'] = 'N';
-            $user['is_god'] = 'Y';
+            $user['active'] = true;
+            $user['deleted'] = false;
+            $user['is_god'] = true;
 
             // insert user
             $user['id'] = BackendUsersModel::insert($user, $settings);
@@ -193,19 +193,19 @@ class Installer extends ModuleInstaller
 
         // store files
         $filesystem->dumpFile(
-            PATH_WWW . '/src/Frontend/Files/backend_users/avatars/source/god.jpg',
+            PATH_WWW . '/src/Frontend/Files/Users/avatars/source/god.jpg',
             base64_decode($avatar124x124)
         );
         $filesystem->dumpFile(
-            PATH_WWW . '/src/Frontend/Files/backend_users/avatars/128x128/god.jpg',
+            PATH_WWW . '/src/Frontend/Files/Users/avatars/128x128/god.jpg',
             base64_decode($avatar124x124)
         );
         $filesystem->dumpFile(
-            PATH_WWW . '/src/Frontend/Files/backend_users/avatars/64x64/god.jpg',
+            PATH_WWW . '/src/Frontend/Files/Users/avatars/64x64/god.jpg',
             base64_decode($avatar64x64)
         );
         $filesystem->dumpFile(
-            PATH_WWW . '/src/Frontend/Files/backend_users/avatars/32x32/god.jpg',
+            PATH_WWW . '/src/Frontend/Files/Users/avatars/32x32/god.jpg',
             base64_decode($avatar32x32)
         );
     }

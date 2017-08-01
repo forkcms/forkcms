@@ -24,6 +24,6 @@ class MediaFolderInfo extends BackendBaseAJAXAction
         }
 
         // Currently always allow to be moved
-        $this->output(Response::HTTP_OK, ['allow_move' => 'Y']);
+        $this->output(Response::HTTP_OK, ['allow_move' => true]);
     }
 }

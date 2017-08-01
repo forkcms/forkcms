@@ -264,8 +264,8 @@ class Installer extends ModuleInstaller
                     'publish_on' => gmdate('Y-m-d H:i:00'),
                     'created_on' => gmdate('Y-m-d H:i:00'),
                     'edited_on' => gmdate('Y-m-d H:i:00'),
-                    'hidden' => 'N',
-                    'allow_comments' => 'Y',
+                    'hidden' => false,
+                    'allow_comments' => true,
                     'num_comments' => '2',
                 ]
             );
@@ -303,8 +303,8 @@ class Installer extends ModuleInstaller
                     'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
                     'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
                     'edited_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-                    'hidden' => 'N',
-                    'allow_comments' => 'Y',
+                    'hidden' => false,
+                    'allow_comments' => true,
                     'num_comments' => '0',
                 ]
             );

@@ -25,9 +25,3 @@ after_failure:
   - cat app/logs/test.log
 
 sudo: false
-notifications:
-  slack:
-    secure: V3COyzztWJAlY+f0qS+V4zI5w0tpBSy/G37AzURdyzCe0atT4L+HiRUSHSYj3Yv6Ar9iS8oGhoJGvvmzN1q3pJSiEYR7i9b7gw5Jsu7yqbtioaWLtjToTHsD9vEPE4KCVN/uMGjFxkkCAJRrBI0KcTfe8a34bFAvviLaVTCW6aA=
-    on_success: change
-    on_failure: change
-    on_start: change

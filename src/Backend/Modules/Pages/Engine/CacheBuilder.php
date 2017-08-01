@@ -143,11 +143,6 @@ class CacheBuilder
         // add it
         $keys[$page['id']] = trim($url . '/' . $page['url'], '/');
 
-        // unserialize
-        if (isset($page['meta_data'])) {
-            $page['meta_data'] = @unserialize($page['meta_data']);
-        }
-
         // build navigation array
         $pageData = [
             'page_id' => (int) $page['id'],
@@ -155,11 +150,11 @@ class CacheBuilder
             'full_url' => $languageUrl . $keys[$page['id']],
             'title' => $page['title'],
             'navigation_title' => $page['navigation_title'],
-            'has_extra' => (bool) ($page['has_extra'] == 'Y'),
-            'no_follow' => (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow'),
-            'hidden' => (bool) ($page['hidden'] == 'Y'),
+            'has_extra' => (bool) $page['has_extra'],
+            'no_follow' => $page['seo_follow'] === 'nofollow',
+            'hidden' => (bool) $page['hidden'],
             'extra_blocks' => null,
-            'has_children' => (bool) ($page['has_children'] == 'Y'),
+            'has_children' => (bool) $page['has_children'],
         ];
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);
@@ -172,7 +167,7 @@ class CacheBuilder
     {
         // calculate tree-type
         $treeType = 'page';
-        if ($page['hidden'] == 'Y') {
+        if ($page['hidden']) {
             $treeType = 'hidden';
         }
 
@@ -256,7 +251,7 @@ class CacheBuilder
                 'SELECT i.id, i.module, i.action, i.data
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
-                ['block', 'N'],
+                ['block', false],
                 'id'
             );
 
@@ -284,7 +279,7 @@ class CacheBuilder
                 'SELECT i.id, i.module, i.action
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
-                ['widget', 'N'],
+                ['widget', false],
                 'id'
             );
 

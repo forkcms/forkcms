@@ -220,7 +220,7 @@ class ForkInstaller
                     'extra_id' => $extra['id'],
                     'created_on' => gmdate('Y-m-d H:i:s'),
                     'edited_on' => gmdate('Y-m-d H:i:s'),
-                    'visible' => 'Y',
+                    'visible' => true,
                 ];
             }
 

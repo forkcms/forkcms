@@ -42,11 +42,11 @@ class AddCategory extends BackendBaseAJAXAction
 
         $meta = [
             'keywords' => $item['title'],
-            'keywords_overwrite' => 'N',
+            'keywords_overwrite' => false,
             'description' => $item['title'],
-            'description_overwrite' => 'N',
+            'description_overwrite' => false,
             'title' => $item['title'],
-            'title_overwrite' => 'N',
+            'title_overwrite' => false,
             'url' => BackendBlogModel::getUrlForCategory(\SpoonFilter::urlise($item['title'])),
         ];
 

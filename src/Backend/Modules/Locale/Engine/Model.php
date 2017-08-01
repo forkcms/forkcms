@@ -19,6 +19,16 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Model
 {
+    /**
+     * @var array The possible locale types
+     */
+    public const TYPES = [
+        'act',
+        'err',
+        'lbl',
+        'msg',
+    ];
+
     public static function buildCache(string $language, string $application): void
     {
         $cacheBuilder = new CacheBuilder(BackendModel::get('database'));
@@ -371,11 +381,7 @@ class Model
 
     public static function getTypesForDropDown(): array
     {
-        // fetch types
-        $types = BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type');
-
-        // init
-        $labels = $types;
+        $labels = static::TYPES;
 
         // loop and build labels
         foreach ($labels as &$row) {
@@ -383,16 +389,12 @@ class Model
         }
 
         // build array
-        return array_combine($types, $labels);
+        return array_combine(static::TYPES, $labels);
     }
 
     public static function getTypesForMultiCheckbox(): array
     {
-        // fetch types
-        $aTypes = BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type');
-
-        // init
-        $labels = $aTypes;
+        $labels = static::TYPES;
 
         // loop and build labels
         foreach ($labels as &$row) {
@@ -400,7 +402,7 @@ class Model
         }
 
         // build array
-        $aTypes = array_combine($aTypes, $labels);
+        $aTypes = array_combine(static::TYPES, $labels);
 
         // create a new array to redefine the types for the multicheckbox
         $types = [];
@@ -453,9 +455,8 @@ class Model
         $possibleModules = (array) $database->getColumn('SELECT m.name FROM modules AS m');
 
         // types
-        $typesShort = (array) $database->getEnumValues('locale', 'type');
         $possibleTypes = [];
-        foreach ($typesShort as $type) {
+        foreach (static::TYPES as $type) {
             $possibleTypes[$type] = self::getTypeName($type);
         }
 

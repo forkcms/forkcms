@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "595280518aaf4173474777dad7b0aed2",
+    "content-hash": "8151bb3b6ae798d00c73b5c8a536781d",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1787,16 +1787,16 @@
         },
         {
             "name": "mailmotor/mailmotor-bundle",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/mailmotor-bundle.git",
-                "reference": "23ab81056419006b9d7d766ac525fcf713d17081"
+                "reference": "695a902ee1ef8f1daa74ab7f05d7e1e535da857a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/23ab81056419006b9d7d766ac525fcf713d17081",
-                "reference": "23ab81056419006b9d7d766ac525fcf713d17081",
+                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/695a902ee1ef8f1daa74ab7f05d7e1e535da857a",
+                "reference": "695a902ee1ef8f1daa74ab7f05d7e1e535da857a",
                 "shasum": ""
             },
             "require": {
@@ -1831,7 +1831,7 @@
                 "php",
                 "symfony"
             ],
-            "time": "2017-06-29T09:47:12+00:00"
+            "time": "2017-07-20T08:54:06+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -2658,23 +2658,23 @@
         },
         {
             "name": "spoon/library",
-            "version": "2.3.3",
+            "version": "dev-3.0.0-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "2eb4593de01762ecc7098f122794857bd483ef27"
+                "reference": "5dafd7b2081095fd8d94715019ddcf85e15e7c21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/2eb4593de01762ecc7098f122794857bd483ef27",
-                "reference": "2eb4593de01762ecc7098f122794857bd483ef27",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/5dafd7b2081095fd8d94715019ddcf85e15e7c21",
+                "reference": "5dafd7b2081095fd8d94715019ddcf85e15e7c21",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "symfony/phpunit-bridge": "^3.3"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -2689,7 +2689,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2016-09-05T14:43:42+00:00"
+            "time": "2017-07-25 13:33:11"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3871,9 +3871,18 @@
             "time": "2017-03-09T12:58:16+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "3.0.0",
+            "alias_normalized": "3.0.0.0",
+            "version": "dev-3.0.0-dev",
+            "package": "spoon/library"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "spoon/library": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

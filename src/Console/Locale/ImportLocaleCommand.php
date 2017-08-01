@@ -31,7 +31,7 @@ class ImportLocaleCommand extends Command
         $fileOption = $input->getOption('file');
         $moduleOption = $input->getOption('module');
         $localeOption = $input->getOption('locale');
-        $overwriteOption = $input->hasOption('overwrite') ? true : false;
+        $overwriteOption = $input->hasOption('overwrite');
 
         if (!isset($fileOption) && !isset($moduleOption)) {
             throw new Exception('Please specify a modulename or path to a locale file');

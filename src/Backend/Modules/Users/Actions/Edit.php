@@ -178,7 +178,7 @@ class Edit extends BackendBaseActionEdit
         );
 
         // permissions
-        $this->form->addCheckbox('active', ($this->record['active'] == 'Y'));
+        $this->form->addCheckbox('active', $this->record['active']);
 
         // only when GOD or when you can edit other users
         if ($this->allowUserRights) {
@@ -294,11 +294,11 @@ class Edit extends BackendBaseActionEdit
                 }
                 if ($this->authenticatedUser->getUserId() != $this->record['id']
                 ) {
-                    $user['active'] = $fields['active']->getActualValue();
+                    $user['active'] = $fields['active']->isChecked();
                 }
 
                 // user is now de-activated, we now remove all sessions for this user so he is logged out immediately
-                if (isset($user['active']) && $user['active'] === 'N' && $this->record['active'] !== $user['active']) {
+                if (isset($user['active']) && !$user['active'] && $this->record['active'] !== $user['active']) {
                     // delete all sessions for user
                     BackendModel::get('database')->delete(
                         'users_sessions',
@@ -350,7 +350,7 @@ class Edit extends BackendBaseActionEdit
                 // has the user submitted an avatar?
                 if ($fields['avatar']->isFilled()) {
                     // init vars
-                    $avatarsPath = FRONTEND_FILES_PATH . '/backend_users/avatars';
+                    $avatarsPath = FRONTEND_FILES_PATH . '/Users/avatars';
 
                     // delete old avatar if it isn't the default-image
                     if ($this->record['settings']['avatar'] != 'no-avatar.jpg'

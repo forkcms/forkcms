@@ -37,7 +37,7 @@ class LoadFaqQuestions
                 'question' => 'Is this a working test?',
                 'answer' => '<p>I hope so.</p>',
                 'created_on' => '2015-02-23 00:00:00',
-                'hidden' => 'N',
+                'hidden' => false,
                 'sequence' => 1,
             ]
         );

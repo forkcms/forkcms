@@ -103,7 +103,7 @@ class Installer extends ModuleInstaller
             'theme' => 'Fork',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
-            'active' => 'Y',
+            'active' => true,
             'data' => serialize(
                 [
                     'format' => '[/,/,top],[main,main,main]',
@@ -117,7 +117,7 @@ class Installer extends ModuleInstaller
             'theme' => 'Fork',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
-            'active' => 'Y',
+            'active' => true,
             'data' => serialize(
                 [
                     'format' => '[/,/,top],[main,main,main]',

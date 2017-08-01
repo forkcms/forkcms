@@ -10,9 +10,9 @@ namespace Frontend\Modules\Mailmotor\Widgets;
  */
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Modules\Mailmotor\Command\Subscription;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use Frontend\Core\Language\Locale;
-use Frontend\Modules\Mailmotor\Form\SubscribeType;
+use Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType;
 
 /**
  * This is a widget with the Subscribe form

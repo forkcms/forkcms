@@ -151,7 +151,7 @@ class Installer extends ModuleInstaller
             'INSERT INTO search_index (module, other_id, language, field, value, active)
              VALUES (?, ?, ?, ?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?, active = ?',
-            ['Pages', $id, $language, 'title', $term, 'Y', $term, 'Y']
+            ['Pages', $id, $language, 'title', $term, true, $term, true]
         );
     }
 }

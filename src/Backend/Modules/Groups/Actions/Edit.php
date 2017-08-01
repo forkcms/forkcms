@@ -266,7 +266,7 @@ class Edit extends BackendBaseActionEdit
 
     private function loadDataGrids(): void
     {
-        $this->dataGridUsers = new BackendDataGridDatabase(BackendGroupsModel::QUERY_ACTIVE_USERS, [$this->id, 'N']);
+        $this->dataGridUsers = new BackendDataGridDatabase(BackendGroupsModel::QUERY_ACTIVE_USERS, [$this->id, false]);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit', 'Users')) {

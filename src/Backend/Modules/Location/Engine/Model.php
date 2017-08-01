@@ -90,7 +90,7 @@ class Model
             'SELECT i.*
              FROM location AS i
              WHERE i.language = ? AND i.show_overview = ?',
-            [BL::getWorkingLanguage(), 'Y']
+            [BL::getWorkingLanguage(), true]
         );
     }
 
