@@ -580,3 +580,9 @@ We don't use SpoonCookie anymore and therefore also the class Common\Cookie has 
 You can now use the new cookie service `fork.cookie`
 
 The values of cookies are also no longer automatically serialized.
+
+## Sessions
+
+We removed SpoonSession and have switched fully to the symfony sessions
+``
+We also added a shortcut to get the current session: \Common\Core\Model::getSession()`

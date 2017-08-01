@@ -15,6 +15,8 @@ use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use TijsVerkoyen\Akismet\Akismet;
 
 /**
@@ -324,5 +326,14 @@ class Model extends BaseModel
         $akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
 
         return $akismet;
+    }
+
+    public static function getSession(): SessionInterface
+    {
+        if (self::requestIsAvailable()) {
+            return self::getRequest()->getSession();
+        }
+
+        return null;
     }
 }
