@@ -555,6 +555,14 @@
         <translation language="nl"><![CDATA[thema templates]]></translation>
         <translation language="en"><![CDATA[theme templates]]></translation>
       </item>
+      <item type="label" name="SelectedTheme">
+        <translation language="nl"><![CDATA[geselecteerd thema]]></translation>
+        <translation language="en"><![CDATA[selected theme]]></translation>
+      </item>
+      <item type="label" name="UseThisTheme">
+        <translation language="nl"><![CDATA[gebruik dit thema]]></translation>
+        <translation language="en"><![CDATA[use this theme]]></translation>
+      </item>
       <item type="label" name="UploadModule">
         <translation language="nl"><![CDATA[module opladen]]></translation>
         <translation language="en"><![CDATA[upload module]]></translation>

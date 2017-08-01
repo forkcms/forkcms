@@ -61,9 +61,12 @@ class Installer extends ModuleInstaller
     {
         // loop languages
         foreach ($this->getLanguages() as $language) {
-            $pageId = $this->insertPage(
-                ['title' => 'Newsletters', 'language' => $language]
-            );
+            $pageId = $this->getPageWithMailmotorBlock($language);
+            if ($pageId === null) {
+                $pageId = $this->insertPage(
+                    ['title' => 'Newsletters', 'language' => $language]
+                );
+            }
 
             if (!$this->hasPageWithSubscribeBlock($language)) {
                 $this->insertPage(
@@ -117,5 +120,23 @@ class Installer extends ModuleInstaller
              LIMIT 1',
             [$this->unsubscribeBlockId, $language]
         );
+    }
+
+    private function getPageWithMailmotorBlock(string $language): ?int
+    {
+        // @todo: Replace with PageRepository method when it exists.
+        $pageId = (int) $this->getDatabase()->getVar(
+            'SELECT p.id
+             FROM pages AS p
+             WHERE p.title = ? AND p.language = ?
+             LIMIT 1',
+            ['Newsletters', $language]
+        );
+
+        if ($pageId === 0) {
+            return null;
+        }
+
+        return $pageId;
     }
 }

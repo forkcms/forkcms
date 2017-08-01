@@ -51,7 +51,7 @@ class CacheClearCommand extends Command
         $fullPath = realpath(__DIR__ . '/../../..' . $path);
 
         // I use a rm-command because this is much faster then using the finder/filesystem-component
-        $command = 'rm -f `find %1$s ! -name ".gitignore" -type f ! -path *.svn/* -type f`';
+        $command = 'find %1$s ! -name ".gitignore" -type f ! -path *.svn/* -type f | xargs rm -f';
         shell_exec(sprintf($command, $fullPath));
         $io->comment(sprintf('Removed %1$s', $name));
     }
