@@ -121,6 +121,7 @@ final class RequirementsChecker
     {
         $reasoningBehindTheMinimumPHPVersion = 'At this moment we require php 7.0 as we follow the <a href="http://php.net/supported-versions.php">supported versions timeline of php</a>';
 
+        var_dump(php_sapi_name());
         return new RequirementCategory(
             'web server',
             Requirement::check(
@@ -141,7 +142,7 @@ final class RequirementsChecker
             ),
             Requirement::check(
                 'mod_rewrite',
-                (bool) (getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')),
+                php_sapi_name() === "cli" || (bool) (getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')),
                 'Fork CMS is able to rewrite the urls using mod_rewrite',
                 'Fork CMS will not be able to run if mod_rewrite can not be applied. Please make sure that the .htaccess file is present (the file starts with a dot, so it may be hidden on your filesystem), being read (AllowOverride directive) and the mod_rewrite module is enabled in Apache. If you are installing Fork CMS on another web server than Apache, make sure you have manually configured your web server to properly rewrite urls.
                  More information can be found in our <a href="http://www.fork-cms.com/knowledge-base/detail/fork-cms-and-webservers" title="Fork CMS and web servers">knowledge base</a>.
