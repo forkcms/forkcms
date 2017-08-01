@@ -2,6 +2,7 @@
 
 namespace Common;
 
+use Common\Core\Model;
 use ForkCMS\App\AppKernel;
 use ForkCMS\App\BaseModel;
 use SpoonDatabase;
@@ -11,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\DomCrawler\Crawler;
 use Backend\Core\Engine\Authentication;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * WebTestCase is the base class for functional tests.
@@ -247,22 +249,35 @@ abstract class WebTestCase extends BaseWebTestCase
     }
 
     /**
-     * Logs in a user. We do this directly in the authentication class because
-     * this is a lot faster than submitting forms and following redirects
+     * Logs the client in
      *
      * Logging in using the forms is tested in the Authentication module
+     *
+     * @param Client $client
      */
-    protected function login(): void
+    protected function login(Client $client): void
     {
         Authentication::tearDown();
-        Authentication::loginUser('noreply@fork-cms.com', 'fork');
+        $crawler = $client->request('GET', '/private/en/authentication');
+
+        $form = $crawler->selectButton('login')->form();
+        $this->submitForm($client, $form, [
+            'form' => 'authenticationIndex',
+            'backend_email' => 'noreply@fork-cms.com',
+            'backend_password' => 'fork',
+            'form_token' => $form['form_token']->getValue(),
+        ]);
     }
 
     /**
-     * Log out a user
+     * Logs the client out
+     *
+     * @param Client $client
      */
-    protected function logout(): void
+    protected function logout(Client $client): void
     {
+        $client->setMaxRedirects(-1);
+        $client->request('GET', '/private/en/authentication/logout');
         Authentication::tearDown();
     }
 }

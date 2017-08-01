@@ -8,8 +8,8 @@ class ResetTest extends WebTestCase
 {
     public function testAuthenticationIsNeeded(): void
     {
-        $this->logout();
         $client = static::createClient();
+        $this->logout($client);
 
         $client->setMaxRedirects(1);
         $client->request('GET', '/private/en/analytics/reset');
@@ -24,7 +24,7 @@ class ResetTest extends WebTestCase
     public function testAfterResetRedirectToSettings(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $client->setMaxRedirects(1);
         $client->request('GET', '/private/en/analytics/reset');

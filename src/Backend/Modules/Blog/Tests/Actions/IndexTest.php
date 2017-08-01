@@ -8,8 +8,8 @@ class IndexTest extends WebTestCase
 {
     public function testAuthenticationIsNeeded(): void
     {
-        $this->logout();
         $client = static::createClient();
+        $this->logout($client);
         $this->loadFixtures(
             $client,
             [
@@ -31,7 +31,7 @@ class IndexTest extends WebTestCase
     public function testIndexContainsBlogPosts(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $client->request('GET', '/private/en/blog/index');
         self::assertContains(

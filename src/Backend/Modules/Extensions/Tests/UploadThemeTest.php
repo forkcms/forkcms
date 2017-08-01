@@ -29,12 +29,12 @@ class UploadThemeTest extends WebTestCase
 
     protected function setUp(): void
     {
-        $this->logout();
         $this->client = static::createClient();
+        $this->logout($this->client);
         $this->client->setMaxRedirects(1);
         $this->client->request('GET', self::URL_UPLOAD_THEME);
 
-        $this->login();
+        $this->login($this->client);
 
         $this->client->request('GET', self::URL_UPLOAD_THEME);
     }
@@ -156,7 +156,7 @@ class UploadThemeTest extends WebTestCase
         // Remove the uploaded theme folder
         $fs->remove(FRONTEND_PATH . '/Themes/' . self::THEME_NAME);
 
-        $this->logout();
+        $this->logout($this->client);
         parent::tearDown();
     }
 }

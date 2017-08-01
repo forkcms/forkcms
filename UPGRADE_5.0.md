@@ -586,3 +586,7 @@ The values of cookies are also no longer automatically serialized.
 We removed SpoonSession and have switched fully to the symfony sessions
 ``
 We also added a shortcut to get the current session: \Common\Core\Model::getSession()`
+
+## Tests
+
+The login and logout methods in the tests now require a client as parameter since we will log in/out that specific client

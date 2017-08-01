@@ -24,8 +24,8 @@ class IndexTest extends WebTestCase
     public function testPrivateRedirectsToAuthentication(): void
     {
         $client = static::createClient();
+        $this->logout($client);
         $client->followRedirects();
-        $client->setMaxRedirects(1);
         $this->loadFixtures($client);
 
         $client->request('GET', '/private');
@@ -72,6 +72,7 @@ class IndexTest extends WebTestCase
             'form' => 'authenticationIndex',
             'backend_email' => 'test@test.com',
             'backend_password' => 'wrong_password',
+            'form_token' => $form['form_token']->getValue(),
         ]);
 
         // result should not yet be found
