@@ -9,11 +9,6 @@ use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
  */
 final class LoginHandler extends InstallerHandler
 {
-    /**
-     * @param InstallationData $installationData
-     *
-     * @return InstallationData
-     */
     public function processInstallationData(InstallationData $installationData): InstallationData
     {
         return $installationData;

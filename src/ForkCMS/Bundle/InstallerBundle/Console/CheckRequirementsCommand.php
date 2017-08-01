@@ -30,9 +30,6 @@ class CheckRequirementsCommand extends Command
     /** @var RequirementsChecker */
     private $requirementsChecker;
 
-    /**
-     * @param RequirementsChecker $requirementsChecker
-     */
     public function __construct(RequirementsChecker $requirementsChecker)
     {
         parent::__construct();
@@ -40,23 +37,14 @@ class CheckRequirementsCommand extends Command
         $this->requirementsChecker = $requirementsChecker;
     }
 
-    /**
-     * Configure the command options.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('forkcms:install:check-requirements')
             ->setDescription('Command to check if the server meets the install requirements');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = $output;
@@ -65,7 +53,7 @@ class CheckRequirementsCommand extends Command
         return $this->serverMeetsRequirements();
     }
 
-    private function serverMeetsRequirements()
+    private function serverMeetsRequirements(): int
     {
         if ($this->requirementsChecker->passes()) {
             $this->formatter->success('This server meets the Fork CMS requirements');
@@ -92,7 +80,7 @@ class CheckRequirementsCommand extends Command
         }
     }
 
-    private function showWarnings()
+    private function showWarnings(): void
     {
         $this->formatter->section('Warnings');
         array_map(
@@ -116,7 +104,7 @@ class CheckRequirementsCommand extends Command
         );
     }
 
-    private function showErrors()
+    private function showErrors(): void
     {
         $this->formatter->section('Errors');
         array_map(
@@ -140,11 +128,6 @@ class CheckRequirementsCommand extends Command
         );
     }
 
-    /**
-     * @param string $message
-     *
-     * @return string
-     */
     private function formatRequirementMessageForCLI(string $message): string
     {
         $message = str_replace(['                 ', "\n"], ['', "\n\n"], $message);

@@ -13,11 +13,6 @@ final class Requirement
     /** @var string */
     private $message;
 
-    /**
-     * @param string $name
-     * @param RequirementStatus $status
-     * @param string $message
-     */
     private function __construct(string $name, RequirementStatus $status, string $message)
     {
         $this->name = $name;
@@ -25,15 +20,6 @@ final class Requirement
         $this->message = $message;
     }
 
-    /**
-     * @param string $name
-     * @param bool $requirementIsMet
-     * @param string $requirementIsMetMessage
-     * @param string $requirementNotMetMessage
-     * @param RequirementStatus $requirementNotMetStatus
-     *
-     * @return self
-     */
     public static function check(
         string $name,
         bool $requirementIsMet,
@@ -48,25 +34,16 @@ final class Requirement
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return RequirementStatus
-     */
     public function getStatus(): RequirementStatus
     {
         return $this->status;
     }
 
-    /**
-     * @return string
-     */
     public function getMessage(): string
     {
         return $this->message;

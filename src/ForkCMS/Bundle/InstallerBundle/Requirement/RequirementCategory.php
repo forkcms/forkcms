@@ -10,19 +10,12 @@ final class RequirementCategory
     /** @var Requirement[] */
     private $requirements;
 
-    /**
-     * @param string $name
-     * @param Requirement[] $requirements
-     */
-    public function __construct($name, Requirement ...$requirements)
+    public function __construct(string $name, Requirement ...$requirements)
     {
         $this->name = $name;
         $this->requirements = $requirements;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -62,17 +55,11 @@ final class RequirementCategory
         );
     }
 
-    /**
-     * @return bool
-     */
     public function hasWarnings(): bool
     {
         return count($this->getWarnings()) > 0;
     }
 
-    /**
-     * @return bool
-     */
     public function hasErrors(): bool
     {
         return count($this->getErrors()) > 0;

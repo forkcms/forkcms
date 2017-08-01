@@ -103,7 +103,7 @@ final class RequirementsChecker
      *
      * @return bool
      */
-    protected function checkRequirements(): bool
+    private function checkRequirements(): bool
     {
         $this->requirementCategories = [
             $this->checkWebServer(),

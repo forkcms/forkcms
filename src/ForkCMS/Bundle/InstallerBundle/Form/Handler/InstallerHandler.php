@@ -11,12 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class InstallerHandler
 {
-    /**
-     * @param Form $form
-     * @param Request $request
-     *
-     * @return bool
-     */
     final public function process(Form $form, Request $request): bool
     {
         if (!$request->isMethod('POST')) {
@@ -34,10 +28,5 @@ abstract class InstallerHandler
         return false;
     }
 
-    /**
-     * @param InstallationData $installationData
-     *
-     * @return InstallationData
-     */
     abstract public function processInstallationData(InstallationData $installationData): InstallationData;
 }

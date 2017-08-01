@@ -33,22 +33,13 @@ class InstallCommand extends ContainerAwareCommand
     /** @var SymfonyStyle */
     private $formatter;
 
-    /**
-     * Configure the command options.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('forkcms:install:install')
             ->setDescription('Installation of fork from the cli');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
@@ -81,49 +72,26 @@ class InstallCommand extends ContainerAwareCommand
         return 1;
     }
 
-    /**
-     * @param InstallationData $installationData
-     *
-     * @return InstallationData
-     */
     private function selectLanguages(InstallationData $installationData): InstallationData
     {
         return $this->interactWithForm(LanguagesType::class, $installationData, new LanguagesHandler());
     }
 
-    /**
-     * @param InstallationData $installationData
-     *
-     * @return InstallationData
-     */
     private function selectModules(InstallationData $installationData): InstallationData
     {
         return $this->interactWithForm(ModulesType::class, $installationData, new ModulesHandler());
     }
 
-    /**
-     * @param InstallationData $installationData
-     *
-     * @return InstallationData
-     */
     private function requestDatabaseConfiguration(InstallationData $installationData): InstallationData
     {
         return $this->interactWithForm(DatabaseType::class, $installationData, new DatabaseHandler());
     }
 
-    /**
-     * @param InstallationData $installationData
-     *
-     * @return InstallationData
-     */
     private function requestGodUserCredentials(InstallationData $installationData): InstallationData
     {
         return $this->interactWithForm(LoginType::class, $installationData, new LoginHandler());
     }
 
-    /**
-     * @return bool
-     */
     private function serverMeetsTheRequirements(): bool
     {
         $checkRequirementsCommand = $this->getApplication()->find('forkcms:install:check-requirements');
@@ -144,9 +112,6 @@ class InstallCommand extends ContainerAwareCommand
         return $checkRequirementsOutput === CheckRequirementsCommand::RETURN_SERVER_MEETS_REQUIREMENTS;
     }
 
-    /**
-     * @return bool
-     */
     private function isForkAlreadyInstalled(): bool
     {
         $filesystem = new Filesystem();
@@ -157,9 +122,6 @@ class InstallCommand extends ContainerAwareCommand
         return $filesystem->exists($parameterFile);
     }
 
-    /**
-     * @return bool
-     */
     private function isPreparedForReinstall(): bool
     {
         $reinstallCommand = $this->getApplication()->find('forkcms:install:prepare-for-reinstall');
@@ -189,13 +151,6 @@ class InstallCommand extends ContainerAwareCommand
         return $reinstallOutput === PrepareForReinstallCommand::RETURN_SUCCESS;
     }
 
-    /**
-     * @param string $className
-     * @param InstallationData $installationData
-     * @param InstallerHandler $handler
-     *
-     * @return InstallationData
-     */
     private function interactWithForm(
         string $className,
         InstallationData $installationData,

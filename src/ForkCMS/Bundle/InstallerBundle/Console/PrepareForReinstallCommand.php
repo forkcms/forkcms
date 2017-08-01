@@ -17,9 +17,6 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
     const RETURN_DID_NOT_REINSTALL = 1;
     const RETURN_DID_NOT_CLEAR_DATABASE = 2;
 
-    /**
-     * Configure the command options.
-     */
     protected function configure(): void
     {
         $this->setName('forkcms:install:prepare-for-reinstall')
