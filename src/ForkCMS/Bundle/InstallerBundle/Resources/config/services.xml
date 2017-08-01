@@ -11,10 +11,6 @@
             <argument type="service" id="service_container"/>
         </service>
 
-        <service id="forkcms.console.installer.install" class="ForkCMS\Bundle\InstallerBundle\Console\InstallCommand">
-            <tag name="console.command" />
-        </service>
-
         <service id="forkcms.console.installer.prepare_for_reinstall" class="ForkCMS\Bundle\InstallerBundle\Console\PrepareForReinstallCommand">
             <tag name="console.command" />
         </service>
