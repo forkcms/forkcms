@@ -121,7 +121,6 @@ final class RequirementsChecker
     {
         $reasoningBehindTheMinimumPHPVersion = 'At this moment we require php 7.0 as we follow the <a href="http://php.net/supported-versions.php">supported versions timeline of php</a>';
 
-        var_dump(php_sapi_name());
         return new RequirementCategory(
             'web server',
             Requirement::check(
