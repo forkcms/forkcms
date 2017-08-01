@@ -25,6 +25,7 @@ class IndexTest extends WebTestCase
     {
         $client = static::createClient();
         $client->followRedirects();
+        $client->setMaxRedirects(1);
         $this->loadFixtures($client);
 
         $client->request('GET', '/private');
