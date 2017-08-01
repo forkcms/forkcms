@@ -288,9 +288,9 @@ class Detail extends FrontendBaseBlock
             $this->form->cleanupFields();
 
             // does the key exists?
-            if (\SpoonSession::exists('blog_comment_' . $this->record['id'])) {
+            if (FrontendModel::getSession()->has('blog_comment_' . $this->record['id'])) {
                 // calculate difference
-                $diff = time() - (int) \SpoonSession::get('blog_comment_' . $this->record['id']);
+                $diff = time() - (int) FrontendModel::getSession()->get('blog_comment_' . $this->record['id']);
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
                 if ($diff < 10 && $diff != 0) {
@@ -397,7 +397,7 @@ class Detail extends FrontendBaseBlock
                 FrontendBlogModel::notifyAdmin($comment);
 
                 // store timestamp in session so we can block excessive usage
-                \SpoonSession::set('blog_comment_' . $this->record['id'], time());
+                FrontendModel::getSession()->set('blog_comment_' . $this->record['id'], time());
 
                 // store author-data in cookies
                 try {

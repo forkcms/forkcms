@@ -42,8 +42,8 @@ class Save extends FrontendBaseAJAXAction
             return;
         }
         // previous search result
-        $previousTerm = \SpoonSession::exists('searchTerm') ? \SpoonSession::get('searchTerm') : '';
-        \SpoonSession::set('searchTerm', '');
+        $previousTerm = FrontendModel::getSession()->get('searchTerm', '');
+        FrontendModel::getSession()->set('searchTerm', '');
 
         // save this term?
         if ($previousTerm !== $term) {
@@ -60,7 +60,7 @@ class Save extends FrontendBaseAJAXAction
         }
 
         // save current search term in cookie
-        \SpoonSession::set('searchTerm', $term);
+        FrontendModel::getSession()->set('searchTerm', $term);
 
         // output
         $this->output(Response::HTTP_OK);
