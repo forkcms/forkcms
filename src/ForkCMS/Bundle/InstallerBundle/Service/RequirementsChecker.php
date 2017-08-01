@@ -382,7 +382,7 @@ final class RequirementsChecker
             ),
             Requirement::check(
                 $this->rootDir . 'app/config/*',
-                $this->isWritable($this->rootDir . 'var/config/'),
+                $this->isWritable($this->rootDir . 'app/config/'),
                 'In this location the global configuration will be stored. This location and all subdirectories are be writable.',
                 'In this location the global configuration will be stored. This location and all subdirectories must be writable.',
                 RequirementStatus::error()
