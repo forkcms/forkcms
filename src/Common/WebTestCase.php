@@ -2,7 +2,6 @@
 
 namespace Common;
 
-use Common\Core\Model;
 use ForkCMS\App\AppKernel;
 use ForkCMS\App\BaseModel;
 use SpoonDatabase;
@@ -12,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\DomCrawler\Crawler;
 use Backend\Core\Engine\Authentication;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * WebTestCase is the base class for functional tests.

@@ -10,7 +10,6 @@ use Doctrine\DBAL\DriverManager;
 use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use ForkCMS\Bundle\InstallerBundle\DBAL\InstallerConnection;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Doctrine\DBAL\Exception\ConnectionException;
 
 class InstallerConnectionFactory extends ConnectionFactory

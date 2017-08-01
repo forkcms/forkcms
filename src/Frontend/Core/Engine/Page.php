@@ -462,7 +462,6 @@ class Page extends KernelLoader
                     // add to list of extras to parse
                     $this->extras[] = $block['extra'];
 
-
                     return $block;
                 },
                 $blocks

@@ -6,7 +6,6 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MediaItemManager
 {

@@ -199,6 +199,7 @@ class FrontendHelper
     {
         try {
             $widget->execute();
+
             return $widget->getContent();
         } catch (\Exception $e) {
             // if we are debugging, we want to see the exception
