@@ -30,3 +30,5 @@ services:
             - "%database.password%"
             - "%database.name%_test"
             - "%database.port%"
+        calls:
+            - [ setDebug, [ "%kernel.debug%" ]]
