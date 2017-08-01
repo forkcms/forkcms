@@ -245,7 +245,7 @@ class Model extends \Common\Core\Model
         // get/init tracking identifier
         (self::$visitorId = $cookie->has('track') && $cookie->get('track', '') !== '')
             ? $cookie->get('track')
-            : md5(uniqid('', true) . \SpoonSession::getSessionId());
+            : md5(uniqid('', true) . self::getSession()->getId());
 
         if ($cookie->hasAllowedCookies() || !self::get('fork.settings')->get('Core', 'show_cookie_bar', false)) {
             $cookie->set('track', self::$visitorId, 86400 * 365);

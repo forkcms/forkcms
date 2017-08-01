@@ -13,7 +13,6 @@ use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
 use SpoonFilter;
-use SpoonSession;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -243,7 +242,7 @@ class Url extends KernelLoader
             $language = (string) $chunks[0];
             $this->setLanguageCookie($language);
 
-            SpoonSession::set('frontend_language', $language);
+            Model::getSession()->set('frontend_language', $language);
 
             return $language;
         }
