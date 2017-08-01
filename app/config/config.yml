@@ -6,7 +6,6 @@ imports:
 
 parameters:
     fork.is_installed: true
-    session.storage.php_bridge.class: Common\Core\Session\Storage\PhpBridgeSessionStorage
 
 framework:
     secret: "%kernel.secret%"
@@ -21,7 +20,6 @@ framework:
         engines: ['twig']
     session:
         handler_id: ~
-        storage_id: session.storage.php_bridge
 
 # Assetic Configuration
 assetic:
