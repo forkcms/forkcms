@@ -25,7 +25,7 @@ abstract class InstallerHandler
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $request->getSession()->set('installation_data', $this->processInstallationData($form->getData()));
 
             return true;
