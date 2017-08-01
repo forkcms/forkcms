@@ -158,7 +158,7 @@ class User
              LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
              WHERE u.id = ?
              LIMIT 1',
-            [\SpoonSession::getSessionId(), $userId]
+            [BackendModel::getSession()->getId(), $userId]
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
@@ -221,7 +221,7 @@ class User
              LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
              WHERE u.email = ?
              LIMIT 1',
-            [\SpoonSession::getSessionId(), $email]
+            [BackendModel::getSession()->getId(), $email]
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation

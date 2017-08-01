@@ -95,7 +95,7 @@ class Action extends KernelLoader
      */
     public function checkToken(): void
     {
-        $fromSession = (\SpoonSession::exists('csrf_token')) ? \SpoonSession::get('csrf_token') : '';
+        $fromSession = BackendModel::getSession()->get('csrf_token', '');
         $fromGet = $this->getRequest()->query->get('token');
 
         if ($fromSession !== '' && $fromGet !== '' && $fromSession === $fromGet) {
@@ -103,7 +103,7 @@ class Action extends KernelLoader
         }
 
         // clear the token
-        \SpoonSession::set('csrf_token', '');
+        BackendModel::getSession()->set('csrf_token', '');
 
         $this->redirect(
             BackendModel::createUrlForAction(

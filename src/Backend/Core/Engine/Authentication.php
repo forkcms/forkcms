@@ -11,7 +11,6 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
-use SpoonSession;
 
 /**
  * The class below will handle all authentication stuff. It will handle module-access, action-access, ...
@@ -130,7 +129,7 @@ class Authentication
             INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
             WHERE us.session_id = ? AND us.secret_key = ?
             GROUP BY gra.module, gra.action',
-            [SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')]
+            [BackendModel::getSession()->getId(), BackendModel::getSession()->get('backend_secret_key')]
         );
 
         // add all actions and their level
@@ -239,7 +238,7 @@ class Authentication
                  INNER JOIN users_groups AS ug ON u.id = ug.user_id
                  INNER JOIN groups_rights_modules AS grm ON ug.group_id = grm.group_id
                  WHERE us.session_id = ? AND us.secret_key = ?',
-                [SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')]
+                [BackendModel::getSession()->getId(), BackendModel::getSession()->get('backend_secret_key')]
             );
 
             foreach ($allowedModules as $row) {
@@ -262,7 +261,8 @@ class Authentication
         }
 
         // check if all needed values are set in the session
-        if (!(bool) SpoonSession::get('backend_logged_in') || (string) SpoonSession::get('backend_secret_key') === '') {
+        if (!(bool) BackendModel::getSession()->get('backend_logged_in')
+            || (string) BackendModel::getSession()->get('backend_secret_key') === '') {
             self::logout();
 
             return false;
@@ -276,7 +276,7 @@ class Authentication
              FROM users_sessions AS us
              WHERE us.session_id = ? AND us.secret_key = ?
              LIMIT 1',
-            [SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')]
+            [BackendModel::getSession()->getId(), BackendModel::getSession()->get('backend_secret_key')]
         );
 
         // if we found a matching row, we know the user is logged in, so we update his session
@@ -345,8 +345,8 @@ class Authentication
         // build the session array (will be stored in the database)
         $session = [
             'user_id' => $userId,
-            'secret_key' => static::getEncryptedString(SpoonSession::getSessionId(), $userId),
-            'session_id' => SpoonSession::getSessionId(),
+            'secret_key' => static::getEncryptedString(BackendModel::getSession()->getId(), $userId),
+            'session_id' => BackendModel::getSession()->getId(),
             'date' => BackendModel::getUTCDate(),
         ];
 
@@ -354,8 +354,8 @@ class Authentication
         $database->insert('users_sessions', $session);
 
         // store some values in the session
-        SpoonSession::set('backend_logged_in', true);
-        SpoonSession::set('backend_secret_key', $session['secret_key']);
+        BackendModel::getSession()->set('backend_logged_in', true);
+        BackendModel::getSession()->set('backend_secret_key', $session['secret_key']);
 
         // update/instantiate the value for the logged_in container.
         BackendModel::getContainer()->set('logged_in', true);
@@ -370,12 +370,12 @@ class Authentication
     public static function logout(): void
     {
         // remove all rows owned by the current user
-        BackendModel::get('database')->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
+        BackendModel::get('database')->delete('users_sessions', 'session_id = ?', BackendModel::getSession()->getId());
 
         // reset values. We can't destroy the session because session-data can be used on the site.
-        SpoonSession::set('backend_logged_in', false);
-        SpoonSession::set('backend_secret_key', '');
-        SpoonSession::set('csrf_token', '');
+        BackendModel::getSession()->set('backend_logged_in', false);
+        BackendModel::getSession()->set('backend_secret_key', '');
+        BackendModel::getSession()->set('csrf_token', '');
     }
 
     /**
