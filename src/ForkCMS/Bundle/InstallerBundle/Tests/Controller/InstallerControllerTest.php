@@ -18,7 +18,7 @@ class InstallerControllerTest extends WebTestCase
 
         // we should be redirected to the first step
         self::assertEquals(
-            200,
+            302,
             $client->getResponse()->getStatusCode()
         );
         self::assertStringEndsWith(
