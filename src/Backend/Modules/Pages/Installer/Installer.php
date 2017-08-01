@@ -90,103 +90,109 @@ class Installer extends ModuleInstaller
             'RecentArticlesList',
             'RecentArticlesList'
         );
-        $extras['faq_block'] = $this->insertExtra('Faq', ModuleExtraType::block(), 'Faq');
-        $extras['mailmotor_subscribe'] = $this->insertExtra(
-            'Mailmotor',
-            ModuleExtraType::block(),
-            'SubscribeForm',
-            'Subscribe'
-        );
-        $extras['mailmotor_unsubscribe'] = $this->insertExtra(
-            'Mailmotor',
-            ModuleExtraType::block(),
-            'UnsubscribeForm',
-            'Unsubscribe'
-        );
+        if (in_array('Faq', $this->getVariable('selected_modules'))) {
+            $extras['faq_block'] = $this->insertExtra('Faq', ModuleExtraType::block(), 'Faq');
+        }
+        if (in_array('Faq', $this->getVariable('selected_modules'))) {
+            $extras['mailmotor_subscribe'] = $this->insertExtra(
+                'Mailmotor',
+                ModuleExtraType::block(),
+                'SubscribeForm',
+                'Subscribe'
+            );
+            $extras['mailmotor_unsubscribe'] = $this->insertExtra(
+                'Mailmotor',
+                ModuleExtraType::block(),
+                'UnsubscribeForm',
+                'Unsubscribe'
+            );
+        }
         $extras['tags_block'] = $this->insertExtra('Tags', ModuleExtraType::block(), 'Tags');
-        $extras['profiles_activate'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'Activate',
-            'Activate'
-        );
-        $extras['profiles_forgot_password'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'ForgotPassword',
-            'ForgotPassword'
-        );
-        $extras['profiles_block'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'Dashboard'
-        );
-        $extras['profiles_login'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'Login',
-            'Login'
-        );
-        $extras['profiles_logout'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'Logout',
-            'Logout'
-        );
-        $extras['profiles_change_email'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'ChangeEmail',
-            'ChangeEmail'
-        );
-        $extras['profiles_change_password'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'ChangePassword',
-            'ChangePassword'
-        );
-        $extras['profiles_settings'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'Settings',
-            'Settings'
-        );
-        $extras['profiles_register'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'Register',
-            'Register'
-        );
-        $extras['profiles_reset_password'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'ResetPassword',
-            'ResetPassword'
-        );
-        $extras['profiles_resend_activation'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::block(),
-            'ResendActivation',
-            'ResendActivation'
-        );
-        $extras['profiles_login_box'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::widget(),
-            'LoginBox',
-            'LoginBox'
-        );
-        $extras['profiles_login_link'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::widget(),
-            'LoginLink',
-            'LoginLink'
-        );
-        $extras['profiles_secure_page'] = $this->insertExtra(
-            'Profiles',
-            ModuleExtraType::widget(),
-            'SecurePage',
-            'SecurePage'
-        );
+        if (in_array('Profiles', $this->getVariable('selected_modules'))) {
+            $extras['profiles_activate'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'Activate',
+                'Activate'
+            );
+            $extras['profiles_forgot_password'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'ForgotPassword',
+                'ForgotPassword'
+            );
+            $extras['profiles_block'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'Dashboard'
+            );
+            $extras['profiles_login'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'Login',
+                'Login'
+            );
+            $extras['profiles_logout'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'Logout',
+                'Logout'
+            );
+            $extras['profiles_change_email'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'ChangeEmail',
+                'ChangeEmail'
+            );
+            $extras['profiles_change_password'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'ChangePassword',
+                'ChangePassword'
+            );
+            $extras['profiles_settings'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'Settings',
+                'Settings'
+            );
+            $extras['profiles_register'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'Register',
+                'Register'
+            );
+            $extras['profiles_reset_password'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'ResetPassword',
+                'ResetPassword'
+            );
+            $extras['profiles_resend_activation'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::block(),
+                'ResendActivation',
+                'ResendActivation'
+            );
+            $extras['profiles_login_box'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::widget(),
+                'LoginBox',
+                'LoginBox'
+            );
+            $extras['profiles_login_link'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::widget(),
+                'LoginLink',
+                'LoginLink'
+            );
+            $extras['profiles_secure_page'] = $this->insertExtra(
+                'Profiles',
+                ModuleExtraType::widget(),
+                'SecurePage',
+                'SecurePage'
+            );
+        }
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -245,34 +251,38 @@ class Installer extends ModuleInstaller
                 );
 
                 // faq
-                $this->insertPage(
-                    [
-                        'title' => 'FAQ',
-                        'language' => $language,
-                        'parent_id' => 4,
-                    ],
-                    null,
-                    ['extra_id' => $extras['faq_block']]
-                );
+                if (in_array('Faq', $this->getVariable('selected_modules'))) {
+                    $this->insertPage(
+                        [
+                            'title' => 'FAQ',
+                            'language' => $language,
+                            'parent_id' => 4,
+                        ],
+                        null,
+                        ['extra_id' => $extras['faq_block']]
+                    );
+                }
 
                 // mailmotor
-                $newslettersPageId = $this->insertPage(
-                    [
-                        'title' => 'Newsletters',
-                        'language' => $language,
-                        'parent_id' => 4,
-                    ]
-                );
-                $this->insertPage(
-                    ['parent_id' => $newslettersPageId, 'title' => 'Subscribe', 'language' => $language],
-                    null,
-                    ['extra_id' => $extras['mailmotor_subscribe'], 'position' => 'main']
-                );
-                $this->insertPage(
-                    ['parent_id' => $newslettersPageId, 'title' => 'Unsubscribe', 'language' => $language],
-                    null,
-                    ['extra_id' => $extras['mailmotor_unsubscribe'], 'position' => 'main']
-                );
+                if (in_array('Mailmotor', $this->getVariable('selected_modules'))) {
+                    $newslettersPageId = $this->insertPage(
+                        [
+                            'title' => 'Newsletters',
+                            'language' => $language,
+                            'parent_id' => 4,
+                        ]
+                    );
+                    $this->insertPage(
+                        ['parent_id' => $newslettersPageId, 'title' => 'Subscribe', 'language' => $language],
+                        null,
+                        ['extra_id' => $extras['mailmotor_subscribe'], 'position' => 'main']
+                    );
+                    $this->insertPage(
+                        ['parent_id' => $newslettersPageId, 'title' => 'Unsubscribe', 'language' => $language],
+                        null,
+                        ['extra_id' => $extras['mailmotor_unsubscribe'], 'position' => 'main']
+                    );
+                }
 
                 // tags
                 $this->insertPage(
@@ -287,126 +297,132 @@ class Installer extends ModuleInstaller
                 );
 
                 // profiles
-                $profilesPageId = $this->insertPage(
-                    [
-                        'title' => 'Profiles',
-                        'language' => $language,
-                        'parent_id' => 4,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('subpages')],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('Activate', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_activate'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('ForgotPassword', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_forgot_password'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('ResetPassword', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_reset_password'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('ResendActivation', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_resend_activation'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('Login', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_login'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('Register', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_register'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('Logout', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_logout'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('Profile', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_block'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('ProfileSettings', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_settings'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('ChangeEmail', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_change_email'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
-                $this->insertPage(
-                    [
-                        'title' => ucfirst($this->getLocale('ChangePassword', 'Core', $language, 'lbl', 'Backend')),
-                        'language' => $language,
-                        'parent_id' => $profilesPageId,
-                    ],
-                    null,
-                    ['extra_id' => $extras['profiles_change_password'], 'position' => 'main'],
-                    ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                );
+                if (in_array('Profiles', $this->getVariable('selected_modules'))) {
+                    $profilesPageId = $this->insertPage(
+                        [
+                            'title' => 'Profiles',
+                            'language' => $language,
+                            'parent_id' => 4,
+                        ],
+                        null,
+                        ['extra_id' => $this->getExtraId('subpages')],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst($this->getLocale('Activate', 'Core', $language, 'lbl', 'Backend')),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_activate'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst($this->getLocale('ForgotPassword', 'Core', $language, 'lbl', 'Backend')),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_forgot_password'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst($this->getLocale('ResetPassword', 'Core', $language, 'lbl', 'Backend')),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_reset_password'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst(
+                                $this->getLocale('ResendActivation', 'Core', $language, 'lbl', 'Backend')
+                            ),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_resend_activation'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst($this->getLocale('Login', 'Core', $language, 'lbl', 'Backend')),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_login'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst($this->getLocale('Register', 'Core', $language, 'lbl', 'Backend')),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_register'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst($this->getLocale('Logout', 'Core', $language, 'lbl', 'Backend')),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_logout'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst($this->getLocale('Profile', 'Core', $language, 'lbl', 'Backend')),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_block'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst(
+                                $this->getLocale('ProfileSettings', 'Core', $language, 'lbl', 'Backend')
+                            ),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_settings'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst($this->getLocale('ChangeEmail', 'Core', $language, 'lbl', 'Backend')),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_change_email'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                    $this->insertPage(
+                        [
+                            'title' => ucfirst($this->getLocale('ChangePassword', 'Core', $language, 'lbl', 'Backend')),
+                            'language' => $language,
+                            'parent_id' => $profilesPageId,
+                        ],
+                        null,
+                        ['extra_id' => $extras['profiles_change_password'], 'position' => 'main'],
+                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
+                    );
+                }
             }
         }
     }
