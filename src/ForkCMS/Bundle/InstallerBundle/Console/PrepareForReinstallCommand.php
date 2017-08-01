@@ -60,7 +60,7 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
 
     private function removeConfiguration(SymfonyStyle $io): void
     {
-        $fullPath = realpath(__DIR__ . '/../../..' . '/app/config/parameters.yml');
+        $fullPath = realpath(__DIR__ . '/../../../../..' . '/app/config/parameters.yml');
         if (file_exists($fullPath)) {
             unlink($fullPath);
             $io->success('Removed configuration file');
