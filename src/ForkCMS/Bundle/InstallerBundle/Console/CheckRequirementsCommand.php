@@ -93,7 +93,6 @@ class CheckRequirementsCommand extends Command
 
                 array_map(
                     function (Requirement $requirement) {
-
                         $this->formatter->warning($requirement->getName());
                         $this->formatter->block($this->formatRequirementMessageForCLI($requirement->getMessage()));
                     },
@@ -117,7 +116,6 @@ class CheckRequirementsCommand extends Command
 
                 array_map(
                     function (Requirement $requirement) {
-
                         $this->formatter->error($requirement->getName());
                         $this->formatter->block($this->formatRequirementMessageForCLI($requirement->getMessage()));
                     },
