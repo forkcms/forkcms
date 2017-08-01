@@ -10,170 +10,134 @@ use Common\ModuleExtraType;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Pre-insert default extras of the default theme.
-     */
-    private function insertExtras()
+    public function install(): void
     {
-        // insert extra ids
-        $extras['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
+        $this->addModule('Extensions');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureFrontendExtras();
+        $this->configureFrontendForkTheme();
     }
 
-    /**
-     * Insert the templates.
-     */
-    private function insertTemplates()
+    private function configureBackendActionRightsForModules(): void
     {
-        /*
-         * Fallback templates
-         */
+        $this->setActionRights(1, $this->getModule(), 'DetailModule');
+        $this->setActionRights(1, $this->getModule(), 'InstallModule');
+        $this->setActionRights(1, $this->getModule(), 'Modules');
+        $this->setActionRights(1, $this->getModule(), 'UploadModule');
+    }
 
+    private function configureBackendActionRightsForTemplates(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'AddThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'DeleteThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'EditThemeTemplate');
+        $this->setActionRights(1, $this->getModule(), 'ThemeTemplates');
+    }
+
+    private function configureBackendActionRightsForThemes(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'DetailTheme');
+        $this->setActionRights(1, $this->getModule(), 'InstallTheme');
+        $this->setActionRights(1, $this->getModule(), 'Themes');
+        $this->setActionRights(1, $this->getModule(), 'UploadTheme');
+    }
+
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "Settings"
+        $navigationSettingsId = $this->setNavigation(null, 'Settings');
+        $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+        $this->setNavigation(
+            $navigationModulesId,
+            'Overview',
+            'extensions/modules',
+            [
+                'extensions/detail_module',
+                'extensions/upload_module',
+            ]
+        );
+
+        // Set navigation for "Settings > Themes"
+        $navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes');
+        $this->setNavigation(
+            $navigationThemesId,
+            'ThemesSelection',
+            'extensions/themes',
+            [
+                'extensions/detail_theme',
+                'extensions/upload_theme',
+            ]
+        );
+        $this->setNavigation(
+            $navigationThemesId,
+            'Templates',
+            'extensions/theme_templates',
+            [
+                'extensions/add_theme_template',
+                'extensions/edit_theme_template',
+            ]
+        );
+    }
+
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->configureBackendActionRightsForModules();
+        $this->configureBackendActionRightsForTemplates();
+        $this->configureBackendActionRightsForThemes();
+    }
+
+    private function configureFrontendExtras(): void
+    {
+        $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form');
+    }
+
+    private function configureFrontendForkTheme(): void
+    {
         // build templates
-        $templates['core']['default'] = array(
-            'theme' => 'core',
+        $templates['fork']['default'] = [
+            'theme' => 'Fork',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
-            'active' => 'Y',
-            'data' => serialize(array(
-                'format' => '[main]',
-                'names' => array('main'),
-            )),
-        );
+            'active' => true,
+            'data' => serialize(
+                [
+                    'format' => '[/,/,top],[main,main,main]',
+                    'image' => true,
+                    'names' => ['main', 'top'],
+                ]
+            ),
+        ];
 
-        $templates['core']['home'] = array(
-            'theme' => 'core',
+        $templates['fork']['home'] = [
+            'theme' => 'Fork',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
-            'active' => 'Y',
-            'data' => serialize(array(
-                'format' => '[main]',
-                'names' => array('main'),
-            )),
-        );
+            'active' => true,
+            'data' => serialize(
+                [
+                    'format' => '[/,/,top],[main,main,main]',
+                    'image' => true,
+                    'names' => ['main', 'top'],
+                ]
+            ),
+        ];
 
         // insert templates
-        $this->getDB()->insert('themes_templates', $templates['core']['default']);
-        $this->getDB()->insert('themes_templates', $templates['core']['home']);
+        $this->getDatabase()->insert('themes_templates', $templates['fork']['default']);
+        $this->getDatabase()->insert('themes_templates', $templates['fork']['home']);
 
-        /*
-         * Triton templates
-         */
-
-        // search will be installed by default; already link it to this template
-        $extras['search_form'] = $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, 'N', 2001);
-
-        // build templates
-        $templates['triton']['default'] = array(
-            'theme' => 'triton',
-            'label' => 'Default',
-            'path' => 'Core/Layout/Templates/Default.html.twig',
-            'active' => 'Y',
-            'data' => serialize(array(
-                'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[left,main,main,main]',
-                'names' => array('main', 'left', 'top', 'advertisement'),
-                'default_extras' => array('top' => array($extras['search_form'])),
-                'image' => false,
-            )),
-        );
-
-        $templates['triton']['home'] = array(
-            'theme' => 'triton',
-            'label' => 'Home',
-            'path' => 'Core/Layout/Templates/Home.html.twig',
-            'active' => 'Y',
-            'data' => serialize(array(
-                'format' => '[/,advertisement,advertisement,advertisement],[/,/,top,top],[/,/,/,/],[main,main,main,main],[left,left,right,right]',
-                'names' => array('main', 'left', 'right', 'top', 'advertisement'),
-                'default_extras' => array('top' => array($extras['search_form'])),
-                'image' => true,
-            )),
-        );
-
-        // insert templates
-        $this->getDB()->insert('themes_templates', $templates['triton']['default']);
-        $this->getDB()->insert('themes_templates', $templates['triton']['home']);
-
-        /*
-         * General theme settings
-         */
-
-        // set default theme
-        $this->setSetting('Core', 'theme', 'triton', true);
+        // set the theme
+        $this->setSetting('Core', 'theme', 'Fork', true);
 
         // set default template
-        $this->setSetting('Pages', 'default_template', $this->getTemplateId('default'));
+        $this->setSetting('Pages', 'default_template', $this->getTemplateId('Default'));
 
         // disable meta navigation
         $this->setSetting('Pages', 'meta_navigation', false);
-    }
-
-    /**
-     * Install the module
-     */
-    public function install()
-    {
-        // load install.sql
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-
-        // add 'extensions' as a module
-        $this->addModule('Extensions');
-
-        // import locale
-        $this->importLocale(__DIR__ . '/Data/locale.xml');
-
-        // insert extras
-        $this->insertExtras();
-
-        // insert templates
-        $this->insertTemplates();
-
-        // module rights
-        $this->setModuleRights(1, 'Extensions');
-
-        // set rights
-        $this->setRights();
-
-        // settings navigation
-        $navigationSettingsId = $this->setNavigation(null, 'Settings');
-        $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
-        $this->setNavigation($navigationModulesId, 'Overview', 'extensions/modules', array(
-            'extensions/detail_module',
-            'extensions/upload_module',
-        ));
-
-        // theme navigation
-        $navigationThemesId = $this->setNavigation($navigationSettingsId, 'Themes');
-        $this->setNavigation($navigationThemesId, 'ThemesSelection', 'extensions/themes', array(
-            'extensions/upload_theme',
-            'extensions/detail_theme',
-        ));
-        $this->setNavigation($navigationThemesId, 'Templates', 'extensions/theme_templates', array(
-            'extensions/add_theme_template',
-            'extensions/edit_theme_template',
-        ));
-    }
-
-    /**
-     * Set the rights
-     */
-    private function setRights()
-    {
-        // modules
-        $this->setActionRights(1, 'Extensions', 'Modules');
-        $this->setActionRights(1, 'Extensions', 'DetailModule');
-        $this->setActionRights(1, 'Extensions', 'InstallModule');
-        $this->setActionRights(1, 'Extensions', 'UploadModule');
-
-        // themes
-        $this->setActionRights(1, 'Extensions', 'Themes');
-        $this->setActionRights(1, 'Extensions', 'DetailTheme');
-        $this->setActionRights(1, 'Extensions', 'InstallTheme');
-        $this->setActionRights(1, 'Extensions', 'UploadTheme');
-
-        // templates
-        $this->setActionRights(1, 'Extensions', 'ThemeTemplates');
-        $this->setActionRights(1, 'Extensions', 'AddThemeTemplate');
-        $this->setActionRights(1, 'Extensions', 'EditThemeTemplate');
-        $this->setActionRights(1, 'Extensions', 'DeleteThemeTemplate');
     }
 }

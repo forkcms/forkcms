@@ -6,15 +6,15 @@ use Common\WebTestCase;
 
 class CategoryTest extends WebTestCase
 {
-    public function testCategoryHasPage()
+    public function testCategoryHasPage(): void
     {
         $client = static::createClient();
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
                 'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
-            )
+            ]
         );
 
         $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
@@ -28,7 +28,7 @@ class CategoryTest extends WebTestCase
         );
     }
 
-    public function testNonExistingCategoryPostGives404()
+    public function testNonExistingCategoryPostGives404(): void
     {
         $client = static::createClient();
 
@@ -36,7 +36,7 @@ class CategoryTest extends WebTestCase
         $this->assertIs404($client);
     }
 
-    public function testCategoryPageContainsBlogPost()
+    public function testCategoryPageContainsBlogPost(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
@@ -59,11 +59,11 @@ class CategoryTest extends WebTestCase
         );
     }
 
-    public function testNonExistingPageGives404()
+    public function testNonExistingPageGives404(): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/category/blogcategory-for-tests', array('page' => 34));
+        $client->request('GET', '/en/blog/category/blogcategory-for-tests', ['page' => 34]);
         $this->assertIs404($client);
     }
 }

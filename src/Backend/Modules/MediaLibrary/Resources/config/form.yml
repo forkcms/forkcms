@@ -1,0 +1,8 @@
+services:
+    media_library.form.type.media_group:
+        class: Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType
+        arguments:
+            - "@media_library.repository.group"
+            - "@command_bus"
+        tags:
+            - { name: form.type }

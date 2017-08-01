@@ -1,39 +1,32 @@
 /**
  * Interaction for the faq module
  */
-jsFrontend.faq =
-{
-    // init, something like a constructor
-    init: function()
-    {
-        if($('#faqFeedbackForm').length > 0) jsFrontend.faq.feedback.init();
-    }
+jsFrontend.faq = {
+  init: function() {
+    if ($('input[data-role=fork-feedback-useful]').length > 0) jsFrontend.faq.feedback.init();
+  }
 };
 
 // feedback form
-jsFrontend.faq.feedback =
-{
-    init: function()
-    {
-        // useful status has been changed
-        $('#usefulY, #usefulN').on('click', function()
-        {
-            // init useful status
-            var useful = $("#faqFeedbackForm input[type='radio']:checked").val() === 'Y';
+jsFrontend.faq.feedback = {
+  init: function() {
+    $('input[data-role=fork-feedback-useful]').on('change', function() {
+      var $wrapperForm = $(this.form);
 
-            // show or hide the form
-            if(useful)
-            {
-                $('#message').prop('required', false);
-                $('form#feedback').submit();
-            }
-            else
-            {
-                $('#feedbackNoInfo').show();
-                $('#message').prop('required', true);
-            }
-        });
-    }
+      // init useful status
+      var useful = $("input[data-role=fork-feedback-useful]:checked").val();
+
+      // show or hide the form
+      if (useful) {
+        $wrapperForm.find('textarea[data-role=fork-feedback-improve-message]').prop('required', false);
+        $wrapperForm.submit();
+      }
+      else {
+        $wrapperForm.find('textarea[data-role=fork-feedback-improve-message]').prop('required', true);
+        $wrapperForm.find('*[data-role=fork-feedback-container]').show();
+      }
+    });
+  }
 };
 
 $(jsFrontend.faq.init);

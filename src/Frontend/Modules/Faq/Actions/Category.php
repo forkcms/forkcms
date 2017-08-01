@@ -28,51 +28,42 @@ class Category extends FrontendBaseBlock
      */
     private $record;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
-        $this->tpl->assignGlobal('hideContentTitle', true);
+        $this->template->assignGlobal('hideContentTitle', true);
         $this->getData();
         $this->loadTemplate();
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+        if ($this->url->getParameter(1) === null) {
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get by URL
-        $this->record = FrontendFaqModel::getCategory($this->URL->getParameter(1));
+        $this->record = FrontendFaqModel::getCategory($this->url->getParameter(1));
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Category') . '/' . $this->record['url'];
+        $this->record['full_url'] = FrontendNavigation::getUrlForBlock('Faq', 'Category') . '/' . $this->record['url'];
         $this->questions = FrontendFaqModel::getAllForCategory($this->record['id']);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->breadcrumb->addElement($this->record['title']);
         $this->header->setPageTitle($this->record['title']);
 
         // assign category and questions
-        $this->tpl->assign('category', $this->record);
-        $this->tpl->assign('questions', $this->questions);
+        $this->template->assign('category', $this->record);
+        $this->template->assign('questions', $this->questions);
     }
 }

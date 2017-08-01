@@ -11,23 +11,18 @@ namespace Backend\Modules\Mailmotor\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex;
 use Backend\Core\Engine\Model;
-use Backend\Modules\Mailmotor\Command\SaveSettings;
-use Backend\Modules\Mailmotor\Event\SettingsSavedEvent;
 
 /**
  * This redirects to settings
  */
 final class Index extends ActionIndex
 {
-    /**
-     * Execute
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
-        return $this->redirect(
-            Model::createURLForAction(
+        $this->redirect(
+            Model::createUrlForAction(
                 'Settings'
             )
         );

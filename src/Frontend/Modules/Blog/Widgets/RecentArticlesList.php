@@ -18,33 +18,27 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
  */
 class RecentArticlesList extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
-        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
+        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed into the metaCustom
         $this->header->addRssLink($rssTitle, $rssLink);
 
         // assign comments
-        $this->tpl->assign(
+        $this->template->assign(
             'widgetBlogRecentArticlesList',
             FrontendBlogModel::getAll($this->get('fork.settings')->get('Blog', 'recent_articles_list_num_items', 5))
         );
-        $this->tpl->assign('widgetBlogRecentArticlesFullRssLink', $rssLink);
+        $this->template->assign('widgetBlogRecentArticlesFullRssLink', $rssLink);
     }
 }

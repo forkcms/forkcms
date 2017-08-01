@@ -9,20 +9,12 @@ use Frontend\Core\Engine\Model as FrontendModel;
  */
 class Model
 {
-    /**
-     * Get an item.
-     *
-     * @param string $id The id of the item to fetch.
-     *
-     * @return array
-     */
-    public static function get($id)
+    public static function get(string $id): array
     {
-        $id = (int) $id;
-
         // get form
         $form = (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.id, i.language, i.method, i.name, i.email, i.success_message, i.identifier
+            'SELECT i.id, i.email_subject, i.email_template, i.language, i.method, i.name, i.email,
+                    i.success_message, i.identifier
              FROM forms AS i
              WHERE i.id = ?',
             $id
@@ -39,14 +31,7 @@ class Model
         return $form;
     }
 
-    /**
-     * Get all fields of a form.
-     *
-     * @param int $id The id of the form wherefore we fetch the fields.
-     *
-     * @return array
-     */
-    public static function getFields($id)
+    public static function getFields(int $formId): array
     {
         // get fields
         $fields = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -54,12 +39,12 @@ class Model
              FROM forms_fields AS i
              WHERE i.form_id = ?
              ORDER BY i.sequence ASC',
-            (int) $id,
+            $formId,
             'id'
         );
 
         if (empty($fields)) {
-            return false;
+            return [];
         }
 
         // create an array with an equal amount of questionmarks as ids provided
@@ -81,7 +66,7 @@ class Model
             }
 
             // init validations
-            $field['validations'] = array();
+            $field['validations'] = [];
         }
 
         // we need to loop because one field can have multiple 'type' validations
@@ -93,40 +78,26 @@ class Model
         return $fields;
     }
 
-    /**
-     * Insert data.
-     *
-     * @param array $data The data to insert.
-     *
-     * @return int
-     */
-    public static function insertData(array $data)
+    public static function insertData(array $formData): int
     {
-        return FrontendModel::getContainer()->get('database')->insert('forms_data', $data);
+        return FrontendModel::getContainer()->get('database')->insert('forms_data', $formData);
     }
 
-    /**
-     * Insert data fields.
-     *
-     * @param array $data The data to insert.
-     *
-     * @return int
-     */
-    public static function insertDataField(array $data)
+    public static function insertDataField(array $dataField): int
     {
-        return FrontendModel::getContainer()->get('database')->insert('forms_data_fields', $data);
+        return FrontendModel::getContainer()->get('database')->insert('forms_data_fields', $dataField);
     }
 
     /**
      * Convert a PHP Date to jquery date format
      *
-     * @param string $php_format The php date format
+     * @param string $phpFormat The php date format
      *
      * @return string The jQuery date format
      */
-    public static function convertPHPDateToJquery($php_format)
+    public static function convertPHPDateToJquery(string $phpFormat): string
     {
-        $SYMBOLS_MATCHING = array(
+        $symbolsMatching = [
             // Day
             'd' => 'dd',
             'D' => 'D',
@@ -160,34 +131,34 @@ class Model
             'i' => '',
             's' => '',
             'u' => '',
-        );
-        $jqueryui_format = '';
+        ];
+        $jqueryuiFormat = '';
         $escaping = false;
-        for ($i = 0; $i < mb_strlen($php_format); ++$i) {
-            $char = $php_format[$i];
+        for ($i = 0; $i < mb_strlen($phpFormat); ++$i) {
+            $char = $phpFormat[$i];
             if ($char === '\\') {
                 // PHP date format escaping character
 
                 ++$i;
                 if ($escaping) {
-                    $jqueryui_format .= $php_format[$i];
+                    $jqueryuiFormat .= $phpFormat[$i];
                 } else {
-                    $jqueryui_format .= '\'' . $php_format[$i];
+                    $jqueryuiFormat .= '\'' . $phpFormat[$i];
                 }
                 $escaping = true;
             } else {
                 if ($escaping) {
-                    $jqueryui_format .= "'";
+                    $jqueryuiFormat .= "'";
                     $escaping = false;
                 }
-                if (isset($SYMBOLS_MATCHING[$char])) {
-                    $jqueryui_format .= $SYMBOLS_MATCHING[$char];
+                if (isset($symbolsMatching[$char])) {
+                    $jqueryuiFormat .= $symbolsMatching[$char];
                 } else {
-                    $jqueryui_format .= $char;
+                    $jqueryuiFormat .= $char;
                 }
             }
         }
 
-        return $jqueryui_format;
+        return $jqueryuiFormat;
     }
 }

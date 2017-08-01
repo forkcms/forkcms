@@ -2,19 +2,20 @@
 
 namespace Common\Exception;
 
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This exception will be used to bubble up exceptions to the kernel
  */
-class RedirectException extends \Exception
+class RedirectException extends Exception
 {
+    /**
+     * @var Response
+     */
     protected $response;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct($message, Response $response, \Exception $previous = null)
+    public function __construct(string $message, Response $response, Exception $previous = null)
     {
         $this->response = $response;
         $code = $response->getStatusCode();
@@ -26,7 +27,7 @@ class RedirectException extends \Exception
      *
      * @return Response
      */
-    public function getResponse()
+    public function getResponse(): Response
     {
         return $this->response;
     }

@@ -16,14 +16,15 @@ class IndexTest extends WebTestCase
      * If the clients could be insulated from eachother, this
      * would not be an issue.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Authentication::tearDown();
     }
 
-    public function testPrivateRedirectsToAuthentication()
+    public function testPrivateRedirectsToAuthentication(): void
     {
         $client = static::createClient();
+        $this->logout($client);
         $client->followRedirects();
         $this->loadFixtures($client);
 
@@ -34,7 +35,7 @@ class IndexTest extends WebTestCase
         );
     }
 
-    public function testAuthenticationIndexWorks()
+    public function testAuthenticationIndexWorks(): void
     {
         $client = static::createClient();
 
@@ -45,7 +46,7 @@ class IndexTest extends WebTestCase
         );
     }
 
-    public function testPrivateContainsRobotsTag()
+    public function testPrivateContainsRobotsTag(): void
     {
         $client = static::createClient();
 
@@ -56,7 +57,7 @@ class IndexTest extends WebTestCase
         );
     }
 
-    public function testAuthenticationWithWrongCredentials()
+    public function testAuthenticationWithWrongCredentials(): void
     {
         $client = static::createClient();
 
@@ -67,11 +68,12 @@ class IndexTest extends WebTestCase
         );
 
         $form = $crawler->selectButton('login')->form();
-        $this->submitForm($client, $form, array(
+        $this->submitForm($client, $form, [
             'form' => 'authenticationIndex',
             'backend_email' => 'test@test.com',
             'backend_password' => 'wrong_password',
-        ));
+            'form_token' => $form['form_token']->getValue(),
+        ]);
 
         // result should not yet be found
         self::assertContains(
@@ -80,7 +82,7 @@ class IndexTest extends WebTestCase
         );
     }
 
-    public function testAuthenticationWithCorrectCredentials()
+    public function testAuthenticationWithCorrectCredentials(): void
     {
         $client = static::createClient();
         $client->setMaxRedirects(2);
@@ -92,12 +94,12 @@ class IndexTest extends WebTestCase
         );
 
         $form = $crawler->selectButton('login')->form();
-        $this->submitForm($client, $form, array(
+        $this->submitForm($client, $form, [
             'form' => 'authenticationIndex',
             'backend_email' => 'noreply@fork-cms.com',
             'backend_password' => 'fork',
             'form_token' => $form['form_token']->getValue(),
-        ));
+        ]);
 
         self::assertContains(
             'Dashboard',
@@ -117,7 +119,7 @@ class IndexTest extends WebTestCase
      * Login as a pages user.
      * This user has the rights to access only the pages module.
      */
-    public function testPagesUserWithCorrectCredentials()
+    public function testPagesUserWithCorrectCredentials(): void
     {
         $client = static::createClient();
         $client->setMaxRedirects(2);
@@ -129,12 +131,12 @@ class IndexTest extends WebTestCase
         );
 
         $form = $crawler->selectButton('login')->form();
-        $this->submitForm($client, $form, array(
+        $this->submitForm($client, $form, [
             'form' => 'authenticationIndex',
             'backend_email' => 'pages-user@fork-cms.com',
             'backend_password' => 'fork',
             'form_token' => $form['form_token']->getValue(),
-        ));
+        ]);
 
         self::assertContains(
             'Now editing',
@@ -151,7 +153,7 @@ class IndexTest extends WebTestCase
      * This user only has the rights to access the users edit action.
      * It should enable the user to edit his own user-account.
      */
-    public function testUsersUserWithCorrectCredentials()
+    public function testUsersUserWithCorrectCredentials(): void
     {
         $client = static::createClient();
         $client->setMaxRedirects(2);
@@ -163,12 +165,12 @@ class IndexTest extends WebTestCase
         );
 
         $form = $crawler->selectButton('Log in')->form();
-        $this->submitForm($client, $form, array(
+        $this->submitForm($client, $form, [
             'form' => 'authenticationIndex',
             'backend_email' => 'users-edit-user@fork-cms.com',
             'backend_password' => 'fork',
             'form_token' => $form['form_token']->getValue(),
-        ));
+        ]);
 
         self::assertContains(
             'Edit profile',

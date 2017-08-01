@@ -9,8 +9,8 @@ namespace Backend\Modules\Search\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\Base\Action;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -18,77 +18,50 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 /**
  * This is the statistics-action, it will display the overview of search statistics
  */
-class Statistics extends BackendBaseActionIndex
+class Statistics extends Action
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
-        $this->loadDataGrid();
-        $this->parse();
+        $this->showDataGrid();
         $this->display();
     }
 
-    /**
-     * Loads the datagrids
-     */
-    private function loadDataGrid()
+    private function showDataGrid(): void
     {
-        // create datagrid
-        $this->dataGrid = new BackendDataGridDB(
-            BackendSearchModel::QRY_DATAGRID_BROWSE_STATISTICS,
-            BL::getWorkingLanguage()
+        $dataGrid = new BackendDataGridDatabase(
+            BackendSearchModel::QUERY_DATAGRID_BROWSE_STATISTICS,
+            [BL::getWorkingLanguage()]
         );
-
-        // hide column
-        $this->dataGrid->setColumnsHidden('data');
-
-        // create column
-        $this->dataGrid->addColumn('referrer', BL::lbl('Referrer'));
-
-        // header labels
-        $this->dataGrid->setHeaderLabels(array('time' => \SpoonFilter::ucfirst(BL::lbl('SearchedOn'))));
+        $dataGrid->setColumnsHidden(['data']);
+        $dataGrid->addColumn('referrer', BL::lbl('Referrer'));
+        $dataGrid->setHeaderLabels(['time' => \SpoonFilter::ucfirst(BL::lbl('SearchedOn'))]);
 
         // set column function
-        $this->dataGrid->setColumnFunction(array(__CLASS__, 'setReferrer'), '[data]', 'referrer');
-        $this->dataGrid->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[time]'),
+        $dataGrid->setColumnFunction([__CLASS__, 'parseRefererInDataGrid'], '[data]', 'referrer');
+        $dataGrid->setColumnFunction(
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[time]'],
             'time',
             true
         );
+        $dataGrid->setColumnFunction('htmlspecialchars', ['[term]'], 'term');
 
-        // sorting columns
-        $this->dataGrid->setSortingColumns(array('time', 'term'), 'time');
-        $this->dataGrid->setSortParameter('desc');
+        $dataGrid->setSortingColumns(['time', 'term'], 'time');
+        $dataGrid->setSortParameter('desc');
+
+        $this->template->assign('dataGrid', $dataGrid->getContent());
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    public static function parseRefererInDataGrid(string $data): string
     {
-        parent::parse();
-
-        // assign the datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
-    }
-
-    /**
-     * Set column referrer
-     *
-     * @param string $data The source data.
-     *
-     * @return string
-     */
-    public static function setReferrer($data)
-    {
-        // unserialize
         $data = unserialize($data);
+        if (!isset($data['server']['HTTP_REFERER'])) {
+            return '';
+        }
 
-        // return correct data
-        return (isset($data['server']['HTTP_REFERER'])) ? '<a href="' . $data['server']['HTTP_REFERER'] . '">' . $data['server']['HTTP_REFERER'] . '</a>' : '';
+        $referrer = htmlspecialchars($data['server']['HTTP_REFERER']);
+
+        return '<a href="' . $referrer . '">' . $referrer . '</a>';
     }
 }

@@ -1,0 +1,227 @@
+{% extends 'Layout/Templates/pages.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
+
+{% block pagesTree %}
+  <div class="sub-navigation">
+    <div id="mediaTree" class="pages-tree">
+      <div class="alert alert-warning visible-xs visible-sm">
+        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
+      </div>
+      <div id="tree">
+        {{ tree|raw }}
+      </div>
+    </div>
+    <div id="fullwidthSwitch">
+      <a href="#close">&nbsp;</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showMediaLibraryMediaItemCleanup %}
+        {{ macro.buttonIcon( geturl('MediaItemCleanup'), 'trash-o', 'lbl.MediaItemCleanup'|trans|capitalize, null, 'data-role=media-item-cleanup data-target=#confirmMediaItemCleanup') }}
+      {% endif %}
+      {% if showMediaLibraryMediaItemUpload %}
+        {% if mediaFolder %}
+          {{ macro.buttonIcon( geturl('MediaItemUpload', null, '&folder='~mediaFolder.id), 'upload', 'lbl.AddMediaItems'|trans|capitalize) }}
+        {% endif %}
+        {% if not mediaFolder %}
+          {{ macro.buttonIcon( geturl('MediaItemUpload'), 'upload', 'lbl.AddMediaItems'|trans|capitalize) }}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="row fork-module-content">
+    <div id="library" class="col-md-12">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          {% for dataGrid in dataGrids %}
+          <li role="presentation">
+            <a href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-toggle="tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="tab-content">
+          {% for dataGrid in dataGrids %}
+          <div role="tabpanel" class="tab-pane" id="{{ dataGrid.tabName }}">
+            <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="get" class="forkForms">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
+                    <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden" name="move_to_folder_id" value="" />
+                    {% if mediaFolder %}
+                      <input type="hidden" name="current_folder_id" value="{{ mediaFolder.id }}" />
+                    {% endif %}
+                    {{ dataGrid.html|raw }}
+                  </div>
+                </div>
+              </div>
+            </form>
+            {% if not dataGrid.numberOfResults %}
+              {% if mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&folder=#{mediaFolder.id}')) }}</p>{% endif %}
+              {% if not mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add') ) }}</p>{% endif %}
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="row fork-module-actions">
+        <div class="col-md-12">
+          <div class="btn-toolbar">
+            {% if mediaFolder %}
+              <div class="btn-group pull-left" role="group">
+                {% if showMediaLibraryMediaFolderDelete %}
+                  {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
+                    <button type="button" class="btn btn-danger" id="media-folder-delete" data-toggle="modal" data-target="#confirmMediaFolderDelete">
+                      <span class="fa fa-trash-o"></span>
+                      {{ 'lbl.MediaFolderDelete'|trans|ucfirst }}
+                    </button>
+                  {% endif %}
+                {% endif %}
+                {% if showMediaLibraryMediaFolderEdit %}
+                  <button type="button" class="btn" id="media-folder-edit" data-toggle="modal" data-target="#editMediaFolderDialog">
+                    <span class="fa fa-pencil"></span>
+                    {{ 'lbl.EditMediaFolder'|trans|ucfirst }}
+                  </button>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Mass action: Dialog to delete selected media items #}
+  <div class="modal fade" id="confirmMediaItemCleanup" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title h4">{{ 'lbl.MediaItemCleanup'|trans|ucfirst }}</span>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            {{ 'msg.ConfirmMediaItemCleanup'|trans }}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+          </button>
+          <a href="{{ geturl('MediaItemCleanup') }}" class="btn btn-danger">
+            <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Mass action: Dialog to move media items #}
+  <div class="modal fade" id="confirmMassActionMediaItemMove" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title h4">{{ 'lbl.MoveMedia'|trans|ucfirst }}</span>
+        </div>
+        <div class="modal-body">
+          <p>
+            <label for="folderImagesId">{{ 'msg.MoveMediaToFolder'|trans }}</label><br/>
+            <select id="moveToFolderId" name="move_to_folder_id">
+              {% for mediaFolder in mediaFolders %}
+                <option value="{{ mediaFolder.id }}">{{ mediaFolder.slug }}</option>
+              {% endfor %}
+            </select>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <span class="fa fa-check"></span>{{ 'lbl.Move'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Dialogs for MediaFolderDelete and EditMediaFolder #}
+  {% if mediaFolder %}
+    {# Delete MediaFolder Dialog #}
+    {% if showMediaLibraryMediaFolderDelete %}
+    <div class="modal fade" id="confirmMediaFolderDelete" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.MediaFolderDelete'|trans|ucfirst }}</span>
+          </div>
+          <div class="modal-body">
+            <p>
+              {% if hasResults %}
+                {{ 'msg.ConfirmMediaFolderDeleteAndFiles'|trans|format(mediaFolder.name) }}
+              {% endif %}
+              {% if not hasResults %}
+                {{ 'msg.ConfirmMediaFolderDelete'|trans|format(mediaFolder.name) }}
+              {% endif %}
+            </p>
+            {% if dgFiles %}
+            <p>
+              {{ 'msg.DeleteConnections'|trans }}
+            </p>
+            {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            </button>
+            <a href="{{ geturl('MediaFolderDelete') }}&amp;id={{ mediaFolder.id }}" class="btn btn-danger">
+              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {# Edit MediaFolder Dialog #}
+    {% if showMediaLibraryMediaFolderEdit %}
+    <div class="modal fade" id="editMediaFolderDialog" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.EditMediaFolder'|trans|ucfirst }}</span>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="mediaFolderName" class="control-label">
+                {{ 'lbl.Name'|trans|ucfirst }}
+                {{ macro.required }}
+              </label>
+              <input type="hidden" name="mediaFolderId" id="mediaFolderId" maxlength="255" value="{{ mediaFolder.id }}">
+              <input type="text" name="mediaFolderName" id="mediaFolderName" class="form-control checkBeforeUnload" maxlength="255" value="{{ mediaFolder.name }}">
+              <p class="text-danger" id="categoryTitle'err.r" style="display: none;">This field is required.</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            </button>
+            <button id="editMediaFolderSubmit" type="submit" name="edit" class="btn btn-primary">
+              <span class="fa fa-check"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  {% endif %}
+
+  {# Add folder dialog #}
+  {% include "MediaLibrary/Resources/views/BackendMediaLibraryUploadDialogAddFolder.html.twig" %}
+{% endblock %}

@@ -17,10 +17,7 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
  */
 class Categories extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent
         parent::execute();
@@ -29,11 +26,8 @@ class Categories extends FrontendBaseWidget
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
-        $this->tpl->assign('widgetFaqCategories', FrontendFaqModel::getCategories());
+        $this->template->assign('widgetFaqCategories', FrontendFaqModel::getCategories());
     }
 }

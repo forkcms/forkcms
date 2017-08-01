@@ -24,12 +24,10 @@ class TwigFilters
      *
      * @param Twig_Environment $twig
      * @param string $app
-     *
-     * @return array
      */
-    public static function getFilters(&$twig, $app)
+    public static function addFilters(Twig_Environment $twig, string $app): void
     {
-        $app = $app.'\Core\Engine\TemplateModifiers';
+        $app .= '\Core\Engine\TemplateModifiers';
         $twig->addFilter(new Twig_SimpleFilter('getpageinfo', $app.'::getPageInfo'));
         $twig->addFilter(new Twig_SimpleFilter('highlight', $app.'::highlightCode'));
         $twig->addFilter(new Twig_SimpleFilter('profilesetting', $app.'::profileSetting'));
@@ -60,32 +58,32 @@ class TwigFilters
         $twig->addFunction(new Twig_SimpleFunction(
             'getnavigation',
             $app.'::getNavigation',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'getsubnavigation',
             $app.'::getSubNavigation',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'parsewidget',
             $app.'::parseWidget',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
 
         // Function URL
 
         $twig->addFunction(new Twig_SimpleFunction(
             'geturl',
-            $app.'::getURL'
+            $app.'::getUrl'
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'geturlforextraid',
-            $app.'::getURLForExtraId'
+            $app.'::getUrlForExtraId'
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'geturlforblock',
-            $app.'::getURLForBlock'
+            $app.'::getUrlForBlock'
         ));
 
         // boolean functions
@@ -93,7 +91,7 @@ class TwigFilters
         $twig->addFunction(new Twig_SimpleFunction(
             'showbool',
             $app.'::showBool',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
 
         // @Deprecated We should look for replacements because they run on spoon library

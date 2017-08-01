@@ -19,10 +19,8 @@ class AppKernel extends Kernel
 {
     /**
      * Load all the bundles we'll be using in our application.
-     *
-     * @return array
      */
-    public function registerBundles()
+    public function registerBundles(): array
     {
         $bundles = [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -35,14 +33,16 @@ class AppKernel extends Kernel
             new \SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
             new \SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),
             new \SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
-            new \Backend\Modules\Mailmotor\Mailmotor,
+            new \Backend\Modules\MediaLibrary\MediaLibrary(),
+            new \Backend\Modules\Mailmotor\Mailmotor(),
             new \MailMotor\Bundle\MailMotorBundle\MailMotorMailMotorBundle(),
             new \MailMotor\Bundle\MailChimpBundle\MailMotorMailChimpBundle(),
             new \MailMotor\Bundle\CampaignMonitorBundle\MailMotorCampaignMonitorBundle(),
+            new \Liip\ImagineBundle\LiipImagineBundle(),
             new \Matthias\SymfonyConsoleForm\Bundle\SymfonyConsoleFormBundle(),
         ];
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+        if (in_array($this->getEnvironment(), ['dev', 'test'])) {
             $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new \Symfony\Bundle\DebugBundle\DebugBundle();
         }
@@ -50,10 +50,7 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-    /**
-     * @param LoaderInterface $loader
-     */
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         $fs = new Filesystem();
         if ($fs->exists(__DIR__ . '/config/parameters.yml')) {

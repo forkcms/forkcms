@@ -11,7 +11,7 @@ jsBackend.location =
     init: function()
     {
         // only show a map when there are options and markers given
-        if(typeof markers != 'undefined' && typeof mapOptions != 'undefined')
+        if($('#map').length > 0 && typeof markers != 'undefined' && typeof mapOptions != 'undefined')
         {
             jsBackend.location.showMap();
 

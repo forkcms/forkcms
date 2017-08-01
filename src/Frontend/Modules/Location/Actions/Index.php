@@ -20,17 +20,14 @@ class Index extends FrontendBaseBlock
     /**
      * @var array
      */
-    protected $items = array();
+    protected $items = [];
 
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         // define Google Maps API key
         $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
@@ -50,10 +47,7 @@ class Index extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data
-     */
-    protected function loadData()
+    protected function loadData(): void
     {
         $this->items = FrontendLocationModel::getAll();
         $this->settings = FrontendLocationModel::getMapSettings(0);
@@ -71,15 +65,12 @@ class Index extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->addJSData('settings', $this->settings);
         $this->addJSData('items', $this->items);
 
-        $this->tpl->assign('locationItems', $this->items);
-        $this->tpl->assign('locationSettings', $this->settings);
+        $this->template->assign('locationItems', $this->items);
+        $this->template->assign('locationSettings', $this->settings);
     }
 }

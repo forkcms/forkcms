@@ -18,46 +18,23 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
  */
 class Form extends FrontendBaseWidget
 {
-    /**
-     * @var FrontendForm
-     */
-    private $frm;
-
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
-        $this->loadForm();
-        $this->parse();
-    }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
-    {
-        $this->frm = new FrontendForm('search', FrontendNavigation::getURLForBlock('Search'), 'get', null, false);
-        $widgetField = $this->frm->addText(
-            'q_widget',
-            null,
-            255,
-            'inputText autoSuggest',
-            'inputTextError autoSuggest'
-        );
-
-        $widgetField->setAttribute('itemprop', 'query-input');
-    }
-
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
-    {
-        $this->addJS('typeahead.bundle.min.js');
+        $this->addJS('/js/vendors/typeahead.bundle.min.js', true, false);
         $this->addCSS('Search.css');
-        $this->frm->parse($this->tpl);
+
+        $form = new FrontendForm('search', FrontendNavigation::getUrlForBlock('Search'), 'get', null, false);
+        $form->setParameter('class', 'navbar-form');
+        $form->setParameter('role', 'search');
+        $form->addText('q_widget')->setAttributes(
+            [
+                'itemprop' => 'query-input',
+                'data-role' => 'fork-widget-search-field',
+            ]
+        );
+        $form->parse($this->template);
     }
 }

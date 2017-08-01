@@ -44,9 +44,13 @@
       border: 0;
       border-top: 1px solid $gray-lightest;
       padding: 11px 0 12px;
+      color: $formbuilder-blue;
 
-      a {
-        color: $formbuilder-blue;
+      &:hover,
+      &:focus {
+        color: darken($formbuilder-blue, 15%);
+        text-decoration: underline;
+        background: transparent;
       }
 
       .fa {

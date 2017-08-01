@@ -12,31 +12,29 @@ namespace Backend\Modules\ContentBlocks\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\Command\DeleteContentBlock;
-use Backend\Modules\ContentBlocks\Event\ContentBlockDeleted;
-use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
+use Backend\Form\Type\DeleteType;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockDeleted;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotFound;
 
 /**
  * This is the delete-action, it will delete an item.
  */
 class Delete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        /** @var ContentBlockRepository $contentBlockRepository */
-        $contentBlockRepository = $this->get('content_blocks.repository.content_block');
+        $deleteForm = $this->createForm(DeleteType::class, null, ['module' => $this->getModule()]);
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
-        $contentBlock = $contentBlockRepository->findOneByIdAndLocale(
-            $this->getParameter('id', 'int'),
-            Locale::workingLocale()
-        );
-
-        if ($contentBlock === null) {
-            return $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+            return;
         }
+        $deleteFormData = $deleteForm->getData();
+
+        $contentBlock = $this->getContentBlock((int) $deleteFormData['id']);
 
         // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle(new DeleteContentBlock($contentBlock));
@@ -46,16 +44,28 @@ class Delete extends BackendBaseActionDelete
             new ContentBlockDeleted($contentBlock)
         );
 
-        return $this->redirect(
-            BackendModel::createURLForAction(
-                'Index',
-                null,
-                null,
-                [
-                    'report' => 'deleted',
-                    'var' => $contentBlock->getTitle(),
-                ]
-            )
+        $this->redirect($this->getBackLink(['report' => 'deleted', 'var' => $contentBlock->getTitle()]));
+    }
+
+    private function getBackLink(array $parameters = []): string
+    {
+        return BackendModel::createUrlForAction(
+            'Index',
+            null,
+            null,
+            $parameters
         );
+    }
+
+    private function getContentBlock(int $id): ContentBlock
+    {
+        try {
+            return $this->get('content_blocks.repository.content_block')->findOneByIdAndLocale(
+                $id,
+                Locale::workingLocale()
+            );
+        } catch (ContentBlockNotFound $e) {
+            $this->redirect($this->getBackLink(['error' => 'non-existing']));
+        }
     }
 }

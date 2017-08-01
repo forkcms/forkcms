@@ -18,20 +18,14 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
  */
 class Categories extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         // get categories
         $categories = FrontendBlogModel::getAllCategories();
@@ -39,7 +33,7 @@ class Categories extends FrontendBaseWidget
         // any categories?
         if (!empty($categories)) {
             // build link
-            $link = FrontendNavigation::getURLForBlock('Blog', 'Category');
+            $link = FrontendNavigation::getUrlForBlock('Blog', 'Category');
 
             // loop and reset url
             foreach ($categories as &$row) {
@@ -48,6 +42,6 @@ class Categories extends FrontendBaseWidget
         }
 
         // assign comments
-        $this->tpl->assign('widgetBlogCategories', $categories);
+        $this->template->assign('widgetBlogCategories', $categories);
     }
 }

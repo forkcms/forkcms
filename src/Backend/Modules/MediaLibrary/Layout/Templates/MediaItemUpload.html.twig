@@ -1,0 +1,37 @@
+{% extends 'Layout/Templates/pages.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
+
+{% block pagesTree %}
+  <div class="sub-navigation">
+    <div id="mediaTree" class="pages-tree">
+      <div class="alert alert-warning visible-xs visible-sm">
+        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
+      </div>
+      <div id="tree">
+        {{ tree|raw }}
+      </div>
+    </div>
+    <div id="fullwidthSwitch">
+      <a href="#close">&nbsp;</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showMediaLibraryMediaItemIndex %}
+        {% if folderId %}
+          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.BackToOverview'|trans|capitalize) }}
+        {% endif %}
+        {% if not folderId %}
+          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'bars', 'lbl.BackToOverview'|trans|capitalize) }}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
+{% endblock %}

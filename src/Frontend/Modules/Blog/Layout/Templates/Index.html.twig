@@ -3,68 +3,98 @@
   - {{ items }}: contains an array with all posts, each element contains data about the post
 #}
 
-{% if not items %}
-  <div id="blogIndex">
-    <section class="mod">
-      <div class="inner">
-        <div class="bd content">
-          <p>{{ 'msg.BlogNoItems'|trans }}</p>
-        </div>
-      </div>
-    </section>
-  </div>
-{% endif %}
-{% if items %}
-  <div id="blogIndex">
-    {% for item in items %}
-      <article class="mod">
-        <div class="inner">
-          <header class="hd">
-            <h3><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></h3>
-            <ul>
-              <li>
-                {# Written by #}
-                {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname'))|raw }}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-                {# Written on #}
-                {{ 'lbl.On'|trans }} {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
+<section class="module-blog block-blog-index">
+  {% if not items %}
+    {% block block_no_items %}
+      {{ alerts.alert('info', 'msg.BlogNoItems'|trans) }}
+    {% endblock %}
+  {% else %}
+    {% block block_body %}
+      <div class="block-body">
+        {% for item in items %}
+          <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
+            <meta itemprop="interactionCount" content="UserComments:{{ item.comments_count }}">
+            <meta itemprop="author" content="{{ item.user_id|usersetting('nickname' ) }}">
 
-                {# Category#}
-                {{ 'lbl.In'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Category'|trans }}
-                <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
+            <header class="block-article-heading page-header" role="banner">
+              <h2 itemprop="name">
+                <a href="{{ item.full_url }}" title="{{ item.title }}">
+                  {{ item.title }}
+                </a>
+              </h2>
 
-                {# Tags #}
-                {% if item.tags %}
-                  {{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
-                  {% for tags in item.tags %}
-                    <a href="{{ tags.full_url }}" rel="tag" title="{{ tags.name }}">{{ tags.name }}</a>{% if not tags.last %}, {% endif %}{% if tags.last %}.{% endif %}
-                  {% endfor %}
-                {% endif %}
-              </li>
-              {# Comments #}
-              {% if item.allow_comments %}
-                <li>
-                  {% if not item.comments %}
-                    <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|ucfirst }}</a>{% endif %}
-                  {% if item.comments %}
-                    {% if item.comments_multiple %}
-                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count)|raw }}</a>{% endif %}
-                    {% if not item.comments_multiple %}
-                      <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
+              <div class="row">
+                <div class="col-xs-12 col-md-8">
+                  {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')) }}
+                  {{ 'lbl.On'|trans }}
+                  <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">
+                    {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
+                  </time>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  {% if item.allow_comments %}
+                    <div class="pull-right">
+                      {% if not item.comments %}
+                        <a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+                          {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                        </a>
+                      {% else %}
+                        <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
+                          {% if item.comments_multiple %}
+                            {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count ) }}
+                          {% else %}
+                            {{ 'msg.BlogOneComment'|trans }}
+                          {% endif %}
+                        </a>
+                      {% endif %}
+                    </div>
                   {% endif %}
-                </li>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  {{ 'lbl.Category'|trans|ucfirst }}
+                  <a itemprop="genre" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+                  <div class="pull-right">
+                    {% if item.tags %}
+                      {{ 'lbl.Tags'|trans|ucfirst }}:
+                      <span itemprop="keywords">
+                        {% for tag in item.tags %}
+                        <a class="label label-default" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                          {{ tag.name }}
+                          </a>{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                      </span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </header>
+
+            <div class="block-article-body" itemprop="articleBody">
+              {% if item.image %}
+                <img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
+              {% if not item.introduction %}
+                {{ item.text|raw }}
+              {% else %}
+                {{ item.introduction|raw }}
               {% endif %}
-            </ul>
-          </header>
-          <div class="bd content">
-            {% if item.image %}
-              <img src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
-            {% if not item.introduction %}{{ item.text|raw }}{% endif %}
-            {% if item.introduction %}{{ item.introduction|raw }}{% endif %}
-          </div>
-        </div>
-      </article>
-    {% endfor %}
-  </div>
-  {% include "Core/Layout/Templates/Pagination.html.twig" %}
-{% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% endblock %}
+
+    {% block block_pagination %}
+      <div class="block-footer">
+        {% include "Core/Layout/Templates/Pagination.html.twig" %}
+      </div>
+    {% endblock %}
+  {% endif %}
+</section>

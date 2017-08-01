@@ -1,0 +1,45 @@
+.header {
+  background-size: cover;
+  background-position: center;
+
+  .page-header {
+    border-bottom: 0;
+    text-align: center;
+    padding: 0;
+    margin: 100px 0;
+
+    h1 {
+      font-size: $font-size-h2;
+      color: $white;
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+    }
+  }
+
+  &.header-blue {
+    background-color: $brand-primary-dark;
+  }
+}
+
+@media screen and (min-width: $screen-md) {
+
+  .header .page-header {
+    margin: 150px 0;
+
+    h1 {
+      font-size: $font-size-h1;
+    }
+  }
+}
+
+
+@media screen and (min-width: $screen-lg) {
+
+  .header .page-header {
+    margin: 200px 0;
+
+    h1 {
+      font-size: $font-size-h1;
+    }
+  }
+}

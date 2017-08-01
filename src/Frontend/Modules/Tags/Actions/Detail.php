@@ -24,14 +24,14 @@ class Detail extends FrontendBaseBlock
      *
      * @var array
      */
-    private $record = array();
+    private $record = [];
 
     /**
      * The items per module with this tag
      *
      * @var array
      */
-    private $results = array();
+    private $results = [];
 
     /**
      * Used modules
@@ -40,35 +40,29 @@ class Detail extends FrontendBaseBlock
      */
     private $modules;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
-        $this->tpl->assignGlobal('hideContentTitle', true);
+        $this->template->assignGlobal('hideContentTitle', true);
         $this->loadTemplate();
         $this->getData();
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+        if ($this->url->getParameter(1) === null) {
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // fetch record
-        $this->record = FrontendTagsModel::get($this->URL->getParameter(1));
+        $this->record = FrontendTagsModel::get($this->url->getParameter(1));
 
         // validate record
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // fetch modules
@@ -81,7 +75,7 @@ class Detail extends FrontendBaseBlock
                 'SELECT other_id
                  FROM modules_tags
                  WHERE module = ? AND tag_id = ?',
-                array($module, $this->record['id'])
+                [$module, $this->record['id']]
             );
 
             // set module class
@@ -92,30 +86,27 @@ class Detail extends FrontendBaseBlock
 
             // add into results array
             if (!empty($items)) {
-                $this->results[] = array(
+                $this->results[] = [
                     'name' => $module,
                     'label' => FL::lbl(\SpoonFilter::ucfirst($module)),
                     'items' => $items,
-                );
+                ];
             }
         }
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // assign tag
-        $this->tpl->assign('tag', $this->record);
+        $this->template->assign('tag', $this->record);
 
         // assign tags
-        $this->tpl->assign('tagsModules', $this->results);
+        $this->template->assign('tagsModules', $this->results);
 
         // update breadcrumb
         $this->breadcrumb->addElement($this->record['name']);
 
         // tag-pages don't have any SEO-value, so don't index them
-        $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);
+        $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, follow'], true);
     }
 }

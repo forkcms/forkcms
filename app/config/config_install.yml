@@ -1,11 +1,12 @@
 imports:
+    - { resource: console.yml }
     - { resource: parameters_install.yml }
     - { resource: doctrine.yml }
 
 framework:
-    secret:          %kernel.secret%
+    secret:          "%kernel.secret%"
     router:
-        resource: "%kernel.root_dir%/config/routing_install.yml"
+        resource: "%kernel.project_dir%/app/config/routing_install.yml"
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
@@ -28,11 +29,12 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  %site.path_www%/app/logs/logs.log
+            path:  %site.path_www%/var/logs/logs.log
             level: debug
 
 parameters:
     doctrine.dbal.connection_factory.class: ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory
+    fork.is_installed: false
 
 services:
     # dummy service during the installation
@@ -57,4 +59,4 @@ services:
             - %database.name%
             - %database.port%
         calls:
-            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
+            - [ setDebug, [ "%kernel.debug%" ]]

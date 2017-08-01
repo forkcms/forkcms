@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS `profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `status` enum('active','inactive','deleted','blocked') NOT NULL,
-  `display_name` varchar(255) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registered_on` datetime NOT NULL,
   `last_login` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `profiles` (
 
 CREATE TABLE IF NOT EXISTS `profiles_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

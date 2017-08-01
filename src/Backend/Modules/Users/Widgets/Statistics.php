@@ -18,10 +18,7 @@ use Backend\Core\Language\Language as BL;
  */
 class Statistics extends BackendBaseWidget
 {
-    /**
-     * Execute the widget
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->setColumn('left');
         $this->setPosition(1);
@@ -29,16 +26,13 @@ class Statistics extends BackendBaseWidget
         $this->display();
     }
 
-    /**
-     * Parse into template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get the logged in user
         $authenticatedUser = BackendAuthentication::getUser();
 
         // check if we need to show the password strength and parse the label
-        $this->tpl->assign('showPasswordStrength', ($authenticatedUser->getSetting('password_strength') !== 'strong'));
-        $this->tpl->assign('passwordStrengthLabel', BL::lbl($authenticatedUser->getSetting('password_strength')));
+        $this->template->assign('showPasswordStrength', ($authenticatedUser->getSetting('password_strength') !== 'strong'));
+        $this->template->assign('passwordStrengthLabel', BL::lbl($authenticatedUser->getSetting('password_strength')));
     }
 }

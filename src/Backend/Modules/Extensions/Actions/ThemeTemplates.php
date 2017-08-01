@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
@@ -30,7 +30,7 @@ class ThemeTemplates extends BackendBaseActionEdit
     private $availableThemes;
 
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dataGrid;
 
@@ -41,10 +41,7 @@ class ThemeTemplates extends BackendBaseActionEdit
      */
     private $selectedTheme;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadData();
@@ -54,13 +51,10 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Load the record
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get data
-        $this->selectedTheme = $this->getParameter('theme', 'string');
+        $this->selectedTheme = $this->getRequest()->query->get('theme');
 
         // build available themes
         foreach (BackendExtensionsModel::getThemes() as $theme) {
@@ -68,50 +62,62 @@ class ThemeTemplates extends BackendBaseActionEdit
         }
 
         // determine selected theme, based upon submitted form or default theme
-        $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), $this->get('fork.settings')->get('Core', 'theme', 'core'));
+        if (!array_key_exists($this->selectedTheme, $this->availableThemes)) {
+            $this->selectedTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+        }
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(BackendExtensionsModel::QRY_BROWSE_TEMPLATES, array($this->selectedTheme));
+        $this->dataGrid = new BackendDataGridDatabase(
+            BackendExtensionsModel::QUERY_BROWSE_TEMPLATES,
+            [$this->selectedTheme]
+        );
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('EditThemeTemplate')) {
             // set colum URLs
-            $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL(
+                'title',
+                BackendModel::createUrlForAction('EditThemeTemplate') . '&amp;id=[id]'
+            );
 
             // add edit column
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->addColumn(
+                'edit',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createUrlForAction('EditThemeTemplate') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('themes');
+        $this->form = new BackendForm('themes');
 
         // create elements
-        $this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme, false, 'form-control dontCheckBeforeUnload', 'form-control dontCheckBeforeUnload');
+        $this->form->addDropdown(
+            'theme',
+            $this->availableThemes,
+            $this->selectedTheme,
+            false,
+            'form-control dontCheckBeforeUnload',
+            'form-control dontCheckBeforeUnload'
+        );
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // assign datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->template->assign('dataGrid', $this->dataGrid->getContent());
 
         // assign the selected theme, so we can propagate it to the add/edit actions.
-        $this->tpl->assign('selectedTheme', rawurlencode($this->selectedTheme));
+        $this->template->assign('selectedTheme', rawurlencode($this->selectedTheme));
     }
 }

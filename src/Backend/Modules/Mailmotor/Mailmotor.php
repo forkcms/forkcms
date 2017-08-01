@@ -8,7 +8,7 @@ use Backend\Modules\Mailmotor\DependencyInjection\Compiler\MailmotorCompilerPass
 
 class Mailmotor extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

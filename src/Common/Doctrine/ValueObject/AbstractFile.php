@@ -2,6 +2,7 @@
 
 namespace Common\Doctrine\ValueObject;
 
+use Common\Uri;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -37,34 +38,22 @@ abstract class AbstractFile
      */
     protected $namePrefix;
 
-    /**
-     * @param string $fileName
-     */
-    protected function __construct($fileName)
+    protected function __construct(?string $fileName)
     {
         $this->fileName = $fileName;
     }
 
-    /**
-     * @return string
-     */
-    public function getFileName()
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getAbsolutePath()
+    public function getAbsolutePath(): ?string
     {
         return $this->fileName === null ? null : $this->getUploadRootDir() . '/' . $this->fileName;
     }
 
-    /**
-     * @return string
-     */
-    public function getWebPath()
+    public function getWebPath(): string
     {
         $file = $this->getAbsolutePath();
         if (is_file($file) && file_exists($file)) {
@@ -74,18 +63,12 @@ abstract class AbstractFile
         return '';
     }
 
-    /**
-     * @return string
-     */
-    protected function getUploadRootDir()
+    protected function getUploadRootDir(): string
     {
         return FRONTEND_FILES_PATH . '/' . $this->getTrimmedUploadDir();
     }
 
-    /**
-     * @return string
-     */
-    protected function getTrimmedUploadDir()
+    protected function getTrimmedUploadDir(): string
     {
         return trim($this->getUploadDir(), '/\\');
     }
@@ -96,16 +79,9 @@ abstract class AbstractFile
      *
      * @return string
      */
-    abstract protected function getUploadDir();
+    abstract protected function getUploadDir(): string;
 
-    /**
-     * Sets file.
-     *
-     * @param UploadedFile|null $file
-     *
-     * @return static
-     */
-    public function setFile(UploadedFile $file = null)
+    public function setFile(UploadedFile $file = null): self
     {
         if ($file === null) {
             return $this;
@@ -129,23 +105,20 @@ abstract class AbstractFile
      * @param UploadedFile|null $uploadedFile
      * @param string|null $namePrefix If set this will be prepended to the generated filename
      *
-     * @return static
+     * @return self
      */
-    public static function fromUploadedFile(UploadedFile $uploadedFile = null, $namePrefix = null)
+    public static function fromUploadedFile(UploadedFile $uploadedFile = null, string $namePrefix = null): self
     {
         $file = new static(null);
         $file->setFile($uploadedFile);
-        $file->setNamePrefix($namePrefix);
+        if ($namePrefix !== null) {
+            $file->setNamePrefix($namePrefix);
+        }
 
         return $file;
     }
 
-    /**
-     * Get file.
-     *
-     * @return UploadedFile
-     */
-    public function getFile()
+    public function getFile(): UploadedFile
     {
         return $this->file;
     }
@@ -153,21 +126,24 @@ abstract class AbstractFile
     /**
      * This function should be called for the life cycle events PrePersist() and PreUpdate()
      */
-    public function prepareToUpload()
+    public function prepareToUpload(): void
     {
         if ($this->getFile() === null) {
             return;
         }
 
         // do whatever you want to generate a unique name
-        $filename = urlencode($this->namePrefix) . '_' . sha1(uniqid(mt_rand(), true));
+        $filename = sha1(uniqid(mt_rand(), true));
+        if ($this->namePrefix !== null) {
+            $filename = Uri::getUrl($this->namePrefix) . '_' . $filename;
+        }
         $this->fileName = $filename . '.' . $this->getFile()->guessExtension();
     }
 
     /**
      * This function should be called for the life cycle events PostPersist() and PostUpdate()
      */
-    public function upload()
+    public function upload(): void
     {
         // check if we have an old image
         if ($this->oldFileName !== null) {
@@ -186,7 +162,7 @@ abstract class AbstractFile
     /**
      * This will remove the old file, can be extended to add extra functionality
      */
-    protected function removeOldFile()
+    protected function removeOldFile(): void
     {
         // delete the old file
         $oldFile = $this->getUploadRootDir() . '/' . $this->oldFileName;
@@ -202,7 +178,7 @@ abstract class AbstractFile
      * be automatically thrown by move(). This will properly prevent
      * the entity from being persisted to the database on error
      */
-    protected function writeFileToDisk()
+    protected function writeFileToDisk(): void
     {
         $this->getFile()->move($this->getUploadRootDir(), $this->fileName);
     }
@@ -210,7 +186,7 @@ abstract class AbstractFile
     /**
      * This function should be called for the life cycle event PostRemove()
      */
-    public function remove()
+    public function remove(): void
     {
         $file = $this->getAbsolutePath();
         if (!is_file($file) || !file_exists($file)) {
@@ -220,30 +196,20 @@ abstract class AbstractFile
         unlink($file);
     }
 
-    /**
-     * Returns a string representation of the image.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->fileName;
     }
 
-    /**
-     * @param string $fileName
-     *
-     * @return static
-     */
-    public static function fromString($fileName)
+    public static function fromString(?string $fileName): ?self
     {
-        return new static($fileName);
+        return $fileName !== null ? new static($fileName) : null;
     }
 
     /**
      * The next time doctrine saves this to the database the file will be removed
      */
-    public function markForDeletion()
+    public function markForDeletion(): void
     {
         $this->oldFileName = $this->fileName;
         $this->fileName = null;
@@ -251,12 +217,35 @@ abstract class AbstractFile
 
     /**
      * @param string $namePrefix If set this will be prepended to the generated filename
+     *
      * @return self
      */
-    public function setNamePrefix($namePrefix)
+    public function setNamePrefix(string $namePrefix): self
     {
         $this->namePrefix = $namePrefix;
 
         return $this;
+    }
+
+    /**
+     * @internal Used by the form types
+     *
+     * @param bool $isPendingDeletion
+     */
+    public function setPendingDeletion($isPendingDeletion)
+    {
+        if ($isPendingDeletion) {
+            $this->markForDeletion();
+        }
+    }
+
+    /**
+     * @internal Used by the form types
+     *
+     * @return bool
+     */
+    public function isPendingDeletion()
+    {
+        return strlen($this->oldFileName) > 0 && $this->fileName === null;
     }
 }

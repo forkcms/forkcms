@@ -1,0 +1,98 @@
+{#
+  Media Lightbox with PhotoSwipe
+  Variables that are available:
+  - {{ items }}: Contains full urls to MediaItem items, f.e.: {{ items.small_source }} or {{ items.small_resolution }}
+  - {{ title }}: A custom optional title that you can give when parsing from Custom module.
+
+  Attention:
+  PhotoSwipe only works properly when you define the image data-size="widthxheight" to the large image
+  because it requires this to show transition/zoom/... properly.
+
+  More info about this:
+    - FAQ: http://photoswipe.com/documentation/faq.html#image-size
+    - GitHub Issue: https://github.com/dimsemenov/PhotoSwipe/issues/741
+
+  Note:
+  If you also want to support <figure> and <figcaption> in older browsers (< IE9),
+  you should add the following html to your <head>.
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script><![endif]-->
+#}
+
+{% if mediaItems %}
+<section class="module-media-library widget-media-library-lightbox" itemscope itemtype="http://schema.org/ImageGallery">
+  {% block widget_heading %}
+    {% if title %}
+      <header class="widget-heading">
+        <h3>{{ title|ucfirst }}</h3>
+      </header>
+    {% endif %}
+  {% endblock %}
+
+  {% block widget_body %}
+    <div class="widget-body">
+      {% for mediaItem in mediaItems %}
+        <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+          {% set img = mediaItem.webpath() %}
+          <a href="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_lightbox_large') }}" itemprop="contentUrl" data-size="{{ mediaItem.width }}x{{ mediaItem.height }}">
+            <img itemprop="thumbnail" src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_lightbox_small') }}" alt="{{ mediaItem.title }}" />
+          </a>
+          <figcaption itemprop="caption description">{% if title %}{{ title }}{% endif %}{% if not title %}{{ mediaItem.title }}{% endif %}</figcaption>
+        </figure>
+      {% endfor %}
+    </div>
+
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+      <!-- Background of PhotoSwipe. It's a separate element as animating opacity is faster than rgba(). -->
+      <div class="pswp__bg"></div>
+
+      <!-- Slides wrapper with overflow:hidden. -->
+      <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides.
+          PhotoSwipe keeps only 3 of them in the DOM to save memory.
+          Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+          <div class="pswp__top-bar">
+            <!--  Controls are self-explanatory. Order can be changed. -->
+            <div class="pswp__counter"></div>
+            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+            <button class="pswp__button pswp__button--share" title="Share"></button>
+            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+            <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+            <!-- element will get class pswp__preloader--active when preloader is running -->
+            <div class="pswp__preloader">
+              <div class="pswp__preloader__icn">
+                <div class="pswp__preloader__cut">
+                  <div class="pswp__preloader__donut"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+            <div class="pswp__share-tooltip"></div>
+          </div>
+
+          <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+          <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+
+          <div class="pswp__caption">
+            <div class="pswp__caption__center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+</section>
+{% endif %}

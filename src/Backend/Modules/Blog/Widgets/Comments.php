@@ -27,14 +27,11 @@ class Comments extends BackendBaseWidget
     /**
      * An array that contains the number of comments / status
      *
-     * @var int
+     * @var array
      */
     private $numCommentStatus;
 
-    /**
-     * Execute the widget
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->setColumn('middle');
         $this->setPosition(0);
@@ -43,25 +40,19 @@ class Comments extends BackendBaseWidget
         $this->display();
     }
 
-    /**
-     * Load the data
-     */
-    private function loadData()
+    private function loadData(): void
     {
         $this->comments = BackendBlogModel::getLatestComments('published', 5);
         $this->numCommentStatus = BackendBlogModel::getCommentStatusCount();
     }
 
-    /**
-     * Parse into template
-     */
-    private function parse()
+    private function parse(): void
     {
-        $this->tpl->assign('blogComments', $this->comments);
+        $this->template->assign('blogComments', $this->comments);
 
         // comments to moderate
         if (isset($this->numCommentStatus['moderation']) && (int) $this->numCommentStatus['moderation'] > 0) {
-            $this->tpl->assign('blogNumCommentsToModerate', $this->numCommentStatus['moderation']);
+            $this->template->assign('blogNumCommentsToModerate', $this->numCommentStatus['moderation']);
         }
     }
 }

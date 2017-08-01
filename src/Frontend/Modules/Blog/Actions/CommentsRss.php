@@ -28,33 +28,24 @@ class CommentsRss extends FrontendBaseBlock
      */
     private $items;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->getData();
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->items = FrontendBlogModel::getAllComments();
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get vars
         $title = \SpoonFilter::ucfirst(FL::msg('BlogAllComments'));
-        $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog');
-        $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog');
+        $detailLink = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $description = null;
 
         // create new rss instance

@@ -6,16 +6,16 @@ use Common\WebTestCase;
 
 class IndexTest extends WebTestCase
 {
-    public function testIndexContainsBlogPosts()
+    public function testIndexContainsBlogPosts(): void
     {
         $client = static::createClient();
 
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
                 'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
-            )
+            ]
         );
 
         $client->request('GET', '/en/blog');
@@ -29,11 +29,11 @@ class IndexTest extends WebTestCase
         );
     }
 
-    public function testNonExistingPageGives404()
+    public function testNonExistingPageGives404(): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog', array('page' => 34));
+        $client->request('GET', '/en/blog', ['page' => 34]);
         $this->assertIs404($client);
     }
 }

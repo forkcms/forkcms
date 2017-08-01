@@ -1,0 +1,75 @@
+{# Add new media dialog #}
+<div class="modal fade" id="addMediaDialog" tabindex="-1" role="dialog" aria-hidden="true" data-role="media-library-add-dialog">
+  <div class="modal-dialog modal-lg" data-role="media-library-select-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title h4">{{ 'lbl.MediaConnect'|trans|ucfirst }}</span>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab" data-toggle="tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
+          </li>
+          <li role="presentation">
+            <a href="#tabLibrary" aria-controls="tabLibrary" role="tab" data-toggle="tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tabUploadMedia">
+            {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabLibrary">
+            <div class="options">
+              <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
+              <select id="mediaFolders"></select>
+            </div>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#tabImage" aria-controls="tabImage" role="tab" data-toggle="tab">{{ 'lbl.MediaImages'|trans|ucfirst }} <span id="mediaCountImage">(0)</span></a>
+              </li>
+              <li role="presentation">
+                <a href="#tabFile" aria-controls="tabFile" role="tab" data-toggle="tab">{{ 'lbl.MediaFiles'|trans|ucfirst }} <span id="mediaCountFile">(0)</span></a>
+              </li>
+              <li role="presentation">
+                <a href="#tabMovie" aria-controls="tabMovie" role="tab" data-toggle="tab">{{ 'lbl.MediaMovies'|trans|ucfirst }} <span id="mediaCountMovie">(0)</span></a>
+              </li>
+              <li role="presentation">
+                <a href="#tabAudio" aria-controls="tabAudio" role="tab" data-toggle="tab">{{ 'lbl.MediaAudio'|trans|ucfirst }} <span id="mediaCountAudio">(0)</span></a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="tabImage">
+                <div class="table-responsive">
+                  <table id="mediaTableImage" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabFile">
+                <div class="table-responsive">
+                  <table id="mediaTableFile" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabMovie">
+                <div class="table-responsive">
+                  <table id="mediaTableMovie" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tabAudio">
+                <div class="table-responsive">
+                  <table id="mediaTableAudio" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          <span class="fa fa-times"></span><span class="btn-text">{{ 'lbl.Cancel'|trans|ucfirst }}</span>
+        </button>
+        <button id="addMediaSubmit" type="button" class="btn btn-primary">
+          <span class="fa fa-check"></span><span class="btn-text">{{ 'lbl.OK'|trans|ucfirst }}</span></button>
+      </div>
+    </div>
+  </div>
+  {% include "MediaLibrary/Resources/views/CropperDialog.html.twig" %}
+</div>

@@ -1,0 +1,107 @@
+{#
+  variables that are available:
+  - {{ widgetBlogRecentArticlesFull }}: contains an array with all posts, each element contains data about the post
+#}
+
+{% if widgetBlogRecentArticlesFull %}
+  <section class="module-blog widget-blog-recent-articles-full">
+    {% block widget_heading %}
+      <header class="widget-heading page-header" role="banner">
+        <h2>{{ 'lbl.RecentArticles'|trans|ucfirst }}</h2>
+      </header>
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
+        {% for post in widgetBlogRecentArticlesFull %}
+          <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
+            <meta itemprop="interactionCount" content="UserComments:{{ post.comments_count }}">
+            <meta itemprop="author" content="{{ post.user_id|usersetting('nickname' ) }}">
+
+            <header class="block-article-heading" role="banner">
+              <h3 itemprop="name">
+                <a href="{{ post.full_url }}" title="{{ post.title }}">
+                  {{ post.title }}
+                </a>
+              </h3>
+
+              <div class="row">
+                <div class="col-xs-12 col-md-8">
+                  {{ 'msg.WrittenBy'|trans|ucfirst|format(post.user_id|usersetting('nickname')) }}
+                  {{ 'lbl.On'|trans }}
+                  <time itemprop="datePublished" datetime="{{ post.publish_on|trans|date('Y-m-d\TH,i,s') }}">
+                    {{ post.publish_on|spoondate(dateFormatLong, LANGUAGE ) }}
+                  </time>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  {% if post.allow_comments %}
+                    <div class="pull-right">
+                      {% if not post.comments %}
+                        <a href="{{ post.full_url }}#{{ 'act.Comment'|trans }}" itemprop="discussionUrl">
+                          {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}
+                        </a>
+                      {% else %}
+                        <a href="{{ post.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
+                          {% if post.comments_multiple %}
+                            {{ 'msg.BlogNumberOfComments'|trans|format(post.comments_count ) }}
+                          {% else %}
+                            {{ 'msg.BlogOneComment'|trans }}
+                          {% endif %}
+                        </a>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  {{ 'lbl.Category'|trans|ucfirst }}
+                  <a itemprop="genre" href="{{ post.category_full_url }}" title="{{ post.category_title }}">{{ post.category_title }}</a>
+                </div>
+               <div class="col-xs-12 col-md-6">
+                 <div class="pull-right">
+                   {% if post.tags %}
+                     {{ 'lbl.Tags'|trans|ucfirst }}:
+                     <span itemprop="keywords">
+                      {% for tag in post.tags %}
+                      <a class="label label-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                        {{ tag.name }}
+                        </a>
+                      {% endfor %}
+                    </span>
+                   {% endif %}
+                 </div>
+               </div>
+              </div>
+            </header>
+
+            <div class="block-article-body" itemprop="articleBody">
+              {% if post.image %}
+                <img itemprop="image" class="img-polaroid col-md-4 img-responsive pull-right" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ post.image }}" alt="{{ post.title }}" />
+              {% endif %}
+              {% if not post.introduction %}
+                {{ post.text|raw }}
+              {% else %}
+                {{ post.introduction|raw }}
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% endblock %}
+
+    {% block widget_footer %}
+      <footer class="widget-footer">
+        <p class="btn-group">
+          <a class="btn btn-default" href="{{ geturlforblock('Blog') }}">
+            {{ 'lbl.BlogArchive'|trans|ucfirst }}
+          </a>
+          <a class="btn btn-default" href="{{ widgetBlogRecentArticlesFullRssLink }}">
+            {{ 'lbl.SubscribeToTheRSSFeed'|trans|ucfirst }}
+          </a>
+        </p>
+      </footer>
+    {% endblock %}
+  </section>
+{% endif %}

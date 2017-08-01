@@ -20,51 +20,45 @@ class InstallTheme extends BackendBaseActionIndex
      */
     private $currentTheme;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
-        $this->currentTheme = $this->getParameter('theme', 'string');
+        $this->currentTheme = $this->getRequest()->query->get('theme', '');
 
         // does the item exist
-        if ($this->currentTheme !== null && BackendExtensionsModel::existsTheme($this->currentTheme)) {
+        if ($this->currentTheme !== '' && BackendExtensionsModel::existsTheme($this->currentTheme)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
             // make sure this theme can be installed
-            $this->validateInstall();
+            $this->validateThatTheThemeCanBeInstalled();
 
             try {
                 // do the actual install
                 BackendExtensionsModel::installTheme($this->currentTheme);
 
                 // redirect to index with a success message
-                $this->redirect(BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $this->currentTheme);
+                $this->redirect(BackendModel::createUrlForAction('Themes') . '&report=theme-installed&var=' . $this->currentTheme);
             } catch (Exception $e) {
                 // redirect to index with a success message
-                $this->redirect(BackendModel::createURLForAction('Themes') . '&report=information-file-is-empty&var=' . $this->currentTheme);
+                $this->redirect(BackendModel::createUrlForAction('Themes') . '&report=information-file-is-empty&var=' . $this->currentTheme);
             }
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Themes') . '&error=non-existing');
         }
     }
 
-    /**
-     * Validate if the theme can be installed.
-     */
-    private function validateInstall()
+    private function validateThatTheThemeCanBeInstalled(): void
     {
         // already installed
         if (BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
-            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=already-installed&var=' . $this->currentTheme);
+            $this->redirect(BackendModel::createUrlForAction('Themes') . '&error=already-installed&var=' . $this->currentTheme);
         }
 
         // no information file present
         if (!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml')) {
-            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-information-file&var=' . $this->currentTheme);
+            $this->redirect(BackendModel::createUrlForAction('Themes') . '&error=no-information-file&var=' . $this->currentTheme);
         }
     }
 }

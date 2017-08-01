@@ -29,11 +29,11 @@ class Helper
      *
      * @return string
      */
-    public static function parseField(array $field)
+    public static function parseField(array $field): string
     {
         if (!empty($field)) {
             // init
-            $frm = new BackendForm('tmp', '');
+            $form = new BackendForm('tmp', '');
             $tpl = (BackendModel::getContainer()->has('template') ?
                 BackendModel::getContainer()->get('template') :
                 new BackendTemplate()
@@ -51,7 +51,7 @@ class Helper
              * Create form and parse to HTML
              */
             // dropdown
-            if ($field['type'] == 'dropdown') {
+            if ($field['type'] === 'dropdown') {
                 // values and labels are the same
                 $values = array_combine($values, $values);
 
@@ -62,16 +62,16 @@ class Helper
                 }
 
                 // create element
-                $ddm = $frm->addDropdown($fieldName, $values, $defaultIndex);
+                $ddm = $form->addDropdown($fieldName, $values, $defaultIndex);
 
                 // empty default element
                 $ddm->setDefaultElement('');
 
                 // get content
                 $fieldHTML = $ddm->parse();
-            } elseif ($field['type'] == 'datetime') {
+            } elseif ($field['type'] === 'datetime') {
                 // create element
-                if ($field['settings']['input_type'] == 'date') {
+                if ($field['settings']['input_type'] === 'date') {
                     // calculate default value
                     $amount = $field['settings']['value_amount'];
                     $type = $field['settings']['value_type'];
@@ -92,52 +92,55 @@ class Helper
                         }
                     }
 
-                    $datetime = $frm->addText($fieldName, $defaultValues);
+                    $datetime = $form->addText($fieldName, $defaultValues);
                 } else {
-                    $datetime = $frm->addTime($fieldName, $defaultValues);
+                    $datetime = $form->addTime($fieldName, $defaultValues);
                 }
                 $datetime->setAttribute('disabled', 'disabled');
 
                 // get content
                 $fieldHTML = $datetime->parse();
-            } elseif ($field['type'] == 'radiobutton') {
+            } elseif ($field['type'] === 'radiobutton') {
                 // create element
-                $rbt = $frm->addRadiobutton($fieldName, $values, $defaultValues);
+                $rbt = $form->addRadiobutton($fieldName, $values, $defaultValues);
 
                 // get content
                 $fieldHTML = $rbt->parse();
-            } elseif ($field['type'] == 'checkbox') {
+            } elseif ($field['type'] === 'checkbox') {
                 // rebuild values
-                foreach ($values as $value) {
-                    $newValues[] = array('label' => $value, 'value' => $value);
+                $newValues = [];
+                foreach ((array) $values as $value) {
+                    $newValues[] = ['label' => $value, 'value' => $value];
                 }
 
                 // create element
-                $chk = $frm->addMultiCheckbox($fieldName, $newValues, $defaultValues);
+                $chk = $form->addMultiCheckbox($fieldName, $newValues, $defaultValues);
 
                 // get content
                 $fieldHTML = $chk->parse();
-            } elseif ($field['type'] == 'textbox') {
+            } elseif ($field['type'] === 'textbox') {
                 // create element
-                $txt = $frm->addText($fieldName, $defaultValues);
+                $txt = $form->addText($fieldName, $defaultValues);
                 $txt->setAttribute('disabled', 'disabled');
                 $txt->setAttribute('placeholder', $placeholder);
 
                 // get content
                 $fieldHTML = $txt->parse();
-            } elseif ($field['type'] == 'textarea') {
+            } elseif ($field['type'] === 'textarea') {
                 // create element
-                $txt = $frm->addTextarea($fieldName, $defaultValues);
+                $txt = $form->addTextarea($fieldName, $defaultValues);
                 $txt->setAttribute('cols', 30);
                 $txt->setAttribute('disabled', 'disabled');
                 $txt->setAttribute('placeholder', $placeholder);
 
                 // get content
                 $fieldHTML = $txt->parse();
-            } elseif ($field['type'] == 'heading') {
+            } elseif ($field['type'] === 'heading') {
                 $fieldHTML = '<h3>' . $values . '</h3>';
-            } elseif ($field['type'] == 'paragraph') {
+            } elseif ($field['type'] === 'paragraph') {
                 $fieldHTML = $values;
+            } elseif ($field['type'] === 'recaptcha') {
+                $fieldHTML = '<p>reCAPTCHA</p>';
             }
 
             /*
@@ -151,13 +154,13 @@ class Helper
             $tpl->assign('required', isset($field['validations']['required']));
 
             // plaintext items
-            if ($field['type'] == 'heading' || $field['type'] == 'paragraph') {
+            if (in_array($field['type'], ['heading', 'paragraph', 'recaptcha'])) {
                 // assign
                 $tpl->assign('content', $fieldHTML);
                 $tpl->assign('plaintext', true);
-            } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
+            } elseif (in_array($field['type'], ['checkbox', 'radiobutton'])) {
                 // name (prefixed by type)
-                $name = ($field['type'] == 'checkbox') ?
+                $name = ($field['type'] === 'checkbox') ?
                     'chk' . \SpoonFilter::ucfirst($fieldName) :
                     'rbt' . \SpoonFilter::ucfirst($fieldName)
                 ;
@@ -179,9 +182,9 @@ class Helper
             }
 
             return $tpl->getContent(BACKEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Field.html.twig');
-        } else {
-            // empty field so return empty string
-            return '';
         }
+
+        // empty field so return empty string
+        return '';
     }
 }

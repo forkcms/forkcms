@@ -3,6 +3,7 @@
 namespace Frontend\Core\Engine;
 
 use Backend\Core\Language\Language as BackendLanguage;
+use Twig_Compiler;
 
 /**
  * Twig node for writing the SEO form
@@ -14,19 +15,16 @@ class SeoFormNode extends \Twig_Node
     /**
      * @param string $form Name of the template var holding the form this field
      *                     belongs to.
-     * @param int $lineno Line number in the template source file.
+     * @param int $lineNumber Line number in the template source file.
      * @param string $tag
      */
-    public function __construct($form, $lineno, $tag)
+    public function __construct(string $form, int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineno, $tag);
+        parent::__construct([], [], $lineNumber, $tag);
         $this->form = $form;
     }
 
-    /**
-     * @param \Twig_Compiler $compiler
-     */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Twig_Compiler $compiler): void
     {
         $compiler
             ->addDebugInfo($this)
@@ -129,8 +127,9 @@ class SeoFormNode extends \Twig_Node
 
         $compiler
             ->write('echo \'<span id="urlFirstPart">\';')
-            ->write('if (' . $this->hasVariable('detailUrl') . ') {')
-            ->write($this->getVariable('detailUrl'))
+            ->write('if (' . $this->hasVariable('detailURL') . ') {')
+            ->write($this->getVariable('detailURL'))
+            ->write('echo "/";')
             ->write('} else {')
             ->write('echo "' . SITE_URL . '/' . ' ' . '";')
             ->write('}')
@@ -217,97 +216,51 @@ class SeoFormNode extends \Twig_Node
             ->write('echo \'</div>\';');
     }
 
-    /**
-     * @param $label string
-     *
-     * @return string
-     */
-    private function lbl($label)
+    private function lbl(string $label): string
     {
         return ucfirst(BackendLanguage::getLabel($label));
     }
 
-    /**
-     * @param $message string
-     *
-     * @return string
-     */
-    private function msg($message)
+    private function msg(string $message): string
     {
         return BackendLanguage::getMessage($message);
     }
 
-    /**
-     * @param $variable
-     *
-     * @return string
-     */
-    private function hasVariable($variable)
+    private function hasVariable(string $variable): string
     {
         return "isset(\$context['{$variable}']) && !empty(\$context['{$variable}'])";
     }
 
-    /**
-     * @param $variable
-     * @param $as
-     *
-     * @return string
-     */
-    private function loopTroughField($variable, $as)
+    private function loopTroughField(string $variable, string $as): string
     {
         return "foreach (\$context['{$variable}'] as {$as}) {";
     }
 
-    /**
-     * @param $variable
-     *
-     * @return string
-     */
-    private function getVariable($variable)
+    private function getVariable(string $variable): string
     {
         return "echo \$context['{$variable}'];";
     }
 
-    /**
-     * @param $fieldName
-     *
-     * @return string
-     */
-    private function getField($fieldName)
+    private function getField(string $fieldName): string
     {
-        $frm = "\$context['form_{$this->form}']";
+        $form = "\$context['form_{$this->form}']";
 
-        return 'echo ' . $frm . "->getField('" . $fieldName . "')->parse();";
+        return 'echo ' . $form . "->getField('" . $fieldName . "')->parse();";
     }
 
-    /**
-     * @param $fieldName
-     *
-     * @return string
-     */
-    private function hasField($fieldName)
+    private function hasField(string $fieldName): string
     {
-        $frm = "\$context['form_{$this->form}']";
+        $form = "\$context['form_{$this->form}']";
 
-        return $frm . "->existsField('" . $fieldName . "')";
+        return $form . "->existsField('" . $fieldName . "')";
     }
 
-    /**
-     * @param $fieldName
-     *
-     * @return string
-     */
-    private function hasError($fieldName)
+    private function hasError(string $fieldName): string
     {
         return "\$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() ";
     }
 
-    /**
-     * @param $fieldName
-     *
-     * @return string
-     */
-    private function getError($fieldName)
+    private function getError(string $fieldName): string
     {
         return "echo \$context['form_{$this->form}']->getField('" . $fieldName . "')->getErrors() "
             . "? '<span class=\"formError\">' "

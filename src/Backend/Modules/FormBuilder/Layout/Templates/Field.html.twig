@@ -1,3 +1,4 @@
+{% import "Layout/Templates/macros.html.twig" as macro %}
 <div id="fieldHolder-{{ id }}" class="form-group field jsField">
   <div class="row">
     {% if plaintext %}
@@ -8,7 +9,7 @@
     {% if simple %}
       <div class="col-md-3">
         <label for="field{{ id }}">
-          {{ label }}
+          {{ label|raw }}
           {% if required %}
             {{ macro.required }}
           {% endif %}
@@ -21,7 +22,7 @@
     {% if multiple %}
       <div class="col-md-3">
         <label for="field{{ id }}">
-          {{ label }}
+          {{ label|raw }}
           {% if required %}
             {{ macro.required }}
           {% endif %}
@@ -31,7 +32,7 @@
         <ul class="list-unstyled">
           {% for item in items %}
             <li class="checkbox">
-              <label for="{{ item.id }}">{{ item.field|raw }} {{ item.label }}</label>
+              <label for="{{ item.id }}">{{ item.field|raw }} {{ item.label|raw }}</label>
             </li>
           {% endfor %}
         </ul>

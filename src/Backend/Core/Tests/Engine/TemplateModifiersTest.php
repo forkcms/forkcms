@@ -4,11 +4,11 @@ namespace Backend\Core\Tests\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\TemplateModifiers;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class TemplateModifiersTest extends PHPUnit_Framework_TestCase
+class TemplateModifiersTest extends TestCase
 {
-    public function testStripNewlines()
+    public function testStripNewlines(): void
     {
         self::assertEquals(
             'Foo Bar',
@@ -26,7 +26,7 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testTruncate()
+    public function testTruncate(): void
     {
         $containerMock = $this
             ->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')

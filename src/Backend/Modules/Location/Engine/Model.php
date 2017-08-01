@@ -19,7 +19,7 @@ use Symfony\Component\Intl\Intl as Intl;
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
+    const QUERY_DATAGRID_BROWSE =
         'SELECT id, title, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
          FROM location
          WHERE language = ?';
@@ -29,10 +29,10 @@ class Model
      *
      * @param int $id The id of the record to delete.
      */
-    public static function delete($id)
+    public static function delete(int $id): void
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get item
         $item = self::get($id);
@@ -40,8 +40,8 @@ class Model
         BackendModel::deleteExtraById($item['extra_id']);
 
         // delete location and its settings
-        $db->delete('location', 'id = ? AND language = ?', array((int) $id, BL::getWorkingLanguage()));
-        $db->delete('location_settings', 'map_id = ?', array((int) $id));
+        $database->delete('location', 'id = ? AND language = ?', [$id, BL::getWorkingLanguage()]);
+        $database->delete('location_settings', 'map_id = ?', [$id]);
     }
 
     /**
@@ -51,14 +51,14 @@ class Model
      *
      * @return bool
      */
-    public static function exists($id)
+    public static function exists(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM location AS i
              WHERE i.id = ? AND i.language = ?
              LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
+            [$id, BL::getWorkingLanguage()]
         );
     }
 
@@ -69,13 +69,13 @@ class Model
      *
      * @return array
      */
-    public static function get($id)
+    public static function get(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*
              FROM location AS i
              WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
+            [$id, BL::getWorkingLanguage()]
         );
     }
 
@@ -84,36 +84,36 @@ class Model
      *
      * @return array
      */
-    public static function getAll()
+    public static function getAll(): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.*
              FROM location AS i
              WHERE i.language = ? AND i.show_overview = ?',
-            array(BL::getWorkingLanguage(), 'Y')
+            [BL::getWorkingLanguage(), true]
         );
     }
 
     /**
      * Get coordinates latitude/longitude
      *
-     * @param  string $street
-     * @param  string $streetNumber
-     * @param  string $city
-     * @param  string $zip
-     * @param  string $country
+     * @param string $street
+     * @param string $streetNumber
+     * @param string $city
+     * @param string $zip
+     * @param string $country
      *
      * @return array  Contains 'latitude' and 'longitude' as variables
      */
     public static function getCoordinates(
-        $street = null,
-        $streetNumber = null,
-        $city = null,
-        $zip = null,
-        $country = null
-    ) {
+        string $street = null,
+        string $streetNumber = null,
+        string $city = null,
+        string $zip = null,
+        string $country = null
+    ): array {
         // init item
-        $item = array();
+        $item = [];
 
         // building item
         if (!empty($street)) {
@@ -144,10 +144,16 @@ class Model
         $geocodes = json_decode(file_get_contents($url), true);
 
         // return coordinates latitude/longitude
-        return array(
-            'latitude' => array_key_exists(0, $geocodes['results']) ? $geocodes['results'][0]['geometry']['location']['lat'] : null,
-            'longitude' => array_key_exists(0, $geocodes['results']) ? $geocodes['results'][0]['geometry']['location']['lng'] : null,
-        );
+        return [
+            'latitude' => array_key_exists(
+                0,
+                $geocodes['results']
+            ) ? $geocodes['results'][0]['geometry']['location']['lat'] : null,
+            'longitude' => array_key_exists(
+                0,
+                $geocodes['results']
+            ) ? $geocodes['results'][0]['geometry']['location']['lng'] : null,
+        ];
     }
 
     /**
@@ -158,16 +164,16 @@ class Model
      *
      * @return mixed
      */
-    public static function getMapSetting($mapId, $name)
+    public static function getMapSetting(int $mapId, string $name)
     {
         $serializedData = (string) BackendModel::getContainer()->get('database')->getVar(
             'SELECT s.value
              FROM location_settings AS s
              WHERE s.map_id = ? AND s.name = ?',
-            array((int) $mapId, (string) $name)
+            [$mapId, $name]
         );
 
-        if ($serializedData != null) {
+        if ($serializedData !== null) {
             return unserialize($serializedData);
         }
 
@@ -181,13 +187,13 @@ class Model
      *
      * @return array
      */
-    public static function getMapSettings($mapId)
+    public static function getMapSettings(int $mapId): array
     {
         $mapSettings = (array) BackendModel::getContainer()->get('database')->getPairs(
             'SELECT s.name, s.value
              FROM location_settings AS s
              WHERE s.map_id = ?',
-            array((int) $mapId)
+            [$mapId]
         );
 
         foreach ($mapSettings as $key => $value) {
@@ -204,9 +210,9 @@ class Model
      *
      * @return int
      */
-    public static function insert($item)
+    public static function insert(array $item): int
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
@@ -216,18 +222,18 @@ class Model
 
         // insert new location
         $item['created_on'] = $item['edited_on'] = BackendModel::getUTCDate();
-        $item['id'] = $db->insert('location', $item);
+        $item['id'] = $database->insert('location', $item);
 
         // update extra (item id is now known)
         BackendModel::updateExtra(
             $item['extra_id'],
             'data',
-            array(
+            [
                 'id' => $item['id'],
                 'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
-            )
+                'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
+            ]
         );
 
         return $item['id'];
@@ -240,7 +246,7 @@ class Model
      * @param string $key
      * @param mixed $value
      */
-    public static function setMapSetting($mapId, $key, $value)
+    public static function setMapSetting(int $mapId, string $key, $value): void
     {
         $value = serialize($value);
 
@@ -248,7 +254,7 @@ class Model
             'INSERT INTO location_settings(map_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array((int) $mapId, $key, $value, $value)
+            [$mapId, $key, $value, $value]
         );
     }
 
@@ -259,7 +265,7 @@ class Model
      *
      * @return int
      */
-    public static function update($item)
+    public static function update(array $item): int
     {
         // redefine edited on date
         $item['edited_on'] = BackendModel::getUTCDate();
@@ -270,12 +276,12 @@ class Model
             BackendModel::updateExtra(
                 $item['extra_id'],
                 'data',
-                array(
+                [
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
                     'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'],
-                )
+                    'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
+                ]
             );
         }
 
@@ -284,7 +290,7 @@ class Model
             'location',
             $item,
             'id = ? AND language = ?',
-            array($item['id'], $item['language'])
+            [$item['id'], $item['language']]
         );
     }
 }

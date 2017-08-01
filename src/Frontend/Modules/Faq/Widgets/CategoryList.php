@@ -17,10 +17,7 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
  */
 class CategoryList extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent
         parent::execute();
@@ -29,13 +26,10 @@ class CategoryList extends FrontendBaseWidget
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
-        $this->tpl->assign('widgetFaqCategory', FrontendFaqModel::getCategoryById($this->data['id']));
-        $this->tpl->assign(
+        $this->template->assign('widgetFaqCategory', FrontendFaqModel::getCategoryById($this->data['id']));
+        $this->template->assign(
             'widgetFaqCategoryList',
             FrontendFaqModel::getAllForCategory(
                 $this->data['id'],

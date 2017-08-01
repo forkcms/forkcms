@@ -2,24 +2,27 @@
   variables that are available:
   - {{ widgetBlogCategories }}:
 #}
-
 {% if widgetBlogCategories %}
-  <section id="blogCategoriesWidget" class="mod">
-    <div class="inner">
-      <header class="hd">
+  <aside class="module-blog widget-blog-categories">
+    {% block widget_heading %}
+      <header class="widget-heading" role="banner">
         <h3>{{ 'lbl.Categories'|trans|ucfirst }}</h3>
       </header>
-      <div class="bd content">
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
         <ul>
-          {% for widgetBlogCategories in widgetBlogCategories %}
+          {% for category in widgetBlogCategories %}
             <li>
-              <a href="{{ widgetBlogCategories.url }}">
-                {{ widgetBlogCategories.label }}&nbsp;({{ widgetBlogCategories.total }})
+              <a href="{{ category.url }}">
+                {{ category.label }}
+                <span class="badge">{{ category.total }}</span>
               </a>
             </li>
           {% endfor %}
         </ul>
       </div>
-    </div>
-  </section>
+    {% endblock %}
+  </aside>
 {% endif %}

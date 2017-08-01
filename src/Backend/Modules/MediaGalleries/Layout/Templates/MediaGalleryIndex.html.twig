@@ -1,0 +1,74 @@
+{% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
+
+{% block actionbar %}
+    {% if not warnings %}
+      <div class="btn-toolbar pull-right">
+        <div class="btn-group" role="group">
+          {% if showMediaGalleriesMediaGalleryAdd %}
+            {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize, '', 'id=addMediaGroupType') }}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if warnings %}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <ul>
+          {% for warning in warnings %}
+            <li>{{ warning.message | raw }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if not warnings %}
+    <div class="row">
+      <div class="col-md-12">
+        {% if dataGrid %}
+        <div class="content-block content-block-pb">
+          <div class="content-title">
+            <p>{{ 'lbl.Galleries'|trans|capitalize }}</p>
+          </div>
+          <div class="table-responsive">
+            {{ dataGrid|raw }}
+          </div>
+        </div>
+        {% endif %}
+        {% if not dataGrid %}
+          <p>{{ 'msg.NoItems'|trans }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="modal fade" id="addMediaGroupTypeDialog" tabindex="-1" role="dialog" aria-hidden="true">
+      {{ form_start(form) }}
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.MediaGalleryAdd'|trans|capitalize }}</span>
+          </div>
+          <div class="modal-body">
+            {{ form_label(form.type) }}
+            {{ form_widget(form.type) }}
+            {{ form_errors(form.type) }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            </button>
+            <button id="addMediaGroupTypeSubmit" type="button" class="btn btn-primary">
+              <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
+            </button>
+          </div>
+        </div>
+      </div>
+      {{ form_end(form) }}
+    </div>
+  {% endif %}
+
+{% endblock %}

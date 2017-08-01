@@ -1,81 +1,127 @@
-{# Success #}
-{% if updateSettingsSuccess %}
-  <div class="message success"><p>{{ 'msg.UpdateSettingsIsSuccess'|trans }}</p></div>
-{% endif %}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+<section class="module-profiles block-profiles-settings">
+  {% block block_alerts %}
+    <div class="block-alerts">
+      {% if updateSettingsSuccess %}
+        {{ alerts.alert('success', 'msg.UpdateSettingsIsSuccess'|trans) }}
+      {% endif %}
+      {% if updateSettingsHasFormError %}
+        {{ alerts.alert('danger', 'err.FormError'|trans) }}
+      {% endif %}
+    </div>
+  {% endblock %}
 
-{# Error #}
-{% if updateSettingsHasFormError %}
-  <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
-{% endif %}
-
-<section id="settingsForm" class="mod">
-  <div class="inner">
-    <div class="bd">
+  {% block block_body %}
+    <div class="block-body">
       {% form updateSettings %}
-      <fieldset>
+      <fieldset class="form-horizontal">
         <legend>{{ 'lbl.YourData'|trans|ucfirst }}</legend>
 
-        <p{% if txtDisplayNameError %} class="errorArea"{% endif %}>
-          <label for="displayName">{{ 'lbl.DisplayName'|trans|ucfirst }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+        <div class="form-group{% if txtDisplayNameError %} has-error{% endif %}">
+          <label class="control-label col-sm-2" for="displayName">
+            {{ 'lbl.DisplayName'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
           </label>
-          {% form_field display_name %} {% form_field_error display_name %}
-          <small class="helpTxt">{{ 'msg.HelpDisplayNameChanges'|trans|format( maxDisplayNameChanges, displayNameChangesLeft) }}</small>
-        </p>
-        <p{% if txtEmailError %} class="errorArea"{% endif %}>
-          <label for="email">{{ 'lbl.Email'|trans|ucfirst }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+          <div class="col-sm-6">
+            {% form_field_error display_name %}{% form_field display_name %}
+            <small class="helpTxt muted">{{ 'msg.HelpDisplayNameChanges'|trans|format(maxDisplayNameChanges, displayNameChangesLeft ) }}</small>
+          </div>
+        </div>
+        <div class="form-group{% if txtEmailError %} has-error{% endif %}">
+          <label class="control-label col-sm-2" for="email">
+            {{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
           </label>
-          {% form_field email %} {% form_field_error email %}
-        </p>
-        <p>
-          <a href="{{ geturlforblock('Profiles', 'ChangeEmail') }}">{{ 'msg.ChangeEmail'|trans }}</a>
-        </p>
-        <p{% if txtFirstNameError %} class="errorArea"{% endif %}>
-          <label for="firstName">{{ 'lbl.FirstName'|trans|ucfirst }}</label>
-          {% form_field first_name %} {% form_field_error first_name %}
-        </p>
-        <p{% if txtLastNameError %} class="errorArea"{% endif %}>
-          <label for="lastName">{{ 'lbl.LastName'|trans|ucfirst }}</label>
-          {% form_field last_name %} {% form_field_error last_name %}
-        </p>
-        <p{% if ddmGenderError %} class="errorArea"{% endif %}>
-          <label for="gender">{{ 'lbl.Gender'|trans|ucfirst }}</label>
-          {% form_field gender %} {% form_field_error gender %}
-        </p>
-        <p{% if ddmDayError or ddmMonthError or ddmYearError %} class="errorArea"{% endif %}>
-          <label for="day">{{ 'lbl.BirthDate'|trans|ucfirst }}</label>
-          {% form_field day %} {% form_field month %} {% form_field year %}
-          {% form_field_error day %} {% form_field_error month %} {% form_field_error year %}
-        </p>
+          <div class="col-sm-6">
+            {% form_field_error email %}{% form_field email %}
+            <a href="{{ geturlforblock('Profiles', 'ChangeEmail') }}">{{ 'msg.ChangeEmail'|trans }}</a>
+          </div>
+        </div>
+        <div class="form-group{% if txtFirstNameError %} has-error{% endif %}">
+          <label class="control-label col-sm-2" for="firstName">
+            {{ 'lbl.FirstName'|trans|ucfirst }}
+          </label>
+          <div class="col-sm-6">
+            {% form_field_error first_name %}{% form_field first_name %}
+          </div>
+        </div>
+        <div class="form-group{% if txtLastNameError %} has-error{% endif %}">
+          <label class="control-label col-sm-2" for="lastName">
+            {{ 'lbl.LastName'|trans|ucfirst }}
+          </label>
+          <div class="col-sm-6">
+            {% form_field_error last_name %}{% form_field last_name %}
+          </div>
+        </div>
+        <div class="form-group{% if ddmGenderError %} has-error{% endif %}">
+          <label class="control-label col-sm-2" for="gender">
+            {{ 'lbl.Gender'|trans|ucfirst }}
+          </label>
+          <div class="col-sm-2">
+            {% form_field_error gender %} {% form_field gender %}
+          </div>
+        </div>
+        <div class="birthDate form-group{% if ddmYearError %} has-error{% endif %}">
+          <label class="control-label col-sm-2" for="day">
+            {{ 'lbl.BirthDate'|trans|ucfirst }}
+          </label>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-xs-4">
+                {% form_field day %}
+              </div>
+              <div class="col-xs-4">
+                {% form_field month %}
+              </div>
+              <div class="col-xs-4">
+                {% form_field_error year %}{% form_field year %}
+              </div>
+            </div>
+          </div>
+        </div>
       </fieldset>
-      <fieldset>
+
+      <fieldset class="form-horizontal">
         <legend>{{ 'lbl.YourLocationData'|trans|ucfirst }}</legend>
 
-        <p{% if txtCityError %} class="errorArea"{% endif %}>
-          <label for="city">{{ 'lbl.City'|trans|ucfirst }}</label>
-          {% form_field city %} {% form_field_error city %}
-        </p>
-        <p{% if ddmCountryError %} class="errorArea"{% endif %}>
-          <label for="country">{{ 'lbl.Country'|trans|ucfirst }}</label>
-          {% form_field country %} {% form_field_error country %}
-        </p>
+        <div class="form-group{% if txtCityError %} has-error{% endif %}">
+          <label class="control-label col-sm-2" for="city">
+            {{ 'lbl.City'|trans|ucfirst }}
+          </label>
+          <div class="col-sm-6">
+            {% form_field_error city %}{% form_field city %}
+          </div>
+        </div>
+        <div class="form-group{% if ddmCountryError %} has-error{% endif %}">
+          <label class="control-label col-sm-2" for="country">
+            {{ 'lbl.Country'|trans|ucfirst }}
+          </label>
+          <div class="col-sm-6">
+            {% form_field_error country %} {% form_field country %}
+          </div>
+        </div>
       </fieldset>
-      <fieldset>
-        <legend>{{ 'lbl.YourAvatar'|trans|ucfirst }}</legend>
-        {% if avatar %}
-          <img src="{{ FRONTEND_FILES_URL }}/Profiles/Avatars/240x240/{{ avatar }}" />
-        {% endif %}
 
-        <p{% if fileAvatarError %} class="errorArea"{% endif %}>
-          <label for="avatar">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
-          {% form_field avatar %} {% form_field_error avatar %}
-        </p>
+      <fieldset class="form-horizontal">
+        <legend>{{ 'lbl.YourAvatar'|trans|ucfirst }}</legend>
+        <div class="form-group{% if fileAvatarError %} has-error{% endif %}">
+          <label class="control-label col-sm-2" for="avatar">
+            {{ 'lbl.Avatar'|trans|ucfirst }}
+          </label>
+          <div class="col-sm-6">
+            {% if avatar %}
+              <img src="{{ FRONTEND_FILES_URL }}/Profiles/Avatars/240x240/{{ avatar }}" class="img-circle" />
+              <br />
+            {% endif %}
+            {% form_field avatar %} {% form_field_error avatar %}
+          </div>
+        </div>
       </fieldset>
-      <p>
-        <input class="inputSubmit" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
-      </p>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-6">
+          <input class="btn btn-primary" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
+        </div>
+      </div>
       {% endform %}
     </div>
-  </div>
+  {% endblock %}
 </section>

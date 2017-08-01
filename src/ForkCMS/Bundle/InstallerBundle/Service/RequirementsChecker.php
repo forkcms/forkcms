@@ -23,11 +23,6 @@ final class RequirementsChecker
      */
     private $requirementCategories;
 
-    /**
-     * RequirementsChecker constructor.
-     *
-     * @param $rootDir
-     */
     public function __construct(string $rootDir)
     {
         $this->rootDir = $rootDir;
@@ -122,9 +117,6 @@ final class RequirementsChecker
         return !$this->hasErrors() && !$this->hasWarnings();
     }
 
-    /**
-     * @return RequirementCategory
-     */
     private function checkWebServer(): RequirementCategory
     {
         $reasoningBehindTheMinimumPHPVersion = 'At this moment we require php 7.0 as we follow the <a href="http://php.net/supported-versions.php">supported versions timeline of php</a>';
@@ -159,9 +151,6 @@ final class RequirementsChecker
         );
     }
 
-    /**
-     * @return RequirementCategory
-     */
     private function checkPHPExtensions(): RequirementCategory
     {
         $pcreVersion = defined('PCRE_VERSION') ? (float) PCRE_VERSION : null;
@@ -262,23 +251,20 @@ final class RequirementsChecker
         );
     }
 
-    /**
-     * @return RequirementCategory
-     */
     private function checkPHPIniSettings(): RequirementCategory
     {
         return new RequirementCategory(
             'PHP ini-settings',
             Requirement::check(
                 'Open Basedir',
-                ini_get('open_basedir') == '',
+                ini_get('open_basedir') === '',
                 'You are not using open_basedir just like we recommend for forward compatibility',
                 'For forward compatibility we highly recommend you not to use open_basedir.',
                 RequirementStatus::warning()
             ),
             Requirement::check(
                 'date.timezone',
-                ini_get('date.timezone') == '' || in_array(
+                ini_get('date.timezone') === '' || in_array(
                     date_default_timezone_get(),
                     \DateTimeZone::listIdentifiers()
                 ),
@@ -290,9 +276,6 @@ final class RequirementsChecker
         );
     }
 
-    /**
-     * @return RequirementCategory
-     */
     private function checkAvailableFunctions(): RequirementCategory
     {
         return new RequirementCategory(
@@ -335,9 +318,6 @@ final class RequirementsChecker
         );
     }
 
-    /**
-     * @return RequirementCategory
-     */
     private function checkRequiredPermissionsAndFiles(): RequirementCategory
     {
         $distParametersFile = $this->rootDir . 'app/config/parameters.yml.dist';
@@ -387,22 +367,22 @@ final class RequirementsChecker
                 RequirementStatus::warning()
             ),
             Requirement::check(
-                $this->rootDir . 'app/cache/*',
-                $this->isWritable($this->rootDir . 'app/cache/'),
+                $this->rootDir . 'var/cache/*',
+                $this->isWritable($this->rootDir . 'var/cache/'),
                 'In this location the global cache will be stored. This location and all subdirectories are be writable.',
                 'In this location the global cache will be stored. This location and all subdirectories must be writable.',
                 RequirementStatus::error()
             ),
             Requirement::check(
-                $this->rootDir . 'app/logs/*',
-                $this->isWritable($this->rootDir . 'app/logs/'),
+                $this->rootDir . 'var/logs/*',
+                $this->isWritable($this->rootDir . 'var/logs/'),
                 'In this location the global logs will be stored. This location and all subdirectories are be writable.',
                 'In this location the global logs will be stored. This location and all subdirectories must be writable.',
                 RequirementStatus::error()
             ),
             Requirement::check(
                 $this->rootDir . 'app/config/*',
-                $this->isWritable($this->rootDir . 'app/config/'),
+                $this->isWritable($this->rootDir . 'var/config/'),
                 'In this location the global configuration will be stored. This location and all subdirectories are be writable.',
                 'In this location the global configuration will be stored. This location and all subdirectories must be writable.',
                 RequirementStatus::error()

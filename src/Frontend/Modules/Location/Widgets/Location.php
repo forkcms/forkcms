@@ -20,22 +20,19 @@ class Location extends FrontendBaseWidget
     /**
      * @var array
      */
-    protected $items = array();
+    protected $items = [];
 
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * @var array
      */
     private $item;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         // define Google Maps API key
         $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
@@ -55,10 +52,7 @@ class Location extends FrontendBaseWidget
         $this->parse();
     }
 
-    /**
-     * Load the data
-     */
-    protected function loadData()
+    protected function loadData(): void
     {
         $this->item = FrontendLocationModel::get($this->data['id']);
         $this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
@@ -80,18 +74,15 @@ class Location extends FrontendBaseWidget
             $this->settings['center']['lng'] = $this->item['lng'];
         }
 
-        $this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, array($this->item));
+        $this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, [$this->item]);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         $this->addJSData('settings_' . $this->item['id'], $this->settings);
-        $this->addJSData('items_' . $this->item['id'], array($this->item));
+        $this->addJSData('items_' . $this->item['id'], [$this->item]);
 
-        $this->tpl->assign('widgetLocationItem', $this->item);
-        $this->tpl->assign('widgetLocationSettings', $this->settings);
+        $this->template->assign('widgetLocationItem', $this->item);
+        $this->template->assign('widgetLocationSettings', $this->settings);
     }
 }

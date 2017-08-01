@@ -10,7 +10,6 @@ use ZipArchive;
 
 /**
  * Class UploadThemeTest
- * @package Backend\Modules\Extensions\Tests
  */
 class UploadThemeTest extends WebTestCase
 {
@@ -28,32 +27,27 @@ class UploadThemeTest extends WebTestCase
      */
     private $client;
 
-    /**
-     * @return void
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->logout();
         $this->client = static::createClient();
+        $this->logout($this->client);
         $this->client->setMaxRedirects(1);
         $this->client->request('GET', self::URL_UPLOAD_THEME);
 
-        $this->login();
+        $this->login($this->client);
 
         $this->client->request('GET', self::URL_UPLOAD_THEME);
     }
 
     /**
      * Test that we cannot upload a theme without info.xml file
-     *
-     * @return void
      */
-    public function testUploadThemeZipWithoutInfoFile()
+    public function testUploadThemeZipWithoutInfoFile(): void
     {
         // Generate zip with no info.xml
         $this->fileName = tempnam(sys_get_temp_dir(), 'Theme');
         $filePath = $this->fileName . '.zip';
-        $archive = new ZipArchive;
+        $archive = new ZipArchive();
         $archive->open($filePath, ZipArchive::CREATE);
         $archive->addEmptyDir($this->fileName);
         $archive->close();
@@ -71,16 +65,14 @@ class UploadThemeTest extends WebTestCase
 
     /**
      * Test if we can upload a theme with a zip that contains a subfolder containing the themefiles.
-     *
-     * @return void
      */
-    public function testUploadThemeZipGithub()
+    public function testUploadThemeZipGithub(): void
     {
         // Generate zip with no info.xml
         $this->fileName = tempnam(sys_get_temp_dir(), 'Theme');
         $filePath = $this->fileName . '.zip';
         $baseName = self::THEME_NAME;
-        $archive = new ZipArchive;
+        $archive = new ZipArchive();
         $archive->open($filePath, ZipArchive::CREATE);
         $archive->addEmptyDir($baseName);
         $archive->addFromString("$baseName/info.xml", $this->getSampleInfoXmlContents($baseName));
@@ -100,16 +92,14 @@ class UploadThemeTest extends WebTestCase
 
     /**
      * Test if we can upload a theme with a zip that contains only the files (not wrapped in a parent folder).
-     *
-     * @return void
      */
-    public function testUploadThemeNoParentFolder()
+    public function testUploadThemeNoParentFolder(): void
     {
         // Generate zip with no info.xml
         $this->fileName = tempnam(sys_get_temp_dir(), 'Theme');
         $filePath = $this->fileName . '.zip';
         $baseName = self::THEME_NAME;
-        $archive = new ZipArchive;
+        $archive = new ZipArchive();
         $archive->open($filePath, ZipArchive::CREATE);
         $archive->addFromString('info.xml', $this->getSampleInfoXmlContents($baseName));
         $archive->close();
@@ -128,17 +118,15 @@ class UploadThemeTest extends WebTestCase
 
     /**
      * @param string $themeName
+     *
      * @return string
      */
-    private function getSampleInfoXmlContents($themeName)
+    private function getSampleInfoXmlContents(string $themeName): string
     {
         return '<?xml version="1.0" encoding="UTF-8"?><theme><name>' . $themeName . '</name><version>1.0.0</version><requirements><minimum_version>4.0.0</minimum_version></requirements><thumbnail>thumbnail.png</thumbnail><description><![CDATA[Fork CMS Test]]></description><authors><author><name>Fork CMS</name><url>http://www.fork-cms.com</url></author></authors><metanavigation supported="false" /><templates></templates></theme>';
     }
 
-    /**
-     * @return void
-     */
-    private function submitThemeUploadForm()
+    private function submitThemeUploadForm(): void
     {
         $form = $this->client->getCrawler()->selectButton('Install')->form();
 
@@ -147,16 +135,13 @@ class UploadThemeTest extends WebTestCase
             'type' => 'application/zip',
             'tmp_name' => "{$this->fileName}.zip",
             'error' => 0,
-            'size' => 0
+            'size' => 0,
         ];
 
         $this->submitEditForm($this->client, $form, ['form' => 'upload']);
     }
 
-    /**
-     * @return void
-     */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $fs = new Filesystem();
 
@@ -171,7 +156,7 @@ class UploadThemeTest extends WebTestCase
         // Remove the uploaded theme folder
         $fs->remove(FRONTEND_PATH . '/Themes/' . self::THEME_NAME);
 
-        $this->logout();
+        $this->logout($this->client);
         parent::tearDown();
     }
 }

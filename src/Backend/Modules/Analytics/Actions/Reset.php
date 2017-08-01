@@ -10,7 +10,7 @@ use Backend\Core\Engine\Model;
  */
 final class Reset extends ActionDelete
 {
-    public function execute()
+    public function execute(): void
     {
         $this->get('fork.settings')->delete($this->getModule(), 'certificate');
         $this->get('fork.settings')->delete($this->getModule(), 'email');
@@ -18,6 +18,6 @@ final class Reset extends ActionDelete
         $this->get('fork.settings')->delete($this->getModule(), 'web_property_id');
         $this->get('fork.settings')->delete($this->getModule(), 'profile');
 
-        return $this->redirect(Model::createURLForAction('Settings'));
+        $this->redirect(Model::createUrlForAction('Settings'));
     }
 }

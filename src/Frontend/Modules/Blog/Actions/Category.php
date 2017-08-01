@@ -39,18 +39,15 @@ class Category extends FrontendBaseBlock
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 10,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
@@ -58,38 +55,35 @@ class Category extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // get categories
         $categories = FrontendBlogModel::getAllCategories();
-        $possibleCategories = array();
+        $possibleCategories = [];
         foreach ($categories as $category) {
             $possibleCategories[$category['url']] = $category['id'];
         }
 
         // requested category
         $requestedCategory = \SpoonFilter::getValue(
-            $this->URL->getParameter(1, 'string'),
+            $this->url->getParameter(1, 'string'),
             array_keys($possibleCategories),
             'false'
         );
 
         // requested page
-        $requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $requestedPage = $this->url->getParameter('page', 'int', 1);
 
         // validate category
         if ($requestedCategory == 'false') {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // set category
         $this->category = $categories[$possibleCategories[$requestedCategory]];
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $requestedCategory;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Blog', 'Category') . '/' . $requestedCategory;
         $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
@@ -98,7 +92,7 @@ class Category extends FrontendBaseBlock
 
         // redirect if the request page doesn't exists
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // populate calculated fields in pagination
@@ -113,14 +107,11 @@ class Category extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
-        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
+        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed
         $this->header->addRssLink($rssTitle, $rssLink);
@@ -134,22 +125,22 @@ class Category extends FrontendBaseBlock
         $this->header->setPageTitle($this->category['label']);
 
         // advanced SEO-attributes
-        if (isset($this->category['meta_data']['seo_index'])) {
+        if (isset($this->category['meta_seo_index'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->category['meta_data']['seo_index'])
+                ['name' => 'robots', 'content' => $this->category['meta_seo_index']]
             );
         }
-        if (isset($this->category['meta_data']['seo_follow'])) {
+        if (isset($this->category['meta_seo_follow'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->category['meta_data']['seo_follow'])
+                ['name' => 'robots', 'content' => $this->category['meta_seo_follow']]
             );
         }
 
         // assign category
-        $this->tpl->assign('category', $this->category);
+        $this->template->assign('category', $this->category);
 
         // assign articles
-        $this->tpl->assign('items', $this->items);
+        $this->template->assign('items', $this->items);
 
         // parse the pagination
         $this->parsePagination();

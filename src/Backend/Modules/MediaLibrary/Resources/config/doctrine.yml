@@ -1,0 +1,34 @@
+doctrine:
+  dbal:
+    types:
+      uuid: Ramsey\Uuid\Doctrine\UuidType
+      media_item_storage_type: Backend\Modules\MediaLibrary\Domain\MediaItem\StorageTypeDBALType
+      media_item_type: Backend\Modules\MediaLibrary\Domain\MediaItem\TypeDBALType
+      media_item_aspect_ratio: Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatioDBALType
+      media_group_type: Backend\Modules\MediaLibrary\Domain\MediaGroup\TypeDBALType
+  orm:
+    mappings:
+      media_folder:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaFolder"
+        alias: MediaLibraryMediaFolder
+        prefix: Backend\Modules\MediaLibrary\Domain\MediaFolder
+      media_group:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaGroup"
+        alias: MediaLibraryMediaGroup
+        prefix: Backend\Modules\MediaLibrary\Domain\MediaGroup
+      media_group_media_item:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaGroupMediaItem"
+        alias: MediaLibraryMediaGroupMediaItem
+        prefix: Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem
+      media_item:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaItem"
+        alias: MediaLibraryMediaItem
+        prefix: Backend\Modules\MediaLibrary\Domain\MediaItem

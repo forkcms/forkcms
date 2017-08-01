@@ -1,0 +1,24 @@
+services:
+    media_library.storage.local:
+        class: Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider
+        arguments:
+            - "src/Frontend/Files/MediaLibrary"
+            - "%site.protocol%://%site.domain%"
+            - "%site.path_www%"
+            - "@liip_imagine.cache.manager"
+        tags:
+            - { name: media_library.storage_provider, storageType: local }
+    media_library.storage.youtube:
+        class: Backend\Modules\MediaLibrary\Component\StorageProvider\YoutubeStorageProvider
+        arguments:
+            - "https://www.youtube.com/watch?v="
+            - "%site.protocol%://www.youtube.com/embed/"
+        tags:
+            - { name: media_library.storage_provider, storageType: youtube }
+    media_library.storage.vimeo:
+        class: Backend\Modules\MediaLibrary\Component\StorageProvider\VimeoStorageProvider
+        arguments:
+            - "https://www.vimeo.com/"
+            - "%site.protocol%://player.vimeo.com/video/"
+        tags:
+            - { name: media_library.storage_provider, storageType: vimeo }

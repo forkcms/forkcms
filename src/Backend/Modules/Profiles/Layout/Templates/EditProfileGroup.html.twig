@@ -1,4 +1,4 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends 'Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
 
@@ -42,29 +42,34 @@
           </button>
         </div>
       </div>
-      {% if showProfilesDeleteProfileGroup %}
-        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
-              </div>
-              <div class="modal-body">
-                <p>{{ 'msg.ConfirmProfileGroupDelete'|trans|format(profileGroup.name)|raw }}</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                <a href="{{ geturl('delete_profile_group') }}&amp;id={{ profileGroup.id }}" class="btn btn-danger">
-                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      {% endif %}
     </div>
   </div>
   {% endform %}
+
+  {% if showProfilesDeleteProfileGroup %}
+    {{ form_start(deleteForm) }}
+    {{ form_row(deleteForm._token) }}
+    {{ form_row(deleteForm.id) }}
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+          </div>
+          <div class="modal-body">
+            <p>{{ 'msg.ConfirmProfileGroupDelete'|trans|format(profileGroup.name)|raw }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            </button>
+            <button type="submit" class="btn btn-danger">
+              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ form_end(deleteForm) }}
+  {% endif %}
 {% endblock %}

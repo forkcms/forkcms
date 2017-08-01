@@ -9,70 +9,36 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Config;
+use Backend\Core\Engine\Base\AjaxAction as BaseAjaxAction;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...
  */
-class AjaxAction extends Base\Object
+final class AjaxAction extends KernelLoader
 {
     /**
-     * The config file
-     *
-     * @var Base\Config
+     * @var BaseAjaxAction
      */
-    private $config;
+    private $ajaxAction;
 
-    /**
-     * Execute the action
-     * We will build the classname, require the class and call the execute method.
-     *
-     * @throws Exception
-     *
-     * @return Response
-     */
-    public function execute()
+    public function display(): Response
     {
-        $this->loadConfig();
+        $this->ajaxAction->execute();
 
-        // build action-class-name
-        $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
-        if ($this->getModule() == 'Core') {
-            $actionClass = 'Backend\\Core\\Ajax\\' . $this->getAction();
-        }
-
-        if (!class_exists($actionClass)) {
-            throw new Exception('The class ' . $actionClass . ' could not be found.');
-        }
-
-        // create action-object
-        $object = new $actionClass($this->getKernel(), $this->getAction(), $this->getModule());
-        $object->setAction($this->getAction(), $this->getModule());
-        $object->execute();
-
-        return $object->getContent();
+        return $this->ajaxAction->getContent();
     }
 
-    /**
-     * Load the config file for the requested module.
-     * In the config file we have to find disabled actions, the constructor
-     * will read the folder and set possible actions
-     * Other configurations will be stored in it also.
-     */
-    public function loadConfig()
+    public function __construct(KernelInterface $kernel, string $module, string $action)
     {
-        // check if we can load the config file
-        $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
-        if ($this->getModule() == 'Core') {
-            $configClass = 'Backend\\Core\\Config';
-        }
+        parent::__construct($kernel);
 
-        // validate if class exists (aka has correct name)
-        if (!class_exists($configClass)) {
-            throw new Exception('The config file ' . $configClass . ' could not be found.');
-        }
+        $config = Config::forModule($kernel, $module);
+        $actionClass = $config->getActionClass('ajax', $action);
 
-        // create config-object, the constructor will do some magic
-        $this->config = new $configClass($this->getKernel(), $this->getModule());
+        $this->ajaxAction = new $actionClass($this->getKernel());
     }
 }

@@ -15,20 +15,13 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class ContentBlocksExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('command.yml');
-        $loader->load('repository.yml');
+        $loader->load('services.yml');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('doctrine.yml');

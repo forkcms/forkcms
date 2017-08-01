@@ -2,7 +2,6 @@
 
 namespace Common\Doctrine\Entity;
 
-use Doctrine\DBAL\Exception\TableExistsException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\ToolsException;
@@ -25,7 +24,7 @@ class CreateSchema
      *
      * @param string $entityClass
      */
-    public function forEntityClass($entityClass)
+    public function forEntityClass(string $entityClass): void
     {
         $this->forEntityClasses([$entityClass]);
     }
@@ -33,11 +32,11 @@ class CreateSchema
     /**
      * Adds new doctrine entities in the database
      *
-     * @param array $entityClasses
+     * @param string[] $entityClasses
      *
      * @throws ToolsException
      */
-    public function forEntityClasses(array $entityClasses)
+    public function forEntityClasses(array $entityClasses): void
     {
         $schemaTool = new SchemaTool($this->entityManager);
 

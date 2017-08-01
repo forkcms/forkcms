@@ -25,40 +25,24 @@ class FormBuilderSubmittedEvent extends Event
      */
     protected $dataId;
 
-    /**
-     * @param array $form
-     * @param array $data
-     * @param $dataId
-     *
-     * @internal param int $datId
-     */
-    public function __construct($form, $data, $dataId)
+    public function __construct(array $form, array $data, int $dataId)
     {
         $this->form = $form;
         $this->data = $data;
         $this->dataId = $dataId;
     }
 
-    /**
-     * @return array
-     */
-    public function getForm()
+    public function getForm(): array
     {
         return $this->form;
     }
 
-    /**
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @return int
-     */
-    public function getDataId()
+    public function getDataId(): int
     {
         return $this->dataId;
     }

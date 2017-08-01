@@ -26,10 +26,7 @@ class PreviousNextNavigation extends FrontendBaseWidget
      */
     private $navigation;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadData();
@@ -48,10 +45,7 @@ class PreviousNextNavigation extends FrontendBaseWidget
         $this->parse();
     }
 
-    /**
-     * Load the data
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get the current page id
         $pageId = $this->getContainer()->get('page')->getId();
@@ -59,7 +53,7 @@ class PreviousNextNavigation extends FrontendBaseWidget
         $navigation = FrontendNavigation::getNavigation();
         $pageInfo = FrontendNavigation::getPageInfo($pageId);
 
-        $this->navigation = array();
+        $this->navigation = [];
 
         if (isset($navigation['page'][$pageInfo['parent_id']])) {
             $pages = $navigation['page'][$pageInfo['parent_id']];
@@ -97,11 +91,8 @@ class PreviousNextNavigation extends FrontendBaseWidget
         }
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
-        $this->tpl->assign('widgetPagesNavigation', $this->navigation);
+        $this->template->assign('widgetPagesNavigation', $this->navigation);
     }
 }

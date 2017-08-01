@@ -6,16 +6,16 @@ use Common\WebTestCase;
 
 class IndexTest extends WebTestCase
 {
-    public function testAuthenticationIsNeeded()
+    public function testAuthenticationIsNeeded(): void
     {
-        $this->logout();
         $client = static::createClient();
+        $this->logout($client);
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
                 'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
-            )
+            ]
         );
 
         $client->setMaxRedirects(1);
@@ -28,10 +28,10 @@ class IndexTest extends WebTestCase
         );
     }
 
-    public function testIndexContainsBlogPosts()
+    public function testIndexContainsBlogPosts(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $client->request('GET', '/private/en/blog/index');
         self::assertContains(

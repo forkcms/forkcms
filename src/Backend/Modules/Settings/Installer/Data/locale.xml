@@ -51,6 +51,10 @@
         <translation language="de"><![CDATA[Cookies]]></translation>
         <translation language="es"><![CDATA[cookies]]></translation>
       </item>
+      <item type="label" name="ClearCache">
+        <translation language="nl"><![CDATA[verwijder cache]]></translation>
+        <translation language="en"><![CDATA[clear cache]]></translation>
+      </item>
       <item type="label" name="LicenseKey">
         <translation language="nl"><![CDATA[Licentie key]]></translation>
         <translation language="en"><![CDATA[License key]]></translation>
@@ -122,6 +126,14 @@
         <translation language="fr"><![CDATA[twitter]]></translation>
         <translation language="es"><![CDATA[twitter]]></translation>
         <translation language="it"><![CDATA[twitter]]></translation>
+      </item>
+      <item type="label" name="Tools">
+        <translation language="nl"><![CDATA[tools]]></translation>
+        <translation language="en"><![CDATA[tools]]></translation>
+        <translation language="de"><![CDATA[tools]]></translation>
+        <translation language="fr"><![CDATA[tools]]></translation>
+        <translation language="es"><![CDATA[tools]]></translation>
+        <translation language="it"><![CDATA[tools]]></translation>
       </item>
       <item type="label" name="Facebook">
         <translation language="nl"><![CDATA[facebook]]></translation>
@@ -431,6 +443,18 @@
         <translation language="es"><![CDATA[Este formato es usado para mostrar fechas en el sitio web.]]></translation>
         <translation language="el"><![CDATA[Αυτή η μορφή χρησιμοποείται γιά την εμφάνιση των ημερομηνιών στον ιστοχώρο.]]></translation>
       </item>
+      <item type="message" name="ClearCache">
+        <translation language="nl"><![CDATA[Verwijder alle gecachete bestanden. Handig wanneer er problemen optreden die hier mogelijks mee te maken hebben. Hou er rekening mee dat er errors kunnen optreden wanneer er voor het eerst terug een pagina ingeladen word.]]></translation>
+        <translation language="en"><![CDATA[Remove all cached files. Useful for when problems arise which possibly have something to do with the cache. Remember clearing the cache might cause some errors when a page is reloaded for the first time.]]></translation>
+      </item>
+      <item type="message" name="ClearingCache">
+        <translation language="nl"><![CDATA[De cache wordt verwijderd, even geduld]]></translation>
+        <translation language="en"><![CDATA[The cache is being cleared, hang on]]></translation>
+      </item>
+      <item type="message" name="CacheCleared">
+        <translation language="nl"><![CDATA[De cache is succesvol verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The cache has been successfully cleared.]]></translation>
+      </item>
       <item type="message" name="NoAdminIds">
         <translation language="nl"><![CDATA[Nog geen admin-ids]]></translation>
         <translation language="en"><![CDATA[No admin ids yet.]]></translation>
@@ -524,5 +548,13 @@
       </item>
     </Settings>
   </Backend>
+  <Frontend>
+    <Core>
+      <item type="error" name="RecaptchaInvalid">
+        <translation language="nl"><![CDATA[Captcha code is ongeldig.]]></translation>
+        <translation language="en"><![CDATA[Captcha code is invalid.]]></translation>
+      </item>
+    </Core>
+  </Frontend>
 </locale>
 

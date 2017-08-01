@@ -12,7 +12,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -36,10 +36,7 @@ class Index extends BackendBaseActionIndex
      */
     private $emptyDatagrid;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDatagrids();
@@ -48,68 +45,62 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Loads the dataGrids
-     */
-    private function loadDatagrids()
+    private function loadDatagrids(): void
     {
         // load all categories
         $categories = BackendFaqModel::getCategories(true);
 
         // loop categories and create a dataGrid for each one
         foreach ($categories as $categoryId => $categoryTitle) {
-            $dataGrid = new BackendDataGridDB(
-                BackendFaqModel::QRY_DATAGRID_BROWSE,
-                array(BL::getWorkingLanguage(), $categoryId)
+            $dataGrid = new BackendDataGridDatabase(
+                BackendFaqModel::QUERY_DATAGRID_BROWSE,
+                [BL::getWorkingLanguage(), $categoryId]
             );
             $dataGrid->enableSequenceByDragAndDrop();
-            $dataGrid->setColumnsHidden(array('category_id', 'sequence'));
-            $dataGrid->setColumnAttributes('question', array('class' => 'title'));
-            $dataGrid->setRowAttributes(array('id' => '[id]'));
+            $dataGrid->setColumnsHidden(['category_id', 'sequence']);
+            $dataGrid->setColumnAttributes('question', ['class' => 'title']);
+            $dataGrid->setRowAttributes(['id' => '[id]']);
 
             // check if this action is allowed
             if (BackendAuthentication::isAllowedAction('Edit')) {
-                $dataGrid->setColumnURL('question', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
+                $dataGrid->setColumnURL('question', BackendModel::createUrlForAction('Edit') . '&amp;id=[id]');
                 $dataGrid->addColumn(
                     'edit',
                     null,
                     BL::lbl('Edit'),
-                    BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                    BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
                     BL::lbl('Edit')
                 );
             }
 
             // add dataGrid to list
-            $this->dataGrids[] = array(
+            $this->dataGrids[] = [
                 'id' => $categoryId,
                 'title' => $categoryTitle,
                 'content' => $dataGrid->getContent(),
-            );
+            ];
         }
 
         // set empty datagrid
         $this->emptyDatagrid = new BackendDataGridArray(
-            array(array(
+            [[
                 'dragAndDropHandle' => '',
                 'question' => BL::msg('NoQuestionInCategory'),
                 'edit' => '',
-            ))
+            ]]
         );
-        $this->emptyDatagrid->setAttributes(array('class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop emptyGrid'));
-        $this->emptyDatagrid->setHeaderLabels(array('edit' => null, 'dragAndDropHandle' => null));
+        $this->emptyDatagrid->setAttributes(['class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop emptyGrid']);
+        $this->emptyDatagrid->setHeaderLabels(['edit' => null, 'dragAndDropHandle' => null]);
     }
 
-    /**
-     * Parse the dataGrids and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // parse dataGrids
         if (!empty($this->dataGrids)) {
-            $this->tpl->assign('dataGrids', $this->dataGrids);
+            $this->template->assign('dataGrids', $this->dataGrids);
         }
-        $this->tpl->assign('emptyDatagrid', $this->emptyDatagrid->getContent());
+        $this->template->assign('emptyDatagrid', $this->emptyDatagrid->getContent());
     }
 }

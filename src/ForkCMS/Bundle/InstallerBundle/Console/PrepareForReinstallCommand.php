@@ -20,19 +20,13 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
     /**
      * Configure the command options.
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('forkcms:install:prepare-for-reinstall')
-            ->setDescription('Clear the cache and database to prepare for a full reinstall');
+            ->setDescription('Revert Fork CMS to an uninstalled state, prompting the install wizard.');
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -47,12 +41,7 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
         return $returnCode;
     }
 
-    /**
-     * @param SymfonyStyle $io
-     *
-     * @return int
-     */
-    private function clearDatabase(SymfonyStyle $io)
+    private function clearDatabase(SymfonyStyle $io): int
     {
         if (!$io->confirm('Clear the database?')) {
             return self::RETURN_DID_NOT_CLEAR_DATABASE;
@@ -72,10 +61,7 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
         return self::RETURN_SUCCESS;
     }
 
-    /**
-     * @param SymfonyStyle $io
-     */
-    private function removeConfiguration(SymfonyStyle $io)
+    private function removeConfiguration(SymfonyStyle $io): void
     {
         $fullPath = realpath(__DIR__ . '/../../..' . '/app/config/parameters.yml');
         if (file_exists($fullPath)) {
@@ -84,18 +70,14 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
         }
     }
 
-    /**
-     * @param OutputInterface $output
-     * @param SymfonyStyle $io
-     */
-    private function clearCache(OutputInterface $output, SymfonyStyle $io)
+    private function clearCache(OutputInterface $output, SymfonyStyle $io): void
     {
         $command = $this->getApplication()->find('forkcms:cache:clear');
         $command->run(
             new ArrayInput(
-                array(
+                [
                     'forkcms:cache:clear',
-                )
+                ]
             ),
             $output
         );

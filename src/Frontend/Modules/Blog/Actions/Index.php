@@ -31,18 +31,15 @@ class Index extends FrontendBaseBlock
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 10,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
@@ -50,16 +47,13 @@ class Index extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // requested page
-        $requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $requestedPage = $this->url->getParameter('page', 'int', 1);
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog');
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Blog');
         $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
@@ -73,7 +67,7 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // populate calculated fields in pagination
@@ -84,27 +78,24 @@ class Index extends FrontendBaseBlock
         $this->items = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
-        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
+        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed
         $this->header->addLink(
-            array(
+            [
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
                  'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE),
                  'href' => $rssLink,
-            ),
+            ],
             true
         );
 
         // assign articles
-        $this->tpl->assign('items', $this->items);
+        $this->template->assign('items', $this->items);
 
         // parse the pagination
         $this->parsePagination();

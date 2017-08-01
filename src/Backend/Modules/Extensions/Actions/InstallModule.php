@@ -27,21 +27,18 @@ class InstallModule extends BackendBaseActionIndex
      */
     private $currentModule;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
-        $this->currentModule = $this->getParameter('module', 'string');
+        $this->currentModule = $this->getRequest()->query->get('module', '');
 
         // does the item exist
-        if ($this->currentModule !== null && BackendExtensionsModel::existsModule($this->currentModule)) {
+        if ($this->currentModule !== '' && BackendExtensionsModel::existsModule($this->currentModule)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
             // make sure this module can be installed
-            $this->validateInstall();
+            $this->validateIfModuleCanBeInstalled();
 
             // do the actual install
             BackendExtensionsModel::installModule($this->currentModule);
@@ -51,26 +48,23 @@ class InstallModule extends BackendBaseActionIndex
             $filesystem->remove($this->getContainer()->getParameter('kernel.cache_dir'));
 
             // redirect to index with a success message
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&report=module-installed&var=' . $this->currentModule . '&highlight=row-module_' . $this->currentModule);
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&report=module-installed&var=' . $this->currentModule . '&highlight=row-module_' . $this->currentModule);
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&error=non-existing');
         }
     }
 
-    /**
-     * Validate if the module can be installed.
-     */
-    private function validateInstall()
+    private function validateIfModuleCanBeInstalled(): void
     {
         // already installed
         if (BackendModel::isModuleInstalled($this->currentModule)) {
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=already-installed&var=' . $this->currentModule);
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&error=already-installed&var=' . $this->currentModule);
         }
 
         // no installer class present
         if (!is_file(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/Installer/Installer.php')) {
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=no-installer-file&var=' . $this->currentModule);
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&error=no-installer-file&var=' . $this->currentModule);
         }
     }
 }

@@ -1,8 +1,16 @@
 {% extends 'Core/Layout/Templates/Mails/Default.html.twig' %}
 
+{% block title %}
+  <title>{{ SITE_TITLE }} - {{ 'msg.FormBuilderSubject'|trans|format(name) }}</title>
+{% endblock %}
+
 {% block main %}
-  <h2>{{ SITE_TITLE }}: {{ 'msg.FormBuilderSubject'|trans|format(name) }}</h2>
+  <h2>{{ SITE_TITLE }}: {{ subject|format(name) }}</h2>
   <hr />
+  {% if is_confirmation_mail %}
+    <p>{{ 'msg.YouJustSentTheFollowingMessage'|trans }}</p>
+    <hr>
+  {% endif %}
   <h3>{{ 'lbl.SenderInformation'|trans|ucfirst }}</h3>
   <p>
     <strong>{{ 'lbl.SentOn'|trans|ucfirst }}:</strong><br />

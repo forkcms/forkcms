@@ -29,7 +29,7 @@ class Form extends \SpoonForm
      *
      * @var Url
      */
-    protected $URL;
+    protected $url;
 
     /**
      * Adds a single checkbox.
@@ -235,7 +235,7 @@ class Form extends \SpoonForm
     /**
      * @return string|null
      */
-    public static function getUploadMaxFileSize()
+    public static function getUploadMaxFileSize(): ?string
     {
         $uploadMaxFileSize = ini_get('upload_max_filesize');
         if ($uploadMaxFileSize === false) {
@@ -248,20 +248,40 @@ class Form extends \SpoonForm
         }
 
         // reformat if specified in kB
-        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) == 'K') {
+        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) === 'K') {
             return mb_substr($uploadMaxFileSize, 0, -1) . 'kB';
         }
 
         // reformat if specified in MB
-        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) == 'M') {
+        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) === 'M') {
             return $uploadMaxFileSize . 'B';
         }
 
         // reformat if specified in GB
-        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) == 'G') {
+        if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1, 1)) === 'G') {
             return $uploadMaxFileSize . 'B';
         }
 
         return $uploadMaxFileSize;
+    }
+
+    protected function sessionHasFormToken()
+    {
+        return Model::getSession()->has('form_token');
+    }
+
+    protected function saveTokenToSession($token)
+    {
+        Model::getSession()->set('form_token', $token);
+    }
+
+    protected function getSessionId()
+    {
+        return Model::getSession()->getId();
+    }
+
+    protected function getTokenFromSession()
+    {
+        return Model::getSession()->get('form_token');
     }
 }

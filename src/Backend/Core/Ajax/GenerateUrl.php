@@ -10,35 +10,31 @@ namespace Backend\Core\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Meta as BackendMeta;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This action will generate a valid url based upon the submitted url.
  */
 class GenerateUrl extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
         // get parameters
-        $url = \SpoonFilter::getPostValue('url', null, '', 'string');
-        $className = \SpoonFilter::getPostValue('className', null, '', 'string');
-        $methodName = \SpoonFilter::getPostValue('methodName', null, '', 'string');
-        $parameters = \SpoonFilter::getPostValue('parameters', null, '', 'string');
+        $url = $this->getRequest()->request->get('url', '');
+        $className = $this->getRequest()->request->get('className', '');
+        $methodName = $this->getRequest()->request->get('methodName', '');
+        $parameters = $this->getRequest()->request->get('parameters', '');
 
         // cleanup values
         $parameters = @unserialize($parameters);
 
         // fetch generated meta url
-        $url = urldecode($this->get('fork.repository.meta')->generateURL($url, $className, $methodName, $parameters));
+        $url = urldecode($this->get('fork.repository.meta')->generateUrl($url, $className, $methodName, $parameters));
 
         // output
-        $this->output(self::OK, $url);
+        $this->output(Response::HTTP_OK, $url);
     }
 }

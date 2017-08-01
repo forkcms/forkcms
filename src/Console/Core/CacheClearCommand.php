@@ -12,20 +12,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class CacheClearCommand extends Command
 {
-    /**
-     * Configure the command options.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('forkcms:cache:clear')
             ->setDescription('Clear the cache');
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -41,7 +34,7 @@ class CacheClearCommand extends Command
         $this->removeFilesInFolder('/src/Backend/Cache/MinifiedCss', $io, 'backend minified css');
         $this->removeFilesInFolder('/src/Backend/Cache/MinifiedJs', $io, 'backend minified js');
 
-        $this->removeFilesInFolder('/app/cache', $io, 'general cache');
+        $this->removeFilesInFolder('/var/cache', $io, 'general cache');
 
         $io->success('Cache is cleared');
     }
@@ -49,17 +42,17 @@ class CacheClearCommand extends Command
     /**
      * Remove the files in a given folder
      *
-     * @param string       $path
+     * @param string $path
      * @param SymfonyStyle $io
-     * @param string       $name
+     * @param string $name
      */
-    private function removeFilesInFolder($path, SymfonyStyle $io, $name)
+    private function removeFilesInFolder(string $path, SymfonyStyle $io, string $name): void
     {
         $fullPath = realpath(__DIR__ . '/../../..' . $path);
 
         // I use a rm-command because this is much faster then using the finder/filesystem-component
-        $command = 'rm -f `find %1$s ! -name ".gitignore" -type f ! -path *.svn/* -type f`';
-        shell_exec(vsprintf($command, $fullPath));
-        $io->comment(vsprintf('Removed %1$s', $name));
+        $command = 'find %1$s ! -name ".gitignore" -type f ! -path *.svn/* -type f | xargs rm -f';
+        shell_exec(sprintf($command, $fullPath));
+        $io->comment(sprintf('Removed %1$s', $name));
     }
 }

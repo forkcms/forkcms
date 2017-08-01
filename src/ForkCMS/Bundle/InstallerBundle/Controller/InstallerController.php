@@ -21,9 +21,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class InstallerController extends Controller
 {
-    /**
-     * @return RedirectResponse|Response
-     */
+    /** @var InstallationData */
+    public static $installationData;
+
     public function step1Action(): Response
     {
         $this->checkInstall();
@@ -38,55 +38,31 @@ final class InstallerController extends Controller
             'ForkCMSInstallerBundle:Installer:step1.html.twig',
             [
                 'checker' => $requirementsChecker,
+                'rootDir' => realpath($this->container->getParameter('site.path_www')),
             ]
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     */
     public function step2Action(Request $request): Response
     {
         return $this->handleInstallationStep(2, LanguagesType::class, new LanguagesHandler(), $request);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     */
     public function step3Action(Request $request): Response
     {
         return $this->handleInstallationStep(3, ModulesType::class, new ModulesHandler(), $request);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     */
     public function step4Action(Request $request): Response
     {
         return $this->handleInstallationStep(4, DatabaseType::class, new DatabaseHandler(), $request);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     */
     public function step5Action(Request $request): Response
     {
         return $this->handleInstallationStep(5, LoginType::class, new LoginHandler(), $request);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function step6Action(Request $request): Response
     {
         $this->checkInstall();
@@ -104,9 +80,6 @@ final class InstallerController extends Controller
         );
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function noStepAction(): RedirectResponse
     {
         $this->checkInstall();
@@ -114,16 +87,13 @@ final class InstallerController extends Controller
         return $this->redirect($this->generateUrl('install_step1'));
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return InstallationData
-     */
     protected function getInstallationData(Request $request): InstallationData
     {
         if (!$request->getSession()->has('installation_data')) {
             $request->getSession()->set('installation_data', new InstallationData());
         }
+        // static cache
+        self::$installationData = $request->getSession()->get('installation_data');
 
         return $request->getSession()->get('installation_data');
     }
@@ -134,7 +104,7 @@ final class InstallerController extends Controller
     protected function checkInstall()
     {
         $filesystem = new Filesystem();
-        $kernelDir = $this->container->getParameter('kernel.root_dir');
+        $kernelDir = $this->container->getParameter('kernel.project_dir') . '/app';
         $parameterFile = $kernelDir . 'config/parameters.yml';
         if ($filesystem->exists($parameterFile)) {
             throw new ExitException(
@@ -148,14 +118,6 @@ final class InstallerController extends Controller
         }
     }
 
-    /**
-     * @param int $step
-     * @param string $formTypeClass
-     * @param InstallerHandler $handler
-     * @param Request $request
-     *
-     * @return Response
-     */
     private function handleInstallationStep(
         int $step,
         string $formTypeClass,

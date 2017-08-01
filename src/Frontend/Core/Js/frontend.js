@@ -74,9 +74,9 @@ jsFrontend.cookieBar =
     init: function()
     {
         // if there is no cookiebar we shouldn't do anything
-        if($('#cookieBar').length === 0) return;
+        if($('#cookie-bar').length === 0) return;
 
-        $cookieBar = $('#cookieBar');
+        $cookieBar = $('#cookie-bar');
 
         // @remark: as you can see we use PHP-serialized values so we can use them in PHP too.
         // hide the cookieBar if needed
@@ -84,16 +84,17 @@ jsFrontend.cookieBar =
             $cookieBar.hide();
         }
 
-        $cookieBar.on('click', '#cookieBarAgree', function(e) {
+        $cookieBar.on('click', '[data-role="cookie-bar-button"]', function(e) {
             e.preventDefault();
-            utils.cookies.setCookie('cookie_bar_agree', 'b:1;');
-            utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
-            $cookieBar.hide();
-        });
-        $cookieBar.on('click', '#cookieBarDisagree', function(e) {
-            e.preventDefault();
-            utils.cookies.setCookie('cookie_bar_agree', 'b:0;');
-            utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+
+            if ($(e.currentTarget).data('action') == 'agree') {
+                utils.cookies.setCookie('cookie_bar_agree', 'Y');
+                utils.cookies.setCookie('cookie_bar_hide', 'Y');
+            }
+            else {
+                utils.cookies.setCookie('cookie_bar_agree', 'N');
+                utils.cookies.setCookie('cookie_bar_hide', 'Y');
+            }
             $cookieBar.hide();
         });
     }
@@ -178,6 +179,7 @@ jsFrontend.forms =
         jsFrontend.forms.datefields();
         jsFrontend.forms.validation();
         jsFrontend.forms.filled();
+        jsFrontend.forms.datePicker();
     },
 
     // once text has been filled add another class to it (so it's possible to style it differently)
@@ -384,6 +386,16 @@ jsFrontend.forms =
                 });
             });
         }
+    },
+
+    // Add date pickers to the appropriate input elements
+    datePicker: function ()
+    {
+        $('input[data-role="fork-datepicker"]').each(
+            function (index, datePickerElement) {
+                $(datePickerElement).datepicker();
+            }
+        );
     }
 };
 

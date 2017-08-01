@@ -9,6 +9,8 @@ namespace Common\Core\Twig\Extensions;
  * file that was distributed with this source code.
  */
 
+use SpoonFilter;
+
 /**
  * Contains Base Frontend-related custom modifiers.
  * These filters work independent of front/backend.
@@ -19,15 +21,15 @@ class BaseTwigModifiers
      * Format a number as currency
      *    syntax: {{ $string|formatcurrency($currency, $decimals) }}.
      *
-     * @param string $string   The string to form.
+     * @param float $number The string to form.
      * @param string $currency The currency to will be used to format the number.
-     * @param int    $decimals The number of decimals to show.
+     * @param int $decimals The number of decimals to show.
      *
      * @return string
      */
-    public static function formatCurrency($string, $currency = 'EUR', $decimals = null)
+    public static function formatCurrency(float $number, string $currency = 'EUR', int $decimals = null): string
     {
-        $decimals = ($decimals === null) ? 2 : (int) $decimals;
+        $decimals = $decimals === null ? 2 : $decimals;
 
         // @later get settings from backend
         switch ($currency) {
@@ -37,24 +39,24 @@ class BaseTwigModifiers
             default:
         }
 
-        return $currency.'&nbsp;'.static::formatNumber($string, $decimals);
+        return $currency . '&nbsp;' . static::formatNumber($number, $decimals);
     }
 
     /**
      * Fallback for if our parent functions don't implement this method
      *
-     * @param string $number
+     * @param float $number
      * @param int $decimals
      *
      * @return string
      */
-    public static function formatNumber($number, $decimals = null)
+    public static function formatNumber(float $number, int $decimals = null): string
     {
         if ($decimals === null) {
             $decimals = 2;
         }
 
-        return number_format((float) $number, $decimals, ',', '&nbsp;');
+        return number_format($number, $decimals, ',', '&nbsp;');
     }
 
     /**
@@ -65,7 +67,7 @@ class BaseTwigModifiers
      *
      * @return string
      */
-    public static function highlightCode($string)
+    public static function highlightCode(string $string): string
     {
         // regex pattern
         $pattern = '/<code>.*?<\/code>/is';
@@ -78,7 +80,7 @@ class BaseTwigModifiers
                 $string = str_replace($match, highlight_string($match, true), $string);
 
                 // replace highlighted code tags in match
-                $string = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $string);
+                $string = str_replace(['&lt;code&gt;', '&lt;/code&gt;'], '', $string);
             }
         }
 
@@ -94,12 +96,9 @@ class BaseTwigModifiers
      *
      * @return int
      */
-    public static function random($min, $max)
+    public static function random(int $min, int $max): int
     {
-        $min = (int) $min;
-        $max = (int) $max;
-
-        return mt_rand($min, $max);
+        return random_int($min, $max);
     }
 
     /**
@@ -110,9 +109,9 @@ class BaseTwigModifiers
      *
      * @return string
      */
-    public static function stripNewlines($string)
+    public static function stripNewlines(string $string): string
     {
-        return str_replace(array("\r\n", "\n", "\r"), ' ', $string);
+        return str_replace(["\r\n", "\n", "\r"], ' ', $string);
     }
 
     /**
@@ -123,7 +122,7 @@ class BaseTwigModifiers
      *
      * @return string The string, completly uppercased.
      */
-    public static function uppercase($string)
+    public static function uppercase(string $string): string
     {
         return mb_convert_case($string, MB_CASE_UPPER, \Spoon::getCharset());
     }
@@ -137,7 +136,7 @@ class BaseTwigModifiers
      *
      * @return string The string, completely lowercased.
      */
-    public static function lowercase($string)
+    public static function lowercase(string $string): string
     {
         return mb_convert_case($string, MB_CASE_LOWER, \Spoon::getCharset());
     }
@@ -152,7 +151,7 @@ class BaseTwigModifiers
      *
      * @return string
      */
-    public static function snakeCase($string)
+    public static function snakeCase(string $string): string
     {
         return ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $string)), '_');
     }
@@ -167,10 +166,10 @@ class BaseTwigModifiers
      *
      * @return string
      */
-    public static function camelCase($string)
+    public static function camelCase(string $string): string
     {
         // non-alpha and non-numeric characters become spaces
-        $string = preg_replace('/[^a-z0-9'.implode('', []).']+/i', ' ', $string);
+        $string = preg_replace('/[^a-z0-9' . implode('', []) . ']+/i', ' ', $string);
         $string = trim($string);
         // uppercase the first character of each word
         $string = ucwords($string);
@@ -184,9 +183,9 @@ class BaseTwigModifiers
      * Formats a language specific date.
      *    syntax: {{ $timestamp|spoondate($format, $language) }}.
      *
-     * @param mixed            $timestamp The timestamp or date that you want to apply the format to.
-     * @param string[optional] $format    The optional format that you want to apply on the provided timestamp.
-     * @param string[optional] $language  The optional language that you want this format in (Check SpoonLocale for the possible languages).
+     * @param string|int $timestamp The timestamp or date that you want to apply the format to.
+     * @param string $format The optional format that you want to apply on the provided timestamp.
+     * @param string $language The optional language that you want this format in (Check SpoonLocale for the possible languages).
      *
      * @return string The formatted date according to the timestamp, format and provided language.
      */
@@ -205,33 +204,21 @@ class BaseTwigModifiers
      *    syntax: {{ showbool($status, $reverse) }}.
      *
      * @param string|bool $status
-     * @param bool        $reverse show the opposite of the status
+     * @param bool $reverse show the opposite of the status
      *
      * @return string
      */
-    public static function showBool($status, $reverse = false)
+    public static function showBool($status, bool $reverse = false): string
     {
         $showTrue = '<strong style="color:green">&#10003;</strong>';
         $showFalse = '<strong style="color:red">&#10008;</strong>';
 
-        if ($reverse) {
-            if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
-                return $showFalse;
-            }
-
-            if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
-                return $showTrue;
-            }
-
-            return $status;
-        }
-
         if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
-            return $showTrue;
+            return $reverse ? self::showBool(false) : $showTrue;
         }
 
         if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
-            return $showFalse;
+            return $reverse ? self::showBool(true) : $showFalse;
         }
 
         return $status;
@@ -241,45 +228,47 @@ class BaseTwigModifiers
      * Truncate a string
      *    syntax: {{ $string|truncate($max-length, $append-hellip, $closest-word) }}.
      *
-     * @param string $string      The string passed from the template.
-     * @param int    $length      The maximum length of the truncated string.
-     * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
-     * @param bool   $closestWord Truncate on exact length or on closest word?
+     * @param string $string The string passed from the template.
+     * @param int $length The maximum length of the truncated string.
+     * @param bool $useHellip Should a hellip be appended if the length exceeds the requested length?
+     * @param bool $closestWord Truncate on exact length or on closest word?
      *
      * @return string
      */
-    public static function truncate($string, $length, $useHellip = true, $closestWord = false)
-    {
+    public static function truncate(
+        string $string,
+        int $length,
+        bool $useHellip = true,
+        bool $closestWord = false
+    ): string {
         // remove special chars, all of them, also the ones that shouldn't be there.
-        $string = \SpoonFilter::htmlentitiesDecode($string, null, ENT_QUOTES);
+        $string = SpoonFilter::htmlentitiesDecode($string, null, ENT_QUOTES);
 
         // remove HTML
         $string = strip_tags($string);
 
         // less characters
         if (mb_strlen($string) <= $length) {
-            return \SpoonFilter::htmlspecialchars($string);
-        } else {
-            // more characters
-            // hellip is seen as 1 char, so remove it from length
-            if ($useHellip) {
-                --$length;
-            }
-
-            // truncate
-            if ($closestWord) {
-                $string = mb_substr($string, 0, strrpos(substr($string, 0, $length + 1), ' '), 'UTF-8');
-            } else {
-                $string = mb_substr($string, 0, $length, 'UTF8');
-            }
-
-            // add hellip
-            if ($useHellip) {
-                $string .= '…';
-            }
-
-            // return
-            return \SpoonFilter::htmlspecialchars($string, ENT_QUOTES);
+            return SpoonFilter::htmlspecialchars($string);
         }
+
+        // more characters
+        // hellip is seen as 1 char, so remove it from length
+        if ($useHellip) {
+            --$length;
+        }
+
+        // truncate
+        $string = $closestWord
+            ? mb_substr($string, 0, strrpos(substr($string, 0, $length + 1), ' '), 'UTF-8')
+            : mb_substr($string, 0, $length, 'UTF8');
+
+        // add hellip
+        if ($useHellip) {
+            $string .= '…';
+        }
+
+        // return
+        return SpoonFilter::htmlspecialchars($string, ENT_QUOTES);
     }
 }

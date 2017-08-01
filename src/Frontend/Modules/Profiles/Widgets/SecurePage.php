@@ -20,20 +20,17 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class SecurePage extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
 
         // Check if we're logged in, else redirect to the login form.
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
-            $queryString = $this->URL->getQueryString();
+            $queryString = $this->url->getQueryString();
             throw new RedirectException(
                 'Redirect',
-                new RedirectResponse(Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
+                new RedirectResponse(Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
             );
         }
     }

@@ -81,8 +81,8 @@ For Nginx
             server_name fork-cms.com;
             root /var/www/fork;
             index index.php;
-            error_log /var/www/fork/app/logs/error-nginx.log;
-            access_log /var/www/fork/app/logs/access-nginx.log;
+            error_log /var/www/fork/var/logs/error-nginx.log;
+            access_log /var/www/fork/var/logs/access-nginx.log;
     
         #site root is redirected to the app boot script
         location = / {

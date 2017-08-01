@@ -5,35 +5,71 @@
 #}
 
 {% if widgetLocationItem %}
-  {# @remark: do not remove the parseMap-class, it is used by JS #}
-  <div id="map{{ widgetLocationItem.id }}" class="parseMap" style="height: {{ widgetLocationSettings.height }}px; width: {{ widgetLocationSettings.width }}px;"></div>
+  <aside class="module-location widget-location-location">
+    {% block widget_map %}
+      <div class="widget-map">
+        <div data-role="fork-map-container" data-map-id="{{ widgetLocationItem.id }}" style="height: {{ widgetLocationSettings.height }}px;">
+          <span class="hidden">{{ 'lbl.Loading'|trans|ucfirst }}</span>
+        </div>
+      </div>
+    {% endblock %}
 
-  {% if widgetLocationSettings.directions %}
-    <aside id="locationSearch{{ widgetLocationItem.id }}" class="locationSearch">
-      <form method="get" action="#">
-        <p>
-          <label for="locationSearchAddress{{ widgetLocationItem.id }}">{{ 'lbl.Start'|trans|ucfirst }}
-            <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-          <input type="text" id="locationSearchAddress{{ widgetLocationItem.id }}" name="locationSearchAddress" class="inputText" />
-          <span id="locationSearchError{{ widgetLocationItem.id }}" class="formError inlineError" style="display: none;">{{ 'err.FieldIsRequired'|trans|ucfirst }}</span>
-        </p>
-        <p>
-          <input type="submit" id="locationSearchRequest{{ widgetLocationItem.id }}" name="locationSearchRequest" class="inputSubmit" value="{{ 'lbl.ShowDirections'|trans|ucfirst }}" />
-        </p>
-      </form>
-    </aside>
-  {% endif %}
+    {% if widgetLocationSettings.full_url %}
+      {% block widget_large_map_link %}
+        <div class="widget-large-map-link">
+          <div class="row">
+            <div class="col-xs-12">
+              <a href="{{ widgetLocationSettings.maps_url }}" class="btn pull-right" target="_blank" data-role="fork-map-url" data-map-id="{{ widgetLocationItem.id }}">
+                {{ 'lbl.ViewLargeMap'|trans|ucfirst }} <span class="sr-only">{{ widgetLocationItem.title }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endblock %}
+    {% endif %}
 
-  {% if widgetLocationSettings.full_url %}
-    <p>
-      <a id="map-full-url-{{ widgetLocationItem.id }}" href="{{ widgetLocationSettings.maps_url }}" title="{{ 'lbl.ViewLargeMap'|trans }}">{{ 'lbl.ViewLargeMap'|trans|ucfirst }}</a>
-    </p>
-  {% endif %}
+    {% if widgetLocationSettings.directions %}
+      {% block widget_directions %}
+        <div class="widget-directions">
+          <aside>
+            <form method="get" action="#" data-role="fork-directions-form" data-map-id="{{ widgetLocationItem.id }}">
+              <div class="form-group">
+                <label class="control-label" for="locationSearchAddress{{ widgetLocationItem.id }}">
+                  {{ 'lbl.Start'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>&nbsp;
+                </label>
+                <div class="input-group">
+                  <input type="text" id="locationSearchAddress{{ widgetLocationItem.id }}" name="locationSearchAddress" class="form-control" data-role="fork-directions-start" data-map-id="{{ widgetLocationItem.id }}" />
+                  <span data-role="fork-directions-error" data-map-id="{{ widgetLocationItem.id }}" class="error" style="display: none;">
+                    <span class="help-inline">{{ 'err.FieldIsRequired'|trans|ucfirst }}</span>
+                  </span>
+                  <span class="input-group-btn">
+                    <input type="submit" name="locationSearchRequest" class="btn btn-primary" value="{{ 'lbl.ShowDirections'|trans|ucfirst }}" />
+                  </span>
+                </div>
+              </div>
+            </form>
+          </aside>
+        </div>
+      {% endblock %}
+    {% endif %}
 
-  <div id="markerText{{ widgetLocationItem.id }}" style="display: none;">
-    <address>
-      {{ widgetLocationItem.street }} {{ widgetLocationItem.number }}<br />
-      {{ widgetLocationItem.zip }} {{ widgetLocationItem.city }}
-    </address>
-  </div>
+    {% block widget_marker_text %}
+      <div class="widget-marker-text">
+        <div data-role="fork-marker-data-container" data-map-id="{{ widgetLocationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">
+          <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+            <meta itemprop="latitude" content="{{ widgetLocationItem.lat }}" />
+            <meta itemprop="longitude" content="{{ widgetLocationItem.lng }}" />
+          </div>
+
+          <div itemprop="name" class="hidden"><strong>{{ widgetLocationItem.title }}</strong></div>
+          <address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+            <span itemprop="streetAddress">{{ widgetLocationItem.street }} {{ widgetLocationItem.number }}</span><br>
+            <span itemprop="postalCode">{{ widgetLocationItem.zip }}</span>
+            <span itemprop="addressLocality">{{ widgetLocationItem.city }}</span><br>
+            <span itemprop="addressCountry">{{ widgetLocationItem.country }}</span>
+          </address>
+        </div>
+      </div>
+    {% endblock %}
+  </aside>
 {% endif %}

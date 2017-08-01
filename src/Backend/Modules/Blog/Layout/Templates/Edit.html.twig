@@ -1,4 +1,5 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
@@ -75,7 +76,7 @@
                     <div class="panel-body">
                       {% if item.image %}
                         <div>
-                          <img src="{{ FRONTEND_FILES_URL }}/blog/images/128x128/{{ item.image }}" class="img-thumbnail" width="128" height="128" alt="{{ 'lbl.Image'|trans|ucfirst }}" />
+                          <img src="{{ FRONTEND_FILES_URL }}/Blog/images/128x128/{{ item.image }}" class="img-thumbnail" width="128" height="128" alt="{{ 'lbl.Image'|trans|ucfirst }}" />
                         </div>
                         <ul class="list-unstyled">
                           <li class="checkbox">
@@ -223,28 +224,6 @@
       </div>
     </div>
   </div>
-  {% if showBlogDelete %}
-    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="blog-delete" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
-          </div>
-          <div class="modal-body">
-            <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <a href="{{ geturl('delete') }}&amp;id={{ item.id }}{% if categoryId %}&amp;category={{ categoryId }}{% endif %}" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endif %}
   <div class="modal fade" id="addCategoryDialog" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -273,4 +252,32 @@
     </div>
   </div>
   {% endform %}
+
+  {% if showBlogDelete %}
+    {{ form_start(deleteForm) }}
+    {{ form_row(deleteForm._token) }}
+    {{ form_row(deleteForm.id) }}
+    {{ form_row(deleteForm.categoryId) }}
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="blog-delete" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+          </div>
+          <div class="modal-body">
+            <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            </button>
+            <button type="submit" class="btn btn-danger">
+              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ form_end(deleteForm) }}
+  {% endif %}
 {% endblock %}

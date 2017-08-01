@@ -20,12 +20,9 @@ class Index extends FrontendBaseBlock
     /**
      * @var array
      */
-    private $items = array();
+    private $items = [];
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -34,10 +31,7 @@ class Index extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         $categories = FrontendFaqModel::getCategories();
         $limit = $this->get('fork.settings')->get('Faq', 'overview_num_items_per_category', 10);
@@ -55,13 +49,10 @@ class Index extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
-        $this->tpl->assign('faqCategories', (array) $this->items);
-        $this->tpl->assign(
+        $this->template->assign('faqCategories', (array) $this->items);
+        $this->template->assign(
             'allowMultipleCategories',
             $this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true)
         );

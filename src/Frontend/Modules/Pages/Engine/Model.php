@@ -11,7 +11,7 @@ namespace Frontend\Modules\Pages\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url as FrontendURL;
+use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
@@ -26,7 +26,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getForTags(array $ids)
+    public static function getForTags(array $ids): array
     {
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -36,14 +36,14 @@ class Model implements FrontendTagsInterface
              WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')
              ORDER BY i.title ASC',
-            array('active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            ['active', false, LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00']
         );
 
         // has items
         if (!empty($items)) {
             // reset url
             foreach ($items as &$row) {
-                $row['full_url'] = FrontendNavigation::getURL($row['id'], LANGUAGE);
+                $row['full_url'] = FrontendNavigation::getUrl($row['id'], LANGUAGE);
             }
         }
 
@@ -55,11 +55,11 @@ class Model implements FrontendTagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $url The current URL.
+     * @param FrontendUrl $url The current URL.
      *
      * @return int
      */
-    public static function getIdForTags(FrontendURL $url)
+    public static function getIdForTags(FrontendUrl $url): int
     {
         return FrontendNavigation::getPageId($url->getQueryString());
     }
@@ -71,7 +71,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getSubpages($id)
+    public static function getSubpages(int $id): array
     {
         // fetch items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -81,14 +81,14 @@ class Model implements FrontendTagsInterface
              WHERE i.parent_id = ? AND i.status = ? AND i.hidden = ?
              AND i.language = ? AND i.publish_on <= ?
              ORDER BY i.sequence ASC',
-            array((int) $id, 'active', 'N', LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            [$id, 'active', false, LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') . ':00']
         );
 
         // has items
         if (!empty($items)) {
             foreach ($items as &$row) {
                 // reset url
-                $row['full_url'] = FrontendNavigation::getURL($row['id'], LANGUAGE);
+                $row['full_url'] = FrontendNavigation::getUrl($row['id'], LANGUAGE);
 
                 // unserialize page data and template data
                 if (!empty($row['data'])) {
@@ -112,23 +112,23 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function search(array $ids)
+    public static function search(array $ids): array
     {
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // define ids to ignore
-        $ignore = array(404);
+        $ignore = [404];
 
         // get items
-        $items = (array) $db->getRecords(
+        $items = (array) $database->getRecords(
             'SELECT p.id, p.title, m.url, p.revision_id AS text
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.id IN (' . implode(', ', $ids) . ') AND p.id NOT IN (' .
             implode(', ', $ignore) . ') AND p.status = ? AND p.hidden = ? AND p.language = ?',
-            array('active', 'N', LANGUAGE),
+            ['active', false, LANGUAGE],
             'id'
         );
 
@@ -136,15 +136,15 @@ class Model implements FrontendTagsInterface
         foreach ($items as &$item) {
             $item['text'] = implode(
                 ' ',
-                (array) $db->getColumn(
+                (array) $database->getColumn(
                     'SELECT pb.html
                      FROM pages_blocks AS pb
                      WHERE pb.revision_id = ?',
-                    array($item['text'])
+                    [$item['text']]
                 )
             );
 
-            $item['full_url'] = FrontendNavigation::getURL($item['id']);
+            $item['full_url'] = FrontendNavigation::getUrl($item['id']);
         }
 
         return $items;

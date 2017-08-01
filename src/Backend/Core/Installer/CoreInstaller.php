@@ -14,10 +14,7 @@ namespace Backend\Core\Installer;
  */
 class CoreInstaller extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         // validate variables
         if ($this->getVariable('default_language') === null) {
@@ -46,27 +43,20 @@ class CoreInstaller extends ModuleInstaller
         $this->addModule('Error');
 
         $this->setRights();
-        $this->setSettings();
+        $this->configureDefaultSettings();
 
         // add core navigation
         $this->setNavigation(null, 'Dashboard', 'dashboard/index', null, 1);
-        $this->setNavigation(null, 'Modules', null, null, 3);
+        $this->setNavigation(null, 'Modules', null, null, 4);
     }
 
-    /**
-     * Set the rights
-     */
-    private function setRights()
+    private function setRights(): void
     {
         $this->setModuleRights(1, 'Dashboard');
-
         $this->setActionRights(1, 'Dashboard', 'Index');
     }
 
-    /**
-     * Store the settings
-     */
-    private function setSettings()
+    private function configureDefaultSettings(): void
     {
         // languages settings
         $this->setSetting('Core', 'languages', $this->getLanguages(), true);
@@ -81,7 +71,7 @@ class CoreInstaller extends ModuleInstaller
         $this->setSetting('Core', 'akismet_key', '');
         $this->setSetting('Core', 'google_maps_key', '');
         $this->setSetting('Core', 'max_num_revisions', 20);
-        $this->setSetting('Core', 'site_domains', array($this->getVariable('site_domain')));
+        $this->setSetting('Core', 'site_domains', [$this->getVariable('site_domain')]);
         $this->setSetting('Core', 'site_html_header', '');
         $this->setSetting('Core', 'site_html_footer', '');
 
@@ -90,7 +80,7 @@ class CoreInstaller extends ModuleInstaller
         $this->setSetting(
             'Core',
             'date_formats_short',
-            array(
+            [
                 'j/n/Y',
                 'j-n-Y',
                 'j.n.Y',
@@ -115,13 +105,13 @@ class CoreInstaller extends ModuleInstaller
                 'm/d/y',
                 'm-d-y',
                 'm.d.y',
-            )
+            ]
         );
         $this->setSetting('Core', 'date_format_long', 'l j F Y');
         $this->setSetting(
             'Core',
             'date_formats_long',
-            array(
+            [
                 'j F Y',
                 'D j F Y',
                 'l j F Y',
@@ -136,51 +126,51 @@ class CoreInstaller extends ModuleInstaller
                 'F d, Y',
                 'D F d, Y',
                 'l F d, Y',
-            )
+            ]
         );
         $this->setSetting('Core', 'time_format', 'H:i');
-        $this->setSetting('Core', 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));
+        $this->setSetting('Core', 'time_formats', ['H:i', 'H:i:s', 'g:i a', 'g:i A']);
 
         // number formats
         $this->setSetting('Core', 'number_format', 'dot_nothing');
         $this->setSetting(
             'Core',
             'number_formats',
-            array(
+            [
                 'comma_nothing' => '10000,25',
                 'dot_nothing' => '10000.25',
                 'dot_comma' => '10,000.25',
                 'comma_dot' => '10.000,25',
                 'dot_space' => '10000.25',
                 'comma_space' => '10 000,25',
-            )
+            ]
         );
 
         // e-mail settings
         $this->setSetting(
             'Core',
             'mailer_from',
-            array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email'))
+            ['name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')]
         );
         $this->setSetting(
             'Core',
             'mailer_to',
-            array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email'))
+            ['name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')]
         );
         $this->setSetting(
             'Core',
             'mailer_reply_to',
-            array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email'))
+            ['name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')]
         );
 
-        // stmp settings
+        // smtp settings
         $this->setSetting('Core', 'smtp_server', $this->getVariable('smtp_server'));
         $this->setSetting('Core', 'smtp_port', $this->getVariable('smtp_port'));
         $this->setSetting('Core', 'smtp_username', $this->getVariable('smtp_username'));
         $this->setSetting('Core', 'smtp_password', $this->getVariable('smtp_password'));
 
         // default titles
-        $siteTitles = array(
+        $siteTitles = [
             'en' => 'My website',
             'bg' => 'уебсайта си',
             'zh' => '我的网站',
@@ -200,7 +190,7 @@ class CoreInstaller extends ModuleInstaller
             'sv' => 'min hemsida',
             'tr' => 'web siteme',
             'uk' => 'мій сайт',
-        );
+        ];
 
         // language specific
         foreach ($this->getLanguages() as $language) {

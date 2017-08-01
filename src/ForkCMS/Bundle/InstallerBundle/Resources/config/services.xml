@@ -4,12 +4,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="forkcms.requirements.checker" class="ForkCMS\Bundle\InstallerBundle\Service\RequirementsChecker">
-            <argument>%kernel.root_dir%/../</argument>
+            <argument>%kernel.project_dir%/</argument>
         </service>
 
         <service id="forkcms.installer" class="ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller">
             <argument type="service" id="service_container"/>
-            <argument>%kernel.root_dir%/../</argument>
         </service>
 
         <service id="forkcms.console.installer.install" class="ForkCMS\Bundle\InstallerBundle\Console\InstallCommand">

@@ -23,12 +23,16 @@ interface ApplicationInterface
      * the page's functionality gets loaded. Any functionality of the app should be
      * initialized afterwards.
      */
-    public function initialize();
+    public function initialize(): void;
 
     /**
      * Sends the output of the app to our browser, in the form of a Response object.
-     *
-     * @return Response
      */
-    public function display();
+    public function display(): Response;
+
+    /**
+     * This is fairly dirty, but so is having static method classes for models.
+     * Consider this a temporary solution until we have genuine models available.
+     */
+    public function passContainerToModels(): void;
 }

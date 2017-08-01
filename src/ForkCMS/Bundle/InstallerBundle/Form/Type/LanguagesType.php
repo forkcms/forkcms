@@ -3,112 +3,102 @@
 namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Builds the form to select languages to install
  */
 class LanguagesType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
                 'language_type',
-                'choice',
-                array(
+                ChoiceType::class,
+                [
                     'expanded' => true,
                     'multiple' => false,
-                    'choices' => array(
-                        'single' => 'Just one language',
-                        'multiple' => 'Multiple languages',
-                    ),
-                )
+                    'choices' => [
+                        'Just one language' => 'single',
+                        'Multiple languages' => 'multiple',
+                    ],
+                ]
             )
             ->add(
                 'languages',
-                'choice',
-                array(
+                ChoiceType::class,
+                [
                     'choices' => $this->getInstallableLanguages(),
                     'expanded' => true,
                     'multiple' => true,
-                )
+                ]
             )
             ->add(
                 'default_language',
-                'choice',
-                array(
+                ChoiceType::class,
+                [
                     'choices' => $this->getInstallableLanguages(),
-                )
+                ]
             )
             ->add(
                 'same_interface_language',
-                'checkbox',
-                array(
+                CheckboxType::class,
+                [
                     'label' => 'Use the same language(s) for the CMS interface.',
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'default_interface_language',
-                'choice',
-                array(
+                ChoiceType::class,
+                [
                     'choices' => $this->getInstallableLanguages(),
-                )
+                ]
             )
             ->add(
                 'interface_languages',
-                'choice',
-                array(
+                ChoiceType::class,
+                [
                     'choices' => $this->getInstallableLanguages(),
                     'multiple' => true,
                     'expanded' => true,
-                )
+                ]
             )
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
-        ));
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'install_languages';
     }
 
-    /**
-     * @return array
-     */
-    protected function getInstallableLanguages()
+    protected function getInstallableLanguages(): array
     {
-        return array(
-            'en' => 'English',
-            'zh' => 'Chinese',
-            'nl' => 'Dutch',
-            'fr' => 'French',
-            'de' => 'German',
-            'el' => 'Greek',
-            'hu' => 'Hungarian',
-            'it' => 'Italian',
-            'lt' => 'Lithuanian',
-            'ru' => 'Russian',
-            'es' => 'Spanish',
-            'sv' => 'Swedish',
-            'uk' => 'Ukrainian',
-        );
+        return [
+            'English' => 'en',
+            'Chinese' => 'zh',
+            'Dutch' => 'nl',
+            'French' => 'fr',
+            'German' => 'de',
+            'Greek' => 'el',
+            'Hungarian' => 'hu',
+            'Italian' => 'it',
+            'Lithuanian' => 'lt',
+            'Russian' => 'ru',
+            'Spanish' => 'es',
+            'Swedish' => 'sv',
+            'Ukrainian' => 'uk',
+        ];
     }
 }

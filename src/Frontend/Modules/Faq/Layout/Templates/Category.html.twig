@@ -2,34 +2,43 @@
   variables that are available:
   - {{ questions }}: contains all questions inside this category
 #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-<section id="faqCategory" class="mod">
-  <div class="inner">
-    <header class="hd">
-      <h1>{{ category.title }}</h1>
+<section class="module-faq block-faq-category" itemscope itemtype="http://schema.org/Question">
+  {% block block_heading %}
+    <header class="page-header">
+      <h1 itemprop="genre">{{ category.title }}</h1>
     </header>
-    <div class="bd">
-      {% if questions %}
-        <section class="mod">
-          <div class="inner">
-            <div class="bd">
-              <ul>
-                {% for question in questions %}
-                  <li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
-                {% endfor %}
-              </ul>
-            </div>
-          </div>
-        </section>
-      {% endif %}
+  {% endblock %}
 
-      {% if not questions %}
-        <p>{{ 'msg.NoQuestionsInCategory'|trans|ucfirst }}</p>
-      {% endif %}
+  {% if questions is empty %}
+    {% block block_alerts %}
+      <div class="block-alerts">
+        {{ alerts.alert('info', 'msg.NoQuestionsInCategory'|trans) }}
+      </div>
+    {% endblock %}
+  {% else %}
+    {% block block_body %}
+      <div class="block-body">
+        <ul>
+          {% for question in questions %}
+            <li itemprop="about"><a href="{{ question.full_url }}">{{ question.question }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endblock %}
+  {% endif %}
 
-      <p>
-        <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">{{ 'lbl.ToFaqOverview'|trans|ucfirst }}</a>
-      </p>
-    </div>
-  </div>
+  {% block block_footer %}
+    <nav class="block-footer">
+      <ul class="pager">
+        <li class="previous">
+          <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}">
+            ←
+            {{ 'lbl.ToFaqOverview'|trans|ucfirst }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  {% endblock %}
 </section>

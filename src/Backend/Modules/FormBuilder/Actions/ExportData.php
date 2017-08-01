@@ -25,7 +25,7 @@ class ExportData extends BackendBaseAction
      *
      * @var array
      */
-    private $columnHeaders = array();
+    private $columnHeaders = [];
 
     /**
      * The filter.
@@ -46,17 +46,17 @@ class ExportData extends BackendBaseAction
      *
      * @var array
      */
-    private $rows = array();
+    private $rows = [];
 
     /**
      * Builds the query for this datagrid.
      *
      * @return array An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
         // init var
-        $parameters = array($this->id);
+        $parameters = [$this->id];
 
         /*
          * Start query, as you can see this query is build in the wrong place, because of the filter
@@ -88,37 +88,34 @@ class ExportData extends BackendBaseAction
             $parameters[] = BackendModel::getUTCDate(null, gmmktime(23, 59, 59, $chunks[1], $chunks[0], $chunks[2]));
         }
 
-        return array($query, $parameters);
+        return [$query, $parameters];
     }
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendFormBuilderModel::exists($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->setItems();
             BackendCSV::outputCSV(date('Ymd_His') . '.csv', $this->rows, $this->columnHeaders);
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // start date is set
-        if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
+        if ($this->getRequest()->query->has('start_date') && $this->getRequest()->query->get('start_date', '') !== '') {
             // redefine
-            $startDate = (string) $_GET['start_date'];
+            $startDate = $this->getRequest()->query->get('start_date', '');
 
             // explode date parts
             $chunks = explode('/', $startDate);
@@ -136,9 +133,9 @@ class ExportData extends BackendBaseAction
         }
 
         // end date is set
-        if (isset($_GET['end_date']) && $_GET['end_date'] != '') {
+        if ($this->getRequest()->query->has('end_date') && $this->getRequest()->query->get('end_date', '') !== '') {
             // redefine
-            $endDate = (string) $_GET['end_date'];
+            $endDate = $this->getRequest()->query->get('end_date', '');
 
             // explode date parts
             $chunks = explode('/', $endDate);
@@ -159,19 +156,19 @@ class ExportData extends BackendBaseAction
     /**
      * Fetch data for this form from the database and reformat to csv rows.
      */
-    private function setItems()
+    private function setItems(): void
     {
         // init header labels
         $lblSessionId = \SpoonFilter::ucfirst(BL::lbl('SessionId'));
         $lblSentOn = \SpoonFilter::ucfirst(BL::lbl('SentOn'));
-        $this->columnHeaders = array($lblSessionId, $lblSentOn);
+        $this->columnHeaders = [$lblSessionId, $lblSentOn];
 
         // fetch query and parameters
         list($query, $parameters) = $this->buildQuery();
 
         // get the data
         $records = (array) $this->get('database')->getRecords($query, $parameters);
-        $data = array();
+        $data = [];
 
         // reformat data
         foreach ($records as $row) {
