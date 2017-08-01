@@ -330,10 +330,19 @@ class Model extends BaseModel
 
     public static function getSession(): SessionInterface
     {
-        if (self::requestIsAvailable()) {
-            return self::getRequest()->getSession();
+        if (!self::requestIsAvailable()) {
+            throw new RuntimeException('No request available');
         }
 
-        return null;
+        $request = self::getRequest();
+        if ($request->hasSession()) {
+            return $request->getSession();
+        }
+
+        $session = new Session();
+        $session->start();
+        $request->setSession($session);
+
+        return $session;
     }
 }
