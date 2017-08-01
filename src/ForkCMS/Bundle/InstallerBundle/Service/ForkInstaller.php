@@ -332,6 +332,7 @@ class ForkInstaller
             'smtp_password' => '',
             'email' => $data->getEmail(),
             'password' => $data->getPassword(),
+            'selected_modules' => $data->getModules(),
         ];
     }
 }
