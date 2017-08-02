@@ -37,7 +37,7 @@ class DatePickerType extends DateType
         $this->header->addCSS('/css/vendors/bootstrap-datepicker3.standalone.min.css', true, true, Priority::core());
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('widget', 'single_text');

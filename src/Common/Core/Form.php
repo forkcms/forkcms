@@ -265,22 +265,22 @@ class Form extends \SpoonForm
         return $uploadMaxFileSize;
     }
 
-    protected function sessionHasFormToken()
+    protected function sessionHasFormToken(): bool
     {
         return Model::getSession()->has('form_token');
     }
 
-    protected function saveTokenToSession($token)
+    protected function saveTokenToSession($token): void
     {
         Model::getSession()->set('form_token', $token);
     }
 
-    protected function getSessionId()
+    protected function getSessionId(): string
     {
         return Model::getSession()->getId();
     }
 
-    protected function getTokenFromSession()
+    protected function getTokenFromSession(): ?string
     {
         return Model::getSession()->get('form_token');
     }
