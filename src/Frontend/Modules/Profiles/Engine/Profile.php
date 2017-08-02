@@ -307,7 +307,7 @@ class Profile
         ];
 
         // add settings
-        foreach ($this->settings as $key => $value) {
+        foreach ($this->getSettings() as $key => $value) {
             $profile['settings'][$key] = $value;
         }
 
