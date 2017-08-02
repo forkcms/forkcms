@@ -115,7 +115,7 @@ class Detail extends FrontendBaseBlock
 
         $cookie = FrontendModel::getContainer()->get('fork.cookie');
         $author = $cookie->get('comment_author');
-        $email = ($cookie->has('comment_email') && \SpoonFilter::isEmail($cookie->get('comment_email')))
+        $email = ($cookie->has('comment_email') && filter_var($cookie->get('comment_email'), FILTER_VALIDATE_EMAIL))
             ? $cookie->get('comment_email') : null;
         $website = ($cookie->has('comment_website') && \SpoonFilter::isURL($cookie->get('comment_website')))
             ? $cookie->get('comment_website') : 'http://';

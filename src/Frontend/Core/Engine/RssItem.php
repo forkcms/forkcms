@@ -85,11 +85,11 @@ class RssItem extends \SpoonFeedRSSItem
         $author = (string) \SpoonFilter::htmlspecialcharsDecode($author);
 
         // add fake-emailaddress
-        if (!\SpoonFilter::isEmail($author)) {
+        if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
             $author = CommonUri::getUrl($author) . '@example.com (' . $author . ')';
         }
         // add fake email address
-        if (!\SpoonFilter::isEmail($author)) {
+        if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
             $author = \SpoonFilter::urlise($author) . '@example.com (' . $author . ')';
         }
 
