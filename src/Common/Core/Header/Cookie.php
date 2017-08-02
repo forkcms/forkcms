@@ -43,7 +43,7 @@ final class Cookie
         bool $secure = null,
         bool $httpOnly = true,
         bool $raw = false,
-        string $sameSite = null
+        string $sameSite = SymfonyCookie::SAMESITE_LAX
     ): void {
         $this->setCookie(
             new SymfonyCookie(
