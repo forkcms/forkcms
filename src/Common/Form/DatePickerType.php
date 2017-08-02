@@ -22,7 +22,7 @@ class DatePickerType extends DateType
         $this->header = $container->get('header');
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 

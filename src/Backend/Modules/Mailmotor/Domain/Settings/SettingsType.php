@@ -32,7 +32,7 @@ class SettingsType extends AbstractType
         $this->subscriberGatewayManager = $subscriberGatewayManager;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $mailEngines = $this->getPossibleMailEngines();
 

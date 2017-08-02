@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class FileType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['show_remove_file']) {
             $builder->add(
