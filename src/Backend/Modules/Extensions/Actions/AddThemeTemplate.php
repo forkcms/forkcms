@@ -93,7 +93,6 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->form->addCheckbox('default');
         $this->form->addCheckbox('image');
 
-        // init vars
         $positions = [];
         $blocks = [];
         $widgets = [];
@@ -133,7 +132,6 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
         // content has been submitted: re-create submitted content rather than the database-fetched content
         if ($this->getRequest()->request->has('position_0')) {
-            // init vars
             $this->names = [];
             $this->extras = [];
             $i = 1;
@@ -141,7 +139,6 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
             // loop submitted positions
             while ($this->getRequest()->request->has('position_' . $i)) {
-                // init vars
                 $j = 0;
                 $extras = [];
 

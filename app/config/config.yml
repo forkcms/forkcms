@@ -159,7 +159,7 @@ services:
             - "@cache.pool"
 
     fork.cookie:
-        class: Common\Core\Header\Cookie
+        class: Common\Core\Cookie
 
     fork.cookie_setter:
         class: Common\EventListener\ForkCookieSetter

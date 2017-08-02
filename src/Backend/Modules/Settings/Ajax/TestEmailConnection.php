@@ -34,13 +34,13 @@ class TestEmailConnection extends BackendBaseAJAXAction
         $errors = [];
 
         // validate
-        if ($fromEmail == '' || !\SpoonFilter::isEmail($fromEmail)) {
+        if (!filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
             $errors['from'] = BL::err('EmailIsInvalid');
         }
-        if ($toEmail == '' || !\SpoonFilter::isEmail($toEmail)) {
+        if (!filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
             $errors['to'] = BL::err('EmailIsInvalid');
         }
-        if ($replyToEmail == '' || !\SpoonFilter::isEmail($replyToEmail)) {
+        if (!filter_var($replyToEmail, FILTER_VALIDATE_EMAIL)) {
             $errors['reply'] = BL::err('EmailIsInvalid');
         }
 

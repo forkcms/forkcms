@@ -75,19 +75,15 @@ class ArticleCommentsRss extends FrontendBaseBlock
 
         // loop articles
         foreach ($this->items as $item) {
-            // init vars
             $title = $item['author'] . ' ' . FL::lbl('On') . ' ' . $this->record['title'];
             $link = $detailLink . '/' . $this->record['url'] . '/#comment-' . $item['id'];
             $description = $item['text'];
 
-            // create new instance
             $rssItem = new FrontendRSSItem($title, $link, $description);
 
-            // set item properties
             $rssItem->setPublicationDate($item['created_on']);
             $rssItem->setAuthor($item['author']);
 
-            // add item
             $rss->addItem($rssItem);
         }
 

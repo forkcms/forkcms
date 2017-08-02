@@ -32,7 +32,7 @@ class SettingsType extends AbstractType
         $this->subscriberGatewayManager = $subscriberGatewayManager;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $mailEngines = $this->getPossibleMailEngines();
 
@@ -105,17 +105,17 @@ class SettingsType extends AbstractType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => SaveSettings::class,
             'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
-                if ($data->mailEngine !== 'not_implemented') {
-                    return ['Default', 'mail_engine_selected'];
+                if ($data->mailEngine === 'not_implemented') {
+                    return ['Default'];
                 }
 
-                return ['Default'];
+                return ['Default', 'mail_engine_selected'];
             },
         ]);
     }

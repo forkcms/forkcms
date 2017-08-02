@@ -176,19 +176,14 @@ class Authentication
                     $secret
                 );
 
-                // set new cookie
                 FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $profileSecret);
 
-                // set is_logged_in to true
                 FrontendModel::getSession()->set('frontend_profile_logged_in', true);
 
-                // update last login
                 FrontendProfilesModel::update($profileId, ['last_login' => FrontendModel::getUTCDate()]);
 
-                // new user object
                 self::$profile = new FrontendProfilesProfile($profileId);
 
-                // logged in
                 return true;
             }
 

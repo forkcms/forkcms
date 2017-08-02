@@ -1,8 +1,7 @@
 <?php
 
-namespace Common\Core\Header;
+namespace Common\Core;
 
-use Common\Core\Model;
 use Symfony\Component\HttpFoundation\Cookie as SymfonyCookie;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -43,7 +42,7 @@ final class Cookie
         bool $secure = null,
         bool $httpOnly = true,
         bool $raw = false,
-        string $sameSite = null
+        string $sameSite = SymfonyCookie::SAMESITE_LAX
     ): void {
         $this->setCookie(
             new SymfonyCookie(
@@ -65,15 +64,6 @@ final class Cookie
         $this->newCookiesHeaderBag->setCookie($cookie);
     }
 
-    /**
-     * Deletes a cookie
-     *
-     * @param string $name
-     * @param string $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool $httpOnly
-     */
     public function delete(
         string $name,
         string $path = '/',
@@ -126,17 +116,7 @@ final class Cookie
             return $secure;
         }
 
-        /*
-         detect if we are using HTTPS, this wil only work in Apache, if you are using nginx you should add the
-         code below into your config:
-             ssl on;
-            fastcgi_param HTTPS on;
-
-         for lighttpd you should add:
-             setenv.add-environment = ("HTTPS" => "on")
-         */
-
-        return (isset($_SERVER['HTTPS']) && mb_strtolower($_SERVER['HTTPS']) === 'on');
+        return Model::getRequest()->isSecure();
     }
 
     /**

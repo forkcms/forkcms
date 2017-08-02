@@ -75,7 +75,7 @@ class MediaGroupType extends AbstractType
         self::parseFiles();
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if ($view->parent === null) {
             throw new LogicException(
@@ -90,7 +90,7 @@ class MediaGroupType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(
             [

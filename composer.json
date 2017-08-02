@@ -37,7 +37,7 @@
         "liip/imagine-bundle": "^1.7",
         "swiftmailer/swiftmailer": "^6.0",
         "google/recaptcha": "~1.1",
-        "spoon/library": "dev-3.0.0-dev as 3.0.0"
+        "spoon/library": "^3.0"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",

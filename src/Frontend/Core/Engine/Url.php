@@ -122,13 +122,13 @@ class Url extends KernelLoader
     /**
      * Return all the parameters
      *
-     * @param bool $includeGET Should the GET-parameters be included?
+     * @param bool $includeGet Should the GET-parameters be included?
      *
      * @return array
      */
-    public function getParameters(bool $includeGET = true): array
+    public function getParameters(bool $includeGet = true): array
     {
-        return $includeGET ? $this->parameters : array_diff_assoc($this->parameters, Model::getRequest()->query->all());
+        return $includeGet ? $this->parameters : array_diff_assoc($this->parameters, Model::getRequest()->query->all());
     }
 
     public function getQueryString(): string

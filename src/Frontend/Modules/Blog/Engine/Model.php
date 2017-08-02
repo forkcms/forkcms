@@ -420,7 +420,6 @@ class Model implements FrontendTagsInterface
             ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i')]
         );
 
-        // init vars
         $stats = [];
         $link = FrontendNavigation::getUrlForBlock('Blog', 'Archive');
         $firstYear = (int) date('Y');
@@ -428,7 +427,6 @@ class Model implements FrontendTagsInterface
 
         // loop the numbers
         foreach ($numbers as $key => $count) {
-            // init vars
             $year = mb_substr($key, 0, 4);
             $month = mb_substr($key, 4, 2);
 

@@ -70,7 +70,6 @@ class Model
     {
         // advanced search
         if (is_array($term)) {
-            // init vars
             $where = [];
             $order = [];
             $join = [];
@@ -265,7 +264,6 @@ class Model
     {
         // advanced search
         if (is_array($term)) {
-            // init vars
             $where = [];
             $join = [];
             $params = [];

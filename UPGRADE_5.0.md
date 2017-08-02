@@ -1,6 +1,33 @@
 UPGRADE FROM 4.x to 5.0
 =======================
 
+## Spoon library has been updated to 3.0.0
+
+Changes:
+
+- We require php 7.1 from now on
+- When passing booleans to spoon database they are changed into 1 and 0
+
+Fixes:
+
+- Fix json as parameter for datagrid functions
+- Fix spoon form checkboxes not working in fork 5
+- Fixes `null` values from being converted to empty string in SpoonDataGrid columnFunctions
+- Bugfix when having multi-array arrays
+
+Removed:
+
+- spoon email
+- spoon ical
+- spoon rest client
+- spoon xmlrpc client
+- spoon log
+- SpoonFilter::getGetValue
+- SpoonFilter::getPostValue
+- atom rss feed
+- spoon cookie
+- spoon session
+
 ## API is removed
 
 The full API is removed. If you need to expose an API for your project you should look into:

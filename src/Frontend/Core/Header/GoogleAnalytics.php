@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Header;
 
-use Common\Core\Header\Cookie;
+use Common\Core\Cookie;
 use Common\ModulesSettings;
 
 final class GoogleAnalytics
