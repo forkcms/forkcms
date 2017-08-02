@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a932d1253c415ef169468573c502d512",
+    "content-hash": "29111fd1adeaf54648ad77c9d757b13a",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2895,16 +2895,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "dev-3.0.0-dev",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "ec7ed918ea0f48753b27dc596ab3178e1b6da335"
+                "reference": "700719c82bd10e6ab52eb5637b3070fb9ac598e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/ec7ed918ea0f48753b27dc596ab3178e1b6da335",
-                "reference": "ec7ed918ea0f48753b27dc596ab3178e1b6da335",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/700719c82bd10e6ab52eb5637b3070fb9ac598e2",
+                "reference": "700719c82bd10e6ab52eb5637b3070fb9ac598e2",
                 "shasum": ""
             },
             "require": {
@@ -2926,7 +2926,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2017-08-01 12:07:22"
+            "time": "2017-08-02T09:39:23+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4174,18 +4174,9 @@
             "time": "2015-12-28T09:39:46+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "3.0.0",
-            "alias_normalized": "3.0.0.0",
-            "version": "dev-3.0.0-dev",
-            "package": "spoon/library"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "spoon/library": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
