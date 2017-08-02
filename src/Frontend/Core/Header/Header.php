@@ -15,6 +15,7 @@ use Common\Core\Header\JsData;
 use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
 use ForkCMS\App\KernelLoader;
+use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
@@ -352,22 +353,23 @@ class Header extends KernelLoader
             $this->meta->addMetaData(MetaData::forName('robots', 'noindex, nofollow'), true);
         }
 
-        $this->template->addGlobal('meta', $this->meta);
-        $this->template->addGlobal('metaCustom', $this->getMetaCustom());
+        $this->template->assignGlobal('meta', $this->meta);
+        $this->template->assignGlobal('metaCustom', $this->getMetaCustom());
         $this->cssFiles->parse($this->template, 'cssFiles');
         $this->jsFiles->parse($this->template, 'jsFiles');
 
         $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_header', '') . "\n";
         $siteHTMLHeader .= new GoogleAnalytics(
             $this->get('fork.settings'),
-            $this->get('request')->getHttpHost()
+            Model::getRequest()->getHttpHost(),
+            $this->get('fork.cookie')
         );
         $siteHTMLHeader .= "\n" . $this->jsData;
-        $this->template->addGlobal('siteHTMLHeader', trim($siteHTMLHeader));
+        $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHeader));
 
-        $this->template->addGlobal('pageTitle', $this->getPageTitle());
-        $this->template->addGlobal('contentTitle', $this->getContentTitle());
-        $this->template->addGlobal(
+        $this->template->assignGlobal('pageTitle', $this->getPageTitle());
+        $this->template->assignGlobal('contentTitle', $this->getContentTitle());
+        $this->template->assignGlobal(
             'siteTitle',
             (string) $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
         );
@@ -403,11 +405,11 @@ class Header extends KernelLoader
         }
 
         // any items provided through GET?
-        if (!isset($urlChunks['query']) || !$this->get('request')->query->has('page')) {
+        if (!isset($urlChunks['query']) || !Model::getRequest()->query->has('page')) {
             return $url;
         }
 
-        return $url . '?page=' . $this->get('request')->query->get('page');
+        return $url . '?page=' . Model::getRequest()->query->get('page');
     }
 
     /**

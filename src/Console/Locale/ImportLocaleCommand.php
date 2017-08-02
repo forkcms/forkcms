@@ -92,15 +92,7 @@ class ImportLocaleCommand extends Command
         }
     }
 
-    /**
-     * Get the file or module path according to the input options
-     *
-     * @param string|null $fileOption
-     * @param string $moduleOption
-     *
-     * @return string
-     */
-    private function getLocalePath(?string $fileOption, string $moduleOption): string
+    private function getLocalePath(?string $fileOption, ?string $moduleOption): string
     {
         if (isset($fileOption)) {
             return $fileOption;

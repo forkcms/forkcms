@@ -32,7 +32,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
             ]
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         $deleteForm = $this->createForm(
             DeleteType::class,
@@ -41,7 +41,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
         );
         $this->template->assign('deleteForm', $deleteForm->createView());
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->template->assign('form', $form->createView());
             $this->template->assign('backLink', $this->getBackLink());
             $this->template->assign('mediaGallery', $mediaGallery);

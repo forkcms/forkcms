@@ -39,12 +39,12 @@ class CollectionType extends AbstractType
                 'prototype_name' => '__name__',
                 'add_button_text' => 'lbl.Add',
                 'delete_button_text' => 'lbl.Delete',
-                'options' => [],
-                'type' => TextType::class,
+                'entry_options' => [],
+                'entry_type' => TextType::class,
             ]
         );
         $resolver->setNormalizer(
-            'options',
+            'entry_options',
             function (Options $options, $value) {
                 $value['block_name'] = 'entry';
 
@@ -61,13 +61,5 @@ class CollectionType extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'bootstrap_collection';
-    }
-
-    /**
-     * Backward compatibility for SF < 3.0
-     */
-    public function getName(): string
-    {
-        return $this->getBlockPrefix();
     }
 }

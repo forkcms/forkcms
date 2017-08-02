@@ -9,7 +9,6 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
-use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
@@ -111,16 +110,16 @@ class Detail extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        // create form
         $this->form = new FrontendForm('commentsForm');
         $this->form->setAction($this->form->getAction() . '#' . FL::act('Comment'));
 
-        // init vars
-        $author = (CommonCookie::exists('comment_author')) ? CommonCookie::get('comment_author') : null;
-        $email = (CommonCookie::exists('comment_email') && \SpoonFilter::isEmail(CommonCookie::get('comment_email'))) ? CommonCookie::get('comment_email') : null;
-        $website = (CommonCookie::exists('comment_website') && \SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
+        $cookie = FrontendModel::getContainer()->get('fork.cookie');
+        $author = $cookie->get('comment_author');
+        $email = ($cookie->has('comment_email') && filter_var($cookie->get('comment_email'), FILTER_VALIDATE_EMAIL))
+            ? $cookie->get('comment_email') : null;
+        $website = ($cookie->has('comment_website') && \SpoonFilter::isURL($cookie->get('comment_website')))
+            ? $cookie->get('comment_website') : 'http://';
 
-        // create elements
         $this->form->addText('author', $author)->setAttributes(['required' => null]);
         $this->form->addText('email', $email)->setAttributes(['required' => null, 'type' => 'email']);
         $this->form->addText('website', $website, null);
@@ -286,9 +285,9 @@ class Detail extends FrontendBaseBlock
             $this->form->cleanupFields();
 
             // does the key exists?
-            if (\SpoonSession::exists('blog_comment_' . $this->record['id'])) {
+            if (FrontendModel::getSession()->has('blog_comment_' . $this->record['id'])) {
                 // calculate difference
-                $diff = time() - (int) \SpoonSession::get('blog_comment_' . $this->record['id']);
+                $diff = time() - (int) FrontendModel::getSession()->get('blog_comment_' . $this->record['id']);
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
                 if ($diff < 10 && $diff != 0) {
@@ -395,14 +394,15 @@ class Detail extends FrontendBaseBlock
                 FrontendBlogModel::notifyAdmin($comment);
 
                 // store timestamp in session so we can block excessive usage
-                \SpoonSession::set('blog_comment_' . $this->record['id'], time());
+                FrontendModel::getSession()->set('blog_comment_' . $this->record['id'], time());
 
                 // store author-data in cookies
                 try {
-                    CommonCookie::set('comment_author', $author);
-                    CommonCookie::set('comment_email', $email);
-                    CommonCookie::set('comment_website', $website);
-                } catch (\Exception $e) {
+                    $cookie = FrontendModel::getContainer()->get('fork.cookie');
+                    $cookie->set('comment_author', $author);
+                    $cookie->set('comment_email', $email);
+                    $cookie->set('comment_website', $website);
+                } catch (\RuntimeException $e) {
                     // settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
                 }
 

@@ -13,11 +13,8 @@ use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Language\Language;
 use SpoonFilter;
-use SpoonSession;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Common\Cookie as CommonCookie;
 
 /**
  * This class will handle the incoming URL.
@@ -30,13 +27,6 @@ class Url extends KernelLoader
      * @var array
      */
     private $pages = [];
-
-    /**
-     * The Symfony request object
-     *
-     * @var Request
-     */
-    private $request;
 
     /**
      * The parameters
@@ -52,24 +42,21 @@ class Url extends KernelLoader
         // add ourself to the reference so other classes can retrieve us
         $this->getContainer()->set('url', $this);
 
-        // fetch the request object from the container
-        $this->request = $this->get('request');
-
         // if there is a trailing slash we permanent redirect to the page without slash
-        if (mb_strlen($this->request->getRequestUri()) !== 1 &&
-            mb_substr($this->request->getRequestUri(), -1) === '/'
+        if (mb_strlen(Model::getRequest()->getRequestUri()) !== 1 &&
+            mb_substr(Model::getRequest()->getRequestUri(), -1) === '/'
         ) {
             throw new RedirectException(
                 'Redirect',
                 new RedirectResponse(
-                    mb_substr($this->request->getRequestUri(), 0, -1),
+                    mb_substr(Model::getRequest()->getRequestUri(), 0, -1),
                     301
                 )
             );
         }
 
         // set query-string and parameters for later use
-        $this->parameters = $this->request->query->all();
+        $this->parameters = Model::getRequest()->query->all();
 
         // process URL
         $this->processQueryString();
@@ -83,7 +70,7 @@ class Url extends KernelLoader
     public function getDomain(): string
     {
         // replace
-        return str_replace('www.', '', $this->request->getHttpHost());
+        return str_replace('www.', '', Model::getRequest()->getHttpHost());
     }
 
     /**
@@ -135,18 +122,18 @@ class Url extends KernelLoader
     /**
      * Return all the parameters
      *
-     * @param bool $includeGET Should the GET-parameters be included?
+     * @param bool $includeGet Should the GET-parameters be included?
      *
      * @return array
      */
-    public function getParameters(bool $includeGET = true): array
+    public function getParameters(bool $includeGet = true): array
     {
-        return $includeGET ? $this->parameters : array_diff_assoc($this->parameters, $this->request->query->all());
+        return $includeGet ? $this->parameters : array_diff_assoc($this->parameters, Model::getRequest()->query->all());
     }
 
     public function getQueryString(): string
     {
-        return rtrim($this->request->getRequestUri(), '/');
+        return rtrim(Model::getRequest()->getRequestUri(), '/');
     }
 
     /**
@@ -164,7 +151,7 @@ class Url extends KernelLoader
     private function processQueryString(): void
     {
         // store the query string local, so we don't alter it.
-        $queryString = trim($this->request->getPathInfo(), '/');
+        $queryString = trim(Model::getRequest()->getPathInfo(), '/');
 
         $hasMultiLanguages = $this->getContainer()->getParameter('site.multilanguage');
         $language = $this->determineLanguage($queryString);
@@ -255,15 +242,16 @@ class Url extends KernelLoader
             $language = (string) $chunks[0];
             $this->setLanguageCookie($language);
 
-            SpoonSession::set('frontend_language', $language);
+            Model::getSession()->set('frontend_language', $language);
 
             return $language;
         }
 
-        if (CommonCookie::exists('frontend_language')
-            && in_array(CommonCookie::get('frontend_language'), $redirectLanguages)
+        $cookie = $this->getContainer()->get('fork.cookie');
+        if ($cookie->has('frontend_language')
+            && in_array($cookie->get('frontend_language'), $redirectLanguages, true)
         ) {
-            $this->redirectToLanguage((string) CommonCookie::get('frontend_language'));
+            $this->redirectToLanguage($cookie->get('frontend_language'));
         }
 
         // default browser language
@@ -275,8 +263,8 @@ class Url extends KernelLoader
     private function setLanguageCookie(string $language): void
     {
         try {
-            CommonCookie::set('frontend_language', $language);
-        } catch (\SpoonCookieException $e) {
+            self::getContainer()->get('fork.cookie')->set('frontend_language', $language);
+        } catch (\RuntimeException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
     }

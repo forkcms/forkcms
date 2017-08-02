@@ -6,13 +6,10 @@ use Common\WebTestCase;
 
 class IndexTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationIsNeeded(): void
     {
-        $this->logout();
         $client = static::createClient();
+        $this->logout($client);
 
         $client->setMaxRedirects(1);
         $client->request('GET', '/private/en/analytics/index');
@@ -24,13 +21,10 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRedirectToSettingsActionWhenTheAnalyticsModuleIsNotConfigured(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $client->setMaxRedirects(1);
         $client->request('GET', '/private/en/analytics/reset');

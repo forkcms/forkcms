@@ -13,15 +13,15 @@ class RemoveUploadedFile extends AjaxAction
 {
     public function execute(): void
     {
-        $request = $this->get('request');
+        $request = $this->getRequest();
         if (!$request->request->has('file') || !$request->request->has('type')) {
             $this->output(Response::HTTP_BAD_REQUEST, 'Missing data');
 
             return;
         }
 
-        $file = pathinfo($this->get('request')->request->get('file'), PATHINFO_BASENAME);
-        $directory = $this->get('request')->request->get('type');
+        $file = pathinfo($this->getRequest()->request->get('file'), PATHINFO_BASENAME);
+        $directory = $this->getRequest()->request->get('type');
 
         $path = FRONTEND_FILES_PATH . '/Pages/' . $directory . '/' . $file;
 

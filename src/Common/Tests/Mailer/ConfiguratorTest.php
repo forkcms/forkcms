@@ -34,8 +34,8 @@ class ConfiguratorTest extends TestCase
             ->expects($this->once())
             ->method('set')
             ->with(
-                $this->equalTo('swiftmailer.mailer.default.transport'),
-                $this->isInstanceOf('\Swift_MailTransport')
+                $this->equalTo('swiftmailer.transport'),
+                $this->isInstanceOf('\Swift_SendmailTransport')
             )
         ;
 
@@ -71,7 +71,7 @@ class ConfiguratorTest extends TestCase
             ->expects($this->once())
             ->method('set')
             ->with(
-                $this->equalTo('swiftmailer.mailer.default.transport'),
+                $this->equalTo('swiftmailer.transport'),
                 $this->isInstanceOf('\Swift_SmtpTransport')
             )
         ;

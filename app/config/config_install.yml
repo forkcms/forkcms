@@ -4,11 +4,11 @@ imports:
     - { resource: doctrine.yml }
 
 framework:
-    secret:          %kernel.secret%
+    secret: "%kernel.secret%"
     router:
-        resource: "%kernel.root_dir%/config/routing_install.yml"
+        resource: "%kernel.project_dir%/app/config/routing_install.yml"
         strict_requirements: ~
-    form:            ~
+    form: ~
     csrf_protection: ~
     templating:
         engines: ['twig']
@@ -19,17 +19,17 @@ framework:
 
 # Assetic Configuration
 assetic:
-    debug:          "%kernel.debug%"
+    debug: "%kernel.debug%"
     use_controller: false
-    bundles:        [ 'ForkCMSInstallerBundle' ]
+    bundles: [ 'ForkCMSInstallerBundle' ]
     filters:
         cssrewrite: ~
 
 monolog:
     handlers:
         main:
-            type:  stream
-            path:  %site.path_www%/app/logs/logs.log
+            type: stream
+            path: "%site.path_www%/var/logs/logs.log"
             level: debug
 
 parameters:
@@ -52,11 +52,11 @@ services:
     database:
         class: SpoonDatabase
         arguments:
-            - %database.driver%
-            - %database.host%
-            - %database.user%
-            - %database.password%
-            - %database.name%
-            - %database.port%
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%"
+            - "%database.port%"
         calls:
-            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
+            - [ setDebug, [ "%kernel.debug%" ]]

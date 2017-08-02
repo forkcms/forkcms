@@ -88,7 +88,6 @@ class Index extends BackendBaseActionIndex
 
     private function loadDataGrid(): void
     {
-        // init vars
         $langWidth = (60 / count($this->filter['language']));
 
         // if nothing is submitted

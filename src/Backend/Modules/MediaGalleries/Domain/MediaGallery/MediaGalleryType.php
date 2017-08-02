@@ -3,7 +3,6 @@
 namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Backend\Core\Engine\Authentication;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -45,7 +44,6 @@ class MediaGalleryType extends AbstractType
                 [
                     'label' => 'lbl.WidgetView',
                     'choices' => MediaWidget::getPossibleValues(),
-                    'choices_as_values' => true,
                     'choice_label' => function ($possibleWidget) {
                         return $possibleWidget;
                     },
@@ -66,7 +64,6 @@ class MediaGalleryType extends AbstractType
                         },
                         Status::POSSIBLE_VALUES
                     ),
-                    'choices_as_values' => true,
                     'choice_label' => function (Status $type) {
                         return TemplateModifiers::toLabel($type);
                     },

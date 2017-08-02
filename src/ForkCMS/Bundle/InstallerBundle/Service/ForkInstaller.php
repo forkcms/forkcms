@@ -133,7 +133,9 @@ class ForkInstaller
     protected function buildDatabase(InstallationData $data): void
     {
         // put a new instance of the database in the container
-        $database = new \SpoonDatabase(
+        $database = $this->container->get('database');
+        // lets do some magic to add the database connection details from the installation data
+        $database->__construct(
             'mysql',
             $data->getDatabaseHostname(),
             $data->getDatabaseUsername(),
@@ -145,7 +147,9 @@ class ForkInstaller
             'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
             ['charset' => 'utf8mb4']
         );
-        $this->container->set('database', $database);
+        $database->execute(
+            'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'
+        );
     }
 
     protected function getCoreInstaller(InstallationData $data): CoreInstaller

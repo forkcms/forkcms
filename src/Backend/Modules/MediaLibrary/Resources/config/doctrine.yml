@@ -11,24 +11,24 @@ doctrine:
       media_folder:
         type: annotation
         is_bundle: false
-        dir: %kernel.root_dir%/../src/Backend/Modules/MediaLibrary/Domain/MediaFolder
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaFolder"
         alias: MediaLibraryMediaFolder
         prefix: Backend\Modules\MediaLibrary\Domain\MediaFolder
       media_group:
         type: annotation
         is_bundle: false
-        dir: %kernel.root_dir%/../src/Backend/Modules/MediaLibrary/Domain/MediaGroup
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaGroup"
         alias: MediaLibraryMediaGroup
         prefix: Backend\Modules\MediaLibrary\Domain\MediaGroup
       media_group_media_item:
         type: annotation
         is_bundle: false
-        dir: %kernel.root_dir%/../src/Backend/Modules/MediaLibrary/Domain/MediaGroupMediaItem
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaGroupMediaItem"
         alias: MediaLibraryMediaGroupMediaItem
         prefix: Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem
       media_item:
         type: annotation
         is_bundle: false
-        dir: %kernel.root_dir%/../src/Backend/Modules/MediaLibrary/Domain/MediaItem
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaItem"
         alias: MediaLibraryMediaItem
         prefix: Backend\Modules\MediaLibrary\Domain\MediaItem

@@ -48,7 +48,7 @@ class Footer extends KernelLoader
     public function parse(): void
     {
         $footerLinks = (array) Navigation::getFooterLinks();
-        $this->template->addGlobal('footerLinks', $footerLinks);
+        $this->template->assignGlobal('footerLinks', $footerLinks);
 
         $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
 
@@ -71,7 +71,7 @@ class Footer extends KernelLoader
         }
 
         // assign site wide html
-        $this->template->addGlobal('siteHTMLFooter', $siteHTMLFooter);
+        $this->template->assignGlobal('siteHTMLFooter', $siteHTMLFooter);
     }
 
     /**

@@ -6,9 +6,6 @@ use Common\WebTestCase;
 
 class CategoryTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testCategoryHasPage(): void
     {
         $client = static::createClient();
@@ -31,9 +28,6 @@ class CategoryTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testNonExistingCategoryPostGives404(): void
     {
         $client = static::createClient();
@@ -42,9 +36,6 @@ class CategoryTest extends WebTestCase
         $this->assertIs404($client);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testCategoryPageContainsQuestion(): void
     {
         $client = static::createClient();
@@ -68,9 +59,6 @@ class CategoryTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testNonExistingPageGives404(): void
     {
         $client = static::createClient();

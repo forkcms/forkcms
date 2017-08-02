@@ -4,9 +4,9 @@ backend:
     path: /private/{_locale}/{module}/{action}
     defaults:
         _controller: \ForkCMS\App\ForkController::backendController
-        _locale:     ~
-        module:      ~
-        action:      ~
+        _locale: ~
+        module: ~
+        action: ~
 backend_ajax:
     path: /backend/ajax
     defaults:
@@ -19,6 +19,6 @@ frontend:
     path: /{route}
     defaults:
         _controller: \ForkCMS\App\ForkController::frontendController
-        route:       ~
+        route: ~
     requirements:
         route: (.*)

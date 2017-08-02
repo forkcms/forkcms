@@ -18,7 +18,6 @@ class TypeType extends AbstractType
                 [
                     'label' => 'msg.ChooseTypeForNewGroup',
                     'choices' => $this->getTypeChoices(),
-                    'choices_as_values' => true,
                     'choice_label' => function (Type $type) {
                         return Language::lbl('MediaLibraryGroupType' . \SpoonFilter::toCamelCase($type, '-'), 'Core');
                     },

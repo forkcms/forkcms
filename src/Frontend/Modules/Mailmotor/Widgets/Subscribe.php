@@ -35,9 +35,9 @@ class Subscribe extends FrontendBaseWidget
             )
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->template->assign('form', $form->createView());
 
             if ($form->isSubmitted()) {

@@ -85,7 +85,7 @@ abstract class WebTestCase extends BaseWebTestCase
 
         // make sure our database has a clean state (freshly installed Fork)
         $this->emptyTestDatabase($database);
-        $kernelDir = $client->getContainer()->getParameter('kernel.root_dir');
+        $kernelDir = $client->getContainer()->getParameter('kernel.project_dir') . '/app';
         $this->importSQL(
             $client->getContainer()->get('database'),
             file_get_contents($kernelDir . '/../tests/data/test_db.sql')
@@ -247,22 +247,35 @@ abstract class WebTestCase extends BaseWebTestCase
     }
 
     /**
-     * Logs in a user. We do this directly in the authentication class because
-     * this is a lot faster than submitting forms and following redirects
+     * Logs the client in
      *
      * Logging in using the forms is tested in the Authentication module
+     *
+     * @param Client $client
      */
-    protected function login(): void
+    protected function login(Client $client): void
     {
         Authentication::tearDown();
-        Authentication::loginUser('noreply@fork-cms.com', 'fork');
+        $crawler = $client->request('GET', '/private/en/authentication');
+
+        $form = $crawler->selectButton('login')->form();
+        $this->submitForm($client, $form, [
+            'form' => 'authenticationIndex',
+            'backend_email' => 'noreply@fork-cms.com',
+            'backend_password' => 'fork',
+            'form_token' => $form['form_token']->getValue(),
+        ]);
     }
 
     /**
-     * Log out a user
+     * Logs the client out
+     *
+     * @param Client $client
      */
-    protected function logout(): void
+    protected function logout(Client $client): void
     {
+        $client->setMaxRedirects(-1);
+        $client->request('GET', '/private/en/authentication/logout');
         Authentication::tearDown();
     }
 }

@@ -5,7 +5,6 @@ namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
-use Symfony\Component\Validator\Constraints as Assert;
 
 final class CreateContentBlock extends ContentBlockDataTransferObject
 {

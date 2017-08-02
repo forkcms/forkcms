@@ -257,7 +257,6 @@ class Add extends BackendBaseActionAdd
      */
     private function insertPermissions(array $actionPermissions, array $bundledActionPermissions): void
     {
-        // init vars
         $modulesDenied = [];
         $modulesGranted = [];
         $actionsDenied = [];

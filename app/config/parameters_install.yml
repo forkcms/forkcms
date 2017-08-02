@@ -17,7 +17,7 @@ parameters:
     site.default_title:     Fork CMS
     site.multilanguage:     false
     site.default_language:  en
-    site.path_www:          %kernel.root_dir%/..
+    site.path_www:          "%kernel.project_dir%"
 
-    action.group_tag:       \@actiongroup
+    action.group_tag:       '\@actiongroup'
     action.rights_level:    7

@@ -88,7 +88,7 @@ class Add extends BackendBaseActionAdd
                 foreach ($emailAddresses as $address) {
                     $address = trim($address);
 
-                    if (!\SpoonFilter::isEmail($address)) {
+                    if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
                         $error = true;
                         break;
                     }

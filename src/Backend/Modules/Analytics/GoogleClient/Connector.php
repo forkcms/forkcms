@@ -4,7 +4,6 @@ namespace Backend\Modules\Analytics\GoogleClient;
 
 use Common\ModulesSettings;
 use Google_Service_Analytics;
-use Google_Service_Analytics_GaData;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**

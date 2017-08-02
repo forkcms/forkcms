@@ -4,12 +4,12 @@ doctrine:
         default_connection: default
         connections:
             default:
-                driver: pdo_%database.driver%
-                host: %database.host%
-                port: %database.port%
-                dbname: %database.name%
-                user: %database.user%
-                password: %database.password%
+                driver: "pdo_%database.driver%"
+                host: "%database.host%"
+                port: "%database.port%"
+                dbname: "%database.name%"
+                user: "%database.user%"
+                password: "%database.password%"
                 charset: utf8mb4
                 default_table_options:
                     charset: utf8mb4
@@ -35,7 +35,7 @@ doctrine:
                     common:
                         type: annotation
                         is_bundle: false
-                        dir: %kernel.root_dir%/../src/Common/Doctrine/Entity
+                        dir: "%kernel.project_dir%/src/Common/Doctrine/Entity"
                         alias: Common
                         prefix: Common\Doctrine\Entity
 

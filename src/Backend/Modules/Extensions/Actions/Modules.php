@@ -114,6 +114,6 @@ class Modules extends BackendBaseActionIndex
         $this->template->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());
 
         // parse installer warnings
-        $this->template->assign('warnings', (array) \SpoonSession::get('installer_warnings'));
+        $this->template->assign('warnings', (array) BackendModel::getSession()->get('installer_warnings'));
     }
 }

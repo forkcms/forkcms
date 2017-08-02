@@ -6,13 +6,10 @@ use Common\WebTestCase;
 
 class EditTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationIsNeeded(): void
     {
-        $this->logout();
         $client = static::createClient();
+        $this->logout($client);
         $this->loadFixtures(
             $client,
             [
@@ -31,13 +28,10 @@ class EditTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testWeCanGoToEditFromTheIndexPage(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $crawler = $client->request('GET', '/private/en/blog/index');
         self::assertContains(
@@ -55,13 +49,10 @@ class EditTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testEditingOurBlogPost(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
         self::assertContains(
@@ -94,13 +85,10 @@ class EditTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSubmittingInvalidData(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
 
@@ -127,13 +115,10 @@ class EditTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testInvalidIdShouldShowAnError(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $client->request('GET', '/private/en/blog/edit?id=12345678');
         $client->followRedirect();

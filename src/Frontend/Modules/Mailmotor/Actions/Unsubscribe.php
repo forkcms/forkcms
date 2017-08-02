@@ -26,21 +26,18 @@ class Unsubscribe extends FrontendBaseBlock
     {
         parent::execute();
 
-        // Define email from the unsubscribe widget
-        $email = $this->getEmail();
-
         // Create the form
         $form = $this->createForm(
             UnsubscribeType::class,
             new Unsubscription(
                 Locale::frontendLanguage(),
-                $email
+                $this->getEmail()
             )
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->template->assign('form', $form->createView());
 
             if ($form->isSubmitted()) {
@@ -79,20 +76,9 @@ class Unsubscribe extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Get email
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
-        // define email
-        $email = null;
-
-        // request contains an email
-        if ($this->get('request')->request->get('email') != null) {
-            $email = $this->get('request')->request->get('email');
-        }
-
-        return $email;
+        return $this->getRequest()->request->get('email');
     }
 
     private function parse(): void

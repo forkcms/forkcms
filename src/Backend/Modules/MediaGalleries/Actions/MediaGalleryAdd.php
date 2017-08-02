@@ -23,7 +23,7 @@ class MediaGalleryAdd extends ActionAdd
         /** @var Form $form */
         $form = $this->getForm();
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->parseForm($form);
 
             return;
@@ -70,7 +70,7 @@ class MediaGalleryAdd extends ActionAdd
             )
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         return $form;
     }
@@ -78,7 +78,7 @@ class MediaGalleryAdd extends ActionAdd
     private function getMediaGroupType(): Type
     {
         try {
-            return Type::fromString($this->get('request')->query->get('media_group_type')['type']);
+            return Type::fromString($this->getRequest()->query->get('media_group_type')['type']);
         } catch (InvalidArgumentException $e) {
             $this->redirect(
                 $this->getBackLink(

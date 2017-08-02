@@ -10,10 +10,9 @@ script:
 
 before_script:
   - npm install -g bower
-  - export SYMFONY_DEPRECATIONS_HELPER="disabled"
   - composer install
   - mysql -e 'create database fork_test'
-  - mysql -u travis fork_test < tests/data/test_db.sql
+  - mysql -u root fork_test < tests/data/test_db.sql
   - cp app/config/parameters.yml.travis app/config/parameters.yml
   - mysql -e "SET GLOBAL wait_timeout = 3600" # try to avoid mysql has gone away errors
 
@@ -22,6 +21,6 @@ after_success:
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 after_failure:
-  - cat app/logs/test.log
+  - cat var/logs/test.log
 
 sudo: false

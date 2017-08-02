@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ INTERFACE_LANGUAGE }}">
 
-{% include "/Layout/Templates/head.html.twig" %}
+{% include "Layout/Templates/head.html.twig" %}
 
 <body id="{{ bodyID }}" class="{{ bodyClass }}">
 
-{% include "/Layout/Templates/header.html.twig" %}
+{% include "Layout/Templates/header.html.twig" %}
 
 <div class="main-wrapper main-wrapper-dashboard {% if attribute(cookies, 'navigation-collapse') == 'true' %} navigation-collapsed{% endif %}">
   <div class="sidebar">
-    {% include "/Layout/Templates/navigation.html.twig" %}
+    {% include "Layout/Templates/navigation.html.twig" %}
   </div>
 
   <div id="root">
@@ -24,7 +24,7 @@
     </div>
   </div>
   <div class="footer-dashboard">
-    {% include "/Layout/Templates/footer.html.twig" %}
+    {% include "Layout/Templates/footer.html.twig" %}
   </div>
 </div>
 

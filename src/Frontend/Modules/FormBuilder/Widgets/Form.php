@@ -398,7 +398,7 @@ class Form extends FrontendBaseWidget
         // submitted
         if ($this->form->isSubmitted()) {
             if ($this->hasRecaptchaField) {
-                $request = $this->get('request')->request;
+                $request = $this->getRequest()->request;
                 if (!$request->has('g-recaptcha-response')) {
                     $this->form->addError(FL::err('RecaptchaInvalid'));
                 }
@@ -420,9 +420,9 @@ class Form extends FrontendBaseWidget
                 }
             }
             // does the key exists?
-            if (\SpoonSession::exists('formbuilder_' . $this->item['id'])) {
+            if (FrontendModel::getSession()->has('formbuilder_' . $this->item['id'])) {
                 // calculate difference
-                $diff = time() - (int) \SpoonSession::get('formbuilder_' . $this->item['id']);
+                $diff = time() - (int) FrontendModel::getSession()->get('formbuilder_' . $this->item['id']);
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
                 if ($diff < 10 && $diff != 0) {
@@ -478,7 +478,7 @@ class Form extends FrontendBaseWidget
                 // item
                 $data = [
                     'form_id' => $this->item['id'],
-                    'session_id' => \SpoonSession::getSessionId(),
+                    'session_id' => FrontendModel::getSession()->getId(),
                     'sent_on' => FrontendModel::getUTCDate(),
                     'data' => serialize(['server' => $_SERVER]),
                 ];
@@ -541,7 +541,7 @@ class Form extends FrontendBaseWidget
                 );
 
                 // store timestamp in session so we can block excessive usage
-                \SpoonSession::set('formbuilder_' . $this->item['id'], time());
+                FrontendModel::getSession()->set('formbuilder_' . $this->item['id'], time());
 
                 // redirect
                 $redirect = SITE_URL . $this->url->getQueryString();

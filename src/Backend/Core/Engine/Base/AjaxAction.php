@@ -9,6 +9,7 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,7 +66,7 @@ class AjaxAction extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return Model::getRequest();
     }
 
     public function getAction(): string

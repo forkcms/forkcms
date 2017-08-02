@@ -17,7 +17,6 @@ use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Backend\Core\Engine\Model as BackendModel;
@@ -183,13 +182,14 @@ class Page extends KernelLoader
     public function display(): Response
     {
         // assign the id so we can use it as an option
-        $this->template->addGlobal('isPage' . $this->pageId, true);
-        $this->template->addGlobal('isChildOfPage' . $this->record['parent_id'], true);
+        $this->template->assignGlobal('isPage' . $this->pageId, true);
+        $this->template->assignGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
-        $this->template->addGlobal(
+        $this->template->assignGlobal(
             'cookieBarHide',
-            !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar()
+            !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false)
+            || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
         );
 
         $this->parsePositions();
@@ -290,7 +290,7 @@ class Page extends KernelLoader
             return;
         }
 
-        $this->template->addGlobal(
+        $this->template->assignGlobal(
             'languages',
             array_map(
                 function (string $language) {
@@ -436,7 +436,7 @@ class Page extends KernelLoader
         // assign content
         $pageInfo = Navigation::getPageInfo($this->record['id']);
         $this->record['has_children'] = $pageInfo['has_children'];
-        $this->template->addGlobal('page', $this->record);
+        $this->template->assignGlobal('page', $this->record);
 
         // set template path
         $this->templatePath = $this->record['template_path'];
@@ -461,7 +461,6 @@ class Page extends KernelLoader
 
                     // add to list of extras to parse
                     $this->extras[] = $block['extra'];
-
 
                     return $block;
                 },

@@ -12,7 +12,6 @@ namespace Backend\Modules\Extensions\Actions;
 use Backend\Core\Engine\Base\ActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model;
-use SpoonFilter;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

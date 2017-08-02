@@ -6,9 +6,6 @@ use Common\WebTestCase;
 
 class IndexTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testFaqIndexContainsCategories(): void
     {
         $client = static::createClient();
@@ -32,9 +29,6 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testFaqIndexContainsQuestions(): void
     {
         $client = static::createClient();

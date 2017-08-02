@@ -95,15 +95,19 @@ class SubscribeType extends AbstractType
             $mailMotorInterests = $this->subscriber->getInterests();
 
             // Has interests
-            if (!empty($mailMotorInterests) && is_array($mailMotorInterests)) {
-                // Loop interests
-                foreach ($mailMotorInterests as $categoryId => $categoryInterest) {
-                    if (!empty($categoryInterest['children']) && is_array($categoryInterest['children'])) {
-                        foreach ($categoryInterest['children'] as $categoryChildId => $categoryChildTitle) {
-                            // Add interest value for checkbox
-                            $interests[$categoryChildId] = $categoryChildTitle;
-                        }
-                    }
+            if (empty($mailMotorInterests) || !is_array($mailMotorInterests)) {
+                return $interests;
+            }
+
+            // Loop interests
+            foreach ($mailMotorInterests as $categoryId => $categoryInterest) {
+                if (empty($categoryInterest['children']) || !is_array($categoryInterest['children'])) {
+                    continue;
+                }
+
+                foreach ($categoryInterest['children'] as $categoryChildId => $categoryChildTitle) {
+                    // Add interest value for checkbox
+                    $interests[$categoryChildTitle] = $categoryChildId;
                 }
             }
         // Fallback for when no mail-engine is chosen in the Backend
@@ -122,9 +126,9 @@ class SubscribeType extends AbstractType
                 $overwriteInterests = $this->modulesSettings->get('Mailmotor', 'overwrite_interests', true);
                 if (!empty($this->interests) && $overwriteInterests) {
                     return ['Default', 'has_interests'];
-                } else {
-                    return ['Default'];
                 }
+
+                return ['Default'];
             },
         ]);
     }

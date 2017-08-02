@@ -4,12 +4,14 @@ namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Builds the form to set up database information
@@ -21,37 +23,36 @@ class DatabaseType extends AbstractType
         $builder
             ->add(
                 'databaseHostname',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                 ]
             )
             ->add(
                 'databasePort',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                 ]
             )
             ->add(
                 'databaseName',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                 ]
             )
             ->add(
                 'databaseUsername',
-                'text',
+                TextType::class,
                 [
                     'required' => true,
                 ]
             )
             ->add(
                 'databasePassword',
-                'password'
-            )
-        ;
+                PasswordType::class
+            );
 
         // make sure the default data is set
         $builder->addEventListener(
@@ -81,59 +82,50 @@ class DatabaseType extends AbstractType
         );
     }
 
-    public function getName(): string
+    public function getBlockPrefix(): string
     {
         return 'install_database';
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver): void
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'constraints' => [
-                new Callback(
-                    [
-                        'methods' => [
-                            [$this, 'checkDatabaseConnection'],
-                        ],
-                    ]
-                ),
-            ],
-            'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
-        ]);
-    }
+        $resolver->setDefaults(
+            [
+                'constraints' => [
+                    new Callback(
+                        [
+                            'callback' => function (InstallationData $data, ExecutionContextInterface $context) : void {
+                                try {
+                                    // create instance
+                                    $database = new \SpoonDatabase(
+                                        'mysql',
+                                        $data->getDatabaseHostname(),
+                                        $data->getDatabaseUsername(),
+                                        $data->getDatabasePassword(),
+                                        $data->getDatabaseName(),
+                                        $data->getDatabasePort()
+                                    );
 
-    /**
-     * Validate if a database connection can be made
-     *
-     * @param InstallationData $data The form data
-     * @param ExecutionContextInterface $context The forms validation context
-     *
-     * @todo   Replace SpoonDatabase
-     */
-    public function checkDatabaseConnection(InstallationData $data, ExecutionContextInterface $context): void
-    {
-        try {
-            // create instance
-            $database = new \SpoonDatabase(
-                'mysql',
-                $data->getDatabaseHostname(),
-                $data->getDatabaseUsername(),
-                $data->getDatabasePassword(),
-                $data->getDatabaseName(),
-                $data->getDatabasePort()
-            );
+                                    // test table
+                                    $table = 'test' . time();
 
-            // test table
-            $table = 'test' . time();
+                                    // attempt to create table
+                                    $database->execute('DROP TABLE IF EXISTS ' . $table);
+                                    $database->execute(
+                                        'CREATE TABLE ' . $table . ' (id int(11) NOT NULL) ENGINE=MyISAM'
+                                    );
 
-            // attempt to create table
-            $database->execute('DROP TABLE IF EXISTS ' . $table);
-            $database->execute('CREATE TABLE ' . $table . ' (id int(11) NOT NULL) ENGINE=MyISAM');
-
-            // drop table
-            $database->drop($table);
-        } catch (\Exception $e) {
-            $context->addViolation('Problem with database credentials');
-        }
+                                    // drop table
+                                    $database->drop($table);
+                                } catch (\Exception $e) {
+                                    $context->addViolation('Problem with database credentials');
+                                }
+                            },
+                        ]
+                    ),
+                ],
+                'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
+            ]
+        );
     }
 }

@@ -15,6 +15,7 @@ use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
+use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
@@ -326,7 +327,6 @@ class Block extends KernelLoader
         if ($this->pagination['requested_page'] > 5
             && $this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4)
         ) {
-            // init vars
             $pagesStart = ($this->pagination['num_pages'] > 7)
                 ? $this->pagination['num_pages'] - 5 : $this->pagination['num_pages'] - 6;
             $pagesEnd = $this->pagination['num_pages'];
@@ -342,7 +342,6 @@ class Block extends KernelLoader
             }
         } elseif ($this->pagination['requested_page'] <= 5) {
             // as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
-            // init vars
             $pagesStart = 1;
             $pagesEnd = 6;
 
@@ -360,7 +359,6 @@ class Block extends KernelLoader
             }
         } else {
             // page 6
-            // init vars
             $pagesStart = $this->pagination['requested_page'] - 2;
             $pagesEnd = $this->pagination['requested_page'] + 2;
             $showFirstPages = true;
@@ -568,6 +566,6 @@ class Block extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return Model::getRequest();
     }
 }

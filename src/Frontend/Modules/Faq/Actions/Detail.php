@@ -193,7 +193,7 @@ class Detail extends FrontendBaseBlock
     private function updateStatistics(): void
     {
         // view has been counted
-        if (\SpoonSession::exists('viewed_faq_' . $this->record['id'])) {
+        if (FrontendModel::getSession()->has('viewed_faq_' . $this->record['id'])) {
             return;
         }
 
@@ -201,7 +201,7 @@ class Detail extends FrontendBaseBlock
         FrontendFaqModel::increaseViewCount($this->record['id']);
 
         // save in session so we know this view has been counted
-        \SpoonSession::set('viewed_faq_' . $this->record['id'], true);
+        FrontendModel::getSession()->set('viewed_faq_' . $this->record['id'], true);
     }
 
     private function validateForm(): void
@@ -231,15 +231,13 @@ class Detail extends FrontendBaseBlock
                 $text = $this->form->getField('message')->getValue();
 
                 // get feedback in session
-                $previousFeedback = (\SpoonSession::exists('faq_feedback_' . $this->record['id']) ? \SpoonSession::get(
-                    'faq_feedback_' . $this->record['id']
-                ) : null);
+                $previousFeedback = FrontendModel::getSession()->get('faq_feedback_' . $this->record['id']);
 
                 // update counters
                 FrontendFaqModel::updateFeedback($this->record['id'], $useful, $previousFeedback);
 
                 // save feedback in session
-                \SpoonSession::set('faq_feedback_' . $this->record['id'], $useful);
+                FrontendModel::getSession()->set('faq_feedback_' . $this->record['id'], $useful);
 
                 // answer is yes so there's no feedback
                 if (!$useful) {

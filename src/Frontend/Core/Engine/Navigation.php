@@ -223,7 +223,7 @@ class Navigation extends KernelLoader
         int $parentId = 0,
         int $depth = null,
         array $excludeIds = [],
-        string $template = '/Core/Layout/Templates/Navigation.html.twig',
+        string $template = 'Core/Layout/Templates/Navigation.html.twig',
         int $depthCounter = 1
     ): string {
         // get navigation

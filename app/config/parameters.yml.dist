@@ -17,7 +17,7 @@ parameters:
     site.default_title:     <site-default-title>
     site.multilanguage:     <site-multilanguage>
     site.default_language:  <site-default-language>
-    site.path_www:          %kernel.root_dir%/..
+    site.path_www:          "%kernel.project_dir%"
 
-    action.group_tag:       <action-group-tag>
+    action.group_tag:       '<action-group-tag>'
     action.rights_level:    <action-rights-level>

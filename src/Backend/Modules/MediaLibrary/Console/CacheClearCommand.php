@@ -10,8 +10,8 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Clear media library cache
- * Example: "app/console media_library:cache:clear", will only clear all frontend MediaLibrary cached-thumbnails
- * Example: "app/console media_library:cache:clear --all", will clear all MediaLibrary cached-thumbnails
+ * Example: "bin/console media_library:cache:clear", will only clear all frontend MediaLibrary cached-thumbnails
+ * Example: "bin/console media_library:cache:clear --all", will clear all MediaLibrary cached-thumbnails
  */
 class CacheClearCommand extends ContainerAwareCommand
 {

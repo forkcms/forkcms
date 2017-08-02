@@ -2,7 +2,7 @@
 
 namespace Common\Mailer;
 
-use Swift_MailTransport;
+use Swift_SendmailTransport;
 use Swift_SmtpTransport;
 use Swift_Transport;
 
@@ -24,7 +24,7 @@ class TransportFactory
      * @return Swift_Transport
      */
     public static function create(
-        string $type = 'mail',
+        string $type = 'sendmail',
         string $server = null,
         int $port = 25,
         string $user = null,
@@ -45,19 +45,20 @@ class TransportFactory
         string $pass = null,
         string $encryption = null
     ): Swift_SmtpTransport {
-        $transport = Swift_SmtpTransport::newInstance($server, $port)
+        $transport = new Swift_SmtpTransport($server, $port);
+        $transport
             ->setUsername($user)
             ->setPassword($pass);
 
-        if (in_array($encryption, ['ssl', 'tls'])) {
+        if (in_array($encryption, ['ssl', 'tls'], true)) {
             $transport->setEncryption($encryption);
         }
 
         return $transport;
     }
 
-    private static function getMailTransport(): Swift_MailTransport
+    private static function getMailTransport(): Swift_SendmailTransport
     {
-        return Swift_MailTransport::newInstance();
+        return new Swift_SendmailTransport();
     }
 }

@@ -83,7 +83,7 @@ class Model extends \Common\Core\Model
         }
 
         $parameters['token'] = self::getToken();
-        $queryParameterBag = self::getContainer()->get('request')->query;
+        $queryParameterBag = self::getRequest()->query;
 
         // add offset, order & sort (only if not yet manually added)
         if (!isset($parameters['offset']) && $queryParameterBag->has('offset')) {
@@ -504,12 +504,12 @@ class Model extends \Common\Core\Model
      */
     public static function getToken(): string
     {
-        if (\SpoonSession::exists('csrf_token') && \SpoonSession::get('csrf_token') !== '') {
-            return \SpoonSession::get('csrf_token');
+        if (self::getSession()->has('csrf_token') && self::getSession()->get('csrf_token') !== '') {
+            return self::getSession()->get('csrf_token');
         }
 
         $token = self::generateRandomString(10, true, true, false, false);
-        \SpoonSession::set('csrf_token', $token);
+        self::getSession()->set('csrf_token', $token);
 
         return $token;
     }
@@ -708,7 +708,7 @@ class Model extends \Common\Core\Model
                 'type' => $type,
                 'label' => $label ?? $module, // if label is empty, fallback to module
                 'action' => $action ?? null,
-                'data' => $data ===  null ? null : serialize($data),
+                'data' => $data === null ? null : serialize($data),
                 'hidden' => $hidden,
                 'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
             ]

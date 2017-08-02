@@ -18,7 +18,7 @@ class LoginHandler
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             return $this->processValidForm($form, $request);
         }
 

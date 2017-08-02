@@ -149,7 +149,7 @@ class TemplateModifiers extends BaseTwigModifiers
         int $parentId = 0,
         int $depth = null,
         string $excludeIds = null,
-        string $template = '/Core/Layout/Templates/Navigation.html.twig'
+        string $template = 'Core/Layout/Templates/Navigation.html.twig'
     ): string {
         // build excludeIds
         if ($excludeIds !== null) {
@@ -262,7 +262,7 @@ class TemplateModifiers extends BaseTwigModifiers
         int $startDepth = 1,
         int $endDepth = null,
         string $excludeIds = null,
-        string $template = '/Core/Layout/Templates/Navigation.html.twig'
+        string $template = 'Core/Layout/Templates/Navigation.html.twig'
     ): string {
         // build excludeIds
         if ($excludeIds !== null) {

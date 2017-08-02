@@ -168,7 +168,6 @@ class Add extends BackendBaseActionAdd
 
         // content has been submitted: re-create submitted content rather than the database-fetched content
         if ($this->getRequest()->request->has('block_html_0')) {
-            // init vars
             $this->blocksContent = [];
             $hasBlock = false;
             $i = 1;
@@ -176,7 +175,6 @@ class Add extends BackendBaseActionAdd
             $positions = [];
             // loop submitted blocks
             while ($this->getRequest()->request->has('block_position_' . $i)) {
-                // init var
                 $block = [];
 
                 // save block position
@@ -574,7 +572,7 @@ class Add extends BackendBaseActionAdd
         return Authentication::isAllowedAction('Edit', 'Tags') && Authentication::isAllowedAction('GetAllTags', 'Tags');
     }
 
-    private function getHiddenJsonField(string $name, string $json): SpoonFormHidden
+    private function getHiddenJsonField(string $name, ?string $json): SpoonFormHidden
     {
         return new class($name, htmlspecialchars($json)) extends SpoonFormHidden {
             public function getValue($allowHTML = null)

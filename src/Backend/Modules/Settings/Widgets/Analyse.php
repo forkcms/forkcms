@@ -27,10 +27,8 @@ class Analyse extends BackendBaseWidget
 
     private function parse(): void
     {
-        // init vars
         $warnings = BackendSettingsModel::getWarnings();
 
-        // assign warnings
         if (!empty($warnings)) {
             $this->template->assign('warnings', $warnings);
         }

@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use InvalidArgumentException;
-use Common\Cookie as CommonCookie;
 
 /**
  * In this file we store all generic functions that we will be using in the frontend.
@@ -241,14 +240,15 @@ class Model extends \Common\Core\Model
         if (self::$visitorId !== null) {
             return self::$visitorId;
         }
+        $cookie = self::getContainer()->get('fork.cookie');
 
         // get/init tracking identifier
-        self::$visitorId = CommonCookie::exists('track') && !empty($_COOKIE['track'])
-            ? (string) CommonCookie::get('track')
-            : md5(uniqid('', true) . \SpoonSession::getSessionId());
+        (self::$visitorId = $cookie->has('track') && $cookie->get('track', '') !== '')
+            ? $cookie->get('track')
+            : md5(uniqid('', true) . self::getSession()->getId());
 
-        if (CommonCookie::hasAllowedCookies() || !self::get('fork.settings')->get('Core', 'show_cookie_bar', false)) {
-            CommonCookie::set('track', self::$visitorId, 86400 * 365);
+        if ($cookie->hasAllowedCookies() || !self::get('fork.settings')->get('Core', 'show_cookie_bar', false)) {
+            $cookie->set('track', self::$visitorId, 86400 * 365);
         }
 
         return self::getVisitorId();

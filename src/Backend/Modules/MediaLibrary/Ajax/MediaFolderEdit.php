@@ -36,7 +36,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
     protected function getMediaFolder(): MediaFolder
     {
-        $id = $this->get('request')->request->getInt('folder_id');
+        $id = $this->getRequest()->request->getInt('folder_id');
 
         // validate values
         if ($id === null) {
@@ -53,7 +53,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
     protected function getFolderName(): string
     {
-        $name = $this->get('request')->request->get('name');
+        $name = $this->getRequest()->request->get('name');
 
         if ($name === null) {
             throw new AjaxExitException(Language::err('TitleIsRequired'));

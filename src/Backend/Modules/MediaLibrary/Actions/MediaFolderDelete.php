@@ -7,7 +7,6 @@ use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Common\Exception\RedirectException;
 
 class MediaFolderDelete extends BackendBaseActionDelete
 {
@@ -79,7 +78,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
         try {
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById(
-                $this->get('request')->query->getInt('id')
+                $this->getRequest()->query->getInt('id')
             );
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
             $this->redirect(

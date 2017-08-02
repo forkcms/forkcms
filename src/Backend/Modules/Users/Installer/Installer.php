@@ -67,7 +67,6 @@ class Installer extends ModuleInstaller
 
     public function getPasswordStrength(): string
     {
-        // init vars
         $password = $this->getVariable('password');
         $score = 0;
         $uniqueChars = [];

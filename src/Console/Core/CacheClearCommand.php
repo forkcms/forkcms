@@ -34,7 +34,7 @@ class CacheClearCommand extends Command
         $this->removeFilesInFolder('/src/Backend/Cache/MinifiedCss', $io, 'backend minified css');
         $this->removeFilesInFolder('/src/Backend/Cache/MinifiedJs', $io, 'backend minified js');
 
-        $this->removeFilesInFolder('/app/cache', $io, 'general cache');
+        $this->removeFilesInFolder('/var/cache', $io, 'general cache');
 
         $io->success('Cache is cleared');
     }

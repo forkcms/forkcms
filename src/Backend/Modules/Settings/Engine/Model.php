@@ -23,7 +23,6 @@ class Model
      */
     public static function getWarnings(): array
     {
-        // init vars
         $warnings = [];
         $installedModules = BackendModel::getModules();
 
@@ -31,7 +30,7 @@ class Model
         foreach ($installedModules as $module) {
             // model class
             $class = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
-            if ($module == 'Core') {
+            if ($module === 'Core') {
                 $class = 'Backend\\Core\\Engine\\Model';
             }
 

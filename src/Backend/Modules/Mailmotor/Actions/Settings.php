@@ -30,9 +30,9 @@ final class Settings extends ActionIndex
             new SaveSettings($this->get('fork.settings'))
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->template->assign('form', $form->createView());
 
             $this->parse();

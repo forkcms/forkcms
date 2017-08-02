@@ -265,8 +265,8 @@ class Index extends FrontendBaseBlock
         }
 
         // previous search result
-        $previousTerm = \SpoonSession::exists('searchTerm') ? \SpoonSession::get('searchTerm') : '';
-        \SpoonSession::set('searchTerm', '');
+        $previousTerm = FrontendModel::getSession()->get('searchTerm', '');
+        FrontendModel::getSession()->set('searchTerm', '');
 
         // save this term?
         if ($previousTerm !== $this->term) {
@@ -281,8 +281,8 @@ class Index extends FrontendBaseBlock
             );
         }
 
-        // save current search term in cookie
-        \SpoonSession::set('searchTerm', $this->term);
+        // save current search term in session
+        FrontendModel::getSession()->set('searchTerm', $this->term);
     }
 
     private function validateForm(): void

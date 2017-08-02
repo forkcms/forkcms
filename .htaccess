@@ -61,7 +61,7 @@ deny from env=stayout
 	RewriteRule composer\.lock - [F]
 	RewriteRule phpunit\.xml\.dist - [F]
 	RewriteRule .*\.md - [F]
-	RewriteRule app/logs - [F]
+	RewriteRule var/logs - [F]
 	RewriteRule app/config - [F]
 	RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
 	RewriteRule src/Frontend/Cache/Search - [F]

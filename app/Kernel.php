@@ -221,4 +221,14 @@ abstract class Kernel extends BaseKernel
 
         parent::initializeContainer();
     }
+
+    public function getLogDir(): string
+    {
+        return dirname(__DIR__).'/var/logs/' . $this->environment;
+    }
+
+    public function getCacheDir(): string
+    {
+        return dirname(__DIR__) . '/var/cache/' . $this->environment;
+    }
 }

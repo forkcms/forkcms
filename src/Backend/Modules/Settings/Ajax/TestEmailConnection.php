@@ -34,13 +34,13 @@ class TestEmailConnection extends BackendBaseAJAXAction
         $errors = [];
 
         // validate
-        if ($fromEmail == '' || !\SpoonFilter::isEmail($fromEmail)) {
+        if (!filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
             $errors['from'] = BL::err('EmailIsInvalid');
         }
-        if ($toEmail == '' || !\SpoonFilter::isEmail($toEmail)) {
+        if (!filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
             $errors['to'] = BL::err('EmailIsInvalid');
         }
-        if ($replyToEmail == '' || !\SpoonFilter::isEmail($replyToEmail)) {
+        if (!filter_var($replyToEmail, FILTER_VALIDATE_EMAIL)) {
             $errors['reply'] = BL::err('EmailIsInvalid');
         }
 
@@ -63,8 +63,8 @@ class TestEmailConnection extends BackendBaseAJAXAction
         ;
 
         $mailerType = $this->getRequest()->request->get('mailer_type');
-        if (!in_array($mailerType, ['smtp', 'mail'])) {
-            $mailerType = 'mail';
+        if (!in_array($mailerType, ['smtp', 'sendmail'])) {
+            $mailerType = 'sendmail';
         }
         $transport = TransportFactory::create(
             $mailerType,

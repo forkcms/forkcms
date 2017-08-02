@@ -69,8 +69,8 @@ class Email extends BackendBaseActionIndex
         ;
 
         if ($this->isGod) {
-            $mailerType = $this->get('fork.settings')->get('Core', 'mailer_type', 'mail');
-            $this->form->addDropdown('mailer_type', ['mail' => 'PHP\'s mail', 'smtp' => 'SMTP'], $mailerType);
+            $mailerType = $this->get('fork.settings')->get('Core', 'mailer_type', 'sendmail');
+            $this->form->addDropdown('mailer_type', ['sendmail' => 'sendmail', 'smtp' => 'SMTP'], $mailerType);
 
             // smtp settings
             $this->form->addText('smtp_server', $this->get('fork.settings')->get('Core', 'smtp_server', ''));

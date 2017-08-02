@@ -1,6 +1,33 @@
 UPGRADE FROM 4.x to 5.0
 =======================
 
+## Spoon library has been updated to 3.0.0
+
+Changes:
+
+- We require php 7.1 from now on
+- When passing booleans to spoon database they are changed into 1 and 0
+
+Fixes:
+
+- Fix json as parameter for datagrid functions
+- Fix spoon form checkboxes not working in fork 5
+- Fixes `null` values from being converted to empty string in SpoonDataGrid columnFunctions
+- Bugfix when having multi-array arrays
+
+Removed:
+
+- spoon email
+- spoon ical
+- spoon rest client
+- spoon xmlrpc client
+- spoon log
+- SpoonFilter::getGetValue
+- SpoonFilter::getPostValue
+- atom rss feed
+- spoon cookie
+- spoon session
+
 ## API is removed
 
 The full API is removed. If you need to expose an API for your project you should look into:
@@ -91,7 +118,7 @@ If you want to convert a Spoon template to Twig its better to take a look at:
 
 ## install_locale.php-script is removed
 
-Use `php app/console forkcms:locale:import` instead.
+Use `php bin/console forkcms:locale:import` instead.
 
 
 ## `sprintf`-filter is removed
@@ -116,7 +143,7 @@ You can use `Backend\Core\Engine\Base\Config->isActionAvailable($action)` instea
 
 ## `Frontend\Core\Engine\Url->getHost()` and `Backend\Core\Engine\Url->getHost()` are removed
 
-You should use `$request->getHttpHost()` instead. The request-object is available in the container.
+You should use `$request->getHttpHost()` instead. You can request the current request object from the [Common/Frontend/Backend] model with the method `getRequest`.
 
 
 ## `Frontend\Core\Engine\TemplateCustom` is removed
@@ -531,3 +558,62 @@ The following form types have been moved
 | `\Backend\Form\Type\FileType`       | `\Common\Form\FileType`       |
 | `\Backend\Form\Type\ImageType`      | `\Common\Form\ImageType`      |
 | `\Backend\Form\Type\CollectionType` | `\Common\Form\CollectionType` |
+
+## Swiftmailer
+
+The default used to be `mail` but that has been removed in favour of `sendmail`.
+It works more or less the same. More information can be found at the [documentation of swiftmailer](https://swiftmailer.symfony.com/docs/sending.html#the-sendmail-transport)
+
+```mysql
+UPDATE modules_settings SET value = 's:8:"sendmail";' WHERE name = 'mailer_type' AND value = 's:4:"mail";';
+```
+
+## Symfony has been updated to 3.3
+
+All things symfony have been updated to the latest stable versions.
+Consult the upgrade guides of symfony to see what changed. If you don't have deprecation notices on 2.8 you can just upgrade.
+
+- [upgrade from 2.x to 3.0 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.0.md)
+- [upgrade from 3.0 to 3.1 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.1.md)
+- [upgrade from 3.1 to 3.2 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.2.md)
+- [upgrade from 3.2 to 3.3 guide](https://github.com/symfony/symfony/blob/v3.3.0/UPGRADE-3.3.md)
+
+### Requests
+
+Because the current request is no longer directly accessible from the container we added some helper methods to the [Common/Frontend/Backend] model class, `Model::requestIsAvailable()` and `Model::getRequest()`
+
+### Twig
+
+You can't assign globals to twig after initialisation anymore.
+Because of that we removed the `addGlobal` function from `\Frontend\Core\Engine\TwigTemplate`
+
+If you want to add a global anyway you should use assignGlobal as it uses a custom workaround.
+
+### Console
+
+Moved `app/console` to `bin/console`
+
+### Logs
+
+Moved `app/logs` to `var/logs`
+
+### Cache
+
+Moved `app/cache` to `var/cache`
+
+## Cookies
+
+We don't use SpoonCookie anymore and therefore also the class Common\Cookie has been removed.
+You can now use the new cookie service `fork.cookie`
+
+The values of cookies are also no longer automatically serialized.
+
+## Sessions
+
+We removed SpoonSession and have switched fully to the symfony sessions
+``
+We also added a shortcut to get the current session: \Common\Core\Model::getSession()`
+
+## Tests
+
+The login and logout methods in the tests now require a client as parameter since we will log in/out that specific client

@@ -204,6 +204,7 @@ class Installer extends ModuleInstaller
 
     /**
      * Insert a category for a language
+     *
      * @todo: Replace this with a BlogCategoryRepository method when it exists.
      *
      * @param string $language The language to use.

@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class FileType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['show_remove_file']) {
             $builder->add(
@@ -147,10 +147,10 @@ class FileType extends AbstractType
     public function getParent(): string
     {
         if (!$this instanceof self) {
-            return $this->getBlockPrefix();
+            return self::class;
         }
 
-        return 'file';
+        return SymfonyFileType::class;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
@@ -181,11 +181,6 @@ class FileType extends AbstractType
                 'help_text_argument',
             ]
         );
-    }
-
-    public function getName(): string
-    {
-        return $this->getBlockPrefix();
     }
 
     private function getUploadMaxFileSize(): ?string

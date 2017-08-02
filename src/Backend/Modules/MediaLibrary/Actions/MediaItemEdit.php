@@ -37,7 +37,7 @@ class MediaItemEdit extends BackendBaseActionEdit
             )
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         $deleteForm = $this->createForm(
             DeleteType::class,
@@ -46,7 +46,7 @@ class MediaItemEdit extends BackendBaseActionEdit
         );
         $this->template->assign('deleteForm', $deleteForm->createView());
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->template->assign('folderId', $this->folderId);
             $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
             $this->header->addJsData(

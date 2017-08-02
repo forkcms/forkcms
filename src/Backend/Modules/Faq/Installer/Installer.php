@@ -175,6 +175,7 @@ class Installer extends ModuleInstaller
      * @param string $language
      * @param string $title
      * @param string $url
+     *
      * @return int
      */
     private function insertCategory(string $language, string $title, string $url): int

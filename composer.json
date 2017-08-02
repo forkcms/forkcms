@@ -18,11 +18,10 @@
         "tijsverkoyen/css-to-inline-styles": "1.5.*",
         "matthiasmullie/minify": "~1.3",
         "matthiasmullie/scrapbook": "^1.3",
-        "symfony/symfony": "^2.7",
-        "symfony/assetic-bundle": "^2.7",
-        "symfony/swiftmailer-bundle": "^2.3",
-        "symfony/monolog-bundle": "^2.8",
-        "spoon/library": "dev-3.0.0-dev as 3.0.0",
+        "symfony/symfony": "^3.3",
+        "symfony/assetic-bundle": "^2.8",
+        "symfony/swiftmailer-bundle": "^3.0",
+        "symfony/monolog-bundle": "^3.1",
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
         "league/flysystem": "~1.0",
@@ -36,12 +35,13 @@
         "ramsey/uuid": "^3.5",
         "ramsey/uuid-doctrine": "^1.2",
         "liip/imagine-bundle": "^1.7",
-        "swiftmailer/swiftmailer": "^5.4.6",
-        "google/recaptcha": "~1.1"
+        "swiftmailer/swiftmailer": "^6.0",
+        "google/recaptcha": "~1.1",
+        "spoon/library": "^3.0"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
-        "symfony/var-dumper": "^2.7",
+        "symfony/var-dumper": "^3.3",
         "squizlabs/php_codesniffer": "^2.7",
         "symfony/phpunit-bridge": "^3.2"
     },
@@ -55,14 +55,16 @@
     "scripts": {
         "test": "./bin/simple-phpunit",
         "post-install-cmd": [
-            "php app/console assetic:dump .",
-            "php app/console forkcms:cache:clear",
-            "php app/console cache:clear"
+            "php bin/console assetic:dump .",
+            "php bin/console forkcms:cache:clear",
+            "php bin/console cache:clear --no-warmup",
+            "php bin/console cache:warmup"
         ],
         "post-update-cmd": [
-            "php app/console assetic:dump .",
-            "php app/console forkcms:cache:clear",
-            "php app/console cache:clear"
+            "php bin/console assetic:dump .",
+            "php bin/console forkcms:cache:clear",
+            "php bin/console cache:clear --no-warmup",
+            "php bin/console cache:warmup"
         ]
     },
     "autoload": {

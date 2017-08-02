@@ -83,7 +83,7 @@ class Add extends BackendBaseActionAdd
             ['theme' => $this->get('fork.settings')->get('Core', 'theme', 'Fork')]
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         return $form;
     }

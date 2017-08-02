@@ -10,7 +10,6 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Backend\Core\Engine\TwigTemplate;
-use Common\Core\Header\Priority;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\Form\Form;
@@ -78,7 +77,7 @@ class Action extends KernelLoader
         $this->header = $this->getContainer()->get('header');
 
         // populate the parameter array
-        $this->parameters = $this->get('request')->query->all();
+        $this->parameters = $this->getRequest()->query->all();
     }
 
     public function getModule(): string
@@ -96,15 +95,15 @@ class Action extends KernelLoader
      */
     public function checkToken(): void
     {
-        $fromSession = (\SpoonSession::exists('csrf_token')) ? \SpoonSession::get('csrf_token') : '';
-        $fromGet = $this->getContainer()->get('request')->query->get('token');
+        $fromSession = BackendModel::getSession()->get('csrf_token', '');
+        $fromGet = $this->getRequest()->query->get('token');
 
-        if ($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) {
+        if ($fromSession !== '' && $fromGet !== '' && $fromSession === $fromGet) {
             return;
         }
 
         // clear the token
-        \SpoonSession::set('csrf_token', '');
+        BackendModel::getSession()->set('csrf_token', '');
 
         $this->redirect(
             BackendModel::createUrlForAction(
@@ -236,7 +235,7 @@ class Action extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return BackendModel::getRequest();
     }
 
     /**

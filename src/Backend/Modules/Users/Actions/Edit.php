@@ -349,7 +349,6 @@ class Edit extends BackendBaseActionEdit
 
                 // has the user submitted an avatar?
                 if ($fields['avatar']->isFilled()) {
-                    // init vars
                     $avatarsPath = FRONTEND_FILES_PATH . '/Users/avatars';
 
                     // delete old avatar if it isn't the default-image

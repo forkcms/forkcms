@@ -21,7 +21,7 @@ class UploadFile extends AjaxAction
 {
     public function execute(): void
     {
-        $request = $this->get('request');
+        $request = $this->getRequest();
 
         $fileName = $this->writeFile(
             $this->getFileContentFromRequest($request),

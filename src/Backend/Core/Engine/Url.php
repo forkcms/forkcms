@@ -12,7 +12,6 @@ namespace Backend\Core\Engine;
 use Backend\Core\Config;
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 use Backend\Core\Engine\Model as BackendModel;
-use Common\Cookie as CommonCookie;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -55,7 +54,6 @@ class Url extends KernelLoader
         parent::__construct($kernel);
 
         $this->getContainer()->set('url', $this);
-        $this->request = $this->get('request');
 
         $this->processQueryString();
     }
@@ -68,7 +66,7 @@ class Url extends KernelLoader
     public function getDomain(): string
     {
         // replace
-        return str_replace('www.', '', $this->request->getHttpHost());
+        return str_replace('www.', '', BackendModel::getRequest()->getHttpHost());
     }
 
     /**
@@ -78,28 +76,28 @@ class Url extends KernelLoader
      */
     public function getQueryString(): string
     {
-        return trim((string) $this->request->getRequestUri(), '/');
+        return trim((string) BackendModel::getRequest()->getRequestUri(), '/');
     }
 
     private function getLanguageFromUrl(): string
     {
-        if (!array_key_exists($this->request->attributes->get('_locale'), BackendLanguage::getWorkingLanguages())) {
+        if (!array_key_exists(BackendModel::getRequest()->attributes->get('_locale'), BackendLanguage::getWorkingLanguages())) {
             $url = $this->getBaseUrlForLanguage($this->getContainer()->getParameter('site.default_language'));
-            $url .= '/' . $this->request->attributes->get('module') . '/' . $this->request->attributes->get('action');
+            $url .= '/' . BackendModel::getRequest()->attributes->get('module') . '/' . BackendModel::getRequest()->attributes->get('action');
 
-            if ($this->request->getQueryString() !== null) {
-                $url .= '?' . $this->request->getQueryString();
+            if (BackendModel::getRequest()->getQueryString() !== null) {
+                $url .= '?' . BackendModel::getRequest()->getQueryString();
             }
 
             $this->redirect($url);
         }
 
-        return $this->request->attributes->get('_locale');
+        return BackendModel::getRequest()->attributes->get('_locale');
     }
 
     private function getModuleFromRequest(): string
     {
-        $module = $this->request->attributes->get('module');
+        $module = BackendModel::getRequest()->attributes->get('module');
         if (empty($module)) {
             return 'Dashboard';
         }
@@ -109,7 +107,7 @@ class Url extends KernelLoader
 
     private function getActionFromRequest(string $module, string $language): string
     {
-        $action = $this->request->attributes->get('action');
+        $action = BackendModel::getRequest()->attributes->get('action');
         if (!empty($action)) {
             return \SpoonFilter::toCamelCase($action);
         }
@@ -145,7 +143,7 @@ class Url extends KernelLoader
 
     private function processQueryString(): void
     {
-        if ($this->request->attributes->get('_route') === 'backend_ajax') {
+        if (BackendModel::getRequest()->attributes->get('_route') === 'backend_ajax') {
             $this->processAjaxRequest();
 
             return;
@@ -175,15 +173,15 @@ class Url extends KernelLoader
 
     private function getForkData(): array
     {
-        if ($this->request->request->has('fork')) {
-            return $this->splitUpForkData((array) $this->request->request->get('fork'));
+        if (BackendModel::getRequest()->request->has('fork')) {
+            return $this->splitUpForkData((array) BackendModel::getRequest()->request->get('fork'));
         }
 
-        if ($this->request->query->has('fork')) {
-            return $this->splitUpForkData((array) $this->request->query->get('fork'));
+        if (BackendModel::getRequest()->query->has('fork')) {
+            return $this->splitUpForkData((array) BackendModel::getRequest()->query->get('fork'));
         }
 
-        return $this->splitUpForkData($this->request->query->all());
+        return $this->splitUpForkData(BackendModel::getRequest()->query->all());
     }
 
     private function processAjaxRequest(): void
@@ -254,9 +252,9 @@ class Url extends KernelLoader
             return Authentication::getUser()->getSetting('interface_language', $default);
         }
 
-        if (CommonCookie::exists('interface_language')) {
+        if ($this->getContainer()->get('fork.cookie')->has('interface_language')) {
             // no authenticated user, but available from a cookie
-            return CommonCookie::get('interface_language');
+            return $this->getContainer()->get('fork.cookie')->get('interface_language');
         }
 
         return $default;
@@ -329,7 +327,8 @@ class Url extends KernelLoader
      */
     public function redirectToErrorPage(string $type, int $code = Response::HTTP_BAD_REQUEST): void
     {
-        $errorUrl = '/' . NAMED_APPLICATION . '/' . $this->get('request')->getLocale() . '/error?type=' . $type;
+        $errorUrl = '/' . NAMED_APPLICATION . '/' . BackendModel::getRequest()->getLocale()
+                    . '/error?type=' . $type;
 
         $this->get('url')->redirect($errorUrl, $code);
     }

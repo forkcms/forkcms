@@ -34,7 +34,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
 
     private function getMediaGroup(): ?MediaGroup
     {
-        $id = $this->get('request')->request->get('group_id');
+        $id = $this->getRequest()->request->get('group_id');
 
         // GroupId not valid
         if ($id === null) {

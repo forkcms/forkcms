@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Valid;
 
 class ImageType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['show_remove_image']) {
             $builder->add(
@@ -149,10 +149,10 @@ class ImageType extends AbstractType
     public function getParent(): string
     {
         if (!$this instanceof self) {
-            return 'fork_image';
+            return self::class;
         }
 
-        return 'file';
+        return SymfonyFileType::class;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
@@ -184,11 +184,6 @@ class ImageType extends AbstractType
                 'help_text_argument',
             ]
         );
-    }
-
-    public function getName(): string
-    {
-        return $this->getBlockPrefix();
     }
 
     private function getUploadMaxFileSize(): ?string

@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\Blog\Form;
 
-use Backend\Core\Engine\Model;
 use Backend\Form\Type\DeleteType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -62,7 +62,7 @@ class Add extends BackendBaseActionAdd
         $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->form->addEditor('text');
         $this->form->addEditor('introduction');
-        $this->form->addRadiobutton('hidden', $rbtHiddenValues, false);
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, 0);
         $this->form->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
         $this->form->addDropdown('category_id', $categories, $this->getRequest()->query->getInt('category'));
         if (count($categories) !== 2) {

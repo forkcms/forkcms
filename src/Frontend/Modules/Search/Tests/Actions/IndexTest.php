@@ -6,9 +6,6 @@ use Common\WebTestCase;
 
 class IndexTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testSearchIndexWorks(): void
     {
         $client = static::createClient();
@@ -28,9 +25,6 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testNotSubmittedSearchIndexDoesNotContainData(): void
     {
         $client = static::createClient();
@@ -48,9 +42,6 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSubmittedSearchValidatesData(): void
     {
         $client = static::createClient();
@@ -73,9 +64,6 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSubmittedSearchIndexContainsData(): void
     {
         $client = static::createClient();

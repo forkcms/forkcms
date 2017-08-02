@@ -13,7 +13,7 @@ class TransportFactoryTest extends TestCase
     public function testCreatesMailTransportByDefault(): void
     {
         self::assertInstanceOf(
-            'Swift_MailTransport',
+            'Swift_SendmailTransport',
             TransportFactory::create()
         );
     }
