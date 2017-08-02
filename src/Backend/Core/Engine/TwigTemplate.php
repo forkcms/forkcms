@@ -112,7 +112,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->environment->addRuntimeLoader(
             new Twig_FactoryRuntimeLoader(
                 [
-                    TwigRenderer::class => function () use ($rendererEngine, $csrfTokenManager) : TwigRenderer {
+                    TwigRenderer::class => function () use ($rendererEngine, $csrfTokenManager): TwigRenderer {
                         return new TwigRenderer($rendererEngine, $csrfTokenManager);
                     },
                 ]
