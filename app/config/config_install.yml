@@ -29,7 +29,7 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  %site.path_www%/var/logs/logs.log
+            path:  "%site.path_www%/var/logs/logs.log"
             level: debug
 
 parameters:
@@ -52,11 +52,11 @@ services:
     database:
         class: SpoonDatabase
         arguments:
-            - %database.driver%
-            - %database.host%
-            - %database.user%
-            - %database.password%
-            - %database.name%
-            - %database.port%
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%"
+            - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
