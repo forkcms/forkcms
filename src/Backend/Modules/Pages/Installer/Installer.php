@@ -109,12 +109,6 @@ class Installer extends ModuleInstaller
         }
         $extras['tags_block'] = $this->insertExtra('Tags', ModuleExtraType::block(), 'Tags');
         if (in_array('Profiles', $this->getVariable('selected_modules'))) {
-            $extras['profiles_activate'] = $this->insertExtra(
-                'Profiles',
-                ModuleExtraType::block(),
-                'Activate',
-                'Activate'
-            );
             $extras['profiles_forgot_password'] = $this->insertExtra(
                 'Profiles',
                 ModuleExtraType::block(),
@@ -161,12 +155,6 @@ class Installer extends ModuleInstaller
                 ModuleExtraType::block(),
                 'Register',
                 'Register'
-            );
-            $extras['profiles_reset_password'] = $this->insertExtra(
-                'Profiles',
-                ModuleExtraType::block(),
-                'ResetPassword',
-                'ResetPassword'
             );
             $extras['profiles_resend_activation'] = $this->insertExtra(
                 'Profiles',
@@ -310,32 +298,12 @@ class Installer extends ModuleInstaller
                     );
                     $this->insertPage(
                         [
-                            'title' => ucfirst($this->getLocale('Activate', 'Core', $language, 'lbl', 'Backend')),
-                            'language' => $language,
-                            'parent_id' => $profilesPageId,
-                        ],
-                        null,
-                        ['extra_id' => $extras['profiles_activate'], 'position' => 'main'],
-                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                    );
-                    $this->insertPage(
-                        [
                             'title' => ucfirst($this->getLocale('ForgotPassword', 'Core', $language, 'lbl', 'Backend')),
                             'language' => $language,
                             'parent_id' => $profilesPageId,
                         ],
                         null,
                         ['extra_id' => $extras['profiles_forgot_password'], 'position' => 'main'],
-                        ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
-                    );
-                    $this->insertPage(
-                        [
-                            'title' => ucfirst($this->getLocale('ResetPassword', 'Core', $language, 'lbl', 'Backend')),
-                            'language' => $language,
-                            'parent_id' => $profilesPageId,
-                        ],
-                        null,
-                        ['extra_id' => $extras['profiles_reset_password'], 'position' => 'main'],
                         ['extra_id' => $this->getExtraId('search_form'), 'position' => 'top']
                     );
                     $this->insertPage(
