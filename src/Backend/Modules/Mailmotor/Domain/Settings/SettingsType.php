@@ -111,11 +111,11 @@ class SettingsType extends AbstractType
             'data_class' => SaveSettings::class,
             'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
-                if ($data->mailEngine !== 'not_implemented') {
-                    return ['Default', 'mail_engine_selected'];
+                if ($data->mailEngine === 'not_implemented') {
+                    return ['Default'];
                 }
 
-                return ['Default'];
+                return ['Default', 'mail_engine_selected'];
             },
         ]);
     }
