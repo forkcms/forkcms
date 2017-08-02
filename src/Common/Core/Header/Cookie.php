@@ -126,17 +126,7 @@ final class Cookie
             return $secure;
         }
 
-        /*
-         detect if we are using HTTPS, this wil only work in Apache, if you are using nginx you should add the
-         code below into your config:
-             ssl on;
-            fastcgi_param HTTPS on;
-
-         for lighttpd you should add:
-             setenv.add-environment = ("HTTPS" => "on")
-         */
-
-        return (isset($_SERVER['HTTPS']) && mb_strtolower($_SERVER['HTTPS']) === 'on');
+        return Model::getRequest()->isSecure();
     }
 
     /**
