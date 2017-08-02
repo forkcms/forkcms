@@ -10,9 +10,6 @@ class ForkCookieSetter
     /** @var Cookie */
     private $cookie;
 
-    /**
-     * @param Cookie $cookie
-     */
     public function __construct(Cookie $cookie)
     {
         $this->cookie = $cookie;

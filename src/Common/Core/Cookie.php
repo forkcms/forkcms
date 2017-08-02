@@ -64,15 +64,6 @@ final class Cookie
         $this->newCookiesHeaderBag->setCookie($cookie);
     }
 
-    /**
-     * Deletes a cookie
-     *
-     * @param string $name
-     * @param string $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool $httpOnly
-     */
     public function delete(
         string $name,
         string $path = '/',
