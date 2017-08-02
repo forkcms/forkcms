@@ -109,7 +109,6 @@ class Model extends BaseModel
             'st',
         ];
 
-        // init vars
         $consonantsCount = count($consonants);
         $vowelsCount = count($vowels);
         $pass = '';
@@ -263,7 +262,6 @@ class Model extends BaseModel
             throw new \Exception('You need to provide two objects that actually contain valid data.');
         }
 
-        // init vars
         $year = gmdate('Y', $date->getTimestamp());
         $month = gmdate('m', $date->getTimestamp());
         $day = gmdate('j', $date->getTimestamp());

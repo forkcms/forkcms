@@ -66,7 +66,6 @@ class RssItem extends \SpoonFeedRSSItem
             return $content;
         }
 
-        // init vars
         $searchLinks = [];
         $replaceLinks = [];
 

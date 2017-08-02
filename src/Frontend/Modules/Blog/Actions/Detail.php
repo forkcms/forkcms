@@ -110,19 +110,16 @@ class Detail extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        // create form
         $this->form = new FrontendForm('commentsForm');
         $this->form->setAction($this->form->getAction() . '#' . FL::act('Comment'));
 
         $cookie = FrontendModel::getContainer()->get('fork.cookie');
-        // init vars
         $author = $cookie->get('comment_author');
         $email = ($cookie->has('comment_email') && \SpoonFilter::isEmail($cookie->get('comment_email')))
             ? $cookie->get('comment_email') : null;
         $website = ($cookie->has('comment_website') && \SpoonFilter::isURL($cookie->get('comment_website')))
             ? $cookie->get('comment_website') : 'http://';
 
-        // create elements
         $this->form->addText('author', $author)->setAttributes(['required' => null]);
         $this->form->addText('email', $email)->setAttributes(['required' => null, 'type' => 'email']);
         $this->form->addText('website', $website, null);

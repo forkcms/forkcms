@@ -61,7 +61,6 @@ class Rss extends FrontendBaseBlock
 
         // loop articles
         foreach ($this->items as $item) {
-            // init vars
             $title = $item['title'];
             $link = $item['full_url'];
             $description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];

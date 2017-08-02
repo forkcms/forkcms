@@ -130,7 +130,6 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $this->form->getField('active')->setAttributes(['disabled' => 'disabled']);
         }
 
-        // init vars
         $positions = [];
         $blocks = [];
         $widgets = [];
@@ -170,7 +169,6 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
         // content has been submitted: re-create submitted content rather than the database-fetched content
         if ($this->getRequest()->request->has('position_0')) {
-            // init vars
             $this->names = [];
             $this->extras = [];
             $i = 1;
@@ -178,7 +176,6 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
             // loop submitted positions
             while ($this->getRequest()->request->has('position_' . $i)) {
-                // init vars
                 $j = 0;
                 $extras = [];
 
