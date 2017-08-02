@@ -11,6 +11,7 @@ namespace Backend\Core\Language;
 
 use Backend\Core\Engine\Model;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use RuntimeException;
 
 /**
  * This class will store the language-dependant content for the Backend, it will also store the
@@ -269,7 +270,7 @@ class Language
             if (defined('APPLICATION') && APPLICATION !== 'Console') {
                 Model::getContainer()->get('fork.cookie')->set('interface_language', $language);
             }
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
 
