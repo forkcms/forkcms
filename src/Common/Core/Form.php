@@ -60,7 +60,7 @@ class Form extends \SpoonForm
         $this->url = Model::getContainer()->get('url');
         $this->header = Model::getContainer()->get('header');
 
-        $action = ($action === null) ? $this->url->getQueryString() : (string) $action;
+        $action = ($action === null) ? rtrim(Model::getRequest()->getRequestUri(), '/') : (string) $action;
 
         if ($hash !== null && mb_strlen($hash) > 0) {
             // check if the # is present
