@@ -1314,16 +1314,12 @@ jsBackend.pages.template = {
 };
 
 /**
- * All methods related to the tree
+ * All methods related to the pages tree
  */
 jsBackend.pages.tree = {
-    // init, something like a constructor
     init: function()
     {
-        if ($('#tree div').length === 0) return false;
-
-        // add "treeHidden"-class on leafs that are hidden, only for browsers that don't support opacity
-        if (!jQuery.support.opacity) $('#tree ul li[rel="hidden"]').addClass('treeHidden');
+        if ($('#tree').find('> [data-tree]').length === 0) return false;
 
         var openedIds = [];
         if (typeof pageID != 'undefined') {
@@ -1340,34 +1336,68 @@ jsBackend.pages.tree = {
         // add home if needed
         if (!utils.array.inArray('page-1', openedIds)) openedIds.push('page-1');
 
+        // jsTree options
         var options = {
-            ui: {theme_name: 'fork'},
-            opened: openedIds,
-            rules: {
+            core: {
+                themes: {
+                    name: 'proton',
+                    responsive: true
+                },
                 multiple: false,
-                multitree: 'all',
-                drag_copy: false
+                check_callback: true
             },
-            lang: {loading: utils.string.ucfirst(jsBackend.locale.lbl('Loading'))},
-            callback: {
-                beforemove: jsBackend.pages.tree.beforeMove,
-                onselect: jsBackend.pages.tree.onSelect,
-                onmove: jsBackend.pages.tree.onMove
+            types: {
+                default: {
+                    icon: 'fa fa-file-o'
+                },
+                home: {
+                    icon: 'fa fa-home'
+                },
+                anchor: {
+                    icon: 'fa fa-file-o'
+                },
+                sitemap: {
+                    icon: 'fa fa-sitemap'
+                },
+                error: {
+                    icon: 'fa fa-exclamation-triangle'
+                },
             },
-            plugins: {
-                cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/'}}
-            }
+            search: {
+                show_only_matches: true,
+            },
+            plugins: ['dnd', 'types', 'state', 'search']
         };
 
-        // create tree
-        $('#tree div').tree(options);
+        // Init page tree
+        var jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options);
 
-        // layout fix for the tree
-        $('.tree li.open').each(function()
-        {
-            // if the so-called open-element doesn't have any childs we should replace the open-class.
-            if ($(this).find('ul').length === 0) $(this).removeClass('open').addClass('leaf');
+        // Search through pages
+        $('.js-tree-search').keyup(function () {
+            var v = $('.js-tree-search').val();
+            $('#tree').find('> [data-tree]').each(function () {
+                $(this).jstree(true).search(v);
+            });
         });
+
+        jsTreeInstance.on("select_node.jstree", function (e, data) {
+            // get current and new URL
+            var node = data.node;
+            var currentPageURL = window.location.pathname + window.location.search;
+            var newPageURL = node.a_attr.href;
+
+            // Only redirect if destination isn't the current one.
+            if (typeof newPageURL !== 'undefined' && newPageURL !== currentPageURL) {
+                window.location = newPageURL;
+            }
+        });
+
+        // // layout fix for the tree
+        // $('.tree li.open').each(function()
+        // {
+        //     // if the so-called open-element doesn't have any childs we should replace the open-class.
+        //     if ($(this).find('ul').length === 0) $(this).removeClass('open').addClass('leaf');
+        // });
 
         // set the item selected
         if (typeof selectedId != 'undefined') $('#' + selectedId).addClass('selected');
@@ -1421,17 +1451,6 @@ jsBackend.pages.tree = {
 
         // return
         return result;
-    },
-
-    // when an item is selected
-    onSelect: function(node, tree)
-    {
-        // get current and new URL
-        var currentPageURL = window.location.pathname + window.location.search;
-        var newPageURL = $(node).find('a').prop('href');
-
-        // only redirect if destination isn't the current one.
-        if (typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
     },
 
     // when an item is moved

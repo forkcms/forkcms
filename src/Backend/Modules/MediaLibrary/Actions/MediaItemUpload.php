@@ -20,6 +20,7 @@ class MediaItemUpload extends BackendBaseActionAdd
         $this->mediaFolder = $this->getMediaFolder();
 
         $this->parseJsFiles();
+        $this->parseCssFiles();
         $this->parse();
         $this->display();
     }
@@ -51,8 +52,11 @@ class MediaItemUpload extends BackendBaseActionAdd
 
     private function parseJsFiles(): void
     {
-        $this->header->addJS('jstree/jquery.tree.js', 'Pages');
-        $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
-        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', 'Pages');
+        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
+    }
+
+    private function parseCssFiles(): void
+    {
+        $this->header->addCSS('/css/vendors/jstree/style.css', null, true, false);
     }
 }

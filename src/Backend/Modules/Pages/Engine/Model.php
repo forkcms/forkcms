@@ -689,7 +689,7 @@ class Model
             // loop pages
             foreach ($navigation['page'][$parentId] as $page) {
                 // start
-                $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                $html .= '<li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                 // insert link
                 $html .= '    <a href="' .
@@ -700,7 +700,7 @@ class Model
                              ['id' => $page['page_id']]
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
-                // get childs
+                // get children
                 $html .= self::getSubtree($navigation, $page['page_id']);
 
                 // end
@@ -778,7 +778,7 @@ class Model
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
         $html .= '<div class="clearfix" data-tree="main">' . "\n";
         $html .= '    <ul>' . "\n";
-        $html .= '        <li id="page-1" rel="home">';
+        $html .= '        <li id="page-1" rel="home" ' . 'data-jstree=\'{"type":"home"}\'' . '>';
 
         // create homepage anchor from title
         $homePage = self::get(1);
@@ -810,7 +810,7 @@ class Model
                 // loop the items
                 foreach ($navigation['meta'][0] as $page) {
                     // start
-                    $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                    $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                     // insert link
                     $html .= '            <a href="' .
@@ -846,7 +846,7 @@ class Model
             // loop the items
             foreach ($navigation['footer'][0] as $page) {
                 // start
-                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                 // insert link
                 $html .= '            <a href="' .
@@ -881,7 +881,7 @@ class Model
             // loop the items
             foreach ($navigation['root'][0] as $page) {
                 // start
-                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '">' . "\n";
+                $html .= '        <li id="page-' . $page['page_id'] . '" rel="' . $page['tree_type'] . '" data-jstree=\'{"type":"' . $page['tree_type'] . '"}\'">' . "\n";
 
                 // insert link
                 $html .= '            <a href="' .

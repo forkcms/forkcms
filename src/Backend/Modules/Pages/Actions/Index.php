@@ -35,9 +35,10 @@ class Index extends BackendBaseActionIndex
         parent::execute();
 
         // add js
-        $this->header->addJS('jstree/jquery.tree.js', null, false);
-        $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
-        $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
+        $this->header->addJS('/js/vendors/jstree.js', null, false, true);
+
+        // add CSS
+        $this->header->addCSS('/css/vendors/jstree/style.css', null, true, false);
 
         // load the dgRecentlyEdited
         $this->loadDataGrids();

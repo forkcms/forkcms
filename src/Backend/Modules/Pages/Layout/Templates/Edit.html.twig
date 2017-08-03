@@ -6,6 +6,12 @@
       <div class="alert alert-warning visible-sm">
         <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MovePagesNotPossible'|trans|ucfirst }}</p>
       </div>
+
+      <div class="form-group">
+        <label for="pagetree-search" class="control-label">{{ 'lbl.search'|trans|ucfirst }}</label>
+        <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }} {{ 'lbl.page'|trans }}">
+      </div>
+
       <div id="tree">
         {{ tree|raw }}
       </div>

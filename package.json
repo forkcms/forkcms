@@ -23,6 +23,7 @@
     "jquery-migrate": "~1.4",
     "jquery-ui-dist": "~1.12",
     "jstree": "^3.3.4",
+    "jstree-bootstrap-theme": "git+https://github.com/orangehill/jstree-bootstrap-theme.git#1.0.2",
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
     "slick-carousel": "^1.6.0"

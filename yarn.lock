@@ -1215,6 +1215,12 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
+"jstree-bootstrap-theme@git+https://github.com/orangehill/jstree-bootstrap-theme.git", "jstree-bootstrap-theme@git+https://github.com/orangehill/jstree-bootstrap-theme.git#1.0.2":
+  version "1.0.0"
+  resolved "git+https://github.com/orangehill/jstree-bootstrap-theme.git#f30e3fc7ea268a9e4f7d0323b35f4750ffe96df3"
+  dependencies:
+    jquery ">=1.9.1"
+
 jstree@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/jstree/-/jstree-3.3.4.tgz#3d089bb9623bd6f3f25f64c4e4ce547b30d40264"
