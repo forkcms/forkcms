@@ -72,6 +72,37 @@ class Form extends \SpoonForm
     }
 
     /**
+     * Adds a button to the form
+     *
+     * @param string $name Name of the button.
+     * @param string $value The value (or label) that will be printed.
+     * @param string $type The type of the button (submit is default).
+     * @param string $class Class(es) that will be applied on the button.
+     *
+     * @throws Exception
+     *
+     * @return SpoonFormButton
+     */
+    public function addButton($name, $value, $type = 'submit', $class = null): SpoonFormButton
+    {
+        $name = (string) $name;
+        $value = (string) $value;
+        $type = (string) $type;
+        $class = ($class !== null) ? (string) $class : 'btn btn-primary';
+
+        // do a check
+        if ($type === 'submit' && $name === 'submit') {
+            throw new Exception(
+                'You can\'t add buttons with the name submit. JS freaks out when we
+                replace the buttons with a link and use that link to submit the form.'
+            );
+        }
+
+        // create and return a button
+        return parent::addButton($name, $value, $type, $class);
+    }
+
+    /**
      * Adds a single checkbox.
      *
      * @param string $name       The name of the element.
