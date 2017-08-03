@@ -1373,12 +1373,13 @@ jsBackend.pages.tree = {
         var jsTreeInstance = $('#tree').find('> [data-tree]').jstree(options);
 
         // Search through pages
-        $('.js-tree-search').keyup(function () {
+        var searchThroughPages = function() {
             var v = $('.js-tree-search').val();
             $('#tree').find('> [data-tree]').each(function () {
                 $(this).jstree(true).search(v);
             });
-        });
+        };
+        $('.js-tree-search').bind('keyup input', utils.events.debounce(searchThroughPages, 150));
 
         // To prevent FOUC, we only show the jsTree when it's done loading.
         jsTreeInstance.on("ready.jstree", function (e, data) {
