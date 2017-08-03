@@ -16,6 +16,7 @@ use Backend\Core\Engine\Url as BackendUrl;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use SpoonFilter;
 use SpoonFormButton;
+use SpoonFormDropdown;
 use SpoonFormPassword;
 use SpoonFormRadiobutton;
 use SpoonFormText;
@@ -235,7 +236,7 @@ class Form extends \SpoonForm
      * @param string $class             Class(es) that will be applied on the element.
      * @param string $classError        Class(es) that will be applied on the element when an error occurs.
      *
-     * @return \SpoonFormDropdown
+     * @return SpoonFormDropdown
      */
     public function addDropdown(
         $name,
@@ -244,9 +245,8 @@ class Form extends \SpoonForm
         $multipleSelection = false,
         $class = null,
         $classError = null
-    ) {
+    ): SpoonFormDropdown {
         $name = (string) $name;
-        $values = (array) $values;
         $multipleSelection = (bool) $multipleSelection;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-select';
         $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';

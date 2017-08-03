@@ -24,45 +24,6 @@ use SpoonFormTime;
 class Form extends \Common\Core\Form
 {
     /**
-     * Adds a single dropdown.
-     *
-     * @param string $name              Name of the element.
-     * @param array  $values            Values for the dropdown.
-     * @param string $selected          The selected elements.
-     * @param bool   $multipleSelection Is it possible to select multiple items?
-     * @param string $class             Class(es) that will be applied on the element.
-     * @param string $classError        Class(es) that will be applied on the element when an error occurs.
-     *
-     * @return SpoonFormDropdown
-     */
-    public function addDropdown(
-        $name,
-        array $values = null,
-        $selected = null,
-        $multipleSelection = false,
-        $class = null,
-        $classError = null
-    ): SpoonFormDropdown {
-        $name = (string) $name;
-        $values = (array) $values;
-        $selected = ($selected !== null) ? $selected : null;
-        $multipleSelection = (bool) $multipleSelection;
-        $class = ($class !== null) ? (string) $class : 'form-control';
-        $classError = ($classError !== null) ? (string) $classError : 'selectError';
-
-        // special classes for multiple
-        if ($multipleSelection) {
-            $class .= ' selectMultiple';
-            $classError .= ' selectMultipleError';
-        }
-
-        // create and return a dropdown
-        parent::addDropdown($name, $values, $selected, $multipleSelection, $class, $classError);
-
-        return parent::getField($name);
-    }
-
-    /**
      * Adds a single file field.
      *
      * @param string $name       Name of the element.
