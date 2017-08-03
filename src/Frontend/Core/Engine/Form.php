@@ -190,34 +190,6 @@ class Form extends \Common\Core\Form
     }
 
     /**
-     * Adds a single textarea.
-     *
-     * @param string $name       The name of the element.
-     * @param string $value      The value inside the element.
-     * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
-     * @param bool   $HTML       Will the element contain HTML?
-     *
-     * @return SpoonFormTextarea
-     */
-    public function addTextarea(
-        $name,
-        $value = null,
-        $class = null,
-        $classError = null,
-        $HTML = false
-    ): SpoonFormTextarea {
-        $name = (string) $name;
-        $value = ($value !== null) ? (string) $value : null;
-        $class = ($class !== null) ? (string) $class : 'form-control';
-        $classError = ($classError !== null) ? (string) $classError : 'textareaError';
-        $HTML = (bool) $HTML;
-
-        // create and return a textarea
-        return parent::addTextarea($name, $value, $class, $classError, $HTML);
-    }
-
-    /**
      * Generates an example template, based on the elements already added.
      *
      * @return string

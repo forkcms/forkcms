@@ -16,6 +16,7 @@ use Backend\Core\Engine\Url as BackendUrl;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use SpoonFilter;
 use SpoonFormButton;
+use SpoonFormTextarea;
 use SpoonFormTime;
 
 /**
@@ -363,10 +364,15 @@ class Form extends \SpoonForm
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the element contain HTML?
      *
-     * @return \SpoonFormTextarea
+     * @return SpoonFormTextarea
      */
-    public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = true)
-    {
+    public function addTextarea(
+        $name,
+        $value = null,
+        $class = null,
+        $classError = null,
+        $HTML = true
+    ): SpoonFormTextarea {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-textarea';
