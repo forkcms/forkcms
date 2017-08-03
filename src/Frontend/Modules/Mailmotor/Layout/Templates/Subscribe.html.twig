@@ -31,6 +31,7 @@
   {% block block_body %}
     <div class="block-body">
       {% if not mailmotorSubscribeHideForm %}
+        {{ form_start(form) }}
         <div class="form-group">
           <label for="{{ form.email.vars.id }}" class="control-label">{{ form.email.vars.label|trans|ucfirst }}</label>
           <div class="input-group">
@@ -41,6 +42,8 @@
             </div>
           </div>
         </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
       {% endif %}
     </div>
   {% endblock %}
