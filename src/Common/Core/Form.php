@@ -152,7 +152,7 @@ class Form extends \SpoonForm
         }
 
         // set mask and firstday
-        $mask = Model::get('fork.settings')->get('Core', 'date_format_short');
+        $mask = 'd/m/Y';
         $firstDay = 1;
 
         // build attributes
