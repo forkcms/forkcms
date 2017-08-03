@@ -198,6 +198,20 @@ class Installer extends ModuleInstaller
             // We must define the locale we want to insert the page into
             Language::setLocale($language);
 
+            // index page
+            if (!$this->hasPageWithProfilesBlock($language)) {
+                $indexPageId = $this->insertPage(
+                    [
+                        'title' => ucfirst(Language::lbl('Profile')),
+                        'type' => 'root',
+                        'language' => $language,
+                    ],
+                    null,
+                    ['extra_id' => $this->getExtraId('index'), 'position' => 'main'],
+                    ['extra_id' => $searchExtraId, 'position' => 'top']
+                );
+            }
+
             // activate page
             if (!$this->hasPageWithProfilesAction($language, 'Activate')) {
                 $this->insertPage(
@@ -296,20 +310,6 @@ class Installer extends ModuleInstaller
                 );
             }
 
-            // index page
-            if (!$this->hasPageWithProfilesBlock($language)) {
-                $indexPageId = $this->insertPage(
-                    [
-                        'title' => ucfirst(Language::lbl('Profile')),
-                        'type' => 'root',
-                        'language' => $language,
-                    ],
-                    null,
-                    ['extra_id' => $this->getExtraId('index'), 'position' => 'main'],
-                    ['extra_id' => $searchExtraId, 'position' => 'top']
-                );
-            }
-
             // settings page
             if (!$this->hasPageWithProfilesAction($language, 'Settings')) {
                 $this->insertPage(
@@ -396,7 +396,7 @@ class Installer extends ModuleInstaller
              INNER JOIN modules_extras AS e ON e.id = b.extra_id
              WHERE e.module = ? AND p.language = ?
              LIMIT 1',
-            [$this->getModule(), $language]
+            ['Profiles', $language]
         );
     }
 
