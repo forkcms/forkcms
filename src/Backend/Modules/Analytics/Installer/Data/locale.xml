@@ -191,7 +191,7 @@
               <li>Kies een project in de header of maak een nieuw aan.</li>
               <li>Klik op <strong>Bibliotheek</strong> in de zijbalk.</li>
               <li>Ga naar de <strong>Analytics API</strong> door er op te klikken in de <strong>Andere populaire API's</strong> categorie of door het te typen in de zoekbalk.</li>
-              <li>Als je de API nog niet geactiveerd hebt kan je dit doen door onder de header op <strong>INSCHAKELEN</strong> te klikken.<li>
+              <li>Als je de API nog niet geactiveerd hebt kan je dit doen door onder de header op <strong>INSCHAKELEN</strong> te klikken.</li>
             </ol>
           </p>
           <p>Toegangsgegevens aanmaken voor Fork CMS.</p>
@@ -203,7 +203,7 @@
               <li>Download na het opslaan het gegenereerde certificaat (p12 file).</li>
               <li>Ga terug naar de <strong>Inloggegevens</strong> pagina en klik op <strong>Serviceaccounts beheren</strong>.</li>
               <li>Kopieer de <strong>Serviceaccount-ID</strong> van de net aangemaakte account. Het zou er ongeveer als volgt moeten uitzien <code>name@spheric-passkey-123456.iam.gserviceaccount.com</code></li>
-              <li>Log in in Google Analytics and voeg leesrechten toe voor het gegenereerde emailadres in de developer console.</li>
+              <li>Log in in Google Analytics, ga naar het beheerder onderdeel en voeg het gegenereerde e-mail adres toe bij de gewenste property en geef deze "lezen en analyseren" rechten.</li>
               <li>Haal een kop koffie, en kom daarna terug. Het kan even duren voor de koppeling tot stand is gekomen.</li>
             </ol>
           </p>]]></translation>
@@ -218,7 +218,7 @@
               <li>Select a project in the header, or create a new one.</li>
               <li>Click on <strong>Library</strong> in the sidebar on the left.</li>
               <li>Go to the <strong>Analytics API</strong> page by clicking on it in the <strong>Other popular API's</strong> category or typing it in the search bar.</li>
-              <li>You can enable the API if you haven't done that yet by clicking on <strong>ENABLE API</strong> underneath the header.<li>
+              <li>You can enable the API if you haven't done that yet by clicking on <strong>ENABLE API</strong> underneath the header.</li>
             </ol>
           </p>
           <p>Creating credentials for Fork CMS.</p>
@@ -230,7 +230,7 @@
               <li>Download the generated certificate (.p12 file).</li>
               <li>Go back to the <strong>Credentials</strong> page and click on <strong>Manage service accounts</strong></li>
               <li>Copy the <strong>Service account ID</strong> of the newly created account. It should look something like <code>name@spheric-passkey-123456.iam.gserviceaccount.com</code></li>
-              <li>Login to analytics and add read rights to the wanted analytics profile to the generated email address from the developer console.</li>
+              <li>Login to analytics, go to admin page and add the generated e-mail adress to the prefered property with "read and analyze" rights.</li>
               <li>Grab a cup of coffee, and come back to Fork in some minutes. It can take some time before the coupling is fully done.</li>
             </ol>
           </p>]]></translation>
