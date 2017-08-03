@@ -617,3 +617,12 @@ We also added a shortcut to get the current session: \Common\Core\Model::getSess
 ## Tests
 
 The login and logout methods in the tests now require a client as parameter since we will log in/out that specific client
+
+## SpoonForm
+
+Since both the frontend and the backend now ship with bootstrap some of the code for the forms could be abstracted further up to the Common namespace
+
+| Old classname                                 | New classname                                   |
+|-----------------------------------------------|-------------------------------------------------|
+| `\Backend\Core\Engine\FormDate`               | `\Common\Core\FormDate`                         |
+| `\Frontend\Core\Engine\FormDate`              | `\Common\Core\FormDate`                         |

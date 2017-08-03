@@ -103,6 +103,100 @@ class Form extends \SpoonForm
     }
 
     /**
+     * Adds a date field to the form
+     *
+     * @param string $name Name of the element.
+     * @param mixed $value The value for the element.
+     * @param string $type The type (from, till, range) of the datepicker.
+     * @param int $date The date to use.
+     * @param int $date2 The second date for a rangepicker.
+     * @param string $class Class(es) that have to be applied on the element.
+     * @param string $classError Class(es) that have to be applied when an error occurs on the element.
+     *
+     * @throws Exception
+     *
+     * @return FormDate
+     */
+    public function addDate(
+        $name,
+        $value = null,
+        $type = null,
+        $date = null,
+        $date2 = null,
+        $class = null,
+        $classError = null
+    ): FormDate {
+        $name = (string) $name;
+        $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
+        $type = SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
+        $date = ($date !== null) ? (int) $date : null;
+        $date2 = ($date2 !== null) ? (int) $date2 : null;
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-date inputDate';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+
+        // validate
+        if ($type === 'from' && ($date === 0 || $date === null)) {
+            throw new Exception('A date field with type "from" should have a valid date-parameter.');
+        }
+        if ($type === 'till' && ($date === 0 || $date === null)) {
+            throw new Exception('A date field with type "till" should have a valid date-parameter.');
+        }
+        if ($type === 'range' && ($date === 0 || $date2 === 0 || $date === null || $date2 === null)) {
+            throw new Exception('A date field with type "range" should have 2 valid date-parameters.');
+        }
+
+        // set mask and firstday
+        $mask = Model::get('fork.settings')->get('Core', 'date_format_short');
+        $firstDay = 1;
+
+        // build attributes
+        $attributes = [];
+        $attributes['data-mask'] = str_replace(
+            ['d', 'm', 'Y', 'j', 'n'],
+            ['dd', 'mm', 'yy', 'd', 'm'],
+            $mask
+        );
+        $attributes['data-firstday'] = $firstDay;
+        $attributes['data-year'] = date('Y', $value);
+        // -1 because javascript starts at 0
+        $attributes['data-month'] = date('n', $value) - 1;
+        $attributes['data-day'] = date('j', $value);
+
+        // add extra classes based on type
+        switch ($type) {
+            case 'from':
+                $class .= ' fork-form-date-from inputDatefieldFrom form-control';
+                $classError .= ' inputDatefieldFrom';
+                $attributes['data-startdate'] = date('Y-m-d', $date);
+                break;
+
+            case 'till':
+                $class .= ' fork-form-date-till inputDatefieldTill form-control';
+                $classError .= ' inputDatefieldTill';
+                $attributes['data-enddate'] = date('Y-m-d', $date);
+                break;
+
+            case 'range':
+                $class .= ' fork-form-date-range inputDatefieldRange form-control';
+                $classError .= ' inputDatefieldRange';
+                $attributes['data-startdate'] = date('Y-m-d', $date);
+                $attributes['data-enddate'] = date('Y-m-d', $date2);
+                break;
+
+            default:
+                $class .= ' inputDatefieldNormal form-control';
+                $classError .= ' inputDatefieldNormal';
+                break;
+        }
+
+        $this->add(new FormDate($name, $value, $mask, $class, $classError));
+
+        parent::getField($name)->setAttributes($attributes);
+
+        return parent::getField($name);
+    }
+
+    /**
      * Adds a single checkbox.
      *
      * @param string $name       The name of the element.
