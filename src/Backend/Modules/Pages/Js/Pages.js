@@ -1380,6 +1380,11 @@ jsBackend.pages.tree = {
             });
         });
 
+        // To prevent FOUC, we only show the jsTree when it's done loading.
+        jsTreeInstance.on("ready.jstree", function (e, data) {
+            $('#tree').show();
+        });
+
         // On selecting a node in the tree, visit the anchor.
         jsTreeInstance.on("select_node.jstree", function (e, data) {
             if (data && data.node && data.event) {

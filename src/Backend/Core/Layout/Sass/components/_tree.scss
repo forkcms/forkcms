@@ -14,6 +14,8 @@
 }
 
 #tree {
+  // Hide on page-load to avoid FOUC. When DOM is ready, we show the page tree.
+  display: none;
 
   h4 {
     font-size: $font-size-base;
@@ -22,7 +24,6 @@
 }
 
 .tree {
-
   ul {
     margin: 0;
     padding: 0;
@@ -178,6 +179,7 @@
   }
 }
 
+// Useful to visually hide items that are not found in page search
 .jstree-hidden,
 .jstree-node.jstree-hidden {
   display: none;
