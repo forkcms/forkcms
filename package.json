@@ -26,6 +26,7 @@
     "jstree-bootstrap-theme": "git+https://github.com/orangehill/jstree-bootstrap-theme.git#1.0.2",
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
-    "slick-carousel": "^1.6.0"
+    "slick-carousel": "^1.6.0",
+    "typeahead.js": "^0.11.1"
   }
 }

@@ -1183,7 +1183,7 @@ jquery-ui-dist@~1.12:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.2.4.tgz#2c89d6889b5eac522a7eea32c14521559c6cbf02"
 
-jquery@>=1.9.1:
+jquery@>=1.7, jquery@>=1.9.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -1215,7 +1215,7 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
-"jstree-bootstrap-theme@git+https://github.com/orangehill/jstree-bootstrap-theme.git", "jstree-bootstrap-theme@git+https://github.com/orangehill/jstree-bootstrap-theme.git#1.0.2":
+"jstree-bootstrap-theme@git+https://github.com/orangehill/jstree-bootstrap-theme.git#1.0.2":
   version "1.0.0"
   resolved "git+https://github.com/orangehill/jstree-bootstrap-theme.git#f30e3fc7ea268a9e4f7d0323b35f4750ffe96df3"
   dependencies:
@@ -2260,6 +2260,12 @@ type-is@~1.6.10:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.13"
+
+typeahead.js@^0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/typeahead.js/-/typeahead.js-0.11.1.tgz#4e64e671b22310a8606f4aec805924ba84b015b8"
+  dependencies:
+    jquery ">=1.7"
 
 unc-path-regex@^0.1.0:
   version "0.1.2"
