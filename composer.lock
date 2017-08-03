@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ffb28bb3420703a2cc6a0bee5af6671c",
+    "content-hash": "52260a4664f7594404586516c26b5225",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -1585,24 +1585,24 @@
         },
         {
             "name": "mailmotor/mailmotor-bundle",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/mailmotor-bundle.git",
-                "reference": "e92b0945a37515940e9025be30df2d6360822797"
+                "reference": "3bffaaa16bae289eca6b489fb1ba1b396946f397"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/e92b0945a37515940e9025be30df2d6360822797",
-                "reference": "e92b0945a37515940e9025be30df2d6360822797",
+                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/3bffaaa16bae289eca6b489fb1ba1b396946f397",
+                "reference": "3bffaaa16bae289eca6b489fb1ba1b396946f397",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
-                "symfony/http-kernel": "~2.3"
+                "php": ">=5.3.3|^7.0",
+                "symfony/http-kernel": "^2.3|^3.0"
             },
             "require-dev": {
-                "symfony/framework-bundle": "~2.3"
+                "symfony/framework-bundle": "^2.3|^3.0"
             },
             "type": "library",
             "autoload": {
@@ -1622,14 +1622,14 @@
                     "role": "Developer"
                 }
             ],
-            "description": "This Symfony2 bundle loads in MailMotor as a service. So you can subscribe/unsubscribe members to any mailinglist managing API. F.e.: MailChimp, CampaignMonitor, ...",
+            "description": "This Symfony bundle loads in MailMotor as a service. So you can subscribe/unsubscribe members to any mailinglist managing API. F.e.: MailChimp, CampaignMonitor, ...",
             "homepage": "https://github.com/mailmotor/mailmotor-bundle",
             "keywords": [
-                "Symfony2",
                 "bundle",
-                "php"
+                "php",
+                "symfony"
             ],
-            "time": "2016-12-01T14:26:20+00:00"
+            "time": "2017-03-20T10:17:51+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -3537,7 +3537,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.5 || ^7.0"
+        "php": "^5.5 || >=7.0 < 7.2"
     },
     "platform-dev": []
 }
