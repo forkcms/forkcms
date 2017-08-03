@@ -159,37 +159,6 @@ class Form extends \Common\Core\Form
     }
 
     /**
-     * Adds a single textfield.
-     *
-     * @param string $name       The name of the element.
-     * @param string $value      The value inside the element.
-     * @param int    $maxLength  The maximum length for the value.
-     * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
-     * @param bool   $HTML       Will this element contain HTML?
-     *
-     * @return SpoonFormText
-     */
-    public function addText(
-        $name,
-        $value = null,
-        $maxLength = null,
-        $class = null,
-        $classError = null,
-        $HTML = false
-    ): SpoonFormText {
-        $name = (string) $name;
-        $value = ($value !== null) ? (string) $value : null;
-        $maxLength = ($maxLength !== null) ? (int) $maxLength : 255;
-        $class = ($class !== null) ? (string) $class : 'form-control';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError';
-        $HTML = (bool) $HTML;
-
-        // create and return a textfield
-        return parent::addText($name, $value, $maxLength, $class, $classError, $HTML);
-    }
-
-    /**
      * Generates an example template, based on the elements already added.
      *
      * @return string

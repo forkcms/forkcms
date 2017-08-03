@@ -16,6 +16,7 @@ use Backend\Core\Engine\Url as BackendUrl;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use SpoonFilter;
 use SpoonFormButton;
+use SpoonFormText;
 use SpoonFormTextarea;
 use SpoonFormTime;
 
@@ -333,20 +334,26 @@ class Form extends \SpoonForm
     /**
      * Adds a single textfield.
      *
-     * @param string $name       The name of the element.
-     * @param string $value      The value inside the element.
-     * @param int    $maxLength  The maximum length for the value.
-     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $name The name of the element.
+     * @param string $value The value inside the element.
+     * @param int $maxLength The maximum length for the value.
+     * @param string $class Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
-     * @param bool   $HTML       Will this element contain HTML?
+     * @param bool $HTML Will this element contain HTML?
      *
-     * @return \SpoonFormText
+     * @return SpoonFormText
      */
-    public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = true)
-    {
+    public function addText(
+        $name,
+        $value = null,
+        $maxLength = 255,
+        $class = null,
+        $classError = null,
+        $HTML = true
+    ): SpoonFormText {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
-        $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
+        $maxLength = ($maxLength !== null) ? (int) $maxLength : 255;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-text';
         $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
         $HTML = (bool) $HTML;
