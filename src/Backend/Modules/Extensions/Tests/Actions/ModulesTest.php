@@ -31,7 +31,7 @@ class ModulesTest extends WebTestCase
             'Installed modules',
             $client->getResponse()->getContent()
         );
-        self::assertContains(
+        self::assertNotContains(
             'Not installed modules',
             $client->getResponse()->getContent()
         );
