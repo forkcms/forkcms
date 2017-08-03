@@ -9,8 +9,13 @@ namespace Common\Core;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Header;
-use Backend\Core\Engine\Url;
+use Backend\Core\Engine\Header as BackendHeader;
+use Exception;
+use Frontend\Core\Header\Header as FrontendHeader;
+use Backend\Core\Engine\Url as BackendUrl;
+use Frontend\Core\Engine\Url as FrontendUrl;
+use SpoonFilter;
+use SpoonFormButton;
 
 /**
  * This class will initiate the frontend-application
@@ -20,16 +25,51 @@ class Form extends \SpoonForm
     /**
      * The header instance
      *
-     * @var Header
+     * @var BackendHeader|FrontendHeader
      */
     protected $header;
 
     /**
      * The URL instance
      *
-     * @var Url
+     * @var BackendUrl|FrontendUrl
      */
     protected $url;
+
+    /**
+     * @param string $name Name of the form
+     * @param string|null $action The action (URL) whereto the form will be submitted, if not provided it
+     *                            will be auto generated.
+     * @param string|null $method The method to use when submitting the form, default is POST.
+     * @param string $hash     The id of the anchor to append to the action-URL.
+     * @param bool $useToken Should we automatically add a formtoken?
+     */
+    public function __construct(
+        string $name,
+        string $action = null,
+        ?string $method = 'post',
+        string $hash = null,
+        bool $useToken = true
+    ) {
+        $this->url = Model::getContainer()->get('url');
+        $this->header = Model::getContainer()->get('header');
+
+        $action = ($action === null) ? $this->url->getQueryString() : (string) $action;
+
+        if ($hash !== null && mb_strlen($hash) > 0) {
+            // check if the # is present
+            if ($hash[0] !== '#') {
+                $hash = '#' . $hash;
+            }
+
+            $action .= $hash;
+        }
+
+        parent::__construct($name, $action, $method ?? 'post', $useToken);
+
+        $this->setParameter('id', $name);
+        $this->setParameter('class', 'fork-form submitWithLink');
+    }
 
     /**
      * Adds a single checkbox.

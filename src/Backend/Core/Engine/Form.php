@@ -42,30 +42,16 @@ class Form extends \Common\Core\Form
         bool $useToken = true,
         bool $useGlobalError = true
     ) {
-        if (BackendModel::getContainer()->has('url')) {
-            $this->url = BackendModel::getContainer()->get('url');
-        }
-        if (BackendModel::getContainer()->has('header')) {
-            $this->header = BackendModel::getContainer()->get('header');
-        }
-        $this->useGlobalError = (bool) $useGlobalError;
+        $this->useGlobalError = $useGlobalError;
+        $url = BackendModel::getContainer()->get('url');
 
-        // build a name if there wasn't one provided
-        $name = ($name === null) ? \SpoonFilter::toCamelCase(
-            $this->url->getModule() . '_' . $this->url->getAction(),
-            '_',
-            true
-        ) : (string) $name;
-
-        // build the action if it wasn't provided
-        $action = ($action === null) ? '/' . $this->url->getQueryString() : (string) $action;
-
-        // call the real form-class
-        parent::__construct($name, $action, $method ?? 'post', $useToken);
-
-        // add default classes
-        $this->setParameter('id', $name);
-        $this->setParameter('class', 'fork-form submitWithLink');
+        parent::__construct(
+            $name ?? \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true),
+            $action,
+            $method ?? 'post',
+            null,
+            $useToken
+        );
     }
 
     /**

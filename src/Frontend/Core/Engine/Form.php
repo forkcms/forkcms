@@ -24,47 +24,6 @@ use SpoonFormTime;
 class Form extends \Common\Core\Form
 {
     /**
-     * @param string $name     Name of the form.
-     * @param string $action   The action (URL) whereto the form will be submitted, if not provided it will
-     *                         be auto generated.
-     * @param string $method   The method to use when submitting the form, default is POST.
-     * @param string $hash     The id of the anchor to append to the action-URL.
-     * @param bool   $useToken Should we automagically add a form token?
-     */
-    public function __construct(
-        string $name,
-        string $action = null,
-        ?string $method = 'post',
-        string $hash = null,
-        bool $useToken = true
-    ) {
-        $this->url = Model::getContainer()->get('url');
-        $this->header = Model::getContainer()->get('header');
-
-        $name = (string) $name;
-
-        if ($hash !== null && mb_strlen($hash) > 0) {
-            $hash = (string) $hash;
-            // check if the # is present
-            if ($hash[0] !== '#') {
-                $hash = '#' . $hash;
-            }
-        } else {
-            $hash = null;
-        }
-
-        $useToken = (bool) $useToken;
-        $action = ($action === null) ? $this->url->getQueryString() : (string) $action;
-
-        // call the real form-class
-        parent::__construct((string) $name, $action . $hash, $method ?? 'post', (bool) $useToken);
-
-        // add default classes
-        $this->setParameter('id', $name);
-        $this->setParameter('class', 'forkForms submitWithLink');
-    }
-
-    /**
      * Adds a button to the form
      *
      * @param string $name  Name of the button.
