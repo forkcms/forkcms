@@ -1,6 +1,7 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
 
 {%- block form_label -%}
+  <h1>this is a label</h1>
   {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) -%}
   {% if label is not same as(false) -%}
     {% if not compound -%}

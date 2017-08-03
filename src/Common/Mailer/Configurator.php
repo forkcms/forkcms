@@ -47,7 +47,10 @@ class Configurator
                 $this->modulesSettings->get('Core', 'smtp_password'),
                 $this->modulesSettings->get('Core', 'smtp_secure_layer')
             );
-            $this->container->get('mailer')->__construct($transport);
+            $mailer = $this->container->get('mailer');
+            if ($mailer !== null) {
+                $this->container->get('mailer')->__construct($transport);
+            }
             $this->container->set(
                 'swiftmailer.transport',
                 $transport
