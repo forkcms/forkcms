@@ -130,7 +130,7 @@ class Form extends \Common\Core\Form
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-date inputDate';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
 
         // validate
         if ($type === 'from' && ($date === 0 || $date === null)) {
@@ -254,7 +254,7 @@ class Form extends \Common\Core\Form
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'fork-form-file';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
 
         // add element
         $this->add(new FormFile($name, $class, $classError));
@@ -275,7 +275,7 @@ class Form extends \Common\Core\Form
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'fork-form-image';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
 
         // add element
         $this->add(new FormImage($name, $class, $classError));

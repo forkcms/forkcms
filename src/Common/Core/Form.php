@@ -46,7 +46,7 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $checked = (bool) $checked;
         $class = ($class !== null) ? (string) $class : 'fork-form-checkbox';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
 
         // create and return a checkbox
         $this->add(new CommonFormCheckbox($name, $checked, $class, $classError));
@@ -79,7 +79,7 @@ class Form extends \SpoonForm
         $values = (array) $values;
         $multipleSelection = (bool) $multipleSelection;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-select';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
 
         // special classes for multiple
         if ($multipleSelection) {
@@ -135,7 +135,7 @@ class Form extends \SpoonForm
         $value = ($value !== null) ? (string) $value : null;
         $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-password inputPassword';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
         $HTML = (bool) $HTML;
 
         // create and return a password field
@@ -181,7 +181,7 @@ class Form extends \SpoonForm
         $value = ($value !== null) ? (string) $value : null;
         $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-text';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
         $HTML = (bool) $HTML;
 
         // create and return a textfield
@@ -204,7 +204,7 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-textarea';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
         $HTML = (bool) $HTML;
 
         // create and return a textarea
@@ -226,7 +226,7 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $class = ($class !== null) ? (string) $class : 'form-control fork-form-time inputTime';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
 
         // create and return a time field
         return parent::addTime($name, $value, $class, $classError);
