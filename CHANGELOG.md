@@ -1,3 +1,19 @@
+4.5.4 (2017-08-03)
+------------------
+
+Bugfixes:
+
+* Core: Add missing generated_url_selector in the form type for the meta [#2116](https://github.com/forkcms/forkcms/pull/2116)
+* Core: Add debouncer to generatedUrl to prevent spamming the server and catch events like copy/paste in addition to keystrokes [#2115](https://github.com/forkcms/forkcms/pull/2115)
+* Core: Fix deletion of uploaded images not working for file and image types [#2126](https://github.com/forkcms/forkcms/pull/2126)
+* Analytics: Hide analytics widgets when no internet connection is found [#2119](https://github.com/forkcms/forkcms/pull/2119)
+* Composer: Update php requirements since fork 4 won't work on php 7.2 [#2140](https://github.com/forkcms/forkcms/pull/2140)
+* FormBuilder: Fix required indication missing in form builder [#2156](https://github.com/forkcms/forkcms/pull/2156)
+* Mailmotor: Fix mailmotor when no mail engine is chosen [#2134](https://github.com/forkcms/forkcms/pull/2134)
+* Profiles: Fix avatar path in installer [#2124](https://github.com/forkcms/forkcms/pull/2124)
+* Profiles: Fix profile settings missing in toArray when the settings haven't been loaded previously [#2147](https://github.com/forkcms/forkcms/pull/2147)
+
+
 4.5.4 (2017-06-16)
 ------------------
 
