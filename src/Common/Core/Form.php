@@ -16,6 +16,7 @@ use Backend\Core\Engine\Url as BackendUrl;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use SpoonFilter;
 use SpoonFormButton;
+use SpoonFormPassword;
 use SpoonFormRadiobutton;
 use SpoonFormText;
 use SpoonFormTextarea;
@@ -290,7 +291,7 @@ class Form extends \SpoonForm
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @param bool   $HTML       Will the field contain HTML?
      *
-     * @return \SpoonFormPassword
+     * @return SpoonFormPassword
      */
     public function addPassword(
         $name,
@@ -299,7 +300,7 @@ class Form extends \SpoonForm
         $class = null,
         $classError = null,
         $HTML = false
-    ) {
+    ): SpoonFormPassword {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $maxLength = ($maxLength !== null) ? (int) $maxLength : null;

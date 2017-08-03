@@ -103,37 +103,6 @@ class Form extends \Common\Core\Form
     }
 
     /**
-     * Adds a single password field.
-     *
-     * @param string $name       The name of the field.
-     * @param string $value      The value for the field.
-     * @param int    $maxLength  The maximum length for the field.
-     * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
-     * @param bool   $HTML       Will the field contain HTML?
-     *
-     * @return SpoonFormPassword
-     */
-    public function addPassword(
-        $name,
-        $value = null,
-        $maxLength = null,
-        $class = null,
-        $classError = null,
-        $HTML = false
-    ): SpoonFormPassword {
-        $name = (string) $name;
-        $value = ($value !== null) ? (string) $value : null;
-        $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
-        $class = ($class !== null) ? (string) $class : 'form-control inputPassword';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputPasswordError';
-        $HTML = (bool) $HTML;
-
-        // create and return a password field
-        return parent::addPassword($name, $value, $maxLength, $class, $classError, $HTML);
-    }
-
-    /**
      * Generates an example template, based on the elements already added.
      *
      * @return string
