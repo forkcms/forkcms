@@ -218,27 +218,6 @@ class Form extends \Common\Core\Form
     }
 
     /**
-     * Adds a single time field.
-     *
-     * @param string $name       The name of the element.
-     * @param string $value      The value inside the element.
-     * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
-     *
-     * @return SpoonFormTime
-     */
-    public function addTime($name, $value = null, $class = null, $classError = null): SpoonFormTime
-    {
-        $name = (string) $name;
-        $value = ($value !== null) ? (string) $value : null;
-        $class = ($class !== null) ? (string) $class : 'form-control inputTime';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputTimeError';
-
-        // create and return a time field
-        return parent::addTime($name, $value, $class, $classError);
-    }
-
-    /**
      * Generates an example template, based on the elements already added.
      *
      * @return string
@@ -413,10 +392,7 @@ class Form extends \Common\Core\Form
      */
     public function parse($tpl): void
     {
-        // parse the form
         parent::parse($tpl);
-
-        // validate the form
         $this->validate();
 
         // if the form is submitted but there was an error, assign a general error

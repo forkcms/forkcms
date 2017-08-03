@@ -16,6 +16,7 @@ use Backend\Core\Engine\Url as BackendUrl;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use SpoonFilter;
 use SpoonFormButton;
+use SpoonFormTime;
 
 /**
  * This class will initiate the frontend-application
@@ -384,9 +385,9 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
-     * @return \SpoonFormTime
+     * @return SpoonFormTime
      */
-    public function addTime($name, $value = null, $class = null, $classError = null)
+    public function addTime($name, $value = null, $class = null, $classError = null): SpoonFormTime
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
