@@ -134,31 +134,6 @@ class Form extends \Common\Core\Form
     }
 
     /**
-     * Adds a single radio button.
-     *
-     * @param string $name       The name of the element.
-     * @param array  $values     The possible values for the radio button.
-     * @param string $checked    Should the element be checked?
-     * @param string $class      Class(es) that will be applied on the element.
-     *
-     * @return SpoonFormRadiobutton
-     */
-    public function addRadiobutton(
-        $name,
-        array $values,
-        $checked = null,
-        $class = null
-    ): SpoonFormRadiobutton {
-        $name = (string) $name;
-        $values = (array) $values;
-        $checked = ($checked !== null) ? (string) $checked : null;
-        $class = ($class !== null) ? (string) $class : 'inputRadio';
-
-        // create and return a radio button
-        return parent::addRadiobutton($name, $values, $checked, $class);
-    }
-
-    /**
      * Generates an example template, based on the elements already added.
      *
      * @return string

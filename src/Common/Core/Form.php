@@ -16,6 +16,7 @@ use Backend\Core\Engine\Url as BackendUrl;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use SpoonFilter;
 use SpoonFormButton;
+use SpoonFormRadiobutton;
 use SpoonFormText;
 use SpoonFormTextarea;
 use SpoonFormTime;
@@ -318,12 +319,11 @@ class Form extends \SpoonForm
      * @param string $checked    Should the element be checked?
      * @param string $class      Class(es) that will be applied on the element.
      *
-     * @return \SpoonFormRadiobutton
+     * @return SpoonFormRadiobutton
      */
-    public function addRadiobutton($name, array $values, $checked = null, $class = null)
+    public function addRadiobutton($name, array $values, $checked = null, $class = null): SpoonFormRadiobutton
     {
         $name = (string) $name;
-        $values = (array) $values;
         $checked = ($checked !== null) ? (string) $checked : null;
         $class = ($class !== null) ? (string) $class : 'fork-form-radio';
 
