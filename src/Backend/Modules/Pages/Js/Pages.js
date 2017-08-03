@@ -1380,15 +1380,18 @@ jsBackend.pages.tree = {
             });
         });
 
+        // On selecting a node in the tree, visit the anchor.
         jsTreeInstance.on("select_node.jstree", function (e, data) {
-            // get current and new URL
-            var node = data.node;
-            var currentPageURL = window.location.pathname + window.location.search;
-            var newPageURL = node.a_attr.href;
+            if (data && data.node && data.event) {
+                // Get current and new URL
+                var node = data.node;
+                var currentPageURL = window.location.pathname + window.location.search;
+                var newPageURL = node.a_attr.href;
 
-            // Only redirect if destination isn't the current one.
-            if (typeof newPageURL !== 'undefined' && newPageURL !== currentPageURL) {
-                window.location = newPageURL;
+                // Only redirect if destination isn't the current one.
+                if (typeof newPageURL !== 'undefined' && newPageURL !== currentPageURL) {
+                    window.location = newPageURL;
+                }
             }
         });
 
