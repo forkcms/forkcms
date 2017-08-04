@@ -1,4 +1,94 @@
-4.5.4 (2017-08-03)
+5.0.0 (2017-08-04)
+------------------
+
+Since this is a major update we also provided an [upgrade guide](https://github.com/forkcms/forkcms/blob/master/UPGRADE_5.0.md)
+
+Some pull requests fixed bugs that were introduced during the development of fork 5 and won't be listed here
+
+Bugfixes:
+
+* Analytics: Removed extra whitespace in template [#2160](https://github.com/forkcms/forkcms/pull/2160)
+* Analytics: Fixed typos and improved explanation in the translatiosn [#2159](https://github.com/forkcms/forkcms/pull/2159)
+* Extensions: Add missing translations [#2100](https://github.com/forkcms/forkcms/pull/2100)
+* FormBuilder: Fix encoded htmlspecial chars in the email [#2017](https://github.com/forkcms/forkcms/pull/2017)
+
+…
+
+Features:
+
+* Core: Bump minimal php version [#1923](https://github.com/forkcms/forkcms/pull/1923)
+* Core: Remove deprecated code [#1941](https://github.com/forkcms/forkcms/pull/1941)
+* Core: Add macro for datagrids [#1969](https://github.com/forkcms/forkcms/pull/1969)
+* Core: Add a cache clearing button to the backend [#1993](https://github.com/forkcms/forkcms/pull/1993)
+* Core: Added console command to generate the thumbnails [#1988](https://github.com/forkcms/forkcms/pull/1988)
+* Core: Added a datepicker [#2112](https://github.com/forkcms/forkcms/pull/2112)
+* Core: Added docker config [#2038](https://github.com/forkcms/forkcms/pull/2038)
+* Core: Cookies now need to be set with the `fork.cookie` service
+* Triton: After many years of service the triton theme has been retired and replaced with a bootstrap theme [#1930](https://github.com/forkcms/forkcms/pull/1930)
+* FormBuilder: Added possibility to send a confirmation mail from the form builder [#1602](https://github.com/forkcms/forkcms/pull/1602)
+* FormBuilder: Add reCAPTCHA field to formbuilder [#2008](https://github.com/forkcms/forkcms/pull/2008)
+* MediaLibrary: A new core module to help you manage media across modules [#1986](https://github.com/forkcms/forkcms/pull/1986)
+* MediaGalleries: A new core module to help you create sliders etc from media in the media library [#1986](https://github.com/forkcms/forkcms/pull/1986)
+* Pages: Adding content in a preformatted way to a page has been made easier with the addition of user templates [#1958](https://github.com/forkcms/forkcms/pull/1958)
+
+…
+
+Improvements:
+
+* Core: Moved scripts into console commands [#1942](https://github.com/forkcms/forkcms/pull/1942)
+* Core: Enable the cookie bar by default when the timezone is in europe [#1957](https://github.com/forkcms/forkcms/pull/1957)
+* Core: Improve the breadcrumb in the backend [#1968](https://github.com/forkcms/forkcms/pull/1968)
+* Core: Move from PSR-0 to PSR-4 [#1975](https://github.com/forkcms/forkcms/pull/1975)
+* Core: Improve the https htaccess entries [#1979](https://github.com/forkcms/forkcms/pull/1979)
+* Core: Change meta table to InnoDB [#1980](https://github.com/forkcms/forkcms/pull/1980)
+* Core: Move the docs from a separate repo to the docs directory [#1985](https://github.com/forkcms/forkcms/pull/1985)
+* Core: Style form elements in fork style by default [#1967](https://github.com/forkcms/forkcms/pull/1967)
+* Core: Fixed wrong documentation about installation zip [#2007](https://github.com/forkcms/forkcms/pull/2007)
+* Core: Added php 7.1 typehints and cleaned up some legacy code [#2001](https://github.com/forkcms/forkcms/pull/2001)
+* Core: Replace \&amp; by & as parameter query divider [#2095](https://github.com/forkcms/forkcms/pull/2095)
+* Core: Use post requests instead of get requests to delete items [#2090](https://github.com/forkcms/forkcms/pull/2090)
+* Core: Use symfony http code constants [#2123](https://github.com/forkcms/forkcms/pull/2123)
+* Core: Added test command to composer [#2141](https://github.com/forkcms/forkcms/pull/2141)
+* Core: Moved some symfony form types to the common namespace [#2142](https://github.com/forkcms/forkcms/pull/2142)
+* Core: File folder names now match the casing of the modules they belong to [#2143](https://github.com/forkcms/forkcms/pull/2143)
+* Core: Upgraded to symfony 3.3. [#2151](https://github.com/forkcms/forkcms/pull/2151)
+* Core: Cleaned up the fork installer code [#2153](https://github.com/forkcms/forkcms/pull/2153)
+* Travis: Add code style checks to travis [#1972](https://github.com/forkcms/forkcms/pull/1972)
+* Github: Add header image to README.md [#2117](https://github.com/forkcms/forkcms/pull/2117)
+* Blog: Cleaned up the installer [#2070](https://github.com/forkcms/forkcms/pull/2070)
+* ContentBlocks: Cleaned up the installer [#2068](https://github.com/forkcms/forkcms/pull/2068)
+* ContendBlocks: Updated the module structure to the domain model [#2096](https://github.com/forkcms/forkcms/pull/2096)
+* Extensions: You can now switch themes using your keyboard [#2144](https://github.com/forkcms/forkcms/pull/2144)
+* Extensions: Cleaned up the installer [#2071](https://github.com/forkcms/forkcms/pull/2071)
+* FAQ: Cleaned up the installer [#2072](https://github.com/forkcms/forkcms/pull/2072)
+* FormBuilder: Cleaned up the installer [#2073](https://github.com/forkcms/forkcms/pull/2073)
+* Groups: Cleaned up the installer [#2074](https://github.com/forkcms/forkcms/pull/2074)
+* Locale: Cleaned up the installer [#2085](https://github.com/forkcms/forkcms/pull/2085)
+* Location: Cleaned up the installer [#2076](https://github.com/forkcms/forkcms/pull/2076)
+* Mailmotor: Updated documentation [#1987](https://github.com/forkcms/forkcms/pull/1987)
+* Mailmotor: Added double opt-in setting [#2005](https://github.com/forkcms/forkcms/pull/2005)
+* Mailmotor: Updated the module structure to the domain model [#2145](https://github.com/forkcms/forkcms/pull/2145)
+* Pages: Cleaned up the installer [#2079](https://github.com/forkcms/forkcms/pull/2079)
+* Pages: Pages are grouped in a nicer way when installing with demo data [#2150](https://github.com/forkcms/forkcms/pull/2150)
+* Search: Cleaned up the installer [#2081](https://github.com/forkcms/forkcms/pull/2081)
+* Profiles: Cleaned up the installer [#2080](https://github.com/forkcms/forkcms/pull/2080)
+* Settings: Cleaned up the installer [#2082](https://github.com/forkcms/forkcms/pull/2082)
+* Tags: Cleaned up the installer [#2083](https://github.com/forkcms/forkcms/pull/2083)
+* Users: Cleaned up the installer [#2084](https://github.com/forkcms/forkcms/pull/2084)
+
+…
+
+Removed:
+
+* Core: The api has been removed from fork, it is now recommended to use a symfony bundle [#1981](https://github.com/forkcms/forkcms/pull/1981)
+* Spoon: SpoonFilter::getGetValue and SpoonFilter::getPostValue have been removed [#2051](https://github.com/forkcms/forkcms/pull/2051)
+* Spoon: The things that have been removed from spoon library can be found in its [changelog](https://github.com/forkcms/library/releases/tag/3.0.0)
+* Mailmotor: Removed old library for campaignmonotor since we are using one via composer atm [#1973](https://github.com/forkcms/forkcms/pull/1973)
+
+…
+
+
+4.5.5 (2017-08-03)
 ------------------
 
 Bugfixes:
