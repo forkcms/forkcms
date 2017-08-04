@@ -66,6 +66,11 @@ deny from env=stayout
 	RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
 	RewriteRule src/Frontend/Cache/Search - [F]
 	RewriteRule src/Backend/Cache/CompiledTemplates - [F]
+	RewriteRule var/docker/.* - [F]
+	RewriteRule Dockerfile - [F]
+	RewriteRule \.dockerignore - [F]
+	RewriteRule docker-compose\.yml - [F]
+	RewriteRule docker-compose\.override\.yml - [F]
 
 	# redirect all trafic to https
 	# Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS

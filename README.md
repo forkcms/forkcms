@@ -28,6 +28,11 @@ To install the dependencies, you can run the command below in the document-root:
 
 If you discover any security related issues, please email core@fork-cms.com instead of using the issue tracker.
 
+
+## SSL
+
+If you want to activate https redirection, go into the .htaccess file and uncomment the lines about https.
+
 ## Bugs
 
 If you encounter any bugs, please create an issue on [Github](https://github.com/forkcms/forkcms/issues).
