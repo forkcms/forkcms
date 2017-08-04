@@ -47,7 +47,7 @@ class Form extends \SpoonForm
      * @param string|null $action The action (URL) whereto the form will be submitted, if not provided it
      *                            will be auto generated.
      * @param string|null $method The method to use when submitting the form, default is POST.
-     * @param string $hash     The id of the anchor to append to the action-URL.
+     * @param string $hash The id of the anchor to append to the action-URL.
      * @param bool $useToken Should we automatically add a formtoken?
      */
     public function __construct(
