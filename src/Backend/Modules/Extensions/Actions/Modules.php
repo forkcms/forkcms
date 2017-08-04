@@ -71,6 +71,7 @@ class Modules extends BackendBaseActionIndex
 
         $this->dataGridInstallableModules->setSortingColumns(['raw_name']);
         $this->dataGridInstallableModules->setHeaderLabels(['raw_name' => \SpoonFilter::ucfirst(BL::getLabel('Name'))]);
+        $this->dataGridInstallableModules->setColumnsHidden(['installed', 'name']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('DetailModule')) {

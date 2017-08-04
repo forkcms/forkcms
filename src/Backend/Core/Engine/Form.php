@@ -42,160 +42,16 @@ class Form extends \Common\Core\Form
         bool $useToken = true,
         bool $useGlobalError = true
     ) {
-        if (BackendModel::getContainer()->has('url')) {
-            $this->url = BackendModel::getContainer()->get('url');
-        }
-        if (BackendModel::getContainer()->has('header')) {
-            $this->header = BackendModel::getContainer()->get('header');
-        }
-        $this->useGlobalError = (bool) $useGlobalError;
+        $this->useGlobalError = $useGlobalError;
+        $url = BackendModel::getContainer()->get('url');
 
-        // build a name if there wasn't one provided
-        $name = ($name === null) ? \SpoonFilter::toCamelCase(
-            $this->url->getModule() . '_' . $this->url->getAction(),
-            '_',
-            true
-        ) : (string) $name;
-
-        // build the action if it wasn't provided
-        $action = ($action === null) ? '/' . $this->url->getQueryString() : (string) $action;
-
-        // call the real form-class
-        parent::__construct($name, $action, $method ?? 'post', $useToken);
-
-        // add default classes
-        $this->setParameter('id', $name);
-        $this->setParameter('class', 'fork-form submitWithLink');
-    }
-
-    /**
-     * Adds a button to the form
-     *
-     * @param string $name  Name of the button.
-     * @param string $value The value (or label) that will be printed.
-     * @param string $type  The type of the button (submit is default).
-     * @param string $class Class(es) that will be applied on the button.
-     *
-     * @throws Exception
-     *
-     * @return SpoonFormButton
-     */
-    public function addButton($name, $value, $type = 'submit', $class = null): SpoonFormButton
-    {
-        $name = (string) $name;
-        $value = (string) $value;
-        $type = (string) $type;
-        $class = ($class !== null) ? (string) $class : 'btn btn-primary';
-
-        // do a check
-        if ($type == 'submit' && $name == 'submit') {
-            throw new Exception(
-                'You can\'t add buttons with the name submit. JS freaks out when we
-                replace the buttons with a link and use that link to submit the form.'
-            );
-        }
-
-        // create and return a button
-        return parent::addButton($name, $value, $type, $class);
-    }
-
-    /**
-     * Adds a datefield to the form
-     *
-     * @param string $name       Name of the element.
-     * @param mixed  $value      The value for the element.
-     * @param string $type       The type (from, till, range) of the datepicker.
-     * @param int    $date       The date to use.
-     * @param int    $date2      The second date for a rangepicker.
-     * @param string $class      Class(es) that have to be applied on the element.
-     * @param string $classError Class(es) that have to be applied when an error occurs on the element.
-     *
-     * @throws Exception
-     * @throws \SpoonFormException
-     *
-     * @return FormDate
-     */
-    public function addDate(
-        $name,
-        $value = null,
-        $type = null,
-        $date = null,
-        $date2 = null,
-        $class = null,
-        $classError = null
-    ): FormDate {
-        $name = (string) $name;
-        $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
-        $type = \SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
-        $date = ($date !== null) ? (int) $date : null;
-        $date2 = ($date2 !== null) ? (int) $date2 : null;
-        $class = ($class !== null) ? (string) $class : 'form-control fork-form-date inputDate';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
-
-        // validate
-        if ($type === 'from' && ($date === 0 || $date === null)) {
-            throw new Exception('A datefield with type "from" should have a valid date-parameter.');
-        }
-        if ($type === 'till' && ($date === 0 || $date === null)) {
-            throw new Exception('A datefield with type "till" should have a valid date-parameter.');
-        }
-        if ($type === 'range' && ($date === 0 || $date2 === 0 || $date === null || $date2 === null)) {
-            throw new Exception('A datefield with type "range" should have 2 valid date-parameters.');
-        }
-
-        // @later get preferred mask & first day
-        $mask = 'd/m/Y';
-        $firstday = 1;
-
-        // build attributes
-        $attributes = [
-            'data-mask' => str_replace(
-                ['d', 'm', 'Y', 'j', 'n'],
-                ['dd', 'mm', 'yy', 'd', 'm'],
-                $mask
-            ),
-            'data-firstday' => $firstday,
-        ];
-
-        // add extra classes based on type
-        switch ($type) {
-            // start date
-            case 'from':
-                $class .= ' fork-form-date-from inputDatefieldFrom';
-                $classError .= ' inputDatefieldFrom';
-                $attributes['data-startdate'] = date('Y-m-d', $date);
-                break;
-
-            // end date
-            case 'till':
-                $class .= ' fork-form-date-till inputDatefieldTill';
-                $classError .= ' inputDatefieldTill';
-                $attributes['data-enddate'] = date('Y-m-d', $date);
-                break;
-
-            // date range
-            case 'range':
-                $class .= ' fork-form-date-range inputDatefieldRange';
-                $classError .= ' inputDatefieldRange';
-                $attributes['data-startdate'] = date('Y-m-d', $date);
-                $attributes['data-enddate'] = date('Y-m-d', $date2);
-                break;
-
-            // normal date field
-            default:
-                $class .= ' inputDatefieldNormal';
-                $classError .= ' inputDatefieldNormal';
-                break;
-        }
-
-        // create a datefield
-        $this->add(new FormDate($name, $value, $mask, $class, $classError));
-
-        // set attributes
-        parent::getField($name)->setAttributes($attributes);
-
-        // return datefield
-        return parent::getField($name);
+        parent::__construct(
+            $name ?? \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true),
+            $action,
+            $method ?? 'post',
+            null,
+            $useToken
+        );
     }
 
     /**
@@ -254,7 +110,7 @@ class Form extends \Common\Core\Form
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'fork-form-file';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
 
         // add element
         $this->add(new FormFile($name, $class, $classError));
@@ -275,7 +131,7 @@ class Form extends \Common\Core\Form
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'fork-form-image';
-        $classError = ($classError !== null) ? (string) $classError : 'error';
+        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
 
         // add element
         $this->add(new FormImage($name, $class, $classError));

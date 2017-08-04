@@ -11,10 +11,10 @@ services:
       - "@mailmotor.subscriber"
       - "@fork.settings"
     tags:
-      - { name: command_handler, handles: Frontend\Modules\Mailmotor\Command\Subscription }
+      - { name: command_handler, handles: Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription }
   mailmotor.handler.unsubscription:
     class: Frontend\Modules\Mailmotor\Domain\Subscription\Command\UnsubscriptionHandler
     arguments:
       - "@mailmotor.subscriber"
     tags:
-      - { name: command_handler, handles: Frontend\Modules\Mailmotor\Command\Unsubscription }
+      - { name: command_handler, handles: Frontend\Modules\Mailmotor\Domain\Subscription\Command\Unsubscription }

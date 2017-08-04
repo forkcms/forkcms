@@ -55,7 +55,8 @@ class TestEmailConnection extends BackendBaseAJAXAction
             return;
         }
 
-        $message = \Swift_Message::newInstance('Test')
+        $message = new \Swift_Message('Test');
+        $message
             ->setFrom([$fromEmail => $fromName])
             ->setTo([$toEmail => $toName])
             ->setReplyTo([$replyToEmail => $replyToName])
@@ -74,7 +75,7 @@ class TestEmailConnection extends BackendBaseAJAXAction
             $this->getRequest()->request->get('smtp_password', ''),
             $this->getRequest()->request->get('smtp_secure_layer', '')
         );
-        $mailer = \Swift_Mailer::newInstance($transport);
+        $mailer = new \Swift_Mailer($transport);
 
         try {
             if ($mailer->send($message)) {

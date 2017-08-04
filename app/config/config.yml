@@ -32,6 +32,8 @@ assetic:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'Core/Layout/Templates/FormLayout.html.twig'
     paths:
       '%site.path_www%/src/Frontend/Modules/': ForkFrontendModules
 
