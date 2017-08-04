@@ -114,7 +114,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->form->addText('label', $this->record['label']);
         $this->form->addText('file', str_replace('Core/Layout/Templates/', '', $this->record['path']));
         $this->form->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
-        $this->form->addCheckbox('active', ($this->record['active'] == 'Y'));
+        $this->form->addCheckbox('active', ($this->record['active'] == 1));
         $this->form->addCheckbox('default', ($this->record['id'] == $defaultId));
         $this->form->addCheckbox('overwrite', false);
         $this->form->addCheckbox('image', $this->record['data']['image']);
