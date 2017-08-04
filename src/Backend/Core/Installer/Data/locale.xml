@@ -5214,32 +5214,6 @@
         <translation language="sv"><![CDATA[skapad av]]></translation>
         <translation language="el"><![CDATA[δημιουργήθηκε στις]]></translation>
       </item>
-      <item type="label" name="Cronjob">
-        <translation language="en"><![CDATA[cronjob]]></translation>
-        <translation language="ru"><![CDATA[Планировщик задач]]></translation>
-        <translation language="nl"><![CDATA[cronjob]]></translation>
-        <translation language="de"><![CDATA[Cronjob]]></translation>
-        <translation language="lt"><![CDATA[Užplanuotas veiksmas]]></translation>
-        <translation language="es"><![CDATA[cronjob]]></translation>
-        <translation language="uk"><![CDATA[Cron задача]]></translation>
-        <translation language="hu"><![CDATA[cronjob]]></translation>
-        <translation language="sv"><![CDATA[cronjob]]></translation>
-        <translation language="el"><![CDATA[χρονοπρογραμματισμός]]></translation>
-        <translation language="zh"><![CDATA[cronjob]]></translation>
-      </item>
-      <item type="label" name="Cronjobs">
-        <translation language="en"><![CDATA[cronjobs]]></translation>
-        <translation language="ru"><![CDATA[Планируемые задачи]]></translation>
-        <translation language="nl"><![CDATA[cronjobs]]></translation>
-        <translation language="de"><![CDATA[Cronjobs]]></translation>
-        <translation language="lt"><![CDATA[Užplanuoti veiksmai]]></translation>
-        <translation language="es"><![CDATA[cronjobs]]></translation>
-        <translation language="uk"><![CDATA[Cron задачі]]></translation>
-        <translation language="hu"><![CDATA[cronjobs]]></translation>
-        <translation language="sv"><![CDATA[cronjobs]]></translation>
-        <translation language="el"><![CDATA[εργασίες χρονικά προγραμματισμένες]]></translation>
-        <translation language="zh"><![CDATA[cronjobs]]></translation>
-      </item>
       <item type="label" name="CS">
         <translation language="nl"><![CDATA[Tsjechisch]]></translation>
         <translation language="en"><![CDATA[Czech]]></translation>
@@ -11727,6 +11701,10 @@
         <translation language="lt"><![CDATA[Įrašykite slpayvardį]]></translation>
         <translation language="sv"><![CDATA[Vänligen ange ett smeknamn.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε ένα όνομα γιά χρήση στις δημοσιεύσεις.]]></translation>
+      </item>
+      <item type="error" name="NoActionSelected">
+        <translation language="nl"><![CDATA[Geen actie geselecteerd.]]></translation>
+        <translation language="en"><![CDATA[No action selected.]]></translation>
       </item>
       <item type="error" name="NoCommentsSelected">
         <translation language="nl"><![CDATA[Er waren geen reacties geselecteerd.]]></translation>

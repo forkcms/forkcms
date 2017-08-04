@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -21,10 +21,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class Categories extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrid();
@@ -32,29 +29,26 @@ class Categories extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Loads the datagrids
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES,
-            array('active', BL::getWorkingLanguage())
+        $this->dataGrid = new BackendDataGridDatabase(
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_CATEGORIES,
+            ['active', BL::getWorkingLanguage()]
         );
 
         // set headers
-        $this->dataGrid->setHeaderLabels(array(
+        $this->dataGrid->setHeaderLabels([
             'num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount')),
-        ));
+        ]);
 
         // sorting columns
-        $this->dataGrid->setSortingColumns(array('title', 'num_items'), 'title');
+        $this->dataGrid->setSortingColumns(['title', 'num_items'], 'title');
 
         // convert the count into a readable and clickable one
         $this->dataGrid->setColumnFunction(
-            array(__CLASS__, 'setClickableCount'),
-            array('[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'),
+            [__CLASS__, 'setClickableCount'],
+            ['[num_items]', BackendModel::createUrlForAction('Index') . '&amp;category=[id]'],
             'num_items',
             true
         );
@@ -63,14 +57,14 @@ class Categories extends BackendBaseActionIndex
         $this->dataGrid->setPaging(false);
 
         // add attributes, so the inline editing has all the needed data
-        $this->dataGrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
+        $this->dataGrid->setColumnAttributes('title', ['data-id' => '{id:[id]}']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('EditCategory')) {
             // set column URLs
             $this->dataGrid->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]'
             );
 
             // add column
@@ -78,20 +72,17 @@ class Categories extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->template->assign('dataGrid', $this->dataGrid->getContent());
     }
 
     /**
@@ -102,18 +93,16 @@ class Categories extends BackendBaseActionIndex
      *
      * @return string
      */
-    public static function setClickableCount($count, $link)
+    public static function setClickableCount(int $count, string $link): string
     {
-        $count = (int) $count;
-        $link = (string) $link;
-        $return = '';
-
         if ($count > 1) {
-            $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
-        } elseif ($count == 1) {
-            $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
+            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
         }
 
-        return $return;
+        if ($count === 1) {
+            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
+        }
+
+        return '';
     }
 }

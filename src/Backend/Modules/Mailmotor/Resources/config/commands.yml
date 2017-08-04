@@ -1,0 +1,20 @@
+services:
+  mailmotor.handler.save_settings:
+    class: Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettingsHandler
+    arguments:
+      - "@fork.settings"
+    tags:
+      - { name: command_handler, handles: Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings }
+  mailmotor.handler.subscription:
+    class: Frontend\Modules\Mailmotor\Domain\Subscription\Command\SubscriptionHandler
+    arguments:
+      - "@mailmotor.subscriber"
+      - "@fork.settings"
+    tags:
+      - { name: command_handler, handles: Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription }
+  mailmotor.handler.unsubscription:
+    class: Frontend\Modules\Mailmotor\Domain\Subscription\Command\UnsubscriptionHandler
+    arguments:
+      - "@mailmotor.subscriber"
+    tags:
+      - { name: command_handler, handles: Frontend\Modules\Mailmotor\Domain\Subscription\Command\Unsubscription }

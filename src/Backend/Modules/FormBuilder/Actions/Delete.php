@@ -11,6 +11,7 @@ namespace Backend\Modules\FormBuilder\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
@@ -18,35 +19,41 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
  */
 class Delete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
-            parent::execute();
+        if ($this->id === 0 || !BackendFormBuilderModel::exists($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
-            // get all data for the item we want to edit
-            $this->record = (array) BackendFormBuilderModel::get($this->id);
-
-            // delete item
-            BackendFormBuilderModel::delete($this->id);
-
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
-            // user was deleted, so redirect
-            $this->redirect(
-                BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-                rawurlencode($this->record['name'])
-            );
-        } else {
-            // no item found, throw an exceptions, because somebody is fucking with our URL
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            return;
         }
+
+        parent::execute();
+
+        $this->record = (array) BackendFormBuilderModel::get($this->id);
+
+        BackendFormBuilderModel::delete($this->id);
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'Index',
+            null,
+            null,
+            ['report' => 'deleted', 'var' => $this->record['name']]
+        ));
     }
 }

@@ -1,0 +1,82 @@
+{% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
+
+{% block content %}
+  {{ form_start(form) }}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
+    </div>
+  </div>
+
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="active" role="presentation">
+            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+
+          <div role="tabpanel" class="tab-pane active" id="tabContent">
+            <div class="row">
+              <div class="col-md-8">
+                <div id="publishOptions" class="panel form-group panel-default">
+                  <div class="panel-heading">
+                    <p>
+                      {{ 'lbl.WidgetView'|trans|ucfirst }}{{ macro.required }}
+                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.WidgetViewsHelp'|trans|ucfirst }}"></abbr><br>
+                    </p>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group last">
+                      {{ form_widget(form.action) }}
+                      {{ form_errors(form.action) }}
+                    </div>
+                  </div>
+                </div>
+
+                {# Including the MediaLibrary MediaGroup Helper #}
+                {% include "MediaLibrary/Resources/views/BackendMediaGroupsHelper.html.twig" %}
+                {{ form_widget(form.mediaGroup, {'mediaGroup': mediaGroup}) }}
+
+                {{ form_row(form.text) }}
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <p>{{ 'lbl.Status'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      {{ form_widget(form.status) }}
+                      {{ form_errors(form.status) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="addButton" type="submit" name="add" class="btn btn-primary">
+            <span class="fa fa-plus-square"></span>&nbsp;
+            {{ 'lbl.Add'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+{% endblock %}

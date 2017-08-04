@@ -17,23 +17,17 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
  */
 class LoginLink extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
         // assign if logged in
-        $this->tpl->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
+        $this->template->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
 
         // is logged in
         if (FrontendProfilesAuthentication::isLoggedIn()) {
@@ -41,7 +35,7 @@ class LoginLink extends FrontendBaseWidget
             $profile = FrontendProfilesAuthentication::getProfile();
 
             // assign logged in profile
-            $this->tpl->assign('profile', $profile->toArray());
+            $this->template->assign('profile', $profile->toArray());
         }
     }
 }

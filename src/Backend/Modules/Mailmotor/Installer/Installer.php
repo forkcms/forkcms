@@ -10,117 +10,133 @@ namespace Backend\Modules\Mailmotor\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Common\ModuleExtraType;
 
 /**
  * Installer for the Mailmotor module
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    /** @var int */
+    private $subscribeBlockId;
+
+    /** @var int */
+    private $unsubscribeBlockId;
+
+    public function install(): void
     {
-        $this->addModule('Mailmotor', 'The module that allows you to insert/delete subscribers to/from your mailinglist.');
-
-        // install settings
-        $this->installSettings();
-
-        // install locale
-        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
-
-        // install the mailmotor module
-        $this->installModule();
-
-        // install backend navigation
-        $this->installBackendNavigation();
-
-        // install the pages for the module
-        $this->installPages();
+        $this->addModule('Mailmotor');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureSettings();
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureFrontendExtras();
+        $this->configureFrontendPages();
     }
 
-    /**
-     * Install the module and it's actions
-     */
-    private function installModule()
+    private function configureBackendNavigation(): void
     {
-        // module rights
-        $this->setModuleRights(1, $this->getModule());
-
-        // action rights
-        $this->setActionRights(1, $this->getModule(), 'Settings');
-    }
-
-    /**
-     * Install backend navigation
-     */
-    private function installBackendNavigation()
-    {
-        // settings navigation
+        // Set navigation for "Settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, $this->getModule(), 'mailmotor/settings');
     }
 
-    /**
-     * Install the pages for this module
-     */
-    private function installPages()
+    private function configureBackendRights(): void
     {
-        // add extra's
-        $subscribeId = $this->insertExtra($this->getModule(), 'block', 'SubscribeForm', 'Subscribe', null, 'N', 3001);
-        $unsubscribeId = $this->insertExtra($this->getModule(), 'block', 'UnsubscribeForm', 'Unsubscribe', null, 'N', 3002);
-        $this->insertExtra($this->getModule(), 'widget', 'SubscribeForm', 'Subscribe', null, 'N', 3003);
+        $this->setModuleRights(1, $this->getModule());
 
+        $this->setActionRights(1, $this->getModule(), 'Ping');
+        $this->setActionRights(1, $this->getModule(), 'Settings');
+    }
+
+    private function configureFrontendExtras(): void
+    {
+        $this->subscribeBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'SubscribeForm', 'Subscribe');
+        $this->unsubscribeBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'UnsubscribeForm', 'Unsubscribe');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SubscribeForm', 'Subscribe');
+    }
+
+    private function configureFrontendPages(): void
+    {
         // loop languages
         foreach ($this->getLanguages() as $language) {
-            $pageId = $this->insertPage(
-                array('title' => 'Newsletters', 'language' => $language)
-            );
-
-            // check if a page for mailmotor subscribe already exists in this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                array($subscribeId, $language)
-            )) {
-                $this->insertPage(
-                    array('parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language),
-                    null,
-                    array('extra_id' => $subscribeId, 'position' => 'main')
+            $pageId = $this->getPageWithMailmotorBlock($language);
+            if ($pageId === null) {
+                $pageId = $this->insertPage(
+                    ['title' => 'Newsletters', 'language' => $language]
                 );
             }
 
-            // check if a page for mailmotor unsubscribe already exists in this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                array($unsubscribeId, $language)
-            )) {
+            if (!$this->hasPageWithSubscribeBlock($language)) {
                 $this->insertPage(
-                    array('parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language),
+                    ['parent_id' => $pageId, 'title' => 'Subscribe', 'language' => $language],
                     null,
-                    array('extra_id' => $unsubscribeId, 'position' => 'main')
+                    ['extra_id' => $this->subscribeBlockId, 'position' => 'main']
+                );
+            }
+
+            if (!$this->hasPageWithUnsubscribeBlock($language)) {
+                $this->insertPage(
+                    ['parent_id' => $pageId, 'title' => 'Unsubscribe', 'language' => $language],
+                    null,
+                    ['extra_id' => $this->unsubscribeBlockId, 'position' => 'main']
                 );
             }
         }
     }
 
-    /**
-     * Install settings
-     */
-    private function installSettings()
+    private function configureSettings(): void
     {
-        $this->setSetting($this->getModule(), 'mail_engine', null);
         $this->setSetting($this->getModule(), 'api_key', null);
-        $this->setSetting($this->getModule(), 'list_id', null);
-        $this->setSetting($this->getModule(), 'overwrite_interests', false);
         $this->setSetting($this->getModule(), 'automatically_subscribe_from_form_builder_submitted_form', false);
+        $this->setSetting($this->getModule(), 'double_opt_in', true);
+        $this->setSetting($this->getModule(), 'list_id', null);
+        $this->setSetting($this->getModule(), 'mail_engine', null);
+        $this->setSetting($this->getModule(), 'overwrite_interests', false);
+    }
+
+    private function hasPageWithSubscribeBlock(string $language): bool
+    {
+        // @todo: Replace with PageRepository method when it exists.
+        return (bool) $this->getDatabase()->getVar(
+            'SELECT 1
+             FROM pages AS p
+             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             WHERE b.extra_id = ? AND p.language = ?
+             LIMIT 1',
+            [$this->subscribeBlockId, $language]
+        );
+    }
+
+    private function hasPageWithUnsubscribeBlock(string $language): bool
+    {
+        // @todo: Replace with PageRepository method when it exists.
+        return (bool) $this->getDatabase()->getVar(
+            'SELECT 1
+             FROM pages AS p
+             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             WHERE b.extra_id = ? AND p.language = ?
+             LIMIT 1',
+            [$this->unsubscribeBlockId, $language]
+        );
+    }
+
+    private function getPageWithMailmotorBlock(string $language): ?int
+    {
+        // @todo: Replace with PageRepository method when it exists.
+        $pageId = (int) $this->getDatabase()->getVar(
+            'SELECT p.id
+             FROM pages AS p
+             WHERE p.title = ? AND p.language = ?
+             LIMIT 1',
+            ['Newsletters', $language]
+        );
+
+        if ($pageId === 0) {
+            return null;
+        }
+
+        return $pageId;
     }
 }

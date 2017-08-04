@@ -16,17 +16,4 @@ use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
  */
 final class Config extends FrontendBaseConfig
 {
-    /**
-     * The default action
-     *
-     * @var string
-     */
-    protected $defaultAction = 'index';
-
-    /**
-     * The disabled actions
-     *
-     * @var array
-     */
-    protected $disabledActions = array();
 }

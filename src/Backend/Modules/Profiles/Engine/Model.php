@@ -22,6 +22,16 @@ use Backend\Core\Engine\Exception as BackendException;
 class Model
 {
     /**
+     * @var array The possible status
+     */
+    public const POSSIBLE_STATUS = [
+        'active',
+        'inactive',
+        'deleted',
+        'blocked',
+    ];
+
+    /**
      * Cache avatars
      *
      * @param string
@@ -33,7 +43,7 @@ class Model
      *
      * @var string
      */
-    const QRY_DATAGRID_BROWSE_PROFILE_GROUPS =
+    const QUERY_DATAGRID_BROWSE_PROFILE_GROUPS =
         'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on
          FROM profiles_groups AS g
          INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id AND
@@ -45,10 +55,10 @@ class Model
      *
      * @param mixed $ids One ID, or an array of IDs.
      */
-    public static function delete($ids)
+    public static function delete($ids): void
     {
-        // init db
-        $db = BackendModel::getContainer()->get('database');
+        // init database
+        $database = BackendModel::getContainer()->get('database');
 
         // redefine
         $ids = (array) $ids;
@@ -59,206 +69,138 @@ class Model
             $id = (int) $id;
 
             // delete sessions
-            $db->delete('profiles_sessions', 'profile_id = ?', $id);
+            $database->delete('profiles_sessions', 'profile_id = ?', $id);
 
             // set profile status to deleted
-            self::update($id, array('status' => 'deleted'));
+            self::update($id, ['status' => 'deleted']);
         }
     }
 
-    /**
-     * Delete a profile group.
-     *
-     * @param int $id Id of the group.
-     */
-    public static function deleteGroup($id)
+    public static function deleteGroup(int $groupId): void
     {
-        // redefine
-        $id = (int) $id;
-
         // delete rights
-        BackendModel::getContainer()->get('database')->delete('profiles_groups_rights', 'group_id = ?', $id);
+        BackendModel::getContainer()->get('database')->delete('profiles_groups_rights', 'group_id = ?', $groupId);
 
         // delete group
-        BackendModel::getContainer()->get('database')->delete('profiles_groups', 'id = ?', $id);
+        BackendModel::getContainer()->get('database')->delete('profiles_groups', 'id = ?', $groupId);
     }
 
     /**
      * Delete a membership of a profile in a group.
      *
-     * @param int $id Id of the membership.
+     * @param int $membershipId Id of the membership.
      */
-    public static function deleteProfileGroup($id)
+    public static function deleteProfileGroup(int $membershipId)
     {
-        BackendModel::getContainer()->get('database')->delete('profiles_groups_rights', 'id = ?', (int) $id);
+        BackendModel::getContainer()->get('database')->delete('profiles_groups_rights', 'id = ?', $membershipId);
     }
 
-    /**
-     * Delete a sessions of a profile.
-     *
-     * @param int $id Profile id.
-     */
-    public static function deleteSession($id)
+    public static function deleteSession(int $id): void
     {
-        BackendModel::getContainer()->get('database')->delete('profiles_sessions', 'profile_id = ?', (int) $id);
+        BackendModel::getContainer()->get('database')->delete('profiles_sessions', 'profile_id = ?', $id);
     }
 
-    /**
-     * Check if a profile exists.
-     *
-     * @param int $id Profile id.
-     *
-     * @return bool
-     */
-    public static function exists($id)
+    public static function exists(int $profileId): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles AS p
              WHERE p.id = ?
              LIMIT 1',
-            (int) $id
+            $profileId
         );
     }
 
-    /**
-     * Check if a profile exists by email address.
-     *
-     * @param string $email Email address to check for existence.
-     * @param int    $id    Profile id to ignore.
-     *
-     * @return bool
-     */
-    public static function existsByEmail($email, $id = null)
+    public static function existsByEmail(string $email, int $excludedProfileId = 0): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles AS p
              WHERE p.email = ? AND p.id != ?
              LIMIT 1',
-            array((string) $email, (int) $id)
+            [$email, $excludedProfileId]
         );
     }
 
-    /**
-     * Check if a display name exists.
-     *
-     * @param string $displayName The display name to check.
-     * @param int    $id          Profile id to ignore.
-     *
-     * @return bool
-     */
-    public static function existsDisplayName($displayName, $id = null)
+    public static function existsDisplayName(string $displayName, int $excludedProfileId = 0): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles AS p
              WHERE p.display_name = ? AND p.id != ?
              LIMIT 1',
-            array((string) $displayName, (int) $id)
+            [$displayName, $excludedProfileId]
         );
     }
 
-    /**
-     * Check if a group exists.
-     *
-     * @param int $id Group id.
-     *
-     * @return bool
-     */
-    public static function existsGroup($id)
+    public static function existsGroup(int $groupId): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles_groups AS pg
              WHERE pg.id = ?
              LIMIT 1',
-            (int) $id
+            $groupId
         );
     }
 
-    /**
-     * Check if a group name exists.
-     *
-     * @param string $groupName Group name.
-     * @param int    $id        Group id to ignore.
-     *
-     * @return bool
-     */
-    public static function existsGroupName($groupName, $id = null)
+    public static function existsGroupName(string $groupName, int $excludedGroupId = 0): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles_groups AS pg
              WHERE pg.name = ? AND pg.id != ?
              LIMIT 1',
-            array((string) $groupName, (int) $id)
+            [$groupName, $excludedGroupId]
         );
     }
 
-    /**
-     * Check if a profile is in a group.
-     *
-     * @param int $id Membership id.
-     *
-     * @return bool
-     */
-    public static function existsProfileGroup($id)
+    public static function existsProfileGroup(int $membershipId): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles_groups_rights AS gr
              WHERE gr.id = ?
              LIMIT 1',
-            (int) $id
+            $membershipId
         );
     }
 
-    /**
-     * Get information about a profile.
-     *
-     * @param int $id The profile id to get the information for.
-     *
-     * @return array
-     */
-    public static function get($id)
+    public static function get(int $profileId): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.email, p.status, p.display_name, p.url
              FROM profiles AS p
              WHERE p.id = ?',
-            (int) $id
+            $profileId
         );
     }
 
     /**
      * Get avatar
      *
-     * @param int    $id    The id for the profile we want to get the avatar from.
+     * @param int $profileId The id for the profile we want to get the avatar from.
      * @param string $email The email from the user we can use for gravatar.
      *
      * @return string $avatar            The absolute path to the avatar.
      */
-    public static function getAvatar($id, $email = null)
+    public static function getAvatar(int $profileId, string $email = null): string
     {
-        // redefine id
-        $id = (int) $id;
-
         // return avatar from cache
-        if (isset(self::$avatars[$id])) {
-            return self::$avatars[$id];
+        if (isset(self::$avatars[$profileId])) {
+            return self::$avatars[$profileId];
         }
 
         // define avatar path
         $avatarPath = FRONTEND_FILES_URL . '/Profiles/Avatars/32x32/';
 
         // get avatar for profile
-        $avatar = self::getSetting($id, 'avatar');
+        $avatar = self::getSetting($profileId, 'avatar');
 
         // if no email is given
-        if (!$email) {
+        if ($email === null) {
             // get user
-            $user = self::get($id);
+            $user = self::get($profileId);
 
             // redefine email
             $email = $user['email'];
@@ -283,56 +225,54 @@ class Model
         }
 
         // set avatar in cache
-        self::$avatars[$id] = $avatar;
+        self::$avatars[$profileId] = $avatar;
 
         // return avatar image path
         return $avatar;
     }
 
-    /**
-     * Get information about a profile, by email
-     *
-     * @param  string $email The profile email to get the information for.
-     *
-     * @return array
-     */
-    public static function getByEmail($email)
+    public static function getByEmail(string $email): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.email, p.status, p.display_name, p.url
              FROM profiles AS p
              WHERE p.email = ?',
-            (string) $email
+            $email
         );
+    }
+
+    /**
+     * Encrypt the password with PHP password_hash function.
+     *
+     * @param string $password
+     *
+     * @return string
+     */
+    public static function encryptPassword(string $password): string
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
     }
 
     /**
      * Encrypt a string with a salt.
      *
      * @param string $string String to encrypt.
-     * @param string $salt   Salt to saltivy the string with.
+     * @param string $salt Salt to saltivy the string with.
      *
      * @return string
      */
-    public static function getEncryptedString($string, $salt)
+    public static function getEncryptedString(string $string, string $salt): string
     {
-        return md5(sha1(md5((string) $string)) . sha1(md5((string) $salt)));
+        return md5(sha1(md5($string)) . sha1(md5($salt)));
     }
 
-    /**
-     * Get information about a profile group.
-     *
-     * @param int $id Id of the group.
-     *
-     * @return array
-     */
-    public static function getGroup($id)
+    public static function getGroup(int $groupId): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT pg.id, pg.name
              FROM profiles_groups AS pg
              WHERE pg.id = ?',
-            (int) $id
+            $groupId
         );
     }
 
@@ -341,7 +281,7 @@ class Model
      *
      * @return array
      */
-    public static function getGroups()
+    public static function getGroups(): array
     {
         return (array) BackendModel::getContainer()->get('database')->getPairs(
             'SELECT id, name FROM profiles_groups ORDER BY name'
@@ -352,25 +292,25 @@ class Model
      * Get profile groups for dropdown not yet linked to a profile
      *
      * @param int $profileId Profile id.
-     * @param int $includeId Group id to always include.
+     * @param int|null $includeId Group id to always include.
      *
      * @return array
      */
-    public static function getGroupsForDropDown($profileId, $includeId = null)
+    public static function getGroupsForDropDown(int $profileId, int $includeId = null): array
     {
-        // init db
-        $db = BackendModel::getContainer()->get('database');
+        // init database
+        $database = BackendModel::getContainer()->get('database');
 
         // get groups already linked but don't include the includeId
         if ($includeId !== null) {
-            $groupIds = (array) $db->getColumn(
+            $groupIds = (array) $database->getColumn(
                 'SELECT group_id
                  FROM profiles_groups_rights
                  WHERE profile_id = ? AND id != ?',
-                array($profileId, $includeId)
+                [$profileId, $includeId]
             );
         } else {
-            $groupIds = (array) $db->getColumn(
+            $groupIds = (array) $database->getColumn(
                 'SELECT group_id
                  FROM profiles_groups_rights
                  WHERE profile_id = ?',
@@ -379,7 +319,7 @@ class Model
         }
 
         // get groups not yet linked
-        return (array) $db->getPairs(
+        return (array) $database->getPairs(
             'SELECT id, name
              FROM profiles_groups
              WHERE id NOT IN(\'' . implode('\',\'', $groupIds) . '\')'
@@ -389,57 +329,57 @@ class Model
     /**
      * Get information about a profile group where a user is member of.
      *
-     * @param int $id Membership id.
+     * @param int $membershipId
      *
      * @return array
      */
-    public static function getProfileGroup($id)
+    public static function getProfileGroup(int $membershipId): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT gr.id, gr.profile_id, g.id AS group_id, g.name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on
              FROM profiles_groups_rights AS gr
              INNER JOIN profiles_groups AS g ON g.id = gr.group_id
              WHERE gr.id = ?',
-            (int) $id
+            $membershipId
         );
     }
 
     /**
      * Get the groups where a profile is member of.
      *
-     * @param int $id The profile id to get the groups for.
+     * @param int $profileId The profile id to get the groups for.
      *
      * @return array
      */
-    public static function getProfileGroups($id)
+    public static function getProfileGroups(int $profileId): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT gr.id, gr.group_id, g.name AS group_name, gr.expires_on
              FROM profiles_groups AS g
              INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id
              WHERE gr.profile_id = ?',
-            (int) $id
+            $profileId
         );
     }
 
     /**
      * Generate a random string.
      *
-     * @param int  $length    Length of random string.
-     * @param bool $numeric   Use numeric characters.
+     * @param int $length Length of random string.
+     * @param bool $numeric Use numeric characters.
      * @param bool $lowercase Use alphanumeric lowercase characters.
      * @param bool $uppercase Use alphanumeric uppercase characters.
-     * @param bool $special   Use special characters.
+     * @param bool $special Use special characters.
      *
      * @return string
      */
     public static function getRandomString(
-        $length = 15,
-        $numeric = true,
-        $lowercase = true,
-        $uppercase = true,
-        $special = true
-    ) {
+        int $length = 15,
+        bool $numeric = true,
+        bool $lowercase = true,
+        bool $uppercase = true,
+        bool $special = true
+    ): string {
         // init
         $characters = '';
         $string = '';
@@ -472,38 +412,21 @@ class Model
         return $string;
     }
 
-    /**
-     * Get a setting for a profile.
-     *
-     * @param int    $id   Profile id.
-     * @param string $name Setting name.
-     *
-     * @return string
-     */
-    public static function getSetting($id, $name)
+    public static function getSetting(int $profileId, string $name): ?string
     {
         return unserialize(
             (string) BackendModel::getContainer()->get('database')->getVar(
                 'SELECT ps.value
                  FROM profiles_settings AS ps
                  WHERE ps.profile_id = ? AND ps.name = ?',
-                array((int) $id, (string) $name)
+                [$profileId, $name]
             )
         );
     }
 
-    /**
-     * Fetch the list of status, but for a dropdown.
-     *
-     * @return array
-     */
-    public static function getStatusForDropDown()
+    public static function getStatusForDropDown(): array
     {
-        // fetch types
-        $status = BackendModel::getContainer()->get('database')->getEnumValues('profiles', 'status');
-
-        // init
-        $labels = $status;
+        $labels = static::POSSIBLE_STATUS;
 
         // loop and build labels
         foreach ($labels as &$row) {
@@ -511,18 +434,18 @@ class Model
         }
 
         // build array
-        return array_combine($status, $labels);
+        return array_combine(static::POSSIBLE_STATUS, $labels);
     }
 
     /**
      * Retrieve a unique URL for a profile based on the display name.
      *
      * @param string $displayName The display name to base on.
-     * @param int    $id          The id of the profile to ignore.
+     * @param int|null $excludedProfileId
      *
      * @return string
      */
-    public static function getUrl($displayName, $id = null)
+    public static function getUrl(string $displayName, int $excludedProfileId = null): string
     {
         // decode specialchars
         $displayName = \SpoonFilter::htmlspecialcharsDecode((string) $displayName);
@@ -530,18 +453,18 @@ class Model
         // urlise
         $url = CommonUri::getUrl($displayName);
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // new item
-        if ($id === null) {
+        if ($excludedProfileId === null) {
             // get number of profiles with this URL
-            $number = (int) $db->getVar(
+            $number = (int) $database->getVar(
                 'SELECT 1
                  FROM profiles AS p
                  WHERE p.url = ?
                  LIMIT 1',
-                (string) $url
+                $url
             );
 
             // already exists
@@ -554,12 +477,12 @@ class Model
             }
         } else {
             // get number of profiles with this URL
-            $number = (int) $db->getVar(
+            $number = (int) $database->getVar(
                 'SELECT 1
                  FROM profiles AS p
                  WHERE p.url = ? AND p.id != ?
                  LIMIT 1',
-                array((string) $url, (int) $id)
+                [$url, $excludedProfileId]
             );
 
             // already exists
@@ -568,7 +491,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // try again
-                return self::getUrl($url, $id);
+                return self::getUrl($url, $excludedProfileId);
             }
         }
 
@@ -583,10 +506,8 @@ class Model
      *
      * @return string
      */
-    public static function getUser($id)
+    public static function getUser(int $id): string
     {
-        $id = (int) $id;
-
         // create user instance
         $user = self::get($id);
 
@@ -607,7 +528,7 @@ class Model
         $html .= '  <div class="avatar av24">' . "\n";
         if ($allowed) {
             $html .= '      <a href="' .
-                     BackendModel::createURLForAction(
+                     BackendModel::createUrlForAction(
                          'Edit',
                          'Profiles'
                      ) . '&amp;id=' . $id . '">' . "\n";
@@ -618,7 +539,7 @@ class Model
         }
         $html .= '  </div>';
         $html .= '  <p><a href="' .
-                 BackendModel::createURLForAction(
+                 BackendModel::createUrlForAction(
                      'Edit',
                      'Profiles'
                  ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
@@ -631,23 +552,27 @@ class Model
      * Import CSV data
      *
      * @param array $data The array from the .csv file
-     * @param null $groupId $groupId Adding these profiles to a group
+     * @param int|null $groupId $groupId Adding these profiles to a group
      * @param bool $overwriteExisting $overwriteExisting
-     * @return array array('count' => array('exists' => 0, 'inserted' => 0));
      *
      * @throws BackendException
+     *
+     * @return array array('count' => array('exists' => 0, 'inserted' => 0));
+     *
      * @internal param $bool [optional] $overwriteExisting If set to true, this will overwrite existing profiles
      */
-    public static function importCsv($data, $groupId = null, $overwriteExisting = false)
+    public static function importCsv(array $data, int $groupId = null, bool $overwriteExisting = false): array
     {
         // init statistics
-        $statistics = array('count' => array('exists' => 0, 'inserted' => 0));
+        $statistics = ['count' => ['exists' => 0, 'inserted' => 0]];
 
         // loop data
         foreach ($data as $item) {
             // field checking
             if (!isset($item['email']) || !isset($item['display_name']) || !isset($item['password'])) {
-                throw new BackendException('The .csv file should have the following columns; "email", "password" and "display_name".');
+                throw new BackendException(
+                    'The .csv file should have the following columns; "email", "password" and "display_name".'
+                );
             }
 
             // define exists
@@ -663,12 +588,12 @@ class Model
             }
 
             // build item
-            $values = array(
+            $values = [
                 'email' => $item['email'],
                 'registered_on' => BackendModel::getUTCDate(),
                 'display_name' => $item['display_name'],
                 'url' => self::getUrl($item['display_name']),
-            );
+            ];
 
             // does not exist
             if (!$exists) {
@@ -677,7 +602,7 @@ class Model
 
                 // update counter
                 $statistics['count']['inserted'] += 1;
-            // already exists
+                // already exists
             } else {
                 // get profile
                 $profile = self::getByEmail($item['email']);
@@ -689,23 +614,17 @@ class Model
 
             // new password filled in?
             if ($item['password']) {
-                // get new salt
-                $salt = self::getRandomString();
-
-                // update salt
-                self::setSetting($id, 'salt', $salt);
-
                 // build password
-                $values['password'] = self::getEncryptedString($item['password'], $salt);
+                $values['password'] = self::encryptPassword($item['password']);
             }
 
             // update values
             self::update($id, $values);
 
             // we have a group id
-            if ($groupId) {
+            if ($groupId !== null) {
                 // init values
-                $values = array();
+                $values = [];
 
                 // build item
                 $values['profile_id'] = $id;
@@ -720,40 +639,26 @@ class Model
         return $statistics;
     }
 
-    /**
-     * Insert a new profile.
-     *
-     * @param array $values The values to insert.
-     *
-     * @return int
-     */
-    public static function insert(array $values)
+    public static function insert(array $profile): int
     {
-        return (int) BackendModel::getContainer()->get('database')->insert('profiles', $values);
+        return (int) BackendModel::getContainer()->get('database')->insert('profiles', $profile);
     }
 
-    /**
-     * Insert a new group.
-     *
-     * @param array $values Group data.
-     *
-     * @return int
-     */
-    public static function insertGroup(array $values)
+    public static function insertGroup(array $group): int
     {
-        return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups', $values);
+        return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups', $group);
     }
 
     /**
      * Add a profile to a group.
      *
-     * @param array $values Membership data.
+     * @param array $membership
      *
      * @return int
      */
-    public static function insertProfileGroup(array $values)
+    public static function insertProfileGroup(array $membership): int
     {
-        return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups_rights', $values);
+        return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups_rights', $membership);
     }
 
     /**
@@ -762,7 +667,7 @@ class Model
      * @param array $values
      * @param string $templatePath
      */
-    public static function notifyAdmin($values, $templatePath = null)
+    public static function notifyAdmin(array $values, string $templatePath = null): void
     {
         // to email
         $toEmail = BackendModel::get('fork.settings')->get('Profiles', 'profile_notification_email', null);
@@ -773,24 +678,26 @@ class Model
         }
 
         // define backend url
-        $backendURL = BackendModel::createURLForAction('Edit', 'Profiles') . '&id=' . $values['id'];
+        $backendUrl = BackendModel::createUrlForAction('Edit', 'Profiles') . '&id=' . $values['id'];
 
         // set variables
-        $variables['message'] = vsprintf(
-            BL::msg('NotificationNewProfileToAdmin', 'Profiles'),
-            array(
-                $values['display_name'],
-                $values['email'],
-                $backendURL,
-            )
-        );
+        $variables = [
+            'message' => vsprintf(
+                BL::msg('NotificationNewProfileToAdmin', 'Profiles'),
+                [
+                    $values['display_name'],
+                    $values['email'],
+                    $backendUrl,
+                ]
+            ),
+        ];
 
         // define subject
         $subject = vsprintf(
             BL::lbl('NotificationNewProfileToAdmin', 'Profiles'),
-            array(
+            [
                 $values['email'],
-            )
+            ]
         );
 
         self::sendMail(
@@ -809,23 +716,24 @@ class Model
      * @param string $templatePath
      */
     public static function notifyProfile(
-        $values,
-        $forUpdate = false,
-        $templatePath = null
-    ) {
+        array $values,
+        bool $forUpdate = false,
+        string $templatePath = null
+    ): void {
         // set variables
-        $variables['message'] = vsprintf(
-            BL::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
-            array(
-                $values['email'],
-                $values['unencrypted_password'],
-                SITE_URL,
-            )
-        );
+        $variables = [
+            'message' => vsprintf(
+                BL::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
+                [
+                    $values['email'],
+                    $values['unencrypted_password'],
+                    SITE_URL,
+                ]
+            ),
+        ];
 
         // define subject
-        $notificationSubject = ($forUpdate) ?
-            'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';
+        $notificationSubject = $forUpdate ? 'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';
         $subject = BL::lbl($notificationSubject, 'Profiles');
 
         self::sendMail(
@@ -848,11 +756,11 @@ class Model
      */
     protected static function sendMail(
         $subject,
-        $templatePath,
-        $variables,
-        $toEmail,
-        $toDisplayName = null
-    ) {
+        ?string $templatePath,
+        array $variables,
+        string $toEmail,
+        string $toDisplayName = null
+    ): void {
         if (empty($templatePath)) {
             $templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig';
         }
@@ -863,11 +771,10 @@ class Model
 
         // create a message object and set all the needed properties
         $message = Message::newInstance($subject)
-            ->setFrom(array($from['email'] => $from['name']))
-            ->setTo(array($toEmail => $toDisplayName))
-            ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
-            ->parseHtml($templatePath, $variables, true)
-        ;
+            ->setFrom([$from['email'] => $from['name']])
+            ->setTo([$toEmail => $toDisplayName])
+            ->setReplyTo([$replyTo['email'] => $replyTo['name']])
+            ->parseHtml($templatePath, $variables, true);
 
         // send it through the mailer service
         BackendModel::get('mailer')->send($message);
@@ -876,66 +783,58 @@ class Model
     /**
      * Insert or update a single profile setting.
      *
-     * @param int    $id    Profile id.
-     * @param string $name  Setting name.
-     * @param mixed  $value Setting value.
+     * @param int $profileId Profile id.
+     * @param string $name Setting name.
+     * @param mixed $value Setting value.
      */
-    public static function setSetting($id, $name, $value)
+    public static function setSetting(int $profileId, string $name, $value): void
     {
         BackendModel::getContainer()->get('database')->execute(
             'INSERT INTO profiles_settings(profile_id, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array((int) $id, $name, serialize($value), serialize($value))
+            [$profileId, $name, serialize($value), serialize($value)]
         );
     }
 
     /**
      * Update a profile.
      *
-     * @param int   $id     The profile id.
-     * @param array $values The values to update.
+     * @param int $profileId The profile id.
+     * @param array $profile The values to update.
      *
      * @return int
      */
-    public static function update($id, array $values)
+    public static function update(int $profileId, array $profile): int
     {
-        return (int) BackendModel::getContainer()->get('database')->update('profiles', $values, 'id = ?', (int) $id);
+        return (int) BackendModel::getContainer()->get('database')->update('profiles', $profile, 'id = ?', $profileId);
     }
 
-    /**
-     * Update a profile group.
-     *
-     * @param int   $id     Group id.
-     * @param array $values Group data.
-     *
-     * @return int
-     */
-    public static function updateGroup($id, array $values)
+    public static function updateGroup(int $profileId, array $group): int
     {
         return (int) BackendModel::getContainer()->get('database')->update(
             'profiles_groups',
-            $values,
+            $group,
             'id = ?',
-            (int) $id
+            $profileId
         );
     }
 
     /**
      * Update a membership of a profile in a group.
      *
-     * @param int   $id     Membership id.
-     * @param array $values Membership data.
+     * @param int $membershipId
+     * @param array $membership
      *
      * @return int
      */
-    public static function updateProfileGroup($id, array $values)
+    public static function updateProfileGroup(int $membershipId, array $membership): int
     {
         return (int) BackendModel::getContainer()->get('database')->update(
             'profiles_groups_rights',
-            $values,
+            $membership,
             'id = ?',
-            (int) $id
+            $membershipId
         );
     }
 }

@@ -9,18 +9,21 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Config;
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 use Backend\Core\Engine\Model as BackendModel;
-use Common\Cookie as CommonCookie;
+use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Finder\Finder;
 use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class will handle the incoming URL.
  */
-class Url extends Base\Object
+class Url extends KernelLoader
 {
     /**
      * The Symfony request object
@@ -30,17 +33,27 @@ class Url extends Base\Object
     private $request;
 
     /**
+     * The current action
+     *
+     * @var string
+     */
+    protected $action;
+
+    /**
+     * The current module
+     *
+     * @var string
+     */
+    protected $module;
+
+    /**
      * @param KernelInterface $kernel
      */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
 
-        // add to registry
         $this->getContainer()->set('url', $this);
-
-        // fetch the request object from the container
-        $this->request = $this->get('request');
 
         $this->processQueryString();
     }
@@ -50,22 +63,10 @@ class Url extends Base\Object
      *
      * @return string The current domain (without www.)
      */
-    public function getDomain()
+    public function getDomain(): string
     {
         // replace
-        return str_replace('www.', '', $this->request->getHttpHost());
-    }
-
-    /**
-     * Get the host
-     *
-     * @deprecated use $request->getHttpHost() instead
-     *
-     * @return string
-     */
-    public function getHost()
-    {
-        return $this->request->getHttpHost();
+        return str_replace('www.', '', BackendModel::getRequest()->getHttpHost());
     }
 
     /**
@@ -73,223 +74,312 @@ class Url extends Base\Object
      *
      * @return string
      */
-    public function getQueryString()
+    public function getQueryString(): string
     {
-        return trim((string) $this->request->getRequestUri(), '/');
+        return trim((string) BackendModel::getRequest()->getRequestUri(), '/');
     }
 
-    /**
-     * Process the querystring
-     */
-    private function processQueryString()
+    private function getLanguageFromUrl(): string
     {
-        // store the querystring local, so we don't alter it.
-        $queryString = $this->getQueryString();
+        if (!array_key_exists(BackendModel::getRequest()->attributes->get('_locale'), BackendLanguage::getWorkingLanguages())) {
+            $url = $this->getBaseUrlForLanguage($this->getContainer()->getParameter('site.default_language'));
+            $url .= '/' . BackendModel::getRequest()->attributes->get('module') . '/' . BackendModel::getRequest()->attributes->get('action');
 
-        // find the position of ? (which separates real URL and GET-parameters)
-        $positionQuestionMark = mb_strpos($queryString, '?');
+            if (BackendModel::getRequest()->getQueryString() !== null) {
+                $url .= '?' . BackendModel::getRequest()->getQueryString();
+            }
 
-        // separate the GET-chunk from the parameters
-        $getParameters = '';
-        if ($positionQuestionMark === false) {
-            $processedQueryString = $queryString;
-        } else {
-            $processedQueryString = mb_substr($queryString, 0, $positionQuestionMark);
-            $getParameters = mb_substr($queryString, $positionQuestionMark);
+            $this->redirect($url);
         }
 
-        // split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
-        $chunks = (array) explode('/', trim($processedQueryString, '/'));
+        return BackendModel::getRequest()->attributes->get('_locale');
+    }
 
-        // check if this is a request for a AJAX-file
-        $isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax');
+    private function getModuleFromRequest(): string
+    {
+        $module = BackendModel::getRequest()->attributes->get('module');
+        if (empty($module)) {
+            return 'Dashboard';
+        }
 
-        // get the language, this will always be in front
-        $language = '';
-        if (isset($chunks[1]) && $chunks[1] != '') {
-            $language = \SpoonFilter::getValue(
-                $chunks[1],
-                array_keys(BackendLanguage::getWorkingLanguages()),
-                ''
+        return \SpoonFilter::toCamelCase($module);
+    }
+
+    private function getActionFromRequest(string $module, string $language): string
+    {
+        $action = BackendModel::getRequest()->attributes->get('action');
+        if (!empty($action)) {
+            return \SpoonFilter::toCamelCase($action);
+        }
+
+        return $this->getDefaultActionForModule($module, $language);
+    }
+
+    private function getDefaultActionForModule(string $module, string $language): string
+    {
+        // Check if we can load the config file
+        $configClass = 'Backend\\Modules\\' . $module . '\\Config';
+        if ($module === 'Core') {
+            $configClass = Config::class;
+        }
+
+        if (!class_exists($configClass)) {
+            if (BackendModel::getContainer()->getParameter('kernel.debug')) {
+                throw new Exception('The config file for the module (' . $module . ') can\'t be found.');
+            }
+
+            $this->redirectWithQueryString(
+                $language,
+                '/error?type=action-not-allowed',
+                Response::HTTP_TEMPORARY_REDIRECT
             );
         }
 
-        // no language provided?
-        if ($language == '' && !$isAJAX) {
-            // remove first element
-            array_shift($chunks);
+        /** @var BackendBaseConfig $config */
+        $config = new $configClass($this->getKernel(), $module);
 
-            // redirect to login
-            $this->redirect(
-                '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . (empty($chunks) ? '' : '/') . implode('/', $chunks) . $getParameters
-            );
-        }
-
-        // get the module, null will be the default
-        $module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'Dashboard';
-        $module = \SpoonFilter::toCamelCase($module);
-
-        // get the requested action, if it is passed
-        if (isset($chunks[3]) && $chunks[3] != '') {
-            $action = \SpoonFilter::toCamelCase($chunks[3]);
-        } elseif (!$isAJAX) {
-            // Check if we can load the config file
-            $configClass = 'Backend\\Modules\\' . $module . '\\Config';
-            if ($module == 'Core') {
-                $configClass = 'Backend\\Core\\Config';
-            }
-
-            try {
-                // when loading a backend url for a module that doesn't exist, without
-                // providing an action, a FatalErrorException occurs, because the config
-                // class we're trying to load doesn't exist. Let's just throw instead,
-                // and catch it immediately.
-                if (!class_exists($configClass)) {
-                    throw new Exception('The config class does not exist');
-                }
-
-                /** @var BackendBaseConfig $config */
-                $config = new $configClass($this->getKernel(), $module);
-
-                // set action
-                $action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'Index';
-            } catch (Exception $ex) {
-                if (BackendModel::getContainer()->getParameter('kernel.debug')) {
-                    throw new Exception('The config file for the module (' . $module . ') can\'t be found.');
-                } else {
-                    // @todo    don't use redirects for error, we should have something like an invoke method.
-
-                    // build the url
-                    $errorUrl = '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed';
-
-                    // add the querystring, it will be processed by the error-handler
-                    $errorUrl .= '&querystring=' . rawurlencode('/' . $this->getQueryString());
-
-                    // redirect to the error page
-                    $this->redirect($errorUrl, 307);
-                }
-            }
-        }
-
-        // AJAX parameters are passed via GET or POST
-        if ($isAJAX) {
-            $module = (isset($_GET['fork']['module'])) ? $_GET['fork']['module'] : '';
-            $action = (isset($_GET['fork']['action'])) ? $_GET['fork']['action'] : '';
-            $language = (isset($_GET['fork']['language'])) ? $_GET['fork']['language'] : SITE_DEFAULT_LANGUAGE;
-            $module = (isset($_POST['fork']['module'])) ? $_POST['fork']['module'] : $module;
-            $action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
-            $language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
-
-            $this->setModule($module);
-            $this->setAction($action);
-            BackendLanguage::setWorkingLanguage($language);
-        } else {
-            $this->processRegularRequest($module, $action, $language);
-        }
+        return $config->getDefaultAction() ?? 'Index';
     }
 
-    /**
-     * Process a regular request
-     *
-     * @param string $module The requested module.
-     * @param string $action The requested action.
-     * @param string $language The requested language.
-     */
-    private function processRegularRequest($module, $action, $language)
+    private function processQueryString(): void
+    {
+        if (BackendModel::getRequest()->attributes->get('_route') === 'backend_ajax') {
+            $this->processAjaxRequest();
+
+            return;
+        }
+
+        $language = $this->getLanguageFromUrl();
+        $module = $this->getModuleFromRequest();
+        $action = $this->getActionFromRequest($module, $language);
+
+        $this->processRegularRequest($module, $action, $language);
+    }
+
+    private function splitUpForkData(array $forkData): array
+    {
+        $language = $forkData['language'] ?? '';
+
+        if ($language === '') {
+            $language = $this->getContainer()->getParameter('site.default_language');
+        }
+
+        return [
+            $forkData['module'] ?? '',
+            $forkData['action'] ?? '',
+            $language,
+        ];
+    }
+
+    private function getForkData(): array
+    {
+        if (BackendModel::getRequest()->request->has('fork')) {
+            return $this->splitUpForkData((array) BackendModel::getRequest()->request->get('fork'));
+        }
+
+        if (BackendModel::getRequest()->query->has('fork')) {
+            return $this->splitUpForkData((array) BackendModel::getRequest()->query->get('fork'));
+        }
+
+        return $this->splitUpForkData(BackendModel::getRequest()->query->all());
+    }
+
+    private function processAjaxRequest(): void
+    {
+        [$module, $action, $language] = $this->getForkData();
+
+        $this->setAction($action, $module);
+        BackendLanguage::setWorkingLanguage($language);
+    }
+
+    private function processRegularRequest(string $module, string $action, string $language): void
     {
         // the person isn't logged in? or the module doesn't require authentication
         if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
-            // redirect to login
-            $this->redirect(
-                '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . rawurlencode(
-                    '/' . $this->getQueryString()
-                )
-            );
-        } elseif (Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
-            // the person is logged in, but doesn't have access to our action
-            // if the module is the dashboard redirect to the first allowed module
-            if ($module == 'Dashboard') {
-                // require navigation-file
-                require_once Navigation::getCacheDirectory() . 'navigation.php';
+            $this->redirectWithQueryString($language, '/authentication');
+        }
 
-                // loop the navigation to find the first allowed module
-                foreach ($navigation as $value) {
-                    // split up chunks
-                    list($module, $action) = explode('/', $value['url']);
-
-                    // user allowed?
-                    if (Authentication::isAllowedModule($module)) {
-                        // redirect to the page
-                        $this->redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
-                    } else {
-                        if (array_key_exists('children', $value)) {
-                            foreach ($value['children'] as $subItem) {
-                                // split up chunks
-                                list($module, $action) = explode('/', $subItem['url']);
-
-                                // user allowed?
-                                if (Authentication::isAllowedModule($module)) {
-                                    $finder = new Finder();
-                                    $files = $finder->files()->name('*.php')->in(BACKEND_MODULES_PATH . '/' . \SpoonFilter::toCamelCase($module) . '/Actions');
-                                    foreach ($files as $file) {
-                                        $moduleAction = mb_substr($file->getFilename(), 0, -4);
-                                        if (Authentication::isAllowedAction($moduleAction, $module)) {
-                                            $this->redirect('/' . NAMED_APPLICATION . '/' . $language . '/' .
-                                                $module . '/' . $moduleAction);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        if (Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
+            if ($module === 'Dashboard') {
+                $this->redirectToFistAvailableLink(
+                    $language,
+                    $this->getContainer()->get('cache.backend_navigation')->get()
+                );
             }
 
-            // the user doesn't have access, redirect to error page
-            $this->redirect(
-                '/' . NAMED_APPLICATION . '/' . $language .
-                '/error?type=module-not-allowed&querystring=' . rawurlencode('/' . $this->getQueryString()),
-                307
+            $this->redirectWithQueryString(
+                $language,
+                '/error?type=module-not-allowed',
+                Response::HTTP_TEMPORARY_REDIRECT
             );
-        } elseif (!Authentication::isAllowedAction($action, $module)) {
-            // the user hasn't access, redirect to error page
-            $this->redirect(
-                '/' . NAMED_APPLICATION . '/' . $language .
-                '/error?type=action-not-allowed&querystring=' . rawurlencode('/' . $this->getQueryString()),
-                307
-            );
-        } else {
-            // set the working language, this is not the interface language
-            BackendLanguage::setWorkingLanguage($language);
+        }
 
-            $this->setLocale();
-            $this->setModule($module);
-            $this->setAction($action);
+        if (!Authentication::isAllowedAction($action, $module)) {
+            $this->redirectWithQueryString(
+                $language,
+                '/error?type=action-not-allowed',
+                Response::HTTP_TEMPORARY_REDIRECT
+            );
+        }
+
+        // set the working language, this is not the interface language
+        BackendLanguage::setWorkingLanguage($language);
+
+        $this->setLocale();
+        $this->setModule($module);
+        $this->setAction($action);
+    }
+
+    private function setLocale(): void
+    {
+        $defaultLocale = $this->get('fork.settings')->get('Core', 'default_interface_language');
+        $locale = $this->getInterfaceLanguage();
+        $possibleLocale = array_keys(BackendLanguage::getInterfaceLanguages());
+
+        // set the default if the detected interface language is not enabled
+        if (!in_array($locale, $possibleLocale, true)) {
+            $locale = $defaultLocale;
+        }
+
+        BackendLanguage::setLocale($locale);
+    }
+
+    private function getInterfaceLanguage(): string
+    {
+        $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
+
+        if (Authentication::getUser()->isAuthenticated()) {
+            return Authentication::getUser()->getSetting('interface_language', $default);
+        }
+
+        if ($this->getContainer()->get('fork.cookie')->has('interface_language')) {
+            // no authenticated user, but available from a cookie
+            return $this->getContainer()->get('fork.cookie')->get('interface_language');
+        }
+
+        return $default;
+    }
+
+    private function getBaseUrlForLanguage(string $language): string
+    {
+        return '/' . NAMED_APPLICATION . '/' . $language;
+    }
+
+    private function redirectWithQueryString(string $language, string $url, int $code = Response::HTTP_FOUND): void
+    {
+        // add a / at the start if needed
+        if (mb_strpos($url, '/') !== 0) {
+            $url = '/' . $url;
+        }
+
+        $this->redirect($this->getBaseUrlForLanguage($language) . $this->addQueryStringToUrl($url), $code);
+    }
+
+    private function addQueryStringToUrl(string $url): string
+    {
+        $queryString = 'querystring=' . rawurlencode('/' . $this->getQueryString());
+
+        if (mb_strpos($url, '?') !== false) {
+            return $url . '&' . $queryString;
+        }
+
+        return $url . '?' . $queryString;
+    }
+
+    private function redirectToFistAvailableLink(string $language, array $navigation): void
+    {
+        foreach ($navigation as $navigationItem) {
+            list($module, $action) = explode('/', $navigationItem['url']);
+            $module = \SpoonFilter::toCamelCase($module);
+            $action = \SpoonFilter::toCamelCase($action);
+
+            if (Authentication::isAllowedModule($module) && Authentication::isAllowedAction($action, $module)) {
+                $this->redirect(
+                    $this->getBaseUrlForLanguage($language) . '/' . $navigationItem['url'],
+                    Response::HTTP_TEMPORARY_REDIRECT
+                );
+            }
+
+            if (array_key_exists('children', $navigationItem)) {
+                $this->redirectToFistAvailableLink($language, $navigationItem['children']);
+            }
         }
     }
 
     /**
-     * Set the locale
+     * Redirect to a given URL
+     *
+     * @param string $url The URL to redirect to.
+     * @param int $code The redirect code, default is 302 which means this is a temporary redirect.
+     *
+     * @throws RedirectException
      */
-    private function setLocale()
+    public function redirect(string $url, int $code = Response::HTTP_FOUND): void
     {
-        $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
-        $locale = $default;
-        $possibleLocale = array_keys(BackendLanguage::getInterfaceLanguages());
+        throw new RedirectException('Redirect', new RedirectResponse($url, $code));
+    }
 
-        // is the user authenticated
-        if (Authentication::getUser()->isAuthenticated()) {
-            $locale = Authentication::getUser()->getSetting('interface_language', $default);
-        } elseif (CommonCookie::exists('interface_language')) {
-            // no authenticated user, but available from a cookie
-            $locale = CommonCookie::get('interface_language');
+    /**
+     * Helper method to create a redirect to the error page of the backend
+     *
+     * @param string $type
+     * @param int $code
+     */
+    public function redirectToErrorPage(string $type, int $code = Response::HTTP_BAD_REQUEST): void
+    {
+        $errorUrl = '/' . NAMED_APPLICATION . '/' . BackendModel::getRequest()->getLocale()
+                    . '/error?type=' . $type;
+
+        $this->get('url')->redirect($errorUrl, $code);
+    }
+
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    public function getModule(): string
+    {
+        return $this->module;
+    }
+
+    private function setAction(string $action, string $module = null): void
+    {
+        // set module
+        if ($module !== null) {
+            $this->setModule($module);
         }
 
-        // validate if the requested locale is possible
-        if (!in_array($locale, $possibleLocale)) {
-            $locale = $default;
+        // check if module is set
+        if ($this->getModule() === null) {
+            throw new Exception('Module has not yet been set.');
         }
 
-        BackendLanguage::setLocale($locale);
+        // is this action allowed?
+        if (!Authentication::isAllowedAction($action, $this->getModule())) {
+            // set correct headers
+            header('HTTP/1.1 403 Forbidden');
+
+            // throw exception
+            throw new Exception('Action not allowed.');
+        }
+
+        // set property
+        $this->action = \SpoonFilter::toCamelCase($action);
+    }
+
+    private function setModule(string $module): void
+    {
+        // is this module allowed?
+        if (!Authentication::isAllowedModule($module)) {
+            // set correct headers
+            header('HTTP/1.1 403 Forbidden');
+
+            // throw exception
+            throw new Exception('Module not allowed.');
+        }
+
+        // set property
+        $this->module = $module;
     }
 }

@@ -1,0 +1,4 @@
+/docs export-ignore
+/.github export-ignore
+.gitattributes export-ignore
+.travis.yml export-ignore

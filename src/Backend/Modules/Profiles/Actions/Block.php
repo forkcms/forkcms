@@ -18,16 +18,13 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class Block extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendProfilesModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendProfilesModel::exists($this->id)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -37,14 +34,11 @@ class Block extends BackendBaseActionDelete
             // already blocked? Prolly want to unblock then
             if ($profile['status'] === 'blocked') {
                 // set profile status to active
-                BackendProfilesModel::update($this->id, array('status' => 'active'));
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_unblock', array('id' => $this->id));
+                BackendProfilesModel::update($this->id, ['status' => 'active']);
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-unblocked&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Index') . '&report=profile-unblocked&var=' . rawurlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $this->id
                 );
@@ -53,20 +47,17 @@ class Block extends BackendBaseActionDelete
                 BackendProfilesModel::deleteSession($this->id);
 
                 // set profile status to blocked
-                BackendProfilesModel::update($this->id, array('status' => 'blocked'));
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_block', array('id' => $this->id));
+                BackendProfilesModel::update($this->id, ['status' => 'blocked']);
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-blocked&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Index') . '&report=profile-blocked&var=' . rawurlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $this->id
                 );
             }
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 }

@@ -1,7 +1,7 @@
 framework:
     profiler: { only_exceptions: false }
     router:
-        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        resource: "%kernel.project_dir%/app/config/routing_dev.yml"
 
 web_profiler:
     toolbar: true
@@ -11,7 +11,7 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  %site.path_www%/app/logs/%kernel.environment%.log
+            path:  "%site.path_www%/var/logs/%kernel.environment%.log"
             level: debug
 
 services:

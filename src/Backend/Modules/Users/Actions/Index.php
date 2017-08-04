@@ -11,7 +11,7 @@ namespace Backend\Modules\Users\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
@@ -21,10 +21,7 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
  */
 class Index extends BackendBaseActionIndex
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrid();
@@ -32,13 +29,10 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid.
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // create datagrid with an overview of all active and undeleted users
-        $this->dataGrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
+        $this->dataGrid = new BackendDataGridDatabase(BackendUsersModel::QUERY_BROWSE, [false]);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -47,7 +41,7 @@ class Index extends BackendBaseActionIndex
                 'nickname',
                 \SpoonFilter::ucfirst(BL::lbl('Nickname')),
                 null,
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
 
@@ -57,27 +51,24 @@ class Index extends BackendBaseActionIndex
                     'edit',
                     null,
                     BL::lbl('Edit'),
-                    BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
+                    BackendModel::createUrlForAction('Edit') . '&amp;id=[id]'
                 );
             }
         }
 
         // show the user's nickname
         $this->dataGrid->setColumnFunction(
-            array('Backend\\Modules\\Users\\Engine\\Model', 'getSetting'),
-            array('[id]', 'nickname'),
+            ['Backend\\Modules\\Users\\Engine\\Model', 'getSetting'],
+            ['[id]', 'nickname'],
             'nickname',
             false
         );
     }
 
-    /**
-     * Parse the datagrid
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->template->assign('dataGrid', (string) $this->dataGrid->getContent());
     }
 }

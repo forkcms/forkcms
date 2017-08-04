@@ -34,8 +34,10 @@ class ExportAnalyse extends BackendBaseActionIndex
 
     /**
      * Create the XML based on the locale items.
+     *
+     * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
 
@@ -53,10 +55,7 @@ class ExportAnalyse extends BackendBaseActionIndex
         );
     }
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->setFilter();
         $this->setItems();
@@ -65,17 +64,19 @@ class ExportAnalyse extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
-        $this->filter['language'] = (isset($_GET['language'])) ? $this->getParameter('language') : BL::getWorkingLanguage();
+        $this->filter['language'] = $this->getRequest()->query->has('language')
+            ? $this->getRequest()->query->get('language')
+            : BL::getWorkingLanguage();
     }
 
     /**
      * Build items array and group all items by application, module, type and name.
      */
-    private function setItems()
+    private function setItems(): void
     {
-        $this->locale = array();
+        $this->locale = [];
 
         // get items
         $frontend = BackendLocaleModel::getNonExistingFrontendLocale($this->filter['language']);

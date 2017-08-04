@@ -14,6 +14,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\Intl\Intl as Intl;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
@@ -26,7 +27,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * @var array
      */
-    protected $settings = array();
+    protected $settings = [];
 
     /**
      * The settings form
@@ -35,15 +36,12 @@ class Edit extends BackendBaseActionEdit
      */
     protected $settingsForm;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendLocationModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendLocationModel::exists($this->id)) {
             $this->header->addJS(FrontendLocationModel::getPathToMapStyles());
             parent::execute();
 
@@ -52,7 +50,7 @@ class Edit extends BackendBaseActionEdit
 
             // check Google Maps API key, otherwise redirect to settings
             if ($apikey === null) {
-                $this->redirect(BackendModel::createURLForAction('Index', 'Settings'));
+                $this->redirect(BackendModel::createUrlForAction('Index', 'Settings'));
             }
 
             // add js
@@ -62,26 +60,24 @@ class Edit extends BackendBaseActionEdit
 
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
 
             $this->loadSettingsForm();
 
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function loadData()
+    private function loadData(): void
     {
         $this->record = (array) BackendLocationModel::get($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
 
         $this->settings = BackendLocationModel::getMapSettings($this->id);
@@ -109,43 +105,37 @@ class Edit extends BackendBaseActionEdit
         $this->settings['directions'] = (isset($this->settings['directions'])) ? ($this->settings['directions']) : false;
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
-        $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
-        $this->frm->addText('street', $this->record['street']);
-        $this->frm->addText('number', $this->record['number']);
-        $this->frm->addText('zip', $this->record['zip']);
-        $this->frm->addText('city', $this->record['city']);
-        $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), $this->record['country']);
-        $this->frm->addHidden('redirect', 'overview');
+        $this->form = new BackendForm('edit');
+        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
+        $this->form->addText('street', $this->record['street']);
+        $this->form->addText('number', $this->record['number']);
+        $this->form->addText('zip', $this->record['zip']);
+        $this->form->addText('city', $this->record['city']);
+        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), $this->record['country']);
+        $this->form->addHidden('redirect', 'overview');
     }
 
-    /**
-     * Load the settings form
-     */
-    protected function loadSettingsForm()
+    protected function loadSettingsForm(): void
     {
-        $mapTypes = array(
+        $mapTypes = [
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
             'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
-        );
-        $mapStyles = array(
+        ];
+        $mapStyles = [
             'standard' => BL::lbl('Default', $this->getModule()),
             'custom' => BL::lbl('Custom', $this->getModule()),
             'gray' => BL::lbl('Gray', $this->getModule()),
             'blue' => BL::lbl('Blue', $this->getModule()),
-        );
+        ];
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(1, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
+            array_merge(['auto'], range(1, 18)),
+            array_merge([BL::lbl('Auto', $this->getModule())], range(1, 18))
         );
 
         $this->settingsForm = new BackendForm('settings');
@@ -159,59 +149,54 @@ class Edit extends BackendBaseActionEdit
         $this->settingsForm->addDropdown(
             'map_style',
             $mapStyles,
-            isset($this->settings['map_style']) ? $this->settings['map_style'] : null
+            $this->settings['map_style'] ?? null
         );
         $this->settingsForm->addCheckbox('full_url', $this->settings['full_url']);
         $this->settingsForm->addCheckbox('directions', $this->settings['directions']);
-        $this->settingsForm->addCheckbox('marker_overview', ($this->record['show_overview'] == 'Y'));
+        $this->settingsForm->addCheckbox('marker_overview', $this->record['show_overview']);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // assign to template
-        $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('settings', $this->settings);
-        $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
+        $this->template->assign('item', $this->record);
+        $this->template->assign('settings', $this->settings);
+        $this->template->assign('godUser', BackendAuthentication::getUser()->isGod());
 
-        $this->settingsForm->parse($this->tpl);
+        $this->settingsForm->parse($this->template);
 
         // assign message if address was not be geocoded
         if ($this->record['lat'] == null || $this->record['lng'] == null) {
-            $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
+            $this->template->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if ($this->form->isSubmitted()) {
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->frm->getField('street')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('number')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('street')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('number')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('zip')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
+                $item = [];
                 $item['id'] = $this->id;
                 $item['language'] = BL::getWorkingLanguage();
                 $item['extra_id'] = $this->record['extra_id'];
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['street'] = $this->frm->getField('street')->getValue();
-                $item['number'] = $this->frm->getField('number')->getValue();
-                $item['zip'] = $this->frm->getField('zip')->getValue();
-                $item['city'] = $this->frm->getField('city')->getValue();
-                $item['country'] = $this->frm->getField('country')->getValue();
+                $item['title'] = $this->form->getField('title')->getValue();
+                $item['street'] = $this->form->getField('street')->getValue();
+                $item['number'] = $this->form->getField('number')->getValue();
+                $item['zip'] = $this->form->getField('zip')->getValue();
+                $item['city'] = $this->form->getField('city')->getValue();
+                $item['country'] = $this->form->getField('country')->getValue();
 
                 // check if it's necessary to geocode again
                 if ($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country']) {
@@ -235,19 +220,23 @@ class Edit extends BackendBaseActionEdit
                 // insert the item
                 BackendLocationModel::update($item);
 
-                // everything is saved, so redirect to the overview
-                if ($item['lat'] && $item['lng']) {
-                    // trigger event
-                    BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
-                }
-
                 // redirect to the overview
-                if ($this->frm->getField('redirect')->getValue() == 'overview') {
-                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['id']);
+                if ($this->form->getField('redirect')->getValue() == 'overview') {
+                    $this->redirect(BackendModel::createUrlForAction('Index') . '&report=edited&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['id']);
                 } else {
-                    $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
+                    $this->redirect(BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
                 }
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

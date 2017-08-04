@@ -9,6 +9,7 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Form\Type\DeleteType;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -34,53 +35,42 @@ class Edit extends BackendBaseActionEdit
      */
     private $filterQuery;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendLocaleModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendLocaleModel::exists($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendLocaleModel::get($this->id);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
-        $this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('id' => $this->id)) . $this->filterQuery);
-        $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->record['application']);
-        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
-        $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
-        $this->frm->addText('name', $this->record['name']);
-        $this->frm->addTextarea('value', $this->record['value'], null, null, true);
-        $this->frm->addDropdown('language', BL::getWorkingLanguages(), $this->record['language']);
+        $this->form = new BackendForm('edit', BackendModel::createUrlForAction(null, null, null, ['id' => $this->id]) . $this->filterQuery);
+        $this->form->addDropdown('application', ['Backend' => 'Backend', 'Frontend' => 'Frontend'], $this->record['application']);
+        $this->form->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
+        $this->form->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
+        $this->form->addText('name', $this->record['name']);
+        $this->form->addTextarea('value', $this->record['value'], null, null, true);
+        $this->form->addDropdown('language', BL::getWorkingLanguages(), $this->record['language']);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -88,41 +78,44 @@ class Edit extends BackendBaseActionEdit
         $filter = \SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
 
         // parse filter
-        $this->tpl->assign($filter);
-        $this->tpl->assign('filterQuery', $this->filterQuery);
+        $this->template->assignArray($filter);
+        $this->template->assign('filterQuery', $this->filterQuery);
 
         // assign id, name
-        $this->tpl->assign('name', $this->record['name']);
-        $this->tpl->assign('id', $this->record['id']);
+        $this->template->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->record['id']);
     }
 
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
-        $this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
-        $this->filter['application'] = $this->getParameter('application');
-        $this->filter['module'] = $this->getParameter('module');
-        $this->filter['type'] = $this->getParameter('type', 'array');
-        $this->filter['name'] = $this->getParameter('name');
-        $this->filter['value'] = $this->getParameter('value');
+        $this->filter['language'] = $this->getRequest()->query->get('language', []);
+        if (empty($this->filter['language'])) {
+            $this->filter['language'] = BL::getWorkingLanguage();
+        }
+        $this->filter['application'] = $this->getRequest()->query->get('application');
+        $this->filter['module'] = $this->getRequest()->query->get('module');
+        $this->filter['type'] = $this->getRequest()->query->get('type', '');
+        if ($this->filter['type'] === '') {
+            $this->filter['type'] = null;
+        }
+        $this->filter['name'] = $this->getRequest()->query->get('name');
+        $this->filter['value'] = $this->getRequest()->query->get('value');
 
         // build query for filter
-        $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
+        $this->filterQuery = BackendLocaleModel::buildUrlQueryByFilter($this->filter);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if ($this->form->isSubmitted()) {
+            $this->form->cleanupFields();
 
             // redefine fields
-            $txtName = $this->frm->getField('name');
-            $txtValue = $this->frm->getField('value');
+            $txtName = $this->form->getField('name');
+            $txtValue = $this->form->getField('value');
 
             // name checks
             if ($txtName->isFilled(BL::err('FieldIsRequired'))) {
@@ -133,7 +126,7 @@ class Edit extends BackendBaseActionEdit
                         $txtName->setError(BL::err('InvalidName'));
                     } else {
                         // check if exists
-                        if (BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue(), $this->id)) {
+                        if (BackendLocaleModel::existsByName($txtName->getValue(), $this->form->getField('type')->getValue(), $this->form->getField('module')->getValue(), $this->form->getField('language')->getValue(), $this->form->getField('application')->getValue(), $this->id)) {
                             $txtName->setError(BL::err('AlreadyExists'));
                         }
                     }
@@ -143,7 +136,7 @@ class Edit extends BackendBaseActionEdit
             // value checks
             if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
-                if ($this->frm->getField('type')->getValue() == 'act') {
+                if ($this->form->getField('type')->getValue() == 'act') {
                     if (rawurlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
                         $txtValue->addError(BL::err('InvalidValue'));
                     }
@@ -151,31 +144,39 @@ class Edit extends BackendBaseActionEdit
             }
 
             // module should be 'Core' for any other application than backend
-            if ($this->frm->getField('application')->getValue() != 'Backend' && $this->frm->getField('module')->getValue() != 'Core') {
-                $this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore', $this->getModule()));
+            if ($this->form->getField('application')->getValue() != 'Backend' && $this->form->getField('module')->getValue() != 'Core') {
+                $this->form->getField('module')->setError(BL::err('ModuleHasToBeCore', $this->getModule()));
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
+                $item = [];
                 $item['id'] = $this->id;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['language'] = $this->frm->getField('language')->getValue();
-                $item['application'] = $this->frm->getField('application')->getValue();
-                $item['module'] = $this->frm->getField('module')->getValue();
-                $item['type'] = $this->frm->getField('type')->getValue();
-                $item['name'] = $this->frm->getField('name')->getValue();
-                $item['value'] = $this->frm->getField('value')->getValue();
+                $item['language'] = $this->form->getField('language')->getValue();
+                $item['application'] = $this->form->getField('application')->getValue();
+                $item['module'] = $this->form->getField('module')->getValue();
+                $item['type'] = $this->form->getField('type')->getValue();
+                $item['name'] = $this->form->getField('name')->getValue();
+                $item['value'] = $this->form->getField('value')->getValue();
                 $item['edited_on'] = BackendModel::getUTCDate();
 
                 // update item
                 BackendLocaleModel::update($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
-
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=edited&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
+                $this->redirect(BackendModel::createUrlForAction('Index', null, null, null) . '&report=edited&var=' . rawurlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

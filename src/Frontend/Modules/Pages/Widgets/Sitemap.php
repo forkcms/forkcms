@@ -16,10 +16,7 @@ use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
  */
 class Sitemap extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();

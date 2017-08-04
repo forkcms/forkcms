@@ -11,7 +11,7 @@ namespace Backend\Modules\FormBuilder\Actions;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
@@ -35,7 +35,7 @@ class Data extends BackendBaseActionIndex
      *
      * @var Form
      */
-    protected $frm;
+    protected $form;
 
     /**
      * Form id.
@@ -54,9 +54,9 @@ class Data extends BackendBaseActionIndex
      *
      * @return array An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
-        $parameters = array($this->id);
+        $parameters = [$this->id];
 
         // start query, as you can see this query is build in the wrong place,
         // because of the filter it is a special case
@@ -87,19 +87,16 @@ class Data extends BackendBaseActionIndex
         }
 
         // new query
-        return array($query, $parameters);
+        return [$query, $parameters];
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendFormBuilderModel::exists($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->loadForm();
@@ -109,47 +106,45 @@ class Data extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, throw an exceptions, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendFormBuilderModel::get($this->id);
+
+        if ($this->record['method'] === 'email') {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
+        }
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         list($query, $parameters) = $this->buildQuery();
 
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB($query, $parameters);
+        $this->dataGrid = new BackendDataGridDatabase($query, $parameters);
 
         // overrule default URL
         $this->dataGrid->setURL(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 null,
                 null,
                 null,
-                array(
+                [
                     'offset' => '[offset]',
                     'order' => '[order]',
                     'sort' => '[sort]',
                     'start_date' => $this->filter['start_date'],
                     'end_date' => $this->filter['end_date'],
-                ),
+                ],
                 false
             ) . '&amp;id=' . $this->id
         );
 
         // sorting columns
-        $this->dataGrid->setSortingColumns(array('sent_on'), 'sent_on');
+        $this->dataGrid->setSortingColumns(['sent_on'], 'sent_on');
         $this->dataGrid->setSortParameter('desc');
 
         // check if this action is allowed
@@ -157,14 +152,14 @@ class Data extends BackendBaseActionIndex
             // set colum URLs
             $this->dataGrid->setColumnURL(
                 'sent_on',
-                BackendModel::createURLForAction(
+                BackendModel::createUrlForAction(
                     'DataDetails',
                     null,
                     null,
-                    array(
+                    [
                         'start_date' => $this->filter['start_date'],
                         'end_date' => $this->filter['end_date'],
-                    ),
+                    ],
                     false
                 ) . '&amp;id=[id]'
             );
@@ -174,14 +169,14 @@ class Data extends BackendBaseActionIndex
                 'details',
                 null,
                 BL::getLabel('Details'),
-                BackendModel::createURLForAction(
+                BackendModel::createUrlForAction(
                     'DataDetails',
                     null,
                     null,
-                    array(
+                    [
                         'start_date' => $this->filter['start_date'],
                         'end_date' => $this->filter['end_date'],
-                    )
+                    ]
                 ) . '&amp;id=[id]',
                 BL::getLabel('Details')
             );
@@ -189,7 +184,7 @@ class Data extends BackendBaseActionIndex
 
         // date
         $this->dataGrid->setColumnFunction(
-            array(new BackendFormBuilderModel(), 'calculateTimeAgo'),
+            [new BackendFormBuilderModel(), 'calculateTimeAgo'],
             '[sent_on]',
             'sent_on',
             false
@@ -200,15 +195,12 @@ class Data extends BackendBaseActionIndex
         $this->dataGrid->setMassActionCheckboxes('check', '[id]');
 
         // mass action
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
-        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDelete'));
+        $ddmMassAction = new \SpoonFormDropdown('action', ['delete' => BL::getLabel('Delete')], 'delete');
+        $ddmMassAction->setOptionAttributes('delete', ['data-target' => '#confirmDelete']);
         $this->dataGrid->setMassAction($ddmMassAction);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         $startDate = '';
         $endDate = '';
@@ -229,39 +221,36 @@ class Data extends BackendBaseActionIndex
             }
         }
 
-        $this->frm = new BackendForm('filter', BackendModel::createURLForAction() . '&amp;id=' . $this->id, 'get');
-        $this->frm->addDate('start_date', $startDate);
-        $this->frm->addDate('end_date', $endDate);
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction() . '&amp;id=' . $this->id, 'get');
+        $this->form->addDate('start_date', $startDate);
+        $this->form->addDate('end_date', $endDate);
 
         // manually parse fields
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->template->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 
         // form info
-        $this->tpl->assign('name', $this->record['name']);
-        $this->tpl->assign('id', $this->record['id']);
-        $this->tpl->assignArray($this->filter);
+        $this->template->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->record['id']);
+        $this->template->assignArray($this->filter);
     }
 
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
         // start date is set
-        if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
+        if ($this->getRequest()->query->has('start_date') && $this->getRequest()->query->get('start_date', '') !== '') {
             // redefine
-            $startDate = (string) $_GET['start_date'];
+            $startDate = $this->getRequest()->query->get('start_date', '');
 
             // explode date parts
             $chunks = explode('/', $startDate);
@@ -279,9 +268,9 @@ class Data extends BackendBaseActionIndex
         }
 
         // end date is set
-        if (isset($_GET['end_date']) && $_GET['end_date'] != '') {
+        if ($this->getRequest()->query->has('end_date') && $this->getRequest()->query->get('end_date', '') !== '') {
             // redefine
-            $endDate = (string) $_GET['end_date'];
+            $endDate = $this->getRequest()->query->get('end_date');
 
             // explode date parts
             $chunks = explode('/', $endDate);

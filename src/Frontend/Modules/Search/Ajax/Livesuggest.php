@@ -15,6 +15,7 @@ use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the live suggest-action, it will output a list of results for a certain search
@@ -55,13 +56,13 @@ class Livesuggest extends FrontendBaseAJAXAction
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 20,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * The requested page
@@ -80,12 +81,9 @@ class Livesuggest extends FrontendBaseAJAXAction
     /**
      * @var TwigTemplate
      */
-    private $tpl;
+    private $template;
 
-    /**
-     * Display
-     */
-    private function display()
+    private function display(): void
     {
         // set variables
         $this->requestedPage = 1;
@@ -106,15 +104,12 @@ class Livesuggest extends FrontendBaseAJAXAction
 
         // output
         $this->output(
-            self::OK,
-            $this->tpl->render(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
+            Response::HTTP_OK,
+            $this->template->render(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
         );
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->validateForm();
@@ -124,11 +119,11 @@ class Livesuggest extends FrontendBaseAJAXAction
     /**
      * Load the cached data
      *
-     * @todo    refactor me
+     * @todo refactor me
      *
      * @return bool
      */
-    private function getCachedData()
+    private function getCachedData(): bool
     {
         // no search term = no search
         if (!$this->term) {
@@ -136,7 +131,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             return false;
         }
 
@@ -163,10 +158,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         return true;
     }
 
-    /**
-     * Load the data
-     */
-    private function getRealData()
+    private function getRealData(): void
     {
         // no search term = no search
         if (!$this->term) {
@@ -174,7 +166,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term;
 
         // populate calculated fields in pagination
         $this->pagination['limit'] = $this->limit;
@@ -205,7 +197,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (!SPOON_DEBUG) {
+        if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
             $filesystem = new Filesystem();
             $filesystem->dumpFile(
@@ -218,12 +210,9 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
-        $this->tpl = $this->get('templating');
+        $this->template = $this->get('templating');
 
         // no search term = no search
         if (!$this->term) {
@@ -231,17 +220,14 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // assign articles
-        $this->tpl->assign('searchResults', $this->items);
-        $this->tpl->assign('searchTerm', $this->term);
+        $this->template->assign('searchResults', $this->items);
+        $this->template->assign('searchTerm', $this->term);
 
         // parse the pagination
         $this->parsePagination();
     }
 
-    /**
-     * Parse pagination
-     */
-    protected function parsePagination()
+    protected function parsePagination(): void
     {
         // init var
         $pagination = null;
@@ -262,7 +248,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             case (!isset($this->pagination['num_pages'])):
                 throw new FrontendException('no num_pages available in the pagination-property.');
             case (!isset($this->pagination['url'])):
-                throw new FrontendException('no URL available in the pagination-property.');
+                throw new FrontendException('no url available in the pagination-property.');
         }
 
         // should we use a questionmark or an ampersand
@@ -281,7 +267,6 @@ class Livesuggest extends FrontendBaseAJAXAction
 
         // as long as we are below page 5 we should show all pages starting from 1
         if ($this->pagination['requested_page'] < 6) {
-            // init vars
             $pagesStart = 1;
             $pagesEnd = ($this->pagination['num_pages'] >= 6) ? 6 : $this->pagination['num_pages'];
 
@@ -336,7 +321,7 @@ class Livesuggest extends FrontendBaseAJAXAction
                 }
 
                 // add
-                $pagination['first'][] = array('url' => $url, 'label' => $i);
+                $pagination['first'][] = ['url' => $url, 'label' => $i];
             }
         }
 
@@ -353,7 +338,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             }
 
             // add
-            $pagination['pages'][] = array('url' => $url, 'label' => $i, 'current' => $current);
+            $pagination['pages'][] = ['url' => $url, 'label' => $i, 'current' => $current];
         }
 
         // show last pages?
@@ -372,7 +357,7 @@ class Livesuggest extends FrontendBaseAJAXAction
                 }
 
                 // add
-                $pagination['last'][] = array('url' => $url, 'label' => $i);
+                $pagination['last'][] = ['url' => $url, 'label' => $i];
             }
         }
 
@@ -394,24 +379,21 @@ class Livesuggest extends FrontendBaseAJAXAction
         $pagination['multiple_pages'] = ($pagination['num_pages'] == 1) ? false : true;
 
         // assign pagination
-        $this->tpl->assign('pagination', $pagination);
+        $this->template->assign('pagination', $pagination);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // set search term
         $charset = $this->getContainer()->getParameter('kernel.charset');
-        $searchTerm = \SpoonFilter::getPostValue('term', null, '');
-        $this->term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars(
+        $searchTerm = $this->getRequest()->request->get('term', '');
+        $this->term = ($charset === 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
         ) : \SpoonFilter::htmlentities($searchTerm);
 
         // validate
-        if ($this->term == '') {
-            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
+        if ($this->term === '') {
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'term-parameter is missing.');
         }
     }
 }

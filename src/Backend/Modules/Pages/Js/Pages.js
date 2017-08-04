@@ -42,11 +42,15 @@ jsBackend.pages =
 /**
  * All methods related to the controls (buttons, ...)
  */
-jsBackend.pages.extras =
-{
+jsBackend.pages.extras = {
+    uploaders: [],
+    counter: 0,
     // init, something like a constructor
     init: function()
     {
+        // get user templates
+        jsBackend.pages.template.userTemplates = jsData.pages.userTemplates;
+
         // bind events
         $('#extraType').on('change', jsBackend.pages.extras.populateExtraModules);
         $('#extraModule').on('change', jsBackend.pages.extras.populateExtraIds);
@@ -55,17 +59,37 @@ jsBackend.pages.extras =
         $(document).on('click', 'a.addBlock', jsBackend.pages.extras.showAddDialog);
         $(document).on('click', 'a.deleteBlock', jsBackend.pages.extras.showDeleteDialog);
         $(document).on('click', '.showEditor', jsBackend.pages.extras.editContent);
+        $(document).on('click', '.editUserTemplate', jsBackend.pages.extras.editUserTemplate);
         $(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility);
+        $('.modal').on('scroll', jsBackend.pages.extras.modalScrolledHandler);
 
-		    // make the default position sortable
-		    jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'));
+        // make the default position sortable
+        jsBackend.pages.extras.sortable($('#templateVisualFallback div.linkedBlocks'));
 
         $('#authRequired').on('change', jsBackend.pages.extras.showGroups);
-	},
+    },
+
+    // handle stuff when scroll inside a modal
+    modalScrolledHandler: function(event)
+    {
+        jsBackend.pages.extras.counter++;
+
+        // skip 9 out of 10 scrolls
+        if (jsBackend.pages.extras.counter % 10 !== 0) {
+            return false;
+        }
+
+        // update the positions on each uploader
+        $.each(jsBackend.pages.extras.uploaders, function(index, uploader) {
+            uploader.updatePosition();
+        });
+    },
 
     // store the extra for real
-    addBlock: function(selectedExtraId, selectedPosition)
+    addBlock: function(selectedExtraId, selectedPosition, selectedExtraType, selectedExtraData)
     {
+        selectedExtraType = selectedExtraType || 'rich_text';
+
         // clone prototype block
         var block = $('.contentBlock:first').clone();
 
@@ -75,12 +99,16 @@ jsBackend.pages.extras =
         // update index occurences in the hidden data
         var blockHtml = $('textarea[id^=blockHtml]', block);
         var blockExtraId = $('input[id^=blockExtraId]', block);
+        var blockExtraType = $('input[id^=blockExtraType]', block);
+        var blockExtraData = $('input[id^=blockExtraData]', block);
         var blockPosition = $('input[id^=blockPosition]', block);
         var blockVisibility = $('input[id^=blockVisible]', block);
 
         // update id & name to new index
         blockHtml.prop('id', blockHtml.prop('id').replace('0', index)).prop('name', blockHtml.prop('name').replace('0', index));
         blockExtraId.prop('id', blockExtraId.prop('id').replace('0', index)).prop('name', blockExtraId.prop('name').replace('0', index));
+        blockExtraType.prop('id', blockExtraType.prop('id').replace('0', index)).prop('name', blockExtraType.prop('name').replace('0', index));
+        blockExtraData.prop('id', blockExtraData.prop('id').replace('0', index)).prop('name', blockExtraData.prop('name').replace('0', index));
         blockPosition.prop('id', blockPosition.prop('id').replace('0', index)).prop('name', blockPosition.prop('name').replace('0', index));
         blockVisibility.prop('id', blockVisibility.prop('id').replace('0', index)).prop('name', blockVisibility.prop('name').replace('0', index));
 
@@ -90,6 +118,12 @@ jsBackend.pages.extras =
         // save extra id
         blockExtraId.val(selectedExtraId);
 
+        // save extra type
+        blockExtraType.val(selectedExtraType);
+
+        // save extra data
+        blockExtraData.val(JSON.stringify(selectedExtraData));
+
         // add block to dom
         block.appendTo($('#editContent'));
 
@@ -97,59 +131,83 @@ jsBackend.pages.extras =
         var visible = blockVisibility.attr('checked');
 
         // add visual representation of block to template visualisation
-        var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible);
+        var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible, selectedExtraType, selectedExtraData);
 
         // block/widget = don't show editor
-        if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') $('.blockContentHTML', block).hide();
-
-        // editor
-        else $('.blockContentHTML', block).show();
-
-        // reset block indexes
-        // jsBackend.pages.extras.resetIndexes();
+        if (selectedExtraType !== 'usertemplate' && typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') {
+            $('.blockContentHTML', block).hide();
+        }// editor or user template
+        else {
+            $('.blockContentHTML', block).show();
+        }
 
         return addedVisual ? index : false;
     },
 
     // add block visual on template
-    addBlockVisual: function(position, index, extraId, visible)
+    addBlockVisual: function(position, index, extraId, visible, extraType, extraData)
     {
         // check if the extra is valid
-        if(extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
+        if (extraType != 'usertemplate' && extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
 
         // block
         var editLink, title, description;
-        if(extraId != 0)
-        {
+        if (extraType != 'usertemplate' && extraId != 0) {
             // link to edit this block/widget
             editLink = '';
-            if(extrasById[extraId].type == 'block' && extrasById[extraId].data.url) editLink = extrasById[extraId].data.url;
-            if(typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
+            if (extrasById[extraId].type == 'block' && extrasById[extraId].data.url) editLink = extrasById[extraId].data.url;
+            if (typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
 
             // title, description & visibility
             title = extrasById[extraId].human_name;
             description = extrasById[extraId].path;
         }
 
+        // user template
+        else if (extraType == 'usertemplate') {
+            if (typeof(extraData) === "string" && extraData !== '') {
+                extraData = JSON.parse(extraData);
+            }
+
+            editLink = '';
+            title = utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate'));
+            if (extraData.title) {
+                title += ': ' + extraData.title;
+            }
+            description = '';
+            if (extraData.description) {
+                description += extraData.description;
+            }
+        }
+
         // editor
-        else
-        {
+        else {
             // link to edit this content, title, description & visibility
             editLink = '';
             title = utils.string.ucfirst(jsBackend.locale.lbl('Editor'));
             description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
         }
 
+        var linkClass = '';
+        if (extraType == 'usertemplate') {
+            linkClass = 'editUserTemplate ';
+        }
+        else if (extraId == 0) {
+            linkClass = 'showEditor ';
+        }
+
+        var showEditLink = (extraType === 'usertemplate' || (extraId != 0 && editLink));
+
         // create html to be appended in template-view
         var blockHTML = '<div class="templatePositionCurrentType' + (visible ? ' ' : ' templateDisabled') + '" data-block-id="' + index + '">' +
-                            '<span class="templateTitle">' + title + '</span>' +
-                            '<span class="templateDescription">' + description + '</span>' +
-                            '<div class="btn-group buttonHolder">' +
-                                '<a href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
-                                '<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'btn btn-primary btn-icon-only btn-xs' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
-                                '<a href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o"></span></a>' +
-                            '</div>' +
-                        '</div>';
+            '<span class="templateTitle">' + title + '</span>' +
+            '<span class="templateDescription">' + description + '</span>' +
+            '<div class="btn-group buttonHolder">' +
+            '<a href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
+            '<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
+            '<a href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o"></span></a>' +
+            '</div>' +
+            '</div>';
 
         // set block description in template-view
         $('#templatePosition-' + position + ' .linkedBlocks').append(blockHTML);
@@ -218,7 +276,7 @@ jsBackend.pages.extras =
             $('#blockHtml').modal('hide');
         });
 
-        $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
+        $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function(e) {
             // set content in editor
             CKEDITOR.instances['html'].setData(previousContent);
         }).modal('show');
@@ -228,7 +286,7 @@ jsBackend.pages.extras =
     hideFallback: function()
     {
         // after removing all from fallback; hide fallback
-        if($('#templateVisualFallback .templatePositionCurrentType').length === 0) $('#templateVisualFallback').hide();
+        if ($('#templateVisualFallback .templatePositionCurrentType').length === 0) $('#templateVisualFallback').hide();
     },
 
     // populate the dropdown with the modules
@@ -240,21 +298,33 @@ jsBackend.pages.extras =
         // hide
         $('#extraModuleHolder').hide();
         $('#extraExtraIdHolder').hide();
+        $('#userTemplateHolder').hide();
         $('#extraModule').html('<option value="0">-</option>');
         $('#extraExtraId').html('<option value="0">-</option>');
 
         // only widgets and block need the module dropdown
-        if(selectedType == 'widget' || selectedType == 'block')
-        {
+        if (selectedType == 'widget' || selectedType == 'block') {
             // loop modules
-            for(var i in extrasData)
-            {
+            for (var i in extrasData) {
                 // add option if needed
-                if(typeof extrasData[i]['items'][selectedType] != 'undefined') $('#extraModule').append('<option value="'+ extrasData[i].value +'">'+ extrasData[i].name +'</option>');
+                if (typeof extrasData[i]['items'][selectedType] != 'undefined') $('#extraModule').append('<option value="' + extrasData[i].value + '">' + extrasData[i].name + '</option>');
             }
 
             // show
             $('#extraModuleHolder').show();
+        }
+
+        var userTemplates = jsBackend.pages.template.userTemplates;
+
+        // show the defined user templates
+        if (selectedType == 'usertemplate') {
+            var $userTemplate = $('#userTemplate');
+            $userTemplate.find('option').not('[value=-1]').remove();
+            for (var j in userTemplates) {
+                // add option if needed
+                $userTemplate.append('<option value="' + j + '">' + userTemplates[j].title + '</option>');
+            }
+            $('#userTemplateHolder').show();
         }
     },
 
@@ -270,20 +340,15 @@ jsBackend.pages.extras =
         $('#extraExtraId').html('');
 
         // any items?
-        if(typeof extrasData[selectedModule] != 'undefined' && typeof extrasData[selectedModule]['items'][selectedType] != 'undefined')
-        {
-            if(extrasData[selectedModule]['items'][selectedType].length == 1 && selectedType == 'block')
-            {
-                $('#extraExtraId').append('<option selected="selected" value="'+ extrasData[selectedModule]['items'][selectedType][0].id +'">'+ extrasData[selectedModule]['items'][selectedType][0].label +'</option>');
+        if (typeof extrasData[selectedModule] != 'undefined' && typeof extrasData[selectedModule]['items'][selectedType] != 'undefined') {
+            if (extrasData[selectedModule]['items'][selectedType].length == 1 && selectedType == 'block') {
+                $('#extraExtraId').append('<option selected="selected" value="' + extrasData[selectedModule]['items'][selectedType][0].id + '">' + extrasData[selectedModule]['items'][selectedType][0].label + '</option>');
             }
-
-            else
-            {
+            else {
                 // loop items
-                for(var i in extrasData[selectedModule]['items'][selectedType])
-                {
+                for (var i in extrasData[selectedModule]['items'][selectedType]) {
                     // add option
-                    $('#extraExtraId').append('<option value="'+ extrasData[selectedModule]['items'][selectedType][i].id +'">'+ extrasData[selectedModule]['items'][selectedType][i].label +'</option>');
+                    $('#extraExtraId').append('<option value="' + extrasData[selectedModule]['items'][selectedType][i].id + '">' + extrasData[selectedModule]['items'][selectedType][i].label + '</option>');
                 }
 
                 // show
@@ -313,11 +378,13 @@ jsBackend.pages.extras =
             // update index occurences in the hidden data
             var blockHtml = $('.reset [name=block_html_' + oldIndex + ']');
             var blockExtraId = $('.reset [name=block_extra_id_' + oldIndex + ']');
+            var blockExtraType = $('.reset [name=block_extra_type_' + oldIndex + ']');
             var blockPosition = $('.reset [name=block_position_' + oldIndex + ']');
             var blockVisible = $('.reset [name=block_visible_' + oldIndex + ']');
 
             blockHtml.prop('id', blockHtml.prop('id').replace(oldIndex, newIndex)).prop('name', blockHtml.prop('name').replace(oldIndex, newIndex));
             blockExtraId.prop('id', blockExtraId.prop('id').replace(oldIndex, newIndex)).prop('name', blockExtraId.prop('name').replace(oldIndex, newIndex));
+            blockExtraType.prop('id', blockExtraType.prop('id').replace(oldIndex, newIndex)).prop('name', blockExtraType.prop('name').replace(oldIndex, newIndex));
             blockPosition.prop('id', blockPosition.prop('id').replace(oldIndex, newIndex)).prop('name', blockPosition.prop('name').replace(oldIndex, newIndex));
             blockVisible.prop('id', blockVisible.prop('id').replace(oldIndex, newIndex)).prop('name', blockVisible.prop('name').replace(oldIndex, newIndex));
 
@@ -335,8 +402,13 @@ jsBackend.pages.extras =
     // save/reset the content
     setContent: function(index, content)
     {
+        // don't set content if this is a usertemplate
+        if ($('#blockExtraType' + index).val() === 'usertemplate') {
+            return false;
+        }
+
         // the content to set
-        if(content != null) $('#blockHtml' + index).val(content);
+        if (content != null) $('#blockHtml' + index).val(content);
 
         // add short description to visual representation of block
         var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
@@ -365,7 +437,7 @@ jsBackend.pages.extras =
             var id = $(this).val();
 
             // check if a block is already linked
-            if(id !== '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
+            if (id !== '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
         });
 
         // hide warnings
@@ -376,8 +448,7 @@ jsBackend.pages.extras =
         var enabled = true;
 
         // blocks linked?
-        if(hasModules)
-        {
+        if (hasModules) {
             // disable module selection
             enabled = false;
 
@@ -386,8 +457,7 @@ jsBackend.pages.extras =
         }
 
         // home can't have any modules linked!
-        if(typeof pageID != 'undefined' && pageID == 1)
-        {
+        if (typeof pageID != 'undefined' && pageID == 1) {
             // disable module selection
             enabled = false;
 
@@ -406,30 +476,554 @@ jsBackend.pages.extras =
         jsBackend.pages.extras.populateExtraModules();
 
         // initialize the modal for choosing an extra
-        if($('#addBlock').length > 0)
-        {
-            $('#addBlockSubmit').unbind('click').on('click', function (e) {
+        if ($('#addBlock').length > 0) {
+            $('#addBlockSubmit').unbind('click').on('click', function(e) {
                 e.preventDefault();
+                // fetch the selected extra type
+                var selectedExtraType = $('#extraType').val();
                 // fetch the selected extra id
                 var selectedExtraId = $('#extraExtraId').val();
+                // is user template?
+                var isUserTemplate = (selectedExtraType == 'usertemplate');
+
+                // fetch the selected extra data
+                var selectedExtraData = $('#extraData').val();
+
+                // fetch user template id
+                if (isUserTemplate) {
+                    selectedExtraId = $('#userTemplate').val();
+                    selectedExtraData = jsData.pages.userTemplates[selectedExtraId];
+                }
 
                 // add the extra
-                var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
+                var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType, selectedExtraData);
 
                 // add a block = template is no longer original
                 jsBackend.pages.template.original = false;
 
                 // close dialog
-                $('#addBlock').modal('hide');
+                $('#addBlock').off('hidden.bs.modal').on('hidden.bs.modal', function() {
+                    // if the added block was a user template, show the template popup immediately
+                    if (isUserTemplate && index) {
+                        $('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
+                    }
+                }).modal('hide');
 
                 // if the added block was an editor, show the editor immediately
-                if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
-                {
+                if (!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {
                     $('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
                 }
             });
 
             $('#addBlock').modal('show');
+        }
+    },
+    editUserTemplate: function(e)
+    {
+        // prevent default event action
+        e.preventDefault();
+
+        // fetch block index
+        var index = $(this).parent().parent().attr('data-block-id');
+
+        // fetch user template id
+        var userTemplateId = $('#blockExtraId' + index).val();
+
+        // fetch the current content
+        var previousContent = $('#blockHtml' + index).val();
+
+        var templateUrl, sourceHTML;
+
+        // if there already was content, use this.
+        if (previousContent !== '') {
+            $('#userTemplateHiddenPlaceholder').html(previousContent);
+
+            jsBackend.pages.extras.buildUserTemplateForm(
+                $('#userTemplateHiddenPlaceholder'),
+                $('#userTemplatePlaceholder')
+            );
+        }
+        else {
+            // if there was no content yet, take the default content
+            templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
+
+            $.ajax({
+                url: templateUrl,
+                dataType: 'html',
+                success: function(data)
+                {
+                    $('#userTemplateHiddenPlaceholder').html(data);
+
+                    jsBackend.pages.extras.buildUserTemplateForm(
+                        $('#userTemplateHiddenPlaceholder'),
+                        $('#userTemplatePlaceholder')
+                    );
+                }
+            });
+        }
+
+        var $modal = $('#addUserTemplate');
+
+        $modal.find('.js-submit-user-template').off('click').on('click', function(e) {
+            jsBackend.pages.extras.saveUserTemplateForm(
+                $('#userTemplateHiddenPlaceholder'),
+                $('#userTemplatePlaceholder')
+            );
+
+            // grab content
+            var content = $('#userTemplateHiddenPlaceholder').html();
+
+            //save content
+            jsBackend.pages.extras.setContent(index, content);
+
+            // edit content = template is no longer original
+            jsBackend.pages.template.original = false;
+
+            $('#addUserTemplate').modal('hide');
+        });
+        $modal.off('hidden.bs.modal').on('hidden.bs.modal', function() {
+            // the ajax file uploader inserts an input field in the body, remove it
+            $('body > div > input[name="file"]').parent().remove();
+            $('#userTemplatePlaceholder').html('');
+        });
+        $modal.modal('show');
+    },
+
+    /**
+     * Builds a form containing all fields that should be replaced in the
+     * hidden placeholder
+     */
+    buildUserTemplateForm: function($hiddenPlaceholder, $placeholder)
+    {
+        $placeholder.html('');
+
+        $hiddenPlaceholder.find('*').each(function(key) {
+            jsBackend.pages.extras.addCustomFieldInPlaceholderFor($(this), key, $placeholder);
+        });
+    },
+
+    /**
+     * Creates the html for a normal link
+     */
+    getLinkFieldHtml: function(text, url, label, key)
+    {
+        var html = '<div class="panel panel-default" id="user-template-link-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group">';
+        html += '<label>' + label + '</label>';
+        html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '"/>';
+        html += '</div>';
+
+        html += '<div class="form-group last">';
+        html += '<label>URL</label>';
+        html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for a link without content
+     */
+    getLinkWithoutContentFieldHtml: function(url, label, key)
+    {
+        var html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group last">';
+        html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for a text field
+     */
+    getTextFieldHtml: function(text, label, key)
+    {
+        var html = '<div class="panel panel-default" id="user-template-text-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group last">';
+        html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for an editor
+     */
+    getTextAreaFieldHtml: function(text, label, key)
+    {
+        var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group last">';
+        html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for an editor
+     */
+    getEditorFieldHtml: function(text, label, key)
+    {
+        var html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body">';
+
+        html += '<div class="form-group last">';
+        html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for an image field
+     */
+    getImageFieldHtml: function(src, alt, label, isVisible, key)
+    {
+        var html = '<div class="panel panel-default" id="user-template-image-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body clearfix">';
+
+        html += '<div class="form-group thumbnail">';
+        html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />';
+        html += '<div class="caption" id="ajax-upload-' + key + '">';
+        html += '<label>' + label + '</label>';
+        // this will be replaced by the ajax uploader
+        html += '<input data-ft-label="' + label + '" type="file" accept="image/*" />';
+        html += '</div>';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="alt' + key + '">Alt attribute</label>';
+        html += '<input class="form-control" type="text" id="alt' + key + '" value="' + alt + '" />';
+        html += '</div>';
+
+        html += '<div class="checkbox">';
+        html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Creates the html for an image background field
+     */
+    getImageBackgroundFieldHtml: function(src, label, key)
+    {
+        var html = '<div class="panel panel-default" id="user-template-image-background-' + key + '">';
+
+        html += '<div class="panel-heading">';
+        html += '<h3 class="panel-title">' + label + '</h3>';
+        html += '</div>';
+
+        html += '<div class="panel-body clearfix">';
+
+        html += '<div class="form-group thumbnail">';
+        html += '<img class="img-responsive"' + ' src="' + src + '" />';
+        html += '<div class="caption" id="ajax-upload-' + key + '">';
+        html += '<label>' + label + '</label>';
+        // this will be replaced by the ajax uploader
+        html += '<input data-ft-label="' + label + '" type="file" accept="image/*" />';
+        html += '</div>';
+        html += '</div>';
+
+        html += '</div>';
+
+        html += '</div>';
+
+        return html;
+    },
+
+    /**
+     * Checks if an element is some kind of special field that should have form
+     * fields and builds the html for it
+     */
+    addCustomFieldInPlaceholderFor: function($element, key, $placeholder)
+    {
+        // replace links
+        if (($element).is('[data-ft-type="link"]')) {
+            $placeholder.append(jsBackend.pages.extras.getLinkFieldHtml($element.text(), $element.attr('href'), $element.data('ft-label'), key));
+
+            return;
+        }
+
+        // replace links without content
+        if ($element.is('[data-ft-type="link-without-content"]')) {
+            $placeholder.append(jsBackend.pages.extras.getLinkWithoutContentFieldHtml($element.attr('href'), $element.data('ft-label'), key));
+
+            return;
+        }
+
+        // replace text
+        if ($element.is('[data-ft-type="text"]')) {
+            $placeholder.append(jsBackend.pages.extras.getTextFieldHtml($element.text(), $element.data('ft-label'), key));
+
+            return;
+        }
+
+        if ($element.is('[data-ft-type="textarea"]')) {
+            $placeholder.append(jsBackend.pages.extras.getTextAreaFieldHtml($element.text(), $element.data('ft-label'), key));
+
+            return;
+        }
+
+        // replace image
+        if ($element.is('[data-ft-type="image"]')) {
+            $placeholder.append(
+                jsBackend.pages.extras.getImageFieldHtml(
+                    $element.attr('src'),
+                    $element.attr('alt'),
+                    $element.data('ft-label'),
+                    $element.attr('style') !== 'display: none;',
+                    key
+                )
+            );
+
+            // attach an ajax uploader to the field
+            jsBackend.pages.extras.uploaders.push(new ss.SimpleUpload({
+                button: 'ajax-upload-' + key,
+                url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
+                name: 'file',
+                accept: 'image/*',
+                responseType: 'json',
+                onComplete: function(filename, response) {
+                    if (!response) {
+                        alert(filename + 'upload failed');
+                        return false;
+                    }
+
+                    // cache the old image variable, we'll want to remove it to keep our filesystem clean
+                    var oldImage = $('#user-template-image-' + key + ' img').attr('src');
+
+                    $('#user-template-image-' + key + ' img').attr(
+                        'src',
+                        '/src/Frontend/Files/Pages/UserTemplate/' + response.data
+                    );
+
+                    // send a request to remove the old image if the old image doesn't have the same name
+                    if (oldImage !== response.data) {
+                        $.ajax({
+                            data: {
+                                fork: {module: 'Pages', action: 'RemoveUploadedFile'},
+                                file: oldImage,
+                                type: 'UserTemplate'
+                            }
+                        });
+                    }
+                }
+            }));
+
+            // handle the "show image" checkbox
+            $('#user-template-image-' + key + ' input[type=checkbox]').on('click', function(e) {
+                $('#user-template-image-' + key + ' img').toggle($(this).is(':checked'));
+            });
+
+            return;
+        }
+
+        // replace image background
+        if ($element.is('[data-ft-type="image-background"]')) {
+            $placeholder.append(
+                jsBackend.pages.extras.getImageBackgroundFieldHtml(
+                    $element.attr('data-src'),
+                    $element.data('ft-label'),
+                    key
+                )
+            );
+
+            // attach an ajax uploader to the field
+            jsBackend.pages.extras.uploaders.push(new ss.SimpleUpload({
+                button: 'ajax-upload-' + key,
+                url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
+                name: 'file',
+                accept: 'image/*',
+                responseType: 'json',
+                onComplete: function(filename, response) {
+                    if (!response) {
+                        alert(filename + 'upload failed');
+                        return false;
+                    }
+
+                    // cache the old image variable, we'll want to remove it to keep our filesystem clean
+                    var oldImage = $('#user-template-image-background-' + key + ' img').attr('src');
+
+                    $('#user-template-image-background-' + key + ' img').attr(
+                        'src',
+                        '/src/Frontend/Files/Pages/UserTemplate/' + response.data
+                    );
+
+                    // send a request to remove the old image if the old image doesn't have the same name
+                    if (oldImage !== response.data) {
+                        $.ajax({
+                            data: {
+                                fork: {module: 'Pages', action: 'RemoveUploadedFile'},
+                                file: oldImage,
+                                type: 'UserTemplate'
+                            }
+                        });
+                    }
+                }
+            }));
+
+            return;
+        }
+
+        // replace editor
+        if ($element.is('[data-ft-type="editor"]')) {
+            $placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.html(), $element.data('ft-label'), key));
+
+            jsBackend.ckeditor.load();
+
+            return;
+        }
+    },
+
+    /**
+     * Takes all the data out of the user template form and injects it again in
+     * the original template html
+     */
+    saveUserTemplateForm: function($hiddenPlaceholder, $placeholder)
+    {
+        $hiddenPlaceholder.find('*').each(function(key) {
+            jsBackend.pages.extras.saveCustomField($(this), key, $placeholder);
+        });
+    },
+
+    saveCustomField: function($element, key, $placeholder)
+    {
+        if ($element.is('[data-ft-type="link"]')) {
+            var $labelField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-label]');
+            var $urlField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-url]');
+
+            $element.attr('href', $urlField.val());
+            $element.text($labelField.val());
+
+            return;
+        }
+
+        if ($element.is('[data-ft-type="link-without-content"]')) {
+            var $urlField = $placeholder.find('#user-template-link-without-content-' + key + ' input[data-ft-url]');
+
+            $element.attr('href', $urlField.val());
+
+            return;
+        }
+
+        if ($element.is('[data-ft-type="text"]')) {
+            var $labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
+
+            $element.text($labelField.val());
+
+            return;
+        }
+
+        if ($element.is('[data-ft-type="textarea"]')) {
+            var $textarea = $placeholder.find('#user-template-textarea-' + key + ' textarea[data-ft-label]');
+
+            $element.text($textarea.val());
+
+            return;
+        }
+
+        if ($element.is('[data-ft-type="image"]')) {
+            var $img = $placeholder.find('#user-template-image-' + key + ' img');
+            var alt = $placeholder.find('#alt' + key).val();
+            var $visible = $placeholder.find('#user-template-image-' + key + ' input[type=checkbox]');
+
+            $element.attr('src', $img.attr('src'));
+            $element.attr('alt', alt);
+            if ($visible.is(':checked')) {
+                $element.attr('style', 'display: block;');
+            }
+            else {
+                $element.attr('style', 'display: none;');
+            }
+
+            return;
+        }
+
+        if ($element.is('[data-ft-type="image-background"]')) {
+            var $img = $placeholder.find('#user-template-image-background-' + key + ' img');
+
+            $element.attr('data-src', $img.attr('src'));
+            $element.css('background-image', 'url("' + $img.attr('src') + '")');
+
+            return;
+        }
+
+        if ($element.is('[data-ft-type="editor"]')) {
+            var $textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]');
+
+            $element.html($textarea.val());
+
+            // destroy the editor
+            var editor = CKEDITOR.instances['user-template-cke-' + key];
+            if (editor) {
+                editor.destroy(true);
+            }
+
+            return;
         }
     },
 
@@ -443,9 +1037,8 @@ jsBackend.pages.extras =
         var element = $(this);
 
         // initialize the modal for deleting a block
-        if($('#confirmDeleteBlock').length > 0)
-        {
-            $('#confirmDeleteBlockSubmit').unbind('click').on('click', function (e) {
+        if ($('#confirmDeleteBlock').length > 0) {
+            $('#confirmDeleteBlockSubmit').unbind('click').on('click', function(e) {
                 // delete this block
                 jsBackend.pages.extras.deleteBlock(element.parent().parent('.templatePositionCurrentType').attr('data-block-id'));
 
@@ -471,8 +1064,7 @@ jsBackend.pages.extras =
     sortable: function(element)
     {
         // make blocks sortable
-        element.sortable(
-        {
+        element.sortable({
             items: '.templatePositionCurrentType',
             tolerance: 'pointer',
             placeholder: 'dragAndDropPlaceholder',
@@ -497,13 +1089,11 @@ jsBackend.pages.extras =
             start: function(e, ui)
             {
                 // check if we're moving from template
-                if($(this).parents('#templateVisualLarge').length > 0)
-                {
+                if ($(this).parents('#templateVisualLarge').length > 0) {
                     // disable dropping to fallback
                     $('div.linkedBlocks').sortable('option', 'connectWith', '#templateVisualLarge div.linkedBlocks');
                 }
-                else
-                {
+                else {
                     // enable dropping on fallback
                     $('div.linkedBlocks').sortable('option', 'connectWith', 'div.linkedBlocks');
                 }
@@ -543,9 +1133,10 @@ jsBackend.pages.extras =
         $(this).closest('*[data-block-id]').removeClass('templateDisabled');
 
         // toggle visibility indicators
-        if(visible) $(this).find('.fa').addClass('fa-eye');
-        else
-        {
+        if (visible) {
+            $(this).find('.fa').addClass('fa-eye');
+        }
+        else {
             $(this).find('.fa').addClass('fa-eye-slash');
             $(this).closest('*[data-block-id]').addClass('templateDisabled');
         }
@@ -561,10 +1152,10 @@ jsBackend.pages.extras =
 /**
  * All methods related to the templates
  */
-jsBackend.pages.template =
-{
+jsBackend.pages.template = {
     // indicates whether or not the page content is original or has been altered already
     original: true,
+    userTemplates: {},
 
     // init, something like a constructor
     init: function()
@@ -590,7 +1181,8 @@ jsBackend.pages.template =
         // show or hide the image tab
         if ('image' in current.data && current.data.image) {
             $('.js-page-image-tab').show();
-        } else {
+        }
+        else {
             $('.js-page-image-tab').hide();
         }
 
@@ -614,7 +1206,7 @@ jsBackend.pages.template =
         $('input[id^=blockPosition][value=fallback][id!=blockPosition0]').parent().remove();
 
         // check if we have already committed changes (if not, we can just ignore existing blocks and remove all of them)
-        if(current != old && jsBackend.pages.template.original) $('input[id^=blockPosition][id!=blockPosition0]').parent().remove();
+        if (current != old && jsBackend.pages.template.original) $('input[id^=blockPosition][id!=blockPosition0]').parent().remove();
 
         // loop existing blocks
         $('#editContent .contentBlock').each(function(i)
@@ -626,30 +1218,27 @@ jsBackend.pages.template =
             var html = $('textarea[id^=blockHtml]', this).val();
 
             // skip default (base) block (= continue)
-            if(index == 0) return true;
+            if (index == 0) return true;
 
             // blocks were present already = template was not original
             jsBackend.pages.template.original = false;
 
             // check if this block is a default of the old template, in which case it'll go to the fallback position
-            if(current != old && $.inArray(extraId, old.data.default_extras[position]) >= 0 && html === '') $('input[id=blockPosition' + index + ']', this).val('fallback');
+            if (current != old && $.inArray(extraId, old.data.default_extras[position]) >= 0 && html === '') $('input[id=blockPosition' + index + ']', this).val('fallback');
         });
 
         // init var
         newDefaults = [];
 
         // check if this default block has been changed
-        if(current != old || (typeof initDefaults != 'undefined' && initDefaults))
-        {
+        if (current != old || (typeof initDefaults != 'undefined' && initDefaults)) {
             // this is a variable indicating that the add-action may initially set default blocks
-            if(typeof initDefaults != 'undefined') initDefaults = false;
+            if (typeof initDefaults != 'undefined') initDefaults = false;
 
             // loop positions in new template
-            for(var position in current.data.default_extras)
-            {
+            for (var position in current.data.default_extras) {
                 // loop default extra's on positions
-                for(var block in current.data.default_extras[position])
-                {
+                for (var block in current.data.default_extras[position]) {
                     // grab extraId
                     extraId = current.data.default_extras[position][block];
 
@@ -657,10 +1246,12 @@ jsBackend.pages.template =
                     var existingBlock = $('input[id^=blockPosition][value=fallback]:not(#blockPosition0)').parent().find('input[id^=blockExtraId][value=' + extraId + ']').parent();
 
                     // if this block did net yet exist, add it
-                    if(existingBlock.length === 0) newDefaults.push(new Array(extraId, position));
-
-                    // if this block already existed, reset it to correct (new) position
-                    else $('input[id^=blockPosition]', existingBlock).val(position);
+                    if (existingBlock.length === 0) {
+                        newDefaults.push(new Array(extraId, position));
+                    }// if this block already existed, reset it to correct (new) position
+                    else {
+                        $('input[id^=blockPosition]', existingBlock).val(position);
+                    }
                 }
             }
         }
@@ -671,15 +1262,16 @@ jsBackend.pages.template =
             // fetch variables
             var index = $('input[id^=blockExtraId]', this).prop('id').replace('blockExtraId', '');
             var extraId = parseInt($('input[id^=blockExtraId]', this).val());
+            var extraType = $('input[id^=blockExtraType]', this).val();
+            var extraData = $('input[id^=blockExtraData]', this).val();
             var position = $('input[id^=blockPosition]', this).val();
             var visible = $('input[id^=blockVisible]', this).attr('checked');
 
             // skip default (base) block (= continue)
-            if(index == 0) return true;
+            if (index == 0) return true;
 
             // check if this position exists
-            if($.inArray(position, current.data.names) < 0)
-            {
+            if ($.inArray(position, current.data.names) < 0) {
                 // blocks in positions that do no longer exist should go to fallback
                 position = 'fallback';
 
@@ -691,27 +1283,26 @@ jsBackend.pages.template =
             }
 
             // add visual representation of block to template visualisation
-            added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible);
+            added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible, extraType, extraData);
 
             // if the visual could be not added, remove the content entirely
-            if(!added) $(this).remove();
+            if (!added) $(this).remove();
         });
 
         // reset block indexes
         jsBackend.pages.extras.resetIndexes();
 
         // add new defaults at last
-        for(var i in newDefaults) jsBackend.pages.extras.addBlock(newDefaults[i][0], newDefaults[i][1]);
+        for (var i in newDefaults) jsBackend.pages.extras.addBlock(newDefaults[i][0], newDefaults[i][1]);
     },
 
     // bind template change submit click event
     changeTemplateBindSubmit: function(e)
     {
         // prevent the default action
-        $('#changeTemplateSubmit').unbind('click').on('click', function (e) {
+        $('#changeTemplateSubmit').unbind('click').on('click', function(e) {
             e.preventDefault();
-            if($('#templateList input:radio:checked').val() != $('#templateId').val())
-            {
+            if ($('#templateList input:radio:checked').val() != $('#templateId').val()) {
                 // change the template for real
                 jsBackend.pages.template.changeTemplate();
             }
@@ -725,52 +1316,46 @@ jsBackend.pages.template =
 /**
  * All methods related to the tree
  */
-jsBackend.pages.tree =
-{
+jsBackend.pages.tree = {
     // init, something like a constructor
     init: function()
     {
-        if($('#tree div').length === 0) return false;
+        if ($('#tree div').length === 0) return false;
 
         // add "treeHidden"-class on leafs that are hidden, only for browsers that don't support opacity
-        if(!jQuery.support.opacity) $('#tree ul li[rel="hidden"]').addClass('treeHidden');
+        if (!jQuery.support.opacity) $('#tree ul li[rel="hidden"]').addClass('treeHidden');
 
         var openedIds = [];
-        if(typeof pageID != 'undefined')
-        {
+        if (typeof pageID != 'undefined') {
             // get parents
-            var parents = $('#page-'+ pageID).parents('li');
+            var parents = $('#page-' + pageID).parents('li');
 
             // init var
-            openedIds = ['page-'+ pageID];
+            openedIds = ['page-' + pageID];
 
             // add parents
-            for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).prop('id'));
+            for (var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).prop('id'));
         }
 
         // add home if needed
-        if(!utils.array.inArray('page-1', openedIds)) openedIds.push('page-1');
+        if (!utils.array.inArray('page-1', openedIds)) openedIds.push('page-1');
 
-        var options =
-        {
-            ui: { theme_name: 'fork' },
+        var options = {
+            ui: {theme_name: 'fork'},
             opened: openedIds,
-            rules:
-            {
+            rules: {
                 multiple: false,
                 multitree: 'all',
                 drag_copy: false
             },
-            lang: { loading: utils.string.ucfirst(jsBackend.locale.lbl('Loading')) },
-            callback:
-            {
+            lang: {loading: utils.string.ucfirst(jsBackend.locale.lbl('Loading'))},
+            callback: {
                 beforemove: jsBackend.pages.tree.beforeMove,
                 onselect: jsBackend.pages.tree.onSelect,
                 onmove: jsBackend.pages.tree.onMove
             },
-            plugins:
-            {
-                cookie: { prefix: 'jstree_', types: { selected: false }, options: { path: '/' } }
+            plugins: {
+                cookie: {prefix: 'jstree_', types: {selected: false}, options: {path: '/'}}
             }
         };
 
@@ -781,11 +1366,11 @@ jsBackend.pages.tree =
         $('.tree li.open').each(function()
         {
             // if the so-called open-element doesn't have any childs we should replace the open-class.
-            if($(this).find('ul').length === 0) $(this).removeClass('open').addClass('leaf');
+            if ($(this).find('ul').length === 0) $(this).removeClass('open').addClass('leaf');
         });
 
         // set the item selected
-        if(typeof selectedId != 'undefined') $('#' + selectedId).addClass('selected');
+        if (typeof selectedId != 'undefined') $('#' + selectedId).addClass('selected');
     },
 
     // before an item will be moved we have to do some checks
@@ -794,43 +1379,42 @@ jsBackend.pages.tree =
         // get pageID that has to be moved
         var parentPageID;
         var currentPageID = $(node).prop('id').replace('page-', '');
-        if(typeof refNode == 'undefined') parentPageID = 0;
-        else parentPageID = $(refNode).prop('id').replace('page-', '');
+        if (typeof refNode == 'undefined') {
+            parentPageID = 0;
+        }
+        else {
+            parentPageID = $(refNode).prop('id').replace('page-', '');
+        }
 
         // home is a special item
-        if(parentPageID == '1')
-        {
-            if(type == 'before') return false;
-            if(type == 'after') return false;
+        if (parentPageID == '1') {
+            if (type == 'before') return false;
+            if (type == 'after') return false;
         }
 
         // init var
         var result = false;
 
         // make the call
-        $.ajax(
-        {
+        $.ajax({
             async: false, // important that this isn't asynchronous
-            data:
-            {
-                fork: { action: 'GetInfo' },
+            data: {
+                fork: {action: 'GetInfo'},
                 id: currentPageID
             },
             error: function(XMLHttpRequest, textStatus, errorThrown)
             {
-                if(jsBackend.debug) alert(textStatus);
+                if (jsBackend.debug) alert(textStatus);
                 result = false;
             },
             success: function(json, textStatus)
             {
-                if(json.code != 200)
-                {
-                    if(jsBackend.debug) alert(textStatus);
+                if (json.code != 200) {
+                    if (jsBackend.debug) alert(textStatus);
                     result = false;
                 }
-                else
-                {
-                    if(json.data.allow_move == 'Y') result = true;
+                else {
+                    if (json.data.allow_move) result = true;
                 }
             }
         });
@@ -847,7 +1431,7 @@ jsBackend.pages.tree =
         var newPageURL = $(node).find('a').prop('href');
 
         // only redirect if destination isn't the current one.
-        if(typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
+        if (typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
     },
 
     // when an item is moved
@@ -861,15 +1445,17 @@ jsBackend.pages.tree =
 
         // get pageID wheron the page has been dropped
         var droppedOnPageID;
-        if(typeof refNode == 'undefined') droppedOnPageID = 0;
-        else droppedOnPageID = $(refNode).prop('id').replace('page-', '');
+        if (typeof refNode == 'undefined') {
+            droppedOnPageID = 0;
+        }
+        else {
+            droppedOnPageID = $(refNode).prop('id').replace('page-', '');
+        }
 
         // make the call
-        $.ajax(
-        {
-            data:
-            {
-                fork: { action: 'Move' },
+        $.ajax({
+            data: {
+                fork: {action: 'Move'},
                 id: currentPageID,
                 dropped_on: droppedOnPageID,
                 type: type,
@@ -877,9 +1463,8 @@ jsBackend.pages.tree =
             },
             success: function(json, textStatus)
             {
-                if(json.code != 200)
-                {
-                    if(jsBackend.debug) alert(textStatus);
+                if (json.code != 200) {
+                    if (jsBackend.debug) alert(textStatus);
 
                     // show message
                     jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'));
@@ -887,8 +1472,7 @@ jsBackend.pages.tree =
                     // rollback
                     $.tree.rollback(rollback);
                 }
-                else
-                {
+                else {
                     // show message
                     jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title));
                 }

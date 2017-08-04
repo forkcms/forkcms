@@ -1,0 +1,28 @@
+{#
+  Media Listing
+  Variables that are available:
+  - {{ mediaItems }}: Contains full urls to MediaItem items, f.e.: {{ items.source }}
+  - {{ title }}: A custom optional title that you can give when parsing from Custom module.
+#}
+
+{% if mediaItems %}
+<section class="module-media-library widget-media-library-listing">
+  {% block widget_heading %}
+    {% if title %}
+      <header class="widget-heading">
+        <h3>{{ title|ucfirst }}</h3>
+      </header>
+    {% endif %}
+  {% endblock %}
+
+  {% block widget_body %}
+    <div class="widget-body">
+      <ul>
+        {% for mediaItem in mediaItems %}
+          <li>{{ mediaItem.getLinkHTML|raw }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endblock %}
+</section>
+{% endif %}

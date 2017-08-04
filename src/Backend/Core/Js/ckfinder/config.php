@@ -16,9 +16,13 @@
  * Create a Kernel and load the DI container to be able to access the Backend Model methods and
  * the configuration. This should be refactored in time.
  */
-require_once '../../../../../../../../autoload.php';
-require_once '../../../../../../../../app/AppKernel.php';
-require_once '../../../../../../../../app/KernelLoader.php';
+require_once __DIR__ . '/../../../../../autoload.php';
+
+// after registring autoloaders, let's add use statements for our needed classes
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\App\AppKernel;
+use ForkCMS\App\KernelLoader;
 
 $env = getenv('FORK_ENV') ? : 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
@@ -26,10 +30,6 @@ $debug = getenv('FORK_DEBUG') === '1';
 $kernel = new AppKernel($env, $debug);
 $loader = new KernelLoader($kernel);
 $loader->passContainerToModels();
-
-// after registring autoloaders, let's add use statements for our needed classes
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This function must check the user session to be sure that he/she is
@@ -39,17 +39,17 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 function CheckAuthentication()
 {
-	// WARNING : DO NOT simply return "true". By doing so, you are allowing
-	// "anyone" to upload and list the files in your server. You must implement
-	// some kind of session validation here. Even something very simple as...
+    // WARNING : DO NOT simply return "true". By doing so, you are allowing
+    // "anyone" to upload and list the files in your server. You must implement
+    // some kind of session validation here. Even something very simple as...
 
-	// return isset($_SESSION['IsAuthorized']) && $_SESSION['IsAuthorized'];
+    // return isset($_SESSION['IsAuthorized']) && $_SESSION['IsAuthorized'];
 
-	// ... where $_SESSION['IsAuthorized'] is set to "true" as soon as the
-	// user logs in your system. To be able to use session variables don't
-	// forget to add session_start() at the top of this file.
+    // ... where $_SESSION['IsAuthorized'] is set to "true" as soon as the
+    // user logs in your system. To be able to use session variables don't
+    // forget to add session_start() at the top of this file.
 
-	return BackendAuthentication::isLoggedIn();
+    return BackendAuthentication::isLoggedIn();
 }
 
 // LicenseKey : Paste your license key here. If left blank, CKFinder will be
@@ -79,7 +79,7 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = '/src/Frontend/Files/userfiles/';
+$baseUrl = '/src/Frontend/Files/Core/CKFinder/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the
@@ -109,14 +109,15 @@ Thumbnails : thumbnails settings. All thumbnails will end up in the same
 directory, no matter the resource type.
 */
 $config['Thumbnails'] = Array(
-		'url' => $baseUrl . '_thumbs',
-		'directory' => $baseDir . '_thumbs',
-		'enabled' => true,
-		'directAccess' => true,
-		'maxWidth' => 96,
-		'maxHeight' => 96,
-		'bmpSupported' => false,
-		'quality' => 100);
+    'url' => $baseUrl . '_thumbs',
+    'directory' => $baseDir . '_thumbs',
+    'enabled' => true,
+    'directAccess' => true,
+    'maxWidth' => 96,
+    'maxHeight' => 96,
+    'bmpSupported' => false,
+    'quality' => 100,
+);
 
 /*
 Set the maximum size of uploaded images. If an uploaded image is larger, it
@@ -125,7 +126,8 @@ gets scaled down proportionally. Set to 0 to disable this feature.
 $config['Images'] = Array(
     'maxWidth' => BackendModel::get('fork.settings')->get('Core', 'ckfinder_image_max_width'),
     'maxHeight' => BackendModel::get('fork.settings')->get('Core', 'ckfinder_image_max_height'),
-    'quality' => 100);
+    'quality' => 100,
+);
 
 /*
 RoleSessionVar : the session variable name that CKFinder must use to retrieve
@@ -151,19 +153,20 @@ Subfolders inherit their default settings from their parents' definitions.
 */
 
 $config['AccessControl'][] = Array(
-		'role' => '*',
-		'resourceType' => '*',
-		'folder' => '/',
+    'role' => '*',
+    'resourceType' => '*',
+    'folder' => '/',
 
-		'folderView' => true,
-		'folderCreate' => true,
-		'folderRename' => true,
-		'folderDelete' => true,
+    'folderView' => true,
+    'folderCreate' => true,
+    'folderRename' => true,
+    'folderDelete' => true,
 
-		'fileView' => true,
-		'fileUpload' => true,
-		'fileRename' => true,
-		'fileDelete' => true);
+    'fileView' => true,
+    'fileUpload' => true,
+    'fileRename' => true,
+    'fileDelete' => true,
+);
 
 /*
 For example, if you want to restrict the upload, rename or delete of files in
@@ -212,20 +215,22 @@ to upload `.swf` files only if you understand and can accept this risk.
 $config['DefaultResourceTypes'] = '';
 
 $config['ResourceType'][] = Array(
-		'name' => 'Files',				// Single quotes not allowed
-		'url' => $baseUrl . 'files',
-		'directory' => $baseDir . 'files',
-		'maxSize' => 0,
-		'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,eps,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,svg,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,webp,wma,wmv,xls,xlsx,zip',
-		'deniedExtensions' => '');
+    'name' => 'Files',                // Single quotes not allowed
+    'url' => $baseUrl . 'files',
+    'directory' => $baseDir . 'files',
+    'maxSize' => 0,
+    'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,eps,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,svg,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,webp,wma,wmv,xls,xlsx,zip',
+    'deniedExtensions' => '',
+);
 
 $config['ResourceType'][] = Array(
-		'name' => 'Images',
-		'url' => $baseUrl . 'images',
-		'directory' => $baseDir . 'images',
-		'maxSize' => 0,
-		'allowedExtensions' => 'gif,jpeg,jpg,png,svg,webp',
-		'deniedExtensions' => '');
+    'name' => 'Images',
+    'url' => $baseUrl . 'images',
+    'directory' => $baseDir . 'images',
+    'maxSize' => 0,
+    'allowedExtensions' => 'gif,jpeg,jpg,png,svg,webp',
+    'deniedExtensions' => '',
+);
 
 /*
  Due to security issues with Apache modules, it is recommended to leave the
@@ -308,13 +313,13 @@ If possible, it is recommended to set more restrictive permissions, like 0755.
 Set to 0 to disable this feature.
 Note: not needed on Windows-based servers.
 */
-$config['ChmodFiles'] = 0777 ;
+$config['ChmodFiles'] = 0777;
 
 /*
 See comments above.
 Used when creating folders that does not exist.
 */
-$config['ChmodFolders'] = 0755 ;
+$config['ChmodFolders'] = 0755;
 
 /*
 Force ASCII names for files and folders.

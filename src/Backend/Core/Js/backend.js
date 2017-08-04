@@ -548,7 +548,11 @@ jsBackend.ckeditor =
             var modal_this;
             modal_this = this;
             $(document).on('focusin.modal', function(e) {
-                if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select') && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
+                if (modal_this.$element[0] !== e.target
+                    && !modal_this.$element.has(e.target).length
+                    && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select')
+                    && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')
+                    && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_textarea')) {
                     modal_this.$element.focus();
                 }
             });
@@ -1203,6 +1207,7 @@ jsBackend.forms =
         jsBackend.forms.submitWithLinks();
         jsBackend.forms.tagsInput();
         jsBackend.forms.meta();
+        jsBackend.forms.datePicker();
     },
 
     meta: function() {
@@ -1535,6 +1540,15 @@ jsBackend.forms =
 
         // return if needed
         if (changed) return jsBackend.locale.msg('ValuesAreChanged');
+    },
+
+    // Add date pickers to the appropriate input elements
+    datePicker: function () {
+        $('input[data-role="fork-datepicker"]').each(
+            function (index, datePickerElement) {
+                $(datePickerElement).datepicker();
+            }
+        );
     }
 };
 

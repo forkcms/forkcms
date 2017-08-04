@@ -1,4 +1,4 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends 'Layout/Templates/base.html.twig' %}
 
 
 {% block actionbar %}
@@ -197,30 +197,34 @@
           </button>
         </div>
       </div>
-      {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
-        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
-              </div>
-              <div class="modal-body">
-                <p>{{ 'msg.ConfirmDeleteTemplate'|trans|format(template.label)|raw }}</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                <a href="{{ geturl('delete_theme_template') }}&amp;id={{ template.id }}" class="btn btn-danger">
-                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      {% endif %}
     </div>
   </div>
   {% endform %}
 
+  {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
+    {{ form_start(deleteForm) }}
+    {{ form_row(deleteForm._token) }}
+    {{ form_row(deleteForm.id) }}
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+          </div>
+          <div class="modal-body">
+            <p>{{ 'msg.ConfirmDeleteTemplate'|trans|format(template.label)|raw }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            </button>
+            <button type="submit" class="btn btn-danger">
+              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ form_end(deleteForm) }}
+  {% endif %}
 {% endblock %}

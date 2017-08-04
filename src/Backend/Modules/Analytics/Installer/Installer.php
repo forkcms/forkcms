@@ -9,43 +9,39 @@ use Backend\Core\Installer\ModuleInstaller;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    public function install(): void
     {
         $this->addModule('Analytics');
-
-        // import locale
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureBackendWidgets();
+    }
 
-        // add the needed rights
-        $this->setModuleRights(1, $this->getModule());
-        $this->setActionRights(1, $this->getModule(), 'Index');
-        $this->setActionRights(1, $this->getModule(), 'Settings');
-        $this->setActionRights(1, $this->getModule(), 'Reset');
-
-        // module navigation
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "Modules"
         $navigationMarketingId = $this->setNavigation(null, 'Marketing', 'analytics/index', null, 4);
         $this->setNavigation($navigationMarketingId, 'Analytics', 'analytics/index');
 
-        // settings navigation
+        // Set navigation for "Settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, $this->getModule(), 'analytics/settings');
-
-        $this->insertWidgets();
     }
 
-    private function insertWidgets()
+    private function configureBackendRights(): void
     {
-        $this->insertDashboardWidget(
-            'Analytics',
-            'RecentVisits'
-        );
-        $this->insertDashboardWidget(
-            'Analytics',
-            'TraficSources'
-        );
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Settings');
+        $this->setActionRights(1, $this->getModule(), 'Reset');
+    }
+
+    private function configureBackendWidgets(): void
+    {
+        $this->insertDashboardWidget('Analytics', 'RecentVisits');
+        $this->insertDashboardWidget('Analytics', 'TraficSources');
     }
 }

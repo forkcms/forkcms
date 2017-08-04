@@ -9,9 +9,9 @@ namespace Backend\Modules\Search\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Base\Action;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -19,60 +19,27 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 /**
  * This is the synonyms-action, it will display the overview of search synonyms
  */
-class Synonyms extends BackendBaseActionIndex
+class Synonyms extends Action
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
-        $this->loadDataGrid();
-        $this->parse();
+        $this->showDataGrid();
         $this->display();
     }
 
-    /**
-     * Loads the datagrids
-     */
-    private function loadDataGrid()
+    private function showDataGrid(): void
     {
-        // create datagrid
-        $this->dataGrid = new BackendDataGridDB(
-            BackendSearchModel::QRY_DATAGRID_BROWSE_SYNONYMS,
-            BL::getWorkingLanguage()
-        );
+        $dataGrid = new BackendDataGridDatabase(BackendSearchModel::QUERY_DATAGRID_BROWSE_SYNONYMS, [BL::getWorkingLanguage()]);
+        $dataGrid->setSortingColumns(['term'], 'term');
+        $dataGrid->setColumnFunction('str_replace', [',', ', ', '[synonym]'], 'synonym', true);
 
-        // sorting columns
-        $this->dataGrid->setSortingColumns(array('term'), 'term');
-
-        // column function
-        $this->dataGrid->setColumnFunction('str_replace', array(',', ', ', '[synonym]'), 'synonym', true);
-
-        // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('EditSynonym')) {
-            // set column URLs
-            $this->dataGrid->setColumnURL('term', BackendModel::createURLForAction('EditSynonym') . '&amp;id=[id]');
-
-            // add column
-            $this->dataGrid->addColumn(
-                'edit',
-                null,
-                BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditSynonym') . '&amp;id=[id]',
-                BL::lbl('Edit')
-            );
+            $editUrl = BackendModel::createUrlForAction('EditSynonym') . '&amp;id=[id]';
+            $dataGrid->setColumnURL('term', $editUrl);
+            $dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editUrl, BL::lbl('Edit'));
         }
-    }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
-    {
-        parent::parse();
-
-        // assign the datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->template->assign('dataGrid', $dataGrid->getContent());
     }
 }

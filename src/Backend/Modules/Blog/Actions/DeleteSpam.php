@@ -18,17 +18,14 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class DeleteSpam extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         BackendBlogModel::deleteSpamComments();
 
         // item was deleted, so redirect
         $this->redirect(
-            BackendModel::createURLForAction('Comments') .
+            BackendModel::createUrlForAction('Comments') .
             '&report=deleted-spam#tabSpam'
         );
     }

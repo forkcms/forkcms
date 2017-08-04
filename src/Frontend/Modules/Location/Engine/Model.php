@@ -25,7 +25,7 @@ class Model
      *
      * @return string
      */
-    public static function buildUrl(array $settings, array $markers = array())
+    public static function buildUrl(array $settings, array $markers = []): string
     {
         $url = 'http://maps.google.be/?';
 
@@ -51,7 +51,7 @@ class Model
                 break;
         }
 
-        $pointers = array();
+        $pointers = [];
         // add the markers to the url
         foreach ($markers as $marker) {
             $pointers[] = rawurlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
@@ -64,51 +64,39 @@ class Model
         return $url;
     }
 
-    /**
-     * Get an item
-     *
-     * @param int $id The id of the item to fetch.
-     *
-     * @return array
-     */
-    public static function get($id)
+    public static function get(int $id): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT *
              FROM location
              WHERE id = ? AND language = ?',
-            array((int) $id, LANGUAGE)
+            [$id, LANGUAGE]
         );
     }
 
-    /**
-     * Get all items
-     *
-     * @return array
-     */
-    public static function getAll()
+    public static function getAll(): array
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT * FROM location WHERE language = ? AND show_overview = ?',
-            array(LANGUAGE, 'Y')
+            [LANGUAGE, true]
         );
     }
 
     /**
      * Retrieve a map setting
      *
-     * @param int    $mapId
+     * @param int $mapId
      * @param string $name
      *
      * @return mixed
      */
-    public static function getMapSetting($mapId, $name)
+    public static function getMapSetting(int $mapId, string $name)
     {
         $serializedData = (string) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT s.value
              FROM location_settings AS s
              WHERE s.map_id = ? AND s.name = ?',
-            array((int) $mapId, (string) $name)
+            [$mapId, $name]
         );
 
         if ($serializedData != null) {
@@ -118,20 +106,13 @@ class Model
         return false;
     }
 
-    /**
-     * Fetch all the settings for a specific map
-     *
-     * @param int $mapId
-     *
-     * @return array
-     */
-    public static function getMapSettings($mapId)
+    public static function getMapSettings(int $mapId): array
     {
         $mapSettings = (array) FrontendModel::getContainer()->get('database')->getPairs(
             'SELECT s.name, s.value
              FROM location_settings AS s
              WHERE s.map_id = ?',
-            array((int) $mapId)
+            [$mapId]
         );
 
         foreach ($mapSettings as $key => $value) {
@@ -141,13 +122,7 @@ class Model
         return $mapSettings;
     }
 
-    /**
-     * Get path to map styles
-     *
-     * @param boolean $backend
-     * @return string
-     */
-    public static function getPathToMapStyles($backend = true)
+    public static function getPathToMapStyles(bool $backend = true): string
     {
         $path = 'src/Frontend';
         $jsFile = 'Location/Js/LocationMapStyles.js';

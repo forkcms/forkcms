@@ -1,1 +1,136 @@
-{% extends 'form_div_layout.html.twig' %}
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{%- block form_label -%}
+  {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) -%}
+  {% if label is not same as(false) -%}
+    {% if not compound -%}
+      {% set label_attr = label_attr|merge({'for': id}) %}
+    {%- endif -%}
+    {% if required -%}
+      {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+    {%- endif -%}
+    {% if label is empty -%}
+      {%- if label_format is not empty -%}
+        {% set label = label_format|replace({
+        '%name%': name,
+        '%id%': id,
+        }) %}
+      {%- else -%}
+        {% set label = name|humanize|capitalize %}
+      {%- endif -%}
+    {%- endif -%}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+      {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain)|capitalize }}
+      {%- if required -%}
+        <abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+      {%- endif -%}
+    </label>
+  {%- endif -%}
+{%- endblock form_label -%}
+
+{% block form_errors -%}
+  {% if errors|length > 0 -%}
+    {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+        {%- for error in errors -%}
+          {{ error.message }}</li>
+        {%- endfor -%}
+    {% if form.parent %}</span>{% else %}</div>{% endif %}
+  {%- endif %}
+{%- endblock form_errors %}
+
+{% block fork_image_widget %}
+  {% spaceless %}
+    <div class="form-group">
+      {{ form_widget(form.file) }}
+      {% if help_text_message %}
+        <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
+      {% endif %}
+      {{ form_errors(form.file) }}
+    </div>
+    {% set show_preview = show_preview and data is not null and data.fileName is not empty %}
+    {% if show_preview or show_remove_image %}
+      <div class="form-group">
+        {% if show_preview and preview_url %}
+          <img class="{% if preview_class is defined and preview_class is not empty %}{{ preview_class }}{% endif %}" src="{{ preview_url }}">
+        {% endif %}
+        {% if show_remove_image %}
+          {{ form_widget(form.remove) }}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endspaceless %}
+{% endblock %}
+
+{% block fork_file_widget %}
+  {% spaceless %}
+    <div class="form-group">
+      {{ form_widget(form.file) }}
+      {% if help_text_message %}
+        <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
+      {% endif %}
+      {{ form_errors(form.file) }}
+    </div>
+    {% set show_preview = show_preview and data is not null and data.fileName is not empty %}
+    {% if show_preview or show_remove_file %}
+      <div class="form-group">
+        {% if show_preview and preview_url %}
+          <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank">
+            <i class="fa fa-eye"></i>
+            {{ preview_label|trans|ucfirst }}
+          </a>
+        {% endif %}
+        {% if show_remove_file %}
+          {{ form_widget(form.remove) }}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endspaceless %}
+{% endblock %}
+
+{% block bootstrap_collection_row %}
+  {% spaceless %}
+    {% if prototype is defined %}
+      {% set prototype_vars = {} %}
+      {% if style is defined %}
+        {% set prototype_vars = prototype_vars|merge({'style': style}) %}
+      {% endif %}
+      {% set prototype_html = form_widget(prototype, prototype_vars) %}
+      {% if form.vars.allow_delete %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-toolbar"><div class="btn-group pull-right"><a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|raw ~ '</a></div></div>' %}
+      {% endif %}
+
+      {% set attr = attr|merge({'data-prototype': prototype_html }) %}
+      {% set attr = attr|merge({'data-prototype-name': prototype_name }) %}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          {{ form_label(form) }}
+        </div>
+        <ul class="list-group js-collection">
+          {% for field in form %}
+            <li class="list-group-item">
+              {{ form_widget(field) }}
+              {{ form_errors(field) }}
+              {% if form.vars.allow_delete %}
+                <div class="btn-toolbar">
+                  <div class="btn-group pull-right">
+                    <a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|raw }}</a>
+                  </div>
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="panel-footer clearfix">
+          {% if form.vars.allow_add %}
+            <div class="btn-group pull-right">
+              <a href="#" class="btn btn-success btn-sm" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|trans({}, translation_domain)|raw }}</a>
+            </div>
+          {% endif %}
+          {{ form_errors(form) }}
+        </div>
+      </div>
+    </div>
+  {% endspaceless %}
+{% endblock bootstrap_collection_row %}

@@ -22,25 +22,19 @@ class Index extends BackendBaseActionIndex
     /** @var int */
     private $statusCode;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Parse the correct messages into the template
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // grab the error-type from the parameters
-        $errorType = $this->getParameter('type');
+        $errorType = $this->getRequest()->query->get('type');
 
         // set correct headers
         switch ($errorType) {
@@ -58,32 +52,29 @@ class Index extends BackendBaseActionIndex
         }
 
         // querystring provided?
-        if ($this->getParameter('querystring') !== null) {
+        if ($this->getRequest()->query->get('querystring', '') !== '') {
             // split into file and parameters
-            $chunks = explode('?', $this->getParameter('querystring'));
+            $chunks = explode('?', $this->getRequest()->query->get('querystring'));
 
             // get extension
             $extension = pathinfo($chunks[0], PATHINFO_EXTENSION);
 
             // if the file has an extension it is a non-existing-file
-            if ($extension != '' && $extension != $chunks[0]) {
+            if ($extension !== '' && $extension !== $chunks[0]) {
                 // give a nice error, so we can detect which file is missing
                 throw new ExitException(
                     'File not found',
-                    'Requested file (' . htmlspecialchars($this->getParameter('querystring')) . ') not found.',
+                    'Requested file (' . htmlspecialchars($this->getRequest()->query->get('querystring')) . ') not found.',
                     Response::HTTP_NOT_FOUND
                 );
             }
         }
 
         // assign the correct message into the template
-        $this->tpl->assign('message', BL::err(\SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
+        $this->template->assign('message', BL::err(\SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
     }
 
-    /**
-     * @return Response
-     */
-    public function getContent()
+    public function getContent(): Response
     {
         return new Response(
             $this->content,

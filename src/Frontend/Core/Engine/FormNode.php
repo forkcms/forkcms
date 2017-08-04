@@ -14,54 +14,48 @@ class FormNode extends \Twig_Node
 
     /**
      * @param string $form The name of the template variable to which the form is assigned
-     * @param int $lineno
+     * @param int $lineNumber
      * @param string $tag
      */
-    public function __construct($form, $lineno, $tag)
+    public function __construct(string $form, int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineno, $tag);
+        parent::__construct([], [], $lineNumber, $tag);
         $this->form = $form;
     }
 
     /**
      * @param \Twig_Compiler $compiler
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(\Twig_Compiler $compiler): void
     {
         // Set some string representations to make the code writing via the
         // compiler a bit more readable. ("a bit")
-        $frm = "\$context['form_{$this->form}']";
-        $frmAction = $frm . '->getAction()';
-        $frmMethod = $frm . '->getMethod()';
-        $frmName = $frm . '->getName()';
-        $frmToken = $frm . '->getToken()';
-        $frmUseToken = $frm . '->getUseToken()';
-        $frmParamsHtml = $frm . '->getParametersHTML()';
-        $frmAttrAction = ' action="\', ' . $frmAction . ', \'"';
-        $frmAttrMethod = ' method="\', ' . $frmMethod . ', \'"';
-        $hiddenFormName = '<input type="hidden" name="form" value="\', ' . $frmName . ', \'" id="form\', ucfirst(' . $frmName . '), \'" />';
-        $hiddenFormToken = '<input type="hidden" name="form_token" value="\', ' . $frmToken . ', \'" id="formToken\', ucfirst(' . $frmName . '), \'" />';
-
-        // oh boy,  disabled atm constant is gone
-        // $htmlAcceptCharset = (SPOON_CHARSET == 'utf-8')
-        //     ? ' accept-charset="UTF-8"'
-        //     : '';
+        $form = "\$context['form_{$this->form}']";
+        $formAction = $form . '->getAction()';
+        $formMethod = $form . '->getMethod()';
+        $formName = $form . '->getName()';
+        $formToken = $form . '->getToken()';
+        $formUseToken = $form . '->getUseToken()';
+        $formParamsHtml = $form . '->getParametersHTML()';
+        $formAttrAction = ' action="\', ' . $formAction . ', \'"';
+        $formAttrMethod = ' method="\', ' . $formMethod . ', \'"';
+        $hiddenFormName = '<input type="hidden" name="form" value="\', ' . $formName . ', \'" id="form\', ucfirst(' . $formName . '), \'" />';
+        $hiddenFormToken = '<input type="hidden" name="form_token" value="\', ' . $formToken . ', \'" id="formToken\', ucfirst(' . $formName . '), \'" />';
 
         $compiler
             ->addDebugInfo($this)
 
             ->write('echo \'<form')
-            ->raw($frmAttrMethod)
-            ->raw($frmAttrAction)
-            //->raw($htmlAcceptCharset)
+            ->raw($formAttrMethod)
+            ->raw($formAttrAction)
             ->raw("', ")
-            ->raw(' ' . $frmParamsHtml)
+            ->raw(' ' . $formParamsHtml)
             ->raw(', \'')
             ->raw('>\'')
             ->raw(";\n")
 
             ->write("echo '$hiddenFormName';\n")
-            ->write("if($frmUseToken) echo '$hiddenFormToken';")
+            ->write("if($formUseToken) echo '$hiddenFormToken';")
         ;
     }
 }

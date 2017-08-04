@@ -11,6 +11,7 @@ namespace Backend\Modules\Blog\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -18,44 +19,58 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class DeleteCategory extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteCategory']
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction(
+                'Categories',
+                null,
+                null,
+                ['error' => 'something-went-wrong']
+            ));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
-            // get data
-            $this->record = (array) BackendBlogModel::getCategory($this->id);
+        if ($this->id === 0 || !BackendBlogModel::existsCategory($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction('Categories', null, null, ['error' => 'non-existing']));
 
-            // allowed to delete the category?
-            if (BackendBlogModel::deleteCategoryAllowed($this->id)) {
-                // call parent, this will probably add some general CSS/JS or other required files
-                parent::execute();
-
-                // delete item
-                BackendBlogModel::deleteCategory($this->id);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_delete_category', array('id' => $this->id));
-
-                // category was deleted, so redirect
-                $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&report=deleted-category&var=' .
-                    rawurlencode($this->record['title'])
-                );
-            } else {
-                $this->redirect(
-                    // delete category not allowed
-                    BackendModel::createURLForAction('Categories') . '&error=delete-category-not-allowed&var=' .
-                    rawurlencode($this->record['title'])
-                );
-            }
-        } else {
-            // something went wrong
-            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
+            return;
         }
+
+        $this->record = (array) BackendBlogModel::getCategory($this->id);
+
+        // allowed to delete the category?
+        if (!BackendBlogModel::deleteCategoryAllowed($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction(
+                'Categories',
+                null,
+                null,
+                ['error' => 'delete-category-not-allowed', 'var' => $this->record['title']]
+            ));
+
+            return;
+        }
+
+        parent::execute();
+
+        BackendBlogModel::deleteCategory($this->id);
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'Categories',
+            null,
+            null,
+            ['report' => 'deleted-category', 'var' => $this->record['title']]
+        ));
     }
 }

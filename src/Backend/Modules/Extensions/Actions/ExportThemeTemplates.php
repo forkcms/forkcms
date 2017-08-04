@@ -12,7 +12,6 @@ namespace Backend\Modules\Extensions\Actions;
 use Backend\Core\Engine\Base\ActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model;
-use SpoonFilter;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -37,10 +36,10 @@ class ExportThemeTemplates extends ActionEdit
     /**
      * Load the selected theme, falling back to default if none specified.
      */
-    public function execute()
+    public function execute(): void
     {
         // get data
-        $this->selectedTheme = $this->getParameter('theme', 'string');
+        $this->selectedTheme = $this->getRequest()->query->get('theme');
 
         // build available themes
         foreach (Model::getThemes() as $theme) {
@@ -48,17 +47,12 @@ class ExportThemeTemplates extends ActionEdit
         }
 
         // determine selected theme, based upon submitted form or default theme
-        $this->selectedTheme = SpoonFilter::getValue(
-            $this->selectedTheme,
-            array_keys($this->availableThemes),
-            $this->get('fork.settings')->get('Core', 'theme', 'core')
-        );
+        if (!array_key_exists($this->selectedTheme, $this->availableThemes)) {
+            $this->selectedTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+        }
     }
 
-    /**
-     * @return Response
-     */
-    public function getContent()
+    public function getContent(): Response
     {
         $filename = 'templates_' . BackendModel::getUTCDate('d-m-Y') . '.xml';
 

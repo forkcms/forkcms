@@ -12,8 +12,9 @@ namespace Frontend\Modules\Mailmotor\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Locale;
-use Frontend\Modules\Mailmotor\Command\Subscription;
-use Frontend\Modules\Mailmotor\Event\NotImplementedSubscribedEvent;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedSubscribedEvent;
+use Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
@@ -21,12 +22,7 @@ use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
  */
 class Subscribe extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra
-     *
-     * @return void
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -35,20 +31,20 @@ class Subscribe extends FrontendBaseBlock
 
         // Create the form
         $form = $this->createForm(
-            $this->get('mailmotor.form.subscription'),
+            SubscribeType::class,
             new Subscription(
                 Locale::frontendLanguage(),
                 $email
             )
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
-        if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->template->assign('form', $form->createView());
 
             if ($form->isSubmitted()) {
-                $this->tpl->assign('mailmotorSubscribeHasFormError', true);
+                $this->template->assign('mailmotorSubscribeHasFormError', true);
             }
 
             $this->loadTemplate();
@@ -57,13 +53,16 @@ class Subscribe extends FrontendBaseBlock
             return;
         }
 
-        $redirectLink = FrontendNavigation::getURLForBlock(
+        $redirectLink = FrontendNavigation::getUrlForBlock(
             'Mailmotor',
             'Subscribe'
         ) . '?subscribed=true';
 
         /** @var Subscription $subscription */
         $subscription = $form->getData();
+
+        /** @var bool $doubleOptin */
+        $doubleOptin = $this->get('fork.settings')->get('Mailmotor', 'double_opt_in', false);
 
         try {
             // The command bus will handle the unsubscription
@@ -77,45 +76,39 @@ class Subscribe extends FrontendBaseBlock
                 )
             );
 
-            $redirectLink .= '&double-opt-in=false';
+            $doubleOptin = false;
         }
 
+        $redirectLink .= '&double-opt-in=';
+        $redirectLink .= $doubleOptin ? 'true' : 'false';
         $redirectLink .= '#mailmotorSubscribeForm';
 
-        return $this->redirect($redirectLink);
+        $this->redirect($redirectLink);
     }
 
-    /**
-     * Get email
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         // define email
         $email = null;
 
         // request contains an email
-        if ($this->get('request')->request->get('email') != null) {
-            $email = $this->get('request')->request->get('email');
+        if ($this->getRequest()->request->get('email') != null) {
+            $email = $this->getRequest()->request->get('email');
         }
 
         return $email;
     }
 
-    /**
-     * Parse the data into the template
-     *
-     * @return void
-     */
-    private function parse()
+    private function parse(): void
     {
         // form was subscribed?
-        if ($this->URL->getParameter('subscribed') == 'true') {
+        if ($this->url->getParameter('subscribed') == 'true') {
             // show message
-            $this->tpl->assign('mailmotorSubscribeIsSuccess', true);
-            $this->tpl->assign('mailmotorSubscribeHasDoubleOptIn', ($this->URL->getParameter('double-opt-in', 'string', 'true') === 'true'));
+            $this->template->assign('mailmotorSubscribeIsSuccess', true);
+            $this->template->assign('mailmotorSubscribeHasDoubleOptIn', ($this->url->getParameter('double-opt-in', 'string', 'true') === 'true'));
 
             // hide form
-            $this->tpl->assign('mailmotorSubscribeHideForm', true);
+            $this->template->assign('mailmotorSubscribeHideForm', true);
         }
     }
 }

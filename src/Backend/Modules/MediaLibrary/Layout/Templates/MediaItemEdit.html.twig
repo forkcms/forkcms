@@ -1,0 +1,94 @@
+{% extends 'Layout/Templates/pages.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
+
+{% block pagesTree %}
+  <div class="sub-navigation">
+    <div id="mediaTree" class="pages-tree">
+      <div class="alert alert-warning visible-xs visible-sm">
+        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
+      </div>
+      <div id="tree">
+        {{ tree|raw }}
+      </div>
+    </div>
+    <div id="fullwidthSwitch">
+      <a href="#close">&nbsp;</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block actionbar %}
+  <div class="btn-toolbar pull-right">
+    <div class="btn-group" role="group">
+      {% if showMediaLibraryMediaItemIndex %}
+        {% if folderId %}
+          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.Overview'|trans|capitalize) }}
+        {% endif %}
+        {% if not folderId %}
+          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'bars', 'lbl.Overview'|trans|capitalize) }}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {{ form_start(form) }}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      {% if form.url %}
+        {{ form_row(form.url) }}
+      {% endif %}
+      {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-left" role="group">
+          {% if showMediaLibraryMediaItemDelete %}
+            {% if mediaItem.groups.count == 0 %}
+              <button type="button" class="btn btn-danger" id="blog-delete" data-toggle="modal" data-target="#confirmDelete">
+                <span class="fa fa-trash-o"></span>
+                {{ 'lbl.Delete'|trans|ucfirst }}
+              </button>
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="btn-group pull-right" role="group">
+          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+            <span class="fa fa-check"></span>{{ 'lbl.Save'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ form_end(form) }}
+
+  {% if showMediaLibraryMediaItemDelete %}
+    {{ form_start(deleteForm) }}
+    {{ form_row(deleteForm._token) }}
+    {{ form_row(deleteForm.id) }}
+    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="blog-delete" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+          </div>
+          <div class="modal-body">
+            <p>{{ 'msg.ConfirmMediaItemDelete'|trans|format(mediaItem.title)|raw }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            </button>
+            <button type="submit" class="btn btn-danger">
+              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ form_end(deleteForm) }}
+  {% endif %}
+{% endblock %}

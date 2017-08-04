@@ -11,6 +11,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
@@ -18,52 +19,56 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class Delete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
-        // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== null && BackendProfilesModel::exists($this->id)) {
-            // call parent, this will probably add some general CSS/JS or other required files
-            parent::execute();
+        if ($this->id === 0 || !BackendProfilesModel::exists($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
-            // get profile
-            $profile = BackendProfilesModel::get($this->id);
-
-            // already deleted? Prolly want to undo then
-            if ($profile['status'] === 'deleted') {
-                // set profile status to active
-                BackendProfilesModel::update($this->id, array('status' => 'active'));
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_reactivate', array('id' => $this->id));
-
-                // redirect
-                $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-undeleted&var=' . rawurlencode(
-                        $profile['email']
-                    ) . '&highlight=row-' . $profile['id']
-                );
-            } else {
-                // delete profile
-                BackendProfilesModel::delete($this->id);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_delete_profile', array('id' => $this->id));
-
-                // redirect
-                $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-deleted&var=' . rawurlencode(
-                        $profile['email']
-                    ) . '&highlight=row-' . $profile['id']
-                );
-            }
-        } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            return;
         }
+
+        parent::execute();
+
+        $profile = BackendProfilesModel::get($this->id);
+
+        // already deleted? Prolly want to undo then
+        if ($profile['status'] === 'deleted') {
+            // set profile status to active
+            BackendProfilesModel::update($this->id, ['status' => 'active']);
+
+            $this->redirect(BackendModel::createUrlForAction(
+                'Index',
+                null,
+                null,
+                ['report' => 'profile-undeleted', 'var' => $profile['email'], 'highlight=row-' . $profile['id']]
+            ));
+
+            return;
+        }
+
+        BackendProfilesModel::delete($this->id);
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'Index',
+            null,
+            null,
+            ['report' => 'profile-deleted', 'var' => $profile['email'], 'highlight=row-' . $profile['id']]
+        ));
     }
 }

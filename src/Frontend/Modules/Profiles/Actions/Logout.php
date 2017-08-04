@@ -10,7 +10,6 @@ namespace Frontend\Modules\Profiles\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 
 /**
@@ -18,18 +17,12 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
  */
 class Logout extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // logout
         if (FrontendProfilesAuthentication::isLoggedIn()) {
             FrontendProfilesAuthentication::logout();
         }
-
-        // trigger event
-        FrontendModel::triggerEvent('Profiles', 'after_logout');
 
         // redirect
         $this->redirect(SITE_URL);

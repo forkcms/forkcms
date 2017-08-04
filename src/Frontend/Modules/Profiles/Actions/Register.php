@@ -29,12 +29,9 @@ class Register extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -42,10 +39,10 @@ class Register extends FrontendBaseBlock
 
         // profile not logged in
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
-        } elseif ($this->URL->getParameter('sent') == true) {
+        } elseif ($this->url->getParameter('sent') == true) {
             // just registered so show success message
             $this->parse();
         } else {
@@ -54,48 +51,44 @@ class Register extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
-        $this->frm = new FrontendForm('register', null, null, 'registerForm');
-        $this->frm->addText('display_name');
-        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
-        $this->frm->addPassword('password', null, null, 'inputText showPasswordInput')->setAttributes(
-            array('required' => null)
+        $this->form = new FrontendForm('register', null, null, 'registerForm');
+        $this->form->addText('display_name');
+        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addPassword('password')->setAttributes(
+            [
+                'required' => null,
+                'data-role' => 'fork-new-password',
+            ]
         );
-        $this->frm->addCheckbox('show_password');
+        $this->form->addCheckbox('show_password')->setAttributes(
+            ['data-role' => 'fork-toggle-visible-password']
+        );
     }
 
-    /**
-     * Parse the data into the template.
-     */
-    private function parse()
+    private function parse(): void
     {
         // e-mail was sent?
-        if ($this->URL->getParameter('sent') == 'true') {
+        if ($this->url->getParameter('sent') == 'true') {
             // show message
-            $this->tpl->assign('registerIsSuccess', true);
+            $this->template->assign('registerIsSuccess', true);
 
             // hide form
-            $this->tpl->assign('registerHideForm', true);
+            $this->template->assign('registerHideForm', true);
         } else {
-            $this->frm->parse($this->tpl);
+            $this->form->parse($this->template);
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get fields
-            $txtDisplayName = $this->frm->getField('display_name');
-            $txtEmail = $this->frm->getField('email');
-            $txtPassword = $this->frm->getField('password');
+            $txtDisplayName = $this->form->getField('display_name');
+            $txtEmail = $this->form->getField('email');
+            $txtPassword = $this->form->getField('password');
 
             // check email
             if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
@@ -114,21 +107,17 @@ class Register extends FrontendBaseBlock
             $txtDisplayName->isFilled(FL::getError('FieldIsRequired'));
 
             // no errors
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // init values
-                $settings = array();
-                $values = array();
+                $settings = [];
+                $values = [];
 
                 // generate salt
-                $settings['salt'] = FrontendProfilesModel::getRandomString();
                 $settings['language'] = LANGUAGE;
 
                 // values
                 $values['email'] = $txtEmail->getValue();
-                $values['password'] = FrontendProfilesModel::getEncryptedString(
-                    $txtPassword->getValue(),
-                    $settings['salt']
-                );
+                $values['password'] = FrontendProfilesModel::encryptPassword($txtPassword->getValue());
                 $values['status'] = 'inactive';
                 $values['display_name'] = $txtDisplayName->getValue();
                 $values['registered_on'] = FrontendModel::getUTCDate();
@@ -145,16 +134,13 @@ class Register extends FrontendBaseBlock
                     // use the profile id as url until we have an actual url
                     FrontendProfilesModel::update(
                         $profileId,
-                        array('url' => FrontendProfilesModel::getUrl($values['display_name']))
+                        ['url' => FrontendProfilesModel::getUrl($values['display_name'])]
                     );
-
-                    // trigger event
-                    FrontendModel::triggerEvent('Profiles', 'after_register', array('id' => $profileId));
 
                     // generate activation key
                     $settings['activation_key'] = FrontendProfilesModel::getEncryptedString(
                         $profileId . microtime(),
-                        $settings['salt']
+                        FrontendProfilesModel::getRandomString()
                     );
 
                     // set settings
@@ -163,27 +149,26 @@ class Register extends FrontendBaseBlock
                     // login
                     FrontendProfilesAuthentication::login($profileId);
 
-                    // activation URL
-                    $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate')
-                                                   . '/' . $settings['activation_key'];
-
                     // send email
                     $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                     $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                     $message = Message::newInstance(FL::getMessage('RegisterSubject'))
-                        ->setFrom(array($from['email'] => $from['name']))
-                        ->setTo(array($txtEmail->getValue() => ''))
-                        ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                        ->setFrom([$from['email'] => $from['name']])
+                        ->setTo([$txtEmail->getValue() => ''])
+                        ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                         ->parseHtml(
                             '/Profiles/Layout/Templates/Mails/Register.html.twig',
-                            $mailValues,
+                            [
+                                'activationUrl' => SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'Activate')
+                                                   . '/' . $settings['activation_key'],
+                            ],
                             true
                         )
                     ;
                     $this->get('mailer')->send($message);
 
                     // redirect
-                    $this->redirect(SITE_URL . $this->URL->getQueryString() . '?sent=true');
+                    $this->redirect(SITE_URL . $this->url->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
                     // make sure RedirectExceptions get thrown
                     if ($e instanceof RedirectException) {
@@ -196,10 +181,10 @@ class Register extends FrontendBaseBlock
                     }
 
                     // show error
-                    $this->tpl->assign('registerHasFormError', true);
+                    $this->template->assign('registerHasFormError', true);
                 }
             } else {
-                $this->tpl->assign('registerHasFormError', true);
+                $this->template->assign('registerHasFormError', true);
             }
         }
     }

@@ -26,10 +26,7 @@ class Subpages extends FrontendBaseWidget
      */
     private $items;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadData();
@@ -48,10 +45,7 @@ class Subpages extends FrontendBaseWidget
         $this->parse();
     }
 
-    /**
-     * Load the data
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get the current page id
         $pageId = $this->getContainer()->get('page')->getId();
@@ -60,11 +54,8 @@ class Subpages extends FrontendBaseWidget
         $this->items = FrontendPagesModel::getSubpages($pageId);
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
-        $this->tpl->assign('widgetSubpages', $this->items);
+        $this->template->assign('widgetSubpages', $this->items);
     }
 }

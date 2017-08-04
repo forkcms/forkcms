@@ -73,27 +73,6 @@
         <translation language="el"><![CDATA[Ο χρήστης μπορεί να ανεβάσει ένα αρχείο.]]></translation>
         <translation language="zh"><![CDATA[用户可以上传一个文件。]]></translation>
       </item>
-      <item type="message" name="CronjobsInfo">
-        <translation language="nl"><![CDATA[
-
-            <p>
-              Cronjobs roepen perdiodiek, op bepaalde tijdstippen, een script aan.<br />
-              Cronjobs kunnen ofwel commandline aangeroepen worden, alsook via je webserver.<br />
-              Probeer bij het instellen van cronjobs op servers met meerdere Fork CMS installaties de uitvoering van cronjobs te spreiden door de minuten parameter aan te passen.
-            </p>
-            <p>
-              Commandline: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />
-              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>
-            </p>
-
-       ]]></translation>
-        <translation language="en"><![CDATA[                      <p>              Cronjobs periodically, on a set timeframe, perform a call to script.<br />              Cronjobs can be executed either through commandline as well as over your webserver.<br />              When setting cronjobs on servers with several Fork CMS installations try to spread the execution by changing the minutes parameter.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>            </p>                 ]]></translation>
-        <translation language="ru"><![CDATA[                      <p>              Планировщик задач периодически в заданное время будет выполнять специальные скрипты.<br />              Планировщик задач может быть запущен в командной строке на вашем сервере.<br />              Если на сервере несколько Fork CMS, советуем для каждой установить иное время.            </p>            <p>              Командная строка: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />              Веб-сервер: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>            </p>                 ]]></translation>
-        <translation language="de"><![CDATA[                      <p>              Cronjobs senden periodisch, nach einem gesetzten Zeitintervall, einen Aufruf an einen Skript.<br />              Cronjobs können über die Commandline und über den Webserver direkt ausgeführt werden.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>            </p>                 ]]></translation>
-        <translation language="es"><![CDATA[<p>Los Cronjobs realizan periódicamente, en un tiempo determinado, una llamada para un script.<br />Los Cronjobs puede ser ejecutados a través de la línea de comando o a través de tu servidor web.<br />Cuando configures cronjobs en servidores con varias instalaciones de Fork CMS intenta distanciar la ejecución cambiando el parametro de minutos.</p><p>Línea de comando: <small>php %1$s/backend/cronjob module=<i>module</i>action=<i>action</i></small><br />Servidor Web: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small></p>                 ]]></translation>
-        <translation language="lt"><![CDATA[Kronoinformacija]]></translation>
-        <translation language="hu"><![CDATA[                      <p>              Cronjobs periodically, on a set timeframe, perform a call to script.<br />              Cronjobs can be executed either through commandline as well as over your webserver.<br />              When setting cronjobs on servers with several Fork CMS installations try to spread the execution by changing the minutes parameter.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>            </p>                 ]]></translation>
-      </item>
       <item type="message" name="DeletedTemplate">
         <translation language="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>
         <translation language="en"><![CDATA[The template "%1$s" was deleted.]]></translation>
@@ -412,6 +391,10 @@
         <translation language="sv"><![CDATA[lägg till position]]></translation>
         <translation language="el"><![CDATA[Προσθήκη θέσης]]></translation>
       </item>
+      <item type="label" name="AddThemeTemplate">
+        <translation language="nl"><![CDATA[thema template toevoegen]]></translation>
+        <translation language="en"><![CDATA[add theme template]]></translation>
+      </item>
       <item type="label" name="Authors">
         <translation language="nl"><![CDATA[auteurs]]></translation>
         <translation language="en"><![CDATA[authors]]></translation>
@@ -439,6 +422,10 @@
         <translation language="sv"><![CDATA[ta bort position]]></translation>
         <translation language="lt"><![CDATA[trinti poziciją]]></translation>
         <translation language="el"><![CDATA[Διαγραφή θέσης]]></translation>
+      </item>
+      <item type="label" name="EditThemeTemplate">
+        <translation language="nl"><![CDATA[thema template bewerken]]></translation>
+        <translation language="en"><![CDATA[edit theme template]]></translation>
       </item>
       <item type="label" name="Events">
         <translation language="nl"><![CDATA[evenementen (hooks)]]></translation>
@@ -564,6 +551,18 @@
         <translation language="el"><![CDATA[Θέμα]]></translation>
         <translation language="zh"><![CDATA[主题]]></translation>
       </item>
+      <item type="label" name="ThemeTemplates">
+        <translation language="nl"><![CDATA[thema templates]]></translation>
+        <translation language="en"><![CDATA[theme templates]]></translation>
+      </item>
+      <item type="label" name="SelectedTheme">
+        <translation language="nl"><![CDATA[geselecteerd thema]]></translation>
+        <translation language="en"><![CDATA[selected theme]]></translation>
+      </item>
+      <item type="label" name="UseThisTheme">
+        <translation language="nl"><![CDATA[gebruik dit thema]]></translation>
+        <translation language="en"><![CDATA[use this theme]]></translation>
+      </item>
       <item type="label" name="UploadModule">
         <translation language="nl"><![CDATA[module opladen]]></translation>
         <translation language="en"><![CDATA[upload module]]></translation>
@@ -621,18 +620,6 @@
         <translation language="sv"><![CDATA[uppladdad fil är inte en giltig ZIP fil och kan inte extraherad.]]></translation>
         <translation language="el"><![CDATA[Το αρχείο που ανεβάσατε δεν είναι έγκυρο αρχείο ZIP και δεν έγινε δυνατό να αποσυμπιεστεί.]]></translation>
         <translation language="zh"><![CDATA[上传的文件不是一个有效的ZIP文件，无法被解压。]]></translation>
-      </item>
-      <item type="error" name="CronjobsNotSet">
-        <translation language="nl"><![CDATA[Niet alle cronjobs zijn ingesteld.]]></translation>
-        <translation language="en"><![CDATA[Not all cronjobs are set.]]></translation>
-        <translation language="ru"><![CDATA[Планировщик задач не установлен.]]></translation>
-        <translation language="de"><![CDATA[Es wurden noch nicht alle Cronjobs eingestellt.]]></translation>
-        <translation language="es"><![CDATA[No todos los cronjobs están configurados.]]></translation>
-        <translation language="lt"><![CDATA[Ne visi cron darbai yra.]]></translation>
-        <translation language="hu"><![CDATA[Nincs minden cronjobs beállítva.]]></translation>
-        <translation language="sv"><![CDATA[Inte alla cronjobs är satta.]]></translation>
-        <translation language="zh"><![CDATA[cronjobs未被全部设置]]></translation>
-        <translation language="el"><![CDATA[Δεν έχουν ορισθεί όλοι οι χρονοπρογραμματισμοί.]]></translation>
       </item>
       <item type="error" name="DeleteTemplate">
         <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>

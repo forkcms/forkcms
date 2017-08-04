@@ -2,40 +2,50 @@
   variables that are available:
   - {{ widgetBlogArchive }}:
 #}
+{% if widgetBlogArchive %}
+<aside class="module-blog widget-blog-archive">
+  {% block widget_heading %}
+    <header class="widget-heading" role="banner">
+      <h3>{{ 'lbl.Archive'|trans|ucfirst }}</h3>
+    </header>
+  {% endblock %}
 
-{#% cache _blogWidgetArchiveCache %#}
-  {% if widgetBlogArchive %}
-    <section id="blogArchiveWidget" class="mod">
-      <div class="inner">
-        <header class="hd">
-          <h3>{{ 'lbl.Archive'|trans|ucfirst }}</h3>
-        </header>
-        <div class="bd content">
-          <ul>
-            {% for archive in widgetBlogArchive %}
-              <li>
-                {% if archive.url %}<a href="{{ archive.url }}">{% endif %}
-                  {{ archive.label }}
-                  {% if archive.url %}({{ archive.total }}){% endif %}
-                  {% if archive.url %}</a>{% endif %}
+  {% block widget_body %}
+    <div class="widget-body">
+      <ul>
+        {% for archive in widgetBlogArchive %}
+          <li>
+            {% if archive.url %}
+              <a href="{{ archive.url }}">
+            {% endif %}
+              {{ archive.label }}
+              <span class="badge">{{ archive.total }}</span>
+            {% if archive.url %}
+              </a>
+            {% endif %}
 
-                {% if archive.months %}
-                  <ul>
-                    {% for months in archive.months %}
-                      <li>
-                        {% if months.url %}<a href="{{ months.url }}">{% endif %}
-                          {{ months.label|spoondate('F', LANGUAGE) }}
-                          {% if months.url %}({{ months.total }}){% endif %}
-                          {% if months.url %}</a>{% endif %}
-                      </li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    </section>
-  {% endif %}
-{#% endcache %#}
+            {% if archive.months %}
+              <ul>
+                {% for months in archive.months %}
+                  <li>
+                    {% if months.url %}
+                      <a href="{{ months.url }}">
+                    {% endif %}
+                      {{ months.label|spoondate('F', LANGUAGE) }}
+                      {% if months.url %}
+                        <span class="badge">{{ months.total }}</span>
+                      {% endif %}
+                    {% if months.url %}
+                      </a>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endblock %}
+</aside>
+{% endif %}

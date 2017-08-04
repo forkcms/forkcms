@@ -14,6 +14,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
@@ -28,134 +29,143 @@ class Edit extends BackendBaseActionEdit
      */
     private $feedback;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendFaqModel::exists($this->id)) {
             parent::execute();
 
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
+            $this->loadDeleteFeedbackForm();
 
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = (array) BackendFaqModel::get($this->id);
         $this->feedback = BackendFaqModel::getAllFeedbackForQuestion($this->id);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // get values for the form
-        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden'), 'value' => 1],
+            ['label' => BL::lbl('Published'), 'value' => 0],
+        ];
         $categories = BackendFaqModel::getCategories();
 
         // create form
-        $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['question'], null, 'form-control title', 'form-control danger title');
-        $this->frm->addEditor('answer', $this->record['answer']);
-        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
-        $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
-        $this->frm->addText(
+        $this->form = new BackendForm('edit');
+        $this->form->addText('title', $this->record['question'], null, 'form-control title', 'form-control danger title');
+        $this->form->addEditor('answer', $this->record['answer']);
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
+        $this->form->addDropdown('category_id', $categories, $this->record['category_id']);
+        $this->form->addText(
             'tags',
-            BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']),
+            BackendTagsModel::getTags($this->url->getModule(), $this->record['id']),
             null,
             'form-control js-tags-input',
             'form-control danger js-tags-input'
         );
 
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
+        $url404 = BackendModel::getUrl(404);
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
 
         // assign the active record and additional variables
-        $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('feedback', $this->feedback);
+        $this->template->assign('item', $this->record);
+        $this->template->assign('feedback', $this->feedback);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURL', array($this->record['id']));
+        if ($this->form->isSubmitted()) {
+            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getUrl', [$this->record['id']]);
 
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('QuestionIsRequired'));
-            $this->frm->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
-            $this->frm->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('QuestionIsRequired'));
+            $this->form->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
+            $this->form->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
+                $item = [];
                 $item['id'] = $this->id;
                 $item['meta_id'] = $this->meta->save(true);
-                $item['category_id'] = $this->frm->getField('category_id')->getValue();
+                $item['category_id'] = $this->form->getField('category_id')->getValue();
                 $item['language'] = $this->record['language'];
-                $item['question'] = $this->frm->getField('title')->getValue();
-                $item['answer'] = $this->frm->getField('answer')->getValue(true);
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
+                $item['question'] = $this->form->getField('title')->getValue();
+                $item['answer'] = $this->form->getField('answer')->getValue(true);
+                $item['hidden'] = $this->form->getField('hidden')->getValue();
 
                 // update the item
                 BackendFaqModel::update($item);
                 BackendTagsModel::saveTags(
                     $item['id'],
-                    $this->frm->getField('tags')->getValue(),
-                    $this->URL->getModule()
+                    $this->form->getField('tags')->getValue(),
+                    $this->url->getModule()
                 );
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
                 // edit search index
                 BackendSearchModel::saveIndex(
                     $this->getModule(),
                     $item['id'],
-                    array(
+                    [
                         'title' => $item['question'],
                         'text' => $item['answer'],
-                    )
+                    ]
                 );
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=saved&var=' .
+                    BackendModel::createUrlForAction('Index') . '&report=saved&var=' .
                     rawurlencode($item['question']) . '&highlight=' . $item['id']
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule()]
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
+    }
+
+    private function loadDeleteFeedbackForm(): void
+    {
+        $deleteFeedbackForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteFeedback']
+        );
+        $this->template->assign('deleteFeedbackForm', $deleteFeedbackForm->createView());
     }
 }

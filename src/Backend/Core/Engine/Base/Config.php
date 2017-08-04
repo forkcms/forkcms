@@ -9,15 +9,18 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\App\KernelLoader;
+use InvalidArgumentException;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Backend\Core\Config as CoreConfig;
 
 /**
  * This is the base-object for config-files. The module-specific config-files
  * can extend the functionality from this class
  */
-class Config extends Object
+class Config extends KernelLoader
 {
     /**
      * The default action
@@ -31,83 +34,44 @@ class Config extends Object
      *
      * @var array
      */
-    protected $disabledActions = array();
+    protected $disabledActions = [];
 
     /**
      * The disabled AJAX-actions
      *
      * @var array
      */
-    protected $disabledAJAXActions = array();
+    protected $disabledAJAXActions = [];
 
     /**
      * All the possible actions
      *
      * @var array
      */
-    protected $possibleActions = array();
+    protected $possibleActions = [];
 
     /**
      * All the possible AJAX actions
      *
      * @var array
      */
-    protected $possibleAJAXActions = array();
+    protected $possibleAJAXActions = [];
 
     /**
-     * @param KernelInterface $kernel
-     * @param string          $module The module wherefore this is the configuration-file.
+     * @var string
      */
-    public function __construct(KernelInterface $kernel, $module)
+    private $module;
+
+    public function __construct(KernelInterface $kernel, string $module)
     {
         parent::__construct($kernel);
 
         $this->setModule($module);
     }
 
-    /**
-     * Get the default action
-     *
-     * @return string
-     */
-    public function getDefaultAction()
+    public function getDefaultAction(): string
     {
         return $this->defaultAction;
-    }
-
-    /**
-     * Get the possible actions
-     *
-     * @deprecated
-     *
-     * @return array
-     */
-    public function getPossibleActions()
-    {
-        trigger_error(
-            '$config->getPossibleActions() is deprecated.
-             Use $config->isActionAvailable($action) to determine if an action is available',
-            E_USER_DEPRECATED
-        );
-
-        return $this->possibleActions;
-    }
-    /**
-     * Get the possible AJAX actions
-     *
-     * @deprecated
-     *
-     * @return array
-     */
-    public function getPossibleAJAXActions()
-    {
-        trigger_error(
-            '$config->getPossibleAJAXActions() is deprecated.
-             Use $config->isActionAvailable($action) to determine if an action is available',
-            E_USER_DEPRECATED
-        );
-
-        return $this->possibleAJAXActions;
     }
 
     /**
@@ -120,11 +84,11 @@ class Config extends Object
      *
      * @throws BackendException If module is not allowed
      */
-    public function setModule($module)
+    private function setModule(string $module): void
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
-        if (!in_array($module, $modules)) {
+        if (!in_array($module, $modules, true)) {
             // set correct headers
             header('HTTP/1.1 403 Forbidden');
 
@@ -132,40 +96,22 @@ class Config extends Object
             throw new BackendException('Module not allowed.');
         }
 
-        // set property
         $this->module = $module;
     }
 
-    /**
-     * @return array
-     */
-    public function getPossibleActionTypes()
+    public function getPossibleActionTypes(): array
     {
-        return array(
+        return [
             'actions',
             'ajax',
-        );
+        ];
     }
 
-    /**
-     * @param string $action
-     *
-     * @return bool
-     */
-    public function isActionAvailable($action)
+    public function isActionAvailable(string $action): bool
     {
-        // Save our action
-        $this->action = $action;
-
         // Loop over every action type
         foreach ($this->getPossibleActionTypes() as $actionType) {
-            // If this action is disabled for this type, continue on to the next type
-            if ($this->isActionDisabled($actionType)) {
-                continue;
-            }
-
-            // If the action file is missing, continue on to the next type
-            if (!$this->isActionFilePresent($actionType)) {
+            if (!$this->isActionAvailableForActionType($action, $actionType)) {
                 continue;
             }
 
@@ -177,41 +123,87 @@ class Config extends Object
         return false;
     }
 
-    /**
-     * @param string $actionType
-     *
-     * @throws \Exception
-     *
-     * @return bool
-     */
-    public function isActionDisabled($actionType)
+    public function isActionAvailableForActionType(string $action, string $actionType): bool
     {
-        switch ($actionType) {
-            case 'actions':
-                return in_array($this->getAction(), $this->disabledActions);
-            case 'ajax':
-                return in_array($this->action, $this->disabledAJAXActions);
-        }
-
-        throw new \Exception($actionType . ' is not a valid action type');
-    }
-
-    /**
-     * @param string $actionType
-     *
-     * @return bool
-     */
-    public function isActionFilePresent($actionType)
-    {
-        // Create the directory string
-        $directory = BACKEND_MODULES_PATH . '/' . $this->module . '/' . ucfirst($actionType);
-
-        // If the directory doesn't exist, surely the action can't exist.
-        if (!is_dir($directory)) {
+        // The action is disabled
+        if ($this->isActionDisabled($actionType, $action)) {
             return false;
         }
 
-        // Return if the file exists
-        return file_exists($directory . '/' . ucfirst($this->action) . '.php');
+        // The action class is missing
+        if (!$this->actionClassExists($actionType, $action)) {
+            return false;
+        }
+
+        // The action is not disabled and the file is present, this is an available action!
+        return true;
+    }
+
+    private function isActionDisabled(string $actionType, string $action): bool
+    {
+        switch ($actionType) {
+            case 'actions':
+                return in_array($action, $this->disabledActions, true);
+            case 'ajax':
+                return in_array($action, $this->disabledAJAXActions, true);
+        }
+
+        throw new InvalidArgumentException($actionType . ' is not a valid action type');
+    }
+
+    private function actionClassExists(string $actionType, string $action): bool
+    {
+        $actionClass = $this->buildActionClass($actionType, $action);
+
+        return class_exists($actionClass);
+    }
+
+    public function getActionClass(string $actionType, string $action): string
+    {
+        $actionClass = $this->buildActionClass($actionType, $action);
+
+        if (!$this->actionClassExists($actionType, $action)) {
+            throw new InvalidArgumentException('The class ' . $actionClass . ' could not be found.');
+        }
+
+        return $actionClass;
+    }
+
+    private function buildActionClass(string $actionType, string $action): string
+    {
+        $actionType = ucfirst($actionType);
+
+        $actionClass = 'Backend\\Modules\\' . $this->module . '\\' . $actionType . '\\' . $action;
+        if ($this->module === 'Core' && $actionType === 'Ajax') {
+            $actionClass = 'Backend\\Core\\Ajax\\' . $action;
+        }
+
+        return $actionClass;
+    }
+
+    /**
+     * Get the config file for the requested module.
+     * In the config file we have to find disabled actions, the constructor
+     * will read the folder and set possible actions
+     * Other configurations will be stored in it also.
+     *
+     * @param KernelInterface $kernel
+     * @param string $module
+     *
+     * @return self
+     */
+    public static function forModule(KernelInterface $kernel, string $module): self
+    {
+        $configClass = 'Backend\\Modules\\' . $module . '\\Config';
+        if ($module === 'Core') {
+            $configClass = CoreConfig::class;
+        }
+
+        // validate if class exists (aka has correct name)
+        if (!class_exists($configClass)) {
+            throw new InvalidArgumentException('The config file ' . $configClass . ' could not be found.');
+        }
+
+        return new $configClass($kernel, $module);
     }
 }

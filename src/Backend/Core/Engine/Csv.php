@@ -25,23 +25,24 @@ class Csv extends \SpoonFileCSV
      * @param array $array The array to convert.
      * @param array $columns The column names you want to use.
      * @param array $excludeColumns The columns you want to exclude.
+     *
+     * @throws RedirectException
      */
-    public static function outputCSV($filename, array $array, array $columns = null, array $excludeColumns = null)
-    {
-        // get settings
-        $splitCharacter = Authentication::getUser()->getSetting('csv_split_character');
-        $lineEnding = Authentication::getUser()->getSetting('csv_line_ending');
-
-        // reformat
-        if ($lineEnding == '\n') {
-            $lineEnding = "\n";
-        }
-        if ($lineEnding == '\r\n') {
-            $lineEnding = "\r\n";
-        }
-
+    public static function outputCSV(
+        string $filename,
+        array $array,
+        array $columns = null,
+        array $excludeColumns = null
+    ) {
         // convert into CSV
-        $csv = \SpoonFileCSV::arrayToString($array, $columns, $excludeColumns, $splitCharacter, '"', $lineEnding);
+        $csv = \SpoonFileCSV::arrayToString(
+            $array,
+            $columns,
+            $excludeColumns,
+            Authentication::getUser()->getSetting('csv_split_character'),
+            '"',
+            self::getLineEnding()
+        );
 
         // set headers for download
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
@@ -58,5 +59,20 @@ class Csv extends \SpoonFileCSV
                 ]
             )
         );
+    }
+
+    private static function getLineEnding(): string
+    {
+        $lineEnding = Authentication::getUser()->getSetting('csv_line_ending');
+
+        // reformat
+        if ($lineEnding === '\n') {
+            return "\n";
+        }
+        if ($lineEnding === '\r\n') {
+            return "\r\n";
+        }
+
+        return $lineEnding;
     }
 }

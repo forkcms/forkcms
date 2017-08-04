@@ -12,7 +12,7 @@ use Backend\Modules\Analytics\Form\SettingsType;
  */
 final class Settings extends ActionIndex
 {
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -23,18 +23,18 @@ final class Settings extends ActionIndex
         );
 
         if ($settingsForm->handle()) {
-            $this->redirect(Model::createURLForAction('Settings'));
+            $this->redirect(Model::createUrlForAction('Settings'));
         }
-        $settingsForm->parse($this->tpl);
+        $settingsForm->parse($this->template);
 
         if ($this->get('fork.settings')->get($this->getModule(), 'web_property_id')) {
-            $this->tpl->assign(
+            $this->template->assign(
                 'web_property_id',
                 $this->get('fork.settings')->get($this->getModule(), 'web_property_id')
             );
         }
         if ($this->get('fork.settings')->get($this->getModule(), 'profile')) {
-            $this->tpl->assign(
+            $this->template->assign(
                 'profile',
                 $this->get('fork.settings')->get($this->getModule(), 'profile')
             );

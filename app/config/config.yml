@@ -1,15 +1,16 @@
 imports:
+    - { resource: console.yml }
     - { resource: parameters.yml }
     - { resource: doctrine.yml }
+    - { resource: form.yml }
 
 parameters:
-    translator.identity.class: Common\Language
-    session.storage.php_bridge.class: Common\Core\Session\Storage\PhpBridgeSessionStorage
+    fork.is_installed: true
 
 framework:
-    secret:          %kernel.secret%
+    secret: "%kernel.secret%"
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: "%kernel.project_dir%/app/config/routing.yml"
         strict_requirements: ~
     form:            ~
     validation:
@@ -19,7 +20,6 @@ framework:
         engines: ['twig']
     session:
         handler_id: ~
-        storage_id: session.storage.php_bridge
 
 # Assetic Configuration
 assetic:
@@ -32,12 +32,16 @@ assetic:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - 'Core/Layout/Templates/FormLayout.html.twig'
+    paths:
+      '%site.path_www%/src/Frontend/Modules/': ForkFrontendModules
 
 monolog:
     handlers:
         main:
             type:  stream
-            path:  %site.path_www%/app/logs/%kernel.environment%.log
+            path:  "%site.path_www%/var/logs/%kernel.environment%.log"
             level: error
         # swift:
         #     type:       swift_mailer
@@ -49,7 +53,44 @@ monolog:
         #     content_type: text/html
 
 swiftmailer:
-    transport: "mail"
+    transport: "sendmail"
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path:
+            web_root: "%kernel.project_dir%/"
+            cache_prefix: src/Frontend/Files/Cache
+    loaders:
+        default:
+            filesystem:
+                data_root: "%kernel.project_dir%/"
+    cache: default
+    data_loader: default
+
+    # your filter sets are defined here
+    filter_sets:
+        # the name of the "filter set"
+        media_library_backend_thumbnail:
+            # adjust the image quality to 95%
+            quality: 95
+            # list of transformations to apply (the "filters")
+            filters:
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail: { size : [140, 90], mode : outbound }
+        media_library_lightbox_small:
+            filters:
+                scale: { dim : [800, 600] }
+        media_library_lightbox_large:
+            filters:
+                scale: { dim : [1600, 800] }
+        media_library_slider_pano:
+            filters:
+                scale: { dim : [1600, 600] }
+        media_library_one_image_large:
+            filters:
+                thumbnail: { size : [1600, 500], mode : inbound }
 
 services:
     form.type.editor:
@@ -66,18 +107,18 @@ services:
     database:
         class: SpoonDatabase
         arguments:
-            - %database.driver%
-            - %database.host%
-            - %database.user%
-            - %database.password%
-            - %database.name%
-            - %database.port%
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%"
+            - "%database.port%"
         calls:
             - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
             # The following line removes the ONLY_FULL_GROUP_BY from the sessions sql_mode, it was added in 5.7
             # and caused some queries to break.
             - [ execute, [ 'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'] ]
-            - [ setDebug, [ %kernel.debug% ]]
+            - [ setDebug, [ "%kernel.debug%" ]]
     mailer_configurator:
         class: Common\Mailer\Configurator
         tags:
@@ -90,7 +131,7 @@ services:
     cache.filesystem.adapter:
         class: League\Flysystem\Adapter\Local
         arguments:
-            - %kernel.cache_dir%
+            - "%kernel.cache_dir%"
     cache.filesystem.filesystem:
         class: League\Flysystem\Filesystem
         arguments:
@@ -107,12 +148,27 @@ services:
         class: MatthiasMullie\Scrapbook\Psr6\Pool
         arguments:
             - "@cache.buffer"
+    cache.backend_navigation:
+        class: Backend\Core\Engine\NavigationCache
+        arguments:
+            - "@database"
+            - "@cache.pool"
 
     fork.settings:
         class: Common\ModulesSettings
         arguments:
             - "@database"
             - "@cache.pool"
+
+    fork.cookie:
+        class: Common\Core\Cookie
+
+    fork.cookie_setter:
+        class: Common\EventListener\ForkCookieSetter
+        arguments:
+            - "@fork.cookie"
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
@@ -125,3 +181,8 @@ services:
             - "@twig"
             - "@templating.name_parser"
             - "@templating.locator"
+
+    translator:
+        class: Common\Language
+        arguments:
+            - "@translator.selector"

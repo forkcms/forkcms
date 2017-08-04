@@ -23,24 +23,21 @@ class ActionAdd extends Action
      *
      * @var Form
      */
-    protected $frm;
+    protected $form;
 
     /**
-     * The backends meta-object
+     * The backend meta-object
      *
      * @var Meta
      */
     protected $meta;
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
-        if ($this->frm) {
-            $this->frm->parse($this->tpl);
+        if ($this->form) {
+            $this->form->parse($this->template);
         }
     }
 }

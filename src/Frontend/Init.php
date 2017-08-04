@@ -14,15 +14,12 @@ namespace Frontend;
  */
 class Init extends \Common\Core\Init
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected $allowedTypes = array('Frontend', 'FrontendAjax');
+    protected $allowedTypes = ['Frontend', 'FrontendAjax'];
 
     /**
      * @param string $type The type of init to load, possible values are: frontend, frontend_ajax, frontend_js.
      */
-    public function initialize($type)
+    public function initialize(string $type): void
     {
         parent::initialize($type);
 

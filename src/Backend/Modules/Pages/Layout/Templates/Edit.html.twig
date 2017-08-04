@@ -1,4 +1,5 @@
-{% extends '/Layout/Templates/pages.html.twig' %}
+{% extends 'Layout/Templates/pages.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block pagesTree %}
   <div class="sub-navigation hidden-xs">
@@ -289,7 +290,7 @@
                 </div>
                 <div class="form-group">
                   {% if item.data.image %}
-                    <img src="{{ FRONTEND_FILES_URL }}/pages/images/source/{{ item.data.image }}" class="img-responsive" />
+                    <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive" />
                     <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
                     {% form_field_error remove_image %}
                   {% endif %}
@@ -355,6 +356,12 @@
           {# this will store the selected extra #}
           {{ block.formElements.hidExtraId.parse() | raw }}
 
+          {# this will store the extra type #}
+          {{ block.formElements.hidExtraType.parse() | raw }}
+
+          {# this will store the extra data #}
+          {{ block.formElements.hidExtraData.parse() | raw }}
+
           {# this will store the selected position #}
           {{ block.formElements.hidPosition.parse() | raw }}
 
@@ -403,13 +410,45 @@
               <option value="-1">-</option>
             </select>
           </div>
+          <div id="userTemplateHolder" class="form-group"  style="display: none;">
+            <label for="userTemplate">{{ 'lbl.WhichTemplate'|trans|capitalize }}</label>
+            <select class="form-control" id="userTemplate">
+              <option value="-1">-</option>
+            </select>
+          </div>
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
             <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="addBlockSubmit" type="button" class="btn btn-primary">
             <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Dialog to select user templates #}
+  <div class="modal fade" id="addUserTemplate" tabindex="-1" role="dialog"
+    aria-labelledby="{{ 'lbl.ChooseATemplate'|trans|capitalize }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <span class="modal-title h4">{{ 'lbl.Content'|trans|capitalize }}</span>
+        </div>
+        <div class="modal-body">
+          <div id="userTemplateHiddenPlaceholder" style="display:none;"></div>
+          <div id="userTemplatePlaceholder"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+          </button>
+          <button type="button" class="btn btn-primary js-submit-user-template">
+            <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
           </button>
         </div>
       </div>
@@ -516,9 +555,13 @@
       </div>
     </div>
   </div>
+  {% endform %}
 
   {# Page delete confirm block #}
   {% if item %}
+    {{ form_start(deleteForm) }}
+    {{ form_row(deleteForm._token) }}
+    {{ form_row(deleteForm.id) }}
     <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -532,15 +575,16 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">
               <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
-            <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
+            <button type="submit" class="btn btn-danger">
               <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-            </a>
+            </button>
           </div>
         </div>
       </div>
     </div>
+    {{ form_end(deleteForm) }}
   {% endif %}
-  {% endform %}
+
   <div class="_itr_22">
     <script type="text/javascript">
       //<![CDATA[

@@ -20,10 +20,7 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class AddGroup extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -32,28 +29,22 @@ class AddGroup extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
-        $this->frm = new BackendForm('addGroup');
-        $this->frm->addText('name');
+        $this->form = new BackendForm('addGroup');
+        $this->form->addText('name');
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get field
             /** @var $txtName \SpoonFormText */
-            $txtName = $this->frm->getField('name');
+            $txtName = $this->form->getField('name');
 
             // name filled in?
             if ($txtName->isFilled(BL::getError('NameIsRequired'))) {
@@ -65,19 +56,16 @@ class AddGroup extends BackendBaseActionAdd
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
-                $values['name'] = $txtName->getValue();
+                $values = ['name' => $txtName->getValue()];
 
                 // insert values
                 $id = BackendProfilesModel::insertGroup($values);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add_group', array('item' => $values));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Groups') . '&report=group-added&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Groups') . '&report=group-added&var=' . rawurlencode(
                         $values['name']
                     ) . '&highlight=row-' . $id
                 );

@@ -11,6 +11,7 @@ namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
@@ -18,43 +19,64 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
  */
 class DeleteThemeTemplate extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteThemeTemplate']
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction(
+                'ThemeTemplates',
+                null,
+                null,
+                ['error' => 'something-went-wrong']
+            ));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== null && BackendExtensionsModel::existsTemplate($this->id)) {
-            // call parent, this will probably add some general CSS/JS or other required files
-            parent::execute();
+        if ($this->id === 0 || !BackendExtensionsModel::existsTemplate($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction(
+                'ThemeTemplates',
+                null,
+                null,
+                ['error' => 'non-existing']
+            ));
 
-            // init var
-            $success = false;
-
-            // get template (we need the title)
-            $item = BackendExtensionsModel::getTemplate($this->id);
-
-            // valid template?
-            if (!empty($item)) {
-                // delete the page
-                $success = BackendExtensionsModel::deleteTemplate($this->id);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_delete_template', array('id' => $this->id));
-            }
-
-            // page is deleted, so redirect to the overview
-            if ($success) {
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . rawurlencode($item['label']));
-            } else {
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
-            }
-        } else {
-            // something went wrong
-            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+            return;
         }
+
+        parent::execute();
+
+        $success = false;
+        $item = BackendExtensionsModel::getTemplate($this->id);
+        if (!empty($item)) {
+            $success = BackendExtensionsModel::deleteTemplate($this->id);
+        }
+
+        if (!$success) {
+            $this->redirect(BackendModel::createUrlForAction(
+                'ThemeTemplates',
+                null,
+                null,
+                ['error' => 'non-existing']
+            ));
+
+            return;
+        }
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'ThemeTemplates',
+            null,
+            null,
+            ['theme' => $item['theme'], 'report' => 'deleted-template', 'var' => $item['label']]
+        ));
     }
 }

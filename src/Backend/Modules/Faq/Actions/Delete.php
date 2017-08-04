@@ -11,6 +11,7 @@ namespace Backend\Modules\Faq\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
@@ -18,33 +19,39 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  */
 class Delete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
 
-        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
-            parent::execute();
-            $this->record = BackendFaqModel::get($this->id);
-
-            // delete item
-            BackendFaqModel::delete($this->id);
-            BackendModel::triggerEvent(
-                $this->getModule(),
-                'after_delete',
-                array('item' => $this->record)
-            );
-
-            $this->redirect(
-                BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-                rawurlencode($this->record['question'])
-            );
-        } else {
-            $this->redirect(
-                BackendModel::createURLForAction('Index') . '&error=non-existing'
-            );
+            return;
         }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = $deleteFormData['id'];
+
+        if ($this->id === 0 || !BackendFaqModel::exists($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
+
+            return;
+        }
+
+        parent::execute();
+        $this->record = BackendFaqModel::get($this->id);
+
+        BackendFaqModel::delete($this->id);
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'Index',
+            null,
+            null,
+            ['report' => 'deleted', 'var' => $this->record['question']]
+        ));
     }
 }

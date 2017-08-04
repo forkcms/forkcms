@@ -36,10 +36,7 @@ class Add extends BackendBaseActionAdd
      */
     private $notifyProfile;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->getData();
@@ -49,34 +46,28 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Get data
-     */
-    public function getData()
+    public function getData(): void
     {
         $this->notifyAdmin = $this->get('fork.settings')->get(
-            $this->URL->getModule(),
+            $this->url->getModule(),
             'send_new_profile_admin_mail',
             false
         );
 
         $this->notifyProfile = $this->get('fork.settings')->get(
-            $this->URL->getModule(),
+            $this->url->getModule(),
             'send_new_profile_mail',
             false
         );
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // gender dropdown values
-        $genderValues = array(
+        $genderValues = [
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
             'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
-        );
+        ];
 
         // birthdate dropdown values
         $days = range(1, 31);
@@ -84,54 +75,51 @@ class Add extends BackendBaseActionAdd
         $years = range(date('Y'), 1900);
 
         // create form
-        $this->frm = new BackendForm('add');
+        $this->form = new BackendForm('add');
 
         // create elements
-        $this->frm
+        $this->form
             ->addText('email')
             ->setAttribute('type', 'email')
         ;
-        $this->frm->addPassword('password');
-        $this->frm->addText('display_name');
-        $this->frm->addText('first_name');
-        $this->frm->addText('last_name');
-        $this->frm->addText('city');
-        $this->frm->addDropdown('gender', $genderValues);
-        $this->frm->addDropdown('day', array_combine($days, $days));
-        $this->frm->addDropdown('month', $months);
-        $this->frm->addDropdown('year', array_combine($years, $years));
-        $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()));
+        $this->form->addPassword('password');
+        $this->form->addText('display_name');
+        $this->form->addText('first_name');
+        $this->form->addText('last_name');
+        $this->form->addText('city');
+        $this->form->addDropdown('gender', $genderValues);
+        $this->form->addDropdown('day', array_combine($days, $days));
+        $this->form->addDropdown('month', $months);
+        $this->form->addDropdown('year', array_combine($years, $years));
+        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()));
 
         // set default elements dropdowns
-        $this->frm->getField('gender')->setDefaultElement('');
-        $this->frm->getField('day')->setDefaultElement('');
-        $this->frm->getField('month')->setDefaultElement('');
-        $this->frm->getField('year')->setDefaultElement('');
-        $this->frm->getField('country')->setDefaultElement('');
+        $this->form->getField('gender')->setDefaultElement('');
+        $this->form->getField('day')->setDefaultElement('');
+        $this->form->getField('month')->setDefaultElement('');
+        $this->form->getField('year')->setDefaultElement('');
+        $this->form->getField('country')->setDefaultElement('');
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $txtEmail = $this->frm->getField('email');
-            $txtDisplayName = $this->frm->getField('display_name');
-            $txtPassword = $this->frm->getField('password');
-            $txtFirstName = $this->frm->getField('first_name');
-            $txtLastName = $this->frm->getField('last_name');
-            $txtCity = $this->frm->getField('city');
-            $ddmGender = $this->frm->getField('gender');
-            $ddmDay = $this->frm->getField('day');
-            $ddmMonth = $this->frm->getField('month');
-            $ddmYear = $this->frm->getField('year');
-            $ddmCountry = $this->frm->getField('country');
+            $txtEmail = $this->form->getField('email');
+            $txtDisplayName = $this->form->getField('display_name');
+            $txtPassword = $this->form->getField('password');
+            $txtFirstName = $this->form->getField('first_name');
+            $txtLastName = $this->form->getField('last_name');
+            $txtCity = $this->form->getField('city');
+            $ddmGender = $this->form->getField('gender');
+            $ddmDay = $this->form->getField('day');
+            $ddmMonth = $this->form->getField('month');
+            $ddmYear = $this->form->getField('year');
+            $ddmCountry = $this->form->getField('country');
 
             // email filled in?
             if ($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
@@ -169,25 +157,21 @@ class Add extends BackendBaseActionAdd
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
-                $salt = BackendProfilesModel::getRandomString();
+            if ($this->form->isCorrect()) {
                 $password = ($txtPassword->isFilled()) ?
                     $txtPassword->getValue() : BackendModel::generatePassword(8);
 
                 // build item
-                $values = array(
+                $values = [
                     'email' => $txtEmail->getValue(),
                     'registered_on' => BackendModel::getUTCDate(),
                     'display_name' => $txtDisplayName->getValue(),
                     'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue()),
                     'last_login' => BackendModel::getUTCDate(null, 0),
-                    'password' => BackendProfilesModel::getEncryptedString($password, $salt),
-                );
+                    'password' => BackendProfilesModel::encryptPassword($password),
+                ];
 
                 $this->id = BackendProfilesModel::insert($values);
-
-                // update salt
-                BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
                 // bday is filled in
                 if ($ddmYear->isFilled()) {
@@ -211,16 +195,16 @@ class Add extends BackendBaseActionAdd
                 // notify values
                 $notifyValues = array_merge(
                     $values,
-                    array(
+                    [
                         'id' => $this->id,
                         'first_name' => $txtFirstName->getValue(),
                         'last_name' => $txtLastName->getValue(),
                         'unencrypted_password' => $password,
-                    )
+                    ]
                 );
 
-                $redirectUrl = BackendModel::createURLForAction('Edit') .
-                    '&id=' . $this->id .
+                $redirectUrl = BackendModel::createUrlForAction('Edit') .
+                               '&id=' . $this->id .
                     '&var=' . rawurlencode($values['display_name']) .
                     '&report='
                 ;
@@ -239,22 +223,16 @@ class Add extends BackendBaseActionAdd
                     BackendProfilesModel::notifyAdmin($notifyValues);
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect($redirectUrl);
             }
         }
     }
 
-    /**
-     * Parse
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
-        $this->tpl->assign('notifyProfile', $this->notifyProfile);
+        $this->template->assign('notifyProfile', $this->notifyProfile);
     }
 }

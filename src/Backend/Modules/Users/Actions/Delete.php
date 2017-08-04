@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\User as BackendUser;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
@@ -20,40 +21,51 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
  */
 class Delete extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = (int) $deleteFormData['id'];
 
         // does the user exist
-        if ($this->id !== null && BackendUsersModel::exists($this->id) &&
-            BackendAuthentication::getUser()->getUserId() != $this->id
+        if ($this->id === 0
+            || !BackendUsersModel::exists($this->id)
+            || BackendAuthentication::getUser()->getUserId() === $this->id
         ) {
-            parent::execute();
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
-            // get data
-            $user = new BackendUser($this->id);
-
-            // God-users can't be deleted
-            if ($user->isGod()) {
-                $this->redirect(BackendModel::createURLForAction('Index') . '&error=cant-delete-god');
-            }
-
-            // delete item
-            BackendUsersModel::delete($this->id);
-
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
-            // item was deleted, so redirect
-            $this->redirect(
-                BackendModel::createURLForAction('Index') . '&report=deleted&var=' . $user->getSetting('nickname')
-            );
-        } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            return;
         }
+
+        parent::execute();
+
+        $user = new BackendUser($this->id);
+
+        // God-users can't be deleted
+        if ($user->isGod()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'cant-delete-god']));
+
+            return;
+        }
+
+        BackendUsersModel::delete($this->id);
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'Index',
+            null,
+            null,
+            ['report' => 'deleted', 'var' => $user->getSetting('nickname')]
+        ));
     }
 }

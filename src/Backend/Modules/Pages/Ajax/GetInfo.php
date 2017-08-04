@@ -11,32 +11,32 @@ namespace Backend\Modules\Pages\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will get the page info using Ajax
  */
 class GetInfo extends BackendBaseAJAXAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent
         parent::execute();
 
         // get parameters
-        $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
+        $id = $this->getRequest()->request->getInt('id');
 
         // validate
         if ($id === 0) {
-            $this->output(self::BAD_REQUEST, null, 'no id provided');
-        } else {
-            // get page
-            $page = BackendPagesModel::get($id);
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'no id provided');
 
-            // output
-            $this->output(self::OK, $page);
+            return;
         }
+
+        // get page
+        $page = BackendPagesModel::get($id);
+
+        // output
+        $this->output(Response::HTTP_OK, $page);
     }
 }

@@ -1,4 +1,5 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
 
@@ -177,45 +178,6 @@
           </button>
         </div>
       </div>
-      {% if showProfilesDelete %}
-        <div class="modal fade" id="{% if deleted %}confirmUndelete{% endif %}{% if not deleted %}confirmDelete{% endif %}" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                {% if deleted %}
-                  <span class="modal-title h4">{{ 'lbl.Undelete'|trans|ucfirst }}</span>
-                {% endif %}
-                {% if not deleted %}
-                  <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
-                {% endif %}
-              </div>
-              <div class="modal-body">
-                {% if deleted %}
-                  <p>{{ 'msg.ConfirmUndelete'|trans|format(profile.email)|raw }}</p>
-                {% endif %}
-                {% if not deleted %}
-                  <p>{{ 'msg.ConfirmDelete'|trans|format(profile.email)|raw }}</p>
-                {% endif %}
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                {% if deleted %}
-                  <a href="{{ geturl('delete') }}&amp;id={{ profile.id }}" class="btn btn-primary">
-                    {{ 'lbl.Undelete'|trans|ucfirst }}
-                  </a>
-                {% endif %}
-                {% if not deleted %}
-                  <a href="{{ geturl('delete') }}&amp;id={{ profile.id }}" class="btn btn-danger">
-                    <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-                  </a>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </div>
-      {% endif %}
       {% if showProfilesBlock %}
         <div class="modal fade" id="{% if blocked %}confirmUnblock{% endif %}{% if not blocked %}confirmBlock{% endif %}" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
@@ -258,5 +220,46 @@
     </div>
   </div>
   {% endform %}
+
+  {% if showProfilesDelete %}
+    {{ form_start(deleteForm) }}
+    {{ form_row(deleteForm._token) }}
+    {{ form_row(deleteForm.id) }}
+    <div class="modal fade" id="{% if deleted %}confirmUndelete{% endif %}{% if not deleted %}confirmDelete{% endif %}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            {% if deleted %}
+              <span class="modal-title h4">{{ 'lbl.Undelete'|trans|ucfirst }}</span>
+            {% endif %}
+            {% if not deleted %}
+              <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+            {% endif %}
+          </div>
+          <div class="modal-body">
+            {% if deleted %}
+              <p>{{ 'msg.ConfirmUndelete'|trans|format(profile.email)|raw }}</p>
+            {% endif %}
+            {% if not deleted %}
+              <p>{{ 'msg.ConfirmDelete'|trans|format(profile.email)|raw }}</p>
+            {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            </button>
+            <button type="submit" class="btn btn-danger">
+              {% if deleted %}
+                {{ 'lbl.Undelete'|trans|ucfirst }}
+              {% else %}
+                <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              {% endif %}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{ form_end(deleteForm) }}
+  {% endif %}
 {% endblock %}
 

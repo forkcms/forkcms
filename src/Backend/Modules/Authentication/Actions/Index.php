@@ -26,17 +26,16 @@ use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 class Index extends BackendBaseActionIndex
 {
     /**
-     * Form instances
-     *
      * @var BackendForm
      */
-    private $frm;
-    private $frmForgotPassword;
+    private $form;
 
     /**
-     * Execute the action
+     * @var BackendForm
      */
-    public function execute()
+    private $formForgotPassword;
+
+    public function execute(): void
     {
         // check if the user is really logged on
         if (BackendAuthentication::getUser()->isAuthenticated()) {
@@ -48,62 +47,53 @@ class Index extends BackendBaseActionIndex
         }
 
         parent::execute();
-        $this->load();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Load the forms
-     */
-    private function load()
+    private function buildForm(): void
     {
-        $this->frm = new BackendForm(null, null, 'post', true, false);
-        $this->frm
+        $this->form = new BackendForm(null, null, 'post', true, false);
+        $this->form
             ->addText('backend_email')
             ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Email')))
             ->setAttribute('type', 'email')
         ;
-        $this->frm
+        $this->form
             ->addPassword('backend_password')
             ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Password')))
         ;
 
-        $this->frmForgotPassword = new BackendForm('forgotPassword');
-        $this->frmForgotPassword->addText('backend_email_forgot');
+        $this->formForgotPassword = new BackendForm('forgotPassword');
+        $this->formForgotPassword->addText('backend_email_forgot');
     }
 
-    /**
-     * Parse the action into the template
-     */
-    public function parse()
+    public function parse(): void
     {
         parent::parse();
 
         // assign the interface language ourself, because it won't be assigned automagically
-        $this->tpl->assign('INTERFACE_LANGUAGE', BL::getInterfaceLanguage());
+        $this->template->assign('INTERFACE_LANGUAGE', BL::getInterfaceLanguage());
 
-        $this->frm->parse($this->tpl);
-        $this->frmForgotPassword->parse($this->tpl);
+        $this->form->parse($this->template);
+        $this->formForgotPassword->parse($this->template);
     }
 
-    /**
-     * Validate the forms
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $txtEmail = $this->frm->getField('backend_email');
-            $txtPassword = $this->frm->getField('backend_password');
+        if ($this->form->isSubmitted()) {
+            $txtEmail = $this->form->getField('backend_email');
+            $txtPassword = $this->form->getField('backend_password');
 
             // required fields
             if (!$txtEmail->isFilled() || !$txtPassword->isFilled()) {
                 // add error
-                $this->frm->addError('fields required');
+                $this->form->addError('fields required');
 
                 // show error
-                $this->tpl->assign('hasError', true);
+                $this->template->assign('hasError', true);
             }
 
             $this->getContainer()->get('logger')->info(
@@ -111,7 +101,7 @@ class Index extends BackendBaseActionIndex
             );
 
             // invalid form-token?
-            if ($this->frm->getToken() != $this->frm->getField('form_token')->getValue()) {
+            if ($this->form->getToken() != $this->form->getField('form_token')->getValue()) {
                 // set a correct header, so bots understand they can't mess with us.
                 throw new BadRequestHttpException();
             }
@@ -120,7 +110,7 @@ class Index extends BackendBaseActionIndex
             $userId = BackendUsersModel::getIdByEmail($txtEmail->getValue());
 
             // all fields are ok?
-            if ($txtEmail->isFilled() && $txtPassword->isFilled() && $this->frm->getToken() == $this->frm->getField('form_token')->getValue()) {
+            if ($txtEmail->isFilled() && $txtPassword->isFilled() && $this->form->getToken() == $this->form->getField('form_token')->getValue()) {
                 // try to login the user
                 if (!BackendAuthentication::loginUser($txtEmail->getValue(), $txtPassword->getValue())) {
                     $this->getContainer()->get('logger')->info(
@@ -128,13 +118,13 @@ class Index extends BackendBaseActionIndex
                     );
 
                     // add error
-                    $this->frm->addError('invalid login');
+                    $this->form->addError('invalid login');
 
                     // store attempt in session
-                    $current = (\SpoonSession::exists('backend_login_attempts')) ? (int) \SpoonSession::get('backend_login_attempts') : 0;
+                    $current = (int) BackendModel::getSession()->get('backend_login_attempts', 0);
 
                     // increment and store
-                    \SpoonSession::set('backend_login_attempts', ++$current);
+                    BackendModel::getSession()->set('backend_login_attempts', ++$current);
 
                     // save the failed login attempt in the user's settings
                     if ($userId !== false) {
@@ -142,17 +132,17 @@ class Index extends BackendBaseActionIndex
                     }
 
                     // show error
-                    $this->tpl->assign('hasError', true);
+                    $this->template->assign('hasError', true);
                 }
             }
 
             // check sessions
-            if (\SpoonSession::exists('backend_login_attempts') && (int) \SpoonSession::get('backend_login_attempts') >= 5) {
+            if (BackendModel::getSession()->get('backend_login_attempts', 0) >= 5) {
                 // get previous attempt
-                $previousAttempt = (\SpoonSession::exists('backend_last_attempt')) ? \SpoonSession::get('backend_last_attempt') : time();
+                $previousAttempt = BackendModel::getSession()->get('backend_last_attempt', time());
 
                 // calculate timeout
-                $timeout = 5 * ((\SpoonSession::get('backend_login_attempts') - 4));
+                $timeout = 5 * (BackendModel::getSession()->get('backend_login_attempts') - 4);
 
                 // too soon!
                 if (time() < $previousAttempt + $timeout) {
@@ -161,28 +151,27 @@ class Index extends BackendBaseActionIndex
 
                     // set a correct header, so bots understand they can't mess with us.
                     throw new ServiceUnavailableHttpException();
-                } else {
-                    // increment and store
-                    \SpoonSession::set('backend_last_attempt', time());
                 }
+                // increment and store
+                BackendModel::getSession()->set('backend_last_attempt', time());
 
                 // too many attempts
-                $this->frm->addEditor('too many attempts');
+                $this->form->addEditor('too many attempts');
 
                 $this->getContainer()->get('logger')->info(
                     "Too many login attempts for user '{$txtEmail->getValue()}'."
                 );
 
                 // show error
-                $this->tpl->assign('hasTooManyAttemps', true);
-                $this->tpl->assign('hasError', false);
+                $this->template->assign('hasTooManyAttemps', true);
+                $this->template->assign('hasError', false);
             }
 
             // no errors in the form?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // cleanup sessions
-                \SpoonSession::delete('backend_login_attempts');
-                \SpoonSession::delete('backend_last_attempt');
+                BackendModel::getSession()->remove('backend_login_attempts');
+                BackendModel::getSession()->remove('backend_last_attempt');
 
                 // save the login timestamp in the user's settings
                 $lastLogin = BackendUsersModel::getSetting($userId, 'current_login');
@@ -201,20 +190,20 @@ class Index extends BackendBaseActionIndex
         }
 
         // is the form submitted
-        if ($this->frmForgotPassword->isSubmitted()) {
+        if ($this->formForgotPassword->isSubmitted()) {
             // backend email
-            $email = $this->frmForgotPassword->getField('backend_email_forgot')->getValue();
+            $email = $this->formForgotPassword->getField('backend_email_forgot')->getValue();
 
             // required fields
-            if ($this->frmForgotPassword->getField('backend_email_forgot')->isEmail(BL::err('EmailIsInvalid'))) {
+            if ($this->formForgotPassword->getField('backend_email_forgot')->isEmail(BL::err('EmailIsInvalid'))) {
                 // check if there is a user with the given emailaddress
                 if (!BackendUsersModel::existsEmail($email)) {
-                    $this->frmForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
+                    $this->formForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
                 }
             }
 
             // no errors in the form?
-            if ($this->frmForgotPassword->isCorrect()) {
+            if ($this->formForgotPassword->isCorrect()) {
                 // generate the key for the reset link and fetch the user ID for this email
                 $key = BackendAuthentication::getEncryptedString($email, uniqid('', true));
 
@@ -224,21 +213,21 @@ class Index extends BackendBaseActionIndex
                 $user->setSetting('reset_password_key', $key);
                 $user->setSetting('reset_password_timestamp', time());
 
-                // variables to parse in the e-mail
-                $variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('ResetPassword') . '&email=' . $email . '&key=' . $key;
-
                 // send e-mail to user
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = Message::newInstance(
                     \SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject'))
                 )
-                    ->setFrom(array($from['email'] => $from['name']))
-                    ->setTo(array($email))
-                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->setFrom([$from['email'] => $from['name']])
+                    ->setTo([$email])
+                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
                     ->parseHtml(
                         '/Authentication/Layout/Templates/Mails/ResetPassword.html.twig',
-                        $variables
+                        [
+                            'resetLink' => SITE_URL . BackendModel::createUrlForAction('ResetPassword')
+                                           . '&email=' . $email . '&key=' . $key,
+                        ]
                     );
                 $this->get('mailer')->send($message);
 
@@ -246,28 +235,28 @@ class Index extends BackendBaseActionIndex
                 $_POST['backend_email_forgot'] = '';
 
                 // show success message
-                $this->tpl->assign('isForgotPasswordSuccess', true);
+                $this->template->assign('isForgotPasswordSuccess', true);
 
                 // show form
-                $this->tpl->assign('showForm', true);
+                $this->template->assign('showForm', true);
             } else {
                 // errors?
-                $this->tpl->assign('showForm', true);
+                $this->template->assign('showForm', true);
             }
         }
     }
 
-    /*
+    /**
      * Find out which module and action are allowed
      * and send the user on his way.
      */
-    private function redirectToAllowedModuleAndAction()
+    private function redirectToAllowedModuleAndAction(): void
     {
         $allowedModule = $this->getAllowedModule();
         $allowedAction = $this->getAllowedAction($allowedModule);
-        $allowedModuleActionUrl = $allowedModule ?
-            BackendModel::createURLForAction($allowedAction, $allowedModule) :
-            BackendModel::createURLForAction('Index', 'Authentication');
+        $allowedModuleActionUrl = $allowedModule !== false && $allowedAction !== false ?
+            BackendModel::createUrlForAction($allowedAction, $allowedModule) :
+            BackendModel::createUrlForAction('Index', 'Authentication');
 
         $userEmail = BackendAuthentication::getUser()->getEmail();
         $this->getContainer()->get('logger')->info(
@@ -275,18 +264,18 @@ class Index extends BackendBaseActionIndex
         );
 
         $this->redirect(
-            $this->getParameter('querystring', 'string', $allowedModuleActionUrl)
+            $this->getRequest()->query->get('querystring', $allowedModuleActionUrl)
         );
     }
 
     /**
      * Run through the action of a certain module and find us an action(name) this user is allowed to access.
      *
-     * @param $module
+     * @param string $module
      *
      * @return bool|string
      */
-    private function getAllowedAction($module)
+    private function getAllowedAction(string $module)
     {
         if (BackendAuthentication::isAllowedAction('Index', $module)) {
             return 'Index';
@@ -319,7 +308,7 @@ class Index extends BackendBaseActionIndex
     private function getAllowedModule()
     {
         // create filter with modules which may not be displayed
-        $filter = array('Authentication', 'Error', 'Core');
+        $filter = ['Authentication', 'Error', 'Core'];
 
         // get all modules
         $modules = array_diff(BackendModel::getModules(), $filter);

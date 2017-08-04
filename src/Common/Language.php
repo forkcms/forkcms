@@ -5,7 +5,6 @@ namespace Common;
 use Common\Core\Model;
 use Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
-use Symfony\Component\DependencyInjection\Exception\InactiveScopeException;
 use Symfony\Component\Translation\IdentityTranslator;
 
 /**
@@ -18,36 +17,29 @@ use Symfony\Component\Translation\IdentityTranslator;
  */
 final class Language extends IdentityTranslator
 {
-    /**
-     * @return string
-     */
-    public static function get()
+    public static function get(): string
     {
         $application = 'Backend';
 
-        try {
-            if (Model::has('request')
-                && Model::get('request')->attributes->has('_route')
-                && stripos(Model::get('request')->attributes->get('_route'), 'frontend') === 0
-            ) {
-                $application = 'Frontend';
-            }
-        } catch (InactiveScopeException $inactiveScopeException) {
-            // do nothing, use the backend language
+        if (Model::requestIsAvailable()
+            && Model::getRequest()->attributes->has('_route')
+            && stripos(Model::getRequest()->attributes->get('_route'), 'frontend') === 0
+        ) {
+            $application = 'Frontend';
         }
 
         return $application . '\Core\Language\Language';
     }
 
     /**
-     * @param $function
-     * @param $parameters
+     * @param string $function
+     * @param array $parameters
      *
      * @throws InvalidArgumentException when the function can't be called
      *
      * @return mixed
      */
-    public static function callLanguageFunction($function, $parameters = [])
+    public static function callLanguageFunction(string $function, array $parameters = [])
     {
         $languageClass = self::get();
         $callback = [$languageClass, $function];
@@ -68,11 +60,11 @@ final class Language extends IdentityTranslator
      * Get a label.
      * This only implements the key because the other parameters differ between the front- and backend.
      *
-     * @param $key
+     * @param string $key
      *
      * @return string
      */
-    public static function lbl($key)
+    public static function lbl(string $key): string
     {
         return self::callLanguageFunction('lbl', [$key]);
     }
@@ -81,11 +73,11 @@ final class Language extends IdentityTranslator
      * Get an error.
      * This only implements the key because the other parameters differ between the front- and backend.
      *
-     * @param $key
+     * @param string $key
      *
      * @return string
      */
-    public static function err($key)
+    public static function err(string $key): string
     {
         return self::callLanguageFunction('err', [$key]);
     }
@@ -93,14 +85,13 @@ final class Language extends IdentityTranslator
     /**
      * Get an action.
      *
-     *
-     * @param $key
+     * @param string $key
      *
      * @throws InvalidArgumentException when used in the backend.
      *
      * @return string
      */
-    public static function act($key)
+    public static function act(string $key): string
     {
         return self::callLanguageFunction('act', [$key]);
     }
@@ -109,19 +100,16 @@ final class Language extends IdentityTranslator
      * Get a message.
      * This only implements the key because the other parameters differ between the front- and backend.
      *
-     * @param $key
+     * @param string $key
      *
      * @return string
      */
-    public static function msg($key)
+    public static function msg(string $key): string
     {
         return self::callLanguageFunction('msg', [$key]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
     {
         $possibleActions = ['lbl', 'err', 'msg'];
         if (self::get() === FrontendLanguage::class) {

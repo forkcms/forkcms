@@ -9,6 +9,7 @@ namespace Backend\Modules\Users\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Form\Type\DeleteType;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -45,13 +46,10 @@ class Edit extends BackendBaseActionEdit
      */
     private $user;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
-        $error = $this->getParameter('error', 'string');
+        $this->id = $this->getRequest()->query->getInt('id');
+        $error = $this->getRequest()->query->get('error', '');
         $this->loadAuthenticatedUser();
 
         // If id and error parameters are not set we'll assume the user logged in
@@ -59,12 +57,12 @@ class Edit extends BackendBaseActionEdit
         // When this is the case the user will be redirected to the index action of this module.
         // An action to which he may not have any user rights.
         // Redirect to the user's own profile instead to avoid unnessary words.
-        if ($this->id === null
-            && $error === null
+        if ($this->id === 0
+            && $error === ''
             && $this->authenticatedUser->getUserId()
         ) {
             $this->redirect(
-                BackendModel::createURLForAction(
+                BackendModel::createUrlForAction(
                     'Edit'
                 ) . '&id=' . $this->authenticatedUser->getUserId()
             );
@@ -76,26 +74,23 @@ class Edit extends BackendBaseActionEdit
             $this->record = (array) BackendUsersModel::get($this->id);
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
-    /*
-     * Load the authenticated user in a seperate method
-     * so we can load it before the form starts loading.
+    /**
+     * Load the authenticated user in a separate method so we can load it before the form starts loading.
      */
-    private function loadAuthenticatedUser()
+    private function loadAuthenticatedUser(): void
     {
         $this->authenticatedUser = BackendAuthentication::getUser();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create user objects
         $this->user = new BackendUser($this->id);
@@ -108,15 +103,16 @@ class Edit extends BackendBaseActionEdit
         if (!$this->authenticatedUser->isGod()
             && ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('Add'))
         ) {
-            $this->redirect(BackendModel::createURLForAction('Error') . '&type=not-allowed');
+            $this->redirect(BackendModel::createUrlForAction('Error') . '&type=not-allowed');
         }
 
         // create form
-        $this->frm = new BackendForm('edit');
+        $this->form = new BackendForm('edit');
 
         // get active groups
         $groups = BackendGroupsModel::getGroupsByUser($this->id);
 
+        $checkedGroups = [];
         // loop through groups and set checked
         foreach ($groups as $group) {
             $checkedGroups[] = $group['id'];
@@ -124,87 +120,79 @@ class Edit extends BackendBaseActionEdit
 
         // create elements
         // profile
-        $this->frm
+        $this->form
             ->addText('email', $this->record['email'], 255)
             ->setAttribute('type', 'email')
         ;
         if ($this->user->isGod()) {
-            $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
+            $this->form->getField('email')->setAttributes(['disabled' => 'disabled']);
         }
-        $this->frm->addText('name', $this->record['settings']['name'], 255);
-        $this->frm->addText('surname', $this->record['settings']['surname'], 255);
-        $this->frm->addText('nickname', $this->record['settings']['nickname'], 24);
-        $this->frm->addImage('avatar');
+        $this->form->addText('name', $this->record['settings']['name'], 255);
+        $this->form->addText('surname', $this->record['settings']['surname'], 255);
+        $this->form->addText('nickname', $this->record['settings']['nickname'], 24);
+        $this->form->addImage('avatar');
 
         // password
         // check if we're god or same user
         if ($this->authenticatedUser->getUserId() == $this->id || $this->authenticatedUser->isGod()) {
             // allow to set new password
-            $this->frm->addPassword('new_password', null, 75);
-            $this->frm->addPassword('confirm_password', null, 75);
+            $this->form->addPassword('new_password', null, 75);
+            $this->form->addPassword('confirm_password', null, 75);
 
             // disable autocomplete
-            $this->frm->getField('new_password')->setAttributes(array('autocomplete' => 'off'));
-            $this->frm->getField('confirm_password')->setAttributes(array('autocomplete' => 'off'));
+            $this->form->getField('new_password')->setAttributes(['autocomplete' => 'off']);
+            $this->form->getField('confirm_password')->setAttributes(['autocomplete' => 'off']);
         }
 
         // settings
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'interface_language',
             BL::getInterfaceLanguages(),
             $this->record['settings']['interface_language']
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'date_format',
             BackendUsersModel::getDateFormats(),
             $this->user->getSetting('date_format')
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'time_format',
             BackendUsersModel::getTimeFormats(),
             $this->user->getSetting('time_format')
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'number_format',
             BackendUsersModel::getNumberFormats(),
             $this->user->getSetting('number_format', 'dot_nothing')
         );
 
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'csv_split_character',
             BackendUsersModel::getCSVSplitCharacters(),
             $this->user->getSetting('csv_split_character')
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'csv_line_ending',
             BackendUsersModel::getCSVLineEndings(),
             $this->user->getSetting('csv_line_ending')
         );
 
         // permissions
-        $this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
+        $this->form->addCheckbox('active', $this->record['active']);
 
         // only when GOD or when you can edit other users
         if ($this->allowUserRights) {
             // disable active field for current users
             if ($this->authenticatedUser->getUserId() == $this->record['id']) {
-                $this->frm->getField(
+                $this->form->getField(
                     'active'
                 )->setAttribute('disabled', 'disabled');
             }
-            // @TODO remove this when the api is kicked out
-            $this->frm->addCheckbox(
-                'api_access',
-                (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y')
-            );
-            $this->frm->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
+            $this->form->addMultiCheckbox('groups', BackendGroupsModel::getAll(), $checkedGroups);
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
@@ -214,39 +202,36 @@ class Edit extends BackendBaseActionEdit
         }
 
         // only allow deletion of other users
-        $this->tpl->assign(
+        $this->template->assign(
             'allowUsersDelete',
             $this->authenticatedUser->getUserId() != $this->id
         );
 
         // assign
-        $this->tpl->assign('record', $this->record);
-        $this->tpl->assign('id', $this->id);
+        $this->template->assign('record', $this->record);
+        $this->template->assign('id', $this->id);
 
         // assign that we're god or the same user
-        $this->tpl->assign(
+        $this->template->assign(
             'allowPasswordEdit',
             ($this->authenticatedUser->getUserId() == $this->id || $this->authenticatedUser->isGod())
         );
 
         // assign that you can edit the user rights
-        $this->tpl->assign('allowUserRights', $this->allowUserRights);
+        $this->template->assign('allowUserRights', $this->allowUserRights);
 
         // check if we need to show the password strength and parse the label
-        $this->tpl->assign('showPasswordStrength', ($this->record['settings']['password_strength'] !== 'strong'));
-        $this->tpl->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
+        $this->template->assign('showPasswordStrength', ($this->record['settings']['password_strength'] !== 'strong'));
+        $this->template->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
-            $fields = $this->frm->getFields();
+            $this->form->cleanupFields();
+            $fields = $this->form->getFields();
 
             // email is present
             if (!$this->user->isGod()) {
@@ -258,11 +243,11 @@ class Edit extends BackendBaseActionEdit
                             $fields['email']->addError(
                                 sprintf(
                                     BL::err('EmailWasDeletedBefore'),
-                                    BackendModel::createURLForAction(
+                                    BackendModel::createUrlForAction(
                                         'UndoDelete',
                                         null,
                                         null,
-                                        array('email' => $fields['email']->getValue())
+                                        ['email' => $fields['email']->getValue()]
                                     )
                                 )
                             );
@@ -301,30 +286,31 @@ class Edit extends BackendBaseActionEdit
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build user-array
-                $user['id'] = $this->id;
+                $user = ['id' => $this->id];
                 if (!$this->user->isGod()) {
                     $user['email'] = $fields['email']->getValue(true);
                 }
                 if ($this->authenticatedUser->getUserId() != $this->record['id']
                 ) {
-                    $user['active'] = $fields['active']->getActualValue();
+                    $user['active'] = $fields['active']->isChecked();
                 }
 
                 // user is now de-activated, we now remove all sessions for this user so he is logged out immediately
-                if (isset($user['active']) && $user['active'] === 'N' && $this->record['active'] !== $user['active']) {
+                if (isset($user['active']) && !$user['active'] && $this->record['active'] !== $user['active']) {
                     // delete all sessions for user
                     BackendModel::get('database')->delete(
                         'users_sessions',
                         'user_id = ?',
-                        array(
+                        [
                             $this->user->getUserId(),
-                        )
+                        ]
                     );
                 }
 
                 // build settings-array
+                $settings = [];
                 $settings['nickname'] = $fields['nickname']->getValue();
                 $settings['name'] = $fields['name']->getValue();
                 $settings['surname'] = $fields['surname']->getValue();
@@ -335,16 +321,10 @@ class Edit extends BackendBaseActionEdit
                 $settings['number_format'] = $fields['number_format']->getValue();
                 $settings['csv_split_character'] = $fields['csv_split_character']->getValue();
                 $settings['csv_line_ending'] = $fields['csv_line_ending']->getValue();
-                // @TODO remove this when the api is kicked out
-                $settings['api_access'] = ($this->allowUserRights) ? (bool) $fields['api_access']->getChecked(
-                ) : $this->record['settings']['api_access'];
 
                 // update password (only if filled in)
                 if (isset($fields['new_password']) && $fields['new_password']->isFilled()) {
-                    $user['password'] = BackendAuthentication::getEncryptedString(
-                        $fields['new_password']->getValue(),
-                        $this->record['settings']['password_key']
-                    );
+                    $user['password'] = BackendAuthentication::encryptPassword($fields['new_password']->getValue());
 
                     // the password has changed
                     if ($this->record['password'] != $user['password']) {
@@ -369,8 +349,7 @@ class Edit extends BackendBaseActionEdit
 
                 // has the user submitted an avatar?
                 if ($fields['avatar']->isFilled()) {
-                    // init vars
-                    $avatarsPath = FRONTEND_FILES_PATH . '/backend_users/avatars';
+                    $avatarsPath = FRONTEND_FILES_PATH . '/Users/avatars';
 
                     // delete old avatar if it isn't the default-image
                     if ($this->record['settings']['avatar'] != 'no-avatar.jpg'
@@ -414,26 +393,33 @@ class Edit extends BackendBaseActionEdit
                     BackendGroupsModel::insertMultipleGroups($this->id, $groups);
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $user));
-
                 // can only edit own profile
                 if (!BackendAuthentication::isAllowedAction('Index')) {
                     // everything is saved, so redirect to the edit page
                     $this->redirect(
-                        BackendModel::createURLForAction(
+                        BackendModel::createUrlForAction(
                             'Edit'
                         ) . '&id=' . $this->id . '&report=edited&var=' . $settings['nickname']
                     );
                 } else {
                     // everything is saved, so redirect to the overview
                     $this->redirect(
-                        BackendModel::createURLForAction(
+                        BackendModel::createUrlForAction(
                             'Index'
                         ) . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']
                     );
                 }
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->user->getUserId()],
+            ['module' => $this->getModule()]
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

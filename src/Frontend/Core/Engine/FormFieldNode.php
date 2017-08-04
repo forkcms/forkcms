@@ -7,19 +7,26 @@ namespace Frontend\Core\Engine;
  */
 class FormFieldNode extends \Twig_Node
 {
+    /**
+     * @var string
+     */
     private $form;
+
+    /**
+     * @var string
+     */
     private $field;
 
     /**
      * @param string $form Name of the template var holding the form this field
      *                     belongs to.
      * @param string $field Name of the field to render.
-     * @param int $lineno Line number in the template source file.
+     * @param int $lineNumber Line number in the template source file.
      * @param string $tag
      */
-    public function __construct($form, $field, $lineno, $tag)
+    public function __construct(string $form, string $field, int $lineNumber, string $tag)
     {
-        parent::__construct(array(), array(), $lineno, $tag);
+        parent::__construct([], [], $lineNumber, $tag);
         $this->form = $form;
         $this->field = $field;
     }
@@ -27,10 +34,10 @@ class FormFieldNode extends \Twig_Node
     /**
      * @param \Twig_Compiler $compiler
      */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(\Twig_Compiler $compiler): void
     {
-        $frm = "\$context['form_{$this->form}']";
-        $parseField = $frm . "->getField('{$this->field}')->parse()";
+        $form = "\$context['form_{$this->form}']";
+        $parseField = $form . "->getField('{$this->field}')->parse()";
 
         $compiler
             ->addDebugInfo($this)

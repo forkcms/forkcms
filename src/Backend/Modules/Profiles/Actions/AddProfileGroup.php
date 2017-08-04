@@ -20,7 +20,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class AddProfileGroup extends BackendBaseActionAdd
 {
-
     /**
      * The id of the profile
      *
@@ -28,60 +27,51 @@ class AddProfileGroup extends BackendBaseActionAdd
      */
     private $id;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendProfilesModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendProfilesModel::exists($this->id)) {
             parent::execute();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // get group values for dropdown
         $ddmValues = BackendProfilesModel::getGroupsForDropDown($this->id);
 
         // create form
-        $this->frm = new BackendForm('addProfileGroup');
+        $this->form = new BackendForm('addProfileGroup');
 
         // create elements
-        $this->frm->addDropdown('group', $ddmValues);
-        $this->frm->addDate('expiration_date');
-        $this->frm->addTime('expiration_time', '');
+        $this->form->addDropdown('group', $ddmValues);
+        $this->form->addDate('expiration_date');
+        $this->form->addTime('expiration_time', '');
 
         // set default element
-        $this->frm->getField('group')->setDefaultElement('');
+        $this->form->getField('group')->setDefaultElement('');
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $ddmGroup = $this->frm->getField('group');
-            $txtExpirationDate = $this->frm->getField('expiration_date');
-            $txtExpirationTime = $this->frm->getField('expiration_time');
+            $ddmGroup = $this->form->getField('group');
+            $txtExpirationDate = $this->form->getField('expiration_date');
+            $txtExpirationTime = $this->form->getField('expiration_time');
 
             // fields filled?
             $ddmGroup->isFilled(BL::getError('FieldIsRequired'));
@@ -93,8 +83,9 @@ class AddProfileGroup extends BackendBaseActionAdd
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
+                $values = [];
                 $values['profile_id'] = $this->id;
                 $values['group_id'] = $ddmGroup->getSelected();
                 $values['starts_on'] = BackendModel::getUTCDate();
@@ -111,12 +102,9 @@ class AddProfileGroup extends BackendBaseActionAdd
                 // insert values
                 $id = BackendProfilesModel::insertProfileGroup($values);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_profile_add_to_group', array('item' => $values));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction(
+                    BackendModel::createUrlForAction(
                         'Edit'
                     ) . '&id=' . $values['profile_id'] . '&report=membership-added&highlight=row-' . $id . '#tabGroups'
                 );

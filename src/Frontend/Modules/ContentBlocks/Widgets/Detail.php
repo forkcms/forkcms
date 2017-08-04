@@ -2,7 +2,6 @@
 
 namespace Frontend\Modules\ContentBlocks\Widgets;
 
-use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Language\Locale;
 
@@ -11,10 +10,7 @@ use Frontend\Core\Language\Locale;
  */
 class Detail extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -23,13 +19,6 @@ class Detail extends FrontendBaseWidget
             Locale::frontendLanguage()
         );
 
-        // if the content block is not found or if it is hidden, just return an array with empty text
-        // @deprecated fix this for version 5, we just shouldn't assign this instead of this hack, but we need it for BC
-        if (!$contentBlock instanceof ContentBlock || $contentBlock->isHidden()) {
-            $contentBlock = ['text' => ''];
-        }
-
-        $this->tpl->assign('widgetContentBlocks', $contentBlock);
-        // That's all folks!
+        $this->template->assign('widgetContentBlocks', $contentBlock);
     }
 }

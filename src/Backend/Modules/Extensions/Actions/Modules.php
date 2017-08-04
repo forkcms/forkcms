@@ -34,28 +34,22 @@ class Modules extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $installedModules = array();
-    private $installableModules = array();
+    private $installedModules = [];
+    private $installableModules = [];
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         $this->loadData();
-        $this->loadDataGridInstalled();
-        $this->loadDataGridInstallable();
+        $this->loadDataGridInstalledModules();
+        $this->loadDataGridInstallableModules();
 
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Load the data for the 2 data grids.
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get all manageable modules
         $modules = BackendExtensionsModel::getModules();
@@ -70,66 +64,57 @@ class Modules extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Load the data grid for installable modules.
-     */
-    private function loadDataGridInstallable()
+    private function loadDataGridInstallableModules(): void
     {
         // create datagrid
         $this->dataGridInstallableModules = new BackendDataGridArray($this->installableModules);
 
-        $this->dataGridInstallableModules->setSortingColumns(array('raw_name'));
-        $this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => \SpoonFilter::ucfirst(BL::getLabel('Name'))));
-        $this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));
+        $this->dataGridInstallableModules->setSortingColumns(['raw_name']);
+        $this->dataGridInstallableModules->setHeaderLabels(['raw_name' => \SpoonFilter::ucfirst(BL::getLabel('Name'))]);
+        $this->dataGridInstallableModules->setColumnsHidden(['installed', 'name']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('DetailModule')) {
-            $this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]');
-            $this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
+            $this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]');
+            $this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
         }
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('InstallModule')) {
             // add install column
-            $this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('InstallModule') . '&amp;module=[raw_name]', BL::lbl('Install'));
+            $this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createUrlForAction('InstallModule') . '&amp;module=[raw_name]', BL::lbl('Install'));
             $this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'), null, \SpoonFilter::ucfirst(BL::lbl('Install')) . '?');
         }
     }
 
-    /**
-     * Load the data grid for installed modules.
-     */
-    private function loadDataGridInstalled()
+    private function loadDataGridInstalledModules(): void
     {
         // create datagrid
         $this->dataGridInstalledModules = new BackendDataGridArray($this->installedModules);
 
-        $this->dataGridInstalledModules->setSortingColumns(array('name'));
-        $this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name', 'cronjobs_active'));
+        $this->dataGridInstalledModules->setSortingColumns(['name']);
+        $this->dataGridInstalledModules->setColumnsHidden(['installed', 'raw_name']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('DetailModule')) {
-            $this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]');
-            $this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
+            $this->dataGridInstalledModules->setColumnURL('name', BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]');
+            $this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
         }
 
         // add the greyed out option to modules that have warnings
         $this->dataGridInstalledModules->addColumn('hidden');
-        $this->dataGridInstalledModules->setColumnFunction(array(new BackendExtensionsModel(), 'hasModuleWarnings'), array('[raw_name]'), array('hidden'));
+        $this->dataGridInstalledModules->setColumnFunction([new BackendExtensionsModel(), 'hasModuleWarnings'], ['[raw_name]'], ['hidden']);
     }
 
-    /**
-     * Parse the datagrids and the reports.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // parse data grid
-        $this->tpl->assign('dataGridInstallableModules', (string) $this->dataGridInstallableModules->getContent());
-        $this->tpl->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());
+        $this->template->assign('dataGridInstallableModules', (string) $this->dataGridInstallableModules->getContent());
+        $this->template->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());
 
         // parse installer warnings
-        $this->tpl->assign('warnings', (array) \SpoonSession::get('installer_warnings'));
+        $this->template->assign('warnings', (array) BackendModel::getSession()->get('installer_warnings'));
     }
 }

@@ -17,27 +17,13 @@ use Behat\Transliterator\Transliterator;
 class Uri
 {
     /**
-     * Prepares a string for a filename so that it can be used in urls.
-     *
-     * @param  string $value The value (without extension) that should be urlised.
-     *
-     * @return string        The urlised string.
-     *
-     * @deprecated use getUrl instead, it is strict enough to create valid filenames
-     */
-    public static function getFilename($value)
-    {
-        return self::getUrl($value);
-    }
-
-    /**
      * Prepares a string so that it can be used in urls.
      *
-     * @param  string $value The value that should be urlised.
+     * @param string $value The value that should be urlized.
      *
-     * @return string        The urlised string.
+     * @return string  The urlized string.
      */
-    public static function getUrl($value)
+    public static function getUrl(string $value): string
     {
         // convert cyrlic, greek or other caracters to ASCII characters
         $value = Transliterator::transliterate($value);

@@ -9,13 +9,15 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\ApplicationInterface;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This class defines the frontend, it is the core. Everything starts here.
  * We create all needed instances.
  */
-class Frontend extends \KernelLoader implements \ApplicationInterface
+class Frontend extends KernelLoader implements ApplicationInterface
 {
     /**
      * @var Page
@@ -25,7 +27,7 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
     /**
      * @return Response
      */
-    public function display()
+    public function display(): Response
     {
         return $this->page->display();
     }
@@ -36,7 +38,7 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
      * This method exists because the service container needs to be set before
      * the page's functionality gets loaded.
      */
-    public function initialize()
+    public function initialize(): void
     {
         new Url($this->getKernel());
 

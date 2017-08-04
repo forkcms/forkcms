@@ -8,19 +8,19 @@ jsFrontend.search =
     init: function()
     {
         // auto suggest (search widget)
-        if($('input.autoSuggest').length > 0) jsFrontend.search.autosuggest(55);
+        if($("input[data-role=fork-widget-search-field]").length > 0) jsFrontend.search.autosuggest(55);
 
         // autocomplete (search results page: autocomplete based on known search terms)
-        if($('input.autoComplete').length > 0) jsFrontend.search.autocomplete();
+        if($("input[data-role=fork-search-field][data-autocomplete=enabled]").length > 0) jsFrontend.search.autocomplete();
 
         // live suggest (search results page: live feed of matches)
-        if($('input.liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest();
+        if($("input[data-role=fork-search-field][data-live-suggest=enabled]").length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest();
     },
 
     // autocomplete (search results page: autocomplete based on known search terms)
     autocomplete: function()
     {
-        var input = $('input.autoComplete');
+        var input = $("input[data-role=fork-search-field][data-autocomplete=enabled]");
         var searchEngine = jsFrontend.search.getSuggestionEngine('Autocomplete');
 
         // autocomplete (based on saved search terms) on results page
@@ -64,7 +64,7 @@ jsFrontend.search =
         // set default values
         if(typeof length == 'undefined') length = 100;
 
-        var input = $('input.autoSuggest');
+        var input = $("input[data-role=fork-widget-search-field]");
         var searchEngine = jsFrontend.search.getSuggestionEngine('Autosuggest', length);
 
         // Init the typeahead search
@@ -108,12 +108,12 @@ jsFrontend.search =
         var allowCall = true;
 
         // grab element
-        var $input = $('input.liveSuggest');
+        var $input = $("input[data-role=fork-search-field][data-live-suggest=enabled]");
 
         // change in input = do the dance: live search results completion
         $input.on('keyup', function()
         {
-            var $searchContainer = $('#searchContainer');
+            var $searchContainer = $("*[data-role=search-results-container]");
 
             // make sure we're allowed to do the call (= previous call is no longer processing)
             if(allowCall)
@@ -177,9 +177,9 @@ jsFrontend.search =
                     settings.type = "POST";
                     settings.contentType = "application/x-www-form-urlencoded; charset=UTF-8";
                     settings.data = {
-                        fork: { 
-                            module: 'Search', 
-                            action: action, 
+                        fork: {
+                            module: 'Search',
+                            action: action,
                             language: jsFrontend.current.language
                         },
                         term: query,

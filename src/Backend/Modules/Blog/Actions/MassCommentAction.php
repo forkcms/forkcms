@@ -18,33 +18,36 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class MassCommentAction extends BackendBaseAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         // current status
-        $from = \SpoonFilter::getGetValue('from', array('published', 'moderation', 'spam'), 'published');
+        $from = $this->getRequest()->query->get('from');
+        if (!in_array($from, ['published', 'moderation', 'spam'])) {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-from-selected');
+        }
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
+        $action = $this->getRequest()->query->get('action');
+        if (!in_array($action, ['published', 'moderation', 'spam', 'delete'])) {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
+        }
 
         // no id's provided
-        if (!isset($_GET['id'])) {
-            $this->redirect(BackendModel::createURLForAction('Comments') . '&error=no-comments-selected');
+        if (!$this->getRequest()->query->has('id')) {
+            $this->redirect(BackendModel::createUrlForAction('Comments') . '&error=no-comments-selected');
         }
 
         // redefine id's
-        $ids = (array) $_GET['id'];
+        $ids = (array) $this->getRequest()->query->get('id');
 
         // delete comment(s)
         if ($action == 'delete') {
             BackendBlogModel::deleteComments($ids);
         } elseif ($action == 'spam') {
             // is the spamfilter active?
-            if ($this->get('fork.settings')->get($this->URL->getModule(), 'spamfilter', false)) {
+            if ($this->get('fork.settings')->get($this->url->getModule(), 'spamfilter', false)) {
                 // get data
                 $comments = BackendBlogModel::getComments($ids);
 
@@ -82,7 +85,7 @@ class MassCommentAction extends BackendBaseAction
             // published?
             if ($action == 'published') {
                 // is the spamfilter active?
-                if ($this->get('fork.settings')->get($this->URL->getModule(), 'spamfilter', false)) {
+                if ($this->get('fork.settings')->get($this->url->getModule(), 'spamfilter', false)) {
                     // get data
                     $comments = BackendBlogModel::getComments($ids);
 
@@ -137,6 +140,6 @@ class MassCommentAction extends BackendBaseAction
         }
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('Comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
+        $this->redirect(BackendModel::createUrlForAction('Comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
     }
 }

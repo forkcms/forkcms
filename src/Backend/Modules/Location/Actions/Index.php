@@ -11,7 +11,7 @@ namespace Backend\Modules\Location\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -33,13 +33,10 @@ class Index extends BackendBaseActionIndex
     /**
      * @var array
      */
-    protected $items = array();
-    protected $settings = array();
+    protected $items = [];
+    protected $settings = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->header->addJS(FrontendLocationModel::getPathToMapStyles());
         parent::execute();
@@ -49,7 +46,7 @@ class Index extends BackendBaseActionIndex
 
         // check Google Maps API key, otherwise redirect to settings
         if ($apikey === null) {
-            $this->redirect(BackendModel::createURLForAction('Index', 'Settings'));
+            $this->redirect(BackendModel::createUrlForAction('Index', 'Settings'));
         }
 
         // add js
@@ -64,10 +61,7 @@ class Index extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the settings
-     */
-    protected function loadData()
+    protected function loadData(): void
     {
         $this->items = BackendLocationModel::getAll();
         $this->settings = BackendLocationModel::getMapSettings(0);
@@ -75,7 +69,7 @@ class Index extends BackendBaseActionIndex
 
         // if there are no markers we reset it to the birthplace of Fork
         if ($firstMarker === false) {
-            $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
+            $firstMarker = ['lat' => '51.052146', 'lng' => '3.720491'];
         }
 
         // load the settings from the general settings
@@ -96,56 +90,50 @@ class Index extends BackendBaseActionIndex
         }
     }
 
-    /**
-     * Loads the datagrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
-        $this->dataGrid = new BackendDataGridDB(
-            BackendLocationModel::QRY_DATAGRID_BROWSE,
-            array(BL::getWorkingLanguage())
+        $this->dataGrid = new BackendDataGridDatabase(
+            BackendLocationModel::QUERY_DATAGRID_BROWSE,
+            [BL::getWorkingLanguage()]
         );
-        $this->dataGrid->setSortingColumns(array('address', 'title'), 'address');
+        $this->dataGrid->setSortingColumns(['address', 'title'], 'address');
         $this->dataGrid->setSortParameter('ASC');
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]'
             );
             $this->dataGrid->addColumn(
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
     }
 
-    /**
-     * Load the settings form
-     */
-    protected function loadSettingsForm()
+    protected function loadSettingsForm(): void
     {
-        $mapTypes = array(
+        $mapTypes = [
             'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
             'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
             'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
             'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
-        );
-        $mapStyles = array(
+        ];
+        $mapStyles = [
             'standard' => BL::lbl('Default', $this->getModule()),
             'custom' => BL::lbl('Custom', $this->getModule()),
             'gray' => BL::lbl('Gray', $this->getModule()),
             'blue' => BL::lbl('Blue', $this->getModule()),
-        );
+        ];
 
         $zoomLevels = array_combine(
-            array_merge(array('auto'), range(1, 18)),
-            array_merge(array(BL::lbl('Auto', $this->getModule())), range(1, 18))
+            array_merge(['auto'], range(1, 18)),
+            array_merge([BL::lbl('Auto', $this->getModule())], range(1, 18))
         );
 
         $this->form = new BackendForm('settings');
@@ -163,19 +151,16 @@ class Index extends BackendBaseActionIndex
         );
     }
 
-    /**
-     * Parse the datagrid
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
-        $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
+        $this->template->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->template->assign('godUser', BackendAuthentication::getUser()->isGod());
 
         // assign to template
-        $this->tpl->assign('items', $this->items);
-        $this->tpl->assign('settings', $this->settings);
-        $this->form->parse($this->tpl);
+        $this->template->assign('items', $this->items);
+        $this->template->assign('settings', $this->settings);
+        $this->form->parse($this->template);
     }
 }

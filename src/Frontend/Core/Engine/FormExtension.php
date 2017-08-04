@@ -16,7 +16,7 @@ class FormExtension
      *
      * @param Twig_Environment $twig
      */
-    public function __construct($twig)
+    public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
 

@@ -2,61 +2,29 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Form\Handler;
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Request;
+use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 
 /**
  * Validates and saves the data from the languages form
  */
-class LanguagesHandler
+final class LanguagesHandler extends InstallerHandler
 {
-    /**
-     * @param Form    $form
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function process(Form $form, Request $request)
+    public function processInstallationData(InstallationData $installationData): InstallationData
     {
-        if (!$request->isMethod('POST')) {
-            return false;
-        }
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            return $this->processValidForm($form, $request);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param Form    $form
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function processValidForm(Form $form, Request $request)
-    {
-        $data = $form->getData();
-
         // different fields for single and multiple language
-        $data->setLanguages(
-            ($data->getLanguageType() === 'multiple')
-                ? $data->getLanguages()
-                : array($data->getDefaultLanguage())
+        $installationData->setLanguages(
+            ($installationData->getLanguageType() === 'multiple')
+                ? $installationData->getLanguages()
+                : [$installationData->getDefaultLanguage()]
         );
 
         // take same_interface_language field into account
-        $data->setInterfaceLanguages(
-            ($data->getSameInterfaceLanguage() === true)
-                ? $data->getLanguages()
-                : $data->getInterfaceLanguages()
+        $installationData->setInterfaceLanguages(
+            ($installationData->getSameInterfaceLanguage() === true)
+                ? $installationData->getLanguages()
+                : $installationData->getInterfaceLanguages()
         );
 
-        $request->getSession()->set('installation_data', $data);
-
-        return true;
+        return $installationData;
     }
 }

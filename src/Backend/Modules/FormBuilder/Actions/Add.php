@@ -23,51 +23,58 @@ use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 class Add extends BackendBaseActionAdd
 {
     /**
-     * Execute the action
+     * The available templates
+     *
+     * @var array
      */
-    public function execute()
+    private $templates = [];
+
+    public function execute(): void
     {
         parent::execute();
+        $this->templates = BackendFormBuilderModel::getTemplates();
         $this->loadForm();
         $this->validateForm();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
-        $this->frm = new BackendForm('add');
-        $this->frm->addText('name');
-        $this->frm->addDropdown(
+        $this->form = new BackendForm('add');
+        $this->form->addText('name');
+        $this->form->addDropdown(
             'method',
-            array(
+            [
                 'database' => BL::getLabel('MethodDatabase'),
                 'database_email' => BL::getLabel('MethodDatabaseEmail'),
-            ),
+                'email' => BL::getLabel('MethodEmail'),
+            ],
             'database_email'
         );
-        $this->frm->addText('email');
-        $this->frm->addText('identifier', BackendFormBuilderModel::createIdentifier());
-        $this->frm->addEditor('success_message');
+        $this->form->addText('email');
+        $this->form->addText('email_subject');
+        $this->form->addText('identifier', BackendFormBuilderModel::createIdentifier());
+        $this->form->addEditor('success_message');
+
+        // if we have multiple templates, add a dropdown to select them
+        if (count($this->templates) > 1) {
+            $this->form->addDropdown('template', array_combine($this->templates, $this->templates));
+        }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if ($this->form->isSubmitted()) {
+            $this->form->cleanupFields();
 
             // shorten the fields
-            $txtName = $this->frm->getField('name');
-            $txtEmail = $this->frm->getField('email');
-            $ddmMethod = $this->frm->getField('method');
-            $txtSuccessMessage = $this->frm->getField('success_message');
-            $txtIdentifier = $this->frm->getField('identifier');
+            $txtName = $this->form->getField('name');
+            $txtEmail = $this->form->getField('email');
+            $txtEmailSubject = $this->form->getField('email_subject');
+            $ddmMethod = $this->form->getField('method');
+            $txtSuccessMessage = $this->form->getField('success_message');
+            $txtIdentifier = $this->form->getField('identifier');
 
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
@@ -81,7 +88,7 @@ class Add extends BackendBaseActionAdd
                 foreach ($emailAddresses as $address) {
                     $address = trim($address);
 
-                    if (!\SpoonFilter::isEmail($address)) {
+                    if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
                         $error = true;
                         break;
                     }
@@ -104,13 +111,18 @@ class Add extends BackendBaseActionAdd
                 }
             }
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build array
+                $values = [];
                 $values['language'] = BL::getWorkingLanguage();
                 $values['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();
-                $values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
+                $values['email'] = ($ddmMethod->getValue() === 'database_email' || $ddmMethod->getValue() === 'email')
+                    ? serialize($emailAddresses) : null;
+                $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
+                $values['email_template'] = count($this->templates) > 1
+                    ? $this->form->getField('template')->getValue() : $this->templates[0];
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
@@ -122,21 +134,19 @@ class Add extends BackendBaseActionAdd
                 // insert the item
                 $id = BackendFormBuilderModel::insert($values);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
-
                 // set frontend locale
                 FL::setLocale(BL::getWorkingLanguage(), true);
 
                 // create submit button
+                $field = [];
                 $field['form_id'] = $id;
                 $field['type'] = 'submit';
-                $field['settings'] = serialize(array('values' => \SpoonFilter::ucfirst(FL::getLabel('Send'))));
+                $field['settings'] = serialize(['values' => \SpoonFilter::ucfirst(FL::getLabel('Send'))]);
                 BackendFormBuilderModel::insertField($field);
 
                 // everything is saved, so redirect to the editform
                 $this->redirect(
-                    BackendModel::createURLForAction('Edit') . '&id=' . $id .
+                    BackendModel::createUrlForAction('Edit') . '&id=' . $id .
                     '&report=added&var=' . rawurlencode($values['name']) . '#tabFields'
                 );
             }

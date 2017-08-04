@@ -25,19 +25,16 @@ class Settings extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $modules = array();
+    private $modules = [];
 
     /**
      * Settings per module
      *
      * @var array
      */
-    private $settings = array();
+    private $settings = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -46,42 +43,39 @@ class Settings extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Loads the settings form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // init settings form
-        $this->frm = new BackendForm('settings');
+        $this->form = new BackendForm('settings');
 
         // get current settings
         $this->settings = BackendSearchModel::getModuleSettings();
 
         // add field for pagination
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'overview_num_items',
             array_combine(range(1, 30), range(1, 30)),
             $this->get('fork.settings')->get($this->getModule(), 'overview_num_items', 20)
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'autocomplete_num_items',
             array_combine(range(1, 30), range(1, 30)),
             $this->get('fork.settings')->get($this->getModule(), 'autocomplete_num_items', 20)
         );
-        $this->frm->addDropdown(
+        $this->form->addDropdown(
             'autosuggest_num_items',
             array_combine(range(1, 30), range(1, 30)),
             $this->get('fork.settings')->get($this->getModule(), 'autosuggest_num_items', 20)
         );
 
         // add checkbox for the sitelinks search box in Google
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'use_sitelinks_search_box',
             $this->get('fork.settings')->get($this->getModule(), 'use_sitelinks_search_box', true)
         );
 
         // modules that, no matter what, can not be searched
-        $disallowedModules = array('Search');
+        $disallowedModules = ['Search'];
 
         // loop modules
         foreach (BackendModel::getModulesForDropDown() as $module => $label) {
@@ -90,109 +84,99 @@ class Settings extends BackendBaseActionEdit
                 method_exists('Frontend\\Modules\\' . $module . '\\Engine\\Model', 'search')
             ) {
                 // add field to decide whether or not this module is searchable
-                $this->frm->addCheckbox(
+                $this->form->addCheckbox(
                     'search_' . $module,
-                    isset($this->settings[$module]) ? $this->settings[$module]['searchable'] == 'Y' : false
+                    isset($this->settings[$module]) ? $this->settings[$module]['searchable'] : false
                 );
 
                 // add field to decide weight for this module
-                $this->frm->addText(
+                $this->form->addText(
                     'search_' . $module . '_weight',
                     isset($this->settings[$module]) ? $this->settings[$module]['weight'] : 1
                 );
 
                 // field disabled?
-                if (!isset($this->settings[$module]) || $this->settings[$module]['searchable'] != 'Y') {
-                    $this->frm->getField('search_' . $module . '_weight')->setAttribute('disabled', 'disabled');
-                    $this->frm->getField('search_' . $module . '_weight')->setAttribute('class', 'form-control disabled');
+                if (!isset($this->settings[$module]) || !$this->settings[$module]['searchable']) {
+                    $this->form->getField('search_' . $module . '_weight')->setAttribute('disabled', 'disabled');
+                    $this->form->getField('search_' . $module . '_weight')->setAttribute('class', 'form-control disabled');
                 }
 
                 // add to list of modules
-                $this->modules[] = array(
+                $this->modules[] = [
                     'module' => $module,
-                    'id' => $this->frm->getField('search_' . $module)->getAttribute('id'),
+                    'id' => $this->form->getField('search_' . $module)->getAttribute('id'),
                     'label' => $label,
-                    'chk' => $this->frm->getField('search_' . $module)->parse(),
-                    'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(),
+                    'chk' => $this->form->getField('search_' . $module)->parse(),
+                    'txt' => $this->form->getField('search_' . $module . '_weight')->parse(),
                     'txtError' => '',
-                );
+                ];
             }
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // parse form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // assign iteration
-        $this->tpl->assign(array('modules' => $this->modules));
+        $this->template->assign('modules', $this->modules);
     }
 
-    /**
-     * Validates the settings form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // form is submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // validate module weights
             foreach ($this->modules as $i => $module) {
                 // only if this module is enabled
-                if ($this->frm->getField('search_' . $module['module'])->getChecked()) {
+                if ($this->form->getField('search_' . $module['module'])->getChecked()) {
                     // valid weight?
-                    $this->frm->getField('search_' . $module['module'] . '_weight')->isDigital(
+                    $this->form->getField('search_' . $module['module'] . '_weight')->isDigital(
                         BL::err('WeightNotNumeric')
                     );
-                    $this->modules[$i]['txtError'] = $this->frm->getField(
+                    $this->modules[$i]['txtError'] = $this->form->getField(
                         'search_' . $module['module'] . '_weight'
                     )->getErrors();
                 }
             }
 
             // form is validated
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // set our settings
                 $this->get('fork.settings')->set(
                     $this->getModule(),
                     'overview_num_items',
-                    $this->frm->getField('overview_num_items')->getValue()
+                    $this->form->getField('overview_num_items')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     $this->getModule(),
                     'autocomplete_num_items',
-                    $this->frm->getField('autocomplete_num_items')->getValue()
+                    $this->form->getField('autocomplete_num_items')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     $this->getModule(),
                     'autosuggest_num_items',
-                    $this->frm->getField('autosuggest_num_items')->getValue()
+                    $this->form->getField('autosuggest_num_items')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     $this->getModule(),
                     'use_sitelinks_search_box',
-                    $this->frm->getField('use_sitelinks_search_box')->isChecked()
+                    $this->form->getField('use_sitelinks_search_box')->isChecked()
                 );
 
                 // module search
                 foreach ((array) $this->modules as $module) {
-                    $searchable = $this->frm->getField('search_' . $module['module'])->getChecked() ? 'Y' : 'N';
-                    $weight = $this->frm->getField('search_' . $module['module'] . '_weight')->getValue();
+                    $searchable = $this->form->getField('search_' . $module['module'])->getChecked();
+                    $weight = $this->form->getField('search_' . $module['module'] . '_weight')->getValue();
 
-                    // insert, or update
-                    BackendSearchModel::insertModuleSettings($module, $searchable, $weight);
+                    BackendSearchModel::insertModuleSettings($module['module'], $searchable, $weight);
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_changed_settings');
-
                 // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
+                $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved');
             }
         }
     }

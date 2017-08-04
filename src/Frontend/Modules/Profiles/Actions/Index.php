@@ -18,10 +18,7 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
  */
 class Index extends FrontendBaseBlock
 {
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         // only logged in profiles can seer their dashboard
         if (FrontendProfilesAuthentication::isLoggedIn()) {
@@ -37,10 +34,10 @@ class Index extends FrontendBaseBlock
         } else {
             // profile not logged in
             $this->redirect(
-                FrontendNavigation::getURLForBlock(
+                FrontendNavigation::getUrlForBlock(
                     'Profiles',
                     'Login'
-                ) . '?queryString=' . FrontendNavigation::getURLForBlock('Profiles'),
+                ) . '?queryString=' . FrontendNavigation::getUrlForBlock('Profiles'),
                 307
             );
         }

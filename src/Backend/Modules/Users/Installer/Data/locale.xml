@@ -89,18 +89,6 @@
         <translation language="es"><![CDATA[Activa el acceso CMS para esta cuenta.]]></translation>
         <translation language="el"><![CDATA[Δώσε άδεια πρόσβασης στο CMS γιά αυτόν το λογαριασμό.]]></translation>
       </item>
-      <item type="message" name="HelpAPIAccess">
-        <translation language="nl"><![CDATA[Geef deze account toegang tot de API.]]></translation>
-        <translation language="en"><![CDATA[Enable API access for this account.]]></translation>
-        <translation language="it"><![CDATA[Abilita l'accesso tramite API per questo account.]]></translation>
-        <translation language="ru"><![CDATA[Разрешить доступ к API этому аккаунту.]]></translation>
-        <translation language="zh"><![CDATA[允许API到达这个帐户。]]></translation>
-        <translation language="de"><![CDATA[API-Zugang für dieses Benutzerkonto aktivieren.]]></translation>
-        <translation language="hu"><![CDATA[API hozzáférés engedélyezése a fiókhoz.]]></translation>
-        <translation language="fr"><![CDATA[Activer l'accès API pour ce compte.]]></translation>
-        <translation language="es"><![CDATA[activa el acceso API para esta cuenta.]]></translation>
-        <translation language="el"><![CDATA[Δώσε άδεια πρόσβασης στο API γιά αυτόν το λογαριασμό.]]></translation>
-      </item>
       <item type="message" name="HelpStrongPassword">
         <translation language="nl"><![CDATA[Sterke wachtwoorden bestaan uit een combinatie van hoofdletters]]></translation>
         <translation language="en"><![CDATA[Strong passwords consist of a combination of capitals]]></translation>

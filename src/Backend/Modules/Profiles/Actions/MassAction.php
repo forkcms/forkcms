@@ -18,22 +18,22 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  */
 class MassAction extends BackendBaseAction
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
         // action to execute
-        $action = \SpoonFilter::getGetValue('action', array('addToGroup', 'delete'), '');
-        $ids = (isset($_GET['id'])) ? (array) $_GET['id'] : array();
-        $newGroupId = \SpoonFilter::getGetValue('newGroup', array_keys(BackendProfilesModel::getGroups()), '');
+        $action = $this->getRequest()->query->get('action');
+        if (!in_array($action, ['addToGroup', 'delete'])) {
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
+        }
+        $ids = $this->getRequest()->query->has('id') ? (array) $this->getRequest()->query->get('id') : [];
+        $newGroupId = $this->getRequest()->query->get('newGroup');
 
         // no ids provided
         if (empty($ids)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-profiles-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-profiles-selected');
         }
 
         // delete the given profiles
@@ -43,9 +43,9 @@ class MassAction extends BackendBaseAction
         } elseif ($action === 'addToGroup') {
             // add the profiles to the given group
             // no group id provided
-            if ($newGroupId == '') {
+            if (!array_key_exists($newGroupId, BackendProfilesModel::getGroups())) {
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&error=no-group-selected'
+                    BackendModel::createUrlForAction('Index') . '&error=no-group-selected'
                 );
             }
 
@@ -63,11 +63,11 @@ class MassAction extends BackendBaseAction
 
                     // OK, it's safe to add the user to this group
                     BackendProfilesModel::insertProfileGroup(
-                        array(
+                        [
                              'profile_id' => $id,
                              'group_id' => $newGroupId,
                              'starts_on' => BackendModel::getUTCDate(),
-                        )
+                        ]
                     );
                 }
             }
@@ -76,7 +76,7 @@ class MassAction extends BackendBaseAction
             $report = 'added-to-group';
         } else {
             // unknown action
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=unknown-action');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=unknown-action');
         }
 
         // report
@@ -84,18 +84,18 @@ class MassAction extends BackendBaseAction
 
         // redirect
         $this->redirect(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 'Index',
                 null,
                 null,
-                array(
-                     'offset' => \SpoonFilter::getGetValue('offset', null, ''),
-                     'order' => \SpoonFilter::getGetValue('order', null, ''),
-                     'sort' => \SpoonFilter::getGetValue('sort', null, ''),
-                     'email' => \SpoonFilter::getGetValue('email', null, ''),
-                     'status' => \SpoonFilter::getGetValue('status', null, ''),
-                     'group' => \SpoonFilter::getGetValue('group', null, ''),
-                )
+                [
+                     'offset' => $this->getRequest()->query->get('offset', ''),
+                     'order' => $this->getRequest()->query->get('order', ''),
+                     'sort' => $this->getRequest()->query->get('sort', ''),
+                     'email' => $this->getRequest()->query->get('email', ''),
+                     'status' => $this->getRequest()->query->get('status', ''),
+                     'group' => $this->getRequest()->query->get('group', ''),
+                ]
             ) . '&report=' . $report
         );
     }

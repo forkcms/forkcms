@@ -34,25 +34,22 @@ class DetailModule extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $information = array();
+    private $information = [];
 
     /**
      * List of warnings.
      *
      * @var array
      */
-    private $warnings = array();
+    private $warnings = [];
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
-        $this->currentModule = $this->getParameter('module', 'string');
+        $this->currentModule = $this->getRequest()->query->get('module', '');
 
         // does the item exist
-        if ($this->currentModule !== null && BackendExtensionsModel::existsModule($this->currentModule)) {
+        if ($this->currentModule !== '' && BackendExtensionsModel::existsModule($this->currentModule)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -60,7 +57,6 @@ class DetailModule extends BackendBaseActionIndex
             $this->loadData();
 
             // load datagrids
-            $this->loadDataGridCronjobs();
             $this->loadDataGridEvents();
 
             // parse
@@ -70,7 +66,7 @@ class DetailModule extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&error=non-existing');
         }
     }
 
@@ -78,11 +74,11 @@ class DetailModule extends BackendBaseActionIndex
      * Load the data.
      * This will also set some warnings if needed.
      */
-    private function loadData()
+    private function loadData(): void
     {
         // inform that the module is not installed yet
         if (!BackendModel::isModuleInstalled($this->currentModule)) {
-            $this->warnings[] = array('message' => BL::getMessage('InformationModuleIsNotInstalled'));
+            $this->warnings[] = ['message' => BL::getMessage('InformationModuleIsNotInstalled')];
         }
 
         // fetch the module information
@@ -91,41 +87,7 @@ class DetailModule extends BackendBaseActionIndex
         $this->warnings = $this->warnings + $moduleInformation['warnings'];
     }
 
-    /**
-     * Load the data grid which contains the cronjobs.
-     */
-    private function loadDataGridCronjobs()
-    {
-        // no cronjobs = don't bother
-        if (!isset($this->information['cronjobs'])) {
-            return;
-        }
-
-        // create data grid
-        $this->dataGridCronjobs = new BackendDataGridArray($this->information['cronjobs']);
-
-        // hide columns
-        $this->dataGridCronjobs->setColumnsHidden(array('minute', 'hour', 'day-of-month', 'month', 'day-of-week', 'action', 'description', 'active'));
-
-        // add cronjob data column
-        $this->dataGridCronjobs->addColumn(
-            'cronjob',
-            BL::getLabel('Cronjob'),
-            '[description]<br /><strong>[minute] [hour] [day-of-month] [month] [day-of-week]</strong> php ' . PATH_WWW . '/backend/cronjob module=<strong>' . $this->currentModule . '</strong> action=<strong>[action]</strong>',
-            null,
-            null,
-            null,
-            0
-        );
-
-        // no paging
-        $this->dataGridCronjobs->setPaging(false);
-    }
-
-    /**
-     * Load the data grid which contains the events.
-     */
-    private function loadDataGridEvents()
+    private function loadDataGridEvents(): void
     {
         // no hooks = don't bother
         if (!isset($this->information['events'])) {
@@ -139,21 +101,18 @@ class DetailModule extends BackendBaseActionIndex
         $this->dataGridEvents->setPaging(false);
     }
 
-    /**
-     * Parse.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // assign module data
-        $this->tpl->assign('name', $this->currentModule);
-        $this->tpl->assign('warnings', $this->warnings);
-        $this->tpl->assign('information', $this->information);
-        $this->tpl->assign('showInstallButton', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('InstallModule'));
+        $this->template->assign('name', $this->currentModule);
+        $this->template->assign('warnings', $this->warnings);
+        $this->template->assign('information', $this->information);
+        $this->template->assign('showInstallButton', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('InstallModule'));
 
         // data grids
-        $this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
-        $this->tpl->assign('dataGridCronjobs', (isset($this->dataGridCronjobs) && $this->dataGridCronjobs->getNumResults() > 0) ? $this->dataGridCronjobs->getContent() : false);
+        $this->template->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);
+        $this->template->assign('dataGridCronjobs', (isset($this->dataGridCronjobs) && $this->dataGridCronjobs->getNumResults() > 0) ? $this->dataGridCronjobs->getContent() : false);
     }
 }

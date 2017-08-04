@@ -11,13 +11,15 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
+use SpoonDate;
+use SpoonFilter;
 
 /**
  * A set of commonly used functions that will be applied on rows or columns
  */
 class DataGridFunctions
 {
-    protected static $dataGridUsers = array();
+    protected static $dataGridUsers = [];
 
     /**
      * Formats plain text as HTML, links will be detected, paragraphs will be inserted
@@ -26,12 +28,10 @@ class DataGridFunctions
      *
      * @return string
      */
-    public static function cleanupPlainText($var)
+    public static function cleanupPlainText(string $var): string
     {
-        $var = (string) $var;
-
         // detect links
-        $var = \SpoonFilter::replaceURLsWithAnchors($var);
+        $var = SpoonFilter::replaceURLsWithAnchors($var);
 
         // replace newlines
         $var = str_replace("\r", '', $var);
@@ -50,16 +50,13 @@ class DataGridFunctions
     /**
      * Format a number as a float
      *
-     * @param float $number   The number to format.
-     * @param int   $decimals The number of decimals.
+     * @param float $number The number to format.
+     * @param int $decimals The number of decimals.
      *
      * @return string
      */
-    public static function formatFloat($number, $decimals = 2)
+    public static function formatFloat(float $number, int $decimals = 2): string
     {
-        $number = (float) $number;
-        $decimals = (int) $decimals;
-
         return number_format($number, $decimals, '.', ' ');
     }
 
@@ -70,10 +67,8 @@ class DataGridFunctions
      *
      * @return string
      */
-    public static function getDate($timestamp)
+    public static function getDate(int $timestamp): string
     {
-        $timestamp = (int) $timestamp;
-
         // if invalid timestamp return an empty string
         if ($timestamp <= 0) {
             return '';
@@ -83,7 +78,7 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('date_format');
 
         // format the date according the user his settings
-        return \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
+        return SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -93,10 +88,8 @@ class DataGridFunctions
      *
      * @return string
      */
-    public static function getLongDate($timestamp)
+    public static function getLongDate(int $timestamp): string
     {
-        $timestamp = (int) $timestamp;
-
         // if invalid timestamp return an empty string
         if ($timestamp <= 0) {
             return '';
@@ -106,7 +99,7 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('datetime_format');
 
         // format the date according the user his settings
-        return \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
+        return SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -116,10 +109,8 @@ class DataGridFunctions
      *
      * @return string
      */
-    public static function getTime($timestamp)
+    public static function getTime(int $timestamp): string
     {
-        $timestamp = (int) $timestamp;
-
         // if invalid timestamp return an empty string
         if ($timestamp <= 0) {
             return '';
@@ -129,7 +120,7 @@ class DataGridFunctions
         $format = Authentication::getUser()->getSetting('time_format');
 
         // format the date according the user his settings
-        return \SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
+        return SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage());
     }
 
     /**
@@ -139,21 +130,18 @@ class DataGridFunctions
      *
      * @return string
      */
-    public static function getTimeAgo($timestamp)
+    public static function getTimeAgo(int $timestamp): string
     {
-        $timestamp = (int) $timestamp;
-
         // get user setting for long dates
         $format = Authentication::getUser()->getSetting('datetime_format');
 
         // get the time ago as a string
-        $timeAgo = \SpoonDate::getTimeAgo($timestamp, BackendLanguage::getInterfaceLanguage(), $format);
+        $timeAgo = SpoonDate::getTimeAgo($timestamp, BackendLanguage::getInterfaceLanguage(), $format);
 
-        return '<time data-toggle="tooltip" datetime="' . \SpoonDate::getDate('Y-m-d H:i:s', $timestamp) . '" title="' . \SpoonDate::getDate(
-            $format,
-            $timestamp,
-            BackendLanguage::getInterfaceLanguage()
-        ) . '">' . $timeAgo . '</time>';
+        return '<time data-toggle="tooltip" datetime="'
+               . SpoonDate::getDate('Y-m-d H:i:s', $timestamp)
+               . '" title="' . SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage())
+               . '">' . $timeAgo . '</time>';
     }
 
     /**
@@ -163,10 +151,8 @@ class DataGridFunctions
      *
      * @return string
      */
-    public static function getUser($id)
+    public static function getUser(int $id): string
     {
-        $id = (int) $id;
-
         // nothing in cache
         if (!isset(self::$dataGridUsers[$id])) {
             // create user instance
@@ -181,12 +167,12 @@ class DataGridFunctions
             $html = '<div class="fork-data-grid-avatar">' . "\n";
             if ($allowed) {
                 $html .= '     <a href="' .
-                    BackendModel::createURLForAction(
+                    BackendModel::createUrlForAction(
                         'Edit',
                         'Users'
                     ) . '&amp;id=' . $id . '">' . "\n";
             }
-            $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+            $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/Users/avatars/32x32/' .
                 $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
 
             $html .= '<span>' . $nickname . '</span>';
@@ -207,12 +193,12 @@ class DataGridFunctions
      * 'visible', 'hidden', 'active', 'published'
      *
      * @param string $type The type of column. This is given since some columns can have different meanings than others.
-     * @param string $value
-     * @param array  $attributes
+     * @param string|bool $value
+     * @param array $attributes
      *
      * @return array
      */
-    public static function greyOut($type, $value, array $attributes = array())
+    public static function greyOut(string $type, $value, array $attributes = []): array
     {
         $grayedOutClass = 'fork-data-grid-grayed-out grayedOut';
         $greyOut = false;
@@ -221,17 +207,17 @@ class DataGridFunctions
             case 'visible':
             case 'active':
             case 'published':
-                if ($value == 'N') {
+                if (!$value) {
                     $greyOut = true;
                 }
                 break;
             case 'status':
-                if ($value == 'hidden') {
+                if ($value === 'hidden') {
                     $greyOut = true;
                 }
                 break;
             case 'hidden':
-                if ($value == 'Y') {
+                if ($value) {
                     $greyOut = true;
                 }
                 break;
@@ -252,34 +238,48 @@ class DataGridFunctions
     /**
      * Returns an image tag
      *
-     * @param string $path    The path to the image.
-     * @param string $image   The filename of the image.
-     * @param string $title   The title (will be used as alt).
-     * @param string $url     The url
-     * @param int $width   The width for the <img element
-     * @param int $height  The height for the <img element
+     * @param string $path The path to the image.
+     * @param string $image The filename of the image.
+     * @param string $title The title (will be used as alt).
+     * @param string $url The url
+     * @param int $width The width for the <img element
+     * @param int $height The height for the <img element
+     * @param string $filter The LiipImagineBundle filter
      *
      * @return string
      */
-    public static function showImage($path, $image, $title = '', $url = null, $width = null, $height = null)
-    {
-        $path = (string) $path;
-        $image = (string) $image;
-        $title = (string) $title;
+    public static function showImage(
+        string $path,
+        string $image,
+        string $title = '',
+        string $url = null,
+        int $width = null,
+        int $height = null,
+        string $filter = null
+    ): string {
+        if ($width === 0 || $height === 0) {
+            throw new \Exception('An image must not have a width or height equal to 0, because the image will not be visible.');
+        }
 
-        $html = '<img src="' . $path . '/' . $image . '" alt="' . $title . '"';
+        $imagePath = $path . '/' . $image;
 
-        if ($width) {
+        if ($filter !== null) {
+            $imagePath = BackendModel::get('liip_imagine.cache.manager')->getBrowserPath($imagePath, $filter);
+        }
+
+        $html = '<img src="' . $imagePath . '" alt="' . $title . '"';
+
+        if ($width !== null) {
             $html .= ' width="' . $width . '"';
         }
 
-        if ($height) {
+        if ($height !== null) {
             $html .= ' height="' . $height . '"';
         }
 
         $html .= ' />';
 
-        if ($url) {
+        if ($url !== null) {
             $html = '<a href="' . $url . '" title="' . $title . '">' . $html . '</a>';
         }
 
@@ -289,48 +289,48 @@ class DataGridFunctions
     /**
      * Truncate a string
      *
-     * @param string $string    The string to truncate.
-     * @param int    $length    The maximumlength for the string.
-     * @param bool   $useHellip Should a hellip be appended?
+     * @param string $string The string to truncate.
+     * @param int $length The maximum length for the string.
+     * @param bool $useHellip Should a hellip be appended?
      *
      * @return string
      */
-    public static function truncate($string, $length, $useHellip = true)
+    public static function truncate(string $string, int $length, bool $useHellip = true): string
     {
         // remove special chars
         $string = htmlspecialchars_decode($string);
 
         // less characters
         if (mb_strlen($string) <= $length) {
-            return \SpoonFilter::htmlspecialchars($string);
-        } else {
-            // more characters
-            // hellip is seen as 1 char, so remove it from length
-            if ($useHellip) {
-                --$length;
-            }
-
-            // get the amount of requested characters
-            $string = mb_substr($string, 0, $length);
-
-            // add hellip
-            if ($useHellip) {
-                $string .= '…';
-            }
-
-            return \SpoonFilter::htmlspecialchars($string);
+            return SpoonFilter::htmlspecialchars($string);
         }
+
+        // more characters
+        // hellip is seen as 1 char, so remove it from length
+        if ($useHellip) {
+            --$length;
+        }
+
+        // get the amount of requested characters
+        $string = mb_substr($string, 0, $length);
+
+        // add hellip
+        if ($useHellip) {
+            $string .= '…';
+        }
+
+        return SpoonFilter::htmlspecialchars($string);
     }
 
     /**
      * This is an alias for the template modifier since it can also be used here and people didn't find it.
      *
      * @param string|bool $status
-     * @param bool        $reverse show the opposite of the status
+     * @param bool $reverse show the opposite of the status
      *
      * @return string
      */
-    public static function showBool($status, $reverse = false)
+    public static function showBool($status, bool $reverse = false): string
     {
         return TemplateModifiers::showBool($status, $reverse);
     }

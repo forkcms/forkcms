@@ -11,8 +11,9 @@ namespace Backend\Modules\Mailmotor\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex;
 use Backend\Core\Engine\Model;
-use Backend\Modules\Mailmotor\Command\SaveSettings;
-use Backend\Modules\Mailmotor\Event\SettingsSavedEvent;
+use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
+use Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
+use Backend\Modules\Mailmotor\Domain\Settings\SettingsType;
 
 /**
  * This is the settings-action (default),
@@ -20,22 +21,19 @@ use Backend\Modules\Mailmotor\Event\SettingsSavedEvent;
  */
 final class Settings extends ActionIndex
 {
-    /**
-     * Execute
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         $form = $this->createForm(
-            $this->get('mailmotor.form.settings'),
+            SettingsType::class,
             new SaveSettings($this->get('fork.settings'))
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
-        if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->template->assign('form', $form->createView());
 
             $this->parse();
             $this->display();
@@ -54,9 +52,11 @@ final class Settings extends ActionIndex
             new SettingsSavedEvent($settings)
         );
 
-        return $this->redirect(
-            Model::createURLForAction(
-                'Settings',
+        $redirectAction = $settings->mailEngine === 'not_implemented' ? 'Settings' : 'Ping';
+
+        $this->redirect(
+            Model::createUrlForAction(
+                $redirectAction,
                 null,
                 null,
                 [

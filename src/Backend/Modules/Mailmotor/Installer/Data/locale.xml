@@ -79,6 +79,21 @@
                 <translation language="uk"><![CDATA[ключ API]]></translation>
                 <translation language="zh"><![CDATA[API密钥]]></translation>
             </item>
+            <item type="message" name="DoubleOptIn">
+                <translation language="de"><![CDATA[Doppelte Opt-In aktivieren. Wenn überprüft Leute, die einschreiben, erhalten eine Mail, wo sie auf den Bestätigungslink klicken müssen. Dies hilft zu verhindern, dass Ihre Liste mit fictional E-Mail-Adressen gesperrt wird.]]></translation>
+                <translation language="el"><![CDATA[Ενεργοποίηση διπλό opt-in. Αν ελέγχονται οι άνθρωποι που εγγράφονται θα πάρετε ένα μήνυμα στο οποίο πρέπει να κάνετε κλικ στο σύνδεσμο επιβεβαίωσης. Αυτό βοηθά στην πρόληψη λίστα σας από το να spammed με φανταστικό διευθύνσεις ηλεκτρονικού ταχυδρομείου.]]></translation>
+                <translation language="en"><![CDATA[Enable double opt-in. If checked people who enroll will get a mail where they have to click the confirmation link. This helps to prevent your list from being spammed with fictional email addresses.]]></translation>
+                <translation language="es"><![CDATA[Habilitar doble opt-in. Si está marcada, las personas que se inscriban recibirán un correo donde tendrán que hacer clic en el enlace de confirmación. Esto ayuda a evitar que su lista de spam con direcciones de correo electrónico ficticio.]]></translation>
+                <translation language="fr"><![CDATA[Activer le double opt-in. Si les personnes vérifiées qui s'inscrivent recevront un courrier où ils doivent cliquer sur le lien de confirmation. Cela contribue à empêcher votre liste d'être spamming avec des adresses de courriel fictives.]]></translation>
+                <translation language="hu"><![CDATA[Engedélyezze kettős opt-in. Ha be van jelölve, akik beiratkozik kap egy e-mailt, ahol rá kell kattintani a visszaigazoló linkre. Ez segít megelőzni a listát spammelnek fiktív e-mail címeket.]]></translation>
+                <translation language="it"><![CDATA[Abilita double opt-in. Se selezionato ottenere la gente che per primo si iscrivono una email a cliccare sul link di conferma. Questo aiuta a prevenire l'elenco viene spammato con indirizzi e-mail fittizi.]]></translation>
+                <translation language="lt"><![CDATA[Įjungti dvigubai opt-in. Jei patikrintų žmonių, kurie įrašyti gausite laišką, kuriame jie turi paspausti patvirtinimo nuorodą. Tai padeda išvengti savo sąrašą iš spam su fantastikos elektroninio pašto adresais.]]></translation>
+                <translation language="nl"><![CDATA[Activeer double opt-in. Indien aangevinkt krijgen de mensen die zich inschrijven eerst een mail waar ze op de bevestigingslink moeten klikken. Dit helpt te voorkomen dat je lijst gespamt wordt met fictieve e-mailadresssen.]]></translation>
+                <translation language="ru"><![CDATA[Включить двойной отказ. Если выбрано, то люди, которые зачисляют, получат почту, на которой они должны нажать ссылку подтверждения. Это помогает предотвратить спам в вашем списке с вымышленными адресами электронной почты.]]></translation>
+                <translation language="sv"><![CDATA[Aktivera dubbel opt-in. Om markerad människor som registrerar får ett mail där de måste klicka på länken bekräftelse. Detta bidrar till att förhindra listan från att spammad med fiktiva e-postadresser.]]></translation>
+                <translation language="uk"><![CDATA[Включити подвійний неавтоматичного. Якщо перевіряються людей, зарахованих отримає пошту, де вони повинні натиснути на посилання для підтвердження. Це допомагає запобігти ваш список від спаму з того фіктивними адресами електронної пошти.]]></translation>
+                <translation language="zh"><![CDATA[启用双重选择启用。 如果选中，注册的人将收到邮件，他们必须单击确认链接。 这有助于防止您的列表被虚构的电子邮件地址垃圾邮件。]]></translation>
+            </item>
             <item type="label" name="ListId">
                 <translation language="de"><![CDATA[list id]]></translation>
                 <translation language="el"><![CDATA[κατάλογος id]]></translation>
@@ -138,6 +153,18 @@
                 <translation language="sv"><![CDATA[När någon re-prenumererar, skriva sina nuvarande intressen.]]></translation>
                 <translation language="uk"><![CDATA[Коли хтось повторно підписується, перезаписати їх поточні інтереси.]]></translation>
                 <translation language="zh"><![CDATA[当有人重新订阅时，覆盖其当前的兴趣。]]></translation>
+            </item>
+            <item type="message" name="SuccessfulMailEngineApiConnection">
+              <translation language="de"><![CDATA[Erfolgreiche API Verbindung]]></translation>
+              <translation language="en"><![CDATA[Successful API Connection]]></translation>
+              <translation language="fr"><![CDATA[Connexion api réussie]]></translation>
+              <translation language="nl"><![CDATA[Successvolle API verbinding]]></translation>
+            </item>
+            <item type="error" name="WrongMailEngineCredentials">
+              <translation language="de"><![CDATA[Falsche Mail-Engine API Key und / oder List-ID.]]></translation>
+              <translation language="en"><![CDATA[Wrong mail engine API-key and/or List-ID.]]></translation>
+              <translation language="fr"><![CDATA[La clé de l'API du moteur de messagerie incorrect et / ou l'ID de la liste.]]></translation>
+              <translation language="nl"><![CDATA[Verkeerde mail engine API-key en/of List-ID.]]></translation>
             </item>
         </Mailmotor>
     </Backend>

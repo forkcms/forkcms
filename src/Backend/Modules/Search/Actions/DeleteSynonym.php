@@ -11,6 +11,7 @@ namespace Backend\Modules\Search\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
@@ -18,36 +19,44 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class DeleteSynonym extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        parent::execute();
 
-        // does the item exist
-        if ($this->id !== null && BackendSearchModel::existsSynonymById($this->id)) {
-            // call parent, this will probably add some general CSS/JS or other required files
-            parent::execute();
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteSynonym']
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction(
+                'Synonyms',
+                null,
+                null,
+                ['error' => 'something-went-wrong']
+            ));
 
-            // get data
-            $this->record = (array) BackendSearchModel::getSynonym($this->id);
-
-            // delete item
-            BackendSearchModel::deleteSynonym($this->id);
-
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete_synonym', array('id' => $this->id));
-
-            // item was deleted, so redirect
-            $this->redirect(
-                BackendModel::createURLForAction('Synonyms') . '&report=deleted-synonym&var=' . rawurlencode(
-                    $this->record['term']
-                )
-            );
-        } else {
-            $this->redirect(BackendModel::createURLForAction('Synonyms') . '&error=non-existing');
+            return;
         }
+        $deleteFormData = $deleteForm->getData();
+
+        $id = (int) $deleteFormData['id'];
+
+        if ($id === 0 || !BackendSearchModel::existsSynonymById($id)) {
+            $this->redirect(BackendModel::createUrlForAction('Synonyms', null, null, ['error' => 'non-existing']));
+
+            return;
+        }
+
+        $synonym = (array) BackendSearchModel::getSynonym($id);
+        BackendSearchModel::deleteSynonym($id);
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'Synonyms',
+            null,
+            null,
+            ['report' => 'deleted-synonym', 'var' => $synonym['term']]
+        ));
     }
 }

@@ -4,12 +4,12 @@ doctrine:
         default_connection: default
         connections:
             default:
-                driver: pdo_%database.driver%
-                host: %database.host%
-                port: %database.port%
-                dbname: %database.name%
-                user: %database.user%
-                password: %database.password%
+                driver: "pdo_%database.driver%"
+                host: "%database.host%"
+                port: "%database.port%"
+                dbname: "%database.name%"
+                user: "%database.user%"
+                password: "%database.password%"
                 charset: utf8mb4
                 default_table_options:
                     charset: utf8mb4
@@ -18,7 +18,8 @@ doctrine:
                     # Remove when we don't have legacy tables anymore
                     enum: string
         types:
-            enum_bool: Common\Doctrine\Type\EnumBoolType
+            seo_follow: Common\Doctrine\Type\SEOFollowType
+            seo_index: Common\Doctrine\Type\SEOIndexType
             locale: Common\Doctrine\Type\LocaleType
             datetime: Common\Doctrine\Type\UTCDateTimeType
             datetimetz: Common\Doctrine\Type\UTCDateTimeType
@@ -34,7 +35,7 @@ doctrine:
                     common:
                         type: annotation
                         is_bundle: false
-                        dir: %kernel.root_dir%/../src/Common/Doctrine/Entity
+                        dir: "%kernel.project_dir%/src/Common/Doctrine/Entity"
                         alias: Common
                         prefix: Common\Doctrine\Entity
 
@@ -44,11 +45,6 @@ doctrine_orm_bridge:
 
 services:
     fork.entity.create_schema:
-        class: Common\Doctrine\Entity\CreateSchema
-        arguments:
-            - "@doctrine.orm.entity_manager"
-    entity.create_schema:
-        deprecated: The service %service_id% is deprecated and is replaced by fork.entity.create_schema
         class: Common\Doctrine\Entity\CreateSchema
         arguments:
             - "@doctrine.orm.entity_manager"

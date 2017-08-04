@@ -17,20 +17,14 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class Init extends \Common\Core\Init
 {
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
-        $this->allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob', 'Console');
+        $this->allowedTypes = ['Backend', 'BackendAjax', 'Console'];
 
         parent::__construct($kernel);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function initialize($type)
+    public function initialize(string $type): void
     {
         parent::initialize($type);
 

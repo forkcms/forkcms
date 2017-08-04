@@ -9,9 +9,10 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\ModuleExtraType;
+use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use TijsVerkoyen\Akismet\Akismet;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Core\Engine\Model as BackendModel;
@@ -24,39 +25,17 @@ use Backend\Core\Language\Language as BackendLanguage;
 class Model extends \Common\Core\Model
 {
     /**
-     * Allowed module extras types
-     *
-     * @var array
-     */
-    private static $allowedExtras = array('homepage', 'block', 'widget');
-
-    /**
      * Checks the settings and optionally returns an array with warnings
      *
      * @return array
      */
-    public static function checkSettings()
+    public static function checkSettings(): array
     {
-        $warnings = array();
+        $warnings = [];
 
         // check if debug-mode is active
         if (BackendModel::getContainer()->getParameter('kernel.debug')) {
-            $warnings[] = array('message' => BackendLanguage::err('DebugModeIsActive'));
-        }
-
-        // check if this action is allowed
-        if (Authentication::isAllowedAction('Index', 'Settings')) {
-            // check if the fork API keys are available
-            if (self::get('fork.settings')->get('Core', 'fork_api_private_key') == '' ||
-                self::get('fork.settings')->get('Core', 'fork_api_public_key') == ''
-            ) {
-                $warnings[] = array(
-                    'message' => sprintf(
-                        BackendLanguage::err('ForkAPIKeys'),
-                        self::createURLForAction('Index', 'Settings')
-                    ),
-                );
-            }
+            $warnings[] = ['message' => BackendLanguage::err('DebugModeIsActive')];
         }
 
         // check for extensions warnings
@@ -71,88 +50,77 @@ class Model extends \Common\Core\Model
      * If you don't specify a module the current module will be used.
      * If you don't specify a language the current language will be used.
      *
-     * @param string $action     The action to build the URL for.
-     * @param string $module     The module to build the URL for.
-     * @param string $language   The language to use, if not provided we will use the working language.
-     * @param array  $parameters GET-parameters to use.
-     * @param bool   $urlencode  Should the parameters be urlencoded?
+     * @param string $action The action to build the URL for.
+     * @param string $module The module to build the URL for.
+     * @param string $language The language to use, if not provided we will use the working language.
+     * @param array $parameters GET-parameters to use.
+     * @param bool $encodeSquareBrackets Should the square brackets be allowed so we can use them in de datagrid?
      *
      * @throws \Exception If $action, $module or both are not set
      *
      * @return string
      */
-    public static function createURLForAction(
-        $action = null,
-        $module = null,
-        $language = null,
+    public static function createUrlForAction(
+        string $action = null,
+        string $module = null,
+        string $language = null,
         array $parameters = null,
-        $urlencode = true
-    ) {
-        // redefine variables
-        $action = ($action !== null) ? (string) $action : null;
-        $module = ($module !== null) ? (string) $module : null;
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
-        $queryString = '';
+        bool $encodeSquareBrackets = true
+    ): string {
+        $language = $language ?? BackendLanguage::getWorkingLanguage();
 
         // checking if we have an url, because in a cronjob we don't have one
         if (self::getContainer()->has('url')) {
             // grab the URL from the reference
             $url = self::getContainer()->get('url');
-
-            // redefine
-            if ($action === null) {
-                $action = $url->getAction();
-            }
-            if ($module === null) {
-                $module = $url->getModule();
-            }
+            $action = $action ?? $url->getAction();
+            $module = $module ?? $url->getModule();
         }
 
         // error checking
         if ($action === null || $module === null) {
-            throw new \Exception('Action and Module must not be empty when creating an URL.');
+            throw new \Exception('Action and Module must not be empty when creating an url.');
         }
 
-        // lets create underscore cased module and action names
-        $module = mb_strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $module));
-        $action = mb_strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $action));
+        $parameters['token'] = self::getToken();
+        $queryParameterBag = self::getRequest()->query;
 
         // add offset, order & sort (only if not yet manually added)
-        if (isset($_GET['offset']) && !isset($parameters['offset'])) {
-            $parameters['offset'] = (int) $_GET['offset'];
+        if (!isset($parameters['offset']) && $queryParameterBag->has('offset')) {
+            $parameters['offset'] = $queryParameterBag->getInt('offset');
         }
-        if (isset($_GET['order']) && !isset($parameters['order'])) {
-            $parameters['order'] = (string) $_GET['order'];
+        if (!isset($parameters['order']) && $queryParameterBag->has('order')) {
+            $parameters['order'] = $queryParameterBag->get('order');
         }
-        if (isset($_GET['sort']) && !isset($parameters['sort'])) {
-            $parameters['sort'] = (string) $_GET['sort'];
-        }
-
-        // add at least one parameter
-        $parameters['token'] = self::getToken();
-
-        // add parameters
-        $i = 1;
-        foreach ($parameters as $key => $value) {
-            // first element
-            if ($i == 1) {
-                $queryString .= '?' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
-            } else {
-                $queryString .= '&' . $key . '=' . (($urlencode) ? rawurlencode($value) : $value);
-            }
-
-            ++$i;
+        if (!isset($parameters['sort']) && $queryParameterBag->has('sort')) {
+            $parameters['sort'] = $queryParameterBag->get('sort');
         }
 
-        // build the URL and return it
+        $queryString = '?' . http_build_query($parameters);
+
+        if (!$encodeSquareBrackets) {
+            // we use things like [id] to parse database column data in so we need to unescape those
+            $queryString = str_replace([urlencode('['), urlencode(']')], ['[', ']'], $queryString);
+        }
+
         return self::get('router')->generate(
             'backend',
-            array(
+            [
                 '_locale' => $language,
-                'module' => $module,
-                'action' => $action,
-            )
+                'module' => self::camelCaseToLowerSnakeCase($module),
+                'action' => self::camelCaseToLowerSnakeCase($action),
+            ]
         ) . $queryString;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    public static function camelCaseToLowerSnakeCase(string $string): string
+    {
+        return mb_strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $string));
     }
 
     /**
@@ -161,25 +129,25 @@ class Model extends \Common\Core\Model
      * Data is a key/value array. Example: array(id => 23, language => nl);
      *
      * @param string $module The module wherefore the extra exists.
-     * @param string $type   The type of extra, possible values are block, homepage, widget.
-     * @param array  $data   Extra data that exists.
+     * @param string $type The type of extra, possible values are block, homepage, widget.
+     * @param array $data Extra data that exists.
      */
-    public static function deleteExtra($module = null, $type = null, array $data = null)
+    public static function deleteExtra(string $module = null, string $type = null, array $data = null): void
     {
         // init
         $query = 'SELECT i.id, i.data FROM modules_extras AS i WHERE 1';
-        $parameters = array();
+        $parameters = [];
 
         // module
         if ($module !== null) {
             $query .= ' AND i.module = ?';
-            $parameters[] = (string) $module;
+            $parameters[] = $module;
         }
 
         // type
         if ($type !== null) {
             $query .= ' AND i.type = ?';
-            $parameters[] = (string) $type;
+            $parameters[] = $type;
         }
 
         // get extras
@@ -187,67 +155,65 @@ class Model extends \Common\Core\Model
 
         // loop found extras
         foreach ($extras as $extra) {
-            $deleteExtra = true;
-
             // get extra data
             $extraData = $extra['data'] !== null ? (array) unserialize($extra['data']) : null;
 
             // if we have $data parameter set and $extraData not null we should not delete such extra
-            if (isset($data) && !isset($extraData)) {
-                $deleteExtra = false;
-            } elseif (isset($data) && isset($extraData)) {
+            if ($data !== null && $extraData === null) {
+                continue;
+            }
+
+            if ($data !== null && $extraData !== null) {
                 foreach ($data as $dataKey => $dataValue) {
-                    if (isset($extraData[$dataKey]) && $dataValue != $extraData[$dataKey]) {
-                        $deleteExtra = false;
+                    if (isset($extraData[$dataKey]) && $dataValue !== $extraData[$dataKey]) {
+                        continue 2;
                     }
                 }
             }
 
-            // delete extra
-            if ($deleteExtra) {
-                self::deleteExtraById($extra['id']);
-            }
+            self::deleteExtraById($extra['id']);
         }
     }
 
     /**
      * Delete a page extra by its id
      *
-     * @param int  $id          The id of the extra to delete.
+     * @param int $id The id of the extra to delete.
      * @param bool $deleteBlock Should the block be deleted? Default is false.
      */
-    public static function deleteExtraById($id, $deleteBlock = false)
+    public static function deleteExtraById(int $id, bool $deleteBlock = false): void
     {
-        $id = (int) $id;
-        $deleteBlock = (bool) $deleteBlock;
+        self::getContainer()->get('database')->delete('modules_extras', 'id = ?', $id);
 
-        // delete the blocks
         if ($deleteBlock) {
             self::getContainer()->get('database')->delete('pages_blocks', 'extra_id = ?', $id);
-        } else {
-            self::getContainer()->get('database')->update(
-                'pages_blocks',
-                array('extra_id' => null),
-                'extra_id = ?',
-                $id
-            );
+
+            return;
         }
 
-        // delete extra
-        self::getContainer()->get('database')->delete('modules_extras', 'id = ?', $id);
+        self::getContainer()->get('database')->update(
+            'pages_blocks',
+            ['extra_id' => null],
+            'extra_id = ?',
+            $id
+        );
     }
 
     /**
      * Delete all extras for a certain value in the data array of that module_extra.
      *
      * @param string $module The module for the extra.
-     * @param string $field  The field of the data you want to check the value for.
-     * @param string $value  The value to check the field for.
+     * @param string $field The field of the data you want to check the value for.
+     * @param string $value The value to check the field for.
      * @param string $action In case you want to search for a certain action.
      */
-    public static function deleteExtrasForData($module, $field, $value, $action = null)
-    {
-        $ids = self::getExtrasForData((string) $module, (string) $field, (string) $value, $action);
+    public static function deleteExtrasForData(
+        string $module,
+        string $field,
+        string $value,
+        string $action = null
+    ): void {
+        $ids = self::getExtrasForData($module, $field, $value, $action);
 
         // we have extras
         if (!empty($ids)) {
@@ -259,13 +225,13 @@ class Model extends \Common\Core\Model
     /**
      * Delete thumbnails based on the folders in the path
      *
-     * @param string $path      The path wherein the thumbnail-folders exist.
-     * @param string $thumbnail The filename to be deleted.
+     * @param string $path The path wherein the thumbnail-folders exist.
+     * @param string|null $thumbnail The filename to be deleted.
      */
-    public static function deleteThumbnails($path, $thumbnail)
+    public static function deleteThumbnails(string $path, ?string $thumbnail): void
     {
         // if there is no image provided we can't do anything
-        if ($thumbnail == '') {
+        if ($thumbnail === null || $thumbnail === '') {
             return;
         }
 
@@ -282,21 +248,21 @@ class Model extends \Common\Core\Model
     /**
      * Generate a random string
      *
-     * @param int  $length    Length of random string.
-     * @param bool $numeric   Use numeric characters.
+     * @param int $length Length of random string.
+     * @param bool $numeric Use numeric characters.
      * @param bool $lowercase Use alphanumeric lowercase characters.
      * @param bool $uppercase Use alphanumeric uppercase characters.
-     * @param bool $special   Use special characters.
+     * @param bool $special Use special characters.
      *
      * @return string
      */
     public static function generateRandomString(
-        $length = 15,
-        $numeric = true,
-        $lowercase = true,
-        $uppercase = true,
-        $special = true
-    ) {
+        int $length = 15,
+        bool $numeric = true,
+        bool $lowercase = true,
+        bool $uppercase = true,
+        bool $special = true
+    ): string {
         $characters = '';
         $string = '';
 
@@ -317,7 +283,7 @@ class Model extends \Common\Core\Model
         // get random characters
         for ($i = 0; $i < $length; ++$i) {
             // random index
-            $index = mt_rand(0, mb_strlen($characters));
+            $index = random_int(0, mb_strlen($characters));
 
             // add character to salt
             $string .= mb_substr($characters, $index, 1, self::getContainer()->getParameter('kernel.charset'));
@@ -331,9 +297,9 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getDateFormatsLong()
+    public static function getDateFormatsLong(): array
     {
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach ((array) self::get('fork.settings')->get('Core', 'date_formats_long') as $format) {
@@ -353,9 +319,9 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getDateFormatsShort()
+    public static function getDateFormatsShort(): array
     {
-        $possibleFormats = array();
+        $possibleFormats = [];
 
         // loop available formats
         foreach ((array) self::get('fork.settings')->get('Core', 'date_formats_short') as $format) {
@@ -370,28 +336,18 @@ class Model extends \Common\Core\Model
         return $possibleFormats;
     }
 
-    /**
-     * Get extras
-     *
-     * @param array $ids The ids of the modules_extras to get.
-     *
-     * @return array
-     */
-    public static function getExtras($ids)
+    public static function getExtras(array $ids): array
     {
-        // get db
-        $db = self::getContainer()->get('database');
+        // get database
+        $database = self::getContainer()->get('database');
 
-        // loop and cast to integers
-        foreach ($ids as &$id) {
-            $id = (int) $id;
-        }
+        array_walk($ids, 'intval');
 
         // create an array with an equal amount of question marks as ids provided
         $extraIdPlaceHolders = array_fill(0, count($ids), '?');
 
         // get extras
-        return (array) $db->getRecords(
+        return (array) $database->getRecords(
             'SELECT i.*
              FROM modules_extras AS i
              WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
@@ -403,51 +359,42 @@ class Model extends \Common\Core\Model
      * Get extras for data
      *
      * @param string $module The module for the extra.
-     * @param string $key    The key of the data you want to check the value for.
-     * @param string $value  The value to check the key for.
+     * @param string $key The key of the data you want to check the value for.
+     * @param string $value The value to check the key for.
      * @param string $action In case you want to search for a certain action.
      *
-     * @return array                    The ids for the extras.
+     * @return array The ids for the extras.
      */
-    public static function getExtrasForData($module, $key, $value, $action = null)
+    public static function getExtrasForData(string $module, string $key, string $value, string $action = null): array
     {
-        // init variables
-        $module = (string) $module;
-        $key = (string) $key;
-        $value = (string) $value;
-        $result = array();
-
-        // init query
         $query = 'SELECT i.id, i.data
                  FROM modules_extras AS i
                  WHERE i.module = ? AND i.data != ?';
+        $parameters = [$module, 'NULL'];
 
-        // init parameters
-        $parameters = array($module, 'NULL');
-
-        // we have an action
-        if ($action) {
+        // Filter on the action if it is given.
+        if ($action !== null) {
             $query .= ' AND i.action = ?';
-            $parameters[] = (string) $action;
+            $parameters[] = $action;
         }
 
-        // get items
-        $items = (array) self::getContainer()->get('database')->getPairs($query, $parameters);
+        $moduleExtras = (array) self::getContainer()->get('database')->getPairs($query, $parameters);
 
-        // stop here when no items
-        if (empty($items)) {
-            return $result;
+        // No module extra's found
+        if (empty($moduleExtras)) {
+            return [];
         }
 
-        // loop items
-        foreach ($items as $id => $data) {
-            $data = unserialize($data);
-            if (isset($data[$key]) && $data[$key] == $value) {
-                $result[] = $id;
-            }
-        }
+        return array_keys(
+            array_filter(
+                $moduleExtras,
+                function (array $data) use ($key, $value) {
+                    $data = $data === null ? [] : unserialize($data);
 
-        return $result;
+                    return isset($data[$key]) && $data[$key] === $value;
+                }
+            )
+        );
     }
 
     /**
@@ -457,13 +404,13 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getKeys($language = null)
+    public static function getKeys(string $language = null): array
     {
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        if ($language === null) {
+            $language = BackendLanguage::getWorkingLanguage();
+        }
 
-        $cacheBuilder = BackendPagesModel::getCacheBuilder();
-
-        return $cacheBuilder->getKeys($language);
+        return BackendPagesModel::getCacheBuilder()->getKeys($language);
     }
 
     /**
@@ -473,19 +420,16 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getModulesOnFilesystem($includeCore = true)
+    public static function getModulesOnFilesystem(bool $includeCore = true): array
     {
-        if ($includeCore) {
-            $return = array('Core');
-        } else {
-            $return = array();
-        }
+        $modules = $includeCore ? ['Core'] : [];
         $finder = new Finder();
-        foreach ($finder->directories()->in(PATH_WWW . '/src/Backend/Modules')->depth('==0') as $folder) {
-            $return[] = $folder->getBasename();
+        $directories = $finder->directories()->in(__DIR__ . '/../../Modules')->depth('==0');
+        foreach ($directories as $directory) {
+            $modules[] = $directory->getBasename();
         }
 
-        return $return;
+        return $modules;
     }
 
     /**
@@ -493,9 +437,9 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getModulesForDropDown()
+    public static function getModulesForDropDown(): array
     {
-        $dropDown = array('Core' => 'Core');
+        $dropDown = ['Core' => 'Core'];
 
         // fetch modules
         $modules = self::getModules();
@@ -515,9 +459,11 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getNavigation($language = null)
+    public static function getNavigation(string $language = null): array
     {
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        if ($language === null) {
+            $language = BackendLanguage::getWorkingLanguage();
+        }
 
         $cacheBuilder = BackendPagesModel::getCacheBuilder();
 
@@ -529,15 +475,9 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getNumberFormats()
+    public static function getNumberFormats(): array
     {
-        $possibleFormats = array();
-
-        foreach ((array) self::get('fork.settings')->get('Core', 'number_formats') as $format => $example) {
-            $possibleFormats[$format] = $example;
-        }
-
-        return $possibleFormats;
+        return (array) self::get('fork.settings')->get('Core', 'number_formats');
     }
 
     /**
@@ -545,16 +485,13 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getTimeFormats()
+    public static function getTimeFormats(): array
     {
-        $possibleFormats = array();
+        $possibleFormats = [];
+        $interfaceLanguage = Authentication::getUser()->getSetting('interface_language');
 
         foreach (self::get('fork.settings')->get('Core', 'time_formats') as $format) {
-            $possibleFormats[$format] = \SpoonDate::getDate(
-                $format,
-                null,
-                Authentication::getUser()->getSetting('interface_language')
-            );
+            $possibleFormats[$format] = \SpoonDate::getDate($format, null, $interfaceLanguage);
         }
 
         return $possibleFormats;
@@ -565,14 +502,14 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function getToken()
+    public static function getToken(): string
     {
-        if (\SpoonSession::exists('csrf_token') && \SpoonSession::get('csrf_token') != '') {
-            $token = \SpoonSession::get('csrf_token');
-        } else {
-            $token = self::generateRandomString(10, true, true, false, false);
-            \SpoonSession::set('csrf_token', $token);
+        if (self::getSession()->has('csrf_token') && self::getSession()->get('csrf_token') !== '') {
+            return self::getSession()->get('csrf_token');
         }
+
+        $token = self::generateRandomString(10, true, true, false, false);
+        self::getSession()->set('csrf_token', $token);
 
         return $token;
     }
@@ -580,52 +517,55 @@ class Model extends \Common\Core\Model
     /**
      * Get URL for a given pageId
      *
-     * @param int    $pageId   The id of the page to get the URL for.
+     * @param int $pageId The id of the page to get the URL for.
      * @param string $language The language to use, if not provided we will use the working language.
      *
      * @return string
      */
-    public static function getURL($pageId, $language = null)
+    public static function getUrl(int $pageId, string $language = null): string
     {
-        $pageId = (int) $pageId;
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        if ($language === null) {
+            $language = BackendLanguage::getWorkingLanguage();
+        }
 
-        // init URL
-        $url = (self::getContainer()->getParameter('site.multilanguage')) ? '/' . $language . '/' : '/';
+        // Prepend the language if the site is multi language
+        $url = self::getContainer()->getParameter('site.multilanguage') ? '/' . $language . '/' : '/';
 
         // get the menuItems
         $keys = self::getKeys($language);
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
-            return self::getURL(404, $language);
-        } else {
-            $url .= $keys[$pageId];
+            return self::getUrl(404, $language);
         }
 
         // return the unique URL!
-        return urldecode($url);
+        return urldecode($url . $keys[$pageId]);
     }
 
     /**
      * Get the URL for a give module & action combination
      *
-     * @param string $module   The module wherefore the URL should be build.
-     * @param string $action   The specific action wherefore the URL should be build.
+     * @param string $module The module wherefore the URL should be build.
+     * @param string $action The specific action wherefore the URL should be build.
      * @param string $language The language wherein the URL should be retrieved,
      *                         if not provided we will load the language that was provided in the URL.
-     * @param array $data      An array with keys and values that partially or fully match the data of the block.
+     * @param array $data An array with keys and values that partially or fully match the data of the block.
      *                         If it matches multiple versions of that block it will just return the first match.
      *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
-    {
-        $module = (string) $module;
-        $action = ($action !== null) ? (string) $action : null;
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+    public static function getUrlForBlock(
+        string $module,
+        string $action = null,
+        string $language = null,
+        array $data = null
+    ): string {
+        if ($language === null) {
+            $language = BackendLanguage::getWorkingLanguage();
+        }
 
-        $pageIdForURL = null;
+        $pageIdForUrl = null;
         $navigation = self::getNavigation($language);
 
         $dataMatch = false;
@@ -643,36 +583,38 @@ class Model extends \Common\Core\Model
                     // loop extras
                     foreach ($properties['extra_blocks'] as $extra) {
                         // direct link?
-                        if ($extra['module'] == $module && $extra['action'] == $action  && $extra['action'] !== null) {
+                        if ($extra['module'] === $module && $extra['action'] === $action && $extra['action'] !== null) {
                             // if there is data check if all the requested data matches the extra data
-                            if (isset($extra['data']) && $data !== null
-                                && array_intersect_assoc($data, (array) $extra['data']) !== $data) {
+                            if ($data !== null && isset($extra['data'])
+                                && array_intersect_assoc($data, (array) $extra['data']) !== $data
+                            ) {
                                 // It is the correct action but has the wrong data
                                 continue;
                             }
+
                             // exact page was found, so return
-                            return self::getURL($properties['page_id'], $language);
+                            return self::getUrl($properties['page_id'], $language);
                         }
 
-                        if ($extra['module'] == $module && $extra['action'] == null) {
+                        if ($extra['module'] === $module && $extra['action'] === null) {
                             // if there is data check if all the requested data matches the extra data
-                            if (isset($extra['data']) && $data !== null) {
+                            if ($data !== null && isset($extra['data'])) {
                                 if (array_intersect_assoc($data, (array) $extra['data']) !== $data) {
                                     // It is the correct module but has the wrong data
                                     continue;
                                 }
 
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
 
-                            if ($extra['data'] === null && $data === null) {
-                                $pageIdForURL = (int) $pageId;
+                            if ($data === null && $extra['data'] === null) {
+                                $pageIdForUrl = (int) $pageId;
                                 $dataMatch = true;
                             }
 
                             if (!$dataMatch) {
-                                $pageIdForURL = (int) $pageId;
+                                $pageIdForUrl = (int) $pageId;
                             }
                         }
                     }
@@ -680,12 +622,12 @@ class Model extends \Common\Core\Model
             }
         }
 
-        // still no page id?
-        if ($pageIdForURL === null) {
-            return self::getURL(404, $language);
+        // Page not found so return the 404 url
+        if ($pageIdForUrl === null) {
+            return self::getUrl(404, $language);
         }
 
-        $url = self::getURL($pageIdForURL, $language);
+        $url = self::getUrl($pageIdForUrl, $language);
 
         // set locale with force
         FrontendLanguage::setLocale($language, true);
@@ -702,116 +644,98 @@ class Model extends \Common\Core\Model
     /**
      * Image Delete
      *
-     * @param string $module       Module name.
-     * @param string $filename     Filename.
+     * @param string $module Module name.
+     * @param string $filename Filename.
      * @param string $subDirectory Subdirectory.
-     * @param array  $fileSizes    Possible file sizes.
+     * @param array $fileSizes Possible file sizes.
      */
-    public static function imageDelete($module, $filename, $subDirectory = '', $fileSizes = null)
-    {
+    public static function imageDelete(
+        string $module,
+        string $filename,
+        string $subDirectory = '',
+        array $fileSizes = null
+    ): void {
         if (empty($fileSizes)) {
             $model = get_class_vars('Backend' . \SpoonFilter::toCamelCase($module) . 'Model');
             $fileSizes = $model['fileSizes'];
         }
 
+        // also include the source directory
+        $fileSizes[] = 'source';
+
+        $baseDirectory = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : '/' . $subDirectory . '/');
         $filesystem = new Filesystem();
-        foreach ($fileSizes as $sizeDir) {
-            $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                        (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . $sizeDir . '/' . $filename;
-            if (is_file($fullPath)) {
-                $filesystem->remove($fullPath);
+        array_walk(
+            $fileSizes,
+            function (string $sizeDirectory) use ($baseDirectory, $filename, $filesystem) {
+                $fullPath = $baseDirectory . basename($sizeDirectory) . '/' . $filename;
+                if (is_file($fullPath)) {
+                    $filesystem->remove($fullPath);
+                }
             }
-        }
-        $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                    (empty($subDirectory) ? '/' : '/' . $subDirectory . '/') . 'source/' . $filename;
-        if (is_file($fullPath)) {
-            $filesystem->remove($fullPath);
-        }
+        );
     }
 
     /**
      * Insert extra
      *
-     * @param  string    $type           What type do you want to insert, 'homepage', 'block' or 'widget'.
-     * @param  string    $module         The module you are inserting this extra for.
-     * @param  string    $action         The action this extra will use.
-     * @param  string    $label          Label which will be used when you want to connect this block.
-     * @param  array     $data           Containing extra variables.
-     * @param  bool      $hidden         Should this extra be visible in frontend or not?
-     * @param  int       $sequence
+     * @param ModuleExtraType $type What type do you want to insert, 'homepage', 'block' or 'widget'.
+     * @param string $module The module you are inserting this extra for.
+     * @param string $action The action this extra will use.
+     * @param string $label Label which will be used when you want to connect this block.
+     * @param array $data Containing extra variables.
+     * @param bool $hidden Should this extra be visible in frontend or not?
+     * @param int $sequence
      *
      * @throws Exception If extra type is not allowed
      *
-     * @return int       The new extra id
+     * @return int The new extra id
      */
-    public static function insertExtra($type, $module, $action = null, $label = null, $data = null, $hidden = false, $sequence = null)
-    {
-        $type = (string) $type;
-        $module = (string) $module;
-
-        // if action and label are empty, fallback to module
-        $action = ($action == null) ? $module : (string) $action;
-        $label = ($label == null) ? $module : (string) $label;
-
-        // check if type is allowed
-        if (!in_array($type, self::$allowedExtras)) {
-            throw new Exception(
-                'Type is not allowed, choose from "' . implode(', ', self::$allowedExtras) .'".'
-            );
-        }
-
-        // get database
-        $db = self::get('database');
-
-        // sequence not given
-        if ($sequence == null) {
-            // redefine sequence: get maximum sequence for module
-            $sequence = $db->getVar(
-                'SELECT MAX(i.sequence) + 1
-                 FROM modules_extras AS i
-                 WHERE i.module = ?',
-                array($module)
-            );
-
-            // sequence could not be found for module
-            if (is_null($sequence)) {
-                // redefine sequence: maximum sequence overall
-                $sequence = $db->getVar(
-                    'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
-                     FROM modules_extras AS i'
-                );
-            }
-        }
-
-        // build extra
-        $extra = array(
-            'module' => $module,
-            'type' => $type,
-            'label' => $label,
-            'action' => $action,
-            'data' => serialize((array) $data),
-            'hidden' => ($hidden) ? 'Y' : 'N',
-            'sequence' => $sequence,
-        );
-
+    public static function insertExtra(
+        ModuleExtraType $type,
+        string $module,
+        string $action = null,
+        string $label = null,
+        array $data = null,
+        bool $hidden = false,
+        int $sequence = null
+    ): int {
         // return id for inserted extra
-        return $db->insert('modules_extras', $extra);
+        return self::get('database')->insert(
+            'modules_extras',
+            [
+                'module' => $module,
+                'type' => $type,
+                'label' => $label ?? $module, // if label is empty, fallback to module
+                'action' => $action ?? null,
+                'data' => $data === null ? null : serialize($data),
+                'hidden' => $hidden,
+                'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
+            ]
+        );
     }
 
     /**
-     * @deprecated: twig doesn't contain this same type of caching out of the box.
-     * Use https://github.com/asm89/twig-cache-extension instead
+     * @param string $module
      *
-     * @param string $module   A specific module to clear the cache for.
-     * @param string $language The language to use.
+     * @return int
      */
-    public static function invalidateFrontendCache($module = null, $language = null)
+    private static function getNextModuleExtraSequenceForModule(string $module): int
     {
-        trigger_error(
-            'invalidateFrontendCache is deprecated since twig does not use the
-            same caching mechanisme. You can use https://github.com/asm89/twig-cache-extension
-            if you want a similar type of template cache.',
-            E_USER_DEPRECATED
+        $database = self::get('database');
+        // set next sequence number for this module
+        $sequence = (int) $database->getVar(
+            'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
+            [$module]
+        );
+
+        // this is the first extra for this module: generate new 1000-series
+        if ($sequence > 0) {
+            return $sequence;
+        }
+
+        return (int) $database->getVar(
+            'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
         );
     }
 
@@ -822,164 +746,47 @@ class Model extends \Common\Core\Model
      *
      * @return bool
      */
-    public static function isModuleInstalled($module)
+    public static function isModuleInstalled(string $module): bool
     {
-        $modules = self::getModules();
-
-        return (in_array((string) $module, $modules));
-    }
-
-    /**
-     * Ping the known webservices
-     *
-     * @param string $pageOrFeedURL The page/feed that has changed.
-     * @param string $category      An optional category for the site.
-     *
-     * @return bool If everything went fne true will, otherwise false.
-     * @throws Exception
-     *
-     * @deprecated
-     */
-    public static function ping($pageOrFeedURL = null, $category = null)
-    {
-        $siteTitle = self::get('fork.settings')->get('Core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
-        $siteURL = SITE_URL;
-        $pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
-        $category = ($category !== null) ? (string) $category : null;
-
-        // get ping services
-        $pingServices = self::get('fork.settings')->get('Core', 'ping_services', null);
-
-        // no ping services available or older than one month ago
-        if ($pingServices === null || $pingServices['date'] < strtotime('-1 month')) {
-            // get ForkAPI-keys
-            $publicKey = self::get('fork.settings')->get('Core', 'fork_api_public_key', '');
-            $privateKey = self::get('fork.settings')->get('Core', 'fork_api_private_key', '');
-
-            // validate keys
-            if ($publicKey == '' || $privateKey == '') {
-                return false;
-            }
-
-            // require the class
-            require_once PATH_LIBRARY . '/external/fork_api.php';
-
-            // create instance
-            $forkAPI = new \ForkAPI($publicKey, $privateKey);
-
-            // try to get the services
-            try {
-                $pingServices['services'] = $forkAPI->pingGetServices();
-                $pingServices['date'] = time();
-            } catch (Exception $e) {
-                // check if the error should not be ignored
-                if (mb_strpos($e->getMessage(), 'Operation timed out') === false &&
-                    mb_strpos($e->getMessage(), 'Invalid headers') === false
-                ) {
-                    if (BackendModel::getContainer()->getParameter('kernel.debug')) {
-                        throw $e;
-                    } else {
-                        // stop, hammertime
-                        return false;
-                    }
-                }
-            }
-
-            // store the services
-            self::get('fork.settings')->set('Core', 'ping_services', $pingServices);
-        }
-
-        // make sure services array will not trigger an error (even if we couldn't load any)
-        if (!isset($pingServices['services']) || !$pingServices['services']) {
-            $pingServices['services'] = array();
-        }
-
-        // loop services
-        foreach ($pingServices['services'] as $service) {
-            $client = new \SpoonXMLRPCClient($service['url']);
-            $client->setUserAgent('Fork ' . FORK_VERSION);
-            $client->setTimeout(10);
-            $client->setPort($service['port']);
-
-            try {
-                // extended ping?
-                if ($service['type'] == 'extended') {
-                    // no page or feed URL present?
-                    if ($pageOrFeedURL === null) {
-                        continue;
-                    }
-
-                    $parameters[] = array('type' => 'string', 'value' => $siteTitle);
-                    $parameters[] = array('type' => 'string', 'value' => $siteURL);
-                    $parameters[] = array('type' => 'string', 'value' => $pageOrFeedURL);
-                    if ($category !== null) {
-                        $parameters[] = array('type' => 'string', 'value' => $category);
-                    }
-
-                    $client->execute('weblogUpdates.extendedPing', $parameters);
-                } else {
-                    // default ping
-                    $parameters[] = array('type' => 'string', 'value' => $siteTitle);
-                    $parameters[] = array('type' => 'string', 'value' => $siteURL);
-
-                    $client->execute('weblogUpdates.ping', $parameters);
-                }
-            } catch (Exception $e) {
-                // check if the error should not be ignored
-                if (mb_strpos($e->getMessage(), 'Operation timed out') === false &&
-                    mb_strpos($e->getMessage(), 'Invalid headers') === false
-                ) {
-                    if (BackendModel::getContainer()->getParameter('kernel.debug')) {
-                        throw $e;
-                    }
-                }
-                continue;
-            }
-        }
-
-        return true;
+        return in_array($module, self::getModules(), true);
     }
 
     /**
      * Submit ham, this call is intended for the marking of false positives, things that were incorrectly marked as
      * spam.
      *
-     * @param string $userIp    IP address of the comment submitter.
+     * @param string $userIp IP address of the comment submitter.
      * @param string $userAgent User agent information.
-     * @param string $content   The content that was submitted.
-     * @param string $author    Submitted name with the comment.
-     * @param string $email     Submitted email address.
-     * @param string $url       Commenter URL.
+     * @param string $content The content that was submitted.
+     * @param string $author Submitted name with the comment.
+     * @param string $email Submitted email address.
+     * @param string $url Commenter URL.
      * @param string $permalink The permanent location of the entry the comment was submitted to.
-     * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
-     * @param string $referrer  The content of the HTTP_REFERER header should be sent here.
-     * @param array  $others    Other data (the variables from $_SERVER).
+     * @param string $type May be blank, comment, trackback, pingback, or a made up value like "registration".
+     * @param string $referrer The content of the HTTP_REFERER header should be sent here.
+     * @param array $others Other data (the variables from $_SERVER).
+     *
+     * @throws Exception
      *
      * @return bool If everything went fine, true will be returned, otherwise an exception will be triggered.
-     * @throws Exception
      */
     public static function submitHam(
-        $userIp,
-        $userAgent,
-        $content,
-        $author = null,
-        $email = null,
-        $url = null,
-        $permalink = null,
-        $type = null,
-        $referrer = null,
-        $others = null
-    ) {
-        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
-
-        // no key, so we can't detect spam
-        if ($akismetKey === '') {
+        string $userIp,
+        string $userAgent,
+        string $content,
+        string $author = null,
+        string $email = null,
+        string $url = null,
+        string $permalink = null,
+        string $type = null,
+        string $referrer = null,
+        array $others = null
+    ): bool {
+        try {
+            $akismet = self::getAkismet();
+        } catch (InvalidArgumentException $invalidArgumentException) {
             return false;
         }
-
-        $akismet = new Akismet($akismetKey, SITE_URL);
-        $akismet->setTimeOut(10);
-        $akismet->setUserAgent('Fork CMS/2.1');
 
         // try it to decide it the item is spam
         try {
@@ -1008,42 +815,38 @@ class Model extends \Common\Core\Model
     /**
      * Submit spam, his call is for submitting comments that weren't marked as spam but should have been.
      *
-     * @param string $userIp    IP address of the comment submitter.
+     * @param string $userIp IP address of the comment submitter.
      * @param string $userAgent User agent information.
-     * @param string $content   The content that was submitted.
-     * @param string $author    Submitted name with the comment.
-     * @param string $email     Submitted email address.
-     * @param string $url       Commenter URL.
+     * @param string $content The content that was submitted.
+     * @param string $author Submitted name with the comment.
+     * @param string $email Submitted email address.
+     * @param string $url Commenter URL.
      * @param string $permalink The permanent location of the entry the comment was submitted to.
-     * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
-     * @param string $referrer  The content of the HTTP_REFERER header should be sent here.
-     * @param array  $others    Other data (the variables from $_SERVER).
+     * @param string $type May be blank, comment, trackback, pingback, or a made up value like "registration".
+     * @param string $referrer The content of the HTTP_REFERER header should be sent here.
+     * @param array $others Other data (the variables from $_SERVER).
+     *
+     * @throws Exception
      *
      * @return bool If everything went fine true will be returned, otherwise an exception will be triggered.
-     * @throws Exception
      */
     public static function submitSpam(
-        $userIp,
-        $userAgent,
-        $content,
-        $author = null,
-        $email = null,
-        $url = null,
-        $permalink = null,
-        $type = null,
-        $referrer = null,
-        $others = null
-    ) {
-        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
-
-        // no key, so we can't detect spam
-        if ($akismetKey === '') {
+        string $userIp,
+        string $userAgent,
+        string $content,
+        string $author = null,
+        string $email = null,
+        string $url = null,
+        string $permalink = null,
+        string $type = null,
+        string $referrer = null,
+        array $others = null
+    ): bool {
+        try {
+            $akismet = self::getAkismet();
+        } catch (InvalidArgumentException $invalidArgumentException) {
             return false;
         }
-
-        $akismet = new Akismet($akismetKey, SITE_URL);
-        $akismet->setTimeOut(10);
-        $akismet->setUserAgent('Fork CMS/2.1');
 
         // try it to decide it the item is spam
         try {
@@ -1072,56 +875,51 @@ class Model extends \Common\Core\Model
     /**
      * Update extra
      *
-     * @param int    $id    The id for the extra.
-     * @param string $key   The key you want to update.
-     * @param string $value The new value.
+     * @param int $id The id for the extra.
+     * @param string $key The key you want to update.
+     * @param string|array $value The new value.
      *
      * @throws Exception If key parameter is not allowed
      */
-    public static function updateExtra($id, $key, $value)
+    public static function updateExtra(int $id, string $key, $value): void
     {
-        // recast key
-        $key = (string) $key;
-
         // define allowed keys
-        $allowedKeys = array('label', 'action', 'data', 'hidden', 'sequence');
+        $allowedKeys = ['label', 'action', 'data', 'hidden', 'sequence'];
 
         // key is not allowed
-        if (!in_array((string) $key, $allowedKeys)) {
+        if (!in_array($key, $allowedKeys, true)) {
             throw new Exception('The key ' . $key . ' can\'t be updated.');
         }
 
         // key is 'data' and value is not serialized
         if ($key === 'data' && is_array($value)) {
             // serialize value
-            $value = serialize($value);
+            $value = $value === null ? null : serialize($value);
         }
 
-        $item = array();
-        $item[(string) $key] = (string) $value;
-        self::getContainer()->get('database')->update('modules_extras', $item, 'id = ?', array((int) $id));
+        self::getContainer()->get('database')->update('modules_extras', [$key => $value], 'id = ?', [$id]);
     }
 
     /**
      * Update extra data
      *
-     * @param int    $id    The id for the extra.
-     * @param string $key   The key in the data you want to update.
-     * @param string $value The new value.
+     * @param int $id The id for the extra.
+     * @param string $key The key in the data you want to update.
+     * @param string|array $value The new value.
      */
-    public static function updateExtraData($id, $key, $value)
+    public static function updateExtraData(int $id, string $key, $value): void
     {
-        $db = self::getContainer()->get('database');
+        $database = self::getContainer()->get('database');
 
-        $data = (string) $db->getVar(
+        $data = (string) $database->getVar(
             'SELECT i.data
              FROM modules_extras AS i
              WHERE i.id = ?',
-            array((int) $id)
+            [$id]
         );
 
-        $data = unserialize($data);
-        $data[(string) $key] = (string) $value;
-        $db->update('modules_extras', array('data' => serialize($data)), 'id = ?', array((int) $id));
+        $data = $data === null ? [] : unserialize($data);
+        $data[$key] = $value;
+        $database->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
     }
 }

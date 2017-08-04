@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
@@ -20,46 +21,29 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class EditSynonym extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        parent::execute();
 
-        // does the item exists
-        if ($this->id !== null && BackendSearchModel::existsSynonymById($this->id)) {
-            parent::execute();
-            $this->getData();
-            $this->loadForm();
-            $this->validateForm();
-            $this->parse();
-            $this->display();
-        } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
-        }
+        $this->id = $this->getId();
+        $this->getData();
+        $this->loadForm();
+        $this->validateForm();
+        $this->loadDeleteForm();
+        $this->parse();
+        $this->display();
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendSearchModel::getSynonym($this->id);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
-        // create form
-        $this->frm = new BackendForm('editItem');
-
-        // create elements
-        $this->frm->addText('term', $this->record['term'], 255);
-        $this->frm->addText(
+        $this->form = new BackendForm('editItem');
+        $this->form->addText('term', $this->record['term']);
+        $this->form->addText(
             'synonym',
             $this->record['synonym'],
             null,
@@ -68,60 +52,63 @@ class EditSynonym extends BackendBaseActionEdit
         );
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
-        // assign id, term
-        $this->tpl->assign('id', $this->record['id']);
-        $this->tpl->assign('term', $this->record['term']);
+        $this->template->assign('id', $this->record['id']);
+        $this->template->assign('term', $this->record['term']);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        // is the form submitted?
-        if ($this->frm->isSubmitted()) {
-            // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
-
-            // validate fields
-            $this->frm->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
-            $this->frm->getField('term')->isFilled(BL::err('TermIsRequired'));
-            if (BackendSearchModel::existsSynonymByTerm(
-                $this->frm->getField('term')->getValue(),
-                $this->id
-            )
-            ) {
-                $this->frm->getField('term')->addError(BL::err('TermExists'));
-            }
-
-            // no errors?
-            if ($this->frm->isCorrect()) {
-                // build item
-                $item['id'] = $this->id;
-                $item['term'] = $this->frm->getField('term')->getValue();
-                $item['synonym'] = $this->frm->getField('synonym')->getValue();
-                $item['language'] = BL::getWorkingLanguage();
-
-                // update the item
-                BackendSearchModel::updateSynonym($item);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit_synonym', array('item' => $item));
-
-                // everything is saved, so redirect to the overview
-                $this->redirect(
-                    BackendModel::createURLForAction('Synonyms') . '&report=edited-synonym&var=' . rawurlencode(
-                        $item['term']
-                    ) . '&highlight=row-' . $item['id']
-                );
-            }
+        if (!$this->form->isSubmitted()) {
+            return;
         }
+        $this->form->cleanupFields();
+        $this->form->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
+        $this->form->getField('term')->isFilled(BL::err('TermIsRequired'));
+        if (BackendSearchModel::existsSynonymByTerm($this->form->getField('term')->getValue(), $this->id)) {
+            $this->form->getField('term')->addError(BL::err('TermExists'));
+        }
+
+        if (!$this->form->isCorrect()) {
+            return;
+        }
+
+        $synonym = [
+            'id' => $this->id,
+            'term' => $this->form->getField('term')->getValue(),
+            'synonym' => $this->form->getField('synonym')->getValue(),
+        ];
+
+        BackendSearchModel::updateSynonym($synonym);
+
+        $this->redirect(
+            BackendModel::createUrlForAction('Synonyms') . '&report=edited-synonym&var=' . rawurlencode(
+                $synonym['term']
+            ) . '&highlight=row-' . $synonym['id']
+        );
+    }
+
+    private function getId(): int
+    {
+        $id = $this->getRequest()->query->getInt('id');
+
+        if ($id === 0 || !BackendSearchModel::existsSynonymById($id)) {
+            $this->redirect(BackendModel::createUrlForAction('Synonyms') . '&error=non-existing');
+        }
+
+        return $id;
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteSynonym']
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

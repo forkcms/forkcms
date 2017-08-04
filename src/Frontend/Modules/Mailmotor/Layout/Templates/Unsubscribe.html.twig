@@ -1,18 +1,46 @@
-<section id="mailmotorUnsubscribeForm" class="mod">
-	<div class="inner">
-		<div class="hd">
-			<h3>{{ 'lbl.UnsubscribeFromNewsletter'|trans|capitalize }}</h3>
-		</div>
-		<div class="bd">
-			{% if mailmotorUnsubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans|raw }}</p></div>{% endif %}
-			{% if mailmotorUnsubscribeHasError %}<div class="message error"><p>{{ 'err.UnsubscribeFailed'|trans|raw }}</p></div>{% endif %}
-			{% if mailmotorUnsubscribeIsSuccess %}<div class="message success"><p>{{ 'msg.UnsubscribeSuccess'|trans|raw }}</p></div>{% endif %}
+{#
+    The variables that are available to use:
+    - $mailMotorUnsubscribeHasFormError
+    - $mailMotorUnsubscribeHasError
+    - $mailMotorUnsubscribeIsSuccess
+    - $mailMotorUnsubscribeHideForm
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-			{% if not mailmotorUnsubscribeHideForm %}
-				{{ form_start(form) }}
-				{{ form_rest(form) }}
-				{{ form_end(form) }}
-			{% endif %}
-		</div>
-	</div>
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+
+<section class="module-mailmotor block-mailmotor-unsubscribe">
+  {% block block_alerts %}
+    <div class="block-alerts">
+      {% if mailmotorUnsubscribeHasFormError %}
+        {{ alerts.alert('danger', 'err.FormError'|trans|raw) }}
+      {% endif %}
+      {% if mailmotorUnsubscribeHasError %}
+        {{ alerts.alert('danger', 'err.UnsubscribeFailed'|trans|raw) }}
+      {% endif %}
+      {% if mailmotorUnsubscribeIsSuccess %}
+        {{ alerts.alert('success', 'msg.UnsubscribeSuccess'|trans|raw) }}
+      {% endif %}
+    </div>
+  {% endblock %}
+
+  {% block block_body %}
+    <div class="block-body">
+      {% if not mailmotorUnsubscribeHideForm %}
+        {{ form_start(form) }}
+        <div class="form-group">
+          <label for="{{ form.email.vars.id }}" class="control-label">{{ form.email.vars.label|trans|ucfirst }}</label>
+          <div class="input-group">
+            {{ form_widget(form.email) }}
+            <div class="input-group-btn">
+              <button type="submit" id="{{ form.unsubscribe.vars.id }}" class="btn btn-default">{{ form.unsubscribe.vars.label|trans }}</button>
+              {% do form.unsubscribe.setRendered %}
+            </div>
+          </div>
+        </div>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+      {% endif %}
+    </div>
+  {% endblock %}
 </section>

@@ -1,4 +1,5 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
 
@@ -163,9 +164,6 @@
                   <ul class="list-unstyled">
                     <li class="checkbox">
                       <label for="active" class="control-label">{% form_field active %} {% form_field_error active %} {{ 'msg.HelpActive'|trans }}</label>
-                    </li>
-                    <li class="checkbox">
-                      <label for="apiAccess" class="control-label">{% form_field api_access %} {% form_field_error api_access %} {{ 'msg.HelpAPIAccess'|trans }}</label>
                     </li>
                   </ul>
                 </div>

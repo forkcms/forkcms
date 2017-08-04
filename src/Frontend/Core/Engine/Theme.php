@@ -25,40 +25,40 @@ class Theme
      * Get the file path based on the theme.
      * If it does not exist in the theme it will return $file.
      *
-     * @param string $file Path to the file.
+     * @param string $filePath Path to the file.
+     *
+     * @throws Exception
      *
      * @return string Path to the (theme) file.
-     * @throws Exception
      */
-    public static function getPath($file)
+    public static function getPath(string $filePath): string
     {
-        // redefine
-        $file = (string) $file;
-
-        // theme name
-        $theme = self::getTheme();
-
-        // theme in use
-        if (Model::get('fork.settings')->get('Core', 'theme', 'core') != 'core') {
-            // theme not yet specified
-            if (mb_strpos($file, 'src/Frontend/Themes/' . $theme) === false) {
-                // add theme location
-                $themeTemplate = str_replace(array('src/Frontend/'), array('src/Frontend/Themes/' . $theme . '/'), $file);
-
-                // check if this template exists
-                if (is_file(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) {
-                    $file = $themeTemplate;
-                }
-            }
-        }
+        $filePath = self::getFilePathForcurrentTheme(self::getTheme(), $filePath);
 
         // check if the file exists
-        if (!is_file(PATH_WWW . str_replace(PATH_WWW, '', $file))) {
-            throw new Exception('The template (' . $file . ') does not exist.');
+        if (!is_file(PATH_WWW . str_replace(PATH_WWW, '', $filePath))) {
+            throw new Exception('The template (' . $filePath . ') does not exist.');
         }
 
-        // return template path
-        return $file;
+        return $filePath;
+    }
+
+    private static function getFilePathForCurrentTheme(string $theme, string $filePath): string
+    {
+        // just return the file if the theme is already in the file path
+        if (mb_strpos($filePath, 'src/Frontend/Themes/' . $theme) !== false) {
+            return $filePath;
+        }
+
+        // add theme location
+        $themeTemplate = str_replace('src/Frontend/', 'src/Frontend/Themes/' . $theme . '/', $filePath);
+
+        // check if this template exists
+        if (is_file(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) {
+            return $themeTemplate;
+        }
+
+        return $filePath;
     }
 
     /**
@@ -66,7 +66,7 @@ class Theme
      *
      * @return string
      */
-    public static function getTheme()
+    public static function getTheme(): string
     {
         // theme name has not yet been saved, fetch and save it
         if (!self::$theme) {

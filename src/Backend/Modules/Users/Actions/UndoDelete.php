@@ -19,15 +19,12 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
  */
 class UndoDelete extends BackendBaseAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $email = $this->getParameter('email', 'string');
+        $email = $this->getRequest()->query->get('email', '');
 
         // does the user exist
-        if ($email !== null) {
+        if ($email !== '') {
             parent::execute();
 
             // delete item
@@ -35,24 +32,17 @@ class UndoDelete extends BackendBaseAction
                 // get user
                 $user = new BackendUser(null, $email);
 
-                // trigger event
-                $item = array(
-                    'id' => $user->getUserId(),
-                    'email' => $email,
-                );
-                BackendModel::triggerEvent($this->getModule(), 'after_undelete', array('item' => $item));
-
                 // item was deleted, so redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('edit') . '&id=' . $user->getUserId(
+                    BackendModel::createUrlForAction('edit') . '&id=' . $user->getUserId(
                     ) . '&report=restored&var=' . $user->getSetting('nickname') . '&highlight=row-' . $user->getUserId()
                 );
             } else {
                 // invalid user
-                $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+                $this->redirect(BackendModel::createUrlForAction('index') . '&error=non-existing');
             }
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('index') . '&error=non-existing');
         }
     }
 }

@@ -16,65 +16,60 @@ use Backend\Core\Installer\ModuleInstaller;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Insert an empty admin dashboard sequence
-     */
-    private function insertDashboardSequence()
+    public function install(): void
     {
-        $db = $this->getDB();
+        $this->addModule('Groups');
+        $this->importSQL(__DIR__ . '/Data/install.sql');
+        $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureBackendWidgets();
+    }
+
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "Settings"
+        $navigationSettingsId = $this->setNavigation(null, 'Settings');
+        $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', [
+            'groups/add',
+            'groups/edit',
+        ], 5);
+    }
+
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
+    }
+
+    private function configureBackendWidgets(): void
+    {
+        $database = $this->getDatabase();
 
         // build groupsetting
+        $groupSetting = [];
         $groupSetting['group_id'] = 1;
         $groupSetting['name'] = 'dashboard_sequence';
-        $groupSetting['value'] = serialize(array());
+        $groupSetting['value'] = serialize([]);
 
         // build usersetting
+        $userSetting = [];
         $userSetting['user_id'] = 1;
         $userSetting['name'] = 'dashboard_sequence';
-        $userSetting['value'] = serialize(array());
+        $userSetting['value'] = serialize([]);
 
         // insert settings
-        $db->insert('groups_settings', $groupSetting);
-        $db->insert('users_settings', $userSetting);
+        $database->insert('groups_settings', $groupSetting);
+        $database->insert('users_settings', $userSetting);
 
         // insert default dashboard widget
         $this->insertDashboardWidget('Settings', 'Analyse');
 
         // insert default dashboard widget
         $this->insertDashboardWidget('Users', 'Statistics');
-    }
-
-    /**
-     * Install the module
-     */
-    public function install()
-    {
-        // load install.sql
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-
-        // add 'settings' as a module
-        $this->addModule('Groups');
-
-        // import locale
-        $this->importLocale(__DIR__ . '/Data/locale.xml');
-
-        // module rights
-        $this->setModuleRights(1, 'Groups');
-
-        // action rights
-        $this->setActionRights(1, 'Groups', 'Index');
-        $this->setActionRights(1, 'Groups', 'Add');
-        $this->setActionRights(1, 'Groups', 'Edit');
-        $this->setActionRights(1, 'Groups', 'Delete');
-
-        // set navigation
-        $navigationSettingsId = $this->setNavigation(null, 'Settings');
-        $this->setNavigation($navigationSettingsId, 'Groups', 'groups/index', array(
-            'groups/add',
-            'groups/edit',
-        ), 5);
-
-        // insert admins dashboard sequence
-        $this->insertDashboardSequence();
     }
 }

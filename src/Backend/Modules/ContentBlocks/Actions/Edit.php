@@ -11,48 +11,42 @@ namespace Backend\Modules\ContentBlocks\Actions;
 
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\DataGridFunctions;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language;
-use Backend\Modules\ContentBlocks\Command\UpdateContentBlock;
-use Backend\Modules\ContentBlocks\Entity\ContentBlock;
-use Backend\Modules\ContentBlocks\Event\ContentBlockUpdated;
-use Backend\Modules\ContentBlocks\Repository\ContentBlockRepository;
-use Backend\Modules\ContentBlocks\Form\ContentBlockType;
-use Backend\Modules\ContentBlocks\DataGrid\ContentBlockRevisionDataGrid;
 use Backend\Core\Language\Locale;
-use SpoonFilter;
+use Backend\Form\Type\DeleteType;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRevisionDataGrid;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockUpdated;
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotFound;
+use Symfony\Component\Form\Form;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
  */
 class Edit extends BackendBaseActionEdit
 {
-    /** @var ContentBlock */
-    private $contentBlock;
-
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
-        $this->contentBlock = $this->getContentBlock();
+        $contentBlock = $this->getContentBlock();
 
-        if ($this->contentBlock === null) {
-            return $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
-        }
+        $form = $this->getForm($contentBlock);
 
-        $form = $this->createForm(
-            new ContentBlockType($this->get('fork.settings')->get('Core', 'theme', 'core'), UpdateContentBlock::class),
-            new UpdateContentBlock($this->contentBlock)
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $contentBlock->getId()],
+            ['module' => $this->getModule()]
         );
+        $this->template->assign('deleteForm', $deleteForm->createView());
 
-        $form->handleRequest($this->get('request'));
-
-        if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->template->assign('form', $form->createView());
+            $this->template->assign('contentBlock', $contentBlock);
+            $this->template->assign('revisions', ContentBlockRevisionDataGrid::getHtml($contentBlock, Locale::workingLocale()));
 
             $this->parse();
             $this->display();
@@ -61,113 +55,86 @@ class Edit extends BackendBaseActionEdit
         }
 
         /** @var UpdateContentBlock $updateContentBlock */
+        $updateContentBlock = $this->updateContentBlock($form);
+
+        $this->get('event_dispatcher')->dispatch(
+            ContentBlockUpdated::EVENT_NAME,
+            new ContentBlockUpdated($updateContentBlock->getContentBlockEntity())
+        );
+
+        $this->redirect(
+            $this->getBackLink(
+                [
+                    'report' => 'edited',
+                    'var' => $updateContentBlock->title,
+                    'highlight' => 'row-' . $contentBlock->getId(),
+                ]
+            )
+        );
+    }
+
+    private function getBackLink(array $parameters = []): string
+    {
+        return BackendModel::createUrlForAction(
+            'Index',
+            null,
+            null,
+            $parameters
+        );
+    }
+
+    private function getContentBlock(): ContentBlock
+    {
+        /** @var ContentBlockRepository $contentBlockRepository */
+        $contentBlockRepository = $this->get('content_blocks.repository.content_block');
+
+        // specific revision?
+        $revisionId = $this->getRequest()->query->getInt('revision');
+
+        if ($revisionId !== 0) {
+            $this->template->assign('usingRevision', true);
+
+            try {
+                return $contentBlockRepository->findOneByRevisionIdAndLocale($revisionId, Locale::workingLocale());
+            } catch (ContentBlockNotFound $e) {
+                $this->redirect($this->getBackLink(['error' => 'non-existing']));
+            }
+        }
+
+        try {
+            return $contentBlockRepository->findOneByIdAndLocale(
+                $this->getRequest()->query->getInt('id'),
+                Locale::workingLocale()
+            );
+        } catch (ContentBlockNotFound $e) {
+            $this->redirect($this->getBackLink(['error' => 'non-existing']));
+        }
+    }
+
+    private function getForm(ContentBlock $contentBlock): Form
+    {
+        $form = $this->createForm(
+            ContentBlockType::class,
+            new UpdateContentBlock($contentBlock),
+            [
+                'theme' => $this->get('fork.settings')->get('Core', 'theme', 'Fork'),
+            ]
+        );
+
+        $form->handleRequest($this->getRequest());
+
+        return $form;
+    }
+
+    private function updateContentBlock(Form $form): UpdateContentBlock
+    {
+        /** @var UpdateContentBlock $updateContentBlock */
         $updateContentBlock = $form->getData();
         $updateContentBlock->userId = Authentication::getUser()->getUserId();
 
         // The command bus will handle the saving of the content block in the database.
         $this->get('command_bus')->handle($updateContentBlock);
 
-        $this->get('event_dispatcher')->dispatch(
-            ContentBlockUpdated::EVENT_NAME,
-            new ContentBlockUpdated($updateContentBlock->contentBlock)
-        );
-
-        return $this->redirect(
-            BackendModel::createURLForAction(
-                'Index',
-                null,
-                null,
-                [
-                    'report' => 'edited',
-                    'var' => $updateContentBlock->title,
-                    'highlight' => 'row-' . $this->contentBlock->getId(),
-                ]
-            )
-        );
-    }
-
-    /**
-     * @return ContentBlock|null
-     */
-    private function getContentBlock()
-    {
-        /** @var ContentBlockRepository $contentBlockRepository */
-        $contentBlockRepository = $this->get('content_blocks.repository.content_block');
-
-        // specific revision?
-        $revisionId = $this->getParameter('revision', 'int');
-
-        if ($revisionId !== null) {
-            $this->tpl->assign('usingRevision', true);
-
-            return $contentBlockRepository->findOneByRevisionIdAndLocale($revisionId, Locale::workingLocale());
-        }
-
-        return $contentBlockRepository->findOneByIdAndLocale($this->getParameter('id', 'int'), Locale::workingLocale());
-    }
-
-    /**
-     * Parses a data grid with the revisions in the template
-     */
-    private function parseRevisionsDataGrid()
-    {
-        // create datagrid
-        $revisions = new ContentBlockRevisionDataGrid($this->contentBlock, Locale::workingLocale());
-
-        // hide columns
-        $revisions->setColumnsHidden(['id', 'revision_id']);
-
-        // disable paging
-        $revisions->setPaging(false);
-
-        // set headers
-        $revisions->setHeaderLabels(
-            [
-                'user_id' => SpoonFilter::ucfirst(Language::lbl('By')),
-                'edited_on' => SpoonFilter::ucfirst(Language::lbl('LastEditedOn')),
-            ]
-        );
-
-        // set column-functions
-        $revisions->setColumnFunction([DataGridFunctions::class, 'getUser'], ['[user_id]'], 'user_id');
-        $revisions->setColumnFunction([DataGridFunctions::class, 'getTimeAgo'], ['[edited_on]'], 'edited_on');
-
-        // check if this action is allowed
-        if (Authentication::isAllowedAction('Edit')) {
-            $editRevisionUrl = BackendModel::createURLForAction(
-                'Edit',
-                null,
-                null,
-                ['id' => '[id]', 'revision' => '[revision_id]'],
-                false
-            );
-            // set column URLs
-            $revisions->setColumnURL('title', $editRevisionUrl);
-
-            // add use column
-            $revisions->addColumn(
-                'use_revision',
-                null,
-                Language::lbl('UseThisVersion'),
-                $editRevisionUrl,
-                Language::lbl('UseThisVersion')
-            );
-        }
-
-        $this->tpl->assign('revisions', (string) $revisions->getContent());
-    }
-
-    /**
-     * Parse the content block and the revisions
-     */
-    protected function parse()
-    {
-        parent::parse();
-
-        $this->tpl->assign('id', $this->contentBlock->getId());
-        $this->tpl->assign('title', $this->contentBlock->getTitle());
-        $this->tpl->assign('revision_id', $this->contentBlock->getRevisionId());
-
-        $this->parseRevisionsDataGrid();
+        return $updateContentBlock;
     }
 }

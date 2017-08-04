@@ -11,11 +11,12 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Symfony\Component\Intl\Intl as Intl;
 
@@ -27,7 +28,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Groups data grid.
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgGroups;
 
@@ -43,52 +44,44 @@ class Edit extends BackendBaseActionEdit
      */
     private $profile;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist?
-        if ($this->id !== null && BackendProfilesModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendProfilesModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadGroups();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
-    /**
-     * Get the profile data.
-     */
-    private function getData()
+    private function getData(): void
     {
         // get general info
         $this->profile = BackendProfilesModel::get($this->id);
 
         $this->notifyProfile = $this->get('fork.settings')->get(
-            $this->URL->getModule(),
+            $this->url->getModule(),
             'send_new_profile_mail',
             false
         );
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // gender dropdown values
-        $genderValues = array(
+        $genderValues = [
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
             'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
-        );
+        ];
 
         // birthdate dropdown values
         $days = range(1, 31);
@@ -109,57 +102,54 @@ class Edit extends BackendBaseActionEdit
         }
 
         // create form
-        $this->frm = new BackendForm('edit');
+        $this->form = new BackendForm('edit');
 
         // create elements
-        $this->frm->addCheckbox('new_email');
-        $this->frm->addText('email', $this->profile['email']);
-        $this->frm->addCheckbox('new_password');
-        $this->frm->addPassword('password');
-        $this->frm->addPassword('password_repeat');
-        $this->frm->addText('display_name', $this->profile['display_name']);
-        $this->frm->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
-        $this->frm->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'));
-        $this->frm->addText('city', BackendProfilesModel::getSetting($this->id, 'city'));
-        $this->frm->addDropdown('gender', $genderValues, BackendProfilesModel::getSetting($this->id, 'gender'));
-        $this->frm->addDropdown('day', array_combine($days, $days), $birthDay);
-        $this->frm->addDropdown('month', $months, $birthMonth);
-        $this->frm->addDropdown('year', array_combine($years, $years), (int) $birthYear);
-        $this->frm->addDropdown(
+        $this->form->addCheckbox('new_email');
+        $this->form->addText('email', $this->profile['email']);
+        $this->form->addCheckbox('new_password');
+        $this->form->addPassword('password');
+        $this->form->addPassword('password_repeat');
+        $this->form->addText('display_name', $this->profile['display_name']);
+        $this->form->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
+        $this->form->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'));
+        $this->form->addText('city', BackendProfilesModel::getSetting($this->id, 'city'));
+        $this->form->addDropdown('gender', $genderValues, BackendProfilesModel::getSetting($this->id, 'gender'));
+        $this->form->addDropdown('day', array_combine($days, $days), $birthDay);
+        $this->form->addDropdown('month', $months, $birthMonth);
+        $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear);
+        $this->form->addDropdown(
             'country',
             Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()),
             BackendProfilesModel::getSetting($this->id, 'country')
         );
 
         // set default elements dropdowns
-        $this->frm->getField('gender')->setDefaultElement('');
-        $this->frm->getField('day')->setDefaultElement('');
-        $this->frm->getField('month')->setDefaultElement('');
-        $this->frm->getField('year')->setDefaultElement('');
-        $this->frm->getField('country')->setDefaultElement('');
+        $this->form->getField('gender')->setDefaultElement('');
+        $this->form->getField('day')->setDefaultElement('');
+        $this->form->getField('month')->setDefaultElement('');
+        $this->form->getField('year')->setDefaultElement('');
+        $this->form->getField('country')->setDefaultElement('');
     }
 
-    /**
-     * Load the data grid with groups.
-     */
-    private function loadGroups()
+    private function loadGroups(): void
     {
         // create the data grid
-        $this->dgGroups = new BackendDataGridDB(
-            BackendProfilesModel::QRY_DATAGRID_BROWSE_PROFILE_GROUPS,
-            array($this->profile['id'])
+        $this->dgGroups = new BackendDataGridDatabase(
+            BackendProfilesModel::QUERY_DATAGRID_BROWSE_PROFILE_GROUPS,
+            [$this->profile['id']]
         );
 
         // sorting columns
-        $this->dgGroups->setSortingColumns(array('group_name'), 'group_name');
+        $this->dgGroups->setSortingColumns(['group_name'], 'group_name');
 
         // disable paging
         $this->dgGroups->setPaging(false);
 
         // set column function
         $this->dgGroups->setColumnFunction(
-            array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[expires_on]'),
+            [new BackendDataGridFunctions(), 'getLongDate'],
+            ['[expires_on]'],
             'expires_on',
             true
         );
@@ -169,7 +159,7 @@ class Edit extends BackendBaseActionEdit
             // set column URLs
             $this->dgGroups->setColumnURL(
                 'group_name',
-                BackendModel::createURLForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id
+                BackendModel::createUrlForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id
             );
 
             // edit column
@@ -177,63 +167,57 @@ class Edit extends BackendBaseActionEdit
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id,
+                BackendModel::createUrlForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id,
                 BL::getLabel('Edit')
             );
         }
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
-        $this->tpl->assign('notifyProfile', $this->notifyProfile);
+        $this->template->assign('notifyProfile', $this->notifyProfile);
 
         // assign the active record and additional variables
-        $this->tpl->assign('profile', $this->profile);
+        $this->template->assign('profile', $this->profile);
 
         // parse data grids
-        $this->tpl->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
+        $this->template->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
 
         // show delete or undelete button?
         if ($this->profile['status'] === 'deleted') {
-            $this->tpl->assign('deleted', true);
+            $this->template->assign('deleted', true);
         }
 
         // show block or unblock button?
         if ($this->profile['status'] === 'blocked') {
-            $this->tpl->assign('blocked', true);
+            $this->template->assign('blocked', true);
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $chkNewEmail = $this->frm->getField('new_email');
-            $txtEmail = $this->frm->getField('email');
-            $txtDisplayName = $this->frm->getField('display_name');
-            $chkNewPassword = $this->frm->getField('new_password');
-            $txtPassword = $this->frm->getField('password');
-            $txtPasswordRepeat = $this->frm->getField('password_repeat');
-            $txtFirstName = $this->frm->getField('first_name');
-            $txtLastName = $this->frm->getField('last_name');
-            $txtCity = $this->frm->getField('city');
-            $ddmGender = $this->frm->getField('gender');
-            $ddmDay = $this->frm->getField('day');
-            $ddmMonth = $this->frm->getField('month');
-            $ddmYear = $this->frm->getField('year');
-            $ddmCountry = $this->frm->getField('country');
+            $chkNewEmail = $this->form->getField('new_email');
+            $txtEmail = $this->form->getField('email');
+            $txtDisplayName = $this->form->getField('display_name');
+            $chkNewPassword = $this->form->getField('new_password');
+            $txtPassword = $this->form->getField('password');
+            $txtPasswordRepeat = $this->form->getField('password_repeat');
+            $txtFirstName = $this->form->getField('first_name');
+            $txtLastName = $this->form->getField('last_name');
+            $txtCity = $this->form->getField('city');
+            $ddmGender = $this->form->getField('gender');
+            $ddmDay = $this->form->getField('day');
+            $ddmMonth = $this->form->getField('month');
+            $ddmYear = $this->form->getField('year');
+            $ddmCountry = $this->form->getField('country');
 
             // email filled in?
             if ($chkNewEmail->isChecked() && $txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
@@ -284,10 +268,9 @@ class Edit extends BackendBaseActionEdit
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
-                $values['email'] = ($chkNewEmail->isChecked()) ?
-                    $txtEmail->getValue() : $this->profile['email'];
+                $values = ['email' => $chkNewEmail->isChecked() ? $txtEmail->getValue() : $this->profile['email']];
 
                 // only update if display name changed
                 if ($txtDisplayName->getValue() != $this->profile['display_name']) {
@@ -300,21 +283,12 @@ class Edit extends BackendBaseActionEdit
 
                 // new password filled in?
                 if ($chkNewPassword->isChecked()) {
-                    // get new salt
-                    $salt = BackendProfilesModel::getRandomString();
-
-                    // update salt
-                    BackendProfilesModel::setSetting($this->id, 'salt', $salt);
-
                     // new password filled in? otherwise generate a password
                     $password = ($txtPassword->isFilled()) ?
                         $txtPassword->getValue() : BackendModel::generatePassword(8);
 
                     // build password
-                    $values['password'] = BackendProfilesModel::getEncryptedString(
-                        $password,
-                        $salt
-                    );
+                    $values['password'] = BackendProfilesModel::encryptPassword($password);
                 }
 
                 // update values
@@ -341,8 +315,8 @@ class Edit extends BackendBaseActionEdit
                 $displayName = (isset($values['display_name'])) ?
                     $values['display_name'] : $this->profile['display_name'];
 
-                $redirectUrl = BackendModel::createURLForAction('Index') .
-                    '&var=' . rawurlencode($values['email']) .
+                $redirectUrl = BackendModel::createUrlForAction('Index') .
+                               '&var=' . rawurlencode($values['email']) .
                     '&highlight=row-' . $this->id .
                     '&var=' . rawurlencode($displayName) .
                     '&report='
@@ -359,12 +333,12 @@ class Edit extends BackendBaseActionEdit
                     // notify values
                     $notifyValues = array_merge(
                         $values,
-                        array(
+                        [
                             'id' => $this->id,
                             'first_name' => $txtFirstName->getValue(),
                             'last_name' => $txtLastName->getValue(),
                             'unencrypted_password' => $password,
-                        )
+                        ]
                     );
 
                     if (!isset($notifyValues['display_name'])) {
@@ -378,12 +352,19 @@ class Edit extends BackendBaseActionEdit
                     $redirectUrl .= 'saved';
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect($redirectUrl);
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->profile['id']],
+            ['module' => $this->getModule()]
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
@@ -32,51 +33,66 @@ class Delete extends BackendBaseActionDelete
      */
     private $filterQuery;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod()) {
-            parent::execute();
+        if ($this->id === 0 || !BackendLocaleModel::exists($this->id) || !BackendAuthentication::getUser()->isGod()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
-            // filter options
-            $this->setFilter();
-
-            // get data
-            $this->record = (array) BackendLocaleModel::get($this->id);
-
-            // delete item
-            BackendLocaleModel::delete(array($this->id));
-
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
-            // build redirect URL
-            $redirectUrl = BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['name'] . ' (' . mb_strtoupper($this->record['language']) . ')') . $this->filterQuery;
-
-            // item was deleted, so redirect
-            $this->redirect($redirectUrl);
-        } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            return;
         }
+
+        parent::execute();
+
+        $this->setFilter();
+        $this->record = (array) BackendLocaleModel::get($this->id);
+
+        BackendLocaleModel::delete([$this->id]);
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'Index',
+            null,
+            null,
+            [
+                'report' => 'deleted',
+                'var' => $this->record['name'] . ' (' . mb_strtoupper($this->record['language']) . ')',
+            ]
+        ) . $this->filterQuery);
     }
 
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
-        $this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
-        $this->filter['application'] = $this->getParameter('application');
-        $this->filter['module'] = $this->getParameter('module');
-        $this->filter['type'] = $this->getParameter('type', 'array');
-        $this->filter['name'] = $this->getParameter('name');
-        $this->filter['value'] = $this->getParameter('value');
+        $this->filter['language'] = $this->getRequest()->query->get('language', []);
+        if (empty($this->filter['language'])) {
+            $this->filter['language'] = BL::getWorkingLanguage();
+        }
+        $this->filter['application'] = $this->getRequest()->query->get('application');
+        $this->filter['module'] = $this->getRequest()->query->get('module');
+        $this->filter['type'] = $this->getRequest()->query->get('type', '');
+        if ($this->filter['type'] === '') {
+            $this->filter['type'] = null;
+        }
+        $this->filter['name'] = $this->getRequest()->query->get('name');
+        $this->filter['value'] = $this->getRequest()->query->get('value');
 
-        $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
+        $this->filterQuery = BackendLocaleModel::buildUrlQueryByFilter($this->filter);
     }
 }

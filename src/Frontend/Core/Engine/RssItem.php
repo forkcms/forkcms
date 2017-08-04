@@ -21,24 +21,19 @@ class RssItem extends \SpoonFeedRSSItem
      *
      * @var array
      */
-    private $utm = array('utm_source' => 'feed', 'utm_medium' => 'rss');
+    private $utm = ['utm_source' => 'feed', 'utm_medium' => 'rss'];
 
-    /**
-     * @param string $title       The title for the item.
-     * @param string $link        The link for the item.
-     * @param string $description The content for the item.
-     */
-    public function __construct($title, $link, $description)
+    public function __construct(string $title, string $link, string $content)
     {
         // decode
         $title = \SpoonFilter::htmlspecialcharsDecode($title);
-        $description = \SpoonFilter::htmlspecialcharsDecode($description);
+        $content = \SpoonFilter::htmlspecialcharsDecode($content);
 
         // set UTM-campaign
         $this->utm['utm_campaign'] = CommonUri::getUrl($title);
 
         // call parent
-        parent::__construct($title, Model::addURLParameters($link, $this->utm), $description);
+        parent::__construct($title, Model::addUrlParameters($link, $this->utm), $content);
 
         // set some properties
         $this->setGuid($link, true);
@@ -51,59 +46,50 @@ class RssItem extends \SpoonFeedRSSItem
      *
      * @return string
      */
-    public function processLinks($content)
+    public function processLinks(string $content): string
     {
-        // redefine
-        $content = (string) $content;
-
         // replace URLs and images
-        $search = array('href="/', 'src="/');
-        $replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
+        $search = ['href="/', 'src="/'];
+        $replace = ['href="' . SITE_URL . '/', 'src="' . SITE_URL . '/'];
 
         // replace links to files
         $content = str_replace($search, $replace, $content);
 
         // init var
-        $matches = array();
+        $matches = [];
 
         // match links
         preg_match_all('/href="(http:\/\/(.*))"/iU', $content, $matches);
 
         // any links?
-        if (isset($matches[1]) && !empty($matches[1])) {
-            // init vars
-            $searchLinks = array();
-            $replaceLinks = array();
-
-            // loop old links
-            foreach ($matches[1] as $i => $link) {
-                $searchLinks[] = $matches[0][$i];
-                $replaceLinks[] = 'href="' . Model::addURLParameters($link, $this->utm) . '"';
-            }
-
-            // replace
-            $content = str_replace($searchLinks, $replaceLinks, $content);
+        if (!isset($matches[1]) || empty($matches[1])) {
+            return $content;
         }
 
-        return $content;
+        $searchLinks = [];
+        $replaceLinks = [];
+
+        // loop old links
+        foreach ((array) $matches[1] as $i => $link) {
+            $searchLinks[] = $matches[0][$i];
+            $replaceLinks[] = 'href="' . Model::addUrlParameters($link, $this->utm) . '"';
+        }
+
+        // replace
+        return str_replace($searchLinks, $replaceLinks, $content);
     }
 
-    /**
-     * Set the author.
-     *
-     * @param string $author The author to use.
-     */
-    public function setAuthor($author)
+    public function setAuthor($author): void
     {
         // remove special chars
         $author = (string) \SpoonFilter::htmlspecialcharsDecode($author);
 
         // add fake-emailaddress
-        if (!\SpoonFilter::isEmail($author)) {
+        if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
             $author = CommonUri::getUrl($author) . '@example.com (' . $author . ')';
         }
         // add fake email address
-        if (!\SpoonFilter::isEmail($author)) {
+        if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
             $author = \SpoonFilter::urlise($author) . '@example.com (' . $author . ')';
         }
 
@@ -112,12 +98,11 @@ class RssItem extends \SpoonFeedRSSItem
     }
 
     /**
-     * Set the description.
      * All links and images that link to internal files will be prepended with the sites URL
      *
      * @param string $description The content of the item.
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         // remove special chars
         $description = (string) \SpoonFilter::htmlspecialcharsDecode($description);
@@ -130,43 +115,33 @@ class RssItem extends \SpoonFeedRSSItem
     }
 
     /**
-     * Set the guid.
      * If the link is an internal link the sites URL will be prepended.
      *
-     * @param string $link        The guid for an item.
-     * @param bool   $isPermaLink Is this link permanent?
+     * @param string $link The guid for an item.
+     * @param bool $isPermaLink Is this link permanent?
      */
-    public function setGuid($link, $isPermaLink = true)
+    public function setGuid($link, $isPermaLink = true): void
     {
-        // redefine var
-        $link = (string) $link;
+        parent::setGuid($this->prependWithSiteUrlIfHttpIsMissing($link), $isPermaLink);
+    }
 
-        // if link doesn't start with http, we prepend the URL of the site
-        if (mb_substr($link, 0, 7) != 'http://') {
-            $link = SITE_URL . $link;
+    private function prependWithSiteUrlIfHttpIsMissing(string $link): string
+    {
+        // if link doesn't start with http(s), we prepend the URL of the site
+        if (mb_stripos($link, 'http://') !== 0 || mb_stripos($link, 'https://')) {
+            return SITE_URL . $link;
         }
 
-        // call parent
-        parent::setGuid($link, $isPermaLink);
+        return $link;
     }
 
     /**
-     * Set the link.
      * If the link is an internal link the sites URL will be prepended.
      *
      * @param string $link The link for the item.
      */
-    public function setLink($link)
+    public function setLink($link): void
     {
-        // redefine var
-        $link = (string) $link;
-
-        // if link doesn't start with http, we prepend the URL of the site
-        if (mb_substr($link, 0, 7) != 'http://') {
-            $link = SITE_URL . $link;
-        }
-
-        // call parent
-        parent::setLink($link);
+        parent::setLink($this->prependWithSiteUrlIfHttpIsMissing($link));
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace ForkCMS\App;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,21 +9,24 @@
  * file that was distributed with this source code.
  */
 
+use PDOException;
+use Spoon;
+use SpoonDatabaseException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\DependencyInjection\BackendExtension;
 
 /**
  * The Kernel provides a proper way to load an environment and DI container.
  * It also handles requests and responses.
  */
-abstract class Kernel extends BaseKernel implements KernelInterface
+abstract class Kernel extends BaseKernel
 {
     /** @var Request We need this to check if a module is being installed */
     private $request;
@@ -30,15 +35,15 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      * Constructor.
      *
      * @param string $environment The environment
-     * @param bool $debug Whether to enable debugging or not
+     * @param bool $enableDebug Whether to enable debugging or not
      *
      * @api
      */
-    public function __construct($environment, $debug)
+    public function __construct(string $environment, bool $enableDebug)
     {
         $this->request = Request::createFromGlobals();
 
-        parent::__construct($environment, $debug);
+        parent::__construct($environment, $enableDebug);
         $this->boot();
     }
 
@@ -47,7 +52,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      *
      * @api
      */
-    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true): Response
     {
         // boot if it hasn't booted yet
         $this->boot();
@@ -58,7 +63,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
     /**
      * Boot and define the Fork Constants.
      */
-    public function boot()
+    public function boot(): void
     {
         if ($this->booted) {
             return;
@@ -75,7 +80,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      *
      * @deprecated
      */
-    public function defineForkConstants()
+    public function defineForkConstants(): void
     {
         $container = $this->getContainer();
 
@@ -88,13 +93,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
          * @deprecated SPOON_* constants are deprecated in favor of Spoon::set*().
          * Will be removed in the next major release.
          */
-        defined('SPOON_DEBUG') || define('SPOON_DEBUG', $container->getParameter('kernel.debug'));
-        defined('SPOON_DEBUG_EMAIL') || define('SPOON_DEBUG_EMAIL', $container->getParameter('fork.debug_email'));
-        defined('SPOON_DEBUG_MESSAGE') || define('SPOON_DEBUG_MESSAGE', $container->getParameter('fork.debug_message'));
-        defined('SPOON_CHARSET') || define('SPOON_CHARSET', $container->getParameter('kernel.charset'));
-
         defined('PATH_WWW') || define('PATH_WWW', realpath($container->getParameter('site.path_www')));
-        defined('PATH_LIBRARY') || define('PATH_LIBRARY', realpath($container->getParameter('site.path_library')));
 
         defined('SITE_DEFAULT_LANGUAGE') || define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
         defined('SITE_DEFAULT_TITLE') || define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
@@ -123,8 +122,6 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/Frontend/Files');
         defined('FRONTEND_CORE_URL') || define('FRONTEND_CORE_URL', '/src/Frontend/Core');
         defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/src/Frontend/Cache');
-
-        defined('API_CORE_PATH') || define('API_CORE_PATH', PATH_WWW . '/Api');
     }
 
     /**
@@ -160,12 +157,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         return $container;
     }
 
-    /**
-     * @param ContainerBuilder $container
-     *
-     * @return array
-     */
-    private function getInstalledModules(ContainerBuilder $container)
+    private function getInstalledModules(ContainerBuilder $containerBuilder): array
     {
         // on installation all modules should be loaded
         if ($this->environment === 'install' || $this->environment === 'test') {
@@ -180,7 +172,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         try {
             $moduleNames = array_merge(
                 $moduleNames,
-                (array) $container->get('database')->getColumn(
+                (array) $containerBuilder->get('database')->getColumn(
                     'SELECT name FROM modules'
                 )
             );
@@ -198,20 +190,14 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         return $moduleNames;
     }
 
-    /**
-     * @return bool
-     */
-    private function isInstallingModule()
+    private function isInstallingModule(): bool
     {
         return preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $this->request->getRequestUri())
                && $this->request->query->has('module')
                && in_array($this->request->query->get('module'), $this->getAllPossibleModuleNames());
     }
 
-    /**
-     * @return array
-     */
-    private function getAllPossibleModuleNames()
+    private function getAllPossibleModuleNames(): array
     {
         $moduleNames = [];
         $finder = new Finder();
@@ -225,7 +211,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         return $moduleNames;
     }
 
-    protected function initializeContainer()
+    protected function initializeContainer(): void
     {
         // remove the cache dir when installing a module to trigger rebuilding the kernel
         if ($this->isInstallingModule()) {
@@ -234,5 +220,15 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         }
 
         parent::initializeContainer();
+    }
+
+    public function getLogDir(): string
+    {
+        return dirname(__DIR__).'/var/logs/' . $this->environment;
+    }
+
+    public function getCacheDir(): string
+    {
+        return dirname(__DIR__) . '/var/cache/' . $this->environment;
     }
 }

@@ -31,25 +31,16 @@ class CacheBuilder
     protected $blocks;
     protected $sitemapId;
 
-    /**
-     * @param \SpoonDatabase         $database
-     * @param CacheItemPoolInterface $cache
-     */
     public function __construct(\SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
         $this->database = $database;
         $this->cache = $cache;
     }
 
-    /**
-     * Builds the pages cache
-     *
-     * @param string $language The language to build the cache for.
-     */
-    public function buildCache($language)
+    public function buildCache(string $language): void
     {
         // kill existing caches so they can be re-generated
-        $this->cache->deleteItems(array('keys_' . $language, 'navigation_' . $language));
+        $this->cache->deleteItems(['keys_' . $language, 'navigation_' . $language]);
         $keys = $this->getKeys($language);
         $navigation = $this->getNavigation($language);
 
@@ -62,12 +53,7 @@ class CacheBuilder
         );
     }
 
-    /**
-     * @param string $language
-     *
-     * @return array
-     */
-    public function getKeys($language)
+    public function getKeys(string $language): array
     {
         $item = $this->cache->getItem('keys_' . $language);
         if ($item->isHit()) {
@@ -81,12 +67,7 @@ class CacheBuilder
         return $keys;
     }
 
-    /**
-     * @param string $language
-     *
-     * @return array
-     */
-    public function getNavigation($language)
+    public function getNavigation(string $language): array
     {
         $item = $this->cache->getItem('navigation_' . $language);
         if ($item->isHit()) {
@@ -107,13 +88,13 @@ class CacheBuilder
      *
      * @return array tupple containing keys and navigation
      */
-    protected function getData($language)
+    protected function getData(string $language): array
     {
         // get tree
-        $levels = Model::getTree(array(0), null, 1, $language);
+        $levels = Model::getTree([0], null, 1, $language);
 
-        $keys = array();
-        $navigation = array();
+        $keys = [];
+        $navigation = [];
 
         // loop levels
         foreach ($levels as $pages) {
@@ -129,57 +110,52 @@ class CacheBuilder
         // order by URL
         asort($keys);
 
-        return array($keys, $navigation);
+        return [$keys, $navigation];
     }
 
     /**
      * Fetches the pagedata for a certain page array
      * It also adds the page data to the keys array
      *
-     * @param  array  &$keys
-     * @param  array  $page
-     * @param  string $language
+     * @param array &$keys
+     * @param array $page
+     * @param string $language
      *
-     * @return array  An array containing more data for the page
+     * @return array An array containing more data for the page
      */
-    protected function getPageData(&$keys, $page, $language)
+    protected function getPageData(array &$keys, array $page, string $language): array
     {
         $parentID = (int) $page['parent_id'];
 
         // init URLs
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
-        $languageURL = ($hasMultiLanguages) ? '/' . $language . '/' : '/';
+        $languageUrl = ($hasMultiLanguages) ? '/' . $language . '/' : '/';
         $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
         // home is special
         if ($page['id'] == 1) {
             $page['url'] = '';
             if ($hasMultiLanguages) {
-                $languageURL = rtrim($languageURL, '/');
+                $languageUrl = rtrim($languageUrl, '/');
             }
         }
 
         // add it
         $keys[$page['id']] = trim($url . '/' . $page['url'], '/');
 
-        // unserialize
-        if (isset($page['meta_data'])) {
-            $page['meta_data'] = @unserialize($page['meta_data']);
-        }
-
         // build navigation array
-        $pageData = array(
+        $pageData = [
             'page_id' => (int) $page['id'],
             'url' => $page['url'],
-            'full_url' => $languageURL . $keys[$page['id']],
+            'full_url' => $languageUrl . $keys[$page['id']],
             'title' => $page['title'],
             'navigation_title' => $page['navigation_title'],
-            'has_extra' => (bool) ($page['has_extra'] == 'Y'),
-            'no_follow' => (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow'),
-            'hidden' => (bool) ($page['hidden'] == 'Y'),
+            'has_extra' => (bool) $page['has_extra'],
+            'no_follow' => $page['seo_follow'] === 'nofollow',
+            'hidden' => (bool) $page['hidden'],
             'extra_blocks' => null,
-            'has_children' => (bool) ($page['has_children'] == 'Y'),
-        );
+            'has_children' => (bool) $page['has_children'],
+        ];
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);
         $pageData['tree_type'] = $this->getPageTreeType($page, $pageData);
@@ -187,16 +163,11 @@ class CacheBuilder
         return $pageData;
     }
 
-    /**
-     * @param $page array
-     * @param $pageData array
-     * @return string
-     */
-    protected function getPageTreeType($page, &$pageData)
+    protected function getPageTreeType(array $page, array &$pageData): string
     {
         // calculate tree-type
         $treeType = 'page';
-        if ($page['hidden'] == 'Y') {
+        if ($page['hidden']) {
             $treeType = 'hidden';
         }
 
@@ -250,44 +221,37 @@ class CacheBuilder
         return $treeType;
     }
 
-    /**
-     * @param $page array
-     * @return array
-     */
-    protected function getPageExtraBlocks($page)
+    protected function getPageExtraBlocks(array $page): array
     {
-        // add extras to the page array
-        if ($page['extra_ids'] !== null) {
-            $blocks = $this->getBlocks();
-            $ids = (array) explode(',', $page['extra_ids']);
-            $pageBlocks = array();
+        $pageBlocks = [];
 
-            foreach ($ids as $id) {
-                $id = (int) $id;
-
-                // available in extras, so add it to the pageData-array
-                if (isset($blocks[$id])) {
-                    $pageBlocks[$id] = $blocks[$id];
-                }
-            }
-
+        if ($page['extra_ids'] === null) {
             return $pageBlocks;
         }
+
+        $blocks = $this->getBlocks();
+        $ids = (array) explode(',', $page['extra_ids']);
+
+        foreach ($ids as $id) {
+            $id = (int) $id;
+
+            // available in extras, so add it to the pageData-array
+            if (isset($blocks[$id])) {
+                $pageBlocks[$id] = $blocks[$id];
+            }
+        }
+
+        return $pageBlocks;
     }
 
-    /**
-     * Returns an array containing all extras
-     *
-     * @return array
-     */
-    protected function getBlocks()
+    protected function getBlocks(): array
     {
         if (empty($this->blocks)) {
             $this->blocks = (array) $this->database->getRecords(
                 'SELECT i.id, i.module, i.action, i.data
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
-                array('block', 'N'),
+                ['block', false],
                 'id'
             );
 
@@ -308,19 +272,14 @@ class CacheBuilder
         return $this->blocks;
     }
 
-    /**
-     * Returns an array containing all widgets
-     *
-     * @return string
-     */
-    protected function getSitemapId()
+    protected function getSitemapId(): int
     {
         if (empty($this->sitemapId)) {
             $widgets = (array) $this->database->getRecords(
                 'SELECT i.id, i.module, i.action
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
-                array('widget', 'N'),
+                ['widget', false],
                 'id'
             );
 
@@ -333,21 +292,15 @@ class CacheBuilder
             }
         }
 
-        return $this->sitemapId;
+        return (int) $this->sitemapId;
     }
 
-    /**
-     * Get the order
-     *
-     * @param  array  $navigation The navigation array.
-     * @param  string $type       The type of navigation.
-     * @param  int    $parentId   The Id to start from.
-     * @param  array  $order      The array to hold the order.
-     *
-     * @return array
-     */
-    protected function getOrder($navigation, $type = 'page', $parentId = 0, $order = array())
-    {
+    protected function getOrder(
+        array $navigation,
+        string $type = 'page',
+        int $parentId = 0,
+        array $order = []
+    ): array {
         // loop alle items for the type and parent
         foreach ($navigation[$type][$parentId] as $id => $page) {
             // add to array
@@ -367,17 +320,9 @@ class CacheBuilder
         return $order;
     }
 
-    /**
-     * Save the link list
-     *
-     * @param  array  $navigation The full navigation array
-     * @param  array  $keys       The page keys
-     * @param  string $language   The language to save the file for
-     *
-     * @return string             The full content for the cache file
-     */
-    protected function dumpEditorLinkList($navigation, $keys, $language)
+    protected function dumpEditorLinkList(array $navigation, array $keys, string $language): string
     {
+        $order = [];
         // get the order
         foreach (array_keys($navigation) as $type) {
             $order[$type] = $this->getOrder($navigation, $type, 0);
@@ -389,7 +334,7 @@ class CacheBuilder
         );
 
         // init var
-        $links = array();
+        $links = [];
 
         // init var
         $cachedTitles = (array) $this->database->getPairs(
@@ -397,11 +342,11 @@ class CacheBuilder
              FROM pages AS i
              WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
              AND i.language = ? AND i.status = ?',
-            array($language, 'active')
+            [$language, 'active']
         );
 
         // loop the types in the order we want them to appear
-        foreach (array('page', 'meta', 'footer', 'root') as $type) {
+        foreach (['page', 'meta', 'footer', 'root'] as $type) {
             // any pages?
             if (isset($order[$type])) {
                 // loop pages
@@ -444,7 +389,7 @@ class CacheBuilder
                     }
 
                     // add
-                    $links[] = array($title, $url);
+                    $links[] = [$title, $url];
                 }
             }
         }
@@ -455,14 +400,7 @@ class CacheBuilder
         return $editorLinkListString;
     }
 
-    /**
-     * Gets the header for cache files
-     *
-     * @param  string $itContainsMessage A message about the content of the file
-     *
-     * @return string A comment to be used in the cache file
-     */
-    protected function getCacheHeader($itContainsMessage)
+    protected function getCacheHeader(string $itContainsMessage): string
     {
         $cacheHeader = '/**' . "\n";
         $cacheHeader .= ' * This file is generated by Fork CMS, it contains' . "\n";

@@ -199,7 +199,7 @@
                 </p>
                 {{ form_label(form.url) }}
                 <div class="form-inline">
-                  <span id="urlFirstPart">{{ SITE_URL }}/ </span>{{ form_widget(form.url) }}
+                  <span id="urlFirstPart">{{ form.vars.detail_url }}/ </span>{{ form_widget(form.url) }}
                 </div>
                 {{ form_errors(form.url) }}
                 <p class="help-block">{{ 'msg.HelpMetaURL'|trans|raw }}</p>
@@ -338,3 +338,39 @@
     </div>
   {% endspaceless %}
 {% endblock bootstrap_collection_row %}
+
+{% block media_group_widget %}
+  {% include "MediaLibrary/Resources/views/FormLayout.html.twig" %}
+{% endblock media_group_widget %}
+
+{% block form_row %}
+  <div class="panel form-group panel-default{% if (not compound or force_error|default(false)) and not valid %} panel-danger{% endif %}">
+    <div class="panel-heading">
+      {{- form_label(form) -}}
+    </div>
+    <div class="panel-body">
+      {{- form_widget(form) -}}
+    </div>
+    {% if (not compound or force_error|default(false)) and not valid %}
+      <div class="panel-footer">
+        {{- form_errors(form) -}}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block editor_row %}
+  <div class="panel form-group panel-default panel-editor{% if (not compound or force_error|default(false)) and not valid %} panel-danger{% endif %}">
+    <div class="panel-heading">
+      {{- form_label(form) -}}
+    </div>
+    <div class="panel-body">
+      {{- form_widget(form) -}}
+    </div>
+    {% if (not compound or force_error|default(false)) and not valid %}
+      <div class="panel-footer">
+        {{- form_errors(form) -}}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

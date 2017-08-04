@@ -20,10 +20,6 @@ class ModulesSettings
      */
     private $cache;
 
-    /**
-     * @param SpoonDatabase $database
-     * @param CacheItemPoolInterface $cache
-     */
     public function __construct(SpoonDatabase $database, CacheItemPoolInterface $cache)
     {
         $this->database = $database;
@@ -33,13 +29,13 @@ class ModulesSettings
     /**
      * Get a module setting
      *
-     * @param  string $module       The module wherefore a setting has to be retrieved.
-     * @param  string $key          The name of the setting to be retrieved.
-     * @param  mixed  $defaultValue A fallback value
+     * @param string $module The module wherefore a setting has to be retrieved.
+     * @param string $key The name of the setting to be retrieved.
+     * @param mixed $defaultValue A fallback value
      *
      * @return mixed
      */
-    public function get($module, $key, $defaultValue = null)
+    public function get(string $module, string $key, $defaultValue = null)
     {
         $settings = $this->getSettings();
 
@@ -54,10 +50,10 @@ class ModulesSettings
      * Store a module setting
      *
      * @param string $module The module wherefore a setting has to be stored.
-     * @param string $key    The name of the setting.
-     * @param mixed  $value  The value to save
+     * @param string $key The name of the setting.
+     * @param mixed $value The value to save
      */
-    public function set($module, $key, $value)
+    public function set(string $module, string $key, $value): void
     {
         $valueToStore = serialize($value);
 
@@ -65,7 +61,7 @@ class ModulesSettings
             'INSERT INTO modules_settings(module, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array($module, $key, $valueToStore, $valueToStore)
+            [$module, $key, $valueToStore, $valueToStore]
         );
 
         /*
@@ -79,7 +75,7 @@ class ModulesSettings
          * & cache being regenerated while the other is being saved, it will
          * be cleared again after saving the new setting!
          */
-        $this->cache->deleteItems(array('settings'));
+        $this->cache->deleteItems(['settings']);
     }
 
     /**
@@ -88,15 +84,15 @@ class ModulesSettings
      * @param string $module
      * @param string $key
      */
-    public function delete($module, $key)
+    public function delete(string $module, string $key): void
     {
         $this->database->delete(
             'modules_settings',
             'module = :module and name = :name',
-            array(
+            [
                 'module' => $module,
                 'name' => $key,
-            )
+            ]
         );
 
         /*
@@ -110,17 +106,17 @@ class ModulesSettings
          * & cache being regenerated while the other is being saved, it will
          * be cleared again after saving the new setting!
          */
-        $this->cache->deleteItems(array('settings'));
+        $this->cache->deleteItems(['settings']);
     }
 
     /**
      * Get all module settings for a module
      *
-     * @param  string $module The module wherefore a setting has to be retrieved.
+     * @param string $module The module wherefore a setting has to be retrieved.
      *
      * @return array
      */
-    public function getForModule($module)
+    public function getForModule(string $module): array
     {
         $settings = $this->getSettings();
 
@@ -136,7 +132,8 @@ class ModulesSettings
         if (isset($settings[$module])) {
             return $settings[$module];
         }
-        return array();
+
+        return [];
     }
 
     /**
@@ -144,7 +141,7 @@ class ModulesSettings
      *
      * @return array
      */
-    private function getSettings()
+    private function getSettings(): array
     {
         $item = $this->cache->getItem('settings');
         if ($item->isHit()) {
@@ -163,7 +160,7 @@ class ModulesSettings
      *
      * @return array
      */
-    private function getAllSettingsFromDatabase()
+    private function getAllSettingsFromDatabase(): array
     {
         // fetch settings
         $settings = (array) $this->database->getRecords(
@@ -173,7 +170,7 @@ class ModulesSettings
         );
 
         // loop settings & unserialize the values
-        $groupedSettings = array();
+        $groupedSettings = [];
         foreach ($settings as $row) {
             $groupedSettings[$row['module']][$row['name']] = unserialize(
                 $row['value']

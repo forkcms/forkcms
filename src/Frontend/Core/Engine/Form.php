@@ -8,9 +8,15 @@ namespace Frontend\Core\Engine;
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
-
-use Symfony\Component\Filesystem\Filesystem;
-use Frontend\Core\Language\Language as FL;
+use SpoonFilter;
+use SpoonFormButton;
+use SpoonFormDropdown;
+use SpoonFormFile;
+use SpoonFormPassword;
+use SpoonFormRadiobutton;
+use SpoonFormText;
+use SpoonFormTextarea;
+use SpoonFormTime;
 
 /**
  * This is our extended version of SpoonForm.
@@ -18,183 +24,15 @@ use Frontend\Core\Language\Language as FL;
 class Form extends \Common\Core\Form
 {
     /**
-     * @param string $name     Name of the form.
-     * @param string $action   The action (URL) whereto the form will be submitted, if not provided it will
-     *                         be auto generated.
-     * @param string $method   The method to use when submitting the form, default is POST.
-     * @param string $hash     The id of the anchor to append to the action-URL.
-     * @param bool   $useToken Should we automagically add a form token?
-     */
-    public function __construct($name, $action = null, $method = 'post', $hash = null, $useToken = true)
-    {
-        $this->URL = Model::getContainer()->get('url');
-        $this->header = Model::getContainer()->get('header');
-
-        $name = (string) $name;
-
-        if ($hash !== null && mb_strlen($hash) > 0) {
-            $hash = (string) $hash;
-            // check if the # is present
-            if ($hash[0] !== '#') {
-                $hash = '#' . $hash;
-            }
-        } else {
-            $hash = null;
-        }
-
-        $useToken = (bool) $useToken;
-        $action = ($action === null) ? $this->URL->getQueryString() : (string) $action;
-
-        // call the real form-class
-        parent::__construct((string) $name, $action . $hash, $method, (bool) $useToken);
-
-        // add default classes
-        $this->setParameter('id', $name);
-        $this->setParameter('class', 'forkForms submitWithLink');
-    }
-
-    /**
-     * Adds a button to the form
-     *
-     * @param string $name  Name of the button.
-     * @param string $value The value (or label) that will be printed.
-     * @param string $type  The type of the button (submit is default).
-     * @param string $class Class(es) that will be applied on the button.
-     *
-     * @return \SpoonFormButton
-     *
-     * @throws Exception
-     */
-    public function addButton($name, $value, $type = 'submit', $class = null)
-    {
-        $name = (string) $name;
-        $value = (string) $value;
-        $type = (string) $type;
-        $class = ($class !== null) ? (string) $class : 'inputText inputButton';
-
-        // do a check, only enable this if we use forms that are submitted with javascript
-        if ($type == 'submit' && $name == 'submit') {
-            throw new Exception(
-                'You can\'t add buttons with the name submit. JS freaks out
-                when we replace the buttons with a link and use that link to
-                submit the form.'
-            );
-        }
-
-        // create and return a button
-        return parent::addButton($name, $value, $type, $class);
-    }
-
-    /**
-     * Adds a date field to the form
-     *
-     * @param string $name       Name of the element.
-     * @param mixed  $value      The value for the element.
-     * @param string $type       The type (from, till, range) of the datepicker.
-     * @param int    $date       The date to use.
-     * @param int    $date2      The second date for a rangepicker.
-     * @param string $class      Class(es) that have to be applied on the element.
-     * @param string $classError Class(es) that have to be applied when an error occurs on the element.
-     *
-     * @return FormDate
-     *
-     * @throws Exception
-     */
-    public function addDate(
-        $name,
-        $value = null,
-        $type = null,
-        $date = null,
-        $date2 = null,
-        $class = null,
-        $classError = null
-    ) {
-        $name = (string) $name;
-        $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
-        $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
-        $date = ($date !== null) ? (int) $date : null;
-        $date2 = ($date2 !== null) ? (int) $date2 : null;
-        $class = ($class !== null) ? (string) $class : 'inputText inputDate';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputDateError';
-
-        // validate
-        if ($type == 'from' && ($date == 0 || $date == null)) {
-            throw new Exception('A date field with type "from" should have a valid date-parameter.');
-        }
-        if ($type == 'till' && ($date == 0 || $date == null)) {
-            throw new Exception('A date field with type "till" should have a valid date-parameter.');
-        }
-        if ($type == 'range' && ($date == 0 || $date2 == 0 || $date == null || $date2 == null)) {
-            throw new Exception('A date field with type "range" should have 2 valid date-parameters.');
-        }
-
-        // set mask and firstday
-        $mask = Model::get('fork.settings')->get('Core', 'date_format_short');
-        $firstDay = 1;
-
-        // build attributes
-        $attributes['data-mask'] = str_replace(
-            array('d', 'm', 'Y', 'j', 'n'),
-            array('dd', 'mm', 'yy', 'd', 'm'),
-            $mask
-        );
-        $attributes['data-firstday'] = $firstDay;
-        $attributes['data-year'] = date('Y', $value);
-        // -1 because javascript starts at 0
-        $attributes['data-month'] = date('n', $value) - 1;
-        $attributes['data-day'] = date('j', $value);
-
-        // add extra classes based on type
-        switch ($type) {
-            // start date
-            case 'from':
-                $class .= ' inputDatefieldFrom inputText';
-                $classError .= ' inputDatefieldFrom';
-                $attributes['data-startdate'] = date('Y-m-d', $date);
-                break;
-
-            // end date
-            case 'till':
-                $class .= ' inputDatefieldTill inputText';
-                $classError .= ' inputDatefieldTill';
-                $attributes['data-enddate'] = date('Y-m-d', $date);
-                break;
-
-            // date range
-            case 'range':
-                $class .= ' inputDatefieldRange inputText';
-                $classError .= ' inputDatefieldRange';
-                $attributes['data-startdate'] = date('Y-m-d', $date);
-                $attributes['data-enddate'] = date('Y-m-d', $date2);
-                break;
-
-            // normal date field
-            default:
-                $class .= ' inputDatefieldNormal inputText';
-                $classError .= ' inputDatefieldNormal';
-                break;
-        }
-
-        // create a datefield
-        $this->add(new FormDate($name, $value, $mask, $class, $classError));
-
-        // set attributes
-        parent::getField($name)->setAttributes($attributes);
-
-        // return date field
-        return parent::getField($name);
-    }
-
-    /**
      * Adds a single file field.
      *
      * @param string $name       Name of the element.
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
-     * @return \SpoonFormFile
+     * @return SpoonFormFile
      */
-    public function addFile($name, $class = null, $classError = null)
+    public function addFile($name, $class = null, $classError = null): SpoonFormFile
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'inputFile';
@@ -213,7 +51,7 @@ class Form extends \Common\Core\Form
      *
      * @return FormImage
      */
-    public function addImage($name, $class = null, $classError = null)
+    public function addImage($name, $class = null, $classError = null): FormImage
     {
         $name = (string) $name;
         $class = ($class !== null) ? (string) $class : 'inputFile inputImage';
@@ -230,7 +68,7 @@ class Form extends \Common\Core\Form
      *
      * @return string
      */
-    public function getTemplateExample()
+    public function getTemplateExample(): string
     {
         // start form
         $value = "\n";
@@ -243,7 +81,7 @@ class Form extends \Common\Core\Form
         foreach ($this->getFields() as $object) {
             // is a hidden field
             if (($object instanceof \SpoonFormHidden) && $object->getName() != 'form') {
-                $value .= "\t" . '{$hid' . str_replace('[]', '', \SpoonFilter::toCamelCase($object->getName())) . "}\n";
+                $value .= "\t" . '{$hid' . str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) . "}\n";
             }
         }
 
@@ -254,125 +92,125 @@ class Form extends \Common\Core\Form
         foreach ($this->getFields() as $object) {
             // NOT a hidden field
             if (!($object instanceof \SpoonFormHidden)) {
-                if ($object instanceof \SpoonFormButton) {
+                if ($object instanceof SpoonFormButton) {
                     $value .= "\t" . '<p>' . "\n";
-                    $value .= "\t\t" . '{$btn' . \SpoonFilter::toCamelCase($object->getName()) . '}' . "\n";
+                    $value .= "\t\t" . '{$btn' . SpoonFilter::toCamelCase($object->getName()) . '}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof \SpoonFormCheckbox) {
-                    $value .= "\t" . '<p{option:chk' . \SpoonFilter::toCamelCase($object->getName()) .
+                    $value .= "\t" . '<p{option:chk' . SpoonFilter::toCamelCase($object->getName()) .
                               'Error} class="errorArea"{/option:chk' .
-                              \SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
+                              SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              \SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
-                    $value .= "\t\t" . '{$chk' . \SpoonFilter::toCamelCase($object->getName()) .
-                              '} {$chk' . \SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                    $value .= "\t\t" . '{$chk' . SpoonFilter::toCamelCase($object->getName()) .
+                              '} {$chk' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof \SpoonFormMultiCheckbox) {
-                    $value .= "\t" . '<div{option:chk' . \SpoonFilter::toCamelCase($object->getName()) .
+                    $value .= "\t" . '<div{option:chk' . SpoonFilter::toCamelCase($object->getName()) .
                               'Error} class="errorArea"{/option:chk' .
-                              \SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
-                    $value .= "\t\t" . '<p class="label">' . \SpoonFilter::toCamelCase($object->getName()) .
+                              SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
+                    $value .= "\t\t" . '<p class="label">' . SpoonFilter::toCamelCase($object->getName()) .
                               '</p>' . "\n";
-                    $value .= "\t\t" . '{$chk' . \SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                    $value .= "\t\t" . '{$chk' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t\t" . '<ul class="inputList">' . "\n";
                     $value .= "\t\t\t" . '{iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t\t\t" . '<li><label for="{$' . $object->getName() . '.id}">{$' .
-                              $object->getName() . '.chk' . \SpoonFilter::toCamelCase($object->getName()) .
+                              $object->getName() . '.chk' . SpoonFilter::toCamelCase($object->getName()) .
                               '} {$' . $object->getName() . '.label}</label></li>' . "\n";
                     $value .= "\t\t\t" . '{/iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t" . '</ul>' . "\n";
                     $value .= "\t" . '</div>' . "\n\n";
-                } elseif ($object instanceof \SpoonFormDropdown) {
+                } elseif ($object instanceof SpoonFormDropdown) {
                     $value .= "\t" . '<p{option:ddm' .
                               str_replace(
                                   '[]',
                                   '',
-                                  \SpoonFilter::toCamelCase($object->getName())
+                                  SpoonFilter::toCamelCase($object->getName())
                               ) . 'Error} class="errorArea"{/option:ddm' .
                               str_replace(
                                   '[]',
                                   '',
-                                  \SpoonFilter::toCamelCase($object->getName())
+                                  SpoonFilter::toCamelCase($object->getName())
                               ) . 'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
                               str_replace(
                                   '[]',
                                   '',
-                                  \SpoonFilter::toCamelCase($object->getName())
+                                  SpoonFilter::toCamelCase($object->getName())
                               ) . '</label>' . "\n";
-                    $value .= "\t\t" . '{$ddm' . str_replace('[]', '', \SpoonFilter::toCamelCase($object->getName())) .
+                    $value .= "\t\t" . '{$ddm' . str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) .
                               '} {$ddm' .
                               str_replace(
                                   '[]',
                                   '',
-                                  \SpoonFilter::toCamelCase($object->getName())
+                                  SpoonFilter::toCamelCase($object->getName())
                               ) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 } elseif ($object instanceof \SpoonFormImage) {
-                    $value .= "\t" . '<p{option:file' . \SpoonFilter::toCamelCase($object->getName()) .
+                    $value .= "\t" . '<p{option:file' . SpoonFilter::toCamelCase($object->getName()) .
                               'Error} class="errorArea"{/option:file' .
-                              \SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
+                              SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              \SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
-                    $value .= "\t\t" . '{$file' . \SpoonFilter::toCamelCase($object->getName()) .
+                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                    $value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) .
                               '} <span class="helpTxt">{$msgHelpImageField}</span> {$file' .
-                              \SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                              SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
-                } elseif ($object instanceof \SpoonFormFile) {
-                    $value .= "\t" . '<p{option:file' . \SpoonFilter::toCamelCase($object->getName()) .
+                } elseif ($object instanceof SpoonFormFile) {
+                    $value .= "\t" . '<p{option:file' . SpoonFilter::toCamelCase($object->getName()) .
                               'Error} class="errorArea"{/option:file' .
-                              \SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
+                              SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              \SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
-                    $value .= "\t\t" . '{$file' . \SpoonFilter::toCamelCase($object->getName()) .
-                              '} {$file' . \SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                    $value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) .
+                              '} {$file' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
-                } elseif ($object instanceof \SpoonFormRadiobutton) {
-                    $value .= "\t" . '<div{option:rbt' . \SpoonFilter::toCamelCase($object->getName()) .
+                } elseif ($object instanceof SpoonFormRadiobutton) {
+                    $value .= "\t" . '<div{option:rbt' . SpoonFilter::toCamelCase($object->getName()) .
                               'Error} class="errorArea"{/option:rbt' .
-                              \SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
-                    $value .= "\t\t" . '<p class="label">' . \SpoonFilter::toCamelCase($object->getName()) .
+                              SpoonFilter::toCamelCase($object->getName()) . 'Error}>' . "\n";
+                    $value .= "\t\t" . '<p class="label">' . SpoonFilter::toCamelCase($object->getName()) .
                               '</p>' . "\n";
-                    $value .= "\t\t" . '{$rbt' . \SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                    $value .= "\t\t" . '{$rbt' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t\t" . '<ul class="inputList">' . "\n";
                     $value .= "\t\t\t" . '{iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t\t\t" . '<li><label for="{$' . $object->getName() . '.id}">{$' .
-                              $object->getName() . '.rbt' . \SpoonFilter::toCamelCase($object->getName()) .
+                              $object->getName() . '.rbt' . SpoonFilter::toCamelCase($object->getName()) .
                               '} {$' . $object->getName() . '.label}</label></li>' . "\n";
                     $value .= "\t\t\t" . '{/iteration:' . $object->getName() . '}' . "\n";
                     $value .= "\t\t" . '</ul>' . "\n";
                     $value .= "\t" . '</div>' . "\n\n";
                 } elseif ($object instanceof \SpoonFormDate) {
-                    $value .= "\t" . '<p{option:txt' . \SpoonFilter::toCamelCase($object->getName()) .
-                              'Error} class="errorArea"{/option:txt' . \SpoonFilter::toCamelCase($object->getName()) .
+                    $value .= "\t" . '<p{option:txt' . SpoonFilter::toCamelCase($object->getName()) .
+                              'Error} class="errorArea"{/option:txt' . SpoonFilter::toCamelCase($object->getName()) .
                               'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              \SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
-                    $value .= "\t\t" . '{$txt' . \SpoonFilter::toCamelCase($object->getName()) .
+                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                    $value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) .
                               '} <span class="helpTxt">{$msgHelpDateField}</span> {$txt' .
-                              \SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                              SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
-                } elseif ($object instanceof \SpoonFormTime) {
-                    $value .= "\t" . '<p{option:txt' . \SpoonFilter::toCamelCase($object->getName()) .
-                              'Error} class="errorArea"{/option:txt' . \SpoonFilter::toCamelCase($object->getName()) .
+                } elseif ($object instanceof SpoonFormTime) {
+                    $value .= "\t" . '<p{option:txt' . SpoonFilter::toCamelCase($object->getName()) .
+                              'Error} class="errorArea"{/option:txt' . SpoonFilter::toCamelCase($object->getName()) .
                               'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              \SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
-                    $value .= "\t\t" . '{$txt' . \SpoonFilter::toCamelCase($object->getName()) .
+                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                    $value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) .
                               '} <span class="helpTxt">{$msgHelpTimeField}</span> {$txt' .
-                              \SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                              SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
-                } elseif (($object instanceof \SpoonFormPassword) ||
-                          ($object instanceof \SpoonFormTextarea) ||
-                          ($object instanceof \SpoonFormText)
+                } elseif (($object instanceof SpoonFormPassword) ||
+                          ($object instanceof SpoonFormTextarea) ||
+                          ($object instanceof SpoonFormText)
                 ) {
-                    $value .= "\t" . '<p{option:txt' . \SpoonFilter::toCamelCase($object->getName()) .
-                              'Error} class="errorArea"{/option:txt' . \SpoonFilter::toCamelCase($object->getName()) .
+                    $value .= "\t" . '<p{option:txt' . SpoonFilter::toCamelCase($object->getName()) .
+                              'Error} class="errorArea"{/option:txt' . SpoonFilter::toCamelCase($object->getName()) .
                               'Error}>' . "\n";
                     $value .= "\t\t" . '<label for="' . $object->getAttribute('id') . '">' .
-                              \SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
-                    $value .= "\t\t" . '{$txt' . \SpoonFilter::toCamelCase($object->getName()) .
-                              '} {$txt' . \SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
+                              SpoonFilter::toCamelCase($object->getName()) . '</label>' . "\n";
+                    $value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) .
+                              '} {$txt' . SpoonFilter::toCamelCase($object->getName()) . 'Error}' . "\n";
                     $value .= "\t" . '</p>' . "\n\n";
                 }
             }
@@ -388,7 +226,7 @@ class Form extends \Common\Core\Form
      *
      * @return array
      */
-    public function getValues($excluded = array('form', 'save', '_utf8'))
+    public function getValues($excluded = ['form', 'save', '_utf8']): array
     {
         return parent::getValues($excluded);
     }
@@ -398,12 +236,9 @@ class Form extends \Common\Core\Form
      *
      * @param TwigTemplate $tpl The template instance wherein the form will be parsed.
      */
-    public function parse($tpl)
+    public function parse($tpl): void
     {
-        // parse the form
         parent::parse($tpl);
-
-        // validate the form
         $this->validate();
 
         // if the form is submitted but there was an error, assign a general error

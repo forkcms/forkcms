@@ -29,15 +29,12 @@ class Edit extends BackendBaseActionEdit
      */
     protected $dgUsage;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exist
-        if ($this->id !== null && BackendTagsModel::exists($this->id)) {
+        if ($this->id !== 0 && BackendTagsModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadDataGrid();
@@ -46,25 +43,19 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendTagsModel::get($this->id);
     }
 
-    /**
-     * Load the datagrid
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // init var
-        $items = array();
+        $items = [];
 
         // get modules
         $modules = BackendModel::getModules();
@@ -78,20 +69,20 @@ class Edit extends BackendBaseActionEdit
             }
 
             // check if the getByTag-method is available
-            if (is_callable(array($className, 'getByTag'))) {
+            if (is_callable([$className, 'getByTag'])) {
                 // make the call and get the item
-                $moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
+                $moduleItems = (array) call_user_func([$className, 'getByTag'], $this->id);
 
                 // loop items
                 foreach ($moduleItems as $row) {
                     // check if needed fields are available
                     if (isset($row['url'], $row['name'], $row['module'])) {
                         // add
-                        $items[] = array(
+                        $items[] = [
                             'module' => \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module']))),
                             'name' => $row['name'],
                             'url' => $row['url'],
-                        );
+                        ];
                     }
                 }
             }
@@ -100,55 +91,47 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgUsage = new BackendDataGridArray($items);
         $this->dgUsage->setPaging(false);
-        $this->dgUsage->setColumnsHidden(array('url'));
-        $this->dgUsage->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => ''));
+        $this->dgUsage->setColumnsHidden(['url']);
+        $this->dgUsage->setHeaderLabels(['name' => \SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => '']);
         $this->dgUsage->setColumnURL('name', '[url]', \SpoonFilter::ucfirst(BL::lbl('Edit')));
         $this->dgUsage->addColumn('edit', null, \SpoonFilter::ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
-        $this->frm = new BackendForm('edit');
-        $this->frm->addText('name', $this->record['name']);
+        $this->form = new BackendForm('edit');
+        $this->form->addText('name', $this->record['name']);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // assign id, name
-        $this->tpl->assign('id', $this->id);
-        $this->tpl->assign('name', $this->record['name']);
+        $this->template->assign('id', $this->id);
+        $this->template->assign('name', $this->record['name']);
 
         // assign usage-datagrid
-        $this->tpl->assign('usage', (string) $this->dgUsage->getContent());
+        $this->template->assign('usage', $this->dgUsage->getContent());
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+            $this->form->getField('name')->isFilled(BL::err('NameIsRequired'));
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build tag
+                $item = [];
                 $item['id'] = $this->id;
-                $item['tag'] = $this->frm->getField('name')->getValue();
-                $item['url'] = BackendTagsModel::getURL(
+                $item['tag'] = $this->form->getField('name')->getValue();
+                $item['url'] = BackendTagsModel::getUrl(
                     CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
                     $this->id
                 );
@@ -156,12 +139,9 @@ class Edit extends BackendBaseActionEdit
                 // update the item
                 BackendTagsModel::update($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Index') . '&report=edited&var=' . rawurlencode(
                         $item['tag']
                     ) . '&highlight=row-' . $item['id']
                 );

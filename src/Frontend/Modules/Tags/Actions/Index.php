@@ -22,35 +22,26 @@ class Index extends FrontendBaseBlock
      *
      * @var array
      */
-    private $tags = array();
+    private $tags = [];
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->loadTemplate();
         $this->getData();
         $this->parse();
     }
 
-    /**
-     * Load the data from the database.
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->tags = FrontendTagsModel::getAll();
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // make tags available
-        $this->tpl->assign('tags', $this->tags);
+        $this->template->assign('tags', $this->tags);
 
         // tag-pages don't have any SEO-value, so don't index them
-        $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);
+        $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, follow'], true);
     }
 }

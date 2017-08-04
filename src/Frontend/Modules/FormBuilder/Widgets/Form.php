@@ -7,12 +7,12 @@ use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use ReCaptcha\ReCaptcha;
 use SpoonFormAttributes;
-use SpoonFormMultiCheckbox;
-use SpoonFormRadiobutton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -32,7 +32,7 @@ class Form extends FrontendBaseWidget
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * Form name
@@ -49,6 +49,11 @@ class Form extends FrontendBaseWidget
     private $item;
 
     /**
+     * @var bool
+     */
+    private $hasRecaptchaField;
+
+    /**
      * Create form action and strip the identifier parameter.
      *
      * We use this function to create the action for the form.
@@ -57,15 +62,15 @@ class Form extends FrontendBaseWidget
      *
      * @return string
      */
-    private function createAction()
+    private function createAction(): string
     {
         // pages
-        $action = implode('/', $this->URL->getPages());
+        $action = implode('/', $this->url->getPages());
 
         // init parameters
-        $parameters = $this->URL->getParameters();
-        $moduleParameters = array();
-        $getParameters = array();
+        $parameters = $this->url->getParameters();
+        $moduleParameters = [];
+        $getParameters = [];
 
         // sort by key (important for action order)
         ksort($parameters);
@@ -106,10 +111,7 @@ class Form extends FrontendBaseWidget
         return '/' . $action;
     }
 
-    /**
-     * Execute the extra.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -117,22 +119,19 @@ class Form extends FrontendBaseWidget
         $this->loadData();
 
         // success message
-        if ($this->URL->hasParameter('identifier')
-            && $this->URL->getParameter('identifier') == $this->item['identifier']
+        if ($this->url->hasParameter('identifier')
+            && $this->url->getParameter('identifier') === $this->item['identifier']
         ) {
             $this->parseSuccessMessage();
         } else {
             // create/handle form
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         }
     }
 
-    /**
-     * Load the data.
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // fetch the item
         $this->item = FrontendFormBuilderModel::get((int) $this->data['id']);
@@ -141,36 +140,32 @@ class Form extends FrontendBaseWidget
         $this->formName = 'form' . $this->item['id'];
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
-        $this->frm = new FrontendForm('form' . $this->item['id']);
+        $this->form = new FrontendForm('form' . $this->item['id']);
 
         // exists and has fields
         if (!empty($this->item) && !empty($this->item['fields'])) {
             // loop fields
             foreach ($this->item['fields'] as $field) {
                 // init
-                $item['name'] = 'field' . $field['id'];
-                $item['type'] = $field['type'];
-                $item['label'] = (isset($field['settings']['label'])) ? $field['settings']['label'] : '';
-                $item['placeholder'] = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
-                $item['classname'] = (isset($field['settings']['classname']) ? $field['settings']['classname'] : null);
-                $item['required'] = isset($field['validations']['required']);
-                $item['validations'] = isset($field['validations']) ? $field['validations'] : [];
-                $item['html'] = '';
+                $item = [
+                    'name' => 'field' . $field['id'],
+                    'type' => $field['type'],
+                    'label' => $field['settings']['label'] ?? '',
+                    'placeholder' => $field['settings']['placeholder'] ?? null,
+                    'classname' => $field['settings']['classname'] ?? null,
+                    'required' => isset($field['validations']['required']),
+                    'validations' => $field['validations'] ?? [],
+                    'html' => '',
+                ];
 
                 // form values
-                $values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);
-                $defaultValues = (isset($field['settings']['default_values']) ?
-                    $field['settings']['default_values'] :
-                    null
-                );
+                $values = $field['settings']['values'] ?? null;
+                $defaultValues = $field['settings']['default_values'] ?? null;
 
-                if ($field['type'] == 'dropdown') {
+                if ($field['type'] === 'dropdown') {
                     // values and labels are the same
                     $values = array_combine($values, $values);
 
@@ -181,7 +176,7 @@ class Form extends FrontendBaseWidget
                     }
 
                     // create element
-                    $ddm = $this->frm->addDropdown($item['name'], $values, $defaultIndex, false, $item['classname']);
+                    $ddm = $this->form->addDropdown($item['name'], $values, $defaultIndex, false, $item['classname']);
 
                     // empty default element
                     $ddm->setDefaultElement('');
@@ -194,29 +189,29 @@ class Form extends FrontendBaseWidget
                     $this->setCustomHTML5ErrorMessages($item, $ddm);
                     // get content
                     $item['html'] = $ddm->parse();
-                } elseif ($field['type'] == 'radiobutton') {
+                } elseif ($field['type'] === 'radiobutton') {
                     // create element
-                    $rbt = $this->frm->addRadiobutton($item['name'], $values, $defaultValues, $item['classname']);
+                    $rbt = $this->form->addRadiobutton($item['name'], $values, $defaultValues, $item['classname']);
 
                     // get content
                     $item['html'] = $rbt->parse();
-                } elseif ($field['type'] == 'checkbox') {
+                } elseif ($field['type'] === 'checkbox') {
                     // reset
-                    $newValues = array();
+                    $newValues = [];
 
                     // rebuild values
                     foreach ($values as $value) {
-                        $newValues[] = array('label' => $value, 'value' => $value);
+                        $newValues[] = ['label' => $value, 'value' => $value];
                     }
 
                     // create element
-                    $chk = $this->frm->addMultiCheckbox($item['name'], $newValues, $defaultValues, $item['classname']);
+                    $chk = $this->form->addMultiCheckbox($item['name'], $newValues, $defaultValues, $item['classname']);
 
                     // get content
                     $item['html'] = $chk->parse();
-                } elseif ($field['type'] == 'textbox') {
+                } elseif ($field['type'] === 'textbox') {
                     // create element
-                    $txt = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname']);
+                    $txt = $this->form->addText($item['name'], $defaultValues, 255, $item['classname']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -225,7 +220,7 @@ class Form extends FrontendBaseWidget
                     if (isset($item['validations']['email'])) {
                         $txt->setAttribute('type', 'email');
                     }
-                    if (isset($item['validations']['numeric'])) {
+                    if (isset($item['validations']['number'])) {
                         $txt->setAttribute('type', 'number');
                     }
                     if ($item['placeholder']) {
@@ -236,9 +231,9 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $txt->parse();
-                } elseif ($field['type'] == 'datetime') {
+                } elseif ($field['type'] === 'datetime') {
                     // create element
-                    if ($field['settings']['input_type'] == 'date') {
+                    if ($field['settings']['input_type'] === 'date') {
                         // calculate default value
                         $amount = $field['settings']['value_amount'];
                         $type = $field['settings']['value_type'];
@@ -262,16 +257,16 @@ class Form extends FrontendBaseWidget
                         // Convert the php date format to a jquery date format
                         $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery($this->get('fork.settings')->get('Core', 'date_format_short'));
 
-                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield ' . $item['classname'])->setAttributes(
-                            array(
+                        $datetime = $this->form->addText($item['name'], $defaultValues, 255, 'inputDatefield ' . $item['classname'])->setAttributes(
+                            [
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
                                 'type' => 'date',
                                 'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : ''),
-                            )
+                            ]
                         );
                     } else {
-                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, $item['classname'])->setAttributes(array('type' => 'time'));
+                        $datetime = $this->form->addText($item['name'], $defaultValues, 255, $item['classname'])->setAttributes(['type' => 'time']);
                     }
 
                     // add required attribute
@@ -283,9 +278,9 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $datetime->parse();
-                } elseif ($field['type'] == 'textarea') {
+                } elseif ($field['type'] === 'textarea') {
                     // create element
-                    $txt = $this->frm->addTextarea($item['name'], $defaultValues, $item['classname']);
+                    $txt = $this->form->addTextarea($item['name'], $defaultValues, $item['classname']);
                     $txt->setAttribute('cols', 30);
 
                     // add required attribute
@@ -300,12 +295,15 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $txt->parse();
-                } elseif ($field['type'] == 'heading') {
+                } elseif ($field['type'] === 'heading') {
                     $item['html'] = '<h3>' . $values . '</h3>';
-                } elseif ($field['type'] == 'paragraph') {
+                } elseif ($field['type'] === 'paragraph') {
                     $item['html'] = $values;
-                } elseif ($field['type'] == 'submit') {
+                } elseif ($field['type'] === 'submit') {
                     $item['html'] = $values;
+                } elseif ($field['type'] === 'recaptcha') {
+                    $this->hasRecaptchaField = true;
+                    continue;
                 }
 
                 // add to list
@@ -314,19 +312,9 @@ class Form extends FrontendBaseWidget
         }
     }
 
-    /**
-     * @param array $item
-     * @param SpoonFormAttributes $formField
-     */
-    private function setCustomHTML5ErrorMessages(array $item, SpoonFormAttributes $formField)
+    private function setCustomHTML5ErrorMessages(array $item, SpoonFormAttributes $formField): void
     {
         foreach ($item['validations'] as $validation) {
-            // @deprecated
-            // we need to change it here since it is saved like this in the database and we can't change that for now.
-            if ($validation['type'] === 'numeric') {
-                $validation['type'] = 'number';
-            }
-
             $formField->setAttribute(
                 'data-error-' . $validation['type'],
                 $validation['error_message']
@@ -334,16 +322,19 @@ class Form extends FrontendBaseWidget
         }
     }
 
-    /**
-     * Parse.
-     */
-    private function parse()
+    private function parse(): void
     {
         // form name
         $formName = 'form' . $this->item['id'];
-        $this->tpl->assign('formName', $formName);
-        $this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
-        $this->tpl->assign('successMessage', false);
+        $this->template->assign('formName', $formName);
+        $this->template->assign('formAction', $this->createAction() . '#' . $formName);
+        $this->template->assign('successMessage', false);
+
+        if ($this->hasRecaptchaField) {
+            $this->header->addJS('https://www.google.com/recaptcha/api.js?hl=' . Locale::frontendLanguage());
+            $this->template->assign('hasRecaptchaField', true);
+            $this->template->assign('siteKey', FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key'));
+        }
 
         // got fields
         if (!empty($this->fieldsHTML)) {
@@ -352,11 +343,11 @@ class Form extends FrontendBaseWidget
 
             // loop html fields
             foreach ($this->fieldsHTML as &$field) {
-                if ($field['type'] == 'heading' || $field['type'] == 'paragraph') {
+                if (in_array($field['type'], ['heading', 'paragraph', 'recaptcha'])) {
                     $field['plaintext'] = true;
-                } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
+                } elseif (in_array($field['type'], ['checkbox', 'radiobutton'])) {
                     // name (prefixed by type)
-                    $name = ($field['type'] == 'checkbox') ?
+                    $name = ($field['type'] === 'checkbox') ?
                         'chk' . \SpoonFilter::toCamelCase($field['name']) :
                         'rbt' . \SpoonFilter::toCamelCase($field['name'])
                     ;
@@ -368,7 +359,7 @@ class Form extends FrontendBaseWidget
 
                     // multiple items
                     $field['multiple'] = true;
-                } elseif ($field['type'] == 'submit') {
+                } elseif ($field['type'] === 'submit') {
                     $submitValue = $field['html'];
                 } else {
                     $field['simple'] = true;
@@ -376,50 +367,66 @@ class Form extends FrontendBaseWidget
 
                 // errors (only for form elements)
                 if (isset($field['simple']) || isset($field['multiple'])) {
-                    $field['error'] = $this->frm->getField(
+                    $field['error'] = $this->form->getField(
                         $field['name']
                     )->getErrors();
                 }
             }
 
             // assign
-            $this->tpl->assign('submitValue', $submitValue);
-            $this->tpl->assign('fields', $this->fieldsHTML);
+            $this->template->assign('submitValue', $submitValue);
+            $this->template->assign('fields', $this->fieldsHTML);
 
             // parse form
-            $this->frm->parse($this->tpl);
-            $this->tpl->assign('formToken', $this->frm->getToken());
+            $this->form->parse($this->template);
+            $this->template->assign('formToken', $this->form->getToken());
 
             // assign form error
-            $this->tpl->assign('error', ($this->frm->getErrors() != '' ? $this->frm->getErrors() : false));
+            $this->template->assign('error', ($this->form->getErrors() != '' ? $this->form->getErrors() : false));
         }
     }
 
-    /**
-     * Parse the success message.
-     */
-    private function parseSuccessMessage()
+    private function parseSuccessMessage(): void
     {
         // form name
-        $this->tpl->assign('formName', $this->formName);
-        $this->tpl->assign('successMessage', $this->item['success_message']);
+        $this->template->assign('formName', $this->formName);
+        $this->template->assign('successMessage', $this->item['success_message']);
     }
 
-    /**
-     * Validate the form.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
+            if ($this->hasRecaptchaField) {
+                $request = $this->getRequest()->request;
+                if (!$request->has('g-recaptcha-response')) {
+                    $this->form->addError(FL::err('RecaptchaInvalid'));
+                }
+
+                $response = $request->get('g-recaptcha-response');
+
+                $secret = FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
+
+                if (!$secret) {
+                    $this->form->addError(FL::err('RecaptchaInvalid'));
+                }
+
+                $recaptcha = new ReCaptcha($secret);
+
+                $response = $recaptcha->verify($response);
+
+                if (!$response->isSuccess()) {
+                    $this->form->addError(FL::err('RecaptchaInvalid'));
+                }
+            }
             // does the key exists?
-            if (\SpoonSession::exists('formbuilder_' . $this->item['id'])) {
+            if (FrontendModel::getSession()->has('formbuilder_' . $this->item['id'])) {
                 // calculate difference
-                $diff = time() - (int) \SpoonSession::get('formbuilder_' . $this->item['id']);
+                $diff = time() - (int) FrontendModel::getSession()->get('formbuilder_' . $this->item['id']);
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
                 if ($diff < 10 && $diff != 0) {
-                    $this->frm->addError(FL::err('FormTimeout'));
+                    $this->form->addError(FL::err('FormTimeout'));
                 }
             }
 
@@ -429,71 +436,77 @@ class Form extends FrontendBaseWidget
                 $fieldName = 'field' . $field['id'];
 
                 // skip
-                if ($field['type'] == 'submit' || $field['type'] == 'paragraph' || $field['type'] == 'heading') {
+                if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha'])) {
                     continue;
                 }
 
                 // loop other validations
                 foreach ($field['validations'] as $rule => $settings) {
                     // already has an error so skip
-                    if ($this->frm->getField($fieldName)->getErrors() !== null) {
+                    if ($this->form->getField($fieldName)->getErrors() !== null) {
                         continue;
                     }
 
                     // required
-                    if ($rule == 'required') {
-                        $this->frm->getField($fieldName)->isFilled($settings['error_message']);
-                    } elseif ($rule == 'email') {
+                    if ($rule === 'required') {
+                        $this->form->getField($fieldName)->isFilled($settings['error_message']);
+                    } elseif ($rule === 'email') {
                         // only check this if the field is filled, if the field is required it will be validated before
-                        if ($this->frm->getField($fieldName)->isFilled()) {
-                            $this->frm->getField($fieldName)->isEmail(
+                        if ($this->form->getField($fieldName)->isFilled()) {
+                            $this->form->getField($fieldName)->isEmail(
                                 $settings['error_message']
                             );
                         }
-                    } elseif ($rule == 'numeric') {
+                    } elseif ($rule === 'number') {
                         // only check this if the field is filled, if the field is required it will be validated before
-                        if ($this->frm->getField($fieldName)->isFilled()) {
-                            $this->frm->getField($fieldName)->isNumeric(
+                        if ($this->form->getField($fieldName)->isFilled()) {
+                            $this->form->getField($fieldName)->isNumeric(
                                 $settings['error_message']
                             );
                         }
-                    } elseif ($rule == 'time') {
+                    } elseif ($rule === 'time') {
                         $regexTime = '/^(([0-1][0-9]|2[0-3]|[0-9])|([0-1][0-9]|2[0-3]|[0-9])(:|h)[0-5]?[0-9]?)$/';
-                        if (!\SpoonFilter::isValidAgainstRegexp($regexTime, $this->frm->getField($fieldName)->getValue())) {
-                            $this->frm->getField($fieldName)->setError($settings['error_message']);
+                        if (!\SpoonFilter::isValidAgainstRegexp($regexTime, $this->form->getField($fieldName)->getValue())) {
+                            $this->form->getField($fieldName)->setError($settings['error_message']);
                         }
                     }
                 }
             }
 
             // valid form
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // item
-                $data['form_id'] = $this->item['id'];
-                $data['session_id'] = \SpoonSession::getSessionId();
-                $data['sent_on'] = FrontendModel::getUTCDate();
-                $data['data'] = serialize(array('server' => $_SERVER));
+                $data = [
+                    'form_id' => $this->item['id'],
+                    'session_id' => FrontendModel::getSession()->getId(),
+                    'sent_on' => FrontendModel::getUTCDate(),
+                    'data' => serialize(['server' => $_SERVER]),
+                ];
 
+                $dataId = null;
                 // insert data
-                $dataId = FrontendFormBuilderModel::insertData($data);
+                if ($this->item['method'] !== 'email') {
+                    $dataId = FrontendFormBuilderModel::insertData($data);
+                }
 
                 // init fields array
-                $fields = array();
+                $fields = [];
 
                 // loop all fields
                 foreach ($this->item['fields'] as $field) {
                     // skip
-                    if ($field['type'] == 'submit' || $field['type'] == 'paragraph' || $field['type'] == 'heading') {
+                    if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha'])) {
                         continue;
                     }
 
                     // field data
+                    $fieldData = [];
                     $fieldData['data_id'] = $dataId;
                     $fieldData['label'] = $field['settings']['label'];
-                    $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
+                    $fieldData['value'] = $this->form->getField('field' . $field['id'])->getValue();
 
-                    if ($field['type'] == 'radiobutton') {
-                        $values = array();
+                    if ($field['type'] === 'radiobutton') {
+                        $values = [];
 
                         foreach ($field['settings']['values'] as $value) {
                             $values[$value['value']] = $value['label'];
@@ -517,7 +530,9 @@ class Form extends FrontendBaseWidget
                     $fields[$field['id']] = $fieldData;
 
                     // insert
-                    FrontendFormBuilderModel::insertDataField($fieldData);
+                    if ($this->item['method'] !== 'email') {
+                        FrontendFormBuilderModel::insertDataField($fieldData);
+                    }
                 }
 
                 $this->get('event_dispatcher')->dispatch(
@@ -525,24 +540,11 @@ class Form extends FrontendBaseWidget
                     new FormBuilderSubmittedEvent($this->item, $fields, $dataId)
                 );
 
-                // trigger event
-                FrontendModel::triggerEvent(
-                    'FormBuilder',
-                    'after_submission',
-                    array(
-                        'form_id' => $this->item['id'],
-                        'data_id' => $dataId,
-                        'data' => $data,
-                        'fields' => $fields,
-                        'visitorId' => FrontendModel::getVisitorId(),
-                    )
-                );
-
                 // store timestamp in session so we can block excessive usage
-                \SpoonSession::set('formbuilder_' . $this->item['id'], time());
+                FrontendModel::getSession()->set('formbuilder_' . $this->item['id'], time());
 
                 // redirect
-                $redirect = SITE_URL . $this->URL->getQueryString();
+                $redirect = SITE_URL . $this->url->getQueryString();
                 $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
                 $redirect .= 'identifier=' . $this->item['identifier'];
                 $redirect .= '#' . $this->formName;
@@ -554,11 +556,11 @@ class Form extends FrontendBaseWidget
             } else {
                 // not correct, show errors
                 // global form errors set
-                if ($this->frm->getErrors() != '') {
-                    $this->tpl->assign('formBuilderError', $this->frm->getErrors());
+                if ($this->form->getErrors() != '') {
+                    $this->template->assign('formBuilderError', $this->form->getErrors());
                 } else {
                     // general error
-                    $this->tpl->assign('formBuilderError', FL::err('FormError'));
+                    $this->template->assign('formBuilderError', FL::err('FormError'));
                 }
             }
         }

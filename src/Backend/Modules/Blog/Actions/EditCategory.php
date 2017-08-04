@@ -14,6 +14,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Language\Language as BL;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -21,103 +22,98 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
  */
 class EditCategory extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // does the item exists
-        if ($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
+        if ($this->id !== 0 && BackendBlogModel::existsCategory($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
+            $this->loadDeleteForm();
             $this->parse();
             $this->display();
         } else {
             // no item found, throw an exception, because somebody is fucking with our URL
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->record = BackendBlogModel::getCategory($this->id);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('editCategory');
+        $this->form = new BackendForm('editCategory');
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
+        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
 
         // meta object
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
-        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURLForCategory', array($this->record['id']));
+        $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getUrlForCategory', [$this->record['id']]);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
-        $this->tpl->assign('item', $this->record);
+        $this->template->assign('item', $this->record);
 
         // delete allowed?
-        $this->tpl->assign(
+        $this->template->assign(
             'allowBlogDeleteCategory',
             BackendBlogModel::deleteCategoryAllowed($this->id)
         );
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
             // validate meta
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
-                $item['id'] = $this->id;
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['meta_id'] = $this->meta->save(true);
+                $item = [
+                    'id' => $this->id,
+                    'title' => $this->form->getField('title')->getValue(),
+                    'meta_id' => $this->meta->save(true),
+                ];
 
                 // update the item
                 BackendBlogModel::updateCategory($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
-
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
+                    BackendModel::createUrlForAction('Categories') . '&report=edited-category&var=' .
                     rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteCategory']
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

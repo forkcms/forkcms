@@ -10,10 +10,10 @@ namespace Backend\Modules\Extensions\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
@@ -27,40 +27,35 @@ class EditThemeTemplate extends BackendBaseActionEdit
      *
      * @var array
      */
-    private $extras = array();
+    private $extras = [];
 
     /**
      * The position's names.
      *
      * @var array
      */
-    private $names = array();
+    private $names = [];
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->header->addJS('ThemeTemplate.js');
         $this->loadData();
         $this->loadForm();
         $this->validateForm();
+        $this->loadDeleteForm();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Load the record
-     */
-    private function loadData()
+    private function loadData(): void
     {
         // get record
-        $this->id = $this->getParameter('id', 'int');
+        $this->id = $this->getRequest()->query->getInt('id');
 
         // validate id
-        if ($this->id === null || !BackendExtensionsModel::existsTemplate($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+        if ($this->id === 0 || !BackendExtensionsModel::existsTemplate($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction('ThemeTemplates') . '&error=non-existing');
         }
 
         // get the record
@@ -80,7 +75,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         }
 
         // assign
-        $this->tpl->assign('template', $this->record);
+        $this->template->assign('template', $this->record);
 
         // is the template being used
         $inUse = BackendExtensionsModel::isTemplateInUse($this->id);
@@ -96,52 +91,48 @@ class EditThemeTemplate extends BackendBaseActionEdit
         }
 
         // assign
-        $this->tpl->assign('inUse', $inUse);
-        $this->tpl->assign('allowExtensionsDeleteThemeTemplate', $deleteAllowed);
+        $this->template->assign('inUse', $inUse);
+        $this->template->assign('allowExtensionsDeleteThemeTemplate', $deleteAllowed);
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('edit');
+        $this->form = new BackendForm('edit');
 
         // init var
         $defaultId = $this->get('fork.settings')->get('Pages', 'default_template');
 
         // build available themes
-        $themes = array();
+        $themes = [];
         foreach (BackendExtensionsModel::getThemes() as $theme) {
             $themes[$theme['value']] = $theme['label'];
         }
 
         // create elements
-        $this->frm->addDropdown('theme', $themes, $this->get('fork.settings')->get('Core', 'theme', 'core'));
-        $this->frm->addText('label', $this->record['label']);
-        $this->frm->addText('file', str_replace('Core/Layout/Templates/', '', $this->record['path']));
-        $this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
-        $this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
-        $this->frm->addCheckbox('default', ($this->record['id'] == $defaultId));
-        $this->frm->addCheckbox('overwrite', false);
-        $this->frm->addCheckbox('image', $this->record['data']['image']);
+        $this->form->addDropdown('theme', $themes, $this->get('fork.settings')->get('Core', 'theme', 'Fork'));
+        $this->form->addText('label', $this->record['label']);
+        $this->form->addText('file', str_replace('Core/Layout/Templates/', '', $this->record['path']));
+        $this->form->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
+        $this->form->addCheckbox('active', ($this->record['active'] == 'Y'));
+        $this->form->addCheckbox('default', ($this->record['id'] == $defaultId));
+        $this->form->addCheckbox('overwrite', false);
+        $this->form->addCheckbox('image', $this->record['data']['image']);
 
         // if this is the default template we can't alter the active/default state
         if (($this->record['id'] == $defaultId)) {
-            $this->frm->getField('active')->setAttributes(array('disabled' => 'disabled'));
-            $this->frm->getField('default')->setAttributes(array('disabled' => 'disabled'));
+            $this->form->getField('active')->setAttributes(['disabled' => 'disabled']);
+            $this->form->getField('default')->setAttributes(['disabled' => 'disabled']);
         }
 
         // if the template is in use we cant alter the active state
         if (BackendExtensionsModel::isTemplateInUse($this->id)) {
-            $this->frm->getField('active')->setAttributes(array('disabled' => 'disabled'));
+            $this->form->getField('active')->setAttributes(['disabled' => 'disabled']);
         }
 
-        // init vars
-        $positions = array();
-        $blocks = array();
-        $widgets = array();
+        $positions = [];
+        $blocks = [];
+        $widgets = [];
         $extras = BackendExtensionsModel::getExtras();
 
         // loop extras to populate the default extras
@@ -164,39 +155,37 @@ class EditThemeTemplate extends BackendBaseActionEdit
         asort($widgets, SORT_STRING);
 
         // create array
-        $defaultExtras = array(
-            '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
+        $defaultExtras = [
+            '' => [0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))],
             \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
-        );
+        ];
 
         // create default position field
-        $position = array();
+        $position = [];
         $position['i'] = 0;
-        $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
-        $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control positionBlockError');
+        $position['formElements']['txtPosition'] = $this->form->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
+        $position['blocks'][]['formElements']['ddmType'] = $this->form->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'form-control positionBlock', 'form-control positionBlockError');
         $positions[] = $position;
 
-        // content has been submitted: re-create submitted content rather than the db-fetched content
-        if (isset($_POST['position_0'])) {
-            // init vars
-            $this->names = array();
-            $this->extras = array();
+        // content has been submitted: re-create submitted content rather than the database-fetched content
+        if ($this->getRequest()->request->has('position_0')) {
+            $this->names = [];
+            $this->extras = [];
             $i = 1;
-            $errors = array();
+            $errors = [];
 
             // loop submitted positions
-            while (isset($_POST['position_' . $i])) {
-                // init vars
+            while ($this->getRequest()->request->has('position_' . $i)) {
                 $j = 0;
-                $extras = array();
+                $extras = [];
 
                 // gather position names
-                $name = $_POST['position_' . $i];
+                $name = $this->getRequest()->request->get('position_' . $i);
 
                 // loop submitted blocks
-                while (isset($_POST['type_' . $i . '_' . $j])) {
+                while ($this->getRequest()->request->has('type_' . $i . '_' . $j)) {
                     // gather blocks id
-                    $extras[] = (int) $_POST['type_' . $i . '_' . $j];
+                    $extras[] = $this->getRequest()->request->getInt('type_' . $i . '_' . $j);
 
                     // increment counter; go fetch next block
                     ++$j;
@@ -226,21 +215,21 @@ class EditThemeTemplate extends BackendBaseActionEdit
             }
 
             // add errors
-            if ($errors) {
-                $this->frm->addError(implode('<br />', array_unique($errors)));
+            if (!empty($errors)) {
+                $this->form->addError(implode('<br />', array_unique($errors)));
             }
         }
 
         // build blocks array
         foreach ($this->names as $i => $name) {
             // create default position field
-            $position = array();
+            $position = [];
             $position['i'] = $i + 1;
-            $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'form-control positionName', 'form-control danger positionName');
+            $position['formElements']['txtPosition'] = $this->form->addText('position_' . $position['i'], $name, 255, 'form-control positionName', 'form-control danger positionName');
 
             if (isset($this->extras[$name])) {
                 foreach ($this->extras[$name] as $y => $extra) {
-                    $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . $y, $defaultExtras, $extra, false, 'form-control positionBlock', 'form-control positionBlockError');
+                    $position['blocks'][]['formElements']['ddmType'] = $this->form->addDropdown('type_' . $position['i'] . '_' . $y, $defaultExtras, $extra, false, 'form-control positionBlock', 'form-control positionBlockError');
                 }
             }
 
@@ -248,59 +237,50 @@ class EditThemeTemplate extends BackendBaseActionEdit
         }
 
         // assign
-        $this->tpl->assign('positions', $positions);
+        $this->template->assign('positions', $positions);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // assign form errors
-        $this->tpl->assign('formErrors', (string) $this->frm->getErrors());
+        $this->template->assign('formErrors', (string) $this->form->getErrors());
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // required fields
-            $this->frm->getField('file')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('label')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('file')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('label')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
+            $templateFile = $this->getContainer()->getParameter('site.path_www');
             // check if the template file exists
-            if ($this->frm->getField('theme')->getValue() == 'Core') {
-                $templateFile = PATH_WWW.'/src/Frontend/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
-            } else {
-                $templateFile = PATH_WWW.'/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
-            }
+            $templateFile .= '/src/Frontend/Themes/' . $this->form->getField('theme')->getValue() . '/Core/Layout/Templates/' . $this->form->getField('file')->getValue();
             if (!is_file($templateFile)) {
-                $this->frm->getField('file')->addError(BL::err('TemplateFileNotFound'));
+                $this->form->getField('file')->addError(BL::err('TemplateFileNotFound'));
             }
 
             // validate syntax
-            $syntax = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
+            $syntax = trim(str_replace(["\n", "\r", ' '], '', $this->form->getField('format')->getValue()));
 
             // init var
             $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
 
             // validate the syntax
             if ($table === false) {
-                $this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
+                $this->form->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
             } else {
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);
                 $cellCount = 0;
                 $first = true;
-                $errors = array();
+                $errors = [];
 
                 // loop rows
                 foreach ($table as $row) {
@@ -337,27 +317,28 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 }
 
                 // add errors
-                if ($errors) {
-                    $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
+                if (!empty($errors)) {
+                    $this->form->getField('format')->addError(implode('<br />', array_unique($errors)));
                 }
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build array
+                $item = [];
                 $item['id'] = $this->id;
-                $item['theme'] = $this->frm->getField('theme')->getValue();
-                $item['label'] = $this->frm->getField('label')->getValue();
-                $item['path'] = 'Core/Layout/Templates/' . $this->frm->getField('file')->getValue();
-                $item['active'] = $this->frm->getField('active')->getActualValue();
+                $item['theme'] = $this->form->getField('theme')->getValue();
+                $item['label'] = $this->form->getField('label')->getValue();
+                $item['path'] = 'Core/Layout/Templates/' . $this->form->getField('file')->getValue();
+                $item['active'] = $this->form->getField('active')->isChecked();
 
                 // copy data from previous version, otherwise default_extras from other languages are overwritten
                 $item['data'] = $this->record['data'];
-                $item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
+                $item['data']['format'] = trim(str_replace(["\n", "\r", ' '], '', $this->form->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
                 $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
-                $item['data']['image'] = $this->frm->getField('image')->isChecked();
+                $item['data']['image'] = $this->form->getField('image')->isChecked();
 
                 // serialize
                 $item['data'] = serialize($item['data']);
@@ -375,22 +356,29 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 // insert the item
                 BackendExtensionsModel::updateTemplate($item);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit_template', array('item' => $item));
-
                 // set default template
-                if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'core')) {
+                if ($this->form->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'Fork')) {
                     $this->get('fork.settings')->set('pages', 'default_template', $item['id']);
                 }
 
                 // update all existing pages using this template to add the newly inserted block(s)
                 if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
-                    BackendPagesModel::updatePagesTemplates($item['id'], $item['id'], $this->frm->getField('overwrite')->getChecked());
+                    BackendPagesModel::updatePagesTemplates($item['id'], $item['id'], $this->form->getField('overwrite')->getChecked());
                 }
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createUrlForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . rawurlencode($item['label']) . '&highlight=row-' . $item['id']);
             }
         }
+    }
+
+    private function loadDeleteForm(): void
+    {
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            ['id' => $this->record['id']],
+            ['module' => $this->getModule(), 'action' => 'DeleteThemeTemplate']
+        );
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

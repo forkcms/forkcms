@@ -2,37 +2,25 @@ language: php
 dist: precise
 matrix:
   include:
-    - php: 5.5
-    - php: 5.6
-    - php: 7.0
     - php: 7.1
-    - php: hhvm
-  allow_failures:
-    - php: hhvm
 
 script:
+  - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
   - travis_wait 20 bin/simple-phpunit --coverage-clover=coverage.clover
 
 before_script:
   - npm install -g bower
-  - export SYMFONY_DEPRECATIONS_HELPER="disabled"
   - composer install
   - mysql -e 'create database fork_test'
-  - mysql -u travis fork_test < tools/test_db.sql
+  - mysql -u root fork_test < tests/data/test_db.sql
   - cp app/config/parameters.yml.travis app/config/parameters.yml
   - mysql -e "SET GLOBAL wait_timeout = 3600" # try to avoid mysql has gone away errors
 
 after_success:
-  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7.1" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7.1" ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 after_failure:
-  - cat app/logs/test.log
+  - cat var/logs/test.log
 
 sudo: false
-notifications:
-  slack:
-    secure: V3COyzztWJAlY+f0qS+V4zI5w0tpBSy/G37AzURdyzCe0atT4L+HiRUSHSYj3Yv6Ar9iS8oGhoJGvvmzN1q3pJSiEYR7i9b7gw5Jsu7yqbtioaWLtjToTHsD9vEPE4KCVN/uMGjFxkkCAJRrBI0KcTfe8a34bFAvviLaVTCW6aA=
-    on_success: change
-    on_failure: change
-    on_start: change

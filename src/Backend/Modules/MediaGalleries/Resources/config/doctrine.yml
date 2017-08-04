@@ -1,0 +1,12 @@
+doctrine:
+  dbal:
+    types:
+      media_gallery_status: Backend\Modules\MediaGalleries\Domain\MediaGallery\StatusDBALType
+  orm:
+    mappings:
+      media_gallery:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaGalleries/Domain/MediaGallery"
+        alias: MediaGalleriesMediaGallery
+        prefix: Backend\Modules\MediaGalleries\Domain\MediaGallery

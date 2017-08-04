@@ -21,7 +21,7 @@ class MetaRepository
      *
      * @return string
      */
-    public function generateURL($url, $class, $method, array $parameters = [])
+    public function generateUrl(string $url, string $class, string $method, array $parameters = []): string
     {
         // check if the class is a service
         if (Model::getContainer()->has($class)) {

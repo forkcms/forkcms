@@ -4,30 +4,47 @@
     - $mailMotorSubscribeHasError
     - $mailMotorSubscribeIsSuccess
     - $mailMotorSubscribeHideForm
-    - $mailMotorSubscribe
+    - mailmotorSubscribeHasDoubleOptIn
 #}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-<div id="mailmotorSubscribeForm" class="mod">
-  <div class="inner">
-    <div class="hd">
-      <h3>{{ 'lbl.SubscribeToNewsletter'|trans|capitalize }}</h3>
-    </div>
-    <div class="bd">
-      {% if mailmotorSubscribeHasFormError %}<div class="message error"><p>{{ 'err.FormError'|trans|raw }}</p></div>{% endif %}
-      {% if mailmotorSubscribeHasError %}<div class="message error"><p>{{ 'err.SubscribeFailed'|trans|raw }}</p></div>{% endif %}
-      {% if mailmotorSubscribeIsSuccess %}
-        <div class="message success">
-          {% if mailmotorSubscribeHasDoubleOptIn %}{{ 'msg.SubscribeSuccessForDoubleOptIn'|trans|raw }}{% endif %}
-          {% if not mailmotorSubscribeHasDoubleOptIn %}{{ 'msg.SubscribeSuccess'|trans|raw }}{% endif %}
-        </div>
+<section class="module-mailmotor block-mailmotor-subscribe">
+  {% block block_alerts %}
+    <div class="block-alerts">
+      {% if mailmotorSubscribeHasFormError %}
+        {{ alerts.alert('danger', 'err.FormError'|trans|raw) }}
       {% endif %}
+      {% if mailmotorSubscribeHasError %}
+        {{ alerts.alert('danger', 'err.SubscribeFailed'|trans|raw) }}
+      {% endif %}
+      {% if mailmotorSubscribeIsSuccess %}
+        {% if mailmotorSubscribeHasDoubleOptIn %}
+          {{ alerts.alert('success', 'msg.SubscribeSuccessForDoubleOptIn'|trans|raw) }}
+        {% endif %}
+        {% if not mailmotorSubscribeHasDoubleOptIn %}
+          {{ alerts.alert('success', 'msg.SubscribeSuccess'|trans|raw) }}
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endblock %}
 
+  {% block block_body %}
+    <div class="block-body">
       {% if not mailmotorSubscribeHideForm %}
         {{ form_start(form) }}
+        <div class="form-group">
+          <label for="{{ form.email.vars.id }}" class="control-label">{{ form.email.vars.label|trans|ucfirst }}</label>
+          <div class="input-group">
+            {{ form_widget(form.email) }}
+            <div class="input-group-btn">
+              <button type="submit" id="{{ form.subscribe.vars.id }}" class="btn btn-default">{{ form.subscribe.vars.label|trans }}</button>
+              {% do form.subscribe.setRendered %}
+            </div>
+          </div>
+        </div>
         {{ form_rest(form) }}
         {{ form_end(form) }}
       {% endif %}
-
     </div>
-  </div>
-</div>
+  {% endblock %}
+</section>

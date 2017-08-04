@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
   <name>ContentBlocks</name>
-  <version>3.0.0</version>
+  <version>4.0.0</version>
   <requirements>
     <minimum_version>4.2.0</minimum_version>
   </requirements>
@@ -28,10 +28,14 @@
       <name><![CDATA[Jelmer Prins]]></name>
       <url><![CDATA[https://www.sumocoders.be]]></url>
     </author>
+    <author>
+      <name><![CDATA[Jeroen Desloovere]]></name>
+      <url><![CDATA[http://www.jeroendesloovere.be]]></url>
+    </author>
   </authors>
   <events>
-    <event application="backend (symfony event listener)" name="content_blocks.event.content_block_created"><![CDATA[Triggered when a content block is added.]]></event>
-    <event application="backend (symfony event listener)" name="content_blocks.event.content_block_deleted"><![CDATA[Triggered when a content block is deleted.]]></event>
-    <event application="backend (symfony event listener)" name="content_blocks.event.content_block_updated"><![CDATA[Triggered when a content block is edited.]]></event>
+    <event application="backend" name="content_blocks.event.content_block_created"><![CDATA[Triggered when a content block is added.]]></event>
+    <event application="backend" name="content_blocks.event.content_block_deleted"><![CDATA[Triggered when a content block is deleted.]]></event>
+    <event application="backend" name="content_blocks.event.content_block_updated"><![CDATA[Triggered when a content block is edited.]]></event>
   </events>
 </module>

@@ -12,6 +12,7 @@ namespace Backend\Modules\Blog\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use Backend\Modules\Blog\Form\BlogDeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
@@ -19,57 +20,51 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class Delete extends BackendBaseActionDelete
 {
-    /**
-     * The id of the category where is filtered on
-     *
-     * @var int
-     */
-    private $categoryId;
-
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        // get parameters
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            BlogDeleteType::class,
+            null,
+            ['module' => $this->getModule()]
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = (int) $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== null && BackendBlogModel::exists($this->id)) {
-            // call parent, this will probably add some general CSS/JS or other required files
-            parent::execute();
+        if ($this->id === 0 || !BackendBlogModel::exists($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
-            // set category id
-            $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-            if ($this->categoryId == 0) {
-                $this->categoryId = null;
-            }
-
-            // get data
-            $this->record = (array) BackendBlogModel::get($this->id);
-
-            // delete item
-            BackendBlogModel::delete($this->id);
-
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
-            // delete search indexes
-            BackendSearchModel::removeIndex($this->getModule(), $this->id);
-
-            // build redirect URL
-            $redirectUrl = BackendModel::createURLForAction('Index') . '&report=deleted&var=' . rawurlencode($this->record['title']);
-
-            // append to redirect URL
-            if ($this->categoryId != null) {
-                $redirectUrl .= '&category=' . $this->categoryId;
-            }
-
-            // item was deleted, so redirect
-            $this->redirect($redirectUrl);
-        } else {
-            // something went wrong
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            return;
         }
+
+        parent::execute();
+
+        $categoryId = (int) $deleteFormData['categoryId'];
+
+        $this->record = (array) BackendBlogModel::get($this->id);
+
+        BackendBlogModel::delete($this->id);
+
+        // delete search indexes
+        BackendSearchModel::removeIndex($this->getModule(), $this->id);
+
+        $redirectParameters = ['report' => 'deleted', 'var' => $this->record['title']];
+        if ($categoryId !== 0) {
+            $redirectParameters['category'] = $categoryId;
+        }
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'Index',
+            null,
+            null,
+            $redirectParameters
+        ));
     }
 }

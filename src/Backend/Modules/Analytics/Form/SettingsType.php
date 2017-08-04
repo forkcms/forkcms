@@ -12,40 +12,38 @@ use Google_Service_Analytics;
  */
 final class SettingsType
 {
-    /** @var SettingsStepType */
+    /** @var SettingsStepTypeInterface|Form */
     private $form;
 
-    /**
-     * @param string $name
-     * @param ModulesSettings $settings
-     * @param Google_Service_Analytics $googleServiceAnalytics
-     */
-    public function __construct($name, ModulesSettings $settings, Google_Service_Analytics $googleServiceAnalytics)
-    {
+    public function __construct(
+        string $name,
+        ModulesSettings $settings,
+        Google_Service_Analytics $googleServiceAnalytics
+    ) {
         // we don't even have a auth config file yet, let the user upload it
         if ($settings->get('Analytics', 'certificate') === null) {
-            $this->form = new SettingsStepAuthConfigFileType($name, $settings);
+            $this->form = new SettingsStepAuthConfigFileTypeInterface($name, $settings);
 
             return;
         }
 
         // we are authenticated! Let's see which account the user wants to use
         if ($settings->get('Analytics', 'account') === null) {
-            $this->form = new SettingsStepAccountType($name, $settings, $googleServiceAnalytics);
+            $this->form = new SettingsStepAccountTypeInterface($name, $settings, $googleServiceAnalytics);
 
             return;
         }
 
         // we have an account, but don't know which property to track
         if ($settings->get('Analytics', 'web_property_id') === null) {
-            $this->form = new SettingsStepWebPropertyType($name, $settings, $googleServiceAnalytics);
+            $this->form = new SettingsStepWebPropertyTypeInterface($name, $settings, $googleServiceAnalytics);
 
             return;
         }
 
         // we have an account, but don't know which property to track
         if ($settings->get('Analytics', 'profile') === null) {
-            $this->form = new SettingsStepProfileType($name, $settings, $googleServiceAnalytics);
+            $this->form = new SettingsStepProfileTypeInterface($name, $settings, $googleServiceAnalytics);
 
             return;
         }
@@ -53,18 +51,12 @@ final class SettingsType
         $this->form = new Form($name);
     }
 
-    /**
-     * @param TwigTemplate $template
-     */
-    public function parse(TwigTemplate $template)
+    public function parse(TwigTemplate $template): void
     {
         $this->form->parse($template);
     }
 
-    /**
-     * @return bool
-     */
-    public function handle()
+    public function handle(): bool
     {
         if ($this->form instanceof Form) {
             return false;

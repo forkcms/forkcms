@@ -18,10 +18,7 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Settings extends BackendBaseActionEdit
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -30,42 +27,33 @@ class Settings extends BackendBaseActionEdit
         $this->display();
     }
 
-    /**
-     * Loads the settings form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // init settings form
-        $this->frm = new BackendForm('settings');
+        $this->form = new BackendForm('settings');
 
         // add fields for meta navigation
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'meta_navigation',
             $this->get('fork.settings')->get($this->getModule(), 'meta_navigation', false)
         );
     }
 
-    /**
-     * Validates the settings form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // form is submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // form is validated
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // set our settings
                 $this->get('fork.settings')->set(
                     $this->getModule(),
                     'meta_navigation',
-                    (bool) $this->frm->getField('meta_navigation')->getValue()
+                    (bool) $this->form->getField('meta_navigation')->getValue()
                 );
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');
-
                 // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
+                $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved');
             }
         }
     }

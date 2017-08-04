@@ -9,19 +9,17 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
+use Frontend\Core\Engine\Model;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  */
-class AjaxAction extends \KernelLoader
+class AjaxAction extends KernelLoader
 {
-    const OK = 200;
-    const BAD_REQUEST = 400;
-    const FORBIDDEN = 403;
-    const ERROR = 500;
-
     /**
      * The current action
      *
@@ -41,12 +39,7 @@ class AjaxAction extends \KernelLoader
      */
     protected $module;
 
-    /**
-     * @param KernelInterface $kernel
-     * @param string          $action The action to use.
-     * @param string          $module The module to use.
-     */
-    public function __construct(KernelInterface $kernel, $action, $module)
+    public function __construct(KernelInterface $kernel, string $action, string $module)
     {
         parent::__construct($kernel);
 
@@ -55,26 +48,18 @@ class AjaxAction extends \KernelLoader
         $this->setAction($action);
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        return $this->getContent();
+        // placeholder
     }
 
-    /**
-     * Get the action
-     *
-     * @return string
-     */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
 
     /**
-     * Since the display action in the backend is rather complicated and we
+     * Since the display action in the frontend is rather complicated and we
      * want to make this work with our Kernel, I've added this getContent
      * method to extract the output from the actual displaying.
      *
@@ -83,23 +68,16 @@ class AjaxAction extends \KernelLoader
      *
      * @return Response
      */
-    public function getContent()
+    public function getContent(): Response
     {
-        $statusCode = (isset($this->content['code']) ? $this->content['code'] : 200);
-
         return new Response(
             json_encode($this->content),
-            $statusCode,
-            array('content-type' => 'application/json')
+            $this->content['code'] ?? Response::HTTP_OK,
+            ['content-type' => 'application/json']
         );
     }
 
-    /**
-     * Get the module
-     *
-     * @return string
-     */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
@@ -107,40 +85,33 @@ class AjaxAction extends \KernelLoader
     /**
      * Outputs an answer to the browser
      *
-     * @param int    $statusCode The status code to use, use one of the available constants
+     * @param int $statusCode The status code to use, use one of the available constants
      *                           (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
-     * @param mixed  $data       The data to be returned (will be encoded as JSON).
-     * @param string $message    A text-message.
+     * @param mixed $data The data to be returned (will be encoded as JSON).
+     * @param string $message A text-message.
      */
-    public function output($statusCode, $data = null, $message = null)
+    public function output(int $statusCode, $data = null, string $message = null): void
     {
-        $statusCode = (int) $statusCode;
-        if ($message !== null) {
-            $message = (string) $message;
-        }
+        $this->content = ['code' => $statusCode, 'data' => $data, 'message' => $message];
+    }
 
-        $response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
+    protected function setAction(string $action): void
+    {
+        $this->action = $action;
+    }
 
-        $this->content = $response;
+    protected function setModule(string $module): void
+    {
+        $this->module = $module;
     }
 
     /**
-     * Set the action, for later use
+     * Get the request from the container.
      *
-     * @param string $action The action to use.
+     * @return Request
      */
-    protected function setAction($action)
+    public function getRequest(): Request
     {
-        $this->action = (string) $action;
-    }
-
-    /**
-     * Set the module, for later use
-     *
-     * @param string $module The module to use.
-     */
-    protected function setModule($module)
-    {
-        $this->module = (string) $module;
+        return Model::getRequest();
     }
 }

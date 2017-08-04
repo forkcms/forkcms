@@ -33,10 +33,7 @@ class Add extends BackendBaseActionAdd
      */
     protected $imageIsAllowed = true;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -45,150 +42,151 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
-        $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
+        $this->imageIsAllowed = $this->get('fork.settings')->get($this->url->getModule(), 'show_image_form', true);
 
-        $this->frm = new BackendForm('add');
+        $this->form = new BackendForm('add');
 
         // set hidden values
-        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => 1],
+            ['label' => BL::lbl('Published'), 'value' => 0],
+        ];
 
         // get categories
         $categories = BackendBlogModel::getCategories();
         $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
         // create elements
-        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
-        $this->frm->addEditor('text');
-        $this->frm->addEditor('introduction');
-        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
-        $this->frm->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
-        $this->frm->addDropdown('category_id', $categories, \SpoonFilter::getGetValue('category', null, null, 'int'));
-        if (count($categories) != 2) {
-            $this->frm->getField('category_id')->setDefaultElement('');
+        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
+        $this->form->addEditor('text');
+        $this->form->addEditor('introduction');
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, 0);
+        $this->form->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
+        $this->form->addDropdown('category_id', $categories, $this->getRequest()->query->getInt('category'));
+        if (count($categories) !== 2) {
+            $this->form->getField('category_id')->setDefaultElement('');
         }
-        $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
-        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
-        $this->frm->addDate('publish_on_date');
-        $this->frm->addTime('publish_on_time');
+        $this->form->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
+        $this->form->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
+        $this->form->addDate('publish_on_date');
+        $this->form->addTime('publish_on_time');
         if ($this->imageIsAllowed) {
-            $this->frm->addImage('image');
+            $this->form->addImage('image');
         }
 
         // meta
-        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+        $this->meta = new BackendMeta($this->form, null, 'title', true);
     }
 
-    /**
-     * Parse the form
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
-        $this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
+        $this->template->assign('imageIsAllowed', $this->imageIsAllowed);
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'detail');
+        $url404 = BackendModel::getUrl(404);
 
         // parse additional variables
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // is the form submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get the status
-            $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+            $status = $this->getRequest()->request->get('status');
+            if (!in_array($status, ['active', 'draft'])) {
+                $status = 'active';
+            }
 
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
-            $this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
-            $this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
-            if ($this->frm->getField('category_id')->getValue() == 'new_category') {
-                $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('text')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
+            $this->form->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
+            $this->form->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
+            if ($this->form->getField('category_id')->getValue() == 'new_category') {
+                $this->form->getField('category_id')->addError(BL::err('FieldIsRequired'));
             }
 
             // validate meta
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
-                $item['id'] = (int) BackendBlogModel::getMaximumId() + 1;
-                $item['meta_id'] = $this->meta->save();
-                $item['category_id'] = (int) $this->frm->getField('category_id')->getValue();
-                $item['user_id'] = $this->frm->getField('user_id')->getValue();
-                $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['introduction'] = $this->frm->getField('introduction')->getValue();
-                $item['text'] = $this->frm->getField('text')->getValue();
-                $item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($this->frm->getField('publish_on_date'), $this->frm->getField('publish_on_time')));
-                $item['created_on'] = BackendModel::getUTCDate();
+                $item = [
+                    'id' => (int) BackendBlogModel::getMaximumId() + 1,
+                    'meta_id' => $this->meta->save(),
+                    'category_id' => (int) $this->form->getField('category_id')->getValue(),
+                    'user_id' => $this->form->getField('user_id')->getValue(),
+                    'language' => BL::getWorkingLanguage(),
+                    'title' => $this->form->getField('title')->getValue(),
+                    'introduction' => $this->form->getField('introduction')->getValue(),
+                    'text' => $this->form->getField('text')->getValue(),
+                    'publish_on' => BackendModel::getUTCDate(
+                        null,
+                        BackendModel::getUTCTimestamp(
+                            $this->form->getField('publish_on_date'),
+                            $this->form->getField('publish_on_time')
+                        )
+                    ),
+                    'created_on' => BackendModel::getUTCDate(),
+                    'hidden' => $this->form->getField('hidden')->getValue(),
+                    'allow_comments' => $this->form->getField('allow_comments')->getChecked(),
+                    'num_comments' => 0,
+                    'status' => $status,
+                ];
                 $item['edited_on'] = $item['created_on'];
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
-                $item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
-                $item['num_comments'] = 0;
-                $item['status'] = $status;
 
                 // insert the item
                 $item['revision_id'] = BackendBlogModel::insert($item);
 
                 if ($this->imageIsAllowed) {
                     // the image path
-                    $imagePath = FRONTEND_FILES_PATH . '/blog/images';
+                    $imagePath = FRONTEND_FILES_PATH . '/Blog/images';
 
                     // create folders if needed
                     $filesystem = new Filesystem();
-                    $filesystem->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
+                    $filesystem->mkdir([$imagePath . '/source', $imagePath . '/128x128']);
 
                     // image provided?
-                    if ($this->frm->getField('image')->isFilled()) {
+                    if ($this->form->getField('image')->isFilled()) {
                         // build the image name
-                        $item['image'] = $this->meta->getURL()
+                        $item['image'] = $this->meta->getUrl()
                             . '-' . BL::getWorkingLanguage()
                             . '-' . $item['revision_id']
-                            . '.' . $this->frm->getField('image')->getExtension();
+                            . '.' . $this->form->getField('image')->getExtension();
 
                         // upload the image & generate thumbnails
-                        $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
+                        $this->form->getField('image')->generateThumbnails($imagePath, $item['image']);
 
                         // add the image to the database without changing the revision id
-                        BackendBlogModel::updateRevision($item['revision_id'], array('image' => $item['image']));
+                        BackendBlogModel::updateRevision($item['revision_id'], ['image' => $item['image']]);
                     }
                 }
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
-
                 // save the tags
-                BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+                BackendTagsModel::saveTags($item['id'], $this->form->getField('tags')->getValue(), $this->url->getModule());
 
                 // active
                 if ($item['status'] == 'active') {
                     // add search index
-                    BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
+                    BackendSearchModel::saveIndex($this->getModule(), $item['id'], ['title' => $item['title'], 'text' => $item['text']]);
 
                     // everything is saved, so redirect to the overview
-                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
+                    $this->redirect(BackendModel::createUrlForAction('Index') . '&report=added&var=' . rawurlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
                 } elseif ($item['status'] == 'draft') {
                     // draft: everything is saved, so redirect to the edit action
-                    $this->redirect(BackendModel::createURLForAction('Edit') . '&report=saved-as-draft&var=' . rawurlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
+                    $this->redirect(BackendModel::createUrlForAction('Edit') . '&report=saved-as-draft&var=' . rawurlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
                 }
             }
         }

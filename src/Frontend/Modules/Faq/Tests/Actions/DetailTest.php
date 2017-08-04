@@ -6,18 +6,15 @@ use Common\WebTestCase;
 
 class DetailTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
-    public function testBlogPostHasDetailPage()
+    public function testFaqHasDetailPage(): void
     {
         $client = static::createClient();
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
                 'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
-            )
+            ]
         );
 
         $crawler = $client->request('GET', '/en/faq');
@@ -43,10 +40,7 @@ class DetailTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
-    public function testNonExistingBlogPostGives404()
+    public function testNonExistingFaqGives404(): void
     {
         $client = static::createClient();
 

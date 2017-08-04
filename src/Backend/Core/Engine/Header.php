@@ -9,63 +9,119 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Core\Header\Asset;
+use Common\Core\Header\AssetCollection;
+use Common\Core\Header\JsData;
+use Common\Core\Header\Minifier;
+use Common\Core\Header\Priority;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use MatthiasMullie\Minify;
 use Backend\Core\Language\Language as BL;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  */
-class Header extends Base\Object
+final class Header extends KernelLoader
 {
     /**
-     * All added CSS-files
+     * The added css-files
      *
-     * @var array
+     * @var AssetCollection
      */
-    private $cssFiles = array();
+    private $cssFiles;
 
     /**
      * Data that will be passed to js
      *
-     * @var array
+     * @var JsData
      */
-    private $jsData = array();
+    private $jsData;
 
     /**
-     * All added JS-files
+     * The added js-files
      *
-     * @var array
+     * @var AssetCollection
      */
-    private $jsFiles = array();
+    private $jsFiles;
 
     /**
      * Template instance
      *
-     * @var Template
+     * @var TwigTemplate
      */
-    private $tpl;
+    private $template;
 
     /**
      * URL-instance
      *
      * @var Url
      */
-    private $URL;
+    private $url;
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
 
-        $this->getContainer()->set('header', $this);
+        $container = $this->getContainer();
+        $container->set('header', $this);
 
-        // grab from the reference
-        $this->URL = $this->getContainer()->get('url');
-        $this->tpl = $this->getContainer()->get('template');
+        $this->url = $container->get('url');
+        $this->template = $container->get('template');
+
+        $this->cssFiles = new AssetCollection(
+            Minifier::css(
+                $container->getParameter('site.path_www'),
+                BACKEND_CACHE_URL . '/MinifiedCss/',
+                BACKEND_CACHE_PATH . '/MinifiedCss/'
+            )
+        );
+        $this->jsFiles = new AssetCollection(
+            Minifier::js(
+                $container->getParameter('site.path_www'),
+                BACKEND_CACHE_URL . '/MinifiedJs/',
+                BACKEND_CACHE_PATH . '/MinifiedJs/'
+            )
+        );
+        $this->jsData = new JsData(
+            [
+                'interface_language' => $this->getInterfaceLanguage(),
+                'debug' => $this->getContainer()->getParameter('kernel.debug'),
+            ]
+        );
+
+        $this->addCoreJs();
+        $this->addCoreCss();
+    }
+
+    private function addCoreJs(): void
+    {
+        $this->addJS('/js/vendors/jquery.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/jquery-migrate.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/jquery-ui.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/bootstrap.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/typeahead.bundle.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('/js/vendors/bootstrap-tagsinput.min.js', 'Core', false, true, true, Priority::core());
+        $this->addJS('jquery/jquery.backend.js', 'Core', true, false, true, Priority::core());
+        $this->addJS('utils.js', 'Core', true, false, true, Priority::core());
+        $this->addJS('backend.js', 'Core', true, false, true, Priority::core());
+    }
+
+    private function addCoreCss(): void
+    {
+        $this->addCSS('/css/vendors/bootstrap-tagsinput.css', 'Core', true, true, true, Priority::core());
+        $this->addCSS('/css/vendors/bootstrap-tagsinput-typeahead.css', 'Core', true, true, true, Priority::core());
+        $this->addCSS('screen.css', 'Core', false, true, true, Priority::core());
+        $this->addCSS('debug.css', 'Core', false, true, true, Priority::debug());
+    }
+
+    private function buildPathForModule(string $fileName, string $module, string $subDirectory): string
+    {
+        if ($module === 'Core') {
+            return '/src/Backend/Core/' . $subDirectory . '/' . $fileName;
+        }
+
+        return '/src/Backend/Modules/' . $module . '/' . $subDirectory . '/' . $fileName;
     }
 
     /**
@@ -79,60 +135,31 @@ class Header extends Base\Object
      * If you set overwritePath to true, the above-described automatic path creation will not happen, instead the
      * file-parameter will be used as path; which we then expect to be a full path (It has to start with a slash '/')
      *
-     * @param string $file          The name of the file to load.
-     * @param string $module        The module wherein the file is located.
-     * @param bool   $overwritePath Should we overwrite the full path?
-     * @param bool   $minify        Should the CSS be minified?
-     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
+     * @param string $file The name of the file to load.
+     * @param string $module The module wherein the file is located.
+     * @param bool $overwritePath Should we overwrite the full path?
+     * @param bool $minify Should the CSS be minified?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
+     * @param Priority $priority the files are added based on the priority
+     *                           defaults to standard for full links or core or module for core or module css
      */
-    public function addCSS($file, $module = null, $overwritePath = false, $minify = true, $addTimestamp = false)
-    {
-        $file = (string) $file;
-        $module = (string) ($module !== null) ? $module : $this->URL->getModule();
-        $overwritePath = (bool) $overwritePath;
-        $minify = (bool) $minify;
-        $addTimestamp = (bool) $addTimestamp;
-
-        // no actual path given: create
-        if (!$overwritePath) {
-            // we have to build the path, but core is a special one
-            if ($module !== 'Core') {
-                $file = '/src/Backend/Modules/' . $module . '/Layout/Css/' . $file;
-            } else {
-                // core is special because it isn't a real module
-                $file = '/src/Backend/Core/Layout/Css/' . $file;
-            }
-        }
-
-        // no minifying when debugging
-        if ($this->getContainer()->getParameter('kernel.debug')) {
-            $minify = false;
-        }
-
-        // try to minify
-        if ($minify) {
-            $file = $this->minifyCSS($file);
-        }
-
-        // in array
-        $inArray = false;
-
-        // check if the file already exists in the array
-        foreach ($this->cssFiles as $row) {
-            if ($row['file'] == $file) {
-                $inArray = true;
-            }
-        }
-
-        // add to array if it isn't there already
-        if (!$inArray) {
-            // build temporary array
-            $temp['file'] = (string) $file;
-            $temp['add_timestamp'] = $addTimestamp;
-
-            // add to files
-            $this->cssFiles[] = $temp;
-        }
+    public function addCSS(
+        string $file,
+        string $module = null,
+        bool $overwritePath = false,
+        bool $minify = true,
+        bool $addTimestamp = false,
+        Priority $priority = null
+    ): void {
+        $module = $module ?? $this->url->getModule();
+        $this->cssFiles->add(
+            new Asset(
+                $overwritePath ? $file : $this->buildPathForModule($file, $module, 'Layout/Css'),
+                $addTimestamp,
+                $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
+            ),
+            $minify && !$this->getContainer()->getParameter('kernel.debug')
+        );
     }
 
     /**
@@ -140,272 +167,92 @@ class Header extends Base\Object
      * If you don't specify a module, the current one will be used
      * If you set overwritePath to true we expect a full path (It has to start with a /)
      *
-     * @param string $file          The file to load.
-     * @param string $module        The module wherein the file is located.
-     * @param bool   $minify        Should the module be minified?
-     * @param bool   $overwritePath Should we overwrite the full path?
-     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
+     * @param string $file The file to load.
+     * @param string $module The module wherein the file is located.
+     * @param bool $minify Should the module be minified?
+     * @param bool $overwritePath Should we overwrite the full path?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
+     * @param Priority $priority the files are added based on the priority
+     *                           defaults to standard for full links or core or module for core or module css
      */
-    public function addJS($file, $module = null, $minify = true, $overwritePath = false, $addTimestamp = false)
-    {
-        $file = (string) $file;
-        $module = (string) ($module !== null) ? $module : $this->URL->getModule();
-        $minify = (bool) $minify;
-        $overwritePath = (bool) $overwritePath;
-        $addTimestamp = (bool) $addTimestamp;
+    public function addJS(
+        string $file,
+        string $module = null,
+        bool $minify = true,
+        bool $overwritePath = false,
+        bool $addTimestamp = false,
+        Priority $priority = null
+    ): void {
+        $module = $module ?? $this->url->getModule();
 
-        // no minifying when debugging
-        if ($this->getContainer()->getParameter('kernel.debug')) {
-            $minify = false;
-        }
-
-        // is the given path the real path?
-        if (!$overwritePath) {
-            // we have to build the path, but core is a special one
-            if ($module !== 'Core') {
-                $file = '/src/Backend/Modules/' . $module . '/Js/' . $file;
-            } else {
-                // core is special because it isn't a real module
-                $file = '/src/Backend/Core/Js/' . $file;
-            }
-        }
-
-        // try to minify
-        if ($minify) {
-            $file = $this->minifyJS($file);
-        }
-
-        // already in array?
-        if (!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles)) {
-            // add to files
-            $this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
-        }
+        $this->jsFiles->add(
+            new Asset(
+                $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'Js'),
+                $addTimestamp,
+                $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
+            ),
+            $minify
+        );
     }
 
     /**
      * Add data into the jsData
      *
      * @param string $module The name of the module.
-     * @param string $key    The key whereunder the value will be stored.
-     * @param mixed  $value  The value
+     * @param string $key The key whereunder the value will be stored.
+     * @param mixed $value The value
      */
-    public function addJsData($module, $key, $value)
+    public function addJsData(string $module, string $key, $value): void
     {
-        $this->jsData[$module][$key] = $value;
-    }
-
-    /**
-     * Get all added CSS files
-     *
-     * @return array
-     */
-    public function getCSSFiles()
-    {
-        // fetch files
-        return $this->cssFiles;
-    }
-
-    /**
-     * get all added javascript files
-     *
-     * @return array
-     */
-    public function getJSFiles()
-    {
-        return $this->jsFiles;
-    }
-
-    /**
-     * Minify a CSS-file
-     *
-     * @param string $file The file to be minified.
-     *
-     * @return string
-     */
-    private function minifyCSS($file)
-    {
-        // create unique filename
-        $fileName = md5($file) . '.css';
-        $finalURL = BACKEND_CACHE_URL . '/MinifiedCss/' . $fileName;
-        $finalPath = BACKEND_CACHE_PATH . '/MinifiedCss/' . $fileName;
-
-        // check that file does not yet exist or has been updated already
-        if (!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
-            // minify the file
-            $css = new Minify\CSS(PATH_WWW . $file);
-            $css->minify($finalPath);
-        }
-
-        return $finalURL;
-    }
-
-    /**
-     * Minify a JS-file
-     *
-     * @param string $file The file to be minified.
-     *
-     * @return string
-     */
-    private function minifyJS($file)
-    {
-        // create unique filename
-        $fileName = md5($file) . '.js';
-        $finalURL = BACKEND_CACHE_URL . '/MinifiedJs/' . $fileName;
-        $finalPath = BACKEND_CACHE_PATH . '/MinifiedJs/' . $fileName;
-
-        // check that file does not yet exist or has been updated already
-        if (!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
-            // minify the file
-            $js = new Minify\JS(PATH_WWW . $file);
-            $js->minify($finalPath);
-        }
-
-        return $finalURL;
+        $this->jsData->add($module, $key, $value);
     }
 
     /**
      * Parse the header into the template
      */
-    public function parse()
+    public function parse(): void
     {
-        // put the page title in the <title>
-        $this->tpl->assign('page_title', BL::getLabel($this->URL->getModule()));
+        $this->template->assign('page_title', BL::getLabel($this->url->getModule()));
+        $this->cssFiles->parse($this->template, 'cssFiles');
+        $this->jsFiles->parse($this->template, 'jsFiles');
 
-        // parse CSS
-        $this->parseCSS();
+        $this->jsData->add('site', 'domain', SITE_DOMAIN);
+        $this->jsData->add('editor', 'language', $this->getCKEditorLanguage());
 
-        // parse JS
-        $this->parseJS();
+        if (!empty($this->get('fork.settings')->get('Core', 'theme'))) {
+            $this->jsData->add('theme', 'theme', $this->get('fork.settings')->get('Core', 'theme'));
+            $themePath = FRONTEND_PATH . '/Themes/' . $this->get('fork.settings')->get('Core', 'theme');
+            $this->jsData->add('theme', 'path', $themePath);
+            $this->jsData->add('theme', 'has_css', is_file($themePath . '/Core/Layout/Css/screen.css'));
+            $this->jsData->add('theme', 'has_editor_css', is_file($themePath . '/Core/Layout/Css/editor_content.css'));
+        }
+        $this->template->assign('jsData', $this->jsData);
     }
 
     /**
-     * Parse the CSS-files
+     * @return string
      */
-    public function parseCSS()
+    private function getInterfaceLanguage(): string
     {
-        // init var
-        $cssFiles = array();
-        $existingCSSFiles = $this->getCSSFiles();
-
-        // if there aren't any JS-files added we don't need to do something
-        if (!empty($existingCSSFiles)) {
-            foreach ($existingCSSFiles as $file) {
-                // add lastmodified time
-                if ($file['add_timestamp'] !== false) {
-                    $file['file'] .= (mb_strpos($file['file'], '?') !== false) ?
-                        '&m=' . LAST_MODIFIED_TIME :
-                        '?m=' . LAST_MODIFIED_TIME
-                    ;
-                }
-
-                // add
-                $cssFiles[] = $file;
-            }
+        if (Authentication::getUser()->isAuthenticated()) {
+            return (string) Authentication::getUser()->getSetting('interface_language');
         }
 
-        // css-files
-        $this->tpl->assign('cssFiles', $cssFiles);
+        return BL::getInterfaceLanguage();
     }
 
     /**
-     * Parse the JS-files
+     * @return string
      */
-    public function parseJS()
+    private function getCKEditorLanguage(): string
     {
-        $jsFiles = array();
-        $existingJSFiles = $this->getJSFiles();
-
-        // if there aren't any JS-files added we don't need to do something
-        if (!empty($existingJSFiles)) {
-            // some files should be cached, even if we don't want cached (mostly libraries)
-            $ignoreCache = array(
-                '/js/vendors/jquery.min.js',
-                '/js/vendors/jquery-migrate.min.js',
-                '/js/vendors/jquery-ui.min.js',
-                '/js/vendors/bootstrap.min.js',
-                '/js/vendors/bootstrap-tagsinput.min.js',
-                '/src/Backend/Core/Js/jquery/jquery.ui.dialog.patch.js',
-                '/src/Backend/Core/Js/jquery/jquery.backend.js',
-                '/src/Backend/Core/Js/ckeditor/ckeditor.js',
-                '/src/Backend/Core/Js/ckeditor/adapters/jquery.js',
-                '/src/Backend/Core/Js/ckfinder/ckfinder.js',
-            );
-
-            foreach ($existingJSFiles as $file) {
-                // some files shouldn't be uncachable
-                if (in_array($file['file'], $ignoreCache)
-                    || $file['add_timestamp'] === false
-                ) {
-                    $file = array('file' => $file['file']);
-                } else {
-                    if (mb_substr($file['file'], 0, 11) == '/frontend/js') {
-                        $file = array('file' => $file['file'] . '&amp;m=' . time());
-                    } else {
-                        $modifiedTime = (mb_strpos($file['file'], '?') !== false) ?
-                            '&amp;m=' . LAST_MODIFIED_TIME :
-                            '?m=' . LAST_MODIFIED_TIME
-                        ;
-                        $file = array('file' => $file['file'] . $modifiedTime);
-                    }
-                }
-
-                // add
-                $jsFiles[] = $file;
-            }
-        }
-
-        // assign JS-files
-        $this->tpl->assign('jsFiles', $jsFiles);
-
-        // fetch preferred interface language
-        if (Authentication::getUser()->isAuthenticated()) {
-            $interfaceLanguage = (string) Authentication::getUser()->getSetting('interface_language');
-        } else {
-            $interfaceLanguage = BL::getInterfaceLanguage();
-        }
-
-        // some default stuff
-        $this->jsData['debug'] = $this->getContainer()->getParameter('kernel.debug');
-        $this->jsData['site']['domain'] = SITE_DOMAIN;
-        $this->jsData['editor']['language'] = $interfaceLanguage;
-        $this->jsData['interface_language'] = $interfaceLanguage;
-
-        // is the user object filled?
-        if (Authentication::getUser()->isAuthenticated()) {
-            $this->jsData['editor']['language'] = (string) Authentication::getUser()->getSetting('interface_language');
-        }
+        $language = $this->getInterfaceLanguage();
 
         // CKeditor has support for simplified Chinese, but the language is called zh-cn instead of zn
-        if ($this->jsData['editor']['language'] == 'zh') {
-            $this->jsData['editor']['language'] = 'zh-cn';
+        if ($language === 'zh') {
+            return 'zh-cn';
         }
 
-        // theme
-        if ($this->get('fork.settings')->get('Core', 'theme') !== null) {
-            $this->jsData['theme']['theme'] = $this->get('fork.settings')->get('Core', 'theme');
-            $this->jsData['theme']['path'] = FRONTEND_PATH . '/Themes/' .
-                                             $this->get('fork.settings')->get(
-                                                 'Core',
-                                                 'theme'
-                                             );
-            $this->jsData['theme']['has_css'] = (is_file(
-                FRONTEND_PATH . '/Themes/' .
-                $this->get('fork.settings')->get(
-                    'Core',
-                    'theme'
-                ) . '/Core/Layout/Css/screen.css'
-            ));
-            $this->jsData['theme']['has_editor_css'] = (is_file(
-                FRONTEND_PATH . '/Themes/' .
-                $this->get('fork.settings')->get(
-                    'Core',
-                    'theme'
-                ) . '/Core/Layout/Css/editor_content.css'
-            ));
-        }
-
-        // encode and add
-        $jsData = json_encode($this->jsData);
-        $this->tpl->assign('jsData', 'var jsData = ' . $jsData . ';' . "\n");
+        return $language;
     }
 }

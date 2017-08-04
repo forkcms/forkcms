@@ -6,19 +6,16 @@ use Common\WebTestCase;
 
 class IndexTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
-    public function testFaqIndexContainsCategories()
+    public function testFaqIndexContainsCategories(): void
     {
         $client = static::createClient();
 
         $this->loadFixtures(
             $client,
-            array(
+            [
                 'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
                 'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
-            )
+            ]
         );
 
         $client->request('GET', '/en/faq');
@@ -32,10 +29,7 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
-    public function testFaqIndexContainsQuestions()
+    public function testFaqIndexContainsQuestions(): void
     {
         $client = static::createClient();
 

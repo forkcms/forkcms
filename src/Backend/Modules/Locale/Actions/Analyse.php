@@ -31,10 +31,7 @@ class Analyse extends BackendBaseActionIndex
      */
     private $dgFrontend;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadDataGrids();
@@ -49,9 +46,9 @@ class Analyse extends BackendBaseActionIndex
      *
      * @return string
      */
-    public static function formatFilesList($files)
+    public static function formatFilesList(string $files): string
     {
-        $files = (array) unserialize((string) $files);
+        $files = (array) unserialize($files);
 
         // no files
         if (empty($files)) {
@@ -73,10 +70,7 @@ class Analyse extends BackendBaseActionIndex
         return $return;
     }
 
-    /**
-     * Load the datagrids
-     */
-    private function loadDataGrids()
+    private function loadDataGrids(): void
     {
         /*
          * Frontend datagrid
@@ -85,19 +79,19 @@ class Analyse extends BackendBaseActionIndex
         $this->dgFrontend = new BackendDataGridArray($nonExistingFrontendLocale);
 
         // overrule default URL
-        $this->dgFrontend->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
+        $this->dgFrontend->setURL(BackendModel::createUrlForAction(null, null, null, ['offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'], false));
 
         // sorting columns
-        $this->dgFrontend->setSortingColumns(array('language', 'application', 'module', 'type', 'name'), 'name');
+        $this->dgFrontend->setSortingColumns(['language', 'application', 'module', 'type', 'name'], 'name');
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Add')) {
             // set column URLs
-            $this->dgFrontend->setColumnURL('name', BackendModel::createURLForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
+            $this->dgFrontend->setColumnURL('name', BackendModel::createUrlForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
         }
 
         // set column functions
-        $this->dgFrontend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
+        $this->dgFrontend->setColumnFunction([__CLASS__, 'formatFilesList'], '[used_in]', 'used_in', true);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('SaveTranslation')) {
@@ -105,11 +99,11 @@ class Analyse extends BackendBaseActionIndex
             $this->dgFrontend->addColumn('translation', null, null, null, BL::lbl('Add'));
 
             // add a class for the inline edit
-            $this->dgFrontend->setColumnAttributes('translation', array('class' => 'translationValue'));
+            $this->dgFrontend->setColumnAttributes('translation', ['class' => 'translationValue']);
 
             // add attributes, so the inline editing has all the needed data
-            $this->dgFrontend->setColumnAttributes('translation', array('data-id' => '{language: \'[language]\', application: \'[application]\', module: \'[module]\', name: \'[name]\', type: \'[type]\'}'));
-            $this->dgFrontend->setColumnAttributes('translation', array('style' => 'width: 150px'));
+            $this->dgFrontend->setColumnAttributes('translation', ['data-id' => '{language: \'[language]\', application: \'[application]\', module: \'[module]\', name: \'[name]\', type: \'[type]\'}']);
+            $this->dgFrontend->setColumnAttributes('translation', ['style' => 'width: 150px']);
         }
 
         // disable paging
@@ -122,19 +116,19 @@ class Analyse extends BackendBaseActionIndex
         $this->dgBackend = new BackendDataGridArray($getNonExistingBackendLocale);
 
         // overrule default URL
-        $this->dgBackend->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
+        $this->dgBackend->setURL(BackendModel::createUrlForAction(null, null, null, ['offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'], false));
 
         // sorting columns
-        $this->dgBackend->setSortingColumns(array('language', 'application', 'module', 'type', 'name'), 'name');
+        $this->dgBackend->setSortingColumns(['language', 'application', 'module', 'type', 'name'], 'name');
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Add')) {
             // set column URLs
-            $this->dgBackend->setColumnURL('name', BackendModel::createURLForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
+            $this->dgBackend->setColumnURL('name', BackendModel::createUrlForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
         }
 
         // set column functions
-        $this->dgBackend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
+        $this->dgBackend->setColumnFunction([__CLASS__, 'formatFilesList'], '[used_in]', 'used_in', true);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('SaveTranslation')) {
@@ -142,29 +136,26 @@ class Analyse extends BackendBaseActionIndex
             $this->dgBackend->addColumn('translation', null, null, null, BL::lbl('Add'));
 
             // add a class for the inline edit
-            $this->dgBackend->setColumnAttributes('translation', array('class' => 'translationValue'));
+            $this->dgBackend->setColumnAttributes('translation', ['class' => 'translationValue']);
 
             // add attributes, so the inline editing has all the needed data
-            $this->dgBackend->setColumnAttributes('translation', array('data-id' => '{language: \'[language]\', application: \'[application]\', module: \'[module]\', name: \'[name]\', type: \'[type]\'}'));
-            $this->dgBackend->setColumnAttributes('translation', array('style' => 'width: 150px'));
+            $this->dgBackend->setColumnAttributes('translation', ['data-id' => '{language: \'[language]\', application: \'[application]\', module: \'[module]\', name: \'[name]\', type: \'[type]\'}']);
+            $this->dgBackend->setColumnAttributes('translation', ['style' => 'width: 150px']);
         }
 
         // disable paging
         $this->dgBackend->setPaging(false);
     }
 
-    /**
-     * Parse & display the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // parse datagrid
-        $this->tpl->assign('dgBackend', ($this->dgBackend->getNumResults() != 0) ? $this->dgBackend->getContent() : false);
-        $this->tpl->assign('dgFrontend', ($this->dgFrontend->getNumResults() != 0) ? $this->dgFrontend->getContent() : false);
+        $this->template->assign('dgBackend', ($this->dgBackend->getNumResults() != 0) ? $this->dgBackend->getContent() : false);
+        $this->template->assign('dgFrontend', ($this->dgFrontend->getNumResults() != 0) ? $this->dgFrontend->getContent() : false);
 
         // parse filter
-        $this->tpl->assign('language', BL::getWorkingLanguage());
+        $this->template->assign('language', BL::getWorkingLanguage());
     }
 }

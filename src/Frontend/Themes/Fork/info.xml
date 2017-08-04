@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+  <name>Fork</name>
+  <version>1.0.0</version>
+  <requirements>
+    <minimum_version>5.0.0</minimum_version>
+  </requirements>
+  <thumbnail>thumbnail.png</thumbnail>
+  <description>
+    <![CDATA[
+    ]]>
+  </description>
+  <metanavigation supported="false" />
+  <templates>
+    <template label="Home" path="Core/Layout/Templates/Home.html.twig" image="true">
+      <positions>
+        <position name="top" />
+        <position name="main" />
+      </positions>
+      <format>
+        [/,/,top],
+        [main,main,main]
+      </format>
+    </template>
+    <template label="Default" path="Core/Layout/Templates/Default.html.twig" image="true">
+      <positions>
+        <position name="top" />
+        <position name="main" />
+      </positions>
+      <format>
+        [/,/,top],
+        [main,main,main]
+      </format>
+    </template>
+  </templates>
+</theme>

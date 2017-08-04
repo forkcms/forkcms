@@ -14,10 +14,7 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
  */
 class ImportLocaleCommand extends Command
 {
-    /**
-     * Configure the command options.
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('forkcms:locale:import')
             ->setAliases(['locale:import'])
@@ -28,21 +25,13 @@ class ImportLocaleCommand extends Command
             ->addOption('locale', 'l', InputOption::VALUE_OPTIONAL, 'Only install for a specific locale');
     }
 
-    /**
-     * Execute the command.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @throws Exception
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         // Get input values
         $fileOption = $input->getOption('file');
         $moduleOption = $input->getOption('module');
         $localeOption = $input->getOption('locale');
-        $overwriteOption = $input->hasOption('overwrite') ? true : false;
+        $overwriteOption = $input->hasOption('overwrite');
 
         if (!isset($fileOption) && !isset($moduleOption)) {
             throw new Exception('Please specify a modulename or path to a locale file');
@@ -61,16 +50,12 @@ class ImportLocaleCommand extends Command
         $this->importLocale($localePath, $overwriteOption, $output, $localeOption);
     }
 
-    /**
-     * @param string $localePath
-     * @param bool $overwrite
-     * @param OutputInterFace $output
-     * @param string|null $specificLocale
-     *
-     * @throws Exception
-     */
-    private function importLocale($localePath, $overwrite, OutputInterface $output, $specificLocale = null)
-    {
+    private function importLocale(
+        string $localePath,
+        bool $overwrite,
+        OutputInterface $output,
+        string $specificLocale = null
+    ): void {
         // Load the xml from the file
         $xmlData = @simplexml_load_file($localePath);
 
@@ -107,15 +92,7 @@ class ImportLocaleCommand extends Command
         }
     }
 
-    /**
-     * Get the file or module path according to the input options
-     *
-     * @param string $fileOption
-     * @param string $moduleOption
-     *
-     * @return string
-     */
-    private function getLocalePath($fileOption, $moduleOption)
+    private function getLocalePath(?string $fileOption, ?string $moduleOption): string
     {
         if (isset($fileOption)) {
             return $fileOption;

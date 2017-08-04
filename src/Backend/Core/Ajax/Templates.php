@@ -9,7 +9,6 @@ namespace Backend\Core\Ajax;
  * file that was distributed with this source code.
  */
 
-use Common\Exception\RedirectException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +21,11 @@ class Templates extends AjaxAction
     /** @var array */
     private $templates;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->templates = [];
         $theme = $this->get('fork.settings')->get('Core', 'theme');
-        $files[] = BACKEND_PATH . '/Core/Layout/EditorTemplates/templates.js';
+        $files = [BACKEND_PATH . '/Core/Layout/EditorTemplates/templates.js'];
         $themePath = FRONTEND_PATH . '/Themes/' . $theme . '/Core/Layout/EditorTemplates/templates.js';
 
         if (is_file($themePath)) {
@@ -41,10 +37,7 @@ class Templates extends AjaxAction
         }
     }
 
-    /**
-     * @return Response
-     */
-    public function getContent()
+    public function getContent(): Response
     {
         return new Response(
             'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n" . json_encode(
@@ -55,12 +48,7 @@ class Templates extends AjaxAction
         );
     }
 
-    /**
-     * Process the content of the file.
-     *
-     * @param string $file The file to process.
-     */
-    private function processFile($file)
+    private function processFile(string $file): void
     {
         $filesystem = new Filesystem();
 
@@ -84,9 +72,9 @@ class Templates extends AjaxAction
             if (!isset($template['title'])) {
                 continue;
             }
-
-            if (isset($template['file']) && $filesystem->exists(PATH_WWW . $template['file'])) {
-                $template['html'] = file_get_contents(PATH_WWW . $template['file']);
+            $realPathWww = realpath($this->getContainer()->getParameter('site.path_www'));
+            if (isset($template['file']) && $filesystem->exists($realPathWww . $template['file'])) {
+                $template['html'] = file_get_contents($realPathWww . $template['file']);
             }
 
             // skip items without HTML
@@ -101,13 +89,13 @@ class Templates extends AjaxAction
                 $image = ltrim($template['image'], '/');
             }
 
-            $temp['title'] = $template['title'];
-            $temp['description'] = isset($template['description']) ? $template['description'] : '';
-            $temp['image'] = $image;
-            $temp['html'] = $template['html'];
-
             // add the template
-            $this->templates[] = $temp;
+            $this->templates[] = [
+                'title' => $template['title'],
+                'description' => $template['description'] ?? '',
+                'image' => $image,
+                'html' => $template['html'],
+            ];
         }
     }
 }

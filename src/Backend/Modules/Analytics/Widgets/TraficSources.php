@@ -11,10 +11,7 @@ use Google_IO_Exception;
  */
 class TraficSources extends Widget
 {
-    /**
-     * Execute the widget
-     */
-    public function execute()
+    public function execute(): void
     {
         $startDate = strtotime('-1 week', mktime(0, 0, 0));
         $endDate = mktime(0, 0, 0);
@@ -22,7 +19,7 @@ class TraficSources extends Widget
         try {
             $analytics = $this->get('analytics.connector');
 
-            $this->tpl->assign(
+            $this->template->assign(
                 'source_graph_data',
                 $analytics->getSourceGraphData($startDate, $endDate)
             );

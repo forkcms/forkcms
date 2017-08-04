@@ -1,0 +1,21 @@
+services:
+    media_library.listener.invalidate_backend_media_folder_cache:
+        class: Backend\Modules\MediaLibrary\EventListener\MediaFolderInvalidateBackendCacheSubscriber
+        arguments:
+            - "@media_library.cache.media_folder"
+        tags:
+            - { name: doctrine.event_subscriber }
+    media_library.listener.media_item:
+        class: Backend\Modules\MediaLibrary\EventListener\MediaItemSubscriber
+        tags:
+            - { name: doctrine.event_subscriber }
+        arguments:
+            - "@media_library.manager.file"
+            - "@liip_imagine.cache.manager"
+            - "@command_bus"
+    media_library.listener.media_item_deleted_resequence:
+        class: Backend\Modules\MediaLibrary\EventListener\MediaItemDeletedReSequenceMediaGroupMediaItemListener
+        arguments:
+            - "@command_bus"
+        tags:
+            - { name: doctrine.event_listener, event: postRemove }

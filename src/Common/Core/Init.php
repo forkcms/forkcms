@@ -3,6 +3,7 @@
 namespace Common\Core;
 
 use Common\Exception\InvalidInitTypeException;
+use ForkCMS\App\KernelLoader;
 
 /*
  * This file is part of Fork CMS.
@@ -14,7 +15,7 @@ use Common\Exception\InvalidInitTypeException;
 /**
  * This class will initiate the application
  */
-abstract class Init extends \KernelLoader
+abstract class Init extends KernelLoader
 {
     /**
      * Current type
@@ -33,7 +34,7 @@ abstract class Init extends \KernelLoader
     /**
      * @param string $type The type of init to load, possible values are: frontend, frontend_ajax, frontend_js.
      */
-    public function initialize($type)
+    public function initialize(string $type): void
     {
         $type = (string) $type;
 
@@ -44,7 +45,7 @@ abstract class Init extends \KernelLoader
         $this->type = $type;
 
         // set a default timezone if no one was set by PHP.ini
-        if (ini_get('date.timezone') == '') {
+        if (ini_get('date.timezone') === '') {
             date_default_timezone_set('Europe/Brussels');
         }
 

@@ -1,0 +1,26 @@
+{#
+  Media Slider with BxSlider
+  Variables that are available:
+  - {{ mediaItem }}: Contains the MediaItem
+  - {{ title }}: A custom optional title that you can give when parsing from Custom module.
+#}
+
+{% if mediaItem %}
+  <section class="module-media-library widget-media-library-one-image" itemscope itemtype="http://schema.org/ImageGallery">
+    {% block widget_heading %}
+      {% if title %}
+        <header class="widget-heading">
+          <h3>{{ title|ucfirst }}</h3>
+        </header>
+      {% endif %}
+    {% endblock %}
+
+    {% block widget_body %}
+      <div class="widget-body">
+        <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+          <img itemprop="thumbnail" class="img-polaroid img-responsive" src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_one_image_large') }}" alt="{{ mediaItem.title }}" />
+        </figure>
+      </div>
+    {% endblock %}
+  </section>
+{% endif %}

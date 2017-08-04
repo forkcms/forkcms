@@ -10,12 +10,14 @@ namespace Frontend\Core\Engine;
  */
 
 use Common\Exception\RedirectException;
+use DateTime;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use Frontend\Core\Language\Language;
 use Frontend\Core\Language\Locale;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Common\Core\Twig\Extensions\BaseTwigModifiers;
-use \SpoonDate;
+use SpoonDate;
 
 /**
  * Contains all Frontend-related custom modifiers
@@ -26,16 +28,16 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a UNIX-timestamp as a date
      * syntax: {{ $var|formatdate }}
      *
-     * @param int $var The UNIX-timestamp to format or \DateTime
+     * @param int|DateTime $var The UNIX-timestamp to format or \DateTime
      *
      * @return string
      */
-    public static function formatDate($var)
+    public static function formatDate($var): string
     {
         // get setting
         $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_short');
 
-        if ($var instanceof \DateTime) {
+        if ($var instanceof DateTime) {
             $var = $var->getTimestamp();
         }
 
@@ -47,16 +49,16 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a UNIX-timestamp as a date
      * syntax: {{ $var|formatdatetime }}
      *
-     * @param int $var The UNIX-timestamp to format or \DateTime
+     * @param int|DateTime $var The UNIX-timestamp to format or \DateTime
      *
      * @return string
      */
-    public static function formatDateTime($var)
+    public static function formatDateTime($var): string
     {
         // get setting
         $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_long');
 
-        if ($var instanceof \DateTime) {
+        if ($var instanceof DateTime) {
             $var = $var->getTimestamp();
         }
 
@@ -68,62 +70,61 @@ class TemplateModifiers extends BaseTwigModifiers
      * Format a number as a float
      *    syntax: {{ $number|formatfloat($decimals) }}
      *
-     * @param float $number   The number to format.
-     * @param int   $decimals The number of decimals.
+     * @param float $number The number to format.
+     * @param int $decimals The number of decimals.
      *
      * @return string
      */
-    public static function formatFloat($number, $decimals = 2)
+    public static function formatFloat(float $number, int $decimals = 2): string
     {
-        return number_format((float) $number, (int) $decimals, '.', ' ');
+        return number_format($number, $decimals, '.', ' ');
     }
 
     /**
      * Format a number
      *    syntax: {{ $string|formatnumber($decimals) }}
      *
-     * @param float $string The number to format.
+     * @param float $number The number to format.
      * @param int $decimals The number of decimals
      *
      * @return string
      */
-    public static function formatNumber($string, $decimals = null)
+    public static function formatNumber(float $number, int $decimals = null): string
     {
-        // redefine
-        $string = (float) $string;
-
         // get setting
         $format = FrontendModel::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
         if ($decimals === null) {
-            $decimals = (mb_strpos($string, '.') ? mb_strlen(mb_substr($string, mb_strpos($string, '.') + 1)) : 0);
+            $decimals = (mb_strpos($number, '.') ? mb_strlen(mb_substr($number, mb_strpos($number, '.') + 1)) : 0);
         }
 
         // get separators
         $separators = explode('_', $format);
-        $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
-        $decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
-        $thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
+        $separatorSymbols = ['comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => ''];
+        $decimalSeparator = isset($separators[0], $separatorSymbols[$separators[0]])
+            ? $separatorSymbols[$separators[0]] : null;
+        $thousandsSeparator = isset($separators[1], $separatorSymbols[$separators[1]])
+            ? $separatorSymbols[$separators[1]] : null;
 
         // format the number
-        return number_format($string, $decimals, $decimalSeparator, $thousandsSeparator);
+        return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
     }
 
     /**
      * Format a UNIX-timestamp as a date
      * syntax: {{ $var|formatdate }}
      *
-     * @param int $var The UNIX-timestamp to format or \DateTime
+     * @param int|DateTime $var The UNIX-timestamp to format or \DateTime
      *
      * @return string
      */
-    public static function formatTime($var)
+    public static function formatTime($var): string
     {
         // get setting
         $format = FrontendModel::get('fork.settings')->get('Core', 'time_format');
 
-        if ($var instanceof \DateTime) {
+        if ($var instanceof DateTime) {
             $var = $var->getTimestamp();
         }
 
@@ -135,36 +136,36 @@ class TemplateModifiers extends BaseTwigModifiers
      * Get the navigation html
      *    syntax: {{ getnavigation($type, $parentId, $depth, $excludeIds-splitted-by-dash, $template) }}
      *
-     * @param string $type       The type of navigation, possible values are: page, footer.
-     * @param int    $parentId   The parent wherefore the navigation should be build.
-     * @param int    $depth      The maximum depth that has to be build.
+     * @param string $type The type of navigation, possible values are: page, footer.
+     * @param int $parentId The parent wherefore the navigation should be build.
+     * @param int $depth The maximum depth that has to be build.
      * @param string $excludeIds Which pageIds should be excluded (split them by -).
-     * @param string $template        The template that will be used.
+     * @param string $template The template that will be used.
      *
      * @return string
      */
     public static function getNavigation(
-        $type = 'page',
-        $parentId = 0,
-        $depth = null,
-        $excludeIds = null,
-        $template = '/Core/Layout/Templates/Navigation.html.twig'
-    ) {
+        string $type = 'page',
+        int $parentId = 0,
+        int $depth = null,
+        string $excludeIds = null,
+        string $template = 'Core/Layout/Templates/Navigation.html.twig'
+    ): string {
         // build excludeIds
         if ($excludeIds !== null) {
-            $excludeIds = (array) explode('-', $excludeIds);
+            $excludeIds = explode('-', $excludeIds);
         }
 
         // get HTML
         try {
-            $return = (string) Navigation::getNavigationHTML($type, $parentId, $depth, $excludeIds, $template);
+            $return = (string) Navigation::getNavigationHTML($type, $parentId, $depth, (array) $excludeIds, $template);
         } catch (Exception $e) {
             // if something goes wrong just return as fallback
             return '';
         }
 
         // return the var
-        if ($return != '') {
+        if ($return !== '') {
             return $return;
         }
 
@@ -174,53 +175,51 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Formats a timestamp as a string that indicates the time ago
-     *    syntax: {{ $string|timeago }}.
+     *    syntax: {{ $$timestamp|timeago }}.
      *
-     * @param string $string A UNIX-timestamp that will be formatted as a time-ago-string.
+     * @param int|DateTime $timestamp A UNIX-timestamp that will be formatted as a time-ago-string.
      *
      * @return string
      */
-    public static function timeAgo($string = null)
+    public static function timeAgo($timestamp = null): string
     {
-        $string = (int) $string;
+        if ($timestamp instanceof DateTime) {
+            $timestamp = $timestamp->getTimestamp();
+        }
 
         // invalid timestamp
-        if ($string == 0) {
+        if ((int) $timestamp === 0) {
             return '';
         }
 
         // return
         return '<abbr title="'.\SpoonDate::getDate(
-            FrontendModel::get('fork.settings')->get('Core', 'date_format_long').', '.FrontendModel::get('fork.settings')->get(
-                'Core',
-                'time_format'
-            ),
-            $string,
+            FrontendModel::get('fork.settings')->get('Core', 'date_format_long') .', '
+            . FrontendModel::get('fork.settings')->get('Core', 'time_format'),
+            $timestamp,
             Locale::frontendLanguage()
-        ).'">'.\SpoonDate::getTimeAgo($string, Locale::frontendLanguage()).'</abbr>';
+        ).'">'.\SpoonDate::getTimeAgo($timestamp, Locale::frontendLanguage()).'</abbr>';
     }
 
     /**
      * Get a given field for a page-record
      *    syntax: {{ $pageId|getpageinfo($field) }}
      *
-     * @param int    $pageId   The id of the page to build the URL for.
-     * @param string $field    The field to get.
+     * @param int $pageId The id of the page to build the URL for.
+     * @param string $field The field to get.
      *
      * @return string
      */
-    public static function getPageInfo($pageId, $field = 'title')
+    public static function getPageInfo(int $pageId, string $field = 'title'): string
     {
-        // redefine
-        $field = (string) $field;
-
         // get page
-        $page = Navigation::getPageInfo((int) $pageId);
+        $page = Navigation::getPageInfo($pageId);
 
         // validate
         if (empty($page)) {
             return '';
         }
+
         if (!isset($page[$field])) {
             return '';
         }
@@ -237,7 +236,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function getPath($file)
+    public static function getPath(string $file): string
     {
         return Theme::getPath($file);
     }
@@ -248,26 +247,26 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      *   NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
      *
-     * @param string $type       The type of navigation, possible values are: page, footer.
-     * @param int    $pageId     The parent wherefore the navigation should be build.
-     * @param int    $startDepth The depth to start from.
-     * @param int    $endDepth   The maximum depth that has to be build.
+     * @param string $type The type of navigation, possible values are: page, footer.
+     * @param int $pageId The parent wherefore the navigation should be build.
+     * @param int $startDepth The depth to start from.
+     * @param int $endDepth The maximum depth that has to be build.
      * @param string $excludeIds Which pageIds should be excluded (split them by -).
-     * @param string $template        The template that will be used.
+     * @param string $template The template that will be used.
      *
      * @return string
      */
     public static function getSubNavigation(
-        $type = 'page',
-        $pageId = 0,
-        $startDepth = 1,
-        $endDepth = null,
-        $excludeIds = null,
-        $template = '/Core/Layout/Templates/Navigation.html.twig'
-    ) {
+        string $type = 'page',
+        int $pageId = 0,
+        int $startDepth = 1,
+        int $endDepth = null,
+        string $excludeIds = null,
+        string $template = 'Core/Layout/Templates/Navigation.html.twig'
+    ): string {
         // build excludeIds
         if ($excludeIds !== null) {
-            $excludeIds = (array) explode('-', $excludeIds);
+            $excludeIds = explode('-', $excludeIds);
         }
 
         // get info about the given page
@@ -282,22 +281,22 @@ class TemplateModifiers extends BaseTwigModifiers
         $chunks = (array) explode('/', $pageInfo['full_url']);
 
         // remove language chunk
-        $hasMultiLanguages = FrontendModel::getContainer()->getParameter('site.multilanguage');
-        $chunks = ($hasMultiLanguages) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
-        if (count($chunks) == 0) {
+        $hasMultiLanguages = (bool) FrontendModel::getContainer()->getParameter('site.multilanguage');
+        $chunks = $hasMultiLanguages ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
+        if (count($chunks) === 0) {
             $chunks[0] = '';
         }
 
         // init var
-        $parentURL = '';
+        $parentUrl = '';
 
         // build url
         for ($i = 0; $i < $startDepth - 1; ++$i) {
-            $parentURL .= $chunks[$i] . '/';
+            $parentUrl .= $chunks[$i] . '/';
         }
 
         // get parent ID
-        $parentID = Navigation::getPageId($parentURL);
+        $parentID = Navigation::getPageId($parentUrl);
 
         try {
             // get HTML
@@ -305,72 +304,63 @@ class TemplateModifiers extends BaseTwigModifiers
                 $type,
                 $parentID,
                 $endDepth,
-                $excludeIds,
+                (array) $excludeIds,
                 (string) $template
             );
         } catch (Exception $e) {
             return '';
         }
 
-        // return the var
-        if ($return != '') {
-            return $return;
-        }
-
-        // fallback
-        return;
+        return $return;
     }
 
     /**
      * Get the URL for a given pageId & language
      *    syntax: {{ geturl($pageId, $language) }}
      *
-     * @param int    $pageId   The id of the page to build the URL for.
+     * @param int $pageId The id of the page to build the URL for.
      * @param string $language The language to use, if not provided we will use the loaded language.
      *
      * @return string
      */
-    public static function getURL($pageId, $language = null)
+    public static function getUrl(int $pageId, string $language = null): string
     {
-        $language = ($language !== null) ? (string) $language : null;
-
-        return Navigation::getURL((int) $pageId, $language);
+        return Navigation::getUrl($pageId, $language);
     }
 
     /**
      * Get the URL for a give module & action combination
      *    syntax: {{ geturlforblock($module, $action, $language, $data) }}
      *
-     * @param string $module   The module wherefore the URL should be build.
-     * @param string $action   A specific action wherefore the URL should be build, otherwise the default will be used.
+     * @param string $module The module wherefore the URL should be build.
+     * @param string $action A specific action wherefore the URL should be build, otherwise the default will be used.
      * @param string $language The language to use, if not provided we will use the loaded language.
-     * @param array $data      An array with keys and values that partially or fully match the data of the block.
+     * @param array $data An array with keys and values that partially or fully match the data of the block.
      *                         If it matches multiple versions of that block it will just return the first match.
      *
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null, array $data = null)
-    {
-        $action = ($action !== null) ? (string) $action : null;
-        $language = ($language !== null) ? (string) $language : null;
-
-        return Navigation::getURLForBlock((string) $module, $action, $language, $data);
+    public static function getUrlForBlock(
+        string $module,
+        string $action = null,
+        string $language = null,
+        array $data = null
+    ): string {
+        return Navigation::getUrlForBlock($module, $action, $language, $data);
     }
 
     /**
      * Fetch an URL based on an extraId
      *    syntax: {{ geturlforextraid($extraId, $language) }}
      *
-     * @param int    $extraId  The id of the extra.
+     * @param int $extraId The id of the extra.
      * @param string $language The language to use, if not provided we will use the loaded language.
      *
      * @return string
      */
-    public static function getURLForExtraId($extraId, $language = null)
+    public static function getUrlForExtraId(int $extraId, string $language = null): string
     {
-        $language = ($language !== null) ? (string) $language : null;
-
-        return Navigation::getURLForExtraId((int) $extraId, $language);
+        return Navigation::getUrlForExtraId($extraId, $language);
     }
 
     /**
@@ -383,12 +373,13 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param string $module The module whose module we want to execute.
      * @param string $action The action to execute.
-     * @param string $id     The widget id (saved in data-column).
+     * @param string $id The widget id (saved in data-column).
      *
-     * @return null|string
      * @throws Exception
+     *
+     * @return string
      */
-    public static function parseWidget($module, $action, $id = null)
+    public static function parseWidget(string $module, string $action, string $id = null): string
     {
         // create new widget instance and return parsed content
         $extra = FrontendBlockWidget::getForId(
@@ -406,7 +397,7 @@ class TemplateModifiers extends BaseTwigModifiers
             $content = $extra->getContent();
             FrontendModel::getContainer()->set('parseWidget', null);
 
-            return $content;
+            return (string) $content;
         } catch (RedirectException $redirectException) {
             throw new \Twig_Error('redirect fix from template modifier', null, null, $redirectException);
         } catch (Exception $e) {
@@ -415,37 +406,35 @@ class TemplateModifiers extends BaseTwigModifiers
                 throw $e;
             }
 
-            return;
+            return '';
         }
     }
 
     /**
      * Output a profile setting
-     *    syntax: {{ profilesetting($string, $name) }}
+     *    syntax: {{ profilesetting($profileId, $name) }}
      *
-     * @param string $string  The variable
+     * @param int $profileId The variable
      * @param string $name The name of the setting
      *
-     * @return string
+     * @return mixed
      */
-    public static function profileSetting($string, $name)
+    public static function profileSetting(int $profileId, string $name)
     {
-        $profile = FrontendProfilesModel::get((int) $string);
-        if ($profile === false) {
-            return '';
-        }
+        $profile = FrontendProfilesModel::get($profileId);
 
         // convert into array
         $profile = $profile->toArray();
 
         // @remark I know this is dirty, but I couldn't find a better way.
-        if (in_array($name, array('display_name', 'registered_on', 'full_url')) && isset($profile[$name])) {
+        if (in_array($name, ['display_name', 'registered_on', 'full_url']) && isset($profile[$name])) {
             return $profile[$name];
-        } elseif (isset($profile['settings'][$name])) {
-            return $profile['settings'][$name];
-        } else {
-            return '';
         }
+        if (isset($profile['settings'][$name])) {
+            return $profile['settings'][$name];
+        }
+
+        return '';
     }
 
     /**
@@ -454,15 +443,15 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param string|null $string  The string passed from the template.
      * @param string $setting The name of the setting you want.
-     * @param int    $userId  The userId, if not set by $string.
+     * @param int $userId  The userId, if not set by $string.
+     *
+     * @throws Exception
      *
      * @return string
-     * @throws Exception
      */
-    public static function userSetting($string, $setting, $userId = null)
+    public static function userSetting($string, string $setting, int $userId = null)
     {
-        $userId = ($string !== null) ? (int) $string : (int) $userId;
-        $setting = (string) $setting;
+        $userId = ($string !== null) ? (int) $string : $userId;
 
         // validate
         if ($userId === 0) {
@@ -484,11 +473,8 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function cleanupPlainText($string)
+    public static function cleanupPlainText(string $string): string
     {
-        // redefine
-        $string = (string) $string;
-
         // detect links
         $string = \SpoonFilter::replaceURLsWithAnchors(
             $string,
@@ -500,7 +486,7 @@ class TemplateModifiers extends BaseTwigModifiers
         $string = preg_replace('/(?<!.)(\r\n|\r|\n){3,}$/m', '', $string);
 
         // replace br's into p's
-        $string = '<p>'.str_replace("\n", '</p><p>', $string).'</p>';
+        $string = '<p>' . str_replace("\n", '</p><p>', $string) . '</p>';
 
         // cleanup
         $string = str_replace("\n", '', $string);
@@ -517,7 +503,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return int
      */
-    public static function count(array $data)
+    public static function count(array $data): int
     {
         return count($data);
     }
@@ -530,7 +516,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @return string
      */
-    public static function toLabel($value)
+    public static function toLabel(string $value): string
     {
         return \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
     }

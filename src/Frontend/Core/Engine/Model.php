@@ -9,8 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use TijsVerkoyen\Akismet\Akismet;
-use Common\Cookie as CommonCookie;
+use InvalidArgumentException;
 
 /**
  * In this file we store all generic functions that we will be using in the frontend.
@@ -27,15 +26,13 @@ class Model extends \Common\Core\Model
     /**
      * Add parameters to an URL
      *
-     * @param string $url        The URL to append the parameters too.
-     * @param array  $parameters The parameters as key-value-pairs.
+     * @param string $url The URL to append the parameters too.
+     * @param array $parameters The parameters as key-value-pairs.
      *
      * @return string
      */
-    public static function addURLParameters($url, array $parameters)
+    public static function addUrlParameters(string $url, array $parameters): string
     {
-        $url = (string) $url;
-
         if (empty($parameters)) {
             return $url;
         }
@@ -48,29 +45,27 @@ class Model extends \Common\Core\Model
         }
 
         // build query string
-        $queryString = http_build_query($parameters, null, '&amp;', PHP_QUERY_RFC3986);
+        $queryString = http_build_query($parameters, null, '&', PHP_QUERY_RFC3986);
         if (mb_strpos($url, '?') !== false) {
-            $url .= '&' . $queryString . $hash;
-        } else {
-            $url .= '?' . $queryString . $hash;
+            return $url . '&' . $queryString . $hash;
         }
 
-        return $url;
+        return $url . '?' . $queryString . $hash;
     }
 
     /**
      * Get plain text for a given text
      *
-     * @param string $text           The text to convert.
-     * @param bool   $includeAHrefs  Should the url be appended after the link-text?
-     * @param bool   $includeImgAlts Should the alt tag be inserted for images?
+     * @param string $text The text to convert.
+     * @param bool $includeAHrefs Should the url be appended after the link-text?
+     * @param bool $includeImgAlts Should the alt tag be inserted for images?
      *
      * @return string
      */
-    public static function convertToPlainText($text, $includeAHrefs = true, $includeImgAlts = true)
+    public static function convertToPlainText(string $text, bool $includeAHrefs = true, $includeImgAlts = true): string
     {
         // remove tabs, line feeds and carriage returns
-        $text = str_replace(array("\t", "\n", "\r"), '', $text);
+        $text = str_replace(["\t", "\n", "\r"], '', $text);
 
         // remove the head-, style- and script-tags and all their contents
         $text = preg_replace('|\<head[^>]*\>(.*\n*)\</head\>|isU', '', $text);
@@ -133,16 +128,36 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getPage($pageId)
+    public static function getPage(int $pageId): array
     {
-        // redefine
-        $pageId = (int) $pageId;
-
-        // get database instance
-        $db = self::getContainer()->get('database');
-
         // get data
-        $record = (array) $db->getRecord(
+        $revisionId = (int) self::getContainer()->get('database')->getVar(
+            'SELECT p.revision_id
+             FROM pages AS p
+             WHERE p.id = ? AND p.status = ? AND p.language = ?
+             LIMIT 1',
+            [$pageId, 'active', LANGUAGE]
+        );
+
+        // No page found
+        if ($revisionId === 0) {
+            return [];
+        }
+
+        return self::getPageRevision($revisionId, false);
+    }
+
+    /**
+     * Get a revision for a page
+     *
+     * @param int $revisionId The revisionID.
+     * @param bool $allowHidden is used by the getPage method to prevent hidden records
+     *
+     * @return array
+     */
+    public static function getPageRevision(int $revisionId, bool $allowHidden = true): array
+    {
+        $pageRevision = (array) self::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title,
                  p.navigation_title_overwrite, p.data, p.hidden,
                  m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
@@ -150,144 +165,68 @@ class Model extends \Common\Core\Model
                  m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
                  m.custom AS meta_custom,
                  m.url, m.url_overwrite,
-                 m.data AS meta_data,
-                 t.path AS template_path, t.data AS template_data
-             FROM pages AS p
-             INNER JOIN meta AS m ON p.meta_id = m.id
-             INNER JOIN themes_templates AS t ON p.template_id = t.id
-             WHERE p.id = ? AND p.status = ? AND p.language = ?
-             LIMIT 1',
-            array($pageId, 'active', LANGUAGE)
-        );
-
-        // validate
-        if (empty($record)) {
-            return array();
-        }
-
-        // if the page is hidden we need a 404 record
-        if ($record['hidden'] === 'Y' && $pageId !== 404) {
-            return self::getPage(404);
-        }
-
-        // unserialize page data and template data
-        if (isset($record['data']) && $record['data'] != '') {
-            $record['data'] = unserialize($record['data']);
-        }
-        if (isset($record['meta_data']) && $record['meta_data'] != '') {
-            $record['meta_data'] = unserialize(
-                $record['meta_data']
-            );
-        }
-        if (isset($record['template_data']) && $record['template_data'] != '') {
-            $record['template_data'] = @unserialize(
-                $record['template_data']
-            );
-        }
-
-        // get blocks
-        $blocks = (array) $db->getRecords(
-            'SELECT pe.id AS extra_id, pb.html, pb.position,
-             pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
-             FROM pages_blocks AS pb
-             INNER JOIN pages AS p ON p.revision_id = pb.revision_id
-             LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-             WHERE pb.revision_id = ? AND p.status = ? AND pb.visible = ?
-             ORDER BY pb.position, pb.sequence',
-            array('N', $record['revision_id'], 'active', 'Y')
-        );
-
-        // init positions
-        $record['positions'] = array();
-
-        // loop blocks
-        foreach ($blocks as $block) {
-            // unserialize data if it is available
-            if (isset($block['data'])) {
-                $block['data'] = unserialize($block['data']);
-            }
-
-            // save to position
-            $record['positions'][$block['position']][] = $block;
-        }
-
-        return $record;
-    }
-
-    /**
-     * Get a revision for a page
-     *
-     * @param int $revisionId The revisionID.
-     *
-     * @return array
-     */
-    public static function getPageRevision($revisionId)
-    {
-        $revisionId = (int) $revisionId;
-
-        // get database instance
-        $db = self::getContainer()->get('database');
-
-        // get data
-        $record = (array) $db->getRecord(
-            'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite,
-                 p.data,
-                 m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-                 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-                 m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-                 m.custom AS meta_custom,
-                 m.url, m.url_overwrite,
+                 m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index,
                  t.path AS template_path, t.data AS template_data
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.revision_id = ? AND p.language = ?
              LIMIT 1',
-            array($revisionId, LANGUAGE)
+            [$revisionId, LANGUAGE]
         );
 
-        // validate
-        if (empty($record)) {
-            return array();
+        if (empty($pageRevision)) {
+            return [];
         }
 
-        // unserialize page data and template data
-        if (isset($record['data']) && $record['data'] != '') {
-            $record['data'] = unserialize($record['data']);
+        if (!$allowHidden && (int) $pageRevision['id'] !== 404 && $pageRevision['hidden']) {
+            return self::getPage(404);
         }
-        if (isset($record['template_data']) && $record['template_data'] != '') {
-            $record['template_data'] = @unserialize(
-                $record['template_data']
-            );
+
+        $pageRevision = self::unserializeArrayContent($pageRevision, 'data');
+        $pageRevision = self::unserializeArrayContent($pageRevision, 'meta_data');
+        $pageRevision = self::unserializeArrayContent($pageRevision, 'template_data');
+        $pageRevision['positions'] = self::getPositionsForRevision($pageRevision['revision_id'], $allowHidden);
+
+        return $pageRevision;
+    }
+
+    /**
+     * @param int $revisionId
+     * @param bool $allowHidden
+     *
+     * @return array
+     */
+    private static function getPositionsForRevision(int $revisionId, bool $allowHidden = false): array
+    {
+        $positions = [];
+        $where = 'pb.revision_id = ?';
+        $parameters = [false, $revisionId];
+
+        if (!$allowHidden) {
+            $where .= ' AND p.status = ? AND pb.visible = ?';
+            $parameters[] = 'active';
+            $parameters[] = true;
         }
 
         // get blocks
-        $blocks = (array) $db->getRecords(
+        $blocks = (array) self::getContainer()->get('database')->getRecords(
             'SELECT pe.id AS extra_id, pb.html, pb.position,
              pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
              FROM pages_blocks AS pb
              INNER JOIN pages AS p ON p.revision_id = pb.revision_id
              LEFT OUTER JOIN modules_extras AS pe ON pb.extra_id = pe.id AND pe.hidden = ?
-             WHERE pb.revision_id = ?
+             WHERE ' . $where . '
              ORDER BY pb.position, pb.sequence',
-            array('N', $record['revision_id'])
+            $parameters
         );
-
-        // init positions
-        $record['positions'] = array();
 
         // loop blocks
         foreach ($blocks as $block) {
-            // unserialize data if it is available
-            if (isset($block['data'])) {
-                $block['data'] = unserialize($block['data']);
-            }
-
-            // save to position
-            $record['positions'][$block['position']][] = $block;
+            $positions[$block['position']][] = self::unserializeArrayContent($block, 'data');
         }
 
-        return $record;
+        return $positions;
     }
 
     /**
@@ -295,20 +234,21 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function getVisitorId()
+    public static function getVisitorId(): string
     {
         // check if tracking id is fetched already
         if (self::$visitorId !== null) {
             return self::$visitorId;
         }
+        $cookie = self::getContainer()->get('fork.cookie');
 
         // get/init tracking identifier
-        self::$visitorId = CommonCookie::exists('track') && !empty($_COOKIE['track'])
-            ? (string) CommonCookie::get('track')
-            : md5(uniqid('', true) . \SpoonSession::getSessionId());
+        (self::$visitorId = $cookie->has('track') && $cookie->get('track', '') !== '')
+            ? $cookie->get('track')
+            : md5(uniqid('', true) . self::getSession()->getId());
 
-        if (!self::get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
-            CommonCookie::set('track', self::$visitorId, 86400 * 365);
+        if ($cookie->hasAllowedCookies() || !self::get('fork.settings')->get('Core', 'show_cookie_bar', false)) {
+            $cookie->set('track', self::$visitorId, 86400 * 365);
         }
 
         return self::getVisitorId();
@@ -317,33 +257,31 @@ class Model extends \Common\Core\Model
     /**
      * General method to check if something is spam
      *
-     * @param string $content   The content that was submitted.
+     * @param string $content The content that was submitted.
      * @param string $permaLink The permanent location of the entry the comment was submitted to.
-     * @param string $author    Commenter's name.
-     * @param string $email     Commenter's email address.
-     * @param string $url       Commenter's URL.
-     * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
+     * @param string $author Commenter's name.
+     * @param string $email Commenter's email address.
+     * @param string $url Commenter's URL.
+     * @param string $type May be blank, comment, trackback, pingback, or a made up value like "registration".
+     *
+     * @throws \Exception
      *
      * @return bool|string Will return a boolean, except when we can't decide the status
      *                          (unknown will be returned in that case)
-     * @throws \Exception
      */
-    public static function isSpam($content, $permaLink, $author = null, $email = null, $url = null, $type = 'comment')
-    {
-        // get some settings
-        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
-
-        // invalid key, so we can't detect spam
-        if ($akismetKey === '') {
+    public static function isSpam(
+        string $content,
+        string $permaLink,
+        string $author = null,
+        string $email = null,
+        string $url = null,
+        string $type = 'comment'
+    ) {
+        try {
+            $akismet = self::getAkismet();
+        } catch (InvalidArgumentException $invalidArgumentException) {
             return false;
         }
-
-        // create new instance
-        $akismet = new Akismet($akismetKey, SITE_URL);
-
-        // set properties
-        $akismet->setTimeOut(10);
-        $akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
 
         // try it, to decide if the item is spam
         try {
@@ -360,126 +298,14 @@ class Model extends \Common\Core\Model
         }
     }
 
-    /**
-     * Push a notification to Apple's notifications-server
-     *
-     * @deprecated: no more support for the Fork-app.
-     *
-     * @param mixed  $alert             The message/dictionary to send.
-     * @param int    $badge             The number for the badge.
-     * @param string $sound             The sound that should be played.
-     * @param array  $extraDictionaries Extra dictionaries.
-     *
-     * @throws Exception
-     */
-    public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
+    private static function unserializeArrayContent(array $array, string $key): array
     {
-        trigger_error(
-            'pushToAppleApp is deprecated since there was never an official Microsoft app.',
-            E_USER_DEPRECATED
-        );
+        if (isset($array[$key]) && $array[$key] !== '') {
+            $array[$key] = unserialize($array[$key]);
 
-        // get ForkAPI-keys
-        $publicKey = self::get('fork.settings')->get('Core', 'fork_api_public_key', '');
-        $privateKey = self::get('fork.settings')->get('Core', 'fork_api_private_key', '');
-
-        // no keys, so stop here
-        if ($publicKey == '' || $privateKey == '') {
-            return;
+            return $array;
         }
 
-        // get all apple-device tokens
-        $deviceTokens = (array) self::getContainer()->get('database')->getColumn(
-            'SELECT s.value
-             FROM users AS i
-             INNER JOIN users_settings AS s
-             WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
-            array('Y', 'N', 'apple_device_token', 'N;')
-        );
-
-        // no devices, so stop here
-        if (empty($deviceTokens)) {
-            return;
-        }
-
-        // init var
-        $tokens = array();
-
-        // loop devices
-        foreach ($deviceTokens as $row) {
-            // unserialize
-            $row = unserialize($row);
-
-            // loop and add
-            foreach ($row as $item) {
-                $tokens[] = $item;
-            }
-        }
-
-        // no tokens, so stop here
-        if (empty($tokens)) {
-            return;
-        }
-
-        // require the class
-        require_once PATH_LIBRARY . '/external/fork_api.php';
-
-        // create instance
-        $forkAPI = new \ForkAPI($publicKey, $privateKey);
-
-        try {
-            // push
-            $response = $forkAPI->applePush($tokens, $alert, $badge, $sound, $extraDictionaries);
-
-            if (!empty($response)) {
-                // get db
-                $db = self::getContainer()->get('database');
-
-                // loop the failed keys and remove them
-                foreach ($response as $deviceToken) {
-                    // get setting wherein the token is available
-                    $row = $db->getRecord(
-                        'SELECT i.*
-                         FROM users_settings AS i
-                         WHERE i.name = ? AND i.value LIKE ?',
-                        array('apple_device_token', '%' . $deviceToken . '%')
-                    );
-
-                    // any rows?
-                    if (!empty($row)) {
-                        // reset data
-                        $data = unserialize($row['value']);
-
-                        // loop keys
-                        foreach ($data as $key => $token) {
-                            // match and unset if needed.
-                            if ($token == $deviceToken) {
-                                unset($data[$key]);
-                            }
-                        }
-
-                        // no more tokens left?
-                        if (empty($data)) {
-                            $db->delete(
-                                'users_settings',
-                                'user_id = ? AND name = ?',
-                                array($row['user_id'], $row['name'])
-                            );
-                        } else {
-                            $db->update(
-                                'users_settings',
-                                array('value' => serialize($data)),
-                                'user_id = ? AND name = ?',
-                                array($row['user_id'], $row['name'])
-                            );
-                        }
-                    }
-                }
-            }
-        } catch (Exception $e) {
-            if (self::getContainer()->getParameter('kernel.debug')) {
-                throw $e;
-            }
-        }
+        return $array;
     }
 }

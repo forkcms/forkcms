@@ -20,10 +20,7 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class AddSynonym extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadForm();
@@ -32,59 +29,43 @@ class AddSynonym extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
-        // create form
-        $this->frm = new BackendForm('addItem');
+        $this->form = new BackendForm('addItem');
 
-        // create elements
-        $this->frm->addText('term', null, 255);
-        $this->frm->addText('synonym', null, null, 'form-control synonymBox', 'form-control danger synonymBox');
+        $this->form->addText('term', null, 255);
+        $this->form->addText('synonym', null, null, 'form-control synonymBox', 'form-control danger synonymBox');
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        // is the form submitted?
-        if ($this->frm->isSubmitted()) {
-            // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
-
-            // validate field
-            $this->frm->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
-            $this->frm->getField('term')->isFilled(BL::err('TermIsRequired'));
-            if (BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue())) {
-                $this->frm->getField(
-                    'term'
-                )->addError(BL::err('TermExists'));
-            }
-
-            // no errors?
-            if ($this->frm->isCorrect()) {
-                // build item
-                $item = array();
-                $item['term'] = $this->frm->getField('term')->getValue();
-                $item['synonym'] = $this->frm->getField('synonym')->getValue();
-                $item['language'] = BL::getWorkingLanguage();
-
-                // insert the item
-                $id = BackendSearchModel::insertSynonym($item);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add_synonym', array('item' => $item));
-
-                // everything is saved, so redirect to the overview
-                $this->redirect(
-                    BackendModel::createURLForAction('Synonyms') . '&report=added-synonym&var=' . rawurlencode(
-                        $item['term']
-                    ) . '&highlight=row-' . $id
-                );
-            }
+        if (!$this->form->isSubmitted()) {
+            return;
         }
+
+        $this->form->cleanupFields();
+        $this->form->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
+        $this->form->getField('term')->isFilled(BL::err('TermIsRequired'));
+        if (BackendSearchModel::existsSynonymByTerm($this->form->getField('term')->getValue())) {
+            $this->form->getField('term')->addError(BL::err('TermExists'));
+        }
+
+        if (!$this->form->isCorrect()) {
+            return;
+        }
+
+        $synonym = [
+            'term' => $this->form->getField('term')->getValue(),
+            'synonym' => $this->form->getField('synonym')->getValue(),
+            'language' => BL::getWorkingLanguage(),
+        ];
+
+        $id = BackendSearchModel::insertSynonym($synonym);
+
+        $this->redirect(
+            BackendModel::createUrlForAction('Synonyms') . '&report=added-synonym&var=' . rawurlencode(
+                $synonym['term']
+            ) . '&highlight=row-' . $id
+        );
     }
 }

@@ -46,13 +46,13 @@ class Archive extends FrontendBaseBlock
      *
      * @var array
      */
-    protected $pagination = array(
+    protected $pagination = [
         'limit' => 10,
         'offset' => 0,
         'requested_page' => 1,
         'num_items' => null,
         'num_pages' => null,
-    );
+    ];
 
     /**
      * The requested year
@@ -68,10 +68,7 @@ class Archive extends FrontendBaseBlock
      */
     private $month;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
@@ -80,20 +77,17 @@ class Archive extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // get parameters
-        $this->year = $this->URL->getParameter(1);
-        $this->month = $this->URL->getParameter(2);
+        $this->year = $this->url->getParameter(1);
+        $this->month = $this->url->getParameter(2);
 
         // redirect /2010/6 to /2010/06 to avoid duplicate content
         if ($this->month !== null && mb_strlen($this->month) != 2) {
             $queryString = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
             $this->redirect(
-                FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $this->year . '/' . str_pad(
+                FrontendNavigation::getUrlForBlock('Blog', 'Archive') . '/' . $this->year . '/' . str_pad(
                     $this->month,
                     2,
                     '0',
@@ -103,7 +97,7 @@ class Archive extends FrontendBaseBlock
             );
         }
         if (mb_strlen($this->year) != 4) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // redefine
@@ -114,11 +108,11 @@ class Archive extends FrontendBaseBlock
 
         // validate parameters
         if ($this->year == 0 || $this->month === 0) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // requested page
-        $requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $requestedPage = $this->url->getParameter('page', 'int', 1);
 
         // rebuild url
         $url = $this->year;
@@ -135,7 +129,7 @@ class Archive extends FrontendBaseBlock
         }
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $url;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Blog', 'Archive') . '/' . $url;
         $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
@@ -144,7 +138,7 @@ class Archive extends FrontendBaseBlock
 
         // redirect if the request page doesn't exists
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // populate calculated fields in pagination
@@ -160,14 +154,11 @@ class Archive extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
-        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
+        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed
         $this->header->addRssLink($rssTitle, $rssLink);
@@ -191,21 +182,21 @@ class Archive extends FrontendBaseBlock
         }
 
         // assign category
-        $this->tpl->assign(
+        $this->template->assign(
             'archive',
-            array(
+            [
                  'start_date' => $this->startDate,
                  'end_date' => $this->endDate,
                  'year' => $this->year,
                  'month' => $this->month,
-            )
+            ]
         );
 
         // assign items
-        $this->tpl->assign('items', $this->items);
+        $this->template->assign('items', $this->items);
 
         // assign allowComments
-        $this->tpl->assign('allowComments', $this->get('fork.settings')->get('Blog', 'allow_comments'));
+        $this->template->assign('allowComments', $this->get('fork.settings')->get('Blog', 'allow_comments'));
 
         // parse the pagination
         $this->parsePagination();

@@ -9,15 +9,16 @@ namespace Backend\Modules\Pages\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
+use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\Command\CopyContentBlocksToOtherLocale;
-use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use ForkCMS\App\ForkController;
 use Frontend\Core\Language\Language as FrontendLanguage;
 
 /**
@@ -25,14 +26,14 @@ use Frontend\Core\Language\Language as FrontendLanguage;
  */
 class Model
 {
-    const QRY_BROWSE_RECENT =
+    const QUERY_BROWSE_RECENT =
         'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
          WHERE i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC
          LIMIT ?';
 
-    const QRY_DATAGRID_BROWSE_DRAFTS =
+    const QUERY_DATAGRID_BROWSE_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
          INNER JOIN
@@ -44,28 +45,25 @@ class Model
          ) AS p
          WHERE i.revision_id = p.revision_id';
 
-    const QRY_BROWSE_REVISIONS =
+    const QUERY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
          WHERE i.id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
-    const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
+    const QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
          WHERE i.id = ? AND i.status = ? AND i.language = ?
          ORDER BY i.edited_on DESC';
 
-    const QRY_BROWSE_TEMPLATES =
+    const QUERY_BROWSE_TEMPLATES =
         'SELECT i.id, i.label AS title
          FROM pages_templates AS i
          WHERE i.theme = ?
          ORDER BY i.label ASC';
 
-    /**
-     * @return CacheBuilder
-     */
-    public static function getCacheBuilder()
+    public static function getCacheBuilder(): CacheBuilder
     {
         static $cacheBuilder = null;
         if ($cacheBuilder === null) {
@@ -75,36 +73,19 @@ class Model
         return $cacheBuilder;
     }
 
-    /**
-     * Build the cache
-     *
-     * @param string $language The language to build the cache for, if not passed we use the working language.
-     */
-    public static function buildCache($language = null)
+    public static function buildCache(string $language = null): void
     {
-        // redefine
-        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
-
         $cacheBuilder = static::getCacheBuilder();
-        $cacheBuilder->buildCache($language);
-
-        // trigger an event
-        BackendModel::triggerEvent('Pages', 'after_recreated_cache');
+        $cacheBuilder->buildCache($language ?? BL::getWorkingLanguage());
     }
 
-    /**
-     * Copy pages
-     *
-     * @param string $from The language code to copy the pages from.
-     * @param string $to   The language code we want to copy the pages to.
-     */
-    public static function copy($from, $to)
+    public static function copy(string $fromLanguage, string $toLanguage): void
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // copy contentBlocks and get copied contentBlockIds
-        $copyContentBlocks = new CopyContentBlocksToOtherLocale(Locale::fromString($to), Locale::fromString($from));
+        $copyContentBlocks = new CopyContentBlocksToOtherLocale(Locale::fromString($toLanguage), Locale::fromString($fromLanguage));
         BackendModel::get('command_bus')->handle($copyContentBlocks);
         $contentBlockIds = $copyContentBlocks->extraIdMap;
 
@@ -112,11 +93,11 @@ class Model
         $contentBlockOldIds = array_keys($contentBlockIds);
 
         // get all old pages
-        $ids = $db->getColumn(
+        $ids = $database->getColumn(
             'SELECT id
              FROM pages AS i
              WHERE i.language = ? AND i.status = ?',
-            array($to, 'active')
+            [$toLanguage, 'active']
         );
 
         // any old pages
@@ -127,29 +108,29 @@ class Model
                 $id = (int) $id;
 
                 // get revision ids
-                $revisionIDs = (array) $db->getColumn(
+                $revisionIDs = (array) $database->getColumn(
                     'SELECT i.revision_id
                      FROM pages AS i
                      WHERE i.id = ? AND i.language = ?',
-                    array($id, $to)
+                    [$id, $toLanguage]
                 );
 
                 // get meta ids
-                $metaIDs = (array) $db->getColumn(
+                $metaIDs = (array) $database->getColumn(
                     'SELECT i.meta_id
                      FROM pages AS i
                      WHERE i.id = ? AND i.language = ?',
-                    array($id, $to)
+                    [$id, $toLanguage]
                 );
 
                 // delete meta records
                 if (!empty($metaIDs)) {
-                    $db->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
+                    $database->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
                 }
 
                 // delete blocks and their revisions
                 if (!empty($revisionIDs)) {
-                    $db->delete(
+                    $database->delete(
                         'pages_blocks',
                         'revision_id IN (' . implode(',', $revisionIDs) . ')'
                     );
@@ -157,48 +138,48 @@ class Model
 
                 // delete page and the revisions
                 if (!empty($revisionIDs)) {
-                    $db->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
+                    $database->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
                 }
             }
         }
 
         // delete search indexes
-        $db->delete('search_index', 'module = ? AND language = ?', array('pages', $to));
+        $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
 
         // get all active pages
         $ids = BackendModel::getContainer()->get('database')->getColumn(
             'SELECT id
              FROM pages AS i
              WHERE i.language = ? AND i.status = ?',
-            array($from, 'active')
+            [$fromLanguage, 'active']
         );
 
         // loop
         foreach ($ids as $id) {
             // get data
-            $sourceData = self::get($id, null, $from);
+            $sourceData = self::get($id, null, $fromLanguage);
 
             // get and build meta
-            $meta = $db->getRecord(
+            $meta = $database->getRecord(
                 'SELECT *
                  FROM meta
                  WHERE id = ?',
-                array($sourceData['meta_id'])
+                [$sourceData['meta_id']]
             );
 
             // remove id
             unset($meta['id']);
 
             // init page
-            $page = array();
+            $page = [];
 
             // build page
             $page['id'] = $sourceData['id'];
             $page['user_id'] = BackendAuthentication::getUser()->getUserId();
             $page['parent_id'] = $sourceData['parent_id'];
             $page['template_id'] = $sourceData['template_id'];
-            $page['meta_id'] = (int) $db->insert('meta', $meta);
-            $page['language'] = $to;
+            $page['meta_id'] = (int) $database->insert('meta', $meta);
+            $page['language'] = $toLanguage;
             $page['type'] = $sourceData['type'];
             $page['title'] = $sourceData['title'];
             $page['navigation_title'] = $sourceData['navigation_title'];
@@ -219,10 +200,10 @@ class Model
             $revisionId = self::insert($page);
 
             // init var
-            $blocks = array();
+            $blocks = [];
 
             // get the blocks
-            $sourceBlocks = self::getBlocks($id, null, $from);
+            $sourceBlocks = self::getBlocks($id, null, $fromLanguage);
 
             // loop blocks
             foreach ($sourceBlocks as $sourceBlock) {
@@ -255,60 +236,54 @@ class Model
             BackendSearchModel::saveIndex(
                 'Pages',
                 (int) $page['id'],
-                array('title' => $page['title'], 'text' => $text),
-                $to
+                ['title' => $page['title'], 'text' => $text],
+                $toLanguage
             );
 
             // get tags
-            $tags = BackendTagsModel::getTags('pages', $id, 'string', $from);
+            $tags = BackendTagsModel::getTags('pages', $id, 'string', $fromLanguage);
 
             // save tags
             if ($tags != '') {
                 $saveWorkingLanguage = BL::getWorkingLanguage();
 
                 // If we don't set the working language to the target language,
-                // BackendTagsModel::getURL() will use the current working
+                // BackendTagsModel::getUrl() will use the current working
                 // language, possibly causing unnecessary '-2' suffixes in
                 // tags.url
-                BL::setWorkingLanguage($to);
+                BL::setWorkingLanguage($toLanguage);
 
-                BackendTagsModel::saveTags($page['id'], $tags, 'pages', $to);
+                BackendTagsModel::saveTags($page['id'], $tags, 'pages', $toLanguage);
                 BL::setWorkingLanguage($saveWorkingLanguage);
             }
         }
 
         // build cache
-        self::buildCache($to);
+        self::buildCache($toLanguage);
     }
 
-    /**
-     * Creates the html for the menu
-     *
-     * @param string $type     The type of navigation.
-     * @param int    $depth    The maximum depth to show.
-     * @param int    $parentId The Id to start from.
-     * @param string $html     Will hold the created HTML.
-     *
-     * @return string
-     */
-    public static function createHtml($type = 'page', $depth = 0, $parentId = 1, $html = '')
-    {
+    public static function createHtml(
+        string $navigationType = 'page',
+        int $depth = 0,
+        int $parentId = 1,
+        string $html = ''
+    ): string {
         $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
 
         // check if item exists
-        if (isset($navigation[$type][$depth][$parentId])) {
+        if (isset($navigation[$navigationType][$depth][$parentId])) {
             // start html
             $html .= '<ul>' . "\n";
 
             // loop elements
-            foreach ($navigation[$type][$depth][$parentId] as $key => $aValue) {
+            foreach ($navigation[$navigationType][$depth][$parentId] as $key => $aValue) {
                 $html .= "\t<li>" . "\n";
                 $html .= "\t\t" . '<a href="#">' . $aValue['navigation_title'] . '</a>' . "\n";
 
                 // insert recursive here!
-                if (isset($navigation[$type][$depth + 1][$key])) {
+                if (isset($navigation[$navigationType][$depth + 1][$key])) {
                     $html .= self::createHtml(
-                        $type,
+                        $navigationType,
                         $depth + 1,
                         $parentId,
                         ''
@@ -328,23 +303,19 @@ class Model
     }
 
     /**
-     * Delete a page
-     *
-     * @param int    $id         The id of the page to delete.
-     * @param string $language   The language wherein the page will be deleted,
+     * @param int $id The id of the page to delete.
+     * @param string $language The language wherein the page will be deleted,
      *                           if not provided we will use the working language.
-     * @param int    $revisionId If specified the given revision will be deleted, used for deleting drafts.
+     * @param int $revisionId If specified the given revision will be deleted, used for deleting drafts.
      *
      * @return bool
      */
-    public static function delete($id, $language = null, $revisionId = null)
+    public static function delete(int $id, string $language = null, int $revisionId = null): bool
     {
-        // redefine
-        $id = (int) $id;
-        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $language = $language ?? BL::getWorkingLanguage();
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get record
         $page = self::get($id, $revisionId, $language);
@@ -353,39 +324,39 @@ class Model
         if (empty($page)) {
             return false;
         }
-        if ($page['allow_delete'] == 'N') {
+        if (!$page['allow_delete']) {
             return false;
         }
 
         // get revision ids
-        $revisionIDs = (array) $db->getColumn(
+        $revisionIDs = (array) $database->getColumn(
             'SELECT i.revision_id
              FROM pages AS i
              WHERE i.id = ? AND i.language = ?',
-            array($id, $language)
+            [$id, $language]
         );
 
         // get meta ids
-        $metaIDs = (array) $db->getColumn(
+        $metaIDs = (array) $database->getColumn(
             'SELECT i.meta_id
              FROM pages AS i
              WHERE i.id = ? AND i.language = ?',
-            array($id, $language)
+            [$id, $language]
         );
 
         // delete meta records
         if (!empty($metaIDs)) {
-            $db->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
+            $database->delete('meta', 'id IN (' . implode(',', $metaIDs) . ')');
         }
 
         // delete blocks and their revisions
         if (!empty($revisionIDs)) {
-            $db->delete('pages_blocks', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
+            $database->delete('pages_blocks', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
         }
 
         // delete page and the revisions
         if (!empty($revisionIDs)) {
-            $db->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
+            $database->delete('pages', 'revision_id IN (' . implode(',', $revisionIDs) . ')');
         }
 
         // delete tags
@@ -395,49 +366,35 @@ class Model
         return true;
     }
 
-    /**
-     * Check if a page exists
-     *
-     * @param int $id The id to check for existence.
-     *
-     * @return bool
-     */
-    public static function exists($id)
+    public static function exists(int $pageId): bool
     {
-        // redefine
-        $id = (int) $id;
-        $language = BL::getWorkingLanguage();
-
-        // exists?
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM pages AS i
              WHERE i.id = ? AND i.language = ? AND i.status IN (?, ?)
              LIMIT 1',
-            array($id, $language, 'active', 'draft')
+            [$pageId, BL::getWorkingLanguage(), 'active', 'draft']
         );
     }
 
     /**
      * Get the data for a record
      *
-     * @param int    $id       The Id of the page to fetch.
-     * @param int    $revisionId
+     * @param int $pageId The Id of the page to fetch.
+     * @param int $revisionId
      * @param string $language The language to use while fetching the page.
      *
      * @return mixed False if the record can't be found, otherwise an array with all data.
      */
-    public static function get($id, $revisionId = null, $language = null)
+    public static function get(int $pageId, int $revisionId = null, string $language = null)
     {
         // fetch revision if not specified
         if ($revisionId === null) {
-            $revisionId = self::getLatestRevision($id, $language);
+            $revisionId = self::getLatestRevision($pageId, $language);
         }
 
         // redefine
-        $id = (int) $id;
-        $revisionId = (int) $revisionId;
-        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $language = $language ?? BL::getWorkingLanguage();
 
         // get page (active version)
         $return = (array) BackendModel::getContainer()->get('database')->getRecord(
@@ -450,7 +407,7 @@ class Model
              LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
              WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
              GROUP BY i.revision_id',
-            array('block', $id, $revisionId, $language)
+            ['block', $pageId, $revisionId, $language]
         );
 
         // no page?
@@ -459,25 +416,25 @@ class Model
         }
 
         // can't be deleted
-        if (in_array($return['id'], array(1, 404))) {
-            $return['allow_delete'] = 'N';
+        if (in_array($return['id'], [1, 404])) {
+            $return['allow_delete'] = false;
         }
 
         // can't be moved
-        if (in_array($return['id'], array(1, 404))) {
-            $return['allow_move'] = 'N';
+        if (in_array($return['id'], [1, 404])) {
+            $return['allow_move'] = false;
         }
 
         // can't have children
-        if (in_array($return['id'], array(404))) {
-            $return['allow_move'] = 'N';
+        if (in_array($return['id'], [404])) {
+            $return['allow_move'] = false;
         }
 
         // convert into bools for use in template engine
-        $return['move_allowed'] = (bool) ($return['allow_move'] == 'Y');
-        $return['children_allowed'] = (bool) ($return['allow_children'] == 'Y');
-        $return['edit_allowed'] = (bool) ($return['allow_edit'] == 'Y');
-        $return['delete_allowed'] = (bool) ($return['allow_delete'] == 'Y');
+        $return['move_allowed'] = (bool) $return['allow_move'];
+        $return['children_allowed'] = (bool) $return['allow_children'];
+        $return['edit_allowed'] = (bool) $return['allow_edit'];
+        $return['delete_allowed'] = (bool) $return['allow_delete'];
 
         // unserialize data
         if ($return['data'] !== null) {
@@ -488,26 +445,15 @@ class Model
         return $return;
     }
 
-    /**
-     * Get blocks for a certain page/revision
-     *
-     * @param int    $id         The id of the page.
-     * @param int    $revisionId The revision to grab.
-     * @param string $language   The language to use.
-     *
-     * @return array
-     */
-    public static function getBlocks($id, $revisionId = null, $language = null)
+    public static function getBlocks(int $pageId, int $revisionId = null, string $language = null): array
     {
         // fetch revision if not specified
         if ($revisionId === null) {
-            $revisionId = self::getLatestRevision($id, $language);
+            $revisionId = self::getLatestRevision($pageId, $language);
         }
 
         // redefine
-        $id = (int) $id;
-        $revisionId = (int) $revisionId;
-        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $language = $language ?? BL::getWorkingLanguage();
 
         // get page (active version)
         return (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -516,22 +462,12 @@ class Model
              INNER JOIN pages AS i ON b.revision_id = i.revision_id
                 WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
                 ORDER BY b.sequence ASC',
-            array($id, $revisionId, $language)
+            [$pageId, $revisionId, $language]
         );
     }
 
-    /**
-     * Get all items by a given tag id
-     *
-     * @param int $tagId The id of the tag.
-     *
-     * @return array
-     */
-    public static function getByTag($tagId)
+    public static function getByTag(int $tagId): array
     {
-        // redefine
-        $tagId = (int) $tagId;
-
         // get the items
         $items = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id AS url, i.title AS name, mt.module
@@ -539,16 +475,16 @@ class Model
              INNER JOIN tags AS t ON mt.tag_id = t.id
              INNER JOIN pages AS i ON mt.other_id = i.id
              WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?',
-            array('pages', $tagId, 'active')
+            ['pages', $tagId, 'active']
         );
 
         // loop items
         foreach ($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction(
+            $row['url'] = BackendModel::createUrlForAction(
                 'Edit',
                 'Pages',
                 null,
-                array('id' => $row['url'])
+                ['id' => $row['url']]
             );
         }
 
@@ -563,11 +499,8 @@ class Model
      *
      * @return mixed
      */
-    public static function getFirstChildId($pageId)
+    public static function getFirstChildId(int $pageId)
     {
-        // redefine
-        $pageId = (int) $pageId;
-
         // get child
         $childId = (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.id
@@ -575,11 +508,11 @@ class Model
              WHERE i.parent_id = ? AND i.status = ? AND i.language = ?
              ORDER BY i.sequence ASC
              LIMIT 1',
-            array($pageId, 'active', BL::getWorkingLanguage())
+            [$pageId, 'active', BL::getWorkingLanguage()]
         );
 
         // return
-        if ($childId != 0) {
+        if ($childId !== 0) {
             return $childId;
         }
 
@@ -587,14 +520,7 @@ class Model
         return false;
     }
 
-    /**
-     * Get the full-URL for a given menuId
-     *
-     * @param int $id The Id of the page to get the URL for.
-     *
-     * @return string
-     */
-    public static function getFullURL($id)
+    public static function getFullUrl(int $id): string
     {
         $keys = static::getCacheBuilder()->getKeys(BL::getWorkingLanguage());
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
@@ -630,56 +556,33 @@ class Model
         return urldecode($url);
     }
 
-    /**
-     * Get latest revision id for a page.
-     *
-     * @param int    $id       The id of the page.
-     * @param string $language The language to use.
-     *
-     * @return int
-     */
-    public static function getLatestRevision($id, $language = null)
+    public static function getLatestRevision(int $id, string $language = null): int
     {
-        // redefine
-        $id = (int) $id;
-        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $language = $language ?? BL::getWorkingLanguage();
 
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT revision_id
              FROM pages AS i
              WHERE i.id = ? AND i.language = ? AND i.status != ?',
-            array($id, $language, 'archive')
+            [$id, $language, 'archive']
         );
     }
 
-    /**
-     * Get the maximum unique id for blocks
-     *
-     * @return int
-     */
-    public static function getMaximumBlockId()
+    public static function getMaximumBlockId(): int
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(i.id) FROM pages_blocks AS i'
         );
     }
 
-    /**
-     * Get the maximum unique id for pages
-     *
-     * @param string $language The language to use, if not provided we will use the working language.
-     *
-     * @return int
-     */
-    public static function getMaximumPageId($language = null)
+    public static function getMaximumPageId($language = null): int
     {
-        // redefine
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
+        $language = $language ?? BL::getWorkingLanguage();
 
         // get the maximum id
         $maximumMenuId = (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(i.id) FROM pages AS i WHERE i.language = ?',
-            array($language)
+            [$language]
         );
 
         // pages created by a user that isn't a god should have an id higher then 1000
@@ -692,48 +595,31 @@ class Model
         return $maximumMenuId;
     }
 
-    /**
-     * Get the maximum sequence inside a leaf
-     *
-     * @param int    $parentId The Id of the parent.
-     * @param string $language The language to use, if not provided we will use the working language.
-     *
-     * @return int
-     */
-    public static function getMaximumSequence($parentId, $language = null)
+    public static function getMaximumSequence(int $parentId, string $language = null): int
     {
-        $parentId = (int) $parentId;
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
+        $language = $language ?? BL::getWorkingLanguage();
 
         // get the maximum sequence inside a certain leaf
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(i.sequence)
              FROM pages AS i
              WHERE i.language = ? AND i.parent_id = ?',
-            array($language, $parentId)
+            [$language, $parentId]
         );
     }
 
-    /**
-     * Get the pages for usage in a dropdown menu
-     *
-     * @param string $language The language to use, if not provided we will use the working language.
-     *
-     * @return array
-     */
-    public static function getPagesForDropdown($language = null)
+    public static function getPagesForDropdown($language = null): array
     {
-        // redefine
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
+        $language = $language ?? BL::getWorkingLanguage();
 
         // get tree
-        $levels = self::getTree(array(0), null, 1, $language);
+        $levels = self::getTree([0], null, 1, $language);
 
         // init var
-        $titles = array();
-        $sequences = array();
-        $keys = array();
-        $return = array();
+        $titles = [];
+        $sequences = [];
+        $keys = [];
+        $return = [];
 
         // loop levels
         foreach ($levels as $pages) {
@@ -791,18 +677,8 @@ class Model
         return $return;
     }
 
-    /**
-     * Get the subtree for a root element
-     *
-     * @param array  $navigation The navigation array.
-     * @param int    $parentId   The id of the parent.
-     *
-     * @return string
-     */
-    public static function getSubtree($navigation, $parentId)
+    public static function getSubtree(array $navigation, int $parentId): string
     {
-        $navigation = (array) $navigation;
-        $parentId = (int) $parentId;
         $html = '';
 
         // any elements
@@ -817,11 +693,11 @@ class Model
 
                 // insert link
                 $html .= '    <a href="' .
-                         BackendModel::createURLForAction(
+                         BackendModel::createUrlForAction(
                              'Edit',
                              null,
                              null,
-                             array('id' => $page['page_id'])
+                             ['id' => $page['page_id']]
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // get childs
@@ -842,24 +718,22 @@ class Model
     /**
      * Get all pages/level
      *
-     * @param integer[]  $ids      The parentIds.
-     * @param array  $data     A holder for the generated data.
-     * @param int    $level    The counter for the level.
+     * @param int[] $ids The parentIds.
+     * @param array $data A holder for the generated data.
+     * @param int $level The counter for the level.
      * @param string $language The language.
      *
      * @return array
      */
-    public static function getTree(array $ids, array $data = null, $level = 1, $language = null)
+    public static function getTree(array $ids, array $data = null, int $level = 1, string $language = null): array
     {
-        // redefine
-        $level = (int) $level;
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
+        $language = $language ?? BL::getWorkingLanguage();
 
         // get data
         $data[$level] = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT
                  i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.data,
-                m.url, m.data AS meta_data,
+                m.url, m.data AS meta_data, m.seo_follow, m.seo_index,
                 IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
                 GROUP_CONCAT(b.extra_id) AS extra_ids,
                 IF(COUNT(p.id), "Y", "N") AS has_children
@@ -877,7 +751,7 @@ class Model
                  AND i.status = ? AND i.language = ?
              GROUP BY i.revision_id
              ORDER BY i.sequence ASC',
-            array('block', 'active', $language),
+            ['block', 'active', $language],
             'id'
         );
 
@@ -896,12 +770,7 @@ class Model
         return $data;
     }
 
-    /**
-     * Get the tree
-     *
-     * @return string
-     */
-    public static function getTreeHTML()
+    public static function getTreeHTML(): string
     {
         $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
 
@@ -914,11 +783,11 @@ class Model
         // create homepage anchor from title
         $homePage = self::get(1);
         $html .= '            <a href="' .
-                 BackendModel::createURLForAction(
+                 BackendModel::createUrlForAction(
                      'Edit',
                      null,
                      null,
-                     array('id' => 1)
+                     ['id' => 1]
                  ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
@@ -945,11 +814,11 @@ class Model
 
                     // insert link
                     $html .= '            <a href="' .
-                             BackendModel::createURLForAction(
+                             BackendModel::createUrlForAction(
                                  'Edit',
                                  null,
                                  null,
-                                 array('id' => $page['page_id'])
+                                 ['id' => $page['page_id']]
                              ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                     // insert subtree
@@ -981,11 +850,11 @@ class Model
 
                 // insert link
                 $html .= '            <a href="' .
-                         BackendModel::createURLForAction(
+                         BackendModel::createUrlForAction(
                              'Edit',
                              null,
                              null,
-                             array('id' => $page['page_id'])
+                             ['id' => $page['page_id']]
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
@@ -1016,11 +885,11 @@ class Model
 
                 // insert link
                 $html .= '            <a href="' .
-                         BackendModel::createURLForAction(
+                         BackendModel::createUrlForAction(
                              'Edit',
                              null,
                              null,
-                             array('id' => $page['page_id'])
+                             ['id' => $page['page_id']]
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
@@ -1039,97 +908,82 @@ class Model
         return $html;
     }
 
-    /**
-     * Get the possible block types
-     *
-     * @return array
-     */
-    public static function getTypes()
+    public static function getTypes(): array
     {
-        return array(
+        return [
             'rich_text' => BL::lbl('Editor'),
             'block' => BL::lbl('Module'),
             'widget' => BL::lbl('Widget'),
-        );
+            'usertemplate' => BL::lbl('UserTemplate'),
+        ];
     }
 
-    /**
-     * Get an unique URL for a page
-     *
-     * @param string $url      The URL to base on.
-     * @param int    $id       The id to ignore.
-     * @param int    $parentId The parent for the page to create an url for.
-     * @param bool   $isAction Is this page an action.
-     *
-     * @return string
-     */
-    public static function getURL($url, $id = null, $parentId = 0, $isAction = false)
+    public static function getUrl(string $url, int $id = null, int $parentId = null, bool $isAction = false): string
     {
-        $url = (string) $url;
-        $parentIds = array((int) $parentId);
+        $parentIds = [$parentId ?? 0];
 
         // 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
         if ($parentId == 0 || $parentId == 1 || $parentId == 2 || $parentId == 3 || $parentId == 4) {
-            $parentIds = array(
+            $parentIds = [
                 0,
                 1,
                 2,
                 3,
                 4,
-            );
+            ];
         }
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // no specific id
         if ($id === null) {
             // no items?
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM pages AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.parent_id IN(' . implode(',', $parentIds) . ') AND i.status = ? AND m.url = ?
                     AND i.language = ?
                  LIMIT 1',
-                array('active', $url, BL::getWorkingLanguage())
+                ['active', $url, BL::getWorkingLanguage()]
             )
             ) {
                 // add a number
                 $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($url, null, $parentId, $isAction);
+                return self::getUrl($url, null, $parentId, $isAction);
             }
         } else {
             // one item should be ignored
             // there are items so, call this method again.
-            if ((bool) $db->getVar(
+            if ((bool) $database->getVar(
                 'SELECT 1
                  FROM pages AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.parent_id IN(' . implode(',', $parentIds) . ') AND i.status = ?
                     AND m.url = ? AND i.id != ? AND i.language = ?
                  LIMIT 1',
-                array('active', $url, $id, BL::getWorkingLanguage())
+                ['active', $url, $id, BL::getWorkingLanguage()]
             )
             ) {
                 // add a number
                 $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($url, $id, $parentId, $isAction);
+                return self::getUrl($url, $id, $parentId, $isAction);
             }
         }
 
         // get full URL
-        $fullURL = self::getFullURL($parentId) . '/' . $url;
+        $fullUrl = self::getFullUrl($parentId) . '/' . $url;
 
         // get info about parent page
         $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
 
         // does the parent have extras?
-        if ($parentPageInfo['has_extra'] == 'Y' && !$isAction) {
+        if (!$isAction && $parentPageInfo['has_extra']) {
             // set locale
             FrontendLanguage::setLocale(BL::getWorkingLanguage(), true);
 
@@ -1142,40 +996,33 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // recall this method, but with a new URL
-                return self::getURL($url, $id, $parentId, $isAction);
+                return self::getUrl($url, $id, $parentId, $isAction);
             }
         }
 
         // check if folder exists
-        if (is_dir(PATH_WWW . '/' . $fullURL) || is_file(PATH_WWW . '/' . $fullURL)) {
+        if (is_dir(PATH_WWW . '/' . $fullUrl) || is_file(PATH_WWW . '/' . $fullUrl)) {
             // add a number
             $url = BackendModel::addNumber($url);
 
             // recall this method, but with a new URL
-            return self::getURL($url, $id, $parentId, $isAction);
+            return self::getUrl($url, $id, $parentId, $isAction);
         }
 
         // check if it is an application
-        if (array_key_exists(trim($fullURL, '/'), \ApplicationRouting::getRoutes())) {
+        if (array_key_exists(trim($fullUrl, '/'), ForkController::getRoutes())) {
             // add a number
             $url = BackendModel::addNumber($url);
 
             // recall this method, but with a new URL
-            return self::getURL($url, $id, $parentId, $isAction);
+            return self::getUrl($url, $id, $parentId, $isAction);
         }
 
         // return the unique URL!
         return $url;
     }
 
-    /**
-     * Insert a page
-     *
-     * @param array $page The data for the page.
-     *
-     * @return int
-     */
-    public static function insert(array $page)
+    public static function insert(array $page): int
     {
         return (int) BackendModel::getContainer()->get('database')->insert('pages', $page);
     }
@@ -1187,52 +1034,83 @@ class Model
      */
     public static function insertBlocks(array $blocks)
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // loop blocks
         foreach ($blocks as $block) {
+            if ($block['extra_type'] === 'usertemplate') {
+                $block['extra_id'] = null;
+            }
+
             // insert blocks
-            $db->insert('pages_blocks', $block);
+            $database->insert('pages_blocks', $block);
         }
+    }
+
+    public static function loadUserTemplates(): array
+    {
+        $themePath = FRONTEND_PATH . '/Themes/';
+        $themePath .= BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork');
+        $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.json';
+
+        $userTemplates = [];
+
+        $fs = new Filesystem();
+        if ($fs->exists($filePath)) {
+            $userTemplates = json_decode(file_get_contents($filePath), true);
+
+            foreach ($userTemplates as &$userTemplate) {
+                $userTemplate['file'] =
+                    '/src/Frontend/Themes/' .
+                    BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork') .
+                    '/Core/Layout/Templates/UserTemplates/' .
+                    $userTemplate['file'];
+            }
+        }
+
+        return $userTemplates;
     }
 
     /**
      * Move a page
      *
-     * @param int    $id         The id for the page that has to be moved.
-     * @param int    $droppedOn  The id for the page where to page has been dropped on.
+     * @param int $pageId The id for the page that has to be moved.
+     * @param int $droppedOnPageId The id for the page where to page has been dropped on.
      * @param string $typeOfDrop The type of drop, possible values are: before, after, inside.
-     * @param string $tree       The tree the item is dropped on, possible values are: main, meta, footer, root.
-     * @param string $language   The language to use, if not provided we will use the working language.
+     * @param string $tree The tree the item is dropped on, possible values are: main, meta, footer, root.
+     * @param string $language The language to use, if not provided we will use the working language.
      *
      * @return bool
      */
-    public static function move($id, $droppedOn, $typeOfDrop, $tree, $language = null)
-    {
-        $id = (int) $id;
-        $droppedOn = (int) $droppedOn;
-        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, array('before', 'after', 'inside'), 'inside');
-        $tree = \SpoonFilter::getValue($tree, array('main', 'meta', 'footer', 'root'), 'inside');
-        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+    public static function move(
+        int $pageId,
+        int $droppedOnPageId,
+        string $typeOfDrop,
+        string $tree,
+        string $language = null
+    ): bool {
+        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, ['before', 'after', 'inside'], 'inside');
+        $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'inside');
+        $language = $language ?? BL::getWorkingLanguage();
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // reset type of drop for special pages
-        if ($droppedOn == 1) {
+        if ($droppedOnPageId == 1) {
             $typeOfDrop = 'inside';
         }
-        if ($droppedOn == 0) {
+        if ($droppedOnPageId == 0) {
             $typeOfDrop = 'inside';
         }
 
         // get data for pages
-        $page = self::get($id, null, $language);
-        $droppedOnPage = self::get($droppedOn, null, $language);
+        $page = self::get($pageId, null, $language);
+        $droppedOnPage = self::get($droppedOnPageId, null, $language);
 
         // reset if the drop was on 0 (new meta)
-        if ($droppedOn == 0) {
+        if ($droppedOnPageId == 0) {
             $droppedOnPage = self::get(1, null, $language);
         }
 
@@ -1242,11 +1120,11 @@ class Model
         }
 
         // calculate new parent for items that should be moved inside
-        if ($droppedOn == 0) {
+        if ($droppedOnPageId == 0) {
             $newParent = 0;
-        } elseif ($typeOfDrop == 'inside') {
+        } elseif ($typeOfDrop === 'inside') {
             // check if item allows children
-            if ($droppedOnPage['allow_children'] != 'Y') {
+            if (!$droppedOnPage['allow_children']) {
                 return false;
             }
 
@@ -1258,8 +1136,8 @@ class Model
         }
 
         // decide new type
-        if ($droppedOn == 0) {
-            if ($tree == 'footer') {
+        if ($droppedOnPageId == 0) {
+            if ($tree === 'footer') {
                 $newType = 'footer';
             } else {
                 $newType = 'meta';
@@ -1273,157 +1151,150 @@ class Model
         // calculate new sequence for items that should be moved inside
         if ($typeOfDrop == 'inside') {
             // get highest sequence + 1
-            $newSequence = (int) $db->getVar(
+            $newSequence = (int) $database->getVar(
                 'SELECT MAX(i.sequence)
                  FROM pages AS i
                  WHERE i.id = ? AND i.language = ? AND i.status = ?',
-                array($newParent, $language, 'active')
+                [$newParent, $language, 'active']
             ) + 1;
 
             // update
-            $db->update(
+            $database->update(
                 'pages',
-                array('parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType),
+                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
                 'id = ? AND language = ? AND status = ?',
-                array($id, $language, 'active')
+                [$pageId, $language, 'active']
             );
         } elseif ($typeOfDrop == 'before') {
             // calculate new sequence for items that should be moved before
             // get new sequence
-            $newSequence = (int) $db->getVar(
+            $newSequence = (int) $database->getVar(
                 'SELECT i.sequence
                  FROM pages AS i
                  WHERE i.id = ? AND i.language = ? AND i.status = ?
                  LIMIT 1',
-                array($droppedOnPage['id'], $language, 'active')
+                [$droppedOnPage['id'], $language, 'active']
             ) - 1;
 
             // increment all pages with a sequence that is higher or equal to the current sequence;
-            $db->execute(
+            $database->execute(
                 'UPDATE pages
                  SET sequence = sequence + 1
                  WHERE parent_id = ? AND language = ? AND sequence >= ?',
-                array($newParent, $language, $newSequence + 1)
+                [$newParent, $language, $newSequence + 1]
             );
 
             // update
-            $db->update(
+            $database->update(
                 'pages',
-                array('parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType),
+                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
                 'id = ? AND language = ? AND status = ?',
-                array($id, $language, 'active')
+                [$pageId, $language, 'active']
             );
         } elseif ($typeOfDrop == 'after') {
             // calculate new sequence for items that should be moved after
             // get new sequence
-            $newSequence = (int) $db->getVar(
+            $newSequence = (int) $database->getVar(
                 'SELECT i.sequence
                 FROM pages AS i
                 WHERE i.id = ? AND i.language = ? AND i.status = ?
                 LIMIT 1',
-                array($droppedOnPage['id'], $language, 'active')
+                [$droppedOnPage['id'], $language, 'active']
             ) + 1;
 
             // increment all pages with a sequence that is higher then the current sequence;
-            $db->execute(
+            $database->execute(
                 'UPDATE pages
                  SET sequence = sequence + 1
                  WHERE parent_id = ? AND language = ? AND sequence > ?',
-                array($newParent, $language, $newSequence)
+                [$newParent, $language, $newSequence]
             );
 
             // update
-            $db->update(
+            $database->update(
                 'pages',
-                array('parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType),
+                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
                 'id = ? AND language = ? AND status = ?',
-                array($id, $language, 'active')
+                [$pageId, $language, 'active']
             );
         } else {
             return false;
         }
 
-        // get current URL
-        $currentURL = (string) $db->getVar(
+        // get current url
+        $currentUrl = (string) $database->getVar(
             'SELECT url
              FROM meta AS m
              WHERE m.id = ?',
-            array($page['meta_id'])
+            [$page['meta_id']]
         );
 
         // rebuild url
-        $newURL = self::getURL(
-            $currentURL,
-            $id,
+        $newUrl = self::getUrl(
+            $currentUrl,
+            $pageId,
             $newParent,
-            (isset($page['data']['is_action']) && $page['data']['is_action'] == 'Y')
+            isset($page['data']['is_action']) && $page['data']['is_action']
         );
 
         // store
-        $db->update('meta', array('url' => $newURL), 'id = ?', array($page['meta_id']));
+        $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
 
         // return
         return true;
     }
 
-    /**
-     * Update a page
-     *
-     * @param array $page The new data for the page.
-     *
-     * @return int
-     */
-    public static function update(array $page)
+    public static function update(array $page): int
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // update old revisions
         if ($page['status'] != 'draft') {
-            $db->update(
+            $database->update(
                 'pages',
-                array('status' => 'archive'),
+                ['status' => 'archive'],
                 'id = ? AND language = ?',
-                array((int) $page['id'], $page['language'])
+                [(int) $page['id'], $page['language']]
             );
         } else {
-            $db->delete(
+            $database->delete(
                 'pages',
                 'id = ? AND user_id = ? AND status = ? AND language = ?',
-                array((int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft', $page['language'])
+                [(int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft', $page['language']]
             );
         }
 
         // insert
-        $page['revision_id'] = (int) $db->insert('pages', $page);
+        $page['revision_id'] = (int) $database->insert('pages', $page);
 
         // how many revisions should we keep
         $rowsToKeep = (int) BackendModel::get('fork.settings')->get('Pages', 'max_num_revisions', 20);
 
         // get revision-ids for items to keep
-        $revisionIdsToKeep = (array) $db->getColumn(
+        $revisionIdsToKeep = (array) $database->getColumn(
             'SELECT i.revision_id
              FROM pages AS i
              WHERE i.id = ? AND i.status = ?
              ORDER BY i.edited_on DESC
              LIMIT ?',
-            array((int) $page['id'], 'archive', $rowsToKeep)
+            [(int) $page['id'], 'archive', $rowsToKeep]
         );
 
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
             // because blocks are linked by revision we should get all revisions we want to delete
-            $revisionsToDelete = (array) $db->getColumn(
+            $revisionsToDelete = (array) $database->getColumn(
                 'SELECT i.revision_id
                  FROM pages AS i
                  WHERE i.id = ? AND i.status = ? AND i.revision_id NOT IN(' . implode(', ', $revisionIdsToKeep) . ')',
-                array((int) $page['id'], 'archive')
+                [(int) $page['id'], 'archive']
             );
 
             // any revisions to delete
             if (!empty($revisionsToDelete)) {
-                $db->delete('pages', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
-                $db->delete('pages_blocks', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
+                $database->delete('pages', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
+                $database->delete('pages_blocks', 'revision_id IN(' . implode(', ', $revisionsToDelete) . ')');
             }
         }
 
@@ -1434,16 +1305,12 @@ class Model
     /**
      * Switch templates for all existing pages
      *
-     * @param int  $oldTemplateId The id of the new template to replace.
-     * @param int  $newTemplateId The id of the new template to use.
-     * @param bool $overwrite     Overwrite all pages with default blocks.
+     * @param int $oldTemplateId The id of the new template to replace.
+     * @param int $newTemplateId The id of the new template to use.
+     * @param bool $overwrite Overwrite all pages with default blocks.
      */
-    public static function updatePagesTemplates($oldTemplateId, $newTemplateId, $overwrite = false)
+    public static function updatePagesTemplates(int $oldTemplateId, int $newTemplateId, bool $overwrite = false): void
     {
-        $newTemplateId = (int) $newTemplateId;
-        $oldTemplateId = (int) $oldTemplateId;
-        $overwrite = (bool) $overwrite;
-
         // fetch new template data
         $newTemplate = BackendExtensionsModel::getTemplate($newTemplateId);
         $newTemplate['data'] = @unserialize($newTemplate['data']);
@@ -1453,7 +1320,7 @@ class Model
             'SELECT *
              FROM pages
              WHERE template_id = ? AND status IN (?, ?)',
-            array($oldTemplateId, 'active', 'draft')
+            [$oldTemplateId, 'active', 'draft']
         );
 
         // there is no active/draft page with the old template id
@@ -1478,10 +1345,10 @@ class Model
             // overwrite all blocks with current defaults
             if ($overwrite) {
                 // init var
-                $blocksContent = array();
+                $blocksContent = [];
 
                 // fetch default blocks for this page
-                $defaultBlocks = array();
+                $defaultBlocks = [];
                 if (isset($newTemplate['data']['default_extras_' . $page['language']])) {
                     $defaultBlocks = $newTemplate['data']['default_extras_' . $page['language']];
                 } elseif (isset($newTemplate['data']['default_extras'])) {
@@ -1492,19 +1359,18 @@ class Model
                 foreach ($defaultBlocks as $position => $blocks) {
                     // loop blocks
                     foreach ($blocks as $extraId) {
-                        // build block
-                        $block = array();
-                        $block['revision_id'] = $page['revision_id'];
-                        $block['position'] = $position;
-                        $block['extra_id'] = $extraId;
-                        $block['html'] = '';
-                        $block['created_on'] = BackendModel::getUTCDate();
-                        $block['edited_on'] = $block['created_on'];
-                        $block['visible'] = 'Y';
-                        $block['sequence'] = count($defaultBlocks[$position]) - 1;
-
                         // add to the list
-                        $blocksContent[] = $block;
+                        $blocksContent[] = [
+                            'revision_id' => $page['revision_id'],
+                            'position' => $position,
+                            'extra_id' => $extraId,
+                            'extra_type' => 'rich_text',
+                            'html' => '',
+                            'created_on' => BackendModel::getUTCDate(),
+                            'edited_on' => BackendModel::getUTCDate(),
+                            'visible' => true,
+                            'sequence' => count($defaultBlocks[$position]) - 1,
+                        ];
                     }
                 }
             } else {
@@ -1522,26 +1388,20 @@ class Model
         }
     }
 
-    /**
-     * Get encoded redirect URL
-     *
-     * @param string $redirectURL
-     *
-     * @return string
-     */
-    public static function getEncodedRedirectURL($redirectURL)
+    public static function getEncodedRedirectUrl(string $redirectUrl): string
     {
-        preg_match('!(http[s]?)://(.*)!i', $redirectURL, $matches);
-        $URLChunks = explode('/', $matches[2]);
-        if (!empty($URLChunks)) {
+        preg_match('!(http[s]?)://(.*)!i', $redirectUrl, $matches);
+        $urlChunks = explode('/', $matches[2]);
+        if (!empty($urlChunks)) {
             // skip domain name
-            $domain = array_shift($URLChunks);
-            foreach ($URLChunks as &$URLChunk) {
-                $URLChunk = rawurlencode($URLChunk);
+            $domain = array_shift($urlChunks);
+            foreach ($urlChunks as &$urlChunk) {
+                $urlChunk = rawurlencode($urlChunk);
             }
-            $redirectURL = $matches[1] . '://' . $domain . '/' . implode('/', $URLChunks);
+            unset($urlChunk);
+            $redirectUrl = $matches[1] . '://' . $domain . '/' . implode('/', $urlChunks);
         }
 
-        return $redirectURL;
+        return $redirectUrl;
     }
 }

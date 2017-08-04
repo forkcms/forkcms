@@ -11,7 +11,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -33,12 +33,12 @@ class Groups extends BackendBaseActionIndex
      *
      * @var BackendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * Groups data grid.
      *
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgGroups;
 
@@ -47,9 +47,9 @@ class Groups extends BackendBaseActionIndex
      *
      * @return array An array with two arguments containing the query and its parameters.
      */
-    private function buildQuery()
+    private function buildQuery(): array
     {
-        $parameters = array();
+        $parameters = [];
 
         /*
          * Start query, as you can see this query is build in the wrong place, because of the
@@ -70,13 +70,10 @@ class Groups extends BackendBaseActionIndex
         }
 
         // query
-        return array($query, $parameters);
+        return [$query, $parameters];
     }
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->setFilter();
@@ -86,40 +83,37 @@ class Groups extends BackendBaseActionIndex
         $this->display();
     }
 
-    /**
-     * Load the datagrid.
-     */
-    private function loadDataGrid()
+    private function loadDataGrid(): void
     {
         // fetch query and parameters
         list($query, $parameters) = $this->buildQuery();
 
         // create datagrid
-        $this->dgGroups = new BackendDataGridDB($query, $parameters);
+        $this->dgGroups = new BackendDataGridDatabase($query, $parameters);
 
         // overrule default URL
         $this->dgGroups->setURL(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 null,
                 null,
                 null,
-                array(
+                [
                      'offset' => '[offset]',
                      'order' => '[order]',
                      'sort' => '[sort]',
                      'name' => $this->filter['name'],
-                ),
+                ],
                 false
             )
         );
 
         // sorting columns
-        $this->dgGroups->setSortingColumns(array('name', 'members_count'), 'name');
+        $this->dgGroups->setSortingColumns(['name', 'members_count'], 'name');
 
         // set the amount of profiles
         $this->dgGroups->setColumnFunction(
-            array(__CLASS__, 'parseNumProfiles'),
-            array('[id]', '[members_count]'),
+            [__CLASS__, 'parseNumProfilesInDataGrid'],
+            ['[id]', '[members_count]'],
             'members_count'
         );
 
@@ -127,65 +121,51 @@ class Groups extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('Index')) {
             $this->dgGroups->setColumnURL(
                 'members_count',
-                BackendModel::createURLForAction('Index') . '&amp;group=[id]'
+                BackendModel::createUrlForAction('Index') . '&amp;group=[id]'
             );
         }
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('EditGroup')) {
-            $this->dgGroups->setColumnURL('name', BackendModel::createURLForAction('EditGroup') . '&amp;id=[id]');
+            $this->dgGroups->setColumnURL('name', BackendModel::createUrlForAction('EditGroup') . '&amp;id=[id]');
             $this->dgGroups->addColumn(
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('EditGroup') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('EditGroup') . '&amp;id=[id]'
             );
         }
     }
 
-    /**
-     * Load the form.
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
 
         // add fields
-        $this->frm->addText('name', $this->filter['name']);
+        $this->form->addText('name', $this->filter['name']);
 
         // manually parse fields
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
-    /**
-     * Parse & display the page.
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // parse datagrid
-        $this->tpl->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
+        $this->template->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
 
         // parse paging & sorting
-        $this->tpl->assign('offset', (int) $this->dgGroups->getOffset());
-        $this->tpl->assign('order', (string) $this->dgGroups->getOrder());
-        $this->tpl->assign('sort', (string) $this->dgGroups->getSort());
+        $this->template->assign('offset', (int) $this->dgGroups->getOffset());
+        $this->template->assign('order', (string) $this->dgGroups->getOrder());
+        $this->template->assign('sort', (string) $this->dgGroups->getSort());
 
         // parse filter
-        $this->tpl->assign($this->filter);
+        $this->template->assignArray($this->filter);
     }
 
-    /**
-     * Parse amount of profiles for the datagrid.
-     *
-     * @param int $groupId     Group id.
-     * @param int $numProfiles Number of profiles.
-     *
-     * @return string
-     */
-    public static function parseNumProfiles($groupId, $numProfiles)
+    public static function parseNumProfilesInDataGrid(int $groupId, int $numProfiles): string
     {
         // 1 item
         if ($numProfiles == 1) {
@@ -199,7 +179,7 @@ class Groups extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('Edit')) {
             // complete output
             $output = '<a href="' .
-                      BackendModel::createURLForAction(
+                      BackendModel::createUrlForAction(
                           'Index'
                       ) . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
         }
@@ -210,8 +190,8 @@ class Groups extends BackendBaseActionIndex
     /**
      * Sets the filter based on the $_GET array.
      */
-    private function setFilter()
+    private function setFilter(): void
     {
-        $this->filter['name'] = $this->getParameter('name');
+        $this->filter['name'] = $this->getRequest()->query->get('name');
     }
 }

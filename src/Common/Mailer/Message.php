@@ -12,18 +12,12 @@ use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
  */
 class Message extends \Swift_Message
 {
-    /**
-     * Create a new Message.
-     *
-     * Details may be optionally passed into the constructor.
-     *
-     * @param string $subject
-     * @param string $body
-     * @param string $contentType
-     * @param string $charset
-     */
-    public function __construct($subject = null, $body = null, $contentType = null, $charset = null)
-    {
+    public function __construct(
+        string $subject = null,
+        string $body = null,
+        string $contentType = null,
+        string $charset = null
+    ) {
         parent::__construct($subject, $body, $contentType, $charset);
     }
 
@@ -45,13 +39,13 @@ class Message extends \Swift_Message
     /**
      * Parses a TwigTemplate with the wanted variables
      *
-     * @param  string  $template
-     * @param  array   $variables
-     * @param  bool    $addUTM
+     * @param string $template
+     * @param array $variables
+     * @param bool $addUTM
      *
-     * @return Message
+     * @return self
      */
-    public function parseHtml($template, $variables, $addUTM = false)
+    public function parseHtml(string $template, array $variables, bool $addUTM = false): self
     {
         $html = $this->getTemplateContent($template, $variables);
         $html = $this->relativeToAbsolute($html);
@@ -69,11 +63,11 @@ class Message extends \Swift_Message
     /**
      * Attach multiple attachments to this message
      *
-     * @param  array   $attachments
+     * @param array $attachments
      *
      * @return Message
      */
-    public function addAttachments($attachments)
+    public function addAttachments(array $attachments): Message
     {
         if (!empty($attachments)) {
             // add attachments one by one
@@ -91,11 +85,11 @@ class Message extends \Swift_Message
     /**
      * Add plaintext content as fallback for the html
      *
-     * @param  string  $content
+     * @param string $content
      *
      * @return Message
      */
-    public function setPlainText($content)
+    public function setPlainText(string $content): Message
     {
         if ($content !== null) {
             $this->addPart($content, 'text/plain');
@@ -105,31 +99,31 @@ class Message extends \Swift_Message
     }
 
     /**
-     * @param  string $html    The html to convert links in.
-     * @param  string $subject The subject of the mail
+     * @param string $html The html to convert links in.
+     * @param string $subject The subject of the mail
      *
      * @return string
      */
-    private function addUTM($html, $subject)
+    private function addUTM(string $html, string $subject): string
     {
         // match links
-        $matches = array();
+        $matches = [];
         preg_match_all('/href="(http:\/\/(.*))"/iU', $html, $matches);
 
         // any links?
-        $utm = array(
+        $utm = [
             'utm_source' => 'mail',
             'utm_medium' => 'email',
             'utm_campaign' => Uri::getUrl($subject),
-        );
+        ];
         if (isset($matches[0]) && !empty($matches[0])) {
-            $searchLinks = array();
-            $replaceLinks = array();
+            $searchLinks = [];
+            $replaceLinks = [];
 
             // loop old links
             foreach ($matches[1] as $i => $link) {
                 $searchLinks[] = $matches[0][$i];
-                $replaceLinks[] = 'href="' . Model::addURLParameters($link, $utm) . '"';
+                $replaceLinks[] = 'href="' . Model::addUrlParameters($link, $utm) . '"';
             }
 
             $html = str_replace($searchLinks, $replaceLinks, $html);
@@ -141,12 +135,12 @@ class Message extends \Swift_Message
     /**
      * Returns the content from a given template
      *
-     * @param  string $template  The template to use.
-     * @param  array  $variables The variables to assign.
+     * @param string $template The template to use.
+     * @param array $variables The variables to assign.
      *
      * @return string
      */
-    private function getTemplateContent($template, $variables = null)
+    private function getTemplateContent(string $template, array $variables = null): string
     {
         // with the strpos we check if it is a frontend template, in that case we use the frontend template to prevent
         // errors that the template could not be found. This way we don't have a backwards compatibility break.
@@ -161,7 +155,7 @@ class Message extends \Swift_Message
 
         // variables were set
         if (!empty($variables)) {
-            $tpl->assign($variables);
+            $tpl->assignArray($variables);
         }
 
         // grab the content
@@ -171,11 +165,11 @@ class Message extends \Swift_Message
     /**
      * Converts all css to inline styles
      *
-     * @param  string $html
+     * @param string $html
      *
      * @return string
      */
-    private function cssToInlineStyles($html)
+    private function cssToInlineStyles(string $html): string
     {
         $cssToInlineStyles = new CssToInlineStyles();
         $cssToInlineStyles->setHTML($html);
@@ -187,15 +181,15 @@ class Message extends \Swift_Message
     /**
      * Replace internal links and images to absolute links
      *
-     * @param  string $html The html to convert links in.
+     * @param string $html The html to convert links in.
      *
      * @return string
      */
-    private function relativeToAbsolute($html)
+    private function relativeToAbsolute(string $html): string
     {
         // replace internal links/images
-        $search = array('href="/', 'src="/');
-        $replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
+        $search = ['href="/', 'src="/'];
+        $replace = ['href="' . SITE_URL . '/', 'src="' . SITE_URL . '/'];
 
         return str_replace($search, $replace, $html);
     }

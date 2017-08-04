@@ -11,6 +11,7 @@ namespace Backend\Modules\Faq\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
@@ -18,25 +19,35 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  */
 class DeleteFeedback extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $feedbackId = $this->getParameter('id', 'int');
-        $feedback = BackendFaqModel::getFeedback($feedbackId);
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteFeedback']
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
 
-        BackendModel::triggerEvent($this->getModule(), 'after_delete_feedback', array('item' => $feedback));
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $feedbackId = (int) $deleteFormData['id'];
+        $feedback = BackendFaqModel::getFeedback($feedbackId);
 
         // there is no feedback data, so redirect
         if (empty($feedback)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
         }
 
         BackendFaqModel::deleteFeedback($feedbackId);
-        $this->redirect(
-            BackendModel::createURLForAction('Edit') . '&amp;id=' .
-            $feedback['question_id'] . '&report=deleted#tabFeedback'
-        );
+        $this->redirect(BackendModel::createUrlForAction(
+            'Edit',
+            null,
+            null,
+            ['id' => $feedback['question_id'], 'report' => 'deleted']
+        ) . '#tabFeedback');
     }
 }

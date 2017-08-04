@@ -9,7 +9,6 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
-use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
@@ -35,7 +34,7 @@ class Detail extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     /**
      * The blogpost
@@ -51,48 +50,41 @@ class Detail extends FrontendBaseBlock
      */
     private $settings;
 
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
-        $this->tpl->assignGlobal('hideContentTitle', true);
         $this->loadTemplate();
         $this->getData();
-        $this->loadForm();
+        $this->buildForm();
         $this->validateForm();
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
-    private function getData()
+    private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+        if ($this->url->getParameter(1) === null) {
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // load revision
-        if ($this->URL->getParameter('revision', 'int') != 0) {
+        if ($this->url->getParameter('revision', 'int') != 0) {
             // get data
             $this->record = FrontendBlogModel::getRevision(
-                $this->URL->getParameter(1),
-                $this->URL->getParameter('revision', 'int')
+                $this->url->getParameter(1),
+                $this->url->getParameter('revision', 'int')
             );
 
             // add no-index, so the draft won't get accidentally indexed
-            $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+            $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
         } else {
             // get by URL
-            $this->record = FrontendBlogModel::get($this->URL->getParameter(1));
+            $this->record = FrontendBlogModel::get($this->url->getParameter(1));
         }
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get comments
@@ -105,10 +97,9 @@ class Detail extends FrontendBaseBlock
         $this->settings = $this->get('fork.settings')->getForModule('Blog');
 
         // overwrite URLs
-        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') .
+        $this->record['category_full_url'] = FrontendNavigation::getUrlForBlock('Blog', 'Category') .
                                              '/' . $this->record['category_url'];
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' . $this->record['url'];
-        $this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
+        $this->record['full_url'] = FrontendNavigation::getUrlForBlock('Blog', 'Detail') . '/' . $this->record['url'];
         $this->record['comments_count'] = count($this->comments);
 
         // reset allow comments
@@ -117,42 +108,36 @@ class Detail extends FrontendBaseBlock
         }
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
-        // create form
-        $this->frm = new FrontendForm('commentsForm');
-        $this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
+        $this->form = new FrontendForm('commentsForm');
+        $this->form->setAction($this->form->getAction() . '#' . FL::act('Comment'));
 
-        // init vars
-        $author = (CommonCookie::exists('comment_author')) ? CommonCookie::get('comment_author') : null;
-        $email = (CommonCookie::exists('comment_email') && \SpoonFilter::isEmail(CommonCookie::get('comment_email'))) ? CommonCookie::get('comment_email') : null;
-        $website = (CommonCookie::exists('comment_website') && \SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
+        $cookie = FrontendModel::getContainer()->get('fork.cookie');
+        $author = $cookie->get('comment_author');
+        $email = ($cookie->has('comment_email') && filter_var($cookie->get('comment_email'), FILTER_VALIDATE_EMAIL))
+            ? $cookie->get('comment_email') : null;
+        $website = ($cookie->has('comment_website') && \SpoonFilter::isURL($cookie->get('comment_website')))
+            ? $cookie->get('comment_website') : 'http://';
 
-        // create elements
-        $this->frm->addText('author', $author)->setAttributes(array('required' => null));
-        $this->frm->addText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
-        $this->frm->addText('website', $website, null);
-        $this->frm->addTextarea('message')->setAttributes(array('required' => null));
+        $this->form->addText('author', $author)->setAttributes(['required' => null]);
+        $this->form->addText('email', $email)->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addText('website', $website, null);
+        $this->form->addTextarea('message')->setAttributes(['required' => null]);
     }
 
-    /**
-     * Parse the data into the template
-     */
-    private function parse()
+    private function parse(): void
     {
         // get RSS-link
         $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
-        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
+        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed
         $this->header->addRssLink($rssTitle, $rssLink);
 
         // get RSS-link for the comments
-        $rssCommentTitle = vsprintf(FL::msg('CommentsOn'), array($this->record['title']));
-        $rssCommentsLink = FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
+        $rssCommentTitle = vsprintf(FL::msg('CommentsOn'), [$this->record['title']]);
+        $rssCommentsLink = FrontendNavigation::getUrlForBlock('Blog', 'ArticleCommentsRss') .
                            '/' . $this->record['url'];
 
         // add RSS-feed into the metaCustom
@@ -161,7 +146,7 @@ class Detail extends FrontendBaseBlock
         // add specified image
         if (isset($this->record['image']) && $this->record['image'] != '') {
             $this->header->addOpenGraphImage(
-                FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']
+                FRONTEND_FILES_URL . '/Blog/images/source/' . $this->record['image']
             );
         }
 
@@ -179,20 +164,20 @@ class Detail extends FrontendBaseBlock
         );
         $this->header->addOpenGraphData(
             'description',
-            ($this->record['meta_description_overwrite'] == 'Y') ? $this->record['meta_description'] : $this->record['title'],
+            $this->record['meta_description_overwrite'] ? $this->record['meta_description'] : $this->record['title'],
             true
         );
 
         // Twitter Card
-        $imgURL = FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image'];
-        $this->header->setTwitterCard($this->record['title'], $this->record['meta_description'], $imgURL);
+        $imgUrl = FRONTEND_FILES_URL . '/Blog/images/source/' . $this->record['image'];
+        $this->header->setTwitterCard($this->record['title'], $this->record['meta_description'], $imgUrl);
 
         // when there are 2 or more categories with at least one item in it,
         // the category will be added in the breadcrumb
         if (count(FrontendBlogModel::getAllCategories()) > 1) {
             $this->breadcrumb->addElement(
                 $this->record['category_title'],
-                FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $this->record['category_url']
+                FrontendNavigation::getUrlForBlock('Blog', 'Category') . '/' . $this->record['category_url']
             );
         }
 
@@ -200,145 +185,144 @@ class Detail extends FrontendBaseBlock
         $this->breadcrumb->addElement($this->record['title']);
 
         // set meta
-        $this->header->setPageTitle($this->record['meta_title'], ($this->record['meta_title_overwrite'] == 'Y'));
+        $this->header->setPageTitle($this->record['meta_title'], $this->record['meta_title_overwrite']);
         $this->header->addMetaDescription(
             $this->record['meta_description'],
-            ($this->record['meta_description_overwrite'] == 'Y')
+            $this->record['meta_description_overwrite']
         );
         $this->header->addMetaKeywords(
             $this->record['meta_keywords'],
-            ($this->record['meta_keywords_overwrite'] == 'Y')
+            $this->record['meta_keywords_overwrite']
         );
+        $this->header->setMetaCustom($this->record['meta_custom']);
 
         // advanced SEO-attributes
-        if (isset($this->record['meta_data']['seo_index'])) {
+        if (isset($this->record['meta_seo_index'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index'])
+                ['name' => 'robots', 'content' => $this->record['meta_seo_index']]
             );
         }
-        if (isset($this->record['meta_data']['seo_follow'])) {
+        if (isset($this->record['meta_seo_follow'])) {
             $this->header->addMetaData(
-                array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow'])
+                ['name' => 'robots', 'content' => $this->record['meta_seo_follow']]
             );
         }
 
         $this->header->setCanonicalUrl($this->record['full_url']);
 
         // assign article
-        $this->tpl->assign('item', $this->record);
+        $this->template->assign('item', $this->record);
 
         // count comments
         $commentCount = count($this->comments);
 
         // assign the comments
-        $this->tpl->assign('commentsCount', $commentCount);
-        $this->tpl->assign('comments', $this->comments);
+        $this->template->assign('commentsCount', $commentCount);
+        $this->template->assign('comments', $this->comments);
 
         // options
         if ($commentCount > 1) {
-            $this->tpl->assign('blogCommentsMultiple', true);
+            $this->template->assign('blogCommentsMultiple', true);
         }
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // some options
-        if ($this->URL->getParameter('comment', 'string') == 'moderation') {
-            $this->tpl->assign(
+        if ($this->url->getParameter('comment', 'string') == 'moderation') {
+            $this->template->assign(
                 'commentIsInModeration',
                 true
             );
         }
-        if ($this->URL->getParameter('comment', 'string') == 'spam') {
-            $this->tpl->assign('commentIsSpam', true);
+        if ($this->url->getParameter('comment', 'string') == 'spam') {
+            $this->template->assign('commentIsSpam', true);
         }
-        if ($this->URL->getParameter('comment', 'string') == 'true') {
-            $this->tpl->assign('commentIsAdded', true);
+        if ($this->url->getParameter('comment', 'string') == 'true') {
+            $this->template->assign('commentIsAdded', true);
         }
 
         // assign settings
-        $this->tpl->assign('settings', $this->settings);
+        $this->template->assign('settings', $this->settings);
 
         $navigation = FrontendBlogModel::getNavigation($this->record['id']);
 
         // set previous and next link for usage with Flip ahead
         if (!empty($navigation['previous'])) {
             $this->header->addLink(
-                array(
+                [
                      'rel' => 'prev',
                      'href' => SITE_URL . $navigation['previous']['url'],
-                )
+                ]
             );
         }
         if (!empty($navigation['next'])) {
             $this->header->addLink(
-                array(
+                [
                      'rel' => 'next',
                      'href' => SITE_URL . $navigation['next']['url'],
-                )
+                ]
             );
         }
 
         // assign navigation
-        $this->tpl->assign('navigation', $navigation);
+        $this->template->assign('navigation', $navigation);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // get settings
         $commentsAllowed = (isset($this->settings['allow_comments']) && $this->settings['allow_comments']);
 
         // comments aren't allowed so we don't have to validate
         if (!$commentsAllowed) {
-            return false;
+            return;
         }
 
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // does the key exists?
-            if (\SpoonSession::exists('blog_comment_' . $this->record['id'])) {
+            if (FrontendModel::getSession()->has('blog_comment_' . $this->record['id'])) {
                 // calculate difference
-                $diff = time() - (int) \SpoonSession::get('blog_comment_' . $this->record['id']);
+                $diff = time() - (int) FrontendModel::getSession()->get('blog_comment_' . $this->record['id']);
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
                 if ($diff < 10 && $diff != 0) {
-                    $this->frm->getField('message')->addError(FL::err('CommentTimeout'));
+                    $this->form->getField('message')->addError(FL::err('CommentTimeout'));
                 }
             }
 
             // validate required fields
-            $this->frm->getField('author')->isFilled(FL::err('AuthorIsRequired'));
-            $this->frm->getField('email')->isEmail(FL::err('EmailIsRequired'));
-            $this->frm->getField('message')->isFilled(FL::err('MessageIsRequired'));
+            $this->form->getField('author')->isFilled(FL::err('AuthorIsRequired'));
+            $this->form->getField('email')->isEmail(FL::err('EmailIsRequired'));
+            $this->form->getField('message')->isFilled(FL::err('MessageIsRequired'));
 
             // validate optional fields
-            if ($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://'
+            if ($this->form->getField('website')->isFilled() && $this->form->getField('website')->getValue() != 'http://'
             ) {
-                $this->frm->getField('website')->isURL(FL::err('InvalidURL'));
+                $this->form->getField('website')->isURL(FL::err('InvalidURL'));
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // get module setting
                 $spamFilterEnabled = (isset($this->settings['spamfilter']) && $this->settings['spamfilter']);
                 $moderationEnabled = (isset($this->settings['moderation']) && $this->settings['moderation']);
 
                 // reformat data
-                $author = $this->frm->getField('author')->getValue();
-                $email = $this->frm->getField('email')->getValue();
-                $website = $this->frm->getField('website')->getValue();
+                $author = $this->form->getField('author')->getValue();
+                $email = $this->form->getField('email')->getValue();
+                $website = $this->form->getField('website')->getValue();
                 if (trim($website) == '' || $website == 'http://') {
                     $website = null;
                 }
-                $text = $this->frm->getField('message')->getValue();
+                $text = $this->form->getField('message')->getValue();
 
                 // build array
+                $comment = [];
                 $comment['post_id'] = $this->record['id'];
                 $comment['language'] = LANGUAGE;
                 $comment['created_on'] = FrontendModel::getUTCDate();
@@ -347,7 +331,7 @@ class Detail extends FrontendBaseBlock
                 $comment['website'] = $website;
                 $comment['text'] = $text;
                 $comment['status'] = 'published';
-                $comment['data'] = serialize(array('server' => $_SERVER));
+                $comment['data'] = serialize(['server' => $_SERVER]);
 
                 // get URL for article
                 $permaLink = $this->record['full_url'];
@@ -378,9 +362,6 @@ class Detail extends FrontendBaseBlock
 
                 // insert comment
                 $comment['id'] = FrontendBlogModel::insertComment($comment);
-
-                // trigger event
-                FrontendModel::triggerEvent('Blog', 'after_add_comment', array('comment' => $comment));
 
                 // append a parameter to the URL so we can show moderation
                 if (mb_strpos($redirectLink, '?') === false) {
@@ -413,14 +394,15 @@ class Detail extends FrontendBaseBlock
                 FrontendBlogModel::notifyAdmin($comment);
 
                 // store timestamp in session so we can block excessive usage
-                \SpoonSession::set('blog_comment_' . $this->record['id'], time());
+                FrontendModel::getSession()->set('blog_comment_' . $this->record['id'], time());
 
                 // store author-data in cookies
                 try {
-                    CommonCookie::set('comment_author', $author);
-                    CommonCookie::set('comment_email', $email);
-                    CommonCookie::set('comment_website', $website);
-                } catch (\Exception $e) {
+                    $cookie = FrontendModel::getContainer()->get('fork.cookie');
+                    $cookie->set('comment_author', $author);
+                    $cookie->set('comment_email', $email);
+                    $cookie->set('comment_website', $website);
+                } catch (\RuntimeException $e) {
                     // settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
                 }
 

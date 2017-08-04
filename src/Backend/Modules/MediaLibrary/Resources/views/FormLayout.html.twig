@@ -1,0 +1,87 @@
+{#
+  $mediaFields    Contains all fields require to make the magic happen
+  $mediaGroups    Contains every possible group
+#}
+
+{% block media_group_widget %}
+  <div class="row fork-module-content media-library-media-group-helper">
+    <div class="col-md-12">
+      <div class="panel form-group panel-default{% if not form.vars.valid %} panel-danger{% endif %}">
+        <div class="panel-heading">
+          {{ form_label(form) }}
+        </div>
+        <div class="panel-body">
+          <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" class="panel panel-default mediaGroup">
+            <!--[if lt IE 7 ]><div class="panel-body mediaConnectedBox ie6"><![endif]-->
+            <!--[if IE 7 ]><div class="panel-body mediaConnectedBox ie7"><![endif]-->
+            <!--[if IE 8 ]><div class="panel-body mediaConnectedBox ie8"><![endif]-->
+            <!--[if IE 9 ]><div class="panel-body mediaConnectedBox ie9"><![endif]-->
+            <!--[if (gt IE 9)|!(IE)]><!--><div class="panel-body mediaConnectedBox"><!--<![endif]-->
+              <ul class="mediaConnectedItems ui-sortable">
+                {% for connectedItem in mediaGroup.connectedItems %}
+                  <li id="media-{{ connectedItem.item.id }}" data-folder-id="{{ connectedItem.item.folder.id }}" class="ui-state-default">
+                    <div class="mediaHolder mediaHolder{{ connectedItem.item.type|ucfirst }}">
+
+                      {# Audio #}
+                      {% if connectedItem.item.type.isAudio %}
+                        <div class="icon"></div>
+                        <div class="url">{{ connectedItem.item.url }}</div>
+                      {% endif %}
+
+                      {# File #}
+                      {% if connectedItem.item.type.isFile %}
+                        <div class="icon"></div>
+                        <div class="url">{{ connectedItem.item.url }}</div>
+                      {% endif %}
+
+                      {# Image #}
+                      {% if connectedItem.item.type.isImage %}
+                        <img src="{{ connectedItem.item.getWebPath('backend') }}" alt="{{ connectedItem.item.title }}" title="{{ connectedItem.item.title }}"/>
+                      {% endif %}
+
+                      {# Movie #}
+                      {% if connectedItem.item.type.isMovie %}
+                        <div class="icon"></div>
+                        <div class="url">{{ connectedItem.item.url }}</div>
+                      {% endif %}
+
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+
+              {% if not mediaGroup.connectedItems.count %}
+                <p class="mediaNoItems helpTxt">{{ 'msg.MediaNoItemsConnected'|trans }}</p>
+              {% endif %}
+              {% if not form.vars.valid %}
+                <div class="media-group-type-errors">
+                  {{ form_errors(form.mediaIds) }}
+                </div>
+              {% endif %}
+            </div>
+            <div class="panel-footer mediaEditBox">
+              <div class="btn-toolbar">
+                <div class="btn-group pull-left" role="group">
+                  <button type="button" {% if aspectRatio is defined %} data-aspect-ratio={{ aspectRatio }}{% endif %} data-i="{{ mediaGroup.id }}" class="addMediaButton btn btn-default" title="{{ 'lbl.MediaConnectNow'|trans|ucfirst }}">
+                    <span class="fa fa-plus-square"></span>
+                    <span class="btn-text">{{ 'lbl.MediaConnectNow'|trans|ucfirst }}</span>
+                  </button>
+                  <button type="button" data-i="{{ mediaGroup.id }}" class="disconnectMediaItemsButton btn btn-default disabled" title="{{ 'lbl.MediaDisconnect'|trans|ucfirst }}">
+                    <span class="fa fa-minus-square"></span>
+                    <span class="btn-text">{{ 'lbl.MediaDisconnect'|trans|ucfirst }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {# Add hidden required fields #}
+            {{ form_row(form.id) }}
+            {{ form_row(form.mediaIds) }}
+            {{ form_row(form.type) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock media_group_widget %}

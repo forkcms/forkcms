@@ -1,43 +1,56 @@
-{# Success #}
-{% if registerIsSuccess %}
-  <div class="message success"><p>{{ 'msg.RegisterIsSuccess'|trans }}</p></div>
-{% endif %}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
-{# Error #}
-{% if registerHasFormError %}
-  <div class="message error"><p>{{ 'err.FormError'|trans }}</p></div>
-{% endif %}
-
-{% if not registerHideForm %}
-  {% form register %}
-  <section id="registerForm" class="mod">
-    <div class="inner">
-      <div class="bd">
-        <fieldset>
-          <p{% if txtDisplayNameError %} class="errorArea"{% endif %}>
-            <label for="displayName">{{ 'lbl.DisplayName'|trans|ucfirst }}
-              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
-            </label>
-            {% form_field display_name %} {% form_field_error display_name %}
-          </p>
-          <p{% if txtEmailError %} class="errorArea"{% endif %}>
-            <label for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field email %} {% form_field_error email %}
-          </p>
-          <p{% if txtPasswordError %} class="errorArea"{% endif %}>
-            <label for="password">{{ 'lbl.Password'|trans|ucfirst }}
-              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
-            {% form_field password %} {% form_field_error password %}
-          </p>
-          <p>
-            <label for="showPassword">{% form_field show_password %} {{ 'lbl.ShowPassword'|trans|ucfirst }} </label>
-          </p>
-          <p>
-            <input class="inputSubmit" type="submit" value="{{ 'lbl.Register'|trans|ucfirst }}" />
-          </p>
-        </fieldset>
-      </div>
+<section class="module-profiles block-profiles-register">
+  {% block block_alerts %}
+    <div class="block-alerts">
+      {% if registerIsSuccess %}
+        {{ alerts.alert('success', 'msg.RegisterIsSuccess'|trans) }}
+      {% endif %}
+      {% if registerHasFormError %}
+        {{ alerts.alert('danger', 'err.FormError'|trans) }}
+      {% endif %}
     </div>
-  </section>
-  {% endform %}
-{% endif %}
+  {% endblock %}
+
+  {% block block_body %}
+    <div class="block-body">
+      {% if not registerHideForm %}
+        {% form register %}
+        <fieldset class="form-horizontal">
+          <div class="form-group{% if txtDisplayNameError %} has-error{% endif %}">
+            <label class="control-label col-sm-2" for="displayName">{{ 'lbl.DisplayName'|trans|ucfirst }}
+              <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+            <div class="col-sm-6">
+              {% form_field_error display_name %}{% form_field display_name %}
+            </div>
+          </div>
+          <div class="form-group{% if txtEmailError %} has-error{% endif %}">
+            <label class="control-label col-sm-2" for="email">{{ 'lbl.Email'|trans|ucfirst }}
+              <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+            <div class="col-sm-6">
+              {% form_field_error email %}{% form_field email %}
+            </div>
+          </div>
+          <div class="form-group{% if txtPasswordError %} has-error{% endif %}">
+            <label class="control-label col-sm-2" for="password">{{ 'lbl.Password'|trans|ucfirst }}
+              <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+            <div class="col-sm-6">
+              {% form_field_error password %}{% form_field password %}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+              <label for="showPassword">{% form_field show_password %} {{ 'lbl.ShowPassword'|trans|ucfirst }} </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+              <input class="btn btn-primary" type="submit" value="{{ 'lbl.Register'|trans|ucfirst }}" />
+            </div>
+          </div>
+        </fieldset>
+        {% endform %}
+      {% endif %}
+    </div>
+  {% endblock %}
+</section>

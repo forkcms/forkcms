@@ -10,8 +10,8 @@ namespace Backend\Core\Language;
  */
 
 use Backend\Core\Engine\Model;
-use Common\Cookie as CommonCookie;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use RuntimeException;
 
 /**
  * This class will store the language-dependant content for the Backend, it will also store the
@@ -20,13 +20,25 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 class Language
 {
     /**
+     * The errors
+     *
+     * @var array
+     */
+    protected static $err = [];
+
+    /**
      * The labels
      *
      * @var array
      */
-    protected static $err = array();
-    protected static $lbl = array();
-    protected static $msg = array();
+    protected static $lbl = [];
+
+    /**
+     * The messages
+     *
+     * @var array
+     */
+    protected static $msg = [];
 
     /**
      * The active languages
@@ -49,20 +61,11 @@ class Language
      */
     protected static $currentWorkingLanguage;
 
-    /**
-     * Get the active languages
-     *
-     * @return array
-     */
-    public static function getActiveLanguages()
+    public static function getActiveLanguages(): array
     {
         // validate the cache
         if (empty(self::$activeLanguages)) {
-            // grab from settings
-            $activeLanguages = (array) Model::get('fork.settings')->get('Core', 'active_languages');
-
-            // store in cache
-            self::$activeLanguages = $activeLanguages;
+            self::$activeLanguages = (array) Model::get('fork.settings')->get('Core', 'active_languages');
         }
 
         // return from cache
@@ -74,28 +77,28 @@ class Language
      *
      * @return array
      */
-    public static function getCheckboxValues()
+    public static function getCheckboxValues(): array
     {
         $languages = self::getActiveLanguages();
-        $results = array();
+        $results = [];
 
         // stop here if no languages are present
         if (empty($languages)) {
-            return array();
+            return [];
         }
 
         // addRadioButton requires an array with keys 'value' and 'label'
         foreach ($languages as $abbreviation) {
-            $results[] = array(
+            $results[] = [
                 'value' => $abbreviation,
                 'label' => self::lbl(mb_strtoupper($abbreviation)),
-            );
+            ];
         }
 
         return $results;
     }
 
-    public static function getCurrentModule()
+    public static function getCurrentModule(): string
     {
         // Needed to make it possible to use the backend language in the console.
         if (defined('APPLICATION') && APPLICATION === 'Console') {
@@ -106,32 +109,18 @@ class Language
             return Model::get('url')->getModule();
         }
 
-        if (Model::getContainer()->has('request')
-            && Model::getContainer()->get('request')->query->has('module')
-        ) {
-            return Model::getContainer()->get('request')->query->get('module');
+        if (Model::requestIsAvailable() && Model::getRequest()->query->has('module')) {
+            return Model::getRequest()->query->get('module');
         }
 
         return 'Core';
     }
 
-    /**
-     * Get an error from the language-file
-     *
-     * @param string $key    The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
-    public static function getError($key, $module = null)
+    public static function getError(string $key, string $module = null): string
     {
-        // do we know the module
-        if ($module === null) {
-            $module = self::getCurrentModule();
-        }
+        $module = $module ?? self::getCurrentModule();
 
-        $key = \SpoonFilter::toCamelCase((string) $key);
-        $module = (string) $module;
+        $key = \SpoonFilter::toCamelCase($key);
 
         // check if the error exists
         if (isset(self::$err[$module][$key])) {
@@ -147,37 +136,26 @@ class Language
         return '{$err' . \SpoonFilter::toCamelCase($module) . $key . '}';
     }
 
-    /**
-     * Get all the errors from the language-file
-     *
-     * @return array
-     */
-    public static function getErrors()
+    public static function getErrors(): array
     {
-        return (array) self::$err;
+        return self::$err;
     }
 
-    /**
-     * Get the current interface language
-     *
-     * @return string
-     */
-    public static function getInterfaceLanguage()
+    public static function getInterfaceLanguage(): string
     {
+        if (self::$currentInterfaceLanguage === null) {
+            self::$currentInterfaceLanguage = Model::getContainer()->getParameter('site.default_language');
+        }
+
         return self::$currentInterfaceLanguage;
     }
 
-    /**
-     * Get all the possible interface languages
-     *
-     * @return array
-     */
-    public static function getInterfaceLanguages()
+    public static function getInterfaceLanguages(): array
     {
-        $languages = array();
+        $languages = [];
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('fork.settings')->get('Core', 'interface_languages', array('en')) as $key) {
+        foreach ((array) Model::get('fork.settings')->get('Core', 'interface_languages', ['en']) as $key) {
             // fetch language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
@@ -189,23 +167,11 @@ class Language
         return $languages;
     }
 
-    /**
-     * Get a label from the language-file
-     *
-     * @param string $key    The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
-    public static function getLabel($key, $module = null)
+    public static function getLabel(string $key, string $module = null): string
     {
-        // do we know the module
-        if ($module === null) {
-            $module = self::getCurrentModule();
-        }
+        $module = $module ?? self::getCurrentModule();
 
-        $key = \SpoonFilter::toCamelCase((string) $key);
-        $module = (string) $module;
+        $key = \SpoonFilter::toCamelCase($key);
 
         // check if the label exists
         if (isset(self::$lbl[$module][$key])) {
@@ -221,38 +187,15 @@ class Language
         return '{$lbl' . \SpoonFilter::toCamelCase($module) . $key . '}';
     }
 
-    /**
-     * Get all the labels from the language-file
-     *
-     * @return array
-     */
-    public static function getLabels()
+    public static function getLabels(): array
     {
         return self::$lbl;
     }
 
-    /**
-     * Get a message from the language-file
-     *
-     * @param string $key    The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
-    public static function getMessage($key, $module = null)
+    public static function getMessage(string $key, string $module = null): string
     {
-        if ($module === null) {
-            if (Model::getContainer()->has('url')) {
-                $module = Model::get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
-        }
-
         $key = \SpoonFilter::toCamelCase((string) $key);
-        $module = (string) $module;
+        $module = $module ?? self::getCurrentModule();
 
         // check if the message exists
         if (isset(self::$msg[$module][$key])) {
@@ -268,37 +211,26 @@ class Language
         return '{$msg' . \SpoonFilter::toCamelCase($module) . $key . '}';
     }
 
-    /**
-     * Get the messages
-     *
-     * @return array
-     */
-    public static function getMessages()
+    public static function getMessages(): array
     {
         return self::$msg;
     }
 
-    /**
-     * Get the current working language
-     *
-     * @return string
-     */
-    public static function getWorkingLanguage()
+    public static function getWorkingLanguage(): string
     {
+        if (self::$currentWorkingLanguage === null) {
+            self::$currentWorkingLanguage = Model::getContainer()->getParameter('site.default_language');
+        }
+
         return self::$currentWorkingLanguage;
     }
 
-    /**
-     * Get all possible working languages
-     *
-     * @return array
-     */
-    public static function getWorkingLanguages()
+    public static function getWorkingLanguages(): array
     {
-        $languages = array();
+        $languages = [];
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('fork.settings')->get('Core', 'languages', array('en')) as $key) {
+        foreach ((array) Model::get('fork.settings')->get('Core', 'languages', ['en']) as $key) {
             // fetch the language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
@@ -315,10 +247,8 @@ class Language
      *
      * @param string $language The language to load.
      */
-    public static function setLocale($language)
+    public static function setLocale(string $language): void
     {
-        $language = (string) $language;
-
         // validate file, generate it if needed
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.json')) {
             BackendLocaleModel::buildCache('en', APPLICATION);
@@ -338,9 +268,9 @@ class Language
         try {
             // Needed to make it possible to use the backend language in the console.
             if (defined('APPLICATION') && APPLICATION !== 'Console') {
-                CommonCookie::set('interface_language', $language);
+                Model::getContainer()->get('fork.cookie')->set('interface_language', $language);
             }
-        } catch (\SpoonCookieException $e) {
+        } catch (RuntimeException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
 
@@ -363,69 +293,43 @@ class Language
         $msg = (array) $translations['msg'];
         foreach ($err as $module => $translations) {
             if (!isset(self::$err[$module])) {
-                self::$err[$module] = array();
+                self::$err[$module] = [];
             }
             self::$err[$module] = array_merge(self::$err[$module], $translations);
         }
         foreach ($lbl as $module => $translations) {
             if (!isset(self::$lbl[$module])) {
-                self::$lbl[$module] = array();
+                self::$lbl[$module] = [];
             }
             self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
         }
         foreach ($msg as $module => $translations) {
             if (!isset(self::$msg[$module])) {
-                self::$msg[$module] = array();
+                self::$msg[$module] = [];
             }
             self::$msg[$module] = array_merge(self::$msg[$module], $translations);
         }
     }
 
     /**
-     * Set the current working language
-     *
      * @param string $language The language to use, if not provided we will use the working language.
      */
-    public static function setWorkingLanguage($language)
+    public static function setWorkingLanguage(string $language): void
     {
-        self::$currentWorkingLanguage = (string) $language;
+        self::$currentWorkingLanguage = $language;
     }
 
-    /**
-     * Get an error from the language-file
-     *
-     * @param string $key    The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
-    public static function err($key, $module = null)
+    public static function err(string $key, string $module = null): string
     {
         return self::getError($key, $module);
     }
 
-    /**
-     * Get a label from the language-file
-     *
-     * @param string $key    The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
-    public static function lbl($key, $module = null)
+    public static function lbl(string $key, string $module = null): string
     {
         return self::getLabel($key, $module);
     }
 
-    /**
-     * Get a message from the language-file
-     *
-     * @param string $key    The key to get.
-     * @param string $module The module wherein we should search.
-     *
-     * @return string
-     */
-    public static function msg($key, $module = null)
+    public static function msg(string $key, string $module = null): string
     {
         return self::getMessage($key, $module);
     }

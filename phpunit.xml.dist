@@ -20,12 +20,34 @@
             <exclude>src/ForkCMS/Bundle/InstallerBundle/Tests/Controller</exclude>
             <exclude>src/Frontend/Modules/*/Tests</exclude>
             <exclude>src/Frontend/Modules/Blog/Tests/Actions</exclude>
+            <exclude>src/Frontend/Modules/ContentBlocks/Tests/Actions</exclude>
             <exclude>src/Frontend/Modules/Faq/Tests/Actions</exclude>
+            <exclude>src/Frontend/Modules/FormBuilder/Tests/Actions</exclude>
+            <exclude>src/Frontend/Modules/Location/Tests/Actions</exclude>
+            <exclude>src/Frontend/Modules/Mailmotor/Tests/Actions</exclude>
+            <exclude>src/Frontend/Modules/Pages/Tests/Actions</exclude>
+            <exclude>src/Frontend/Modules/Profiles/Tests/Actions</exclude>
             <exclude>src/Frontend/Modules/Search/Tests/Actions</exclude>
+            <exclude>src/Frontend/Modules/Tags/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Analytics/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Authentication/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Blog/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/ContentBlocks/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Dashboard/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Error/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Extensions/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Faq/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/FormBuilder/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Groups/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Locale/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Location/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Mailmotor/Tests/Actions</exclude>
             <exclude>src/Backend/Modules/Pages/Tests/Actions</exclude>
-            <exclude>src/Api/*/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Profiles/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Search/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Settings/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Tags/Tests/Actions</exclude>
+            <exclude>src/Backend/Modules/Users/Tests/Actions</exclude>
             <exclude>src/Frontend/Core/Tests/AjaxTest.php</exclude>
         </testsuite>
     </testsuites>
@@ -38,7 +60,6 @@
             <directory>src/Frontend/Modules/*/Tests/Actions</directory>
             <directory>src/Frontend/Core/Tests/AjaxTest.php</directory>
             <directory>src/Backend/Modules/*/Tests/Actions</directory>
-            <directory>src/Api/*/Tests/Actions</directory>
         </testsuite>
     </testsuites>
 

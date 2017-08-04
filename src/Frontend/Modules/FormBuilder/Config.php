@@ -22,11 +22,4 @@ class Config extends FrontendBaseConfig
      * @var string
      */
     protected $defaultAction = 'Form';
-
-    /**
-     * The disabled actions
-     *
-     * @var array
-     */
-    protected $disabledActions = array();
 }

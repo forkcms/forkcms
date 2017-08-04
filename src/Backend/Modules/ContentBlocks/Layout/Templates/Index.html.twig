@@ -1,10 +1,11 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
   {% if showContentBlocksAdd %}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
-        {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|ucfirst) }}
+        {{ macro.buttonIcon( geturl('Add'), 'plus-square', 'lbl.Add'|trans|ucfirst) }}
       </div>
     </div>
   {% endif %}

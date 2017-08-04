@@ -1,11 +1,15 @@
 <?php
 
+namespace ForkCMS\App;
+
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * If you want to extend Fork with an application of your own, you should implement this interface
@@ -19,12 +23,16 @@ interface ApplicationInterface
      * the page's functionality gets loaded. Any functionality of the app should be
      * initialized afterwards.
      */
-    public function initialize();
+    public function initialize(): void;
 
     /**
      * Sends the output of the app to our browser, in the form of a Response object.
-     *
-     * @return Symfony\Component\HttpFoundation\Response
      */
-    public function display();
+    public function display(): Response;
+
+    /**
+     * This is fairly dirty, but so is having static method classes for models.
+     * Consider this a temporary solution until we have genuine models available.
+     */
+    public function passContainerToModels(): void;
 }

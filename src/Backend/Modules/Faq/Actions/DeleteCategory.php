@@ -11,6 +11,7 @@ namespace Backend\Modules\Faq\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Form\Type\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
@@ -18,43 +19,57 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  */
 class DeleteCategory extends BackendBaseActionDelete
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
-        $this->id = $this->getParameter('id', 'int');
+        $deleteForm = $this->createForm(
+            DeleteType::class,
+            null,
+            ['module' => $this->getModule(), 'action' => 'DeleteCategory']
+        );
+        $deleteForm->handleRequest($this->getRequest());
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->redirect(BackendModel::createUrlForAction(
+                'Categories',
+                null,
+                null,
+                ['error' => 'something-went-wrong']
+            ));
+
+            return;
+        }
+        $deleteFormData = $deleteForm->getData();
+
+        $this->id = $deleteFormData['id'];
 
         // does the item exist
-        if ($this->id !== null && BackendFaqModel::existsCategory($this->id)) {
-            $this->record = (array) BackendFaqModel::getCategory($this->id);
+        if ($this->id === 0 || !BackendFaqModel::existsCategory($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction('Categories', null, null, ['error' => 'non-existing']));
 
-            if (BackendFaqModel::deleteCategoryAllowed($this->id)) {
-                parent::execute();
-
-                // delete item
-                BackendFaqModel::deleteCategory($this->id);
-                BackendModel::triggerEvent(
-                    $this->getModule(),
-                    'after_delete_category',
-                    array('item' => $this->record)
-                );
-
-                // category was deleted, so redirect
-                $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&report=deleted-category&var=' .
-                    rawurlencode($this->record['title'])
-                );
-            } else {
-                $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&error=delete-category-not-allowed&var=' .
-                    rawurlencode($this->record['title'])
-                );
-            }
-        } else {
-            $this->redirect(
-                BackendModel::createURLForAction('Categories') . '&error=non-existing'
-            );
+            return;
         }
+
+        $this->record = (array) BackendFaqModel::getCategory($this->id);
+
+        if (!BackendFaqModel::deleteCategoryAllowed($this->id)) {
+            $this->redirect(BackendModel::createUrlForAction(
+                'Categories',
+                null,
+                null,
+                ['error' => 'delete-category-not-allowed', 'var' => $this->record['title']]
+            ));
+
+            return;
+        }
+
+        parent::execute();
+
+        BackendFaqModel::deleteCategory($this->id);
+
+        $this->redirect(BackendModel::createUrlForAction(
+            'Categories',
+            null,
+            null,
+            ['report' => 'deleted-category', 'var' => $this->record['title']]
+        ));
     }
 }

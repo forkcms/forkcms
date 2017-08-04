@@ -12,6 +12,7 @@ namespace Frontend\Modules\Search\Ajax;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the save-action, it will save the searched term in the statistics
@@ -23,47 +24,45 @@ class Save extends FrontendBaseAJAXAction
      */
     private $statistics;
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
         // get parameters
         $charset = $this->getContainer()->getParameter('kernel.charset');
-        $searchTerm = \SpoonFilter::getPostValue('term', null, '');
+        $searchTerm = $this->getRequest()->request->get('term', '');
         $term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities(
             $searchTerm
         );
 
         // validate search term
-        if ($term == '') {
-            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
-        } else {
-            // previous search result
-            $previousTerm = \SpoonSession::exists('searchTerm') ? \SpoonSession::get('searchTerm') : '';
-            \SpoonSession::set('searchTerm', '');
+        if ($term === '') {
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'term-parameter is missing.');
 
-            // save this term?
-            if ($previousTerm != $term) {
-                // format data
-                $this->statistics = array();
-                $this->statistics['term'] = $term;
-                $this->statistics['language'] = LANGUAGE;
-                $this->statistics['time'] = FrontendModel::getUTCDate();
-                $this->statistics['data'] = serialize(array('server' => $_SERVER));
-                $this->statistics['num_results'] = FrontendSearchModel::getTotal($term);
-
-                // save data
-                FrontendSearchModel::save($this->statistics);
-            }
-
-            // save current search term in cookie
-            \SpoonSession::set('searchTerm', $term);
-
-            // output
-            $this->output(self::OK);
+            return;
         }
+        // previous search result
+        $previousTerm = FrontendModel::getSession()->get('searchTerm', '');
+        FrontendModel::getSession()->set('searchTerm', '');
+
+        // save this term?
+        if ($previousTerm !== $term) {
+            // format data
+            $this->statistics = [];
+            $this->statistics['term'] = $term;
+            $this->statistics['language'] = LANGUAGE;
+            $this->statistics['time'] = FrontendModel::getUTCDate();
+            $this->statistics['data'] = serialize(['server' => $_SERVER]);
+            $this->statistics['num_results'] = FrontendSearchModel::getTotal($term);
+
+            // save data
+            FrontendSearchModel::save($this->statistics);
+        }
+
+        // save current search term in cookie
+        FrontendModel::getSession()->set('searchTerm', $term);
+
+        // output
+        $this->output(Response::HTTP_OK);
     }
 }

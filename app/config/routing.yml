@@ -1,34 +1,24 @@
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
 backend:
     path: /private/{_locale}/{module}/{action}
     defaults:
-        _controller: ApplicationRouting::backendController
-        _locale:     ~
-        module:      ~
-        action:      ~
+        _controller: \ForkCMS\App\ForkController::backendController
+        _locale: ~
+        module: ~
+        action: ~
 backend_ajax:
     path: /backend/ajax
     defaults:
-        _controller: ApplicationRouting::backendAjaxController
-backend_cronjob:
-    path: /backend/cronjob
-    defaults:
-        _controller: ApplicationRouting::backendCronjobController
+        _controller: \ForkCMS\App\ForkController::backendAjaxController
 frontend_ajax:
     path: /frontend/ajax
     defaults:
-        _controller: ApplicationRouting::frontendAjaxController
-api:
-    path: /api/{version}/{client}
-    defaults:
-        _controller: ApplicationRouting::apiController
-        version:     ~
-        client:      ~
-    requirements:
-        client: (|client)
+        _controller: \ForkCMS\App\ForkController::frontendAjaxController
 frontend:
     path: /{route}
     defaults:
-        _controller: ApplicationRouting::frontendController
-        route:       ~
+        _controller: \ForkCMS\App\ForkController::frontendController
+        route: ~
     requirements:
         route: (.*)

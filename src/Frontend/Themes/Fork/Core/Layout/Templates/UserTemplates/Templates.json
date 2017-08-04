@@ -1,0 +1,12 @@
+[
+  {
+    "title": "test",
+    "description": "just a simple test",
+    "file": "test.html"
+  },
+  {
+    "title": "quote",
+    "description": "easy way to add a quote",
+    "file": "quote.html"
+  }
+]

@@ -6,8 +6,12 @@ use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
+use Symfony\Component\Templating\TemplateNameParserInterface;
+use Twig_Environment;
+use Twig_FactoryRuntimeLoader;
 
 /*
  * This file is part of Fork CMS.
@@ -23,55 +27,58 @@ use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 class TwigTemplate extends BaseTwigTemplate
 {
     /**
-     * theme path location
-     *
      * @var string
      */
     private $themePath;
 
-    /**
-     * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
-     */
-    public function __construct()
+    public function __construct(
+        Twig_Environment $environment,
+        TemplateNameParserInterface $parser,
+        FileLocatorInterface $locator
+    ) {
+        parent::__construct($environment, $parser, $locator);
+
+        $container = Model::getContainer();
+        $this->debugMode = $container->getParameter('kernel.debug');
+        $this->environment->disableStrictVariables();
+        new FormExtension($this->environment);
+        TwigFilters::addFilters($this->environment, 'Frontend');
+        $this->startGlobals($this->environment);
+
+        if (!$container->getParameter('fork.is_installed')) {
+            return;
+        }
+
+        $this->addFrontendPathsToTheTemplateLoader($container->get('fork.settings')->get('Core', 'theme', 'Fork'));
+        $this->connectSymfonyForms();
+    }
+
+    private function addFrontendPathsToTHeTemplateLoader(string $theme): void
     {
-        parent::__construct(func_get_arg(0), func_get_arg(1), func_get_arg(2));
+        $this->themePath = FRONTEND_PATH . '/Themes/' . $theme;
+        $this->environment->setLoader(
+            new \Twig_Loader_Chain(
+                [$this->environment->getLoader(), new \Twig_Loader_Filesystem($this->getLoadingFolders())]
+            )
+        );
+    }
 
-        $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
+    private function connectSymfonyForms(): void
+    {
+        $rendererEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'), $this->environment);
+        $csrfTokenManager = Model::get('security.csrf.token_manager');
+        $this->environment->addRuntimeLoader(
+            new Twig_FactoryRuntimeLoader(
+                [
+                    TwigRenderer::class => function () use ($rendererEngine, $csrfTokenManager): TwigRenderer {
+                        return new TwigRenderer($rendererEngine, $csrfTokenManager);
+                    },
+                ]
+            )
+        );
 
-        $this->forkSettings = Model::get('fork.settings');
-        // fork has been installed
-        try {
-            if ($this->forkSettings) {
-                $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
-                $loader = $this->environment->getLoader();
-                $loader = new \Twig_Loader_Chain(
-                    array(
-                        $loader,
-                        new \Twig_Loader_Filesystem($this->getLoadingFolders()),
-                    )
-                );
-                $this->environment->setLoader($loader);
-
-                // connect symphony forms
-                $formEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'));
-                $formEngine->setEnvironment($this->environment);
-                $this->environment->addExtension(
-                    new SymfonyFormExtension(
-                        new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
-                    )
-                );
-            }
-
-            $this->environment->disableStrictVariables();
-
-            // init Form extension
-            new FormExtension($this->environment);
-
-            // start the filters / globals
-            TwigFilters::getFilters($this->environment, 'Frontend');
-            $this->startGlobals($this->environment);
-        } catch (\PDOException $exception) {
-            // fork is not installed apparently so we need to catch this error
+        if (!$this->environment->hasExtension(SymfonyFormExtension::class)) {
+            $this->environment->addExtension(new SymfonyFormExtension());
         }
     }
 
@@ -82,7 +89,7 @@ class TwigTemplate extends BaseTwigTemplate
      *
      * @return string
      */
-    public function getPath($template)
+    public function getPath(string $template): string
     {
         if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
             return str_replace(FRONTEND_MODULES_PATH . '/', '', $template);
@@ -93,24 +100,13 @@ class TwigTemplate extends BaseTwigTemplate
     }
 
     /**
-     * Adds a global variable to the template
-     *
-     * @param string $name
-     * @param mixed $value
-     */
-    public function addGlobal($name, $value)
-    {
-        $this->environment->addGlobal($name, $value);
-    }
-
-    /**
      * Fetch the parsed content from this template.
      *
      * @param string $template The location of the template file, used to display this template.
      *
      * @return string The actual parsed content after executing this template.
      */
-    public function getContent($template)
+    public function getContent(string $template): string
     {
         $template = $this->getPath($template);
 
@@ -119,63 +115,39 @@ class TwigTemplate extends BaseTwigTemplate
             $this->variables
         );
 
-        $this->variables = array();
+        $this->variables = [];
 
         return $content;
     }
 
-    /**
-     * @param string $template
-     * @param array $variables
-     *
-     * @return string
-     */
-    public function render($template, array $variables = array())
+    private function getLoadingFolders(): array
     {
-        if (!empty($this->forms)) {
-            foreach ($this->forms as $form) {
-                // using assign to pass the form as global
-                $this->environment->addGlobal('form_' . $form->getName(), $form);
-            }
-        }
-
-        return $this->environment->render($template, $variables);
-    }
-
-    /**
-     * @return array
-     */
-    private function getLoadingFolders()
-    {
-        $filesystem = new Filesystem();
-
-        return array_filter(
-            array(
+        return $this->filterOutNonExistingPaths(
+            [
                 $this->themePath . '/Modules',
                 $this->themePath,
                 FRONTEND_MODULES_PATH,
                 FRONTEND_PATH,
-            ),
-            function ($folder) use ($filesystem) {
-                return $filesystem->exists($folder);
-            }
+            ]
         );
     }
 
-    /**
-     * @param string $fileName
-     *
-     * @return array
-     */
-    private function getFormTemplates($fileName)
+    private function getFormTemplates(string $fileName): array
+    {
+        return $this->filterOutNonExistingPaths(
+            [
+                FRONTEND_PATH . '/Core/Layout/Templates/' . $fileName,
+                $this->themePath . '/Core/Layout/Templates/' . $fileName,
+            ]
+        );
+    }
+
+    private function filterOutNonExistingPaths(array $files): array
     {
         $filesystem = new Filesystem();
 
         return array_filter(
-            array(
-                FRONTEND_PATH . '/Core/Layout/Templates/' . $fileName,
-                $this->themePath . '/Core/Layout/Templates/' . $fileName,
-            ),
+            $files,
             function ($folder) use ($filesystem) {
                 return $filesystem->exists($folder);
             }

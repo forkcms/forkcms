@@ -16,11 +16,13 @@ if (!is_dir(__DIR__ . '/vendor')) {
          installed you should run: <code>composer install</code>. If you
          don\'t have composer installed you really should, see
          http://getcomposer.org for more information';
+
     return;
 }
 
 require_once __DIR__ . '/autoload.php';
 
+use ForkCMS\App\AppKernel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
@@ -42,15 +44,15 @@ if (!file_exists($parametersFile)) {
                  <a href="http://www.fork-cms.com/community/documentation/detail/installation/webservers">webservers</a>
                  for further information. <a href="?skiphtaccess">Skip .htaccess
                  check</a>';
+
             return;
         }
 
         header('Location: /install');
+
         return;
     }
 }
-
-require_once __DIR__ . '/app/AppKernel.php';
 
 if (extension_loaded('newrelic')) {
     newrelic_name_transaction(strtok($request->getRequestUri(), '?'));

@@ -24,10 +24,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  */
 class Add extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
 
@@ -38,97 +35,89 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('add');
+        $this->form = new BackendForm('add');
 
         // set hidden values
-        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
-        $rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
-
+        $rbtHiddenValues = [
+            ['label' => BL::lbl('Hidden'), 'value' => 1],
+            ['label' => BL::lbl('Published'), 'value' => 0],
+        ];
         // get categories
         $categories = BackendFaqModel::getCategories();
 
         // create elements
-        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
-        $this->frm->addEditor('answer');
-        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
-        $this->frm->addDropdown('category_id', $categories);
-        $this->frm->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
+        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
+        $this->form->addEditor('answer');
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, false);
+        $this->form->addDropdown('category_id', $categories);
+        $this->form->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
 
         // meta
-        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+        $this->meta = new BackendMeta($this->form, null, 'title', true);
     }
 
-    /**
-     * Parse the page
-     */
-    protected function parse()
+    protected function parse(): void
     {
         parent::parse();
 
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
+        $url404 = BackendModel::getUrl(404);
 
         // parse additional variables
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
+        if ($this->form->isSubmitted()) {
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('QuestionIsRequired'));
-            $this->frm->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
-            $this->frm->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('QuestionIsRequired'));
+            $this->form->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
+            $this->form->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
+                $item = [];
                 $item['meta_id'] = $this->meta->save();
-                $item['category_id'] = $this->frm->getField('category_id')->getValue();
+                $item['category_id'] = $this->form->getField('category_id')->getValue();
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['language'] = BL::getWorkingLanguage();
-                $item['question'] = $this->frm->getField('title')->getValue();
-                $item['answer'] = $this->frm->getField('answer')->getValue(true);
+                $item['question'] = $this->form->getField('title')->getValue();
+                $item['answer'] = $this->form->getField('answer')->getValue(true);
                 $item['created_on'] = BackendModel::getUTCDate();
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
+                $item['hidden'] = $this->form->getField('hidden')->getValue();
                 $item['sequence'] = BackendFaqModel::getMaximumSequence(
-                    $this->frm->getField('category_id')->getValue()
+                    $this->form->getField('category_id')->getValue()
                 ) + 1;
 
                 // save the data
                 $item['id'] = BackendFaqModel::insert($item);
                 BackendTagsModel::saveTags(
                     $item['id'],
-                    $this->frm->getField('tags')->getValue(),
-                    $this->URL->getModule()
+                    $this->form->getField('tags')->getValue(),
+                    $this->url->getModule()
                 );
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
                 // add search index
                 BackendSearchModel::saveIndex(
                     $this->getModule(),
                     $item['id'],
-                    array(
+                    [
                         'title' => $item['question'],
                         'text' => $item['answer'],
-                    )
+                    ]
                 );
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=added&var=' .
+                    BackendModel::createUrlForAction('Index') . '&report=added&var=' .
                     rawurlencode($item['question']) . '&highlight=' . $item['id']
                 );
             }

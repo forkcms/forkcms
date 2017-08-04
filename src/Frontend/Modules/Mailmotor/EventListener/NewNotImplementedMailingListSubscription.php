@@ -11,7 +11,7 @@ namespace Frontend\Modules\Mailmotor\EventListener;
 
 use Common\Language;
 use Common\Mailer\Message;
-use Frontend\Modules\Mailmotor\Event\NotImplementedSubscribedEvent;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedSubscribedEvent;
 use Swift_Mailer;
 use Common\ModulesSettings;
 
@@ -34,10 +34,6 @@ final class NewNotImplementedMailingListSubscription
      */
     protected $mailer;
 
-    /**
-     * @param Swift_Mailer $mailer
-     * @param ModulesSettings $modulesSettings
-     */
     public function __construct(
         Swift_Mailer $mailer,
         ModulesSettings $modulesSettings
@@ -46,14 +42,9 @@ final class NewNotImplementedMailingListSubscription
         $this->modulesSettings = $modulesSettings;
     }
 
-    /**
-     * On NotImplementedSubscribedEvent
-     *
-     * @param NotImplementedSubscribedEvent $event
-     */
     public function onNotImplementedSubscribedEvent(
         NotImplementedSubscribedEvent $event
-    ) {
+    ): void {
         // define title
         $title = sprintf(
             Language::lbl('MailTitleSubscribeSubscriber'),
@@ -68,14 +59,14 @@ final class NewNotImplementedMailingListSubscription
 
         // define message
         $message = Message::newInstance($title)
-            ->setFrom(array($from['email'] => $from['name']))
-            ->setTo(array($to['email'] => $to['name']))
-            ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+            ->setFrom([$from['email'] => $from['name']])
+            ->setTo([$to['email'] => $to['name']])
+            ->setReplyTo([$replyTo['email'] => $replyTo['name']])
             ->parseHtml(
                 FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.html.twig',
-                array(
-                    'message' => $title
-                ),
+                [
+                    'message' => $title,
+                ],
                 true
             )
         ;

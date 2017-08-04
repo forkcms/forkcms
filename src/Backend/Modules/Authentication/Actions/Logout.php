@@ -18,15 +18,12 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Logout extends BackendBaseAction
 {
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         BackendAuthentication::logout();
 
         // redirect to login-screen
-        $this->redirect(BackendModel::createURLForAction('Index', $this->getModule()));
+        $this->redirect(BackendModel::createUrlForAction('Index', $this->getModule()));
     }
 }

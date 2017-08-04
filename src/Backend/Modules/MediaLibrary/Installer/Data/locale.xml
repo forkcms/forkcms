@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Core>
+      <item type="label" name="AddMediaItems">
+        <translation language="en"><![CDATA[add media]]></translation>
+        <translation language="nl"><![CDATA[bestanden toevoegen]]></translation>
+      </item>
+      <item type="message" name="ChooseTypeForNewGroup">
+        <translation language="en"><![CDATA[with the following type:]]></translation>
+        <translation language="nl"><![CDATA[van het volgende type:]]></translation>
+      </item>
+      <item type="label" name="DropFilesHere">
+        <translation language="en"><![CDATA[drop files here]]></translation>
+        <translation language="nl"><![CDATA[sleep hier je bestanden]]></translation>
+      </item>
+      <item type="message" name="FolderIsAdded">
+        <translation language="en"><![CDATA[The new folder is added.]]></translation>
+        <translation language="nl"><![CDATA[De nieuwe map is toegevoegd.]]></translation>
+      </item>
+      <item type="label" name="MediaAddFolder">
+        <translation language="en"><![CDATA[add folder]]></translation>
+        <translation language="nl"><![CDATA[map toevoegen]]></translation>
+      </item>
+      <item type="label" name="MediaAddMovie">
+        <translation language="en"><![CDATA[add movie]]></translation>
+        <translation language="nl"><![CDATA[video toevoegen]]></translation>
+      </item>
+      <item type="label" name="EnableCropper">
+        <translation language="en"><![CDATA[enable cropper]]></translation>
+        <translation language="nl"><![CDATA[activeer cropper]]></translation>
+      </item>
+      <item type="message" name="TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat">
+        <translation language="en"><![CDATA[The cropper is mandatory because the images need to have a certain aspect ratio.]]></translation>
+        <translation language="nl"><![CDATA[De cropper is verplicht omdat de afbeeldingen een bepaalde aspect ratio moeten hebben.]]></translation>
+      </item>
+      <item type="label" name="MediaAudio">
+        <translation language="de"><![CDATA[audio]]></translation>
+        <translation language="en"><![CDATA[audio]]></translation>
+        <translation language="fr"><![CDATA[audio]]></translation>
+        <translation language="nl"><![CDATA[audio]]></translation>
+      </item>
+      <item type="message" name="MediaChoseToUpload">
+        <translation language="en"><![CDATA[Choose the media to upload.]]></translation>
+        <translation language="nl"><![CDATA[Kies de bestand(en) die je wil opladen.]]></translation>
+      </item>
+      <item type="label" name="MediaConnect">
+        <translation language="en"><![CDATA[connect media]]></translation>
+        <translation language="nl"><![CDATA[media koppelen]]></translation>
+      </item>
+      <item type="label" name="MediaConnectNow">
+        <translation language="en"><![CDATA[connect / upload]]></translation>
+        <translation language="nl"><![CDATA[koppelen / opladen]]></translation>
+      </item>
+      <item type="label" name="MediaDisconnect">
+        <translation language="en"><![CDATA[disconnect]]></translation>
+        <translation language="nl"><![CDATA[ontkoppelen]]></translation>
+      </item>
+      <item type="label" name="MediaFiles">
+        <translation language="de"><![CDATA[Dateien]]></translation>
+        <translation language="en"><![CDATA[files]]></translation>
+        <translation language="fr"><![CDATA[fichiers]]></translation>
+        <translation language="nl"><![CDATA[bestanden]]></translation>
+      </item>
+      <item type="label" name="MediaFolder">
+        <translation language="en"><![CDATA[folder]]></translation>
+        <translation language="nl"><![CDATA[map]]></translation>
+      </item>
+      <item type="message" name="MediaGroupEdited">
+        <translation language="en"><![CDATA[The media is changed correctly.<br/><strong>Attention:</strong> these changes will be used after saving.]]></translation>
+        <translation language="nl"><![CDATA[Correct gewijzigd!<br/><strong>Opgelet</strong>: nog opslaan om te bevestigen.]]></translation>
+      </item>
+      <item type="label" name="MediaImages">
+        <translation language="de"><![CDATA[Bilder]]></translation>
+        <translation language="en"><![CDATA[images]]></translation>
+        <translation language="fr"><![CDATA[photos]]></translation>
+        <translation language="nl"><![CDATA[afbeeldingen]]></translation>
+      </item>
+      <item type="label" name="MediaInTheFolder">
+        <translation language="en"><![CDATA[in the folder]]></translation>
+        <translation language="nl"><![CDATA[in de map]]></translation>
+      </item>
+      <item type="label" name="MediaItemDelete">
+        <translation language="de"><![CDATA[Entfernen von Medien]]></translation>
+        <translation language="en"><![CDATA[charging media]]></translation>
+        <translation language="fr"><![CDATA[médias de charge]]></translation>
+        <translation language="nl"><![CDATA[media verwijderen]]></translation>
+      </item>
+      <item type="label" name="MediaItemIndex">
+        <translation language="de"><![CDATA[Übersicht]]></translation>
+        <translation language="en"><![CDATA[overview]]></translation>
+        <translation language="fr"><![CDATA[vue d'ensemble]]></translation>
+        <translation language="nl"><![CDATA[overzicht]]></translation>
+      </item>
+      <item type="label" name="MediaItemUpload">
+        <translation language="de"><![CDATA[Entfernen von Medien]]></translation>
+        <translation language="en"><![CDATA[removing media]]></translation>
+        <translation language="fr"><![CDATA[supression de media]]></translation>
+        <translation language="nl"><![CDATA[media opladen]]></translation>
+      </item>
+      <item type="label" name="MediaLibrary">
+        <translation language="de"><![CDATA[Medienbibliothek]]></translation>
+        <translation language="en"><![CDATA[media]]></translation>
+        <translation language="fr"><![CDATA[média]]></translation>
+        <translation language="nl"><![CDATA[media]]></translation>
+      </item>
+      <item type="label" name="MediaLibraryGroupTypeAll">
+        <translation language="en"><![CDATA[all file types]]></translation>
+        <translation language="nl"><![CDATA[alle bestandstypes]]></translation>
+      </item>
+      <item type="label" name="MediaLibraryGroupTypeAudio">
+        <translation language="en"><![CDATA[only audio-files]]></translation>
+        <translation language="nl"><![CDATA[enkel audio-bestanden]]></translation>
+      </item>
+      <item type="label" name="MediaLibraryGroupTypeFile">
+        <translation language="en"><![CDATA[only files (.pdf, .doc, .docx, ...)]]></translation>
+        <translation language="nl"><![CDATA[enkel bestanden (.pdf, .doc, .docx, ...)]]></translation>
+      </item>
+      <item type="label" name="MediaLibraryGroupTypeImage">
+        <translation language="en"><![CDATA[only images (.jpg, .png, .gif)]]></translation>
+        <translation language="nl"><![CDATA[enkel afbeeldingen (.jpg, .png, .gif)]]></translation>
+      </item>
+      <item type="label" name="MediaLibraryGroupTypeImageFile">
+        <translation language="en"><![CDATA[only images and files]]></translation>
+        <translation language="nl"><![CDATA[enkel afbeeldingen en bestanden]]></translation>
+      </item>
+      <item type="label" name="MediaLibraryGroupTypeImageMovie">
+        <translation language="en"><![CDATA[only images and movies]]></translation>
+        <translation language="nl"><![CDATA[enkel afbeeldingen en video's]]></translation>
+      </item>
+      <item type="label" name="MediaLibraryGroupTypeMovie">
+        <translation language="en"><![CDATA[only movies (.avi, .mov, .mp4)]]></translation>
+        <translation language="nl"><![CDATA[enkel video's (.avi, .mov, .mp4)]]></translation>
+      </item>
+      <item type="label" name="MediaLibraryTab">
+        <translation language="de"><![CDATA[Medien]]></translation>
+        <translation language="en"><![CDATA[media library]]></translation>
+        <translation language="fr"><![CDATA[médiathèque]]></translation>
+        <translation language="nl"><![CDATA[media bibliotheek]]></translation>
+      </item>
+      <item type="label" name="MediaMovieId">
+        <translation language="en"><![CDATA[movie ID]]></translation>
+        <translation language="nl"><![CDATA[video ID]]></translation>
+      </item>
+      <item type="error" name="MediaMovieIdAlreadyExists">
+        <translation language="en"><![CDATA[Movie ID is already inserted.]]></translation>
+        <translation language="nl"><![CDATA[Deze video ID is reeds toegevoegd.]]></translation>
+      </item>
+      <item type="message" name="MediaMovieIdHelp">
+        <translation language="en"><![CDATA[This is the unique ID for a movie.]]></translation>
+        <translation language="nl"><![CDATA[Dit is de unieke ID die de video heeft.]]></translation>
+      </item>
+      <item type="message" name="MediaMovieIsAdded">
+        <translation language="en"><![CDATA[Movie id is added.]]></translation>
+        <translation language="nl"><![CDATA[Video ID is toegevoegd.]]></translation>
+      </item>
+      <item type="label" name="MediaMovies">
+        <translation language="de"><![CDATA[Videos]]></translation>
+        <translation language="en"><![CDATA[movies]]></translation>
+        <translation language="fr"><![CDATA[vidéos]]></translation>
+        <translation language="nl"><![CDATA[video's]]></translation>
+      </item>
+      <item type="label" name="MediaMovieSource">
+        <translation language="en"><![CDATA[source]]></translation>
+        <translation language="nl"><![CDATA[bron]]></translation>
+      </item>
+      <item type="error" name="MediaMovieSourceIsRequired">
+        <translation language="en"><![CDATA[Movie source is a required field.]]></translation>
+        <translation language="nl"><![CDATA[Videobron is een verplicht veld.]]></translation>
+      </item>
+      <item type="label" name="MediaMovieTitle">
+        <translation language="en"><![CDATA[movie title]]></translation>
+        <translation language="nl"><![CDATA[video titel]]></translation>
+      </item>
+      <item type="error" name="MediaMovieTitleIsRequired">
+        <translation language="en"><![CDATA[Movie title is a required field.]]></translation>
+        <translation language="nl"><![CDATA[Video titel is een verplicht veld.]]></translation>
+      </item>
+      <item type="label" name="MediaMultipleAudio">
+        <translation language="en"><![CDATA[audio]]></translation>
+        <translation language="nl"><![CDATA[audio]]></translation>
+      </item>
+      <item type="label" name="MediaMultipleFile">
+        <translation language="en"><![CDATA[files]]></translation>
+        <translation language="nl"><![CDATA[bestanden]]></translation>
+      </item>
+      <item type="label" name="MediaMultipleImage">
+        <translation language="en"><![CDATA[images]]></translation>
+        <translation language="nl"><![CDATA[afbeeldingen]]></translation>
+      </item>
+      <item type="label" name="MediaMultipleMovie">
+        <translation language="en"><![CDATA[movies]]></translation>
+        <translation language="nl"><![CDATA[video's]]></translation>
+      </item>
+      <item type="label" name="MediaNew">
+        <translation language="en"><![CDATA[nieuwe media]]></translation>
+        <translation language="nl"><![CDATA[nieuwe media]]></translation>
+      </item>
+      <item type="message" name="MediaNoItemsConnected">
+        <translation language="en"><![CDATA[You didn't have any media connected.]]></translation>
+        <translation language="nl"><![CDATA[Je hebt nog geen media gekoppeld.]]></translation>
+      </item>
+      <item type="message" name="MediaNoItemsInFolder">
+        <translation language="en"><![CDATA[There is no media in this folder.]]></translation>
+        <translation language="nl"><![CDATA[Er is nog geen media in deze map.]]></translation>
+      </item>
+      <item type="message" name="MediaOrAddMediaFolder">
+        <translation language="en"><![CDATA[or add new folder]]></translation>
+        <translation language="nl"><![CDATA[of nieuwe map toevoegen]]></translation>
+      </item>
+      <item type="label" name="MediaStorageType">
+        <translation language="en"><![CDATA[source]]></translation>
+        <translation language="nl"><![CDATA[bron]]></translation>
+      </item>
+      <item type="message" name="MediaUploaded">
+        <translation language="en"><![CDATA[Uploaded media.]]></translation>
+        <translation language="nl"><![CDATA[Opgeladen media.]]></translation>
+      </item>
+      <item type="message" name="MediaUploadedSuccess">
+        <translation language="en"><![CDATA[%1$s file(s) successful uploaded.]]></translation>
+        <translation language="nl"><![CDATA[%1$s bestand(en) succesvol opgeladen.]]></translation>
+      </item>
+      <item type="message" name="MediaUploadedSuccessful">
+        <translation language="en"><![CDATA[Media "%1$s" uploaded successful.]]></translation>
+        <translation language="nl"><![CDATA[Media "%1$s" succesvol opgeladen.]]></translation>
+      </item>
+      <item type="message" name="MediaUploadThisType">
+        <translation language="en"><![CDATA[What do you want to add?]]></translation>
+        <translation language="nl"><![CDATA[Wat wil je toevoegen?]]></translation>
+      </item>
+      <item type="message" name="MediaUploadToThisFolder">
+        <translation language="en"><![CDATA[Upload to this folder:]]></translation>
+        <translation language="nl"><![CDATA[Toevoegen in de map:]]></translation>
+      </item>
+      <item type="message" name="MediaUploadTypeFiles">
+        <translation language="en"><![CDATA[Images, files]]></translation>
+        <translation language="nl"><![CDATA[Afbeeldingen, bestanden]]></translation>
+      </item>
+      <item type="message" name="MediaUploadTypeMovies">
+        <translation language="en"><![CDATA[Online movies (Youtube, Vimeo, ...)]]></translation>
+        <translation language="nl"><![CDATA[Online video's (Youtube, Vimeo, ...)]]></translation>
+      </item>
+      <item type="message" name="MediaYouAreHere">
+        <translation language="en"><![CDATA[You are here:]]></translation>
+        <translation language="nl"><![CDATA[U bevindt zich hier:]]></translation>
+      </item>
+      <item type="message" name="MediaWhichMovieToAdd">
+        <translation language="en"><![CDATA[Which movie do you want to add?]]></translation>
+        <translation language="nl"><![CDATA[Welke video wil je toevoegen?]]></translation>
+      </item>
+      <item type="message" name="MediaWillBeConnected">
+        <translation language="en"><![CDATA[The following media will be connected when pressing "OK":]]></translation>
+        <translation language="nl"><![CDATA[Volgende media wordt gekoppeld als je op "OK" drukt:]]></translation>
+      </item>
+      <item type="label" name="Crop">
+        <translation language="en"><![CDATA[crop]]></translation>
+        <translation language="nl"><![CDATA[bijsnijden]]></translation>
+      </item>
+      <item type="label" name="RotateLeft">
+        <translation language="en"><![CDATA[rotate left]]></translation>
+        <translation language="nl"><![CDATA[draai naar links]]></translation>
+      </item>
+      <item type="label" name="RotateRight">
+        <translation language="en"><![CDATA[rotate right]]></translation>
+        <translation language="nl"><![CDATA[draai naar rechts]]></translation>
+      </item>
+      <item type="label" name="CropImage">
+        <translation language="en"><![CDATA[crop image]]></translation>
+        <translation language="nl"><![CDATA[afbeelding bijsnijden]]></translation>
+      </item>
+    </Core>
+    <MediaLibrary>
+      <item type="label" name="Action">
+        <translation language="en"><![CDATA[action class]]></translation>
+        <translation language="nl"><![CDATA[actie klasse]]></translation>
+      </item>
+      <item type="label" name="AddMediaFolder">
+        <translation language="en"><![CDATA[add folder]]></translation>
+        <translation language="nl"><![CDATA[map toevoegen]]></translation>
+      </item>
+      <item type="label" name="AddMediaItems">
+        <translation language="en"><![CDATA[add media]]></translation>
+        <translation language="nl"><![CDATA[media opladen]]></translation>
+      </item>
+      <item type="label" name="AllMedia">
+        <translation language="en"><![CDATA[all media]]></translation>
+        <translation language="nl"><![CDATA[alle media]]></translation>
+      </item>
+      <item type="label" name="BackToOverview">
+        <translation language="en"><![CDATA[back to overview]]></translation>
+        <translation language="nl"><![CDATA[terug naar overzicht]]></translation>
+      </item>
+      <item type="message" name="CleanedUpMediaItems">
+        <translation language="en"><![CDATA[Removed %1$s media items.]]></translation>
+        <translation language="nl"><![CDATA[%1$s media items verwijderd]]></translation>
+      </item>
+      <item type="message" name="ConfirmMediaItemCleanup">
+        <translation language="en"><![CDATA[Are you sure you want to delete non-connected media?]]></translation>
+        <translation language="nl"><![CDATA[Bent u zeker dat u niet-gekoppelde media wil verwijderen?]]></translation>
+      </item>
+      <item type="message" name="ConfirmMediaFolderDelete">
+        <translation language="en"><![CDATA[Are you sure you want to delete the folder "%1$s"?]]></translation>
+        <translation language="nl"><![CDATA[Bent u zeker dat u de map "%1$s" wil verwijderen?]]></translation>
+      </item>
+      <item type="message" name="ConfirmMediaFolderDeleteAndFiles">
+        <translation language="en"><![CDATA[Are you sure you want to delete the folder "%1$s" and all its files? This files will be completely removed and you can't use them anymore.]]></translation>
+        <translation language="nl"><![CDATA[Bent u zeker dat u de map "%1$s" en alle bestanden in deze map wil verwijderen? Deze bestanden worden volledig gewist en kan u niet meer opvragen.]]></translation>
+      </item>
+      <item type="message" name="ConfirmMediaItemDelete">
+        <translation language="en"><![CDATA[Are you sure you want to delete this media item "%1$s" and all it connections?]]></translation>
+        <translation language="nl"><![CDATA[Bent u zeker dat u dit bestand "%1$s" en alle koppelingen wil verwijderen?]]></translation>
+      </item>
+      <item type="label" name="Delete">
+        <translation language="en"><![CDATA[delete]]></translation>
+        <translation language="nl"><![CDATA[verwijderen]]></translation>
+      </item>
+      <item type="message" name="DeletedMediaItem">
+        <translation language="en"><![CDATA[The media item "%1$s" and all its connections are deleted.]]></translation>
+        <translation language="nl"><![CDATA[Het media item "%1$s" en al z'n koppelingen zijn verwijderd.]]></translation>
+      </item>
+      <item type="message" name="DeletedMediaFolder">
+        <translation language="en"><![CDATA[The folder "%1$s" and all its files are deleted.]]></translation>
+        <translation language="nl"><![CDATA[De map "%1$s" is verwijderd.]]></translation>
+      </item>
+      <item type="message" name="DeletedView">
+        <translation language="en"><![CDATA[View deleted.]]></translation>
+        <translation language="nl"><![CDATA[Weergave verwijderd.]]></translation>
+      </item>
+      <item type="message" name="EditFile">
+        <translation language="en"><![CDATA[edit file "%1$s"]]></translation>
+        <translation language="nl"><![CDATA[bewerk bestand "%1$s"]]></translation>
+      </item>
+      <item type="label" name="EditMediaFolder">
+        <translation language="en"><![CDATA[edit folder]]></translation>
+        <translation language="nl"><![CDATA[map wijzigen]]></translation>
+      </item>
+      <item type="label" name="File">
+        <translation language="en"><![CDATA[file]]></translation>
+        <translation language="nl"><![CDATA[bestand]]></translation>
+      </item>
+      <item type="label" name="FileTypes">
+        <translation language="en"><![CDATA[file types]]></translation>
+        <translation language="nl"><![CDATA[bestandstypes]]></translation>
+      </item>
+      <item type="error" name="FileExtensionNotAllowed">
+        <translation language="en"><![CDATA[File extension not allowed.]]></translation>
+        <translation language="nl"><![CDATA[Bestandstype niet toegestaan.]]></translation>
+      </item>
+      <item type="message" name="FilesFor">
+        <translation language="en"><![CDATA[in the folder "%1$s"]]></translation>
+        <translation language="nl"><![CDATA[in de map "%1$s"]]></translation>
+      </item>
+      <item type="label" name="Folders">
+        <translation language="nl"><![CDATA[mappen]]></translation>
+        <translation language="en"><![CDATA[folders]]></translation>
+      </item>
+      <item type="label" name="Image">
+        <translation language="en"><![CDATA[image]]></translation>
+        <translation language="nl"><![CDATA[afbeelding]]></translation>
+      </item>
+      <item type="error" name="InvalidWidgetAction">
+        <translation language="en"><![CDATA[Invalid widget action.]]></translation>
+        <translation language="nl"><![CDATA[Ongeldige widget action.]]></translation>
+      </item>
+      <item type="error" name="LabelIsRequired">
+        <translation language="en"><![CDATA[Title is a required field.]]></translation>
+        <translation language="nl"><![CDATA[Titel is een verplicht veld.]]></translation>
+      </item>
+      <item type="label" name="Library">
+        <translation language="en"><![CDATA[library]]></translation>
+        <translation language="nl"><![CDATA[bibliotheek]]></translation>
+      </item>
+      <item type="message" name="MediaDeleted">
+        <translation language="en"><![CDATA[Media deleted.]]></translation>
+        <translation language="nl"><![CDATA[Media verwijderd.]]></translation>
+      </item>
+      <item type="label" name="MediaFolderDelete">
+        <translation language="en"><![CDATA[Delete folder]]></translation>
+        <translation language="nl"><![CDATA[map verwijderen]]></translation>
+      </item>
+      <item type="message" name="MediaFolderDeleted">
+        <translation language="en"><![CDATA[Media folder "%1$s" deleted.]]></translation>
+        <translation language="nl"><![CDATA[Media folder "%1$s" verwijderd.]]></translation>
+      </item>
+      <item type="error" name="MediaFolderDeleteNotPossible">
+        <translation language="en"><![CDATA[Delete folder not possible because it's the last folder.]]></translation>
+        <translation language="nl"><![CDATA[Map verwijderen niet mogelijk omdat dit de laatste map is.]]></translation>
+      </item>
+      <item type="error" name="MediaFolderDeleteNotPossibleBecauseOfConnectedMediaItems">
+        <translation language="en"><![CDATA[Delete folder not possible because it contains media that is connected somewhere.]]></translation>
+        <translation language="nl"><![CDATA[Map verwijderen niet mogelijk omdat er media in zit die ergens gekoppeld is.]]></translation>
+      </item>
+      <item type="message" name="MediaDisconnected">
+        <translation language="en"><![CDATA[File disconnected from gallery "%1$s".]]></translation>
+        <translation language="nl"><![CDATA[Bestand ontkoppeld uit de galerij "%1$s".]]></translation>
+      </item>
+      <item type="error" name="MediaFolderDoesNotExists">
+        <translation language="en"><![CDATA[The folder doesn't exists.]]></translation>
+        <translation language="nl"><![CDATA[De map bestaat niet.]]></translation>
+      </item>
+      <item type="error" name="MediaFolderExists">
+        <translation language="en"><![CDATA[This folder already exists.]]></translation>
+        <translation language="nl"><![CDATA[Deze map bestaat al.]]></translation>
+      </item>
+      <item type="message" name="MediaFolderIsEdited">
+        <translation language="en"><![CDATA[Folder "%1$s" edited.]]></translation>
+        <translation language="nl"><![CDATA[Map "%1$s" gewijzigd.]]></translation>
+      </item>
+      <item type="message" name="MediaFolderMoved">
+        <translation language="en"><![CDATA[Media folder "%1$s" moved.]]></translation>
+        <translation language="nl"><![CDATA[Map "%1$s" verplaatst.]]></translation>
+      </item>
+      <item type="label" name="MediaItemCleanup">
+        <translation language="en"><![CDATA[remove all obsolete media]]></translation>
+        <translation language="nl"><![CDATA[verwijder alle ongebruikte media]]></translation>
+      </item>
+      <item type="message" name="MediaItemDeleted">
+        <translation language="en"><![CDATA[Media item "%1$s" deleted.]]></translation>
+        <translation language="nl"><![CDATA[Media item "%1$s" verwijderd.]]></translation>
+      </item>
+      <item type="label" name="MediaItemEdit">
+        <translation language="en"><![CDATA[edit item]]></translation>
+        <translation language="nl"><![CDATA[item aanpassen]]></translation>
+      </item>
+      <item type="message" name="MediaItemEdited">
+        <translation language="en"><![CDATA[The item "%1$s" has been saved.]]></translation>
+        <translation language="nl"><![CDATA[Het item "%1$s" is opgeslagen.]]></translation>
+      </item>
+      <item type="message" name="MediaMoved">
+        <translation language="en"><![CDATA[Media moved.]]></translation>
+        <translation language="nl"><![CDATA[Media verplaatst.]]></translation>
+      </item>
+      <item type="label" name="Mime">
+        <translation language="en"><![CDATA[filetype]]></translation>
+        <translation language="nl"><![CDATA[bestandstype]]></translation>
+      </item>
+      <item type="label" name="Move">
+        <translation language="en"><![CDATA[move]]></translation>
+        <translation language="nl"><![CDATA[verplaatsen]]></translation>
+      </item>
+      <item type="label" name="MoveMedia">
+        <translation language="en"><![CDATA[move media]]></translation>
+        <translation language="nl"><![CDATA[media verplaatsen]]></translation>
+      </item>
+      <item type="message" name="MoveMediaFoldersNotPossible">
+        <translation language="en"><![CDATA[It's not possible to move media folders.]]></translation>
+        <translation language="nl"><![CDATA[Het is niet mogelijk om media folders te verplaatsen.]]></translation>
+      </item>
+      <item type="message" name="MoveMediaToFolder">
+        <translation language="en"><![CDATA[Move media to this folder:]]></translation>
+        <translation language="nl"><![CDATA[Verplaats deze media naar volgende map:]]></translation>
+      </item>
+      <item type="error" name="NonExistingMediaFolder">
+        <translation language="en"><![CDATA[Folder does not exist.]]></translation>
+        <translation language="nl"><![CDATA[Map bestaat niet.]]></translation>
+      </item>
+      <item type="label" name="NumConnected">
+        <translation language="en"><![CDATA[# connections]]></translation>
+        <translation language="nl"><![CDATA[# koppelingen]]></translation>
+      </item>
+      <item type="error" name="PleaseSelectAFolder">
+        <translation language="en"><![CDATA[Please select a folder when trying to move items.]]></translation>
+        <translation language="nl"><![CDATA[Selecteer aub. een folder bij het verplaatsen.]]></translation>
+      </item>
+      <item type="label" name="SaveAndEdit">
+        <translation language="en"><![CDATA[save and edit]]></translation>
+        <translation language="nl"><![CDATA[opslaan en blijven bewerken]]></translation>
+      </item>
+      <item type="error" name="YouAreRequiredToConnectMedia">
+        <translation language="en"><![CDATA[You are required to connect media.]]></translation>
+        <translation language="nl"><![CDATA[Je bent verplicht om media te koppelen.]]></translation>
+      </item>
+    </MediaLibrary>
+  </Backend>
+</locale>

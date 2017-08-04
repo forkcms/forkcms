@@ -1,0 +1,32 @@
+<div class="modal-dialog modal-lg hidden" data-role="media-library-cropper-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="modal-title h4">{{ 'lbl.CropImage'|trans|ucfirst }}</span>
+    </div>
+    <div class="modal-body" data-role="media-library-cropper-dialog-body">
+      <div class="img-responsive" data-role="media-library-cropper-dialog-canvas-wrapper"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="button-group pull-left">
+        <button type="button" class="btn btn-default" data-role="media-library-cropper-rotate" data-degrees="-90">
+          <span class="fa fa-rotate-left"><span class="sr-only">{{ 'lbl.RotateLeft'|trans|ucfirst }}</span></span>
+        </button>
+        <button type="button" class="btn btn-default" data-role="media-library-cropper-rotate" data-degrees="90">
+          <span class="fa fa-rotate-right"><span class="sr-only">{{ 'lbl.RotateRight'|trans|ucfirst }}</span></span>
+        </button>
+        <button type="button" class="btn btn-default" data-role="media-library-cropper-zoom" data-zoom="-0.05">
+          <span class="fa fa-search-minus"><span class="sr-only">{{ 'lbl.ZoomOut'|trans|ucfirst }}</span></span>
+        </button>
+        <button type="button" class="btn btn-default" data-role="media-library-cropper-zoom" data-zoom="0.05">
+          <span class="fa fa-search-plus"><span class="sr-only">{{ 'lbl.ZoomIn'|trans|ucfirst }}</span></span>
+        </button>
+        <button type="button" class="btn btn-warning" data-role="media-library-cropper-reset">
+          <span class="fa fa-refresh"><span class="sr-only">{{ 'lbl.Reset'|trans|ucfirst }}</span></span>
+        </button>
+      </div>
+      <button type="button" class="btn btn-primary" data-role="media-library-cropper-crop">
+        <span class="fa fa-crop"></span>{{ 'lbl.Crop'|trans|ucfirst }}
+      </button>
+    </div>
+  </div>
+</div>

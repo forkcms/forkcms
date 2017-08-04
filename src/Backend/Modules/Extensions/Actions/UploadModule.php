@@ -22,25 +22,22 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class UploadModule extends BackendBaseActionAdd
 {
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
         // zip extension is required for module upload
         if (!extension_loaded('zlib')) {
-            $this->tpl->assign('zlibIsMissing', true);
+            $this->template->assign('zlibIsMissing', true);
         }
 
         if (!$this->isWritable()) {
             // we need write rights to upload files
-            $this->tpl->assign('notWritable', true);
+            $this->template->assign('notWritable', true);
         } else {
             // everything allright, we can upload
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         }
@@ -52,16 +49,16 @@ class UploadModule extends BackendBaseActionAdd
     /**
      * Process the zip-file & install the module
      *
-     * @return string
+     * @return string|null
      */
-    private function uploadModuleFromZip()
+    private function uploadModuleFromZip(): ?string
     {
         // list of validated files (these files will actually be unpacked)
-        $files = array();
+        $files = [];
 
         // shorten field variables
         /** @var $fileFile \SpoonFormFile */
-        $fileFile = $this->frm->getField('file');
+        $fileFile = $this->form->getField('file');
 
         // create \ziparchive instance
         $zip = new \ZipArchive();
@@ -75,15 +72,14 @@ class UploadModule extends BackendBaseActionAdd
         if ($zip->numFiles == 0) {
             $fileFile->addError(BL::getError('FileIsEmpty'));
 
-            return;
+            return null;
         }
 
         // directories we are allowed to upload to
-        $allowedDirectories = array(
+        $allowedDirectories = [
             'src/Backend/Modules/',
             'src/Frontend/Modules/',
-            'library/external/',
-        );
+        ];
 
         // name of the module we are trying to upload
         $moduleName = null;
@@ -105,14 +101,6 @@ class UploadModule extends BackendBaseActionAdd
             foreach ($allowedDirectories as $directory) {
                 // yay, in a valid directory
                 if (mb_stripos($fileName, $prefix . $directory) === 0) {
-                    // we have a library file
-                    if ($directory == $prefix . 'library/external/') {
-                        if (!is_file(PATH_WWW . '/' . $fileName)) {
-                            $files[] = $fileName;
-                        }
-                        break;
-                    }
-
                     // extract the module name from the url
                     $tmpName = trim(str_ireplace($prefix . $directory, '', $fileName), '/');
                     if ($tmpName == '') {
@@ -145,34 +133,34 @@ class UploadModule extends BackendBaseActionAdd
         if (count($files) == 0) {
             $fileFile->addError(BL::getError('FileContentsIsUseless'));
 
-            return;
+            return null;
         }
 
         // module already exists on the filesystem
         if (BackendExtensionsModel::existsModule($moduleName)) {
             $fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
 
-            return;
+            return null;
         }
 
         // installer in array?
         if (!in_array($prefix . 'src/Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
             $fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
 
-            return;
+            return null;
         }
 
         // unpack module files
-        $zip->extractTo(PATH_WWW, $files);
+        $zip->extractTo($this->getContainer()->getParameter('site.path_www'), $files);
 
         // place all the items in the prefixed folders in the right folders
         if (!empty($prefix)) {
             $filesystem = new Filesystem();
             foreach ($files as &$file) {
-                $fullPath = PATH_WWW . '/' . $file;
+                $fullPath = $this->getContainer()->getParameter('site.path_www') . '/' . $file;
                 $newPath = str_replace(
-                    PATH_WWW . '/' . $prefix,
-                    PATH_WWW . '/',
+                    $this->getContainer()->getParameter('site.path_www') . '/' . $prefix,
+                    $this->getContainer()->getParameter('site.path_www') . '/',
                     $fullPath
                 );
 
@@ -186,7 +174,7 @@ class UploadModule extends BackendBaseActionAdd
                 }
             }
 
-            $filesystem->remove(PATH_WWW . '/' . $prefix);
+            $filesystem->remove($this->getContainer()->getParameter('site.path_www') . '/' . $prefix);
         }
 
         // return the files
@@ -197,21 +185,21 @@ class UploadModule extends BackendBaseActionAdd
      * Try to extract a prefix if a module has been zipped with unexpected
      * paths.
      *
-     * @param $file
+     * @param string $file
      *
      * @return string
      */
-    private function extractPrefix($file)
+    private function extractPrefix(string $file): string
     {
         $name = explode(PATH_SEPARATOR, $file['name']);
-        $prefix = array();
+        $prefix = [];
 
         foreach ($name as $element) {
-            if ($element == 'src' || $element == 'library') {
+            if ($element == 'src') {
                 return implode(PATH_SEPARATOR, $prefix);
-            } else {
-                $prefix[] = $element;
             }
+
+            $prefix[] = $element;
         }
 
         // If the zip has a top-level single directory, eg
@@ -224,7 +212,7 @@ class UploadModule extends BackendBaseActionAdd
      *
      * @return bool
      */
-    private function isWritable()
+    private function isWritable(): bool
     {
         if (!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) {
             return false;
@@ -233,38 +221,32 @@ class UploadModule extends BackendBaseActionAdd
         return BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH);
     }
 
-    /**
-     * Create a form and its elements.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
-        $this->frm = new BackendForm('upload');
+        $this->form = new BackendForm('upload');
 
         // create and add elements
-        $this->frm->addFile('file');
+        $this->form->addFile('file');
     }
 
-    /**
-     * Validate a submitted form and process it.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // the form is submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // shorten field variables
-            $fileFile = $this->frm->getField('file');
+            $fileFile = $this->form->getField('file');
 
             // validate the file
-            if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
+            if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
                 $moduleName = $this->uploadModuleFromZip();
             }
 
             // passed all validation
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // redirect to the install url, this is needed for doctrine modules because the container needs to
                 // load this module as an allowed module to get the entities working
-                $this->redirect(BackendModel::createURLForAction('InstallModule') . '&module=' . $moduleName);
+                $this->redirect(BackendModel::createUrlForAction('InstallModule') . '&module=' . $moduleName);
             }
         }
     }

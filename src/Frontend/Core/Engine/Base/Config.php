@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -17,7 +18,7 @@ use Symfony\Component\Finder\Finder;
  * This is the base-object for config-files.
  * The module-specific config-files can extend the functionality from this class.
  */
-class Config extends \KernelLoader
+class Config extends KernelLoader
 {
     /**
      * The default action
@@ -31,14 +32,14 @@ class Config extends \KernelLoader
      *
      * @var array
      */
-    protected $disabledActions = array();
+    protected $disabledActions = [];
 
     /**
      * The disabled AJAX-actions
      *
      * @var array
      */
-    protected $disabledAJAXActions = array();
+    protected $disabledAJAXActions = [];
 
     /**
      * The current loaded module
@@ -52,20 +53,20 @@ class Config extends \KernelLoader
      *
      * @var array
      */
-    protected $possibleActions = array();
+    protected $possibleActions = [];
 
     /**
      * All the possible AJAX actions
      *
      * @var array
      */
-    protected $possibleAJAXActions = array();
+    protected $possibleAJAXActions = [];
 
     /**
      * @param KernelInterface $kernel
-     * @param string          $module The module wherefore this is the configuration-file.
+     * @param string $module The module wherefore this is the configuration-file.
      */
-    public function __construct(KernelInterface $kernel, $module)
+    public function __construct(KernelInterface $kernel, string $module)
     {
         parent::__construct($kernel);
 
@@ -75,42 +76,22 @@ class Config extends \KernelLoader
         $this->setPossibleActions();
     }
 
-    /**
-     * Get the default action
-     *
-     * @return string
-     */
-    public function getDefaultAction()
+    public function getDefaultAction(): string
     {
         return $this->defaultAction;
     }
 
-    /**
-     * Get the current loaded module
-     *
-     * @return string
-     */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
 
-    /**
-     * Get the possible actions
-     *
-     * @return array
-     */
-    public function getPossibleActions()
+    public function getPossibleActions(): array
     {
         return $this->possibleActions;
     }
 
-    /**
-     * Get the possible AJAX actions
-     *
-     * @return array
-     */
-    public function getPossibleAJAXActions()
+    public function getPossibleAJAXActions(): array
     {
         return $this->possibleAJAXActions;
     }
@@ -119,7 +100,7 @@ class Config extends \KernelLoader
      * Set the possible actions, based on files in folder.
      * You can disable action in the config file. (Populate $disabledActions)
      */
-    protected function setPossibleActions()
+    protected function setPossibleActions(): void
     {
         // build path to the module
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();

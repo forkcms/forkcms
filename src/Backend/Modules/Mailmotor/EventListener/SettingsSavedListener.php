@@ -9,7 +9,7 @@ namespace Backend\Modules\Mailmotor\EventListener;
  * file that was distributed with this source code.
  */
 
-use Backend\Modules\Mailmotor\Event\SettingsSavedEvent;
+use Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -22,22 +22,11 @@ final class SettingsSavedListener
      */
     protected $cacheDirectory;
 
-    /**
-     * SaveSettingsHandler constructor.
-     *
-     * @param string $cacheDirectory
-     */
-    public function __construct(
-        $cacheDirectory
-    ) {
+    public function __construct(string $cacheDirectory)
+    {
         $this->cacheDirectory = $cacheDirectory;
     }
 
-    /**
-     * On settings saved
-     *
-     * @param SettingsSavedEvent $event
-     */
     public function onSettingsSavedEvent(SettingsSavedEvent $event)
     {
         /**

@@ -41,25 +41,22 @@ class UploadTheme extends BackendBaseActionAdd
      */
     private $parentFolderName;
 
-    /**
-     * Execute the action.
-     */
-    public function execute()
+    public function execute(): void
     {
         // Call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
         // Zip extension is required for theme upload
         if (!extension_loaded('zlib')) {
-            $this->tpl->assign('zlibIsMissing', true);
+            $this->template->assign('zlibIsMissing', true);
         }
 
         if (!$this->isWritable()) {
             // we need write rights to upload files
-            $this->tpl->assign('notWritable', true);
+            $this->template->assign('notWritable', true);
         } else {
             // everything allright, we can upload
-            $this->loadForm();
+            $this->buildForm();
             $this->validateForm();
             $this->parse();
         }
@@ -73,41 +70,35 @@ class UploadTheme extends BackendBaseActionAdd
      *
      * @return bool
      */
-    private function isWritable()
+    private function isWritable(): bool
     {
         return BackendExtensionsModel::isWritable(FRONTEND_PATH . '/Themes');
     }
 
-    /**
-     * Create a form and its elements.
-     */
-    private function loadForm()
+    private function buildForm(): void
     {
         // create form
-        $this->frm = new BackendForm('upload');
+        $this->form = new BackendForm('upload');
 
         // create and add elements
-        $this->frm->addFile('file');
+        $this->form->addFile('file');
     }
 
-    /**
-     * Validate a submitted form and process it.
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
         // The form is submitted
-        if (!$this->frm->isSubmitted()) {
+        if (!$this->form->isSubmitted()) {
             return;
         }
 
         /** @var $fileFile \SpoonFormFile */
-        $fileFile = $this->frm->getField('file');
+        $fileFile = $this->form->getField('file');
         $zip = null;
         $zipFiles = null;
 
         // Validate the file. Check if the file field is filled and if it's a zip.
         if ($fileFile->isFilled(BL::err('FieldIsRequired')) &&
-            $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))
+            $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))
         ) {
             // Create ziparchive instance
             $zip = new ZipArchive();
@@ -120,9 +111,11 @@ class UploadTheme extends BackendBaseActionAdd
 
                     // Throw error if info.xml is not found
                     if ($infoXml === null) {
-                        return $fileFile->addError(
+                        $fileFile->addError(
                             sprintf(BL::getError('NoInformationFile'), $fileFile->getFileName())
                         );
+
+                        return;
                     }
 
                     // Parse xml
@@ -135,19 +128,25 @@ class UploadTheme extends BackendBaseActionAdd
 
                         // Empty data (nothing useful)
                         if (empty($this->info)) {
-                            return $fileFile->addError(BL::getMessage('InformationFileIsEmpty'));
+                            $fileFile->addError(BL::getMessage('InformationFileIsEmpty'));
+
+                            return;
                         }
 
                         // Define the theme name, based on the info.xml file.
                         $this->themeName = $this->info['name'];
                     } catch (Exception $e) {
                         // Warning that the information file is corrupt
-                        return $fileFile->addError(BL::getMessage('InformationFileCouldNotBeLoaded'));
+                        $fileFile->addError(BL::getMessage('InformationFileCouldNotBeLoaded'));
+
+                        return;
                     }
 
                     // Wow wow, you are trying to upload an already existing theme
                     if (BackendExtensionsModel::existsTheme($this->themeName)) {
-                        return $fileFile->addError(sprintf(BL::getError('ThemeAlreadyExists'), $this->themeName));
+                        $fileFile->addError(sprintf(BL::getError('ThemeAlreadyExists'), $this->themeName));
+
+                        return;
                     }
 
                     $zipFiles = $this->getValidatedFilesList($zip);
@@ -157,12 +156,14 @@ class UploadTheme extends BackendBaseActionAdd
                 }
             } else {
                 // Something went very wrong, probably corrupted
-                return $fileFile->addError(BL::getError('CorruptedFile'));
+                $fileFile->addError(BL::getError('CorruptedFile'));
+
+                return;
             }
         }
 
         // Passed all validation
-        if ($this->frm->isCorrect() && $zip !== null) {
+        if ($zip !== null && $this->form->isCorrect()) {
             // Unpack the zip. If the files were not found inside a parent directory, we create the theme directory.
             $themePath = FRONTEND_PATH . '/Themes';
             if ($this->parentFolderName === null) {
@@ -184,7 +185,9 @@ class UploadTheme extends BackendBaseActionAdd
             BackendExtensionsModel::installTheme($this->themeName);
 
             // Redirect with fireworks
-            $this->redirect(BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $this->themeName);
+            $this->redirect(
+                BackendModel::createUrlForAction('Themes') . '&report=theme-installed&var=' . $this->themeName
+            );
         }
     }
 
@@ -192,11 +195,12 @@ class UploadTheme extends BackendBaseActionAdd
      * Two ideal situations possible: we have a zip with files including info.xml, or we have a zip with the theme-folder.
      *
      * @param ZipArchive $zip
-     * @return string
+     *
+     * @return string|null
      */
-    private function findInfoFileInZip(ZipArchive $zip)
+    private function findInfoFileInZip(ZipArchive $zip): ?string
     {
-        for ($i = 0; $i < $zip->numFiles; $i++) {
+        for ($i = 0; $i < $zip->numFiles; ++$i) {
             if (mb_stripos($zip->getNameIndex($i), self::INFO_FILE) !== false) {
                 $infoFile = $zip->statIndex($i);
 
@@ -221,14 +225,15 @@ class UploadTheme extends BackendBaseActionAdd
      * prepend them with the theme folder.
      *
      * @param ZipArchive $zip
-     * @return String[]
+     *
+     * @return string[]
      */
-    private function getValidatedFilesList($zip)
+    private function getValidatedFilesList(ZipArchive $zip): array
     {
         $this->parentFolderName = $this->extractFolderNameBasedOnInfoFile($this->infoFilePath);
 
         // Check every file in the zip
-        $files = array();
+        $files = [];
         for ($i = 0; $i < $zip->numFiles; ++$i) {
             // Get the file name
             $file = $zip->statIndex($i);
@@ -249,9 +254,10 @@ class UploadTheme extends BackendBaseActionAdd
 
     /**
      * @param string $infoFilePath
-     * @return string
+     *
+     * @return string|null
      */
-    private function extractFolderNameBasedOnInfoFile($infoFilePath)
+    private function extractFolderNameBasedOnInfoFile(string $infoFilePath): ?string
     {
         $pathParts = explode('/', $infoFilePath);
 
@@ -263,10 +269,11 @@ class UploadTheme extends BackendBaseActionAdd
     }
 
     /**
-     * @param string $path
-     * @return bool Path contains a to-be-ignored word.
+     * @param string $path contains a to-be-ignored word.
+     *
+     * @return bool
      */
-    private function checkIfPathContainsIgnoredWord($path)
+    private function checkIfPathContainsIgnoredWord(string $path): bool
     {
         foreach ($this->ignoreList as $ignoreItem) {
             if (mb_stripos($path, $ignoreItem) !== false) {

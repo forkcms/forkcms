@@ -10,7 +10,6 @@ namespace Backend\Modules\Search\Installer;
  */
 
 use Common\ModuleExtraType;
-use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
 
 /**
@@ -18,36 +17,25 @@ use Backend\Core\Installer\ModuleInstaller;
  */
 class Installer extends ModuleInstaller
 {
-    /**
-     * Install the module
-     */
-    public function install()
+    /** @var int */
+    private $searchBlockId;
+
+    public function install(): void
     {
-        // load install.sql
-        $this->importSQL(__DIR__ . '/Data/install.sql');
-
-        // add 'search' as a module
         $this->addModule('Search');
-
-        // import locale
+        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureSettings();
+        $this->configureBackendNavigation();
+        $this->configureBackendRights();
+        $this->configureFrontendExtras();
+        $this->configureFrontendPages();
+        $this->configureFrontendSearchIndexes();
+    }
 
-        // general settings
-        $this->setSetting('Search', 'overview_num_items', 10);
-        $this->setSetting('Search', 'validate_search', true);
-
-        // module rights
-        $this->setModuleRights(1, 'Search');
-
-        // action rights
-        $this->setActionRights(1, 'Search', 'AddSynonym');
-        $this->setActionRights(1, 'Search', 'EditSynonym');
-        $this->setActionRights(1, 'Search', 'DeleteSynonym');
-        $this->setActionRights(1, 'Search', 'Settings');
-        $this->setActionRights(1, 'Search', 'Statistics');
-        $this->setActionRights(1, 'Search', 'Synonyms');
-
-        // set navigation
+    private function configureBackendNavigation(): void
+    {
+        // Set navigation for "Modules"
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationSearchId = $this->setNavigation($navigationModulesId, 'Search');
         $this->setNavigation($navigationSearchId, 'Statistics', 'search/statistics');
@@ -55,106 +43,115 @@ class Installer extends ModuleInstaller
             $navigationSearchId,
             'Synonyms',
             'search/synonyms',
-            array('search/add_synonym', 'search/edit_synonym')
+            ['search/add_synonym', 'search/edit_synonym']
         );
 
-        // settings navigation
+        // Set navigation for "Settings"
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, 'Search', 'search/settings');
+    }
 
-        // add extra's
-        $searchId = $this->insertExtra('Search', ModuleExtraType::block(), 'Search', null, null, 'N', 2000);
-        $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form', null, 'N', 2001);
+    private function configureBackendRights(): void
+    {
+        $this->setModuleRights(1, $this->getModule());
+        $this->setActionRights(1, $this->getModule(), 'AddSynonym');
+        $this->setActionRights(1, $this->getModule(), 'DeleteSynonym');
+        $this->setActionRights(1, $this->getModule(), 'EditSynonym');
+        $this->setActionRights(1, $this->getModule(), 'Settings');
+        $this->setActionRights(1, $this->getModule(), 'Statistics');
+        $this->setActionRights(1, $this->getModule(), 'Synonyms');
+    }
 
-        // loop languages
+    private function configureFrontendExtras(): void
+    {
+        $this->searchBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Search');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SearchForm', 'Form');
+    }
+
+    private function configureFrontendPages(): void
+    {
         foreach ($this->getLanguages() as $language) {
-            // check if a page for search already exists in this language
-            // @todo refactor this nasty if statement...
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                array($searchId, $language)
-            )
-            ) {
-                // insert search
-                $this->insertPage(
-                    array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Search', 'Core', $language, 'lbl', 'Frontend')),
-                         'type' => 'root',
-                         'language' => $language,
-                    ),
-                    null,
-                    array('extra_id' => $searchId, 'position' => 'main')
-                );
+            if ($this->hasExistingSearchIndex($language)) {
+                continue;
             }
-        }
 
-        // activate search on 'pages'
-        $this->searchPages();
-
-        // create module cache path
-        $filesystem = new Filesystem();
-        if (!$filesystem->exists(PATH_WWW . '/src/Frontend/Cache/Search')) {
-            $filesystem->mkdir(PATH_WWW . '/src/Frontend/Cache/Search');
+            $searchIndexPageTitle = $this->getLocale('Search', 'Core', $language, 'lbl', 'Frontend');
+            $this->insertPage(
+                [
+                    'title' => \SpoonFilter::ucfirst($searchIndexPageTitle),
+                    'type' => 'root',
+                    'language' => $language,
+                ],
+                null,
+                ['extra_id' => $this->searchBlockId, 'position' => 'main']
+            );
         }
     }
 
-    /**
-     * Activate search on pages
-     */
-    private function searchPages()
+    private function configureFrontendSearchIndexes(): void
     {
-        // make 'pages' searchable
         $this->makeSearchable('Pages');
 
-        // get db instance
-        $db = $this->getDB();
+        foreach ($this->getActivePages() as $page) {
+            $this->insertSearchIndexForPage($page['id'], $page['language'], $page['title']);
+            $this->insertSearchIndexForPage(
+                $page['id'],
+                $page['language'],
+                $this->getContentFromBlocksForPageRevision($page['revision_id'])
+            );
+        }
+    }
 
-        // get existing menu items
-        $menu = $db->getRecords(
+    private function configureSettings(): void
+    {
+        $this->setSetting($this->getModule(), 'overview_num_items', 10);
+        $this->setSetting($this->getModule(), 'validate_search', true);
+    }
+
+    private function getActivePages(): array
+    {
+        // @todo: Replace with a PageRepository method when it exists.
+        return (array) $this->getDatabase()->getRecords(
             'SELECT id, revision_id, language, title
              FROM pages
              WHERE status = ?',
-            array('active')
+            ['active']
+        );
+    }
+
+    private function getContentFromBlocksForPageRevision(int $pageRevisionId): string
+    {
+        // @todo: Replace with a PageBlockRepository method when it exists.
+        $blocks = (array) $this->getDatabase()->getColumn(
+            'SELECT html FROM pages_blocks WHERE revision_id = ?',
+            [$pageRevisionId]
         );
 
-        // loop menu items
-        foreach ($menu as $page) {
-            // get blocks
-            $blocks = $db->getColumn(
-                'SELECT html FROM pages_blocks WHERE revision_id = ?',
-                array($page['revision_id'])
-            );
+        return empty($blocks) ? '' : strip_tags(implode(' ', $blocks));
+    }
 
-            // merge blocks content
-            $text = strip_tags(implode(' ', $blocks));
+    private function hasExistingSearchIndex(string $language): bool
+    {
+        // @todo: Replace with a PageBlockRepository method when it exists.
+        return (bool) $this->getDatabase()->getVar(
+            'SELECT 1
+             FROM pages AS p
+             INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+             WHERE b.extra_id = ? AND p.language = ?
+             LIMIT 1',
+            [$this->searchBlockId, $language]
+        );
+    }
 
-            // add page to search index
-            $db->execute(
-                'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
-                 ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array(
-                     'Pages',
-                     (int) $page['id'],
-                     (string) $page['language'],
-                     'title',
-                     $page['title'],
-                     'Y',
-                     $page['title'],
-                     'Y',
-                )
-            );
-            $db->execute(
-                'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
-                 ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array('Pages', (int) $page['id'], (string) $page['language'], 'text', $text, 'Y', $text, 'Y')
-            );
-        }
+    private function insertSearchIndexForPage(int $id, string $language, string $term): void
+    {
+        // @todo: Replace with a SearchRepository method when it exists.
+        $this->getDatabase()->execute(
+            'INSERT INTO search_index (module, other_id, language, field, value, active)
+             VALUES (?, ?, ?, ?, ?, ?)
+             ON DUPLICATE KEY UPDATE value = ?, active = ?',
+            ['Pages', $id, $language, 'title', $term, true, $term, true]
+        );
     }
 }

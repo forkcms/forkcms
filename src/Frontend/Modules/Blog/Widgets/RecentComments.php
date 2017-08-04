@@ -17,21 +17,15 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
  */
 class RecentComments extends FrontendBaseWidget
 {
-    /**
-     * Execute the extra
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->loadTemplate();
         $this->parse();
     }
 
-    /**
-     * Parse
-     */
-    private function parse()
+    private function parse(): void
     {
-        $this->tpl->assign('widgetBlogRecentComments', FrontendBlogModel::getRecentComments(5));
+        $this->template->assign('widgetBlogRecentComments', FrontendBlogModel::getRecentComments(5));
     }
 }

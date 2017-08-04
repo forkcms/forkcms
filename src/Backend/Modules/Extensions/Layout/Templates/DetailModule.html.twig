@@ -1,4 +1,4 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends 'Layout/Templates/base.html.twig' %}
 
 {% block actionbar %}
 
@@ -39,7 +39,7 @@
               </h3>
             </div>
             <div class="panel-body">
-              <p>{{ 'msg.CronjobsInfo'|trans|format(PATH_WWW_SITE_URL)|raw }}</p>
+              <p>{{ 'msg.CronjobsInfo'|trans|format(PATH_WWW, SITE_URL)|raw }}</p>
             </div>
             {{ dataGridCronjobs }}
           </div>

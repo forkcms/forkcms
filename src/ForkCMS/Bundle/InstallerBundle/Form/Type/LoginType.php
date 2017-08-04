@@ -4,36 +4,36 @@ namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Builds the form to set up login information
  */
 class LoginType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
                 'email',
-                'email'
+                EmailType::class
             )
             ->add(
                 'password',
-                'repeated',
-                array(
-                    'type' => 'password',
+                RepeatedType::class,
+                [
+                    'type' => PasswordType::class,
                     'invalid_message' => 'The passwords do not match.',
                     'required' => true,
-                    'first_options' => array('label' => 'Password'),
-                    'second_options' => array('label' => 'Confirm'),
-                )
+                    'first_options' => ['label' => 'Password'],
+                    'second_options' => ['label' => 'Confirm'],
+                ]
             )
         ;
 
@@ -52,21 +52,15 @@ class LoginType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => InstallationData::class,
             'validation_groups' => 'login',
-        ));
+        ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getBlockPrefix(): string
     {
         return 'install_login';
     }

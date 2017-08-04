@@ -1,4 +1,5 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
 
@@ -40,6 +41,18 @@
                       </label>
                       {% form_field method %} {% form_field_error method %}
                     </div>
+                    <div class="form-group">
+                      <label for="EmailSubject" class="control-label">
+                        {{ 'lbl.EmailSubject'|trans|ucfirst }}
+                      </label>
+                      {% form_field email_subject %} {% form_field_error email_subject %}
+                    </div>
+                    {% if ddmTemplate %}
+                      <div class="form-group">
+                        <label for="template" class="control-label">{{ 'lbl.Template'|trans|ucfirst }}</label>
+                        {% form_field template %} {% form_field_error template %}
+                      </div>
+                    {% endif %}
                     <div class="form-group">
                       <label for="email" class="control-label">
                         {{ 'lbl.Recipient'|trans|ucfirst }}

@@ -24,12 +24,10 @@ class TwigFilters
      *
      * @param Twig_Environment $twig
      * @param string $app
-     *
-     * @return array
      */
-    public static function getFilters(&$twig, $app)
+    public static function addFilters(Twig_Environment $twig, string $app): void
     {
-        $app = $app.'\Core\Engine\TemplateModifiers';
+        $app .= '\Core\Engine\TemplateModifiers';
         $twig->addFilter(new Twig_SimpleFilter('getpageinfo', $app.'::getPageInfo'));
         $twig->addFilter(new Twig_SimpleFilter('highlight', $app.'::highlightCode'));
         $twig->addFilter(new Twig_SimpleFilter('profilesetting', $app.'::profileSetting'));
@@ -54,43 +52,38 @@ class TwigFilters
         $twig->addFilter(new Twig_SimpleFilter('addslashes', 'addslashes'));
         $twig->addFilter(new Twig_SimpleFilter('count', 'count'));
         $twig->addFilter(new Twig_SimpleFilter('is_array', 'is_array'));
-        $twig->addFilter(new Twig_SimpleFilter(
-            'sprintf',
-            array(__CLASS__, 'deprecatedSprintf'),
-            array('is_safe' => array('html'))
-        ));
         $twig->addFilter(new Twig_SimpleFilter('ucfirst', 'ucfirst'));
 
         // Functions navigation
         $twig->addFunction(new Twig_SimpleFunction(
             'getnavigation',
             $app.'::getNavigation',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'getsubnavigation',
             $app.'::getSubNavigation',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'parsewidget',
             $app.'::parseWidget',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
 
         // Function URL
 
         $twig->addFunction(new Twig_SimpleFunction(
             'geturl',
-            $app.'::getURL'
+            $app.'::getUrl'
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'geturlforextraid',
-            $app.'::getURLForExtraId'
+            $app.'::getUrlForExtraId'
         ));
         $twig->addFunction(new Twig_SimpleFunction(
             'geturlforblock',
-            $app.'::getURLForBlock'
+            $app.'::getUrlForBlock'
         ));
 
         // boolean functions
@@ -98,31 +91,16 @@ class TwigFilters
         $twig->addFunction(new Twig_SimpleFunction(
             'showbool',
             $app.'::showBool',
-            array('is_safe' => array('html'))
+            ['is_safe' => ['html']]
         ));
 
-        // Deprecated functions
+        // @Deprecated We should look for replacements because they run on spoon library
+        // after we have those we can remove them
 
         $twig->addFilter(new Twig_SimpleFilter('spoondate', $app.'::spoonDate'));
         $twig->addFilter(new Twig_SimpleFilter('formatdate', $app.'::formatDate'));
         $twig->addFilter(new Twig_SimpleFilter('formattime', $app.'::formatTime'));
         $twig->addFilter(new Twig_SimpleFilter('timeago', $app.'::timeAgo'));
         $twig->addFilter(new Twig_SimpleFilter('formatdatetime', $app.'::formatDateTime'));
-    }
-
-    /**
-     * Show deprecated error for sprintf.
-     *
-     * @return string
-     */
-    public static function deprecatedSprintf()
-    {
-        trigger_error(
-            '|sprintf is deprecated.
-             Use |format(args)|raw instead',
-            E_USER_DEPRECATED
-        );
-
-        return call_user_func_array('sprintf', func_get_args());
     }
 }

@@ -9,15 +9,19 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Common\Core\Header\Priority;
 use Common\Doctrine\Entity\Meta;
 use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
-use Frontend\Core\Engine\Header;
+use Frontend\Core\Engine\Model;
+use Frontend\Core\Engine\Url;
+use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -25,7 +29,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @later  Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  */
-class Block extends Object
+class Block extends KernelLoader
 {
     /**
      * The current action
@@ -84,18 +88,33 @@ class Block extends Object
     private $templatePath;
 
     /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $template;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $url;
+
+    /**
      * @param KernelInterface $kernel
      * @param string $module The name of the module.
      * @param string $action The name of the action.
      * @param string $data The data that should be available in this block.
      */
-    public function __construct(KernelInterface $kernel, $module, $action, $data = null)
+    public function __construct(KernelInterface $kernel, string $module, string $action, string $data = null)
     {
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible
         $this->header = $this->getContainer()->get('header');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
+        $this->template = $this->getContainer()->get('templating');
         $this->breadcrumb = $this->getContainer()->get('breadcrumb');
 
         // set properties
@@ -112,19 +131,24 @@ class Block extends Object
      * @param bool $minify Should the CSS be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
-    {
-        // redefine
-        $file = (string) $file;
-        $overwritePath = (bool) $overwritePath;
-
+    public function addCSS(
+        string $file,
+        bool $overwritePath = false,
+        bool $minify = true,
+        bool $addTimestamp = false
+    ): void {
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
         }
 
         // add css to the header
-        $this->header->addCSS($file, $minify, $addTimestamp);
+        $this->header->addCSS(
+            $file,
+            $minify,
+            $addTimestamp,
+            $overwritePath ? Priority::standard() : Priority::forModule($this->getModule())
+        );
     }
 
     /**
@@ -135,18 +159,24 @@ class Block extends Object
      * @param bool $minify Should the file be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addJS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
-    {
-        $file = (string) $file;
-        $overwritePath = (bool) $overwritePath;
-
+    public function addJS(
+        string $file,
+        bool $overwritePath = false,
+        bool $minify = true,
+        bool $addTimestamp = false
+    ): void {
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;
         }
 
         // add js to the header
-        $this->header->addJS($file, $minify, $addTimestamp);
+        $this->header->addJS(
+            $file,
+            $minify,
+            $addTimestamp,
+            $overwritePath ? Priority::standard() : Priority::forModule($this->getModule())
+        );
     }
 
     /**
@@ -155,7 +185,7 @@ class Block extends Object
      * @param string $key The key whereunder the value will be stored.
      * @param mixed $value The value to pass.
      */
-    public function addJSData($key, $value)
+    public function addJSData(string $key, $value): void
     {
         $this->header->addJsData($this->getModule(), $key, $value);
     }
@@ -164,41 +194,36 @@ class Block extends Object
      * Execute the action
      * If a javascript file with the name of the module or action exists it will be loaded.
      */
-    public function execute()
+    public function execute(): void
     {
         // build path to the module
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
         // build URL to the module
-        $frontendModuleURL = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
+        $frontendModuleUrl = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getModule() . '.js',
+                $frontendModuleUrl . '/' . $this->getModule() . '.js',
                 true,
                 true,
-                Header::PRIORITY_GROUP_MODULE
+                Priority::module()
             );
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getAction() . '.js',
+                $frontendModuleUrl . '/' . $this->getAction() . '.js',
                 true,
                 true,
-                Header::PRIORITY_GROUP_MODULE
+                Priority::module()
             );
         }
     }
 
-    /**
-     * Get the action
-     *
-     * @return string
-     */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
@@ -208,17 +233,12 @@ class Block extends Object
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
-        return $this->tpl->getContent($this->templatePath);
+        return $this->template->getContent($this->templatePath);
     }
 
-    /**
-     * Get the module
-     *
-     * @return string
-     */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
@@ -228,47 +248,30 @@ class Block extends Object
      *
      * @return bool
      */
-    public function getOverwrite()
+    public function getOverwrite(): bool
     {
         return $this->overwrite;
     }
 
-    /**
-     * Get template
-     *
-     * @return TwigTemplate
-     */
-    public function getTemplate()
+    public function getTemplate(): TwigTemplate
     {
-        return $this->tpl;
+        return $this->template;
     }
 
-    /**
-     * Get template path
-     *
-     * @return string
-     */
-    public function getTemplatePath()
+    public function getTemplatePath(): string
     {
         return $this->templatePath;
     }
 
     /**
-     * Load the template
-     *
      * @param string $path The path for the template to use.
      * @param bool $overwrite Should the template overwrite the default?
      */
-    protected function loadTemplate($path = null, $overwrite = false)
+    protected function loadTemplate(string $path = null, bool $overwrite = false): void
     {
-        $overwrite = (bool) $overwrite;
-
         // no template given, so we should build the path
         if ($path === null) {
             $path = $this->getModule() . '/Layout/Templates/' . $this->getAction() . '.html.twig';
-        } else {
-            // redefine
-            $path = (string) $path;
         }
 
         // set properties
@@ -276,14 +279,7 @@ class Block extends Object
         $this->setTemplatePath($path);
     }
 
-    /**
-     * Parse pagination
-     *
-     * @param string $query_parameter
-     *
-     * @throws Exception
-     */
-    protected function parsePagination($query_parameter = 'page')
+    protected function parsePagination(string $query_parameter = 'page'): void
     {
         $pagination = null;
         $showFirstPages = false;
@@ -307,7 +303,7 @@ class Block extends Object
             throw new Exception('no num_pages available in the pagination-property.');
         }
         if (!isset($this->pagination['url'])) {
-            throw new Exception('no URL available in the pagination-property.');
+            throw new Exception('no url available in the pagination-property.');
         }
 
         // should we use a questionmark or an ampersand
@@ -325,16 +321,18 @@ class Block extends Object
         $pagination['current_page'] = $this->pagination['requested_page'];
 
         // define anchor
-        $anchor = (isset($this->pagination['anchor'])) ? '#' . $this->pagination['anchor'] : '';
+        $anchor = isset($this->pagination['anchor']) ? '#' . $this->pagination['anchor'] : '';
 
         // as long as we have more then 5 pages and are 5 pages from the end we should show all pages till the end
-        if ($this->pagination['requested_page'] > 5 && $this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4)) {
-            // init vars
-            $pagesStart = ($this->pagination['num_pages'] > 7) ? $this->pagination['num_pages'] - 5 : $this->pagination['num_pages'] - 6;
+        if ($this->pagination['requested_page'] > 5
+            && $this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4)
+        ) {
+            $pagesStart = ($this->pagination['num_pages'] > 7)
+                ? $this->pagination['num_pages'] - 5 : $this->pagination['num_pages'] - 6;
             $pagesEnd = $this->pagination['num_pages'];
 
             // fix for page 6
-            if ($this->pagination['num_pages'] == 6) {
+            if ($this->pagination['num_pages'] === 6) {
                 $pagesStart = 1;
             }
 
@@ -344,12 +342,11 @@ class Block extends Object
             }
         } elseif ($this->pagination['requested_page'] <= 5) {
             // as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
-            // init vars
             $pagesStart = 1;
             $pagesEnd = 6;
 
             // when we have 7 pages, show 7 as end
-            if ($this->pagination['num_pages'] == 7) {
+            if ($this->pagination['num_pages'] === 7) {
                 $pagesEnd = 7;
             } elseif ($this->pagination['num_pages'] <= 6) {
                 // when we have less then 6 pages, show the maximum page
@@ -362,7 +359,6 @@ class Block extends Object
             }
         } else {
             // page 6
-            // init vars
             $pagesStart = $this->pagination['requested_page'] - 2;
             $pagesEnd = $this->pagination['requested_page'] + 2;
             $showFirstPages = true;
@@ -384,10 +380,10 @@ class Block extends Object
 
             // flip ahead
             $this->header->addLink(
-                array(
+                [
                     'rel' => 'prev',
                     'href' => SITE_URL . $url . $anchor,
-                )
+                ]
             );
         }
 
@@ -407,14 +403,14 @@ class Block extends Object
                 }
 
                 // add
-                $pagination['first'][] = array('url' => $url . $anchor, 'label' => $i);
+                $pagination['first'][] = ['url' => $url . $anchor, 'label' => $i];
             }
         }
 
         // build array
         for ($i = $pagesStart; $i <= $pagesEnd; ++$i) {
             // init var
-            $current = ($i == $this->pagination['requested_page']);
+            $current = ($i === $this->pagination['requested_page']);
 
             // build URL
             if ($useQuestionMark) {
@@ -424,7 +420,7 @@ class Block extends Object
             }
 
             // add
-            $pagination['pages'][] = array('url' => $url . $anchor, 'label' => $i, 'current' => $current);
+            $pagination['pages'][] = ['url' => $url . $anchor, 'label' => $i, 'current' => $current];
         }
 
         // show last pages?
@@ -443,7 +439,7 @@ class Block extends Object
                 }
 
                 // add
-                $pagination['last'][] = array('url' => $url . $anchor, 'label' => $i);
+                $pagination['last'][] = ['url' => $url . $anchor, 'label' => $i];
             }
         }
 
@@ -462,18 +458,18 @@ class Block extends Object
 
             // flip ahead
             $this->header->addLink(
-                array(
+                [
                     'rel' => 'next',
                     'href' => SITE_URL . $url . $anchor,
-                )
+                ]
             );
         }
 
         // multiple pages
-        $pagination['multiple_pages'] = ($pagination['num_pages'] == 1) ? false : true;
+        $pagination['multiple_pages'] = (int) $pagination['num_pages'] !== 1;
 
         // assign pagination
-        $this->tpl->assign('pagination', $pagination);
+        $this->template->assign('pagination', $pagination);
     }
 
     /**
@@ -484,48 +480,29 @@ class Block extends Object
      *
      * @throws RedirectException
      */
-    public function redirect($url, $code = 302)
+    public function redirect(string $url, int $code = RedirectResponse::HTTP_FOUND): void
     {
-        $response = new RedirectResponse($url, $code);
-
-        throw new RedirectException('Redirect', $response);
+        throw new RedirectException('Redirect', new RedirectResponse($url, $code));
     }
 
-    /**
-     * Set the action, for later use
-     *
-     * @param string $action The action to set.
-     */
-    private function setAction($action)
+    private function setAction(string $action)
     {
-        $this->action = (string) $action;
+        $this->action = $action;
     }
 
-    /**
-     * Set the data, for later use
-     *
-     * @param string $data The data that should be available.
-     */
-    private function setData($data = null)
+    private function setData(string $data = null): void
     {
         // data given?
-        if ($data !== null) {
-            // unserialize data
-            $data = unserialize($data);
-
-            // store
-            $this->data = $data;
+        if ($data === null) {
+            return;
         }
+
+        $this->data = unserialize($data);
     }
 
-    /**
-     * Set the module, for later use
-     *
-     * @param string $module The module that should be used.
-     */
-    private function setModule($module)
+    private function setModule(string $module): void
     {
-        $this->module = (string) $module;
+        $this->module = $module;
     }
 
     /**
@@ -533,9 +510,9 @@ class Block extends Object
      *
      * @param bool $overwrite true if the template should overwrite the current template, false if not.
      */
-    protected function setOverwrite($overwrite)
+    protected function setOverwrite(bool $overwrite): void
     {
-        $this->overwrite = (bool) $overwrite;
+        $this->overwrite = $overwrite;
     }
 
     /**
@@ -543,15 +520,12 @@ class Block extends Object
      *
      * @param string $path The path to the template that should be loaded.
      */
-    protected function setTemplatePath($path)
+    protected function setTemplatePath(string $path): void
     {
-        $this->templatePath = (string) $path;
+        $this->templatePath = $path;
     }
 
-    /**
-     * @param Meta $meta
-     */
-    protected function setMeta(Meta $meta)
+    protected function setMeta(Meta $meta): void
     {
         $this->header->setPageTitle($meta->getTitle(), $meta->isTitleOverwrite());
         $this->header->addMetaDescription($meta->getDescription(), $meta->isDescriptionOverwrite());
@@ -574,14 +548,24 @@ class Block extends Object
     /**
      * Creates and returns a Form instance from the type of the form.
      *
-     * @param string|FormTypeInterface $type The built type of the form
+     * @param string $type FQCN of the form type class i.e: MyClass::class
      * @param mixed $data The initial data for the form
      * @param array $options Options for the form
      *
      * @return Form
      */
-    public function createForm($type, $data = null, array $options = array())
+    public function createForm(string $type, $data = null, array $options = []): Form
     {
         return $this->get('form.factory')->create($type, $data, $options);
+    }
+
+    /**
+     * Get the request from the container.
+     *
+     * @return Request
+     */
+    public function getRequest(): Request
+    {
+        return Model::getRequest();
     }
 }

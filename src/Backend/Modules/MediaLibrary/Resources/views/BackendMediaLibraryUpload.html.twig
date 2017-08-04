@@ -1,0 +1,208 @@
+<!-- Fine Uploader Gallery template
+    ====================================================================== -->
+<script type="text/template" id="qq-template-gallery">
+  <div class="qq-uploader-selector qq-uploader qq-gallery" qq-drop-area-text="{{ 'lbl.DropFilesHere'|trans|ucfirst }}">
+    <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
+      <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
+    </div>
+    <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+      <span class="qq-upload-drop-area-text-selector"></span>
+    </div>
+    <div class="qq-upload-button-selector btn btn-default">
+      <span class="fa fa-plus-square"></span>
+      <span class="btn-text">{{ 'lbl.AddMediaItems'|trans|ucfirst }}</span>
+    </div>
+    <span class="qq-drop-processing-selector qq-drop-processing">
+      <span>Processing dropped files...</span>
+      <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+    </span>
+    <ul class="qq-upload-list-selector qq-upload-list" role="region" aria-live="polite" aria-relevant="additions removals">
+      <li>
+        <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+        <div class="qq-progress-bar-container-selector qq-progress-bar-container">
+          <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+        </div>
+        <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+        <div class="qq-thumbnail-wrapper">
+          <img class="qq-thumbnail-selector" qq-max-size="140" qq-server-scale>
+        </div>
+        <button type="button" class="qq-upload-cancel-selector qq-upload-cancel">X</button>
+        <button type="button" class="qq-upload-retry-selector qq-upload-retry">
+          <span class="qq-btn qq-retry-icon" aria-label="Retry"></span>
+          Retry
+        </button>
+
+        <div class="qq-file-info">
+          <div class="qq-file-name">
+            <span class="qq-upload-file-selector qq-upload-file"></span>
+            <span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>
+          </div>
+          <input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">
+          <span class="qq-upload-size-selector qq-upload-size"></span>
+          <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">
+            <span class="qq-btn qq-delete-icon" aria-label="Delete"></span>
+          </button>
+          <button type="button" class="qq-btn qq-upload-pause-selector qq-upload-pause">
+            <span class="qq-btn qq-pause-icon" aria-label="Pause"></span>
+          </button>
+          <button type="button" class="qq-btn qq-upload-continue-selector qq-upload-continue">
+            <span class="qq-btn qq-continue-icon" aria-label="Continue"></span>
+          </button>
+        </div>
+      </li>
+    </ul>
+
+    <dialog class="qq-alert-dialog-selector">
+      <div class="qq-dialog-message-selector"></div>
+      <div class="qq-dialog-buttons">
+        <button type="button" class="qq-cancel-button-selector">Close</button>
+      </div>
+    </dialog>
+
+    <dialog class="qq-confirm-dialog-selector">
+      <div class="qq-dialog-message-selector"></div>
+      <div class="qq-dialog-buttons">
+        <button type="button" class="qq-cancel-button-selector">No</button>
+        <button type="button" class="qq-ok-button-selector">Yes</button>
+      </div>
+    </dialog>
+
+    <dialog class="qq-prompt-dialog-selector">
+      <div class="qq-dialog-message-selector"></div>
+      <input type="text">
+      <div class="qq-dialog-buttons">
+        <button type="button" class="qq-cancel-button-selector">Cancel</button>
+        <button type="button" class="qq-ok-button-selector">Ok</button>
+      </div>
+    </dialog>
+  </div>
+</script>
+
+{# Step 0 - Choose type #}
+<div id="uploadMediaTypeBox" class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>{{ 'msg.MediaUploadThisType'|trans }}</p>
+      </div>
+      <div class="panel-body">
+        <div class="form-group last">
+          <ul class="list-unstyled">
+            <li class="radiobutton">
+              <label><input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" checked="checked" /> {{ 'msg.MediaUploadTypeFiles'|trans }}</label>
+            </li>
+            <li class="radiobutton">
+              <label><input type="radio" name="uploading_type" value="movie" /> {{ 'msg.MediaUploadTypeMovies'|trans }}</label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Step 1 - Choose folder #}
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>1) {{ 'msg.MediaUploadToThisFolder'|trans }}</p>
+      </div>
+      <div class="panel-body">
+        <p>
+          <label for="folder">{{ 'lbl.MediaFolder'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <select id="uploadMediaFolderId" name="uploadMediaFolderId">
+            <option></option>
+          </select>&nbsp;&nbsp;
+          <a href="#" id="addFolder" title="{{ 'lbl.MediaAddFolder'|trans|capitalize }}">
+            <span>{{ 'msg.MediaOrAddMediaFolder'|trans }}</span>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Step 2 - Choose media to upload #}
+<div id="uploadMediaBox" class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>2) {{ 'msg.MediaChoseToUpload'|trans }}</p>
+      </div>
+      <div id="fine-uploader-gallery"></div>
+      <div class="panel-footer">
+        <div class="form-group" data-role="cropper-is-mandatory-form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" data-role="enable-cropper-checkbox">
+              {{ 'lbl.EnableCropper'|trans|ucfirst }}
+              <span class="help-block hidden" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Step 2 - Adding a movie #}
+<div id="addMovieBox" class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <p>2) {{ 'msg.MediaWhichMovieToAdd'|trans|ucfirst }}</p>
+      </div>
+      <div class="panel-body">
+        <p>
+          <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
+          <select id="mediaMovieStorageType" name="media_movie_source"></select>
+        </p>
+        <p>
+          <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <input id="mediaMovieId" name="media_movie_id" type="text" class="inputText" />
+          <span class="helpTxt">{{ 'msg.MediaMovieIdHelp'|trans }}</span>
+        </p>
+        <p>
+          <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <input id="mediaMovieTitle" name="media_movie_title" type="text" class="inputText" />
+        </p>
+      </div>
+      <div class="panel-footer">
+        <div class="btn-toolbar">
+          <div class="btn-group pull-right" role="group">
+            <a href="#" id="addMediaMovie" class="btn btn-default" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
+              <span class="fa fa-plus-square"></span><span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Step 3 - Uploaded media #}
+<div id="uploadedMediaBox" class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default panel-editor">
+      <div class="panel-heading">
+        <p>3) {{ 'msg.MediaUploaded'|trans }}</p>
+      </div>
+      <div class="panel-body">
+        <p id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</p>
+        <div class="mediaConnectedBox">
+          <ul id="uploadedMedia" class="mediaConnectedItems ui-sortable"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Add folder dialog #}
+{% include "MediaLibrary/Resources/views/BackendMediaLibraryUploadDialogAddFolder.html.twig" %}
+
+{# Modal with cropper, don't use fade since it will mess up the initial width of the cropper #}
+<div class="modal" id="cropperMediaDialog" tabindex="-1" role="dialog" aria-hidden="true" data-role="media-library-cropper-dialog">
+  {% include "MediaLibrary/Resources/views/CropperDialog.html.twig" %}
+</div>

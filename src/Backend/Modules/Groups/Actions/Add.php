@@ -28,14 +28,14 @@ class Add extends BackendBaseActionAdd
      *
      * @var array
      */
-    private $actionGroups = array();
+    private $actionGroups = [];
 
     /**
      * The actions
      *
      * @var array
      */
-    private $actions = array();
+    private $actions = [];
 
     /**
      * The id of the new group
@@ -75,7 +75,7 @@ class Add extends BackendBaseActionAdd
     /**
      * Bundle all actions that need to be bundled
      */
-    private function bundleActions()
+    private function bundleActions(): void
     {
         foreach ($this->modules as $module) {
             // loop through actions and add all classnames
@@ -119,10 +119,7 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    /**
-     * Execute the action
-     */
-    public function execute()
+    public function execute(): void
     {
         parent::execute();
         $this->getData();
@@ -132,14 +129,11 @@ class Add extends BackendBaseActionAdd
         $this->display();
     }
 
-    /**
-     * Get the actions
-     */
-    private function getActions()
+    private function getActions(): void
     {
-        $this->actions = array();
-        $filter = array('Authentication', 'Error', 'Core');
-        $modules = array();
+        $this->actions = [];
+        $filter = ['Authentication', 'Error', 'Core'];
+        $modules = [];
 
         $finder = new Finder();
         $finder->name('*.php')
@@ -177,40 +171,34 @@ class Add extends BackendBaseActionAdd
                     $description = '';
                 }
 
-                $this->actions[$module][] = array(
+                $this->actions[$module][] = [
                     'label' => \SpoonFilter::toCamelCase($actionName),
                     'value' => $actionName,
                     'description' => $description,
-                );
+                ];
             }
         }
 
         $modules = array_unique($modules);
         foreach ($modules as $module) {
-            $this->modules[] = array(
+            $this->modules[] = [
                 'label' => \SpoonFilter::toCamelCase($module),
                 'value' => $module,
-            );
+            ];
         }
     }
 
-    /**
-     * Get the data
-     */
-    private function getData()
+    private function getData(): void
     {
         $this->getWidgets();
         $this->getActions();
         $this->bundleActions();
     }
 
-    /**
-     * Get the widgets
-     */
-    private function getWidgets()
+    private function getWidgets(): void
     {
-        $this->widgets = array();
-        $this->widgetInstances = array();
+        $this->widgets = [];
+        $this->widgetInstances = [];
 
         $finder = new Finder();
         $finder->name('*.php')->in(BACKEND_MODULES_PATH . '/*/Widgets');
@@ -223,11 +211,11 @@ class Add extends BackendBaseActionAdd
 
                 if (class_exists($class)) {
                     // add to array
-                    $this->widgetInstances[] = array(
+                    $this->widgetInstances[] = [
                         'module' => $module,
                         'widget' => $widgetName,
                         'className' => $class,
-                    );
+                    ];
 
                     // create reflection class
                     $reflection = new \ReflectionClass($class);
@@ -249,13 +237,13 @@ class Add extends BackendBaseActionAdd
                     }
 
                     // add to array
-                    $this->widgets[] = array(
+                    $this->widgets[] = [
                         'module_name' => $module,
                         'checkbox_name' => \SpoonFilter::toCamelCase($module) . \SpoonFilter::toCamelCase($widgetName),
                         'label' => \SpoonFilter::toCamelCase($widgetName),
                         'value' => $widgetName,
                         'description' => $description,
-                    );
+                    ];
                 }
             }
         }
@@ -267,15 +255,14 @@ class Add extends BackendBaseActionAdd
      * @param \SpoonFormElement[] $actionPermissions The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
-    private function insertPermissions($actionPermissions, $bundledActionPermissions)
+    private function insertPermissions(array $actionPermissions, array $bundledActionPermissions): void
     {
-        // init vars
-        $modulesDenied = array();
-        $modulesGranted = array();
-        $actionsDenied = array();
-        $actionsGranted = array();
-        $checkedModules = array();
-        $uncheckedModules = array();
+        $modulesDenied = [];
+        $modulesGranted = [];
+        $actionsDenied = [];
+        $actionsGranted = [];
+        $checkedModules = [];
+        $uncheckedModules = [];
 
         // loop through action permissions
         foreach ($actionPermissions as $permission) {
@@ -289,7 +276,7 @@ class Add extends BackendBaseActionAdd
             // permission checked?
             if ($permission->getChecked()) {
                 // add to granted
-                $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+                $actionsGranted[] = ['group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL];
 
                 // if not yet present, add to checked modules
                 if (!in_array($module, $checkedModules)) {
@@ -297,7 +284,7 @@ class Add extends BackendBaseActionAdd
                 }
             } else {
                 // add to denied
-                $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+                $actionsDenied[] = ['group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL];
 
                 // if not yet present add to unchecked modules
                 if (!in_array($module, $uncheckedModules)) {
@@ -321,7 +308,7 @@ class Add extends BackendBaseActionAdd
                 if ($permission->getChecked()) {
                     // add to granted if in the right group
                     if (in_array($group, $moduleAction)) {
-                        $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                        $actionsGranted[] = ['group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL];
                     }
 
                     // if not yet present, add to checked modules
@@ -331,7 +318,7 @@ class Add extends BackendBaseActionAdd
                 } else {
                     // add to denied
                     if (in_array($group, $moduleAction)) {
-                        $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                        $actionsDenied[] = ['group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL];
                     }
 
                     // if not yet present add to unchecked modules
@@ -344,12 +331,12 @@ class Add extends BackendBaseActionAdd
 
         // loop through granted modules and add to array
         foreach ($checkedModules as $module) {
-            $modulesGranted[] = array('group_id' => $this->id, 'module' => $module);
+            $modulesGranted[] = ['group_id' => $this->id, 'module' => $module];
         }
 
         // loop through denied modules and add to array
         foreach (array_diff($uncheckedModules, $checkedModules) as $module) {
-            $modulesDenied[] = array('group_id' => $this->id, 'module' => $module);
+            $modulesDenied[] = ['group_id' => $this->id, 'module' => $module];
         }
 
         // add granted permissions
@@ -368,10 +355,10 @@ class Add extends BackendBaseActionAdd
      *
      * @return mixed
      */
-    private function insertWidgets($widgetPresets)
+    private function insertWidgets(array $widgetPresets)
     {
         // empty dashboard sequence
-        $this->hiddenOnDashboard = array();
+        $this->hiddenOnDashboard = [];
 
         // loop through all widgets
         foreach ($this->widgetInstances as $widget) {
@@ -386,7 +373,7 @@ class Add extends BackendBaseActionAdd
 
                 if (!$preset->getChecked()) {
                     if (!isset($this->hiddenOnDashboard[$widget['module']])) {
-                        $this->hiddenOnDashboard[$widget['module']] = array();
+                        $this->hiddenOnDashboard[$widget['module']] = [];
                     }
                     $this->hiddenOnDashboard[$widget['module']][] = $widget['widget'];
                 }
@@ -394,9 +381,11 @@ class Add extends BackendBaseActionAdd
         }
 
         // build group
-        $userGroup['name'] = $this->frm->getField('name')->getValue();
+        $userGroup = [];
+        $userGroup['name'] = $this->form->getField('name')->getValue();
 
         // build setting
+        $setting = [];
         $setting['name'] = 'hidden_on_dashboard';
         $setting['value'] = serialize($this->hiddenOnDashboard);
 
@@ -406,25 +395,27 @@ class Add extends BackendBaseActionAdd
         return $userGroup;
     }
 
-    /**
-     * Load the form
-     */
-    private function loadForm()
+    private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('add');
+        $this->form = new BackendForm('add');
+
+        $widgetBoxes = [];
 
         // widgets available?
         if (isset($this->widgets)) {
             // loop through widgets
             foreach ($this->widgets as $j => $widget) {
                 // add widget checkboxes
-                $widgetBoxes[$j]['check'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['checkbox_name'], true)->parse() . '</span>';
+                $widgetBoxes[$j]['check'] = '<span>' . $this->form->addCheckbox('widgets_' . $widget['checkbox_name'], true)->parse() . '</span>';
                 $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BL::lbl($widget['module_name']));
                 $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['checkbox_name']) . '">' . $widget['label'] . '</label>';
                 $widgetBoxes[$j]['description'] = $widget['description'];
             }
         }
+
+        $permissionBoxes = [];
+        $actionBoxes = [];
 
         // loop through modules
         foreach ($this->modules as $key => $module) {
@@ -432,7 +423,7 @@ class Add extends BackendBaseActionAdd
             $permissionBoxes[$key]['label'] = $module['label'];
 
             // init var
-            $addedBundles = array();
+            $addedBundles = [];
 
             // loop through actions
             foreach ($this->actions[$module['value']] as $i => $action) {
@@ -441,7 +432,7 @@ class Add extends BackendBaseActionAdd
                     // bundle not yet in array?
                     if (!in_array($action['group'], $addedBundles)) {
                         // assign bundled action boxes
-                        $actionBoxes[$key]['actions'][$i]['check'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($action['group']))->parse();
+                        $actionBoxes[$key]['actions'][$i]['check'] = $this->form->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($action['group']))->parse();
                         $actionBoxes[$key]['actions'][$i]['action'] = \SpoonFilter::ucfirst($action['group']);
                         $actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
@@ -450,7 +441,7 @@ class Add extends BackendBaseActionAdd
                     }
                 } else {
                     // assign action boxes
-                    $actionBoxes[$key]['actions'][$i]['check'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
+                    $actionBoxes[$key]['actions'][$i]['check'] = $this->form->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
                     $actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . \SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
                     $actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
                 }
@@ -460,7 +451,7 @@ class Add extends BackendBaseActionAdd
             if (isset($widgetBoxes)) {
                 // create datagrid
                 $widgetGrid = new BackendDataGridArray($widgetBoxes);
-                $widgetGrid->setHeaderLabels(array('check' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /><span class="visuallyHidden"></span>'));
+                $widgetGrid->setHeaderLabels(['check' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /><span class="visuallyHidden"></span>']);
 
                 // get content
                 $widgets = $widgetGrid->getContent();
@@ -468,65 +459,67 @@ class Add extends BackendBaseActionAdd
 
             // create datagrid
             $actionGrid = new BackendDataGridArray($actionBoxes[$key]['actions']);
-            $actionGrid->setHeaderLabels(array('check' => ''));
+            $actionGrid->setHeaderLabels(['check' => '']);
 
             // disable paging
             $actionGrid->setPaging(false);
 
             // get content of datagrids
             $permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
-            $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload jsSelectAll')->parse();
+            $permissionBoxes[$key]['chk'] = $this->form->addCheckbox(
+                $module['label'],
+                false,
+                'inputCheckbox checkBeforeUnload jsSelectAll'
+            )->parse();
             $permissionBoxes[$key]['id'] = \SpoonFilter::toCamelCase($module['label']);
         }
 
         // create elements
-        $this->frm->addText('name');
-        $this->frm->addDropdown('manage_users', array('Deny', 'Allow'));
-        $this->frm->addDropdown('manage_groups', array('Deny', 'Allow'));
-        $this->tpl->assign('permissions', $permissionBoxes);
-        $this->tpl->assign('widgets', isset($widgets) ? $widgets : false);
+        $this->form->addText('name');
+        $this->form->addDropdown('manage_users', ['Deny', 'Allow']);
+        $this->form->addDropdown('manage_groups', ['Deny', 'Allow']);
+        $this->template->assign('permissions', $permissionBoxes);
+        $this->template->assign('widgets', $widgets ?? false);
     }
 
-    /**
-     * Validate the form
-     */
-    private function validateForm()
+    private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $bundledActionPermissions = array();
+        if ($this->form->isSubmitted()) {
+            $bundledActionPermissions = [];
 
             // cleanup the submitted fields, ignore fields that were added by hackers
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // get fields
-            $nameField = $this->frm->getField('name');
+            $nameField = $this->form->getField('name');
 
+            $actionPermissions = [];
             foreach ($this->modules as $module) {
                 // loop through actions
                 foreach ($this->actions[$module['value']] as $action) {
                     // collect permissions if not bundled
                     if (!array_key_exists('group', $action)) {
-                        $actionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . $action['label']);
+                        $actionPermissions[] = $this->form->getField('actions_' . $module['label'] . '_' . $action['label']);
                     }
                 }
 
                 // loop through bundled actions
                 foreach ($this->actionGroups as $key => $group) {
                     // loop through all fields
-                    foreach ($this->frm->getFields() as $field) {
+                    foreach ($this->form->getFields() as $field) {
                         // field exists?
                         if ($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($key)) {
                             // add to bundled actions
-                            $bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($key));
+                            $bundledActionPermissions[] = $this->form->getField('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($key));
                         }
                     }
                 }
             }
 
             // loop through widgets and collect presets
-            $widgetPresets = array();
+            $widgetPresets = [];
             foreach ($this->widgets as $widget) {
-                $widgetPresets[] = $this->frm->getField('widgets_' . $widget['checkbox_name']);
+                $widgetPresets[] = $this->form->getField('widgets_' . $widget['checkbox_name']);
             }
 
             // validate fields
@@ -538,7 +531,7 @@ class Add extends BackendBaseActionAdd
             }
 
             // no errors?
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // insert widgets
                 $group = $this->insertWidgets($widgetPresets);
 
@@ -548,11 +541,8 @@ class Add extends BackendBaseActionAdd
                 // insert permissions
                 $this->insertPermissions($actionPermissions, $bundledActionPermissions);
 
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $group));
-
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(BackendModel::createUrlForAction('Index') . '&report=added&var=' . rawurlencode($group['name']) . '&highlight=row-' . $group['id']);
             }
         }
     }

@@ -1,0 +1,21 @@
+{% extends 'Core/Layout/Templates/Base.html.twig' %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block main %}
+
+  <div class="row">
+    {# Main positions #}
+    {% for content in positions.main %}
+      <div class="col-lg-offset-2 col-lg-8">
+        <div class="section-home font-size-large">
+          {% if content.html %}
+            {{ content.html|raw }}
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

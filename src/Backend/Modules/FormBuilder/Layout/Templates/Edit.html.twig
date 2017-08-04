@@ -1,4 +1,5 @@
-{% extends '/Layout/Templates/base.html.twig' %}
+{% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
 
@@ -58,6 +59,18 @@
                       {% form_field method %} {% form_field_error method %}
                     </div>
                     <div class="form-group">
+                      <label for="EmailSubject" class="control-label">
+                        {{ 'lbl.EmailSubject'|trans|ucfirst }}
+                      </label>
+                      {% form_field email_subject %} {% form_field_error email_subject %}
+                    </div>
+                    {% if ddmTemplate %}
+                      <div class="form-group">
+                        <label for="template" class="control-label">{{ 'lbl.Template'|trans|ucfirst }}</label>
+                        {% form_field template %} {% form_field_error template %}
+                      </div>
+                    {% endif %}
+                    <div class="form-group">
                       <label for="email" class="control-label">
                         {{ 'lbl.Recipient'|trans|ucfirst }}
                         {{ macro.required }}
@@ -91,7 +104,9 @@
             <div class="row">
               <div class="col-md-12">
                 <p class="alert alert-warning alert-xs">
-                  <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ImportantImmediateUpdate'|trans|raw }}</p>
+                  <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ImportantImmediateUpdate'|trans|raw }}
+                  {% if recaptchaMissing %}<br><span class="fa fa-exclamation-triangle"></span>{{ 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw }}{% endif %}
+                </p>
                 <br>
               </div>
             </div>
@@ -145,52 +160,39 @@
                     </h3>
                   </div>
                   <div class="panel-body">
-                    <ul class="list-group first">
+                    <div class="list-group first">
                       <h5>{{ 'lbl.FormElements'|trans|ucfirst }}</h5>
-                      <li id="textboxSelector" class="list-group-item">
-                        <a href="#textbox" rel="textboxDialog" class="jsFieldDialogTrigger">
-                          <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textbox.svg" alt="textbox">{{ 'lbl.Textbox'|trans|ucfirst }}
-                        </a>
-                      </li>
-                      <li id="textareaSelector" class="list-group-item">
-                        <a href="#textarea" rel="textareaDialog" class="jsFieldDialogTrigger">
-                          <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textarea.svg" alt="textarea">{{ 'lbl.Textarea'|trans|ucfirst }}
-                        </a>
-                      </li>
-                      <li id="datetimeSelector" class="list-group-item">
-                        <a href="#datetime" rel="datetimeDialog" class="jsFieldDialogTrigger">
-                          <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ 'lbl.Datetime'|trans|ucfirst }}
-                        </a>
-                      </li>
-                      <li id="dropdownSelector" class="list-group-item">
-                        <a href="#dropdown" rel="dropdownDialog" class="jsFieldDialogTrigger">
-                          <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-dropdown.svg" alt="dropdown">{{ 'lbl.Dropdown'|trans|ucfirst }}
-                        </a>
-                      </li>
-                      <li id="checkboxSelector" class="list-group-item">
-                        <a href="#checkbox" rel="checkboxDialog" class="jsFieldDialogTrigger">
-                          <i class="fa fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|ucfirst }}
-                        </a>
-                      </li>
-                      <li id="radiobuttonSelector" class="list-group-item">
-                        <a href="#radiobutton" rel="radiobuttonDialog" class="jsFieldDialogTrigger">
-                          <i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
-                        </a>
-                      </li>
-                    </ul>
-                    <ul class="list-group">
+                      <a id="textboxSelector" href="#textbox" rel="textboxDialog" class="list-group-item jsFieldDialogTrigger">
+                        <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textbox.svg" alt="textbox">{{ 'lbl.Textbox'|trans|ucfirst }}
+                      </a>
+                      <a id="textareaSelector" href="#textarea" rel="textareaDialog" class="list-group-item jsFieldDialogTrigger">
+                        <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textarea.svg" alt="textarea">{{ 'lbl.Textarea'|trans|ucfirst }}
+                      </a>
+                      <a id="datetimeSelector" href="#datetime" rel="datetimeDialog" class="list-group-item jsFieldDialogTrigger">
+                        <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ 'lbl.Datetime'|trans|ucfirst }}
+                      </a>
+                      <a id="dropdownSelector" href="#dropdown" rel="dropdownDialog" class="list-group-item jsFieldDialogTrigger">
+                        <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-dropdown.svg" alt="dropdown">{{ 'lbl.Dropdown'|trans|ucfirst }}
+                      </a>
+                      <a id="checkboxSelector" href="#checkbox" rel="checkboxDialog" class="list-group-item jsFieldDialogTrigger">
+                        <i class="fa fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|ucfirst }}
+                      </a>
+                      <a id="radiobuttonSelector" href="#radiobutton" rel="radiobuttonDialog" class="list-group-item jsFieldDialogTrigger">
+                        <i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
+                      </a>
+                      <a id="recaptchaSelector" href="#recaptcha" class="list-group-item jsRecaptchaTrigger">
+                        <i class="fa fa-repeat fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
+                      </a>
+                    </div>
+                    <div class="list-group">
                       <h5>{{ 'lbl.TextElements'|trans|ucfirst }}</h5>
-                      <li id="headingSelector" class="list-group-item">
-                        <a href="#heading" rel="headingDialog" class="jsFieldDialogTrigger">
-                          <i class="fa fa-header fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
-                        </a>
-                      </li>
-                      <li id="paragraphSelector" class="list-group-item">
-                        <a href="#paragraph" rel="paragraphDialog" class="jsFieldDialogTrigger">
-                          <i class="fa fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|ucfirst }}
-                        </a>
-                      </li>
-                    </ul>
+                      <a id="headingSelector" href="#heading" rel="headingDialog" class="list-group-item jsFieldDialogTrigger">
+                        <i class="fa fa-header fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
+                      </a>
+                      <a id="paragraphSelector" href="#paragraph" rel="paragraphDialog" class="list-group-item jsFieldDialogTrigger">
+                        <i class="fa fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|ucfirst }}
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -283,6 +285,22 @@
                       </li>
                     </ul>
                   </div>
+                  <div class="form-group">
+                    <ul class="list-unstyled">
+                      <li class="checkbox">
+                        <label for="textboxSendConfirmationMailTo" class="control-label">
+                          {% form_field textbox_send_confirmation_mail_to %} {{ 'lbl.SendConfirmationMailTo'|trans|ucfirst }}
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="form-group">
+                    <label for="textboxConfirmationMailSubject" class="control-label">
+                      {{ 'lbl.ConfirmationMailSubject'|trans|ucfirst }}
+                    </label>
+                    {% form_field textbox_confirmation_mail_subject %}
+                    <p id="textboxConfirmationMailSubjectErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                  </div>
                   <div class="jsValidation">
                     <ul class="list-unstyled">
                       <li class="checkbox">
@@ -305,7 +323,8 @@
                       <label for="textboxValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
                       {% form_field textbox_validation %}
                     </div>
-                    <p id="textboxReplyToErrorMessageError" class="text-danger" style="display: none;"></p>
+                    <p id="textboxReplyToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                    <p id="textboxSendConfirmationMailToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                     <div class="form-group jsValidationParameter" style="display: none;">
                       <label for="textboxValidationParameter" class="control-label">
                         {{ 'lbl.Parameter'|trans|ucfirst }}
@@ -928,12 +947,15 @@
       </div>
     </div>
   </div>
-
+  {% endform %}
 
   {# Page delete confirm block #}
   {% if showFormBuilderDelete %}
     {% if id %}
       {% if name %}
+        {{ form_start(deleteForm) }}
+        {{ form_row(deleteForm._token) }}
+        {{ form_row(deleteForm.id) }}
         <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -947,15 +969,15 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                   <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
-                <a href="{{ geturl('delete') }}&amp;id={{ id }}" class="btn btn-danger">
+                <button type="submit" class="btn btn-danger">
                   <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-                </a>
+                </button>
               </div>
             </div>
           </div>
         </div>
+        {{ form_end(deleteForm) }}
       {% endif %}
     {% endif %}
   {% endif %}
-  {% endform %}
 {% endblock %}

@@ -17,10 +17,7 @@ use Backend\Modules\Settings\Engine\Model as BackendSettingsModel;
  */
 class Analyse extends BackendBaseWidget
 {
-    /**
-     * Execute the widget
-     */
-    public function execute()
+    public function execute(): void
     {
         $this->setColumn('left');
         $this->setPosition(1);
@@ -28,17 +25,12 @@ class Analyse extends BackendBaseWidget
         $this->display();
     }
 
-    /**
-     * Parse into template
-     */
-    private function parse()
+    private function parse(): void
     {
-        // init vars
         $warnings = BackendSettingsModel::getWarnings();
 
-        // assign warnings
         if (!empty($warnings)) {
-            $this->tpl->assign('warnings', $warnings);
+            $this->template->assign('warnings', $warnings);
         }
     }
 }

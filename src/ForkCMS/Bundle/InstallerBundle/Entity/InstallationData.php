@@ -14,35 +14,35 @@ class InstallationData
      *
      * @var string
      */
-    protected $dbHostname;
+    protected $databaseHostname;
 
     /**
      * The username for the database
      *
      * @var string
      */
-    protected $dbUsername;
+    protected $databaseUsername;
 
     /**
      * The password for the database
      *
      * @var string
      */
-    protected $dbPassword;
+    protected $databasePassword;
 
     /**
      * The database name
      *
      * @var string
      */
-    protected $dbDatabase;
+    protected $databaseName;
 
     /**
      * The port for the database
      *
      * @var int
      */
-    protected $dbPort = 3306;
+    protected $databasePort = 3306;
 
     /**
      * The type of language setup: single or multiple
@@ -91,7 +91,7 @@ class InstallationData
      *
      * @var array
      */
-    protected $modules = array();
+    protected $modules = [];
 
     /**
      * do we install exampleData?
@@ -136,23 +136,23 @@ class InstallationData
     /**
      * Gets the The host of the database.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDbHostname()
+    public function getDatabaseHostname(): ?string
     {
-        return $this->dbHostname;
+        return $this->databaseHostname;
     }
 
     /**
      * Sets the The host of the database.
      *
-     * @param string $dbHostname the db hostname
+     * @param string $databaseHostname the database hostname
      *
      * @return self
      */
-    public function setDbHostname($dbHostname)
+    public function setDatabaseHostname($databaseHostname): self
     {
-        $this->dbHostname = $dbHostname;
+        $this->databaseHostname = $databaseHostname;
 
         return $this;
     }
@@ -160,23 +160,23 @@ class InstallationData
     /**
      * Gets the The username for the database.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDbUsername()
+    public function getDatabaseUsername(): ?string
     {
-        return $this->dbUsername;
+        return $this->databaseUsername;
     }
 
     /**
      * Sets the The username for the database.
      *
-     * @param string $dbUsername the db username
+     * @param string $databaseUsername the database username
      *
      * @return self
      */
-    public function setDbUsername($dbUsername)
+    public function setDatabaseUsername($databaseUsername): self
     {
-        $this->dbUsername = $dbUsername;
+        $this->databaseUsername = $databaseUsername;
 
         return $this;
     }
@@ -184,23 +184,23 @@ class InstallationData
     /**
      * Gets the The password for the database.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDbPassword()
+    public function getDatabasePassword(): ?string
     {
-        return $this->dbPassword;
+        return $this->databasePassword;
     }
 
     /**
      * Sets the The password for the database.
      *
-     * @param string $dbPassword the db password
+     * @param string $databasePassword the database password
      *
      * @return self
      */
-    public function setDbPassword($dbPassword)
+    public function setDatabasePassword($databasePassword): self
     {
-        $this->dbPassword = $dbPassword;
+        $this->databasePassword = $databasePassword;
 
         return $this;
     }
@@ -208,23 +208,23 @@ class InstallationData
     /**
      * Gets the The database name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDbDatabase()
+    public function getDatabaseName(): ?string
     {
-        return $this->dbDatabase;
+        return $this->databaseName;
     }
 
     /**
      * Sets the The database name.
      *
-     * @param string $dbDatabase the db database
+     * @param string $databaseName the database name
      *
      * @return self
      */
-    public function setDbDatabase($dbDatabase)
+    public function setDatabaseName($databaseName): self
     {
-        $this->dbDatabase = $dbDatabase;
+        $this->databaseName = $databaseName;
 
         return $this;
     }
@@ -234,21 +234,21 @@ class InstallationData
      *
      * @return int
      */
-    public function getDbPort()
+    public function getDatabasePort(): int
     {
-        return $this->dbPort;
+        return $this->databasePort;
     }
 
     /**
      * Sets the The port for the database.
      *
-     * @param int $dbPort the db port
+     * @param int $databasePort the database port
      *
      * @return self
      */
-    public function setDbPort($dbPort)
+    public function setDatabasePort($databasePort): self
     {
-        $this->dbPort = $dbPort;
+        $this->databasePort = $databasePort;
 
         return $this;
     }
@@ -256,9 +256,9 @@ class InstallationData
     /**
      * Gets the The type of language setup: single or multiple.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLanguageType()
+    public function getLanguageType(): ?string
     {
         return $this->languageType;
     }
@@ -270,7 +270,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setLanguageType($languageType)
+    public function setLanguageType($languageType): self
     {
         $this->languageType = $languageType;
 
@@ -282,7 +282,7 @@ class InstallationData
      *
      * @return bool
      */
-    public function getSameInterfaceLanguage()
+    public function getSameInterfaceLanguage(): bool
     {
         return $this->sameInterfaceLanguage;
     }
@@ -294,7 +294,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setSameInterfaceLanguage($sameInterfaceLanguage)
+    public function setSameInterfaceLanguage($sameInterfaceLanguage): self
     {
         $this->sameInterfaceLanguage = $sameInterfaceLanguage;
 
@@ -304,9 +304,9 @@ class InstallationData
     /**
      * Helper method, only needed for the languages form
      *
-     * @return string
+     * @return string|null
      */
-    public function getInterfaceLanguage()
+    public function getInterfaceLanguage(): ?string
     {
         return $this->getDefaultLanguage();
     }
@@ -314,9 +314,9 @@ class InstallationData
     /**
      * Gets the The languages to install Fork in.
      *
-     * @return array
+     * @return array|null
      */
-    public function getLanguages()
+    public function getLanguages(): ?array
     {
         return $this->languages;
     }
@@ -328,7 +328,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setLanguages(array $languages)
+    public function setLanguages(array $languages): self
     {
         $this->languages = $languages;
 
@@ -338,9 +338,9 @@ class InstallationData
     /**
      * Gets the The backend interface languages to install for Fork.
      *
-     * @return array
+     * @return array|null
      */
-    public function getInterfaceLanguages()
+    public function getInterfaceLanguages(): ?array
     {
         return $this->interfaceLanguages;
     }
@@ -352,7 +352,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setInterfaceLanguages(array $interfaceLanguages)
+    public function setInterfaceLanguages(array $interfaceLanguages): self
     {
         $this->interfaceLanguages = $interfaceLanguages;
 
@@ -362,9 +362,9 @@ class InstallationData
     /**
      * Gets the The default language for this Fork installation.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDefaultLanguage()
+    public function getDefaultLanguage(): ?string
     {
         return $this->defaultLanguage;
     }
@@ -376,7 +376,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setDefaultLanguage($defaultLanguage)
+    public function setDefaultLanguage($defaultLanguage): self
     {
         $this->defaultLanguage = $defaultLanguage;
 
@@ -386,9 +386,9 @@ class InstallationData
     /**
      * Gets the The default language for the Fork backend.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDefaultInterfaceLanguage()
+    public function getDefaultInterfaceLanguage(): ?string
     {
         return $this->defaultInterfaceLanguage;
     }
@@ -400,7 +400,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setDefaultInterfaceLanguage($defaultInterfaceLanguage)
+    public function setDefaultInterfaceLanguage($defaultInterfaceLanguage): self
     {
         $this->defaultInterfaceLanguage = $defaultInterfaceLanguage;
 
@@ -410,9 +410,9 @@ class InstallationData
     /**
      * Gets the The modules to install Fork in.
      *
-     * @return array
+     * @return array|null
      */
-    public function getModules()
+    public function getModules(): ?array
     {
         return $this->modules;
     }
@@ -422,13 +422,15 @@ class InstallationData
      *
      * @param string $module
      *
-     * @return $this
+     * @return self
      */
-    public function addModule($module)
+    public function addModule($module): self
     {
-        if (!in_array($module, $this->modules)) {
+        if (!in_array($module, $this->modules, true)) {
             $this->modules[] = $module;
         }
+
+        return $this;
     }
 
     /**
@@ -436,14 +438,16 @@ class InstallationData
      *
      * @param string $module
      *
-     * @return $this
+     * @return self
      */
-    public function removeModule($module)
+    public function removeModule($module): self
     {
-        $index = array_search($module, $this->modules);
+        $index = array_search($module, $this->modules, true);
         if ($index !== false) {
             unset($this->modules[$index]);
         }
+
+        return $this;
     }
 
     /**
@@ -453,7 +457,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setModules(array $modules)
+    public function setModules(array $modules): self
     {
         $this->modules = $modules;
 
@@ -463,9 +467,9 @@ class InstallationData
     /**
      * Gets the do we install exampleData?.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function hasExampleData()
+    public function hasExampleData(): ?bool
     {
         return $this->exampleData;
     }
@@ -477,7 +481,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setExampleData($exampleData)
+    public function setExampleData($exampleData): self
     {
         $this->exampleData = $exampleData;
 
@@ -487,9 +491,9 @@ class InstallationData
     /**
      * Gets the Do we use a different debug emailaddress.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function hasDifferentDebugEmail()
+    public function hasDifferentDebugEmail(): ?bool
     {
         return $this->differentDebugEmail;
     }
@@ -501,7 +505,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setDifferentDebugEmail($differentDebugEmail)
+    public function setDifferentDebugEmail($differentDebugEmail): self
     {
         $this->differentDebugEmail = $differentDebugEmail;
 
@@ -511,9 +515,9 @@ class InstallationData
     /**
      * Gets the The custom debug emailaddress, if applicable.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDebugEmail()
+    public function getDebugEmail(): ?string
     {
         return $this->debugEmail;
     }
@@ -525,7 +529,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setDebugEmail($debugEmail)
+    public function setDebugEmail($debugEmail): self
     {
         $this->debugEmail = $debugEmail;
 
@@ -535,9 +539,9 @@ class InstallationData
     /**
      * Gets the The backend login email for the GOD user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -549,7 +553,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setEmail($email)
+    public function setEmail($email): self
     {
         $this->email = $email;
 
@@ -559,9 +563,9 @@ class InstallationData
     /**
      * Gets the The backend password for the GOD user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -573,7 +577,7 @@ class InstallationData
      *
      * @return self
      */
-    public function setPassword($password)
+    public function setPassword($password): self
     {
         $this->password = $password;
 
@@ -585,13 +589,13 @@ class InstallationData
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         return !(
-            empty($this->dbHostname)
-            || empty($this->dbUsername)
-            || empty($this->dbDatabase)
-            || empty($this->dbPort)
+            empty($this->databaseHostname)
+            || empty($this->databaseUsername)
+            || empty($this->databaseName)
+            || empty($this->databasePort)
 
             || empty($this->languages)
             || empty($this->interfaceLanguages)
