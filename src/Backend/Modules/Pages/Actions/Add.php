@@ -357,7 +357,7 @@ class Add extends BackendBaseActionAdd
         if ($this->form->isSubmitted()) {
             // get the status
             $status = $this->getRequest()->request->get('status');
-            if ( ! in_array($status, ['active', 'draft'])) {
+            if (! in_array($status, ['active', 'draft'])) {
                 $status = 'active';
             }
 
@@ -393,7 +393,7 @@ class Add extends BackendBaseActionAdd
                 // init var
                 $parentId = $this->getRequest()->query->getInt('parent');
                 $parentPage = BackendPagesModel::get($parentId);
-                if ( ! $parentPage || ! $parentPage['children_allowed']) {
+                if (! $parentPage ||! $parentPage['children_allowed']) {
                     // no children allowed
                     $parentId = 0;
                     $parentPage = false;
@@ -488,7 +488,7 @@ class Add extends BackendBaseActionAdd
                     $this->blocksContent[$i]['revision_id'] = $page['revision_id'];
 
                     // validate blocks, only save blocks for valid positions
-                    if ( ! in_array(
+                    if (! in_array(
                         $block['position'],
                         $this->templates[$this->form->getField('template_id')->getValue()]['data']['names']
                     )
@@ -553,7 +553,7 @@ class Add extends BackendBaseActionAdd
 
     private function getImage(bool $allowImage): ?string
     {
-        if ( ! $allowImage || ! $this->form->getField('image')->isFilled()) {
+        if (! $allowImage ||! $this->form->getField('image')->isFilled()) {
             return null;
         }
 
@@ -576,8 +576,7 @@ class Add extends BackendBaseActionAdd
 
     private function getHiddenJsonField(string $name, string $json): SpoonFormHidden
     {
-        return new class($name, htmlspecialchars($json)) extends SpoonFormHidden
-        {
+        return new class($name, htmlspecialchars($json)) extends SpoonFormHidden {
             public function getValue($allowHTML = null)
             {
                 return parent::getValue(true);
