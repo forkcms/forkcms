@@ -23,5 +23,5 @@
 /js/*.js
 
 # Docker
-/data/*
+var/docker/db/data/*
 docker-compose.override.yml

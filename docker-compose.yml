@@ -34,9 +34,9 @@ services:
             # Uncomment the next line if you want to keep mysql in a data container
             # - db-data:/var/lib/mysql:rw
             # By default, use a bind-mounted host directory instead. It's harder to accidentally lose all your db data!
-            - ./docker/db/data:/var/lib/mysql:rw
+            - ./var/docker/db/data:/var/lib/mysql:rw
             - ./tests/data/test_db.sql:/test_db.sql:ro
-            - ./docker/db/scripts:/docker-entrypoint-initdb.d:ro
+            - ./var/docker/db/scripts:/docker-entrypoint-initdb.d:ro
 
 volumes:
     db-data: {}

@@ -30,11 +30,11 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-install intl
 
 # Custom php.ini settings
-COPY docker/php/php.ini ${PHP_INI_DIR}/php.ini
+COPY var/docker/php/php.ini ${PHP_INI_DIR}/php.ini
 
 # Install and configure XDebug
 RUN pecl install xdebug && docker-php-ext-enable xdebug
-COPY docker/php/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.init
+COPY var/docker/php/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.init
 RUN echo 'xdebug.remote_host="${DOCKER_HOST_IP}"' >> ${PHP_INI_DIR}/conf.d/xdebug.ini
 
 # Install composer

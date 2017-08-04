@@ -24,12 +24,11 @@ build/
 composer.phar
 docker-compose.override.yml
 docker-compose.yml
-docker/db/data/
-var/
+var/docker/db/data/
 vendor/
 .idea
-app/cache/*
-app/logs/*
+var/cache/*
+var/logs/*
 app/config/parameters.yml
 src/Backend/Cache/*/*
 src/Frontend/Cache/*/*
