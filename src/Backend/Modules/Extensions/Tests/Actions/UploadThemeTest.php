@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Extensions\Tests;
+namespace Backend\Modules\Extensions\Tests\Actions;
 
 use Common\WebTestCase;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -158,5 +158,37 @@ class UploadThemeTest extends WebTestCase
 
         $this->logout($this->client);
         parent::tearDown();
+    }
+
+    public function testAuthenticationIsNeeded(): void
+    {
+        $client = static::createClient();
+        $this->logout($client);
+
+        $client->setMaxRedirects(1);
+        $client->request('GET', self::URL_UPLOAD_THEME);
+
+        // we should get redirected to authentication with a reference to blog index in our url
+        self::assertStringEndsWith(
+            '/private/en/authentication?querystring=%2Fprivate%2Fen%2Fextensions%2Fupload_theme',
+            $client->getHistory()->current()->getUri()
+        );
+    }
+
+    public function testUploadPage(): void
+    {
+        $client = static::createClient();
+        $this->login($client);
+
+        $client->request('GET', self::URL_UPLOAD_THEME);
+        self::assertContains(
+            'Install',
+            $client->getResponse()->getContent()
+        );
+
+        self::assertContains(
+            '<label for="file" class="control-label">',
+            $client->getResponse()->getContent()
+        );
     }
 }
