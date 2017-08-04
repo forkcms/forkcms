@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+    app:
+        build:
+            context: .
+        working_dir: /var/www/html
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - db
+        environment:
+            - FORK_DEBUG=1
+            - FORK_ENV=dev
+            - DOCKER_HOST_IP
+            - XDEBUG_CONFIG="remote_host=${DOCKER_HOST_IP} idekey=PHPSTORM remote_log=/dev/stdout" # PHP CLI debug
+        volumes:
+            - .:/var/www/html:cached
+            - ./src/Frontend/Files:/var/www/html/src/Frontend/Files:cached
+
+    db:
+        image: "mariadb:latest"
+        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            # Make sure to change these if you're planning on using Docker for purposes other than local development!
+            - MYSQL_DATABASE=forkcms
+            - MYSQL_ROOT_PASSWORD=kingtriton
+            - MYSQL_USER=forkcms
+            - MYSQL_PASSWORD=forkcms
+        volumes:
+            # Uncomment the next line if you want to keep mysql in a data container
+            # - db-data:/var/lib/mysql:rw
+            # By default, use a bind-mounted host directory instead. It's harder to accidentally lose all your db data!
+            - ./var/docker/db/data:/var/lib/mysql:rw
+            - ./tests/data/test_db.sql:/test_db.sql:ro
+            - ./var/docker/db/scripts:/docker-entrypoint-initdb.d:ro
+
+volumes:
+    db-data: {}
