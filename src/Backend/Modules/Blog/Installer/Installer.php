@@ -173,7 +173,7 @@ class Installer extends ModuleInstaller
     private function getCategory(string $language): int
     {
         // @todo: Replace this with a BlogCategoryRepository method when it exists.
-        return (int) $this->getDB()->getVar(
+        return (int) $this->getDatabase()->getVar(
             'SELECT id FROM blog_categories WHERE language = ?',
             [$language]
         );
@@ -182,7 +182,7 @@ class Installer extends ModuleInstaller
     private function getSearchWidgetId(): int
     {
         // @todo: Replace this with a ModuleExtraRepository method when it exists.
-        return (int) $this->getDB()->getVar(
+        return (int) $this->getDatabase()->getVar(
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
             ['Search', ModuleExtraType::widget(), 'Form']
@@ -192,7 +192,7 @@ class Installer extends ModuleInstaller
     private function hasPageWithBlogBlock(string $language): bool
     {
         // @todo: Replace with a PageRepository method when it exists.
-        return (bool) $this->getDB()->getVar(
+        return (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM pages AS p
              INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
@@ -204,6 +204,7 @@ class Installer extends ModuleInstaller
 
     /**
      * Insert a category for a language
+     *
      * @todo: Replace this with a BlogCategoryRepository method when it exists.
      *
      * @param string $language The language to use.
@@ -219,7 +220,7 @@ class Installer extends ModuleInstaller
         $item['language'] = $language;
         $item['title'] = $title;
 
-        return (int) $this->getDB()->insert('blog_categories', $item);
+        return (int) $this->getDatabase()->insert('blog_categories', $item);
     }
 
     /**
@@ -227,11 +228,11 @@ class Installer extends ModuleInstaller
      */
     private function installExampleData(string $language): void
     {
-        // get db instance
-        $db = $this->getDB();
+        // get database instance
+        $database = $this->getDatabase();
 
         // check if blogposts already exist in this language
-        if (!(bool) $db->getVar(
+        if (!(bool) $database->getVar(
             'SELECT 1
              FROM blog_posts
              WHERE language = ?
@@ -240,7 +241,7 @@ class Installer extends ModuleInstaller
         )
         ) {
             // insert sample blogpost 1
-            $db->insert(
+            $database->insert(
                 'blog_posts',
                 [
                     'id' => 1,
@@ -264,8 +265,8 @@ class Installer extends ModuleInstaller
                     'publish_on' => gmdate('Y-m-d H:i:00'),
                     'created_on' => gmdate('Y-m-d H:i:00'),
                     'edited_on' => gmdate('Y-m-d H:i:00'),
-                    'hidden' => 'N',
-                    'allow_comments' => 'Y',
+                    'hidden' => false,
+                    'allow_comments' => true,
                     'num_comments' => '2',
                 ]
             );
@@ -284,7 +285,7 @@ class Installer extends ModuleInstaller
             );
 
             // insert sample blogpost 2
-            $db->insert(
+            $database->insert(
                 'blog_posts',
                 [
                     'id' => 2,
@@ -303,8 +304,8 @@ class Installer extends ModuleInstaller
                     'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
                     'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
                     'edited_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-                    'hidden' => 'N',
-                    'allow_comments' => 'Y',
+                    'hidden' => false,
+                    'allow_comments' => true,
                     'num_comments' => '0',
                 ]
             );
@@ -323,7 +324,7 @@ class Installer extends ModuleInstaller
             );
 
             // insert example comment 1
-            $db->insert(
+            $database->insert(
                 'blog_comments',
                 [
                     'post_id' => 1,
@@ -340,7 +341,7 @@ class Installer extends ModuleInstaller
             );
 
             // insert example comment 2
-            $db->insert(
+            $database->insert(
                 'blog_comments',
                 [
                     'post_id' => 1,

@@ -23,7 +23,7 @@ class ActionAdd extends Action
      *
      * @var Form
      */
-    protected $frm;
+    protected $form;
 
     /**
      * The backend meta-object
@@ -36,8 +36,8 @@ class ActionAdd extends Action
     {
         parent::parse();
 
-        if ($this->frm) {
-            $this->frm->parse($this->tpl);
+        if ($this->form) {
+            $this->form->parse($this->template);
         }
     }
 }

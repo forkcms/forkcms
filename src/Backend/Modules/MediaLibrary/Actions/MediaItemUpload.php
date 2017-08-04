@@ -27,7 +27,7 @@ class MediaItemUpload extends BackendBaseActionAdd
     protected function getMediaFolder(): ?MediaFolder
     {
         /** @var int $id */
-        $id = $this->get('request')->query->get('folder');
+        $id = $this->getRequest()->query->get('folder');
 
         try {
             return $this->get('media_library.repository.folder')->findOneById($id);
@@ -44,8 +44,8 @@ class MediaItemUpload extends BackendBaseActionAdd
         /** @var int|null $mediaFolderId */
         $mediaFolderId = ($this->mediaFolder instanceof MediaFolder) ? $this->mediaFolder->getId() : null;
 
-        $this->tpl->assign('folderId', $mediaFolderId);
-        $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
+        $this->template->assign('folderId', $mediaFolderId);
+        $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
         $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
     }
 

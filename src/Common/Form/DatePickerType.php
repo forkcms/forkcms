@@ -22,7 +22,7 @@ class DatePickerType extends DateType
         $this->header = $container->get('header');
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
@@ -37,7 +37,7 @@ class DatePickerType extends DateType
         $this->header->addCSS('/css/vendors/bootstrap-datepicker3.standalone.min.css', true, true, Priority::core());
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('widget', 'single_text');

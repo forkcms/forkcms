@@ -3,16 +3,19 @@
 namespace Backend\Core\Engine;
 
 use Backend\Core\Language\Language as BL;
-use Frontend\Core\Engine\FormExtension;
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
+use Frontend\Core\Engine\FormExtension;
 use ReflectionClass;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
 use Twig_Environment;
 use Twig_Extension_Debug;
+use Twig_FactoryRuntimeLoader;
 use Twig_Loader_Filesystem;
 
 /*
@@ -39,7 +42,7 @@ class TwigTemplate extends BaseTwigTemplate
         parent::__construct(
             $this->buildTwigEnvironmentForTheBackend(),
             $container->get('templating.name_parser'),
-            $container->get('templating.locator')
+            new TemplateLocator($container->get('file_locator'), $container->getParameter('kernel.cache_dir'))
         );
 
         if ($addToReference) {
@@ -71,12 +74,6 @@ class TwigTemplate extends BaseTwigTemplate
         $this->parseTranslations();
         $this->parseVars();
         $this->startGlobals($this->environment);
-
-        if (count($this->forms) > 0) {
-            foreach ($this->forms as $form) {
-                $this->environment->addGlobal('form_' . $form->getName(), $form);
-            }
-        }
 
         return $this->render(str_replace(BACKEND_MODULES_PATH, '', $template), $this->variables);
     }
@@ -110,19 +107,26 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function connectSymfonyForms(): void
     {
-        $formEngine = new TwigRendererEngine(['Layout/Templates/FormLayout.html.twig']);
-        $formEngine->setEnvironment($this->environment);
-        $this->environment->addExtension(
-            new SymfonyFormExtension(
-                new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+        $rendererEngine = new TwigRendererEngine(['Layout/Templates/FormLayout.html.twig'], $this->environment);
+        $csrfTokenManager = Model::get('security.csrf.token_manager');
+        $this->environment->addRuntimeLoader(
+            new Twig_FactoryRuntimeLoader(
+                [
+                    TwigRenderer::class => function () use ($rendererEngine, $csrfTokenManager): TwigRenderer {
+                        return new TwigRenderer($rendererEngine, $csrfTokenManager);
+                    },
+                ]
             )
         );
+
+        if (!$this->environment->hasExtension(SymfonyFormExtension::class)) {
+            $this->environment->addExtension(new SymfonyFormExtension());
+        }
     }
 
     private function connectSymfonyTranslator(): void
     {
-        $twigTranslationExtensionClass = Model::getContainer()->getParameter('twig.extension.trans.class');
-        $this->environment->addExtension(new $twigTranslationExtensionClass(Model::get('translator')));
+        $this->environment->addExtension(new TranslationExtension(Model::get('translator')));
     }
 
     private function connectSpoonForm(): void
@@ -132,25 +136,12 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function parseUserDefinedConstants(): void
     {
-        // constants that should be protected from usage in the template
-        $notPublicConstants = ['DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD'];
-
         // get all defined constants
         $constants = get_defined_constants(true);
 
-        // init var
-        $realConstants = [];
-
-        // remove protected constants aka constants that should not be used in the template
-        foreach ($constants['user'] as $key => $value) {
-            if (!in_array($key, $notPublicConstants)) {
-                $realConstants[$key] = $value;
-            }
-        }
-
         // we should only assign constants if there are constants to assign
-        if (!empty($realConstants)) {
-            $this->assignArray($realConstants);
+        if (!empty($constants['user'])) {
+            $this->assignArray($constants['user']);
         }
 
         // we use some abbreviations and common terms, these should also be assigned
@@ -218,7 +209,7 @@ class TwigTemplate extends BaseTwigTemplate
                 // assign special vars
                 $this->assign(
                     'authenticatedUserEditUrl',
-                    Model::createURLForAction(
+                    Model::createUrlForAction(
                         'Edit',
                         'Users',
                         null,
@@ -317,7 +308,7 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        $this->assign('cookies', Model::get('request')->cookies->all());
+        $this->assign('cookies', Model::getRequest()->cookies->all());
     }
 
     private function parseNavigation(): void

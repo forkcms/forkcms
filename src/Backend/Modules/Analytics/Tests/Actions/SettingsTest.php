@@ -6,13 +6,10 @@ use Common\WebTestCase;
 
 class SettingsTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationIsNeeded(): void
     {
-        $this->logout();
         $client = static::createClient();
+        $this->logout($client);
 
         $client->setMaxRedirects(1);
         $client->request('GET', '/private/en/analytics/settings');
@@ -24,13 +21,10 @@ class SettingsTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testAnalyticsSettingsWorks(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $crawler = $client->request('GET', '/private/en/analytics/settings');
 

@@ -26,12 +26,12 @@ class ResetPassword extends FrontendBaseBlock
      *
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
         // get reset key
-        $key = $this->URL->getParameter(0);
+        $key = $this->url->getParameter(0);
 
         // do we have an reset key?
         if (isset($key)) {
@@ -51,30 +51,30 @@ class ResetPassword extends FrontendBaseBlock
 
                 // validate
                 $this->validateForm();
-            } elseif ($this->URL->getParameter('sent') != 'true') {
-                $this->redirect(FrontendNavigation::getURL(404));
+            } elseif ($this->url->getParameter('sent') != 'true') {
+                $this->redirect(FrontendNavigation::getUrl(404));
             }
 
             // parse
             $this->parse();
         } else {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
     }
 
     private function buildForm(): void
     {
         // create the form
-        $this->frm = new FrontendForm('resetPassword', null, null, 'resetPasswordForm');
+        $this->form = new FrontendForm('resetPassword', null, null, 'resetPasswordForm');
 
         // create & add elements
-        $this->frm->addPassword('password')->setAttributes(
+        $this->form->addPassword('password')->setAttributes(
             [
                 'required' => null,
                 'data-role' => 'fork-new-password',
             ]
         );
-        $this->frm->addCheckbox('show_password')->setAttributes(
+        $this->form->addCheckbox('show_password')->setAttributes(
             ['data-role' => 'fork-toggle-visible-password']
         );
     }
@@ -82,31 +82,31 @@ class ResetPassword extends FrontendBaseBlock
     private function parse(): void
     {
         // has the password been saved?
-        if ($this->URL->getParameter('sent') == 'true') {
+        if ($this->url->getParameter('sent') == 'true') {
             // show message
-            $this->tpl->assign('resetPasswordSuccess', true);
+            $this->template->assign('resetPasswordSuccess', true);
 
             // hide form
-            $this->tpl->assign('resetPasswordHideForm', true);
+            $this->template->assign('resetPasswordHideForm', true);
         } else {
-            $this->frm->parse($this->tpl);
+            $this->form->parse($this->template);
         }
     }
 
     private function validateForm(): void
     {
         // is the form submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // get fields
-            $txtPassword = $this->frm->getField('password');
+            $txtPassword = $this->form->getField('password');
 
             // field is filled in?
             $txtPassword->isFilled(FL::getError('PasswordIsRequired'));
 
             // valid
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // get profile id
-                $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $this->URL->getParameter(0));
+                $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $this->url->getParameter(0));
 
                 // remove key (we can only update the password once with this key)
                 FrontendProfilesModel::deleteSetting($profileId, 'forgot_password_key');
@@ -121,12 +121,12 @@ class ResetPassword extends FrontendBaseBlock
 
                 // redirect
                 $this->redirect(
-                    FrontendNavigation::getURLForBlock('Profiles', 'ResetPassword') . '/' . $this->URL->getParameter(
+                    FrontendNavigation::getUrlForBlock('Profiles', 'ResetPassword') . '/' . $this->url->getParameter(
                         0
                     ) . '?sent=true'
                 );
             } else {
-                $this->tpl->assign('forgotPasswordHasError', true);
+                $this->template->assign('forgotPasswordHasError', true);
             }
         }
     }

@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine\Base;
  */
 
 use ForkCMS\App\KernelLoader;
+use Frontend\Core\Engine\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -19,11 +20,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class AjaxAction extends KernelLoader
 {
-    public const OK = 200;
-    public const BAD_REQUEST = 400;
-    public const FORBIDDEN = 403;
-    public const ERROR = 500;
-
     /**
      * The current action
      *
@@ -76,7 +72,7 @@ class AjaxAction extends KernelLoader
     {
         return new Response(
             json_encode($this->content),
-            $this->content['code'] ?? self::OK,
+            $this->content['code'] ?? Response::HTTP_OK,
             ['content-type' => 'application/json']
         );
     }
@@ -116,6 +112,6 @@ class AjaxAction extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return Model::getRequest();
     }
 }

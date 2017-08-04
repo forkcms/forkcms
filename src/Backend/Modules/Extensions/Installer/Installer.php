@@ -103,7 +103,7 @@ class Installer extends ModuleInstaller
             'theme' => 'Fork',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
-            'active' => 'Y',
+            'active' => true,
             'data' => serialize(
                 [
                     'format' => '[/,/,top],[main,main,main]',
@@ -117,7 +117,7 @@ class Installer extends ModuleInstaller
             'theme' => 'Fork',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
-            'active' => 'Y',
+            'active' => true,
             'data' => serialize(
                 [
                     'format' => '[/,/,top],[main,main,main]',
@@ -128,8 +128,8 @@ class Installer extends ModuleInstaller
         ];
 
         // insert templates
-        $this->getDB()->insert('themes_templates', $templates['fork']['default']);
-        $this->getDB()->insert('themes_templates', $templates['fork']['home']);
+        $this->getDatabase()->insert('themes_templates', $templates['fork']['default']);
+        $this->getDatabase()->insert('themes_templates', $templates['fork']['home']);
 
         // set the theme
         $this->setSetting('Core', 'theme', 'Fork', true);

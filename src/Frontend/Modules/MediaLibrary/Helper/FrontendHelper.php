@@ -149,7 +149,7 @@ class FrontendHelper
      * Parse widget for a MediaGroupId in a custom module.
      *
      * Example:
-     * $this->tpl->assign(
+     * $this->template->assign(
      *     'imagesWidget',
      *     // We can create widget for the MediaGroup id
      *     $this->get('media_library.helper.frontend')->parseWidget(
@@ -199,6 +199,7 @@ class FrontendHelper
     {
         try {
             $widget->execute();
+
             return $widget->getContent();
         } catch (\Exception $e) {
             // if we are debugging, we want to see the exception

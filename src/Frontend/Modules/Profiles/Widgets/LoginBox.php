@@ -22,7 +22,7 @@ class LoginBox extends FrontendBaseWidget
     /**
      * @var FrontendForm
      */
-    private $frm;
+    private $form;
 
     public function execute(): void
     {
@@ -39,25 +39,25 @@ class LoginBox extends FrontendBaseWidget
             return;
         }
 
-        $this->frm = new FrontendForm(
+        $this->form = new FrontendForm(
             'login',
-            FrontendNavigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $this->URL->getQueryString()
+            FrontendNavigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $this->url->getQueryString()
         );
-        $this->frm->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
-        $this->frm->addPassword('password')->setAttributes(['required' => null]);
-        $this->frm->addCheckbox('remember', true);
+        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addPassword('password')->setAttributes(['required' => null]);
+        $this->form->addCheckbox('remember', true);
 
         // parse the form
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     private function parse(): void
     {
-        $this->tpl->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
+        $this->template->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
 
         if (FrontendProfilesAuthentication::isLoggedIn()) {
             $profile = FrontendProfilesAuthentication::getProfile();
-            $this->tpl->assign('profile', $profile->toArray());
+            $this->template->assign('profile', $profile->toArray());
         }
     }
 }

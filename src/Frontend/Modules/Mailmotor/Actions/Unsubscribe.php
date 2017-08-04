@@ -12,9 +12,9 @@ namespace Frontend\Modules\Mailmotor\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Locale;
-use Frontend\Modules\Mailmotor\Command\Unsubscription;
-use Frontend\Modules\Mailmotor\Event\NotImplementedUnsubscribedEvent;
-use Frontend\Modules\Mailmotor\Form\UnsubscribeType;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Unsubscription;
+use Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedUnsubscribedEvent;
+use Frontend\Modules\Mailmotor\Domain\Subscription\UnsubscribeType;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
@@ -26,25 +26,22 @@ class Unsubscribe extends FrontendBaseBlock
     {
         parent::execute();
 
-        // Define email from the unsubscribe widget
-        $email = $this->getEmail();
-
         // Create the form
         $form = $this->createForm(
             UnsubscribeType::class,
             new Unsubscription(
                 Locale::frontendLanguage(),
-                $email
+                $this->getEmail()
             )
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
-        if (!$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->template->assign('form', $form->createView());
 
             if ($form->isSubmitted()) {
-                $this->tpl->assign('mailmotorUnsubscribeHasFormError', true);
+                $this->template->assign('mailmotorUnsubscribeHasFormError', true);
             }
 
             $this->loadTemplate();
@@ -70,7 +67,7 @@ class Unsubscribe extends FrontendBaseBlock
         }
 
         $this->redirect(
-            FrontendNavigation::getURLForBlock(
+            FrontendNavigation::getUrlForBlock(
                 'Mailmotor',
                 'Unsubscribe'
             )
@@ -79,31 +76,20 @@ class Unsubscribe extends FrontendBaseBlock
         );
     }
 
-    /**
-     * Get email
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
-        // define email
-        $email = null;
-
-        // request contains an email
-        if ($this->get('request')->request->get('email') != null) {
-            $email = $this->get('request')->request->get('email');
-        }
-
-        return $email;
+        return $this->getRequest()->request->get('email');
     }
 
     private function parse(): void
     {
         // form was unsubscribed?
-        if ($this->URL->getParameter('unsubscribed') === 'true') {
+        if ($this->url->getParameter('unsubscribed') === 'true') {
             // show message
-            $this->tpl->assign('mailmotorUnsubscribeIsSuccess', true);
+            $this->template->assign('mailmotorUnsubscribeIsSuccess', true);
 
             // hide form
-            $this->tpl->assign('mailmotorUnsubscribeHideForm', true);
+            $this->template->assign('mailmotorUnsubscribeHideForm', true);
         }
     }
 }

@@ -11,8 +11,12 @@ namespace Common\Core;
 
 use ForkCMS\App\BaseModel;
 use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use TijsVerkoyen\Akismet\Akismet;
 
 /**
@@ -105,7 +109,6 @@ class Model extends BaseModel
             'st',
         ];
 
-        // init vars
         $consonantsCount = count($consonants);
         $vowelsCount = count($vowels);
         $pass = '';
@@ -259,7 +262,6 @@ class Model extends BaseModel
             throw new \Exception('You need to provide two objects that actually contain valid data.');
         }
 
-        // init vars
         $year = gmdate('Y', $date->getTimestamp());
         $month = gmdate('m', $date->getTimestamp());
         $day = gmdate('j', $date->getTimestamp());
@@ -293,6 +295,21 @@ class Model extends BaseModel
         return self::$modules;
     }
 
+    public static function getRequest(): Request
+    {
+        if (!self::requestIsAvailable()) {
+            throw new RuntimeException('No request available');
+        }
+
+        return self::getContainer()->get('request_stack')->getCurrentRequest();
+    }
+
+    public static function requestIsAvailable(): bool
+    {
+        return self::getContainer()->has('request_stack')
+               && self::getContainer()->get('request_stack')->getCurrentRequest() !== null;
+    }
+
     protected static function getAkismet(): Akismet
     {
         $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
@@ -307,5 +324,23 @@ class Model extends BaseModel
         $akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
 
         return $akismet;
+    }
+
+    public static function getSession(): SessionInterface
+    {
+        if (!self::requestIsAvailable()) {
+            throw new RuntimeException('No request available');
+        }
+
+        $request = self::getRequest();
+        if ($request->hasSession()) {
+            return $request->getSession();
+        }
+
+        $session = new Session();
+        $session->start();
+        $request->setSession($session);
+
+        return $session;
     }
 }

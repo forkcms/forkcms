@@ -2,33 +2,15 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Form\Handler;
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Request;
+use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 
 /**
  * Validates and saves the data from the login form
  */
-class LoginHandler
+final class LoginHandler extends InstallerHandler
 {
-    public function process(Form $form, Request $request): bool
+    public function processInstallationData(InstallationData $installationData): InstallationData
     {
-        if (!$request->isMethod('POST')) {
-            return false;
-        }
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            return $this->processValidForm($form, $request);
-        }
-
-        return false;
-    }
-
-    public function processValidForm(Form $form, Request $request): bool
-    {
-        $request->getSession()->set('installation_data', $form->getData());
-
-        return true;
+        return $installationData;
     }
 }

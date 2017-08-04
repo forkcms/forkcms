@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use InvalidArgumentException;
-use Common\Cookie as CommonCookie;
 
 /**
  * In this file we store all generic functions that we will be using in the frontend.
@@ -32,7 +31,7 @@ class Model extends \Common\Core\Model
      *
      * @return string
      */
-    public static function addURLParameters(string $url, array $parameters): string
+    public static function addUrlParameters(string $url, array $parameters): string
     {
         if (empty($parameters)) {
             return $url;
@@ -166,7 +165,7 @@ class Model extends \Common\Core\Model
                  m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
                  m.custom AS meta_custom,
                  m.url, m.url_overwrite,
-                 m.data AS meta_data,
+                 m.data AS meta_data, m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index,
                  t.path AS template_path, t.data AS template_data
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
@@ -180,7 +179,7 @@ class Model extends \Common\Core\Model
             return [];
         }
 
-        if (!$allowHidden && (int) $pageRevision['id'] !== 404 && $pageRevision['hidden'] === 'Y') {
+        if (!$allowHidden && (int) $pageRevision['id'] !== 404 && $pageRevision['hidden']) {
             return self::getPage(404);
         }
 
@@ -202,12 +201,12 @@ class Model extends \Common\Core\Model
     {
         $positions = [];
         $where = 'pb.revision_id = ?';
-        $parameters = ['N', $revisionId];
+        $parameters = [false, $revisionId];
 
         if (!$allowHidden) {
             $where .= ' AND p.status = ? AND pb.visible = ?';
             $parameters[] = 'active';
-            $parameters[] = 'Y';
+            $parameters[] = true;
         }
 
         // get blocks
@@ -241,14 +240,15 @@ class Model extends \Common\Core\Model
         if (self::$visitorId !== null) {
             return self::$visitorId;
         }
+        $cookie = self::getContainer()->get('fork.cookie');
 
         // get/init tracking identifier
-        self::$visitorId = CommonCookie::exists('track') && !empty($_COOKIE['track'])
-            ? (string) CommonCookie::get('track')
-            : md5(uniqid('', true) . \SpoonSession::getSessionId());
+        (self::$visitorId = $cookie->has('track') && $cookie->get('track', '') !== '')
+            ? $cookie->get('track')
+            : md5(uniqid('', true) . self::getSession()->getId());
 
-        if (CommonCookie::hasAllowedCookies() || !self::get('fork.settings')->get('Core', 'show_cookie_bar', false)) {
-            CommonCookie::set('track', self::$visitorId, 86400 * 365);
+        if ($cookie->hasAllowedCookies() || !self::get('fork.settings')->get('Core', 'show_cookie_bar', false)) {
+            $cookie->set('track', self::$visitorId, 86400 * 365);
         }
 
         return self::getVisitorId();

@@ -10,7 +10,7 @@ namespace Backend\Modules\Profiles\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -35,10 +35,10 @@ class Index extends BackendBaseActionIndex
      *
      * @var BackendForm
      */
-    private $frm;
+    private $form;
 
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgProfiles;
 
@@ -105,11 +105,11 @@ class Index extends BackendBaseActionIndex
         list($query, $parameters) = $this->buildQuery();
 
         // create datagrid
-        $this->dgProfiles = new BackendDataGridDB($query, $parameters);
+        $this->dgProfiles = new BackendDataGridDatabase($query, $parameters);
 
         // overrule default URL
         $this->dgProfiles->setURL(
-            BackendModel::createURLForAction(
+            BackendModel::createUrlForAction(
                 null,
                 null,
                 null,
@@ -161,14 +161,14 @@ class Index extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
-            $this->dgProfiles->setColumnURL('email', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
+            $this->dgProfiles->setColumnURL('email', BackendModel::createUrlForAction('Edit') . '&amp;id=[id]');
 
             // add columns
             $this->dgProfiles->addColumn(
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('Edit', null, null, null) . '&amp;id=[id]',
+                BackendModel::createUrlForAction('Edit', null, null, null) . '&amp;id=[id]',
                 BL::getLabel('Edit')
             );
         }
@@ -177,25 +177,25 @@ class Index extends BackendBaseActionIndex
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
 
         // values for dropdowns
         $status = BackendProfilesModel::getStatusForDropDown();
         $groups = BackendProfilesModel::getGroups();
 
         // add fields
-        $this->frm->addText('email', $this->filter['email']);
-        $this->frm->addDropdown('status', $status, $this->filter['status']);
-        $this->frm->getField('status')->setDefaultElement('');
+        $this->form->addText('email', $this->filter['email']);
+        $this->form->addDropdown('status', $status, $this->filter['status']);
+        $this->form->getField('status')->setDefaultElement('');
 
         // add a group filter if wa have groups
         if (!empty($groups)) {
-            $this->frm->addDropdown('group', $groups, $this->filter['group']);
-            $this->frm->getField('group')->setDefaultElement('');
+            $this->form->addDropdown('group', $groups, $this->filter['group']);
+            $this->form->getField('group')->setDefaultElement('');
         }
 
         // manually parse fields
-        $this->frm->parse($this->tpl);
+        $this->form->parse($this->template);
     }
 
     protected function parse(): void
@@ -203,18 +203,18 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse data grid
-        $this->tpl->assign(
+        $this->template->assign(
             'dgProfiles',
             ($this->dgProfiles->getNumResults() != 0) ? $this->dgProfiles->getContent() : false
         );
 
         // parse paging & sorting
-        $this->tpl->assign('offset', (int) $this->dgProfiles->getOffset());
-        $this->tpl->assign('order', (string) $this->dgProfiles->getOrder());
-        $this->tpl->assign('sort', (string) $this->dgProfiles->getSort());
+        $this->template->assign('offset', (int) $this->dgProfiles->getOffset());
+        $this->template->assign('order', (string) $this->dgProfiles->getOrder());
+        $this->template->assign('sort', (string) $this->dgProfiles->getSort());
 
         // parse filter
-        $this->tpl->assignArray($this->filter);
+        $this->template->assignArray($this->filter);
     }
 
     /**

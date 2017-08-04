@@ -13,7 +13,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
@@ -23,17 +23,17 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 class Comments extends BackendBaseActionIndex
 {
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgPublished;
 
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgModeration;
 
     /**
-     * @var BackendDataGridDB
+     * @var BackendDataGridDatabase
      */
     private $dgSpam;
 
@@ -50,7 +50,7 @@ class Comments extends BackendBaseActionIndex
     public static function addPostData(string $text, string $title, string $url, int $id): string
     {
         // reset URL
-        $url = BackendModel::getURLForBlock('Blog', 'Detail') . '/' . $url . '#comment-' . $id;
+        $url = BackendModel::getUrlForBlock('Blog', 'Detail') . '/' . $url . '#comment-' . $id;
 
         // build HTML
         return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $url, $title) . '</em></p>' . "\n" . (string) $text;
@@ -69,8 +69,8 @@ class Comments extends BackendBaseActionIndex
         /*
          * DataGrid for the published comments.
          */
-        $this->dgPublished = new BackendDataGridDB(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
+        $this->dgPublished = new BackendDataGridDatabase(
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_COMMENTS,
             ['published', BL::getWorkingLanguage(), 'active']
         );
 
@@ -142,7 +142,7 @@ class Comments extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditComment') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditComment') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
@@ -153,7 +153,7 @@ class Comments extends BackendBaseActionIndex
                 'mark_as_spam',
                 null,
                 BL::lbl('MarkAsSpam'),
-                BackendModel::createURLForAction('MassCommentAction') .
+                BackendModel::createUrlForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=spam',
                 BL::lbl('MarkAsSpam')
             );
@@ -164,8 +164,8 @@ class Comments extends BackendBaseActionIndex
          */
 
         // datagrid for the comments that are awaiting moderation
-        $this->dgModeration = new BackendDataGridDB(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
+        $this->dgModeration = new BackendDataGridDatabase(
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_COMMENTS,
             ['moderation', BL::getWorkingLanguage(), 'active']
         );
 
@@ -237,7 +237,7 @@ class Comments extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('EditComment') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('EditComment') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
@@ -248,7 +248,7 @@ class Comments extends BackendBaseActionIndex
                 'approve',
                 null,
                 BL::lbl('Approve'),
-                BackendModel::createURLForAction('MassCommentAction') .
+                BackendModel::createUrlForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=published',
                 BL::lbl('Approve')
             );
@@ -257,8 +257,8 @@ class Comments extends BackendBaseActionIndex
         /*
          * DataGrid for the comments that are marked as spam
          */
-        $this->dgSpam = new BackendDataGridDB(
-            BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
+        $this->dgSpam = new BackendDataGridDatabase(
+            BackendBlogModel::QUERY_DATAGRID_BROWSE_COMMENTS,
             ['spam', BL::getWorkingLanguage(), 'active']
         );
 
@@ -329,7 +329,7 @@ class Comments extends BackendBaseActionIndex
                 'approve',
                 null,
                 BL::lbl('Approve'),
-                BackendModel::createURLForAction('MassCommentAction') .
+                BackendModel::createUrlForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=spam&amp;action=published',
                 BL::lbl('Approve')
             );
@@ -341,15 +341,15 @@ class Comments extends BackendBaseActionIndex
         parent::parse();
 
         // published datagrid and num results
-        $this->tpl->assign('dgPublished', (string) $this->dgPublished->getContent());
-        $this->tpl->assign('numPublished', $this->dgPublished->getNumResults());
+        $this->template->assign('dgPublished', (string) $this->dgPublished->getContent());
+        $this->template->assign('numPublished', $this->dgPublished->getNumResults());
 
         // moderation datagrid and num results
-        $this->tpl->assign('dgModeration', (string) $this->dgModeration->getContent());
-        $this->tpl->assign('numModeration', $this->dgModeration->getNumResults());
+        $this->template->assign('dgModeration', (string) $this->dgModeration->getContent());
+        $this->template->assign('numModeration', $this->dgModeration->getNumResults());
 
         // spam datagrid and num results
-        $this->tpl->assign('dgSpam', (string) $this->dgSpam->getContent());
-        $this->tpl->assign('numSpam', $this->dgSpam->getNumResults());
+        $this->template->assign('dgSpam', (string) $this->dgSpam->getContent());
+        $this->template->assign('numSpam', $this->dgSpam->getNumResults());
     }
 }

@@ -58,6 +58,7 @@ class GenerateThumbnailsCommand extends Command
      * Get the folder path according to the input options
      *
      * @param string $folderOption
+     *
      * @return string
      */
     private function getFolderPath(string $folderOption): string

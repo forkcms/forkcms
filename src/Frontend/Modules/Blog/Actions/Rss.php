@@ -53,7 +53,7 @@ class Rss extends FrontendBaseBlock
     {
         // get vars
         $title = (isset($this->settings['rss_title_' . LANGUAGE])) ? $this->settings['rss_title_' . LANGUAGE] : $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
-        $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog');
+        $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog');
         $description = (isset($this->settings['rss_description_' . LANGUAGE])) ? $this->settings['rss_description_' . LANGUAGE] : null;
 
         // create new rss instance
@@ -61,7 +61,6 @@ class Rss extends FrontendBaseBlock
 
         // loop articles
         foreach ($this->items as $item) {
-            // init vars
             $title = $item['title'];
             $link = $item['full_url'];
             $description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];

@@ -22,6 +22,16 @@ use Backend\Core\Engine\Exception as BackendException;
 class Model
 {
     /**
+     * @var array The possible status
+     */
+    public const POSSIBLE_STATUS = [
+        'active',
+        'inactive',
+        'deleted',
+        'blocked',
+    ];
+
+    /**
      * Cache avatars
      *
      * @param string
@@ -33,7 +43,7 @@ class Model
      *
      * @var string
      */
-    const QRY_DATAGRID_BROWSE_PROFILE_GROUPS =
+    const QUERY_DATAGRID_BROWSE_PROFILE_GROUPS =
         'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on
          FROM profiles_groups AS g
          INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id AND
@@ -47,8 +57,8 @@ class Model
      */
     public static function delete($ids): void
     {
-        // init db
-        $db = BackendModel::getContainer()->get('database');
+        // init database
+        $database = BackendModel::getContainer()->get('database');
 
         // redefine
         $ids = (array) $ids;
@@ -59,7 +69,7 @@ class Model
             $id = (int) $id;
 
             // delete sessions
-            $db->delete('profiles_sessions', 'profile_id = ?', $id);
+            $database->delete('profiles_sessions', 'profile_id = ?', $id);
 
             // set profile status to deleted
             self::update($id, ['status' => 'deleted']);
@@ -288,19 +298,19 @@ class Model
      */
     public static function getGroupsForDropDown(int $profileId, int $includeId = null): array
     {
-        // init db
-        $db = BackendModel::getContainer()->get('database');
+        // init database
+        $database = BackendModel::getContainer()->get('database');
 
         // get groups already linked but don't include the includeId
         if ($includeId !== null) {
-            $groupIds = (array) $db->getColumn(
+            $groupIds = (array) $database->getColumn(
                 'SELECT group_id
                  FROM profiles_groups_rights
                  WHERE profile_id = ? AND id != ?',
                 [$profileId, $includeId]
             );
         } else {
-            $groupIds = (array) $db->getColumn(
+            $groupIds = (array) $database->getColumn(
                 'SELECT group_id
                  FROM profiles_groups_rights
                  WHERE profile_id = ?',
@@ -309,7 +319,7 @@ class Model
         }
 
         // get groups not yet linked
-        return (array) $db->getPairs(
+        return (array) $database->getPairs(
             'SELECT id, name
              FROM profiles_groups
              WHERE id NOT IN(\'' . implode('\',\'', $groupIds) . '\')'
@@ -416,11 +426,7 @@ class Model
 
     public static function getStatusForDropDown(): array
     {
-        // fetch types
-        $status = BackendModel::getContainer()->get('database')->getEnumValues('profiles', 'status');
-
-        // init
-        $labels = $status;
+        $labels = static::POSSIBLE_STATUS;
 
         // loop and build labels
         foreach ($labels as &$row) {
@@ -428,7 +434,7 @@ class Model
         }
 
         // build array
-        return array_combine($status, $labels);
+        return array_combine(static::POSSIBLE_STATUS, $labels);
     }
 
     /**
@@ -447,13 +453,13 @@ class Model
         // urlise
         $url = CommonUri::getUrl($displayName);
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // new item
         if ($excludedProfileId === null) {
             // get number of profiles with this URL
-            $number = (int) $db->getVar(
+            $number = (int) $database->getVar(
                 'SELECT 1
                  FROM profiles AS p
                  WHERE p.url = ?
@@ -471,7 +477,7 @@ class Model
             }
         } else {
             // get number of profiles with this URL
-            $number = (int) $db->getVar(
+            $number = (int) $database->getVar(
                 'SELECT 1
                  FROM profiles AS p
                  WHERE p.url = ? AND p.id != ?
@@ -522,7 +528,7 @@ class Model
         $html .= '  <div class="avatar av24">' . "\n";
         if ($allowed) {
             $html .= '      <a href="' .
-                     BackendModel::createURLForAction(
+                     BackendModel::createUrlForAction(
                          'Edit',
                          'Profiles'
                      ) . '&amp;id=' . $id . '">' . "\n";
@@ -533,7 +539,7 @@ class Model
         }
         $html .= '  </div>';
         $html .= '  <p><a href="' .
-                 BackendModel::createURLForAction(
+                 BackendModel::createUrlForAction(
                      'Edit',
                      'Profiles'
                  ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
@@ -672,7 +678,7 @@ class Model
         }
 
         // define backend url
-        $backendURL = BackendModel::createURLForAction('Edit', 'Profiles') . '&id=' . $values['id'];
+        $backendUrl = BackendModel::createUrlForAction('Edit', 'Profiles') . '&id=' . $values['id'];
 
         // set variables
         $variables = [
@@ -681,7 +687,7 @@ class Model
                 [
                     $values['display_name'],
                     $values['email'],
-                    $backendURL,
+                    $backendUrl,
                 ]
             ),
         ];

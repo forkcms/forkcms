@@ -167,12 +167,12 @@ class DataGridFunctions
             $html = '<div class="fork-data-grid-avatar">' . "\n";
             if ($allowed) {
                 $html .= '     <a href="' .
-                    BackendModel::createURLForAction(
+                    BackendModel::createUrlForAction(
                         'Edit',
                         'Users'
                     ) . '&amp;id=' . $id . '">' . "\n";
             }
-            $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+            $html .= '          <img class="img-circle" src="' . FRONTEND_FILES_URL . '/Users/avatars/32x32/' .
                 $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
 
             $html .= '<span>' . $nickname . '</span>';
@@ -193,12 +193,12 @@ class DataGridFunctions
      * 'visible', 'hidden', 'active', 'published'
      *
      * @param string $type The type of column. This is given since some columns can have different meanings than others.
-     * @param string $value
+     * @param string|bool $value
      * @param array $attributes
      *
      * @return array
      */
-    public static function greyOut(string $type, string $value, array $attributes = []): array
+    public static function greyOut(string $type, $value, array $attributes = []): array
     {
         $grayedOutClass = 'fork-data-grid-grayed-out grayedOut';
         $greyOut = false;
@@ -207,7 +207,7 @@ class DataGridFunctions
             case 'visible':
             case 'active':
             case 'published':
-                if ($value === 'N') {
+                if (!$value) {
                     $greyOut = true;
                 }
                 break;
@@ -217,7 +217,7 @@ class DataGridFunctions
                 }
                 break;
             case 'hidden':
-                if ($value === 'Y') {
+                if ($value) {
                     $greyOut = true;
                 }
                 break;
@@ -257,6 +257,10 @@ class DataGridFunctions
         int $height = null,
         string $filter = null
     ): string {
+        if ($width === 0 || $height === 0) {
+            throw new \Exception('An image must not have a width or height equal to 0, because the image will not be visible.');
+        }
+
         $imagePath = $path . '/' . $image;
 
         if ($filter !== null) {

@@ -15,6 +15,7 @@ use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the auto suggest-action, it will output a list of results for a certain search
@@ -154,7 +155,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term;
         $this->pagination['limit'] = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
 
         // populate calculated fields in pagination
@@ -209,7 +210,7 @@ class Autosuggest extends FrontendBaseAJAXAction
             $this->items[] = [
                 'title' => FL::lbl('More'),
                 'text' => FL::msg('MoreResults'),
-                'full_url' => FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term,
+                'full_url' => FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term,
             ];
         }
 
@@ -228,7 +229,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         }
 
         // output
-        $this->output(self::OK, $this->items);
+        $this->output(Response::HTTP_OK, $this->items);
     }
 
     private function validateForm(): void
@@ -242,8 +243,8 @@ class Autosuggest extends FrontendBaseAJAXAction
         $this->length = $this->getRequest()->request->getInt('length', 50);
 
         // validate
-        if ($this->term == '') {
-            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
+        if ($this->term === '') {
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'term-parameter is missing.');
         }
     }
 }

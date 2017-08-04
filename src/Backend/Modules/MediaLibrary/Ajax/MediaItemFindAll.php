@@ -8,8 +8,10 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFoun
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Common\Exception\AjaxExitException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will get all media items in a certain folder and from a gallery.
@@ -23,24 +25,35 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolderBasedOnMediaGroup();
+        $aspectRatio = $this->getAspectRatio();
 
         // Output success message with variables
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             [
-                'media' => $this->loadMediaItems($mediaFolder),
+                'media' => $this->loadMediaItems($mediaFolder, $aspectRatio),
                 'folder' => $mediaFolder !== null ? $mediaFolder->getId() : null,
                 'tab' => $this->selectedTab,
             ]
         );
     }
 
+    private function getAspectRatio(): ?AspectRatio
+    {
+        $aspectRatio = $this->getRequest()->request->get('aspect_ratio');
+
+        if (empty($aspectRatio) || $aspectRatio === 'false') {
+            return null;
+        }
+
+        return new AspectRatio($aspectRatio);
+    }
+
     private function getMediaFolder(): ?MediaFolder
     {
         /** @var int $id */
-        $id = $this->get('request')->request->getInt('folder_id', 0);
+        $id = $this->getRequest()->request->getInt('folder_id', 0);
 
         if ($id === 0) {
             return null;
@@ -54,9 +67,6 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         }
     }
 
-    /**
-     * @return MediaFolder|null
-     */
     private function getMediaFolderBasedOnMediaGroup(): ?MediaFolder
     {
         /** @var MediaFolder|null $mediaFolder */
@@ -89,7 +99,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
     private function getMediaGroup(): ?MediaGroup
     {
         /** @var string $id */
-        $id = $this->get('request')->request->get('group_id', '');
+        $id = $this->getRequest()->request->get('group_id', '');
 
         if ($id === '') {
             return null;
@@ -103,15 +113,12 @@ class MediaItemFindAll extends BackendBaseAJAXAction
         }
     }
 
-    private function loadMediaItems(MediaFolder $mediaFolder = null): array
+    private function loadMediaItems(?MediaFolder $mediaFolder, ?AspectRatio $aspectRatio): array
     {
         if ($mediaFolder === null) {
             return [];
         }
 
-        return $this->get('media_library.repository.item')->findBy(
-            ['folder' => $mediaFolder],
-            ['title' => 'ASC']
-        );
+        return $this->get('media_library.repository.item')->findByFolderAndAspectRatio($mediaFolder, $aspectRatio);
     }
 }

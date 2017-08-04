@@ -39,7 +39,7 @@ class EditCategory extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Categories') . '&error=non-existing');
         }
     }
 
@@ -51,10 +51,10 @@ class EditCategory extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // create form
-        $this->frm = new BackendForm('editCategory');
-        $this->frm->addText('title', $this->record['title']);
+        $this->form = new BackendForm('editCategory');
+        $this->form->addText('title', $this->record['title']);
 
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
     }
 
     protected function parse(): void
@@ -62,8 +62,8 @@ class EditCategory extends BackendBaseActionEdit
         parent::parse();
 
         // assign the data
-        $this->tpl->assign('item', $this->record);
-        $this->tpl->assign(
+        $this->template->assign('item', $this->record);
+        $this->template->assign(
             'showFaqDeleteCategory',
             (
                 BackendFaqModel::deleteCategoryAllowed($this->id) &&
@@ -71,34 +71,34 @@ class EditCategory extends BackendBaseActionEdit
             )
         );
 
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Category');
-        $url404 = BackendModel::getURL(404);
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
+        $url404 = BackendModel::getUrl(404);
         if ($url404 != $url) {
-            $this->tpl->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('detailURL', SITE_URL . $url);
         }
     }
 
     private function validateForm(): void
     {
-        if ($this->frm->isSubmitted()) {
-            $this->meta->setURLCallback(
+        if ($this->form->isSubmitted()) {
+            $this->meta->setUrlCallback(
                 'Backend\Modules\Faq\Engine\Model',
-                'getURLForCategory',
+                'getUrlForCategory',
                 [$this->record['id']]
             );
 
-            $this->frm->cleanupFields();
+            $this->form->cleanupFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
             $this->meta->validate();
 
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
                 $item['id'] = $this->id;
                 $item['language'] = $this->record['language'];
-                $item['title'] = $this->frm->getField('title')->getValue();
+                $item['title'] = $this->form->getField('title')->getValue();
                 $item['extra_id'] = $this->record['extra_id'];
                 $item['meta_id'] = $this->meta->save(true);
 
@@ -107,7 +107,7 @@ class EditCategory extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
+                    BackendModel::createUrlForAction('Categories') . '&report=edited-category&var=' .
                     rawurlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }
@@ -121,6 +121,6 @@ class EditCategory extends BackendBaseActionEdit
             ['id' => $this->record['id']],
             ['module' => $this->getModule(), 'action' => 'DeleteCategory']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
     }
 }

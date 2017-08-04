@@ -77,7 +77,7 @@ class ContentBlock
     /**
      * @var bool
      *
-     * @ORM\Column(type="enum_bool", name="hidden", options={"default" = "N"})
+     * @ORM\Column(type="boolean", name="hidden", options={"default" = false})
      */
     private $isHidden;
 
@@ -229,7 +229,7 @@ class ContentBlock
      */
     private function updateWidget()
     {
-        $editUrl = Model::createURLForAction('Edit', 'ContentBlocks', (string) $this->locale) . '&id=' . $this->id;
+        $editUrl = Model::createUrlForAction('Edit', 'ContentBlocks', (string) $this->locale) . '&id=' . $this->id;
 
         // update data for the extra
         // @TODO replace this with an implementation with doctrine

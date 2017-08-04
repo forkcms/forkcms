@@ -13,10 +13,11 @@
 .settings
 .*.swp
 .DS_Store
-/app/cache/*
-/app/logs/*
+/var/cache/*
+/var/logs/*
 /app/sessions/*
 /bin/*
+!bin/console
 /bundles/*
 /css/*.css
 /js/*.js

@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Common\Exception\AjaxExitException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will add a new MediaFolder.
@@ -24,7 +25,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
 
         // Success message
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             $createMediaFolder->getMediaFolderEntity(),
             vsprintf(
                 Language::msg('AddedFolder'),
@@ -59,7 +60,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
     protected function getFolderName(MediaFolder $parent = null): string
     {
         // Define name
-        $name = $this->get('request')->request->get('name');
+        $name = $this->getRequest()->request->get('name');
 
         // We don't have a name
         if ($name === null) {
@@ -77,7 +78,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
     protected function getParent(): ?MediaFolder
     {
         // Get parameters
-        $parentId = $this->get('request')->request->getInt('parent_id');
+        $parentId = $this->getRequest()->request->getInt('parent_id');
 
         if ($parentId === 0) {
             return null;

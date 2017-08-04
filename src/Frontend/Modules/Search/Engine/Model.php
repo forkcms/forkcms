@@ -70,7 +70,6 @@ class Model
     {
         // advanced search
         if (is_array($term)) {
-            // init vars
             $where = [];
             $order = [];
             $join = [];
@@ -115,7 +114,7 @@ class Model
                 $params2 = array_merge(
                     $params2,
                     $terms,
-                    [(string) $field, LANGUAGE, 'Y', 'Y']
+                    [(string) $field, LANGUAGE, true, true]
                 );
             }
 
@@ -165,7 +164,7 @@ class Model
             $params = array_merge(
                 $terms,
                 $terms,
-                [LANGUAGE, 'Y', 'Y', $offset, $limit]
+                [LANGUAGE, true, true, $offset, $limit]
             );
         }
 
@@ -209,7 +208,7 @@ class Model
 
     public static function getSynonyms(string $term): array
     {
-        // query db for synonyms
+        // query database for synonyms
         $synonyms = FrontendModel::getContainer()->get('database')->getVar(
             'SELECT synonym
              FROM search_synonyms
@@ -265,7 +264,6 @@ class Model
     {
         // advanced search
         if (is_array($term)) {
-            // init vars
             $where = [];
             $join = [];
             $params = [];
@@ -298,7 +296,7 @@ class Model
                 $params = array_merge(
                     $params,
                     $terms,
-                    [(string) $field, LANGUAGE, 'Y', 'Y']
+                    [(string) $field, LANGUAGE, true, true]
                 );
             }
 
@@ -340,7 +338,7 @@ class Model
                 GROUP BY i.module, i.other_id
             ) AS results';
 
-            $params = array_merge($terms, [LANGUAGE, 'Y', 'Y']);
+            $params = array_merge($terms, [LANGUAGE, true, true]);
         }
 
         // get the search results
@@ -497,7 +495,7 @@ class Model
                 WHERE language = ? AND active = ?
                 GROUP BY module, other_id
                 LIMIT ?, ?',
-                [LANGUAGE, 'N', $offset, $limit]
+                [LANGUAGE, false, $offset, $limit]
             );
 
             // none found? good news!

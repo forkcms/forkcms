@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFoun
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Common\Exception\AjaxExitException;
 use Common\Uri;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will update a folder using AJAX
@@ -24,7 +25,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
         // Output
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             $updateMediaFolder->getMediaFolderEntity(),
             sprintf(
                 Language::msg('MediaFolderIsEdited'),
@@ -35,7 +36,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
     protected function getMediaFolder(): MediaFolder
     {
-        $id = $this->get('request')->request->getInt('folder_id');
+        $id = $this->getRequest()->request->getInt('folder_id');
 
         // validate values
         if ($id === null) {
@@ -52,7 +53,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
     protected function getFolderName(): string
     {
-        $name = $this->get('request')->request->get('name');
+        $name = $this->getRequest()->request->get('name');
 
         if ($name === null) {
             throw new AjaxExitException(Language::err('TitleIsRequired'));

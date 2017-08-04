@@ -8,4 +8,4 @@ framework:
     profiler:
         collect: false
     router:
-        resource: "%kernel.root_dir%/config/routing_install.yml"
+        resource: "%kernel.project_dir%/app/config/routing_install.yml"

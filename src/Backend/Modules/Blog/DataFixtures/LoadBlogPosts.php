@@ -56,7 +56,7 @@ class LoadBlogPosts
                 'field' => 'title',
                 'value' => 'Blogpost for functional tests',
                 'language' => 'en',
-                'active' => 'Y',
+                'active' => true,
             ]
         );
     }

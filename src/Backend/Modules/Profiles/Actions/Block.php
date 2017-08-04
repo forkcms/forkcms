@@ -38,7 +38,7 @@ class Block extends BackendBaseActionDelete
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-unblocked&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Index') . '&report=profile-unblocked&var=' . rawurlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $this->id
                 );
@@ -51,13 +51,13 @@ class Block extends BackendBaseActionDelete
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=profile-blocked&var=' . rawurlencode(
+                    BackendModel::createUrlForAction('Index') . '&report=profile-blocked&var=' . rawurlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $this->id
                 );
             }
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         }
     }
 }

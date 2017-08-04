@@ -45,16 +45,16 @@ class ArticleCommentsRss extends FrontendBaseBlock
     private function getData(): void
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+        if ($this->url->getParameter(1) === null) {
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get record
-        $this->record = FrontendBlogModel::get($this->URL->getParameter(1));
+        $this->record = FrontendBlogModel::get($this->url->getParameter(1));
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // get articles
@@ -65,9 +65,9 @@ class ArticleCommentsRss extends FrontendBaseBlock
     {
         // get vars
         $title = vsprintf(FL::msg('CommentsOn'), [$this->record['title']]);
-        $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
+        $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'ArticleCommentsRss') .
                 '/' . $this->record['url'];
-        $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $detailLink = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail');
         $description = null;
 
         // create new rss instance
@@ -75,19 +75,15 @@ class ArticleCommentsRss extends FrontendBaseBlock
 
         // loop articles
         foreach ($this->items as $item) {
-            // init vars
             $title = $item['author'] . ' ' . FL::lbl('On') . ' ' . $this->record['title'];
             $link = $detailLink . '/' . $this->record['url'] . '/#comment-' . $item['id'];
             $description = $item['text'];
 
-            // create new instance
             $rssItem = new FrontendRSSItem($title, $link, $description);
 
-            // set item properties
             $rssItem->setPublicationDate($item['created_on']);
             $rssItem->setAuthor($item['author']);
 
-            // add item
             $rss->addItem($rssItem);
         }
 

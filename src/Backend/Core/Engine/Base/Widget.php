@@ -9,6 +9,7 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -64,7 +65,7 @@ class Widget extends KernelLoader
      *
      * @var TwigTemplate
      */
-    public $tpl;
+    protected $template;
 
     /**
      * The constructor will set some properties, it populates the parameter array with urldecoded
@@ -76,7 +77,7 @@ class Widget extends KernelLoader
     {
         parent::__construct($kernel);
 
-        $this->tpl = $this->getContainer()->get('template');
+        $this->template = $this->getContainer()->get('template');
         $this->header = $this->getContainer()->get('header');
     }
 
@@ -170,6 +171,6 @@ class Widget extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return Model::getRequest();
     }
 }

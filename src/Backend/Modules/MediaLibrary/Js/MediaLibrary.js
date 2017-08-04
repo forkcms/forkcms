@@ -244,7 +244,7 @@ jsBackend.mediaLibrary.tree =
                     return;
                 }
 
-                if (json.data.allow_move == 'Y') {
+                if (json.data.allow_move) {
                     result = true;
                 }
             }

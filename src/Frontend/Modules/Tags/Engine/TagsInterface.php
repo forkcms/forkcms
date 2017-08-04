@@ -9,7 +9,7 @@ namespace Frontend\Modules\Tags\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Url as FrontendURL;
+use Frontend\Core\Engine\Url as FrontendUrl;
 
 /**
  * In this file we specify the functions a class must implement to work with tags.
@@ -30,9 +30,9 @@ interface TagsInterface
      * Get the id of an item by the full URL of the current page.
      * Selects the proper part of the full URL to get the item's id from the database.
      *
-     * @param FrontendURL $url The current URL.
+     * @param FrontendUrl $url The current URL.
      *
      * @return int The id that corresponds with the given full URL.
      */
-    public static function getIdForTags(FrontendURL $url): int;
+    public static function getIdForTags(FrontendUrl $url): int;
 }

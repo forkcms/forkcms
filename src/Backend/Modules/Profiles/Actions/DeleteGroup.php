@@ -28,7 +28,7 @@ class DeleteGroup extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction(
+            $this->redirect(BackendModel::createUrlForAction(
                 'Groups',
                 null,
                 null,
@@ -43,7 +43,7 @@ class DeleteGroup extends BackendBaseActionDelete
 
         // does the item exist
         if ($this->id === 0 || !BackendProfilesModel::existsGroup($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Groups', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('Groups', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -54,7 +54,7 @@ class DeleteGroup extends BackendBaseActionDelete
 
         BackendProfilesModel::deleteGroup($this->id);
 
-        $this->redirect(BackendModel::createURLForAction(
+        $this->redirect(BackendModel::createUrlForAction(
             'Groups',
             null,
             null,

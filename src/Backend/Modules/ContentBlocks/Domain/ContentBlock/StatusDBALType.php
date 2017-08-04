@@ -2,18 +2,12 @@
 
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
-class StatusDBALType extends Type
+class StatusDBALType extends StringType
 {
     const CONTENT_BLOCKS_STATUS = 'content_blocks_status';
-
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
-    {
-        return 'ENUM("' . implode('","', Status::getPossibleStatuses()) . '")';
-    }
 
     public function convertToPHPValue($status, AbstractPlatform $platform): Status
     {

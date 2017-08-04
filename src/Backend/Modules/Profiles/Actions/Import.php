@@ -41,22 +41,22 @@ class Import extends BackendBaseActionAdd
         $ddmValues = BackendProfilesModel::getGroupsForDropDown($this->id);
 
         // create form and elements
-        $this->frm = new BackendForm('import');
-        $this->frm->addDropdown('group', $ddmValues);
-        $this->frm->addFile('file');
-        $this->frm->addCheckbox('overwrite_existing');
+        $this->form = new BackendForm('import');
+        $this->form->addDropdown('group', $ddmValues);
+        $this->form->addFile('file');
+        $this->form->addCheckbox('overwrite_existing');
     }
 
     private function validateForm(): void
     {
-        if (!$this->frm->isSubmitted()) {
+        if (!$this->form->isSubmitted()) {
             return;
         }
-        $this->frm->cleanupFields();
+        $this->form->cleanupFields();
 
         // get fields
-        $ddmGroup = $this->frm->getField('group');
-        $fileFile = $this->frm->getField('file');
+        $ddmGroup = $this->form->getField('group');
+        $fileFile = $this->form->getField('file');
         $csv = [];
 
         // validate input
@@ -70,12 +70,12 @@ class Import extends BackendBaseActionAdd
             }
         }
 
-        if (!$this->frm->isCorrect()) {
+        if (!$this->form->isCorrect()) {
             return;
         }
 
         // import the profiles
-        $overwrite = $this->frm->getField('overwrite_existing')->isChecked();
+        $overwrite = $this->form->getField('overwrite_existing')->isChecked();
         $statistics = BackendProfilesModel::importCsv(
             $csv,
             $ddmGroup->getValue(),
@@ -83,7 +83,7 @@ class Import extends BackendBaseActionAdd
         );
 
         // build redirect url with the right message
-        $redirectUrl = BackendModel::createURLForAction('index') . '&report=';
+        $redirectUrl = BackendModel::createUrlForAction('index') . '&report=';
         $redirectUrl .= $overwrite ?
             'profiles-imported-and-updated' :
             'profiles-imported';

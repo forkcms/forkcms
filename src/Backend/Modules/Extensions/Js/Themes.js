@@ -13,14 +13,16 @@ jsBackend.extensions.themeSelection =
 {
     init: function()
     {
+        var $installedThemes = $('#installedThemes');
         // store the list items
-        var listItems = $('#installedThemes .js-theme');
+        var listItems = $('.js-theme-selector');
 
         // one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
         listItems.on('click', function(e)
         {
+            var $this = $(e.currentTarget);
             // store the object
-            var radiobutton = $(this).find('input:radio:first');
+            var radiobutton = $(this).parents('.panel-select').find('input:radio:first');
 
             // set checked
             radiobutton.prop('checked', true);
@@ -29,10 +31,16 @@ jsBackend.extensions.themeSelection =
             if(radiobutton.is(':checked'))
             {
                 // remove the selected state from all other templates
-                listItems.find('.panel').removeClass('panel-primary').addClass('panel-default');
+                $installedThemes.find('.panel').removeClass('panel-primary').addClass('panel-default');
+                listItems.removeClass('btn-primary').addClass('btn-default');
+                listItems.find('.available-theme').removeClass('hidden');
+                listItems.find('.selected-theme').addClass('hidden');
 
                 // add a selected state to the parent
-                radiobutton.closest('.panel').addClass('panel-primary');
+                radiobutton.closest('.panel').addClass('panel-primary').removeClass('panel-default');
+                $this.addClass('btn-primary');
+                $this.find('.available-theme').addClass('hidden');
+                $this.find('.selected-theme').removeClass('hidden');
             }
         });
     }

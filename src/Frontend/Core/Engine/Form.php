@@ -34,11 +34,11 @@ class Form extends \Common\Core\Form
     public function __construct(
         string $name,
         string $action = null,
-        string $method = 'post',
+        ?string $method = 'post',
         string $hash = null,
         bool $useToken = true
     ) {
-        $this->URL = Model::getContainer()->get('url');
+        $this->url = Model::getContainer()->get('url');
         $this->header = Model::getContainer()->get('header');
 
         $name = (string) $name;
@@ -54,10 +54,10 @@ class Form extends \Common\Core\Form
         }
 
         $useToken = (bool) $useToken;
-        $action = ($action === null) ? $this->URL->getQueryString() : (string) $action;
+        $action = ($action === null) ? $this->url->getQueryString() : (string) $action;
 
         // call the real form-class
-        parent::__construct((string) $name, $action . $hash, $method, (bool) $useToken);
+        parent::__construct((string) $name, $action . $hash, $method ?? 'post', (bool) $useToken);
 
         // add default classes
         $this->setParameter('id', $name);

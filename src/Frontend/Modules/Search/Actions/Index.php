@@ -88,7 +88,7 @@ class Index extends FrontendBaseBlock
     private function display(): void
     {
         // set variables
-        $this->requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $this->requestedPage = $this->url->getParameter('page', 'int', 1);
         $this->limit = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
@@ -158,7 +158,7 @@ class Index extends FrontendBaseBlock
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term;
 
         // populate calculated fields in pagination
         $this->pagination['limit'] = $this->limit;
@@ -185,7 +185,7 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($this->requestedPage < 1 || $this->requestedPage > $this->pagination['num_pages']) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getUrl(404));
         }
 
         // debug mode = no cache
@@ -229,7 +229,7 @@ class Index extends FrontendBaseBlock
         );
 
         // since we know the term just here we should set the canonical url here
-        $canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('Search');
+        $canonicalUrl = SITE_URL . FrontendNavigation::getUrlForBlock('Search');
         if ($query !== '') {
             $canonicalUrl .= '?q=' . \SpoonFilter::htmlspecialchars($query);
         }
@@ -242,7 +242,7 @@ class Index extends FrontendBaseBlock
         $this->addCSS('Search.css');
 
         // parse the form
-        $this->form->parse($this->tpl);
+        $this->form->parse($this->template);
 
         // no search term = no search
         if (!$this->term) {
@@ -250,8 +250,8 @@ class Index extends FrontendBaseBlock
         }
 
         // assign articles
-        $this->tpl->assign('searchResults', $this->items);
-        $this->tpl->assign('searchTerm', $this->term);
+        $this->template->assign('searchResults', $this->items);
+        $this->template->assign('searchTerm', $this->term);
 
         // parse the pagination
         $this->parsePagination();
@@ -265,8 +265,8 @@ class Index extends FrontendBaseBlock
         }
 
         // previous search result
-        $previousTerm = \SpoonSession::exists('searchTerm') ? \SpoonSession::get('searchTerm') : '';
-        \SpoonSession::set('searchTerm', '');
+        $previousTerm = FrontendModel::getSession()->get('searchTerm', '');
+        FrontendModel::getSession()->set('searchTerm', '');
 
         // save this term?
         if ($previousTerm !== $this->term) {
@@ -281,8 +281,8 @@ class Index extends FrontendBaseBlock
             );
         }
 
-        // save current search term in cookie
-        \SpoonSession::set('searchTerm', $this->term);
+        // save current search term in session
+        FrontendModel::getSession()->set('searchTerm', $this->term);
     }
 
     private function validateForm(): void

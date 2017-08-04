@@ -25,7 +25,7 @@ class MassDataAction extends BackendBaseAction
         // action to execute
         $action = $this->getRequest()->query->get('action');
         if (!in_array($action, ['delete'])) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
         }
 
         // form id
@@ -33,13 +33,13 @@ class MassDataAction extends BackendBaseAction
 
         // no id's provided
         if (!$this->getRequest()->query->has('id')) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-items-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-items-selected');
         } elseif ($action == '') {
             // no action provided
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
         } elseif (!BackendFormBuilderModel::exists($formId)) {
             // valid form id
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=non-existing');
         } else {
             // redefine id's
             $ids = (array) $this->getRequest()->query->get('id');
@@ -58,7 +58,7 @@ class MassDataAction extends BackendBaseAction
             }
 
             // redirect
-            $this->redirect(BackendModel::createURLForAction('Data') . '&id=' . $formId . '&report=' . $report);
+            $this->redirect(BackendModel::createUrlForAction('Data') . '&id=' . $formId . '&report=' . $report);
         }
     }
 }

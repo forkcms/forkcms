@@ -36,14 +36,14 @@ class Form extends \Common\Core\Form
      * @param bool   $useGlobalError Should we automagically show a global error?
      */
     public function __construct(
-        $name = null,
-        $action = null,
-        $method = 'post',
-        $useToken = true,
-        $useGlobalError = true
+        string $name = null,
+        string $action = null,
+        ?string $method = 'post',
+        bool $useToken = true,
+        bool $useGlobalError = true
     ) {
         if (BackendModel::getContainer()->has('url')) {
-            $this->URL = BackendModel::getContainer()->get('url');
+            $this->url = BackendModel::getContainer()->get('url');
         }
         if (BackendModel::getContainer()->has('header')) {
             $this->header = BackendModel::getContainer()->get('header');
@@ -52,16 +52,16 @@ class Form extends \Common\Core\Form
 
         // build a name if there wasn't one provided
         $name = ($name === null) ? \SpoonFilter::toCamelCase(
-            $this->URL->getModule() . '_' . $this->URL->getAction(),
+            $this->url->getModule() . '_' . $this->url->getAction(),
             '_',
             true
         ) : (string) $name;
 
         // build the action if it wasn't provided
-        $action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
+        $action = ($action === null) ? '/' . $this->url->getQueryString() : (string) $action;
 
         // call the real form-class
-        parent::__construct($name, $action, $method, $useToken);
+        parent::__construct($name, $action, $method ?? 'post', $useToken);
 
         // add default classes
         $this->setParameter('id', $name);

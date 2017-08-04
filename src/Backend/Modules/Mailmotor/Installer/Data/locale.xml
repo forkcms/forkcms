@@ -154,6 +154,18 @@
                 <translation language="uk"><![CDATA[Коли хтось повторно підписується, перезаписати їх поточні інтереси.]]></translation>
                 <translation language="zh"><![CDATA[当有人重新订阅时，覆盖其当前的兴趣。]]></translation>
             </item>
+            <item type="message" name="SuccessfulMailEngineApiConnection">
+              <translation language="de"><![CDATA[Erfolgreiche API Verbindung]]></translation>
+              <translation language="en"><![CDATA[Successful API Connection]]></translation>
+              <translation language="fr"><![CDATA[Connexion api réussie]]></translation>
+              <translation language="nl"><![CDATA[Successvolle API verbinding]]></translation>
+            </item>
+            <item type="error" name="WrongMailEngineCredentials">
+              <translation language="de"><![CDATA[Falsche Mail-Engine API Key und / oder List-ID.]]></translation>
+              <translation language="en"><![CDATA[Wrong mail engine API-key and/or List-ID.]]></translation>
+              <translation language="fr"><![CDATA[La clé de l'API du moteur de messagerie incorrect et / ou l'ID de la liste.]]></translation>
+              <translation language="nl"><![CDATA[Verkeerde mail engine API-key en/of List-ID.]]></translation>
+            </item>
         </Mailmotor>
     </Backend>
     <Frontend>

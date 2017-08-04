@@ -48,10 +48,10 @@ class InstallModule extends BackendBaseActionIndex
             $filesystem->remove($this->getContainer()->getParameter('kernel.cache_dir'));
 
             // redirect to index with a success message
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&report=module-installed&var=' . $this->currentModule . '&highlight=row-module_' . $this->currentModule);
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&report=module-installed&var=' . $this->currentModule . '&highlight=row-module_' . $this->currentModule);
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&error=non-existing');
         }
     }
 
@@ -59,12 +59,12 @@ class InstallModule extends BackendBaseActionIndex
     {
         // already installed
         if (BackendModel::isModuleInstalled($this->currentModule)) {
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=already-installed&var=' . $this->currentModule);
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&error=already-installed&var=' . $this->currentModule);
         }
 
         // no installer class present
         if (!is_file(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/Installer/Installer.php')) {
-            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=no-installer-file&var=' . $this->currentModule);
+            $this->redirect(BackendModel::createUrlForAction('Modules') . '&error=no-installer-file&var=' . $this->currentModule);
         }
     }
 }

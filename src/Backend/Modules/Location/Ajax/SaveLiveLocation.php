@@ -12,6 +12,7 @@ namespace Backend\Modules\Location\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is an ajax handler that will set a new position for a certain map
@@ -82,11 +83,11 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         $item = [
             'id' => $itemId,
             'language' => BL::getWorkingLanguage(),
-            'show_overview' => ($showOverview) ? 'Y' : 'N',
+            'show_overview' => $showOverview,
         ];
         BackendLocationModel::update($item);
 
         // output
-        $this->output(self::OK, null, BL::msg('Success'));
+        $this->output(Response::HTTP_OK, null, BL::msg('Success'));
     }
 }

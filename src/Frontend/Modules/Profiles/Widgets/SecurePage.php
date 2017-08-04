@@ -27,10 +27,10 @@ class SecurePage extends FrontendBaseWidget
 
         // Check if we're logged in, else redirect to the login form.
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
-            $queryString = $this->URL->getQueryString();
+            $queryString = $this->url->getQueryString();
             throw new RedirectException(
                 'Redirect',
-                new RedirectResponse(Navigation::getURLForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
+                new RedirectResponse(Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
             );
         }
     }

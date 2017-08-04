@@ -68,7 +68,7 @@ final class TreeManager
 
     private function getLink($parameters = [])
     {
-        return BackendModel::createURLForAction(
+        return BackendModel::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

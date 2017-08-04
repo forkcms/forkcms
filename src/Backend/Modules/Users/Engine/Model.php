@@ -18,7 +18,7 @@ use Backend\Core\Engine\User as BackendUser;
  */
 class Model
 {
-    const QRY_BROWSE =
+    const QUERY_BROWSE =
         'SELECT i.id
          FROM users AS i
          WHERE i.deleted = ?';
@@ -32,7 +32,7 @@ class Model
     {
         BackendModel::getContainer()->get('database')->update(
             'users',
-            ['active' => 'N', 'deleted' => 'Y'],
+            ['active' => false, 'deleted' => true],
             'id = ?',
             [$id]
         );
@@ -67,7 +67,7 @@ class Model
              FROM users AS i
              WHERE i.email = ? AND i.deleted = ?
              LIMIT 1',
-            [$email, 'Y']
+            [$email, true]
         );
     }
 
@@ -81,22 +81,22 @@ class Model
      */
     public static function exists(int $id, bool $active = true): bool
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // if the user should also be active, there should be at least one row to return true
         if ($active) {
-            return (bool) $db->getVar(
+            return (bool) $database->getVar(
                 'SELECT 1
                  FROM users AS i
                  WHERE i.id = ? AND i.deleted = ?
                  LIMIT 1',
-                [$id, 'N']
+                [$id, false]
             );
         }
 
         // fallback, this doesn't take the active nor deleted status in account
-        return (bool) $db->getVar(
+        return (bool) $database->getVar(
             'SELECT 1
              FROM users AS i
              WHERE i.id = ?
@@ -116,12 +116,12 @@ class Model
      */
     public static function existsEmail(string $email, int $id = null): bool
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // userid specified?
         if ($id !== null) {
-            return (bool) $db->getVar(
+            return (bool) $database->getVar(
                 'SELECT 1
                  FROM users AS i
                  WHERE i.id != ? AND i.email = ?
@@ -131,7 +131,7 @@ class Model
         }
 
         // no user to ignore
-        return (bool) $db->getVar(
+        return (bool) $database->getVar(
             'SELECT 1
              FROM users AS i
              WHERE i.email = ?
@@ -142,11 +142,11 @@ class Model
 
     public static function get(int $id): array
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get general user data
-        $user = (array) $db->getRecord(
+        $user = (array) $database->getRecord(
             'SELECT i.id, i.email, i.password, i.active
              FROM users AS i
              WHERE i.id = ?',
@@ -159,7 +159,7 @@ class Model
         }
 
         // get user-settings
-        $user['settings'] = (array) $db->getPairs(
+        $user['settings'] = (array) $database->getPairs(
             'SELECT s.name, s.value
              FROM users_settings AS s
              WHERE s.user_id = ?',
@@ -330,7 +330,7 @@ class Model
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
              WHERE i.active = ? AND i.deleted = ?',
-            ['nickname', 'Y', 'N']
+            ['nickname', true, false]
         );
 
         // loop users & unserialize
@@ -344,11 +344,11 @@ class Model
 
     public static function insert(array $user, array $settings): int
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // update user
-        $userId = (int) $db->insert('users', $user);
+        $userId = (int) $database->insert('users', $user);
         $userSettings = [];
 
         // loop settings
@@ -361,7 +361,7 @@ class Model
         }
 
         // insert all settings at once
-        $db->insert('users_settings', $userSettings);
+        $database->insert('users_settings', $userSettings);
 
         // return the new users' id
         return $userId;
@@ -389,16 +389,16 @@ class Model
      */
     public static function undoDelete(string $email): bool
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // get id
-        $id = $db->getVar(
+        $id = $database->getVar(
             'SELECT id
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id
              WHERE i.email = ? AND i.deleted = ?',
-            [$email, 'Y']
+            [$email, true]
         );
 
         // no valid users
@@ -407,7 +407,7 @@ class Model
         }
 
         // restore
-        $db->update('users', ['active' => 'Y', 'deleted' => 'N'], 'id = ?', (int) $id);
+        $database->update('users', ['active' => true, 'deleted' => false], 'id = ?', (int) $id);
 
         // return
         return true;
@@ -422,16 +422,16 @@ class Model
      */
     public static function update(array $user, array $settings): int
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get database
+        $database = BackendModel::getContainer()->get('database');
 
         // update user
-        $updated = $db->update('users', $user, 'id = ?', [$user['id']]);
+        $updated = $database->update('users', $user, 'id = ?', [$user['id']]);
 
         // loop settings
         foreach ($settings as $key => $value) {
             // insert or update
-            $db->execute(
+            $database->execute(
                 'INSERT INTO users_settings(user_id, name, value)
                  VALUES(?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?',

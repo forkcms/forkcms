@@ -33,7 +33,7 @@ class RssItem extends \SpoonFeedRSSItem
         $this->utm['utm_campaign'] = CommonUri::getUrl($title);
 
         // call parent
-        parent::__construct($title, Model::addURLParameters($link, $this->utm), $content);
+        parent::__construct($title, Model::addUrlParameters($link, $this->utm), $content);
 
         // set some properties
         $this->setGuid($link, true);
@@ -66,14 +66,13 @@ class RssItem extends \SpoonFeedRSSItem
             return $content;
         }
 
-        // init vars
         $searchLinks = [];
         $replaceLinks = [];
 
         // loop old links
         foreach ((array) $matches[1] as $i => $link) {
             $searchLinks[] = $matches[0][$i];
-            $replaceLinks[] = 'href="' . Model::addURLParameters($link, $this->utm) . '"';
+            $replaceLinks[] = 'href="' . Model::addUrlParameters($link, $this->utm) . '"';
         }
 
         // replace
@@ -86,11 +85,11 @@ class RssItem extends \SpoonFeedRSSItem
         $author = (string) \SpoonFilter::htmlspecialcharsDecode($author);
 
         // add fake-emailaddress
-        if (!\SpoonFilter::isEmail($author)) {
+        if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
             $author = CommonUri::getUrl($author) . '@example.com (' . $author . ')';
         }
         // add fake email address
-        if (!\SpoonFilter::isEmail($author)) {
+        if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
             $author = \SpoonFilter::urlise($author) . '@example.com (' . $author . ')';
         }
 

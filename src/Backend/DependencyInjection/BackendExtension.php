@@ -18,7 +18,7 @@ class BackendExtension extends Extension implements PrependExtensionInterface
     {
         $filesystem = new Filesystem();
         foreach ((array) $container->getParameter('installed_modules') as $module) {
-            $dir = $container->getParameter('kernel.root_dir') . '/../src/Backend/Modules/' . $module . '/Entity';
+            $dir = $container->getParameter('kernel.project_dir') . '/src/Backend/Modules/' . $module . '/Entity';
 
             if (!$filesystem->exists($dir)) {
                 continue;

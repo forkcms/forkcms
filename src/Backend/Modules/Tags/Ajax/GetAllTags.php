@@ -11,6 +11,7 @@ namespace Backend\Modules\Tags\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the autocomplete-action, it will output a list of tags that start
@@ -21,6 +22,6 @@ class GetAllTags extends BackendBaseAJAXAction
     public function execute(): void
     {
         parent::execute();
-        $this->output(self::OK, BackendTagsModel::getAll());
+        $this->output(Response::HTTP_OK, BackendTagsModel::getAll());
     }
 }

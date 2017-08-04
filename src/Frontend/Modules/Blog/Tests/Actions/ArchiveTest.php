@@ -6,9 +6,6 @@ use Common\WebTestCase;
 
 class ArchiveTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testArchiveContainsBlogPosts(): void
     {
         $client = static::createClient();
@@ -32,9 +29,6 @@ class ArchiveTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testArchiveWithOnlyYearsContainsBlogPosts(): void
     {
         $client = static::createClient();
@@ -50,9 +44,6 @@ class ArchiveTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testArchiveWithWrongMonthsGives404(): void
     {
         $client = static::createClient();
@@ -61,9 +52,6 @@ class ArchiveTest extends WebTestCase
         $this->assertIs404($client);
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testNonExistingPageGives404(): void
     {
         $client = static::createClient();

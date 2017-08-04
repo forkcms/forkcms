@@ -46,6 +46,7 @@ class Installer extends ModuleInstaller
     {
         $this->setModuleRights(1, $this->getModule());
 
+        $this->setActionRights(1, $this->getModule(), 'Ping');
         $this->setActionRights(1, $this->getModule(), 'Settings');
     }
 
@@ -60,9 +61,12 @@ class Installer extends ModuleInstaller
     {
         // loop languages
         foreach ($this->getLanguages() as $language) {
-            $pageId = $this->insertPage(
-                ['title' => 'Newsletters', 'language' => $language]
-            );
+            $pageId = $this->getPageWithMailmotorBlock($language);
+            if ($pageId === null) {
+                $pageId = $this->insertPage(
+                    ['title' => 'Newsletters', 'language' => $language]
+                );
+            }
 
             if (!$this->hasPageWithSubscribeBlock($language)) {
                 $this->insertPage(
@@ -95,7 +99,7 @@ class Installer extends ModuleInstaller
     private function hasPageWithSubscribeBlock(string $language): bool
     {
         // @todo: Replace with PageRepository method when it exists.
-        return (bool) $this->getDB()->getVar(
+        return (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM pages AS p
              INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
@@ -108,7 +112,7 @@ class Installer extends ModuleInstaller
     private function hasPageWithUnsubscribeBlock(string $language): bool
     {
         // @todo: Replace with PageRepository method when it exists.
-        return (bool) $this->getDB()->getVar(
+        return (bool) $this->getDatabase()->getVar(
             'SELECT 1
              FROM pages AS p
              INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
@@ -116,5 +120,23 @@ class Installer extends ModuleInstaller
              LIMIT 1',
             [$this->unsubscribeBlockId, $language]
         );
+    }
+
+    private function getPageWithMailmotorBlock(string $language): ?int
+    {
+        // @todo: Replace with PageRepository method when it exists.
+        $pageId = (int) $this->getDatabase()->getVar(
+            'SELECT p.id
+             FROM pages AS p
+             WHERE p.title = ? AND p.language = ?
+             LIMIT 1',
+            ['Newsletters', $language]
+        );
+
+        if ($pageId === 0) {
+            return null;
+        }
+
+        return $pageId;
     }
 }

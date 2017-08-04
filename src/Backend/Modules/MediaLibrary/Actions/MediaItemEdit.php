@@ -37,26 +37,26 @@ class MediaItemEdit extends BackendBaseActionEdit
             )
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         $deleteForm = $this->createForm(
             DeleteType::class,
             ['id' => $mediaItem->getId()],
             ['module' => $this->getModule(), 'action' => 'MediaItemDelete']
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
 
-        if (!$form->isValid()) {
-            $this->tpl->assign('folderId', $this->folderId);
-            $this->tpl->assign('tree', $this->get('media_library.manager.tree')->getHTML());
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->template->assign('folderId', $this->folderId);
+            $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
             $this->header->addJsData(
                 'MediaLibrary',
                 'openedFolderId',
                 $this->folderId ?? null
             );
-            $this->tpl->assign('form', $form->createView());
-            $this->tpl->assign('mediaItem', $mediaItem);
-            $this->tpl->assign('backLink', $this->getBackLink());
+            $this->template->assign('form', $form->createView());
+            $this->template->assign('mediaItem', $mediaItem);
+            $this->template->assign('backLink', $this->getBackLink());
 
             // Call parent
             $this->parse();
@@ -104,7 +104,7 @@ class MediaItemEdit extends BackendBaseActionEdit
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createURLForAction(
+        return Model::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

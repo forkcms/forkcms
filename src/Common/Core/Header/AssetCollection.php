@@ -33,6 +33,7 @@ final class AssetCollection
 
     /**
      * @param bool $orderAssets
+     *
      * @return Asset[]
      */
     public function getAssets($orderAssets = false): array

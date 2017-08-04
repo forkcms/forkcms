@@ -7,29 +7,10 @@ use Backend\Core\Engine\Authentication as Authentication;
 
 class LogoutTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
-    public function testLogoutActionActuallyLogsYouOut(): void
-    {
-        $client = static::createClient();
-        $this->login();
-
-        self::assertTrue(Authentication::isLoggedIn());
-
-        $client->request('GET', '/private/en/authentication/logout');
-        $client->followRedirect();
-
-        self::assertFalse(Authentication::isLoggedIn());
-    }
-
-    /**
-     * @runInSeparateProcess
-     */
     public function testLogoutActionRedirectsYouToLoginAfterLoggingOut(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $client->request('GET', '/private/en/authentication/logout');
         $client->followRedirect();

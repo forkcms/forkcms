@@ -29,7 +29,7 @@ class Add extends BackendBaseActionAdd
         $form = $this->getForm();
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
+            $this->template->assign('form', $form->createView());
 
             $this->parse();
             $this->display();
@@ -67,7 +67,7 @@ class Add extends BackendBaseActionAdd
 
     private function getBackLink(array $parameters = []): string
     {
-        return BackendModel::createURLForAction(
+        return BackendModel::createUrlForAction(
             'Index',
             null,
             null,
@@ -83,7 +83,7 @@ class Add extends BackendBaseActionAdd
             ['theme' => $this->get('fork.settings')->get('Core', 'theme', 'Fork')]
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         return $form;
     }

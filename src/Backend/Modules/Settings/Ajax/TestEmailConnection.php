@@ -12,6 +12,7 @@ namespace Backend\Modules\Settings\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Common\Mailer\TransportFactory;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This test-email-action will test the mail-connection
@@ -33,54 +34,58 @@ class TestEmailConnection extends BackendBaseAJAXAction
         $errors = [];
 
         // validate
-        if ($fromEmail == '' || !\SpoonFilter::isEmail($fromEmail)) {
+        if (!filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
             $errors['from'] = BL::err('EmailIsInvalid');
         }
-        if ($toEmail == '' || !\SpoonFilter::isEmail($toEmail)) {
+        if (!filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
             $errors['to'] = BL::err('EmailIsInvalid');
         }
-        if ($replyToEmail == '' || !\SpoonFilter::isEmail($replyToEmail)) {
+        if (!filter_var($replyToEmail, FILTER_VALIDATE_EMAIL)) {
             $errors['reply'] = BL::err('EmailIsInvalid');
         }
 
         // got errors?
         if (!empty($errors)) {
             $this->output(
-                self::BAD_REQUEST,
+                Response::HTTP_BAD_REQUEST,
                 ['errors' => $errors],
                 'invalid fields'
             );
-        } else {
-            $message = \Swift_Message::newInstance('Test')
-                ->setFrom([$fromEmail => $fromName])
-                ->setTo([$toEmail => $toName])
-                ->setReplyTo([$replyToEmail => $replyToName])
-                ->setBody(BL::msg('TestMessage'), 'text/plain')
-            ;
 
-            $mailerType = $this->getRequest()->request->get('mailer_type');
-            if (!in_array($mailerType, ['smtp', 'mail'])) {
-                $mailerType = 'mail';
-            }
-            $transport = TransportFactory::create(
-                $mailerType,
-                $this->getRequest()->request->get('smtp_server', ''),
-                $this->getRequest()->request->getInt('smtp_port', 25),
-                $this->getRequest()->request->get('smtp_username', ''),
-                $this->getRequest()->request->get('smtp_password', ''),
-                $this->getRequest()->request->get('smtp_secure_layer', '')
-            );
-            $mailer = \Swift_Mailer::newInstance($transport);
+            return;
+        }
 
-            try {
-                if ($mailer->send($message)) {
-                    $this->output(self::OK, null, '');
-                } else {
-                    $this->output(self::ERROR, null, 'unknown');
-                }
-            } catch (\Exception $e) {
-                $this->output(self::ERROR, null, $e->getMessage());
+        $message = \Swift_Message::newInstance('Test')
+            ->setFrom([$fromEmail => $fromName])
+            ->setTo([$toEmail => $toName])
+            ->setReplyTo([$replyToEmail => $replyToName])
+            ->setBody(BL::msg('TestMessage'), 'text/plain')
+        ;
+
+        $mailerType = $this->getRequest()->request->get('mailer_type');
+        if (!in_array($mailerType, ['smtp', 'sendmail'])) {
+            $mailerType = 'sendmail';
+        }
+        $transport = TransportFactory::create(
+            $mailerType,
+            $this->getRequest()->request->get('smtp_server', ''),
+            $this->getRequest()->request->getInt('smtp_port', 25),
+            $this->getRequest()->request->get('smtp_username', ''),
+            $this->getRequest()->request->get('smtp_password', ''),
+            $this->getRequest()->request->get('smtp_secure_layer', '')
+        );
+        $mailer = \Swift_Mailer::newInstance($transport);
+
+        try {
+            if ($mailer->send($message)) {
+                $this->output(Response::HTTP_OK, null, '');
+
+                return;
             }
+
+            $this->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, 'unknown');
+        } catch (\Exception $e) {
+            $this->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, $e->getMessage());
         }
     }
 }

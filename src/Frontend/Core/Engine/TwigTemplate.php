@@ -11,6 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Twig_Environment;
+use Twig_FactoryRuntimeLoader;
 
 /*
  * This file is part of Fork CMS.
@@ -64,13 +65,21 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function connectSymfonyForms(): void
     {
-        $formEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'));
-        $formEngine->setEnvironment($this->environment);
-        $this->environment->addExtension(
-            new SymfonyFormExtension(
-                new TwigRenderer($formEngine, Model::get('security.csrf.token_manager'))
+        $rendererEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'), $this->environment);
+        $csrfTokenManager = Model::get('security.csrf.token_manager');
+        $this->environment->addRuntimeLoader(
+            new Twig_FactoryRuntimeLoader(
+                [
+                    TwigRenderer::class => function () use ($rendererEngine, $csrfTokenManager): TwigRenderer {
+                        return new TwigRenderer($rendererEngine, $csrfTokenManager);
+                    },
+                ]
             )
         );
+
+        if (!$this->environment->hasExtension(SymfonyFormExtension::class)) {
+            $this->environment->addExtension(new SymfonyFormExtension());
+        }
     }
 
     /**
@@ -88,17 +97,6 @@ class TwigTemplate extends BaseTwigTemplate
 
         // else it's in the theme folder
         return str_replace($this->themePath . '/', '', $template);
-    }
-
-    /**
-     * Adds a global variable to the template
-     *
-     * @param string $name
-     * @param mixed $value
-     */
-    public function addGlobal(string $name, $value): void
-    {
-        $this->environment->addGlobal($name, $value);
     }
 
     /**
@@ -120,18 +118,6 @@ class TwigTemplate extends BaseTwigTemplate
         $this->variables = [];
 
         return $content;
-    }
-
-    public function render($template, array $variables = []): string
-    {
-        if (!empty($this->forms)) {
-            foreach ($this->forms as $form) {
-                // using assign to pass the form as global
-                $this->environment->addGlobal('form_' . $form->getName(), $form);
-            }
-        }
-
-        return $this->environment->render($template, $variables);
     }
 
     private function getLoadingFolders(): array

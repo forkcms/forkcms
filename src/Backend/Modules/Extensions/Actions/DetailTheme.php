@@ -56,7 +56,7 @@ class DetailTheme extends BackendBaseActionIndex
             $this->display();
         } else {
             // no item found, redirect to index, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
+            $this->redirect(BackendModel::createUrlForAction('Themes') . '&error=non-existing');
         }
     }
 
@@ -140,10 +140,10 @@ class DetailTheme extends BackendBaseActionIndex
         parent::parse();
 
         // assign theme data
-        $this->tpl->assign('name', $this->currentTheme);
-        $this->tpl->assign('warnings', $this->warnings);
-        $this->tpl->assign('information', $this->information);
-        $this->tpl->assign(
+        $this->template->assign('name', $this->currentTheme);
+        $this->template->assign('warnings', $this->warnings);
+        $this->template->assign('information', $this->information);
+        $this->template->assign(
             'showInstallButton',
             !BackendExtensionsModel::isThemeInstalled($this->currentTheme) && BackendAuthentication::isAllowedAction(
                 'InstallTheme'
@@ -151,7 +151,7 @@ class DetailTheme extends BackendBaseActionIndex
         );
 
         // data grids
-        $this->tpl->assign(
+        $this->template->assign(
             'dataGridTemplates',
             (isset($this->dataGridTemplates) && $this->dataGridTemplates->getNumResults() > 0)
                 ? $this->dataGridTemplates->getContent()

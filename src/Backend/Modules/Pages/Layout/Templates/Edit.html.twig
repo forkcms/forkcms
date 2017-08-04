@@ -1,4 +1,5 @@
-{% extends '/Layout/Templates/pages.html.twig' %}
+{% extends 'Layout/Templates/pages.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block pagesTree %}
   <div class="sub-navigation hidden-xs">
@@ -261,7 +262,7 @@
                     <label for="authRequired" class="control-label">{% form_field auth_required %} {{ 'msg.AuthRequired'|trans|ucfirst }}</label>
                   </li>
                   {% if authGroups %}
-                  <div class="js-authentication-groups" {% if not item.data.auth_required %} style="display: none;"{% endif %}>
+                  <div class="js-authentication-groups" {% if item.data.auth_required %} style="display: none;"{% endif %}>
                     <h4>{{ 'lbl.Groups'|trans|ucfirst }}</h4>
                     <ul class="list-unstyled">
                       {% for item in authGroups %}
@@ -289,7 +290,7 @@
                 </div>
                 <div class="form-group">
                   {% if item.data.image %}
-                    <img src="{{ FRONTEND_FILES_URL }}/pages/images/source/{{ item.data.image }}" class="img-responsive" />
+                    <img src="{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ item.data.image }}" class="img-responsive" />
                     <label for="removeImage">{% form_field remove_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
                     {% form_field_error remove_image %}
                   {% endif %}
@@ -355,8 +356,11 @@
           {# this will store the selected extra #}
           {{ block.formElements.hidExtraId.parse() | raw }}
 
-          {* this will store the extra type *}
+          {# this will store the extra type #}
           {{ block.formElements.hidExtraType.parse() | raw }}
+
+          {# this will store the extra data #}
+          {{ block.formElements.hidExtraData.parse() | raw }}
 
           {# this will store the selected position #}
           {{ block.formElements.hidPosition.parse() | raw }}

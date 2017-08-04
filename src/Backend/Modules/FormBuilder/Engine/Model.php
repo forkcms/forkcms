@@ -20,7 +20,7 @@ use Symfony\Component\Finder\Finder;
  */
 class Model
 {
-    const QRY_BROWSE =
+    const QUERY_BROWSE =
         'SELECT i.id, i.name, i.email, i.method,
          (SELECT COUNT(fd.form_id) FROM forms_data AS fd WHERE fd.form_id = i.id) AS sent_forms
          FROM forms AS i
@@ -117,20 +117,20 @@ class Model
      */
     public static function delete(int $id): void
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         // get field ids
-        $fieldIds = (array) $db->getColumn('SELECT i.id FROM forms_fields AS i WHERE i.form_id = ?', $id);
+        $fieldIds = (array) $database->getColumn('SELECT i.id FROM forms_fields AS i WHERE i.form_id = ?', $id);
 
         // we have items to be deleted
         if (!empty($fieldIds)) {
             // delete all fields
-            $db->delete('forms_fields', 'form_id = ?', $id);
-            $db->delete('forms_fields_validation', 'field_id IN(' . implode(',', $fieldIds) . ')');
+            $database->delete('forms_fields', 'form_id = ?', $id);
+            $database->delete('forms_fields_validation', 'field_id IN(' . implode(',', $fieldIds) . ')');
         }
 
         // get data ids
-        $dataIds = (array) $db->getColumn('SELECT i.id FROM forms_data AS i WHERE i.form_id = ?', $id);
+        $dataIds = (array) $database->getColumn('SELECT i.id FROM forms_data AS i WHERE i.form_id = ?', $id);
 
         // we have items to be deleted
         if (!empty($dataIds)) {
@@ -141,7 +141,7 @@ class Model
         BackendModel::deleteExtra('FormBuilder', 'widget', ['id' => $id]);
 
         // delete form
-        $db->delete('forms', 'id = ?', $id);
+        $database->delete('forms', 'id = ?', $id);
     }
 
     /**
@@ -151,10 +151,10 @@ class Model
      */
     public static function deleteData(array $ids): void
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
-        $db->delete('forms_data', 'id IN(' . implode(',', $ids) . ')');
-        $db->delete('forms_data_fields', 'data_id IN(' . implode(',', $ids) . ')');
+        $database->delete('forms_data', 'id IN(' . implode(',', $ids) . ')');
+        $database->delete('forms_data_fields', 'data_id IN(' . implode(',', $ids) . ')');
     }
 
     /**
@@ -508,7 +508,7 @@ class Model
                 'id' => $formId,
                 'extra_label' => $values['name'],
                 'language' => $values['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $formId,
+                'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $formId,
             ],
             false,
             '400' . $formId
@@ -551,10 +551,10 @@ class Model
      */
     public static function update(int $id, array $values): int
     {
-        $db = BackendModel::getContainer()->get('database');
+        $database = BackendModel::getContainer()->get('database');
 
         // update item
-        $db->update('forms', $values, 'id = ?', $id);
+        $database->update('forms', $values, 'id = ?', $id);
 
         // build array
         $extra = [
@@ -563,13 +563,13 @@ class Model
                     'language' => BL::getWorkingLanguage(),
                     'extra_label' => $values['name'],
                     'id' => $id,
-                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $id,
+                    'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $id,
                 ]
             ),
         ];
 
         // update extra
-        $db->update(
+        $database->update(
             'modules_extras',
             $extra,
             'module = ? AND type = ? AND sequence = ?',

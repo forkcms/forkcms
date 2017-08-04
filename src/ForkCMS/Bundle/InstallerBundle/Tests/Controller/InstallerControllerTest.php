@@ -9,9 +9,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class InstallerControllerTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testNoStepActionAction(): void
     {
         $client = static::createClient(['environment' => 'test_install']);
@@ -21,7 +18,7 @@ class InstallerControllerTest extends WebTestCase
 
         // we should be redirected to the first step
         self::assertEquals(
-            200,
+            302,
             $client->getResponse()->getStatusCode()
         );
         self::assertStringEndsWith(
@@ -30,9 +27,6 @@ class InstallerControllerTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testInstallationProcess(): void
     {
         $client = static::createClient();
@@ -42,17 +36,17 @@ class InstallerControllerTest extends WebTestCase
         $this->emptyTestDatabase($client->getContainer()->get('database'));
 
         $installDatabaseConfig = [
-            'install_database[dbHostname]' => $container->getParameter('database.host'),
-            'install_database[dbPort]' => $container->getParameter('database.port'),
-            'install_database[dbDatabase]' => $container->getParameter('database.name') . '_test',
-            'install_database[dbUsername]' => $container->getParameter('database.user'),
-            'install_database[dbPassword]' => $container->getParameter('database.password'),
+            'install_database[databaseHostname]' => $container->getParameter('database.host'),
+            'install_database[databasePort]' => $container->getParameter('database.port'),
+            'install_database[databaseName]' => $container->getParameter('database.name') . '_test',
+            'install_database[databaseUsername]' => $container->getParameter('database.user'),
+            'install_database[databasePassword]' => $container->getParameter('database.password'),
         ];
 
         // recreate the client with the empty database because we need this in our installer checks
         $client = static::createClient(['environment' => 'test_install']);
         $filesystem = new Filesystem();
-        $this->backupParametersFile($filesystem, $client->getContainer()->getParameter('kernel.root_dir'));
+        $this->backupParametersFile($filesystem, $client->getContainer()->getParameter('kernel.project_dir') . '/app');
 
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
@@ -61,7 +55,7 @@ class InstallerControllerTest extends WebTestCase
         $this->runTroughStep5($crawler, $client);
 
         // put back our parameters file
-        $this->putParametersFileBack($filesystem, $client->getContainer()->getParameter('kernel.root_dir'));
+        $this->putParametersFileBack($filesystem, $client->getContainer()->getParameter('kernel.project_dir') . '/app');
     }
 
     private function runTroughStep2(Crawler $crawler, Client $client): Crawler

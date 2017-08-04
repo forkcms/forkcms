@@ -41,12 +41,12 @@ class Edit extends BackendBaseActionEdit
             ['id' => $contentBlock->getId()],
             ['module' => $this->getModule()]
         );
-        $this->tpl->assign('deleteForm', $deleteForm->createView());
+        $this->template->assign('deleteForm', $deleteForm->createView());
 
         if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->tpl->assign('form', $form->createView());
-            $this->tpl->assign('contentBlock', $contentBlock);
-            $this->tpl->assign('revisions', ContentBlockRevisionDataGrid::getHtml($contentBlock, Locale::workingLocale()));
+            $this->template->assign('form', $form->createView());
+            $this->template->assign('contentBlock', $contentBlock);
+            $this->template->assign('revisions', ContentBlockRevisionDataGrid::getHtml($contentBlock, Locale::workingLocale()));
 
             $this->parse();
             $this->display();
@@ -75,7 +75,7 @@ class Edit extends BackendBaseActionEdit
 
     private function getBackLink(array $parameters = []): string
     {
-        return BackendModel::createURLForAction(
+        return BackendModel::createUrlForAction(
             'Index',
             null,
             null,
@@ -89,10 +89,10 @@ class Edit extends BackendBaseActionEdit
         $contentBlockRepository = $this->get('content_blocks.repository.content_block');
 
         // specific revision?
-        $revisionId = $this->get('request')->query->getInt('revision');
+        $revisionId = $this->getRequest()->query->getInt('revision');
 
         if ($revisionId !== 0) {
-            $this->tpl->assign('usingRevision', true);
+            $this->template->assign('usingRevision', true);
 
             try {
                 return $contentBlockRepository->findOneByRevisionIdAndLocale($revisionId, Locale::workingLocale());
@@ -102,7 +102,10 @@ class Edit extends BackendBaseActionEdit
         }
 
         try {
-            return $contentBlockRepository->findOneByIdAndLocale($this->get('request')->query->getInt('id'), Locale::workingLocale());
+            return $contentBlockRepository->findOneByIdAndLocale(
+                $this->getRequest()->query->getInt('id'),
+                Locale::workingLocale()
+            );
         } catch (ContentBlockNotFound $e) {
             $this->redirect($this->getBackLink(['error' => 'non-existing']));
         }
@@ -118,7 +121,7 @@ class Edit extends BackendBaseActionEdit
             ]
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         return $form;
     }

@@ -6,13 +6,10 @@ use Common\WebTestCase;
 
 class DeleteTest extends WebTestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationIsNeeded(): void
     {
-        $this->logout();
         $client = static::createClient();
+        $this->logout($client);
         $this->loadFixtures(
             $client,
             [
@@ -31,13 +28,10 @@ class DeleteTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testInvalidIdShouldShowAnError(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         // go to edit page to get a form token
         $crawler = $client->request('GET', '/private/en/blog/edit?token=1234&id=1');
@@ -58,13 +52,10 @@ class DeleteTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testDeleteIsAvailableFromTheEditpage(): void
     {
         $client = static::createClient();
-        $this->login();
+        $this->login($client);
 
         $crawler = $client->request('GET', '/private/en/blog/edit?token=1234&id=1');
         self::assertContains(

@@ -226,11 +226,11 @@
             <ol>
               <li>In the sidebar on the left, select <strong>Credentials</strong>.</li>
               <li>Click on <strong>Create credentials</strong> and select <strong>Service account key</strong> in the dropdown.</li>
-              <li>Create a new serviceaccount with the role <strong>Project - Editor</strong> and <strong>P12</strong> as Key type.</li>
+              <li>Create a new service account with the role <strong>Project - Editor</strong> and <strong>P12</strong> as Key type.</li>
               <li>Download the generated certificate (.p12 file).</li>
               <li>Go back to the <strong>Credentials</strong> page and click on <strong>Manage service accounts</strong></li>
               <li>Copy the <strong>Service account ID</strong> of the newly created account. It should look something like <code>name@spheric-passkey-123456.iam.gserviceaccount.com</code></li>
-              <li>Login to analytics and add read rights to the wanted analytics profile to the generated emailadress from the developer console.</li>
+              <li>Login to analytics and add read rights to the wanted analytics profile to the generated email address from the developer console.</li>
               <li>Grab a cup of coffee, and come back to Fork in some minutes. It can take some time before the coupling is fully done.</li>
             </ol>
           </p>]]></translation>
@@ -238,7 +238,7 @@
 
       <item type="message" name="NoAccounts">
         <translation language="nl"><![CDATA[Er zijn geen analytics accounts gekoppeld aan het opgegeven emailadres. Zorg dat het emailaddres %1$s zeker toegevoegd is aan de gewenste account. Het kan even duren voor de koppeling voltooid is.]]></translation>
-        <translation language="en"><![CDATA[There are no analytics accounts coupled to the given emailadres. Make sure you added the emailaddress %1$s to the wanted account. It can take a while before the coupling is completed.]]></translation>
+        <translation language="en"><![CDATA[There are no analytics accounts coupled to the given email address. Make sure you added the email address %1$s to the wanted account. It can take a while before the coupling is completed.]]></translation>
       </item>
       <item type="message" name="RemoveAccountLink">
         <translation language="nl"><![CDATA[Verwijder de koppeling met uw Google account]]></translation>

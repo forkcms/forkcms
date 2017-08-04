@@ -10,6 +10,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLoc
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Component\UploadHandler;
 use Common\Exception\AjaxExitException;
+use Common\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -56,7 +57,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
         parent::execute();
 
         // Include the upload handler class
-        $uploader = new UploadHandler($this->get('request'), $this->get('media_library.manager.file'));
+        $uploader = new UploadHandler($this->getRequest(), $this->get('media_library.manager.file'));
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
         $uploader->allowedExtensions = $this->get('media_library.manager.extension')->getAll();
         $uploader->allowedMimeTypes = $this->get('media_library.manager.mime_type')->getAll();
@@ -70,12 +71,6 @@ class MediaItemUpload extends BackendBaseAJAXAction
         $this->response = new Response();
 
         $method = $this->getRequestMethod();
-        $iframeRequest = false;
-
-        // Determine whether we are dealing with a regular ol' XMLHttpRequest, or an XDomainRequest
-        if ($this->get('request')->headers->get('x-requested-with') !== 'XMLHttpRequest') {
-            $iframeRequest = true;
-        }
 
         /*
          * handle the preflighted OPTIONS request. Needed for CORS operation.
@@ -97,7 +92,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
 
         // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
         // For example: /myserver/handlers/endpoint.php?done
-        if ($this->get('request')->query->get('done') !== null) {
+        if ($this->getRequest()->query->get('done') !== null) {
             $this->response->setContent($uploader->combineChunks('files'));
             $this->response->send();
             exit();
@@ -113,6 +108,10 @@ class MediaItemUpload extends BackendBaseAJAXAction
 
         // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
         $result = $uploader->handleUpload($uploadDir);
+
+        if (array_key_exists('error', $result)) {
+            $this->sendResponseForResult($result);
+        }
 
         // To return a name used for uploaded file you can use the following line.
         $result['uploadName'] = $uploader->getUploadName();
@@ -142,13 +141,20 @@ class MediaItemUpload extends BackendBaseAJAXAction
         // Handle the MediaItem create
         $this->get('command_bus')->handle($createMediaItemFromLocalSource);
 
-        $resultData = json_encode(
+        $this->sendResponseForResult(
             array_merge(
                 $result,
                 $createMediaItemFromLocalSource->getMediaItem()->jsonSerialize()
             )
         );
+    }
 
+    private function sendResponseForResult(array $result): void
+    {
+        // Determine whether we are dealing with a regular ol' XMLHttpRequest, or an XDomainRequest
+        $iframeRequest = $this->getRequest()->headers->get('x-requested-with') !== 'XMLHttpRequest';
+
+        $resultData = json_encode($result);
         // iframe uploads require the content-type to be 'text/html' and
         // return some JSON along with self-executing javascript (iframe.ss.response)
         // that will parse the JSON and pass it along to Fine Uploader via
@@ -159,8 +165,8 @@ class MediaItemUpload extends BackendBaseAJAXAction
         }
 
         $this->response->setContent($resultData);
-        $this->response->send();
-        exit();
+
+        throw new RedirectException('media item upload', $this->response);
     }
 
     /**
@@ -173,19 +179,19 @@ class MediaItemUpload extends BackendBaseAJAXAction
      */
     private function getRequestMethod(): string
     {
-        if ($this->get('request')->request->get('method') !== null
-            && $this->get('request')->request->get('_method') !== null
+        if ($this->getRequest()->request->get('method') !== null
+            && $this->getRequest()->request->get('_method') !== null
         ) {
-            return $this->get('request')->request->get('_method');
+            return $this->getRequest()->request->get('_method');
         }
 
-        return $this->get('request')->server->get('REQUEST_METHOD');
+        return $this->getRequest()->server->get('REQUEST_METHOD');
     }
 
     private function getMediaFolder(): MediaFolder
     {
         // Define id
-        $id = $this->get('request')->query->getInt('folder_id');
+        $id = $this->getRequest()->query->getInt('folder_id');
 
         if ($id === 0) {
             throw new AjaxExitException(Language::err('MediaFolderIsRequired'));

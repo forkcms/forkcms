@@ -14,8 +14,11 @@ use Common\Core\Header\AssetCollection;
 use Common\Core\Header\JsData;
 use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
-use Frontend\Core\Engine\Base\Object;
+use ForkCMS\App\KernelLoader;
+use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Theme;
+use Frontend\Core\Engine\TwigTemplate;
+use Frontend\Core\Engine\Url;
 use Frontend\Core\Language\Locale;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -23,7 +26,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  */
-class Header extends Object
+class Header extends KernelLoader
 {
     /**
      * The canonical URL
@@ -81,12 +84,29 @@ class Header extends Object
      */
     private $contentTitle;
 
+    /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $template;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $url;
+
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
 
         $container = $this->getContainer();
         $container->set('header', $this);
+
+        $this->template = $container->get('templating');
+        $this->url = $container->get('url');
 
         $this->cssFiles = new AssetCollection(
             Minifier::css(
@@ -333,22 +353,23 @@ class Header extends Object
             $this->meta->addMetaData(MetaData::forName('robots', 'noindex, nofollow'), true);
         }
 
-        $this->tpl->addGlobal('meta', $this->meta);
-        $this->tpl->addGlobal('metaCustom', $this->getMetaCustom());
-        $this->cssFiles->parse($this->tpl, 'cssFiles');
-        $this->jsFiles->parse($this->tpl, 'jsFiles');
+        $this->template->assignGlobal('meta', $this->meta);
+        $this->template->assignGlobal('metaCustom', $this->getMetaCustom());
+        $this->cssFiles->parse($this->template, 'cssFiles');
+        $this->jsFiles->parse($this->template, 'jsFiles');
 
         $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_header', '') . "\n";
         $siteHTMLHeader .= new GoogleAnalytics(
             $this->get('fork.settings'),
-            $this->get('request')->getHttpHost()
+            Model::getRequest()->getHttpHost(),
+            $this->get('fork.cookie')
         );
         $siteHTMLHeader .= "\n" . $this->jsData;
-        $this->tpl->addGlobal('siteHTMLHeader', trim($siteHTMLHeader));
+        $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHeader));
 
-        $this->tpl->addGlobal('pageTitle', $this->getPageTitle());
-        $this->tpl->addGlobal('contentTitle', $this->getContentTitle());
-        $this->tpl->addGlobal(
+        $this->template->assignGlobal('pageTitle', $this->getPageTitle());
+        $this->template->assignGlobal('contentTitle', $this->getContentTitle());
+        $this->template->assignGlobal(
             'siteTitle',
             (string) $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
         );
@@ -356,7 +377,7 @@ class Header extends Object
 
     private function getCanonical(): string
     {
-        $queryString = trim($this->URL->getQueryString(), '/');
+        $queryString = trim($this->url->getQueryString(), '/');
         $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString === $language) {
             $this->canonical = rtrim(SITE_URL, '/');
@@ -371,7 +392,7 @@ class Header extends Object
         }
 
         // get the chunks of the current url
-        $urlChunks = parse_url($this->URL->getQueryString());
+        $urlChunks = parse_url($this->url->getQueryString());
 
         // a canonical url should contain the domain. So make sure you
         // redirect your website to a single url with .htaccess
@@ -384,11 +405,11 @@ class Header extends Object
         }
 
         // any items provided through GET?
-        if (!isset($urlChunks['query']) || !$this->get('request')->query->has('page')) {
+        if (!isset($urlChunks['query']) || !Model::getRequest()->query->has('page')) {
             return $url;
         }
 
-        return $url . '?page=' . $this->get('request')->query->get('page');
+        return $url . '?page=' . Model::getRequest()->query->get('page');
     }
 
     /**
@@ -473,7 +494,7 @@ class Header extends Object
     /**
      * @param string $title The title (maximum 70 characters)
      * @param string $description A brief description of the card (maximum 200 characters)
-     * @param string $imageURL The URL of the image (minimum 280x150 and <1MB)
+     * @param string $imageUrl The URL of the image (minimum 280x150 and <1MB)
      * @param string $cardType The cardtype, possible types: https://dev.twitter.com/cards/types
      * @param string $siteHandle (optional)  Twitter handle of the site
      * @param string $creatorHandle (optional) Twitter handle of the author
@@ -481,7 +502,7 @@ class Header extends Object
     public function setTwitterCard(
         string $title,
         string $description,
-        string $imageURL,
+        string $imageUrl,
         string $cardType = 'summary',
         string $siteHandle = null,
         string $creatorHandle = null
@@ -489,7 +510,7 @@ class Header extends Object
         $this->meta->addMetaData(MetaData::forName('twitter:card', $cardType));
         $this->meta->addMetaData(MetaData::forName('twitter:title', $title));
         $this->meta->addMetaData(MetaData::forName('twitter:description', $description));
-        $this->meta->addMetaData(MetaData::forName('twitter:image', $imageURL));
+        $this->meta->addMetaData(MetaData::forName('twitter:image', $imageUrl));
 
         if ($siteHandle !== null) {
             $this->meta->addMetaData(MetaData::forName('twitter:site', $siteHandle));

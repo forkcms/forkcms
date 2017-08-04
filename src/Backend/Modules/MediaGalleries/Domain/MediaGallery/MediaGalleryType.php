@@ -44,7 +44,6 @@ class MediaGalleryType extends AbstractType
                 [
                     'label' => 'lbl.WidgetView',
                     'choices' => MediaWidget::getPossibleValues(),
-                    'choices_as_values' => true,
                     'choice_label' => function ($possibleWidget) {
                         return $possibleWidget;
                     },
@@ -65,7 +64,6 @@ class MediaGalleryType extends AbstractType
                         },
                         Status::POSSIBLE_VALUES
                     ),
-                    'choices_as_values' => true,
                     'choice_label' => function (Status $type) {
                         return TemplateModifiers::toLabel($type);
                     },

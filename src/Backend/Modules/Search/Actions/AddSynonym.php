@@ -31,39 +31,39 @@ class AddSynonym extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->frm = new BackendForm('addItem');
+        $this->form = new BackendForm('addItem');
 
-        $this->frm->addText('term', null, 255);
-        $this->frm->addText('synonym', null, null, 'form-control synonymBox', 'form-control danger synonymBox');
+        $this->form->addText('term', null, 255);
+        $this->form->addText('synonym', null, null, 'form-control synonymBox', 'form-control danger synonymBox');
     }
 
     private function validateForm(): void
     {
-        if (!$this->frm->isSubmitted()) {
+        if (!$this->form->isSubmitted()) {
             return;
         }
 
-        $this->frm->cleanupFields();
-        $this->frm->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
-        $this->frm->getField('term')->isFilled(BL::err('TermIsRequired'));
-        if (BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue())) {
-            $this->frm->getField('term')->addError(BL::err('TermExists'));
+        $this->form->cleanupFields();
+        $this->form->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
+        $this->form->getField('term')->isFilled(BL::err('TermIsRequired'));
+        if (BackendSearchModel::existsSynonymByTerm($this->form->getField('term')->getValue())) {
+            $this->form->getField('term')->addError(BL::err('TermExists'));
         }
 
-        if (!$this->frm->isCorrect()) {
+        if (!$this->form->isCorrect()) {
             return;
         }
 
         $synonym = [
-            'term' => $this->frm->getField('term')->getValue(),
-            'synonym' => $this->frm->getField('synonym')->getValue(),
+            'term' => $this->form->getField('term')->getValue(),
+            'synonym' => $this->form->getField('synonym')->getValue(),
             'language' => BL::getWorkingLanguage(),
         ];
 
         $id = BackendSearchModel::insertSynonym($synonym);
 
         $this->redirect(
-            BackendModel::createURLForAction('Synonyms') . '&report=added-synonym&var=' . rawurlencode(
+            BackendModel::createUrlForAction('Synonyms') . '&report=added-synonym&var=' . rawurlencode(
                 $synonym['term']
             ) . '&highlight=row-' . $id
         );

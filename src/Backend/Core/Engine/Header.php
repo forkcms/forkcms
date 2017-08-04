@@ -14,6 +14,7 @@ use Common\Core\Header\AssetCollection;
 use Common\Core\Header\JsData;
 use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Language\Language as BL;
 
@@ -21,7 +22,7 @@ use Backend\Core\Language\Language as BL;
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  */
-final class Header extends Base\Object
+final class Header extends KernelLoader
 {
     /**
      * The added css-files
@@ -49,7 +50,7 @@ final class Header extends Base\Object
      *
      * @var TwigTemplate
      */
-    private $tpl;
+    private $template;
 
     /**
      * URL-instance
@@ -66,7 +67,7 @@ final class Header extends Base\Object
         $container->set('header', $this);
 
         $this->url = $container->get('url');
-        $this->tpl = $container->get('template');
+        $this->template = $container->get('template');
 
         $this->cssFiles = new AssetCollection(
             Minifier::css(
@@ -211,9 +212,9 @@ final class Header extends Base\Object
      */
     public function parse(): void
     {
-        $this->tpl->assign('page_title', BL::getLabel($this->url->getModule()));
-        $this->cssFiles->parse($this->tpl, 'cssFiles');
-        $this->jsFiles->parse($this->tpl, 'jsFiles');
+        $this->template->assign('page_title', BL::getLabel($this->url->getModule()));
+        $this->cssFiles->parse($this->template, 'cssFiles');
+        $this->jsFiles->parse($this->template, 'jsFiles');
 
         $this->jsData->add('site', 'domain', SITE_DOMAIN);
         $this->jsData->add('editor', 'language', $this->getCKEditorLanguage());
@@ -225,7 +226,7 @@ final class Header extends Base\Object
             $this->jsData->add('theme', 'has_css', is_file($themePath . '/Core/Layout/Css/screen.css'));
             $this->jsData->add('theme', 'has_editor_css', is_file($themePath . '/Core/Layout/Css/editor_content.css'));
         }
-        $this->tpl->assign('jsData', $this->jsData);
+        $this->template->assign('jsData', $this->jsData);
     }
 
     /**

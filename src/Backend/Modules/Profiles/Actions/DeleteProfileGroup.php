@@ -28,7 +28,7 @@ class DeleteProfileGroup extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'something-went-wrong']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'something-went-wrong']));
 
             return;
         }
@@ -38,7 +38,7 @@ class DeleteProfileGroup extends BackendBaseActionDelete
 
         // does the item exist
         if ($this->id === 0 || !BackendProfilesModel::existsProfileGroup($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('Index', null, null, ['error' => 'non-existing']));
+            $this->redirect(BackendModel::createUrlForAction('Index', null, null, ['error' => 'non-existing']));
 
             return;
         }
@@ -49,7 +49,7 @@ class DeleteProfileGroup extends BackendBaseActionDelete
 
         BackendProfilesModel::deleteProfileGroup($this->id);
 
-        $this->redirect(BackendModel::createURLForAction(
+        $this->redirect(BackendModel::createUrlForAction(
             'Edit',
             null,
             null,

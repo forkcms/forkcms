@@ -23,7 +23,7 @@ class MediaGalleryAdd extends ActionAdd
         /** @var Form $form */
         $form = $this->getForm();
 
-        if (!$form->isValid()) {
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->parseForm($form);
 
             return;
@@ -52,7 +52,7 @@ class MediaGalleryAdd extends ActionAdd
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createURLForAction(
+        return Model::createUrlForAction(
             'MediaGalleryIndex',
             null,
             null,
@@ -70,7 +70,7 @@ class MediaGalleryAdd extends ActionAdd
             )
         );
 
-        $form->handleRequest($this->get('request'));
+        $form->handleRequest($this->getRequest());
 
         return $form;
     }
@@ -78,7 +78,7 @@ class MediaGalleryAdd extends ActionAdd
     private function getMediaGroupType(): Type
     {
         try {
-            return Type::fromString($this->get('request')->query->get('media_group_type')['type']);
+            return Type::fromString($this->getRequest()->query->get('media_group_type')['type']);
         } catch (InvalidArgumentException $e) {
             $this->redirect(
                 $this->getBackLink(
@@ -102,9 +102,9 @@ class MediaGalleryAdd extends ActionAdd
 
     private function parseForm(Form $form): void
     {
-        $this->tpl->assign('form', $form->createView());
-        $this->tpl->assign('backLink', $this->getBackLink());
-        $this->tpl->assign('mediaGroup', $form->getData()->mediaGroup);
+        $this->template->assign('form', $form->createView());
+        $this->template->assign('backLink', $this->getBackLink());
+        $this->template->assign('mediaGroup', $form->getData()->mediaGroup);
 
         // Call parent
         $this->parse();

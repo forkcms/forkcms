@@ -12,6 +12,7 @@ namespace Backend\Modules\Blog\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This add-action will create a new category using Ajax
@@ -27,30 +28,32 @@ class AddCategory extends BackendBaseAJAXAction
 
         // validate
         if ($categoryTitle === '') {
-            $this->output(self::BAD_REQUEST, null, BL::err('TitleIsRequired'));
-        } else {
-            // get the data
-            // build array
-            $item = [
-                'title' => \SpoonFilter::htmlspecialchars($categoryTitle),
-                'language' => BL::getWorkingLanguage(),
-            ];
+            $this->output(Response::HTTP_BAD_REQUEST, null, BL::err('TitleIsRequired'));
 
-            $meta = [
-                'keywords' => $item['title'],
-                'keywords_overwrite' => 'N',
-                'description' => $item['title'],
-                'description_overwrite' => 'N',
-                'title' => $item['title'],
-                'title_overwrite' => 'N',
-                'url' => BackendBlogModel::getURLForCategory(\SpoonFilter::urlise($item['title'])),
-            ];
-
-            // update
-            $item['id'] = BackendBlogModel::insertCategory($item, $meta);
-
-            // output
-            $this->output(self::OK, $item, vsprintf(BL::msg('AddedCategory'), [$item['title']]));
+            return;
         }
+
+        // get the data
+        // build array
+        $item = [
+            'title' => \SpoonFilter::htmlspecialchars($categoryTitle),
+            'language' => BL::getWorkingLanguage(),
+        ];
+
+        $meta = [
+            'keywords' => $item['title'],
+            'keywords_overwrite' => false,
+            'description' => $item['title'],
+            'description_overwrite' => false,
+            'title' => $item['title'],
+            'title_overwrite' => false,
+            'url' => BackendBlogModel::getUrlForCategory(\SpoonFilter::urlise($item['title'])),
+        ];
+
+        // update
+        $item['id'] = BackendBlogModel::insertCategory($item, $meta);
+
+        // output
+        $this->output(Response::HTTP_OK, $item, vsprintf(BL::msg('AddedCategory'), [$item['title']]));
     }
 }

@@ -7,6 +7,6 @@ doctrine:
       content_block:
         type: annotation
         is_bundle: false
-        dir: %kernel.root_dir%/../src/Backend/Modules/ContentBlocks/Domain/ContentBlock
+        dir: "%kernel.project_dir%/src/Backend/Modules/ContentBlocks/Domain/ContentBlock"
         alias: ContentBlocksContentBlock
         prefix: Backend\Modules\ContentBlocks\Domain\ContentBlock

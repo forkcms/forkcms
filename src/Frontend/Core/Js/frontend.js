@@ -88,12 +88,12 @@ jsFrontend.cookieBar =
             e.preventDefault();
 
             if ($(e.currentTarget).data('action') == 'agree') {
-                utils.cookies.setCookie('cookie_bar_agree', 'b:1;');
-                utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+                utils.cookies.setCookie('cookie_bar_agree', 'Y');
+                utils.cookies.setCookie('cookie_bar_hide', 'Y');
             }
             else {
-                utils.cookies.setCookie('cookie_bar_agree', 'b:0;');
-                utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+                utils.cookies.setCookie('cookie_bar_agree', 'N');
+                utils.cookies.setCookie('cookie_bar_hide', 'Y');
             }
             $cookieBar.hide();
         });

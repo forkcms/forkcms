@@ -12,8 +12,11 @@ namespace Frontend\Core\Engine\Base;
 use Common\Core\Header\Priority;
 use Common\Doctrine\Entity\Meta;
 use Common\Exception\RedirectException;
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
+use Frontend\Core\Engine\Model;
+use Frontend\Core\Engine\Url;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\Form\Form;
@@ -26,7 +29,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @later  Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  */
-class Block extends Object
+class Block extends KernelLoader
 {
     /**
      * The current action
@@ -85,6 +88,20 @@ class Block extends Object
     private $templatePath;
 
     /**
+     * TwigTemplate instance
+     *
+     * @var TwigTemplate
+     */
+    protected $template;
+
+    /**
+     * URL instance
+     *
+     * @var Url
+     */
+    protected $url;
+
+    /**
      * @param KernelInterface $kernel
      * @param string $module The name of the module.
      * @param string $action The name of the action.
@@ -96,7 +113,8 @@ class Block extends Object
 
         // get objects from the reference so they are accessible
         $this->header = $this->getContainer()->get('header');
-        $this->URL = $this->getContainer()->get('url');
+        $this->url = $this->getContainer()->get('url');
+        $this->template = $this->getContainer()->get('templating');
         $this->breadcrumb = $this->getContainer()->get('breadcrumb');
 
         // set properties
@@ -182,12 +200,12 @@ class Block extends Object
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
         // build URL to the module
-        $frontendModuleURL = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
+        $frontendModuleUrl = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getModule() . '.js',
+                $frontendModuleUrl . '/' . $this->getModule() . '.js',
                 true,
                 true,
                 Priority::module()
@@ -197,7 +215,7 @@ class Block extends Object
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
             $this->header->addJS(
-                $frontendModuleURL . '/' . $this->getAction() . '.js',
+                $frontendModuleUrl . '/' . $this->getAction() . '.js',
                 true,
                 true,
                 Priority::module()
@@ -217,7 +235,7 @@ class Block extends Object
      */
     public function getContent(): string
     {
-        return $this->tpl->getContent($this->templatePath);
+        return $this->template->getContent($this->templatePath);
     }
 
     public function getModule(): string
@@ -237,7 +255,7 @@ class Block extends Object
 
     public function getTemplate(): TwigTemplate
     {
-        return $this->tpl;
+        return $this->template;
     }
 
     public function getTemplatePath(): string
@@ -285,7 +303,7 @@ class Block extends Object
             throw new Exception('no num_pages available in the pagination-property.');
         }
         if (!isset($this->pagination['url'])) {
-            throw new Exception('no URL available in the pagination-property.');
+            throw new Exception('no url available in the pagination-property.');
         }
 
         // should we use a questionmark or an ampersand
@@ -309,7 +327,6 @@ class Block extends Object
         if ($this->pagination['requested_page'] > 5
             && $this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4)
         ) {
-            // init vars
             $pagesStart = ($this->pagination['num_pages'] > 7)
                 ? $this->pagination['num_pages'] - 5 : $this->pagination['num_pages'] - 6;
             $pagesEnd = $this->pagination['num_pages'];
@@ -325,7 +342,6 @@ class Block extends Object
             }
         } elseif ($this->pagination['requested_page'] <= 5) {
             // as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
-            // init vars
             $pagesStart = 1;
             $pagesEnd = 6;
 
@@ -343,7 +359,6 @@ class Block extends Object
             }
         } else {
             // page 6
-            // init vars
             $pagesStart = $this->pagination['requested_page'] - 2;
             $pagesEnd = $this->pagination['requested_page'] + 2;
             $showFirstPages = true;
@@ -454,7 +469,7 @@ class Block extends Object
         $pagination['multiple_pages'] = (int) $pagination['num_pages'] !== 1;
 
         // assign pagination
-        $this->tpl->assign('pagination', $pagination);
+        $this->template->assign('pagination', $pagination);
     }
 
     /**
@@ -551,6 +566,6 @@ class Block extends Object
      */
     public function getRequest(): Request
     {
-        return $this->get('request');
+        return Model::getRequest();
     }
 }

@@ -283,13 +283,13 @@ class Model
         // urlise
         $url = CommonUri::getUrl($displayName);
 
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
+        // get database
+        $database = FrontendModel::getContainer()->get('database');
 
         // new item
         if ($excludedId === null) {
             // get number of profiles with this URL
-            $number = (int) $db->getVar(
+            $number = (int) $database->getVar(
                 'SELECT 1
                  FROM profiles AS p
                  WHERE p.url = ?
@@ -311,7 +311,7 @@ class Model
 
         // current profile should be excluded
         // get number of profiles with this URL
-        $number = (int) $db->getVar(
+        $number = (int) $database->getVar(
             'SELECT 1
              FROM profiles AS p
              WHERE p.url = ? AND p.id != ?
@@ -363,14 +363,14 @@ class Model
 
         // ignore these urls in the query string
         $ignoreUrls = [
-            FrontendNavigation::getURLForBlock('Profiles', 'Login'),
-            FrontendNavigation::getURLForBlock('Profiles', 'Register'),
-            FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword'),
+            FrontendNavigation::getUrlForBlock('Profiles', 'Login'),
+            FrontendNavigation::getUrlForBlock('Profiles', 'Register'),
+            FrontendNavigation::getUrlForBlock('Profiles', 'ForgotPassword'),
         ];
 
         // query string
-        $queryString = FrontendModel::get('Request')->query->has('queryString')
-            ? SITE_URL . '/' . urldecode(FrontendModel::get('Request')->query->get('queryString'))
+        $queryString = FrontendModel::getRequest()->query->has('queryString')
+            ? SITE_URL . '/' . urldecode(FrontendModel::getRequest()->query->get('queryString'))
             : SITE_URL . FrontendModel::get('url')->getQueryString();
 
         // check all ignore urls
@@ -383,12 +383,12 @@ class Model
         }
 
         // no need to add this if its empty
-        $queryString = ($queryString != '') ? '?queryString=' . rawurlencode($queryString) : '';
+        $queryString = ($queryString !== '') ? '?queryString=' . rawurlencode($queryString) : '';
 
         // useful urls
-        $tpl->assign('loginUrl', FrontendNavigation::getURLForBlock('Profiles', 'Login') . $queryString);
-        $tpl->assign('registerUrl', FrontendNavigation::getURLForBlock('Profiles', 'Register'));
-        $tpl->assign('forgotPasswordUrl', FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword'));
+        $tpl->assign('loginUrl', FrontendNavigation::getUrlForBlock('Profiles', 'Login') . $queryString);
+        $tpl->assign('registerUrl', FrontendNavigation::getUrlForBlock('Profiles', 'Register'));
+        $tpl->assign('forgotPasswordUrl', FrontendNavigation::getUrlForBlock('Profiles', 'ForgotPassword'));
     }
 
     /**

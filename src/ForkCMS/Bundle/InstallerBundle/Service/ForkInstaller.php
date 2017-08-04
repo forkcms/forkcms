@@ -17,13 +17,6 @@ use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 class ForkInstaller
 {
     /**
-     * The root dir of our project
-     *
-     * @var string
-     */
-    private $rootDir;
-
-    /**
      * The Dependency injection container
      *
      * @var Container
@@ -40,12 +33,10 @@ class ForkInstaller
      *        - make sure the Model::setContainer isn't needed anymore
      *
      * @param Container $container
-     * @param string $rootDir
      */
-    public function __construct(Container $container, string $rootDir)
+    public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->rootDir = $rootDir;
 
         Model::setContainer($container);
     }
@@ -142,19 +133,23 @@ class ForkInstaller
     protected function buildDatabase(InstallationData $data): void
     {
         // put a new instance of the database in the container
-        $database = new \SpoonDatabase(
+        $database = $this->container->get('database');
+        // lets do some magic to add the database connection details from the installation data
+        $database->__construct(
             'mysql',
-            $data->getDbHostname(),
-            $data->getDbUsername(),
-            $data->getDbPassword(),
-            $data->getDbDatabase(),
-            $data->getDbPort()
+            $data->getDatabaseHostname(),
+            $data->getDatabaseUsername(),
+            $data->getDatabasePassword(),
+            $data->getDatabaseName(),
+            $data->getDatabasePort()
         );
         $database->execute(
             'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
             ['charset' => 'utf8mb4']
         );
-        $this->container->set('database', $database);
+        $database->execute(
+            'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'
+        );
     }
 
     protected function getCoreInstaller(InstallationData $data): CoreInstaller
@@ -229,7 +224,7 @@ class ForkInstaller
                     'extra_id' => $extra['id'],
                     'created_on' => gmdate('Y-m-d H:i:s'),
                     'edited_on' => gmdate('Y-m-d H:i:s'),
-                    'visible' => 'Y',
+                    'visible' => true,
                 ];
             }
 
@@ -303,11 +298,11 @@ class ForkInstaller
             '<debug-email>' => $data->hasDifferentDebugEmail() ?
                 $data->getDebugEmail() :
                 $data->getEmail(),
-            '<database-name>' => $data->getDbDatabase(),
-            '<database-host>' => addslashes($data->getDbHostname()),
-            '<database-user>' => addslashes($data->getDbUsername()),
-            '<database-password>' => addslashes($data->getDbPassword()),
-            '<database-port>' => $data->getDbPort(),
+            '<database-name>' => $data->getDatabaseName(),
+            '<database-host>' => addslashes($data->getDatabaseHostname()),
+            '<database-user>' => addslashes($data->getDatabaseUsername()),
+            '<database-password>' => addslashes($data->getDatabasePassword()),
+            '<database-port>' => $data->getDatabasePort(),
             '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
                 (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
                 'http',
@@ -341,6 +336,7 @@ class ForkInstaller
             'smtp_password' => '',
             'email' => $data->getEmail(),
             'password' => $data->getPassword(),
+            'selected_modules' => $data->getModules(),
         ];
     }
 }

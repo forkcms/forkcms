@@ -10,8 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Delete media galleries Console Command
- * Example: "app/console media_galleries:delete:galleries", will delete all galleries
- * Example: "app/console media_galleries:delete:galleries --delete-media-items", will delete all galleries and all MediaItem entities
+ * Example: "bin/console media_galleries:delete:galleries", will delete all galleries
+ * Example: "bin/console media_galleries:delete:galleries --delete-media-items", will delete all galleries and all MediaItem entities
  */
 class MediaGalleryDeleteAllCommand extends ContainerAwareCommand
 {

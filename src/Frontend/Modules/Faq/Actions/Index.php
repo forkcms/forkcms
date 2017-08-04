@@ -51,8 +51,8 @@ class Index extends FrontendBaseBlock
 
     private function parse(): void
     {
-        $this->tpl->assign('faqCategories', (array) $this->items);
-        $this->tpl->assign(
+        $this->template->assign('faqCategories', (array) $this->items);
+        $this->template->assign(
             'allowMultipleCategories',
             $this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true)
         );

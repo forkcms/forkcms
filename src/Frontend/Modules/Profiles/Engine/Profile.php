@@ -300,14 +300,14 @@ class Profile
             'display_name' => $this->getDisplayName(),
             'registered_on' => $this->getRegisteredOn(),
             'url' => [
-                'dashboard' => FrontendNavigation::getURLForBlock('Profiles'),
-                'settings' => FrontendNavigation::getURLForBlock('Profiles', 'Settings'),
+                'dashboard' => FrontendNavigation::getUrlForBlock('Profiles'),
+                'settings' => FrontendNavigation::getUrlForBlock('Profiles', 'Settings'),
                 'url' => $this->getUrl(),
             ],
         ];
 
         // add settings
-        foreach ($this->settings as $key => $value) {
+        foreach ($this->getSettings() as $key => $value) {
             $profile['settings'][$key] = $value;
         }
 

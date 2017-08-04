@@ -11,7 +11,7 @@ namespace Backend\Modules\Location\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -46,7 +46,7 @@ class Index extends BackendBaseActionIndex
 
         // check Google Maps API key, otherwise redirect to settings
         if ($apikey === null) {
-            $this->redirect(BackendModel::createURLForAction('Index', 'Settings'));
+            $this->redirect(BackendModel::createUrlForAction('Index', 'Settings'));
         }
 
         // add js
@@ -92,8 +92,8 @@ class Index extends BackendBaseActionIndex
 
     private function loadDataGrid(): void
     {
-        $this->dataGrid = new BackendDataGridDB(
-            BackendLocationModel::QRY_DATAGRID_BROWSE,
+        $this->dataGrid = new BackendDataGridDatabase(
+            BackendLocationModel::QUERY_DATAGRID_BROWSE,
             [BL::getWorkingLanguage()]
         );
         $this->dataGrid->setSortingColumns(['address', 'title'], 'address');
@@ -103,13 +103,13 @@ class Index extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]'
             );
             $this->dataGrid->addColumn(
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
@@ -155,12 +155,12 @@ class Index extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
-        $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
+        $this->template->assign('dataGrid', (string) $this->dataGrid->getContent());
+        $this->template->assign('godUser', BackendAuthentication::getUser()->isGod());
 
         // assign to template
-        $this->tpl->assign('items', $this->items);
-        $this->tpl->assign('settings', $this->settings);
-        $this->form->parse($this->tpl);
+        $this->template->assign('items', $this->items);
+        $this->template->assign('settings', $this->settings);
+        $this->form->parse($this->template);
     }
 }

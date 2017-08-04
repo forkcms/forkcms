@@ -11,6 +11,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Common\Exception\AjaxExitException;
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will add a new MediaItem movie.
@@ -26,7 +27,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
         // Output success message
         $this->output(
-            self::OK,
+            Response::HTTP_OK,
             $createMediaItemFromMovieUrl->getMediaItem(),
             Language::msg('MediaUploadedSuccessful')
         );
@@ -51,7 +52,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
     protected function getMovieId(): string
     {
-        $movieId = trim($this->get('request')->request->get('id'));
+        $movieId = trim($this->getRequest()->request->get('id'));
 
         // Movie id not null
         if ($movieId === null) {
@@ -68,7 +69,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
     protected function getMovieTitle(): string
     {
-        $movieTitle = trim($this->get('request')->request->get('title'));
+        $movieTitle = trim($this->getRequest()->request->get('title'));
 
         // Title not valid
         if ($movieTitle === null) {
@@ -80,7 +81,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
     protected function getMediaFolder(): MediaFolder
     {
-        $id = $this->get('request')->request->getInt('folder_id');
+        $id = $this->getRequest()->request->getInt('folder_id');
 
         if ($id === 0) {
             throw new AjaxExitException(Language::err('MediaFolderIsRequired'));
@@ -96,7 +97,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
     protected function getMovieStorageType(): StorageType
     {
-        $movieStorageType = $this->get('request')->request->get('storageType');
+        $movieStorageType = $this->getRequest()->request->get('storageType');
 
         if ($movieStorageType === null
             || !in_array(

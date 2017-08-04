@@ -8,7 +8,7 @@ framework:
     profiler:
         collect: false
     router:
-        resource: "%kernel.root_dir%/config/routing_install.yml"
+        resource: "%kernel.project_dir%/app/config/routing_install.yml"
 
 web_profiler:
     toolbar: false
@@ -18,15 +18,17 @@ doctrine:
     dbal:
         connections:
             default:
-                dbname: %database.name%_test
+                dbname: "%database.name%_test"
 
 services:
     database:
         class: SpoonDatabase
         arguments:
-            - %database.driver%
-            - %database.host%
-            - %database.user%
-            - %database.password%
-            - %database.name%_test
-            - %database.port%
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%_test"
+            - "%database.port%"
+        calls:
+            - [ setDebug, [ "%kernel.debug%" ]]

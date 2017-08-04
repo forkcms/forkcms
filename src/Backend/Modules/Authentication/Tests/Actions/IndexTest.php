@@ -21,12 +21,10 @@ class IndexTest extends WebTestCase
         Authentication::tearDown();
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testPrivateRedirectsToAuthentication(): void
     {
         $client = static::createClient();
+        $this->logout($client);
         $client->followRedirects();
         $this->loadFixtures($client);
 
@@ -37,9 +35,6 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationIndexWorks(): void
     {
         $client = static::createClient();
@@ -51,9 +46,6 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testPrivateContainsRobotsTag(): void
     {
         $client = static::createClient();
@@ -65,9 +57,6 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationWithWrongCredentials(): void
     {
         $client = static::createClient();
@@ -83,6 +72,7 @@ class IndexTest extends WebTestCase
             'form' => 'authenticationIndex',
             'backend_email' => 'test@test.com',
             'backend_password' => 'wrong_password',
+            'form_token' => $form['form_token']->getValue(),
         ]);
 
         // result should not yet be found
@@ -92,9 +82,6 @@ class IndexTest extends WebTestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testAuthenticationWithCorrectCredentials(): void
     {
         $client = static::createClient();
@@ -131,8 +118,6 @@ class IndexTest extends WebTestCase
     /**
      * Login as a pages user.
      * This user has the rights to access only the pages module.
-     *
-     * @runInSeparateProcess
      */
     public function testPagesUserWithCorrectCredentials(): void
     {
@@ -167,8 +152,6 @@ class IndexTest extends WebTestCase
      * Login as a users user.
      * This user only has the rights to access the users edit action.
      * It should enable the user to edit his own user-account.
-     *
-     * @runInSeparateProcess
      */
     public function testUsersUserWithCorrectCredentials(): void
     {

@@ -15,6 +15,7 @@ use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is the live suggest-action, it will output a list of results for a certain search
@@ -80,7 +81,7 @@ class Livesuggest extends FrontendBaseAJAXAction
     /**
      * @var TwigTemplate
      */
-    private $tpl;
+    private $template;
 
     private function display(): void
     {
@@ -103,8 +104,8 @@ class Livesuggest extends FrontendBaseAJAXAction
 
         // output
         $this->output(
-            self::OK,
-            $this->tpl->render(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
+            Response::HTTP_OK,
+            $this->template->render(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
         );
     }
 
@@ -165,7 +166,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term;
 
         // populate calculated fields in pagination
         $this->pagination['limit'] = $this->limit;
@@ -211,7 +212,7 @@ class Livesuggest extends FrontendBaseAJAXAction
 
     private function parse(): void
     {
-        $this->tpl = $this->get('templating');
+        $this->template = $this->get('templating');
 
         // no search term = no search
         if (!$this->term) {
@@ -219,8 +220,8 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // assign articles
-        $this->tpl->assign('searchResults', $this->items);
-        $this->tpl->assign('searchTerm', $this->term);
+        $this->template->assign('searchResults', $this->items);
+        $this->template->assign('searchTerm', $this->term);
 
         // parse the pagination
         $this->parsePagination();
@@ -247,7 +248,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             case (!isset($this->pagination['num_pages'])):
                 throw new FrontendException('no num_pages available in the pagination-property.');
             case (!isset($this->pagination['url'])):
-                throw new FrontendException('no URL available in the pagination-property.');
+                throw new FrontendException('no url available in the pagination-property.');
         }
 
         // should we use a questionmark or an ampersand
@@ -266,7 +267,6 @@ class Livesuggest extends FrontendBaseAJAXAction
 
         // as long as we are below page 5 we should show all pages starting from 1
         if ($this->pagination['requested_page'] < 6) {
-            // init vars
             $pagesStart = 1;
             $pagesEnd = ($this->pagination['num_pages'] >= 6) ? 6 : $this->pagination['num_pages'];
 
@@ -379,7 +379,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         $pagination['multiple_pages'] = ($pagination['num_pages'] == 1) ? false : true;
 
         // assign pagination
-        $this->tpl->assign('pagination', $pagination);
+        $this->template->assign('pagination', $pagination);
     }
 
     private function validateForm(): void
@@ -387,13 +387,13 @@ class Livesuggest extends FrontendBaseAJAXAction
         // set search term
         $charset = $this->getContainer()->getParameter('kernel.charset');
         $searchTerm = $this->getRequest()->request->get('term', '');
-        $this->term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars(
+        $this->term = ($charset === 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
         ) : \SpoonFilter::htmlentities($searchTerm);
 
         // validate
-        if ($this->term == '') {
-            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
+        if ($this->term === '') {
+            $this->output(Response::HTTP_BAD_REQUEST, null, 'term-parameter is missing.');
         }
     }
 }

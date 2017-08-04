@@ -30,10 +30,10 @@ class Settings extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // init settings form
-        $this->frm = new BackendForm('settings');
+        $this->form = new BackendForm('settings');
 
         // add fields for meta navigation
-        $this->frm->addCheckbox(
+        $this->form->addCheckbox(
             'meta_navigation',
             $this->get('fork.settings')->get($this->getModule(), 'meta_navigation', false)
         );
@@ -42,18 +42,18 @@ class Settings extends BackendBaseActionEdit
     private function validateForm(): void
     {
         // form is submitted
-        if ($this->frm->isSubmitted()) {
+        if ($this->form->isSubmitted()) {
             // form is validated
-            if ($this->frm->isCorrect()) {
+            if ($this->form->isCorrect()) {
                 // set our settings
                 $this->get('fork.settings')->set(
                     $this->getModule(),
                     'meta_navigation',
-                    (bool) $this->frm->getField('meta_navigation')->getValue()
+                    (bool) $this->form->getField('meta_navigation')->getValue()
                 );
 
                 // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
+                $this->redirect(BackendModel::createUrlForAction('Settings') . '&report=saved');
             }
         }
     }

@@ -25,18 +25,18 @@ class MassCommentAction extends BackendBaseAction
         // current status
         $from = $this->getRequest()->query->get('from');
         if (!in_array($from, ['published', 'moderation', 'spam'])) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-from-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-from-selected');
         }
 
         // action to execute
         $action = $this->getRequest()->query->get('action');
         if (!in_array($action, ['published', 'moderation', 'spam', 'delete'])) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
+            $this->redirect(BackendModel::createUrlForAction('Index') . '&error=no-action-selected');
         }
 
         // no id's provided
         if (!$this->getRequest()->query->has('id')) {
-            $this->redirect(BackendModel::createURLForAction('Comments') . '&error=no-comments-selected');
+            $this->redirect(BackendModel::createUrlForAction('Comments') . '&error=no-comments-selected');
         }
 
         // redefine id's
@@ -47,7 +47,7 @@ class MassCommentAction extends BackendBaseAction
             BackendBlogModel::deleteComments($ids);
         } elseif ($action == 'spam') {
             // is the spamfilter active?
-            if ($this->get('fork.settings')->get($this->URL->getModule(), 'spamfilter', false)) {
+            if ($this->get('fork.settings')->get($this->url->getModule(), 'spamfilter', false)) {
                 // get data
                 $comments = BackendBlogModel::getComments($ids);
 
@@ -85,7 +85,7 @@ class MassCommentAction extends BackendBaseAction
             // published?
             if ($action == 'published') {
                 // is the spamfilter active?
-                if ($this->get('fork.settings')->get($this->URL->getModule(), 'spamfilter', false)) {
+                if ($this->get('fork.settings')->get($this->url->getModule(), 'spamfilter', false)) {
                     // get data
                     $comments = BackendBlogModel::getComments($ids);
 
@@ -140,6 +140,6 @@ class MassCommentAction extends BackendBaseAction
         }
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('Comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
+        $this->redirect(BackendModel::createUrlForAction('Comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
     }
 }

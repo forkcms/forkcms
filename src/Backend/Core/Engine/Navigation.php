@@ -9,12 +9,13 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Core\Language\Language as BackendLanguage;
 
-final class Navigation extends Base\Object
+final class Navigation extends KernelLoader
 {
     /** @var array */
     private $navigation;
@@ -70,7 +71,7 @@ final class Navigation extends Base\Object
             return [];
         }
 
-        list($module, $action) = explode('/', $navigationItem['url']);
+        [$module, $action] = explode('/', $navigationItem['url']);
         $module = \SpoonFilter::toCamelCase($module);
         $action = \SpoonFilter::toCamelCase($action);
 
@@ -125,14 +126,14 @@ final class Navigation extends Base\Object
      * Try to determine the selected state
      *
      * @param array $navigationItem
-     * @param string $activeURL
+     * @param string $activeUrl
      *
      * @return bool
      */
-    private function navigationItemMatchesActiveUrl(array $navigationItem, string $activeURL): bool
+    private function navigationItemMatchesActiveUrl(array $navigationItem, string $activeUrl): bool
     {
-        if ($navigationItem['url'] === $activeURL
-            || (isset($navigationItem['selected_for']) && in_array($activeURL, $navigationItem['selected_for'], true))
+        if ($navigationItem['url'] === $activeUrl
+            || (isset($navigationItem['selected_for']) && in_array($activeUrl, $navigationItem['selected_for'], true))
         ) {
             return true;
         }
@@ -142,7 +143,7 @@ final class Navigation extends Base\Object
         }
 
         foreach ($navigationItem['children'] as $childNavigationItem) {
-            if ($this->navigationItemMatchesActiveUrl($childNavigationItem, $activeURL)) {
+            if ($this->navigationItemMatchesActiveUrl($childNavigationItem, $activeUrl)) {
                 return true;
             }
         }

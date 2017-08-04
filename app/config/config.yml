@@ -6,13 +6,11 @@ imports:
 
 parameters:
     fork.is_installed: true
-    translator.identity.class: Common\Language
-    session.storage.php_bridge.class: Common\Core\Session\Storage\PhpBridgeSessionStorage
 
 framework:
-    secret:          %kernel.secret%
+    secret: "%kernel.secret%"
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: "%kernel.project_dir%/app/config/routing.yml"
         strict_requirements: ~
     form:            ~
     validation:
@@ -22,7 +20,6 @@ framework:
         engines: ['twig']
     session:
         handler_id: ~
-        storage_id: session.storage.php_bridge
 
 # Assetic Configuration
 assetic:
@@ -42,7 +39,7 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  %site.path_www%/app/logs/%kernel.environment%.log
+            path:  "%site.path_www%/var/logs/%kernel.environment%.log"
             level: error
         # swift:
         #     type:       swift_mailer
@@ -54,18 +51,18 @@ monolog:
         #     content_type: text/html
 
 swiftmailer:
-    transport: "mail"
+    transport: "sendmail"
 
 liip_imagine:
     resolvers:
        default:
           web_path:
-            web_root: %kernel.root_dir%/../
+            web_root: "%kernel.project_dir%/"
             cache_prefix: src/Frontend/Files/Cache
     loaders:
         default:
             filesystem:
-                data_root: %kernel.root_dir%/../
+                data_root: "%kernel.project_dir%/"
     cache: default
     data_loader: default
 
@@ -108,18 +105,18 @@ services:
     database:
         class: SpoonDatabase
         arguments:
-            - %database.driver%
-            - %database.host%
-            - %database.user%
-            - %database.password%
-            - %database.name%
-            - %database.port%
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%"
+            - "%database.port%"
         calls:
             - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8mb4' } ] ]
             # The following line removes the ONLY_FULL_GROUP_BY from the sessions sql_mode, it was added in 5.7
             # and caused some queries to break.
             - [ execute, [ 'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'] ]
-            - [ setDebug, [ %kernel.debug% ]]
+            - [ setDebug, [ "%kernel.debug%" ]]
     mailer_configurator:
         class: Common\Mailer\Configurator
         tags:
@@ -132,7 +129,7 @@ services:
     cache.filesystem.adapter:
         class: League\Flysystem\Adapter\Local
         arguments:
-            - %kernel.cache_dir%
+            - "%kernel.cache_dir%"
     cache.filesystem.filesystem:
         class: League\Flysystem\Filesystem
         arguments:
@@ -161,6 +158,16 @@ services:
             - "@database"
             - "@cache.pool"
 
+    fork.cookie:
+        class: Common\Core\Cookie
+
+    fork.cookie_setter:
+        class: Common\EventListener\ForkCookieSetter
+        arguments:
+            - "@fork.cookie"
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
         tags:
@@ -172,3 +179,8 @@ services:
             - "@twig"
             - "@templating.name_parser"
             - "@templating.locator"
+
+    translator:
+        class: Common\Language
+        arguments:
+            - "@translator.selector"

@@ -9,7 +9,6 @@ namespace Frontend\Modules\Profiles\Engine;
  * file that was distributed with this source code.
  */
 
-use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
@@ -110,11 +109,11 @@ class Authentication
         // already happened in the current request and we cached the profile)
         if (isset(self::$profile)) {
             return true;
-        } elseif (\SpoonSession::exists('frontend_profile_logged_in') &&
-                  \SpoonSession::get('frontend_profile_logged_in') === true
-        ) {
+        }
+
+        if (FrontendModel::getSession()->get('frontend_profile_logged_in', false) === true) {
             // get session id
-            $sessionId = \SpoonSession::getSessionId();
+            $sessionId = FrontendModel::getSession()->getId();
 
             // get profile id
             $profileId = (int) FrontendModel::getContainer()->get('database')->getVar(
@@ -140,15 +139,13 @@ class Authentication
 
                 // logged in
                 return true;
-            } else {
-                // invalid session
-                \SpoonSession::set('frontend_profile_logged_in', false);
             }
-        } elseif (CommonCookie::exists('frontend_profile_secret_key') &&
-                  CommonCookie::get('frontend_profile_secret_key') != ''
-        ) {
+
+            // invalid session
+            FrontendModel::getSession()->set('frontend_profile_logged_in', false);
+        } elseif (FrontendModel::getContainer()->get('fork.cookie')->get('frontend_profile_secret_key', '') !== '') {
             // secret
-            $secret = (string) CommonCookie::get('frontend_profile_secret_key');
+            $secret = FrontendModel::getContainer()->get('fork.cookie')->get('frontend_profile_secret_key');
 
             // get profile id
             $profileId = (int) FrontendModel::getContainer()->get('database')->getVar(
@@ -163,7 +160,7 @@ class Authentication
             if ($profileId !== 0) {
                 // get new secret key
                 $profileSecret = FrontendProfilesModel::getEncryptedString(
-                    \SpoonSession::getSessionId(),
+                    FrontendModel::getSession()->getId(),
                     FrontendProfilesModel::getRandomString()
                 );
 
@@ -171,7 +168,7 @@ class Authentication
                 FrontendModel::getContainer()->get('database')->update(
                     'profiles_sessions',
                     [
-                        'session_id' => \SpoonSession::getSessionId(),
+                        'session_id' => FrontendModel::getSession()->getId(),
                         'secret_key' => $profileSecret,
                         'date' => FrontendModel::getUTCDate(),
                     ],
@@ -179,24 +176,19 @@ class Authentication
                     $secret
                 );
 
-                // set new cookie
-                CommonCookie::set('frontend_profile_secret_key', $profileSecret);
+                FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $profileSecret);
 
-                // set is_logged_in to true
-                \SpoonSession::set('frontend_profile_logged_in', true);
+                FrontendModel::getSession()->set('frontend_profile_logged_in', true);
 
-                // update last login
                 FrontendProfilesModel::update($profileId, ['last_login' => FrontendModel::getUTCDate()]);
 
-                // new user object
                 self::$profile = new FrontendProfilesProfile($profileId);
 
-                // logged in
                 return true;
-            } else {
-                // invalid cookie
-                CommonCookie::delete('frontend_profile_secret_key');
             }
+
+            // invalid cookie
+            FrontendModel::getContainer()->get('fork.cookie')->delete('frontend_profile_secret_key');
         }
 
         // no one is logged in
@@ -215,25 +207,25 @@ class Authentication
         self::cleanupOldSessions();
 
         // set profile_logged_in to true
-        \SpoonSession::set('frontend_profile_logged_in', true);
+        FrontendModel::getSession()->set('frontend_profile_logged_in', true);
 
         // should we remember the user?
         if ($remember) {
             // generate secret key
             $secretKey = FrontendProfilesModel::getEncryptedString(
-                \SpoonSession::getSessionId(),
+                FrontendModel::getSession()->getId(),
                 FrontendProfilesModel::getRandomString()
             );
 
             // set cookie
-            CommonCookie::set('frontend_profile_secret_key', $secretKey);
+            FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $secretKey);
         }
 
         // delete all records for this session to prevent duplicate keys (this should never happen)
         FrontendModel::getContainer()->get('database')->delete(
             'profiles_sessions',
             'session_id = ?',
-            \SpoonSession::getSessionId()
+            FrontendModel::getSession()->getId()
         );
 
         // insert new session record
@@ -241,7 +233,7 @@ class Authentication
             'profiles_sessions',
             [
                 'profile_id' => $profileId,
-                'session_id' => \SpoonSession::getSessionId(),
+                'session_id' => FrontendModel::getSession()->getId(),
                 'secret_key' => $secretKey,
                 'date' => FrontendModel::getUTCDate(),
             ]
@@ -260,14 +252,13 @@ class Authentication
         FrontendModel::getContainer()->get('database')->delete(
             'profiles_sessions',
             'session_id = ?',
-            [\SpoonSession::getSessionId()]
+            [FrontendModel::getSession()->getId()]
         );
 
         // set is_logged_in to false
-        \SpoonSession::set('frontend_profile_logged_in', false);
+        FrontendModel::getSession()->set('frontend_profile_logged_in', false);
 
-        // delete cookie
-        CommonCookie::delete('frontend_profile_secret_key');
+        FrontendModel::getContainer()->get('fork.cookie')->delete('frontend_profile_secret_key');
     }
 
     /**

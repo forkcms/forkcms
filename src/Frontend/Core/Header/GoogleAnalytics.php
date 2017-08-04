@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Header;
 
-use Common\Cookie;
+use Common\Core\Cookie;
 use Common\ModulesSettings;
 
 final class GoogleAnalytics
@@ -13,10 +13,14 @@ final class GoogleAnalytics
     /** @var string */
     private $httpHost;
 
-    public function __construct(ModulesSettings $modulesSettings, string $httpHost)
+    /** @var Cookie */
+    private $cookie;
+
+    public function __construct(ModulesSettings $modulesSettings, string $httpHost, Cookie $cookie)
     {
         $this->modulesSettings = $modulesSettings;
         $this->httpHost = $httpHost;
+        $this->cookie = $cookie;
     }
 
     private function shouldAddGoogleAnalyticsHtml(): bool

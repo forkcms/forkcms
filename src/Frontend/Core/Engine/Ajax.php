@@ -11,9 +11,9 @@ namespace Frontend\Core\Engine;
 
 use ForkCMS\App\ApplicationInterface;
 use ForkCMS\App\KernelLoader;
+use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\Response;
-use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 
 /**
  * FrontendAJAX
@@ -93,7 +93,11 @@ class Ajax extends KernelLoader implements ApplicationInterface
             $this->response = $this->ajaxAction->getContent();
         } catch (\Exception $exception) {
             $this->ajaxAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
-            $this->ajaxAction->output(FrontendBaseAJAXAction::ERROR, null, $this->getMessageFromException($exception));
+            $this->ajaxAction->output(
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                null,
+                $this->getMessageFromException($exception)
+            );
             $this->response = $this->ajaxAction->getContent();
         }
     }
@@ -161,7 +165,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
 
     private function getForkData(): array
     {
-        $request = $this->getContainer()->get('request');
+        $request = Model::getRequest();
 
         if ($request->request->has('fork')) {
             return (array) $request->request->get('fork');
