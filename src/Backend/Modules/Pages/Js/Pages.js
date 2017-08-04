@@ -1333,12 +1333,13 @@ jsBackend.pages.tree = {
             for (var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).prop('id'));
         }
 
-        // add home if needed
+        // Add home if needed
         if (!utils.array.inArray('page-1', openedIds)) openedIds.push('page-1');
 
         // jsTree options
         var options = {
             core: {
+                animation: 0,
                 themes: {
                     name: 'proton',
                     responsive: true
@@ -1365,6 +1366,9 @@ jsBackend.pages.tree = {
             },
             search: {
                 show_only_matches: true,
+            },
+            dnd: {
+                inside_pos: "last",
             },
             plugins: ['dnd', 'types', 'state', 'search']
         };
@@ -1412,7 +1416,7 @@ jsBackend.pages.tree = {
         if (typeof selectedId != 'undefined') $('#' + selectedId).addClass('selected');
     },
 
-    // before an item will be moved we have to do some checks
+    // Before an item will be moved we have to do some checks
     beforeMove: function(node, refNode, type, tree)
     {
         // get pageID that has to be moved

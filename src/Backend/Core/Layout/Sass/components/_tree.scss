@@ -14,7 +14,7 @@
 }
 
 #tree {
-  // Hide on page-load to avoid FOUC. When DOM is ready, we show the page tree.
+  // Hide tree on page-load to avoid FOUC. When DOM is ready, we show the page tree.
   display: none;
 
   h4 {
@@ -23,95 +23,44 @@
   }
 }
 
-.tree {
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    min-height: 16px;
-    max-width: 100%;
-
-    ins {
-      display: inline-block;
-      text-decoration: none;
-      width: 16px;
-      height: 16px;
-    }
-  }
-
-  li {
-    display: block;
-    min-height: 16px;
-    line-height: 16px;
-    padding: 0 0 0 21px;
-    /* Background fix */
-    clear: both;
-    max-width: 100%;
-
-    li {
-      overflow: hidden;
-    }
-
-    ul {
-      display: none;
-    }
-
-    a:link,
-    a:visited,
-    span {
-      display: inline-block;
-      line-height: 17px;
-      height: 20px;
-      padding: 2px 4px 2px 2px;
-      color: $gray-base;
-      white-space: nowrap;
-      text-decoration: none;
-      margin: 0;
-      border: none !important;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    a input:not([class="xxx"]),
-    span input:not([class="xxx"]) {
-      padding: 1px 0;
-    }
-  }
-}
-
-/* FOR DRAGGING */
-#jstree-dragged {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  margin: 0;
-  padding: 0;
-}
-
-.jstree-proton {
+.jstree {
   /* The jstree theme we use (proton) from jstree-bootstrap-theme uses a custom font. Override this so we don't load it. */
   font-family: inherit !important;
 
   li {
     font-size: $font-size-small;
     position: relative;
+    display: block;
+    min-height: 16px;
+    line-height: 16px;
+    max-width: 100%;
 
-    &[rel="hidden"] a,
-    &.treeHidden a {
-      opacity: .5;
-    }
-
-    &.dragged {
-      outline: none;
-    }
-
-    /* DEFAULT, HOVER, CLICKED, LOADING STATES */
-    .jstree-children li a {
+    // Ensure ellipsis on long pagetree anchors
+    a:link,
+    a:visited,
+    .jstree-anchor {
+      display: inline-block;
+      white-space: nowrap;
+      text-decoration: none;
+      border: none !important;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
       border-radius: 4px;
     }
 
-    .jstree-children .jstree-clicked,
+    // Show hidden pages as transparent.
+    &[rel="hidden"] a {
+      opacity: .5;
+    }
+
+    // Bigger home icon
+    &[rel="home"] > a > i {
+      font-size: 16px;
+    }
+
+    /* DEFAULT, HOVER, CLICKED, LOADING STATES */
+    .jstree-clicked,
     .jstree-hovered,
     .jstree-children li a:hover,
     .jstree-children li a.active,
@@ -125,23 +74,19 @@
       }
     }
 
+    // Don't show hover effects while drag and dropping.
+    .jstree-dnd-parent .jstree-hovered {
+      background: #FFF;
+      color: inherit;
+      border: none;
+      box-shadow: none;
+    }
+
     // No distracting transitions
     .jstree-anchor,
     .jstree-wholerow {
       transition: none;
     }
-
-    a ins.forbidden {
-      background-position: -16px -16px;
-    }
-
-    span ins {
-      background-position: -16px 0;
-    }
-  }
-
-  .locked li a ins {
-    background-position: 0 -48px;
   }
 
   // Make tree icons a subtle bit lighter
@@ -166,21 +111,34 @@
   }
 }
 
-#jstree-dragged {
-  border: 1px dotted $gray;
-  background-color: $gray-lighter;
-  z-index: 20;
-
-  &.tree-fork {
-
-    li li.open {
-      background-position: 0 -16px;
-    }
-  }
-}
-
 // Useful to visually hide items that are not found in page search
 .jstree-hidden,
 .jstree-node.jstree-hidden {
   display: none;
+}
+
+
+/* FOR DRAGGING */
+#jstree-marker {
+  padding: 0;
+  margin: 0;
+  display: block;
+  position: absolute;
+  z-index: 999;
+  width: 16px;
+  height: 16px;
+  border: none !important;
+  margin: 0 !important;
+
+  &:before {
+    font-family: FontAwesome;
+    content: "\f178";
+    font-size: 16px;
+    color: $brand-primary;
+  }
+
+  &.marker_plus:before {
+    font-family: FontAwesome;
+    content: "\f0fe";
+  }
 }

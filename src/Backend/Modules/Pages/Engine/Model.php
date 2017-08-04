@@ -778,7 +778,7 @@ class Model
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
         $html .= '<div class="clearfix" data-tree="main">' . "\n";
         $html .= '    <ul>' . "\n";
-        $html .= '        <li id="page-1" rel="home" ' . 'data-jstree=\'{"type":"home"}\'' . '>';
+        $html .= '        <li id="page-1" rel="home" ' . 'data-jstree=\'{"opened": true, "type":"home"}\'' . '>';
 
         // create homepage anchor from title
         $homePage = self::get(1);
