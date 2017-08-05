@@ -93,7 +93,7 @@ class Installer extends ModuleInstaller
         if (in_array('Faq', $this->getVariable('selected_modules'))) {
             $extras['faq_block'] = $this->insertExtra('Faq', ModuleExtraType::block(), 'Faq');
         }
-        if (in_array('Faq', $this->getVariable('selected_modules'))) {
+        if (in_array('Mailmotor', $this->getVariable('selected_modules'))) {
             $extras['mailmotor_subscribe'] = $this->insertExtra(
                 'Mailmotor',
                 ModuleExtraType::block(),
