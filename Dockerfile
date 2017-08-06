@@ -33,9 +33,9 @@ RUN apt-get update && apt-get install -y \
 COPY var/docker/php/php.ini ${PHP_INI_DIR}/php.ini
 
 # Install and configure XDebug
-RUN pecl install xdebug && docker-php-ext-enable xdebug
-COPY var/docker/php/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.init
-RUN echo 'xdebug.remote_host="${DOCKER_HOST_IP}"' >> ${PHP_INI_DIR}/conf.d/xdebug.ini
+RUN pecl install xdebug && \
+    docker-php-ext-enable xdebug && \
+    rm -rf /tmp/pear
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | \
