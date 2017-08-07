@@ -8,7 +8,6 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
-use ForkCMS\Bundle\InstallerBundle\DBAL\InstallerConnection;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Doctrine\DBAL\Exception\ConnectionException;
 
@@ -52,9 +51,9 @@ class InstallerConnectionFactory extends ConnectionFactory
         array $params,
         Configuration $config = null,
         EventManager $eventManager = null
-    ): InstallerConnection {
+    ): Connection {
         $normalConnection = DriverManager::getConnection($params, $config, $eventManager);
 
-        return new InstallerConnection($params, $normalConnection->getDriver(), $config, $eventManager);
+        return new Connection($params, $normalConnection->getDriver(), $config, $eventManager);
     }
 }
