@@ -1,3 +1,13 @@
+5.0.1 (2017-08-07)
+------------------
+
+Hotfix number one is a fact!
+
+Bugfixes:
+
+* Installer: Fixes installer when you want mailmotor + example data [#2165](https://github.com/forkcms/forkcms/pull/2165)
+* Installer: Install script fix [#2169](https://github.com/forkcms/forkcms/pull/2169)
+
 5.0.0 (2017-08-04)
 ------------------
 
