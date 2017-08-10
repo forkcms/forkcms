@@ -93,8 +93,8 @@ class SubscribeType extends AbstractType
         $interests = [];
 
         // should we be checking interests (CampaignMonitor for example has no interests)
-        $mailMotorInterestsNoCheck = $this->modulesSettings->get('Mailmotor', 'interests_no_check', false);
-        if ($mailMotorInterestsNoCheck) {
+        $mailMotorInterestsCheckInterests = $this->modulesSettings->get('Mailmotor', 'check_interests', true);
+        if (!$mailMotorInterestsCheckInterests) {
             return [];
         }
 
@@ -133,7 +133,7 @@ class SubscribeType extends AbstractType
             $this->modulesSettings->set('Mailmotor', 'interests_last_checked', new DateTime());
         // Fallback for when no mail-engine is chosen in the Backend
         } catch (NotImplementedException $e) {
-            $this->modulesSettings->set('Mailmotor', 'interests_no_check', true);
+            $this->modulesSettings->set('Mailmotor', 'check_interests', false);
 
             return [];
         }
