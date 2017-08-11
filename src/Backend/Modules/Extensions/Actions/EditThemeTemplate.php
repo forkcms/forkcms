@@ -345,12 +345,12 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
                 // if this is the default template make the template active
                 if ($this->get('fork.settings')->get('Pages', 'default_template') == $this->record['id']) {
-                    $item['active'] = 'Y';
+                    $item['active'] = true;
                 }
 
                 // if the template is in use we can't de-activate it
                 if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
-                    $item['active'] = 'Y';
+                    $item['active'] = true;
                 }
 
                 // insert the item
