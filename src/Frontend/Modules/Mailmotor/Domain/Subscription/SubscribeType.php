@@ -110,8 +110,8 @@ class SubscribeType extends AbstractType
                     $interests[$categoryChildTitle] = $categoryChildId;
                 }
             }
-        // Fallback for when no mail-engine is chosen in the Backend
         } catch (NotImplementedException $e) {
+            // Fallback for when no mail-engine is chosen in the Backend
         }
 
         return $interests;

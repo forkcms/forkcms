@@ -41,9 +41,8 @@ class EmailUnsubscriptionValidator extends ConstraintValidator
             } elseif ($this->subscriber->isUnsubscribed($value)) {
                 $this->context->buildViolation($constraint->alreadyUnsubscribedMessage)->addViolation();
             }
-        // fallback for when no mail-engine is chosen in the Backend
         } catch (NotImplementedException $e) {
-            // do nothing
+            // do nothing when no mail-engine is chosen in the Backend
         }
     }
 }

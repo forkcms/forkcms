@@ -56,8 +56,8 @@ class Unsubscribe extends FrontendBaseBlock
         try {
             // The command bus will handle the unsubscription
             $this->get('command_bus')->handle($unsubscription);
-        // fallback for when no mail-engine is chosen in the Backend
         } catch (NotImplementedException $e) {
+            // fallback for when no mail-engine is chosen in the Backend
             $this->get('event_dispatcher')->dispatch(
                 NotImplementedUnsubscribedEvent::EVENT_NAME,
                 new NotImplementedUnsubscribedEvent(
