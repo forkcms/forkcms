@@ -217,6 +217,7 @@ class Model
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
             ModuleExtraType::widget(),
+            'Location',
             'Location'
         );
 
