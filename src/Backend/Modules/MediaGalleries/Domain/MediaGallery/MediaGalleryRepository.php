@@ -6,8 +6,6 @@ use Doctrine\ORM\EntityRepository;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
 
 /**
- * MediaGallery Repository
- *
  * @method MediaGallery|null findOneByTitle(string $title)
  */
 final class MediaGalleryRepository extends EntityRepository
