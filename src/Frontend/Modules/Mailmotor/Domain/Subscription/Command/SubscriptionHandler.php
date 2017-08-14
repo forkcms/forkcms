@@ -58,8 +58,8 @@ final class SubscriptionHandler
                     $interests[$checkedInterestId] = true;
                 }
             }
-        // Fallback for when no mail-engine is chosen in the Backend
         } catch (NotImplementedException $e) {
+            // Fallback for when no mail-engine is chosen in the Backend
         }
 
         // Subscribing the user, will dispatch an event

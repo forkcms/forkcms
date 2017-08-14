@@ -128,11 +128,10 @@ class SubscribeType extends AbstractType
                     $interests[$categoryChildTitle] = $categoryChildId;
                 }
             }
-
             $this->modulesSettings->set('Mailmotor', 'interests', $interests);
             $this->modulesSettings->set('Mailmotor', 'interests_last_checked', new DateTime());
-        // Fallback for when no mail-engine is chosen in the Backend
         } catch (NotImplementedException $e) {
+            // Fallback for when no mail-engine is chosen in the Backend
             $this->modulesSettings->set('Mailmotor', 'check_interests', false);
 
             return [];
