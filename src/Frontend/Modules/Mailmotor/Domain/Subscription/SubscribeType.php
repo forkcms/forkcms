@@ -10,6 +10,7 @@ namespace Frontend\Modules\Mailmotor\Domain\Subscription;
  */
 
 use Common\ModulesSettings;
+use DateTime;
 use Frontend\Core\Engine\Navigation;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
@@ -91,7 +92,24 @@ class SubscribeType extends AbstractType
     {
         $interests = [];
 
+        // should we be checking interests (CampaignMonitor for example has no interests)
+        $mailMotorInterestsCheckInterests = $this->modulesSettings->get('Mailmotor', 'check_interests', true);
+        if (!$mailMotorInterestsCheckInterests) {
+            return [];
+        }
+
         try {
+            $mailMotorInterests = $this->modulesSettings->get('Mailmotor', 'interests');
+            $mailMotorInterestsLastChecked = $this->modulesSettings->get('Mailmotor', 'interests_last_checked');
+
+            // get cached interests
+            if (is_array($mailMotorInterests)
+                && $mailMotorInterestsLastChecked instanceof DateTime
+                && $mailMotorInterestsLastChecked > new DateTime('-8 hours')
+            ) {
+                return $mailMotorInterests;
+            }
+
             $mailMotorInterests = $this->subscriber->getInterests();
 
             // Has interests
@@ -110,8 +128,14 @@ class SubscribeType extends AbstractType
                     $interests[$categoryChildTitle] = $categoryChildId;
                 }
             }
+
+            $this->modulesSettings->set('Mailmotor', 'interests', $interests);
+            $this->modulesSettings->set('Mailmotor', 'interests_last_checked', new DateTime());
         // Fallback for when no mail-engine is chosen in the Backend
         } catch (NotImplementedException $e) {
+            $this->modulesSettings->set('Mailmotor', 'check_interests', false);
+
+            return [];
         }
 
         return $interests;
