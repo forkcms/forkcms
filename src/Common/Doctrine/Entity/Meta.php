@@ -148,7 +148,7 @@ class Meta
         bool $titleOverwrite,
         string $url,
         bool $urlOverwrite,
-        string $custom,
+        string $custom = null,
         SEOFollow $seoFollow = null,
         SEOIndex $seoIndex = null,
         array $data = []
