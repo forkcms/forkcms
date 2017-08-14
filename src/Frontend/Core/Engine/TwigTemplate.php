@@ -53,7 +53,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->connectSymfonyForms();
     }
 
-    private function addFrontendPathsToTHeTemplateLoader(string $theme): void
+    private function addFrontendPathsToTheTemplateLoader(string $theme): void
     {
         $this->themePath = FRONTEND_PATH . '/Themes/' . $theme;
         $this->environment->setLoader(
