@@ -74,7 +74,7 @@
       <img itemprop="image" class="card-img-top" src="https://placehold.it/400x300" alt="{{ item.title }}" />
     {% endif %}
 
-    <div class="card-block" itemprop="text">
+    <div class="card-body" itemprop="text">
       <h4 class="card-title" itemprop="name">{{ item.title }}</h4>
       {% if item.introduction %}
         {{ item.introduction|raw|truncate(200) }}

@@ -7,7 +7,7 @@
     <header class="card-header" role="banner">
       <h4 class="mb-0">{{ 'lbl.Tags'|trans|ucfirst }}</h4>
     </header>
-    <div class="card-block">
+    <div class="card-body">
       {% set total = 0 %}
       {% for tag in widgetTagsTagCloud %}
         {% set total = total + tag.number %}

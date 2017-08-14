@@ -16,7 +16,7 @@
       {{ alerts.alert('success', 'msg.OwnQuestionSuccess'|trans) }}
     {% endif %}
 
-    <div class="card-block">
+    <div class="card-body">
       {% if form_own_question %}
         {% form own_question %}
           <div class="form-group{% if txtNameError %} has-danger{% endif %}">
