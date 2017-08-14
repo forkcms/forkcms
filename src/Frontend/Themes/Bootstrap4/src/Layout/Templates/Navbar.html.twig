@@ -1,12 +1,12 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded mb-4" role="navigation">
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-4" role="navigation">
   <div class="container">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
     <a href="/" class="navbar-brand">
       {{ siteTitle }}
     </a>
+
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
     <div id="navbar-collapse" class="collapse navbar-collapse">
       {{ getnavigation('page', 0, 1) }}

@@ -331,21 +331,7 @@ gulp.task('build:theme:sass:generate-production-css', function () {
     .pipe(gulp.dest(`${paths.core}/Layout/Css`))
 })
 
-var commonWebpackConfig = {
-  output: {
-    filename: 'bundle.js'
-  },
-  devtool: 'source-maps',
-  module: {
-    loaders: [
-      {
-        test: /.js?$/,
-        loader: 'babel',
-        exclude: /node_modules/
-      }
-    ]
-  }
-}
+var commonWebpackConfig = require('./webpack.config')
 
 gulp.task('build:theme:webpack:generate-development-js', function () {
   return gulp.plumbedSrc(`${paths.src}/Js/Index.js`)
@@ -358,18 +344,7 @@ gulp.task('build:theme:webpack:generate-development-js', function () {
 
 gulp.task('build:theme:webpack:generate-production-js', function () {
   return gulp.src(`${paths.src}/Js/Index.js`)
-    .pipe(webpackStream(Object.assign({}, commonWebpackConfig, {
-      plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-          compress: {
-            warnings: false
-          }
-        }),
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': '"production"'
-        })
-      ]
-    }, webpack)))
+    .pipe(webpackStream(commonWebpackConfig, webpack))
     .pipe(gulp.dest(`${paths.core}/Js`))
 })
 

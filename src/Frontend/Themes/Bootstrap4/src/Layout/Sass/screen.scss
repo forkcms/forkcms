@@ -1,10 +1,10 @@
 @charset 'UTF-8';
 
 // Bootstrap
+@import "bootstrap4/scss/functions";
 @import 'bootstrap4/scss/variables';
 @import 'bootstrap-variables';
 @import 'bootstrap-imports';
-//@import 'bootstrap-compass';
 
 // Font Awesome
 @import 'font-awesome/scss/font-awesome';
