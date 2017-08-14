@@ -7,6 +7,8 @@ use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNot
 
 /**
  * MediaGallery Repository
+ *
+ * @method MediaGallery|null findOneByTitle(string $title)
  */
 final class MediaGalleryRepository extends EntityRepository
 {
@@ -20,7 +22,6 @@ final class MediaGalleryRepository extends EntityRepository
 
     public function existsByTitle(string $title, string $ignoreMediaGalleryId = null): bool
     {
-        /** @var MediaGallery $mediaGallery */
         $mediaGallery = $this->findOneByTitle($title);
 
         return ($mediaGallery instanceof MediaGallery) ? ($mediaGallery->getId() !== $ignoreMediaGalleryId) : false;
