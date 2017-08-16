@@ -193,7 +193,7 @@ class Model
         string $module,
         string $language,
         string $application
-    ): bool {
+    ): int {
         return BackendModel::getContainer()->get('database')->getVar(
             'SELECT l.id
              FROM locale AS l
