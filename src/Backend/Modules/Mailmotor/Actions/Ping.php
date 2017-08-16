@@ -34,13 +34,11 @@ final class Ping extends ActionIndex
 
     private function getBackLink(array $parameters = []): string
     {
-        return $this->redirect(
-            Model::createUrlForAction(
-                'Settings',
-                null,
-                null,
-                $parameters
-            )
+        return Model::createUrlForAction(
+            'Settings',
+            null,
+            null,
+            $parameters
         );
     }
 

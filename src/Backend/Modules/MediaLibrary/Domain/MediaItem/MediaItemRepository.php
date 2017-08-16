@@ -6,6 +6,9 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Doctrine\ORM\EntityRepository;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 
+/**
+ * @method MediaItem|null findOneByUrl(string $url)
+ */
 final class MediaItemRepository extends EntityRepository
 {
     public function add(MediaItem $mediaItem): void

@@ -379,12 +379,14 @@ jsBackend.pages.extras = {
             var blockHtml = $('.reset [name=block_html_' + oldIndex + ']');
             var blockExtraId = $('.reset [name=block_extra_id_' + oldIndex + ']');
             var blockExtraType = $('.reset [name=block_extra_type_' + oldIndex + ']');
+            var blockExtraData = $('.reset [name=block_extra_data_' + oldIndex + ']');
             var blockPosition = $('.reset [name=block_position_' + oldIndex + ']');
             var blockVisible = $('.reset [name=block_visible_' + oldIndex + ']');
 
             blockHtml.prop('id', blockHtml.prop('id').replace(oldIndex, newIndex)).prop('name', blockHtml.prop('name').replace(oldIndex, newIndex));
             blockExtraId.prop('id', blockExtraId.prop('id').replace(oldIndex, newIndex)).prop('name', blockExtraId.prop('name').replace(oldIndex, newIndex));
             blockExtraType.prop('id', blockExtraType.prop('id').replace(oldIndex, newIndex)).prop('name', blockExtraType.prop('name').replace(oldIndex, newIndex));
+            blockExtraData.prop('id', blockExtraData.prop('id').replace(oldIndex, newIndex)).prop('name', blockExtraData.prop('name').replace(oldIndex, newIndex));
             blockPosition.prop('id', blockPosition.prop('id').replace(oldIndex, newIndex)).prop('name', blockPosition.prop('name').replace(oldIndex, newIndex));
             blockVisible.prop('id', blockVisible.prop('id').replace(oldIndex, newIndex)).prop('name', blockVisible.prop('name').replace(oldIndex, newIndex));
 

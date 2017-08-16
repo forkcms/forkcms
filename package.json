@@ -19,7 +19,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.0.0",
     "gulp-sourcemaps": "^1.9.1",
-    "jquery": "~2.2",
+    "jquery": "^3.2.1",
     "jquery-migrate": "~1.4",
     "jquery-ui-dist": "~1.12",
     "photoswipe": "^4.1.1",

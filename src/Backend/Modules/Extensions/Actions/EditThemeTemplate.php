@@ -114,7 +114,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->form->addText('label', $this->record['label']);
         $this->form->addText('file', str_replace('Core/Layout/Templates/', '', $this->record['path']));
         $this->form->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
-        $this->form->addCheckbox('active', ($this->record['active'] == 'Y'));
+        $this->form->addCheckbox('active', $this->record['active']);
         $this->form->addCheckbox('default', ($this->record['id'] == $defaultId));
         $this->form->addCheckbox('overwrite', false);
         $this->form->addCheckbox('image', $this->record['data']['image']);
@@ -345,12 +345,12 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
                 // if this is the default template make the template active
                 if ($this->get('fork.settings')->get('Pages', 'default_template') == $this->record['id']) {
-                    $item['active'] = 'Y';
+                    $item['active'] = true;
                 }
 
                 // if the template is in use we can't de-activate it
                 if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
-                    $item['active'] = 'Y';
+                    $item['active'] = true;
                 }
 
                 // insert the item

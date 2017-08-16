@@ -45,7 +45,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         }
         $name = $this->getRequest()->request->get('name', '');
         $type = $this->getRequest()->request->get('type');
-        if (!in_array($type, BackendModel::get('database')->getEnumValues('locale', 'type'))) {
+        if (!in_array($type, BackendModel::get('database')->getColumn('SELECT type FROM locale GROUP BY type'))) {
             $type = '';
         }
         $application = $this->getRequest()->request->get('application');
