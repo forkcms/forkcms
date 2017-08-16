@@ -21,11 +21,6 @@ use Backend\Core\Engine\Csv;
  */
 class Import extends BackendBaseActionAdd
 {
-    /**
-     * @var int
-     */
-    private $id;
-
     public function execute(): void
     {
         parent::execute();
@@ -38,7 +33,7 @@ class Import extends BackendBaseActionAdd
     private function loadForm(): void
     {
         // get group values for dropdown
-        $ddmValues = BackendProfilesModel::getGroupsForDropDown($this->id);
+        $ddmValues = BackendProfilesModel::getGroupsForDropDown(0);
 
         // create form and elements
         $this->form = new BackendForm('import');
