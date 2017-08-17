@@ -173,11 +173,9 @@ jsBackend.pages.extras = {
             title = utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate'));
             if (extraData.title) {
                 title += ': ' + extraData.title;
+                title += ' (' + extraData.description + ')';
             }
-            description = '';
-            if (extraData.description) {
-                description += extraData.description;
-            }
+            description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
         }
 
         // editor
@@ -407,11 +405,9 @@ jsBackend.pages.extras = {
         // the content to set
         if (content != null) $('#blockHtml' + index).val(content);
 
-        if ($('#blockExtraType' + index).val() !== 'usertemplate') {
-            // add short description to visual representation of block, except for usertemplates
-            var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
-            $('.templatePositionCurrentType[data-block-id=' + index + '] .templateDescription').html(description);
-        }
+        // add short description to visual representation of block, except for usertemplates
+        var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
+        $('.templatePositionCurrentType[data-block-id=' + index + '] .templateDescription').html(description);
 
         // mark as updated
         jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
