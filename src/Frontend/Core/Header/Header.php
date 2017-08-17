@@ -481,7 +481,7 @@ class Header extends KernelLoader
             return;
         }
 
-        if ($this->pageTitle === '') {
+        if ($this->pageTitle === null || $this->pageTitle === '') {
             $this->pageTitle = $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
             $this->pageTitle = $value . ' -  ' . $this->pageTitle;
 
