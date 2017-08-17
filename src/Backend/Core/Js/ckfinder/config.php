@@ -6,6 +6,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use ForkCMS\App\AppKernel;
 use ForkCMS\App\KernelLoader;
+use Symfony\Component\HttpFoundation\Request;
 
 $env = getenv('FORK_ENV') ? : 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
@@ -82,6 +83,14 @@ $config = array();
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_authentication
 
 $config['authentication'] = function () {
+    $env = getenv('FORK_ENV') ? : 'prod';
+    $debug = getenv('FORK_DEBUG') === '1';
+
+    $kernel = new AppKernel($env, $debug);
+    $loader = new KernelLoader($kernel);
+
+    BackendModel::get('request_stack')->push(Request::create('/private'));
+
     return BackendAuthentication::isLoggedIn();
 };
 
