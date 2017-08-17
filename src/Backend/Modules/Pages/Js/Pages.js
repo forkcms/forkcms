@@ -404,17 +404,14 @@ jsBackend.pages.extras = {
     // save/reset the content
     setContent: function(index, content)
     {
-        // don't set content if this is a usertemplate
-        if ($('#blockExtraType' + index).val() === 'usertemplate') {
-            return false;
-        }
-
         // the content to set
         if (content != null) $('#blockHtml' + index).val(content);
 
-        // add short description to visual representation of block
-        var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
-        $('.templatePositionCurrentType[data-block-id=' + index + '] .templateDescription').html(description);
+        if ($('#blockExtraType' + index).val() !== 'usertemplate') {
+            // add short description to visual representation of block, except for usertemplates
+            var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
+            $('.templatePositionCurrentType[data-block-id=' + index + '] .templateDescription').html(description);
+        }
 
         // mark as updated
         jsBackend.pages.extras.updatedBlock($('.templatePositionCurrentType[data-block-id=' + index + ']'));
