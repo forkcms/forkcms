@@ -1,5 +1,5 @@
 FROM php:7.1-apache
-MAINTAINER Fork CMS <info@fork-cms.com>
+LABEL maintainer="Fork CMS <info@fork-cms.com>"
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
