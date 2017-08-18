@@ -50,19 +50,19 @@ CKFinder.lang['ru'] =
 	LangCode : 'ru',
 
 	// Date Format
-	//		d    : Day
-	//		dd   : Day (padding zero)
-	//		m    : Month
-	//		mm   : Month (padding zero)
-	//		yy   : Year (two digits)
-	//		yyyy : Year (four digits)
-	//		h    : Hour (12 hour clock)
-	//		hh   : Hour (12 hour clock, padding zero)
-	//		H    : Hour (24 hour clock)
-	//		HH   : Hour (24 hour clock, padding zero)
-	//		M    : Minute
-	//		MM   : Minute (padding zero)
-	//		a    : Firt char of AM/PM
+	//		d    : День
+	//		dd   : День (с ведущим нулём)
+	//		m    : Месяц
+	//		mm   : Месяц (с ведущим нулём)
+	//		yy   : Год (2 символа)
+	//		yyyy : Год (4 символа)
+	//		h    : Час (12-часовом формате без ведущего нуля)
+	//		hh   : Час (12-часовом формате с ведущим нулём)
+	//		H    : Час (24-часовом формате без ведущего нуля)
+	//		HH   : Час (24-часовом формате с ведущим нулём)
+	//		M    : Минута
+	//		MM   : Минута (с ведущим нулём)
+	//		a    : Первый символ из AM/PM
 	//		aa   : AM/PM
 	DateTime : 'dd.mm.yyyy H:MM',
 	DateAmPm : ['AM', 'PM'],
