@@ -1,7 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../../../autoload.php';
 
-// after registring autoloaders, let's add use statements for our needed classes
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use ForkCMS\App\AppKernel;
