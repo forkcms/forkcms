@@ -1,0 +1,33 @@
+{
+    "errorUnknown": "Nebija iespējams pabeigt pieprasījumu. (Kļūda {number})",
+    "errors": {
+        "10": "Nederīga komanda.",
+        "11": "Resursa veids netika norādīts pieprasījumā.",
+        "12": "Pieprasītais resursa veids nav derīgs.",
+        "13": "Savienojuma konfigurācijas fails nav korekts.",
+        "14": "Nekorekts savienojuma spraudnis: {pluginName}.",
+        "102": "Nederīgs faila vai mapes nosaukums.",
+        "103": "Nav iespējams pabeigt pieprasījumu, autorizācijas aizliegumu dēļ.",
+        "104": "Nav iespējams pabeigt pieprasījumu, failu sistēmas atļauju ierobežojumu dēļ.",
+        "105": "Neatļauts faila paplašinājums.",
+        "109": "Nederīgs pieprasījums.",
+        "110": "Nezināma kļūda.",
+        "111": "Pieprasījums neizdevās, dēļ rezultāta faila izmēra.",
+        "115": "Fails vai mape ar šādu nosaukumu jau pastāv.",
+        "116": "Mape nav atrasta. Lūdzu pārlādējiet šo logu un mēģiniet vēlreiz.",
+        "117": "Fails nav atrasts. Lūdzu pārlādējiet failu sarakstu un mēģiniet vēlreiz.",
+        "118": "Abas mapes ir viena un tā pati.",
+        "201": "Fails ar šādu nosaukumu jau eksistē. Augšupielādētais fails tika pārsaukts par \"{name}\".",
+        "202": "Nederīgs fails.",
+        "203": "Nederīgs fails. Faila izmērs pārsniedz pieļaujamo.",
+        "204": "Augšupielādētais fails ir bojāts.",
+        "205": "Neviena pagaidu mape nav pieejama priekš augšupielādēšanas uz servera.",
+        "206": "Augšupielāde atcelta drošības apsvērumu dēļ. Fails satur HTML veida datus.",
+        "207": "Augšupielādētais fails tika pārsaukts par \"{name}\".",
+        "300": "Pārvietot failu(s) neizdevās.",
+        "301": "Pārkopēt failu(s) neizdevās.",
+        "302": "Dzēst failu(s) neizdevās.",
+        "500": "Failu pārlūks ir atslēgts drošības apsvērumu dēļ. Lūdzu sazinieties ar šīs sistēmas tehnisko administratoru vai pārbaudiet CKFinder konfigurācijas failu.",
+        "501": "Sīkbilžu atbalsts ir atslēgts."
+    }
+}

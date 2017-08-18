@@ -1,0 +1,229 @@
+/*
+blue: #01417b
+lightblue: #2f77d1
+darkblue: #021b45
+lightgray: #e5e5e5;
+ */
+
+html {
+    font-size: 14px;
+}
+body,
+input,
+select,
+textarea,
+button,
+.ui-btn {
+    font-size: 1em;
+    line-height: 1.3;
+    font-family: "Open sans", Arial, Helvetica, Tahoma, Verdana, sans-serif;
+}
+
+/* Icons */
+.ui-btn-icon-left:after,
+.ui-btn-icon-right:after,
+.ui-btn-icon-top:after,
+.ui-btn-icon-bottom:after,
+.ui-btn-icon-notext:after {
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* Tweaks */
+* {
+    outline: 0;
+    box-shadow: none !important;
+}
+
+:focus, .ui-btn:focus, html .ui-btn:focus, html .ui-btn:focus, html body .ui-btn:focus, html head+body .ui-btn:focus, .ui-focus, html .ui-focus, html .ui-focus, html body .ui-focus, html head+body .ui-focus {
+    box-shadow: none !important;
+}
+.ckf-folders-panel .ckf-panel-contents {
+    border: 0;
+}
+
+.ckf-folders-panel .ui-listview > li > a.ckf-folders-tree-expander {
+    border: 0;
+    border-bottom: 1px solid #021b45;
+}
+.ckf-folders-panel .ui-listview > li > a.ckf-folders-tree-label {
+    border: 0;
+    border-bottom: 1px solid #021b45;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.ckf-folders-panel {
+    background: #01417b;
+    border-right: #021b45;
+    color: #ffffff;
+    padding-top: 69px;
+}
+
+.ckf-files-page .ckf-toolbar {
+    border: 0;
+    max-width: auto;
+    width: auto;
+    background-color: #ffffff;
+    border-bottom: 3px solid #e5e5e5;
+    padding: 12px 25px 12px 13px;
+}
+
+.ckf-toolbar-visible .ckf-folders-panel .ui-panel-inner {
+    padding: 0;
+    margin: 0;
+}
+
+.ckf-page-regions {
+    background-color: #fafafa;
+}
+
+.ui-header .ui-btn, .ckf-dialog .ui-btn {
+    padding: 9px 12px 10px 32px;
+    color: #4a4a4a;
+    background-color: #e5e5e5;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    border-radius: 3px;
+}
+
+.ckf-dialog .ui-btn {
+    padding: 9px 12px 10px 12px;
+}
+
+.ui-header .ui-btn:hover, .ckf-dialog .ui-btn:hover {
+    background: #cccbcb;
+}
+
+.ckf-files-thumbs.ckf-files-view.ui-listview .ui-btn {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+
+.ckf-files-thumbs.ckf-files-view.ui-listview .ui-btn.ui-btn-active {
+    border: 1px solid #01417b;
+}
+
+.ckf-files-thumbs.ckf-files-view.ui-listview .ckf-file-item .ckf-file-desc {
+    background: rgba(255, 255, 255, 0.85);
+    color: black;
+}
+
+.ui-popup-container {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+
+.ui-listview>li>a.ui-btn:hover, .ui-listview>li>a.ui-btn.ui-btn-active {
+    background: #2f77d1;
+}
+
+.ui-popup-container .ui-listview>li>a.ui-btn {
+    border: 0;
+}
+
+.ui-popup-container .ui-listview>li>a.ui-btn:hover {
+    background: #f1f1f1;
+}
+
+.ui-popup-container .ui-listview>.ui-li-divider {
+    padding: 0;
+    border-color: #e5e5e5;
+}
+
+.ui-popup-screen {
+    background: #021b45;
+}
+
+.ui-input-text {
+    border: 0;
+}
+
+.ckf-toolbar-item .ui-input-text input {
+    font-size: 14px;
+    line-height: 1.428571429;
+    height: 16px;
+    padding: 6px 12px;
+}
+
+.ui-input-text input, input.ui-slider-input {
+    height: 16px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #000;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.075);
+}
+
+input.ui-slider-input {
+    padding: 6px;
+}
+
+.ui-input-text input:focus, input.ui-slider-input: focus {
+    border-color: #2f77d1;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.075);
+    outline: 0;
+}
+
+.ui-popup>.ui-header {
+    border-color: #e5e5e5;
+}
+
+.ckf-panel-right {
+    background: #ffffff;
+    border-left: 1px solid #e5e5e5;
+}
+
+.ckf-panel-right .ui-header {
+    border-color: #e5e5e5;
+}
+
+.ckf-settings-group .ui-controlgroup-controls .items .ckf-settings-checkbox label,
+.ckf-settings-group .ui-controlgroup-controls .items .ckf-settings-checkbox+.ckf-settings-checkbox label,
+.ckf-settings-group .ui-controlgroup-controls .items .ui-radio:last-of-type label,
+.ckf-settings-group .ui-controlgroup-controls .items .ui-select:last-of-type>div {
+    border: 0;
+}
+
+.ckf-settings-group .ui-controlgroup-controls .items .ui-select>div {
+    background-color: #e5e5e5;
+}
+
+.ckf-settings-group .ui-controlgroup-controls .items .ui-slider-handle {
+    border: 1px solid #cccbcb;
+    background: #e5e5e5;
+    border-radius: 5000px;
+    height: 15px;
+    width: 15px;
+    margin: -8px 0 0 -7px;
+}
+
+.ui-slider-track {
+    border-color: #e5e5e5;
+    height: 5px;
+    border-radius: 3px;
+    top: 11px;
+}
+
+.ckf-main-region:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url('/src/Backend/Core/Layout/images/logo_footer.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}

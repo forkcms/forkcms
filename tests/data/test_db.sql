@@ -2408,7 +2408,7 @@ VALUES
 	('Core','smtp_password','s:0:\"\";'),
 	('Core','site_title_en','s:10:\"My website\";'),
 	('Core','ckfinder_license_name','s:8:\"Fork CMS\";'),
-	('Core','ckfinder_license_key','s:34:\"VNA6-BP17-T7D3-CP1B-EMJF-X7Q3-5THF\";'),
+  ('Core','ckfinder_license_key','s:34:\"QFKH-MNCN-19A8-32XW-35GK-Q58G-UPMC\";'),
 	('Users','default_group','i:1;'),
 	('Users','date_formats','a:4:{i:0;s:5:\"j/n/Y\";i:1;s:5:\"d/m/Y\";i:2;s:5:\"j F Y\";i:3;s:6:\"F j, Y\";}'),
 	('Users','time_formats','a:4:{i:0;s:3:\"H:i\";i:1;s:5:\"H:i:s\";i:2;s:5:\"g:i a\";i:3;s:5:\"g:i A\";}'),
