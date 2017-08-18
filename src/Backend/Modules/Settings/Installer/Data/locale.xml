@@ -178,7 +178,7 @@
       <item type="message" name="HelpCkfinderMaximumHeight">
         <translation language="nl"><![CDATA[Instellen van de maximale hoogte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
         <translation language="en"><![CDATA[Configure the maximum height (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
-        <translation language="ru"><![CDATA[Наладзьце максімальную вышыню (у пікселях) загружаных малюнкаў. Калі загружаны малюнак больш, ён атрымлівае зменшана прапарцыйна. Усталюйце 0, каб адключыць гэтую функцыю.]]></translation>
+        <translation language="ru"><![CDATA[Укажите максимальную высоту (в пикселях) загружаемых изображений. Если загружен изображение более, он получает уменьшена пропорционально. Установите 0, чтобы отключить эту функцию.]]></translation>
         <translation language="de"><![CDATA[Konfigurieren Sie die maximale Höhe (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
         <translation language="es"><![CDATA[Configure la altura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
         <translation language="hu"><![CDATA[Adja meg a maximális magasság (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
@@ -188,7 +188,7 @@
       <item type="message" name="HelpCkfinderMaximumWidth">
         <translation language="nl"><![CDATA[Instellen van de maximale breedte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
         <translation language="en"><![CDATA[Configure the maximum width (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
-        <translation language="ru"><![CDATA[Наладзьце максімальную шырыню (у пікселях) загружаных малюнкаў. Калі загружаны малюнак больш, ён атрымлівае зменшана прапарцыйна. Усталюйце 0, каб адключыць гэтую функцыю.]]></translation>
+        <translation language="ru"><![CDATA[Укажите максимальную ширину (в пикселях) загружаемых изображений. Если загружен изображение более, он получает уменьшена пропорционально. Установите 0, чтобы отключить эту функцию.]]></translation>
         <translation language="de"><![CDATA[Konfigurieren Sie die maximale Breite (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
         <translation language="es"><![CDATA[Configure la anchura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
         <translation language="hu"><![CDATA[Adja meg a maximális szélesség (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
