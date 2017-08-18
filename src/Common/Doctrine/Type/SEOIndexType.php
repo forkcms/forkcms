@@ -16,13 +16,21 @@ final class SEOIndexType extends StringType
      *
      * @return string
      */
-    public function convertToDatabaseValue($seoIndex, AbstractPlatform $platform): string
+    public function convertToDatabaseValue($seoIndex, AbstractPlatform $platform): ?string
     {
+        if ($seoIndex === null) {
+            return null;
+        }
+
         return (string) $seoIndex;
     }
 
-    public function convertToPHPValue($seoIndex, AbstractPlatform $platform): SEOIndex
+    public function convertToPHPValue($seoIndex, AbstractPlatform $platform): ?SEOIndex
     {
+        if ($seoIndex === null) {
+            return null;
+        }
+
         return SEOIndex::fromString($seoIndex);
     }
 
