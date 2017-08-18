@@ -49,7 +49,7 @@ CKFinder.lang['ru'] =
 	HelpLang : 'en',
 	LangCode : 'ru',
 
-	// Date Format
+	// Формат даты
 	//		d    : День
 	//		dd   : День (с ведущим нулём)
 	//		m    : Месяц
