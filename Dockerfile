@@ -43,6 +43,8 @@ RUN pecl install xdebug && \
 RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/bin/ --filename=composer
 
+# Set the work directory to /var/www/html so all subsequent commands in this file start from that directory.
+# Also set this work directory so that it uses this directory everytime we use docker exec.
 WORKDIR /var/www/html
 
 # Install the composer dependencies (no autoloader yet as that invalidates the docker cache)
@@ -51,7 +53,7 @@ COPY composer.lock ./
 RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest && \
     composer clear-cache
 
-# Bundle source code into container
+# Bundle source code into container. Important here is that copying is done based on the rules defined in the .dockerignore file.
 COPY . /var/www/html
 
 # Dump the autoloader
