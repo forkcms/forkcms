@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Service;
 
+use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\DependencyInjection\Container;
@@ -53,6 +54,8 @@ class ForkInstaller
         if (!$data->isValid()) {
             return false;
         }
+
+        InstallerController::$installationData = $data;
 
         // extend execution limit
         set_time_limit(0);
