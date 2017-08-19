@@ -61,3 +61,6 @@ RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
 
 # Give apache write access to host
 RUN chown -R www-data:www-data /var/www/html
+
+# Add a healthcheck to allow Docker to automatically interpret whether your container is healthy.
+HEALTHCHECK --interval=10s --timeout=5s CMD curl -f localhost/private || exit 1
