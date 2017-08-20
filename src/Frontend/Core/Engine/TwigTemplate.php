@@ -39,6 +39,7 @@ class TwigTemplate extends BaseTwigTemplate
         parent::__construct($environment, $parser, $locator);
 
         $container = Model::getContainer();
+        $this->forkSettings = $container->get('fork.settings');
         $this->debugMode = $container->getParameter('kernel.debug');
         $this->environment->disableStrictVariables();
         new FormExtension($this->environment);
@@ -49,11 +50,11 @@ class TwigTemplate extends BaseTwigTemplate
             return;
         }
 
-        $this->addFrontendPathsToTheTemplateLoader($container->get('fork.settings')->get('Core', 'theme', 'Fork'));
+        $this->addFrontendPathsToTheTemplateLoader($this->forkSettings->get('Core', 'theme', 'Fork'));
         $this->connectSymfonyForms();
     }
 
-    private function addFrontendPathsToTHeTemplateLoader(string $theme): void
+    private function addFrontendPathsToTheTemplateLoader(string $theme): void
     {
         $this->themePath = FRONTEND_PATH . '/Themes/' . $theme;
         $this->environment->setLoader(

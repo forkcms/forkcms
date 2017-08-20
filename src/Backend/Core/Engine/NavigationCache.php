@@ -54,7 +54,7 @@ final class NavigationCache
         }
 
         return array_map(
-            function (array $navigationItem) use ($parentId) {
+            function (array $navigationItem) {
                 return $this->buildNavigationItem($navigationItem);
             },
             $navigationItems

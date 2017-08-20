@@ -16,13 +16,21 @@ final class SEOFollowType extends StringType
      *
      * @return string
      */
-    public function convertToDatabaseValue($seoFollow, AbstractPlatform $platform): string
+    public function convertToDatabaseValue($seoFollow, AbstractPlatform $platform): ?string
     {
+        if ($seoFollow === null) {
+            return null;
+        }
+
         return (string) $seoFollow;
     }
 
-    public function convertToPHPValue($seoFollow, AbstractPlatform $platform): SEOFollow
+    public function convertToPHPValue($seoFollow, AbstractPlatform $platform): ?SEOFollow
     {
+        if ($seoFollow === null) {
+            return null;
+        }
+
         return SEOFollow::fromString($seoFollow);
     }
 
