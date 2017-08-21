@@ -48,7 +48,7 @@ deny from env=stayout
     RewriteRule src/Backend/Core/Js/ckfinder/core/connector/php/connector\.php - [L]
 
 	# forbidden folders
-        RewriteRule .*\.php - [F]
+	RewriteRule .*\.php - [F]
 	RewriteRule \.git - [F]
 	RewriteRule vendor/.* - [F]
 	RewriteRule bin/.* - [F]
