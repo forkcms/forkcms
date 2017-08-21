@@ -48,7 +48,7 @@ deny from env=stayout
     RewriteRule src/Backend/Core/Js/ckfinder/core/connector/php/connector\.php - [L]
 
 	# forbidden folders
-    RewriteRule .*\.php - [F]
+        RewriteRule .*\.php - [F]
 	RewriteRule \.git - [F]
 	RewriteRule vendor/.* - [F]
 	RewriteRule bin/.* - [F]
@@ -71,6 +71,8 @@ deny from env=stayout
 	RewriteRule \.dockerignore - [F]
 	RewriteRule docker-compose\.yml - [F]
 	RewriteRule docker-compose\.override\.yml - [F]
+	RewriteRule \.env - [F]
+	RewriteRule \.env.dist - [F]
 
 	# redirect all trafic to https
 	# Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
