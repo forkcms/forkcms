@@ -13,5 +13,14 @@ module.exports = {
       jQuery: 'jquery',
       Popper: ['popper.js', 'default']
     })
-  ]
+  ],
+  module:  {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
+    ]
+  }
 }
