@@ -1,12 +1,37 @@
 5.0.1 (2017-08-07)
 ------------------
 
+Bugfixes:
+* Core: Switch the upload and download icons to match the import button [#2174](https://github.com/forkcms/forkcms/pull/2174)
+* Core: Make custom for meta not required for update method [#2177](https://github.com/forkcms/forkcms/pull/2177)
+* Core: Fix active languages array [#2171](https://github.com/forkcms/forkcms/pull/2171)
+* Core: Fix casing of the private method addFrontendPathsToTheTemplateLoader [#2184](https://github.com/forkcms/forkcms/pull/2184)
+* Core: Use the correct vendor versions as stated by yarn.lock and use jquery3 [#2183](https://github.com/forkcms/forkcms/pull/2183)
+* Core: Add missing fork settings to the frontend twig template service [#2173](https://github.com/forkcms/forkcms/pull/2173)
+* Core: Fix page title not set correctly [#2190](https://github.com/forkcms/forkcms/pull/2190)
+* Core: Fix loading the meta entity from the database [#2197](https://github.com/forkcms/forkcms/pull/2197)
+* Core: Fix CKFinder not working in php7, upgrade to 3.4.1 [#2193](https://github.com/forkcms/forkcms/pull/2193)
+* Extensions: Fix old check on enum instead of bool [#2179](https://github.com/forkcms/forkcms/pull/2179)
+* FormBuilder: Fix js not running [#2172](https://github.com/forkcms/forkcms/pull/2172)
+* Locale: Fix update via ajax in datagrid [#2187](https://github.com/forkcms/forkcms/pull/2187)
+* Locale: Fix some Russian translations [#2196](https://github.com/forkcms/forkcms/pull/2196)
+* Location: Specifically state the widget action should be 'Location'  [#2176](https://github.com/forkcms/forkcms/pull/2176)
+* Mailmotor: Cache interests instead of calling the api on each pageload [#2175](https://github.com/forkcms/forkcms/pull/2175)
+* Pages: Fix errors with user templates after deleting a block [#2180](https://github.com/forkcms/forkcms/pull/2180)
+* Pages: Fix user templates [#2194](https://github.com/forkcms/forkcms/pull/2194)
+* Profiles: Fix import [#2185](https://github.com/forkcms/forkcms/pull/2185)
+
+
+5.0.1 (2017-08-07)
+------------------
+
 Hotfix number one is a fact!
 
 Bugfixes:
 
 * Installer: Fixes installer when you want mailmotor + example data [#2165](https://github.com/forkcms/forkcms/pull/2165)
 * Installer: Install script fix [#2169](https://github.com/forkcms/forkcms/pull/2169)
+
 
 5.0.0 (2017-08-04)
 ------------------
