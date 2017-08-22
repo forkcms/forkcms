@@ -41,6 +41,10 @@ class AppKernel extends Kernel
             new \Liip\ImagineBundle\LiipImagineBundle(),
         ];
 
+        if ($this->getEnvironment() === 'prod') {
+            $bundles[] = new \Sentry\SentryBundle\SentryBundle();
+        }
+
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {
             $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new \Symfony\Bundle\DebugBundle\DebugBundle();
