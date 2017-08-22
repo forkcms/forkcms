@@ -1,0 +1,37 @@
+stages:
+  - test
+
+before_script:
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
+
+run_tests:
+  image: sumocoders/fork-php71:latest
+  services:
+    - mysql:5.5
+  before_script:
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
+    - mysql -h mysql -u root -proot -e "create database ci_test"
+    - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
+    - php bin/generate_parameters_gitlab.php
+    - cp app/config/parameters.yml.gitlab app/config/parameters.yml
+  script:
+    - SYMFONY_DEPRECATIONS_HELPER=weak bin/simple-phpunit
+  stage: test
+  tags:
+    - php71
+    - docker
+  variables:
+    MYSQL_DATABASE: ci
+    MYSQL_ROOT_PASSWORD: root
+
+code_styles:
+  image: sumocoders/fork-php71:latest
+  script:
+    - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor src/
+  stage: test
+  tags:
+    - php71
+    - docker

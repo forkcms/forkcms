@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+
+$cwd = dirname(__DIR__) . '';
+
+// read parameters.yml.dist
+$content = file_get_contents($cwd . '/app/config/parameters.yml.dist');
+
+// replace all the content
+$content = replaceGivenParams(
+    [
+        'database-host' => 'mysql',
+        'database-port' => '3306',
+        'database-name' => 'ci',
+        'database-user' => 'root',
+        'database-password' => 'root',
+        'secret' => md5(time()),
+        'site-protocol' => 'http',
+        'site-domain' => 'fork.local',
+        'site-default-title' => 'Fork CMS',
+        'site-multilanguage' => true,
+        'site-default-language' => 'en',
+        'action-group-tag' => '\@actiongroup',
+        'action-rights-level' => '7',
+    ],
+    $content
+);
+
+// store the content
+file_put_contents($cwd . '/app/config/parameters.yml.gitlab', $content);
+
+// helper function
+function replaceGivenParams(array $params, string $content): string
+{
+    $content = str_replace(
+        array_map(
+            function ($key) {
+                return '<' . $key . '>';
+            },
+            array_keys($params)
+        ),
+        array_map(
+            function ($value) {
+                if (is_string($value) && substr_count($value, ' ') > 0) {
+                    return "'" . $value . "'";
+                }
+
+                return $value;
+            },
+            array_values($params)
+        ),
+        $content
+    );
+
+    $content = preg_replace('|<(.*)>|i', '\'\'', $content);
+
+    return $content;
+}
