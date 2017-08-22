@@ -12,7 +12,7 @@ chdir(__DIR__);
 
 // PHP version check
 if (version_compare(phpversion(), '7.1.0', '<')) {
-    echo 'To be able to run Fork CMS you need ad least PHP 7.1.0';
+    echo 'To be able to run Fork CMS you need at least PHP 7.1.0';
 }
 
 // vendors not installed
