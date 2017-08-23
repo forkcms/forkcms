@@ -1,0 +1,15 @@
+{#
+variables that are available:
+- {{ category }}: contains data about the category
+- {{ items }}: contains an array with all posts, each element contains data about the post
+#}
+
+{% import 'Modules/Blog/Layout/Templates/Article.html.twig' as articles %}
+{% if items %}
+  <div id="blogCategory" class="blog blog-category">
+    {% for item in items %}
+      {{ articles.articlePreview(item) }}
+    {% endfor %}
+  </div>
+  {% include "Core/Layout/Templates/Pagination.html.twig" %}
+{% endif %}

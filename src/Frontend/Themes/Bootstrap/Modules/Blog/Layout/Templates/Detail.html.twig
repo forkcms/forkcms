@@ -1,0 +1,172 @@
+{#
+variables that are available:
+- {{ item }}: contains data about the post
+- {{ comments }}: contains an array with the comments for the post, each element contains data about the comment.
+- {{ commentsCount }}: contains a variable with the number of comments for this blog post.
+- {{ navigation }}: contains an array with data for previous and next post
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+<div id="blogDetail" class="blog blog-detail">
+  <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
+    <meta itemprop="interactionCount" content="UserComments:commentsCount">
+    <meta itemprop="author" content="{{ item.user_id|usersetting('nickname' ) }}">
+    <header class="module-header">
+      <h1 itemprop="name">{{ item.title }}</h1>
+      <span class="sr-only">{{ 'msg.WrittenBy'|trans|ucfirst|format('') }} </span>{{ item.user_id|usersetting('nickname' ) }}
+      <span class="sr-only">{{ 'lbl.On'|trans }}</span>
+      <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">{{ item.publish_on|spoondate(dateFormatLong,LANGUAGE ) }}</time>
+
+      <div class="row">
+        <div class="col-md-6">
+          <span class="sr-only">{{ 'lbl.InThe'|trans }} </span>{{ 'lbl.Category'|trans }}:
+          <a itemprop="articleSection" href="{{ item.category_full_url }}">{{ item.category_title }}</a>
+          {% if item.tags %}
+            <span class="sr-only">{{ 'lbl.WithThe'|trans }}</span> {{ 'lbl.Tags'|trans|ucfirst }}:
+            <span itemprop="keywords">
+              {% for tag in item.tags %}
+                <a class="label label-default" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not loop.last %}<span class="sr-only">,</span> {% endif %}
+              {% endfor %}
+            </span>
+          {% endif %}
+        </div>
+
+        {% if item.allow_comments %}
+          <div class="col-md-6">
+            <div class="commentCount">
+              {% if comments %}
+                <i class="icon-comment"></i>
+                {% if blogCommentsMultiple %}
+                  <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(commentsCount) }}</a>
+                {% else %}
+                  <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </header>
+
+    <div class="module-body" itemprop="text">
+      {% if item.image %}<img class="img-responsive" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" itemprop="image" />{% endif %}
+      {{ item.text|raw }}
+    </div>
+
+    <footer class="module-footer">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="share-buttons">
+            <span class="share-button">
+              {{ 'lbl.Share'|trans|ucfirst }}:
+            </span>
+            <span class="share-button share-button-facebook">
+              <div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
+            </span>
+            <span class="share-button share-button-twitter">
+              <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <nav aria-label="page navigation">
+        <ul class="pager">
+          {% if navigation.previous %}
+            <li class="previous">
+              <a href="{{ navigation.previous.url }}" rel="prev" title="{{ navigation.previous.title }}">&larr;
+                <span class="sr-only">{{ 'lbl.PreviousArticle'|trans|ucfirst }}: </span><span class="title">{{ navigation.previous.title }}</span></a>
+            </li>
+          {% endif %}
+          {% if navigation.next %}
+            <li class="next">
+              <a href="{{ navigation.next.url }}" rel="next" title="{{ navigation.next.title }}"><span class="sr-only">{{ 'lbl.NextArticle'|trans|ucfirst }}: </span><span class="title">{{ navigation.next.title }}</span> &rarr;</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+
+    </footer>
+  </article>
+
+  {% if item.allow_comments %}
+    <section id="{{ act.Comments }}" class="comments">
+      <header>
+        <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
+      </header>
+      {% if not comments %}
+        {{ alerts.alert('info', 'msg.BlogNoComments'|trans) }}
+      {% else %}
+        {% for comment in comments %}
+          {# Do not alter the id! It is used as an anchor #}
+          <div id="comment-{{ comment.id }}" class="comment" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+            <div class="row">
+              <div class="col-sm-1">
+                <meta itemprop="discusses" content="{{ item.title }}" />
+                {% if comment.website %}<a href="{{ comment.website }}">{% endif %}
+                <img src="{{ FRONTEND_CORE_URL }}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar img-circle" data-gravatar-id="{{ comment.gravatar_id }}" />
+                {% if comment.website %}</a>{% endif %}
+              </div>
+              <div class="col-sm-7">
+                <div class="meta" itemscope itemtype="http://schema.org/Person">
+                  {% if comment.website %}<a href="{{ comment.website }}" itemprop="url">{% endif %}
+                  <span itemprop="creator name">{{ comment.author }}</span>{% if comment.website %}</a>{% endif %}
+                  <span class="sr-only">{{ 'lbl.Wrote'|trans }}</span>
+                  <time class="muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s' ) }}">{{ comment.created_on|timeago|raw }}</time>
+                </div>
+                <div class="content" itemprop="commentText">
+                  {{ comment.text|raw }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </section>
+
+    <section id="{{ act.Comment }}" class="comment-form">
+      <header>
+        <h3>{{ 'msg.Comment'|trans|ucfirst }}</h3>
+      </header>
+      <div class="well">
+        {% if commentIsInModeration %}
+          {{ alerts.alert('info', 'msg.BlogCommentInModeration'|trans) }}
+        {% endif %}
+        {% if commentIsSpam %}
+          {{ alerts.alert('danger', 'msg.BlogCommentIsSpam'|trans) }}
+        {% endif %}
+        {% if commentIsAdded %}
+          {{ alerts.alert('success', 'msg.BlogCommentIsAdded'|trans) }}
+        {% endif %}
+        {% form commentsForm %}
+          <div class="row">
+            <div class="col-sm-7">
+              <div class="form-group{% if txtMessageError %} has-error{% endif %}">
+                <label class="control-label" for="message">{{ 'lbl.Message'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+                <div class="controls">
+                  {% form_field_error message %} {% form_field message %}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group{% if txtAuthorError %} has-error{% endif %}">
+                <label class="control-label" for="author">{{ 'lbl.Name'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+                {% form_field_error author %} {% form_field author %}
+              </div>
+              <div class="form-group{% if txtEmailError %} has-error{% endif %}">
+                <label class="control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+                {% form_field_error email %} {% form_field email %}
+              </div>
+              <div class="form-group{% if txtWebsiteError %} has-error{% endif %}">
+                <label class="control-label" for="website">{{ 'lbl.Website'|trans|ucfirst }}</label>
+                {% form_field_error website %} {% form_field website %}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="btn btn-primary" type="submit" name="comment" value="{{ 'msg.Comment'|trans|ucfirst }}" />
+          </div>
+        {% endform %}
+      </div>
+    </section>
+  {% endif %}
+</div>

@@ -1,0 +1,25 @@
+<ul class="pager">
+  {% if widgetPagesNavigation.previous %}
+    <li class="previous">
+      <a href="{{ widgetPagesNavigation.previous.url }}" rel="prev">
+        ← {{ widgetPagesNavigation.previous.title }}
+      </a>
+    </li>
+  {% endif %}
+
+  {% if widgetPagesNavigation.parent %}
+    <li class="parentLink">
+      <a href="{{ widgetPagesNavigation.parent.url }}">
+        ↑ {{ widgetPagesNavigation.parent.title }}
+      </a>
+    </li>
+  {% endif %}
+
+  {% if widgetPagesNavigation.next %}
+    <li class="next">
+      <a href="{{ widgetPagesNavigation.next.url }}" rel="next">
+        {{ widgetPagesNavigation.next.title }} ➝
+      </a>
+    </li>
+  {% endif %}
+</ul>

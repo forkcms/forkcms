@@ -1,0 +1,38 @@
+{#
+  variables that are available:
+  - {{ widgetBlogArchive }}:
+#}
+
+{% if widgetBlogArchive %}
+  <section id="blogArchiveWidget" class="blog blog-widget">
+    <header class="widget-header">
+      <h3>{{ 'lbl.Archive'|trans|ucfirst }}</h3>
+    </header>
+    <div class="widget-body">
+      <ul>
+        {% for item in widgetBlogArchive %}
+          <li>
+            {% if item.url %}<a href="{{ item.url }}">{% endif %}
+              {{ item.label }}
+            {% if item.url %}</a>{% endif %}
+            <span class="badge">{{ item.total }}</span>
+
+            {% if item.months %}
+              <ul>
+                {% for month in item.months %}
+                  <li>
+                    {% if month.url %}<a href="{{ month.url }}">{% endif %}
+                      {{ month.label|spoondate('F',LANGUAGE ) }}
+                    {% if month.url %}</a>{% endif %}
+                    <span class="badge">{{ month.total }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+{% endif %}
+

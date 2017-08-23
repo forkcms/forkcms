@@ -1,0 +1,9 @@
+{% extends 'Core/Layout/Templates/Mails/Default.html.twig' %}
+
+{% block main %}
+  <h2>{{ SITE_TITLE }}: {{ 'msg.FaqFeedbackSubject'|trans|format(question) }}</h2>
+  <h3>{{ 'lbl.SenderInformation'|trans|ucfirst }}</h3>
+  <p><strong>{{ 'lbl.SentOn'|trans|ucfirst }}:</strong><br /> {{ sentOn|spoondate(dateFormatLong, LANGUAGE) }}</p>
+  <h3>{{ 'lbl.Content'|trans|ucfirst }}</h3>
+  <p><strong>{{ 'lbl.Feedback'|trans|ucfirst }}:</strong><br /> {{ text|raw }}</p>
+{% endblock %}

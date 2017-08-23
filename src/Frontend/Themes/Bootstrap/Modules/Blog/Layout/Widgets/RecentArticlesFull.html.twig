@@ -1,0 +1,22 @@
+{#
+  variables that are available:
+  - {{ widgetBlogRecentArticlesFull }}: contains an array with all posts, each element contains data about the post
+#}
+
+{% import 'Modules/Blog/Layout/Templates/Article.html.twig' as articles %}
+{% if widgetBlogRecentArticlesFull %}
+  <section id="blogRecentArticlesFullWidget" class="blog blog-widget">
+    <header class="widget-header">
+      <h2>{{ 'lbl.RecentArticles'|trans|ucfirst }}</h2>
+    </header>
+    {% for item in widgetBlogRecentArticlesFull %}
+      {{ articles.articlePreview(item) }}
+    {% endfor %}
+    <footer class="widget-footer">
+      <div class="btn-group">
+        <a class="btn btn-default" href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|ucfirst }}</a>
+        <a class="btn btn-default" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|ucfirst }}</a>
+      </div>
+    </footer>
+  </section>
+{% endif %}

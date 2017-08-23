@@ -1,0 +1,28 @@
+@charset 'UTF-8';
+
+// Bootstrap
+@import 'bootstrap/variables';
+@import 'bootstrap-variables';
+@import 'bootstrap-imports';
+@import 'bootstrap-compass';
+
+// Font Awesome
+@import 'font-awesome/scss/font-awesome';
+
+// Icon font generated from icon-sources/ through grunt
+@import 'icons';
+
+// Plugin styling
+// eg. @import 'fancybox/dist/scss/jquery.fancybox';
+// eg. @import 'fancybox/dist/helpers/scss/jquery.fancybox-thumbs';
+
+// Base styles
+@import 'base/base';
+
+// Components
+@import 'components/cookiebar';
+@import 'components/footer';
+@import 'components/navbar';
+
+// Custom page styling
+// eg. @import 'pages/footer';

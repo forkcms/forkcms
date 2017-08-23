@@ -1,0 +1,39 @@
+.cookiebar {
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.cookiebar-content {
+  float: left;
+}
+
+.cookiebar-buttons {
+  float: right;
+}
+
+@media (max-width: $screen-sm-max) {
+  .cookiebar {
+    text-align: center;
+  }
+  
+  .cookiebar-content,
+  .cookiebar-buttons {
+    float: none;
+  }
+
+  .cookiebar-content {
+    margin-bottom: 8px;
+  }
+
+  .cookiebar-buttons .btn {
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: $screen-xs) {
+  .cookiebar {
+    padding: 25px 15px;
+  }
+}
+

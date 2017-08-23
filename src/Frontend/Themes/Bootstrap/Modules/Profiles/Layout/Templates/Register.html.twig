@@ -1,0 +1,46 @@
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+{% if registerIsSuccess %}
+  {{ alerts.alert('success', 'msg.RegisterIsSuccess'|trans) }}
+{% endif %}
+{% if registerHasFormError %}
+  {{ alerts.alert('danger', 'err.FormError'|trans) }}
+{% endif %}
+
+{% if not registerHideForm %}
+  {% form register %}
+    <section id="registerForm" class="profiles">
+      <div class="bd">
+        <fieldset class="form-horizontal">
+          <div class="form-group{% if txtDisplayNameError %} has-error{% endif %}">
+            <label class="control-label col-sm-2" for="displayName">{{ 'lbl.DisplayName'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+            <div class="col-sm-6">
+              {% form_field_error display_name %}{% form_field display_name %}
+            </div>
+          </div>
+          <div class="form-group{% if txtEmailError %} has-error{% endif %}">
+            <label class="control-label col-sm-2" for="email">{{ 'lbl.Email'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+            <div class="col-sm-6">
+              {% form_field_error email %}{% form_field email %}
+            </div>
+          </div>
+          <div class="form-group{% if txtPasswordError %} has-error{% endif %}">
+            <label class="control-label col-sm-2" for="password">{{ 'lbl.Password'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+            <div class="col-sm-6">
+              {% form_field_error password %}{% form_field password %}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+              <label for="showPassword">{% form_field show_password %} {{ 'lbl.ShowPassword'|trans|capitalize }} </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+              <input class="btn btn-primary" type="submit" value="{{ 'lbl.Register'|trans|capitalize }}" />
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+  {% endform %}
+{% endif %}

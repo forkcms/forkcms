@@ -131,8 +131,87 @@ class Installer extends ModuleInstaller
         $this->getDatabase()->insert('themes_templates', $templates['fork']['default']);
         $this->getDatabase()->insert('themes_templates', $templates['fork']['home']);
 
+        // @remark: custom for Sumocoders
+        // Bootstrap templates
+
+        // search will be installed by default; already link it to this template
+        $extras['search_form'] = $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, 'N', 2001);
+
+        // build templates
+        $templates['custom']['default'] = [
+            'theme' => 'Custom',
+            'label' => 'Default',
+            'path' => 'Core/Layout/Templates/Default.html.twig',
+            'active' => 'Y',
+            'data' => serialize(
+                [
+                    'format' => '[/,/,/,top,/],[/,main,main,main,/]',
+                    'names' => [
+                        'main',
+                        'top',
+                    ],
+                    'default_extras' => [
+                        'top' => [
+                            $extras['search_form'],
+                        ],
+                    ],
+                ]
+            ),
+        ];
+
+        $templates['custom']['error'] = [
+            'theme' => 'Custom',
+            'label' => 'Error',
+            'path' => 'Core/Layout/Templates/Error.html.twig',
+            'active' => 'Y',
+            'data' => serialize(
+                [
+                    'format' => '[/,/,/,top,/],[/,main,main,main,/]',
+                    'names' => [
+                        'main',
+                        'top',
+                    ],
+                    'default_extras' => [
+                        'top' => [
+                            $extras['search_form'],
+                        ],
+                    ],
+                ]
+            ),
+        ];
+
+        $templates['custom']['home'] = [
+            'theme' => 'Custom',
+            'label' => 'Home',
+            'path' => 'Core/Layout/Templates/Home.html.twig',
+            'active' => 'Y',
+            'data' => serialize(
+                [
+                    'format' => '[/,/,/,top,/],[/,main,main,main,/]',
+                    'names' => [
+                        'main',
+                        'top',
+                    ],
+                    'default_extras' => [
+                        'top' => [
+                            $extras['search_form'],
+                        ],
+                    ],
+                ]
+            ),
+        ];
+
+        // insert templates
+        $this->getDatabase()->insert('themes_templates', $templates['custom']['default']);
+        $this->getDatabase()->insert('themes_templates', $templates['custom']['home']);
+        $this->getDatabase()->insert('themes_templates', $templates['custom']['error']);
+
+        /*
+         * General theme settings
+         */
+
         // set the theme
-        $this->setSetting('Core', 'theme', 'Fork', true);
+        $this->setSetting('Core', 'theme', 'Custom', true);
 
         // set default template
         $this->setSetting('Pages', 'default_template', $this->getTemplateId('Default'));

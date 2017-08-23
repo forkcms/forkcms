@@ -1,0 +1,19 @@
+{#
+variables that are available:
+- {{ items }}: contains an array with all posts, each element contains data about the post
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+{% import 'Modules/Blog/Layout/Templates/Article.html.twig' as articles %}
+
+<div id="blogIndex" class="blog">
+  {% if not items %}
+    <div class="module-body">
+      {{ alerts.alert('info', 'msg.BlogNoItems'|trans) }}
+    </div>
+  {% else %}
+    {% for item in items %}
+      {{ articles.articlePreview(item) }}
+    {% endfor %}
+  {% endif %}
+</div>
+{% include 'Core/Layout/Templates/Pagination.html.twig' %}

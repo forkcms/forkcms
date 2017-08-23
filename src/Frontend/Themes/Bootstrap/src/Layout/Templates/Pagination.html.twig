@@ -1,0 +1,62 @@
+{% if pagination %}
+  {% if pagination.multiple_pages %}
+    <nav role="navigation">
+      <ul class="pagination">
+
+        {# Previous page arrow #}
+        <li{% if not pagination.show_previous %} class="disabled"{% endif %}>
+          {% if pagination.show_previous %}
+            <a href="{{ pagination.previous_url }}" rel="prev nofollow" title="{{ 'lbl.PreviousPage'|trans|capitalize }}">
+              &larr;<span class="sr-only"> {{ 'lbl.PreviousPage'|trans|capitalize }}</span>
+            </a>
+          {% else %}
+            <span>&larr;<span class="sr-only"> {{ 'lbl.PreviousPage'|trans|capitalize }}</span></span>
+          {% endif %}
+        </li>
+
+        {# First page #}
+        {% if pagination.first %}
+          {% for pagination in pagination.first %}
+            <li>
+              <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|capitalize }} {{ pagination.label }}">{{ pagination.label }}</a>
+            </li>
+          {% endfor %}
+          <li><span>…</span></li>
+        {% endif %}
+
+        {# Middle pages #}
+        {% for pagination in pagination.pages %}
+          <li{% if pagination.current %} class="active"{% endif %}>
+            <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage|ucfirst'|trans|capitalize }}{{ pagination.label }}">
+              {{ pagination.label }}
+            </a>
+          </li>
+        {% endfor %}
+
+        {# Last page #}
+        {% if pagination.last %}
+          <li><span>…</span></li>
+          {% for pagination in pagination.last %}
+            <li>
+              <a href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|capitalize }} {{ pagination.label }}">
+                {{ pagination.label }}
+              </a>
+            </li>
+          {% endfor %}
+        {% endif %}
+
+        {# Next page arrow #}
+        <li{% if not pagination.show_next %} class="disabled" {% endif %}>
+          {% if pagination.show_next %}
+            <a href="{{ pagination.next_url }}" rel="next nofollow" title="{{ 'lbl.NextPage'|trans|capitalize }}">
+              <span class="sr-only">{{ 'lbl.NextPage' }} </span>&rarr;
+            </a>
+          {% else %}
+            <span><span class="sr-only">{{ 'lbl.NextPage' }} </span>&rarr;</span>
+          {% endif %}
+        </li>
+      </ul>
+    </nav>
+  {% endif %}
+{% endif %}
+
