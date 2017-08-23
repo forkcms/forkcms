@@ -35,6 +35,14 @@ final class MetaCollection
 
     public function __toString(): string
     {
+        /* @remark Sumocoders staging websites should not be tracked */
+        if (isset($_SERVER['HTTP_HOST']) && substr_count($_SERVER['HTTP_HOST'], '.sumocoders.eu') >= 1) {
+            $this->addMetaData(
+                MetaData::forName('robots', 'noindex, nofollow'),
+                true
+            );
+        }
+
         return implode("\n", $this->metaData) . "\n" . implode("\n", $this->metaLinks);
     }
 }
