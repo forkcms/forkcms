@@ -13,6 +13,12 @@ monolog:
             type:  stream
             path:  "%site.path_www%/var/logs/%kernel.environment%.log"
             level: debug
+        dockerstdout:
+            type: stream
+            path: php://stdout
+            level: debug
+            formatter: monolog.full_trace_formatter
+            channels: [!event]
 
 services:
     database_collector:
@@ -21,3 +27,8 @@ services:
             - "@database"
         tags:
             - { name: data_collector, template: "database_data_collector.html.twig", id: "database" }
+
+    monolog.full_trace_formatter:
+        class: Monolog\Formatter\LineFormatter
+        calls:
+            - [includeStacktraces]
