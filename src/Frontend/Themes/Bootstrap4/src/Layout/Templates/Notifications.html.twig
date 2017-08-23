@@ -1,0 +1,29 @@
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+
+<!-- warning for people that don't have JS enabled -->
+<noscript>
+  {{ alerts.alert('danger', 'msg.EnableJavascript'|trans|raw, true) }}
+</noscript>
+
+<!-- Warning for people that still use IE7 or below -->
+<!--[if lt IE 8 ]>
+{{ alerts.alert('danger', 'msg.OldBrowser'|trans, true, 'ie') }}
+<![endif]-->
+
+<a href="#main" class="sr-only">{$lblSkipToContent|ucfirst}</a>
+
+{% if not cookieBarHide %}
+  <div id="cookieBar" class="cookiebar alert alert-fullwidth">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <div class="container">
+      <div class="d-flex justify-content-between">
+        <p class="mb-0"><strong>{{ 'lbl.Warning'|trans|ucfirst }}:</strong> {{ 'msg.Cookies'|trans|raw }}</p>
+        <div class="buttons">
+          <a href="#" id="cookieBarAgree" class="btn btn-primary btn-sm">{{ 'lbl.IAgree'|trans|ucfirst }}</a>
+          <a href="#" id="cookieBarDisagree" class="btn btn-primary btn-sm">{{ 'lbl.IDisagree'|trans|ucfirst }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+

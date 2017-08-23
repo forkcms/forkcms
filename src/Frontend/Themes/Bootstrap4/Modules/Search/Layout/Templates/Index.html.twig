@@ -1,0 +1,23 @@
+{#
+  variables that are available:
+  - {{ searchResults }}: contains an array with all items, each element contains data about the item
+  - {{ searchTerm }}: the term that has been searched for
+#}
+<section id="searchIndex" class="search mb-3" role="search">
+  {% form search %}
+    <div class="form-inline">
+
+      <div class="form-group{% if txtQError %} has-danger{% endif %}">
+        <label class="form-control-label sr-only" for="q">{{ 'lbl.SearchTerm'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>&nbsp;</label>
+        {% form_field q %}
+        <input id="submit" class="btn btn-primary ml-2" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
+        {% form_field_error q %}
+      </div>
+    </div>
+  {% endform %}
+</section>
+
+{# don't remove this container nor replace the id - it'll be used to populate the search results live as you type #}
+<div id="searchContainer">
+  {% include "Modules/Search/Layout/Templates/Results.html.twig" %}
+</div>

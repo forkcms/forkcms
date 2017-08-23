@@ -1,0 +1,28 @@
+{% extends 'Core/Layout/Templates/Base.html.twig' %}
+
+{% block main %}
+
+  <div class="container">
+    {% include 'Core/Layout/Templates/Breadcrumb.html.twig' %}
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        {% for content in positions.main %}
+          {% if content.html %}
+            {{ content.html|raw }}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="col-md-4">
+        {% for content in positions.right %}
+          {% if content.html %}
+            {{ content.html|raw }}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

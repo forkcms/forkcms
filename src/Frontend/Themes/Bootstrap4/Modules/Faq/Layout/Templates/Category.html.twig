@@ -1,0 +1,25 @@
+{#
+  variables that are available:
+  - {{ questions }}: contains all questions inside this category
+#}
+
+<section id="faqCategory" class="faq faq-category" itemscope itemtype="http://schema.org/Question">
+  <header class="module-header">
+    <h1 itemprop="genre">{{ category.title }}</h1>
+  </header>
+  <div class="module-body">
+    {% if questions %}
+      <div class="list-group">
+        {% for question in questions %}
+          <a class="list-group-item list-group-item-action" href="{{ question.full_url }}" itemprop="about">{{ question.question }}</a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>{{ 'msg.NoQuestionsInCategory'|trans|ucfirst }}</p>
+    {% endif %}
+  </div>
+
+  <div class="py-4">
+    <a href="{{ geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|ucfirst }}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> {{ 'lbl.ToFaqOverview'|trans|ucfirst }}</a>
+  </div>
+</section>

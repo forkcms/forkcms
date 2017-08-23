@@ -1,0 +1,153 @@
+{#
+variables that are available:
+- {{ item }}: contains data about the post
+- {{ comments }}: contains an array with the comments for the post, each element contains data about the comment.
+- {{ commentsCount }}: contains a variable with the number of comments for this blog post.
+- {{ navigation }}: contains an array with data for previous and next post
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+{% set nickname = item.user_id|usersetting('nickname' ) %}
+
+<div id="blogDetail" class="blog blog-detail">
+  <article class="article" itemscope itemtype="http://schema.org/Blog" role="main">
+    <meta itemprop="userInteractionCount" content="{{ item.comments_count }}">
+    <meta itemprop="author" content="{{ nickname }}">
+    <header class="module-header mb-4">
+      <h1 itemprop="name">{{ item.title }}</h1>
+      {{ 'msg.WrittenBy'|trans|ucfirst|format(nickname) }}
+      {{ 'lbl.On'|trans }}
+      <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH:i:s' ) }}">{{ item.publish_on|spoondate(dateFormatLong,LANGUAGE ) }}</time>
+
+      <p class="mb-0">
+        <span class="sr-only">{{ 'lbl.InThe'|trans }} </span>{{ 'lbl.Category'|trans|ucfirst }}:
+        <a itemprop="articleSection" href="{{ item.category_full_url }}">{{ item.category_title }}</a>
+      </p>
+      {% if item.tags %}
+        <p class="mb-0">
+          <span class="sr-only">{{ 'lbl.WithThe'|trans }}</span> {{ 'lbl.Tags'|trans|ucfirst }}:
+          <span itemprop="keywords">
+            {% for tag in item.tags %}
+              <a class="badge badge-default" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>{% if not loop.last %}<span class="sr-only">,</span> {% endif %}
+            {% endfor %}
+          </span>
+        </p>
+      {% endif %}
+
+      {% if item.allow_comments %}
+      <div class="commentCount">
+        {% if comments %}
+          <i class="fa fa-comment"></i>
+          {% if blogCommentsMultiple %}
+            <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(commentsCount) }}</a>
+          {% else %}
+            <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogOneComment'|trans }}</a>
+          {% endif %}
+        {% endif %}
+      </div>
+      {% endif %}
+    </header>
+
+    <div class="module-body" itemprop="text">
+      {% if item.image %}<img class="img-responsive" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" itemprop="image" />{% endif %}
+      {{ item.text|raw }}
+    </div>
+
+    <footer class="module-footer">
+      <nav class="py-4 clearfix" aria-label="page navigation">
+        {% if navigation.previous %}
+          <a class="btn btn-secondary pull-left" href="{{ navigation.previous.url }}" rel="prev" title="{{ navigation.previous.title }}">
+            &larr; <span class="sr-only">{{ 'lbl.PreviousArticle'|trans|ucfirst }}: </span><span class="title">{{ navigation.previous.title }}</span>
+          </a>
+        {% endif %}
+        {% if navigation.next %}
+        <a class="btn btn-secondary pull-right" href="{{ navigation.next.url }}" rel="next" title="{{ navigation.next.title }}">
+          <span class="sr-only">{{ 'lbl.NextArticle'|trans|ucfirst }}: </span><span class="title">{{ navigation.next.title }}</span> &rarr;
+        </a>
+        {% endif %}
+      </nav>
+    </footer>
+  </article>
+
+  {% if item.allow_comments %}
+    <section id="{{ act.Comments }}" class="comments">
+      <header>
+        <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
+      </header>
+      {% if not comments %}
+        {{ alerts.alert('info', 'msg.BlogNoComments'|trans) }}
+      {% else %}
+        {% for comment in comments %}
+          {# Do not alter the id! It is used as an anchor #}
+          <div id="comment-{{ comment.id }}" class="media mb-4" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+            <meta itemprop="discusses" content="{{ item.title }}" />
+            <img src="{{ FRONTEND_CORE_URL }}/Layout/images/default_author_avatar.gif" alt="{{ comment.author }}" class="d-flex mr-3 img-circle" data-gravatar-id="{{ comment.gravatar_id }}">
+            <div class="media-body">
+              <time class="text-muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH:i:s' ) }}">
+                <small>{{ comment.created_on|timeago|raw }}</small>
+              </time>
+              <h5 itemprop="creator name" class="my-0">
+                {% if comment.website %}
+                  <a itemprop="url" href="{{ comment.website }}">
+                    {{ comment.author }}
+                  </a>
+                {% else %}
+                  {{ comment.author }}
+                {% endif %}
+              </h5>
+              <span class="sr-only">{{ 'lbl.Wrote'|trans }}</span>
+              <div itemprop="commentText">
+                {{ comment.text|raw }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </section>
+
+    <section id="{{ act.Comment }}" class="comment-form">
+      <header>
+        <h3>{{ 'msg.Comment'|trans|ucfirst }}</h3>
+      </header>
+      <div class="well">
+        {% if commentIsInModeration %}
+          {{ alerts.alert('info', 'msg.BlogCommentInModeration'|trans) }}
+        {% endif %}
+        {% if commentIsSpam %}
+          {{ alerts.alert('danger', 'msg.BlogCommentIsSpam'|trans) }}
+        {% endif %}
+        {% if commentIsAdded %}
+          {{ alerts.alert('success', 'msg.BlogCommentIsAdded'|trans) }}
+        {% endif %}
+        {% form commentsForm %}
+          <div class="row">
+            <div class="col-sm-7">
+              <div class="form-group{% if txtMessageError %} has-danger{% endif %}">
+                <label class="form-control-label" for="message">{{ 'lbl.Message'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+                <div class="controls">
+                  {% form_field_error message %} {% form_field message %}
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group{% if txtAuthorError %} has-danger{% endif %}">
+                <label class="form-control-label" for="author">{{ 'lbl.Name'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+                {% form_field_error author %} {% form_field author %}
+              </div>
+              <div class="form-group{% if txtEmailError %} has-danger{% endif %}">
+                <label class="form-control-label" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+                {% form_field_error email %} {% form_field email %}
+              </div>
+              <div class="form-group{% if txtWebsiteError %} has-danger{% endif %}">
+                <label class="form-control-label" for="website">{{ 'lbl.Website'|trans|ucfirst }}</label>
+                {% form_field_error website %} {% form_field website %}
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="btn btn-primary" type="submit" name="comment" value="{{ 'msg.Comment'|trans|ucfirst }}" />
+          </div>
+        {% endform %}
+      </div>
+    </section>
+  {% endif %}
+</div>

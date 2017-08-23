@@ -1,0 +1,28 @@
+{#
+  variables that are available:
+  - {{ faqCategories }}: contains all categories, along with all questions inside a category
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+
+<div id="faqIndex" class="faq" itemscope itemtype="http://schema.org/Question">
+  {% if not faqCategories %}
+    {{ alerts.alert('info', 'msg.FaqNoItems'|trans) }}
+  {% else %}
+    {% for category in faqCategories %}
+      <header class="module-header">
+        {% if allowMultipleCategories %}
+          <h2 id="{{ category.url }}" itemprop="genre"><a href="{{ category.full_url }}" title="{{ category.title }}">{{ category.title }}</a></h2>
+        {% else %}
+          <h2>{{ 'lbl.Category'|trans|ucfirst }}</h2>
+        {% endif %}
+      </header>
+      <div class="module-body">
+        <div class="list-group">
+          {% for question in category.questions %}
+            <a class="list-group-item list-group-item-action" href="{{ question.full_url }}">{{ question.question }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>

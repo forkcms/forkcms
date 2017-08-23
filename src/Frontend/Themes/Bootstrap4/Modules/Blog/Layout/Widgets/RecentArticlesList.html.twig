@@ -1,0 +1,23 @@
+{#
+  variables that are available:
+  - {{ widgetBlogRecentArticlesList }}: contains an array with all posts, each element contains data about the post
+#}
+
+{% if widgetBlogRecentArticlesList %}
+  <section id="blogRecentArticlesListWidget" class="blog blog-widget card mb-3">
+    <header class="card-header">
+      <h4 class="mb-0">{{ 'lbl.RecentArticles'|trans|ucfirst }}</h4>
+    </header>
+    <div class="list-group list-group-flush">
+      {% for item in widgetBlogRecentArticlesList %}
+        <a class="list-group-item list-group-item-action" href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a>
+      {% endfor %}
+    </div>
+    <footer class="card-footer">
+      <div class="btn-group">
+        <a class="btn btn-secondary" href="{{ geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|ucfirst }}</a>
+        <a class="btn btn-secondary" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|ucfirst }}</a>
+      </div>
+    </footer>
+  </section>
+{% endif %}

@@ -1,0 +1,54 @@
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+
+<section id="loginForm" class="profiles">
+  {% if formError %}
+    {% if loginError %}
+      {% set error = loginError %}
+    {% else %}
+      {% set error = 'err.FormError'|trans %}
+    {% endif %}
+    {{ alerts.alert('danger', error) }}
+  {% endif %}
+
+  {% form login %}
+    <fieldset>
+      <div class="form-group row{% if txtEmailError %} has-danger{% endif %}">
+        <label class="form-control-label col-sm-2" for="email">{{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        <div class="col-sm-6">
+          {% form_field email %}
+          {% form_field_error email %}
+        </div>
+      </div>
+      <div class="form-group row{% if txtPasswordError %} has-danger{% endif %}">
+        <label class="form-control-label col-sm-2" for="password">{{ 'lbl.Password'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+        <div class="col-sm-6">
+          {% form_field_error password %}{% form_field password %}
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+          <div class="checkbox">
+            <label for="remember">{% form_field remember %} {{ 'lbl.RememberMe'|trans|ucfirst }}</label>
+            {% form_field_error remember %}
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+          <input class="btn btn-primary" type="submit" value="{{ 'lbl.Login'|trans|ucfirst }}" />
+          <small>
+            <a href="{{ geturlforblock('Profiles','ForgotPassword') }}" title="{{ 'msg.ForgotPassword'|trans }}">{{ 'msg.ForgotPassword'|trans }}</a>
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+          <small>
+            {{ 'msg.NoAccountYet'|trans|ucfirst }}
+            <a href="{{ geturlforblock('Profiles','Register') }}">{{ 'lbl.RegisterHere'|trans }}</a>.
+          </small>
+        </div>
+      </div>
+    </fieldset>
+  {% endform %}
+</section>

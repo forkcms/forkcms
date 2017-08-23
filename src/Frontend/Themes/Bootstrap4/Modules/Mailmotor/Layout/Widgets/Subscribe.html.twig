@@ -1,0 +1,15 @@
+<div id="mailmotor-subscribe-widget" class="mailmotor">
+  <form action="{{ geturlforblock('Mailmotor','Subscribe') }}" method="post">
+    <input type="hidden" name="form_token" id="formToken" value="{{ formToken }}" />
+    <input type="hidden" name="form" value="subscribe" />
+    <label class="form-control-label" for="email">
+      {{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+    </label>
+    <div class="input-group">
+      <input type="email" value="" id="email" name="email" class="form-control" />
+      <span class="input-group-btn">
+        <input id="send" class="btn btn-secondary" type="submit" name="send" value="{{ 'lbl.Subscribe'|trans|ucfirst }}" />
+      </span>
+    </div>
+  </form>
+</div>

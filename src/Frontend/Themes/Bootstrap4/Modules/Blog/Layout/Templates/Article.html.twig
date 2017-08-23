@@ -1,0 +1,91 @@
+{% macro article(item) %}
+  {% set nickname = item.user_id|usersetting('nickname' ) %}
+  <article class="article" itemcope itemtype="http://schema.org/Blog" role="main">
+    <meta itemprop="userInteractionCount" content="{{ item.comments_count }}">
+    <meta itemprop="author" itemprop="creator" content="{{ nickname }}">
+
+    <header class="module-header">
+      <h2 itemprop="name"><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></h2>
+
+      <div class="article-info">
+        {{ 'msg.WrittenBy'|trans|ucfirst|format(nickname) }}
+        <span class="sr-only">{{ 'lbl.On'|trans }}</span>
+        <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH:i:s' ) }}">{{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}</time>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <span class="sr-only">{{ 'lbl.InThe'|trans }} </span>
+          {{ 'lbl.Category'|trans|ucfirst }}: <a itemprop="genre" href="{{ item.category_full_url }}">{{ item.category_title }}</a>
+
+          {% if item.tags %}
+            <span class="sr-only">{{ 'lbl.WithThe'|trans }}</span>
+            {{ 'lbl.Tags'|trans|ucfirst }}:
+            <span itemprop="keywords">
+                  {% for tag in item.tags %}
+                    <a class="label label-default" href="{{ tag.full_url }}" rel="tag">{{ tag.name }}</a>
+                    {% if not loop.last %}<span class="sr-only">,</span>{% endif %}
+                  {% endfor %}
+                </span>
+          {% endif %}
+        </div>
+
+        <div class="col-md-6">
+          {% if item.allow_comments %}
+            <div class="comment-count pull-right">
+              <i class="fa fa-comments" aria-hidden="true"></i>
+              <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
+                {% if item.comments_multiple or not item.comments %}
+                  {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}
+                {% else %}
+                  {{ 'msg.BlogOneComment'|trans }}
+                {% endif %}
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+
+    <div class="module-body" itemprop="text">
+      {% if item.image %}<img itemprop="image" class="article-image img-responsive" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
+      <div class="article-content">
+        {% if item.introduction %}
+          {{ item.introduction|raw }}
+        {% else %}
+          {{ item.text|raw }}
+        {% endif %}
+      </div>
+    </div>
+
+  </article>
+
+{% endmacro %}
+
+{% macro articleCard(item) %}
+
+  <article class="card article" itemcope itemtype="http://schema.org/Blog" role="main">
+    <meta itemprop="commentCount" content="{{ item.comments_count }}">
+    <meta itemprop="author" itemprop="creator" content="{{ item.user_id|usersetting('nickname' ) }}">
+
+    {% if item.image %}
+      <img itemprop="image" class="card-img-top" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />
+    {% else %}
+      <img itemprop="image" class="card-img-top" src="https://placehold.it/400x300" alt="{{ item.title }}" />
+    {% endif %}
+
+    <div class="card-block" itemprop="text">
+      <h4 class="card-title" itemprop="name">{{ item.title }}</h4>
+      {% if item.introduction %}
+        {{ item.introduction|raw|truncate(200) }}
+      {% else %}
+        {{ item.text|raw }}
+      {% endif %}
+    </div>
+    <div class="card-footer">
+      <a class="btn btn-primary" href="{{ item.full_url }}" title="{{ item.title }}">{{ 'lbl.ReadMore'|trans }}</a>
+    </div>
+
+  </article>
+
+{% endmacro %}

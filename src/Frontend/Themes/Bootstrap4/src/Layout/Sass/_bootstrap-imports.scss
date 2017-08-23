@@ -1,0 +1,54 @@
+/*!
+ * Bootstrap v4.0.0-alpha.6 (https://getbootstrap.com)
+ * Copyright 2011-2017 The Bootstrap Authors
+ * Copyright 2011-2017 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// Core variables and mixins
+//@import "variables";
+@import "bootstrap4/scss/mixins";
+@import "bootstrap4/scss/custom";
+
+// Reset and dependencies
+@import "bootstrap4/scss/normalize";
+@import "bootstrap4/scss/print";
+
+// Core CSS
+@import "bootstrap4/scss/reboot";
+@import "bootstrap4/scss/type";
+@import "bootstrap4/scss/images";
+@import "bootstrap4/scss/code";
+@import "bootstrap4/scss/grid";
+@import "bootstrap4/scss/tables";
+@import "bootstrap4/scss/forms";
+@import "bootstrap4/scss/buttons";
+
+// Components
+@import "bootstrap4/scss/transitions";
+@import "bootstrap4/scss/dropdown";
+@import "bootstrap4/scss/button-group";
+@import "bootstrap4/scss/input-group";
+@import "bootstrap4/scss/custom-forms";
+@import "bootstrap4/scss/nav";
+@import "bootstrap4/scss/navbar";
+@import "bootstrap4/scss/card";
+@import "bootstrap4/scss/breadcrumb";
+@import "bootstrap4/scss/pagination";
+@import "bootstrap4/scss/badge";
+@import "bootstrap4/scss/jumbotron";
+@import "bootstrap4/scss/alert";
+@import "bootstrap4/scss/progress";
+@import "bootstrap4/scss/media";
+@import "bootstrap4/scss/list-group";
+@import "bootstrap4/scss/responsive-embed";
+@import "bootstrap4/scss/close";
+
+// Components w/ JavaScript
+@import "bootstrap4/scss/modal";
+@import "bootstrap4/scss/tooltip";
+@import "bootstrap4/scss/popover";
+@import "bootstrap4/scss/carousel";
+
+// Utility classes
+@import "bootstrap4/scss/utilities";
