@@ -1,4 +1,10 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
+{% use 'bootstrap_3_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
+
+{% block form_widget_simple %}
+  {{- block('base_form_widget_simple') -}}
+  {{- block('help') -}}
+{% endblock %}
 
 {% block form_label %}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
@@ -350,7 +356,6 @@
     </div>
     <div class="panel-body">
       {{- form_widget(form) -}}
-      {{- block('help_text') -}}
     </div>
     {% if (not compound or force_error|default(false)) and not valid %}
       <div class="panel-footer">
@@ -376,7 +381,7 @@
   </div>
 {% endblock %}
 
-{% block help_text %}
+{% block help %}
   {% for attributeName, attributeValue in attr %}
     {% if attributeName == 'help' %}
       <span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
