@@ -350,11 +350,7 @@
     </div>
     <div class="panel-body">
       {{- form_widget(form) -}}
-
-      {% for attributeName, attributeValue in attr %}
-        {% if attributeName == 'help' %}
-          <span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
-      {% endfor %}
+      {{- block('help_text') -}}
     </div>
     {% if (not compound or force_error|default(false)) and not valid %}
       <div class="panel-footer">
@@ -378,4 +374,11 @@
       </div>
     {% endif %}
   </div>
+{% endblock %}
+
+{% block help_text %}
+  {% for attributeName, attributeValue in attr %}
+    {% if attributeName == 'help' %}
+      <span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
+  {% endfor %}
 {% endblock %}
