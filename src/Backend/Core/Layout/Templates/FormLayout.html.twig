@@ -2,8 +2,8 @@
 {% use 'bootstrap_3_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
 
 {% block form_widget_simple %}
-  {{- block('base_form_widget_simple') -}}
-  {{- block('help') -}}
+  {{ block('base_form_widget_simple') }}
+  {{ block('help') }}
 {% endblock %}
 
 {% block form_label %}
