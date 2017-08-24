@@ -212,7 +212,7 @@
         <translation language="hu"><![CDATA[kategória]]></translation>
         <translation language="it"><![CDATA[categoria]]></translation>
         <translation language="fr"><![CDATA[catégorie]]></translation>
-        <translation language="ru"><![CDATA[категории:]]></translation>
+        <translation language="ru"><![CDATA[Категория]]></translation>
         <translation language="zh"><![CDATA[分类]]></translation>
         <translation language="de"><![CDATA[Kategorie]]></translation>
         <translation language="es"><![CDATA[Categoría]]></translation>
@@ -647,6 +647,7 @@
         <translation language="fr"><![CDATA[je suis d'accord]]></translation>
         <translation language="de"><![CDATA[ich bin einverstanden]]></translation>
         <translation language="es"><![CDATA[estoy de acuerdo]]></translation>
+        <translation language="ru"><![CDATA[Я согласен]]></translation>
       </item>
       <item type="label" name="IDisagree">
         <translation language="nl"><![CDATA[ik ga niet akkoord]]></translation>
@@ -654,6 +655,7 @@
         <translation language="fr"><![CDATA[je ne suis pas d'accord]]></translation>
         <translation language="de"><![CDATA[ich bin nicht einverstanden]]></translation>
         <translation language="es"><![CDATA[no estoy de acuerdo]]></translation>
+        <translation language="ru"><![CDATA[Я не согласен]]></translation>
       </item>
       <item type="label" name="In">
         <translation language="nl"><![CDATA[in]]></translation>
@@ -824,7 +826,7 @@
         <translation language="fr"><![CDATA[homme]]></translation>
         <translation language="hu"><![CDATA[férfi]]></translation>
         <translation language="it"><![CDATA[maschio]]></translation>
-        <translation language="ru"><![CDATA[Мужчина]]></translation>
+        <translation language="ru"><![CDATA[Мужской]]></translation>
         <translation language="zh"><![CDATA[男]]></translation>
         <translation language="de"><![CDATA[männlich]]></translation>
         <translation language="es"><![CDATA[Masculino]]></translation>
@@ -922,6 +924,7 @@
         <translation language="nl"><![CDATA[verifiëer nieuw wachtwoord]]></translation>
         <translation language="en"><![CDATA[verify new password]]></translation>
         <translation language="fr"><![CDATA[vérifier nouveau mot de passe]]></translation>
+        <translation language="ru"><![CDATA[Подтвердить новый пароль]]></translation>
       </item>
       <item type="error" name="PasswordsDontMatch">
         <translation language="nl"><![CDATA[De wachtwoorden zijn verschillend]]></translation>
@@ -943,7 +946,7 @@
         <translation language="hu"><![CDATA[következő]]></translation>
         <translation language="it"><![CDATA[successivo]]></translation>
         <translation language="fr"><![CDATA[suivant]]></translation>
-        <translation language="ru"><![CDATA[Далее]]></translation>
+        <translation language="ru"><![CDATA[Следующий]]></translation>
         <translation language="zh"><![CDATA[下一步]]></translation>
         <translation language="de"><![CDATA[nächste]]></translation>
         <translation language="es"><![CDATA[Siguiente]]></translation>
@@ -1163,7 +1166,7 @@
         <translation language="hu"><![CDATA[on]]></translation>
         <translation language="it"><![CDATA[il]]></translation>
         <translation language="fr"><![CDATA[sur]]></translation>
-        <translation language="ru"><![CDATA[Дата:]]></translation>
+        <translation language="ru"><![CDATA[на]]></translation>
         <translation language="zh"><![CDATA[于]]></translation>
         <translation language="de"><![CDATA[am]]></translation>
         <translation language="es"><![CDATA[en]]></translation>
@@ -1249,7 +1252,7 @@
         <translation language="hu"><![CDATA[előző]]></translation>
         <translation language="it"><![CDATA[precedente]]></translation>
         <translation language="fr"><![CDATA[précédent]]></translation>
-        <translation language="ru"><![CDATA[Пред.]]></translation>
+        <translation language="ru"><![CDATA[Предыдущий]]></translation>
         <translation language="zh"><![CDATA[上一步]]></translation>
         <translation language="de"><![CDATA[vorherige]]></translation>
         <translation language="es"><![CDATA[previo]]></translation>
@@ -1410,7 +1413,7 @@
         <translation language="fr"><![CDATA[conservez mes coordonnées]]></translation>
         <translation language="hu"><![CDATA[emlékezz rám]]></translation>
         <translation language="it"><![CDATA[ricordami]]></translation>
-        <translation language="ru"><![CDATA[Запомнить]]></translation>
+        <translation language="ru"><![CDATA[Запомнить меня]]></translation>
         <translation language="zh"><![CDATA[记住我]]></translation>
         <translation language="de"><![CDATA[merken]]></translation>
         <translation language="es"><![CDATA[recordarme]]></translation>
@@ -1495,7 +1498,7 @@
         <translation language="hu"><![CDATA[keresési feltételek]]></translation>
         <translation language="it"><![CDATA[termine di ricerca]]></translation>
         <translation language="fr"><![CDATA[chercher le terme]]></translation>
-        <translation language="ru"><![CDATA[Ключевые Слова]]></translation>
+        <translation language="ru"><![CDATA[Ключевые слова]]></translation>
         <translation language="zh"><![CDATA[搜索词]]></translation>
         <translation language="de"><![CDATA[Suchbegriff]]></translation>
         <translation language="es"><![CDATA[buscar el término]]></translation>
@@ -1593,7 +1596,7 @@
       <item type="label" name="Settings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
         <translation language="en"><![CDATA[settings]]></translation>
-        <translation language="ru"><![CDATA[настройки]]></translation>
+        <translation language="ru"><![CDATA[Настройки]]></translation>
         <translation language="el"><![CDATA[ρυθμίσεις]]></translation>
         <translation language="uk"><![CDATA[Нашатування]]></translation>
         <translation language="hu"><![CDATA[beállítások]]></translation>
@@ -1603,7 +1606,7 @@
       <item type="label" name="Share">
         <translation language="nl"><![CDATA[delen]]></translation>
         <translation language="en"><![CDATA[share]]></translation>
-        <translation language="ru"><![CDATA[поделиться]]></translation>
+        <translation language="ru"><![CDATA[Поделиться]]></translation>
         <translation language="fr"><![CDATA[partager]]></translation>
         <translation language="de"><![CDATA[share]]></translation>
         <translation language="lt"><![CDATA[dalintis]]></translation>
@@ -1786,7 +1789,7 @@
       <item type="label" name="ToFaqOverview">
         <translation language="nl"><![CDATA[naar het FAQ overzicht]]></translation>
         <translation language="en"><![CDATA[to the FAQ overview]]></translation>
-        <translation language="ru"><![CDATA[обзор FAQ]]></translation>
+        <translation language="ru"><![CDATA[Обзор FAQ]]></translation>
         <translation language="fr"><![CDATA[au l'ensemble de FAQ]]></translation>
         <translation language="es"><![CDATA[al resumen del FAQ]]></translation>
         <translation language="de"><![CDATA[zur Fragen-Übersicht]]></translation>
@@ -1803,7 +1806,7 @@
         <translation language="hu"><![CDATA[címkék áttekintése]]></translation>
         <translation language="it"><![CDATA[alla visione d'insieme dei tag]]></translation>
         <translation language="fr"><![CDATA[vers la vue d'ensemble des tags]]></translation>
-        <translation language="ru"><![CDATA[Обзор Тэгов]]></translation>
+        <translation language="ru"><![CDATA[Обзор тэгов]]></translation>
         <translation language="zh"><![CDATA[去标签概览页]]></translation>
         <translation language="de"><![CDATA[zur Schlagwortübersicht]]></translation>
         <translation language="es"><![CDATA[a la visión general de las etiquetas]]></translation>
@@ -1941,6 +1944,7 @@
       <item type="label" name="YourAvatar">
           <translation language="nl"><![CDATA[jouw avatar]]></translation>
           <translation language="en"><![CDATA[your avatar]]></translation>
+          <translation language="ru"><![CDATA[Аватар]]></translation>
       </item>
       <item type="label" name="YourData">
         <translation language="nl"><![CDATA[uw gegevens]]></translation>
@@ -1979,7 +1983,7 @@
         <translation language="fr"><![CDATA[votre emplacement]]></translation>
         <translation language="hu"><![CDATA[címed]]></translation>
         <translation language="it"><![CDATA[la tua posizione]]></translation>
-        <translation language="ru"><![CDATA[Ваше положение]]></translation>
+        <translation language="ru"><![CDATA[Ваше местоположение]]></translation>
         <translation language="zh"><![CDATA[你的位置]]></translation>
         <translation language="de"><![CDATA[dein Ort]]></translation>
         <translation language="es"><![CDATA[Tus Datos de Ubicación]]></translation>
@@ -2247,7 +2251,7 @@
         <translation language="hu"><![CDATA[hozzászólás]]></translation>
         <translation language="it"><![CDATA[commento]]></translation>
         <translation language="fr"><![CDATA[commentez]]></translation>
-        <translation language="ru"><![CDATA[Отправить]]></translation>
+        <translation language="ru"><![CDATA[Комментировать]]></translation>
         <translation language="zh"><![CDATA[评论]]></translation>
         <translation language="de"><![CDATA[kommentieren]]></translation>
         <translation language="es"><![CDATA[comment]]></translation>
@@ -2312,6 +2316,7 @@
         <translation language="fr"><![CDATA[Pour améliorer l'expérience utilisateur sur ce site, nous utilisons des <a href="/disclaimer">cookies</a>.]]></translation>
         <translation language="de"><![CDATA[Wir verwenden <a href="/disclaimer">Cookies</a> um Ihr Benutzer-Erlebnis zu verbessern.]]></translation>
         <translation language="es"><![CDATA[Para mejorar la experiencia del usuario en este sitio utilizamos <a href="/disclaimer">cookies</a>.]]></translation>
+        <translation language="ru"><![CDATA[Чтобы улучшить работу пользователей на этом сайте, мы используем <a href="/disclaimer">cookies</a>.]]></translation>
       </item>
       <item type="message" name="EN">
         <translation language="nl"><![CDATA[Engels]]></translation>
@@ -2569,7 +2574,7 @@
         <translation language="fr"><![CDATA[Le nombre de changement de nom d'affichage est limité à %1$s. Vous pouvez encore faire %2$s changement(s).]]></translation>
         <translation language="it"><![CDATA[Puoi cambiare il nome un massimo di %1$s volte. Hai ancora %2$s modifiche possibili.]]></translation>
         <translation language="hu"><![CDATA[A becenevedet %1$s alkalommal tudod megváltoztatni. Neked maradt még %2$s alkalom.]]></translation>
-        <translation language="ru"><![CDATA[ Вы можете изменить своё имя всего %1$s раз. Осталось %2$s.]]></translation>
+        <translation language="ru"><![CDATA[Вы можете изменить своё имя всего %1$s раз. Осталось %2$s.]]></translation>
         <translation language="zh"><![CDATA[显示名称允许更改%1$s次，当前剩余%2$s次更改机会。]]></translation>
         <translation language="de"><![CDATA[Die Anzahl an Nichname-Änderungen ist auf %1$s limitiert. Du hast noch %2$s Änderung(en) übrig.]]></translation>
         <translation language="es"><![CDATA[El número de veces que puedes cambiar el nombre a mostrar esta limitado a %1$s. Te quedan %2$s .]]></translation>
@@ -2835,7 +2840,7 @@
         <translation language="hu"><![CDATA[eddig]]></translation>
         <translation language="it"><![CDATA[Fin ora]]></translation>
         <translation language="fr"><![CDATA[Rien à afficher]]></translation>
-        <translation language="ru"><![CDATA[Не отправленные]]></translation>
+        <translation language="ru"><![CDATA[Неотправленные]]></translation>
         <translation language="zh"><![CDATA[到目前为止]]></translation>
         <translation language="de"><![CDATA[Bis jetzt wurden noch keine Newsletter verschickt.]]></translation>
         <translation language="es"><![CDATA[No hay nada que mostrar]]></translation>
@@ -2874,6 +2879,7 @@
         <translation language="hu"><![CDATA[További kérdések]]></translation>
         <translation language="zh"><![CDATA[其他问题]]></translation>
         <translation language="de"><![CDATA[Andere Fragen]]></translation>
+        <translation language="ru"><![CDATA[Другие вопросы]]></translation>
       </item>
       <item type="message" name="OwnQuestionSuccess">
         <translation language="nl"><![CDATA[Je vraag werd verzonden. We geven je zo snel mogelijk een antwoord.]]></translation>
@@ -3396,7 +3402,7 @@
       <item type="error" name="FeedbackIsRequired">
         <translation language="nl"><![CDATA[Gelieve feedback te geven.]]></translation>
         <translation language="en"><![CDATA[Please provide feedback.]]></translation>
-        <translation language="ru"><![CDATA[Пожалуйста, укажите ваше сообщение.]]></translation>
+        <translation language="ru"><![CDATA[Пожалуйста, напишите сообщение.]]></translation>
         <translation language="fr"><![CDATA[S'il vous plaît fournir une rétroaction.]]></translation>
         <translation language="es"><![CDATA[Por favor escribe un feedback.]]></translation>
         <translation language="de"><![CDATA[Bitte geben sie ein Feedback.]]></translation>
@@ -3545,7 +3551,7 @@
         <translation language="nl"><![CDATA[Enkel jpg, gif, png]]></translation>
         <translation language="en"><![CDATA[Only jpg, gif, png]]></translation>
         <translation language="hu"><![CDATA[Csak jpg, gif, png]]></translation>
-        <translation language="ru"><![CDATA[Только JPG, GIF, PNG]]></translation>
+        <translation language="ru"><![CDATA[Только jpg, gif, png]]></translation>
         <translation language="it"><![CDATA[Solo jpg, gif, png]]></translation>
         <translation language="zh"><![CDATA[支持jpg/gif/png格式]]></translation>
         <translation language="fr"><![CDATA[Jpg, gif, png seulement]]></translation>
@@ -3907,7 +3913,7 @@
       <item type="action" name="Feedback">
         <translation language="nl"><![CDATA[feedback]]></translation>
         <translation language="en"><![CDATA[feedback]]></translation>
-        <translation language="ru"><![CDATA[обратная-связь]]></translation>
+        <translation language="ru"><![CDATA[обратная связь]]></translation>
         <translation language="fr"><![CDATA[feedback]]></translation>
         <translation language="es"><![CDATA[retroalimentación]]></translation>
         <translation language="de"><![CDATA[feedback]]></translation>
@@ -3920,7 +3926,7 @@
       <item type="action" name="OwnQuestion">
         <translation language="nl"><![CDATA[stel-jouw-vraag]]></translation>
         <translation language="en"><![CDATA[ask-your-question]]></translation>
-        <translation language="ru"><![CDATA[задайте-ваш-вопрос]]></translation>
+        <translation language="ru"><![CDATA[задайте ваш вопрос]]></translation>
         <translation language="fr"><![CDATA[posez-votre-question]]></translation>
         <translation language="es"><![CDATA[realiza-tu-pregunta]]></translation>
         <translation language="de"><![CDATA[stell-deine-frage]]></translation>
@@ -3936,7 +3942,7 @@
         <translation language="hu"><![CDATA[elonezet]]></translation>
         <translation language="it"><![CDATA[anteprima]]></translation>
         <translation language="fr"><![CDATA[apercu]]></translation>
-        <translation language="ru"><![CDATA[предварительный-просмотр]]></translation>
+        <translation language="ru"><![CDATA[предпросмотр]]></translation>
         <translation language="zh"><![CDATA[预览]]></translation>
         <translation language="de"><![CDATA[vorschau]]></translation>
         <translation language="es"><![CDATA[vista-previa]]></translation>
@@ -4045,7 +4051,7 @@
         <translation language="en"><![CDATA[account management]]></translation>
         <translation language="hu"><![CDATA[fiók kezelés]]></translation>
         <translation language="it"><![CDATA[gestione account]]></translation>
-        <translation language="ru"><![CDATA[Настройка Аккаунта]]></translation>
+        <translation language="ru"><![CDATA[Настройка аккаунта]]></translation>
         <translation language="zh"><![CDATA[帐户管理]]></translation>
         <translation language="de"><![CDATA[Benutzerkontenverwaltung]]></translation>
         <translation language="fr"><![CDATA[gestion du compte]]></translation>
@@ -4235,7 +4241,7 @@
         <translation language="nl"><![CDATA[alle e-mailadressen,]]></translation>
         <translation language="hu"><![CDATA[összes e-mail cím]]></translation>
         <translation language="it"><![CDATA[tutti gli indirizzi email]]></translation>
-        <translation language="ru"><![CDATA[Все E-mail]]></translation>
+        <translation language="ru"><![CDATA[Все e-mail]]></translation>
         <translation language="zh"><![CDATA[所有邮箱地址]]></translation>
         <translation language="de"><![CDATA[alle E-Mail-Adressen]]></translation>
         <translation language="fr"><![CDATA[toutes les adresses e-mails]]></translation>
@@ -4540,7 +4546,7 @@
       <item type="label" name="AskOwnQuestion">
         <translation language="nl"><![CDATA[stel jouw vraag]]></translation>
         <translation language="en"><![CDATA[ask own question]]></translation>
-        <translation language="ru"><![CDATA[Задайте свой пароль]]></translation>
+        <translation language="ru"><![CDATA[Задайте свой вопрос]]></translation>
         <translation language="es"><![CDATA[hacerse una pregunta]]></translation>
         <translation language="de"><![CDATA[eigene Frage stellen]]></translation>
         <translation language="lt"><![CDATA[užduoti klausimą]]></translation>
@@ -4668,7 +4674,7 @@
         <translation language="fr"><![CDATA[Bulgare]]></translation>
         <translation language="nl"><![CDATA[Bulgaars]]></translation>
         <translation language="en"><![CDATA[Bulgarian]]></translation>
-        <translation language="ru"><![CDATA[болгарский]]></translation>
+        <translation language="ru"><![CDATA[Болгарский]]></translation>
         <translation language="it"><![CDATA[bulgaro]]></translation>
         <translation language="es"><![CDATA[Bulgaro]]></translation>
         <translation language="lt"><![CDATA[Bulgariškai]]></translation>
@@ -4732,7 +4738,7 @@
         <translation language="hu"><![CDATA[bounce type]]></translation>
         <translation language="it"><![CDATA[tipo di rimbalzo]]></translation>
         <translation language="zh"><![CDATA[bounce type]]></translation>
-        <translation language="ru"><![CDATA[Тип Отчета]]></translation>
+        <translation language="ru"><![CDATA[Тип отчета]]></translation>
         <translation language="fr"><![CDATA[type de rebond]]></translation>
         <translation language="de"><![CDATA[Bounce-Type]]></translation>
         <translation language="es"><![CDATA[bounce type]]></translation>
@@ -5307,7 +5313,7 @@
         <translation language="en"><![CDATA[date and time]]></translation>
         <translation language="hu"><![CDATA[dátum és idő]]></translation>
         <translation language="it"><![CDATA[data e ora]]></translation>
-        <translation language="ru"><![CDATA[Дата и Время]]></translation>
+        <translation language="ru"><![CDATA[Дата и время]]></translation>
         <translation language="zh"><![CDATA[日期与时间]]></translation>
         <translation language="de"><![CDATA[Datum und Uhrzeit]]></translation>
         <translation language="fr"><![CDATA[date et heure]]></translation>
@@ -5324,7 +5330,7 @@
         <translation language="en"><![CDATA[date format]]></translation>
         <translation language="hu"><![CDATA[dátum formátum]]></translation>
         <translation language="it"><![CDATA[formato data]]></translation>
-        <translation language="ru"><![CDATA[Формат Даты]]></translation>
+        <translation language="ru"><![CDATA[Формат даты]]></translation>
         <translation language="zh"><![CDATA[日期格式]]></translation>
         <translation language="de"><![CDATA[Datumsformat]]></translation>
         <translation language="fr"><![CDATA[format de date]]></translation>
@@ -5375,7 +5381,7 @@
         <translation language="en"><![CDATA[debug]]></translation>
         <translation language="hu"><![CDATA[fejlesztői]]></translation>
         <translation language="it"><![CDATA[debug]]></translation>
-        <translation language="ru"><![CDATA[Отладки]]></translation>
+        <translation language="ru"><![CDATA[Отладка]]></translation>
         <translation language="zh"><![CDATA[调试模式]]></translation>
         <translation language="de"><![CDATA[Debug]]></translation>
         <translation language="fr"><![CDATA[Debug]]></translation>
@@ -5664,7 +5670,7 @@
         <translation language="en"><![CDATA[end date]]></translation>
         <translation language="hu"><![CDATA[befejezés ideje]]></translation>
         <translation language="it"><![CDATA[data di scadenza]]></translation>
-        <translation language="ru"><![CDATA[Дата конца]]></translation>
+        <translation language="ru"><![CDATA[Дата окончания]]></translation>
         <translation language="zh"><![CDATA[结束日期]]></translation>
         <translation language="fr"><![CDATA[date de fin]]></translation>
         <translation language="de"><![CDATA[Enddatum]]></translation>
@@ -5788,7 +5794,7 @@
         <translation language="en"><![CDATA[extra metatags]]></translation>
         <translation language="hu"><![CDATA[extra metatag]]></translation>
         <translation language="it"><![CDATA[metatag extra]]></translation>
-        <translation language="ru"><![CDATA[Доп. Мета ]]></translation>
+        <translation language="ru"><![CDATA[Доп. метатеги ]]></translation>
         <translation language="zh"><![CDATA[其他元数据标签]]></translation>
         <translation language="de"><![CDATA[zusätzliche Metatags]]></translation>
         <translation language="fr"><![CDATA[extra metatags]]></translation>
@@ -5929,7 +5935,7 @@
         <translation language="en"><![CDATA[formbuilder]]></translation>
         <translation language="hu"><![CDATA[űrlapkészítő]]></translation>
         <translation language="it"><![CDATA[formbuilder]]></translation>
-        <translation language="ru"><![CDATA[Генератор Форм]]></translation>
+        <translation language="ru"><![CDATA[Генератор форм]]></translation>
         <translation language="zh"><![CDATA[表单创建器]]></translation>
         <translation language="fr"><![CDATA[créateur de formulaire]]></translation>
         <translation language="de"><![CDATA[Formbuilder]]></translation>
@@ -6291,7 +6297,7 @@
         <translation language="en"><![CDATA[interface preferences]]></translation>
         <translation language="hu"><![CDATA[felület beállítások]]></translation>
         <translation language="it"><![CDATA[preferenze interfaccia]]></translation>
-        <translation language="ru"><![CDATA[Настройка Интерфейса]]></translation>
+        <translation language="ru"><![CDATA[Настройка интерфейса]]></translation>
         <translation language="zh"><![CDATA[界面偏好]]></translation>
         <translation language="de"><![CDATA[Interface-Einstellungen]]></translation>
         <translation language="fr"><![CDATA[préférences interface]]></translation>
@@ -6527,7 +6533,7 @@
         <translation language="en"><![CDATA[latest comments]]></translation>
         <translation language="hu"><![CDATA[utolsó komment]]></translation>
         <translation language="it"><![CDATA[ultimi commenti]]></translation>
-        <translation language="ru"><![CDATA[Последние Комментарии]]></translation>
+        <translation language="ru"><![CDATA[Последние комментарии]]></translation>
         <translation language="zh"><![CDATA[最新评论]]></translation>
         <translation language="de"><![CDATA[neueste Kommentare]]></translation>
         <translation language="fr"><![CDATA[derniers commentaires]]></translation>
@@ -6640,7 +6646,7 @@
         <translation language="en"><![CDATA[login details]]></translation>
         <translation language="hu"><![CDATA[belépés részletei]]></translation>
         <translation language="it"><![CDATA[dettagli login]]></translation>
-        <translation language="ru"><![CDATA[Детали Логина]]></translation>
+        <translation language="ru"><![CDATA[Детали логина]]></translation>
         <translation language="zh"><![CDATA[登录详情]]></translation>
         <translation language="fr"><![CDATA[détails de connexion]]></translation>
         <translation language="de"><![CDATA[Anmeldedetails]]></translation>
@@ -6670,7 +6676,7 @@
         <translation language="en"><![CDATA[long date format]]></translation>
         <translation language="hu"><![CDATA[hosszú dátumformátum]]></translation>
         <translation language="it"><![CDATA[formato esteso data]]></translation>
-        <translation language="ru"><![CDATA[Длинный Формат]]></translation>
+        <translation language="ru"><![CDATA[Длинный формат]]></translation>
         <translation language="zh"><![CDATA[日期格式]]></translation>
         <translation language="de"><![CDATA[langes Datumsformat]]></translation>
         <translation language="fr"><![CDATA[format de date long]]></translation>
@@ -6908,7 +6914,7 @@
         <translation language="en"><![CDATA[metadata]]></translation>
         <translation language="hu"><![CDATA[metadata]]></translation>
         <translation language="it"><![CDATA[metadata]]></translation>
-        <translation language="ru"><![CDATA[Мета-дата]]></translation>
+        <translation language="ru"><![CDATA[Метаданные]]></translation>
         <translation language="zh"><![CDATA[元数据]]></translation>
         <translation language="de"><![CDATA[Metadaten]]></translation>
         <translation language="fr"><![CDATA[metadata]]></translation>
@@ -7073,7 +7079,7 @@
         <translation language="en"><![CDATA[move to moderation]]></translation>
         <translation language="hu"><![CDATA[move to moderation]]></translation>
         <translation language="it"><![CDATA[sposta in moderati]]></translation>
-        <translation language="ru"><![CDATA[Отправить в модерацию]]></translation>
+        <translation language="ru"><![CDATA[Отправить на модерацию]]></translation>
         <translation language="zh"><![CDATA[移到待审核]]></translation>
         <translation language="fr"><![CDATA[déplacer vers modération]]></translation>
         <translation language="de"><![CDATA[verschieben zu Moderation]]></translation>
@@ -7088,7 +7094,7 @@
         <translation language="en"><![CDATA[move to published]]></translation>
         <translation language="hu"><![CDATA[move to published]]></translation>
         <translation language="it"><![CDATA[sposta in pubblicati]]></translation>
-        <translation language="ru"><![CDATA[Отправить в опубликованные]]></translation>
+        <translation language="ru"><![CDATA[Перенести в опубликованные]]></translation>
         <translation language="zh"><![CDATA[移到已发布]]></translation>
         <translation language="fr"><![CDATA[déplacer vers publication]]></translation>
         <translation language="de"><![CDATA[verschieben zu Veröffentlicht]]></translation>
@@ -7396,7 +7402,7 @@
         <translation language="nl"><![CDATA[formaat getallen]]></translation>
         <translation language="en"><![CDATA[number format]]></translation>
         <translation language="hu"><![CDATA[szám formátum]]></translation>
-        <translation language="ru"><![CDATA[Числовой Формат]]></translation>
+        <translation language="ru"><![CDATA[Числовой формат]]></translation>
         <translation language="it"><![CDATA[formato numero]]></translation>
         <translation language="zh"><![CDATA[数字格式]]></translation>
         <translation language="de"><![CDATA[Nummernformat]]></translation>
@@ -7551,7 +7557,7 @@
         <translation language="nl"><![CDATA[paginering]]></translation>
         <translation language="en"><![CDATA[pagination]]></translation>
         <translation language="hu"><![CDATA[lapszámozás]]></translation>
-        <translation language="ru"><![CDATA[Навигация Страницы]]></translation>
+        <translation language="ru"><![CDATA[Навигация страницы]]></translation>
         <translation language="it"><![CDATA[paginazione]]></translation>
         <translation language="zh"><![CDATA[页码]]></translation>
         <translation language="fr"><![CDATA[pagination]]></translation>
@@ -7609,7 +7615,7 @@
         <translation language="nl"><![CDATA[rechten]]></translation>
         <translation language="en"><![CDATA[permissions]]></translation>
         <translation language="hu"><![CDATA[jogosultságok]]></translation>
-        <translation language="ru"><![CDATA[Настройка Аккаунта]]></translation>
+        <translation language="ru"><![CDATA[Настройка аккаунта]]></translation>
         <translation language="it"><![CDATA[permessi]]></translation>
         <translation language="zh"><![CDATA[权限]]></translation>
         <translation language="fr"><![CDATA[permissions]]></translation>
@@ -8003,7 +8009,7 @@
         <translation language="nl"><![CDATA[recente artikels (lijst)]]></translation>
         <translation language="en"><![CDATA[recent articles (list)]]></translation>
         <translation language="hu"><![CDATA[újabb cikkek (lista)]]></translation>
-        <translation language="ru"><![CDATA[Последние статьи (лист)]]></translation>
+        <translation language="ru"><![CDATA[Последние статьи (список)]]></translation>
         <translation language="it"><![CDATA[articoli recenti (lista)]]></translation>
         <translation language="zh"><![CDATA[最新文章（列表）]]></translation>
         <translation language="fr"><![CDATA[articles récents (liste)]]></translation>
@@ -8063,7 +8069,7 @@
         <translation language="nl"><![CDATA[referentiecode]]></translation>
         <translation language="en"><![CDATA[reference code]]></translation>
         <translation language="hu"><![CDATA[referencia kód]]></translation>
-        <translation language="ru"><![CDATA[Референс код]]></translation>
+        <translation language="ru"><![CDATA[Реферальный код]]></translation>
         <translation language="it"><![CDATA[codice di riferimento]]></translation>
         <translation language="zh"><![CDATA[参考代码]]></translation>
         <translation language="fr"><![CDATA[code de référence]]></translation>
@@ -8078,7 +8084,7 @@
         <translation language="nl"><![CDATA[referrer]]></translation>
         <translation language="en"><![CDATA[referrer]]></translation>
         <translation language="hu"><![CDATA[referrer]]></translation>
-        <translation language="ru"><![CDATA[Реферрер]]></translation>
+        <translation language="ru"><![CDATA[Реферер]]></translation>
         <translation language="it"><![CDATA[referenti]]></translation>
         <translation language="zh"><![CDATA[介绍人]]></translation>
         <translation language="fr"><![CDATA[référent]]></translation>
@@ -8391,7 +8397,7 @@
         <translation language="en"><![CDATA[sending e-mails]]></translation>
         <translation language="hu"><![CDATA[e-mail küldés]]></translation>
         <translation language="it"><![CDATA[inviando email]]></translation>
-        <translation language="ru"><![CDATA[Отправка E-Mail.]]></translation>
+        <translation language="ru"><![CDATA[Отправка email.]]></translation>
         <translation language="zh"><![CDATA[正在发送邮件]]></translation>
         <translation language="de"><![CDATA[sendet E-Mails]]></translation>
         <translation language="fr"><![CDATA[envoi d'e-mails]]></translation>
@@ -8406,7 +8412,7 @@
         <translation language="nl"><![CDATA[verzonden mailings]]></translation>
         <translation language="hu"><![CDATA[elküldött levelek]]></translation>
         <translation language="it"><![CDATA[mailing inviate]]></translation>
-        <translation language="ru"><![CDATA[Отправленные рассылки]]></translation>
+        <translation language="ru"><![CDATA[Отправленные письма]]></translation>
         <translation language="zh"><![CDATA[已发送的邮件]]></translation>
         <translation language="de"><![CDATA[verschickte Sendungen]]></translation>
         <translation language="fr"><![CDATA[mailing envoyés]]></translation>
@@ -8530,7 +8536,7 @@
         <translation language="nl"><![CDATA[sitemap]]></translation>
         <translation language="en"><![CDATA[sitemap]]></translation>
         <translation language="hu"><![CDATA[oldaltérkép]]></translation>
-        <translation language="ru"><![CDATA[Карта Сайта]]></translation>
+        <translation language="ru"><![CDATA[Карта сайта]]></translation>
         <translation language="it"><![CDATA[sitemap]]></translation>
         <translation language="zh"><![CDATA[站点地图]]></translation>
         <translation language="de"><![CDATA[Sitemap]]></translation>
@@ -8659,7 +8665,7 @@
         <translation language="nl"><![CDATA[spamfilter]]></translation>
         <translation language="en"><![CDATA[spamfilter]]></translation>
         <translation language="hu"><![CDATA[spamfilter]]></translation>
-        <translation language="ru"><![CDATA[Спам Фильтр]]></translation>
+        <translation language="ru"><![CDATA[Спам фильтр]]></translation>
         <translation language="it"><![CDATA[filtro anti spam]]></translation>
         <translation language="zh"><![CDATA[垃圾滤镜]]></translation>
         <translation language="de"><![CDATA[Spamfilter]]></translation>
@@ -8674,7 +8680,7 @@
       <item type="label" name="SplitCharacter">
         <translation language="nl"><![CDATA[scheidingsteken]]></translation>
         <translation language="en"><![CDATA[split character]]></translation>
-        <translation language="ru"><![CDATA[символ разделения]]></translation>
+        <translation language="ru"><![CDATA[разделитель]]></translation>
         <translation language="lt"><![CDATA[padalijimo simbolis]]></translation>
         <translation language="de"><![CDATA[Split-Character]]></translation>
         <translation language="es"><![CDATA[Separar caracter]]></translation>
@@ -8880,7 +8886,7 @@
         <translation language="nl"><![CDATA[tag-cloud]]></translation>
         <translation language="en"><![CDATA[tagcloud]]></translation>
         <translation language="hu"><![CDATA[címkefelhő]]></translation>
-        <translation language="ru"><![CDATA[Облако Т]]></translation>
+        <translation language="ru"><![CDATA[Облако тегов]]></translation>
         <translation language="it"><![CDATA[tagcloud]]></translation>
         <translation language="zh"><![CDATA[标签云]]></translation>
         <translation language="fr"><![CDATA[nuage de tags]]></translation>
@@ -9028,7 +9034,7 @@
         <translation language="nl"><![CDATA[formaat tijd]]></translation>
         <translation language="en"><![CDATA[time format]]></translation>
         <translation language="hu"><![CDATA[idő formátum]]></translation>
-        <translation language="ru"><![CDATA[Формат Времени]]></translation>
+        <translation language="ru"><![CDATA[Формат времени]]></translation>
         <translation language="it"><![CDATA[formato date]]></translation>
         <translation language="zh"><![CDATA[时间格式]]></translation>
         <translation language="de"><![CDATA[Zeitformat]]></translation>
@@ -9093,7 +9099,7 @@
         <translation language="en"><![CDATA[to]]></translation>
         <translation language="hu"><![CDATA[to]]></translation>
         <translation language="it"><![CDATA[a]]></translation>
-        <translation language="ru"><![CDATA[Кому]]></translation>
+        <translation language="ru"><![CDATA[кому]]></translation>
         <translation language="zh"><![CDATA[去]]></translation>
         <translation language="fr"><![CDATA[à]]></translation>
         <translation language="de"><![CDATA[an]]></translation>
@@ -9108,7 +9114,7 @@
         <translation language="en"><![CDATA[today]]></translation>
         <translation language="hu"><![CDATA[ma]]></translation>
         <translation language="it"><![CDATA[oggi]]></translation>
-        <translation language="ru"><![CDATA[Сегодня.]]></translation>
+        <translation language="ru"><![CDATA[Сегодня]]></translation>
         <translation language="zh"><![CDATA[今天]]></translation>
         <translation language="de"><![CDATA[heute]]></translation>
         <translation language="fr"><![CDATA[aujourd'hui]]></translation>
@@ -9418,7 +9424,7 @@
         <translation language="nl"><![CDATA[bekijk rapport]]></translation>
         <translation language="en"><![CDATA[view report]]></translation>
         <translation language="hu"><![CDATA[jelentés megnézése]]></translation>
-        <translation language="ru"><![CDATA[Просмотр Репорта]]></translation>
+        <translation language="ru"><![CDATA[Просмотр отчета]]></translation>
         <translation language="it"><![CDATA[visualizza report]]></translation>
         <translation language="zh"><![CDATA[视图报告]]></translation>
         <translation language="fr"><![CDATA[voir le rapport]]></translation>
@@ -9518,7 +9524,7 @@
         <translation language="en"><![CDATA[e-mail webmaster]]></translation>
         <translation language="hu"><![CDATA[e-mail webmaster]]></translation>
         <translation language="it"><![CDATA[email del webmaster]]></translation>
-        <translation language="ru"><![CDATA[Вебмастер.]]></translation>
+        <translation language="ru"><![CDATA[Email вебмастера]]></translation>
         <translation language="zh"><![CDATA[给管理员发邮件]]></translation>
         <translation language="fr"><![CDATA[contacter le webmaster]]></translation>
         <translation language="de"><![CDATA[E-Mail-Adresse des Webmasters]]></translation>
@@ -9681,7 +9687,7 @@
         <translation language="en"><![CDATA[zip code]]></translation>
         <translation language="hu"><![CDATA[irányítószám]]></translation>
         <translation language="it"><![CDATA[CAP]]></translation>
-        <translation language="ru"><![CDATA[Индекс.]]></translation>
+        <translation language="ru"><![CDATA[Индекс]]></translation>
         <translation language="zh"><![CDATA[邮编]]></translation>
         <translation language="de"><![CDATA[Postleitzahl]]></translation>
         <translation language="fr"><![CDATA[code postal]]></translation>
@@ -9746,7 +9752,7 @@
         <translation language="nl"><![CDATA[alle adressen gesorteerd op inschrijfdatum]]></translation>
         <translation language="hu"><![CDATA[Minden cím a feliratkozás dátuma szerint rendezve.]]></translation>
         <translation language="it"><![CDATA[Tutti gli indirizzi ordinati per data di iscrizioni.]]></translation>
-        <translation language="ru"><![CDATA[Просмотр всех записей]]></translation>
+        <translation language="ru"><![CDATA[Все адреса, отсортированные по дате подписки]]></translation>
         <translation language="zh"><![CDATA[地址已按订阅时间排序]]></translation>
         <translation language="fr"><![CDATA[Toutes les adresses classées par date de souscription.]]></translation>
         <translation language="de"><![CDATA[Alle Adressen nach Anmeldedatum sortiert.]]></translation>
@@ -9763,7 +9769,7 @@
         <translation language="nl"><![CDATA[Bulgaars]]></translation>
         <translation language="en"><![CDATA[Bulgarian]]></translation>
         <translation language="it"><![CDATA[bulgaro]]></translation>
-        <translation language="ru"><![CDATA[болгарский]]></translation>
+        <translation language="ru"><![CDATA[Болгарский]]></translation>
         <translation language="uk"><![CDATA[болгарська]]></translation>
         <translation language="es"><![CDATA[Búlgaro]]></translation>
         <translation language="lt"><![CDATA[Bulgariškai]]></translation>
@@ -9778,7 +9784,7 @@
         <translation language="nl"><![CDATA[Volgorde succesvol gewijzigd.]]></translation>
         <translation language="en"><![CDATA[Changed order successfully.]]></translation>
         <translation language="it"><![CDATA[Cambiato ordine con successo.]]></translation>
-        <translation language="ru"><![CDATA[Изменен порядок успешно.]]></translation>
+        <translation language="ru"><![CDATA[Порядок успешно изменен.]]></translation>
         <translation language="uk"><![CDATA[Змінено порядок успішно.]]></translation>
         <translation language="es"><![CDATA[Para cambiado correctamente.]]></translation>
         <translation language="lt"><![CDATA[Pasikeitė sėkmingai.]]></translation>
@@ -10308,7 +10314,7 @@
         <translation language="en"><![CDATA[E-mails sent from the CMS use these settings.]]></translation>
         <translation language="hu"><![CDATA[E-mail-ek küldése a CMS-ből ezekkel a beállításokkal.]]></translation>
         <translation language="it"><![CDATA[Le email inviate dal CMS utilizzano queste impostazioni.]]></translation>
-        <translation language="ru"><![CDATA[E-Mail будет отправлен с этими настройками.]]></translation>
+        <translation language="ru"><![CDATA[На e-mail будет отправлено письмо с настройками.]]></translation>
         <translation language="zh"><![CDATA[通过Fork CMS发送的邮件将使用这些设置。]]></translation>
         <translation language="de"><![CDATA[E-Mails vom CMS benutzen diese Einstellungen.]]></translation>
         <translation language="fr"><![CDATA[Les e-mails envoyés depuis le CMS utilisent ces réglages.]]></translation>
@@ -10320,6 +10326,7 @@
       <item type="message" name="HelpEmailReplyTo">
         <translation language="nl"><![CDATA[Antwoorden op e-mails verzonden vanuit het CMS worden naar dit e-mailadres gestuurd.]]></translation>
         <translation language="en"><![CDATA[Answers on e-mails sent from the CMS will be sent to this e-mailaddress.]]></translation>
+        <translation language="ru"><![CDATA[Ответы на электронные письма, отправленные с CMS, отправляются на этот адрес электронной почты.]]></translation>
       </item>
       <item type="message" name="HelpEmailTo">
         <translation language="nl"><![CDATA[Notificaties van het CMS worden hiernaar verstuurd.]]></translation>
@@ -10352,7 +10359,7 @@
         <translation language="en"><![CDATA[Below enter your e-mail. You will receive an e-mail containing instructions on how to get a new password.]]></translation>
         <translation language="hu"><![CDATA[Az alábbiakban adja meg az e-mail-t. Kapni fog e-mail-ben egy útmutatót arról, hogyan változtassa meg a jelszavát.]]></translation>
         <translation language="it"><![CDATA[Inserisci qui la tua email. Riceverai un email contenente le istruzioni per ricevere una nuova password.]]></translation>
-        <translation language="ru"><![CDATA[Введите E-Mail. Вы получите письмо с инструкциями о том, как получить новый пароль.]]></translation>
+        <translation language="ru"><![CDATA[Введите e-mail и Вы получите письмо с инструкциями о том, как получить новый пароль.]]></translation>
         <translation language="zh"><![CDATA[请输入你的电子邮箱地址，之后你将收到一封关于获取新密码的指引邮件。]]></translation>
         <translation language="fr"><![CDATA[Entrez une adresse e-mail. Vous recevrez un e-mail contenant les instructions pour récupèrer un nouveau mot de passe.]]></translation>
         <translation language="de"><![CDATA[Trage deine E-Mail-Adresse unterhalb ein. Du wirst dann eine E-Mail erhalten, die dir erklärt, wie du ein neues Passwort bekommst.]]></translation>
@@ -10541,7 +10548,7 @@
         <translation language="en"><![CDATA[Mailserver that should be used for sending e-mails.]]></translation>
         <translation language="hu"><![CDATA[Mailserver, hogy tudd e-mail küldésre használni.]]></translation>
         <translation language="it"><![CDATA[Il server Mail che sarà usato per inviare email.]]></translation>
-        <translation language="ru"><![CDATA[Способ отправки E-Mail.]]></translation>
+        <translation language="ru"><![CDATA[Способ отправки email.]]></translation>
         <translation language="zh"><![CDATA[用于发送电子邮件的邮箱服务。]]></translation>
         <translation language="de"><![CDATA[Mailserver der fürs Versenden von E-Mails benutzt werden soll.]]></translation>
         <translation language="fr"><![CDATA[Le serveur mail qui doit être utilisé pour les envois d'e-mails.]]></translation>
@@ -10749,7 +10756,7 @@
         <translation language="en"><![CDATA[There are no comments in this category yet.]]></translation>
         <translation language="hu"><![CDATA[Még nincsenek hozzászólások ebben a kategóriában.]]></translation>
         <translation language="it"><![CDATA[Non ci sono ancora commenti in questa categoria.]]></translation>
-        <translation language="ru"><![CDATA[Нет комментариев в этой категории.]]></translation>
+        <translation language="ru"><![CDATA[В этой категории нет комментариев.]]></translation>
         <translation language="zh"><![CDATA[这个分类中还没有评论。]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Kommentare in dieser Kategorie.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de commentaires dans cette catégorie.]]></translation>
@@ -10765,7 +10772,7 @@
         <translation language="hu"><![CDATA[Nem e-mail címeket.]]></translation>
         <translation language="it"><![CDATA[Nessun indirizzi e-mail.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas de adresses e-mail.]]></translation>
-        <translation language="ru"><![CDATA[No email addresses.]]></translation>
+        <translation language="ru"><![CDATA[Нет email адресов.]]></translation>
         <translation language="zh"><![CDATA[No email addresses.]]></translation>
         <translation language="de"><![CDATA[No email addresses.]]></translation>
         <translation language="lt"><![CDATA[Nėra el.pašto adresų]]></translation>
@@ -10793,7 +10800,7 @@
         <translation language="nl"><![CDATA[Er zijn nog geen items.]]></translation>
         <translation language="en"><![CDATA[There are no items yet.]]></translation>
         <translation language="hu"><![CDATA[Még nincsenek elemek.]]></translation>
-        <translation language="ru"><![CDATA[Нет Записей.]]></translation>
+        <translation language="ru"><![CDATA[Нет записей.]]></translation>
         <translation language="it"><![CDATA[Non ci sono ancora elementi.]]></translation>
         <translation language="zh"><![CDATA[还没有条目。]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore d'éléments.]]></translation>
@@ -10839,7 +10846,7 @@
         <translation language="en"><![CDATA[There are no referrers yet.]]></translation>
         <translation language="hu"><![CDATA[Még nincsenek referrerek.]]></translation>
         <translation language="it"><![CDATA[Non ci sono ancora referenti.]]></translation>
-        <translation language="ru"><![CDATA[Нет реффереров.]]></translation>
+        <translation language="ru"><![CDATA[Нет рефереров.]]></translation>
         <translation language="zh"><![CDATA[没有引用。]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas encore de référents.]]></translation>
         <translation language="de"><![CDATA[Es gibt noch keine Referrer.]]></translation>
@@ -11091,7 +11098,7 @@
         <translation language="nl"><![CDATA[Volgorde opgeslagen.]]></translation>
         <translation language="en"><![CDATA[Sequence saved]]></translation>
         <translation language="it"><![CDATA[Sequenza salvato.]]></translation>
-        <translation language="ru"><![CDATA[Последовательность сохранены.]]></translation>
+        <translation language="ru"><![CDATA[Последовательность сохранена.]]></translation>
         <translation language="de"><![CDATA[Sequence gespeichert.]]></translation>
         <translation language="fr"><![CDATA[Séquence enregistrée.]]></translation>
         <translation language="es"><![CDATA[Secuencia salvó.]]></translation>
@@ -11194,7 +11201,7 @@
         <translation language="en"><![CDATA[Add the tag before submitting.]]></translation>
         <translation language="hu"><![CDATA[Küldés előtt adj hozzá egy címkét.]]></translation>
         <translation language="it"><![CDATA[Aggiungi il tag prima di andare avanti.]]></translation>
-        <translation language="ru"><![CDATA[Добавьте Тэгов перед отправкой.]]></translation>
+        <translation language="ru"><![CDATA[Добавьте тэги перед отправкой.]]></translation>
         <translation language="zh"><![CDATA[在提交前请添加标签。]]></translation>
         <translation language="fr"><![CDATA[Veuillez ajouter le tag avant de valider.]]></translation>
         <translation language="de"><![CDATA[Füge das Tag hinzu, bevor du den Eintrag speicherst.]]></translation>
@@ -11236,7 +11243,7 @@
         <translation language="en"><![CDATA[Alter sequence failed.]]></translation>
         <translation language="hu"><![CDATA[Alter szekvenciát sikerült.]]></translation>
         <translation language="it"><![CDATA[Alter sequenza non riuscita.]]></translation>
-        <translation language="ru"><![CDATA[Изменить последовательность не удалось.]]></translation>
+        <translation language="ru"><![CDATA[Не удалось изменить последовательность.]]></translation>
         <translation language="zh"><![CDATA[改變序列失敗。]]></translation>
         <translation language="fr"><![CDATA[Alter séquence échoué.]]></translation>
         <translation language="de"><![CDATA[Alter Sequenz fehlgeschlagen.]]></translation>
@@ -11278,7 +11285,7 @@
         <translation language="en"><![CDATA[You need to enable cookies in order to use Fork CMS. Activate cookies and refresh this page.]]></translation>
         <translation language="hu"><![CDATA[Engedélyezned kell a cookie-k használatát a Fork CMS érdekében. Kapcsold be, majd frissítsd az oldalt.]]></translation>
         <translation language="it"><![CDATA[Devi abilitare i cookie per usare Fork CMS. Attiva i cookie e ricarica questa pagina.]]></translation>
-        <translation language="ru"><![CDATA[Включите Печеньки (Cookie) для работы с сайтом, и обновите страницу.]]></translation>
+        <translation language="ru"><![CDATA[Включите Cookie для работы с сайтом, и обновите страницу.]]></translation>
         <translation language="zh"><![CDATA[Fork CMS需要你开启Cookies。请激活Cookies功能后刷新页面。]]></translation>
         <translation language="fr"><![CDATA[Vous devez accepter les cookies pour utiliser Fork CMS. Veuillez accepter les cookies puis rafraîchir cette page.]]></translation>
         <translation language="de"><![CDATA[Du musst Cookies aktivieren um Fork CMS benutzen zu können. Nach dem Aktivieren bitte die Seite neu laden.]]></translation>
@@ -11338,7 +11345,7 @@
         <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
         <translation language="hu"><![CDATA[Ez az e-mail cím használatban van.]]></translation>
         <translation language="it"><![CDATA[Questo indirizzo email è già in uso.]]></translation>
-        <translation language="ru"><![CDATA[Этот E-mail адрес уже используется.]]></translation>
+        <translation language="ru"><![CDATA[Этот email адрес уже используется.]]></translation>
         <translation language="zh"><![CDATA[这个邮箱已经在使用了。]]></translation>
         <translation language="fr"><![CDATA[Cette adresse e-mail est déjà utilisée.]]></translation>
         <translation language="de"><![CDATA[Diese E-Mail-Adresse wird verwendet.]]></translation>
@@ -11366,7 +11373,7 @@
         <translation language="en"><![CDATA[Please provide a valid e-mailaddress.]]></translation>
         <translation language="hu"><![CDATA[Kérlek érvényes e-mail címet adj meg.]]></translation>
         <translation language="it"><![CDATA[Per favore fornisci un indirizzo email valido.]]></translation>
-        <translation language="ru"><![CDATA[Введите верный E-mail.]]></translation>
+        <translation language="ru"><![CDATA[Введите верный email.]]></translation>
         <translation language="zh"><![CDATA[请提供一个有效的Email地址。]]></translation>
         <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
         <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
@@ -11380,7 +11387,7 @@
         <translation language="en"><![CDATA[This e-mailaddress is not in our database.]]></translation>
         <translation language="hu"><![CDATA[Ez az e-amil cím nincs az adatbázisunkban.]]></translation>
         <translation language="it"><![CDATA[Questo indirizzo email non è nel nostro database.]]></translation>
-        <translation language="ru"><![CDATA[Этот E-mail уже есть в базе.]]></translation>
+        <translation language="ru"><![CDATA[Этот email уже есть в базе.]]></translation>
         <translation language="zh"><![CDATA[这个邮箱地址不再数据库中。]]></translation>
         <translation language="fr"><![CDATA[Cette adresse e-mail n'est pas reconnue.]]></translation>
         <translation language="de"><![CDATA[Diese E-Mail-Adresse existiert nicht in unserer Datenbank.]]></translation>
@@ -11408,7 +11415,7 @@
         <translation language="en"><![CDATA[Error while sending email.]]></translation>
         <translation language="hu"><![CDATA[Hiba az e-mail küldésben.]]></translation>
         <translation language="it"><![CDATA[Errore inviando la mail.]]></translation>
-        <translation language="ru"><![CDATA[Ошибка при отправке E-mail.]]></translation>
+        <translation language="ru"><![CDATA[Ошибка при отправке email.]]></translation>
         <translation language="zh"><![CDATA[发送Email时出错。]]></translation>
         <translation language="fr"><![CDATA[L'envoi de l'e-mail a échoué.]]></translation>
         <translation language="de"><![CDATA[Fehler beim Versenden der E-Mail.]]></translation>
@@ -11493,7 +11500,7 @@
         <translation language="nl"><![CDATA[Google maps API-key werd nog niet geconfigureerd. <a href="%1$s">Configureren</a>]]></translation>
         <translation language="en"><![CDATA[Google maps API-key is not configured. <a href="%1$s">Configure</a>]]></translation>
         <translation language="hu"><![CDATA[Google maps API-kulcs nincs beállítva. <a href="%1$s">Beállítás</a>]]></translation>
-        <translation language="ru"><![CDATA[Google Maps API ключ не сконфигурирован. <a href="%1$s">Configura</a>]]></translation>
+        <translation language="ru"><![CDATA[Google Maps API ключ не сконфигурирован. <a href="%1$s">Сконфигурировать</a>]]></translation>
         <translation language="it"><![CDATA[La chiave API di Google Maps non è configurata. <a href="%1$s">Сконфигурировать</a>]]></translation>
         <translation language="zh"><![CDATA[还没设置谷歌地图的API-key。<a href="%1$s">点此设置</a>]]></translation>
         <translation language="fr"><![CDATA[La clef API GOogle Map n'est pas configurée. <a href="%1$s">Configurer</a>]]></translation>
@@ -11522,7 +11529,7 @@
         <translation language="nl"><![CDATA[Ongeldig domein.]]></translation>
         <translation language="en"><![CDATA[Invalid domain.]]></translation>
         <translation language="hu"><![CDATA[Helytelen domain.]]></translation>
-        <translation language="ru"><![CDATA[Неверный Домен.]]></translation>
+        <translation language="ru"><![CDATA[Неверный домен.]]></translation>
         <translation language="it"><![CDATA[Dominio non valido.]]></translation>
         <translation language="zh"><![CDATA[无效的域名。]]></translation>
         <translation language="fr"><![CDATA[Domaine non valide]]></translation>
@@ -11537,7 +11544,7 @@
         <translation language="en"><![CDATA[Your e-mail and password combination is incorrect. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Did you forget your password?</a>]]></translation>
         <translation language="hu"><![CDATA[Az e-mail és jelszó kombinációd hibás. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Elfelejtetted a jelszavadat?</a>]]></translation>
         <translation language="it"><![CDATA[La combinazione email password fornita non è corretta. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Hai dimenticato la password?</a>]]></translation>
-        <translation language="ru"><![CDATA[Неверная пара логин/пароль. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Забыли?</a>]]></translation>
+        <translation language="ru"><![CDATA[Неверная пара логин/пароль. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Забыли пароль?</a>]]></translation>
         <translation language="zh"><![CDATA[你的Email地址或密码输入不正确。Your e-mail and password combination is incorrect. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">忘记密码？</a>]]></translation>
         <translation language="fr"><![CDATA[La combinaison e-mail et mot de passe est incorrecte. Your e-mail and password combination is incorrect. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Avez-vous oublié votre mot de passe ?</a>]]></translation>
         <translation language="de"><![CDATA[Diese E-Mail/Passwort-Kombination ist inkorrekt. <a href="#" id="forgotPasswordLink" rel="forgotPasswordHolder" data-toggle="modal" data-target="#forgotPasswordHolder">Hast du dein Passwort vergessen?</a>]]></translation>
@@ -11633,7 +11640,7 @@
         <translation language="en"><![CDATA[To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.]]></translation>
         <translation language="hu"><![CDATA[A Fork CMS használatához engedélyezni kell a javascriptet. Kapcsold be, majd frissítsd az oldal.]]></translation>
         <translation language="it"><![CDATA[Per usare Fork CMS, javascript deve essere abilitato. Abilita javascript e ricarica la pagina.]]></translation>
-        <translation language="ru"><![CDATA[Включите Javascript для работы с системой.]]></translation>
+        <translation language="ru"><![CDATA[Включите Javascript для работы с системой Fork CMS.]]></translation>
         <translation language="zh"><![CDATA[Fork CMS需要用到Javascript。请激活javascript后刷新页面。]]></translation>
         <translation language="fr"><![CDATA[Pour utiliser Fork CMS, javascript doit être activé. Veuillez activer javascript et rafraîchir cette page.]]></translation>
         <translation language="de"><![CDATA[Fork CMS benötigt Javascript. Aktiviere Javascript und lade die Seite neu.]]></translation>
@@ -11647,7 +11654,7 @@
         <translation language="nl"><![CDATA[Enkel jpg, gif, png]]></translation>
         <translation language="en"><![CDATA[Only jpg, gif, png]]></translation>
         <translation language="hu"><![CDATA[Csak jpg, gif, png]]></translation>
-        <translation language="ru"><![CDATA[Только JPG, GIF, PNG]]></translation>
+        <translation language="ru"><![CDATA[Только jpg, gif, png]]></translation>
         <translation language="it"><![CDATA[Solo jpg, gif, png]]></translation>
         <translation language="zh"><![CDATA[支持jpg/gif/png格式]]></translation>
         <translation language="fr"><![CDATA[Jpg, gif, png seulement]]></translation>
@@ -11705,6 +11712,7 @@
       <item type="error" name="NoActionSelected">
         <translation language="nl"><![CDATA[Geen actie geselecteerd.]]></translation>
         <translation language="en"><![CDATA[No action selected.]]></translation>
+        <translation language="ru"><![CDATA[Не выбрано ни одного действия.]]></translation>
       </item>
       <item type="error" name="NoCommentsSelected">
         <translation language="nl"><![CDATA[Er waren geen reacties geselecteerd.]]></translation>
@@ -11852,7 +11860,7 @@
         <translation language="en"><![CDATA[Blog RSS title is not configured. <a href="%1$s">Configure</a>]]></translation>
         <translation language="hu"><![CDATA[Blog RSS cím nincs beállítva. <a href="%1$s">Beállítás</a>]]></translation>
         <translation language="it"><![CDATA[Il titolo del feed RSS del blog non è configurato. <a href="%1$s">Configura</a>]]></translation>
-        <translation language="ru"><![CDATA[<a href="%1$s">Сконфигурировать Заголовок RSS</a>]]></translation>
+        <translation language="ru"><![CDATA[<a href="%1$s">Сконфигурировать заголовок RSS</a>]]></translation>
         <translation language="zh"><![CDATA[博客RSS标题尚未设置。Blog RSS title is not configured. <a href="%1$s">点此设置</a>]]></translation>
         <translation language="fr"><![CDATA[Le titre du blog RSS n'est pas configuré. <a href="%1$s">Configurer</a>]]></translation>
         <translation language="de"><![CDATA[Der Blog RSS Titel ist noch nicht konfiguriert. <a href="%1$s">Konfigurieren</a>]]></translation>
@@ -11940,7 +11948,7 @@
         <translation language="en"><![CDATA[Provide a title.]]></translation>
         <translation language="hu"><![CDATA[Add meg a címet.]]></translation>
         <translation language="it"><![CDATA[Fornisci un titolo.]]></translation>
-        <translation language="ru"><![CDATA[Заполните поле Заголовка.]]></translation>
+        <translation language="ru"><![CDATA[Заполните поле Заголовок.]]></translation>
         <translation language="zh"><![CDATA[请输入标题。]]></translation>
         <translation language="fr"><![CDATA[Veuillez fournir un titre.]]></translation>
         <translation language="de"><![CDATA[Gib einen Titel an.]]></translation>
@@ -11954,7 +11962,7 @@
         <translation language="en"><![CDATA[Too many login attempts. Click the forgot password link if you forgot your password.]]></translation>
         <translation language="hu"><![CDATA[Túl sok bejelentkezési kísérlet. Kattints a elfelejtett jelszó linkre, ha elfelejtetted jelszavadat.]]></translation>
         <translation language="it"><![CDATA[Troppi tentativi. Clicca sul link per recuperare la password.]]></translation>
-        <translation language="ru"><![CDATA[Слишком много ошибок про входе. Нажмите кнопку "Забыл пароль" для восстановления пароля.]]></translation>
+        <translation language="ru"><![CDATA[Слишком много ошибок про входе. Нажмите кнопку "Забыли пароль" для восстановления пароля.]]></translation>
         <translation language="zh"><![CDATA[尝试登录次数过多。若忘记密码，可点击“忘记密码”链接找回。]]></translation>
         <translation language="fr"><![CDATA[Trop de tentatives de connexion. Cliquez  sur le lien d'oubli de mot de passe si vous avez oublié le votre.]]></translation>
         <translation language="de"><![CDATA[Zu viele Login-Versuche. Klick den Passwort vergessen Link wenn du dein Passwort vergessen hast.]]></translation>
