@@ -170,11 +170,8 @@ class Meta
 
     public function __clone()
     {
-        $clone = clone $this;
-        $clone->id = null;
-        $clone->url = Model::addNumber($this->url);
-
-        return $clone;
+        $this->id = null;
+        $this->url = Model::addNumber($this->url);
     }
 
     /**
