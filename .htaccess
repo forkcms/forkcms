@@ -56,6 +56,8 @@ deny from env=stayout
 	RewriteRule .*\.gitignore - [F]
 	RewriteRule \.editorconfig - [F]
 	RewriteRule \.travis.yml - [F]
+	RewriteRule gulpfile\.js - [F]
+	RewriteRule package\.json - [F]
 	RewriteRule bower\.json - [F]
 	RewriteRule composer\.json - [F]
 	RewriteRule composer\.lock - [F]
