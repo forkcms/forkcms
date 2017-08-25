@@ -41,6 +41,10 @@ class TwigTemplate extends BaseTwigTemplate
         $container = Model::getContainer();
         $this->forkSettings = $container->get('fork.settings');
         $this->debugMode = $container->getParameter('kernel.debug');
+        if ($this->debugMode) {
+            $this->environment->enableAutoReload();
+            $this->environment->setCache(false);
+        }
         $this->environment->disableStrictVariables();
         new FormExtension($this->environment);
         TwigFilters::addFilters($this->environment, 'Frontend');
