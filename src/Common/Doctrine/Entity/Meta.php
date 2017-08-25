@@ -168,11 +168,11 @@ class Meta
         $this->seoIndex = $seoIndex;
     }
 
-    public function duplicate()
+    public function __clone()
     {
         $clone = clone $this;
         $clone->id = null;
-        $clone->url = Model::addNumber($clone->url);
+        $clone->url = Model::addNumber($this->url);
 
         return $clone;
     }
