@@ -385,8 +385,4 @@
   {% for attributeName, attributeValue in attr %}
     {% if attributeName == 'help' %}<span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
   {% endfor %}
-
-  {% if help is defined %}
-    <span class="help-block">{{ help }}</span>
-  {% endif %}
 {% endblock %}
