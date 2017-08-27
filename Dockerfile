@@ -62,9 +62,6 @@ RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
 # Give apache write access to host
 RUN chown -R www-data:www-data /var/www/html
 
-# Add a healthcheck to allow Docker to automatically interpret whether your container is healthy.
-HEALTHCHECK --interval=10s --timeout=5s CMD curl -f localhost/private || exit 1
-
 # This specifies on which port the application will run. This is pure communicative and makes this 12 factor app compliant
 # (see https://12factor.net/port-binding).
 EXPOSE 80 443
