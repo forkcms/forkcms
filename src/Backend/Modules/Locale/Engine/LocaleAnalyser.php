@@ -158,7 +158,7 @@ final class LocaleAnalyser
             }
         }
 
-        if (count($locale) === 0) {
+        if (empty($locale)) {
             return [];
         }
 
