@@ -13,6 +13,9 @@ final class LocaleAnalyser
     /** @var string */
     private $modulesPath;
 
+    /** @var string */
+    private $siteModulespath;
+
     /** @var array */
     private $installedModules;
 
@@ -21,6 +24,7 @@ final class LocaleAnalyser
         $this->application = $application;
         $this->modulesPath = $modulesPath;
         $this->installedModules = $installedModules;
+        $this->siteModulespath = substr($modulesPath, strpos($modulesPath, 'src'));
     }
 
     public function findMissingLocale(string $language): array
@@ -159,7 +163,7 @@ final class LocaleAnalyser
         }
 
         return [
-            'file' => $filename,
+            'file' => $this->siteModulespath . '/' . $file->getRelativePath() . '/' . $filename,
             'locale' => array_merge_recursive(...$locale),
         ];
     }
