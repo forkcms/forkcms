@@ -94,6 +94,10 @@ final class LocaleAnalyser
                 return [
                     '"(?:Language|FL|BL)::(get(?:Label|Error|Message|Action)|act|err|lbl|msg)' . $argumentsPattern . '"'
                 ];
+            case 'twig':
+                return [
+                    '"[\'\"](act|err|lbl|msg)\.(\w+?)[\'\"]\|trans()"'
+                ];
             default:
                 return [];
         }
