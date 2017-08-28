@@ -25,11 +25,47 @@ final class LocaleAnalyser
 
     public function findMissingLocale(string $language): array
     {
+        $this->missingLocale = [];
         $moduleFiles = $this->findModuleFiles();
+        $existingLocale = $this->getExistingLocaleForLanguage($language);
+
         $locale = $this->findLocaleInFiles($moduleFiles);
 
-        // @TODO
-        return [];
+        $nonExisting = [];
+        foreach ($locale as $moduleName => $module) {
+            foreach ($module as $filename => $file) {
+                $file['locale'] = $this->recursiveArrayDiff($file['locale'], $existingLocale);
+
+                foreach ($file['locale'] as $type => $modules) {
+                    foreach ($modules as $key => $translations) {
+                        foreach ($translations as $translationName) {
+                            $nonExistingKey = $this->application . $translationName . $type . $key;
+
+                            if (array_key_exists($nonExistingKey, $nonExisting)) {
+                                $usedInFiles = unserialize($nonExisting[$nonExistingKey]['used_in']);
+                                $usedInFiles[] = $file['file'];
+                                $nonExisting[$nonExistingKey]['used_in'] = serialize($usedInFiles);
+
+                                continue;
+                            }
+
+                            $nonExisting[$nonExistingKey] = [
+                                'language' => $language,
+                                'application' => $this->application,
+                                'module' => $key,
+                                'type' => $type,
+                                'name' => $translationName,
+                                'used_in' => serialize([$file['file']]),
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
+        ksort($nonExisting);
+
+        return $nonExisting;
     }
 
     private function findModuleFiles(): array
@@ -161,5 +197,52 @@ final class LocaleAnalyser
     private function getDefaultModule(string $currentModuleName): string
     {
         return $this->application === 'Backend' ? $currentModuleName : 'Core';
+    }
+
+    private function getExistingLocaleForLanguage(string $language): array
+    {
+        return array_map(
+            function (array $localeForType) {
+                $localeSortedByModule = [];
+                foreach ($localeForType as $locale) {
+                    $localeSortedByModule[$locale['module']][$locale['name']] = $locale['name'];
+                }
+
+                return $localeSortedByModule;
+            },
+            Model::getTranslations(
+                $this->application,
+                '',
+                ['lbl', 'act', 'err', 'msg'],
+                [$language],
+                '',
+                ''
+            )
+        );
+    }
+
+    private function recursiveArrayDiff(array $array1, array $array2): array
+    {
+        $outputDiff = [];
+
+        foreach ($array1 as $key => $value) {
+            if (!array_key_exists($key, $array2) || !is_array($value)) {
+                if (!in_array($value, $array2, true)) {
+                    $outputDiff[$key] = $value;
+                }
+
+                continue;
+            }
+
+            if (is_array($value)) {
+                $recursiveDiff = $this->recursiveArrayDiff($value, $array2[$key]);
+
+                if (count($recursiveDiff)) {
+                    $outputDiff[$key] = $recursiveDiff;
+                }
+            }
+        }
+
+        return $outputDiff;
     }
 }
