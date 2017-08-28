@@ -70,7 +70,6 @@ final class LocaleAnalyser
         foreach ($module as $filename => $file) {
             $fileLocale = $this->findLocaleInFile($moduleName, $filename, $file);
 
-
             if (!empty($fileLocale)) {
                 $locale[$filename] = $fileLocale;
             }
@@ -79,23 +78,27 @@ final class LocaleAnalyser
         return $locale;
     }
 
-    private function findLocaleInFile(string $moduleName, string $filename, SplFileInfo $file): array
+    private function getPatternsForExtension(string $extension): array
     {
-        switch ($file->getExtension()) {
+        switch ($extension) {
             case 'js':
-                return $this->findLocaleInJsFile($moduleName, $filename, $file->getContents());
+                return [
+                    '"\.locale\.(act|err|lbl|msg)\([\'\"](\w+?)[\'\"](?:, ?[\'\"](\w+?)[\'\"])?\)"',
+                    '"\.locale\.get\([\'\"](\w+?)[\'\"], ?[\'\"](\w+?)[\'\"](?:, ?[\'\"](\w+?)[\'\"])?\)"',
+                ];
+
+                break;
             default:
                 return [];
         }
     }
 
-    private function findLocaleInJsFile(string $moduleName, string $filename, string $fileContent): array
+    private function findLocaleInFile(string $moduleName, string $filename, SplFileInfo $file): array
     {
         $locale = [];
-        $patterns = [
-            '"\.locale\.(act|err|lbl|msg)\(\'(\w+?)\'(?:, ?\'(\w+?)\')?\)"',
-            '"\.locale\.get\(\'(\w+?)\', ?\'(\w+?)\'(?:, ?\'(\w+?)\')?\)"',
-        ];
+        $fileContent = $file->getContents();
+        $patterns = $this->getPatternsForExtension($file->getExtension());
+
         foreach ($patterns as $pattern) {
             $matches = [];
             preg_match_all($pattern, $fileContent, $matches);
