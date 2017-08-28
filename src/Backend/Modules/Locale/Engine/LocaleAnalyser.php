@@ -88,6 +88,12 @@ final class LocaleAnalyser
                 ];
 
                 break;
+            case 'php':
+                $argumentsPattern = '\([\'\"](\w+?)[\'\"](?:, ?[\'\"](\w+?)[\'\"])?';
+
+                return [
+                    '"(?:Language|FL|BL)::(get(?:Label|Error|Message|Action)|act|err|lbl|msg)' . $argumentsPattern . '"'
+                ];
             default:
                 return [];
         }
@@ -102,7 +108,10 @@ final class LocaleAnalyser
         foreach ($patterns as $pattern) {
             $matches = [];
             preg_match_all($pattern, $fileContent, $matches);
-            $locale[] = $this->getLocaleArrayFromRegexMatches($this->getDefaultModule($moduleName), $matches);
+            $localeMatches = $this->getLocaleArrayFromRegexMatches($this->getDefaultModule($moduleName), $matches);
+            if (!empty($localeMatches)) {
+                $locale[] = $localeMatches;
+            }
         }
 
         if (count($locale) === 0) {
@@ -126,10 +135,15 @@ final class LocaleAnalyser
 
         for ($index = 0; $index < $matchesCount; ++$index) {
             $module = empty($modules[$index]) ? $defaultModuleName : $modules[$index];
-            $locale[$types[$index]][$module][$labels[$index]] = $labels[$index];
+            $locale[$this->cleanUpLocaleType($types[$index])][$module][$labels[$index]] = $labels[$index];
         }
 
         return $locale;
+    }
+
+    private function cleanUpLocaleType(string $type): string
+    {
+        return str_replace(['getMessage', 'getLabel', 'getError', 'getAction'], ['msg','lbl', 'err', 'act'], $type);
     }
 
     private function getInBetweenStrings(string $start, string $end, string $str)
