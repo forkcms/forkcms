@@ -34,7 +34,7 @@ final class LocaleAnalyser
         $nonExisting = [];
         foreach ($locale as $moduleName => $module) {
             foreach ($module as $filename => $file) {
-                $file['locale'] = $this->recursiveArrayDiff($file['locale'], $existingLocale);
+                $file['locale'] = $this->localeArrayDiff($file['locale'], $existingLocale, $moduleName);
 
                 foreach ($file['locale'] as $type => $modules) {
                     foreach ($modules as $key => $translations) {
@@ -219,6 +219,25 @@ final class LocaleAnalyser
                 ''
             )
         );
+    }
+
+    private function localeArrayDiff(array $fileLocale, array $existingLocale, string $currentModule): array
+    {
+        $diff = [];
+        foreach ($fileLocale as $type => $modules) {
+            $typeDiff = $this->recursiveArrayDiff($modules, $existingLocale[$type] ?? []);
+
+            if (array_key_exists($currentModule, $typeDiff)) {
+                $typeDiff[$currentModule] = $this->recursiveArrayDiff(
+                    $typeDiff[$currentModule],
+                    $existingLocale[$type]['Core'] ?? []
+                );
+            }
+
+            $diff[$type] = $typeDiff;
+        }
+
+        return $diff;
     }
 
     private function recursiveArrayDiff(array $array1, array $array2): array
