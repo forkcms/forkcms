@@ -257,12 +257,14 @@ final class LocaleAnalyser
                 continue;
             }
 
-            if (is_array($value)) {
-                $recursiveDiff = $this->recursiveArrayDiff($value, $array2[$key]);
+            if (!is_array($value)) {
+                continue;
+            }
 
-                if (count($recursiveDiff)) {
-                    $outputDiff[$key] = $recursiveDiff;
-                }
+            $recursiveDiff = $this->recursiveArrayDiff($value, $array2[$key]);
+
+            if (count($recursiveDiff)) {
+                $outputDiff[$key] = $recursiveDiff;
             }
         }
 
