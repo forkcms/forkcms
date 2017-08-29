@@ -21,12 +21,13 @@ jsBackend.mediaGalleries.dialogs =
     {
         var $addMediaGroupTypeDialog = $('#addMediaGroupTypeDialog');
 
-        // Element not found, stop here
-        if ($addMediaGroupTypeDialog.length == 0) {
+        // If element found add dialog
+        if ($addMediaGroupTypeDialog.length > 0) {
+            jsBackend.mediaGalleries.dialogs.addMediaGroupTypeDialog($addMediaGroupTypeDialog);
+        } else {
+            // Element not found, stop here
             return false;
         }
-
-        jsBackend.mediaGalleries.dialogs.addMediaGroupTypeDialog($addMediaGroupTypeDialog);
     },
 
     /**
