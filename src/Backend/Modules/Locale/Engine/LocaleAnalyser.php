@@ -129,7 +129,7 @@ final class LocaleAnalyser
 
                 break;
             case 'php':
-                $argumentsPattern = '\([\'\"](\w+?)[\'\"](?:, ?[\'\"](\w+?)[\'\"])?';
+                $argumentsPattern = '\([\'\"](\w+?)[\'\"](?:, ?[\'\"](\w+?)[\'\"]|\))';
 
                 return [
                     '"(?:Language|FL|BL)::(get(?:Label|Error|Message|Action)|act|err|lbl|msg)' . $argumentsPattern . '"'
