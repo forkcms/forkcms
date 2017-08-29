@@ -737,6 +737,7 @@ VALUES
 	(2297,1,'en','Backend','Core','err','AkismetKey','Akismet API-key is not yet configured. <a href=\"%1$s\">Configure</a>','2017-04-26 00:34:58'),
 	(2004,1,'en','Backend','Core','msg','AllAddresses','All addresses sorted by subscription date.','2017-04-26 00:34:58'),
 	(3318,1,'en','Backend','Faq','lbl','AllCategories','all categories','2017-04-26 00:35:14'),
+	(NULL,1,'en','Frontend','Faq','lbl','AllCategories','all categories','2017-04-26 00:35:14'),
 	(946,1,'en','Backend','Core','lbl','AllComments','all comments','2017-04-26 00:34:58'),
 	(942,1,'en','Backend','Core','lbl','AllEmailAddresses','all e-mail addresses','2017-04-26 00:34:58'),
 	(3920,1,'en','Backend','MediaLibrary','lbl','AllMedia','all media','2017-04-26 00:35:17'),
