@@ -4025,6 +4025,21 @@
         <translation language="el"><![CDATA[διαγραφή-συνδρομής]]></translation>
         <translation language="pl"><![CDATA[nie-subskrybuj]]></translation>
       </item>
+      <item type="label" name="Loading">
+        <translation language="nl"><![CDATA[loading]]></translation>
+        <translation language="en"><![CDATA[loading]]></translation>
+        <translation language="hu"><![CDATA[töltés]]></translation>
+        <translation language="it"><![CDATA[caricamento]]></translation>
+        <translation language="ru"><![CDATA[Загрузка]]></translation>
+        <translation language="zh"><![CDATA[加载中]]></translation>
+        <translation language="de"><![CDATA[lädt]]></translation>
+        <translation language="fr"><![CDATA[chargement]]></translation>
+        <translation language="es"><![CDATA[cargando]]></translation>
+        <translation language="lt"><![CDATA[vykdoma]]></translation>
+        <translation language="uk"><![CDATA[Завантаження]]></translation>
+        <translation language="sv"><![CDATA[laddar]]></translation>
+        <translation language="el"><![CDATA[φόρτωση]]></translation>
+      </item>
     </Core>
   </Frontend>
   <Backend>

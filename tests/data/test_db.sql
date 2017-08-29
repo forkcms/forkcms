@@ -1427,6 +1427,7 @@ VALUES
 	(3195,1,'en','Backend','Analytics','lbl','LinkedProfile','linked profile','2017-04-26 00:35:12'),
 	(3719,1,'en','Backend','Mailmotor','lbl','ListId','list id','2017-04-26 00:35:16'),
 	(1387,1,'en','Backend','Core','lbl','Loading','loading','2017-04-26 00:34:58'),
+	(NULL,1,'en','Frontend','Core','lbl','Loading','loading','2017-04-26 00:34:58'),
 	(1390,1,'en','Backend','Core','lbl','Locale','locale','2017-04-26 00:34:58'),
 	(274,1,'en','Frontend','Core','lbl','Location','location','2017-04-26 00:34:58'),
 	(1393,1,'en','Backend','Core','lbl','Location','location','2017-04-26 00:34:58'),
