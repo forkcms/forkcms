@@ -137,9 +137,7 @@ var initPhotoSwipeFromDOM = function (gallerySelector) {
     var pswpElement = document.querySelectorAll('.pswp')[0]
     var gallery
     var options
-    var items
-
-    items = parseThumbnailElements(galleryElement)
+    var items = parseThumbnailElements(galleryElement)
 
     // define options (if needed)
     options = {
