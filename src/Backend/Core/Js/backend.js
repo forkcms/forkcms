@@ -166,7 +166,7 @@ jsBackend.navigation = {
   toggleCollapse: function () {
     var $wrapper = $('.main-wrapper')
     var $navCollapse = $('.js-toggle-nav')
-    var collapsed = !!($wrapper.hasClass('navigation-collapsed'))
+    var collapsed = $wrapper.hasClass('navigation-collapsed')
 
     $navCollapse.on('click', function (e) {
       e.preventDefault()
