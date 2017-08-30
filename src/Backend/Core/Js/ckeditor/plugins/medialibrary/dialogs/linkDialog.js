@@ -41,7 +41,11 @@ CKEDITOR.dialog.add(
                         {
                             type: 'button',
                             id: 'browseServer',
-                            label: 'Browse server'
+                            label: 'Browse server',
+                            onClick: function () {
+                                var editor = this.getDialog().getParentEditor();
+                                editor.popup(window.location.origin + '/private', 500, 500);
+                            }
                         }
                     ]
                 }

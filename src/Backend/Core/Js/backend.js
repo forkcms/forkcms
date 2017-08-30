@@ -437,7 +437,7 @@ jsBackend.ckeditor =
         // get the editor
         var editor = evt.editor;
 
-        // on initalisation we should force the check, which will be passed in the data-container
+        // on initialisation we should force the check, which will be passed in the data-container
         var forced = (typeof evt.forced == 'boolean') ? evt.forced : false;
 
         // was the content changed, or is the check forced?
