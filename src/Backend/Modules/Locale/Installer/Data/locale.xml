@@ -601,6 +601,19 @@
         <translation language="uk"><![CDATA[Неприпустимий XML-файл]]></translation>
         <translation language="el"><![CDATA[Αυτό το αρχείο XML δεν είναι έγκυρο.]]></translation>
       </item>
+      <item type="error" name="InvalidCSV">
+        <translation language="nl"><![CDATA[Het opgegeven csv-bestand bevat foute csv-data.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid CSV-file.]]></translation>
+        <translation language="it"><![CDATA[Questo è un file CSV non valido.]]></translation>
+        <translation language="ru"><![CDATA[Недопустимый CSV файл.]]></translation>
+        <translation language="zh"><![CDATA[这是一个无效的csv文件。]]></translation>
+        <translation language="hu"><![CDATA[Ez egy érvénytelen CSV-fájl.]]></translation>
+        <translation language="fr"><![CDATA[Fichier CSV non valide]]></translation>
+        <translation language="de"><![CDATA[Die CSV-Datei beinhalte fehlerhafte Daten.]]></translation>
+        <translation language="es"><![CDATA[Este es un archivo CSV no válido.]]></translation>
+        <translation language="uk"><![CDATA[Неприпустимий CSV-файл]]></translation>
+        <translation language="el"><![CDATA[Αυτό το αρχείο CSV δεν είναι έγκυρο.]]></translation>
+      </item>
       <item type="error" name="ModuleHasToBeCore">
         <translation language="nl"><![CDATA[De module moet core zijn voor vertalingen in de frontend.]]></translation>
         <translation language="en"><![CDATA[The module needs to be core for frontend translations.]]></translation>
