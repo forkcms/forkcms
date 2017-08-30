@@ -6,125 +6,125 @@ window.MAPS_CONFIG = {
   gray: [
     // BASIC
     {
-      'stylers': [
+      stylers: [
         {hue: '#B9B9B9'},
         {saturation: -100}
       ]
     },
     // Lanscape
     {
-      'featureType': 'landscape',
-      'stylers': [
+      featureType: 'landscape',
+      stylers: [
         {
-          'color': '#E5E5E5'
+          color: '#E5E5E5'
         }
       ]
     },
     // Water
     {
-      'featureType': 'water',
-      'stylers': [
+      featureType: 'water',
+      stylers: [
         {
           'visibility': 'on'
         },
         {
-          'color': '#DCDCDC'
+          color: '#DCDCDC'
         }
       ]
     },
     // Transit
     {
-      'featureType': 'transit',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'transit',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#B9B9B9'
+          color: '#B9B9B9'
         }
       ]
     },
     // Road hight way
     {
-      'featureType': 'road.highway',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'road.highway',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#E2E2E2'
+          color: '#E2E2E2'
         }
       ]
     },
     // Road hight way control access
     {
-      'featureType': 'road.highway.controlled_access',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'road.highway.controlled_access',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#ACACAC'
+          color: '#ACACAC'
         }
       ]
     },
     // Road arterial
     {
-      'featureType': 'road.arterial',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'road.arterial',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#ffffff'
+          color: '#ffffff'
         }
       ]
     },
     // Road local
     {
-      'featureType': 'road.local',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'road.local',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#F6F6F6'
+          color: '#F6F6F6'
         }
       ]
     },
     // Point global
     {
-      'featureType': 'poi',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#DDDDDD'
+          color: '#DDDDDD'
         }
       ]
     },
     {
-      'featureType': 'poi.park',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi.park',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#D3D3D3'
+          color: '#D3D3D3'
         }
       ]
     },
     {
-      'featureType': 'poi.attraction',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi.attraction',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#DBDBDB'
+          color: '#DBDBDB'
         }
       ]
     },
     {
-      'featureType': 'poi.business',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi.business',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#DBDBDB'
+          color: '#DBDBDB'
         }
       ]
     },
     {
-      'featureType': 'poi.place_of_worship',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi.place_of_worship',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#DBDBDB'
+          color: '#DBDBDB'
         }
       ]
     }
@@ -133,125 +133,125 @@ window.MAPS_CONFIG = {
   blue: [
     // BASIC
     {
-      'stylers': [
+      stylers: [
         {hue: '#4C95B2'},
         {saturation: -100}
       ]
     },
     // Lanscape
     {
-      'featureType': 'landscape',
-      'stylers': [
+      featureType: 'landscape',
+      stylers: [
         {
-          'color': '#DEE7EB'
+          color: '#DEE7EB'
         }
       ]
     },
     // Water
     {
-      'featureType': 'water',
-      'stylers': [
+      featureType: 'water',
+      stylers: [
         {
           'visibility': 'on'
         },
         {
-          'color': '#BBE7F9'
+          color: '#BBE7F9'
         }
       ]
     },
     // Transit
     {
-      'featureType': 'transit',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'transit',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#86CEEB'
+          color: '#86CEEB'
         }
       ]
     },
     // Road hight way
     {
-      'featureType': 'road.highway',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'road.highway',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#C2EDFF'
+          color: '#C2EDFF'
         }
       ]
     },
     // Road hight way control access
     {
-      'featureType': 'road.highway.controlled_access',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'road.highway.controlled_access',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#4DCDFF'
+          color: '#4DCDFF'
         }
       ]
     },
     // Road arterial
     {
-      'featureType': 'road.arterial',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'road.arterial',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#ffffff'
+          color: '#ffffff'
         }
       ]
     },
     // Road local
     {
-      'featureType': 'road.local',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'road.local',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#F3F7F9'
+          color: '#F3F7F9'
         }
       ]
     },
     // Point global
     {
-      'featureType': 'poi',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#C6E5F1'
+          color: '#C6E5F1'
         }
       ]
     },
     {
-      'featureType': 'poi.park',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi.park',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#B7DDEC'
+          color: '#B7DDEC'
         }
       ]
     },
     {
-      'featureType': 'poi.attraction',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi.attraction',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#D5DDE0'
+          color: '#D5DDE0'
         }
       ]
     },
     {
-      'featureType': 'poi.business',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi.business',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#D5DDE0'
+          color: '#D5DDE0'
         }
       ]
     },
     {
-      'featureType': 'poi.place_of_worship',
-      'elementType': 'geometry',
-      'stylers': [
+      featureType: 'poi.place_of_worship',
+      elementType: 'geometry',
+      stylers: [
         {
-          'color': '#D5DDE0'
+          color: '#D5DDE0'
         }
       ]
     }
