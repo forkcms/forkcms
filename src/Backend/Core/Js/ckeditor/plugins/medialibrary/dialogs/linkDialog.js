@@ -1,6 +1,8 @@
 CKEDITOR.dialog.add(
     'linkDialog',
     function (editor) {
+        var urlRegex = 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)';
+
         return {
             title: 'Add link',
 
@@ -16,15 +18,24 @@ CKEDITOR.dialog.add(
                             type: 'text',
                             id: 'displayText',
                             label: 'Display Text',
-                            validate: CKEDITOR.dialog.validate.notEmpty('Display cannot be empty.')
+                            validate: CKEDITOR.dialog.validate.notEmpty('Display cannot be empty.'),
+                            setup: function(element) {
+                                this.setValue(element.getText());
+                            },
+                            commit: function (element) {
+                                element.setText(this.getValue());
+                            }
                         },
                         {
                             type: 'text',
                             id: 'url',
                             label: 'URL',
-                            validate: function () {
-                                return CKEDITOR.dialog.validate.notEmpty('URL cannot be empty.') &&
-                                    CKEDITOR.dialog.validate.regex('https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)', 'URL is not valid.')
+                            validate: CKEDITOR.dialog.validate.regex(new RegExp(urlRegex), 'URL is not valid.'),
+                            setup: function(element) {
+                                this.setValue(element.getAttribute('href'));
+                            },
+                            commit: function (element) {
+                                element.setAttribute('href', this.getValue());
                             }
                         },
                         {
@@ -37,13 +48,54 @@ CKEDITOR.dialog.add(
             ],
 
             onOk: function () {
+                // var dialog = this;
+
+                // var anchor = editor.document.createElement('a');
+                // anchor.setAttribute('href', dialog.getValueOf('tab', 'url'));
+                // anchor.setText(dialog.getValueOf('tab', 'displayText'));
+                //
+                // editor.insertElement(anchor);
+
+                var dialog = this,
+                    anchor = dialog.element;
+
+                dialog.commitContent(anchor);
+
+                if (dialog.insertMode) {
+                    editor.insertElement(anchor);
+                }
+            },
+
+            onShow: function () {
                 var dialog = this;
 
-                var anchor = editor.document.createElement('a');
-                anchor.setAttribute('href', dialog.getValueOf('tab', 'url'));
-                anchor.setText(dialog.getValueOf('tab', 'displayText'));
+                var selection = editor.getSelection();
+                var initialText = selection.getSelectedText();
+                var element = selection.getStartElement();
 
-                editor.insertElement(anchor);
+                if (element) {
+                    element = element.getAscendant('a', true);
+                }
+
+                if (!element || element.getName() !== 'a') {
+                    element = editor.document.createElement('a');
+
+                    if (initialText.match(urlRegex)) {
+                        dialog.setValueOf('tab', 'url', initialText);
+                    } else {
+                        dialog.setValueOf('tab', 'displayText', initialText);
+                    }
+
+                    this.insertMode = true;
+                } else {
+                    this.insertMode = false;
+                }
+
+                this.element = element;
+
+                if (!this.insertMode) {
+                    this.setupContent(element)
+                }
             }
         }
     }
