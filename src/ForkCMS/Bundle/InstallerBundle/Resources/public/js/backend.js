@@ -145,9 +145,8 @@ jsBackend.forms = {
             // is the button disabled?
             if ($(this).prop('disabled')) {
               return false
-            } else {
-              $('form#' + formId).submit()
             }
+            $('form#' + formId).submit()
           })
 
           // don't submit the form on certain elements
