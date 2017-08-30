@@ -56,6 +56,8 @@ deny from env=stayout
 	RewriteRule .*\.gitignore - [F]
 	RewriteRule \.editorconfig - [F]
 	RewriteRule \.travis.yml - [F]
+	RewriteRule gulpfile\.js - [F]
+	RewriteRule package\.json - [F]
 	RewriteRule bower\.json - [F]
 	RewriteRule composer\.json - [F]
 	RewriteRule composer\.lock - [F]
@@ -74,7 +76,7 @@ deny from env=stayout
 
 	# redirect all trafic to https
 	# Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
-	# RewriteCond %{HTTPS} != on
+	# RewriteCond %{HTTPS} !=on
 	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
 	# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 

@@ -416,7 +416,7 @@ We did add helper getters so you can keep doing `$this->getAction()` and `$this-
 
 | Old classname                                 | New classname                                   |
 |-----------------------------------------------|-------------------------------------------------|
-| `\Backend\Core\Engine\Model\DataGridDB`       | `\Backend\Core\Engine\Model\DataGridDatabase`   |
+| `\Backend\Core\Engine\Model\DataGridDB`       | `\Backend\Core\Engine\DataGridDatabase`   |
 
 ## Bye bye enums
 

@@ -85,7 +85,7 @@ final class FormBuilderSubmittedMailSubscriber
                     'sentOn' => time(),
                     'name' => $form['name'],
                     'fields' => array_map(
-                        function (array $field) : \Swift_Mime_SimpleMessage {
+                        function (array $field) : array {
                             $field['value'] = html_entity_decode($field['value']);
 
                             return $field;
