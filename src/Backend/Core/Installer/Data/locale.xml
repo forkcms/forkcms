@@ -8096,6 +8096,14 @@
         <translation language="sv"><![CDATA[senaste besök]]></translation>
         <translation language="el"><![CDATA[πρόσφατες επισκέψεις]]></translation>
       </item>
+      <item type="label" name="Visits">
+        <translation language="nl"><![CDATA[bezoeken]]></translation>
+        <translation language="en"><![CDATA[visits]]></translation>
+        <translation language="it"><![CDATA[visite]]></translation>
+        <translation language="fr"><![CDATA[visites]]></translation>
+        <translation language="de"><![CDATA[Besuche]]></translation>
+        <translation language="es"><![CDATA[visitas]]></translation>
+      </item>
       <item type="label" name="ReferenceCode">
         <translation language="nl"><![CDATA[referentiecode]]></translation>
         <translation language="en"><![CDATA[reference code]]></translation>
