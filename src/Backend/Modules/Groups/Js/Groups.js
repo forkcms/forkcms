@@ -97,11 +97,11 @@ jsBackend.Groups = {
   selectAll: function (event) {
     event.stopPropagation()
     // init vars
-    var $this = $(this)
+    var $selectAll = $(event.currentTarget)
 
     // toggle data grid checkboxes
-    $this.closest('.jsGroupsPermissionsModule').find('td.check input[type="checkbox"]').each(function () {
-      $(this).prop('checked', !!$this.prop('checked'))
+    $selectAll.closest('.jsGroupsPermissionsModule').find('td.check input[type="checkbox"]').each(function (index, checkbox) {
+      $(checkbox).prop('checked', $selectAll.prop('checked'))
     })
   }
 }
