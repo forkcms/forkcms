@@ -19,6 +19,7 @@ class Installer extends ModuleInstaller
         $this->configureBackendRights();
         $this->configureFrontendExtras();
         $this->configureFrontendForkTheme();
+        $this->configureFrontendCustomTheme(); // @remark custom for sumocoders
     }
 
     private function configureBackendActionRightsForModules(): void
@@ -130,19 +131,40 @@ class Installer extends ModuleInstaller
         // insert templates
         $this->getDatabase()->insert('themes_templates', $templates['fork']['default']);
         $this->getDatabase()->insert('themes_templates', $templates['fork']['home']);
+        // set the theme
+        $this->setSetting('Core', 'theme', 'Fork', true);
 
-        // @remark: custom for Sumocoders
+        // set default template
+        $this->setSetting('Pages', 'default_template', $this->getTemplateId('Default'));
+
+        // disable meta navigation
+        $this->setSetting('Pages', 'meta_navigation', false);
+    }
+
+    /**
+     * @remark custom for sumocoders
+     */
+    private function configureFrontendCustomTheme(): void
+    {
         // Bootstrap templates
 
         // search will be installed by default; already link it to this template
-        $extras['search_form'] = $this->insertExtra('search', ModuleExtraType::widget(), 'SearchForm', 'form', null, 'N', 2001);
+        $extras['search_form'] = $this->insertExtra(
+            'search',
+            ModuleExtraType::widget(),
+            'SearchForm',
+            'form',
+            null,
+            'N',
+            2001
+        );
 
         // build templates
         $templates['custom']['default'] = [
             'theme' => 'Custom',
             'label' => 'Default',
             'path' => 'Core/Layout/Templates/Default.html.twig',
-            'active' => 'Y',
+            'active' => true,
             'data' => serialize(
                 [
                     'format' => '[/,/,/,top,/],[/,main,main,main,/]',
@@ -163,7 +185,7 @@ class Installer extends ModuleInstaller
             'theme' => 'Custom',
             'label' => 'Error',
             'path' => 'Core/Layout/Templates/Error.html.twig',
-            'active' => 'Y',
+            'active' => true,
             'data' => serialize(
                 [
                     'format' => '[/,/,/,top,/],[/,main,main,main,/]',
@@ -184,7 +206,7 @@ class Installer extends ModuleInstaller
             'theme' => 'Custom',
             'label' => 'Home',
             'path' => 'Core/Layout/Templates/Home.html.twig',
-            'active' => 'Y',
+            'active' => true,
             'data' => serialize(
                 [
                     'format' => '[/,/,/,top,/],[/,main,main,main,/]',
