@@ -340,7 +340,7 @@ jsBackend.ckeditor =
             { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote' ] },
             { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
             { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', 'Templates' ] },
-            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar', 'Iframe' ] },
+            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar', 'Iframe', 'Link2' ] },
             { name: 'styles', items: [ 'Format', 'Styles' ] }
         ],
 
@@ -363,7 +363,7 @@ jsBackend.ckeditor =
         uploadUrl: '/src/Backend/Core/Js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
 
         // load some extra plugins
-        extraPlugins: 'stylesheetparser,mediaembed',
+        extraPlugins: 'stylesheetparser,mediaembed,medialibrary',
 
         // remove useless plugins
         removePlugins: 'a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools',
