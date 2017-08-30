@@ -11355,6 +11355,21 @@
         <translation language="el"><![CDATA[Η κατάσταση λειτουργίας debug είναι ενεργή.]]></translation>
         <translation language="tr"><![CDATA[Hata ayıklama modu aktif.]]></translation>
       </item>
+      <item type="message" name="WarningDebugMode">
+        <translation language="nl"><![CDATA[Debug-mode is nog actief.]]></translation>
+        <translation language="en"><![CDATA[Debug-mode is active.]]></translation>
+        <translation language="hu"><![CDATA[Debug-mód aktív.]]></translation>
+        <translation language="it"><![CDATA[Modalità Debug attiva.]]></translation>
+        <translation language="ru"><![CDATA[Включен режим отладки.]]></translation>
+        <translation language="zh"><![CDATA[调试模式处于活动状态。]]></translation>
+        <translation language="fr"><![CDATA[Le mode debug est activé.]]></translation>
+        <translation language="de"><![CDATA[Debug-Modus ist aktiv.]]></translation>
+        <translation language="es"><![CDATA[Debug-mode está activado.]]></translation>
+        <translation language="lt"><![CDATA[Įjungtas testavimo režimas.]]></translation>
+        <translation language="sv"><![CDATA[Debug-läge är aktivt.]]></translation>
+        <translation language="el"><![CDATA[Η κατάσταση λειτουργίας debug είναι ενεργή.]]></translation>
+        <translation language="tr"><![CDATA[Hata ayıklama modu aktif.]]></translation>
+      </item>
       <item type="error" name="EmailAlreadyExists">
         <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
         <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
