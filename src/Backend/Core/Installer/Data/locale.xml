@@ -4044,6 +4044,22 @@
   </Frontend>
   <Backend>
     <Core>
+      <item type="error" name="NumericCharactersOnly">
+        <translation language="nl"><![CDATA[Enkel numerieke karakters zijn toegestaan.]]></translation>
+        <translation language="en"><![CDATA[Only numeric characters are allowed.]]></translation>
+        <translation language="fr"><![CDATA[Seuls les caractères numériques sont acceptés.]]></translation>
+        <translation language="hu"><![CDATA[Csak numerikus karakterek megengedettek.]]></translation>
+        <translation language="it"><![CDATA[Sono permessi solo caratteri numerici.]]></translation>
+        <translation language="ru"><![CDATA[Разрешены только цифры.]]></translation>
+        <translation language="zh"><![CDATA[只允许输入数字。]]></translation>
+        <translation language="de"><![CDATA[Nur numerische Zeichen sind erlaubt.]]></translation>
+        <translation language="es"><![CDATA[Solo carácteres numericos son aceptados.]]></translation>
+        <translation language="lt"><![CDATA[Galimi tik skaičiai.]]></translation>
+        <translation language="uk"><![CDATA[Дозволені лише цифри.]]></translation>
+        <translation language="sv"><![CDATA[Endast numeriska tecken är tillåtna.]]></translation>
+        <translation language="el"><![CDATA[Επιτρέπονται μόνον αριθμοί]]></translation>
+        <translation language="pl"><![CDATA[Dozwolone sa tylko znaki numeryczne.]]></translation>
+      </item>
       <item type="label" name="ProfileSettings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
         <translation language="en"><![CDATA[settings]]></translation>
