@@ -905,7 +905,6 @@ jsBackend.mediaLibraryHelper.cropper =
 
             jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
 
-
             return;
         }
 
