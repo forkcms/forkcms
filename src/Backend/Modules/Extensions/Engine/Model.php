@@ -406,18 +406,6 @@ class Model
                         'message' => BL::getMessage('InformationFileIsEmpty'),
                     ];
                 }
-
-                // check if cronjobs are installed already
-                if (isset($information['data']['cronjobs'])) {
-                    foreach ($information['data']['cronjobs'] as $cronjob) {
-                        if (!$cronjob['active']) {
-                            $information['warnings'][] = [
-                                'message' => BL::getError('CronjobsNotSet'),
-                            ];
-                        }
-                        break;
-                    }
-                }
             } catch (Exception $e) {
                 $information['warnings'][] = [
                     'message' => BL::getMessage('InformationFileCouldNotBeLoaded'),
