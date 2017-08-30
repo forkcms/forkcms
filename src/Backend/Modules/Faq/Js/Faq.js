@@ -25,7 +25,11 @@ jsBackend.faq = {
     // reset initial empty grids
     $('table.emptyGrid').each(function () {
       $(this).find('td').parent().remove()
-      $(this).append('<tr class="noQuestions"><td colspan="' + $(this).find('th').length + '">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td></tr>')
+      $(this).append(
+        '<tr class="noQuestions">' +
+        '<td colspan="' + $(this).find('th').length + '">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td>' +
+        '</tr>'
+      )
       $(this).removeClass('emptyGrid')
     })
 
@@ -82,11 +86,17 @@ jsBackend.faq = {
               // successfully saved reordering sequence
               if (data.code === 200) {
                 // change count in title (if any)
-                $('div#dataGrid-' + fromCategoryId + ' .content-title p').html($('div#dataGrid-' + fromCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ($('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length - 1) + ')'))
+                $('div#dataGrid-' + fromCategoryId + ' .content-title p')
+                .html($('div#dataGrid-' + fromCategoryId + ' .content-title p')
+                .html()
+                .replace(/\(([0-9]*)\)$/, '(' + ($('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length - 1) + ')'))
 
                 // if there are no records -> show message
                 if ($('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length === 1) {
-                  $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid').append('<tr class="noQuestions"><td colspan="3">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td></tr>')
+                  $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid').append(
+                    '<tr class="noQuestions">' +
+                    '<td colspan="3">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td>' +
+                    '</tr>')
                 }
 
                 // check empty categories
@@ -99,7 +109,10 @@ jsBackend.faq = {
                 table.find('tr:odd').addClass('odd')
 
                 // change count in title (if any)
-                $('div#dataGrid-' + toCategoryId + ' .content-title p').html($('div#dataGrid-' + toCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ($('div#dataGrid-' + toCategoryId + ' table.jsDataGrid tr').length - 1) + ')'))
+                $('div#dataGrid-' + toCategoryId + ' .content-title p')
+                .html($('div#dataGrid-' + toCategoryId + ' .content-title p')
+                .html()
+                .replace(/\(([0-9]*)\)$/, '(' + ($('div#dataGrid-' + toCategoryId + ' table.jsDataGrid tr').length - 1) + ')'))
 
                 // show message
                 jsBackend.messages.add('success', data.message)

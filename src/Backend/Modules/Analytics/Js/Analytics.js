@@ -45,9 +45,9 @@ jsBackend.analytics.chartPieChart = {
       var $this = $(this)
 
       pieChartData.push({
-        'name': $this.children('span.label').html(),
-        'y': parseInt($this.children('span.value').html()),
-        'percentage': parseInt($this.children('span.percentage').html())
+        name: $this.children('span.label').html(),
+        y: parseInt($this.children('span.value').html()),
+        percentage: parseInt($this.children('span.percentage').html())
       })
     })
 

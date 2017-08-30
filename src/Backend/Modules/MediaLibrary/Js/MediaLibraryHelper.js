@@ -786,9 +786,9 @@ jsBackend.mediaLibraryHelper.cropper = {
 
   passToCropper: function (resizeInfo, resolve, reject) {
     jsBackend.mediaLibraryHelper.cropper.cropperQueue.push({
-      'resizeInfo': resizeInfo,
-      'resolve': resolve,
-      'reject': reject
+      resizeInfo: resizeInfo,
+      resolve: resolve,
+      reject: reject
     })
 
     // If the cropper is already handling the queue we don't need to start it a second time.
