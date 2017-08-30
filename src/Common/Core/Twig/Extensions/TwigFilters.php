@@ -66,6 +66,11 @@ class TwigFilters
             ['is_safe' => ['html']]
         ));
         $twig->addFunction(new Twig_SimpleFunction(
+            'getsiblingsnavigation',
+            $app.'::getSiblingsNavigation',
+            ['is_safe' => ['html']]
+        ));
+        $twig->addFunction(new Twig_SimpleFunction(
             'parsewidget',
             $app.'::parseWidget',
             ['is_safe' => ['html']]

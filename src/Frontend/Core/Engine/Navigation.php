@@ -442,6 +442,34 @@ class Navigation extends KernelLoader
     }
 
     /**
+     * Find the highest parent id, but not 1 from home
+     */
+    public static function getHighestParentId(?int $parentId = null): ?int
+    {
+        if ($parentId === null) {
+            $page = FrontendModel::get('page')->getRecord();
+            if (array_key_exists('parent_id', $page)) {
+                $parentId = (int) $page['parent_id'];
+            }
+        }
+
+        if ($parentId <= 1 || $parentId === null) {
+            return null;
+        }
+
+        $parent = FrontendModel::getPage($parentId);
+        if (array_key_exists('parent_id', $page)) {
+            $newParentId = (int) $parent['parent_id'];
+        }
+
+        if ($newParentId === 1) {
+            return $parentId;
+        }
+
+        return self::getHighestParentId($parentId);
+    }
+
+    /**
      * Get URL for a given pageId
      *
      * @param int $pageId The pageID wherefore you want the URL.

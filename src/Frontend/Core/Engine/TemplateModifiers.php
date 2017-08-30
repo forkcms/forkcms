@@ -242,6 +242,37 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
+     * Get the siblings navigation html
+     *   syntax: {{ getsiblingsnavigation($pageId) }}
+     *
+     * @param int $pageId The parent wherefore the navigation should be build.
+     *
+     * @return string
+     */
+    public static function getSiblingsNavigation(int $pageId = null): string
+    {
+        $highestParentId = Navigation::getHighestParentId();
+
+        if ($highestParentId === null) {
+            return '';
+        }
+
+        try {
+            // get info about the given page
+            $pageInfo = Navigation::getPageInfo($pageId);
+
+            // get HTML
+            return (string) Navigation::getNavigationHTML(
+                'page',
+                $pageInfo['parent_id'],
+                5
+            );
+        } catch (Exception $e) {
+            return '';
+        }
+    }
+
+    /**
      * Get the subnavigation html
      *   syntax: {{ getsubnavigation($type, $parentId, $startdepth, $enddepth, $excludeIds-splitted-by-dash, $template) }}
      *
