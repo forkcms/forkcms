@@ -243,14 +243,21 @@ class TemplateModifiers extends BaseTwigModifiers
 
     /**
      * Get the siblings navigation html
-     *   syntax: {{ getsiblingsnavigation($pageId) }}
+     *   syntax: {{ getsiblingsnavigation($pageId, $enddepth, $excludeIds-splitted-by-dash, $template) }}
      *
      * @param int $pageId The parent wherefore the navigation should be build.
+     * @param int $endDepth The maximum depth that has to be build.
+     * @param string $excludeIds Which pageIds should be excluded (split them by -).
+     * @param string $template The template that will be used.
      *
      * @return string
      */
-    public static function getSiblingsNavigation(int $pageId = null): string
-    {
+    public static function getSiblingsNavigation(
+        int $pageId = null,
+        int $endDepth = null,
+        string $excludeIds = null,
+        string $template = 'Core/Layout/Templates/Navigation.html.twig'
+    ): string {
         $highestParentId = Navigation::getHighestParentId();
 
         if ($highestParentId === null) {
@@ -265,7 +272,9 @@ class TemplateModifiers extends BaseTwigModifiers
             return (string) Navigation::getNavigationHTML(
                 'page',
                 $pageInfo['parent_id'],
-                5
+                $endDepth,
+                (array) $excludeIds,
+                (string) $template
             );
         } catch (Exception $e) {
             return '';
