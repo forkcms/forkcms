@@ -201,7 +201,7 @@ class MediaItemUpload extends BackendBaseAJAXAction
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
-            throw new AjaxExitException(Language::err('NotExistingMediaFolder'));
+            throw new AjaxExitException(Language::err('NonExistingMediaFolder'));
         }
     }
 

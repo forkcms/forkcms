@@ -1143,7 +1143,7 @@ jsBackend.mediaLibraryHelper.upload =
                         jsBackend.messages.add('success', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedSuccess'), succeeded.length));
                     // not everything is uploaded successful, show error message
                     } else {
-                        jsBackend.messages.add('danger', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedError'), (succeeded.length + '","' + failed.length)));
+                        jsBackend.messages.add('danger', utils.string.sprintf(jsBackend.locale.err('MediaUploadedError'), (succeeded.length + '","' + failed.length)));
                     }
                 }
             }
@@ -1469,8 +1469,8 @@ jsBackend.mediaLibraryHelper.templates =
 
         html += '</div>';
         html += '<button type="button" class="deleteMediaItem btn btn-default" ';
-        html += 'title="' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '">';
-        html += '<span>' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '</span>';
+        html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">';
+        html += '<span>' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '</span>';
         html += '</button>';
         html += '</li>';
 
