@@ -458,15 +458,16 @@ class Navigation extends KernelLoader
         }
 
         $parent = FrontendModel::getPage($parentId);
-        if (array_key_exists('parent_id', $page)) {
-            $newParentId = (int) $parent['parent_id'];
+        if (!array_key_exists('parent_id', $parent)) {
+            return $parentId;
         }
 
+        $newParentId = (int) $parent['parent_id'];
         if ($newParentId === 1) {
             return $parentId;
         }
 
-        return self::getHighestParentId($parentId);
+        return self::getHighestParentId($newParentId);
     }
 
     /**
