@@ -549,8 +549,7 @@ jsBackend.ckeditor = {
 
   fallBackBootstrapModals: function () {
     $.fn.modal.Constructor.prototype.enforceFocus = function () {
-      var modalThis
-      modalThis = this
+      var modalThis = this
       $(document).on('focusin.modal', function (e) {
         if (modalThis.$element[0] !== e.target &&
           !modalThis.$element.has(e.target).length &&
