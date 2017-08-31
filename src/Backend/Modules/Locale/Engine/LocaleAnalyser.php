@@ -10,26 +10,21 @@ final class LocaleAnalyser
     /** @var string */
     private $application;
 
-    /** @var string */
-    private $modulesPath;
-
-    /** @var string */
-    private $siteModulespath;
+    /** @var array */
+    private $paths;
 
     /** @var array */
     private $installedModules;
 
-    public function __construct(string $application, string $modulesPath, array $installedModules)
+    public function __construct(string $application, array $paths, array $installedModules)
     {
         $this->application = $application;
-        $this->modulesPath = $modulesPath;
+        $this->paths = $paths;
         $this->installedModules = $installedModules;
-        $this->siteModulespath = substr($modulesPath, strpos($modulesPath, 'src'));
     }
 
     public function findMissingLocale(string $language): array
     {
-        $this->missingLocale = [];
         $moduleFiles = $this->findModuleFiles();
         $existingLocale = $this->getExistingLocaleForLanguage($language);
 
@@ -81,10 +76,14 @@ final class LocaleAnalyser
             ->name('*.html.twig')
             ->name('*.js');
 
-        foreach ($finder->files()->in($this->modulesPath)->getIterator() as $file) {
+        foreach ($finder->files()->in($this->paths)->getIterator() as $file) {
             $module = $this->getInBetweenStrings('Modules/', '/', $file->getPath());
             if (!in_array($module, $this->installedModules, true)) {
-                continue;
+                if (strpos($file->getPath(), $this->application . '/Core') === false) {
+                    continue;
+                }
+
+                $module = 'Core';
             }
             $filename = $file->getFilename();
             $moduleFiles[$module][$filename] = $file;
@@ -162,8 +161,10 @@ final class LocaleAnalyser
             return [];
         }
 
+        $sitePath = substr($file->getPath(), strpos($file->getPath(), 'src'));
+
         return [
-            'file' => $this->siteModulespath . '/' . $file->getRelativePath() . '/' . $filename,
+            'file' => $sitePath . '/' . $filename,
             'locale' => array_merge_recursive(...$locale),
         ];
     }
