@@ -26,7 +26,11 @@ class AnalyseModel extends Model
      */
     public static function getNonExistingBackendLocale(string $language): array
     {
-        $backendAnalyser = new LocaleAnalyser('Backend', BACKEND_MODULES_PATH, BackendModel::getModules());
+        $backendAnalyser = new LocaleAnalyser(
+            'Backend',
+            [BACKEND_MODULES_PATH, BACKEND_CORE_PATH],
+            BackendModel::getModules()
+        );
 
         return $backendAnalyser->findMissingLocale($language);
     }
@@ -40,7 +44,11 @@ class AnalyseModel extends Model
      */
     public static function getNonExistingFrontendLocale(string $language): array
     {
-        $frontendAnalyser = new LocaleAnalyser('Frontend', FRONTEND_MODULES_PATH, BackendModel::getModules());
+        $frontendAnalyser = new LocaleAnalyser(
+            'Frontend',
+            [FRONTEND_MODULES_PATH, FRONTEND_CORE_PATH],
+            BackendModel::getModules()
+        );
 
         return $frontendAnalyser->findMissingLocale($language);
     }
