@@ -10,6 +10,11 @@
 // CLI/Nginx/Cron: We need to set the "current working directory" to this folder
 chdir(__DIR__);
 
+// PHP version check
+if (version_compare(phpversion(), '7.1.0', '<')) {
+    echo 'To be able to run Fork CMS you need at least PHP 7.1.0';
+}
+
 // vendors not installed
 if (!is_dir(__DIR__ . '/vendor')) {
     echo 'Your install is missing some dependencies. If you have composer
