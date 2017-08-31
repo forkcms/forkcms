@@ -247,6 +247,7 @@ class TemplateModifiers extends BaseTwigModifiers
      *
      * @param int $pageId The parent wherefore the navigation should be build.
      * @param int $endDepth The maximum depth that has to be build.
+     * @param bool $startFromHighestParent Should we start from the highest parent? Or just the sibling on this level?
      * @param string $excludeIds Which pageIds should be excluded (split them by -).
      * @param string $template The template that will be used.
      *
@@ -255,6 +256,7 @@ class TemplateModifiers extends BaseTwigModifiers
     public static function getSiblingsNavigation(
         int $pageId = null,
         int $endDepth = null,
+        bool $startFromHighestParent = false,
         string $excludeIds = null,
         string $template = 'Core/Layout/Templates/Navigation.html.twig'
     ): string {
@@ -265,13 +267,18 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         try {
-            // get info about the given page
-            $pageInfo = Navigation::getPageInfo($pageId);
+            $parentId = $highestParentId;
+
+            if (!$startFromHighestParent) {
+                // get info about the given page
+                $pageInfo = Navigation::getPageInfo($pageId);
+                $parentId = $pageInfo['parent_id'];
+            }
 
             // get HTML
             return (string) Navigation::getNavigationHTML(
                 'page',
-                $pageInfo['parent_id'],
+                $parentId,
                 $endDepth,
                 (array) $excludeIds,
                 (string) $template
