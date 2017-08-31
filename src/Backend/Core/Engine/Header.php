@@ -199,7 +199,7 @@ final class Header extends KernelLoader
      * Add data into the jsData
      *
      * @param string $module The name of the module.
-     * @param string $key The key whereunder the value will be stored.
+     * @param string $key The key under which the value will be stored.
      * @param mixed $value The value
      */
     public function addJsData(string $module, string $key, $value): void
