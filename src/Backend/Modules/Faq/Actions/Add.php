@@ -51,7 +51,7 @@ class Add extends BackendBaseActionAdd
         // create elements
         $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->form->addEditor('answer');
-        $this->form->addRadiobutton('hidden', $rbtHiddenValues, false);
+        $this->form->addRadiobutton('hidden', $rbtHiddenValues, 0);
         $this->form->addDropdown('category_id', $categories);
         $this->form->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
 
