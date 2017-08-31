@@ -255,8 +255,8 @@ class TemplateModifiers extends BaseTwigModifiers
      */
     public static function getSiblingsNavigation(
         int $pageId = null,
-        int $endDepth = null,
         bool $startFromHighestParent = false,
+        int $endDepth = null,
         string $excludeIds = null,
         string $template = 'Core/Layout/Templates/Navigation.html.twig'
     ): string {
