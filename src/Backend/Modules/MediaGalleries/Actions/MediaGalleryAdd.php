@@ -87,6 +87,8 @@ class MediaGalleryAdd extends ActionAdd
                     ]
                 )
             );
+
+            return;
         }
     }
 
