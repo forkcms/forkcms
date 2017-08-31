@@ -2,6 +2,20 @@
 <locale>
   <Frontend>
     <Core>
+      <item type="error" name="NumberIsInvalid">
+        <translation language="nl"><![CDATA[Ongeldig getal.]]></translation>
+        <translation language="en"><![CDATA[Invalid number.]]></translation>
+        <translation language="hu"><![CDATA[Helytelen szám.]]></translation>
+        <translation language="ru"><![CDATA[Неверный номер.]]></translation>
+        <translation language="it"><![CDATA[Numero non valido.]]></translation>
+        <translation language="zh"><![CDATA[无效的数字。]]></translation>
+        <translation language="fr"><![CDATA[Nombre incorrect.]]></translation>
+        <translation language="de"><![CDATA[Ungültige Nummer.]]></translation>
+        <translation language="es"><![CDATA[Número no válido.]]></translation>
+        <translation language="lt"><![CDATA[Neteisingas numeris.]]></translation>
+        <translation language="sv"><![CDATA[Ogiltigt nummer.]]></translation>
+        <translation language="el"><![CDATA[Μη έγκυρος αριθμός.]]></translation>
+      </item>
       <item type="label" name="AboutUs">
         <translation language="nl"><![CDATA[over ons]]></translation>
         <translation language="en"><![CDATA[about us]]></translation>
