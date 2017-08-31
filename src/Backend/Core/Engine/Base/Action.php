@@ -205,6 +205,12 @@ class Action extends KernelLoader
                 $this->template->assign('errorMessage', BL::err($errorName));
             }
         }
+
+        $this->header->addJsData(
+            'MediaLibrary',
+            'browseAction',
+            BackendModel::createUrlForAction('MediaItemIndex', 'MediaLibrary')
+        );
     }
 
     /**
