@@ -1,3 +1,8 @@
+/*
+ * bootstrap-tagsinput v0.8.0
+ * 
+ */
+
 .bootstrap-tagsinput {
   background-color: #fff;
   border: 1px solid #ccc;
@@ -40,8 +45,11 @@
   color: white;
 }
 .bootstrap-tagsinput .tag [data-role="remove"] {
+  background: none;
+  border: 0;
   margin-left: 8px;
   cursor: pointer;
+  padding: 0;
 }
 .bootstrap-tagsinput .tag [data-role="remove"]:after {
   content: "x";

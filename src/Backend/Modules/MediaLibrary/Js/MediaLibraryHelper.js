@@ -821,11 +821,7 @@ jsBackend.mediaLibraryHelper.cropper =
 
         jsBackend.mediaLibraryHelper.cropper.isCropping = true;
         var $dialog = jsBackend.mediaLibraryHelper.cropper.getDialog();
-
-        if ($('[data-role="enable-cropper-checkbox"]').is(':checked')) {
-            jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
-        }
-
+        jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog);
         jsBackend.mediaLibraryHelper.cropper.processNextImageInQueue($dialog);
     },
 
@@ -925,6 +921,10 @@ jsBackend.mediaLibraryHelper.cropper =
     },
 
     switchToCropperModal: function($dialog) {
+        if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
+            return;
+        }
+
         if (!$dialog.hasClass('in')) {
             $dialog.modal('show');
         }
