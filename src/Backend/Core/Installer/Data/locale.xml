@@ -4074,6 +4074,10 @@
         <translation language="el"><![CDATA[Επιτρέπονται μόνον αριθμοί]]></translation>
         <translation language="pl"><![CDATA[Dozwolone sa tylko znaki numeryczne.]]></translation>
       </item>
+      <item type="message" name="ConfirmDefault">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze actie wilt uitvoeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to perform this actions?]]></translation>
+      </item>
       <item type="label" name="ProfileSettings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
         <translation language="en"><![CDATA[settings]]></translation>
