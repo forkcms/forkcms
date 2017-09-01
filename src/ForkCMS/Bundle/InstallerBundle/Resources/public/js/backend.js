@@ -69,40 +69,42 @@ jsBackend.controls =
         var uniqueChars = [];
 
         // no chars means no password
-        if(string.length == 0) return 'none';
+        if (string.length === 0) return 'none';
 
         // less then 4 chars is just a weak password
-        if(string.length <= 4) return 'weak';
+        if (string.length <= 4) return 'weak';
 
         // loop chars and add unique chars
-        for(var i = 0; i<string.length; i++)
-        {
-            if($.inArray(string.charAt(i), uniqueChars) == -1) { uniqueChars.push(string.charAt(i)); }
+        for (var i = 0; i < string.length; i++) {
+            if ($.inArray(string.charAt(i), uniqueChars) == -1) uniqueChars.push(string.charAt(i));
         }
 
         // less then 3 unique chars is just weak
-        if(uniqueChars.length < 3) return 'weak';
+        if (uniqueChars.length < 3) return 'weak';
 
         // more then 6 chars is good
-        if(string.length >= 6) score++;
+        if (string.length >= 6) score++;
 
-        // more then 8 is better
-        if(string.length >= 8) score++;
+        // more then 8 is beter
+        if (string.length >= 8) score++;
+
+        // more then 12 is best
+        if (string.length >= 12) score++;
 
         // upper and lowercase?
-        if((string.match(/[a-z]/)) && string.match(/[A-Z]/)) score += 2;
+        if ((string.match(/[a-z]/)) && string.match(/[A-Z]/)) score += 2;
 
         // number?
-        if(string.match(/\d+/)) score++;
+        if (string.match(/\d+/)) score++;
 
         // special char?
-        if(string.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) score++;
+        if (string.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) score++;
 
         // strong password
-        if(score >= 4) return 'strong';
+        if (score >= 6) return 'strong';
 
         // average
-        if(score >= 2) return 'average';
+        if (score >= 2) return 'average';
 
         // fallback
         return 'weak';
