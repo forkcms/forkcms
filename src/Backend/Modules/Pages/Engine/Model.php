@@ -400,7 +400,7 @@ class Model
         $return = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on,
                 UNIX_TIMESTAMP(i.edited_on) AS edited_on,
-             IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
+             IF(COUNT(e.id) > 0, 1, 0) AS has_extra,
              GROUP_CONCAT(b.extra_id) AS extra_ids
              FROM pages AS i
              LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
@@ -435,6 +435,7 @@ class Model
         $return['children_allowed'] = (bool) $return['allow_children'];
         $return['edit_allowed'] = (bool) $return['allow_edit'];
         $return['delete_allowed'] = (bool) $return['allow_delete'];
+        $return['has_extra'] = (bool) $return['has_extra'];
 
         // unserialize data
         if ($return['data'] !== null) {
@@ -734,9 +735,9 @@ class Model
             'SELECT
                  i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.data,
                 m.url, m.data AS meta_data, m.seo_follow, m.seo_index,
-                IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
+                IF(COUNT(e.id) > 0, 1, 0) AS has_extra,
                 GROUP_CONCAT(b.extra_id) AS extra_ids,
-                IF(COUNT(p.id), "Y", "N") AS has_children
+                IF(COUNT(p.id), 1, 0) AS has_children
              FROM pages AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
              LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id
@@ -760,13 +761,21 @@ class Model
 
         // build array
         if (!empty($data[$level])) {
+            $data[$level] = array_map(
+                function ($page) {
+                    $page['has_extra'] = (bool) $page['has_extra'];
+                    $page['has_children'] = (bool) $page['has_children'];
+
+                    return $page;
+                },
+                $data[$level]
+            );
+
             return self::getTree($childIds, $data, ++$level, $language);
-        } else {
-            // cleanup
-            unset($data[$level]);
         }
 
-        // return
+        unset($data[$level]);
+
         return $data;
     }
 
