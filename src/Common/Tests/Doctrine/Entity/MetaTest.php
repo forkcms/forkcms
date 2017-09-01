@@ -31,6 +31,7 @@ class MetaTest extends TestCase
         );
 
         $clonedMeta = clone $meta;
+        $this->assertNotEquals($clonedMeta->getId(), $meta->getId());
         $this->assertEquals(null, $clonedMeta->getId());
         $this->assertNotEquals($clonedMeta->getUrl(), $meta->getUrl());
         $this->assertEquals('fork-cms-rules-this-world-2', $clonedMeta->getUrl());
