@@ -609,73 +609,43 @@ class Model
         );
     }
 
-    public static function getPagesForDropdown($language = null): array
+    public static function getPagesForDropdown(string $language = null): array
     {
         $language = $language ?? BL::getWorkingLanguage();
-
-        // get tree
-        $levels = self::getTree([0], null, 1, $language);
-
-        // init var
         $titles = [];
-        $sequences = [];
+        $sequences = [
+            'pages' => [],
+            'footer' => [],
+        ];
         $keys = [];
-        $return = [];
+        $pages = [];
+        $pageTree = self::getTree([0], null, 1, $language);
+        $homepageTitle = $pageTree[1][1]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
 
-        // loop levels
-        foreach ($levels as $pages) {
-            // loop all items on this level
-            foreach ($pages as $pageID => $page) {
-                // init var
+        foreach ($pageTree as $pageTreePages) {
+            foreach ((array) $pageTreePages as $pageID => $page) {
                 $parentID = (int) $page['parent_id'];
 
-                // get URL for parent
-                $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+                $keys[$pageID] = trim(($keys[$parentID] ?? '') . '/' . $page['url'], '/');
 
-                // add it
-                $keys[$pageID] = trim($url . '/' . $page['url'], '/');
+                $sequences[$page['type'] === 'footer' ? 'footer' : 'pages'][$keys[$pageID]] = $pageID;
 
-                // add to sequences
-                if ($page['type'] == 'footer') {
-                    $sequences['footer'][(string) trim(
-                        $url . '/' . $page['url'],
-                        '/'
-                    )] = $pageID;
-                } else {
-                    $sequences['pages'][(string) trim($url . '/' . $page['url'], '/')] = $pageID;
-                }
-
-                // get URL for parent
-                $title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
-                $title = trim($title, \SpoonFilter::ucfirst(BL::lbl('Home')) . ' > ');
-
-                // add it
-                $titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
+                $parentTitle = str_replace([$homepageTitle . ' > ', $homepageTitle], '', $titles[$parentID] ?? '');
+                $titles[$pageID] = trim($parentTitle . ' > ' . $page['title'], ' > ');
             }
         }
 
-        if (isset($sequences['pages'])) {
-            // sort the sequences
-            ksort($sequences['pages']);
+        foreach ($sequences as $pageGroupSortList) {
+            ksort($pageGroupSortList);
 
-            // loop to add the titles in the correct order
-            foreach ($sequences['pages'] as $id) {
+            foreach ($pageGroupSortList as $id) {
                 if (isset($titles[$id])) {
-                    $return[$id] = $titles[$id];
+                    $pages[$id] = $titles[$id];
                 }
             }
         }
 
-        if (isset($sequences['footer'])) {
-            foreach ($sequences['footer'] as $id) {
-                if (isset($titles[$id])) {
-                    $return[$id] = $titles[$id];
-                }
-            }
-        }
-
-        // return
-        return $return;
+        return $pages;
     }
 
     public static function getSubtree(array $navigation, int $parentId): string
