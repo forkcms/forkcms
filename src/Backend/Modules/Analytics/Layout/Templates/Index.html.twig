@@ -65,7 +65,7 @@
                 <span id="yAxisTitle">{{ 'lbl.Visits'|trans|ucfirst }}</span>
                 <ul class="series">
                   <li class="serie" id="metric1serie">
-                    <span class="name">Pageviews</span>
+                    <span class="name">{{ 'lbl.Pageviews'|trans|ucfirst }}</span>
                     <ul class="data">
                       {% for visitor in visitors_graph_data %}
                         <li>
@@ -77,7 +77,7 @@
                     </ul>
                   </li>
                   <li class="serie" id="metric2serie">
-                    <span class="name">Visitors</span>
+                    <span class="name">{{ 'lbl.Visitors'|trans|ucfirst }}</span>
                     <ul class="data">
                       {% for visitor in visitors_graph_data %}
                         <li>

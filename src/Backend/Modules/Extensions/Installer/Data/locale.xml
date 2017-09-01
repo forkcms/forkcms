@@ -423,6 +423,20 @@
         <translation language="lt"><![CDATA[trinti poziciją]]></translation>
         <translation language="el"><![CDATA[Διαγραφή θέσης]]></translation>
       </item>
+      <item type="label" name="DeleteBlock">
+        <translation language="nl"><![CDATA[blok verwijderen]]></translation>
+        <translation language="en"><![CDATA[delete block]]></translation>
+        <translation language="it"><![CDATA[elimina blocco]]></translation>
+        <translation language="ru"><![CDATA[Удалить блок]]></translation>
+        <translation language="zh"><![CDATA[删除阻止]]></translation>
+        <translation language="de"><![CDATA[Block löschen]]></translation>
+        <translation language="fr"><![CDATA[effacer le bloc]]></translation>
+        <translation language="hu"><![CDATA[blokk törlése]]></translation>
+        <translation language="es"><![CDATA[eliminar bloque]]></translation>
+        <translation language="uk"><![CDATA[Видалити блок]]></translation>
+        <translation language="lt"><![CDATA[trinti bloką]]></translation>
+        <translation language="el"><![CDATA[Διαγραφή μπλοκ]]></translation>
+      </item>
       <item type="label" name="EditThemeTemplate">
         <translation language="nl"><![CDATA[thema template bewerken]]></translation>
         <translation language="en"><![CDATA[edit theme template]]></translation>
