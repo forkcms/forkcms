@@ -400,7 +400,7 @@ class Model
         $return = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on,
                 UNIX_TIMESTAMP(i.edited_on) AS edited_on,
-             IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
+             IF(COUNT(e.id) > 0, 1, 0) AS has_extra,
              GROUP_CONCAT(b.extra_id) AS extra_ids
              FROM pages AS i
              LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
@@ -435,6 +435,7 @@ class Model
         $return['children_allowed'] = (bool) $return['allow_children'];
         $return['edit_allowed'] = (bool) $return['allow_edit'];
         $return['delete_allowed'] = (bool) $return['allow_delete'];
+        $return['has_extra'] = (bool) $return['has_extra'];
 
         // unserialize data
         if ($return['data'] !== null) {
@@ -608,73 +609,43 @@ class Model
         );
     }
 
-    public static function getPagesForDropdown($language = null): array
+    public static function getPagesForDropdown(string $language = null): array
     {
         $language = $language ?? BL::getWorkingLanguage();
-
-        // get tree
-        $levels = self::getTree([0], null, 1, $language);
-
-        // init var
         $titles = [];
-        $sequences = [];
+        $sequences = [
+            'pages' => [],
+            'footer' => [],
+        ];
         $keys = [];
-        $return = [];
+        $pages = [];
+        $pageTree = self::getTree([0], null, 1, $language);
+        $homepageTitle = $pageTree[1][1]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
 
-        // loop levels
-        foreach ($levels as $pages) {
-            // loop all items on this level
-            foreach ($pages as $pageID => $page) {
-                // init var
+        foreach ($pageTree as $pageTreePages) {
+            foreach ((array) $pageTreePages as $pageID => $page) {
                 $parentID = (int) $page['parent_id'];
 
-                // get URL for parent
-                $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+                $keys[$pageID] = trim(($keys[$parentID] ?? '') . '/' . $page['url'], '/');
 
-                // add it
-                $keys[$pageID] = trim($url . '/' . $page['url'], '/');
+                $sequences[$page['type'] === 'footer' ? 'footer' : 'pages'][$keys[$pageID]] = $pageID;
 
-                // add to sequences
-                if ($page['type'] == 'footer') {
-                    $sequences['footer'][(string) trim(
-                        $url . '/' . $page['url'],
-                        '/'
-                    )] = $pageID;
-                } else {
-                    $sequences['pages'][(string) trim($url . '/' . $page['url'], '/')] = $pageID;
-                }
-
-                // get URL for parent
-                $title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
-                $title = trim($title, \SpoonFilter::ucfirst(BL::lbl('Home')) . ' > ');
-
-                // add it
-                $titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
+                $parentTitle = str_replace([$homepageTitle . ' > ', $homepageTitle], '', $titles[$parentID] ?? '');
+                $titles[$pageID] = trim($parentTitle . ' > ' . $page['title'], ' > ');
             }
         }
 
-        if (isset($sequences['pages'])) {
-            // sort the sequences
-            ksort($sequences['pages']);
+        foreach ($sequences as $pageGroupSortList) {
+            ksort($pageGroupSortList);
 
-            // loop to add the titles in the correct order
-            foreach ($sequences['pages'] as $id) {
+            foreach ($pageGroupSortList as $id) {
                 if (isset($titles[$id])) {
-                    $return[$id] = $titles[$id];
+                    $pages[$id] = $titles[$id];
                 }
             }
         }
 
-        if (isset($sequences['footer'])) {
-            foreach ($sequences['footer'] as $id) {
-                if (isset($titles[$id])) {
-                    $return[$id] = $titles[$id];
-                }
-            }
-        }
-
-        // return
-        return $return;
+        return $pages;
     }
 
     public static function getSubtree(array $navigation, int $parentId): string
@@ -734,9 +705,9 @@ class Model
             'SELECT
                  i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.data,
                 m.url, m.data AS meta_data, m.seo_follow, m.seo_index,
-                IF(COUNT(e.id) > 0, "Y", "N") AS has_extra,
+                IF(COUNT(e.id) > 0, 1, 0) AS has_extra,
                 GROUP_CONCAT(b.extra_id) AS extra_ids,
-                IF(COUNT(p.id), "Y", "N") AS has_children
+                IF(COUNT(p.id), 1, 0) AS has_children
              FROM pages AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
              LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id
@@ -760,13 +731,21 @@ class Model
 
         // build array
         if (!empty($data[$level])) {
+            $data[$level] = array_map(
+                function ($page) {
+                    $page['has_extra'] = (bool) $page['has_extra'];
+                    $page['has_children'] = (bool) $page['has_children'];
+
+                    return $page;
+                },
+                $data[$level]
+            );
+
             return self::getTree($childIds, $data, ++$level, $language);
-        } else {
-            // cleanup
-            unset($data[$level]);
         }
 
-        // return
+        unset($data[$level]);
+
         return $data;
     }
 

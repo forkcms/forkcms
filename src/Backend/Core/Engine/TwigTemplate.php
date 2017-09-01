@@ -51,6 +51,10 @@ class TwigTemplate extends BaseTwigTemplate
 
         $this->forkSettings = $container->get('fork.settings');
         $this->debugMode = $container->getParameter('kernel.debug');
+        if ($this->debugMode) {
+            $this->environment->enableAutoReload();
+            $this->environment->setCache(false);
+        }
         $this->language = BL::getWorkingLanguage();
         $this->connectSymfonyForms();
         $this->connectSymfonyTranslator();

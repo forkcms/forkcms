@@ -279,7 +279,7 @@ class Model
                 'data',
                 [
                     'id' => $item['id'],
-                    'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
+                    'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
                     'language' => $item['language'],
                     'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
                 ]

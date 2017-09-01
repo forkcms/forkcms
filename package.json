@@ -12,7 +12,7 @@
     "babel-preset-es2015": "^6.24.1",
     "bootstrap-datepicker": "^1.7.0",
     "bootstrap-sass": "~3.3",
-    "bootstrap-tagsinput": "~0.7",
+    "bootstrap-tagsinput": "https://github.com/mathiashelin/bootstrap-tagsinput.git",
     "bootstrap4": "npm:bootstrap@4.0.0-beta",
     "cropper": "^3.0.0-rc.2",
     "del": "^3.0.0",

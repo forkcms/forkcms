@@ -40,7 +40,8 @@
         "spoon/library": "^3.0",
         "sentry/sentry-symfony": "^0.8.2",
         "league/flysystem-aws-s3-v3": "^1.0.13",
-        "league/flysystem-cached-adapter": "^1.0.6"
+        "league/flysystem-cached-adapter": "^1.0.6",
+        "pimple/pimple": "^3.2"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
