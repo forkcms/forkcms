@@ -612,14 +612,17 @@ class Model
     {
         $language = $language ?? BL::getWorkingLanguage();
         $titles = [];
-        $sequences = [];
+        $sequences = [
+            'pages' => [],
+            'footer' => [],
+        ];
         $keys = [];
-        $return = [];
-        $levels = self::getTree([0], null, 1, $language);
-        $homepageTitle = $levels[1][1]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
+        $pages = [];
+        $pageTree = self::getTree([0], null, 1, $language);
+        $homepageTitle = $pageTree[1][1]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
 
-        foreach ($levels as $pages) {
-            foreach ($pages as $pageID => $page) {
+        foreach ($pageTree as $pageTreePages) {
+            foreach ((array) $pageTreePages as $pageID => $page) {
                 $parentID = (int) $page['parent_id'];
 
                 $keys[$pageID] = trim(($keys[$parentID] ?? '') . '/' . $page['url'], '/');
@@ -631,27 +634,17 @@ class Model
             }
         }
 
-        if (isset($sequences['pages'])) {
-            // sort the sequences
-            ksort($sequences['pages']);
+        foreach ($sequences as $pageGroupSortList) {
+            ksort($pageGroupSortList);
 
-            // loop to add the titles in the correct order
-            foreach ($sequences['pages'] as $id) {
+            foreach ($pageGroupSortList as $id) {
                 if (isset($titles[$id])) {
-                    $return[$id] = $titles[$id];
+                    $pages[$id] = $titles[$id];
                 }
             }
         }
 
-        if (isset($sequences['footer'])) {
-            foreach ($sequences['footer'] as $id) {
-                if (isset($titles[$id])) {
-                    $return[$id] = $titles[$id];
-                }
-            }
-        }
-
-        return $return;
+        return $pages;
     }
 
     public static function getSubtree(array $navigation, int $parentId): string
