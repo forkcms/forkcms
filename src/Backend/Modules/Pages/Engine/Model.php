@@ -608,48 +608,26 @@ class Model
         );
     }
 
-    public static function getPagesForDropdown($language = null): array
+    public static function getPagesForDropdown(string $language = null): array
     {
         $language = $language ?? BL::getWorkingLanguage();
-
-        // get tree
-        $levels = self::getTree([0], null, 1, $language);
-
-        // init var
         $titles = [];
         $sequences = [];
         $keys = [];
         $return = [];
+        $levels = self::getTree([0], null, 1, $language);
+        $homepageTitle = $levels[1][1]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
 
-        // loop levels
         foreach ($levels as $pages) {
-            // loop all items on this level
             foreach ($pages as $pageID => $page) {
-                // init var
                 $parentID = (int) $page['parent_id'];
 
-                // get URL for parent
-                $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+                $keys[$pageID] = trim(($keys[$parentID] ?? '') . '/' . $page['url'], '/');
 
-                // add it
-                $keys[$pageID] = trim($url . '/' . $page['url'], '/');
+                $sequences[$page['type'] === 'footer' ? 'footer' : 'pages'][$keys[$pageID]] = $pageID;
 
-                // add to sequences
-                if ($page['type'] == 'footer') {
-                    $sequences['footer'][(string) trim(
-                        $url . '/' . $page['url'],
-                        '/'
-                    )] = $pageID;
-                } else {
-                    $sequences['pages'][(string) trim($url . '/' . $page['url'], '/')] = $pageID;
-                }
-
-                // get URL for parent
-                $title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
-                $title = trim($title, \SpoonFilter::ucfirst(BL::lbl('Home')) . ' > ');
-
-                // add it
-                $titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
+                $parentTitle = str_replace([$homepageTitle . ' > ', $homepageTitle], '', $titles[$parentID] ?? '');
+                $titles[$pageID] = trim($parentTitle . ' > ' . $page['title'], ' > ');
             }
         }
 
@@ -673,7 +651,6 @@ class Model
             }
         }
 
-        // return
         return $return;
     }
 
