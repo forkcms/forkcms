@@ -1899,7 +1899,7 @@ jsBackend.tableSequenceByDragAndDrop =
                 }
             );
 
-            $sequenceBody.find('[data-role="sort-move"]').on('click', function(e) {
+            $sequenceBody.find('[data-role="order-move"]').on('click.fork.order-move', function(e) {
                 var $this = $(this);
                 var $row = $this.closest('tr');
                 var direction = $this.data('direction');
