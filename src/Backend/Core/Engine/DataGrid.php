@@ -11,7 +11,6 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
-use Backend\Core\Language\Language;
 use SpoonDatagridSource;
 use SpoonFormDropdown;
 
@@ -293,10 +292,10 @@ class DataGrid extends \SpoonDataGrid
             'sortHandle',
             null,
             '<button data-role="order-move" data-direction="up" class="btn btn-default btn-xs">
-                     <i class="fa fa-arrow-up"><span class="sr-only">' . Language::lbl('MoveUpOnePosition') . '</span></i>
+                     <i class="fa fa-arrow-up"><span class="sr-only">' . BackendLanguage::lbl('MoveUpOnePosition') . '</span></i>
                    </button>
                    <button data-role="order-move" data-direction="down" class="btn btn-default btn-xs">
-                     <i class="fa fa-arrow-down"><span class="sr-only">' . Language::lbl('MoveDownOnePosition') . '</span></i>
+                     <i class="fa fa-arrow-down"><span class="sr-only">' . BackendLanguage::lbl('MoveDownOnePosition') . '</span></i>
                    </button>'
         );
 
