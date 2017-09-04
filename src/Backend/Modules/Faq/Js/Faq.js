@@ -137,7 +137,6 @@ jsBackend.faq =
                 tolerance: 'pointer',                    // give a more natural feeling
                 connectWith: 'div.jsDataGridQuestionsHolder',        // this is what makes dragging between categories possible
                 stop: function(e, ui) {
-                    // on stop sorting
                     jsBackend.faq.saveNewQuestionSequence(
                         $(this),
                         ui.item.attr('id'),
