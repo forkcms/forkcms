@@ -1070,7 +1070,7 @@ class Model
         string $language = null
     ): bool {
         $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, ['before', 'after', 'inside'], 'inside');
-        $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'inside');
+        $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
         $language = $language ?? BL::getWorkingLanguage();
 
         // get database
