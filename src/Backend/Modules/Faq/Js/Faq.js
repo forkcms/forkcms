@@ -129,8 +129,9 @@ jsBackend.faq =
     {
         // go over every dataGrid
         $.each($('div.jsDataGridQuestionsHolder'), function() {
+            var $this = $(this);
             // make them sortable
-            $(this).sortable({
+            $this.sortable({
                 items: 'table.jsDataGrid tbody tr',        // set the elements that user can sort
                 handle: 'td.dragAndDropHandle',            // set the element that user can grab
                 tolerance: 'pointer',                    // give a more natural feeling
@@ -143,6 +144,20 @@ jsBackend.faq =
                         ui.item.parents('.jsDataGridQuestionsHolder').attr('id').substring(9)
                     );
                 }
+            });
+            $this.find('[data-role="order-move"]').off('click.fork.order-move').on('click.fork.order-move', function(e) {
+                var $this = $(this);
+                var $row = $this.closest('tr');
+                var direction = $this.data('direction');
+                var $holder = $row.closest('.jsDataGridQuestionsHolder');
+
+                if (direction === 'up') {
+                    $row.prev().insertAfter($row);
+                } else if (direction === 'down') {
+                    $row.next().insertBefore($row);
+                }
+
+                jsBackend.faq.saveNewQuestionSequence($holder, $row.attr('id'), $holder.attr('id').substring(9));
             });
         });
     }
