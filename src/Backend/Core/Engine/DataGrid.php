@@ -293,10 +293,10 @@ class DataGrid extends \SpoonDataGrid
             'sortHandle',
             null,
             '<button data-role="order-move" data-direction="up" class="btn btn-default btn-xs">
-                     <i class="fa fa-arrow-up"><span class="sr-only">' . Language::lbl('MoveUp') . '</span></i>
+                     <i class="fa fa-arrow-up"><span class="sr-only">' . Language::lbl('MoveUpOnePosition') . '</span></i>
                    </button>
                    <button data-role="order-move" data-direction="down" class="btn btn-default btn-xs">
-                     <i class="fa fa-arrow-down"><span class="sr-only">' . Language::lbl('MoveDown') . '</span></i>
+                     <i class="fa fa-arrow-down"><span class="sr-only">' . Language::lbl('MoveDownOnePosition') . '</span></i>
                    </button>'
         );
 

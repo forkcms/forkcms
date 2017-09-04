@@ -12090,6 +12090,14 @@
         <translation language="el"><![CDATA[Επιτρέπονται μόνον αρχεία τύπου XML.]]></translation>
         <translation language="tr"><![CDATA[Sadece XML dosyalarına izin verilir.]]></translation>
       </item>
+      <item type="label" name="MoveUpOnePosition">
+        <translation language="nl"><![CDATA[verplaats één positie omhoog]]></translation>
+        <translation language="en"><![CDATA[move up one position]]></translation>
+      </item>
+      <item type="label" name="MoveDownOnePosition">
+        <translation language="nl"><![CDATA[verplaats één positie omlaag]]></translation>
+        <translation language="en"><![CDATA[move down one position]]></translation>
+      </item>
     </Core>
   </Backend>
 </locale>
