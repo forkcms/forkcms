@@ -10,6 +10,7 @@ namespace Backend\Modules\Pages\Engine;
  */
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
+use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
@@ -1073,153 +1074,36 @@ class Model
         $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
         $language = $language ?? BL::getWorkingLanguage();
 
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
         // reset type of drop for special pages
-        if ($droppedOnPageId == 1) {
-            $typeOfDrop = 'inside';
-        }
-        if ($droppedOnPageId == 0) {
+        if ($droppedOnPageId === 1 || $droppedOnPageId === 0) {
             $typeOfDrop = 'inside';
         }
 
-        // get data for pages
         $page = self::get($pageId, null, $language);
-        $droppedOnPage = self::get($droppedOnPageId, null, $language);
+        $droppedOnPage = self::get(($droppedOnPageId === 0 ? 1 : $droppedOnPageId), null, $language);
 
-        // reset if the drop was on 0 (new meta)
-        if ($droppedOnPageId == 0) {
-            $droppedOnPage = self::get(1, null, $language);
-        }
-
-        // validate
         if (empty($page) || empty($droppedOnPage)) {
             return false;
         }
 
-        // calculate new parent for items that should be moved inside
-        if ($droppedOnPageId == 0) {
-            $newParent = 0;
-        } elseif ($typeOfDrop === 'inside') {
-            // check if item allows children
-            if (!$droppedOnPage['allow_children']) {
-                return false;
-            }
-
-            // set new parent to the dropped on page.
-            $newParent = $droppedOnPage['id'];
-        } else {
-            // if the item has to be moved before or after
-            $newParent = $droppedOnPage['parent_id'];
-        }
-
-        // decide new type
-        if ($droppedOnPageId == 0) {
-            if ($tree === 'footer') {
-                $newType = 'footer';
-            } else {
-                $newType = 'meta';
-            }
-        } elseif ($newParent == 0) {
-            $newType = $droppedOnPage['type'];
-        } else {
-            $newType = 'page';
-        }
-
-        // calculate new sequence for items that should be moved inside
-        if ($typeOfDrop == 'inside') {
-            // get highest sequence + 1
-            $newSequence = (int) $database->getVar(
-                'SELECT MAX(i.sequence)
-                 FROM pages AS i
-                 WHERE i.id = ? AND i.language = ? AND i.status = ?',
-                [$newParent, $language, 'active']
-            ) + 1;
-
-            // update
-            $database->update(
-                'pages',
-                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
-                'id = ? AND language = ? AND status = ?',
-                [$pageId, $language, 'active']
-            );
-        } elseif ($typeOfDrop == 'before') {
-            // calculate new sequence for items that should be moved before
-            // get new sequence
-            $newSequence = (int) $database->getVar(
-                'SELECT i.sequence
-                 FROM pages AS i
-                 WHERE i.id = ? AND i.language = ? AND i.status = ?
-                 LIMIT 1',
-                [$droppedOnPage['id'], $language, 'active']
-            ) - 1;
-
-            // increment all pages with a sequence that is higher or equal to the current sequence;
-            $database->execute(
-                'UPDATE pages
-                 SET sequence = sequence + 1
-                 WHERE parent_id = ? AND language = ? AND sequence >= ?',
-                [$newParent, $language, $newSequence + 1]
-            );
-
-            // update
-            $database->update(
-                'pages',
-                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
-                'id = ? AND language = ? AND status = ?',
-                [$pageId, $language, 'active']
-            );
-        } elseif ($typeOfDrop == 'after') {
-            // calculate new sequence for items that should be moved after
-            // get new sequence
-            $newSequence = (int) $database->getVar(
-                'SELECT i.sequence
-                FROM pages AS i
-                WHERE i.id = ? AND i.language = ? AND i.status = ?
-                LIMIT 1',
-                [$droppedOnPage['id'], $language, 'active']
-            ) + 1;
-
-            // increment all pages with a sequence that is higher then the current sequence;
-            $database->execute(
-                'UPDATE pages
-                 SET sequence = sequence + 1
-                 WHERE parent_id = ? AND language = ? AND sequence > ?',
-                [$newParent, $language, $newSequence]
-            );
-
-            // update
-            $database->update(
-                'pages',
-                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
-                'id = ? AND language = ? AND status = ?',
-                [$pageId, $language, 'active']
-            );
-        } else {
+        try {
+            $newParent = self::getNewParent($droppedOnPageId, $typeOfDrop, $droppedOnPage);
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            // parent doesn't allow children
             return false;
         }
 
-        // get current url
-        $currentUrl = (string) $database->getVar(
-            'SELECT url
-             FROM meta AS m
-             WHERE m.id = ?',
-            [$page['meta_id']]
-        );
-
-        // rebuild url
-        $newUrl = self::getUrl(
-            $currentUrl,
+        self::recalculateSequenceAfterMove(
+            $typeOfDrop,
+            self::getNewType($droppedOnPageId, $tree, $newParent, $droppedOnPage),
             $pageId,
+            $language,
             $newParent,
-            isset($page['data']['is_action']) && $page['data']['is_action']
+            $droppedOnPage['id']
         );
 
-        // store
-        $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
+        self::updateUrlAfterMove($pageId, $page, $newParent);
 
-        // return
         return true;
     }
 
@@ -1382,5 +1266,118 @@ class Model
         }
 
         return $redirectUrl;
+    }
+
+    private static function getNewParent(int $droppedOnPageId, string $typeOfDrop, array $droppedOnPage): int
+    {
+        if ($droppedOnPageId === 0) {
+            return 0;
+        }
+
+        if ($typeOfDrop === 'inside') {
+            // check if item allows children
+            if (!$droppedOnPage['allow_children']) {
+                throw new InvalidArgumentException('Parent page is not allowed to have child pages');
+            }
+
+            return $droppedOnPage['id'];
+        }
+
+        // if the item has to be moved before or after
+        return $droppedOnPage['parent_id'];
+    }
+
+    private static function getNewType(int $droppedOnPageId, string $tree, int $newParent, array $droppedOnPage): string
+    {
+        if ($droppedOnPageId === 0) {
+            if ($tree === 'footer') {
+                return 'footer';
+            }
+
+            return 'meta';
+        }
+
+        if ($newParent === 0) {
+            return $droppedOnPage['type'];
+        }
+
+        return 'page';
+    }
+
+    private static function recalculateSequenceAfterMove(
+        string $typeOfDrop,
+        string $newType,
+        int $pageId,
+        string $language,
+        string $newParent,
+        int $droppedOnPageId
+    ): void {
+        $database = BackendModel::getContainer()->get('database');
+
+        // calculate new sequence for items that should be moved inside
+        if ($typeOfDrop === 'inside') {
+            $newSequence = (int) $database->getVar(
+                'SELECT MAX(i.sequence)
+                 FROM pages AS i
+                 WHERE i.id = ? AND i.language = ? AND i.status = ?',
+                [$newParent, $language, 'active']
+            ) + 1;
+
+            $database->update(
+                'pages',
+                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
+                'id = ? AND language = ? AND status = ?',
+                [$pageId, $language, 'active']
+            );
+
+            return;
+        }
+
+        // calculate new sequence for items that should be moved before or after
+        $droppedOnPageSequence = (int) $database->getVar(
+            'SELECT i.sequence
+             FROM pages AS i
+             WHERE i.id = ? AND i.language = ? AND i.status = ?
+             LIMIT 1',
+            [$droppedOnPageId, $language, 'active']
+        );
+
+        $newSequence = $droppedOnPageSequence + ($typeOfDrop === 'before' ? -1 : 1);
+
+        // increment all pages with a sequence that is higher than the new sequence;
+        $database->execute(
+            'UPDATE pages
+                 SET sequence = sequence + 1
+                 WHERE parent_id = ? AND language = ? AND sequence > ?',
+            [$newParent, $language, $newSequence]
+        );
+
+        $database->update(
+            'pages',
+            ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
+            'id = ? AND language = ? AND status = ?',
+            [$pageId, $language, 'active']
+        );
+    }
+
+    private static function updateUrlAfterMove(int $pageId, array $page, int $newParent): void
+    {
+        $database = BackendModel::getContainer()->get('database');
+
+        $currentUrl = (string) $database->getVar(
+            'SELECT url
+             FROM meta AS m
+             WHERE m.id = ?',
+            [$page['meta_id']]
+        );
+
+        $newUrl = self::getUrl(
+            $currentUrl,
+            $pageId,
+            $newParent,
+            isset($page['data']['is_action']) && $page['data']['is_action']
+        );
+
+        $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
     }
 }
