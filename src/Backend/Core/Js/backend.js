@@ -1893,84 +1893,79 @@ jsBackend.tableSequenceByDragAndDrop =
                     handle: 'td.dragAndDropHandle',
                     placeholder: 'dragAndDropPlaceholder',
                     forcePlaceholderSize: true,
-                    stop: function (e, ui) {
-                        // the table
-                        $table = $(this);
-                        var action = (typeof $table.parents('table.jsDataGrid').data('action') == 'undefined') ? 'Sequence' : $table.parents('table.jsDataGrid').data('action').toString();
-                        var module = (typeof $table.parents('table.jsDataGrid').data('module') == 'undefined') ? jsBackend.current.module : $table.parents('table.jsDataGrid').data('module').toString();
-
-                        // fetch extra params
-                        if (typeof $table.parents('table.jsDataGrid').data('extra-params') != 'undefined') {
-                            // we define extra params
-                            extraParams = $table.parents('table.jsDataGrid').data('extra-params');
-
-                            // we convert the unvalid {'key':'value'} to the valid {"key":"value"}
-                            extraParams = extraParams.replace(/'/g, '"');
-
-                            // we parse it as an object
-                            extraParams = $.parseJSON(extraParams);
-                        } else {
-                            extraParams = {};
-                        }
-
-                        // init var
-                        $rows = $(this).find('tr');
-                        var newIdSequence = [];
-
-                        // loop rowIds
-                        $rows.each(function () {
-                            newIdSequence.push($(this).data('id'));
-                        });
-
-                        // make the call
-                        $.ajax(
-                            {
-                                data: $.extend(
-                                    {
-                                        fork: {module: module, action: action},
-                                        new_id_sequence: newIdSequence.join(',')
-                                    }, extraParams),
-                                success: function (data, textStatus) {
-                                    // not a success so revert the changes
-                                    if (data.code != 200) {
-                                        // revert
-                                        $table.sortable('cancel');
-
-                                        // show message
-                                        jsBackend.messages.add('danger', jsBackend.locale.err('AlterSequenceFailed'));
-                                    }
-
-                                    // redo odd-even
-                                    $table.find('tr').removeClass('odd').removeClass('even');
-                                    $table.find('tr:even').addClass('odd');
-                                    $table.find('tr:odd').addClass('even');
-
-                                    // alert the user
-                                    if (data.code != 200 && jsBackend.debug) alert(data.message);
-
-                                    // show message
-                                    jsBackend.messages.add('success', jsBackend.locale.msg('ChangedOrderSuccessfully'));
-                                },
-                                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                    // init var
-                                    var textStatus = jsBackend.locale.err('AlterSequenceFailed');
-
-                                    // get real message
-                                    if (typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
-
-                                    // show message
-                                    jsBackend.messages.add('danger', textStatus);
-
-                                    // revert
-                                    $table.sortable('cancel');
-
-                                    // alert the user
-                                    if (jsBackend.debug) alert(textStatus);
-                                }
-                            });
+                    stop: function(e, ui) {
+                        jsBackend.tableSequenceByDragAndDrop.saveNewSequence($(this));
                     }
-                });
+                }
+            );
+
+            $sequenceBody.find('[data-role="sort-move"]').on('click', function() {
+
+            });
         }
+    },
+
+    saveNewSequence: function($table) {
+        var action = (typeof $table.parents('table.jsDataGrid').data('action') == 'undefined') ? 'Sequence' : $table.parents('table.jsDataGrid').data('action').toString();
+        var module = (typeof $table.parents('table.jsDataGrid').data('module') == 'undefined') ? jsBackend.current.module : $table.parents('table.jsDataGrid').data('module').toString();
+        var extraParams = {};
+        var $rows = $table.find('tr');
+        var newIdSequence = [];
+
+        // fetch extra params
+        if (typeof $table.parents('table.jsDataGrid').data('extra-params') !== 'undefined') {
+            extraParams = $table.parents('table.jsDataGrid').data('extra-params');
+
+            // we convert the unvalid {'key':'value'} to the valid {"key":"value"}
+            extraParams = extraParams.replace(/'/g, '"');
+
+            // we parse it as an object
+            extraParams = $.parseJSON(extraParams);
+        }
+
+        $rows.each(function() {
+            newIdSequence.push($(this).data('id'));
+        });
+
+        $.ajax({
+            data: $.extend({
+                fork: {module: module, action: action},
+                new_id_sequence: newIdSequence.join(',')
+            }, extraParams),
+            success: function(data) {
+                // not a success so revert the changes
+                if (data.code !== 200) {
+                    $table.sortable('cancel');
+                    jsBackend.messages.add('danger', jsBackend.locale.err('AlterSequenceFailed'));
+                }
+
+                // redo odd-even
+                $table.find('tr').removeClass('odd').removeClass('even');
+                $table.find('tr:even').addClass('odd');
+                $table.find('tr:odd').addClass('even');
+
+                if (data.code !== 200 && jsBackend.debug) {
+                    alert(data.message);
+                }
+
+                jsBackend.messages.add('success', jsBackend.locale.msg('ChangedOrderSuccessfully'));
+            },
+            error: function(XMLHttpRequest) {
+                var textStatus = jsBackend.locale.err('AlterSequenceFailed');
+
+                // get real message
+                if (typeof XMLHttpRequest.responseText !== 'undefined') {
+                    textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
+                }
+
+                jsBackend.messages.add('danger', textStatus);
+                $table.sortable('cancel');
+
+                if (jsBackend.debug) {
+                    alert(textStatus);
+                }
+            }
+        });
     }
 };
 
