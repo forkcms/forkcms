@@ -1899,8 +1899,18 @@ jsBackend.tableSequenceByDragAndDrop =
                 }
             );
 
-            $sequenceBody.find('[data-role="sort-move"]').on('click', function() {
+            $sequenceBody.find('[data-role="sort-move"]').on('click', function(e) {
+                var $this = $(this);
+                var $row = $this.closest('tr');
+                var direction = $this.data('direction');
 
+                if (direction === 'up') {
+                    $row.prev().insertAfter($row);
+                } else if (direction === 'down') {
+                    $row.next().insertBefore($row);
+                }
+
+                jsBackend.tableSequenceByDragAndDrop.saveNewSequence($row.closest('table'));
             });
         }
     },

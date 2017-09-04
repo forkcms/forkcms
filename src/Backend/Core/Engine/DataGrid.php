@@ -292,10 +292,10 @@ class DataGrid extends \SpoonDataGrid
         $this->addColumn(
             'sortHandle',
             null,
-            '<button data-role="sort-move" data-direction="-1" class="btn btn-default btn-xs">
+            '<button data-role="sort-move" data-direction="up" class="btn btn-default btn-xs">
                      <i class="fa fa-arrow-up"><span class="sr-only">' . Language::lbl('MoveUp') . '</span></i>
                    </button>
-                   <button data-role="sort-move" data-direction="1" class="btn btn-default btn-xs">
+                   <button data-role="sort-move" data-direction="down" class="btn btn-default btn-xs">
                      <i class="fa fa-arrow-down"><span class="sr-only">' . Language::lbl('MoveDown') . '</span></i>
                    </button>'
         );
