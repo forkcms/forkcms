@@ -128,17 +128,15 @@ jsBackend.faq =
     bindDragAndDropQuestions: function()
     {
         // go over every dataGrid
-        $.each($('div.jsDataGridQuestionsHolder'), function()
-        {
+        $.each($('div.jsDataGridQuestionsHolder'), function() {
             // make them sortable
-            $('div.jsDataGridQuestionsHolder').sortable(
-            {
+            $(this).sortable({
                 items: 'table.jsDataGrid tbody tr',        // set the elements that user can sort
                 handle: 'td.dragAndDropHandle',            // set the element that user can grab
                 tolerance: 'pointer',                    // give a more natural feeling
                 connectWith: 'div.jsDataGridQuestionsHolder',        // this is what makes dragging between categories possible
-                stop: function(e, ui)                // on stop sorting
-                {
+                stop: function(e, ui) {
+                    // on stop sorting
                     jsBackend.faq.saveNewQuestionSequence(
                         $(this),
                         ui.item.attr('id'),
