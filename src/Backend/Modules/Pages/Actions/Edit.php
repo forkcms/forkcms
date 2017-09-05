@@ -32,6 +32,13 @@ use SpoonFormHidden;
 class Edit extends BackendBaseActionEdit
 {
     /**
+     * The active languages
+     *
+     * @var array
+     */
+    private $activeLanguages = [];
+
+    /**
      * The blocks linked to this page
      *
      * @var array
@@ -51,6 +58,13 @@ class Edit extends BackendBaseActionEdit
      * @var array
      */
     private $extras = [];
+
+    /**
+     * The hreflang fields
+     *
+     * @var array
+     */
+    private $hreflangFields = [];
 
     /**
      * Is the current user a god user?
@@ -161,6 +175,9 @@ class Edit extends BackendBaseActionEdit
             $this->template->assign('appendRevision', true);
         }
 
+        // get languages
+        $this->activeLanguages = BL::getActiveLanguages();
+
         // reset some vars
         $this->record['full_url'] = BackendPagesModel::getFullUrl($this->record['id']);
     }
@@ -244,6 +261,19 @@ class Edit extends BackendBaseActionEdit
         // image related fields
         $this->form->addImage('image');
         $this->form->addCheckbox('remove_image');
+
+        // just execute if the site is multi-language
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
+            // loop active languages
+            foreach ($this->activeLanguages as $language) {
+                if($language != BL::getWorkingLanguage()) {
+                    $pages = BackendPagesModel::getPagesForDropdown($language);
+                    // add field for each language
+                    $field = $this->form->addDropdown('hreflang_' . $language, $pages, (!empty($this->record['data']['hreflang_' . $language]) ? $this->record['data']['hreflang_' . $language] : null))->setDefaultElement('');
+                    $this->hreflangFields[$language]['field_hreflang'] = $field->parse();
+                }
+            }
+        }
 
         // page auth related fields
         // check if profiles module is installed
@@ -566,6 +596,7 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('prefixURL', rtrim(BackendPagesModel::getFullUrl($this->record['parent_id']), '/'));
         $this->template->assign('formErrors', (string) $this->form->getErrors());
         $this->template->assign('showTags', $this->userCanSeeAndEditTags());
+        $this->template->assign('hreflangFields', $this->hreflangFields);
 
         // init var
         $showDelete = true;
@@ -688,6 +719,16 @@ class Edit extends BackendBaseActionEdit
                 $data['remove_from_search_index'] = false;
                 if (BackendModel::isModuleInstalled('Profiles') && $this->form->getField('remove_from_search_index')->isChecked() && $this->form->getField('auth_required')->isChecked()) {
                     $data['remove_from_search_index'] = true;
+                }
+
+                // just execute if the site is multi-language
+                if ($this->getContainer()->getParameter('site.multilanguage')) {
+                    // loop active languages
+                    foreach ($this->activeLanguages as $language) {
+                        if($language != BL::getWorkingLanguage()) {
+                            $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
+                        }
+                    }
                 }
 
                 // build page record
