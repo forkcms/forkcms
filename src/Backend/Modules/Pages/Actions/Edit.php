@@ -252,14 +252,18 @@ class Edit extends BackendBaseActionEdit
             $chkMovePage->setAttribute('disabled');
             $chkMovePage->setAttribute('class', 'fork-form-checkbox disabled');
         }
+        $movePageTreeOptions = [
+            'main' => BL::lbl('MainNavigation'),
+            'meta' => BL::lbl('Meta'),
+            'footer' => BL::lbl('Footer'),
+            'root' => BL::lbl('Root'),
+        ];
+        if (!BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
+            unset($movePageTreeOptions['meta']);
+        }
         $this->form->addDropdown(
             'move_page_tree',
-            [
-                'main' => BL::lbl('MainNavigation'),
-                'meta' => BL::lbl('Meta'),
-                'footer' => BL::lbl('Footer'),
-                'root' => BL::lbl('Root'),
-            ],
+            $movePageTreeOptions,
             'root'
         )->setAttribute('data-role', 'move-page-tree-changer');
         $this->form->addDropdown(
