@@ -318,7 +318,11 @@ class Edit extends BackendBaseActionEdit
             $values = [];
 
             foreach ($items as $value) {
-                $values[] = ['label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value];
+                $values[] = [
+                    'label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)),
+                    'value' => $value,
+                    'attributes' => ['data-role' => 'allow-' . $value . '-toggle'],
+                ];
                 if (isset($this->record['allow_' . $value]) && $this->record['allow_' . $value]) {
                     $checked[] = $value;
                 }

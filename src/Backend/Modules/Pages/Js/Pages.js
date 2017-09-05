@@ -36,6 +36,32 @@ jsBackend.pages =
 
         // do meta
         if($('#title').length > 0) $('#title').doMeta();
+
+        if($('[data-role="move-page-toggle"]').length > 0) jsBackend.pages.move.init();
+    }
+};
+
+jsBackend.pages.move = {
+    init: function() {
+        jsBackend.pages.move.allowGodUsersToEnableTheMovePageSetting();
+    },
+
+    allowGodUsersToEnableTheMovePageSetting: function() {
+        var $toggle = $('[data-role="allow-move-toggle"]');
+        if ($toggle.length === 0) {
+            return;
+        }
+
+        $toggle.on('change', function() {
+            var $movePageToggle = $('[data-role="move-page-toggle"]');
+            if ($(this).is(':checked')) {
+                $movePageToggle.removeClass('disabled').prop('disabled', false);
+
+                return;
+            }
+
+            $movePageToggle.addClass('disabled').prop('disabled', true);
+        }).trigger('change');
     }
 };
 
