@@ -43,12 +43,14 @@ deny from env=stayout
 	RewriteEngine On
 	RewriteBase /
 
-    # allow the ck connector
-    RewriteRule ^index\.php$ - [L]
-    RewriteRule src/Backend/Core/Js/ckfinder/core/connector/php/connector\.php - [L]
+        RewriteRule ^index\.php$ - [L]
+        # allow the ck connector
+        RewriteRule src/Backend/Core/Js/ckfinder/core/connector/php/connector\.php - [L]
+        # allow the php-opcache-reset.php file
+        RewriteRule ^php-opcache-reset\.php - [L]
 
 	# forbidden folders
-    RewriteRule .*\.php - [F]
+        RewriteRule .*\.php - [F]
 	RewriteRule \.git - [F]
 	RewriteRule vendor/.* - [F]
 	RewriteRule bin/.* - [F]
