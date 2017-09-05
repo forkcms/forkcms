@@ -649,6 +649,124 @@ class Model
         return $pages;
     }
 
+    private static function getSubTreeForDropdown(
+        array $navigation,
+        int $parentId,
+        string $parentTitle,
+        array $pageAttributes
+    ): array {
+        if (!isset($navigation['page'][$parentId]) || empty($navigation['page'][$parentId])) {
+            return [];
+        }
+        $tree = self::getEmptyTreeArray();
+
+        foreach ($navigation['page'][$parentId] as $page) {
+            $pageId = $page['page_id'];
+            $pageTitle = $parentTitle . ' > ' . $page['navigation_title'];
+            $tree['pages'][$pageId] = $pageTitle;
+            $tree['attributes'][$pageId] = $pageAttributes;
+
+            $tree = self::mergeTreeForDropdownArrays(
+                $tree,
+                self::getSubTreeForDropdown($navigation, $pageId, $pageTitle, $pageAttributes)
+            );
+        }
+
+        return $tree;
+    }
+
+    private static function mergeTreeForDropdownArrays(array $tree, array $subTree, string $treeLabel = null): array
+    {
+        if (empty($subTree)) {
+            return $tree;
+        }
+
+        $tree['attributes'] += $subTree['attributes'];
+
+        if ($treeLabel === null) {
+            $tree['pages'] += $subTree['pages'];
+
+            return $tree;
+        }
+
+        $tree['pages'][$treeLabel] += $subTree['pages'];
+
+        return $tree;
+    }
+
+    private static function getEmptyTreeArray(): array
+    {
+        return [
+            'pages' => [],
+            'attributes' => [],
+        ];
+    }
+
+    private static function getAttributesArrayForTreeName(string $treeName, string $treeLabel): array
+    {
+        return ['data-tree-name' => $treeName, 'data-tree-label' => $treeLabel];
+    }
+
+    private static function addMainPageToTreeForDropdown(
+        array $tree,
+        string $branchLabel,
+        array $attributes,
+        array $page,
+        array $navigation
+    ): array {
+        $tree['pages'][$branchLabel][$page['page_id']] = $page['navigation_title'];
+        $tree['attributes'][$page['page_id']] = $attributes;
+
+        return self::mergeTreeForDropdownArrays(
+            $tree,
+            self::getSubTreeForDropdown(
+                $navigation,
+                $page['page_id'],
+                $page['navigation_title'],
+                $attributes
+            ),
+            BL::lbl('MainNavigation')
+        );
+    }
+
+    public static function getTreeForDropdown(string $language = null): array
+    {
+        $navigation = static::getCacheBuilder()->getNavigation($language = $language ?? BL::getWorkingLanguage());
+
+        $tree = self::addMainPageToTreeForDropdown(
+            self::getEmptyTreeArray(),
+            BL::lbl('MainNavigation'),
+            self::getAttributesArrayForTreeName('main', BL::lbl('MainNavigation')),
+            $navigation['page'][0][1], // homepage
+            $navigation
+        );
+
+        $treeBranches = [];
+        if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
+            $treeBranches['meta'] = BL::lbl('Meta');
+        }
+        $treeBranches['footer'] = BL::lbl('Footer');
+        $treeBranches['root'] = BL::lbl('Root');
+
+        foreach ($treeBranches as $branchName => $branchLabel) {
+            if (!isset($navigation[$branchName][0]) || !is_array($navigation[$branchName][0])) {
+                continue;
+            }
+
+            foreach ($navigation[$branchName][0] as $page) {
+                $tree = self::addMainPageToTreeForDropdown(
+                    $tree,
+                    $branchLabel,
+                    self::getAttributesArrayForTreeName($branchName, $branchLabel),
+                    $page,
+                    $navigation
+                );
+            }
+        }
+
+        return $tree;
+    }
+
     public static function getSubtree(array $navigation, int $parentId): string
     {
         $html = '';
