@@ -1453,7 +1453,11 @@ class Model
                 return 'footer';
             }
 
-            return 'meta';
+            if ($tree === 'meta') {
+                return 'meta';
+            }
+
+            return 'root';
         }
 
         if ($newParent === 0) {
