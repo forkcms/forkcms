@@ -1260,15 +1260,15 @@ class Model
         $database = BackendModel::getContainer()->get('database');
 
         if (self::isForbiddenToDelete($page['id'])) {
-            $return['allow_delete'] = false;
+            $page['allow_delete'] = false;
         }
 
         if (self::isForbiddenToMove($page['id'])) {
-            $return['allow_move'] = false;
+            $page['allow_move'] = false;
         }
 
         if (self::isForbiddenToHaveChildren($page['id'])) {
-            $return['allow_children'] = false;
+            $page['allow_children'] = false;
         }
 
         // update old revisions
