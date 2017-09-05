@@ -44,6 +44,28 @@ jsBackend.pages =
 jsBackend.pages.move = {
     init: function() {
         jsBackend.pages.move.allowGodUsersToEnableTheMovePageSetting();
+        jsBackend.pages.move.handleChangingPageTree();
+    },
+
+    handleChangingPageTree: function() {
+        $('[data-role="move-page-tree-changer"]').on('change', function() {
+            var $this = $(this);
+            var $pagesSelect = $('[data-role="move-page-pages-select"]');
+
+            // make sure the default option is selected again
+            $pagesSelect.find('option').prop('selected', false);
+            $pagesSelect.find('option[value=0]').prop('selected', true);
+
+            // only show the pages of the selected tree
+            $pagesSelect.find("optgroup").hide().children().hide();
+            var $visiblePages = $pagesSelect.find('[data-tree-name="' + $this.val() + '"]');
+            if ($visiblePages.length > 0) {
+                $visiblePages.show();
+                $pagesSelect.find('optgroup[label="' + $visiblePages.first().attr('data-tree-label') + '"]').show();
+            }
+
+            $pagesSelect.trigger('change');
+        }).trigger('change');
     },
 
     allowGodUsersToEnableTheMovePageSetting: function() {
