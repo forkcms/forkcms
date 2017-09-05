@@ -693,6 +693,12 @@ class Edit extends BackendBaseActionEdit
         $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
         $this->meta->validate();
 
+        if ($this->form->getField('move_page')->isChecked()) {
+            $this->form->getField('move_page_tree')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('move_page_type')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('move_page_reference_page')->isFilled(BL::err('FieldIsRequired'));
+        }
+
         if (!$this->form->isCorrect()) {
             return;
         }
@@ -770,12 +776,28 @@ class Edit extends BackendBaseActionEdit
             return;
         }
 
+        $this->movePage($page);
         $this->saveSearchIndex($data['remove_from_search_index'], $page);
 
         $this->redirect(
             BackendModel::createUrlForAction('Edit') . '&id=' . $page['id'] . '&report=edited&var='
             . rawurlencode($page['title']) . '&highlight=row-' . $page['id']
         );
+    }
+
+    private function movePage(array $page): void
+    {
+        if (!$page['allow_move'] || !$this->form->getField('move_page')->isChecked()) {
+            return;
+        }
+
+        BackendPagesModel::move(
+            $page['id'],
+            (int) $this->form->getField('move_page_reference_page')->getValue(),
+            $this->form->getField('move_page_type')->getValue(),
+            $this->form->getField('move_page_tree')->getValue()
+        );
+        BackendPagesModel::buildCache(BL::getWorkingLanguage());
     }
 
     private function buildPageData(string $redirectValue): array
