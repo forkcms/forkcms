@@ -233,14 +233,17 @@
                     <div class="form-group">
                       <label for="movePageTree" class="control-label">{{ 'lbl.MovePageTree'|trans|ucfirst }}</label>
                       {% form_field move_page_tree %}
+                      {% form_field_error move_page_tree %}
                     </div>
                     <div class="form-group">
                       <label for="movePageReferencePage" class="control-label">{{ 'lbl.MovePageReferencePage'|trans|ucfirst }}</label>
                       {% form_field move_page_reference_page %}
+                      {% form_field_error move_page_reference_page %}
                     </div>
                     <div class="form-group">
                       <label for="movePageType" class="control-label">{{ 'lbl.MovePageType'|trans|ucfirst }}</label>
                       {% form_field move_page_type %}
+                      {% form_field_error move_page_type %}
                     </div>
                   </div>
                 </div>
