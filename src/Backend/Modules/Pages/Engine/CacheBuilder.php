@@ -382,9 +382,9 @@ class CacheBuilder
 
                             // prepend the title
                             if (!isset($cachedTitles[$tempPageId])) {
-                                $title = ' > ' . $title;
+                                $title = ' → ' . $title;
                             } else {
-                                $title = $cachedTitles[$tempPageId] . ' > ' . $title;
+                                $title = $cachedTitles[$tempPageId] . ' → ' . $title;
                             }
                         }
                     }
