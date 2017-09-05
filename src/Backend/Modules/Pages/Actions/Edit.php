@@ -730,28 +730,7 @@ class Edit extends BackendBaseActionEdit
             'data' => serialize($data),
         ];
 
-        if ($this->isGod) {
-            $page['allow_move'] = BackendPagesModel::isForbiddenToMove($this->id) ? false : in_array(
-                'move',
-                (array) $this->form->getField('allow')->getValue(),
-                true
-            );
-            $page['allow_children'] = BackendPagesModel::isForbiddenToHaveChildren($this->id) ? false : in_array(
-                'children',
-                (array) $this->form->getField('allow')->getValue(),
-                true
-            );
-            $page['allow_edit'] = in_array(
-                'edit',
-                (array) $this->form->getField('allow')->getValue(),
-                true
-            );
-            $page['allow_delete'] = BackendPagesModel::isForbiddenToDelete($this->id) ? false : in_array(
-                'delete',
-                (array) $this->form->getField('allow')->getValue(),
-                true
-            );
-        }
+        $page = $this->changePagePermissions($page);
 
         if (empty($page['navigation_title'])) {
             $page['navigation_title'] = $page['title'];
@@ -783,6 +762,36 @@ class Edit extends BackendBaseActionEdit
             BackendModel::createUrlForAction('Edit') . '&id=' . $page['id'] . '&report=edited&var='
             . rawurlencode($page['title']) . '&highlight=row-' . $page['id']
         );
+    }
+
+    private function changePagePermissions(array $page): array
+    {
+        if (!$this->isGod) {
+            return $page;
+        }
+
+        $page['allow_move'] = BackendPagesModel::isForbiddenToMove($this->id) ? false : in_array(
+            'move',
+            (array) $this->form->getField('allow')->getValue(),
+            true
+        );
+        $page['allow_children'] = BackendPagesModel::isForbiddenToHaveChildren($this->id) ? false : in_array(
+            'children',
+            (array) $this->form->getField('allow')->getValue(),
+            true
+        );
+        $page['allow_edit'] = in_array(
+            'edit',
+            (array) $this->form->getField('allow')->getValue(),
+            true
+        );
+        $page['allow_delete'] = BackendPagesModel::isForbiddenToDelete($this->id) ? false : in_array(
+            'delete',
+            (array) $this->form->getField('allow')->getValue(),
+            true
+        );
+
+        return $page;
     }
 
     private function movePage(array $page): void
