@@ -54,6 +54,7 @@ jsBackend.pages.move = {
             var $selectedOption = $this.find(':selected');
             var $typeSelect = $('[data-role="move-page-type-changer"]');
             var $typeSelectOptions = $typeSelect.find('option');
+            var selectedValue = $typeSelect.find('option:selected').val();
             $typeSelectOptions.removeClass('disabled').prop('disabled', false).prop('selected', false);
 
             if ($selectedOption.data('allowInside') !== 1 && $this.val() !== '0') {
@@ -65,8 +66,13 @@ jsBackend.pages.move = {
             if ($selectedOption.data('allowAfter') !== 1) {
                 $typeSelect.find('[value=after]').addClass('disabled').prop('disabled', true);
             }
-            $typeSelectOptions.not(':disabled').first().prop('selected', true);
-            $typeSelectOptions.trigger('change');
+
+            if ($typeSelect.find('option[value="' + selectedValue + '"]').is(':disabled')) {
+                selectedValue = $typeSelectOptions.not(':disabled').first().val();
+            }
+
+            $typeSelect.val(selectedValue);
+            $typeSelect.trigger('change');
         }).trigger('change');
     },
 
@@ -74,19 +80,23 @@ jsBackend.pages.move = {
         $('[data-role="move-page-tree-changer"]').on('change', function() {
             var $this = $(this);
             var $pagesSelect = $('[data-role="move-page-pages-select"]');
+            var selectedValue = $pagesSelect.find('option:selected').val();
 
-            // make sure the default option is selected again
-            $pagesSelect.find('option').prop('selected', false);
-            $pagesSelect.find('option[value=0]').prop('selected', true);
+            $pagesSelect.find('optgroup option').prop('selected', false).prop('disabled', true);
 
             // only show the pages of the selected tree
             $pagesSelect.find("optgroup").hide().children().hide();
             var $visiblePages = $pagesSelect.find('[data-tree-name="' + $this.val() + '"]');
             if ($visiblePages.length > 0) {
-                $visiblePages.show();
+                $visiblePages.show().prop('disabled', false);
                 $pagesSelect.find('optgroup[label="' + $visiblePages.first().attr('data-tree-label') + '"]').show();
             }
 
+            if ($pagesSelect.find('option[value="' + selectedValue + '"]').is(':disabled')) {
+                selectedValue = 0;
+            }
+
+            $pagesSelect.val(selectedValue);
             $pagesSelect.trigger('change');
         }).trigger('change');
     },
