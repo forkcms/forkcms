@@ -416,26 +416,24 @@ class Model
             return false;
         }
 
-        // can't be deleted
-        if (in_array($return['id'], [1, 404])) {
+        $return['move_allowed'] = (bool) $return['allow_move'];
+        $return['children_allowed'] = (bool) $return['allow_children'];
+        $return['delete_allowed'] = (bool) $return['allow_delete'];
+
+        if (self::isForbiddenToDelete($return['id'])) {
             $return['allow_delete'] = false;
         }
 
-        // can't be moved
-        if (in_array($return['id'], [1, 404])) {
+        if (self::isForbiddenToMove($return['id'])) {
             $return['allow_move'] = false;
         }
 
-        // can't have children
-        if (in_array($return['id'], [404])) {
-            $return['allow_move'] = false;
+        if (self::isForbiddenToHaveChildren($return['id'])) {
+            $return['allow_children'] = false;
         }
 
         // convert into bools for use in template engine
-        $return['move_allowed'] = (bool) $return['allow_move'];
-        $return['children_allowed'] = (bool) $return['allow_children'];
         $return['edit_allowed'] = (bool) $return['allow_edit'];
-        $return['delete_allowed'] = (bool) $return['allow_delete'];
         $return['has_extra'] = (bool) $return['has_extra'];
 
         // unserialize data
@@ -445,6 +443,21 @@ class Model
 
         // return
         return $return;
+    }
+
+    public static function isForbiddenToDelete(int $pageId): bool
+    {
+        return in_array($pageId, [1, 404], true);
+    }
+
+    public static function isForbiddenToMove(int $pageId): bool
+    {
+        return in_array($pageId, [1, 404], true);
+    }
+
+    public static function isForbiddenToHaveChildren(int $pageId): bool
+    {
+        return $pageId === 404;
     }
 
     public static function getBlocks(int $pageId, int $revisionId = null, string $language = null): array
@@ -1245,6 +1258,18 @@ class Model
     {
         // get database
         $database = BackendModel::getContainer()->get('database');
+
+        if (self::isForbiddenToDelete($page['id'])) {
+            $return['allow_delete'] = false;
+        }
+
+        if (self::isForbiddenToMove($page['id'])) {
+            $return['allow_move'] = false;
+        }
+
+        if (self::isForbiddenToHaveChildren($page['id'])) {
+            $return['allow_children'] = false;
+        }
 
         // update old revisions
         if ($page['status'] != 'draft') {

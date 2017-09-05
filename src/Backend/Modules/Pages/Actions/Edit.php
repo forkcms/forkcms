@@ -316,19 +316,32 @@ class Edit extends BackendBaseActionEdit
 
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
-            // init some vars
-            $items = ['move', 'children', 'edit', 'delete'];
+            $permissions = [
+                'move' => ['data-role' => 'allow-move-toggle'],
+                'children' => ['data-role' => 'allow-children-toggle'],
+                'edit' => ['data-role' => 'allow-edit-toggle'],
+                'delete' => ['data-role' => 'allow-delete-toggle'],
+            ];
+            if (BackendPagesModel::isForbiddenToMove($this->id)) {
+                $permissions['move']['disabled'] = null;
+            }
+            if (BackendPagesModel::isForbiddenToHaveChildren($this->id)) {
+                $permissions['children']['disabled'] = null;
+            }
+            if (BackendPagesModel::isForbiddenToDelete($this->id)) {
+                $permissions['delete']['disabled'] = null;
+            }
             $checked = [];
             $values = [];
 
-            foreach ($items as $value) {
+            foreach ($permissions as $permission => $attributes) {
                 $values[] = [
-                    'label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)),
-                    'value' => $value,
-                    'attributes' => ['data-role' => 'allow-' . $value . '-toggle'],
+                    'label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $permission)),
+                    'value' => $permission,
+                    'attributes' => $attributes,
                 ];
-                if (isset($this->record['allow_' . $value]) && $this->record['allow_' . $value]) {
-                    $checked[] = $value;
+                if (isset($this->record['allow_' . $permission]) && $this->record['allow_' . $permission]) {
+                    $checked[] = $permission;
                 }
             }
 
@@ -691,7 +704,7 @@ class Edit extends BackendBaseActionEdit
             'user_id' => BackendAuthentication::getUser()->getUserId(),
             'parent_id' => $this->record['parent_id'],
             'template_id' => (int) $this->form->getField('template_id')->getValue(),
-            'meta_id' => (int) $this->meta->save(),
+            'meta_id' => $this->meta->save(),
             'language' => BL::getWorkingLanguage(),
             'type' => $this->record['type'],
             'title' => $this->form->getField('title')->getValue(),
@@ -712,12 +725,12 @@ class Edit extends BackendBaseActionEdit
         ];
 
         if ($this->isGod) {
-            $page['allow_move'] = in_array(
+            $page['allow_move'] = BackendPagesModel::isForbiddenToMove($this->id) ? false : in_array(
                 'move',
                 (array) $this->form->getField('allow')->getValue(),
                 true
             );
-            $page['allow_children'] = in_array(
+            $page['allow_children'] = BackendPagesModel::isForbiddenToHaveChildren($this->id) ? false : in_array(
                 'children',
                 (array) $this->form->getField('allow')->getValue(),
                 true
@@ -727,7 +740,7 @@ class Edit extends BackendBaseActionEdit
                 (array) $this->form->getField('allow')->getValue(),
                 true
             );
-            $page['allow_delete'] = in_array(
+            $page['allow_delete'] = BackendPagesModel::isForbiddenToDelete($this->id) ? false : in_array(
                 'delete',
                 (array) $this->form->getField('allow')->getValue(),
                 true
