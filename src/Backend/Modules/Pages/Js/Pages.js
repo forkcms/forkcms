@@ -115,7 +115,7 @@ jsBackend.pages.move = {
                 return;
             }
 
-            $movePageToggle.addClass('disabled').prop('disabled', true);
+            $movePageToggle.addClass('disabled').prop('disabled', true).prop('checked', false).trigger('change');
         }).trigger('change');
     }
 };
