@@ -245,6 +245,37 @@ class Edit extends BackendBaseActionEdit
         $this->form->addImage('image');
         $this->form->addCheckbox('remove_image');
 
+        // move page fields
+        $chkMovePage = $this->form->addCheckbox('move_page');
+        $chkMovePage->setAttribute('data-role', 'move-page-toggle');
+        if (!(bool) $this->record['allow_move']) {
+            $chkMovePage->setAttribute('disabled');
+            $chkMovePage->setAttribute('class', 'fork-form-checkbox disabled');
+        }
+        $this->form->addDropdown(
+            'move_page_tree',
+            [
+                'main' => BL::lbl('MainNavigation'),
+                'meta' => BL::lbl('Meta'),
+                'footer' => BL::lbl('Footer'),
+                'root' => BL::lbl('Root'),
+            ],
+            'root'
+        )->setAttribute('data-role', 'move-page-tree-changer');
+        $this->form->addDropdown(
+            'move_page_type',
+            ['before' => BL::lbl('BeforePage'), 'after' => BL::lbl('AfterPage'), 'inside' => BL::lbl('InsidePage')],
+            'inside'
+        )->setAttribute('data-role', 'move-page-type-changer');
+        $dropdownPageTree = BackendPagesModel::getTreeForDropdown();
+        $ddmMovePageReferencePage = $this->form->addDropdown(
+            'move_page_reference_page',
+            (array) $dropdownPageTree['pages']
+        )->setDefaultElement(BL::lbl('AppendToTree'), 0)->setAttribute('data-role', 'move-page-pages-select');
+        foreach ((array) $dropdownPageTree['attributes'] as $value => $attributes) {
+            $ddmMovePageReferencePage->setOptionAttributes($value, $attributes);
+        }
+
         // page auth related fields
         // check if profiles module is installed
         if (BackendModel::isModuleInstalled('Profiles')) {

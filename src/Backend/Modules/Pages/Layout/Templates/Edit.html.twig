@@ -223,6 +223,31 @@
                 {% endif %}
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel panel-default jsCheckboxDropdownCombo" data-multiple="true">
+                  <div class="panel-heading">
+                    <label for="movePage">{% form_field move_page %} {{ 'lbl.MoveThisPage'|trans|ucfirst }}</label>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label for="movePageTree" class="control-label">{{ 'lbl.MovePageTree'|trans|ucfirst }}</label>
+                      {% form_field move_page_tree %}
+                    </div>
+                    <div class="form-group">
+                      <label for="movePageReferencePage" class="control-label">{{ 'lbl.MovePageReferencePage'|trans|ucfirst }}</label>
+                      {% form_field move_page_reference_page %}
+                    </div>
+                    <div class="form-group">
+                      <label for="movePageType" class="control-label">{{ 'lbl.MovePageType'|trans|ucfirst }}</label>
+                      {% form_field move_page_type %}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                </div>
+              </div>
+            </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabRedirect">
             <div class="row">
