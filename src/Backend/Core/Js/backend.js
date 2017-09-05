@@ -586,34 +586,32 @@ jsBackend.controls =
 
     // bind a checkbox dropdown combo
     bindCheckboxDropdownCombo: function () {
-        // variables
-        $checkboxDropdownCombo = $('.jsCheckboxDropdownCombo');
+        var $checkboxDropdownCombo = $('.jsCheckboxDropdownCombo');
 
         $checkboxDropdownCombo.each(function () {
-            // variables
-            $this = $(this);
+            var $this = $(this);
+            var multiple = !!$this.data('multiple') || false;
 
-            // check if needed element exists
             if ($this.find('input:checkbox').length > 0 && $this.find('select').length > 0) {
-                // variables
-                $checkbox = $this.find('input:checkbox').eq(0);
-                $dropdown = $this.find('select').eq(0);
-
-                $checkbox.on('change', function (e) {
-                    // variables
-                    $combo = $(this).parents().filter($checkboxDropdownCombo);
-                    $field = $($combo.find('select')[0]);
-                    $this = $(this);
+                $this.find('input:checkbox').eq(0).on('change', function (e) {
+                    var $this = $(this);
+                    var $combo = $(this).parents().filter($checkboxDropdownCombo);
+                    var $dropdown = $($combo.find('select'));
+                    if (!multiple) {
+                        $dropdown = $dropdown.eq(0);
+                    }
 
                     if ($this.is(':checked')) {
-                        $field.removeClass('disabled').prop('disabled', false);
-                        $field.focus();
-                    }
-                    else $field.addClass('disabled').prop('disabled', true);
-                });
+                        $dropdown.removeClass('disabled').prop('disabled', false);
 
-                if ($checkbox.is(':checked')) $dropdown.removeClass('disabled').prop('disabled', false);
-                else $dropdown.addClass('disabled').prop('disabled', true);
+                        var $focusDropdown = ((!multiple) ? $dropdown : $dropdown.eq(0));
+                        $focusDropdown.focus();
+
+                        return;
+                    }
+
+                    $dropdown.addClass('disabled').prop('disabled', true);
+                }).trigger('change');
             }
         });
     },
