@@ -45,6 +45,29 @@ jsBackend.pages.move = {
     init: function() {
         jsBackend.pages.move.allowGodUsersToEnableTheMovePageSetting();
         jsBackend.pages.move.handleChangingPageTree();
+        jsBackend.pages.move.handleChangingReferencePage();
+    },
+
+    handleChangingReferencePage: function() {
+        $('[data-role="move-page-pages-select"]').on('change', function() {
+            var $this = $(this);
+            var $selectedOption = $this.find(':selected');
+            var $typeSelect = $('[data-role="move-page-type-changer"]');
+            var $typeSelectOptions = $typeSelect.find('option');
+            $typeSelectOptions.removeClass('disabled').prop('disabled', false).prop('selected', false);
+
+            if ($selectedOption.data('allowInside') !== 1 && $this.val() !== '0') {
+                $typeSelect.find('[value=inside]').addClass('disabled').prop('disabled', true);
+            }
+            if ($selectedOption.data('allowBefore') !== 1) {
+                $typeSelect.find('[value=before]').addClass('disabled').prop('disabled', true);
+            }
+            if ($selectedOption.data('allowAfter') !== 1) {
+                $typeSelect.find('[value=after]').addClass('disabled').prop('disabled', true);
+            }
+            $typeSelectOptions.not(':disabled').first().prop('selected', true);
+            $typeSelectOptions.trigger('change');
+        }).trigger('change');
     },
 
     handleChangingPageTree: function() {

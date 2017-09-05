@@ -271,7 +271,7 @@ class Edit extends BackendBaseActionEdit
             ['before' => BL::lbl('BeforePage'), 'after' => BL::lbl('AfterPage'), 'inside' => BL::lbl('InsidePage')],
             'inside'
         )->setAttribute('data-role', 'move-page-type-changer');
-        $dropdownPageTree = BackendPagesModel::getTreeForDropdown();
+        $dropdownPageTree = BackendPagesModel::getMoveTreeForDropdown($this->id);
         $ddmMovePageReferencePage = $this->form->addDropdown(
             'move_page_reference_page',
             (array) $dropdownPageTree['pages']
