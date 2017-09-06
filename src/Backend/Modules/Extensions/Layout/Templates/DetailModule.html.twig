@@ -31,19 +31,6 @@
             </div>
           </div>
         {% endif %}
-        {% if dataGridCronjobs %}
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                {{ 'lbl.Cronjobs'|trans|ucfirst }}
-              </h3>
-            </div>
-            <div class="panel-body">
-              <p>{{ 'msg.CronjobsInfo'|trans|format(PATH_WWW, SITE_URL)|raw }}</p>
-            </div>
-            {{ dataGridCronjobs }}
-          </div>
-        {% endif %}
         {% if dataGridEvents %}
           <div class="panel panel-default">
             <div class="panel-heading">

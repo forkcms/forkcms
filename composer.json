@@ -37,7 +37,10 @@
         "liip/imagine-bundle": "^1.7",
         "swiftmailer/swiftmailer": "^6.0",
         "google/recaptcha": "~1.1",
-        "spoon/library": "^3.0"
+        "spoon/library": "^3.0",
+        "league/flysystem-aws-s3-v3": "^1.0.13",
+        "league/flysystem-cached-adapter": "^1.0.6",
+        "pimple/pimple": "^3.2"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
@@ -74,7 +77,8 @@
             "Common\\": "src/Common",
             "Console\\": "src/Console",
             "ForkCMS\\": "src/ForkCMS",
-            "ForkCMS\\App\\": "app"
+            "ForkCMS\\App\\": "app",
+            "CKSource\\CKFinder\\": "src/Backend/Core/Js/ckfinder/core/connector/php/CKSource/CKFinder"
         },
         "exclude-from-classmap": [
             "**/Tests/",

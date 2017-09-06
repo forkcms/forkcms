@@ -999,6 +999,9 @@ jsBackend.controls =
         // more then 8 is beter
         if (string.length >= 8) score++;
 
+        // more then 12 is best
+        if (string.length >= 12) score++;
+
         // upper and lowercase?
         if ((string.match(/[a-z]/)) && string.match(/[A-Z]/)) score += 2;
 
@@ -1009,7 +1012,7 @@ jsBackend.controls =
         if (string.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) score++;
 
         // strong password
-        if (score >= 4) return 'strong';
+        if (score >= 6) return 'strong';
 
         // average
         if (score >= 2) return 'average';

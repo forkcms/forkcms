@@ -1,3 +1,49 @@
+5.0.3  (2017-09-01)
+------------------
+
+Bugfixes:
+* Core: Fixed wrong namespace in the upgrade guide for DataGridDatabase [#2201](https://github.com/forkcms/forkcms/pull/2201)
+* Core: Add missing entries for gulp and npm/yarn to htaccess [#2202](https://github.com/forkcms/forkcms/pull/2202)
+* Core: Fix twig cache issues in debug [#2208](https://github.com/forkcms/forkcms/pull/2208)
+* Core: Fix template modifier for getnavigation rendering child navigation as escaped html [#2216](https://github.com/forkcms/forkcms/pull/2216)
+* Core: Pimple should also be installed on production and not only dev for CKFinder [#2224](https://github.com/forkcms/forkcms/pull/2224)
+* Docs: Update media library documentation [#2198](https://github.com/forkcms/forkcms/pull/2198)
+* FAQ: Fix default value for hidden radio button [#2220](https://github.com/forkcms/forkcms/pull/2220)
+* FAQ: Fix sorting categories [#2225](https://github.com/forkcms/forkcms/pull/2225)
+* FormBuilder: Fix wrong typehint on callback in FormBuilderSubmittedMailSubscriber [#2211](https://github.com/forkcms/forkcms/pull/2211)
+* Locale: Updated and corrected translations into Russian [#2206](https://github.com/forkcms/forkcms/pull/2206)
+* Locale: Fix static translation analysers /private/locale/analyse [#2210](https://github.com/forkcms/forkcms/pull/2210)
+* Locale: Add missing translations [#2222](https://github.com/forkcms/forkcms/pull/2222)
+* MediaLibrary: Fix cropper flashing when uploading multiple images with the cropper disabled [#2167](https://github.com/forkcms/forkcms/pull/2167)
+* Pages: Fix has_children and has_extra still using enum bools [#2226](https://github.com/forkcms/forkcms/pull/2226)
+* Pages: Fix redirect dropdown missing letters in the options [#2215](https://github.com/forkcms/forkcms/pull/2215)
+* Users: Js password strength checker now returns the same result als the php version [#2213](https://github.com/forkcms/forkcms/pull/2213)
+
+
+5.0.2  (2017-08-21)
+------------------
+
+Bugfixes:
+* Core: Switch the upload and download icons to match the import button [#2174](https://github.com/forkcms/forkcms/pull/2174)
+* Core: Make custom for meta not required for update method [#2177](https://github.com/forkcms/forkcms/pull/2177)
+* Core: Fix active languages array [#2171](https://github.com/forkcms/forkcms/pull/2171)
+* Core: Fix casing of the private method addFrontendPathsToTheTemplateLoader [#2184](https://github.com/forkcms/forkcms/pull/2184)
+* Core: Use the correct vendor versions as stated by yarn.lock and use jquery3 [#2183](https://github.com/forkcms/forkcms/pull/2183)
+* Core: Add missing fork settings to the frontend twig template service [#2173](https://github.com/forkcms/forkcms/pull/2173)
+* Core: Fix page title not set correctly [#2190](https://github.com/forkcms/forkcms/pull/2190)
+* Core: Fix loading the meta entity from the database [#2197](https://github.com/forkcms/forkcms/pull/2197)
+* Core: Fix CKFinder not working in php7, upgrade to 3.4.1 [#2193](https://github.com/forkcms/forkcms/pull/2193)
+* Extensions: Fix old check on enum instead of bool [#2179](https://github.com/forkcms/forkcms/pull/2179)
+* FormBuilder: Fix js not running [#2172](https://github.com/forkcms/forkcms/pull/2172)
+* Locale: Fix update via ajax in datagrid [#2187](https://github.com/forkcms/forkcms/pull/2187)
+* Locale: Fix some Russian translations [#2196](https://github.com/forkcms/forkcms/pull/2196)
+* Location: Specifically state the widget action should be 'Location'  [#2176](https://github.com/forkcms/forkcms/pull/2176)
+* Mailmotor: Cache interests instead of calling the api on each pageload [#2175](https://github.com/forkcms/forkcms/pull/2175)
+* Pages: Fix errors with user templates after deleting a block [#2180](https://github.com/forkcms/forkcms/pull/2180)
+* Pages: Fix user templates [#2194](https://github.com/forkcms/forkcms/pull/2194)
+* Profiles: Fix import [#2185](https://github.com/forkcms/forkcms/pull/2185)
+
+
 5.0.1 (2017-08-07)
 ------------------
 
@@ -7,6 +53,7 @@ Bugfixes:
 
 * Installer: Fixes installer when you want mailmotor + example data [#2165](https://github.com/forkcms/forkcms/pull/2165)
 * Installer: Install script fix [#2169](https://github.com/forkcms/forkcms/pull/2169)
+
 
 5.0.0 (2017-08-04)
 ------------------

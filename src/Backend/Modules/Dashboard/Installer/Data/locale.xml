@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <Backend>
-    <Dashboard>
+    <Core>
       <item type="label" name="AllStatistics">
         <translation language="nl"><![CDATA[alle statistieken]]></translation>
         <translation language="en"><![CDATA[all statistics]]></translation>
@@ -17,6 +17,8 @@
         <translation language="sv"><![CDATA[all statistik]]></translation>
         <translation language="el"><![CDATA[Όλα τα στατιστικά]]></translation>
       </item>
+    </Core>
+    <Dashboard>
       <item type="label" name="TopKeywords">
         <translation language="nl"><![CDATA[top zoekwoorden]]></translation>
         <translation language="en"><![CDATA[top keywords]]></translation>

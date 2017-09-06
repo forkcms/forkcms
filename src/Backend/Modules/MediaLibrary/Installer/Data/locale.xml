@@ -215,6 +215,50 @@
         <translation language="nl"><![CDATA[Video titel is een verplicht veld.]]></translation>
         <translation language="ru"><![CDATA[Поле "Заголовок видео" является обязательным полем.]]></translation>
       </item>
+      <item type="error" name="MediaFolderIsRequired">
+        <translation language="en"><![CDATA[Folder is a required field.]]></translation>
+        <translation language="nl"><![CDATA[Map is een verplicht veld.]]></translation>
+      </item>
+      <item type="error" name="GroupIdIsRequired">
+        <translation language="en"><![CDATA[group_id is a required field.]]></translation>
+        <translation language="nl"><![CDATA[group_id is een verplicht veld.]]></translation>
+      </item>
+      <item type="error" name="FolderIdIsRequired">
+        <translation language="en"><![CDATA[folder_id is a required field.]]></translation>
+        <translation language="nl"><![CDATA[folder_id is een verplicht veld.]]></translation>
+      </item>
+      <item type="error" name="MediaMovieIdIsRequired">
+        <translation language="en"><![CDATA[id is a required field.]]></translation>
+        <translation language="nl"><![CDATA[id is een verplicht veld.]]></translation>
+      </item>
+      <item type="label" name="ZoomIn">
+        <translation language="en"><![CDATA[zoom in]]></translation>
+        <translation language="nl"><![CDATA[inzoomen]]></translation>
+      </item>
+      <item type="label" name="MediaConnected">
+        <translation language="en"><![CDATA[connected media]]></translation>
+        <translation language="nl"><![CDATA[gekoppelde media]]></translation>
+      </item>
+      <item type="label" name="ZoomOut">
+        <translation language="en"><![CDATA[zoom out]]></translation>
+        <translation language="nl"><![CDATA[uitzoomen]]></translation>
+      </item>
+      <item type="error" name="ParentNotExists">
+        <translation language="en"><![CDATA[parent directory not found]]></translation>
+        <translation language="nl"><![CDATA[bovenliggende map niet gevonden]]></translation>
+      </item>
+      <item type="label" name="Reset">
+        <translation language="en"><![CDATA[reset]]></translation>
+        <translation language="nl"><![CDATA[reset]]></translation>
+      </item>
+      <item type="error" name="MovieStorageTypeNotExists">
+        <translation language="en"><![CDATA[Can't create a movie with this type.]]></translation>
+        <translation language="nl"><![CDATA[Er kan geen video aangemaakt worden met dit type.]]></translation>
+      </item>
+      <item type="error" name="MediaUploadedError">
+        <translation language="en"><![CDATA[%1$s file(s) could not be uploaded.]]></translation>
+        <translation language="nl"><![CDATA[%1$s bestand(en) konden niet worden geüpload.]]></translation>
+      </item>
       <item type="label" name="MediaMultipleAudio">
         <translation language="en"><![CDATA[audio]]></translation>
         <translation language="nl"><![CDATA[audio]]></translation>
