@@ -14,14 +14,13 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * This is the autocomplete-action, it will output a list of tags that start
- * with a certain string.
+ * This will return an array with all existing tags
  */
 class GetAllTags extends BackendBaseAJAXAction
 {
     public function execute(): void
     {
         parent::execute();
-        $this->output(Response::HTTP_OK, BackendTagsModel::getAll());
+        $this->output(Response::HTTP_OK, BackendTagsModel::getTagNames());
     }
 }
