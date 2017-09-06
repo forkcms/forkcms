@@ -1496,7 +1496,11 @@ class Model
 
             $database->update(
                 'pages',
-                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
+                [
+                    'parent_id' => $newParent,
+                    'sequence' => $newSequence,
+                    'type' => $newType
+                ],
                 'id = ? AND language = ? AND status = ?',
                 [$pageId, $language, 'active']
             );
@@ -1525,7 +1529,11 @@ class Model
 
         $database->update(
             'pages',
-            ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
+            [
+                'parent_id' => $newParent,
+                'sequence' => $newSequence,
+                'type' => $newType
+            ],
             'id = ? AND language = ? AND status = ?',
             [$pageId, $language, 'active']
         );
