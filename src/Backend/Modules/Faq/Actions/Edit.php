@@ -88,7 +88,7 @@ class Edit extends BackendBaseActionEdit
 
         // get url
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
-        $url404 = BackendModel::getUrl(404);
+        $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
         if ($url404 != $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }

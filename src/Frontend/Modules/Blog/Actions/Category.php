@@ -10,6 +10,7 @@ namespace Frontend\Modules\Blog\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
@@ -75,8 +76,8 @@ class Category extends FrontendBaseBlock
         $requestedPage = $this->url->getParameter('page', 'int', 1);
 
         // validate category
-        if ($requestedCategory == 'false') {
-            $this->redirect(FrontendNavigation::getUrl(404));
+        if ($requestedCategory === 'false') {
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
 
         // set category
@@ -92,7 +93,7 @@ class Category extends FrontendBaseBlock
 
         // redirect if the request page doesn't exists
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
 
         // populate calculated fields in pagination

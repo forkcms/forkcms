@@ -254,7 +254,7 @@ class Navigation extends KernelLoader
             // loop elements
             foreach ($navigation[$type][$parentId] as $id => $page) {
                 // home is a special item, it should live on the same depth
-                if (!$mergedHome && (int) $page['page_id'] === 1) {
+                if (!$mergedHome && (int) $page['page_id'] === FrontendModel::HOME_PAGE_ID) {
                     // extra checks otherwise exceptions will wbe triggered.
                     if (!isset($navigation[$type][$parentId])
                         || !is_array($navigation[$type][$parentId])) {
@@ -333,7 +333,7 @@ class Navigation extends KernelLoader
 
                 // fetch children if needed
                 if (($depthCounter + 1 <= $depth || $depth === null)
-                    && (int) $page['page_id'] !== 1
+                    && (int) $page['page_id'] !== FrontendModel::HOME_PAGE_ID
                     && isset($navigation[$subType][$page['page_id']])
                 ) {
                     $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML(
@@ -398,7 +398,7 @@ class Navigation extends KernelLoader
 
         // return 404 if we don't known a valid Id
         if ($key === false) {
-            return 404;
+            return FrontendModel::ERROR_PAGE_ID;
         }
 
         // return the real Id
@@ -461,12 +461,12 @@ class Navigation extends KernelLoader
         $keys = self::getKeys($language);
 
         // get the URL, if it doesn't exist return 404
-        if ($pageId !== 404 && !isset($keys[$pageId])) {
-            return self::getUrl(404, $language);
+        if ($pageId !== FrontendModel::ERROR_PAGE_ID && !isset($keys[$pageId])) {
+            return self::getUrl(FrontendModel::ERROR_PAGE_ID, $language);
         }
 
         if (empty($keys)) {
-            return urldecode($url . 404);
+            return urldecode($url . FrontendModel::ERROR_PAGE_ID);
         }
 
         // return the URL
@@ -552,7 +552,7 @@ class Navigation extends KernelLoader
 
         // pageId still null?
         if ($pageIdForUrl === null) {
-            return self::getUrl(404, $language);
+            return self::getUrl(FrontendModel::ERROR_PAGE_ID, $language);
         }
 
         // build URL
@@ -606,7 +606,7 @@ class Navigation extends KernelLoader
         }
 
         // fallback
-        return self::getUrl(404, $language);
+        return self::getUrl(FrontendModel::ERROR_PAGE_ID, $language);
     }
 
     /**
@@ -631,7 +631,7 @@ class Navigation extends KernelLoader
 
         // no pages, means we're at the homepage
         if (empty($pages)) {
-            self::$selectedPageIds[] = 1;
+            self::$selectedPageIds[] = FrontendModel::HOME_PAGE_ID;
 
             return;
         }

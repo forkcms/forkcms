@@ -10,6 +10,7 @@ namespace Frontend\Modules\Blog\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Rss as FrontendRSS;
@@ -46,7 +47,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
 
         // get record
@@ -54,7 +55,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
 
         // get articles

@@ -49,10 +49,10 @@ class Breadcrumb extends KernelLoader
         $this->getContainer()->set('breadcrumb', $this);
 
         // get more information for the homepage
-        $homeInfo = Navigation::getPageInfo(1);
+        $homeInfo = Navigation::getPageInfo(Model::HOME_PAGE_ID);
 
         // add homepage as first item (with correct element)
-        $this->addElement($homeInfo['navigation_title'], Navigation::getUrl(1));
+        $this->addElement($homeInfo['navigation_title'], Navigation::getUrl(Model::HOME_PAGE_ID));
 
         $this->addBreadcrumbsForPages($this->url->getPages());
     }
@@ -75,7 +75,7 @@ class Breadcrumb extends KernelLoader
     private function getBreadcrumbsForPages(array $pages): array
     {
         $breadcrumbs = [];
-        $errorUrl = Navigation::getUrl(404);
+        $errorUrl = Navigation::getUrl(Model::ERROR_PAGE_ID);
 
         // loop pages
         while (!empty($pages)) {

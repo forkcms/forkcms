@@ -10,6 +10,7 @@ namespace Frontend\Modules\Profiles\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -47,10 +48,10 @@ class Activate extends FrontendBaseBlock
                 $this->template->assign('activationSuccess', true);
             } else {
                 // failure
-                $this->redirect(FrontendNavigation::getUrl(404));
+                $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
             }
         } else {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
     }
 }

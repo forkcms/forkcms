@@ -87,10 +87,10 @@ class Add extends BackendBaseActionAdd
 
         // get url
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'detail');
-        $url404 = BackendModel::getUrl(404);
+        $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
 
         // parse additional variables
-        if ($url404 != $url) {
+        if ($url404 !== $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }
     }

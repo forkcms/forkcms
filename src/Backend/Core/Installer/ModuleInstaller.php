@@ -10,6 +10,7 @@ namespace Backend\Core\Installer;
  */
 
 use Backend\Core\Engine\Model;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -691,7 +692,9 @@ class ModuleInstaller
         $revision['user_id'] = $revision['user_id'] ?? $this->getDefaultUserID();
         $revision['template_id'] = $revision['template_id'] ?? $this->getTemplateId('Default');
         $revision['type'] = $revision['type'] ?? 'page';
-        $revision['parent_id'] = $revision['parent_id'] ?? ($revision['type'] === 'page' ? 1 : 0);
+        $revision['parent_id'] = $revision['parent_id'] ?? (
+            $revision['type'] === 'page' ? Model::HOME_PAGE_ID : BackendPagesModel::NO_PARENT_PAGE_ID
+        );
         $revision['navigation_title'] = $revision['navigation_title'] ?? $revision['title'];
         $revision['navigation_title_overwrite'] = $revision['navigation_title_overwrite'] ?? false;
         $revision['hidden'] = $revision['hidden'] ?? false;

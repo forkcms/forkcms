@@ -10,6 +10,7 @@ namespace Frontend\Modules\Tags\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
@@ -54,7 +55,7 @@ class Detail extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
 
         // fetch record
@@ -62,7 +63,7 @@ class Detail extends FrontendBaseBlock
 
         // validate record
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
 
         // fetch modules

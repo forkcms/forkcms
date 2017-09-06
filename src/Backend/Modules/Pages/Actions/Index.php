@@ -187,7 +187,7 @@ class Index extends BackendBaseActionIndex
                 $this->getRequest()->query->getInt('id')
             );
         } else {
-            $this->template->assign('openedPageId', 1);
+            $this->template->assign('openedPageId', BackendModel::HOME_PAGE_ID);
         }
     }
 }

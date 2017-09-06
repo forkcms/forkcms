@@ -64,7 +64,7 @@ class Detail extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
 
         // load revision
@@ -84,7 +84,7 @@ class Detail extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
 
         // get comments

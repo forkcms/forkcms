@@ -93,7 +93,7 @@ class Edit extends BackendBaseActionEdit
         $this->templates[$this->record['template_id']]['checked'] = true;
 
         // homepage?
-        if ($this->id == 1) {
+        if ($this->id == BackendModel::HOME_PAGE_ID) {
             // loop and set disabled state
             foreach ($this->templates as &$row) {
                 $row['disabled'] = ($row['has_block']);
@@ -413,7 +413,7 @@ class Edit extends BackendBaseActionEdit
                         }
 
                         // home can't have blocks
-                        if ($this->record['id'] == 1) {
+                        if ($this->record['id'] == BackendModel::HOME_PAGE_ID) {
                             $this->form->addError(BL::err('HomeCantHaveBlocks'));
                         }
 

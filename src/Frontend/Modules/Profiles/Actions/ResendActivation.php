@@ -12,6 +12,7 @@ namespace Frontend\Modules\Profiles\Actions;
 use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -38,7 +39,7 @@ class ResendActivation extends FrontendBaseBlock
             $this->parse();
         } else {
             // profile logged in
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
     }
 

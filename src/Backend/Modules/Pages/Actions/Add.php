@@ -324,7 +324,10 @@ class Add extends BackendBaseActionAdd
         $this->template->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->template->assign(
             'prefixURL',
-            rtrim(BackendPagesModel::getFullUrl($this->getRequest()->query->getInt('parent', 1)), '/')
+            rtrim(
+                BackendPagesModel::getFullUrl($this->getRequest()->query->getInt('parent', BackendModel::HOME_PAGE_ID)),
+                '/'
+            )
         );
         $this->template->assign('formErrors', (string) $this->form->getErrors());
         $this->template->assign('showTags', $this->showTags());

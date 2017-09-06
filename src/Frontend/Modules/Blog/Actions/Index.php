@@ -10,6 +10,7 @@ namespace Frontend\Modules\Blog\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
@@ -67,7 +68,7 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
 
         // populate calculated fields in pagination

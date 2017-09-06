@@ -11,6 +11,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -52,13 +53,13 @@ class ResetPassword extends FrontendBaseBlock
                 // validate
                 $this->validateForm();
             } elseif ($this->url->getParameter('sent') != 'true') {
-                $this->redirect(FrontendNavigation::getUrl(404));
+                $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
             }
 
             // parse
             $this->parse();
         } else {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            $this->redirect(FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID));
         }
     }
 

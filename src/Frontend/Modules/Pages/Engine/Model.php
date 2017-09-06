@@ -118,7 +118,7 @@ class Model implements FrontendTagsInterface
         $database = FrontendModel::getContainer()->get('database');
 
         // define ids to ignore
-        $ignore = [404];
+        $ignore = [FrontendModel::ERROR_PAGE_ID];
 
         // get items
         $items = (array) $database->getRecords(
