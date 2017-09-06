@@ -5,6 +5,11 @@
   <requirements>
     <minimum_version>4.2.0</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Settings</module>
+  </depends_on>
   <description>
     <![CDATA[
       The content blocks module provides the possibility to re-use content on multiple pages, wherefore the content can be managed in 1 single point, but the changes are immediately visible on all pages it occurs.

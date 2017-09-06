@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <name>Settings</name>
+  <version></version>
+  <requirements>
+    <minimum_version>4.2.0</minimum_version>
+  </requirements>
+  <depends_on>
+    <module>Locale</module>
+  </depends_on>
+  <description></description>
+  <authors></authors>
+</module>

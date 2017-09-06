@@ -3,13 +3,14 @@
 namespace Backend\Modules\MediaGalleries\Installer;
 
 use Backend\Core\Engine\Model;
+use Backend\Core\Installer\InstallerInterface;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
 
 /**
  * Installer for the media module
  */
-class Installer extends ModuleInstaller
+class Installer extends ModuleInstaller implements InstallerInterface
 {
     public function install(): void
     {

@@ -5,6 +5,11 @@
   <requirements>
     <minimum_version>2.0.0</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Settings</module>
+  </depends_on>
   <description>
     <![CDATA[
       Define the user accounts that may access the CMS, and can be linked to a group to define the specific permissions.

@@ -9,17 +9,27 @@ namespace Backend\Modules\Users\Installer;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
+use Backend\Core\Installer\InstallerInterface;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Installer for the users module
  */
-class Installer extends ModuleInstaller
+class Installer extends ModuleInstaller implements InstallerInterface
 {
+    /**
+     * @var array
+     */
+    protected $promptVariables = [
+        'default_interface_language' => 'Default interface language (ex. ru, en)',
+        'email'                      => 'Email of admin',
+        'password'                   => 'Password of admin',
+    ];
+
     public function install(): void
     {
         $this->addModule('Users');

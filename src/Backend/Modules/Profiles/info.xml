@@ -5,6 +5,12 @@
   <requirements>
     <minimum_version>2.0.0</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Settings</module>
+    <module>Pages</module>
+  </depends_on>
   <description>
     <![CDATA[
       Building a community website requires you to provide a certain interface to your visitors. An interface that allows them to create and maintain a profile on your website. The profiles module contains all the basic functionality to get started:

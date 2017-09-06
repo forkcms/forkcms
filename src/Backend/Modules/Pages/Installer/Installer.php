@@ -9,13 +9,14 @@ namespace Backend\Modules\Pages\Installer;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Installer\InstallerInterface;
 use Backend\Core\Installer\ModuleInstaller;
 use Common\ModuleExtraType;
 
 /**
  * Installer for the pages module
  */
-class Installer extends ModuleInstaller
+class Installer extends ModuleInstaller implements InstallerInterface
 {
     /** @var array */
     private $extraIds;

@@ -5,6 +5,12 @@
   <requirements>
     <minimum_version>2.0.0</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Settings</module>
+    <module>Pages</module>
+  </depends_on>
   <description>
     <![CDATA[
       In the front-end, Search Module is easily integrated all over the site. It uses a full-text search on the database and displays them in a very powerful and impressive Google-like way.

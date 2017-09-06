@@ -5,6 +5,13 @@
   <requirements>
     <minimum_version>2.0.0</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Settings</module>
+    <module>Pages</module>
+    <module>Search</module>
+  </depends_on>
   <description>
     <![CDATA[
       Building forms is one of those things most developers don't like to do. It's a repetitive monkey job that provides little to no satisfaction. So we created a module that allows anyone to create forms via Fork CMS. No longer do developers have to toil away at forms.

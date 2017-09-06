@@ -10,17 +10,19 @@ namespace Backend\Core\Installer;
  */
 
 use Backend\Core\Engine\Model;
-use SpoonDatabase;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
-use Common\Uri as CommonUri;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Common\ModuleExtraType;
+use Common\Uri as CommonUri;
+use SpoonDatabase;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * The base-class for the installer
  */
-class ModuleInstaller
+abstract class ModuleInstaller
 {
     /**
      * Database connection instance
@@ -79,6 +81,21 @@ class ModuleInstaller
     private $example;
 
     /**
+     * @var \Symfony\Component\Console\Input\InputInterface|null
+     */
+    private $input;
+
+    /**
+     * @var \Symfony\Component\Console\Output\OutputInterface|null
+     */
+    private $output;
+
+    /**
+     * @var array
+     */
+    protected $promptVariables = [];
+
+    /**
      * @param SpoonDatabase $database The database-connection.
      * @param array $languages The selected frontend languages.
      * @param array $interfaceLanguages The selected backend languages.
@@ -97,6 +114,46 @@ class ModuleInstaller
         $this->interfaceLanguages = $interfaceLanguages;
         $this->example = $example;
         $this->variables = $variables;
+    }
+
+    /**
+     * @return null|\Symfony\Component\Console\Input\InputInterface
+     */
+    public function getInput(): ?InputInterface
+    {
+        return $this->input;
+    }
+
+    /**
+     * @param null|\Symfony\Component\Console\Input\InputInterface $input
+     */
+    public function setInput($input): void
+    {
+        $this->input = $input;
+    }
+
+    /**
+     * @return null|\Symfony\Component\Console\Output\OutputInterface
+     */
+    public function getOutput(): ?OutputInterface
+    {
+        return $this->output;
+    }
+
+    /**
+     * @param null|\Symfony\Component\Console\Output\OutputInterface $output
+     */
+    public function setOutput($output): void
+    {
+        $this->output = $output;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPromptVariables(): array
+    {
+        return $this->promptVariables;
     }
 
     /**
@@ -216,6 +273,16 @@ class ModuleInstaller
     protected function getModule(): string
     {
         return $this->module;
+    }
+
+    /**
+     * Set the module name
+     *
+     * @param string $module
+     */
+    protected function setModule(string $module): void
+    {
+        $this->module = $module;
     }
 
     /**
@@ -354,9 +421,19 @@ class ModuleInstaller
      *
      * @return mixed
      */
-    protected function getVariable(string $name)
+    public function getVariable(string $name)
     {
         return $this->variables[$name] ?? null;
+    }
+
+    /**
+     * Set a variables
+     *
+     * @param array $variables
+     */
+    public function setVariables(array $variables): void
+    {
+        $this->variables = $variables;
     }
 
     /**

@@ -5,6 +5,11 @@
   <requirements>
     <minimum_version>5.0.0</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Settings</module>
+  </depends_on>
   <description>
     <![CDATA[Managing all your Media in one place.]]>
   </description>

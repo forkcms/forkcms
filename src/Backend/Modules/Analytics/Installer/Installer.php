@@ -2,12 +2,13 @@
 
 namespace Backend\Modules\Analytics\Installer;
 
+use Backend\Core\Installer\InstallerInterface;
 use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the analytics module
  */
-class Installer extends ModuleInstaller
+class Installer extends ModuleInstaller implements InstallerInterface
 {
     public function install(): void
     {

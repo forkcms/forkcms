@@ -5,6 +5,11 @@
   <requirements>
     <minimum_version>3.2.2</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Settings</module>
+  </depends_on>
   <description>
     <![CDATA[
       We've developed the Location-module to simply show your location on a Google Map on your website by just entering your address. Simple as that!

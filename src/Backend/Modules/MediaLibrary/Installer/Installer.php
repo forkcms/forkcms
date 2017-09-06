@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Installer;
 
+use Backend\Core\Installer\InstallerInterface;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
@@ -13,7 +14,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 /**
  * Installer for the MediaLibrary module
  */
-class Installer extends ModuleInstaller
+class Installer extends ModuleInstaller implements InstallerInterface
 {
     public function install(): void
     {
