@@ -96,9 +96,6 @@
           <li class="pull-right" role="presentation">
             <a href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right" role="presentation">
-            <a href="#tabLanguages" aria-controls="tabLanguages" role="tab" data-toggle="tab">{{ 'lbl.Languages'|trans|ucfirst }}</a>
-          </li>
           <li class="pull-right js-page-image-tab" role="presentation">
             <a href="#tabImage" aria-controls="image" role="tab" data-toggle="tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
           </li>
@@ -154,18 +151,6 @@
               </div>
               <div id="templateVisualLarge">
                 &nbsp;
-              </div>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabLanguages">
-            <div class="row">
-              <div class="col-md-12">
-                {% for language, field in hreflangFields %}
-                  <div class="form-group{% if loop.last %} last{% endif %}">
-                    <label for="">{{ language|upper|raw }}</label>
-                    {{ field.field_hreflang|raw }}
-                  </div>
-                {% endfor %}
               </div>
             </div>
           </div>
@@ -325,6 +310,23 @@
           {% endif %}
           <div role="tabpanel" class="tab-pane" id="tabSEO">
             {% seo %}
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <p class="tab-pane-title">{{ 'lbl.Languages'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="panel-body">
+                    {% for language, field in hreflangFields %}
+                      <div class="form-group{% if loop.last %} last{% endif %}">
+                        <label for="">{{ language|upper|raw }}</label>
+                        {{ field.field_hreflang|raw }}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

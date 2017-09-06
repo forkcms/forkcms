@@ -32,13 +32,6 @@ use SpoonFormHidden;
 class Edit extends BackendBaseActionEdit
 {
     /**
-     * The active languages
-     *
-     * @var array
-     */
-    private $activeLanguages = [];
-
-    /**
      * The blocks linked to this page
      *
      * @var array
@@ -175,9 +168,6 @@ class Edit extends BackendBaseActionEdit
             $this->template->assign('appendRevision', true);
         }
 
-        // get languages
-        $this->activeLanguages = BL::getActiveLanguages();
-
         // reset some vars
         $this->record['full_url'] = BackendPagesModel::getFullUrl($this->record['id']);
     }
@@ -265,7 +255,7 @@ class Edit extends BackendBaseActionEdit
         // just execute if the site is multi-language
         if ($this->getContainer()->getParameter('site.multilanguage')) {
             // loop active languages
-            foreach ($this->activeLanguages as $language) {
+            foreach (BL::getActiveLanguages() as $language) {
                 if($language != BL::getWorkingLanguage()) {
                     $pages = BackendPagesModel::getPagesForDropdown($language);
                     // add field for each language
@@ -724,7 +714,7 @@ class Edit extends BackendBaseActionEdit
                 // just execute if the site is multi-language
                 if ($this->getContainer()->getParameter('site.multilanguage')) {
                     // loop active languages
-                    foreach ($this->activeLanguages as $language) {
+                    foreach (BL::getActiveLanguages() as $language) {
                         if($language != BL::getWorkingLanguage()) {
                             $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
                         }
