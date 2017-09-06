@@ -29,6 +29,15 @@ class Model
 {
     const NO_PARENT_PAGE_ID = 0;
 
+    const TYPE_OF_DROP_BEFORE = 'before';
+    const TYPE_OF_DROP_AFTER = 'after';
+    const TYPE_OF_DROP_INSIDE = 'inside';
+    const POSSIBLE_TYPES_OF_DROP = [
+        self::TYPE_OF_DROP_BEFORE,
+        self::TYPE_OF_DROP_AFTER,
+        self::TYPE_OF_DROP_INSIDE,
+    ];
+
     const QUERY_BROWSE_RECENT =
         'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
@@ -1221,13 +1230,13 @@ class Model
         string $tree,
         string $language = null
     ): bool {
-        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, ['before', 'after', 'inside'], 'inside');
+        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
         $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
         $language = $language ?? BL::getWorkingLanguage();
 
         // reset type of drop for special pages
         if ($droppedOnPageId === BackendModel::HOME_PAGE_ID || $droppedOnPageId === self::NO_PARENT_PAGE_ID) {
-            $typeOfDrop = 'inside';
+            $typeOfDrop = self::TYPE_OF_DROP_INSIDE;
         }
 
         $page = self::get($pageId, null, $language);
@@ -1441,7 +1450,7 @@ class Model
             return self::NO_PARENT_PAGE_ID;
         }
 
-        if ($typeOfDrop === 'inside') {
+        if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
             // check if item allows children
             if (!$droppedOnPage['allow_children']) {
                 throw new InvalidArgumentException('Parent page is not allowed to have child pages');
@@ -1486,7 +1495,7 @@ class Model
         $database = BackendModel::getContainer()->get('database');
 
         // calculate new sequence for items that should be moved inside
-        if ($typeOfDrop === 'inside') {
+        if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
             $newSequence = (int) $database->getVar(
                 'SELECT MAX(i.sequence)
                  FROM pages AS i
@@ -1517,7 +1526,7 @@ class Model
             [$droppedOnPageId, $language, 'active']
         );
 
-        $newSequence = $droppedOnPageSequence + ($typeOfDrop === 'before' ? -1 : 1);
+        $newSequence = $droppedOnPageSequence + ($typeOfDrop === self::TYPE_OF_DROP_BEFORE ? -1 : 1);
 
         // increment all pages with a sequence that is higher than the new sequence;
         $database->execute(
