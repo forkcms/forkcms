@@ -715,10 +715,8 @@ class Edit extends BackendBaseActionEdit
                 if ($this->getContainer()->getParameter('site.multilanguage')) {
                     // loop active languages
                     foreach (BL::getActiveLanguages() as $language) {
-                        if ($language != BL::getWorkingLanguage()) {
-                            if ($this->form->getfield('hreflang_' . $language)->isFilled()) {
-                                $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
-                            }
+                        if ($language != BL::getWorkingLanguage() && $this->form->getfield('hreflang_' . $language)->isFilled()) {
+                            $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
                         }
                     }
                 }
