@@ -211,7 +211,6 @@ class Model
             // insert page, store the id, we need it when building the blocks
             $revisionId = self::insert($page);
 
-            // init var
             $blocks = [];
 
             // get the blocks
@@ -236,7 +235,6 @@ class Model
             // insert the blocks
             self::insertBlocks($blocks);
 
-            // init var
             $text = '';
 
             // build search-text
@@ -1383,7 +1381,6 @@ class Model
 
             // overwrite all blocks with current defaults
             if ($overwrite) {
-                // init var
                 $blocksContent = [];
 
                 // fetch default blocks for this page
