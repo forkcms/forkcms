@@ -387,8 +387,6 @@ class Page extends KernelLoader
         if (!isset($pageInfo['data']['hreflang_' . $language])) {
             return;
         }
-
-        // Set url
         $url = Navigation::getUrl($pageInfo['data']['hreflang_' . $language], $language);
 
         // Ignore 404 links

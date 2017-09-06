@@ -716,7 +716,9 @@ class Edit extends BackendBaseActionEdit
                     // loop active languages
                     foreach (BL::getActiveLanguages() as $language) {
                         if ($language != BL::getWorkingLanguage()) {
-                            $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
+                            if ($this->form->getfield('hreflang_' . $language)->isFilled()) {
+                                $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
+                            }
                         }
                     }
                 }
