@@ -256,7 +256,7 @@ class Edit extends BackendBaseActionEdit
         if ($this->getContainer()->getParameter('site.multilanguage')) {
             // loop active languages
             foreach (BL::getActiveLanguages() as $language) {
-                if($language != BL::getWorkingLanguage()) {
+                if ($language != BL::getWorkingLanguage()) {
                     $pages = BackendPagesModel::getPagesForDropdown($language);
                     // add field for each language
                     $field = $this->form->addDropdown('hreflang_' . $language, $pages, (!empty($this->record['data']['hreflang_' . $language]) ? $this->record['data']['hreflang_' . $language] : null))->setDefaultElement('');
@@ -715,7 +715,7 @@ class Edit extends BackendBaseActionEdit
                 if ($this->getContainer()->getParameter('site.multilanguage')) {
                     // loop active languages
                     foreach (BL::getActiveLanguages() as $language) {
-                        if($language != BL::getWorkingLanguage()) {
+                        if ($language != BL::getWorkingLanguage()) {
                             $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
                         }
                     }
