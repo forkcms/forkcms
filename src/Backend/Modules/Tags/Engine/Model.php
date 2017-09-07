@@ -84,8 +84,8 @@ class Model
     public static function getTagNames(string $language = null): array
     {
         return (array) BackendModel::getContainer()->get('database')->getColumn(
-            'SELECT i.tag AS name
-             FROM tags AS i
+            'SELECT tag
+             FROM tags
              WHERE i.language = ?',
             [$language ?? BL::getWorkingLanguage()]
         );
