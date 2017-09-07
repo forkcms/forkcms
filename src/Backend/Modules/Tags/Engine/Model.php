@@ -86,7 +86,7 @@ class Model
         return (array) BackendModel::getContainer()->get('database')->getColumn(
             'SELECT tag
              FROM tags
-             WHERE i.language = ?',
+             WHERE language = ?',
             [$language ?? BL::getWorkingLanguage()]
         );
     }
