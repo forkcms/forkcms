@@ -123,12 +123,17 @@ abstract class AbstractFile
         return $this->file;
     }
 
+    final public function hasFile(): bool
+    {
+        return $this->file instanceof UploadedFile;
+    }
+
     /**
      * This function should be called for the life cycle events PrePersist() and PreUpdate()
      */
     public function prepareToUpload(): void
     {
-        if ($this->getFile() === null) {
+        if (!$this->hasFile()) {
             return;
         }
 
@@ -150,7 +155,7 @@ abstract class AbstractFile
             $this->removeOldFile();
         }
 
-        if ($this->getFile() === null) {
+        if (!$this->hasFile()) {
             return;
         }
 
