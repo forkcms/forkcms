@@ -118,7 +118,7 @@ abstract class AbstractFile
         return $file;
     }
 
-    public function getFile(): UploadedFile
+    public function getFile(): ?UploadedFile
     {
         return $this->file;
     }
