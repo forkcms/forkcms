@@ -29,7 +29,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class ModulesInstallCommand extends ModulesBaseInstallCommand
 {
-
     protected function configure(): void
     {
         $this->setName('forkcms:modules:install')

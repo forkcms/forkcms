@@ -21,7 +21,6 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 abstract class ModulesBaseInstallCommand extends ContainerAwareCommand
 {
-
     const PROMPT_INSTALLED = 1;
     const PROMPT_NOT_INSTALLED = 0;
 

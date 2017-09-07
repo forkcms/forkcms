@@ -14,6 +14,5 @@ namespace Backend\Core\Installer;
  */
 abstract class ModuleUninstaller extends ModuleInstaller
 {
-
     use UninstallerTrait;
 }

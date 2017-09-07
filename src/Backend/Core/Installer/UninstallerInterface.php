@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 interface UninstallerInterface
 {
-
     public function uninstall(): void;
 
     /**

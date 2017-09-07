@@ -142,7 +142,6 @@ trait UninstallerTrait
      */
     protected function deleteLocale(string $module): void
     {
-
         if ($this->tableExists('locale')) {
             $this->getDatabase()->delete(
                 'locale',
@@ -319,7 +318,7 @@ trait UninstallerTrait
     protected function deleteDashboardWidgets(string $module, array $widgets): void
     {
         if ($this->tableExists(['groups_settings', 'users_settings'])) {
-// get database
+            // get database
             $database = $this->getDatabase();
 
             // fetch current settings

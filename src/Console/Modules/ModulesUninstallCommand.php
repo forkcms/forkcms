@@ -29,7 +29,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class ModulesUninstallCommand extends ModulesBaseInstallCommand
 {
-
     protected function configure(): void
     {
         $this->setName('forkcms:modules:uninstall')

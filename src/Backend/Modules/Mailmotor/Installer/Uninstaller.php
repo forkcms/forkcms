@@ -17,7 +17,6 @@ use Backend\Core\Installer\UninstallerInterface;
  */
 class Uninstaller extends ModuleUninstaller implements UninstallerInterface
 {
-
     public function uninstall(): void
     {
         $this->setModule('Mailmotor');

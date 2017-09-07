@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 interface InstallerInterface
 {
-
     public function install(): void;
 
     /**
