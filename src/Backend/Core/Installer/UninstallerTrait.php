@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 trait UninstallerTrait
 {
-
     private $tables;
 
     /**
