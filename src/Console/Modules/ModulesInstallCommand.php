@@ -100,7 +100,6 @@ class ModulesInstallCommand extends ModulesBaseInstallCommand
                         . "\n  Are you sure you want to do this? (y/N) ";
 
                     if ($this->confirmAction($quest)) {
-
                         $output->writeln('');
 
                         // Adding main module to install list
@@ -217,7 +216,6 @@ class ModulesInstallCommand extends ModulesBaseInstallCommand
             $helper = $this->getHelper('question');
 
             foreach ($variables as $variable => $desc) {
-
                 $question = new Question($desc . ':');
                 $question->setMaxAttempts(1);
 

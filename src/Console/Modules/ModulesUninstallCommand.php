@@ -102,7 +102,6 @@ class ModulesUninstallCommand extends ModulesBaseInstallCommand
                         . "\n  <comment>This action can not be undone!</comment> (y/N) ";
 
                     if ($this->confirmAction($quest)) {
-
                         $output->writeln('');
 
                         // Adding main module to remove list
@@ -222,7 +221,6 @@ class ModulesUninstallCommand extends ModulesBaseInstallCommand
             $helper = $this->getHelper('question');
 
             foreach ($variables as $variable => $desc) {
-
                 $question = new Question($desc . ':');
                 $question->setMaxAttempts(1);
 

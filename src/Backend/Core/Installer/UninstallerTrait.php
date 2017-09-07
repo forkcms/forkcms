@@ -217,10 +217,7 @@ trait UninstallerTrait
      * @param string|null $url Url for the item. If omitted the first child is used.
      * @return int|null
      */
-    protected function getNavigation(
-        $parentId,
-        string $label = null
-    ): ?int
+    protected function getNavigation($parentId, string $label = null): ?int
     {
         if ($this->tableExists('backend_navigation')) {
             // get the id for this url
@@ -345,7 +342,8 @@ trait UninstallerTrait
                         $settings['value'][$module],
                         function ($item) use ($widget) {
                             return $widget !== $item;
-                        });
+                        }
+                    );
                 }
 
                 // re-serialize value
@@ -370,7 +368,8 @@ trait UninstallerTrait
                         $settings['value'][$module],
                         function ($item) use ($widget) {
                             return $widget !== $item;
-                        });
+                        }
+                    );
                 }
 
                 // re-serialize value
