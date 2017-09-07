@@ -78,7 +78,6 @@ deny from env=stayout
     # <IfModule headers_module>
     #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
     # </IfModule>
-    # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
     # RewriteCond %{HTTPS} !=on
     # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
     # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
