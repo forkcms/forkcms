@@ -7,9 +7,9 @@ matrix:
 script:
   - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
   - travis_wait 20 bin/simple-phpunit --coverage-clover=coverage.clover
+  - yarn test
 
 before_script:
-  - npm install -g bower
   - composer install
   - mysql -e 'create database fork_test'
   - mysql -u root fork_test < tests/data/test_db.sql
