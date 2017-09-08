@@ -9,6 +9,7 @@ namespace Backend\Modules\Mailmotor\Domain\Settings\Command;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Language\Language;
 use Common\ModulesSettings;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -50,6 +51,11 @@ final class SaveSettings
      */
     public $automaticallySubscribeFromFormBuilderSubmittedForm;
 
+    /**
+     * @var array
+     */
+    public $languageListIds;
+
     public function __construct(ModulesSettings $modulesSettings)
     {
         $settings = $modulesSettings->getForModule('Mailmotor');
@@ -61,5 +67,16 @@ final class SaveSettings
         $this->automaticallySubscribeFromFormBuilderSubmittedForm = (bool) (
             $settings['automatically_subscribe_from_form_builder_submitted_form'] ?? false
         );
+        $this->languageListIds = $this->setLanguageListIds($settings);
+    }
+
+    private function setLanguageListIds(array $settings): array
+    {
+        $languageListIds = [];
+        foreach (Language::getActiveLanguages() as $language) {
+            $languageListIds[$language] = $settings['list_id_' . $language] ?? null;
+        }
+
+        return $languageListIds;
     }
 }

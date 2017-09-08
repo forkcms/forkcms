@@ -9,6 +9,7 @@ namespace Backend\Modules\Mailmotor\Domain\Settings\Command;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Language\Language;
 use Common\ModulesSettings;
 
 final class SaveSettingsHandler
@@ -44,6 +45,7 @@ final class SaveSettingsHandler
 
         $this->saveSetting('api_key', $settings->apiKey);
         $this->saveSetting('list_id', $settings->listId);
+        $this->saveLanguageListIds($settings->languageListIds);
     }
 
     private function saveSetting(string $key, $value): void
@@ -54,5 +56,23 @@ final class SaveSettingsHandler
     private function deleteSetting(string $key): void
     {
         $this->modulesSettings->delete('Mailmotor', $key);
+    }
+
+    public function isActiveLanguage(string $language): bool
+    {
+        return in_array($language, Language::getActiveLanguages(), true);
+    }
+
+    private function saveLanguageListIds(array $languageListIds): void
+    {
+        foreach ($languageListIds as $language => $languageListId) {
+            if (empty($languageListId) || !$this->isActiveLanguage($language)) {
+                $this->deleteSetting('list_id_' . $language);
+
+                continue;
+            }
+
+            $this->saveSetting('list_id_' . $language, $languageListId);
+        }
     }
 }
