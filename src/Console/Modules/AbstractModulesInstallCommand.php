@@ -51,7 +51,7 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
         $input = $this->input;
         $output = $this->output;
 
-        $modules = $this->getAvailableModules();
+        $modules = BackendModel::getModulesOnFilesystem(false);
 
         $showAllModules = $input->getOption('show-all') !== false;
 
@@ -92,18 +92,6 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
         $question->setMaxAttempts(1);
 
         return $helper->ask($input, $output, $question);
-    }
-
-    protected function getAvailableModules(): array
-    {
-        return array_map(function ($path) {
-            return basename($path);
-        }, $this->getAvailableModulesPath());
-    }
-
-    protected function getAvailableModulesPath(): array
-    {
-        return glob(BACKEND_MODULES_PATH . '/*', GLOB_ONLYDIR);
     }
 
     /**
@@ -166,10 +154,10 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
     {
         $result = [];
 
-        $modules = $this->getAvailableModulesPath();
+        $modules = BackendModel::getModulesOnFilesystem(false);
 
-        foreach ($modules as $modulePath) {
-            $info = $modulePath . '/info.xml';
+        foreach ($modules as $module) {
+            $info = BACKEND_MODULES_PATH . '/' . $module . '/info.xml';
 
             if (file_exists($info) && is_readable($info)) {
                 $xml = new \SimpleXMLElement(file_get_contents($info));
@@ -179,7 +167,7 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
                 if (!empty($dependsOn) && is_array($dependsOn)) {
                     foreach ($dependsOn as $depends) {
                         if ($needle === (string) $depends) {
-                            $result[] = basename($modulePath);
+                            $result[] = $module;
 
                             break;
                         }
