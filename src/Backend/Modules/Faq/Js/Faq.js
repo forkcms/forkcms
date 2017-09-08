@@ -96,7 +96,8 @@ jsBackend.faq = {
                   $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid').append(
                     '<tr class="noQuestions">' +
                     '<td colspan="3">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td>' +
-                    '</tr>')
+                    '</tr>'
+                  )
                 }
 
                 // check empty categories
