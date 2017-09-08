@@ -40,6 +40,10 @@ final class SaveSettingsHandler
             $this->deleteSetting('api_key');
             $this->deleteSetting('list_id');
 
+            foreach (Language::getActiveLanguages() as $language) {
+                $this->deleteSetting('list_id_' . $language);
+            }
+
             return;
         }
 
