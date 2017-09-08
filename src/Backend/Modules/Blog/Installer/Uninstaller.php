@@ -31,11 +31,11 @@ class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterf
 
     private function deleteBackendNavigation(): void
     {
-        $this->deleteNavigation('Settings.Modules.' . $this->getModule());
-        $this->deleteNavigation('Modules.' . $this->getModule() . '.Articles');
-        $this->deleteNavigation('Modules.' . $this->getModule() . '.Comments');
-        $this->deleteNavigation('Modules.' . $this->getModule() . '.Categories');
-        $this->deleteNavigation('Modules.' . $this->getModule());
+        $this->deleteNavigation('/Settings/Modules/' . $this->getModule());
+        $this->deleteNavigation('/Modules/' . $this->getModule() . '/Articles');
+        $this->deleteNavigation('/Modules/' . $this->getModule() . '/Comments');
+        $this->deleteNavigation('/Modules/' . $this->getModule() . '/Categories');
+        $this->deleteNavigation('/Modules/' . $this->getModule());
     }
 
     private function deleteBackendWidgets(): void

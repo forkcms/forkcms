@@ -197,7 +197,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     {
         $output = $this->getOutput();
 
-        $chunks = explode('.', $path);
+        $chunks = explode('/', $path);
 
         if ($output->isVerbose()) {
             $output->writeln('Check navigation: ' . $path);
@@ -207,6 +207,10 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
             $lastNavItemId = 0;
 
             foreach ($chunks as $item) {
+                if (empty($item)) {
+                    continue;
+                }
+
                 if ($output->isVeryVerbose()) {
                     $output->write('Getting [' . ($lastNavItemId ?? 'null') . ' -> ' . $item . ']: ');
                 }
