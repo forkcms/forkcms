@@ -9,6 +9,7 @@ namespace Frontend\Modules\Mailmotor\EventListener;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use Common\ModulesSettings;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
@@ -63,8 +64,14 @@ final class SubscribeFromFormBuilderSubmittedForm
         try {
             if (!$this->subscriber->exists($email)) {
                 // @TODO check if we are allowed to do this like this according to GDPR
-                // will ignore double-optin and so subscribes the user immediately
-                $this->subscriber->subscribe($email, $language, [], [], false);
+                $this->subscriber->subscribe(
+                    $email,
+                    $language,
+                    [],
+                    [],
+                    false, // will ignore double-optin and so subscribes the user immediately
+                    $this->modulesSettings->get('Mailmotor', 'list_id_' . Locale::frontendLanguage())
+                );
             }
         } catch (NotImplementedException $e) {
             // We do nothing as fallback when no mail-engine is chosen in the Backend

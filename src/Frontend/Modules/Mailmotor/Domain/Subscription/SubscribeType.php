@@ -12,6 +12,7 @@ namespace Frontend\Modules\Mailmotor\Domain\Subscription;
 use Common\ModulesSettings;
 use DateTime;
 use Frontend\Core\Engine\Navigation;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
@@ -108,7 +109,9 @@ class SubscribeType extends AbstractType
                 return $mailMotorInterests;
             }
 
-            $mailMotorInterests = $this->subscriber->getInterests();
+            $mailMotorInterests = $this->subscriber->getInterests(
+                $this->modulesSettings->get('Mailmotor', 'list_id_' . Locale::frontendLanguage())
+            );
 
             // Has interests
             if (empty($mailMotorInterests) || !is_array($mailMotorInterests)) {

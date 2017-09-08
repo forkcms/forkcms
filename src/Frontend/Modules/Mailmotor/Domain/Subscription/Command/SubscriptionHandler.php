@@ -10,6 +10,7 @@ namespace Frontend\Modules\Mailmotor\Domain\Subscription\Command;
  */
 
 use Common\ModulesSettings;
+use Frontend\Core\Language\Locale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
@@ -35,10 +36,11 @@ final class SubscriptionHandler
     {
         $mergeFields = [];
         $interests = [];
+        $languageSpecificListId = $this->modulesSettings->get('Mailmotor', 'list_id_' . Locale::frontendLanguage());
 
         try {
             if ($this->modulesSettings->get('Mailmotor', 'overwrite_interests', true)) {
-                $possibleInterests = $this->subscriber->getInterests();
+                $possibleInterests = $this->subscriber->getInterests($languageSpecificListId);
 
                 foreach ($possibleInterests as $categoryId => $categoryInterest) {
                     foreach ($categoryInterest['children'] as $categoryChildId => $categoryChildTitle) {
@@ -60,7 +62,8 @@ final class SubscriptionHandler
             (string) $subscription->locale,
             $mergeFields,
             $interests,
-            $this->modulesSettings->get('Mailmotor', 'double_opt_in', true)
+            $this->modulesSettings->get('Mailmotor', 'double_opt_in', true),
+            $languageSpecificListId
         );
     }
 }
