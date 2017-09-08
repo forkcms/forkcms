@@ -12,9 +12,6 @@ namespace Backend\Core\Installer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * The installer interface
- */
 interface InstallerInterface
 {
     public function install(): void;

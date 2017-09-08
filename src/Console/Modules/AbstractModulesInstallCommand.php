@@ -94,9 +94,6 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
         return $helper->ask($input, $output, $question);
     }
 
-    /**
-     * @return array
-     */
     protected function getAvailableModules(): array
     {
         return array_map(function ($path) {
@@ -104,9 +101,6 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
         }, $this->getAvailableModulesPath());
     }
 
-    /**
-     * @return array
-     */
     protected function getAvailableModulesPath(): array
     {
         return glob(BACKEND_MODULES_PATH . '/*', GLOB_ONLYDIR);

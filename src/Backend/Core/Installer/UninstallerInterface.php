@@ -12,9 +12,6 @@ namespace Backend\Core\Installer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * The uninstaller interface
- */
 interface UninstallerInterface
 {
     public function uninstall(): void;

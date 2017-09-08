@@ -21,7 +21,6 @@ class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterf
     {
         $this->setModule('Blog');
 
-        $this->deleteFrontendPages();
         $this->deleteBackendWidgets();
         $this->deleteBackendNavigation();
 
@@ -41,10 +40,5 @@ class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterf
     private function deleteBackendWidgets(): void
     {
         $this->deleteDashboardWidgets('Blog', ['Comments']);
-    }
-
-    private function deleteFrontendPages(): void
-    {
-        $this->deletePages([$this->getModule()]);
     }
 }

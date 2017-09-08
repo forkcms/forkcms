@@ -24,7 +24,6 @@ class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterf
         $this->setModule('Profiles');
 
         $this->deleteFrontendFilesDirectories();
-        $this->deleteFrontendPages();
         $this->deleteBackendNavigation();
 
         $this->dropDatabaseTables([
@@ -53,28 +52,5 @@ class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterf
         $filesystem->remove(PATH_WWW . '/src/Frontend/Files/Profiles/Avatars/240x240/');
         $filesystem->remove(PATH_WWW . '/src/Frontend/Files/Profiles/Avatars/64x64/');
         $filesystem->remove(PATH_WWW . '/src/Frontend/Files/Profiles/Avatars/32x32/');
-    }
-
-    private function deleteFrontendPages(): void
-    {
-        foreach ($this->getLanguages() as $language) {
-            // We must define the locale we want to insert the page into
-            Language::setLocale($language);
-
-            /** @noinspection DisconnectedForeachInstructionInspection */
-            $this->deletePages([
-                ucfirst(Language::lbl('Profile')),
-                ucfirst(Language::lbl('Activate')),
-                ucfirst(Language::lbl('ForgotPassword')),
-                ucfirst(Language::lbl('ResetPassword')),
-                ucfirst(Language::lbl('ResendActivation')),
-                ucfirst(Language::lbl('Login')),
-                ucfirst(Language::lbl('Register')),
-                ucfirst(Language::lbl('Logout')),
-                ucfirst(Language::lbl('ProfileSettings')),
-                ucfirst(Language::lbl('ChangeEmail')),
-                ucfirst(Language::lbl('ChangePassword')),
-            ]);
-        }
     }
 }

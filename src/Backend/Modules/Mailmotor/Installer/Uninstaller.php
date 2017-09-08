@@ -21,7 +21,6 @@ class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterf
     {
         $this->setModule('Mailmotor');
 
-        $this->deleteFrontendPages();
         $this->deleteBackendNavigation();
 
         $this->dropModule();
@@ -30,10 +29,5 @@ class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterf
     private function deleteBackendNavigation(): void
     {
         $this->deleteNavigation('/Settings/Modules/' . $this->getModule());
-    }
-
-    private function deleteFrontendPages(): void
-    {
-        $this->deletePages(['Newsletters', 'Subscribe', 'Unsubscribe']);
     }
 }

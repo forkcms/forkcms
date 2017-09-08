@@ -21,7 +21,6 @@ class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterf
     {
         $this->setModule('FormBuilder');
 
-        $this->deleteFrontendPages();
         $this->deleteBackendNavigation();
 
         $this->dropDatabaseTables([
@@ -38,14 +37,5 @@ class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterf
     private function deleteBackendNavigation(): void
     {
         $this->deleteNavigation('/Modules/' . $this->getModule());
-    }
-
-    private function deleteFrontendPages(): void
-    {
-        foreach ($this->getLanguages() as $language) {
-            $this->deletePages([
-                \SpoonFilter::ucfirst($this->getLocale('Contact', 'Core', $language, 'lbl', 'Frontend')),
-            ]);
-        }
     }
 }

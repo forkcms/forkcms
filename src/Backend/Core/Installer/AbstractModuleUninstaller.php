@@ -9,13 +9,15 @@ namespace Backend\Core\Installer;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+
 /**
  * The base-class for the uninstaller
  */
 abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
 {
     /**
-     * Full delete module
+     * The method completely removes all the basic components of the module
      *
      * @param string|null $module
      */
@@ -35,6 +37,8 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
+     * Method will remove tables from the database
+     *
      * @param array $tables
      */
     protected function dropDatabaseTables(array $tables)
@@ -55,7 +59,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Delete a module.
+     * Delete a module from database.
      *
      * @param string $module The name of the module.
      */
@@ -69,7 +73,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Delete searchable mark for module.
+     * Delete searchable mark for module from database.
      *
      * @param string $module The name of the module.
      */
@@ -83,7 +87,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Delete module locale.
+     * Delete module locale from database.
      *
      * @param string $module The name of the module.
      */
@@ -97,7 +101,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Delete module settings.
+     * Delete module settings from database.
      *
      * @param string $module The name of the module.
      * @param string|null $name The name of the option.
@@ -120,7 +124,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Delete modules extra
+     * Delete modules extra from database.
      *
      * @param string $module The name of the module.
      * @param array|null $labels
@@ -142,6 +146,14 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
             }
         }
 
+        if (BackendModel::isModuleInstalled('Pages')) {
+            $this->getDatabase()->delete(
+                'pages_blocks',
+                "extra_id IN (SELECT id FROM modules_extras WHERE $where)",
+                $parameters
+            );
+        }
+
         $this->getDatabase()->delete(
             'modules_extras',
             $where,
@@ -150,7 +162,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Get a navigation item.
+     * Get a navigation item from database.
      *
      * @param int $parentId Id of the navigation item under we should add this.
      * @param string $label Label for the item.
@@ -168,7 +180,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Delete a navigation item.
+     * Delete a navigation item from database.
      *
      * @param string $path path of removed navigation
      */
@@ -216,7 +228,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Delete the rights for an action
+     * Delete the rights for an action from database.
      *
      * @param string $module The module wherein the action appears.
      */
@@ -230,7 +242,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Delete the rights for a module
+     * Delete the rights for a module from database.
      *
      * @param string $module The module too set the rights for.
      */
@@ -244,7 +256,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     }
 
     /**
-     * Delete dashboard widgets
+     * Delete dashboard widgets from database.
      *
      * @param string $module
      * @param array $widgets
@@ -315,21 +327,5 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
                 [$settings['user_id'], $settings['name']]
             );
         }
-    }
-
-    /**
-     * Delete pages.
-     *
-     * @param array $pages
-     */
-    protected function deletePages(array $pages): void
-    {
-        // @todo rework
-
-        $this->getDatabase()->delete(
-            'pages',
-            'title IN (' . str_repeat('?, ', count($pages) - 1) . ' ?)',
-            $pages
-        );
     }
 }
