@@ -18,7 +18,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
 
     protected function tableExists(array $tables): bool
     {
-        if (null === $this->tables) {
+        if ($this->tables === null) {
             $this->tables = $this->getDatabase()->getTables();
         }
 
@@ -128,7 +128,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
         $where = 'module = ?';
         $parameters = [$module];
 
-        if (null !== $name) {
+        if ($name !== null) {
             $where .= ' AND name = ?';
             $parameters[] = $name;
         }
@@ -151,7 +151,7 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
         $where = 'module = ?';
         $parameters = [$module];
 
-        if (null !== $labels) {
+        if ($labels !== null) {
             if (count($labels) === 1) {
                 $where .= ' AND label = ?';
                 $parameters[] = array_shift($labels);

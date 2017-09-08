@@ -87,7 +87,7 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
 
         $modules = $this->getModules();
 
-        $showAllModules = false !== $input->getOption('show-all');
+        $showAllModules = $input->getOption('show-all') !== false;
 
         if (!$showAllModules) {
             $modules = array_filter($modules, function ($module) use ($mode) {
@@ -149,7 +149,7 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
      */
     protected function getInstalledModules(): ?array
     {
-        if (null === $this->installedModules) {
+        if ($this->installedModules === null) {
             $this->installedModules = $this->fetchInstalledModules();
         }
 
