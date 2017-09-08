@@ -57,7 +57,8 @@ class ModulesInstallCommand extends AbstractModulesInstallCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        parent::execute($input, $output);
+        $this->input = $input;
+        $this->output = $output;
 
         // get parameters
         $modules = $input->getArgument('modules-id');
