@@ -219,14 +219,6 @@ abstract class AbstractModuleInstaller
     }
 
     /**
-     * Method that will be overridden by the specific installers
-     */
-    protected function execute(): void
-    {
-        // just a placeholder
-    }
-
-    /**
      * Get the database-handle
      *
      * @return SpoonDatabase
