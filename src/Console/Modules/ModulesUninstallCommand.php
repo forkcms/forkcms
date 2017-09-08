@@ -188,7 +188,7 @@ class ModulesUninstallCommand extends AbstractModulesInstallCommand
 
         $uninstaller = $this->createUninstaller($module);
 
-        if (!($uninstaller instanceof UninstallerInterface)) {
+        if (!$uninstaller instanceof UninstallerInterface) {
             throw new UninstallerInterfaceException($module, $uninstallerFile);
         }
     }

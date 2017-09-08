@@ -187,7 +187,7 @@ class ModulesInstallCommand extends AbstractModulesInstallCommand
 
         $installer = $this->createInstaller($module);
 
-        if (!($installer instanceof InstallerInterface)) {
+        if (!$installer instanceof InstallerInterface) {
             throw new InstallerInterfaceException($module, $installerFile);
         }
     }
