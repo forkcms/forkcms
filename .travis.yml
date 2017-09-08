@@ -8,13 +8,14 @@ script:
   - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
   - travis_wait 20 bin/simple-phpunit --coverage-clover=coverage.clover
 
-
 before_script:
   - composer install
   - mysql -e 'create database fork_test'
   - mysql -u root fork_test < tests/data/test_db.sql
   - cp app/config/parameters.yml.travis app/config/parameters.yml
   - mysql -e "SET GLOBAL wait_timeout = 3600" # try to avoid mysql has gone away errors
+
+after_script:
   - yarn test
 
 after_success:
