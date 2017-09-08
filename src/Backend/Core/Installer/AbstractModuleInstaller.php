@@ -743,10 +743,10 @@ abstract class AbstractModuleInstaller
         $revision['allow_edit'] = $revision['allow_edit'] ?? true;
         $revision['allow_delete'] = $revision['allow_delete'] ?? true;
         $revision['sequence'] = $revision['sequence'] ?? $this->getNextPageSequence(
-                $revision['language'],
-                $revision['parent_id'],
-                $revision['type']
-            );
+            $revision['language'],
+            $revision['parent_id'],
+            $revision['type']
+        );
         $revision['meta_id'] = $revision['meta_id'] ?? $this->getNewMetaId($meta, $revision['title']);
 
         if (!isset($revision['data']['image']) && $this->installExample()) {

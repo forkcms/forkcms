@@ -9,7 +9,6 @@ namespace Backend\Modules\Analytics\Installer;
  * file that was distributed with this source code.
  */
 
-
 use Backend\Core\Installer\AbstractModuleUninstaller;
 use Backend\Core\Installer\UninstallerInterface;
 
