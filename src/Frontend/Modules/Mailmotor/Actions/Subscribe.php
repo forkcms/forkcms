@@ -92,7 +92,7 @@ class Subscribe extends FrontendBaseBlock
         $email = null;
 
         // request contains an email
-        if ($this->getRequest()->request->get('email') != null) {
+        if ($this->getRequest()->request->get('email') !== null) {
             $email = $this->getRequest()->request->get('email');
         }
 
@@ -102,10 +102,13 @@ class Subscribe extends FrontendBaseBlock
     private function parse(): void
     {
         // form was subscribed?
-        if ($this->url->getParameter('subscribed') == 'true') {
+        if ($this->url->getParameter('subscribed') === 'true') {
             // show message
             $this->template->assign('mailmotorSubscribeIsSuccess', true);
-            $this->template->assign('mailmotorSubscribeHasDoubleOptIn', ($this->url->getParameter('double-opt-in', 'string', 'true') === 'true'));
+            $this->template->assign(
+                'mailmotorSubscribeHasDoubleOptIn',
+                ($this->url->getParameter('double-opt-in', 'string', 'true') === 'true')
+            );
 
             // hide form
             $this->template->assign('mailmotorSubscribeHideForm', true);
