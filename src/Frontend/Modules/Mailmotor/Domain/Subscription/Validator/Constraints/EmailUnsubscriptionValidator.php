@@ -17,21 +17,11 @@ class EmailUnsubscriptionValidator extends ConstraintValidator
      */
     protected $subscriber;
 
-    /**
-     * Set subscriber - using a constructor didn't work.
-     *
-     * @param Subscriber $subscriber
-     */
-    public function setSubscriber(
-        Subscriber $subscriber
-    ): void {
+    public function setSubscriber(Subscriber $subscriber): void
+    {
         $this->subscriber = $subscriber;
     }
 
-    /**
-     * @param mixed $value
-     * @param Constraint $constraint
-     */
     public function validate($value, Constraint $constraint): void
     {
         try {

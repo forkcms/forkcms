@@ -26,13 +26,9 @@ class Unsubscribe extends FrontendBaseBlock
     {
         parent::execute();
 
-        // Create the form
         $form = $this->createForm(
             UnsubscribeType::class,
-            new Unsubscription(
-                Locale::frontendLanguage(),
-                $this->getEmail()
-            )
+            new Unsubscription(Locale::frontendLanguage(), $this->getEmail())
         );
 
         $form->handleRequest($this->getRequest());
@@ -60,17 +56,12 @@ class Unsubscribe extends FrontendBaseBlock
             // fallback for when no mail-engine is chosen in the Backend
             $this->get('event_dispatcher')->dispatch(
                 NotImplementedUnsubscribedEvent::EVENT_NAME,
-                new NotImplementedUnsubscribedEvent(
-                    $unsubscription
-                )
+                new NotImplementedUnsubscribedEvent($unsubscription)
             );
         }
 
         $this->redirect(
-            FrontendNavigation::getUrlForBlock(
-                'Mailmotor',
-                'Unsubscribe'
-            )
+            FrontendNavigation::getUrlForBlock('Mailmotor', 'Unsubscribe')
             . '?unsubscribed=true'
             . '#mailmotorUnsubscribeForm'
         );
@@ -83,12 +74,8 @@ class Unsubscribe extends FrontendBaseBlock
 
     private function parse(): void
     {
-        // form was unsubscribed?
         if ($this->url->getParameter('unsubscribed') === 'true') {
-            // show message
             $this->template->assign('mailmotorUnsubscribeIsSuccess', true);
-
-            // hide form
             $this->template->assign('mailmotorUnsubscribeHideForm', true);
         }
     }

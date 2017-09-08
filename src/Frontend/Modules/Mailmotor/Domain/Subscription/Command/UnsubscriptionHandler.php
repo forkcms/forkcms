@@ -16,7 +16,7 @@ final class UnsubscriptionHandler
     /**
      * @var Subscriber
      */
-    protected $subscriber;
+    private $subscriber;
 
     public function __construct(
         Subscriber $subscriber
@@ -27,8 +27,6 @@ final class UnsubscriptionHandler
     public function handle(Unsubscription $unsubscription): void
     {
         // Unsubscribing the user, will dispatch an event
-        $this->subscriber->unsubscribe(
-            $unsubscription->email
-        );
+        $this->subscriber->unsubscribe($unsubscription->email);
     }
 }

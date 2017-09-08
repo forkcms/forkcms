@@ -26,16 +26,9 @@ class Subscribe extends FrontendBaseBlock
     {
         parent::execute();
 
-        // Define email from the subscribe widget
-        $email = $this->getEmail();
-
-        // Create the form
         $form = $this->createForm(
             SubscribeType::class,
-            new Subscription(
-                Locale::frontendLanguage(),
-                $email
-            )
+            new Subscription(Locale::frontendLanguage(), $this->getEmail())
         );
 
         $form->handleRequest($this->getRequest());
@@ -65,15 +58,13 @@ class Subscribe extends FrontendBaseBlock
         $doubleOptIn = $this->get('fork.settings')->get('Mailmotor', 'double_opt_in', false);
 
         try {
-            // The command bus will handle the unsubscription
+            // The command bus will handle the subscription
             $this->get('command_bus')->handle($subscription);
         } catch (NotImplementedException $e) {
             // fallback for when no mail-engine is chosen in the Backend
             $this->get('event_dispatcher')->dispatch(
                 NotImplementedSubscribedEvent::EVENT_NAME,
-                new NotImplementedSubscribedEvent(
-                    $subscription
-                )
+                new NotImplementedSubscribedEvent($subscription)
             );
 
             $doubleOptIn = false;
@@ -88,30 +79,24 @@ class Subscribe extends FrontendBaseBlock
 
     public function getEmail(): ?string
     {
-        // define email
-        $email = null;
-
-        // request contains an email
         if ($this->getRequest()->request->get('email') !== null) {
-            $email = $this->getRequest()->request->get('email');
+            return $this->getRequest()->request->get('email');
         }
 
-        return $email;
+        return null;
     }
 
     private function parse(): void
     {
-        // form was subscribed?
-        if ($this->url->getParameter('subscribed') === 'true') {
-            // show message
-            $this->template->assign('mailmotorSubscribeIsSuccess', true);
-            $this->template->assign(
-                'mailmotorSubscribeHasDoubleOptIn',
-                ($this->url->getParameter('double-opt-in', 'string', 'true') === 'true')
-            );
-
-            // hide form
-            $this->template->assign('mailmotorSubscribeHideForm', true);
+        if ($this->url->getParameter('subscribed') !== 'true') {
+            return;
         }
+
+        $this->template->assign('mailmotorSubscribeIsSuccess', true);
+        $this->template->assign(
+            'mailmotorSubscribeHasDoubleOptIn',
+            $this->url->getParameter('double-opt-in', 'string', 'true') === 'true'
+        );
+        $this->template->assign('mailmotorSubscribeHideForm', true);
     }
 }

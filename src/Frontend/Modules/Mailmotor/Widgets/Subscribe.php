@@ -21,30 +21,23 @@ class Subscribe extends FrontendBaseWidget
 {
     public function execute(): void
     {
-        // call parent
         parent::execute();
-
-        // load template
         $this->loadTemplate();
-
-        // Create the form
         $form = $this->createForm(
             SubscribeType::class,
-            new Subscription(
-                Locale::frontendLanguage()
-            )
+            new Subscription(Locale::frontendLanguage())
         );
 
         $form->handleRequest($this->getRequest());
 
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->template->assign('form', $form->createView());
-
-            if ($form->isSubmitted()) {
-                $this->template->assign('mailmotorSubscribeHasFormError', true);
-            }
-
+        if ($form->isSubmitted() && $form->isValid()) {
             return;
+        }
+
+        $this->template->assign('form', $form->createView());
+
+        if ($form->isSubmitted()) {
+            $this->template->assign('mailmotorSubscribeHasFormError', true);
         }
     }
 }

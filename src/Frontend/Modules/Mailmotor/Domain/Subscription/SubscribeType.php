@@ -41,10 +41,8 @@ class SubscribeType extends AbstractType
      */
     protected $subscriber;
 
-    public function __construct(
-        Subscriber $subscriber,
-        ModulesSettings $modulesSettings
-    ) {
+    public function __construct(Subscriber $subscriber, ModulesSettings $modulesSettings)
+    {
         $this->subscriber = $subscriber;
         $this->modulesSettings = $modulesSettings;
         $this->interests = $this->getInterests();
@@ -117,7 +115,6 @@ class SubscribeType extends AbstractType
                 return $interests;
             }
 
-            // Loop interests
             foreach ($mailMotorInterests as $categoryId => $categoryInterest) {
                 if (empty($categoryInterest['children']) || !is_array($categoryInterest['children'])) {
                     continue;

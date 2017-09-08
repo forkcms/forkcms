@@ -12,11 +12,10 @@ final class NotImplementedSubscribedEvent extends Event
     /**
      * @var Subscription
      */
-    protected $subscription;
+    private $subscription;
 
-    public function __construct(
-        Subscription $subscription
-    ) {
+    public function __construct(Subscription $subscription)
+    {
         $this->subscription = $subscription;
     }
 

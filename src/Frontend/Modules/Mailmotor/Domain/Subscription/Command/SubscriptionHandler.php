@@ -18,43 +18,35 @@ final class SubscriptionHandler
     /**
      * @var ModulesSettings
      */
-    protected $modulesSettings;
+    private $modulesSettings;
 
     /**
      * @var Subscriber
      */
-    protected $subscriber;
+    private $subscriber;
 
-    public function __construct(
-        Subscriber $subscriber,
-        ModulesSettings $modulesSettings
-    ) {
+    public function __construct(Subscriber $subscriber, ModulesSettings $modulesSettings)
+    {
         $this->subscriber = $subscriber;
         $this->modulesSettings = $modulesSettings;
     }
 
     public function handle(Subscription $subscription): void
     {
-        // Init variables
         $mergeFields = [];
         $interests = [];
 
         try {
-            // We must overwrite existing interests
             if ($this->modulesSettings->get('Mailmotor', 'overwrite_interests', true)) {
                 $possibleInterests = $this->subscriber->getInterests();
 
-                // Loop interests
                 foreach ($possibleInterests as $categoryId => $categoryInterest) {
                     foreach ($categoryInterest['children'] as $categoryChildId => $categoryChildTitle) {
-                        // Add interest
                         $interests[$categoryChildId] = in_array($categoryChildId, $subscription->interests);
                     }
                 }
             } elseif (!empty($subscription->interests)) {
-                // Loop checked interests
                 foreach ($subscription->interests as $checkedInterestId) {
-                    // Add interest
                     $interests[$checkedInterestId] = true;
                 }
             }
