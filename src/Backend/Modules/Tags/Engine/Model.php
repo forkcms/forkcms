@@ -81,6 +81,16 @@ class Model
         );
     }
 
+    public static function getTagNames(string $language = null): array
+    {
+        return (array) BackendModel::getContainer()->get('database')->getColumn(
+            'SELECT tag
+             FROM tags
+             WHERE language = ?',
+            [$language ?? BL::getWorkingLanguage()]
+        );
+    }
+
     /**
      * Get tags that start with the given string
      *
