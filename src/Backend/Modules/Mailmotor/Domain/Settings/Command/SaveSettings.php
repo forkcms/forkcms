@@ -52,30 +52,14 @@ final class SaveSettings
 
     public function __construct(ModulesSettings $modulesSettings)
     {
-        // Define settings
         $settings = $modulesSettings->getForModule('Mailmotor');
-
-        // Define mail engine
-        $this->mailEngine = array_key_exists('mail_engine', $settings)
-            ? $settings['mail_engine'] : null;
-
-        // Define api key
-        $this->apiKey = array_key_exists('api_key', $settings)
-            ? $settings['api_key'] : null;
-
-        // Define list id
-        $this->listId = array_key_exists('list_id', $settings)
-            ? $settings['list_id'] : null;
-
-        // Define overwrite interests
-        $this->overwriteInterests = array_key_exists('overwrite_interests', $settings)
-            ? (bool) $settings['overwrite_interests'] : null;
-
-        // Define double opt-in
-        $this->doubleOptIn = (bool) $settings['double_opt_in'] ?? false;
-
-        // Define automatically subscribe from form builder submitted form
-        $this->automaticallySubscribeFromFormBuilderSubmittedForm = array_key_exists('automatically_subscribe_from_form_builder_submitted_form', $settings)
-            ? (bool) $settings['automatically_subscribe_from_form_builder_submitted_form'] : false;
+        $this->mailEngine = $settings['mail_engine'] ?? null;
+        $this->apiKey = $settings['api_key'] ?? null;
+        $this->listId = $settings['list_id'] ?? null;
+        $this->overwriteInterests = (bool) ($settings['overwrite_interests'] ?? false);
+        $this->doubleOptIn = (bool) ($settings['double_opt_in'] ?? false);
+        $this->automaticallySubscribeFromFormBuilderSubmittedForm = (bool) (
+            $settings['automatically_subscribe_from_form_builder_submitted_form'] ?? false
+        );
     }
 }

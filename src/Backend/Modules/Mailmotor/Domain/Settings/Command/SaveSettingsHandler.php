@@ -16,7 +16,7 @@ final class SaveSettingsHandler
     /**
      * @var ModulesSettings
      */
-    protected $modulesSettings;
+    private $modulesSettings;
 
     public function __construct(
         ModulesSettings $modulesSettings
@@ -26,24 +26,33 @@ final class SaveSettingsHandler
 
     public function handle(SaveSettings $settings): void
     {
-        // Define module
-        $module = 'Mailmotor';
-
-        // set our settings
-        $this->modulesSettings->set($module, 'mail_engine', $settings->mailEngine);
-        $this->modulesSettings->set($module, 'double_opt_in', $settings->doubleOptIn);
-        $this->modulesSettings->set($module, 'overwrite_interests', $settings->overwriteInterests);
-        $this->modulesSettings->set($module, 'automatically_subscribe_from_form_builder_submitted_form', $settings->automaticallySubscribeFromFormBuilderSubmittedForm);
+        $this->saveSetting('mail_engine', $settings->mailEngine);
+        $this->saveSetting('double_opt_in', $settings->doubleOptIn);
+        $this->saveSetting('overwrite_interests', $settings->overwriteInterests);
+        $this->saveSetting(
+            'automatically_subscribe_from_form_builder_submitted_form',
+            $settings->automaticallySubscribeFromFormBuilderSubmittedForm
+        );
 
         // mail engine is empty
         if ($settings->mailEngine === 'not_implemented') {
-            $this->modulesSettings->delete($module, 'api_key');
-            $this->modulesSettings->delete($module, 'list_id');
+            $this->deleteSetting('api_key');
+            $this->deleteSetting('list_id');
 
             return;
         }
 
-        $this->modulesSettings->set($module, 'api_key', $settings->apiKey);
-        $this->modulesSettings->set($module, 'list_id', $settings->listId);
+        $this->saveSetting('api_key', $settings->apiKey);
+        $this->saveSetting('list_id', $settings->listId);
+    }
+
+    private function saveSetting(string $key, $value): void
+    {
+        $this->modulesSettings->set('Mailmotor', $key, $value);
+    }
+
+    private function deleteSetting(string $key): void
+    {
+        $this->modulesSettings->delete('Mailmotor', $key);
     }
 }
