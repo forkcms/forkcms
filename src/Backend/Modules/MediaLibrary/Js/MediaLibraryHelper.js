@@ -31,7 +31,7 @@ jsBackend.mediaLibraryHelper = {
 
 /**
  * Edit group
- * global jsBackend
+ * global: jsBackend
  */
 var media = {}
 var mediaFolders = false
@@ -786,9 +786,9 @@ jsBackend.mediaLibraryHelper.cropper = {
 
   passToCropper: function (resizeInfo, resolve, reject) {
     jsBackend.mediaLibraryHelper.cropper.cropperQueue.push({
-      resizeInfo: resizeInfo,
-      resolve: resolve,
-      reject: reject
+      'resizeInfo': resizeInfo,
+      'resolve': resolve,
+      'reject': reject
     })
 
     // If the cropper is already handling the queue we don't need to start it a second time.
@@ -798,11 +798,7 @@ jsBackend.mediaLibraryHelper.cropper = {
 
     jsBackend.mediaLibraryHelper.cropper.isCropping = true
     var $dialog = jsBackend.mediaLibraryHelper.cropper.getDialog()
-
-    if ($('[data-role="enable-cropper-checkbox"]').is(':checked')) {
-      jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog)
-    }
-
+    jsBackend.mediaLibraryHelper.cropper.switchToCropperModal($dialog)
     jsBackend.mediaLibraryHelper.cropper.processNextImageInQueue($dialog)
   },
 
@@ -902,6 +898,10 @@ jsBackend.mediaLibraryHelper.cropper = {
   },
 
   switchToCropperModal: function ($dialog) {
+    if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
+      return
+    }
+
     if (!$dialog.hasClass('in')) {
       $dialog.modal('show')
     }
@@ -1021,7 +1021,7 @@ jsBackend.mediaLibraryHelper.cropper = {
 
 /**
  * All methods related to the upload
- * global jsBackend
+ * global: jsBackend
  */
 jsBackend.mediaLibraryHelper.upload = {
   preInit: function () {
@@ -1117,7 +1117,7 @@ jsBackend.mediaLibraryHelper.upload = {
             jsBackend.messages.add('success', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedSuccess'), succeeded.length))
             // not everything is uploaded successful, show error message
           } else {
-            jsBackend.messages.add('danger', utils.string.sprintf(jsBackend.locale.msg('MediaUploadedError'), (succeeded.length + '","' + failed.length)))
+            jsBackend.messages.add('danger', utils.string.sprintf(jsBackend.locale.err('MediaUploadedError'), (succeeded.length + '","' + failed.length)))
           }
         }
       }
@@ -1298,8 +1298,8 @@ jsBackend.mediaLibraryHelper.upload = {
 /**
  * Templates
  *
- * global jsBackend
- * global utils
+ * global: jsBackend
+ * global: utils
  */
 jsBackend.mediaLibraryHelper.templates = {
   /**
@@ -1433,8 +1433,8 @@ jsBackend.mediaLibraryHelper.templates = {
 
     html += '</div>'
     html += '<button type="button" class="deleteMediaItem btn btn-default" '
-    html += 'title="' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '">'
-    html += '<span>' + utils.string.ucfirst(jsBackend.locale.msg('MediaDoNotConnectThisMedia')) + '</span>'
+    html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
+    html += '<span>' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '</span>'
     html += '</button>'
     html += '</li>'
 
@@ -1442,5 +1442,5 @@ jsBackend.mediaLibraryHelper.templates = {
   }
 }
 
-/** global jsBackend */
+/** global: jsBackend */
 $(jsBackend.mediaLibraryHelper.init)

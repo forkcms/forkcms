@@ -1,4 +1,4 @@
-var jsBackendInstaller = {
+var jsBackend = {
   debug: false,
 
   // init, something like a constructor
@@ -67,7 +67,7 @@ jsBackend.controls = {
 
     // loop chars and add unique chars
     for (var i = 0; i < string.length; i++) {
-      if ($.inArray(string.charAt(i), uniqueChars) === -1) { uniqueChars.push(string.charAt(i)) }
+      if ($.inArray(string.charAt(i), uniqueChars) === -1) uniqueChars.push(string.charAt(i))
     }
 
     // less then 3 unique chars is just weak
@@ -76,8 +76,11 @@ jsBackend.controls = {
     // more then 6 chars is good
     if (string.length >= 6) score++
 
-    // more then 8 is better
+    // more then 8 is beter
     if (string.length >= 8) score++
+
+    // more then 12 is best
+    if (string.length >= 12) score++
 
     // upper and lowercase?
     if ((string.match(/[a-z]/)) && string.match(/[A-Z]/)) score += 2
@@ -89,7 +92,7 @@ jsBackend.controls = {
     if (string.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) score++
 
     // strong password
-    if (score >= 4) return 'strong'
+    if (score >= 6) return 'strong'
 
     // average
     if (score >= 2) return 'average'
@@ -127,11 +130,7 @@ jsBackend.forms = {
         if (formId !== '') {
           // loop every button to be replaced
           $('form#' + formId + '.submitWithLink input[type=submit]').each(function () {
-            $(this).after(replaceHTML
-              .replace('{label}', $(this).val())
-              .replace('{id}', $(this).attr('id'))
-              .replace('{class}', 'submitButton button ' + $(this).attr('class'))
-            ).css({
+            $(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).attr('id')).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({
               position: 'absolute',
               top: '-9000px',
               left: '-9000px'
@@ -145,8 +144,9 @@ jsBackend.forms = {
             // is the button disabled?
             if ($(this).prop('disabled')) {
               return false
+            } else {
+              $('form#' + formId).submit()
             }
-            $('form#' + formId).submit()
           })
 
           // don't submit the form on certain elements
@@ -254,4 +254,4 @@ jsBackend.layout = {
   }
 }
 
-$(jsBackendInstaller.init)
+$(jsBackend.init)

@@ -90,3 +90,9 @@ Questions? Feel free to discuss on our [Slack channel](https://fork-cms.herokuap
 1. [Documentation](docs/06. contribute/06. documentation.md)
 1. [Spreading the word](docs/06. contribute/07. spreading_the_word.md)
 1. [Open sourcing your modules/themes](docs/06. contribute/08. open_sourcing_fork_cms_modules_and_themes.md)
+
+### 7. Media Library
+1. [Introduction](docs/07. media library/01. introduction.md)
+1. [Integrating in your module](docs/07. media library/02. integrating in your module.md)
+1. [Console commands](docs/07. media library/03. console commands.md)
+1. [Cropper](docs/07. media library/04. cropper.md)

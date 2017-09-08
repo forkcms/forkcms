@@ -6,8 +6,8 @@ DirectorySlash Off
 
 # Make sure the htaccessfile is protected
 <Files .htaccess>
-	order allow,deny
-	deny from all
+    order allow,deny
+    deny from all
 </Files>
 
 # file etags (used when comparing local cached file to server file)
@@ -32,104 +32,108 @@ deny from env=stayout
 ########## End - Common hacking tools and bandwidth hoggers block
 
 <IfModule mod_rewrite.c>
-	# set environment variable to let PHP know that urls are being rewritten
-	RewriteRule .* - [E=MOD_REWRITE:1]
+    # set environment variable to let PHP know that urls are being rewritten
+    RewriteRule .* - [E=MOD_REWRITE:1]
 
-	# Protect against cross site tracing https://www.owasp.org/index.php/Cross_Site_Tracing
-	RewriteCond %{REQUEST_METHOD} ^TRACE
-	RewriteRule .* - [F]
+    # Protect against cross site tracing https://www.owasp.org/index.php/Cross_Site_Tracing
+    RewriteCond %{REQUEST_METHOD} ^TRACE
+    RewriteRule .* - [F]
 
-	# nice urls
-	RewriteEngine On
-	RewriteBase /
+    # nice urls
+    RewriteEngine On
+    RewriteBase /
 
     # allow the ck connector
     RewriteRule ^index\.php$ - [L]
     RewriteRule src/Backend/Core/Js/ckfinder/core/connector/php/connector\.php - [L]
 
-	# forbidden folders
+    # forbidden folders
     RewriteRule .*\.php - [F]
-	RewriteRule \.git - [F]
-	RewriteRule vendor/.* - [F]
-	RewriteRule bin/.* - [F]
-	RewriteRule src/Console/.* - [F]
-	RewriteRule .*\.gitignore - [F]
-	RewriteRule \.editorconfig - [F]
-	RewriteRule \.travis.yml - [F]
-	RewriteRule bower\.json - [F]
-	RewriteRule composer\.json - [F]
-	RewriteRule composer\.lock - [F]
-	RewriteRule phpunit\.xml\.dist - [F]
-	RewriteRule .*\.md - [F]
-	RewriteRule var/logs - [F]
-	RewriteRule app/config - [F]
-	RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
-	RewriteRule src/Frontend/Cache/Search - [F]
-	RewriteRule src/Backend/Cache/CompiledTemplates - [F]
-	RewriteRule var/docker/.* - [F]
-	RewriteRule Dockerfile - [F]
-	RewriteRule \.dockerignore - [F]
-	RewriteRule docker-compose\.yml - [F]
-	RewriteRule docker-compose\.override\.yml - [F]
+    RewriteRule \.git - [F]
+    RewriteRule vendor/.* - [F]
+    RewriteRule bin/.* - [F]
+    RewriteRule src/Console/.* - [F]
+    RewriteRule .*\.gitignore - [F]
+    RewriteRule \.editorconfig - [F]
+    RewriteRule \.travis.yml - [F]
+    RewriteRule gulpfile\.js - [F]
+    RewriteRule package\.json - [F]
+    RewriteRule bower\.json - [F]
+    RewriteRule composer\.json - [F]
+    RewriteRule composer\.lock - [F]
+    RewriteRule phpunit\.xml\.dist - [F]
+    RewriteRule .*\.md - [F]
+    RewriteRule var/logs - [F]
+    RewriteRule app/config - [F]
+    RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
+    RewriteRule src/Frontend/Cache/Search - [F]
+    RewriteRule src/Backend/Cache/CompiledTemplates - [F]
+    RewriteRule var/docker/.* - [F]
+    RewriteRule Dockerfile - [F]
+    RewriteRule \.dockerignore - [F]
+    RewriteRule docker-compose\.yml - [F]
+    RewriteRule docker-compose\.override\.yml - [F]
 
-	# redirect all trafic to https
-	# Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
-	# RewriteCond %{HTTPS} !=on
-	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
-	# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    # redirect all trafic to https
+    # <IfModule headers_module>
+    #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    # </IfModule>
+    # RewriteCond %{HTTPS} !=on
+    # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
-	# one url to rule them all
-	# RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
-	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
-	# RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
+    # one url to rule them all
+    # RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
+    # RewriteCond %{HTTP_HOST} !.*\.dev [NC]
+    # RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
 
-	# src dir should pass via the front controller
-	RewriteCond %{REQUEST_URI} ^/(src|src\/)$
-	RewriteRule . /index.php [NC,L]
+    # src dir should pass via the front controller
+    RewriteCond %{REQUEST_URI} ^/(src|src\/)$
+    RewriteRule . /index.php [NC,L]
 
-	# handle urls
-	RewriteCond %{REQUEST_URI} !^$
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule . index.php [NC,L]
+    # handle urls
+    RewriteCond %{REQUEST_URI} !^$
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . index.php [NC,L]
 </IfModule>
 
 # file caching in browser
 <IfModule mod_expires.c>
-	ExpiresActive On
-	<FilesMatch "\.(?i:ico|gif|jpe?g|png|svg|svgz|js|css|swf|ttf|otf|woff|eot)$">
-		ExpiresDefault "access plus 1 month"
-	</FilesMatch>
+    ExpiresActive On
+    <FilesMatch "\.(?i:ico|gif|jpe?g|png|svg|svgz|js|css|swf|ttf|otf|woff|eot)$">
+        ExpiresDefault "access plus 1 month"
+    </FilesMatch>
 </IfModule>
 
 # gzip on Apache 2
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript application/json image/svg+xml
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript application/json image/svg+xml
 
-	# these browsers do not support deflate
-	BrowserMatch ^Mozilla/4 gzip-only-text/html
-	BrowserMatch ^Mozilla/4.0[678] no-gzip
-	BrowserMatch bMSIE !no-gzip !gzip-only-text/html
+    # these browsers do not support deflate
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4.0[678] no-gzip
+    BrowserMatch bMSIE !no-gzip !gzip-only-text/html
 
-	SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force
+    SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force
 </IfModule>
 
 # gzip on Apache 1
 <IfModule mod_gzip.c>
-	mod_gzip_on Yes
+    mod_gzip_on Yes
 
-	mod_gzip_item_include mime ^application/javascript$
-	mod_gzip_item_include mime ^application/x-javascript$
-	mod_gzip_item_include mime ^application/json$
-	mod_gzip_item_include mime ^application/xhtml+xml$
-	mod_gzip_item_include mime ^application/xml$
-	mod_gzip_item_include mime ^text/css$
-	mod_gzip_item_include mime ^text/html$
-	mod_gzip_item_include mime ^text/javascript$
-	mod_gzip_item_include mime ^text/plain$
-	mod_gzip_item_include mime ^text/xml$
-	mod_gzip_item_exclude mime ^image/
+    mod_gzip_item_include mime ^application/javascript$
+    mod_gzip_item_include mime ^application/x-javascript$
+    mod_gzip_item_include mime ^application/json$
+    mod_gzip_item_include mime ^application/xhtml+xml$
+    mod_gzip_item_include mime ^application/xml$
+    mod_gzip_item_include mime ^text/css$
+    mod_gzip_item_include mime ^text/html$
+    mod_gzip_item_include mime ^text/javascript$
+    mod_gzip_item_include mime ^text/plain$
+    mod_gzip_item_include mime ^text/xml$
+    mod_gzip_item_exclude mime ^image/
 
-	# browser issues
-	mod_gzip_item_exclude reqheader "User-agent: Mozilla/4.0[678]"
+    # browser issues
+    mod_gzip_item_exclude reqheader "User-agent: Mozilla/4.0[678]"
 </IfModule>

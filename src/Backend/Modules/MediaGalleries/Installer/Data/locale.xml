@@ -32,10 +32,6 @@
         <translation language="en"><![CDATA[Invalid widget action.]]></translation>
         <translation language="nl"><![CDATA[Ongeldige widget action.]]></translation>
       </item>
-      <item type="label" name="MediaConnected">
-        <translation language="en"><![CDATA[connected media]]></translation>
-        <translation language="nl"><![CDATA[gekoppelde media]]></translation>
-      </item>
       <item type="label" name="MediaGalleryAdd">
         <translation language="en"><![CDATA[add gallery]]></translation>
         <translation language="nl"><![CDATA[galerij toevoegen]]></translation>

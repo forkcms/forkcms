@@ -1,3 +1,25 @@
+5.0.3  (2017-09-01)
+------------------
+
+Bugfixes:
+* Core: Fixed wrong namespace in the upgrade guide for DataGridDatabase [#2201](https://github.com/forkcms/forkcms/pull/2201)
+* Core: Add missing entries for gulp and npm/yarn to htaccess [#2202](https://github.com/forkcms/forkcms/pull/2202)
+* Core: Fix twig cache issues in debug [#2208](https://github.com/forkcms/forkcms/pull/2208)
+* Core: Fix template modifier for getnavigation rendering child navigation as escaped html [#2216](https://github.com/forkcms/forkcms/pull/2216)
+* Core: Pimple should also be installed on production and not only dev for CKFinder [#2224](https://github.com/forkcms/forkcms/pull/2224)
+* Docs: Update media library documentation [#2198](https://github.com/forkcms/forkcms/pull/2198)
+* FAQ: Fix default value for hidden radio button [#2220](https://github.com/forkcms/forkcms/pull/2220)
+* FAQ: Fix sorting categories [#2225](https://github.com/forkcms/forkcms/pull/2225)
+* FormBuilder: Fix wrong typehint on callback in FormBuilderSubmittedMailSubscriber [#2211](https://github.com/forkcms/forkcms/pull/2211)
+* Locale: Updated and corrected translations into Russian [#2206](https://github.com/forkcms/forkcms/pull/2206)
+* Locale: Fix static translation analysers /private/locale/analyse [#2210](https://github.com/forkcms/forkcms/pull/2210)
+* Locale: Add missing translations [#2222](https://github.com/forkcms/forkcms/pull/2222)
+* MediaLibrary: Fix cropper flashing when uploading multiple images with the cropper disabled [#2167](https://github.com/forkcms/forkcms/pull/2167)
+* Pages: Fix has_children and has_extra still using enum bools [#2226](https://github.com/forkcms/forkcms/pull/2226)
+* Pages: Fix redirect dropdown missing letters in the options [#2215](https://github.com/forkcms/forkcms/pull/2215)
+* Users: Js password strength checker now returns the same result als the php version [#2213](https://github.com/forkcms/forkcms/pull/2213)
+
+
 5.0.2  (2017-08-21)
 ------------------
 
