@@ -711,7 +711,7 @@ class ModuleInstaller
         );
         $revision['meta_id'] = $revision['meta_id'] ?? $this->getNewMetaId($meta, $revision['title']);
         foreach ($this->getLanguages() as $language) {
-            if ($language != $revision['language']) {
+            if ($language !== $revision['language']) {
                 $revision['data']['hreflang_' . $language] = $revision['id'];
             }
         }

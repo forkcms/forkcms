@@ -382,7 +382,6 @@ class Page extends KernelLoader
         // Get page data
         $pageInfo = Model::getPage($this->pageId);
 
-
         // Check if hreflang is set for language
         if (!isset($pageInfo['data']['hreflang_' . $language])) {
             return;

@@ -319,7 +319,7 @@
                   <div class="panel-body">
                     {% for language, field in hreflangFields %}
                       <div class="form-group{% if loop.last %} last{% endif %}">
-                        <label for="">{{ language|upper|raw }}</label>
+                        <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>
                         {{ field.field_hreflang|raw }}
                       </div>
                     {% endfor %}
