@@ -69,60 +69,62 @@ class ModulesUninstallCommand extends AbstractModulesInstallCommand
 
         if (empty($modules)) {
             $output->writeln('  Module not selected.');
-        } else {
-            foreach ($modules as $module) {
-                // make sure this module can be installed
-                $this->validateIfModuleCanBeUninstalled($module);
 
-                $toRemove = [];
+            return 1;
+        }
 
-                $this->findInstalledDependsModules($toRemove, $module);
+        foreach ($modules as $module) {
+            // make sure this module can be installed
+            $this->validateIfModuleCanBeUninstalled($module);
 
-                if (empty($toRemove)) {
-                    $quest = "\n  Are you sure you want to <error>remove</error> module <info>$module</info>?"
-                        . "\n  <comment>This action can not be undone!</comment> (y/N) ";
+            $toRemove = [];
 
-                    if ($this->confirmAction($quest)) {
-                        // do the actual install
-                        $this->uninstallModule($module);
+            $this->findInstalledDependsModules($toRemove, $module);
 
-                        $output->writeln("\n    * <info>Module <comment>$module</comment> successful uninstalled</info>.\n");
-                    } else {
-                        $output->writeln('  Canceled.');
-                    }
+            if (empty($toRemove)) {
+                $quest = "\n  Are you sure you want to <error>remove</error> module <info>$module</info>?"
+                    . "\n  <comment>This action can not be undone!</comment> (y/N) ";
+
+                if ($this->confirmAction($quest)) {
+                    // do the actual install
+                    $this->uninstallModule($module);
+
+                    $output->writeln("\n    * <info>Module <comment>$module</comment> successful uninstalled</info>.\n");
                 } else {
-                    arsort($toRemove);
+                    $output->writeln('  Canceled.');
+                }
+            } else {
+                arsort($toRemove);
 
-                    $toRemoveModules = implode(', ', array_keys($toRemove));
+                $toRemoveModules = implode(', ', array_keys($toRemove));
 
-                    $quest = "\n  Module <info>$module</info> depends on modules <comment>$toRemoveModules</comment>."
-                        . "\n\n  To <error>remove</error> module <info>$module</info>, you will have to <error>remove</error> modules <comment>$toRemoveModules</comment>."
-                        . "\n  Are you sure you want to do this?"
-                        . "\n  <comment>This action can not be undone!</comment> (y/N) ";
+                $quest = "\n  Module <info>$module</info> depends on modules <comment>$toRemoveModules</comment>."
+                    . "\n\n  To <error>remove</error> module <info>$module</info>, you will have to <error>remove</error> modules <comment>$toRemoveModules</comment>."
+                    . "\n  Are you sure you want to do this?"
+                    . "\n  <comment>This action can not be undone!</comment> (y/N) ";
 
-                    if ($this->confirmAction($quest)) {
-                        $output->writeln('');
+                if ($this->confirmAction($quest)) {
+                    $output->writeln('');
 
-                        // Adding main module to remove list
-                        $toRemove[$module] = 0;
+                    // Adding main module to remove list
+                    $toRemove[$module] = 0;
 
-                        foreach ($toRemove as $toRemoveModule => $priority) {
-                            // do the actual install
-                            $this->uninstallModule($toRemoveModule);
+                    foreach ($toRemove as $toRemoveModule => $priority) {
+                        // do the actual install
+                        $this->uninstallModule($toRemoveModule);
 
-                            $output->writeln("    * <info>Module <comment>$toRemoveModule</comment> successful uninstalled</info>.");
-                        }
-
-                        $output->writeln('');
-                    } else {
-                        $output->writeln('  Canceled.');
+                        $output->writeln("    * <info>Module <comment>$toRemoveModule</comment> successful uninstalled</info>.");
                     }
+
+                    $output->writeln('');
+                } else {
+                    $output->writeln('  Canceled.');
                 }
             }
-
-            // remove our container cache after this request
-            (new Filesystem)->remove($this->getContainer()->getParameter('kernel.cache_dir'));
         }
+
+        // remove our container cache after this request
+        (new Filesystem)->remove($this->getContainer()->getParameter('kernel.cache_dir'));
 
         return 0;
     }

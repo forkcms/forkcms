@@ -69,58 +69,60 @@ class ModulesInstallCommand extends AbstractModulesInstallCommand
 
         if (empty($modules)) {
             $output->writeln('  Module not selected.');
-        } else {
-            foreach ($modules as $module) {
-                // make sure this module can be installed
-                $this->validateIfModuleCanBeInstalled($module);
 
-                $toInstall = [];
+            return 1;
+        }
 
-                $this->findNotInstalledModuleDependencies($toInstall, $module);
+        foreach ($modules as $module) {
+            // make sure this module can be installed
+            $this->validateIfModuleCanBeInstalled($module);
 
-                if (empty($toInstall)) {
-                    $quest = "\n  Are you sure you want to <comment>install</comment> module <info>$module</info>? (y/N) ";
+            $toInstall = [];
 
-                    if ($this->confirmAction($quest)) {
-                        // do the actual install
-                        $this->installModule($module);
+            $this->findNotInstalledModuleDependencies($toInstall, $module);
 
-                        $output->writeln("\n    * <info>Module <comment>$module</comment> successful installed</info>.\n");
-                    } else {
-                        $output->writeln('  Canceled.');
-                    }
+            if (empty($toInstall)) {
+                $quest = "\n  Are you sure you want to <comment>install</comment> module <info>$module</info>? (y/N) ";
+
+                if ($this->confirmAction($quest)) {
+                    // do the actual install
+                    $this->installModule($module);
+
+                    $output->writeln("\n    * <info>Module <comment>$module</comment> successful installed</info>.\n");
                 } else {
-                    arsort($toInstall);
+                    $output->writeln('  Canceled.');
+                }
+            } else {
+                arsort($toInstall);
 
-                    $toInstallModules = implode(', ', array_keys($toInstall));
+                $toInstallModules = implode(', ', array_keys($toInstall));
 
-                    $quest = "\n  Module <info>$module</info> depends on modules <comment>$toInstallModules</comment>."
-                        . "\n\n  To <comment>install</comment> module <info>$module</info>, you will have to <comment>install</comment> modules <comment>$toInstallModules</comment>."
-                        . "\n  Are you sure you want to do this? (y/N) ";
+                $quest = "\n  Module <info>$module</info> depends on modules <comment>$toInstallModules</comment>."
+                    . "\n\n  To <comment>install</comment> module <info>$module</info>, you will have to <comment>install</comment> modules <comment>$toInstallModules</comment>."
+                    . "\n  Are you sure you want to do this? (y/N) ";
 
-                    if ($this->confirmAction($quest)) {
-                        $output->writeln('');
+                if ($this->confirmAction($quest)) {
+                    $output->writeln('');
 
-                        // Adding main module to install list
-                        $toInstall[$module] = 0;
+                    // Adding main module to install list
+                    $toInstall[$module] = 0;
 
-                        foreach ($toInstall as $toInstallModule => $priority) {
-                            // do the actual install
-                            $this->installModule($toInstallModule);
+                    foreach ($toInstall as $toInstallModule => $priority) {
+                        // do the actual install
+                        $this->installModule($toInstallModule);
 
-                            $output->writeln("    * <info>Module <comment>$toInstallModule</comment> successful installed</info>.");
-                        }
-
-                        $output->writeln('');
-                    } else {
-                        $output->writeln('  Canceled.');
+                        $output->writeln("    * <info>Module <comment>$toInstallModule</comment> successful installed</info>.");
                     }
+
+                    $output->writeln('');
+                } else {
+                    $output->writeln('  Canceled.');
                 }
             }
-
-            // remove our container cache after this request
-            (new Filesystem)->remove($this->getContainer()->getParameter('kernel.cache_dir'));
         }
+
+        // remove our container cache after this request
+        (new Filesystem)->remove($this->getContainer()->getParameter('kernel.cache_dir'));
 
         return 0;
     }
