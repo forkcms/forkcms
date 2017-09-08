@@ -9,12 +9,13 @@ namespace Console\Modules;
  * file that was distributed with this source code.
  */
 
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Base module installer\uninstaller class
@@ -35,11 +36,6 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
     protected $output;
 
     /**
-     * @var array|null
-     */
-    private $installedModules;
-
-    /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return void
@@ -48,23 +44,6 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
     {
         $this->input = $input;
         $this->output = $output;
-    }
-
-    /**
-     * @param string $module
-     * @return bool
-     */
-    protected function existsModule(string $module): bool
-    {
-        return BackendExtensionsModel::existsModule($module);
-    }
-
-    /**
-     * Clear cache
-     */
-    protected function clearCache(): void
-    {
-        BackendExtensionsModel::clearCache();
     }
 
     /**
@@ -78,20 +57,18 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
      */
-    protected function promptModule(
-        int $mode,
-        callable $formatter
-    ): array {
+    protected function promptModule(int $mode, callable $formatter): array
+    {
         $input = $this->input;
         $output = $this->output;
 
-        $modules = $this->getModules();
+        $modules = $this->getAvailableModules();
 
         $showAllModules = $input->getOption('show-all') !== false;
 
         if (!$showAllModules) {
             $modules = array_filter($modules, function ($module) use ($mode) {
-                $isInstalled = $this->isModuleInstalled($module);
+                $isInstalled = BackendModel::isModuleInstalled($module);
 
                 return $mode === static::PROMPT_INSTALLED ? $isInstalled : !$isInstalled;
             });
@@ -129,59 +106,19 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
     }
 
     /**
-     * @return array|null
-     * @throws \LogicException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
-     */
-    protected function fetchInstalledModules(): ?array
-    {
-        $sql = 'SELECT m.name FROM modules AS m';
-
-        return $this->getContainer()->get('database')->getColumn($sql);
-    }
-
-    /**
-     * @return array|null
-     * @throws \LogicException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
-     */
-    protected function getInstalledModules(): ?array
-    {
-        if ($this->installedModules === null) {
-            $this->installedModules = $this->fetchInstalledModules();
-        }
-
-        return $this->installedModules;
-    }
-
-    /**
-     * @param string $module
-     * @return bool
-     * @throws \LogicException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
-     */
-    protected function isModuleInstalled(string $module): bool
-    {
-        return in_array($module, $this->getInstalledModules(), true);
-    }
-
-    /**
      * @return array
      */
-    protected function getModules(): array
+    protected function getAvailableModules(): array
     {
         return array_map(function ($path) {
             return basename($path);
-        }, $this->getModulesPath());
+        }, $this->getAvailableModulesPath());
     }
 
     /**
      * @return array
      */
-    protected function getModulesPath(): array
+    protected function getAvailableModulesPath(): array
     {
         return glob(BACKEND_MODULES_PATH . '/*', GLOB_ONLYDIR);
     }
@@ -203,7 +140,7 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
         $dependsModules = $this->findDependsModules($module);
 
         foreach ($dependsModules as $dependsModule) {
-            if (!isset($modules[$dependsModule]) && $this->isModuleInstalled($dependsModule)) {
+            if (!isset($modules[$dependsModule]) && BackendModel::isModuleInstalled($dependsModule)) {
                 $modules[$dependsModule] = $level;
 
                 $this->findInstalledDependsModules($modules, $dependsModule, $level);
@@ -228,7 +165,7 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
         $dependsModules = $this->getModuleDependencies($module);
 
         foreach ($dependsModules as $dependsModule) {
-            if (!isset($modules[$dependsModule]) && !$this->isModuleInstalled($dependsModule)) {
+            if (!isset($modules[$dependsModule]) && !BackendModel::isModuleInstalled($dependsModule)) {
                 $modules[$dependsModule] = $level;
 
                 $this->findNotInstalledModuleDependencies($modules, $dependsModule, $level);
@@ -246,7 +183,7 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
     {
         $result = [];
 
-        $modules = $this->getModulesPath();
+        $modules = $this->getAvailableModulesPath();
 
         foreach ($modules as $modulePath) {
             $info = $modulePath . '/info.xml';
@@ -322,6 +259,48 @@ abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
 
                     $result[$attr['name']] = (string) $variable;
                 }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * This method prompts the user for the variables required to perform a particular action
+     *
+     * @param array $variables
+     * @param int $maxAttempts
+     * @return array
+     */
+    protected function askVariables(array $variables, int $maxAttempts = 3)
+    {
+        $result = [];
+
+        if (!empty($variables)) {
+
+            /** @var \Symfony\Component\Console\Helper\SymfonyQuestionHelper $helper */
+            $helper = $this->getHelper('question');
+
+            foreach ($variables as $variable => $desc) {
+                $isHidden = in_array($variable, ['pass', 'password', 'secret'], true);
+
+                $questionLabel = '    ' . $desc . ($isHidden ? ' (hidden input)' : '') . ': ';
+
+                $question = new Question($questionLabel);
+                $question->setMaxAttempts($maxAttempts);
+                $question->setValidator(function ($answer) {
+                    if (empty($answer)) {
+                        throw new \RuntimeException('This field is required.');
+                    }
+
+                    return $answer;
+                });
+
+                if ($isHidden) {
+                    $question->setHidden(true);
+                }
+
+                $result[$variable] = $helper->ask($this->input, $this->output, $question);
             }
         }
 

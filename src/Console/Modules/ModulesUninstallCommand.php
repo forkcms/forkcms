@@ -12,6 +12,7 @@ namespace Console\Modules;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\UninstallerInterface;
 use Backend\Core\Language\Language as BL;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Console\Exceptions\ModuleNotExistsException;
 use Console\Exceptions\ModuleNotInstalledException;
 use Console\Exceptions\UninstallerClassNotFoundException;
@@ -20,7 +21,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -137,7 +137,7 @@ class ModulesUninstallCommand extends AbstractModulesInstallCommand
     {
         $module_pad = str_pad($module, 18, ' ', STR_PAD_RIGHT);
 
-        $isInstalled = $this->isModuleInstalled($module);
+        $isInstalled = BackendModel::isModuleInstalled($module);
 
         $installed = $isInstalled
             ? '<info>  ✔ installed</info>'
@@ -170,7 +170,7 @@ class ModulesUninstallCommand extends AbstractModulesInstallCommand
     private function validateIfModuleCanBeUninstalled(string $module): void
     {
         // does the item exist
-        if (!$this->existsModule($module)) {
+        if (!BackendExtensionsModel::existsModule($module)) {
             throw new ModuleNotExistsException($module);
         }
 
@@ -181,18 +181,13 @@ class ModulesUninstallCommand extends AbstractModulesInstallCommand
 
         $uninstallerFile = BACKEND_MODULES_PATH . '/' . $module . '/Installer/Uninstaller.php';
 
-        // no installer class present
         if (!is_file($uninstallerFile)) {
-            $installerFile = BACKEND_MODULES_PATH . '/' . $module . '/Installer/Installer.php';
-
-            if (!is_file($installerFile)) {
-                throw new UninstallerClassNotFoundException($module, $uninstallerFile);
-            }
+            throw new UninstallerClassNotFoundException($module, $uninstallerFile);
         }
 
-        $installer = $this->createUninstaller($module);
+        $uninstaller = $this->createUninstaller($module);
 
-        if (!($installer instanceof UninstallerInterface)) {
+        if (!($uninstaller instanceof UninstallerInterface)) {
             throw new UninstallerInterfaceException($module, $uninstallerFile);
         }
     }
@@ -209,40 +204,14 @@ class ModulesUninstallCommand extends AbstractModulesInstallCommand
     {
         $variables = $this->getRequiredVariables($module, 'uninstall');
 
-        if (!empty($variables)) {
-
-            /** @var \Symfony\Component\Console\Helper\SymfonyQuestionHelper $helper */
-            $helper = $this->getHelper('question');
-
-            foreach ($variables as $variable => $desc) {
-                $isHidden = in_array($variable, ['pass', 'password', 'secret'], true);
-
-                $questionLabel = '    ' . $desc . ($isHidden ? ' (hidden input)' : '') . ': ';
-
-                $question = new Question($questionLabel);
-                // $question->setMaxAttempts(3);
-                $question->setValidator(function ($answer) {
-                    if (empty($answer)) {
-                        throw new \RuntimeException('This field is required.');
-                    }
-
-                    return $answer;
-                });
-
-                if ($isHidden) {
-                    $question->setHidden(true);
-                }
-
-                $variables[$variable] = $helper->ask($this->input, $this->output, $question);
-            }
-        }
+        $variables = $this->askVariables($variables);
 
         $uninstaller = $this->createUninstaller($module, $variables);
 
         $uninstaller->uninstall();
 
         // clear the cache so locale (and so much more) gets rebuilt
-        $this->clearCache();
+        BackendExtensionsModel::clearCache();
     }
 
     /**
@@ -254,13 +223,7 @@ class ModulesUninstallCommand extends AbstractModulesInstallCommand
      */
     private function createUninstaller(string $module, array $variables = []): UninstallerInterface
     {
-        $searchClass = 'Backend\\Modules\\' . $module . '\\Installer\\Uninstaller';
-
-        if (class_exists($searchClass)) {
-            $class = $searchClass;
-        } else {
-            $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
-        }
+        $class = 'Backend\\Modules\\' . $module . '\\Installer\\Uninstaller';
 
         return new $class(
             BackendModel::getContainer()->get('database'),

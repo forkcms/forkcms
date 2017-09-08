@@ -12,6 +12,7 @@ namespace Console\Modules;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\InstallerInterface;
 use Backend\Core\Language\Language as BL;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Console\Exceptions\InstallerClassNotFoundException;
 use Console\Exceptions\InstallerInterfaceException;
 use Console\Exceptions\ModuleAlreadyInstalledException;
@@ -20,7 +21,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -66,7 +66,9 @@ class ModulesInstallCommand extends AbstractModulesInstallCommand
             $modules = $this->promptModule(static::PROMPT_NOT_INSTALLED, [$this, 'installModulePromptFormat']);
         }
 
-        if (!empty($modules)) {
+        if (empty($modules)) {
+            $output->writeln('  Module not selected.');
+        } else {
             foreach ($modules as $module) {
                 // make sure this module can be installed
                 $this->validateIfModuleCanBeInstalled($module);
@@ -74,8 +76,6 @@ class ModulesInstallCommand extends AbstractModulesInstallCommand
                 $toInstall = [];
 
                 $this->findNotInstalledModuleDependencies($toInstall, $module);
-
-                // dump($toInstall);
 
                 if (empty($toInstall)) {
                     $quest = "\n  Are you sure you want to <comment>install</comment> module <info>$module</info>? (y/N) ";
@@ -135,7 +135,7 @@ class ModulesInstallCommand extends AbstractModulesInstallCommand
     {
         $module_pad = str_pad($module, 18, ' ', STR_PAD_RIGHT);
 
-        $isInstalled = $this->isModuleInstalled($module);
+        $isInstalled = BackendModel::isModuleInstalled($module);
 
         $installed = $isInstalled
             ? '<info>  ✔ installed</info>'
@@ -153,7 +153,7 @@ class ModulesInstallCommand extends AbstractModulesInstallCommand
             ? ''
             : '<error>can not be installed</error>';
 
-        return "$module_pad $installed $canBeInstalled";
+        return "$module_pad $installed    $canBeInstalled";
     }
 
     /**
@@ -168,7 +168,7 @@ class ModulesInstallCommand extends AbstractModulesInstallCommand
     private function validateIfModuleCanBeInstalled(string $module): void
     {
         // does the item exist
-        if (!$this->existsModule($module)) {
+        if (!BackendExtensionsModel::existsModule($module)) {
             throw new ModuleNotExistsException($module);
         }
 
@@ -204,40 +204,14 @@ class ModulesInstallCommand extends AbstractModulesInstallCommand
     {
         $variables = $this->getRequiredVariables($module, 'install');
 
-        if (!empty($variables)) {
-
-            /** @var \Symfony\Component\Console\Helper\SymfonyQuestionHelper $helper */
-            $helper = $this->getHelper('question');
-
-            foreach ($variables as $variable => $desc) {
-                $isHidden = in_array($variable, ['pass', 'password', 'secret'], true);
-
-                $questionLabel = '    ' . $desc . ($isHidden ? ' (hidden input)' : '') . ': ';
-
-                $question = new Question($questionLabel);
-                // $question->setMaxAttempts(3);
-                $question->setValidator(function ($answer) {
-                    if (empty($answer)) {
-                        throw new \RuntimeException('This field is required.');
-                    }
-
-                    return $answer;
-                });
-
-                if ($isHidden) {
-                    $question->setHidden(true);
-                }
-
-                $variables[$variable] = $helper->ask($this->input, $this->output, $question);
-            }
-        }
+        $variables = $this->askVariables($variables);
 
         $installer = $this->createInstaller($module, $variables);
 
         $installer->install();
 
         // clear the cache so locale (and so much more) gets rebuilt
-        $this->clearCache();
+        BackendExtensionsModel::clearCache();
     }
 
     /**
