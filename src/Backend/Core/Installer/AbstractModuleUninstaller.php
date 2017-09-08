@@ -14,26 +14,6 @@ namespace Backend\Core\Installer;
  */
 abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
 {
-    private $tables;
-
-    protected function tableExists(array $tables): bool
-    {
-        if ($this->tables === null) {
-            $this->tables = $this->getDatabase()->getTables();
-        }
-
-        $result = true;
-
-        foreach ($tables as $tableName) {
-            if (!in_array($tableName, $this->tables, true)) {
-                $result = false;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
     /**
      * Full delete module
      *
@@ -61,18 +41,17 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     {
         $drop = [];
 
-        foreach ($tables as $table) {
-            if (!empty($table) && $this->tableExists([$table])) {
-                $drop[] = $table;
+        $existTables = $this->getDatabase()->getTables();
+
+        foreach ($tables as $tableName) {
+            if (!empty($table) && in_array($tableName, $existTables, true)) {
+                $drop[] = $tableName;
             }
         }
 
         if (!empty($drop)) {
             $this->getDatabase()->drop($drop);
         }
-
-        // clear exists cache
-        $this->tables = null;
     }
 
     /**
@@ -347,12 +326,10 @@ abstract class AbstractModuleUninstaller extends AbstractModuleInstaller
     {
         // @todo rework
 
-        if ($this->tableExists(['pages'])) {
-            $this->getDatabase()->delete(
-                'pages',
-                'title IN (' . str_repeat('?, ', count($pages) - 1) . ' ?)',
-                $pages
-            );
-        }
+        $this->getDatabase()->delete(
+            'pages',
+            'title IN (' . str_repeat('?, ', count($pages) - 1) . ' ?)',
+            $pages
+        );
     }
 }
