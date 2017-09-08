@@ -9,13 +9,13 @@ namespace Backend\Modules\FormBuilder\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleUninstaller;
+use Backend\Core\Installer\AbstractModuleUninstaller;
 use Backend\Core\Installer\UninstallerInterface;
 
 /**
  * Uninstaller for the form_builder module
  */
-class Uninstaller extends ModuleUninstaller implements UninstallerInterface
+class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterface
 {
     public function uninstall(): void
     {
@@ -24,8 +24,12 @@ class Uninstaller extends ModuleUninstaller implements UninstallerInterface
         $this->deleteFrontendPages();
         $this->deleteBackendNavigation();
 
-        $this->dropDatabase([
-            'forms_fields_validation', 'forms_fields', 'forms_data_fields', 'forms_data', 'forms',
+        $this->dropDatabaseTables([
+            'forms_fields_validation',
+            'forms_fields',
+            'forms_data_fields',
+            'forms_data',
+            'forms',
         ]);
 
         $this->dropModule();

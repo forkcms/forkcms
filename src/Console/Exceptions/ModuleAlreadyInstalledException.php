@@ -9,12 +9,13 @@ namespace Console\Exceptions;
  * file that was distributed with this source code.
  */
 
+use Throwable;
+
 /**
  * Module already installed exception class
  */
 class ModuleAlreadyInstalledException extends \Exception
 {
-
     /**
      * ModuleAlreadyInstalledException constructor.
      * @param string $module
@@ -23,10 +24,10 @@ class ModuleAlreadyInstalledException extends \Exception
      * @param \Throwable|null $previous
      */
     public function __construct(
-        $module,
-        $message = '',
-        $code = 0,
-        \Throwable $previous = null
+        string $module,
+        string $message = '',
+        int $code = 0,
+        Throwable $previous = null
     ) {
         $message = '' === $message
             ? sprintf('Module `%s` already installed.', $module)

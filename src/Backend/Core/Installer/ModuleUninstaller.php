@@ -11,8 +11,8 @@ namespace Backend\Core\Installer;
 
 /**
  * The base-class for the uninstaller
+ * @deprecated
  */
-abstract class ModuleUninstaller extends ModuleInstaller
+abstract class ModuleUninstaller extends AbstractModuleUninstaller
 {
-    use UninstallerTrait;
 }

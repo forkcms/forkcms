@@ -7,8 +7,8 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\DependencyInjection\Container;
 use Backend\Core\Engine\Model;
+use Backend\Core\Installer\AbstractModuleInstaller;
 use Backend\Core\Installer\CoreInstaller;
-use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 
@@ -180,7 +180,7 @@ class ForkInstaller
             // install exists
             if (class_exists($class)) {
                 // create installer
-                /** @var $install ModuleInstaller */
+                /** @var $install AbstractModuleInstaller */
                 $installer = new $class(
                     $this->container->get('database'),
                     $data->getLanguages(),

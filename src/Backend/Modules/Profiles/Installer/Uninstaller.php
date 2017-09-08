@@ -9,7 +9,7 @@ namespace Backend\Modules\Profiles\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleUninstaller;
+use Backend\Core\Installer\AbstractModuleUninstaller;
 use Backend\Core\Installer\UninstallerInterface;
 use Backend\Core\Language\Language;
 use Symfony\Component\Filesystem\Filesystem;
@@ -17,7 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Uninstaller for the profiles module.
  */
-class Uninstaller extends ModuleUninstaller implements UninstallerInterface
+class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterface
 {
     public function uninstall(): void
     {
@@ -27,8 +27,12 @@ class Uninstaller extends ModuleUninstaller implements UninstallerInterface
         $this->deleteFrontendPages();
         $this->deleteBackendNavigation();
 
-        $this->dropDatabase([
-            'profiles_settings', 'profiles_sessions', 'profiles_groups_rights', 'profiles_groups', 'profiles',
+        $this->dropDatabaseTables([
+            'profiles_settings',
+            'profiles_sessions',
+            'profiles_groups_rights',
+            'profiles_groups',
+            'profiles',
         ]);
 
         $this->dropModule();

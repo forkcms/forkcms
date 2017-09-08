@@ -9,12 +9,13 @@ namespace Console\Exceptions;
  * file that was distributed with this source code.
  */
 
+use Throwable;
+
 /**
  * Installer interface exception class
  */
 class InstallerInterfaceException extends \Exception
 {
-
     /**
      * InstallerInterfaceException constructor.
      * @param string $module
@@ -24,14 +25,14 @@ class InstallerInterfaceException extends \Exception
      * @param \Throwable|null $previous
      */
     public function __construct(
-        $module,
-        $installerFile,
-        $message = '',
-        $code = 0,
-        \Throwable $previous = null
+        string $module,
+        string $installerFile,
+        string $message = '',
+        int $code = 0,
+        Throwable $previous = null
     ) {
         $message = '' === $message
-            ? sprintf('Installer class for module `%s` (%s) not implement InstallerInterface.', $module, $installerFile)
+            ? sprintf('Installer class for module `%s` (%s) does not implement the InstallerInterface.', $module, $installerFile)
             : sprintf($message, $module, $installerFile);
 
         parent::__construct($message, $code, $previous);

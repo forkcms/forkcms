@@ -19,7 +19,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 /**
  * Base module installer\uninstaller class
  */
-abstract class ModulesBaseInstallCommand extends ContainerAwareCommand
+abstract class AbstractModulesInstallCommand extends ContainerAwareCommand
 {
     const PROMPT_INSTALLED = 1;
     const PROMPT_NOT_INSTALLED = 0;
@@ -33,6 +33,11 @@ abstract class ModulesBaseInstallCommand extends ContainerAwareCommand
      * @var \Symfony\Component\Console\Output\OutputInterface
      */
     protected $output;
+
+    /**
+     * @var array|null
+     */
+    private $installedModules;
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
@@ -104,7 +109,7 @@ abstract class ModulesBaseInstallCommand extends ContainerAwareCommand
         if ($module = $helper->ask($input, $output, $question)) {
             $index = array_search($module, $formattedModules, true);
 
-            $modules = (array)$modules[$index];
+            $modules = (array) $modules[$index];
         }
 
         return $modules;
@@ -135,11 +140,6 @@ abstract class ModulesBaseInstallCommand extends ContainerAwareCommand
 
         return $this->getContainer()->get('database')->getColumn($sql);
     }
-
-    /**
-     * @var array|null
-     */
-    private $installedModules;
 
     /**
      * @return array|null
@@ -258,7 +258,7 @@ abstract class ModulesBaseInstallCommand extends ContainerAwareCommand
 
                 if (!empty($dependsOn) && is_array($dependsOn)) {
                     foreach ($dependsOn as $depends) {
-                        if ($needle === (string)$depends) {
+                        if ($needle === (string) $depends) {
                             $result[] = basename($modulePath);
 
                             break;
@@ -290,7 +290,37 @@ abstract class ModulesBaseInstallCommand extends ContainerAwareCommand
 
             if (!empty($dependsOn) && is_array($dependsOn)) {
                 foreach ($dependsOn as $depends) {
-                    $result[] = (string)$depends;
+                    $result[] = (string) $depends;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * This method reads the required variables for any operation.
+     *
+     * @param string $module
+     * @param string $section
+     * @return array
+     */
+    protected function getRequiredVariables(string $module, string $section)
+    {
+        $result = [];
+
+        $info = BACKEND_MODULES_PATH . "/$module/info.xml";
+
+        if (file_exists($info) && is_readable($info)) {
+            $xml = new \SimpleXMLElement(file_get_contents($info));
+
+            $variables = $xml->xpath('//variables/' . $section . '/var');
+
+            if (!empty($variables) && is_array($variables)) {
+                foreach ($variables as $variable) {
+                    $attr = ((array) $variable)['@attributes'];
+
+                    $result[$attr['name']] = (string) $variable;
                 }
             }
         }

@@ -9,13 +9,13 @@ namespace Backend\Modules\MediaLibrary\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleUninstaller;
+use Backend\Core\Installer\AbstractModuleUninstaller;
 use Backend\Core\Installer\UninstallerInterface;
 
 /**
  * Uninstaller for the MediaLibrary module
  */
-class Uninstaller extends ModuleUninstaller implements UninstallerInterface
+class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterface
 {
     public function uninstall(): void
     {
@@ -23,7 +23,7 @@ class Uninstaller extends ModuleUninstaller implements UninstallerInterface
 
         $this->deleteBackendNavigation();
 
-        $this->dropDatabase(['MediaItem', 'MediaGroupMediaItem', 'MediaGroup', 'MediaFolder']);
+        $this->dropDatabaseTables(['MediaItem', 'MediaGroupMediaItem', 'MediaGroup', 'MediaFolder']);
         $this->dropModule();
     }
 

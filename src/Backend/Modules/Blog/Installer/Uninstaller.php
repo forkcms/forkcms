@@ -9,13 +9,13 @@ namespace Backend\Modules\Blog\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleUninstaller;
+use Backend\Core\Installer\AbstractModuleUninstaller;
 use Backend\Core\Installer\UninstallerInterface;
 
 /**
  * Uninstaller for the blog module
  */
-class Uninstaller extends ModuleUninstaller implements UninstallerInterface
+class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterface
 {
     public function uninstall(): void
     {
@@ -25,7 +25,7 @@ class Uninstaller extends ModuleUninstaller implements UninstallerInterface
         $this->deleteBackendWidgets();
         $this->deleteBackendNavigation();
 
-        $this->dropDatabase(['blog_comments', 'blog_posts', 'blog_categories']);
+        $this->dropDatabaseTables(['blog_comments', 'blog_posts', 'blog_categories']);
         $this->dropModule();
     }
 

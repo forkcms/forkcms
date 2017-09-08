@@ -9,13 +9,13 @@ namespace Backend\Modules\Location\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleUninstaller;
+use Backend\Core\Installer\AbstractModuleUninstaller;
 use Backend\Core\Installer\UninstallerInterface;
 
 /**
  * Uninstaller for the location module
  */
-class Uninstaller extends ModuleUninstaller implements UninstallerInterface
+class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterface
 {
     public function uninstall(): void
     {
@@ -23,7 +23,7 @@ class Uninstaller extends ModuleUninstaller implements UninstallerInterface
 
         $this->deleteBackendNavigation();
 
-        $this->dropDatabase(['location_settings', 'location']);
+        $this->dropDatabaseTables(['location_settings', 'location']);
         $this->dropModule();
     }
 

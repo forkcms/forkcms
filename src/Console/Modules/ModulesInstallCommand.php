@@ -11,7 +11,6 @@ namespace Console\Modules;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\InstallerInterface;
-use Backend\Core\Installer\ModuleInstaller;
 use Backend\Core\Language\Language as BL;
 use Console\Exceptions\InstallerClassNotFoundException;
 use Console\Exceptions\InstallerInterfaceException;
@@ -27,7 +26,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Console command for install forkcms modules
  */
-class ModulesInstallCommand extends ModulesBaseInstallCommand
+class ModulesInstallCommand extends AbstractModulesInstallCommand
 {
     protected function configure(): void
     {
@@ -187,7 +186,7 @@ class ModulesInstallCommand extends ModulesBaseInstallCommand
 
         $installer = $this->createInstaller($module);
 
-        if (!($installer instanceof InstallerInterface) && !($installer instanceof ModuleInstaller)) {
+        if (!($installer instanceof InstallerInterface)) {
             throw new InstallerInterfaceException($module, $installerFile);
         }
     }
@@ -203,11 +202,7 @@ class ModulesInstallCommand extends ModulesBaseInstallCommand
      */
     private function installModule(string $module): void
     {
-        $installer = $this->createInstaller($module);
-        $installer->setInput($this->input);
-        $installer->setOutput($this->output);
-
-        $variables = $installer->getPromptVariables();
+        $variables = $this->getRequiredVariables($module, 'install');
 
         if (!empty($variables)) {
 
@@ -215,14 +210,29 @@ class ModulesInstallCommand extends ModulesBaseInstallCommand
             $helper = $this->getHelper('question');
 
             foreach ($variables as $variable => $desc) {
-                $question = new Question($desc . ':');
-                $question->setMaxAttempts(1);
+                $isHidden = in_array($variable, ['pass', 'password', 'secret'], true);
+
+                $questionLabel = '    ' . $desc . ($isHidden ? ' (hidden input)' : '') . ': ';
+
+                $question = new Question($questionLabel);
+                // $question->setMaxAttempts(3);
+                $question->setValidator(function ($answer) {
+                    if (empty($answer)) {
+                        throw new \RuntimeException('This field is required.');
+                    }
+
+                    return $answer;
+                });
+
+                if ($isHidden) {
+                    $question->setHidden(true);
+                }
 
                 $variables[$variable] = $helper->ask($this->input, $this->output, $question);
             }
         }
 
-        $installer->setVariables($variables);
+        $installer = $this->createInstaller($module, $variables);
 
         $installer->install();
 
@@ -246,7 +256,9 @@ class ModulesInstallCommand extends ModulesBaseInstallCommand
             BL::getActiveLanguages(),
             array_keys(BL::getInterfaceLanguages()),
             false,
-            $variables
+            $variables,
+            $this->input,
+            $this->output
         );
     }
 }

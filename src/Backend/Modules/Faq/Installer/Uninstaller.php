@@ -9,13 +9,13 @@ namespace Backend\Modules\Faq\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleUninstaller;
+use Backend\Core\Installer\AbstractModuleUninstaller;
 use Backend\Core\Installer\UninstallerInterface;
 
 /**
  * Uninstaller for the faq module
  */
-class Uninstaller extends ModuleUninstaller implements UninstallerInterface
+class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterface
 {
     public function uninstall(): void
     {
@@ -25,7 +25,7 @@ class Uninstaller extends ModuleUninstaller implements UninstallerInterface
         $this->deleteBackendWidgets();
         $this->deleteBackendNavigation();
 
-        $this->dropDatabase(['faq_feedback', 'faq_questions', 'faq_categories']);
+        $this->dropDatabaseTables(['faq_feedback', 'faq_questions', 'faq_categories']);
         $this->dropModule();
     }
 

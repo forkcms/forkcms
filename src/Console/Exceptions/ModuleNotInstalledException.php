@@ -9,12 +9,13 @@ namespace Console\Exceptions;
  * file that was distributed with this source code.
  */
 
+use Throwable;
+
 /**
  * Module not installed exception class
  */
 class ModuleNotInstalledException extends \Exception
 {
-
     /**
      * ModuleNotInstalledException constructor.
      * @param string $module
@@ -23,10 +24,10 @@ class ModuleNotInstalledException extends \Exception
      * @param \Throwable|null $previous
      */
     public function __construct(
-        $module,
-        $message = '',
-        $code = 0,
-        \Throwable $previous = null
+        string $module,
+        string $message = '',
+        int $code = 0,
+        Throwable $previous = null
     ) {
         $message = '' === $message
             ? sprintf('Module `%s` is not installed.', $module)

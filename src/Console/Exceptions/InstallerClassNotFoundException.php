@@ -9,12 +9,13 @@ namespace Console\Exceptions;
  * file that was distributed with this source code.
  */
 
+use Throwable;
+
 /**
  * Installer class not found exception class
  */
 class InstallerClassNotFoundException extends \Exception
 {
-
     /**
      * InstallerClassNotFoundException constructor.
      * @param string $module
@@ -24,11 +25,11 @@ class InstallerClassNotFoundException extends \Exception
      * @param \Throwable|null $previous
      */
     public function __construct(
-        $module,
-        $installerFile,
-        $message = '',
-        $code = 0,
-        \Throwable $previous = null
+        string $module,
+        string $installerFile,
+        string $message = '',
+        int $code = 0,
+        Throwable $previous = null
     ) {
         $message = '' === $message
             ? sprintf('Installer class for module `%s` not found (%s).', $module, $installerFile)

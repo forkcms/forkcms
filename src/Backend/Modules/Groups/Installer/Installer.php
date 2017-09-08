@@ -9,13 +9,13 @@ namespace Backend\Modules\Groups\Installer;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Installer\AbstractModuleInstaller;
 use Backend\Core\Installer\InstallerInterface;
-use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the groups module
  */
-class Installer extends ModuleInstaller implements InstallerInterface
+class Installer extends AbstractModuleInstaller implements InstallerInterface
 {
     public function install(): void
     {

@@ -10,13 +10,13 @@ namespace Backend\Modules\MediaGalleries\Installer;
  */
 
 
-use Backend\Core\Installer\ModuleUninstaller;
+use Backend\Core\Installer\AbstractModuleUninstaller;
 use Backend\Core\Installer\UninstallerInterface;
 
 /**
  * Uninstaller for the media module
  */
-class Uninstaller extends ModuleUninstaller implements UninstallerInterface
+class Uninstaller extends AbstractModuleUninstaller implements UninstallerInterface
 {
     public function uninstall(): void
     {
@@ -24,7 +24,7 @@ class Uninstaller extends ModuleUninstaller implements UninstallerInterface
 
         $this->deleteBackendNavigation();
 
-        $this->dropDatabase('MediaGallery');
+        $this->dropDatabaseTables('MediaGallery');
         $this->dropModule();
     }
 

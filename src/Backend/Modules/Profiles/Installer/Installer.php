@@ -9,16 +9,16 @@ namespace Backend\Modules\Profiles\Installer;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Installer\AbstractModuleInstaller;
 use Backend\Core\Installer\InstallerInterface;
-use Backend\Core\Installer\ModuleInstaller;
+use Backend\Core\Language\Language;
 use Common\ModuleExtraType;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Language\Language;
 
 /**
  * Installer for the profiles module.
  */
-class Installer extends ModuleInstaller implements InstallerInterface
+class Installer extends AbstractModuleInstaller implements InstallerInterface
 {
     /** @var array */
     private $extraIds;

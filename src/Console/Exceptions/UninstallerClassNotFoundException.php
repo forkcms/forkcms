@@ -9,12 +9,13 @@ namespace Console\Exceptions;
  * file that was distributed with this source code.
  */
 
+use Throwable;
+
 /**
  * Uninstaller class not found exception class
  */
 class UninstallerClassNotFoundException extends \Exception
 {
-
     /**
      * UninstallerClassNotFoundException constructor.
      * @param string $module
@@ -24,11 +25,11 @@ class UninstallerClassNotFoundException extends \Exception
      * @param \Throwable|null $previous
      */
     public function __construct(
-        $module,
-        $uninstallerFile,
-        $message = '',
-        $code = 0,
-        \Throwable $previous = null
+        string $module,
+        string $uninstallerFile,
+        string $message = '',
+        int $code = 0,
+        Throwable $previous = null
     ) {
         $message = '' === $message
             ? sprintf('Uninstaller class for module `%s` not found (%s).', $module, $uninstallerFile)

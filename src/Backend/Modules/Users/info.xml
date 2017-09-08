@@ -10,6 +10,13 @@
     <module>Locale</module>
     <module>Settings</module>
   </depends_on>
+  <variables>
+    <install>
+      <var name="default_interface_language"><![CDATA[Default interface language (ex. ru, en)]]></var>
+      <var name="email"><![CDATA[Email of admin]]></var>
+      <var name="password"><![CDATA[Password of admin]]></var>
+    </install>
+  </variables>
   <description>
     <![CDATA[
       Define the user accounts that may access the CMS, and can be linked to a group to define the specific permissions.

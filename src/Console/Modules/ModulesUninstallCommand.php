@@ -10,7 +10,6 @@ namespace Console\Modules;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Installer\ModuleUninstaller;
 use Backend\Core\Installer\UninstallerInterface;
 use Backend\Core\Language\Language as BL;
 use Console\Exceptions\ModuleNotExistsException;
@@ -27,7 +26,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * Console command for uninstall forkcms modules
  */
-class ModulesUninstallCommand extends ModulesBaseInstallCommand
+class ModulesUninstallCommand extends AbstractModulesInstallCommand
 {
     protected function configure(): void
     {
@@ -193,7 +192,7 @@ class ModulesUninstallCommand extends ModulesBaseInstallCommand
 
         $installer = $this->createUninstaller($module);
 
-        if (!($installer instanceof UninstallerInterface) && !($installer instanceof ModuleUninstaller)) {
+        if (!($installer instanceof UninstallerInterface)) {
             throw new UninstallerInterfaceException($module, $uninstallerFile);
         }
     }
@@ -208,11 +207,7 @@ class ModulesUninstallCommand extends ModulesBaseInstallCommand
      */
     private function uninstallModule(string $module): void
     {
-        $uninstaller = $this->createUninstaller($module);
-        $uninstaller->setInput($this->input);
-        $uninstaller->setOutput($this->output);
-
-        $variables = $uninstaller->getPromptVariables();
+        $variables = $this->getRequiredVariables($module, 'uninstall');
 
         if (!empty($variables)) {
 
@@ -220,14 +215,29 @@ class ModulesUninstallCommand extends ModulesBaseInstallCommand
             $helper = $this->getHelper('question');
 
             foreach ($variables as $variable => $desc) {
-                $question = new Question($desc . ':');
-                $question->setMaxAttempts(1);
+                $isHidden = in_array($variable, ['pass', 'password', 'secret'], true);
+
+                $questionLabel = '    ' . $desc . ($isHidden ? ' (hidden input)' : '') . ': ';
+
+                $question = new Question($questionLabel);
+                // $question->setMaxAttempts(3);
+                $question->setValidator(function ($answer) {
+                    if (empty($answer)) {
+                        throw new \RuntimeException('This field is required.');
+                    }
+
+                    return $answer;
+                });
+
+                if ($isHidden) {
+                    $question->setHidden(true);
+                }
 
                 $variables[$variable] = $helper->ask($this->input, $this->output, $question);
             }
         }
 
-        $uninstaller->setVariables($variables);
+        $uninstaller = $this->createUninstaller($module, $variables);
 
         $uninstaller->uninstall();
 
@@ -257,7 +267,9 @@ class ModulesUninstallCommand extends ModulesBaseInstallCommand
             BL::getActiveLanguages(),
             array_keys(BL::getInterfaceLanguages()),
             false,
-            $variables
+            $variables,
+            $this->input,
+            $this->output
         );
     }
 }
