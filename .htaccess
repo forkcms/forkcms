@@ -77,7 +77,9 @@ deny from env=stayout
 	RewriteRule \.env.dist - [F]
 
 	# redirect all trafic to https
-	# Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    # <IfModule headers_module>
+    #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    # </IfModule>
 	# RewriteCond %{HTTPS} !=on
 	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
 	# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
