@@ -133,7 +133,7 @@ class Form extends \SpoonForm
         $classError = null
     ): FormDate {
         $name = (string) $name;
-        $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
+        $value = ($value === null || $value === '') ? null : (int) $value;
         $type = SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
