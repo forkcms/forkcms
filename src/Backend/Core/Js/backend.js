@@ -1463,7 +1463,7 @@ jsBackend.forms =
 
         if ($('.js-tags-input').length > 0) {
             var allTags = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 prefetch: {
                     url: '/backend/ajax',
@@ -1485,8 +1485,6 @@ jsBackend.forms =
                 tagClass: 'label label-primary',
                 typeaheadjs: {
                     name: 'Tags',
-                    displayKey: 'name',
-                    valueKey: 'name',
                     source: allTags.ttAdapter()
                 }
             });
