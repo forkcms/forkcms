@@ -82,7 +82,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
             $rssItem = new FrontendRSSItem($title, $link, $description);
 
             $rssItem->setPublicationDate($item['created_on']);
-            $rssItem->setAuthor($item['author']);
+            $rssItem->setAuthor(empty($item['email']) ? $item['author'] : $item['email']);
 
             $rss->addItem($rssItem);
         }
