@@ -15,7 +15,7 @@ run_tests:
     - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
     - mysql -h mysql -u root -proot -e "create database ci_test"
     - mysql -h mysql -u root -proot ci_test < tests/data/test_db.sql
-    - php bin/generate_parameters_gitlab.php
+    - php bin/generate-parameters-gitlab
     - cp app/config/parameters.yml.gitlab app/config/parameters.yml
   script:
     - SYMFONY_DEPRECATIONS_HELPER=weak bin/simple-phpunit
