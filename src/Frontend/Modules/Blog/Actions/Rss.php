@@ -112,7 +112,7 @@ class Rss extends FrontendBaseBlock
             // set item properties
             $rssItem->setPublicationDate($item['publish_on']);
             $rssItem->addCategory($item['category_title']);
-            $rssItem->setAuthor(FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
+            $rssItem->setAuthor(FrontendUser::getBackendUser($item['user_id'])->getEmail());
 
             // add item
             $rss->addItem($rssItem);
