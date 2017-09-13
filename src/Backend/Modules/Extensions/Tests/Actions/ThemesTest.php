@@ -31,7 +31,7 @@ class ThemesTest extends WebTestCase
             'Installed themes',
             $client->getResponse()->getContent()
         );
-        self::assertNotContains(
+        self::assertContains(
             'Not installed themes',
             $client->getResponse()->getContent()
         );
