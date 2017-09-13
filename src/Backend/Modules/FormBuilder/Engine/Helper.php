@@ -16,8 +16,6 @@ use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 /**
  * Helper class for the form_builder module.
  *
- * @todo this class should be in helper.php like the other modules do
- *
  * Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class Helper
