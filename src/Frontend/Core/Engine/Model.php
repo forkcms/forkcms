@@ -28,10 +28,11 @@ class Model extends \Common\Core\Model
      *
      * @param string $url The URL to append the parameters too.
      * @param array $parameters The parameters as key-value-pairs.
+     * @param string $separator Defaults to &
      *
      * @return string
      */
-    public static function addUrlParameters(string $url, array $parameters): string
+    public static function addUrlParameters(string $url, array $parameters, string $separator = '&'): string
     {
         if (empty($parameters)) {
             return $url;
@@ -45,9 +46,9 @@ class Model extends \Common\Core\Model
         }
 
         // build query string
-        $queryString = http_build_query($parameters, null, '&', PHP_QUERY_RFC3986);
+        $queryString = http_build_query($parameters, null, $separator, PHP_QUERY_RFC3986);
         if (mb_strpos($url, '?') !== false) {
-            return $url . '&' . $queryString . $hash;
+            return $url . $separator . $queryString . $hash;
         }
 
         return $url . '?' . $queryString . $hash;
