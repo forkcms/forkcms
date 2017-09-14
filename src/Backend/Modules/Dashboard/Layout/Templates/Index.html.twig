@@ -2,14 +2,6 @@
 
 {% block content %}
   <div id="dashboardWidgets" class="fork-dashboard">
-    <div class="row">
-      <div class="col-md-12">
-        <div id="editDashboardMessage" class="alert alert-info" role="alert" style="display:none;">
-          {{ 'msg.HelpEditDashboard'|trans }}
-          <a href="#" id="doneEditingDashboard">{{ 'lbl.Done'|trans|ucfirst }}</a>
-        </div>
-      </div>
-    </div>
     <div class="row row-small">
       {% for widget in widgets %}
         {% if widget.content is not empty %}

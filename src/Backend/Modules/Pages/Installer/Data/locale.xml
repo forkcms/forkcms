@@ -626,18 +626,6 @@
         <translation language="es"><![CDATA[No es posible enlazar 2 (o más) más modulos a la misma pagina.]]></translation>
         <translation language="el"><![CDATA[Δεν είναι δυνατόν να συνδέσετε 2 (ή περισσότερες) ενότητες με την ίδια σελίδα.]]></translation>
       </item>
-      <item type="error" name="CantBeMoved">
-        <translation language="nl"><![CDATA[Pagina kan niet verplaatst worden.]]></translation>
-        <translation language="en"><![CDATA[Page can't be moved.]]></translation>
-        <translation language="it"><![CDATA[La pagina non può essere spostata.]]></translation>
-        <translation language="ru"><![CDATA[Нельзя переместить страницу.]]></translation>
-        <translation language="zh"><![CDATA[页面无法移动。]]></translation>
-        <translation language="de"><![CDATA[Diese Seite kann nicht verschoben werden.]]></translation>
-        <translation language="fr"><![CDATA[La page ne peut pas être déplacée.]]></translation>
-        <translation language="hu"><![CDATA[Az oldalt nem lehet áthelyezni.]]></translation>
-        <translation language="es"><![CDATA[La página no puede ser movida.]]></translation>
-        <translation language="el"><![CDATA[Η σελίδα δεν μπορεί να μετακινηθεί.]]></translation>
-      </item>
       <item type="error" name="HomeCantHaveBlocks">
         <translation language="nl"><![CDATA[Je kan geen modules aan de homepage koppelen.]]></translation>
         <translation language="en"><![CDATA[You can't link a module to the homepage.]]></translation>
@@ -663,6 +651,20 @@
         <translation language="el"><![CDATA[Οι χρήστες πρέπει να είστε συνδεδεμένοι για να δείτε αυτή τη σελίδα.]]></translation>
       </item>
     </Pages>
+    <Core>
+      <item type="error" name="CantBeMoved">
+        <translation language="nl"><![CDATA[Pagina kan niet verplaatst worden.]]></translation>
+        <translation language="en"><![CDATA[Page can't be moved.]]></translation>
+        <translation language="it"><![CDATA[La pagina non può essere spostata.]]></translation>
+        <translation language="ru"><![CDATA[Нельзя переместить страницу.]]></translation>
+        <translation language="zh"><![CDATA[页面无法移动。]]></translation>
+        <translation language="de"><![CDATA[Diese Seite kann nicht verschoben werden.]]></translation>
+        <translation language="fr"><![CDATA[La page ne peut pas être déplacée.]]></translation>
+        <translation language="hu"><![CDATA[Az oldalt nem lehet áthelyezni.]]></translation>
+        <translation language="es"><![CDATA[La página no puede ser movida.]]></translation>
+        <translation language="el"><![CDATA[Η σελίδα δεν μπορεί να μετακινηθεί.]]></translation>
+      </item>
+    </Core>
   </Backend>
   <Frontend>
     <Core>

@@ -436,6 +436,7 @@ class Model
 
     public static function updateCategory(array $item): void
     {
+        unset($item['url']);
         // update faq category
         BackendModel::getContainer()->get('database')->update('faq_categories', $item, 'id = ?', [$item['id']]);
 
