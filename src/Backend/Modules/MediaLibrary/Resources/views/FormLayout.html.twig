@@ -80,6 +80,11 @@
             {{ form_row(form.type) }}
           </div>
         </div>
+        {% if not form.vars.valid %}
+          <div class="panel-footer">
+            {{- form_errors(form) -}}
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
