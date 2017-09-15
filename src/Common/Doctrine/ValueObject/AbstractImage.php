@@ -79,11 +79,11 @@ abstract class AbstractImage extends AbstractFile
      */
     public function upload(): void
     {
-        parent::upload();
-
         if (!$this->hasFile()) {
             return;
         }
+
+        parent::upload();
 
         if (static::GENERATE_THUMBNAILS) {
             Model::generateThumbnails(
