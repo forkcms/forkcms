@@ -156,7 +156,7 @@ final class Cookie
      */
     public function hasHiddenCookieBar(): bool
     {
-        return $this->get('cookie_bar_hide', 'N') === 'N';
+        return $this->get('cookie_bar_hide', 'N') === 'Y';
     }
 
     public function attachToResponse(Response $response): void
