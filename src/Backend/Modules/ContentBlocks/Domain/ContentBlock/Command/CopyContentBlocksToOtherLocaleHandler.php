@@ -30,10 +30,11 @@ final class CopyContentBlocksToOtherLocaleHandler
                 $dataTransferObject = $contentBlock->getDataTransferObject();
 
                 // Overwrite some variables
-                $dataTransferObject->id = $id++;
-                $dataTransferObject->extraId = $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()];
-                $dataTransferObject->revisionId = null;
-                $dataTransferObject->locale = $copyContentBlocksToOtherLocale->toLocale;
+                $dataTransferObject->forOtherLocale(
+                    $id++,
+                    $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()],
+                    $copyContentBlocksToOtherLocale->toLocale
+                );
 
                 $this->contentBlockRepository->add(ContentBlock::fromDataTransferObject($dataTransferObject));
             },
