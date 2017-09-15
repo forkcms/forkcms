@@ -31,7 +31,7 @@ final class CopyContentBlocksToOtherLocaleHandler
 
                 // Overwrite some variables
                 $dataTransferObject->forOtherLocale(
-                    $id ++,
+                    $id++,
                     $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()],
                     $copyContentBlocksToOtherLocale->toLocale
                 );
