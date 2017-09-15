@@ -17,14 +17,14 @@ final class SaveSettings
     /**
      * @var string
      *
-     * @Assert\NotBlank(groups={"mail_engine_selected"})
+     * @Assert\NotBlank(groups={"mail_engine_selected"}, message="err.FieldIsRequired")
      */
     public $apiKey;
 
     /**
      * @var string
      *
-     * @Assert\NotBlank(groups={"mail_engine_selected"})
+     * @Assert\NotBlank(groups={"mail_engine_selected"}, message="err.FieldIsRequired")
      */
     public $listId;
 
