@@ -37,7 +37,7 @@ class KernelLoader
      *
      * @param string $reference The service id
      *
-     * @return object The service
+     * @return mixed The service
      */
     public function get(string $reference)
     {
