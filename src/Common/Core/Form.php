@@ -58,7 +58,9 @@ class Form extends \SpoonForm
         bool $useToken = true
     ) {
         $this->url = Model::getContainer()->get('url');
-        $this->header = Model::getContainer()->get('header');
+        if (Model::getContainer()->has('header')) {
+            $this->header = Model::getContainer()->get('header');
+        }
 
         $action = ($action === null) ? rtrim(Model::getRequest()->getRequestUri(), '/') : (string) $action;
 

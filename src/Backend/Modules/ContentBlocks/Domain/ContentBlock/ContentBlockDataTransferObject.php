@@ -90,6 +90,15 @@ class ContentBlockDataTransferObject
         $this->revisionId = $contentBlock->getRevisionId();
     }
 
+    public function forOtherLocale(int $id, int $extraId, Locale $locale)
+    {
+        $this->id = $id;
+        $this->contentBlockEntity = null;
+        $this->revisionId = null;
+        $this->extraId = $extraId;
+        $this->locale = $locale;
+    }
+
     public function getContentBlockEntity(): ContentBlock
     {
         return $this->contentBlockEntity;

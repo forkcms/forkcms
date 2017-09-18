@@ -123,7 +123,7 @@ jsFrontend.location =
         // show info window on click
         google.maps.event.addListener(marker, 'click', function()
         {
-            $markerText = $('*[data-role=fork-marker-text-container][data-map-id=' + marker.locationId + ']');
+            $markerText = $('*[data-role=fork-marker-data-container][data-map-id=' + marker.locationId + ']');
 
             // apparently JS goes bananas with multi line HTMl, so we grab it from the div, this seems like a good idea for SEO
             if($markerText.length > 0) text = $markerText.html();

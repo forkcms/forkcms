@@ -1,3 +1,25 @@
+5.0.4  (2017-09-15)
+------------------
+
+Bugfixes:
+* Core: Https error when header module not installed [#2235](https://github.com/forkcms/forkcms/pull/2235)
+* Core: Fix type errors when trying to get the uploaded file when there is non [#2234](https://github.com/forkcms/forkcms/pull/2234)
+* Core: Fix gitignore users files avatars [#2239](https://github.com/forkcms/forkcms/pull/2239)
+* Core: Multiple RSS Fixes [#2241](https://github.com/forkcms/forkcms/pull/2241)
+* Core: Fix cookiebar hidden check always resulted in a hidden cookiebar [#2253](https://github.com/forkcms/forkcms/pull/2253)
+* Core: PHPDoc improvements [#2252](https://github.com/forkcms/forkcms/pull/2252)
+* Core: Fix dump in twig templates and related issues when debug sometimes isn't enabled when it should [#2255](https://github.com/forkcms/forkcms/pull/2255)
+* ContentBlocks: Fix Pages copy action sets content blocks of from language archived [#2249](https://github.com/forkcms/forkcms/pull/2249)
+* Extensions: Throw error when template syntax is faulty [#2246](https://github.com/forkcms/forkcms/pull/2246)
+* FormBuilder: Fix formbuilder data action [#2238](https://github.com/forkcms/forkcms/pull/2238)
+* FormBuilder: Fix error when saving form builder fields [#2240](https://github.com/forkcms/forkcms/pull/2240)
+* Mailmotor: Add missing translated error messages for list id and api key [#2250](https://github.com/forkcms/forkcms/pull/2250)
+* MediaLibrary: Fix media-group errors not showing up properly [#2244](https://github.com/forkcms/forkcms/pull/2244)
+* MediaLibrary: The label is already inside the media group widget [#2242](https://github.com/forkcms/forkcms/pull/2242)
+* Pages: Fix clicking "save draft" deleted the page instead of saving it as draft [#2251](https://github.com/forkcms/forkcms/pull/2251)
+* Tags: Fix tagsinput [#2232](https://github.com/forkcms/forkcms/pull/2232)
+
+
 5.0.3  (2017-09-01)
 ------------------
 
