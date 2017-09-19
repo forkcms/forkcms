@@ -33,7 +33,7 @@ class Theme
      */
     public static function getPath(string $filePath): string
     {
-        $filePath = self::getFilePathForcurrentTheme(self::getTheme(), $filePath);
+        $filePath = self::getFilePathForCurrentTheme(self::getTheme(), $filePath);
 
         // check if the file exists
         if (!is_file(PATH_WWW . str_replace(PATH_WWW, '', $filePath))) {
