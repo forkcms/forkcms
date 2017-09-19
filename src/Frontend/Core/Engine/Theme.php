@@ -37,7 +37,7 @@ class Theme
 
         // check if the file exists
         if (!is_file(PATH_WWW . str_replace(PATH_WWW, '', $filePath))) {
-            throw new Exception('The template (' . $filePath . ') does not exist.');
+            throw new Exception('The file (' . $filePath . ') does not exist.');
         }
 
         return $filePath;
