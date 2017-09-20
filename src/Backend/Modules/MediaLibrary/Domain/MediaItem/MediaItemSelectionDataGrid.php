@@ -6,7 +6,6 @@ use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
-use SpoonFormDropdown;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
@@ -17,7 +16,8 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
     {
         parent::__construct(
             'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
-                COUNT(gi.mediaItemId) AS num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
+                COUNT(gi.mediaItemId) AS num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn,
+                i.url AS directUrl
              FROM MediaItem AS i
              LEFT OUTER JOIN MediaGroupMediaItem AS gi ON gi.mediaItemId = i.id
              WHERE i.type = ?' . $this->getWhere($folderId) . ' GROUP BY i.id',
@@ -51,14 +51,14 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
     private function getColumnsThatNeedToBeHidden(Type $type): array
     {
         if ($type->isImage()) {
-            return ['storageType', 'shardingFolderName', 'type', 'mime'];
+            return ['storageType', 'shardingFolderName', 'type', 'mime', 'directUrl'];
         }
 
         if ($type->isMovie()) {
-            return ['shardingFolderName', 'type', 'mime'];
+            return ['shardingFolderName', 'type', 'mime', 'directUrl'];
         }
 
-        return ['storageType', 'shardingFolderName', 'type', 'mime', 'url'];
+        return ['storageType', 'shardingFolderName', 'type', 'mime', 'url', 'directUrl'];
     }
 
     public static function getDataGrid(Type $type, int $folderId = null): DataGridDatabase
@@ -89,8 +89,8 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
 
     private function setExtras(Type $type): void
     {
+        $this->addDataAttributes($type);
         $this->setHeaderLabels($this->getColumnHeaderLabels($type));
-        $this->setActiveTab('tab' . ucfirst((string) $type));
         $this->setColumnsHidden($this->getColumnsThatNeedToBeHidden($type));
         $this->setSortingColumns(
             [
@@ -104,11 +104,25 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         );
         $this->setSortParameter('asc');
 
+        // Add a select button
+        $this->addColumn(
+            'use_revision',
+            Language::lbl('Action'),
+            Language::lbl('Select'),
+            '#',
+            Language::lbl('Select'),
+            null,
+            1
+        );
+
         // If we have an image, show the image
         if ($type->isImage()) {
             // Add image url
             $this->setColumnFunction(
-                [new BackendDataGridFunctions(), 'showImage'],
+                [
+                    new BackendDataGridFunctions(),
+                    'showImage',
+                ],
                 [
                     Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
                     '[url]',
@@ -123,6 +137,20 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
             );
         }
 
+        $this->setColumnFunction(
+            [
+                MediaItemSelectionDataGrid::class,
+                'generateDirectUrl',
+            ],
+            [
+                '[id]',
+                $type,
+                '[storageType]',
+            ],
+            'directUrl',
+            true
+        );
+
         // set column functions
         $this->setColumnFunction(
             [new BackendDataGridFunctions(), 'getLongDate'],
@@ -130,8 +158,41 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
             'createdOn',
             true
         );
+    }
 
+    private function addDataAttributes(Type $type): void
+    {
         // our JS needs to know an id, so we can highlight it
-        $this->setRowAttributes(['id' => 'row-[id]']);
+        $attributes = [
+            'id' => 'row-[id]',
+            'data-direct-url' => '[directUrl]',
+        ];
+        $this->setRowAttributes($attributes);
+    }
+
+    protected function generateDirectUrl(string $id, string $type, string $storageType): string
+    {
+        switch ($type) {
+            case Type::MOVIE:
+                if ($storageType === StorageType::YOUTUBE) {
+                    return Model::get('media_library.storage.youtube')->getAbsoluteWebPath(
+                        Model::get('media_library.repository.item')->find($id)
+                    );
+                }
+
+                if ($storageType === StorageType::VIMEO) {
+                    return Model::get('media_library.storage.vimeo')->getAbsoluteWebPath(
+                        Model::get('media_library.repository.item')->find($id)
+                    );
+                }
+
+                return Model::get('media_library.storage.local')->getAbsoluteWebPath(
+                    Model::get('media_library.repository.item')->find($id)
+                );
+            default:
+                return Model::get('media_library.storage.local')->getAbsoluteWebPath(
+                    Model::get('media_library.repository.item')->find($id)
+                );
+        }
     }
 }
