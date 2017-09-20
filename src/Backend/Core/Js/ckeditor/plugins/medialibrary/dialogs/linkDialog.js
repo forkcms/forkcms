@@ -58,14 +58,6 @@ CKEDITOR.dialog.add(
             ],
 
             onOk: function () {
-                // var dialog = this;
-
-                // var anchor = editor.document.createElement('a');
-                // anchor.setAttribute('href', dialog.getValueOf('tab', 'url'));
-                // anchor.setText(dialog.getValueOf('tab', 'displayText'));
-                //
-                // editor.insertElement(anchor);
-
                 var dialog = this,
                     anchor = dialog.element;
 
