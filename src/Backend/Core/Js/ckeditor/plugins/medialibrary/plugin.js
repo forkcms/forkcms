@@ -12,7 +12,7 @@ CKEDITOR.plugins.add(
                 'Link2',
                 {
                     command: 'addLink',
-                    icon: this.path + 'icons/link2.png',
+                    icon: this.path + 'icons/link.png',
                     label: 'Insert Link',
                     toolbar: 'insert,0'
                 }
