@@ -63,7 +63,7 @@ class Csv extends \SpoonFileCSV
 
     private static function getLineEnding(): string
     {
-        $lineEnding = Authentication::getUser()->getSetting('csv_line_ending');
+        $lineEnding = Authentication::getUser()->getSetting('csv_line_ending', '\n');
 
         // reformat
         if ($lineEnding === '\n') {
