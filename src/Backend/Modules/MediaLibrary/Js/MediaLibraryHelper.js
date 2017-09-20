@@ -11,6 +11,7 @@ jsBackend.mediaLibraryHelper =
         jsBackend.mediaLibraryHelper.group.init();
         jsBackend.mediaLibraryHelper.upload.preInit();
         jsBackend.mediaLibraryHelper.upload.init();
+        jsBackend.mediaLibraryHelper.modalSelection.init();
     },
 
     buildMovieStorageTypeDropdown: function()
@@ -1475,6 +1476,22 @@ jsBackend.mediaLibraryHelper.templates =
         html += '</li>';
 
         return html;
+    }
+};
+
+jsBackend.mediaLibraryHelper.modalSelection = {
+    init: function () {
+        $('tr[data-direct-url] a').on('click', this.selectItemAndSendToParent);
+    },
+
+    selectItemAndSendToParent: function () {
+        // @todo: improve this selector
+        var elementRow = $(this).parent().parent();
+
+        var directUrl = elementRow.data('directUrl');
+
+        window.opener.postMessage(directUrl, '*')
+        window.close();
     }
 };
 
