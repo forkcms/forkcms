@@ -184,7 +184,7 @@ final class Header extends KernelLoader
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
-
+        $overwritePath = $overwritePath || strpos($file, 'http') === 0 || strpos($file, '//') === 0;
         $this->jsFiles->add(
             new Asset(
                 $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'Js'),
