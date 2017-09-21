@@ -95,7 +95,6 @@
   margin: 0 3px 3px 0;
   background: #eee;
   width: 140px;
-  height: 90px;
   vertical-align: top;
 }
 .ie9 .mediaConnectedItems .ui-state-default,
@@ -108,7 +107,6 @@
     float: left;
     cursor: pointer;
     width: 140px;
-    height: 90px;
     display: block;
   }
     .mediaHolderFile .icon,
