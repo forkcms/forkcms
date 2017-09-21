@@ -514,6 +514,10 @@
         <translation language="en"><![CDATA[You are required to connect media.]]></translation>
         <translation language="nl"><![CDATA[Je bent verplicht om media te koppelen.]]></translation>
       </item>
+      <item type="label" name="Select">
+        <translation language="en"><![CDATA[select]]></translation>
+        <translation language="nl"><![CDATA[selecteer]]></translation>
+      </item>
     </MediaLibrary>
   </Backend>
 </locale>
