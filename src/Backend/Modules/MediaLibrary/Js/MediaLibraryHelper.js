@@ -1128,6 +1128,14 @@ jsBackend.mediaLibraryHelper.upload =
                     jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes();
 
                     $fineUploaderGallery.find('.qq-upload-success[qq-file-id=' + id + ']').hide();
+
+                    // Add select button if tab in selection context
+                    if ($('#tabUploadMedia').data('context') === 'selection') {
+                        var $link = $('<a href="#" class="btn btn-default btn-xs" data-direct-url="' + responseJSON.direct_url + '"><span class="fa fa-file-o"></span>&nbsp;' + jsBackend.locale.lbl('Select') + '</a>');
+                        $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent);
+                        $('.mediaHolder.mediaHolderImage[data-item-id="' + responseJSON.id + '"]')
+                            .append($link);
+                    }
                 },
                 onAllComplete: function(succeeded, failed) {
                     // clear if already exists
@@ -1252,6 +1260,14 @@ jsBackend.mediaLibraryHelper.upload =
 
                     // show message
                     jsBackend.messages.add('success', jsBackend.locale.msg('MediaMovieIsAdded'));
+
+                    // Add select button if tab in selection context
+                    if ($('#tabUploadMedia').data('context') === 'selection') {
+                        var $link = $('<a href="#" class="btn btn-default btn-xs" data-direct-url="' + json.data.direct_url + '"><span class="fa fa-file-o"></span>&nbsp;' + jsBackend.locale.lbl('Select') + '</a>');
+                        $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent);
+                        $('.mediaHolder.mediaHolderImage[data-item-id="' + json.data.id + '"]')
+                            .append($link)
+                    }
                 }
             }
         });
@@ -1457,7 +1473,7 @@ jsBackend.mediaLibraryHelper.templates =
 
         // create element
         html += '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder.id + '" class="ui-state-default">';
-        html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">';
+        html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '" data-item-id="' + mediaItem.id + '">';
 
         // is image
         if (mediaItem.type == 'image') {
@@ -1491,6 +1507,11 @@ jsBackend.mediaLibraryHelper.modalSelection = {
         var directUrl = elementRow.data('directUrl');
 
         window.opener.postMessage(directUrl, '*')
+        window.close();
+    },
+
+    sendToParent: function () {
+        window.opener.postMessage($(this).data('directUrl'), '*')
         window.close();
     }
 };
