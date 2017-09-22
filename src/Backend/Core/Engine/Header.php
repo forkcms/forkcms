@@ -154,6 +154,8 @@ final class Header extends KernelLoader
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
+        $overwritePath = $overwritePath || $this->isExternalUrl($file);
+
         $this->cssFiles->add(
             new Asset(
                 $overwritePath ? $file : $this->buildPathForModule($file, $module, 'Layout/Css'),
