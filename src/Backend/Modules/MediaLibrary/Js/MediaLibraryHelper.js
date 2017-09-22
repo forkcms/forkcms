@@ -1131,7 +1131,7 @@ jsBackend.mediaLibraryHelper.upload =
 
                     // Add select button if tab in selection context
                     if ($('#tabUploadMedia').data('context') === 'selection') {
-                        var $link = $('<a href="#" class="btn btn-default btn-xs btn-block" data-direct-url="' + responseJSON.direct_url + '"><span class="fa fa-file-o"></span>&nbsp;' + jsBackend.locale.lbl('Select') + '</a>');
+                        var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' + responseJSON.direct_url + '">&nbsp;' + jsBackend.locale.lbl('Select') + '</a>');
                         $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent);
                         $('.mediaHolder.mediaHolderImage[data-item-id="' + responseJSON.id + '"]')
                             .append($link);
@@ -1263,7 +1263,7 @@ jsBackend.mediaLibraryHelper.upload =
 
                     // Add select button if tab in selection context
                     if ($('#tabUploadMedia').data('context') === 'selection') {
-                        var $link = $('<a href="#" class="btn btn-default btn-xs btn-block" data-direct-url="' + json.data.direct_url + '"><span class="fa fa-file-o"></span>&nbsp;' + jsBackend.locale.lbl('Select') + '</a>');
+                        var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + jsBackend.locale.lbl('Select') + '</a>');
                         $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent);
                         $('.mediaHolder[data-item-id="' + json.data.id + '"]')
                             .append($link)
@@ -1501,10 +1501,7 @@ jsBackend.mediaLibraryHelper.modalSelection = {
     },
 
     selectItemAndSendToParent: function () {
-        // @todo: improve this selector
-        var elementRow = $(this).parent().parent();
-
-        var directUrl = elementRow.data('directUrl');
+        var directUrl = $(this).data('directUrl');
 
         window.opener.postMessage(directUrl, '*')
         window.close();

@@ -15,9 +15,8 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
     public function __construct(Type $type, int $folderId = null)
     {
         parent::__construct(
-            'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
-                COUNT(gi.mediaItemId) AS num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn,
-                i.url AS directUrl
+            'SELECT i.url AS directUrl, i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
+                COUNT(gi.mediaItemId) AS num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
              FROM MediaItem AS i
              LEFT OUTER JOIN MediaGroupMediaItem AS gi ON gi.mediaItemId = i.id
              WHERE i.type = ?' . $this->getWhere($folderId) . ' GROUP BY i.id',
@@ -39,26 +38,28 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
                 'storageType' => ucfirst(Language::lbl('MediaStorageType')),
                 'url' => ucfirst(Language::lbl('MediaMovieId')),
                 'title' => ucfirst(Language::lbl('MediaMovieTitle')),
+                'directUrl' => '',
             ];
         }
 
         return [
             'type' => '',
             'url' => ucfirst(Language::lbl('Image')),
+            'directUrl' => '',
         ];
     }
 
     private function getColumnsThatNeedToBeHidden(Type $type): array
     {
         if ($type->isImage()) {
-            return ['storageType', 'shardingFolderName', 'type', 'mime', 'directUrl'];
+            return ['storageType', 'shardingFolderName', 'type', 'mime'];
         }
 
         if ($type->isMovie()) {
-            return ['shardingFolderName', 'type', 'mime', 'directUrl'];
+            return ['shardingFolderName', 'type', 'mime'];
         }
 
-        return ['storageType', 'shardingFolderName', 'type', 'mime', 'url', 'directUrl'];
+        return ['storageType', 'shardingFolderName', 'type', 'mime', 'url'];
     }
 
     public static function getDataGrid(Type $type, int $folderId = null): DataGridDatabase
@@ -104,17 +105,6 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         );
         $this->setSortParameter('asc');
 
-        // Add a select button
-        $this->addColumn(
-            'use_revision',
-            Language::lbl('Action'),
-            Language::lbl('Select'),
-            '#',
-            Language::lbl('Select'),
-            null,
-            1
-        );
-
         // If we have an image, show the image
         if ($type->isImage()) {
             // Add image url
@@ -137,15 +127,17 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
             );
         }
 
+        // Add a button to select an item
         $this->setColumnFunction(
             [
                 MediaItemSelectionDataGrid::class,
-                'generateDirectUrl',
+                'addButton',
             ],
             [
                 '[id]',
                 $type,
                 '[storageType]',
+                '[directUrl]'
             ],
             'directUrl',
             true
@@ -170,29 +162,38 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         $this->setRowAttributes($attributes);
     }
 
-    protected function generateDirectUrl(string $id, string $type, string $storageType): string
+    protected function addButton(string $id, string $type, string $storageType)
     {
         switch ($type) {
             case Type::MOVIE:
                 if ($storageType === StorageType::YOUTUBE) {
-                    return Model::get('media_library.storage.youtube')->getAbsoluteWebPath(
+                    $absoluteUrl = Model::get('media_library.storage.youtube')->getAbsoluteWebPath(
                         Model::get('media_library.repository.item')->find($id)
                     );
+
+                    break;
                 }
 
                 if ($storageType === StorageType::VIMEO) {
-                    return Model::get('media_library.storage.vimeo')->getAbsoluteWebPath(
+                    $absoluteUrl =  Model::get('media_library.storage.vimeo')->getAbsoluteWebPath(
                         Model::get('media_library.repository.item')->find($id)
                     );
+
+                    break;
                 }
 
-                return Model::get('media_library.storage.local')->getAbsoluteWebPath(
+                $absoluteUrl = Model::get('media_library.storage.local')->getAbsoluteWebPath(
                     Model::get('media_library.repository.item')->find($id)
                 );
+
+                break;
             default:
-                return Model::get('media_library.storage.local')->getAbsoluteWebPath(
+                $absoluteUrl = Model::get('media_library.storage.local')->getAbsoluteWebPath(
                     Model::get('media_library.repository.item')->find($id)
                 );
         }
+
+        return '<a class="btn btn-success" data-direct-url="' . $absoluteUrl . '">' .
+            Language::lbl('Select') . '</a>';
     }
 }
