@@ -9,7 +9,7 @@ CKEDITOR.plugins.add(
             )
 
             editor.ui.addButton(
-                'Link2',
+                'ForkLink',
                 {
                     command: 'addLink',
                     icon: this.path + 'icons/link.png',
