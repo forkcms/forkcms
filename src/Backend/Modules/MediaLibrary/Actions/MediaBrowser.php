@@ -31,7 +31,7 @@ class MediaBrowser extends BackendBaseActionAdd
     protected function getMediaFolder(): ?MediaFolder
     {
         /** @var int $id */
-        $id = 1;
+        $id = $this->getRequest()->query->getInt('folder');
 
         try {
             return $this->get('media_library.repository.folder')->findOneById($id);
@@ -51,7 +51,7 @@ class MediaBrowser extends BackendBaseActionAdd
         $mediaFolderId = ($this->mediaFolder instanceof MediaFolder) ? $this->mediaFolder->getId() : null;
 
         $this->template->assign('folderId', $mediaFolderId);
-        $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
+        $this->template->assign('tree', $this->get('media_library.manager.tree_media_browser')->getHTML());
         $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
     }
 

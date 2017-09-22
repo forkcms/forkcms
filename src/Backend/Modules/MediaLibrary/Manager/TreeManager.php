@@ -15,9 +15,13 @@ final class TreeManager
     /** @var MediaFolderCache */
     protected $mediaFolderCache;
 
-    public function __construct(MediaFolderCache $mediaFolderCache)
+    /** @var string */
+    private $itemAction;
+
+    public function __construct(MediaFolderCache $mediaFolderCache, string $itemAction)
     {
         $this->mediaFolderCache = $mediaFolderCache;
+        $this->itemAction = $itemAction;
     }
 
     public function getHTML(): string
@@ -69,7 +73,7 @@ final class TreeManager
     private function getLink($parameters = [])
     {
         return BackendModel::createUrlForAction(
-            'MediaItemIndex',
+            $this->itemAction,
             null,
             null,
             $parameters

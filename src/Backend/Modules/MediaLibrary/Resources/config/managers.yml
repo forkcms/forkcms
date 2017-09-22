@@ -29,3 +29,9 @@ services:
         class: Backend\Modules\MediaLibrary\Manager\TreeManager
         arguments:
             - "@media_library.cache.media_folder"
+            - 'MediaItemIndex'
+    media_library.manager.tree_media_browser:
+        class: Backend\Modules\MediaLibrary\Manager\TreeManager
+        arguments:
+            - "@media_library.cache.media_folder"
+            - "MediaBrowser"

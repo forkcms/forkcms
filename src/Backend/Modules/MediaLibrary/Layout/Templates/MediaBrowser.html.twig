@@ -4,53 +4,66 @@
 {% block contentActionBar %}{% endblock %}
 
 {% block content %}
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation">
-      <a href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab" data-toggle="tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
-    </li>
-    <li role="presentation" class="active">
-      <a href="#tabLibrary" aria-controls="tabLibrary" role="tab" data-toggle="tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
-    </li>
-  </ul>
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane" id="tabUploadMedia" data-context="selection">
-      {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
+  <div class="row">
+    <div class="col-sm-3">
+      <div id="mediaTree" class="pages-tree">
+        <div id="tree">
+          {{ tree|raw }}
+        </div>
+      </div>
+      <div id="fullwidthSwitch">
+        <a href="#close">&nbsp;</a>
+      </div>
     </div>
-    <div role="tabpanel" class="tab-pane active" id="tabLibrary">
-      {% set alreadyOneActive = false %}
+    <div class="col-sm-9">
       <ul class="nav nav-tabs" role="tablist">
-        {% for dataGrid in dataGrids %}
-          <li role="presentation" class="{% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}active{% set alreadyOneActive = true %}{% endif %}">
-            <a href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-toggle="tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
-          </li>
-        {% endfor %}
+        <li role="presentation">
+          <a href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab" data-toggle="tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
+        </li>
+        <li role="presentation" class="active">
+          <a href="#tabLibrary" aria-controls="tabLibrary" role="tab" data-toggle="tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
+        </li>
       </ul>
       <div class="tab-content">
-        {% set alreadyOneActive = false %}
-        {% for dataGrid in dataGrids %}
-          <div role="tabpanel" class="tab-pane {% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}active{% set alreadyOneActive = true %}{% endif %}" id="{{ dataGrid.tabName }}">
-            <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="get" class="forkForms">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="table-responsive">
-                    <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
-                    <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden" name="move_to_folder_id" value="" />
-                    {% if mediaFolder %}
-                      <input type="hidden" name="current_folder_id" value="{{ mediaFolder.id }}" />
-                    {% endif %}
-                    {{ dataGrid.html|raw }}
+        <div role="tabpanel" class="tab-pane" id="tabUploadMedia" data-context="selection">
+          {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
+        </div>
+        <div role="tabpanel" class="tab-pane active" id="tabLibrary">
+          {% set alreadyOneActive = false %}
+          <ul class="nav nav-tabs" role="tablist">
+            {% for dataGrid in dataGrids %}
+              <li role="presentation" class="{% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}active{% set alreadyOneActive = true %}{% endif %}">
+                <a href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-toggle="tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
+              </li>
+            {% endfor %}
+          </ul>
+          <div class="tab-content">
+            {% set alreadyOneActive = false %}
+            {% for dataGrid in dataGrids %}
+              <div role="tabpanel" class="tab-pane {% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}active{% set alreadyOneActive = true %}{% endif %}" id="{{ dataGrid.tabName }}">
+                <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="get" class="forkForms">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="table-responsive">
+                        <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
+                        <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden" name="move_to_folder_id" value="" />
+                        {% if mediaFolder %}
+                          <input type="hidden" name="current_folder_id" value="{{ mediaFolder.id }}" />
+                        {% endif %}
+                        {{ dataGrid.html|raw }}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </form>
+                {% if not dataGrid.numberOfResults %}
+                  {% if mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&folder=#{mediaFolder.id}')) }}</p>{% endif %}
+                  {% if not mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add') ) }}</p>{% endif %}
+                {% endif %}
               </div>
-            </form>
-            {% if not dataGrid.numberOfResults %}
-              {% if mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&folder=#{mediaFolder.id}')) }}</p>{% endif %}
-              {% if not mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add') ) }}</p>{% endif %}
-            {% endif %}
+            {% endfor %}
           </div>
-        {% endfor %}
+        </div>
       </div>
     </div>
   </div>
-
 {% endblock %}
