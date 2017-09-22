@@ -17,6 +17,8 @@ use Common\Core\Header\Priority;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Language\Language as BL;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validation;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
@@ -171,6 +173,7 @@ final class Header extends KernelLoader
      * @param string $module The module wherein the file is located.
      * @param bool $minify Should the module be minified?
      * @param bool $overwritePath Should we overwrite the full path?
+     *                            An external url will always be handled with $overwritePath as true.
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority $priority the files are added based on the priority
      *                           defaults to standard for full links or core or module for core or module css
@@ -184,7 +187,8 @@ final class Header extends KernelLoader
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
-        $overwritePath = $overwritePath || strpos($file, 'http') === 0 || strpos($file, '//') === 0;
+        $overwritePath = $overwritePath || $this->isExternalUrl($file);
+
         $this->jsFiles->add(
             new Asset(
                 $overwritePath ? $file : $this->buildPathForModule($file, $module ?? $this->url->getModule(), 'Js'),
@@ -193,6 +197,23 @@ final class Header extends KernelLoader
             ),
             $minify
         );
+    }
+
+    private function isExternalUrl(string $url): bool
+    {
+        $violations = Validation::createValidator()->validate(
+            $url,
+            [
+                new Assert\Url(
+                    [
+                        'checkDNS' => true, // Just a crappy name to say that it will check the url has a valid hostname
+                    ]
+                ),
+            ]
+        );
+
+        // if there are no violations the url is a valid external url
+        return $violations->count() === 0;
     }
 
     /**
