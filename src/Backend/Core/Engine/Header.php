@@ -140,7 +140,8 @@ final class Header extends KernelLoader
      * @param string $file The name of the file to load.
      * @param string $module The module wherein the file is located.
      * @param bool $overwritePath Should we overwrite the full path?
-     * @param bool $minify Should the CSS be minified?
+     *                            An external url will always be handled with $overwritePath as true.
+     * @param bool $minify Should the CSS be minified? An external url will never be minified.
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority $priority the files are added based on the priority
      *                           defaults to standard for full links or core or module for core or module css
@@ -173,7 +174,7 @@ final class Header extends KernelLoader
      *
      * @param string $file The file to load.
      * @param string $module The module wherein the file is located.
-     * @param bool $minify Should the module be minified?
+     * @param bool $minify Should the module be minified? An external url will never be minified.
      * @param bool $overwritePath Should we overwrite the full path?
      *                            An external url will always be handled with $overwritePath as true.
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
