@@ -155,7 +155,9 @@ final class Header extends KernelLoader
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
-        $overwritePath = $overwritePath || $this->isExternalUrl($file);
+        $isExternalUrl = $this->isExternalUrl($file);
+        $overwritePath = $overwritePath || $isExternalUrl;
+        $minify = $minify && !$isExternalUrl;
 
         $this->cssFiles->add(
             new Asset(
@@ -189,8 +191,9 @@ final class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        $module = $module ?? $this->url->getModule();
-        $overwritePath = $overwritePath || $this->isExternalUrl($file);
+        $isExternalUrl = $this->isExternalUrl($file);
+        $overwritePath = $overwritePath || $isExternalUrl;
+        $minify = $minify && !$isExternalUrl;
 
         $this->jsFiles->add(
             new Asset(

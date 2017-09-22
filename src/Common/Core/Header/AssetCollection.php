@@ -19,7 +19,7 @@ final class AssetCollection
 
     public function add(Asset $asset, bool $minify = true): void
     {
-        if ($minify && strpos($asset->getFile(), 'http') !== 0 && strpos($asset->getFile(), '//') !== 0) {
+        if ($minify) {
             $asset = $this->minifier->minify($asset);
         }
 
