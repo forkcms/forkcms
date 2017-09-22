@@ -276,7 +276,7 @@ class Header extends KernelLoader
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (strpos($image, 'http://') !== 0 && strpos($image, 'https://') !== 0) {
+        if (!$this->getContainer()->get('fork.validator.url')->isExternalUrl($image)) {
             if (!is_file(PATH_WWW . strtok($image, '?'))) {
                 return;
             }
