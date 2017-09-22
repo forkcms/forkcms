@@ -137,6 +137,8 @@ class Block extends KernelLoader
         bool $minify = true,
         bool $addTimestamp = false
     ): void {
+        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
@@ -165,6 +167,8 @@ class Block extends KernelLoader
         bool $minify = true,
         bool $addTimestamp = false
     ): void {
+        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;
