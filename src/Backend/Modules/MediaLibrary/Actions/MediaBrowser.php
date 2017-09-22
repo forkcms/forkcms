@@ -2,8 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Actions;
 
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\DataGridDatabase;
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -11,7 +10,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemSelectionDataGrid;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 
-class MediaBrowser extends BackendBaseActionAdd
+class MediaBrowser extends BackendBaseAction
 {
     /** @var MediaFolder */
     protected $mediaFolder;
@@ -20,7 +19,6 @@ class MediaBrowser extends BackendBaseActionAdd
     {
         parent::execute();
 
-        /** @var MediaFolder|null $mediaFolder */
         $this->mediaFolder = $this->getMediaFolder();
 
         $this->parseJsFiles();
@@ -30,7 +28,6 @@ class MediaBrowser extends BackendBaseActionAdd
 
     protected function getMediaFolder(): ?MediaFolder
     {
-        /** @var int $id */
         $id = $this->getRequest()->query->getInt('folder');
 
         try {
@@ -65,7 +62,6 @@ class MediaBrowser extends BackendBaseActionAdd
 
     private function parseDataGrids(MediaFolder $mediaFolder = null): void
     {
-        /** @var array $dataGrids */
         $dataGrids = $this->getDataGrids($mediaFolder);
 
         $this->template->assign('dataGrids', $dataGrids);
@@ -76,7 +72,6 @@ class MediaBrowser extends BackendBaseActionAdd
     {
         return array_map(
             function ($type) use ($mediaFolder) {
-                /** @var DataGridDatabase $dataGrid */
                 $dataGrid = MediaItemSelectionDataGrid::getDataGrid(
                     Type::fromString($type),
                     ($mediaFolder !== null) ? $mediaFolder->getId() : null
