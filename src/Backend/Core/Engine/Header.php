@@ -17,8 +17,6 @@ use Common\Core\Header\Priority;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Language\Language as BL;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validation;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
@@ -155,7 +153,7 @@ final class Header extends KernelLoader
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
-        $isExternalUrl = $this->isExternalUrl($file);
+        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
         $overwritePath = $overwritePath || $isExternalUrl;
         $minify = $minify && !$isExternalUrl;
 
@@ -191,7 +189,7 @@ final class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        $isExternalUrl = $this->isExternalUrl($file);
+        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
         $overwritePath = $overwritePath || $isExternalUrl;
         $minify = $minify && !$isExternalUrl;
 
@@ -203,23 +201,6 @@ final class Header extends KernelLoader
             ),
             $minify
         );
-    }
-
-    private function isExternalUrl(string $url): bool
-    {
-        $violations = Validation::createValidator()->validate(
-            $url,
-            [
-                new Assert\Url(
-                    [
-                        'checkDNS' => true, // Just a crappy name to say that it will check the url has a valid hostname
-                    ]
-                ),
-            ]
-        );
-
-        // if there are no violations the url is a valid external url
-        return $violations->count() === 0;
     }
 
     /**

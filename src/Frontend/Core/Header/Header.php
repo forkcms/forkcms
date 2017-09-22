@@ -21,8 +21,6 @@ use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Language\Locale;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validation;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
@@ -156,7 +154,7 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        $isExternalUrl = $this->isExternalUrl($file);
+        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
         $file = $isExternalUrl ? $file : Theme::getPath($file);
         $minify = $minify && !$isExternalUrl;
 
@@ -177,28 +175,11 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        $isExternalUrl = $this->isExternalUrl($file);
+        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
         $file = $isExternalUrl ? $file : Theme::getPath($file);
         $minify = $minify && !$isExternalUrl;
 
         $this->jsFiles->add(new Asset($file, $addTimestamp, $priority), $minify);
-    }
-
-    private function isExternalUrl(string $url): bool
-    {
-        $violations = Validation::createValidator()->validate(
-            $url,
-            [
-                new Assert\Url(
-                    [
-                        'checkDNS' => true, // Just a crappy name to say that it will check the url has a valid hostname
-                    ]
-                ),
-            ]
-        );
-
-        // if there are no violations the url is a valid external url
-        return $violations->count() === 0;
     }
 
     /**
