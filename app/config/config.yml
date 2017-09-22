@@ -65,6 +65,7 @@ liip_imagine:
         default:
             filesystem:
                 data_root: "%kernel.project_dir%/"
+                locator: filesystem_insecure
     cache: default
     data_loader: default
 
