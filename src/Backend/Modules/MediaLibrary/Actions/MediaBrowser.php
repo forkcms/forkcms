@@ -60,7 +60,7 @@ class MediaBrowser extends BackendBaseActionAdd
         $this->header->addJS('jstree/jquery.tree.js', 'Pages');
         $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', 'Pages');
-        $this->header->addJS('MediaLibraryHelper.js', 'MediaLibrary', true);
+        $this->header->addJS('MediaLibraryHelper.js', 'MediaLibrary');
     }
 
     private function parseDataGrids(MediaFolder $mediaFolder = null): void
