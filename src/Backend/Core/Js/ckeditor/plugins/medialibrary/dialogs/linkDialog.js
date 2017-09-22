@@ -79,18 +79,11 @@ CKEDITOR.dialog.add(
                     element = element.getAscendant('a', true);
                 }
 
-                if (!element || element.getName() !== 'a') {
+                dialog.insertMode = !element || element.getName() !== 'a';
+                if (dialog.insertMode) {
                     element = editor.document.createElement('a');
 
-                    if (initialText.match(urlRegex)) {
-                        dialog.setValueOf('tab', 'url', initialText);
-                    } else {
-                        dialog.setValueOf('tab', 'displayText', initialText);
-                    }
-
-                    this.insertMode = true;
-                } else {
-                    this.insertMode = false;
+                    dialog.setValueOf('tab', initialText.match(urlRegex) ? 'url' : 'displayText', initialText);
                 }
 
                 this.element = element;
