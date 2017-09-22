@@ -21,6 +21,8 @@ use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Language\Locale;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validation;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
@@ -144,7 +146,7 @@ class Header extends KernelLoader
      * Add a CSS file into the array
      *
      * @param string $file The path for the CSS-file that should be loaded.
-     * @param bool $minify Should the CSS be minified?
+     * @param bool $minify Should the CSS be minified? An external url will never be minified.
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority|null $priority Provides a way to change the order that things are loaded
      */
@@ -154,9 +156,9 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        if (mb_strpos($file, 'http') !== 0) {
-            $file = Theme::getPath($file);
-        }
+        $isExternalUrl = $this->isExternalUrl($file);
+        $file = $isExternalUrl ? $file : Theme::getPath($file);
+        $minify = $minify && !$isExternalUrl;
 
         $this->cssFiles->add(new Asset($file, $addTimestamp, $priority), $minify);
     }
@@ -165,7 +167,7 @@ class Header extends KernelLoader
      * Add a javascript file into the array
      *
      * @param string $file The path to the javascript-file that should be loaded.
-     * @param bool $minify Should the file be minified?
+     * @param bool $minify Should the file be minified? An external url will never be minified.
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority|null $priority Provides a way to change the order that things are loaded
      */
@@ -175,11 +177,28 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        if (mb_strpos($file, 'http') !== 0) {
-            $file = Theme::getPath($file);
-        }
+        $isExternalUrl = $this->isExternalUrl($file);
+        $file = $isExternalUrl ? $file : Theme::getPath($file);
+        $minify = $minify && !$isExternalUrl;
 
         $this->jsFiles->add(new Asset($file, $addTimestamp, $priority), $minify);
+    }
+
+    private function isExternalUrl(string $url): bool
+    {
+        $violations = Validation::createValidator()->validate(
+            $url,
+            [
+                new Assert\Url(
+                    [
+                        'checkDNS' => true, // Just a crappy name to say that it will check the url has a valid hostname
+                    ]
+                ),
+            ]
+        );
+
+        // if there are no violations the url is a valid external url
+        return $violations->count() === 0;
     }
 
     /**
