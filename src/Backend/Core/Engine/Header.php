@@ -162,7 +162,7 @@ final class Header extends KernelLoader
                 $addTimestamp,
                 $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
             ),
-            $minify && !$this->getContainer()->getParameter('kernel.debug')
+            $minify
         );
     }
 
