@@ -50,6 +50,11 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaItemUpload'); // Action and AJAX
     }
 
+    protected function configureBackendActionRightsForMediaBrowser(): void
+    {
+        $this->setActionRights(1, $this->getModule(), 'MediaBrowser');
+    }
+
     protected function configureBackendNavigation(): void
     {
         // Set navigation for "Modules"
@@ -72,6 +77,7 @@ class Installer extends ModuleInstaller
         // Configure backend action rights for entities
         $this->configureBackendActionRightsForMediaFolder();
         $this->configureBackendActionRightsForMediaItem();
+        $this->configureBackendActionRightsForMediaBrowser();
     }
 
     private function configureEntities(): void
