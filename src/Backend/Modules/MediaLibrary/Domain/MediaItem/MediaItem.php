@@ -268,7 +268,7 @@ class MediaItem implements JsonSerializable
             'editedOn' => $this->editedOn->getTimestamp(),
             'source' => $this->getWebPath(),
             'preview_source' => $this->getWebPath('backend'),
-            'direct_url' => $this->getAbsoluteWebPath(),
+            'direct_url' => $this->getWebPath(),
             $this->type->getType() => true,
         ];
     }
