@@ -182,13 +182,13 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
                     break;
                 }
 
-                $absoluteUrl = Model::get('media_library.storage.local')->getAbsoluteWebPath(
+                $absoluteUrl = Model::get('media_library.storage.local')->getWebPath(
                     Model::get('media_library.repository.item')->find($id)
                 );
 
                 break;
             default:
-                $absoluteUrl = Model::get('media_library.storage.local')->getAbsoluteWebPath(
+                $absoluteUrl = Model::get('media_library.storage.local')->getWebPath(
                     Model::get('media_library.repository.item')->find($id)
                 );
         }
