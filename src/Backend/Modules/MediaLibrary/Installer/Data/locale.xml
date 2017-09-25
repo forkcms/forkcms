@@ -237,7 +237,7 @@
         <translation language="nl"><![CDATA[video's]]></translation>
       </item>
       <item type="label" name="MediaNew">
-        <translation language="en"><![CDATA[nieuwe media]]></translation>
+        <translation language="en"><![CDATA[new media]]></translation>
         <translation language="nl"><![CDATA[nieuwe media]]></translation>
       </item>
       <item type="message" name="MediaNoItemsConnected">
