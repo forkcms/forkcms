@@ -123,6 +123,7 @@ jsBackend.navigation =
         jsBackend.navigation.mobile();
         jsBackend.navigation.toggleCollapse();
         jsBackend.navigation.tooltip();
+        jsBackend.navigation.modal();
     },
 
     mobile: function() {
@@ -144,6 +145,13 @@ jsBackend.navigation =
             this.setControls(-85);
 
         }.bind(this));
+    },
+
+    modal: function () {
+        if (window.opener !== undefined && window.opener !== null) {
+            // We are in modal/popup mode
+            $('body').addClass('hiddenInModalMode');
+        }
     },
 
     resize: function() {
