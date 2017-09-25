@@ -44,7 +44,7 @@ CKEDITOR.dialog.add(
                             label: 'Browse server',
                             onClick: function () {
                                 var editor = this.getDialog().getParentEditor();
-                                editor.popup(window.location.origin + jsData.MediaLibrary.browseAction, 800, 500);
+                                editor.popup(window.location.origin + jsData.MediaLibrary.browseAction, 800, 800);
 
                                 window.onmessage = function (event) {
                                     if (event.data) {
