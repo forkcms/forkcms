@@ -19,6 +19,14 @@ CKEDITOR.plugins.add(
             )
 
             CKEDITOR.dialog.add('linkDialog', this.path + 'dialogs/linkDialog.js');
+
+            // Disable default link dialog behaviour
+            editor.on('doubleclick', function (event) {
+                var element = event.data.element
+                if (element.is('a')) {
+                    event.data.dialog = 'linkDialog'
+                }
+            }, null, null, 100);
         }
     }
 );

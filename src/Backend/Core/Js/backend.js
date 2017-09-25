@@ -338,9 +338,9 @@ jsBackend.ckeditor =
             { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
             { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Undo', 'Redo' ] },
             { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote' ] },
-            { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+            { name: 'links', items: [ 'ForkLink', 'Unlink', 'Anchor' ] },
             { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', 'Templates' ] },
-            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar', 'Iframe', 'ForkLink' ] },
+            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar', 'Iframe' ] },
             { name: 'styles', items: [ 'Format', 'Styles' ] }
         ],
 
