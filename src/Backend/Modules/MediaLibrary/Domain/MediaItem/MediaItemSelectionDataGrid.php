@@ -194,6 +194,6 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         }
 
         return '<a class="btn btn-success" data-direct-url="' . $absoluteUrl . '">' .
-            Language::lbl('Select') . '</a>';
+            ucfirst(Language::lbl('Select')) . '</a>';
     }
 }
