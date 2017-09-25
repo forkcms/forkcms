@@ -36,6 +36,7 @@ CKEDITOR.dialog.add(
                             },
                             commit: function (element) {
                                 element.setAttribute('href', this.getValue());
+                                element.setAttribute('data-cke-saved-href', this.getValue());
                             }
                         },
                         {
