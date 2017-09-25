@@ -247,7 +247,7 @@ class Page extends KernelLoader
 
             // check if we actually have a first child
             if (Navigation::getFirstChildId($record['id']) !== false) {
-                $this->redirect(Navigation::getUrl($firstChildId), RedirectResponse::HTTP_MOVED_PERMANENTLY);
+                $this->redirect(Navigation::getUrl($firstChildId));
             }
         }
 
