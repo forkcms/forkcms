@@ -19,7 +19,7 @@ CKEDITOR.dialog.add(
                             id: 'displayText',
                             label: 'Display Text',
                             validate: CKEDITOR.dialog.validate.notEmpty('Display cannot be empty.'),
-                            setup: function(element) {
+                            setup: function (element) {
                                 this.setValue(element.getText());
                             },
                             commit: function (element) {
@@ -27,32 +27,43 @@ CKEDITOR.dialog.add(
                             }
                         },
                         {
-                            type: 'text',
-                            id: 'url',
-                            label: 'URL',
-                            validate: CKEDITOR.dialog.validate.regex(new RegExp(urlRegex), 'URL is not valid.'),
-                            setup: function(element) {
-                                this.setValue(element.getAttribute('href'));
-                            },
-                            commit: function (element) {
-                                element.setAttribute('href', this.getValue());
-                                element.setAttribute('data-cke-saved-href', this.getValue());
-                            }
-                        },
-                        {
-                            type: 'button',
-                            id: 'browseServer',
-                            label: 'Browse server',
-                            onClick: function () {
-                                var editor = this.getDialog().getParentEditor();
-                                editor.popup(window.location.origin + jsData.MediaLibrary.browseAction, 800, 800);
-
-                                window.onmessage = function (event) {
-                                    if (event.data) {
-                                        this.setValueOf('tab', 'url', event.data);
+                            type: 'hbox',
+                            widths: ['65%', '5%', '30%'],
+                            children: [
+                                {
+                                    type: 'text',
+                                    id: 'url',
+                                    label: 'URL',
+                                    validate: CKEDITOR.dialog.validate.regex(new RegExp(urlRegex), 'URL is not valid.'),
+                                    setup: function (element) {
+                                        this.setValue(element.getAttribute('href'));
+                                    },
+                                    commit: function (element) {
+                                        element.setAttribute('href', this.getValue());
+                                        element.setAttribute('data-cke-saved-href', this.getValue());
                                     }
-                                }.bind(this.getDialog());
-                            }
+                                },
+                                {
+                                    type: 'html',
+                                    html: '<span style="display: block;padding: 27px 5px 0 5px;">or</span>'
+                                },
+                                {
+                                    type: 'button',
+                                    id: 'browseServer',
+                                    label: 'Browse server',
+                                    onClick: function () {
+                                        var editor = this.getDialog().getParentEditor();
+                                        editor.popup(window.location.origin + jsData.MediaLibrary.browseAction, 800, 800);
+
+                                        window.onmessage = function (event) {
+                                            if (event.data) {
+                                                this.setValueOf('tab', 'url', event.data);
+                                            }
+                                        }.bind(this.getDialog());
+                                    },
+                                    style: 'margin-top: 20px;'
+                                }
+                            ]
                         }
                     ]
                 }
@@ -90,9 +101,9 @@ CKEDITOR.dialog.add(
                 this.element = element;
 
                 if (!this.insertMode) {
-                    this.setupContent(element)
+                    this.setupContent(element);
                 }
             }
-        }
+        };
     }
-)
+);
