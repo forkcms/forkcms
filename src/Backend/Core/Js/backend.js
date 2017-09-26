@@ -1787,7 +1787,7 @@ jsBackend.messages =
             '<div class="container-fluid">' +
                 '<i class="fa fa-' + icon + '"></i>' + ' ' +
                 content +
-                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
                     '<span aria-hidden="true" class="fa fa-close"></span>' +
                 '</button>' +
             '</div>' +
