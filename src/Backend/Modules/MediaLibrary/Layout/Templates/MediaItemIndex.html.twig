@@ -99,11 +99,11 @@
   </div>
 
   {# Mass action: Dialog to delete selected media items #}
-  <div class="modal fade" id="confirmMediaItemCleanup" role="dialog">
+  <div class="modal fade" id="confirmMediaItemCleanup" role="dialog" aria-labelledby="confirmMediaItemCleanupTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <span class="modal-title h4">{{ 'lbl.MediaItemCleanup'|trans|ucfirst }}</span>
+          <h4 class="modal-title" id="confirmMediaItemCleanupTitle">{{ 'lbl.MediaItemCleanup'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -123,11 +123,11 @@
   </div>
 
   {# Mass action: Dialog to move media items #}
-  <div class="modal fade" id="confirmMassActionMediaItemMove" role="dialog">
+  <div class="modal fade" id="confirmMassActionMediaItemMove" role="dialog" aria-labelledby="confirmMassActionMediaItemMoveTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <span class="modal-title h4">{{ 'lbl.MoveMedia'|trans|ucfirst }}</span>
+          <h4 class="modal-title" id="confirmMassActionMediaItemMoveTitle">{{ 'lbl.MoveMedia'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <p>
@@ -155,11 +155,11 @@
   {% if mediaFolder %}
     {# Delete MediaFolder Dialog #}
     {% if showMediaLibraryMediaFolderDelete %}
-    <div class="modal fade" id="confirmMediaFolderDelete" role="dialog">
+    <div class="modal fade" id="confirmMediaFolderDelete" role="dialog" aria-labelledby="confirmMediaFolderDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <span class="modal-title h4">{{ 'lbl.MediaFolderDelete'|trans|ucfirst }}</span>
+            <h4 class="modal-title" id="confirmMediaFolderDeleteTitle">{{ 'lbl.MediaFolderDelete'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body">
             <p>
@@ -191,11 +191,11 @@
 
     {# Edit MediaFolder Dialog #}
     {% if showMediaLibraryMediaFolderEdit %}
-    <div class="modal fade" id="editMediaFolderDialog" role="dialog">
+    <div class="modal fade" id="editMediaFolderDialog" role="dialog" aria-labelledby="editMediaFolderDialogTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <span class="modal-title h4">{{ 'lbl.EditMediaFolder'|trans|ucfirst }}</span>
+            <h4 class="modal-title" id="editMediaFolderDialogTitle">{{ 'lbl.EditMediaFolder'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body">
             <div class="form-group">

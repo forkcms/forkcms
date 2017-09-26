@@ -179,16 +179,11 @@
         </div>
       </div>
       {% if showProfilesBlock %}
-        <div class="modal fade" id="{% if blocked %}confirmUnblock{% endif %}{% if not blocked %}confirmBlock{% endif %}" role="dialog">
+        <div class="modal fade" id="{% if blocked %}confirmUnblock{% else %}confirmBlock{% endif %}" role="dialog" aria-labelledby="{% if blocked %}confirmUnblock{% else %}confirmBlock{% endif %}Title">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                {% if blocked %}
-                  <span class="modal-title h4">{{ 'lbl.Unblock'|trans|ucfirst }}</span>
-                {% endif %}
-                {% if not blocked %}
-                  <span class="modal-title h4">{{ 'lbl.Block'|trans|ucfirst }}</span>
-                {% endif %}
+                <h4 class="modal-title" id="{% if blocked %}confirmUnblock{% else %}confirmBlock{% endif %}Title">{% if blocked %}{{ 'lbl.Unblock'|trans|ucfirst }}{% else %}{{ 'lbl.Block'|trans|ucfirst }}{% endif %}</h4>
               </div>
               <div class="modal-body">
                 {% if blocked %}
@@ -225,16 +220,11 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="{% if deleted %}confirmUndelete{% endif %}{% if not deleted %}confirmDelete{% endif %}" role="dialog">
+    <div class="modal fade" id="{% if deleted %}confirmUndelete{% else %}confirmDelete{% endif %}" role="dialog" aria-labelledby="{% if deleted %}confirmUndelete{% else %}confirmDelete{% endif %}Title">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            {% if deleted %}
-              <span class="modal-title h4">{{ 'lbl.Undelete'|trans|ucfirst }}</span>
-            {% endif %}
-            {% if not deleted %}
-              <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
-            {% endif %}
+            <h4 class="modal-title" id="{% if deleted %}confirmUndelete{% else %}confirmDelete{% endif %}Title">{% if deleted %}{{ 'lbl.Undelete'|trans|ucfirst }}{% else %}{{ 'lbl.Delete'|trans|ucfirst }}{% endif %}</h4>
           </div>
           <div class="modal-body">
             {% if deleted %}

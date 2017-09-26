@@ -99,14 +99,14 @@
   </div>
 </div>
 
-<div class="modal fade" id="forgotPasswordHolder" role="dialog">
+<div class="modal fade" id="forgotPasswordHolder" role="dialog" aria-labelledby="forgotPasswordLink">
   <div class="modal-dialog">
     <div class="modal-content">
       {% form forgotPassword %}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{ 'msg.ForgotPassword'|trans|ucfirst }}</h4>
+        <h4 class="modal-title" id="forgotPasswordDialogTitle">{{ 'msg.ForgotPassword'|trans|ucfirst }}</h4>
       </div>
       <div class="modal-body">
         <div class="form-group">

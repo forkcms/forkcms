@@ -93,11 +93,11 @@
             </button>
           </div>
         </div>
-        <div class="modal fade" id="confirmInstall" role="dialog">
+        <div class="modal fade" id="confirmInstall" role="dialog" aria-labelledby="confirmInstallTitle">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <span class="modal-title h4">{{ 'lbl.Install'|trans|ucfirst }}</span>
+                <h4 class="modal-title" id="confirmInstallTitle">{{ 'lbl.Install'|trans|ucfirst }}</h4>
               </div>
               <div class="modal-body">
                 <p>{{ 'msg.ConfirmModuleInstall'|trans|format(name)|raw }}</p>

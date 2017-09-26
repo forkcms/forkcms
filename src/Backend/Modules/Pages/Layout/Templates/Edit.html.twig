@@ -375,13 +375,13 @@
   </div>
 
   {# Dialog to select the content (editor, module or widget). Do not change the ID! #}
-  <div class="modal fade" id="addBlock" role="dialog">
+  <div class="modal fade" id="addBlock" role="dialog" aria-labelledby="addBlockTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span></button>
-          <span class="modal-title h4">{{ 'lbl.ChooseContent'|trans|ucfirst }}</span>
+          <h4 class="modal-title" id="addBlockTitle">{{ 'lbl.ChooseContent'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
@@ -430,14 +430,14 @@
   </div>
 
   {# Dialog to select user templates #}
-  <div class="modal fade" id="addUserTemplate" role="dialog" aria-labelledby="{{ 'lbl.ChooseATemplate'|trans|capitalize }}">
+  <div class="modal fade" id="addUserTemplate" role="dialog" aria-labelledby="addUserTemplateTitle">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span>
           </button>
-          <span class="modal-title h4">{{ 'lbl.Content'|trans|capitalize }}</span>
+          <h4 class="modal-title" id="addUserTemplateTitle">{{ 'lbl.Content'|trans|capitalize }}</h4>
         </div>
         <div class="modal-body">
           <div id="userTemplateHiddenPlaceholder" style="display:none;"></div>
@@ -456,13 +456,13 @@
   </div>
 
   {# Dialog to select another template. Do not change the ID! #}
-  <div class="modal fade" id="changeTemplate" role="dialog">
+  <div class="modal fade" id="changeTemplate" role="dialog" aria-labelledby="changeTemplateTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span></button>
-          <span class="modal-title h4">{{ 'lbl.ChooseATemplate'|trans|ucfirst }}</span>
+          <h4 class="modal-title" id="changeTemplateTitle">{{ 'lbl.ChooseATemplate'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
@@ -503,11 +503,11 @@
   </div>
 
   {# Dialog to confirm block removal. Do not change the ID! #}
-  <div class="modal fade" id="confirmDeleteBlock" role="dialog">
+  <div class="modal fade" id="confirmDeleteBlock" role="dialog" aria-labelledby="confirmDeleteBlockTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <span class="modal-title h4">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</span>
+          <h4 class="modal-title" id="confirmDeleteBlockTitle">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
@@ -524,14 +524,14 @@
   </div>
 
   {# Text editor block #}
-  <div class="modal fade" id="blockHtml" role="dialog">
+  <div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="blockHtmlTitle">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
             <span aria-hidden="true">&times;</span>
           </button>
-          <span class="modal-title h4">{{ 'lbl.Editor'|trans|ucfirst }}</span>
+          <h4 class="modal-title" id="blockHtmlTitle">{{ 'lbl.Editor'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
@@ -561,11 +561,11 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="confirmDelete" role="dialog">
+    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+            <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
           </div>
           <div class="modal-body">
             <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>

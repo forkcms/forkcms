@@ -27,11 +27,11 @@
                 <div class="table-responsive">
                   {{ dgPublished|raw }}
                 </div>
-                <div class="modal fade" id="confirmPublishedToSpam" role="dialog">
+                <div class="modal fade" id="confirmPublishedToSpam" role="dialog" aria-labelledby="confirmPublishedToSpamTitle">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Spam'|trans|ucfirst }}</span>
+                        <h4 class="modal-title" id="confirmPublishedToSpamTitle">{{ 'lbl.Spam'|trans|ucfirst }}</h4>
                       </div>
                       <div class="modal-body">
                         <p>{{ 'msg.ConfirmMassSpam'|trans|ucfirst }}</p>
@@ -47,11 +47,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="modal fade" id="confirmDeletePublished" role="dialog">
+                <div class="modal fade" id="confirmDeletePublished" role="dialog" aria-labelledby="confirmDeletePublishedTitle">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+                        <h4 class="modal-title" id="confirmDeletePublishedTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
                       </div>
                       <div class="modal-body">
                         <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
@@ -80,11 +80,11 @@
                 <div class="table-responsive">
                   {{ dgModeration|raw }}
                 </div>
-                <div class="modal fade" id="confirmModerationToSpam" role="dialog">
+                <div class="modal fade" id="confirmModerationToSpam" role="dialog" aria-labelledby="confirmModerationToSpamTitle">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Spam'|trans|ucfirst }}</span>
+                        <h4 class="modal-title" id="confirmModerationToSpamTitle">{{ 'lbl.Spam'|trans|ucfirst }}</h4>
                       </div>
                       <div class="modal-body">
                         <p>{{ 'msg.ConfirmMassSpam'|trans|ucfirst }}</p>
@@ -100,11 +100,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="modal fade" id="confirmDeleteModeration" role="dialog">
+                <div class="modal fade" id="confirmDeleteModeration" role="dialog" aria-labelledby="confirmDeleteModerationTitle">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+                        <h4 class="modal-title" id="confirmDeleteModerationTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
                       </div>
                       <div class="modal-body">
                         <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
@@ -133,11 +133,11 @@
                 <div class="table-responsive">
                   {{ dgSpam|raw }}
                 </div>
-                <div class="modal fade" id="confirmDeleteSpam" role="dialog">
+                <div class="modal fade" id="confirmDeleteSpam" role="dialog" aria-labelledby="confirmDeleteSpamTitle">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+                        <h4 class="modal-title" id="confirmDeleteSpamTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
                       </div>
                       <div class="modal-body">
                         <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>

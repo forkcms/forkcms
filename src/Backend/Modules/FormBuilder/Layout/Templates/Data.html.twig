@@ -56,11 +56,11 @@
         <form action="{{ geturl('mass_data_action') }}" method="get" class="forkForms">
           <input type="hidden" name="form_id" value="{{ id }}">
           {{ dataGrid|raw }}
-          <div class="modal fade" id="confirmDelete" role="dialog">
+          <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+                  <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
                 </div>
                 <div class="modal-body">
                   <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
