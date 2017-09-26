@@ -16,6 +16,7 @@ use Frontend\Core\Header\Header;
 use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
@@ -117,8 +118,17 @@ class Page extends KernelLoader
         // create header instance
         $this->header = new Header($this->getKernel());
 
+        try {
+            $this->handlePage(Navigation::getPageId(implode('/', $this->url->getPages())));
+        } catch (NotFoundHttpException $notFoundHttpException) {
+            $this->handlePage(Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    private function handlePage(int $pageId)
+    {
         // get page content from pageId of the requested URL
-        $this->record = $this->getPageContent(Navigation::getPageId(implode('/', $this->url->getPages())));
+        $this->record = $this->getPageContent($pageId);
 
         if (empty($this->record)) {
             $this->record = Model::getPage(Response::HTTP_NOT_FOUND);
@@ -181,34 +191,43 @@ class Page extends KernelLoader
 
     public function display(): Response
     {
-        // assign the id so we can use it as an option
-        $this->template->assignGlobal('isPage' . $this->pageId, true);
-        $this->template->assignGlobal('isChildOfPage' . $this->record['parent_id'], true);
+        try {
+            // assign the id so we can use it as an option
+            $this->template->assignGlobal('isPage' . $this->pageId, true);
+            $this->template->assignGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
-        // hide the cookiebar from within the code to prevent flickering
-        $this->template->assignGlobal(
-            'cookieBarHide',
-            !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false)
-            || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
-        );
+            // hide the cookiebar from within the code to prevent flickering
+            $this->template->assignGlobal(
+                'cookieBarHide',
+                !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false)
+                || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
+            );
 
-        $this->parsePositions();
+            $this->parsePositions();
 
-        // assign empty positions
-        $unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
-        foreach ($unusedPositions as $position) {
-            $this->template->assign('position' . \SpoonFilter::ucfirst($position), []);
+            // assign empty positions
+            $unusedPositions = array_diff(
+                $this->record['template_data']['names'],
+                array_keys($this->record['positions'])
+            );
+            foreach ($unusedPositions as $position) {
+                $this->template->assign('position' . \SpoonFilter::ucfirst($position), []);
+            }
+
+            $this->header->parse();
+            $this->breadcrumb->parse();
+            $this->parseLanguages();
+            $this->footer->parse();
+
+            return new Response(
+                $this->template->getContent($this->templatePath),
+                $this->statusCode
+            );
+        } catch (NotFoundHttpException $notFoundHttpException) {
+            $this->handlePage(Response::HTTP_NOT_FOUND);
+
+            return $this->display();
         }
-
-        $this->header->parse();
-        $this->breadcrumb->parse();
-        $this->parseLanguages();
-        $this->footer->parse();
-
-        return new Response(
-            $this->template->getContent($this->templatePath),
-            $this->statusCode
-        );
     }
 
     public function getExtras(): array
