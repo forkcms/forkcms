@@ -11,7 +11,8 @@
           {{ form_label(form) }}
         </div>
         <div class="panel-body">
-          <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" class="panel panel-default mediaGroup">
+          {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'panel panel-default mediaGroup' }) %}
+          <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
             <!--[if lt IE 7 ]><div class="panel-body mediaConnectedBox ie6"><![endif]-->
             <!--[if IE 7 ]><div class="panel-body mediaConnectedBox ie7"><![endif]-->
             <!--[if IE 8 ]><div class="panel-body mediaConnectedBox ie8"><![endif]-->
