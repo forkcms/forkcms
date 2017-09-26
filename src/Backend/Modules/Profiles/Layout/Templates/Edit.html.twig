@@ -179,7 +179,7 @@
         </div>
       </div>
       {% if showProfilesBlock %}
-        <div class="modal fade" id="{% if blocked %}confirmUnblock{% endif %}{% if not blocked %}confirmBlock{% endif %}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="{% if blocked %}confirmUnblock{% endif %}{% if not blocked %}confirmBlock{% endif %}" role="dialog">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -225,7 +225,7 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="{% if deleted %}confirmUndelete{% endif %}{% if not deleted %}confirmDelete{% endif %}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="{% if deleted %}confirmUndelete{% endif %}{% if not deleted %}confirmDelete{% endif %}" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

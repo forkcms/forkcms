@@ -216,7 +216,7 @@
     </div>
   </div>
   {# This is the HTML content, hidden #}
-  <div class="fade hidden" id="editContent" tabindex="-1">
+  <div class="fade hidden" id="editContent">
     {% for position in positions %}
       {% for block in position.blocks %}
         <div class="alert alert-warning">
@@ -250,8 +250,7 @@
   </div>
 
   {# Dialog to select the content (editor, module or widget). Do not change the ID! #}
-  <div class="modal fade" id="addBlock" tabindex="-1" role="dialog"
-    aria-hidden="true">
+  <div class="modal fade" id="addBlock" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -303,8 +302,7 @@
   </div>
 
   {# Dialog to select user templates #}
-  <div class="modal fade" id="addUserTemplate" tabindex="-1" role="dialog"
-    aria-labelledby="{{ 'lbl.ChooseATemplate'|trans|capitalize }}" aria-hidden="true">
+  <div class="modal fade" id="addUserTemplate" role="dialog" aria-labelledby="{{ 'lbl.ChooseATemplate'|trans|capitalize }}">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -328,8 +326,7 @@
   </div>
 
   {# Dialog to select another template. Do not change the ID! #}
-  <div class="modal fade" id="changeTemplate" tabindex="-1" role="dialog"
-    aria-hidden="true">
+  <div class="modal fade" id="changeTemplate" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -376,7 +373,7 @@
   </div>
 
   {# Dialog to confirm block removal. Do not change the ID! #}
-  <div class="modal fade" id="confirmDeleteBlock" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade" id="confirmDeleteBlock" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -398,7 +395,7 @@
   </div>
 
   {# Text editor block #}
-  <div class="modal fade" id="blockHtml" role="dialog" aria-hidden="true">
+  <div class="modal fade" id="blockHtml" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -431,7 +428,7 @@
 
   {# Page delete confirm block #}
   {% if item %}
-    <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="confirmDelete" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
