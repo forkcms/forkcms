@@ -87,8 +87,8 @@ var jsBackend =
 
         // global error handler
         $(document).ajaxError(function (e, XMLHttpRequest, ajaxOptions) {
-            // 403 means we aren't authenticated anymore, so reload the page
-            if (XMLHttpRequest.status == 403) window.location.reload();
+            // 401 means we aren't authenticated anymore, so reload the page
+            if (XMLHttpRequest.status == 401) window.location.reload();
 
             // check if a custom errorhandler is used
             if (typeof ajaxOptions.error == 'undefined') {
