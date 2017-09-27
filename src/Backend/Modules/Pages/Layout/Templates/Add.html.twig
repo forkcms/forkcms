@@ -196,6 +196,23 @@
           {% endif %}
           <div role="tabpanel" class="tab-pane" id="tabSEO">
             {% seo %}
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <p class="tab-pane-title">{{ 'lbl.Languages'|trans|ucfirst }}</p>
+                  </div>
+                  <div class="panel-body">
+                    {% for language, field in hreflangFields %}
+                      <div class="form-group{% if loop.last %} last{% endif %}">
+                        <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>
+                        {{ field.field_hreflang|raw }}
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
