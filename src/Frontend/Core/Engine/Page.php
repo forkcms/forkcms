@@ -131,7 +131,7 @@ class Page extends KernelLoader
         $this->record = $this->getPageContent($pageId);
 
         if (empty($this->record)) {
-            $this->record = Model::getPage(Response::HTTP_NOT_FOUND);
+            $this->record = Model::getPage(404);
         }
 
         $this->checkAuthentication();
@@ -186,7 +186,7 @@ class Page extends KernelLoader
         }
 
         // turns out the logged in profile isn't in a group that is allowed to see the page
-        $this->record = Model::getPage(Response::HTTP_NOT_FOUND);
+        $this->record = Model::getPage(404);
     }
 
     public function display(): Response
