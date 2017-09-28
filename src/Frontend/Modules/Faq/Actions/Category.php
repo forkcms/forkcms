@@ -12,6 +12,7 @@ namespace Frontend\Modules\Faq\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * This is the category-action
@@ -42,7 +43,7 @@ class Category extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            throw new NotFoundHttpException();
         }
 
         // get by URL
@@ -50,7 +51,7 @@ class Category extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            throw new NotFoundHttpException();
         }
 
         $this->record['full_url'] = FrontendNavigation::getUrlForBlock('Faq', 'Category') . '/' . $this->record['url'];

@@ -15,6 +15,7 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Reset your password using a token received from the forgot_password action.
@@ -51,14 +52,14 @@ class ResetPassword extends FrontendBaseBlock
 
                 // validate
                 $this->validateForm();
-            } elseif ($this->url->getParameter('sent') != 'true') {
-                $this->redirect(FrontendNavigation::getUrl(404));
+            } elseif ($this->url->getParameter('sent') !== 'true') {
+                throw new NotFoundHttpException();
             }
 
             // parse
             $this->parse();
         } else {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            throw new NotFoundHttpException();
         }
     }
 

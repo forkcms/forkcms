@@ -16,6 +16,7 @@ use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * This is the detail-action
@@ -64,7 +65,7 @@ class Detail extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            throw new NotFoundHttpException();
         }
 
         // load revision
@@ -84,7 +85,7 @@ class Detail extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            throw new NotFoundHttpException();
         }
 
         // get comments

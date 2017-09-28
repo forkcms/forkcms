@@ -13,6 +13,7 @@ use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * This is the activate-action.
@@ -47,10 +48,10 @@ class Activate extends FrontendBaseBlock
                 $this->template->assign('activationSuccess', true);
             } else {
                 // failure
-                $this->redirect(FrontendNavigation::getUrl(404));
+                throw new NotFoundHttpException();
             }
         } else {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            throw new NotFoundHttpException();
         }
     }
 }

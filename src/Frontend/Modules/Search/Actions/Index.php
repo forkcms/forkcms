@@ -16,6 +16,7 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * This action will display a form to search
@@ -185,7 +186,7 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($this->requestedPage < 1 || $this->requestedPage > $this->pagination['num_pages']) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            throw new NotFoundHttpException();
         }
 
         // debug mode = no cache

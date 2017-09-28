@@ -15,6 +15,7 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Rss as FrontendRSS;
 use Frontend\Core\Engine\RssItem as FrontendRSSItem;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * This is the RSS-feed for comments on a certain article.
@@ -46,7 +47,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            throw new NotFoundHttpException();
         }
 
         // get record
@@ -54,7 +55,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getUrl(404));
+            throw new NotFoundHttpException();
         }
 
         // get articles
