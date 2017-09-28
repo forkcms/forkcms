@@ -150,9 +150,9 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
      * REMARK: You should not use this method from your code, but it has to be
      * public so we can access it later on in the core-code
      *
-     * @return string
+     * @return string|null
      */
-    public function getAction(): string
+    public function getAction(): ?string
     {
         if ($this->action !== null) {
             return $this->action;
