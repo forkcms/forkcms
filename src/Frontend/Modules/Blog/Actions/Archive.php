@@ -9,65 +9,31 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use DateTimeImmutable;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * This is the archive-action
- */
 class Archive extends FrontendBaseBlock
 {
-    /**
-     * The articles
-     *
-     * @var array
-     */
-    private $items;
+    /** @var array */
+    private $articles;
 
-    /**
-     * The dates for the archive
-     *
-     * @var int
-     */
+    /**  @var DateTimeImmutable */
     private $startDate;
 
-    /**
-     * The dates for the archive
-     *
-     * @var int
-     */
+    /**  @var DateTimeImmutable */
     private $endDate;
 
-    /**
-     * The pagination array
-     * It will hold all needed parameters, some of them need initialization
-     *
-     * @var array
-     */
-    protected $pagination = [
-        'limit' => 10,
-        'offset' => 0,
-        'requested_page' => 1,
-        'num_items' => null,
-        'num_pages' => null,
-    ];
+    /** @var bool */
+    private $hasMonth;
 
-    /**
-     * The requested year
-     *
-     * @var int
-     */
-    private $year;
-
-    /**
-     * The requested month
-     *
-     * @var int
-     */
-    private $month;
+    /** @var string */
+    private $format;
 
     public function execute(): void
     {
@@ -78,78 +44,91 @@ class Archive extends FrontendBaseBlock
         $this->parse();
     }
 
+    private function buildUrl(): string
+    {
+        return FrontendNavigation::getUrlForBlock('Blog', 'Archive') . '/' . $this->startDate->format($this->format);
+    }
+
+    private function buildPaginationConfig(): array
+    {
+        $requestedPage = $this->url->getParameter('page', 'int', 1);
+        $numberOfItems = FrontendBlogModel::getAllForDateRangeCount(
+            $this->startDate->getTimestamp(),
+            $this->endDate->getTimestamp()
+        );
+
+        $limit = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
+        $numberOfPages = (int) ceil($numberOfItems / $limit);
+
+        // Check if the page exists
+        if ($requestedPage > $numberOfPages || $requestedPage < 1) {
+            throw new NotFoundHttpException();
+        }
+
+        return [
+            'url' => $this->buildUrl(),
+            'limit' => $limit,
+            'offset' => ($requestedPage * $limit) - $limit,
+            'requested_page' => $requestedPage,
+            'num_items' => $numberOfItems,
+            'num_pages' => $numberOfPages,
+        ];
+    }
+
+    /**
+     * Complete the slug to prevent wrong months when the current day is higher than possible in the requested month
+     *
+     * @param string $slug
+     *
+     * @return string
+     */
+    private function getStartDateSlug(string $slug):string
+    {
+        if (!$this->hasMonth) {
+            $slug .= '/01';
+        }
+
+        return $slug . '/01';
+    }
+
+    private function setDateRange(): void
+    {
+        $baseUrl = Navigation::getUrlForBlock($this->getModule(), $this->getAction());
+        $slug = trim(str_replace($baseUrl, '', $this->getRequest()->getPathInfo()), '/');
+
+        $this->hasMonth = (bool) mb_strpos($slug, '/');
+        $this->format = $this->hasMonth ? 'Y/m' : 'Y';
+
+        $this->startDate = DateTimeImmutable::createFromFormat('Y/m/d', $this->getStartDateSlug($slug))
+            ->setTime(0, 0);
+
+        if (!$this->startDate instanceof DateTimeImmutable) {
+            throw new NotFoundHttpException();
+        }
+
+        if ($slug !== $this->startDate->format($this->format)) {
+            // redirect /2010/6 to /2010/06 to avoid duplicate content
+            $redirectUrl = $baseUrl . '/' . $this->startDate->format($this->format);
+            if (!empty($this->getRequest()->getQueryString())) {
+                $redirectUrl .= '?' . $this->getRequest()->getQueryString();
+            }
+
+            $this->redirect($redirectUrl, Response::HTTP_MOVED_PERMANENTLY);
+        }
+
+        $this->endDate = $this->startDate
+            ->setDate($this->startDate->format('Y'), 12, 31)
+            ->setTime(23, 59, 59, 999999);
+    }
+
     private function getData(): void
     {
-        // get parameters
-        $this->year = $this->url->getParameter(1);
-        $this->month = $this->url->getParameter(2);
+        $this->setDateRange();
+        $this->pagination = $this->buildPaginationConfig();
 
-        // redirect /2010/6 to /2010/06 to avoid duplicate content
-        if ($this->month !== null && mb_strlen($this->month) != 2) {
-            $queryString = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
-            $this->redirect(
-                FrontendNavigation::getUrlForBlock('Blog', 'Archive') . '/' . $this->year . '/' . str_pad(
-                    $this->month,
-                    2,
-                    '0',
-                    STR_PAD_LEFT
-                ) . $queryString,
-                301
-            );
-        }
-        if (mb_strlen($this->year) !== 4) {
-            throw new NotFoundHttpException();
-        }
-
-        // redefine
-        $this->year = (int) $this->year;
-        if ($this->month !== null) {
-            $this->month = (int) $this->month;
-        }
-
-        // validate parameters
-        if ($this->year == 0 || $this->month === 0) {
-            throw new NotFoundHttpException();
-        }
-
-        // requested page
-        $requestedPage = $this->url->getParameter('page', 'int', 1);
-
-        // rebuild url
-        $url = $this->year;
-
-        // build timestamp
-        if ($this->month !== null) {
-            $this->startDate = gmmktime(00, 00, 00, $this->month, 01, $this->year);
-            $this->endDate = gmmktime(23, 59, 59, $this->month, gmdate('t', $this->startDate), $this->year);
-            $url .= '/' . str_pad($this->month, 2, '0', STR_PAD_LEFT);
-        } else {
-            // year
-            $this->startDate = gmmktime(00, 00, 00, 01, 01, $this->year);
-            $this->endDate = gmmktime(23, 59, 59, 12, 31, $this->year);
-        }
-
-        // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Blog', 'Archive') . '/' . $url;
-        $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
-
-        // populate count fields in pagination
-        $this->pagination['num_items'] = FrontendBlogModel::getAllForDateRangeCount($this->startDate, $this->endDate);
-        $this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
-
-        // redirect if the request page doesn't exists
-        if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            throw new NotFoundHttpException();
-        }
-
-        // populate calculated fields in pagination
-        $this->pagination['requested_page'] = $requestedPage;
-        $this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
-
-        // get articles
-        $this->items = FrontendBlogModel::getAllForDateRange(
-            $this->startDate,
-            $this->endDate,
+        $this->articles = FrontendBlogModel::getAllForDateRange(
+            $this->startDate->getTimestamp(),
+            $this->endDate->getTimestamp(),
             $this->pagination['limit'],
             $this->pagination['offset']
         );
@@ -157,49 +136,51 @@ class Archive extends FrontendBaseBlock
 
     private function parse(): void
     {
-        // get RSS-link
-        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
-        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
+        $this->addLinkToRssFeed();
+        $this->addPageToBreadcrumb();
+        $this->setPageTitle();
+        $this->parsePagination();
 
-        // add RSS-feed
-        $this->header->addRssLink($rssTitle, $rssLink);
-
-        // add into breadcrumb
-        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FL::lbl('Archive')));
-        $this->breadcrumb->addElement($this->year);
-        if ($this->month !== null) {
-            $this->breadcrumb->addElement(
-                \SpoonDate::getDate('F', $this->startDate, LANGUAGE, true)
-            );
-        }
-
-        // set pageTitle
-        $this->header->setPageTitle(\SpoonFilter::ucfirst(FL::lbl('Archive')));
-        $this->header->setPageTitle($this->year);
-        if ($this->month !== null) {
-            $this->header->setPageTitle(
-                \SpoonDate::getDate('F', $this->startDate, LANGUAGE, true)
-            );
-        }
-
-        // assign category
         $this->template->assign(
             'archive',
             [
-                 'start_date' => $this->startDate,
-                 'end_date' => $this->endDate,
-                 'year' => $this->year,
-                 'month' => $this->month,
+                'start_date' => $this->startDate->getTimestamp(),
+                'end_date' => $this->endDate->getTimestamp(),
+                'year' => $this->startDate->format('Y'),
+                'month' => $this->hasMonth ? $this->startDate->format('m') : null,
             ]
         );
-
-        // assign items
-        $this->template->assign('items', $this->items);
-
-        // assign allowComments
+        $this->template->assign('items', $this->articles);
         $this->template->assign('allowComments', $this->get('fork.settings')->get('Blog', 'allow_comments'));
+    }
 
-        // parse the pagination
-        $this->parsePagination();
+    private function setPageTitle(): void
+    {
+        $this->header->setPageTitle(\SpoonFilter::ucfirst(FL::lbl('Archive')));
+        $this->header->setPageTitle($this->startDate->format('Y'));
+        if ($this->hasMonth) {
+            $this->header->setPageTitle(
+                \SpoonDate::getDate('F', $this->startDate->getTimestamp(), LANGUAGE, true)
+            );
+        }
+    }
+
+    private function addPageToBreadcrumb(): void
+    {
+        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FL::lbl('Archive')));
+        $this->breadcrumb->addElement($this->startDate->format('Y'));
+        if ($this->hasMonth) {
+            $this->breadcrumb->addElement(
+                \SpoonDate::getDate('F', $this->startDate->getTimestamp(), LANGUAGE, true)
+            );
+        }
+    }
+
+    private function addLinkToRssFeed(): void
+    {
+        $this->header->addRssLink(
+            $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE),
+            FrontendNavigation::getUrlForBlock('Blog', 'Rss')
+        );
     }
 }
