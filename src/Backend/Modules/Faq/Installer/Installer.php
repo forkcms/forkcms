@@ -225,8 +225,8 @@ class Installer extends ModuleInstaller
         $database->update(
             'modules_extras',
             $extra,
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            [$item['extra_id'], $this->getModule(), ModuleExtraType::widget(), 'category_list']
+            'id = ?',
+            [$item['extra_id']]
         );
 
         return $item['id'];
