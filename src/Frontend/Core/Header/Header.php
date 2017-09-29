@@ -144,7 +144,7 @@ class Header extends KernelLoader
      * Add a CSS file into the array
      *
      * @param string $file The path for the CSS-file that should be loaded.
-     * @param bool $minify Should the CSS be minified? An external url will never be minified.
+     * @param bool $minify Should the CSS be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority|null $priority Provides a way to change the order that things are loaded
      */
@@ -165,7 +165,7 @@ class Header extends KernelLoader
      * Add a javascript file into the array
      *
      * @param string $file The path to the javascript-file that should be loaded.
-     * @param bool $minify Should the file be minified? An external url will never be minified.
+     * @param bool $minify Should the javascript be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority|null $priority Provides a way to change the order that things are loaded
      */
