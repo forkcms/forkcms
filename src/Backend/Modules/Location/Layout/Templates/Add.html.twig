@@ -10,7 +10,7 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}</label>
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}{{ macro.required }}</label>
         {% form_field title %} {% form_field_error title %}
       </div>
       <div class="panel panel-default">

@@ -192,8 +192,8 @@ class Edit extends BackendBaseActionEdit
         $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
         // create elements
-        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
-        $this->form->addEditor('text', $this->record['text']);
+        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title')->makeRequired();
+        $this->form->addEditor('text', $this->record['text'])->makeRequired();
         $this->form->addEditor('introduction', $this->record['introduction']);
         $this->form->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
         $this->form->addCheckbox('allow_comments', $this->record['allow_comments']);

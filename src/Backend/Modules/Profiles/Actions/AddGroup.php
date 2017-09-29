@@ -32,7 +32,7 @@ class AddGroup extends BackendBaseActionAdd
     private function loadForm(): void
     {
         $this->form = new BackendForm('addGroup');
-        $this->form->addText('name');
+        $this->form->addText('name')->makeRequired();
     }
 
     private function validateForm(): void

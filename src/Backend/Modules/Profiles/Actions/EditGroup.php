@@ -56,7 +56,7 @@ class EditGroup extends BackendBaseActionEdit
     private function loadForm(): void
     {
         $this->form = new BackendForm('editGroup');
-        $this->form->addText('name', $this->group['name']);
+        $this->form->addText('name', $this->group['name'])->makeRequired();
     }
 
     protected function parse(): void

@@ -108,12 +108,12 @@ class Edit extends BackendBaseActionEdit
     private function loadForm(): void
     {
         $this->form = new BackendForm('edit');
-        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
-        $this->form->addText('street', $this->record['street']);
-        $this->form->addText('number', $this->record['number']);
-        $this->form->addText('zip', $this->record['zip']);
-        $this->form->addText('city', $this->record['city']);
-        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), $this->record['country']);
+        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title')->makeRequired();
+        $this->form->addText('street', $this->record['street'])->makeRequired();
+        $this->form->addText('number', $this->record['number'])->makeRequired();
+        $this->form->addText('zip', $this->record['zip'])->makeRequired();
+        $this->form->addText('city', $this->record['city'])->makeRequired();
+        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), $this->record['country'])->makeRequired();
         $this->form->addHidden('redirect', 'overview');
     }
 

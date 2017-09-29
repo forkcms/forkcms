@@ -42,7 +42,7 @@ class Add extends BackendBaseActionAdd
     private function loadForm(): void
     {
         $this->form = new BackendForm('add');
-        $this->form->addText('name');
+        $this->form->addText('name')->makeRequired();
         $this->form->addDropdown(
             'method',
             [
@@ -51,11 +51,11 @@ class Add extends BackendBaseActionAdd
                 'email' => BL::getLabel('MethodEmail'),
             ],
             'database_email'
-        );
+        )->makeRequired();
         $this->form->addText('email');
         $this->form->addText('email_subject');
         $this->form->addText('identifier', BackendFormBuilderModel::createIdentifier());
-        $this->form->addEditor('success_message');
+        $this->form->addEditor('success_message')->makeRequired();
 
         // if we have multiple templates, add a dropdown to select them
         if (count($this->templates) > 1) {

@@ -58,7 +58,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm(): void
     {
         $this->form = new BackendForm('edit');
-        $this->form->addText('name', $this->record['name']);
+        $this->form->addText('name', $this->record['name'])->makeRequired();
         $this->form->addDropdown(
             'method',
             [
@@ -67,7 +67,7 @@ class Edit extends BackendBaseActionEdit
                 'email' => BL::getLabel('MethodEmail'),
             ],
             $this->record['method']
-        );
+        )->makeRequired();
         $this->form->addText('email', implode(',', (array) $this->record['email']));
         $this->form->addText('email_subject', $this->record['email_subject']);
 
@@ -80,7 +80,7 @@ class Edit extends BackendBaseActionEdit
             );
         }
         $this->form->addText('identifier', $this->record['identifier']);
-        $this->form->addEditor('success_message', $this->record['success_message']);
+        $this->form->addEditor('success_message', $this->record['success_message'])->makeRequired();
 
         // textfield dialog
         $this->form->addText('textbox_label');

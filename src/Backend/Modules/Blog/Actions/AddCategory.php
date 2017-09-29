@@ -33,7 +33,7 @@ class AddCategory extends BackendBaseActionAdd
     private function loadForm(): void
     {
         $this->form = new BackendForm('addCategory');
-        $this->form->addText('title', null, 255, 'form-control title', 'form-control danger title');
+        $this->form->addText('title', null, 255, 'form-control title', 'form-control danger title')->makeRequired();
 
         // meta
         $this->meta = new BackendMeta($this->form, null, 'title', true);

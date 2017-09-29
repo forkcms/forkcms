@@ -49,8 +49,8 @@ class Add extends BackendBaseActionAdd
         $categories = BackendFaqModel::getCategories();
 
         // create elements
-        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
-        $this->form->addEditor('answer');
+        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title')->makeRequired();
+        $this->form->addEditor('answer')->makeRequired();
         $this->form->addRadiobutton('hidden', $rbtHiddenValues, 0);
         $this->form->addDropdown('category_id', $categories);
         $this->form->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');

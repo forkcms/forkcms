@@ -52,7 +52,7 @@ class EditCategory extends BackendBaseActionEdit
     {
         // create form
         $this->form = new BackendForm('editCategory');
-        $this->form->addText('title', $this->record['title']);
+        $this->form->addText('title', $this->record['title'])->makeRequired();
 
         $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
     }

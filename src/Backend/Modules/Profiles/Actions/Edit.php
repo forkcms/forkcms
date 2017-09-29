@@ -110,7 +110,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addCheckbox('new_password');
         $this->form->addPassword('password');
         $this->form->addPassword('password_repeat');
-        $this->form->addText('display_name', $this->profile['display_name']);
+        $this->form->addText('display_name', $this->profile['display_name'])->makeRequired();
         $this->form->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
         $this->form->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'));
         $this->form->addText('city', BackendProfilesModel::getSetting($this->id, 'city'));

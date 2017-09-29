@@ -33,12 +33,12 @@ class Add extends BackendBaseActionAdd
     private function loadForm(): void
     {
         $this->form = new BackendForm('add');
-        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
-        $this->form->addText('street');
-        $this->form->addText('number');
-        $this->form->addText('zip');
-        $this->form->addText('city');
-        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), 'BE');
+        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title')->makeRequired();
+        $this->form->addText('street')->makeRequired();
+        $this->form->addText('number')->makeRequired();
+        $this->form->addText('zip')->makeRequired();
+        $this->form->addText('city')->makeRequired();
+        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), 'BE')->makeRequired();
     }
 
     private function validateForm(): void

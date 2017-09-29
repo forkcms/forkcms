@@ -81,9 +81,10 @@ class Add extends BackendBaseActionAdd
         $this->form
             ->addText('email')
             ->setAttribute('type', 'email')
+            ->makeRequired()
         ;
-        $this->form->addPassword('password');
-        $this->form->addText('display_name');
+        $this->form->addPassword('password')->makeRequired();
+        $this->form->addText('display_name')->makeRequired();
         $this->form->addText('first_name');
         $this->form->addText('last_name');
         $this->form->addText('city');
