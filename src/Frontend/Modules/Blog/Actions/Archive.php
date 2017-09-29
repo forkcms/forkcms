@@ -46,7 +46,8 @@ class Archive extends FrontendBaseBlock
 
     private function buildUrl(): string
     {
-        return FrontendNavigation::getUrlForBlock('Blog', 'Archive') . '/' . $this->startDate->format($this->format);
+        return FrontendNavigation::getUrlForBlock($this->getModule(), $this->getAction())
+               . '/' . $this->startDate->format($this->format);
     }
 
     private function buildPaginationConfig(): array
