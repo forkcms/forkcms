@@ -21,48 +21,43 @@ use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
  */
 class CommentsRss extends FrontendBaseBlock
 {
-    /**
-     * The comments
-     *
-     * @var array
-     */
-    private $items;
-
     public function execute(): void
     {
         parent::execute();
-        $this->getData();
-        $this->parse();
+
+        $this->generateRss();
     }
 
-    private function getData(): void
+    private function generateRss()
     {
-        $this->items = FrontendBlogModel::getAllComments();
-    }
+        $blogPostComments = FrontendBlogModel::getAllComments();
+        $rss = new FrontendRSS(
+            \SpoonFilter::ucfirst(FL::msg('BlogAllComments')),
+            SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule()),
+            ''
+        );
+        $blogPostUrlBase = SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule(), 'Detail');
 
-    private function parse(): void
-    {
-        $title = \SpoonFilter::ucfirst(FL::msg('BlogAllComments'));
-        $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog');
-        $detailLink = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-        $description = '';
-
-        $rss = new FrontendRSS($title, $link, $description);
-
-        // loop articles
-        foreach ($this->items as $item) {
-            $title = $item['author'] . ' ' . FL::lbl('On') . ' ' . $item['post_title'];
-            $link = $detailLink . '/' . $item['post_url'] . '/#comment-' . $item['id'];
-            $description = $item['text'];
-
-            $rssItem = new FrontendRSSItem($title, $link, $description);
-
-            $rssItem->setPublicationDate($item['created_on']);
-            $rssItem->setAuthor(empty($item['email']) ? $item['author'] : $item['email']);
-
-            $rss->addItem($rssItem);
+        foreach ($blogPostComments as $blogPostComment) {
+            $rss->addItem($this->getRssFeedItemForBlogPostComment($blogPostComment, $blogPostUrlBase));
         }
 
         $rss->parse();
+    }
+
+    private function getRssFeedItemForBlogPostComment(
+        array $blogPostComment,
+        string $blogPostUrlBase
+    ): FrontendRSSItem {
+        $rssItem = new FrontendRSSItem(
+            $blogPostComment['author'] . ' ' . FL::lbl('On') . ' ' . $blogPostComment['post_title'],
+            $blogPostUrlBase . '/' . $blogPostComment['post_irl'] . '/#comment-' . $blogPostComment['id'],
+            $blogPostComment['text']
+        );
+
+        $rssItem->setPublicationDate($blogPostComment['created_on']);
+        $rssItem->setAuthor(empty($blogPostComment['email']) ? $blogPostComment['author'] : $blogPostComment['email']);
+
+        return $rssItem;
     }
 }
