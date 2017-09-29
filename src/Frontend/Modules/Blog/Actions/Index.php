@@ -14,31 +14,10 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * This is the overview-action
- */
 class Index extends FrontendBaseBlock
 {
-    /**
-     * The articles
-     *
-     * @var array
-     */
-    private $items;
-
-    /**
-     * The pagination array
-     * It will hold all needed parameters, some of them need initialization.
-     *
-     * @var array
-     */
-    protected $pagination = [
-        'limit' => 10,
-        'offset' => 0,
-        'requested_page' => 1,
-        'num_items' => null,
-        'num_pages' => null,
-    ];
+    /** @var array */
+    private $articles;
 
     public function execute(): void
     {
@@ -48,57 +27,48 @@ class Index extends FrontendBaseBlock
         $this->parse();
     }
 
-    private function getData(): void
+    private function buildPaginationConfig(): array
     {
-        // requested page
         $requestedPage = $this->url->getParameter('page', 'int', 1);
+        $numberOfItems = FrontendBlogModel::getAllCount();
 
-        // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Blog');
-        $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
+        $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items', 10);
+        $numberOfPages = (int) ceil($numberOfItems / $limit);
 
-        // populate count fields in pagination
-        $this->pagination['num_items'] = FrontendBlogModel::getAllCount();
-        $this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
-
-        // num pages is always equal to at least 1
-        if ($this->pagination['num_pages'] == 0) {
-            $this->pagination['num_pages'] = 1;
-        }
-
-        // redirect if the request page doesn't exist
-        if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
+        // Check if the page exists
+        if ($requestedPage > $numberOfPages || $requestedPage < 1) {
             throw new NotFoundHttpException();
         }
 
-        // populate calculated fields in pagination
-        $this->pagination['requested_page'] = $requestedPage;
-        $this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
+        return [
+            'url' => FrontendNavigation::getUrlForBlock($this->getModule()),
+            'limit' => $limit,
+            'offset' => ($requestedPage * $limit) - $limit,
+            'requested_page' => $requestedPage,
+            'num_items' => $numberOfItems,
+            'num_pages' => $numberOfPages,
+        ];
+    }
 
-        // get articles
-        $this->items = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
+    private function getData(): void
+    {
+        $this->pagination = $this->buildPaginationConfig();
+        $this->articles = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
+    }
+
+    private function addLinkToRssFeed(): void
+    {
+        $this->header->addRssLink(
+            $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE),
+            FrontendNavigation::getUrlForBlock($this->getModule(), 'Rss')
+        );
     }
 
     private function parse(): void
     {
-        // get RSS-link
-        $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
-
-        // add RSS-feed
-        $this->header->addLink(
-            [
-                 'rel' => 'alternate',
-                 'type' => 'application/rss+xml',
-                 'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE),
-                 'href' => $rssLink,
-            ],
-            true
-        );
-
-        // assign articles
-        $this->template->assign('items', $this->items);
-
-        // parse the pagination
+        $this->addLinkToRssFeed();
         $this->parsePagination();
+
+        $this->template->assign('items', $this->articles);
     }
 }
