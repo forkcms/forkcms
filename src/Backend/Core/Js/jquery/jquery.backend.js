@@ -811,6 +811,7 @@
             source: function (request, response) {
               $.ajax(
                 {
+<<<<<<< HEAD
                   data: $.extend(options.params, {term: request.term}),
                   success: function (data, textStatus) {
                     // init var
@@ -819,6 +820,84 @@
                     // alert the user
                     if (data.code !== 200 && jsBackend.debug) {
                       window.alert(data.message)
+=======
+                    // show warning
+                    $('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError text-danger">'+ options.errorMessage +'</span>');
+
+                    // clear other timers
+                    clearTimeout(timer);
+
+                    // we need the timeout otherwise the error is show every time the user presses enter in the tagbox
+                    timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
+                }
+
+                return !blockSubmit;
+            });
+
+            // build replace html
+            var html =     '<div class="form-inline form-group tagsWrapper">' +
+                        '    <div class="form-group input-group">' +
+                        '       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+                        '       <a href="#" id="addButton-' + id + '" class="btn btn-default btn-second btn-xs input-group-addon">' +
+                        '           <span class="fa fa-plus-square" aria-hidden="true"></span>' +
+                            (options.showIconOnly?'':'          <span>' + options.addLabel + '</span>') +
+                        '       </a>' +
+                        '   </div>' +
+                        '</div>' +
+                        '<div class="form-inline form-group">' +
+                        '    <div id="elementList-' + id + '" class="form-group tagList">' +
+                        '    </div>' +
+                        '</div>';
+
+            // hide current element
+            $(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+
+            // prepend html
+            $(this).before(html);
+
+            // add elements list
+            build();
+
+            // bind autocomplete if needed
+            if(!$.isEmptyObject(options.params))
+            {
+                $('#addValue-' + id).autocomplete(
+                {
+                    delay: 200,
+                    minLength: 2,
+                    source: function(request, response)
+                    {
+                        $.ajax(
+                        {
+                            data: $.extend(options.params, { term: request.term }),
+                            success: function(data, textStatus)
+                            {
+                                // init var
+                                var realData = [];
+
+                                // alert the user
+                                if(data.code != 200 && jsBackend.debug)
+                                {
+                                    alert(data.message);
+                                }
+
+                                if(data.code == 200)
+                                {
+                                    for(var i in data.data)
+                                    {
+                                        realData.push(
+                                        {
+                                            label: data.data[i].name,
+                                            value: data.data[i].name
+                                        });
+                                    }
+                                }
+
+                                // set response
+                                response(realData);
+                            }
+                        });
+>>>>>>> Add aria-hidden=true for fontawesome icons
                     }
 
                     if (data.code === 200) {
@@ -854,9 +933,28 @@
           // hide before..
           $('#errorMessage-' + id).remove()
 
+<<<<<<< HEAD
           // prevent default behaviour
           e.preventDefault()
           e.stopPropagation()
+=======
+                // items available
+                else
+                {
+                    // start html
+                    html = '<ul class="list-group">';
+
+                    // loop elements
+                    for(var i in elements)
+                    {
+                        var value = utils.string.stripForTag(elements[i]);
+
+                        html += '    <li class="list-group-item">' +
+                                '        <a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash" aria-hidden="true"></span></a></span>' +
+                                '       <span><strong>' + value + '</strong>' +
+                                '    </li>';
+                    }
+>>>>>>> Add aria-hidden=true for fontawesome icons
 
           // add element
           add()
@@ -1213,6 +1311,7 @@
 /**
  * Multiple text box
  */
+<<<<<<< HEAD
 (function ($) {
   $.fn.multipleTextbox = function (options) {
     // define defaults
@@ -1280,6 +1379,76 @@
             minLength: 2,
             source: function (request, response) {
               $.ajax(
+=======
+(function($)
+{
+    $.fn.multipleTextbox = function(options)
+    {
+        // define defaults
+        var defaults = {
+            splitChar: ',',
+            emptyMessage: '',
+            addLabel: 'add',
+            removeLabel: 'delete',
+            params: {},
+            canAddNew: false,
+            showIconOnly: false,
+            afterBuild: null
+        };
+
+        // extend options
+        options = $.extend(defaults, options);
+
+        // loop all elements
+        return this.each(function()
+        {
+            // define some vars
+            var id = $(this).attr('id');
+            var elements = get();
+            var blockSubmit = false;
+
+            $('label[for="' + id + '"]').attr('for', 'addValue-' + id);
+
+            // bind submit
+            $(this.form).submit(function()
+            {
+                return !blockSubmit;
+            });
+
+            // remove previous HTML
+            if($('#elementList-' + id).length > 0)
+            {
+                $('#elementList-' + id).parent('.multipleTextWrapper').remove();
+            }
+
+            // build replace html
+            var html =
+                '<div class="multipleTextWrapper">' +
+                    '<div id="elementList-' + id + '" class="multipleTextList">' +
+                    '</div>' +
+                    '<div class="input-group">' +
+                        '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+                                '<a href="#" id="addButton-' + id + '" class="btn btn-default btn-second input-group-addon">' +
+                '<span class="fa fa-plus-square" aria-hidden="true"></span>' +
+                (options.showIconOnly?'':'<span>' + options.addLabel + '</span>') +
+                '</a>' +
+                    '</div>' +
+                '</div>';
+
+            // hide current element
+            $(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+
+            // prepend html
+            $(this).before(html);
+
+            // add elements list
+            build();
+
+            // bind autocomplete if needed
+            if(!$.isEmptyObject(options.params))
+            {
+                $('#addValue-' + id).autocomplete(
+>>>>>>> Add aria-hidden=true for fontawesome icons
                 {
                   data: $.extend(options.params, {term: request.term}),
                   success: function (data, textStatus) {
@@ -1414,12 +1583,32 @@
               // set new value
               $('#' + id).val(elements.join(options.splitChar))
 
+<<<<<<< HEAD
               // rebuild element list
               build()
             }
           }
         }
       }
+=======
+                // items available
+                else
+                {
+                    // start html
+                    html = '<ul class="list-unstyled">';
+
+                    // loop elements
+                    for(var i in elements)
+                    {
+                        html += '    <li class="form-group input-group">' +
+                                '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
+                                '        <a href="#" class="btn btn-danger input-group-addon deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+                                '           <span class="fa fa-trash" aria-hidden="true"></span>' +
+                                '            <span>' + options.removeLabel + '</span>' +
+                                '        </a>' +
+                                '    </li>';
+                    }
+>>>>>>> Add aria-hidden=true for fontawesome icons
 
       // build the list
       function build () {

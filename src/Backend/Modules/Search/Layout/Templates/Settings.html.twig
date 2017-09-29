@@ -73,7 +73,7 @@
               <th>{{ 'lbl.Module'|trans|ucfirst }}</th>
               <th>
                 {{ 'lbl.Weight'|trans|ucfirst }}
-                <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ 'msg.HelpWeight'|trans|ucfirst }}"></abbr>
+                <abbr class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" title="{{ 'msg.HelpWeight'|trans|ucfirst }}"></abbr>
               </th>
             </tr>
             {% for module in modules %}
@@ -98,7 +98,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="save" type="submit" name="save" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>

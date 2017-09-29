@@ -90,7 +90,7 @@
               <div class="col-md-12">
                 <label for="identifier" class="control-label">
                   {{ 'lbl.Identifier'|trans|ucfirst }}
-                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans }}"></abbr>
+                  <abbr class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans }}"></abbr>
                 </label>
                 {% form_field identifier %} {% form_field_error identifier %}
               </div>
@@ -105,7 +105,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
+            <span class="fa fa-plus-square" aria-hidden="true"></span>{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>

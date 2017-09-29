@@ -17,7 +17,7 @@
             <div class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ LANGUAGE|uppercase }}">
                 <span class="dropdown-text">{{ ('lbl.'~LANGUAGE|uppercase)|trans|ucfirst }}</span>
-                <span class="dropdown-angle"><i class="fa fa-angle-right"></i></span>
+                <span class="dropdown-angle"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
               </a>
               <ul class="dropdown-menu" role="menu">
                 {% for workingLanguage in workingLanguages %}
@@ -37,7 +37,7 @@
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ authenticatedUserNickname }}">
         <img src="{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ authenticatedUserAvatar }}" class="img-circle" alt="{{ authenticatedUserNickname }}" />
-        <i class="fa fa-angle-right"></i>
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
       </a>
       <ul class="dropdown-menu pull-right" role="menu">
         {% if authenticatedUserEditUrl %}
@@ -52,5 +52,5 @@
 {% include "Layout/Templates/messaging.html.twig" %}
 
 <div id="ajaxSpinner">
-  <i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i>
+  <i class="fa fa-spinner fa-pulse fa-lg fa-fw" aria-hidden="true"></i>
 </div>

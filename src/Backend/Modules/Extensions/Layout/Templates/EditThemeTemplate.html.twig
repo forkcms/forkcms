@@ -55,7 +55,7 @@
                     <label for="position{{ position.i }}">
                       <span>{{ 'lbl.Position'|trans|ucfirst }}</span>
                       <a href="#" class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|ucfirst }}">
-                        <span class="fa fa-trash-o"></span>
+                        <span class="fa fa-trash-o" aria-hidden="true"></span>
                       </a>
                     </label>
                   </div>
@@ -78,7 +78,7 @@
                           {{ block.formElements.ddmTypeError }}
                           {# Button to remove block from this position #}
                           <a href="#" class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|ucfirst }}">
-                            <span class="fa fa-trash-o"></span>
+                            <span class="fa fa-trash-o" aria-hidden="true"></span>
                           </a>
                         </div>
                       </div>
@@ -90,7 +90,7 @@
                     <div class="btn-group" role="group">
                       {# Button to add new default block to this position #}
                       <a href="#" class="btn btn-default jsAddBlock">
-                        <span class="fa fa-plus-square"></span>&nbsp;
+                        <span class="fa fa-plus-square" aria-hidden="true"></span>&nbsp;
                         <span>{{ 'lbl.AddBlock'|trans|ucfirst }}</span>
                       </a>
                     </div>
@@ -103,7 +103,7 @@
           <div class="btn-toolbar">
             <div class="btn-group" role="group">
               <a href="#" class="btn btn-primary jsAddPosition">
-                <span class="fa fa-plus-square"></span>&nbsp;
+                <span class="fa fa-plus-square" aria-hidden="true"></span>&nbsp;
                 <span>{{ 'lbl.AddPosition'|trans|ucfirst }}</span>
               </a>
             </div>
@@ -187,13 +187,13 @@
         <div class="btn-group pull-left" role="group">
           {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              <span class="fa fa-trash-o" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -216,10 +216,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              <span class="fa fa-trash" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           </div>
         </div>

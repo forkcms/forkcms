@@ -105,7 +105,7 @@
               <div class="col-md-12">
                 <p class="alert alert-warning alert-xs">
                   <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ImportantImmediateUpdate'|trans|raw }}
-                  {% if recaptchaMissing %}<br><span class="fa fa-exclamation-triangle"></span>{{ 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw }}{% endif %}
+                  {% if recaptchaMissing %}<br><span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw }}{% endif %}
                 </p>
                 <br>
               </div>
@@ -143,7 +143,7 @@
                         <div class="col-md-4">
                           <div class="btn-group pull-right" role="group">
                             <a href="#edit-{{ submitId }}" class="btn btn-default btn-second btn-icon-only jsFieldEdit" rel="{{ submitId }}" title="{{ 'lbl.Edit'|trans|ucfirst }}">
-                              <span class="fa fa-pencil fa-fw"></span>
+                              <span class="fa fa-pencil fa-fw" aria-hidden="true"></span>
                             </a>
                           </div>
                         </div>
@@ -219,14 +219,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showFormBuilderDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
+              <span class="fa fa-trash-o" aria-hidden="true"></span>
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -280,7 +280,7 @@
                       <li class="checkbox">
                         <label for="textboxReplyTo" class="control-label">
                           {% form_field textbox_reply_to %} {{ 'lbl.ReplyTo'|trans|ucfirst }}
-                          <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpReplyTo'|trans }}"></abbr>
+                          <abbr class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="{{ 'msg.HelpReplyTo'|trans }}"></abbr>
                         </label>
                       </li>
                     </ul>
@@ -362,10 +362,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="textboxDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -473,10 +473,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="textareaDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -581,10 +581,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="textareaDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -672,10 +672,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="dropdownDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -762,10 +762,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="radiobuttonDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -852,10 +852,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="checkboxDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -882,10 +882,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="submitDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -912,10 +912,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="headingDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -938,10 +938,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="paragraphDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -967,10 +967,10 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+                  <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 <button type="submit" class="btn btn-danger">
-                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+                  <span class="fa fa-trash" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                 </button>
               </div>
             </div>

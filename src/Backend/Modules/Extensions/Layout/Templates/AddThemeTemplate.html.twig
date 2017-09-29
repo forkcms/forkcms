@@ -53,7 +53,7 @@
                     <label for="position{{ position.i }}">
                       <span>{{ 'lbl.Position'|trans|ucfirst }}</span>
                       <a href="#" class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|ucfirst }}">
-                        <span class="fa fa-trash-o"></span>
+                        <span class="fa fa-trash-o" aria-hidden="true"></span>
                       </a>
                     </label>
                   </div>
@@ -77,7 +77,7 @@
                           {{ block.formElements.ddmTypeError }}
                           {# Button to remove block from this position #}
                           <a href="#" class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|ucfirst }}">
-                            <span class="fa fa-trash-o"></span>
+                            <span class="fa fa-trash-o" aria-hidden="true"></span>
                           </a>
                         </div>
                       </div>
@@ -89,7 +89,7 @@
                     <div class="btn-group" role="group">
                       {# Button to add new default block to this position #}
                       <a href="#" class="btn btn-default jsAddBlock">
-                        <span class="fa fa-plus-square"></span>&nbsp;
+                        <span class="fa fa-plus-square" aria-hidden="true"></span>&nbsp;
                         <span>{{ 'lbl.AddBlock'|trans|ucfirst }}</span>
                       </a>
                     </div>
@@ -102,7 +102,7 @@
           <div class="btn-toolbar">
             <div class="btn-group" role="group">
               <a href="#" class="btn btn-primary jsAddPosition">
-                <span class="fa fa-plus-square"></span>
+                <span class="fa fa-plus-square" aria-hidden="true"></span>
                 <span>{{ 'lbl.AddPosition'|trans|ucfirst }}</span>
               </a>
             </div>
@@ -166,7 +166,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" name="add" class="btn btn-primary" type="submit">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
+            <span class="fa fa-plus-square" aria-hidden="true"></span>{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>

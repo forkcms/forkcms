@@ -17,7 +17,7 @@
           <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl"></span></a>
         {% endif %}
         {% if not detailURL %}
-          <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+          <p class="text-warning"><span class="fa fa-warning" aria-hidden="true"></span> {{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
         {% endif %}
       </div>
     </div>
@@ -68,7 +68,7 @@
                   <div class="panel-heading">
                     <p>
                       {{ 'lbl.Summary'|trans|ucfirst }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr><br>
+                      <abbr class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr><br>
                     </p>
                   </div>
                   <div class="panel-body">
@@ -153,10 +153,10 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <a href="#" id="saveAsDraft" class="btn btn-default">
-            <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
+            <span class="fa fa-file-o" aria-hidden="true"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
           </a>
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
+            <span class="fa fa-plus-square" aria-hidden="true"></span>{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -180,10 +180,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="addCategorySubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.AddCategory'|trans|ucfirst }}</button>
+            <span class="fa fa-plus-square" aria-hidden="true"></span>{{ 'lbl.AddCategory'|trans|ucfirst }}</button>
         </div>
       </div>
     </div>

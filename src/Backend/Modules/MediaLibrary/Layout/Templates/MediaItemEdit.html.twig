@@ -5,7 +5,7 @@
   <div class="sub-navigation">
     <div id="mediaTree" class="pages-tree">
       <div class="alert alert-warning visible-xs visible-sm">
-        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
+        <p><span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
       </div>
       <div id="tree">
         {{ tree|raw }}
@@ -49,7 +49,7 @@
           {% if showMediaLibraryMediaItemDelete %}
             {% if mediaItem.groups.count == 0 %}
               <button type="button" class="btn btn-danger" id="blog-delete" data-toggle="modal" data-target="#confirmDelete">
-                <span class="fa fa-trash-o"></span>
+                <span class="fa fa-trash-o" aria-hidden="true"></span>
                 {{ 'lbl.Delete'|trans|ucfirst }}
               </button>
             {% endif %}
@@ -57,7 +57,7 @@
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-check"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-check" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -80,10 +80,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              <span class="fa fa-trash" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           </div>
         </div>

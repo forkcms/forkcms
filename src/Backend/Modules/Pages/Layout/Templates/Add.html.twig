@@ -5,7 +5,7 @@
   <div class="sub-navigation hidden-xs">
     <div class="pages-tree">
       <div class="alert alert-warning visible-sm">
-        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MovePagesNotPossible'|trans }}</p>
+        <p><span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.MovePagesNotPossible'|trans }}</p>
       </div>
       <div id="tree">
         {{ tree|raw }}
@@ -206,10 +206,10 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <a href="#" id="saveAsDraft" class="btn btn-default">
-            <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
+            <span class="fa fa-file-o" aria-hidden="true"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
           </a>
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.AddPage'|trans|ucfirst }}
+            <span class="fa fa-plus-square" aria-hidden="true"></span>{{ 'lbl.AddPage'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -220,7 +220,7 @@
     {% for position in positions %}
       {% for block in position.blocks %}
         <div class="alert alert-warning">
-          <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ContentSaveWarning'|trans }}
+          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.ContentSaveWarning'|trans }}
         </div>
         <div class="box contentBlock" style="margin: 0;">
           <div class="blockContent HTML optionsRTE">
@@ -264,9 +264,9 @@
           <p>{{ 'msg.HelpBlockContent'|trans }}</p>
 
           <div id="extraWarningAlreadyBlock" class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
+            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
           <div id="extraWarningHomeNoBlock" class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'msg.HomeNoBlock'|trans }}</div>
+            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.HomeNoBlock'|trans }}</div>
           <div class="form-group">
             <label for="extraType" class="control-label">{{ 'lbl.Type'|trans|ucfirst }}</label>
             {% form_field extra_type %}
@@ -292,10 +292,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="addBlockSubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}</button>
+            <span class="fa fa-plus-square" aria-hidden="true"></span>{{ 'lbl.Add'|trans|ucfirst }}</button>
         </div>
       </div>
     </div>
@@ -315,10 +315,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|capitalize }}
           </button>
           <button type="button" class="btn btn-primary js-submit-user-template">
-            <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
+            <span class="fa fa-check" aria-hidden="true"></span>{{ 'lbl.OK'|trans|capitalize }}
           </button>
         </div>
       </div>
@@ -336,7 +336,7 @@
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'msg.TemplateChangeWarning'|trans|raw }}</div>
+            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.TemplateChangeWarning'|trans|raw }}</div>
           <div id="templateList">
             <div class="row">
               {% for template in templates %}
@@ -362,10 +362,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="changeTemplateSubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
+            <span class="fa fa-check" aria-hidden="true"></span>{{ 'lbl.OK'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -384,10 +384,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="confirmDeleteBlockSubmit" type="button" class="btn btn-danger">
-            <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            <span class="fa fa-trash" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -406,7 +406,7 @@
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ContentSaveWarning'|trans|raw }}
+            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.ContentSaveWarning'|trans|raw }}
           </div>
           <br>
           <div class="form-group">
@@ -416,10 +416,10 @@
         </div>
         <div class="modal-footer">
           <button id="blockHtmlCancel" type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="blockHtmlSubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
+            <span class="fa fa-plus-square" aria-hidden="true"></span>{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -439,10 +439,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              <span class="fa fa-trash" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
             </a>
           </div>
         </div>
