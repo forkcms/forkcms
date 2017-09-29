@@ -22,72 +22,74 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ArticleCommentsRss extends FrontendBaseBlock
 {
-    /**
-     * The record
-     *
-     * @var array
-     */
-    private $record;
-
-    /**
-     * The comments
-     *
-     * @var array
-     */
-    private $items;
-
     public function execute(): void
     {
         parent::execute();
-        $this->getData();
-        $this->parse();
+
+        $this->generateRss();
     }
 
-    private function getData(): void
+    private function generateRss()
     {
-        // validate incoming parameters
+        $blogPost = $this->getBlogPost();
+        $blogPostComments = FrontendBlogModel::getComments($blogPost['id']);
+        $rss = new FrontendRSS(
+            vsprintf(FL::msg('CommentsOn'), [$blogPost['title']]),
+            $this->getRssFeedLink($blogPost),
+            ''
+        );
+        $blogPostUrl = $this->getBlogPostLink($blogPost);
+
+        foreach ($blogPostComments as $blogPostComment) {
+            $rss->addItem($this->getRssFeedItemForBlogPostComment($blogPostComment, $blogPost['title'], $blogPostUrl));
+        }
+
+        $rss->parse();
+    }
+
+    private function getRssFeedLink(array $blogPost): string
+    {
+        return SITE_URL
+               . FrontendNavigation::getUrlForBlock($this->getModule(), $this->getAction())
+               . '/' . $blogPost['url'];
+    }
+
+    private function getBlogPostLink(array $blogPost): string
+    {
+        return SITE_URL
+               . FrontendNavigation::getUrlForBlock($this->getModule(), 'Detail')
+               . '/' . $blogPost['url'];
+    }
+
+    private function getRssFeedItemForBlogPostComment(
+        array $blogPostComment,
+        string $blogPostTitle,
+        string $blogPostUrl
+    ): FrontendRSSItem {
+        $rssItem = new FrontendRSSItem(
+            $blogPostComment['author'] . ' ' . FL::lbl('On') . ' ' . $blogPostTitle,
+            $blogPostUrl . '/#comment-' . $blogPostComment['id'],
+            $blogPostComment['text']
+        );
+
+        $rssItem->setPublicationDate($blogPostComment['created_on']);
+        $rssItem->setAuthor(empty($blogPostComment['email']) ? $blogPostComment['author'] : $blogPostComment['email']);
+
+        return $rssItem;
+    }
+
+    private function getBlogPost(): array
+    {
         if ($this->url->getParameter(1) === null) {
             throw new NotFoundHttpException();
         }
 
-        // get record
-        $this->record = FrontendBlogModel::get($this->url->getParameter(1));
+        $blogPost = FrontendBlogModel::get($this->url->getParameter(1));
 
-        // anything found?
-        if (empty($this->record)) {
+        if (empty($blogPost)) {
             throw new NotFoundHttpException();
         }
 
-        // get articles
-        $this->items = FrontendBlogModel::getComments($this->record['id']);
-    }
-
-    private function parse(): void
-    {
-        // get vars
-        $title = vsprintf(FL::msg('CommentsOn'), [$this->record['title']]);
-        $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'ArticleCommentsRss') .
-                '/' . $this->record['url'];
-        $detailLink = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-        $description = '';
-
-        // create new rss instance
-        $rss = new FrontendRSS($title, $link, $description);
-
-        // loop articles
-        foreach ($this->items as $item) {
-            $title = $item['author'] . ' ' . FL::lbl('On') . ' ' . $this->record['title'];
-            $link = $detailLink . '/' . $this->record['url'] . '/#comment-' . $item['id'];
-            $description = $item['text'];
-
-            $rssItem = new FrontendRSSItem($title, $link, $description);
-
-            $rssItem->setPublicationDate($item['created_on']);
-            $rssItem->setAuthor(empty($item['email']) ? $item['author'] : $item['email']);
-
-            $rss->addItem($rssItem);
-        }
-
-        $rss->parse();
+        return $blogPost;
     }
 }
