@@ -5,9 +5,10 @@ namespace Common\Doctrine\Repository;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model;
 use Common\Uri;
+use Doctrine\ORM\EntityRepository;
 use SpoonFilter;
 
-class MetaRepository
+class MetaRepository extends EntityRepository
 {
     /**
      * Generate an url, using the predefined callback.
