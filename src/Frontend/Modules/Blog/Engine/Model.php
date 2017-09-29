@@ -164,6 +164,28 @@ class Model implements FrontendTagsInterface
         return $return;
     }
 
+    public static function getCategory(string $slug): array
+    {
+        $category = (array) FrontendModel::getContainer()->get('database')->getRecord(
+            'SELECT c.id, c.title AS label, m.url, m.id AS meta_id, COUNT(c.id) AS total
+             FROM blog_categories AS c
+             INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
+             INNER JOIN meta AS m ON c.meta_id = m.id AND m.url = ?
+             WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
+             GROUP BY c.id',
+            [$slug, LANGUAGE, 'active', false, FrontendModel::getUTCDate('Y-m-d H:i')],
+            'id'
+        );
+
+        if (empty($category)) {
+            return [];
+        }
+
+        $category['meta'] = FrontendModel::get('fork.repository.meta')->find($category['meta_id']);
+
+        return $category;
+    }
+
     public static function getAllComments(int $limit = 10, int $offset = 0): array
     {
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
