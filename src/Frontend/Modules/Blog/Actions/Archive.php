@@ -58,7 +58,7 @@ class Archive extends FrontendBaseBlock
             $this->endDate->getTimestamp()
         );
 
-        $limit = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
+        $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items', 10);
         $numberOfPages = (int) ceil($numberOfItems / $limit);
 
         // Check if the page exists
@@ -152,7 +152,10 @@ class Archive extends FrontendBaseBlock
             ]
         );
         $this->template->assign('items', $this->articles);
-        $this->template->assign('allowComments', $this->get('fork.settings')->get('Blog', 'allow_comments'));
+        $this->template->assign(
+            'allowComments',
+            $this->get('fork.settings')->get($this->getModule(), 'allow_comments')
+        );
     }
 
     private function setPageTitle(): void
@@ -180,8 +183,8 @@ class Archive extends FrontendBaseBlock
     private function addLinkToRssFeed(): void
     {
         $this->header->addRssLink(
-            $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE),
-            FrontendNavigation::getUrlForBlock('Blog', 'Rss')
+            $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE),
+            FrontendNavigation::getUrlForBlock($this->getModule(), 'Rss')
         );
     }
 }

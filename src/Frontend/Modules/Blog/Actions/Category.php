@@ -53,7 +53,7 @@ class Category extends FrontendBaseBlock
         $requestedPage = $this->url->getParameter('page', 'int', 1);
         $numberOfItems = FrontendBlogModel::getAllForCategoryCount($this->category['url']);
 
-        $limit = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
+        $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items', 10);
         $numberOfPages = (int) ceil($numberOfItems / $limit);
 
         // Check if the page exists
@@ -86,8 +86,8 @@ class Category extends FrontendBaseBlock
     private function addLinkToRssFeed(): void
     {
         $this->header->addRssLink(
-            $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE),
-            FrontendNavigation::getUrlForBlock('Blog', 'Rss')
+            $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE),
+            FrontendNavigation::getUrlForBlock($this->getModule(), 'Rss')
         );
     }
 
