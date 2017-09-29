@@ -54,7 +54,7 @@ class Edit extends BackendBaseActionEdit
             }
 
             // add js
-            $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, null, false, true, false);
+            $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey);
 
             $this->loadData();
 

@@ -112,6 +112,9 @@ class Widget extends KernelLoader
         bool $minify = true,
         bool $addTimestamp = false
     ): void {
+        // external urls always overwrite the path
+        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
         }
@@ -133,6 +136,9 @@ class Widget extends KernelLoader
         bool $minify = true,
         bool $addTimestamp = false
     ): void {
+        // external urls always overwrite the path
+        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;
         }
