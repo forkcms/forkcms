@@ -152,8 +152,8 @@ class Index extends BackendBaseActionIndex
                 $dataGrid->setColumnAttributes(
                     $lang,
                     [
-                        'data-id' => '{language: \'' .
-                            $lang . '\',application: \'[application]\',module: \'[module]\',name: \'[name]\',type: \'' .
+                        'data-id' => '{\'language\': \'' .
+                            $lang . '\',\'application\': \'[application]\',\'module\': \'[module]\',\'name\': \'[name]\',\'type\': \'' .
                             $type . '\'}',
                     ]
                 );
