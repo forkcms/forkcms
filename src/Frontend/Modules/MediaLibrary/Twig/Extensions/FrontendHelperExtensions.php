@@ -36,14 +36,14 @@ class FrontendHelperExtensions extends \Twig_Extension
      * @param string $title - You can give your optional custom title.
      * @param string $module - You can parse a widget from a custom module. Default is the "MediaLibrary" module.
      *
-     * @return Twig_Markup
+     * @return string
      */
     public function parseWidget(
         string $mediaWidgetAction,
         string $mediaGroupId,
         string $title = null,
         string $module = null
-    ): Twig_Markup {
+    ): string {
         return $this->frontendHelper->parseWidget(
             $mediaWidgetAction,
             $mediaGroupId,

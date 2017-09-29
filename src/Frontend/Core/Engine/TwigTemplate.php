@@ -36,10 +36,11 @@ class TwigTemplate extends BaseTwigTemplate
         TemplateNameParserInterface $parser,
         FileLocatorInterface $locator
     ) {
-        parent::__construct($environment, $parser, $locator);
-
         $container = Model::getContainer();
         $this->forkSettings = $container->get('fork.settings');
+
+        parent::__construct($environment, $parser, $locator);
+
         $this->debugMode = $container->getParameter('kernel.debug');
         if ($this->debugMode) {
             $this->environment->enableAutoReload();

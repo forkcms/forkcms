@@ -45,7 +45,7 @@ class CommentsRss extends FrontendBaseBlock
         $title = \SpoonFilter::ucfirst(FL::msg('BlogAllComments'));
         $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog');
         $detailLink = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-        $description = null;
+        $description = '';
 
         $rss = new FrontendRSS($title, $link, $description);
 
@@ -58,7 +58,7 @@ class CommentsRss extends FrontendBaseBlock
             $rssItem = new FrontendRSSItem($title, $link, $description);
 
             $rssItem->setPublicationDate($item['created_on']);
-            $rssItem->setAuthor($item['author']);
+            $rssItem->setAuthor(empty($item['email']) ? $item['author'] : $item['email']);
 
             $rss->addItem($rssItem);
         }

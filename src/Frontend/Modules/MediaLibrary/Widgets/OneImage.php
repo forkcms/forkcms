@@ -26,6 +26,10 @@ class OneImage extends FrontendMediaWidget
         /** @var MediaGroupMediaItem $firstConnectedItem */
         $firstConnectedItem = $this->mediaGroup->getConnectedItems()->first();
 
+        if ($firstConnectedItem === false) {
+            return;
+        }
+
         // Add OpenGraph image
         $this->header->addOpenGraphImage($firstConnectedItem->getItem()->getAbsoluteWebPath());
 

@@ -102,6 +102,7 @@ class MediaGroupType extends AbstractType
             [
                 'label' => Language::lbl('MediaConnected'),
                 'aspect_ratio' => null,
+                'error_bubbling' => false,
             ]
         );
 

@@ -18,8 +18,8 @@ jsBackend.pages = {
 
     // button to save to draft
     $('#saveAsDraft').on('click', function (e) {
-      $('form').append('<input type="hidden" name="status" value="draft" />')
-      $('form').submit()
+      $('form#edit').append('<input type="hidden" name="status" value="draft" />')
+      $('form#edit').submit()
     })
 
     // show / hide the remove from search index checkbox on change
