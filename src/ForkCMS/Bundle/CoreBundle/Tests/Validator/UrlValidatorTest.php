@@ -7,21 +7,33 @@ use PHPUnit\Framework\TestCase;
 
 class UrlValidatorTest extends TestCase
 {
-    public function testExternalUrlValidation()
+    public function testValidExternalUrlValidation()
     {
         $urlValidator = new UrlValidator();
 
         $urls = [
-            'http://test.com/index.js' => true,
-            'https://test.com/index.js' => true,
-            '/index.js' => false,
-            'index.js' => false,
-            'dev/index.js' => false,
-            '/dev/index.js' => false,
+            'http://test.com/index.js',
+            'https://test.com/index.js',
         ];
 
-        foreach ($urls as $url => $isExternal) {
-            $this->assertEquals($isExternal, $urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
+        foreach ($urls as $url) {
+            $this->assertTrue($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
+        }
+    }
+
+    public function testInvalidExternalUrlValidation()
+    {
+        $urlValidator = new UrlValidator();
+
+        $urls = [
+            '/index.js',
+            'index.js',
+            'dev/index.js',
+            '/dev/index.js',
+        ];
+
+        foreach ($urls as $url) {
+            $this->assertFalse($urlValidator->isExternalUrl($url), $url . ' was not validated correctly');
         }
     }
 }
