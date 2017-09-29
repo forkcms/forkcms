@@ -55,97 +55,108 @@ jsBackend.faq =
         }
     },
 
+    saveNewQuestionSequence: function($wrapper, questionId, toCategoryId) {
+
+        // vars we will need
+        var fromCategoryId = $wrapper.attr('id').substring(9);
+        var fromCategorySequence = $wrapper.sortable('toArray').join(',');
+        var toCategorySequence = $('#dataGrid-' + toCategoryId).sortable('toArray').join(',');
+
+        // make ajax call
+        $.ajax({
+            data: {
+                fork: {action: 'SequenceQuestions'},
+                questionId: questionId,
+                fromCategoryId: fromCategoryId,
+                toCategoryId: toCategoryId,
+                fromCategorySequence: fromCategorySequence,
+                toCategorySequence: toCategorySequence
+            },
+            success: function(data, textStatus) {
+                // successfully saved reordering sequence
+                if (data.code == 200) {
+                    // change count in title (if any)
+                    $('div#dataGrid-' + fromCategoryId + ' .content-title p').html($('div#dataGrid-' + fromCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
+
+                    // if there are no records -> show message
+                    if ($('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length == 1) {
+                        $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid').append('<tr class="noQuestions"><td colspan="3">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td></tr>');
+                    }
+
+                    // check empty categories
+                    jsBackend.faq.checkForEmptyCategories();
+
+                    // redo odd-even
+                    var table = $('table.jsDataGrid');
+                    table.find('tr').removeClass('odd').removeClass('even');
+                    table.find('tr:even').addClass('even');
+                    table.find('tr:odd').addClass('odd');
+
+                    // change count in title (if any)
+                    $('div#dataGrid-' + toCategoryId + ' .content-title p').html($('div#dataGrid-' + toCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + toCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
+
+                    // show message
+                    jsBackend.messages.add('success', data.message);
+                }
+                else {
+                    // not a success so revert the changes
+                    $(this).sortable('cancel');
+
+                    // show message
+                    jsBackend.messages.add('danger', 'alter sequence failed.');
+                }
+
+                // alert the user
+                if (data.code != 200 && jsBackend.debug) { alert(data.message); }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                // revert
+                $(this).sortable('cancel');
+
+                // show message
+                jsBackend.messages.add('danger', 'alter sequence failed.');
+
+                // alert the user
+                if (jsBackend.debug) { alert(textStatus); }
+            }
+        });
+    },
+
     /**
      * Bind drag and dropping of a category
      */
     bindDragAndDropQuestions: function()
     {
         // go over every dataGrid
-        $.each($('div.jsDataGridQuestionsHolder'), function()
-        {
+        $.each($('div.jsDataGridQuestionsHolder'), function() {
+            var $this = $(this);
             // make them sortable
-            $('div.jsDataGridQuestionsHolder').sortable(
-            {
+            $this.sortable({
                 items: 'table.jsDataGrid tbody tr',        // set the elements that user can sort
                 handle: 'td.dragAndDropHandle',            // set the element that user can grab
                 tolerance: 'pointer',                    // give a more natural feeling
                 connectWith: 'div.jsDataGridQuestionsHolder',        // this is what makes dragging between categories possible
-                stop: function(e, ui)                // on stop sorting
-                {
-                    // vars we will need
-                    var questionId = ui.item.attr('id');
-                    var fromCategoryId = $(this).attr('id').substring(9);
-                    var toCategoryId = ui.item.parents('.jsDataGridQuestionsHolder').attr('id').substring(9);
-                    var fromCategorySequence = $(this).sortable('toArray').join(',');
-                    var toCategorySequence = $('#dataGrid-' + toCategoryId).sortable('toArray').join(',');
-
-                    // make ajax call
-                    $.ajax(
-                    {
-                        data:
-                        {
-                            fork: { action: 'SequenceQuestions' },
-                            questionId: questionId,
-                            fromCategoryId: fromCategoryId,
-                            toCategoryId: toCategoryId,
-                            fromCategorySequence: fromCategorySequence,
-                            toCategorySequence: toCategorySequence
-                        },
-                        success: function(data, textStatus)
-                        {
-                            // successfully saved reordering sequence
-                            if(data.code == 200)
-                            {
-                                // change count in title (if any)
-                                $('div#dataGrid-' + fromCategoryId + ' .content-title p').html($('div#dataGrid-' + fromCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
-
-                                // if there are no records -> show message
-                                if($('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid tr').length == 1)
-                                {
-                                    $('div#dataGrid-' + fromCategoryId + ' table.jsDataGrid').append('<tr class="noQuestions"><td colspan="3">' + jsBackend.locale.msg('NoQuestionInCategory') + '</td></tr>');
-                                }
-
-                                // check empty categories
-                                jsBackend.faq.checkForEmptyCategories();
-
-                                // redo odd-even
-                                var table = $('table.jsDataGrid');
-                                table.find('tr').removeClass('odd').removeClass('even');
-                                table.find('tr:even').addClass('even');
-                                table.find('tr:odd').addClass('odd');
-
-                                // change count in title (if any)
-                                $('div#dataGrid-' + toCategoryId + ' .content-title p').html($('div#dataGrid-' + toCategoryId + ' .content-title p').html().replace(/\(([0-9]*)\)$/, '(' + ( $('div#dataGrid-' + toCategoryId + ' table.jsDataGrid tr').length - 1 ) + ')'));
-
-                                // show message
-                                jsBackend.messages.add('success', data.message);
-                            }
-                            // not a success so revert the changes
-                            else
-                            {
-                                // revert
-                                $(this).sortable('cancel');
-
-                                // show message
-                                jsBackend.messages.add('danger', 'alter sequence failed.');
-                            }
-
-                            // alert the user
-                            if(data.code != 200 && jsBackend.debug){ alert(data.message); }
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown)
-                        {
-                            // revert
-                            $(this).sortable('cancel');
-
-                            // show message
-                            jsBackend.messages.add('danger', 'alter sequence failed.');
-
-                            // alert the user
-                            if(jsBackend.debug){ alert(textStatus); }
-                        }
-                    });
+                stop: function(e, ui) {
+                    jsBackend.faq.saveNewQuestionSequence(
+                        $(this),
+                        ui.item.attr('id'),
+                        ui.item.parents('.jsDataGridQuestionsHolder').attr('id').substring(9)
+                    );
                 }
+            });
+            $this.find('[data-role="order-move"]').off('click.fork.order-move').on('click.fork.order-move', function(e) {
+                var $this = $(this);
+                var $row = $this.closest('tr');
+                var direction = $this.data('direction');
+                var $holder = $row.closest('.jsDataGridQuestionsHolder');
+
+                if (direction === 'up') {
+                    $row.prev().insertAfter($row);
+                } else if (direction === 'down') {
+                    $row.next().insertBefore($row);
+                }
+
+                jsBackend.faq.saveNewQuestionSequence($holder, $row.attr('id'), $holder.attr('id').substring(9));
             });
         });
     }
