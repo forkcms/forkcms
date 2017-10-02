@@ -375,7 +375,7 @@
   </div>
 
   {# Dialog to select the content (editor, module or widget). Do not change the ID! #}
-  <div class="modal fade" id="addBlock" role="dialog" aria-labelledby="addBlockTitle">
+  <div class="modal fade" id="addBlock" role="dialog" aria-labelledby="addBlockTitle" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -430,7 +430,7 @@
   </div>
 
   {# Dialog to select user templates #}
-  <div class="modal fade" id="addUserTemplate" role="dialog" aria-labelledby="addUserTemplateTitle">
+  <div class="modal fade" id="addUserTemplate" role="dialog" aria-labelledby="addUserTemplateTitle" tabindex="-1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -456,7 +456,7 @@
   </div>
 
   {# Dialog to select another template. Do not change the ID! #}
-  <div class="modal fade" id="changeTemplate" role="dialog" aria-labelledby="changeTemplateTitle">
+  <div class="modal fade" id="changeTemplate" role="dialog" aria-labelledby="changeTemplateTitle" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -503,13 +503,13 @@
   </div>
 
   {# Dialog to confirm block removal. Do not change the ID! #}
-  <div class="modal fade" id="confirmDeleteBlock" role="dialog" aria-labelledby="confirmDeleteBlockTitle">
+  <div class="modal fade" id="confirmDeleteBlock" role="dialog" aria-labelledby="confirmDeleteBlockBody" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="confirmDeleteBlockTitle">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="confirmDeleteBlockBody">
           <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
         </div>
         <div class="modal-footer">
@@ -524,7 +524,7 @@
   </div>
 
   {# Text editor block #}
-  <div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="blockHtmlTitle">
+  <div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="blockHtmlTitle" tabindex="-1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -561,7 +561,7 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
