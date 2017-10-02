@@ -53,7 +53,7 @@ jsBackend.pages.extras = {
 
     // bind buttons
     $(document).on('click', 'button.addBlock', jsBackend.pages.extras.showAddDialog)
-    $(document).on('click', 'a.deleteBlock', jsBackend.pages.extras.showDeleteDialog)
+    $(document).on('click', 'button.deleteBlock', jsBackend.pages.extras.showDeleteDialog)
     $(document).on('click', '.showEditor', jsBackend.pages.extras.editContent)
     $(document).on('click', '.editUserTemplate', jsBackend.pages.extras.editUserTemplate)
     $(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility)
