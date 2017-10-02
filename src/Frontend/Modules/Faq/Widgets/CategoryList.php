@@ -19,7 +19,6 @@ class CategoryList extends FrontendBaseWidget
 {
     public function execute(): void
     {
-        // call parent
         parent::execute();
 
         $this->loadTemplate();
@@ -33,7 +32,7 @@ class CategoryList extends FrontendBaseWidget
             'widgetFaqCategoryList',
             FrontendFaqModel::getAllForCategory(
                 $this->data['id'],
-                $this->get('fork.settings')->get('Faq', 'most_read_num_items', 10)
+                $this->get('fork.settings')->get($this->getModule(), 'most_read_num_items', 10)
             )
         );
     }

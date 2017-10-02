@@ -19,7 +19,6 @@ class Categories extends FrontendBaseWidget
 {
     public function execute(): void
     {
-        // call parent
         parent::execute();
 
         $this->loadTemplate();
