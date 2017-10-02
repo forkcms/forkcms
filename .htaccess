@@ -74,7 +74,7 @@ deny from env=stayout
     RewriteRule docker-compose\.yml - [F]
     RewriteRule docker-compose\.override\.yml - [F]
 
-    # redirect all trafic to https
+    # redirect all traffic to https
     # <IfModule headers_module>
     #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
     # </IfModule>
