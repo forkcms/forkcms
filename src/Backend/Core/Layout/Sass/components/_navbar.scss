@@ -55,6 +55,14 @@
     transform: rotate(180deg);
     transition: all 250ms;
   }
+
+  .screen-open-nav {
+    display: block;
+  }
+
+  .screen-close-nav {
+    display: none;
+  }
 }
 
 .toggle-nav-collapse {
@@ -71,6 +79,8 @@
   width: 240px;
 
   .js-toggle-nav {
+    background: transparent;
+    border: 0;
     display: block;
     height: 100%;
     width:100%;
@@ -87,9 +97,22 @@
       transition: all 250ms;
     }
 
-    &:hover .fa-chevron-left,
-    &:focus .fa-chevron-left {
-      color: $brand-primary-dark;
+    .screen-open-nav {
+      display: none;
+    }
+
+    .screen-close-nav {
+      display: block;
+    }
+
+    &:hover,
+    &:focus {
+      border: 0;
+      outline: none;
+
+      .fa-chevron-left {
+        color: $brand-primary-dark;
+      }
     }
   }
 }

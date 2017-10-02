@@ -7225,6 +7225,26 @@
         <translation language="zh"><![CDATA[导航]]></translation>
         <translation language="de"><![CDATA[Navigation]]></translation>
       </item>
+      <item type="label" name="OpenNavigation">
+        <translation language="nl"><![CDATA[klap navigatie open]]></translation>
+        <translation language="en"><![CDATA[open navigation]]></translation>
+        <translation language="fr"><![CDATA[ouvrir la navigation]]></translation>
+        <translation language="ru"><![CDATA[Открытая навигация]]></translation>
+        <translation language="el"><![CDATA[Άνοιγμα πλοήγησης]]></translation>
+        <translation language="hu"><![CDATA[Nyissa meg a navigációt]]></translation>
+        <translation language="zh"><![CDATA[打開導航]]></translation>
+        <translation language="de"><![CDATA[Öffnen Sie die Navigation]]></translation>
+      </item>
+      <item type="label" name="CloseNavigation">
+        <translation language="nl"><![CDATA[navigatie dichtklappen]]></translation>
+        <translation language="en"><![CDATA[close navigation]]></translation>
+        <translation language="fr"><![CDATA[fermer la navigation]]></translation>
+        <translation language="ru"><![CDATA[закрыть навигацию]]></translation>
+        <translation language="el"><![CDATA[κλείστε την πλοήγηση]]></translation>
+        <translation language="hu"><![CDATA[zárja be a navigációt]]></translation>
+        <translation language="zh"><![CDATA[關閉導航]]></translation>
+        <translation language="de"><![CDATA[schließe die Navigation]]></translation>
+      </item>
       <item type="label" name="NavigationTitle">
         <translation language="nl"><![CDATA[navigatietitel]]></translation>
         <translation language="en"><![CDATA[navigation title]]></translation>

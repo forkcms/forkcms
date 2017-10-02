@@ -169,9 +169,20 @@ jsBackend.navigation = {
     var $navCollapse = $('.js-toggle-nav')
     var collapsed = $wrapper.hasClass('navigation-collapsed')
 
+    if ($wrapper.hasClass('navigation-collapsed')) {
+      $('.js-nav-screen-text').html(jsBackend.locale.lbl('OpenNavigation'))
+    } else {
+      $('.js-nav-screen-text').html(jsBackend.locale.lbl('CloseNavigation'))
+    }
+
     $navCollapse.on('click', function (e) {
       e.preventDefault()
       $wrapper.toggleClass('navigation-collapsed')
+      if ($wrapper.hasClass('navigation-collapsed')) {
+        $('.js-nav-screen-text').html(jsBackend.locale.lbl('OpenNavigation'))
+      } else {
+        $('.js-nav-screen-text').html(jsBackend.locale.lbl('CloseNavigation'))
+      }
       collapsed = !collapsed
       utils.cookies.setCookie('navigation-collapse', collapsed)
       setTimeout(function () {
