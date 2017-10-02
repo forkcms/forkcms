@@ -24,11 +24,11 @@ class Model implements FrontendTagsInterface
 {
     public static function get(string $url): array
     {
-        $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
+        $blogPost = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
              c.title AS category_title, m2.url AS category_url, i.image,
              UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-             i.allow_comments,
+             i.allow_comments, m.id AS meta_id,
              m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
              m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
              m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.custom AS meta_custom,
@@ -43,22 +43,7 @@ class Model implements FrontendTagsInterface
             ['active', LANGUAGE, false, FrontendModel::getUTCDate('Y-m-d H:i'), $url]
         );
 
-        // unserialize
-        if (isset($return['meta_data'])) {
-            $return['meta_data'] = @unserialize($return['meta_data']);
-        }
-
-        // image?
-        if (isset($return['image'])) {
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
-
-            foreach ($folders as $folder) {
-                $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
-            }
-        }
-
-        // return
-        return $return;
+        return self::completeBlogPost($blogPost);
     }
 
     public static function getAll(int $limit = 10, int $offset = 0): array
@@ -743,9 +728,9 @@ class Model implements FrontendTagsInterface
 
     public static function getRevision(string $url, int $revisionId): array
     {
-        $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
+        $blogPost = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.image,
-             c.title AS category_title, m2.url AS category_url,
+             c.title AS category_title, m2.url AS category_url, m.id AS meta_id,
              UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
              i.allow_comments,
              m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
@@ -762,22 +747,29 @@ class Model implements FrontendTagsInterface
             [LANGUAGE, $revisionId, $url]
         );
 
-        // unserialize
-        if (isset($return['meta_data'])) {
-            $return['meta_data'] = @unserialize($return['meta_data']);
+        return self::completeBlogPost($blogPost);
+    }
+
+    private static function completeBlogPost(array $blogPost)
+    {
+        if (isset($blogPost['meta_id'])) {
+            $blogPost['meta'] = FrontendModel::get('fork.repository.meta')->find($blogPost['meta_id']);
+        }
+
+        if (isset($blogPost['meta_data'])) {
+            $blogPost['meta_data'] = @unserialize($blogPost['meta_data'], ['allowed_classes' => false]);
         }
 
         // image?
-        if (isset($return['image'])) {
+        if (isset($blogPost['image'])) {
             $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/images', true);
 
             foreach ($folders as $folder) {
-                $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
+                $blogPost['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $blogPost['image'];
             }
         }
 
-        // return
-        return $return;
+        return $blogPost;
     }
 
     public static function insertComment(array $comment): int
