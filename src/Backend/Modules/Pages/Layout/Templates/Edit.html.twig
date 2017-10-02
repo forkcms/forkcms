@@ -176,7 +176,9 @@
                 <div class="content-block">
                   <div class="content-title">
                     <p>{{ 'lbl.PreviousVersions'|trans|ucfirst }}
-                      <abbr class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans }}"></abbr>
+                      <a href="#" class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans }}">
+                        <span class="sr-only">{{ 'msg.HelpRevisions'|trans }}</span>
+                      </a>
                     </p>
                   </div>
                   {% if revisions %}
