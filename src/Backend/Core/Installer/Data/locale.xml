@@ -4213,6 +4213,22 @@
         <translation language="el"><![CDATA[προσθήκη μπλοκ]]></translation>
         <translation language="tr"><![CDATA[Blok ekle]]></translation>
       </item>
+      <item type="label" name="EditBlock">
+        <translation language="nl"><![CDATA[blok aanpassen]]></translation>
+        <translation language="en"><![CDATA[edit block]]></translation>
+        <translation language="it"><![CDATA[modifica blocco]]></translation>
+        <translation language="ru"><![CDATA[блок редактирования]]></translation>
+        <translation language="zh"><![CDATA[編輯塊]]></translation>
+        <translation language="de"><![CDATA[Block bearbeiten]]></translation>
+        <translation language="fr"><![CDATA[bloc d'édition]]></translation>
+        <translation language="hu"><![CDATA[szerkesztés blokk]]></translation>
+        <translation language="es"><![CDATA[bloque de edición]]></translation>
+        <translation language="lt"><![CDATA[redaguoti bloką]]></translation>
+        <translation language="uk"><![CDATA[редагувати блок]]></translation>
+        <translation language="sv"><![CDATA[uredi blok]]></translation>
+        <translation language="el"><![CDATA[επεξεργασία μπλοκ]]></translation>
+        <translation language="tr"><![CDATA[bloğu düzenle]]></translation>
+      </item>
       <item type="label" name="AddCategory">
         <translation language="nl"><![CDATA[categorie toevoegen]]></translation>
         <translation language="en"><![CDATA[add category]]></translation>
