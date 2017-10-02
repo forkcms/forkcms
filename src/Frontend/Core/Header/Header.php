@@ -520,4 +520,9 @@ class Header extends KernelLoader
             $this->meta->addMetaData(MetaData::forName('twitter:creator', $creatorHandle));
         }
     }
+
+    public function addMetaLink(MetaLink $metaLink, bool $overwrite = false): void
+    {
+        $this->meta->addMetaLink($metaLink, $overwrite);
+    }
 }

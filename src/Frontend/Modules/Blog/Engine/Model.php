@@ -600,7 +600,7 @@ class Model implements FrontendTagsInterface
         );
 
         // validate
-        if ($date == '') {
+        if ($date === '') {
             return [];
         }
 
