@@ -11,6 +11,7 @@ namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Language\Language;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -56,17 +57,24 @@ class Index extends FrontendBaseBlock
         $this->articles = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
     }
 
-    private function addLinkToRssFeed(): void
+    private function addLinkToRssFeeds(): void
     {
+        // General rss feed
         $this->header->addRssLink(
             $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE),
             FrontendNavigation::getUrlForBlock($this->getModule(), 'Rss')
+        );
+
+        // Rss feed for the comments of this blog
+        $this->header->addRssLink(
+            Language::lbl('RecentComments'),
+            FrontendNavigation::getUrlForBlock($this->getModule(), 'CommentsRss')
         );
     }
 
     private function parse(): void
     {
-        $this->addLinkToRssFeed();
+        $this->addLinkToRssFeeds();
         $this->parsePagination();
 
         $this->template->assign('items', $this->articles);
