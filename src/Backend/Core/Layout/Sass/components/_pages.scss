@@ -190,7 +190,7 @@
       transition: opacity 0.3s ease-in-out;
       z-index: 80;
 
-      a {
+      .btn {
         opacity: 0;
 
         &:focus {
@@ -298,10 +298,10 @@
   }
 }
 
-body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder a,
-body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonHolder a,
-#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder a,
-#templateVisualFallback .templatePositionCurrentType:hover .buttonHolder a {
+body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder .btn,
+body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonHolder .btn,
+#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder .btn,
+#templateVisualFallback .templatePositionCurrentType:hover .buttonHolder .btn {
   opacity: 1;
 }
 

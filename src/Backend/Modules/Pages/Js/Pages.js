@@ -52,7 +52,7 @@ jsBackend.pages.extras = {
     $('#extraModule').on('change', jsBackend.pages.extras.populateExtraIds)
 
     // bind buttons
-    $(document).on('click', 'a.addBlock', jsBackend.pages.extras.showAddDialog)
+    $(document).on('click', 'button.addBlock', jsBackend.pages.extras.showAddDialog)
     $(document).on('click', 'a.deleteBlock', jsBackend.pages.extras.showDeleteDialog)
     $(document).on('click', '.showEditor', jsBackend.pages.extras.editContent)
     $(document).on('click', '.editUserTemplate', jsBackend.pages.extras.editUserTemplate)
@@ -189,9 +189,9 @@ jsBackend.pages.extras = {
       '<span class="templateTitle">' + title + '</span>' +
       '<span class="templateDescription">' + description + '</span>' +
       '<div class="btn-group buttonHolder">' +
-      '<a href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span><span class="sr-only">' + jsBackend.locale.lbl('View') + '</span></span></a>' +
-      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span><span class="sr-only">' + jsBackend.locale.lbl('EditBlock') + '</span></a>' +
-      '<a href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o"></span><span class="sr-only">' + jsBackend.locale.lbl('DeleteBlock') + '</span></a>' +
+      '<button href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span><span class="sr-only">' + jsBackend.locale.lbl('View') + '</span></span></button>' +
+      '<button href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span><span class="sr-only">' + jsBackend.locale.lbl('EditBlock') + '</span></button>' +
+      '<button href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o"></span><span class="sr-only">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
       '</div>' +
       '</div>'
 
