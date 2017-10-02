@@ -14,9 +14,6 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * This is the category-action
- */
 class Category extends FrontendBaseBlock
 {
     /**
@@ -27,7 +24,7 @@ class Category extends FrontendBaseBlock
     /**
      * @var array
      */
-    private $record;
+    private $category;
 
     public function execute(): void
     {
@@ -39,32 +36,36 @@ class Category extends FrontendBaseBlock
         $this->parse();
     }
 
-    private function getData(): void
+    private function getCategory(): array
     {
-        // validate incoming parameters
         if ($this->url->getParameter(1) === null) {
             throw new NotFoundHttpException();
         }
 
-        // get by URL
-        $this->record = FrontendFaqModel::getCategory($this->url->getParameter(1));
+        $category = FrontendFaqModel::getCategory($this->url->getParameter(1));
 
-        // anything found?
-        if (empty($this->record)) {
+        if (empty($category)) {
             throw new NotFoundHttpException();
         }
 
-        $this->record['full_url'] = FrontendNavigation::getUrlForBlock('Faq', 'Category') . '/' . $this->record['url'];
-        $this->questions = FrontendFaqModel::getAllForCategory($this->record['id']);
+        $baseUrl = FrontendNavigation::getUrlForBlock($this->getModule(), $this->getAction());
+        $category['full_url'] = $baseUrl . '/' . $category['url'];
+
+        return $category;
+    }
+
+    private function getData(): void
+    {
+        $this->category = $this->getCategory();
+        $this->questions = FrontendFaqModel::getAllForCategory($this->category['id']);
     }
 
     private function parse(): void
     {
-        $this->breadcrumb->addElement($this->record['title']);
-        $this->header->setPageTitle($this->record['title']);
+        $this->breadcrumb->addElement($this->category['title']);
+        $this->header->setPageTitle($this->category['title']);
 
-        // assign category and questions
-        $this->template->assign('category', $this->record);
+        $this->template->assign('category', $this->category);
         $this->template->assign('questions', $this->questions);
     }
 }
