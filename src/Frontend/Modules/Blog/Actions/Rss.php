@@ -34,7 +34,7 @@ class Rss extends FrontendBaseBlock
         $rss = new FrontendRSS(
             $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
             SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule()),
-            $this->settings['rss_description_' . LANGUAGE] ?? ''
+            $this->get('fork.settings')->get('Blog', 'rss_description_' . LANGUAGE, '')
         );
 
         foreach ($blogPosts as $blogPost) {
