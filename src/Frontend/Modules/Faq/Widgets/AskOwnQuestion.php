@@ -41,18 +41,17 @@ class AskOwnQuestion extends FrontendBaseWidget
 
         $this->loadTemplate();
 
-        if (!$this->get('fork.settings')->get('Faq', 'allow_own_question', false)) {
+        if (!$this->get('fork.settings')->get($this->getModule(), 'allow_own_question', false)) {
             return;
         }
 
         $this->buildForm();
-        $this->validateForm();
+        $this->handleForm();
         $this->parse();
     }
 
     private function buildForm(): void
     {
-        // create form
         $this->form = new FrontendForm('own_question', '#' . FL::getAction('OwnQuestion'));
         $this->form->addText('name')->setAttributes(['required' => null]);
         $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
@@ -61,66 +60,87 @@ class AskOwnQuestion extends FrontendBaseWidget
 
     private function parse(): void
     {
+        // parse an option so the stuff can be shown
+        $this->template->assign('widgetFaqOwnQuestion', true);
+
         // parse the form or a status
         if (empty($this->status)) {
             $this->form->parse($this->template);
-        } else {
-            $this->template->assign($this->status, true);
+
+            return;
         }
 
-        // parse an option so the stuff can be shown
-        $this->template->assign('widgetFaqOwnQuestion', true);
+        $this->template->assign($this->status, true);
     }
 
-    private function validateForm(): void
+    private function validateForm(): bool
     {
-        if ($this->form->isSubmitted()) {
-            $this->form->cleanupFields();
+        $this->form->cleanupFields();
 
-            // validate required fields
-            $this->form->getField('name')->isFilled(FL::err('NameIsRequired'));
-            $this->form->getField('email')->isEmail(FL::err('EmailIsInvalid'));
-            $this->form->getField('message')->isFilled(FL::err('QuestionIsRequired'));
+        $this->form->getField('name')->isFilled(FL::err('NameIsRequired'));
+        $this->form->getField('email')->isEmail(FL::err('EmailIsInvalid'));
+        $this->form->getField('message')->isFilled(FL::err('QuestionIsRequired'));
 
-            if ($this->form->isCorrect()) {
-                $spamFilterEnabled = $this->get('fork.settings')->get('Faq', 'spamfilter');
-                $variables = [];
-                $variables['sentOn'] = time();
-                $variables['name'] = $this->form->getField('name')->getValue();
-                $variables['email'] = $this->form->getField('email')->getValue();
-                $variables['message'] = $this->form->getField('message')->getValue();
+        return $this->form->isCorrect();
+    }
 
-                if ($spamFilterEnabled) {
-                    // if the comment is spam alter the comment status so it will appear in the spam queue
-                    if (FrontendModel::isSpam(
-                        $variables['message'],
-                        SITE_URL . FrontendNavigation::getUrlForBlock('Faq'),
-                        $variables['name'],
-                        $variables['email']
-                    )
-                    ) {
-                        $this->status = 'errorSpam';
+    private function isSpamFilterEnabled(): bool
+    {
+        return $this->get('fork.settings')->get($this->getModule(), 'spamfilter', false);
+    }
 
-                        return;
-                    }
-                }
+    private function getSubmittedQuestion(): array
+    {
+        return [
+            'sentOn' => time(),
+            'name' => $this->form->getField('name')->getValue(),
+            'email' => $this->form->getField('email')->getValue(),
+            'message' => $this->form->getField('message')->getValue(),
+        ];
+    }
 
-                $from = $this->get('fork.settings')->get('Core', 'mailer_from');
-                $to = $this->get('fork.settings')->get('Core', 'mailer_to');
-                $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-                $message = Message::newInstance(sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']))
-                    ->setFrom([$from['email'] => $from['name']])
-                    ->setTo([$to['email'] => $to['name']])
-                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
-                    ->parseHtml(
-                        '/Faq/Layout/Templates/Mails/OwnQuestion.html.twig',
-                        $variables,
-                        true
-                    )
-                ;
-                $this->get('mailer')->send($message);
-                $this->status = 'success';
-            }
+    private function isQuestionSpam(array $question): bool
+    {
+        return FrontendModel::isSpam(
+            $question['message'],
+            SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule()),
+            $question['name'],
+            $question['email']
+        );
+    }
+
+    private function handleForm(): void
+    {
+        if (!$this->form->isSubmitted() || !$this->validateForm()) {
+            return;
         }
+
+        $question = $this->getSubmittedQuestion();
+
+        if ($this->isSpamFilterEnabled() && $this->isQuestionSpam($question)) {
+            $this->status = 'errorSpam';
+
+            return;
+        }
+
+        $this->sendNewQuestionNotification($question);
+        $this->status = 'success';
+    }
+
+    private function sendNewQuestionNotification(array $question): void
+    {
+        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
+        $to = $this->get('fork.settings')->get('Core', 'mailer_to');
+        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+        $message = Message::newInstance(sprintf(FL::getMessage('FaqOwnQuestionSubject'), $question['name']))
+            ->setFrom([$from['email'] => $from['name']])
+            ->setTo([$to['email'] => $to['name']])
+            ->setReplyTo([$replyTo['email'] => $replyTo['name']])
+            ->parseHtml(
+                '/Faq/Layout/Templates/Mails/OwnQuestion.html.twig',
+                $question,
+                true
+            );
+        $this->get('mailer')->send($message);
     }
 }
