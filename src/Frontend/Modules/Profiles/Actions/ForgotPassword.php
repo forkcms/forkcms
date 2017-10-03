@@ -23,107 +23,98 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 class ForgotPassword extends FrontendBaseBlock
 {
     /**
-     * FrontendForm instance.
-     *
      * @var FrontendForm
      */
     private $form;
 
     public function execute(): void
     {
-        // only for guests
-        if (!FrontendProfilesAuthentication::isLoggedIn()) {
-            parent::execute();
-            $this->loadTemplate();
-            $this->buildForm();
-            $this->validateForm();
-            $this->parse();
-        } else {
-            // already logged in, redirect to settings
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
             $this->redirect(FrontendNavigation::getUrlForBlock('Profiles', 'Settings'));
         }
+
+        parent::execute();
+        $this->loadTemplate();
+        $this->buildForm();
+        $this->handleForm();
+        $this->parse();
     }
 
     private function buildForm(): void
     {
         $this->form = new FrontendForm('forgotPassword', null, null, 'forgotPasswordForm');
-        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
+        $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
     }
 
     private function parse(): void
     {
-        // e-mail was sent?
-        if ($this->url->getParameter('sent') == 'true') {
-            // show message
-            $this->template->assign('forgotPasswordSuccess', true);
-
-            // hide form
-            $this->template->assign('forgotPasswordHideForm', true);
-        }
-
-        // parse the form
+        $isNewPasswordRequested = $this->url->getParameter('newPasswordRequested') === 'true';
+        // show success message when a new password is requested
+        $this->template->assign('forgotPasswordSuccess', $isNewPasswordRequested);
+        $this->template->assign('forgotPasswordHideForm', $isNewPasswordRequested);
         $this->form->parse($this->template);
     }
 
-    private function validateForm(): void
+    private function validateForm(): bool
     {
-        // is the form submitted
-        if ($this->form->isSubmitted()) {
-            // get field
-            $txtEmail = $this->form->getField('email');
+        $txtEmail = $this->form->getField('email');
 
-            // field is filled in?
-            if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
-                // valid email?
-                if ($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
-                    // email exists?
-                    if (!FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
-                        $txtEmail->addError(FL::getError('EmailIsUnknown'));
-                    }
-                }
-            }
-
-            // valid login
-            if ($this->form->isCorrect()) {
-                // get profile id
-                $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
-
-                // generate forgot password key
-                $key = FrontendProfilesModel::getEncryptedString(
-                    $profileId . microtime(),
-                    FrontendProfilesModel::getRandomString()
-                );
-
-                // insert forgot password key
-                FrontendProfilesModel::setSetting($profileId, 'forgot_password_key', $key);
-
-                // send email
-                $from = $this->get('fork.settings')->get('Core', 'mailer_from');
-                $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-                $message = Message::newInstance(FL::getMessage('ForgotPasswordSubject'))
-                    ->setFrom([$from['email'] => $from['name']])
-                    ->setTo([$txtEmail->getValue() => ''])
-                    ->setReplyTo([$replyTo['email'] => $replyTo['name']])
-                    ->parseHtml(
-                        '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
-                        [
-                            'resetUrl' => SITE_URL . FrontendNavigation::getUrlForBlock(
-                                'Profiles',
-                                'ResetPassword'
-                            ) . '/' . $key,
-                            'firstName' => FrontendProfilesModel::getSetting($profileId, 'first_name'),
-                            'lastName' => FrontendProfilesModel::getSetting($profileId, 'last_name'),
-                        ],
-                        true
-                    )
-                ;
-                $this->get('mailer')->send($message);
-
-                // redirect
-                $this->redirect(SITE_URL . $this->url->getQueryString() . '?sent=true');
-            } else {
-                $this->template->assign('forgotPasswordHasError', true);
-            }
+        if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))
+            && $txtEmail->isEmail(FL::getError('EmailIsInvalid'))
+            && !FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
+            $txtEmail->addError(FL::getError('EmailIsUnknown'));
         }
+
+        return $this->form->isCorrect();
+    }
+
+    private function createResetUrl(int $profileId): string
+    {
+        $key = FrontendProfilesModel::getEncryptedString(
+            $profileId . microtime(),
+            FrontendProfilesModel::getRandomString()
+        );
+
+        FrontendProfilesModel::setSetting($profileId, 'forgot_password_key', $key);
+
+        return SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule(), 'ResetPassword') . '/' . $key;
+    }
+
+    private function handleForm(): void
+    {
+        if (!$this->form->isSubmitted()) {
+            return;
+        }
+
+        if (!$this->validateForm()) {
+            $this->template->assign('forgotPasswordHasError', true);
+
+            return;
+        }
+
+        $profileId = FrontendProfilesModel::getIdByEmail($this->form->getField('email')->getValue());
+        $this->sendForgotPasswordEmail($profileId, $this->createResetUrl($profileId));
+
+        $this->redirect(SITE_URL . $this->url->getQueryString() . '?newPasswordRequested=true');
+    }
+
+    private function sendForgotPasswordEmail(int $profileId, string $resetUrl): void
+    {
+        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
+        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+        $message = Message::newInstance(FL::getMessage('ForgotPasswordSubject'))
+            ->setFrom([$from['email'] => $from['name']])
+            ->setTo([$this->form->getField('email')->getValue() => ''])
+            ->setReplyTo([$replyTo['email'] => $replyTo['name']])
+            ->parseHtml(
+                '/Profiles/Layout/Templates/Mails/ForgotPassword.html.twig',
+                [
+                    'resetUrl' => $resetUrl,
+                    'firstName' => FrontendProfilesModel::getSetting($profileId, 'first_name'),
+                    'lastName' => FrontendProfilesModel::getSetting($profileId, 'last_name'),
+                ],
+                true
+            );
+        $this->get('mailer')->send($message);
     }
 }
