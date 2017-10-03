@@ -16,6 +16,7 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**
  * Change the e-mail of the current logged in profile.
@@ -23,8 +24,6 @@ use Frontend\Modules\Profiles\Engine\Profile;
 class ChangeEmail extends FrontendBaseBlock
 {
     /**
-     * FrontendForm instance.
-     *
      * @var FrontendForm
      */
     private $form;
@@ -38,94 +37,79 @@ class ChangeEmail extends FrontendBaseBlock
 
     public function execute(): void
     {
-        // profile logged in
-        if (FrontendProfilesAuthentication::isLoggedIn()) {
-            parent::execute();
-            $this->getData();
-            $this->loadTemplate();
-            $this->buildForm();
-            $this->validateForm();
-            $this->parse();
-        } else {
-            // profile not logged in
-            $this->redirect(
-                FrontendNavigation::getUrlForBlock(
-                    'Profiles',
-                    'Login'
-                ) . '?queryString=' . FrontendNavigation::getUrlForBlock('Profiles', 'ChangeEmail'),
-                307
-            );
+        if (!FrontendProfilesAuthentication::isLoggedIn()) {
+            throw new InsufficientAuthenticationException('You need to log in to change your email');
         }
+
+        parent::execute();
+        $this->getData();
+        $this->loadTemplate();
+        $this->buildForm();
+        $this->handleForm();
+        $this->parse();
     }
 
     private function getData(): void
     {
-        // get profile
         $this->profile = FrontendProfilesAuthentication::getProfile();
     }
 
     private function buildForm(): void
     {
         $this->form = new FrontendForm('updateEmail', null, null, 'updateEmailForm');
-        $this->form->addPassword('password')->setAttributes(['required' => null]);
-        $this->form->addText('email', $this->profile->getEmail())->setAttributes(
-            ['required' => null, 'type' => 'email']
-        );
+        $this->form->addPassword('password')->makeRequired();
+        $this->form->addText('email', $this->profile->getEmail())->makeRequired()->setAttribute('type', 'email');
     }
 
     private function parse(): void
     {
-        // have the settings been saved?
-        if ($this->url->getParameter('sent') == 'true') {
-            // show success message
-            $this->template->assign('updateEmailSuccess', true);
-        }
-
-        // parse the form
+        // show the success message when the email was changed
+        $this->template->assign('updateEmailSuccess', $this->url->getParameter('changedEmail') === 'true');
         $this->form->parse($this->template);
     }
 
-    private function validateForm(): void
+    private function isValidLoginCredentials(string $email, string $password): bool
     {
-        // is the form submitted
-        if ($this->form->isSubmitted()) {
-            // get fields
-            $txtPassword = $this->form->getField('password');
-            $txtEmail = $this->form->getField('email');
+        $loginStatus = FrontendProfilesAuthentication::getLoginStatus($email, $password);
 
-            // password filled in?
-            if ($txtPassword->isFilled(FL::getError('PasswordIsRequired'))) {
-                // password correct?
-                if (FrontendProfilesAuthentication::getLoginStatus($this->profile->getEmail(), $txtPassword->getValue()) !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
-                    // set error
-                    $txtPassword->addError(FL::getError('InvalidPassword'));
-                }
+        return $loginStatus === FrontendProfilesAuthentication::LOGIN_ACTIVE;
+    }
 
-                // email filled in?
-                if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
-                    // valid email?
-                    if ($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
-                        // email already exists?
-                        if (FrontendProfilesModel::existsByEmail($txtEmail->getValue(), $this->profile->getId())) {
-                            // set error
-                            $txtEmail->setError(FL::getError('EmailExists'));
-                        }
-                    }
-                }
-            }
+    private function validateForm(): bool
+    {
+        $txtPassword = $this->form->getField('password');
+        $txtEmail = $this->form->getField('email');
 
-            // no errors
-            if ($this->form->isCorrect()) {
-                // update email
-                FrontendProfilesModel::update($this->profile->getId(), ['email' => $txtEmail->getValue()]);
-
-                // redirect
-                $this->redirect(
-                    SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangeEmail') . '?sent=true'
-                );
-            } else {
-                $this->template->assign('updateEmailHasFormError', true);
-            }
+        if ($txtPassword->isFilled(FL::getError('PasswordIsRequired'))
+            && !$this->isValidLoginCredentials($this->profile->getEmail(), $txtPassword->getValue())) {
+            $txtPassword->addError(FL::getError('InvalidPassword'));
         }
+
+        if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))
+            && $txtEmail->isEmail(FL::getError('EmailIsInvalid'))
+            && FrontendProfilesModel::existsByEmail($txtEmail->getValue(), $this->profile->getId())) {
+            $txtEmail->setError(FL::getError('EmailExists'));
+        }
+
+        return $this->form->isCorrect(true);
+    }
+
+    private function handleForm(): void
+    {
+        if (!$this->form->isSubmitted()) {
+            return;
+        }
+
+        if (!$this->validateForm()) {
+            $this->template->assign('updateEmailHasFormError', true);
+
+            return;
+        }
+
+        FrontendProfilesModel::update($this->profile->getId(), ['email' => $this->form->getField('email')->getValue()]);
+
+        $this->redirect(
+            SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangeEmail') . '?changedEmail=true'
+        );
     }
 }
