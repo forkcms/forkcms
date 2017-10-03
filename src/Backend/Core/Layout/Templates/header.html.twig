@@ -21,7 +21,7 @@
                 <span class="dropdown-text">{{ ('lbl.'~LANGUAGE|uppercase)|trans|ucfirst }}</span>
                 <span class="dropdown-angle"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
               </a>
-              <ul class="dropdown-menu" role="menu">
+              <ul class="dropdown-menu">
                 {% for workingLanguage in workingLanguages %}
                   <li{% if workingLanguage.selected %} class="active"{% endif %}>
                     <a href="{{ geturl('',null,null,workingLanguage.abbr) }}" title="{{ workingLanguage.label|ucfirst }}">{{ ('lbl.'~workingLanguage.abbr|uppercase)|trans|ucfirst }}</a>
@@ -41,7 +41,7 @@
         <img src="{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ authenticatedUserAvatar }}" class="img-circle" alt="{{ authenticatedUserNickname }}" />
         <i class="fa fa-angle-right" aria-hidden="true"></i>
       </a>
-      <ul class="dropdown-menu pull-right" role="menu">
+      <ul class="dropdown-menu pull-right">
         {% if authenticatedUserEditUrl %}
           <li><a href="{{ authenticatedUserEditUrl }}">{{ 'lbl.EditProfile'|trans|ucfirst }}</a></li>
         {% endif %}
