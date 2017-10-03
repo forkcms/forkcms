@@ -10,48 +10,48 @@ namespace Frontend\Modules\Profiles\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * This is the activate-action.
- */
 class Activate extends FrontendBaseBlock
 {
     public function execute(): void
     {
-        // get activation key
-        $key = $this->url->getParameter(0);
-
-        // load template
         $this->loadTemplate();
+        $profileId = $this->getProfileId();
+        $this->activateProfile($profileId);
 
-        // do we have an activation key?
-        if (isset($key)) {
-            // get profile id
-            $profileId = FrontendProfilesModel::getIdBySetting('activation_key', $key);
+        FrontendProfilesAuthentication::login($profileId);
 
-            // have id?
-            if ($profileId != null) {
-                // update status
-                FrontendProfilesModel::update($profileId, ['status' => 'active']);
+        $this->template->assign('activationSuccess', true);
+    }
 
-                // delete activation key
-                FrontendProfilesModel::deleteSetting($profileId, 'activation_key');
+    private function activateProfile(int $profileId): void
+    {
+        FrontendProfilesModel::update($profileId, ['status' => 'active']);
+        FrontendProfilesModel::deleteSetting($profileId, 'activation_key');
+    }
 
-                // login profile
-                FrontendProfilesAuthentication::login($profileId);
+    private function getProfileId(): int
+    {
+        $profileId = FrontendProfilesModel::getIdBySetting('activation_key', $this->getActivationKey());
 
-                // show success message
-                $this->template->assign('activationSuccess', true);
-            } else {
-                // failure
-                throw new NotFoundHttpException();
-            }
-        } else {
+        if ($profileId === null) {
             throw new NotFoundHttpException();
         }
+
+        return $profileId;
+    }
+
+    private function getActivationKey(): string
+    {
+        $activationKey = $this->url->getParameter(0);
+
+        if ($activationKey === null) {
+            throw new NotFoundHttpException();
+        }
+
+        return $activationKey;
     }
 }
