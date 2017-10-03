@@ -171,4 +171,9 @@ class Breadcrumb extends KernelLoader
         // assign
         $this->template->assignGlobal('breadcrumb', $this->items);
     }
+
+    public function removeLastElement(): void
+    {
+        array_pop($this->items);
+    }
 }
