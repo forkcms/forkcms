@@ -69,14 +69,14 @@
         <div class="login-form">
           <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i></span>
+              <span class="input-group-addon"><i class="fa fa-envelope fa-fw" aria-hidden="true"></i><span class="sr-only">{{ 'lbl.Email'|trans }}</span></span>
               {% form_field backend_email %}
               {% form_field_error backend_email %}
             </div>
           </div>
           <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden="true"></i></span>
+              <span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden="true"></i><span class="sr-only">{{ 'lbl.Password'|trans }}</span></span>
               {% form_field backend_password %} {% form_field_error backend_password %}
             </div>
           </div>
