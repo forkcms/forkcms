@@ -22,6 +22,7 @@ use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Backend\Core\Engine\Model as BackendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**
  * Frontend page class, this class will handle everything on a page
@@ -122,6 +123,8 @@ class Page extends KernelLoader
             $this->handlePage(Navigation::getPageId(implode('/', $this->url->getPages())));
         } catch (NotFoundHttpException $notFoundHttpException) {
             $this->handlePage(Response::HTTP_NOT_FOUND);
+        } catch (InsufficientAuthenticationException $insufficientAuthenticationException) {
+            $this->redirectToLogin();
         }
     }
 
@@ -227,7 +230,20 @@ class Page extends KernelLoader
             $this->handlePage(Response::HTTP_NOT_FOUND);
 
             return $this->display();
+        } catch (InsufficientAuthenticationException $insufficientAuthenticationException) {
+            $this->redirectToLogin();
         }
+    }
+
+    /**
+     * Redirects to the login page in a way that the login page will redirect back to the current page after logging in
+     */
+    private function redirectToLogin()
+    {
+        $this->redirect(
+            Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . Model::getRequest()->getRequestUri(),
+            Response::HTTP_TEMPORARY_REDIRECT
+        );
     }
 
     public function getExtras(): array
