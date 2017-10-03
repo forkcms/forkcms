@@ -169,6 +169,7 @@ class Add extends BackendBaseActionAdd
                     'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue()),
                     'last_login' => BackendModel::getUTCDate(null, 0),
                     'password' => BackendProfilesModel::encryptPassword($password),
+                    'status' => 'active',
                 ];
 
                 $this->id = BackendProfilesModel::insert($values);
