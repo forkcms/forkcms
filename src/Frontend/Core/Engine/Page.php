@@ -134,7 +134,7 @@ class Page extends KernelLoader
         $this->record = $this->getPageContent($pageId);
 
         if (empty($this->record)) {
-            $this->record = Model::getPage(404);
+            throw new NotFoundHttpException('No page was found for the page id:' . $pageId);
         }
 
         $this->checkAuthentication();
@@ -170,9 +170,7 @@ class Page extends KernelLoader
         }
 
         if (!FrontendAuthenticationModel::isLoggedIn()) {
-            $this->redirect(
-                Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $this->url->getQueryString()
-            );
+            throw new InsufficientAuthenticationException('You must log in to see this page');
         }
 
         // specific groups for auth?
@@ -188,8 +186,7 @@ class Page extends KernelLoader
             }
         }
 
-        // turns out the logged in profile isn't in a group that is allowed to see the page
-        $this->record = Model::getPage(404);
+        throw new NotFoundHttpException('The current page is not available to the logged in profile');
     }
 
     public function display(): Response
