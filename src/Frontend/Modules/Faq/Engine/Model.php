@@ -258,6 +258,7 @@ class Model implements FrontendTagsInterface
     public static function saveFeedback(array $feedback): void
     {
         $feedback['created_on'] = FrontendModel::getUTCDate();
+        $feedback['edited_on'] = FrontendModel::getUTCDate();
         unset($feedback['sentOn']);
 
         FrontendModel::getContainer()->get('database')->insert('faq_feedback', $feedback);
