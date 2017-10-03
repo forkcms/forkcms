@@ -15,6 +15,7 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Profile;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**
  * Change the password of the current logged in profile.
@@ -22,8 +23,6 @@ use Frontend\Modules\Profiles\Engine\Profile;
 class ChangePassword extends FrontendBaseBlock
 {
     /**
-     * FrontendForm instance.
-     *
      * @var FrontendForm
      */
     private $form;
@@ -37,101 +36,86 @@ class ChangePassword extends FrontendBaseBlock
 
     public function execute(): void
     {
-        // profile logged in
-        if (FrontendProfilesAuthentication::isLoggedIn()) {
-            parent::execute();
-            $this->getData();
-            $this->loadTemplate();
-            $this->buildForm();
-            $this->validateForm();
-            $this->parse();
-        } else {
-            $this->redirect(
-                FrontendNavigation::getUrlForBlock(
-                    'Profiles',
-                    'Login'
-                ) . '?queryString=' . FrontendNavigation::getUrlForBlock('Profiles', 'ChangePassword'),
-                307
-            );
+        if (!FrontendProfilesAuthentication::isLoggedIn()) {
+            throw new InsufficientAuthenticationException('You need to log in to change your email');
         }
+
+        parent::execute();
+        $this->getData();
+        $this->loadTemplate();
+        $this->buildForm();
+        $this->handleForm();
+        $this->parse();
     }
 
     private function getData(): void
     {
-        // get profile
         $this->profile = FrontendProfilesAuthentication::getProfile();
     }
 
     private function buildForm(): void
     {
         $this->form = new FrontendForm('updatePassword', null, null, 'updatePasswordForm');
-        $this->form->addPassword('old_password')->setAttributes(['required' => null]);
-        $this->form->addPassword('new_password')->setAttributes(
-            [
-                'required' => null,
-                'data-role' => 'fork-new-password',
-            ]
-        );
-        $this->form->addPassword('verify_new_password')->setAttributes(
-            [
-                'required' => null,
-                'data-role' => 'fork-new-password',
-            ]
-        );
-        $this->form->addCheckbox('show_password')->setAttributes(
-            ['data-role' => 'fork-toggle-visible-password']
-        );
+        $this->form->addPassword('old_password')->makeRequired();
+        $this->form->addPassword('new_password')->makeRequired()->setAttribute('data-role', 'fork-new-password');
+        $this->form->addPassword('verify_new_password')->makeRequired()->setAttribute('data-role', 'fork-new-password');
+        $this->form->addCheckbox('show_password')->setAttribute('data-role', 'fork-toggle-visible-password');
     }
 
     private function parse(): void
     {
-        // have the settings been saved?
-        if ($this->url->getParameter('sent') == 'true') {
-            // show success message
-            $this->template->assign('updatePasswordSuccess', true);
-        }
-
-        // parse the form
+        // show the success message when the password was changed
+        $this->template->assign('updatePasswordSuccess', $this->url->getParameter('changedPassword') === 'true');
         $this->form->parse($this->template);
     }
 
-    private function validateForm(): void
+    private function isValidLoginCredentials(string $email, string $password): bool
     {
-        // is the form submitted
-        if ($this->form->isSubmitted()) {
-            // get fields
-            $txtOldPassword = $this->form->getField('old_password');
-            $txtNewPassword = $this->form->getField('new_password');
+        $loginStatus = FrontendProfilesAuthentication::getLoginStatus($email, $password);
 
-            // old password filled in?
-            if ($txtOldPassword->isFilled(FL::getError('PasswordIsRequired'))) {
-                // old password correct?
-                if (FrontendProfilesAuthentication::getLoginStatus($this->profile->getEmail(), $txtOldPassword->getValue()) !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
-                    // set error
-                    $txtOldPassword->addError(FL::getError('InvalidPassword'));
-                }
+        return $loginStatus === FrontendProfilesAuthentication::LOGIN_ACTIVE;
+    }
 
-                // new password filled in?
-                $txtNewPassword->isFilled(FL::getError('PasswordIsRequired'));
+    private function validateForm(): bool
+    {
+        $txtOldPassword = $this->form->getField('old_password');
+        $txtNewPassword = $this->form->getField('new_password');
 
-                // passwords match?
-                if ($this->form->getField('new_password')->getValue() !== $this->form->getField('verify_new_password')->getValue()) {
-                    $this->form->getField('verify_new_password')->addError(FL::err('PasswordsDontMatch'));
-                }
-            }
-
-            // no errors
-            if ($this->form->isCorrect()) {
-                // update password
-                FrontendProfilesAuthentication::updatePassword($this->profile->getId(), $txtNewPassword->getValue());
-
-                // redirect
-                $this->redirect(
-                    SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangePassword') . '?sent=true'
-                );
-            } else {
-                $this->template->assign('updatePasswordHasFormError', true);
-            }
+        if (!$txtOldPassword->isFilled(FL::getError('PasswordIsRequired'))) {
+            return false;
         }
+
+        if (!$this->isValidLoginCredentials($this->profile->getEmail(), $txtOldPassword->getValue())) {
+            $txtOldPassword->addError(FL::getError('InvalidPassword'));
+        }
+
+        if ($txtNewPassword->isFilled(FL::getError('PasswordIsRequired'))
+            && $txtNewPassword->getValue() !== $this->form->getField('verify_new_password')->getValue()) {
+            $this->form->getField('verify_new_password')->addError(FL::err('PasswordsDontMatch'));
+        }
+
+        return $this->form->isCorrect();
+    }
+
+    private function handleForm(): void
+    {
+        if (!$this->form->isSubmitted()) {
+            return;
+        }
+
+        if (!$this->validateForm()) {
+            $this->template->assign('updatePasswordHasFormError', true);
+
+            return;
+        }
+
+        FrontendProfilesAuthentication::updatePassword(
+            $this->profile->getId(),
+            $this->form->getField('new_password')->getValue()
+        );
+
+        $this->redirect(
+            SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangePassword') . '?changedPassword=true'
+        );
     }
 }
