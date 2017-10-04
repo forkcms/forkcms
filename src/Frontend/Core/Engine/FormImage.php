@@ -2,13 +2,6 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Language\Language as FL;
