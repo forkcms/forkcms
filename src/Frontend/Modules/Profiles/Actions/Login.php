@@ -16,14 +16,9 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
-/**
- * This is the login-action.
- */
 class Login extends FrontendBaseBlock
 {
     /**
-     * FrontendForm instance.
-     *
      * @var FrontendForm
      */
     private $form;
@@ -32,27 +27,23 @@ class Login extends FrontendBaseBlock
     {
         parent::execute();
 
-        // profile not logged in
-        if (!FrontendProfilesAuthentication::isLoggedIn()) {
-            $this->loadTemplate();
-            $this->buildForm();
-            $this->validateForm();
-            $this->parse();
-        } else {
-            // profile already logged in
-            // query string
-            $queryString = urldecode($this->getRequest()->query->get('queryString', SITE_URL));
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
+            $this->redirect(urldecode($this->getRequest()->query->get('queryString', SITE_URL)));
 
-            // redirect
-            $this->redirect($queryString);
+            return;
         }
+
+        $this->loadTemplate();
+        $this->buildForm();
+        $this->handleForm();
+        $this->parse();
     }
 
     private function buildForm(): void
     {
         $this->form = new FrontendForm('login', null, 'post', 'loginForm');
-        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
-        $this->form->addPassword('password')->setAttributes(['required' => null]);
+        $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
+        $this->form->addPassword('password')->makeRequired();
         $this->form->addCheckbox('remember', true);
     }
 
@@ -61,60 +52,43 @@ class Login extends FrontendBaseBlock
         $this->form->parse($this->template);
     }
 
-    private function validateForm(): void
+    private function validateForm(): bool
     {
-        // is the form submitted
-        if ($this->form->isSubmitted()) {
-            // get fields
-            $txtEmail = $this->form->getField('email');
-            $txtPassword = $this->form->getField('password');
-            $chkRemember = $this->form->getField('remember');
+        $txtEmail = $this->form->getField('email');
+        $txtPassword = $this->form->getField('password');
 
-            // required fields
-            $txtEmail->isFilled(FL::getError('EmailIsRequired'));
-            $txtPassword->isFilled(FL::getError('PasswordIsRequired'));
-
-            // both fields filled in
-            if ($txtEmail->isFilled() && $txtPassword->isFilled()) {
-                // valid email?
-                if ($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
-                    // get the status for the given login
-                    $loginStatus = FrontendProfilesAuthentication::getLoginStatus(
-                        $txtEmail->getValue(),
-                        $txtPassword->getValue()
-                    );
-
-                    // valid login?
-                    if ($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
-                        // get the error string to use
-                        $errorString = sprintf(
-                            FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
-                            FrontendNavigation::getUrlForBlock('Profiles', 'ResendActivation')
-                        );
-
-                        // add the error to stack
-                        $this->form->addError($errorString);
-
-                        // add the error to the template variables
-                        $this->template->assign('loginError', $errorString);
-                    }
-                }
-            }
-
-            // valid login
-            if ($this->form->isCorrect()) {
-                // get profile id
-                $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
-
-                // login
-                FrontendProfilesAuthentication::login($profileId, $chkRemember->getChecked());
-
-                // query string
-                $queryString = urldecode($this->getRequest()->query->get('queryString', SITE_URL));
-
-                // redirect
-                $this->redirect($queryString);
-            }
+        if (!$txtEmail->isFilled(FL::getError('EmailIsRequired'))
+            || !$txtPassword->isFilled(FL::getError('PasswordIsRequired'))
+            || !$txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
+            return $this->form->isCorrect();
         }
+
+        $loginStatus = FrontendProfilesAuthentication::getLoginStatus($txtEmail->getValue(), $txtPassword->getValue());
+
+        if ($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
+            $errorString = sprintf(
+                FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
+                FrontendNavigation::getUrlForBlock('Profiles', 'ResendActivation')
+            );
+
+            $this->form->addError($errorString);
+            $this->template->assign('loginError', $errorString);
+        }
+
+        return $this->form->isCorrect();
+    }
+
+    private function handleForm(): void
+    {
+        if (!$this->form->isSubmitted() || !$this->validateForm()) {
+            return;
+        }
+
+        FrontendProfilesAuthentication::login(
+            FrontendProfilesModel::getIdByEmail($this->form->getField('email')->getValue()),
+            $this->form->getField('remember')->getChecked()
+        );
+
+        $this->redirect(urldecode($this->getRequest()->query->get('queryString', SITE_URL)));
     }
 }
