@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Countable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +18,7 @@ use Ramsey\Uuid\UuidInterface;
  * @ORM\Entity(repositoryClass="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class MediaGroup implements JsonSerializable
+class MediaGroup implements JsonSerializable, Countable
 {
     /**
      * @var UuidInterface
@@ -237,5 +238,10 @@ class MediaGroup implements JsonSerializable
     {
         $this->editedOn = new \Datetime();
         $this->setNumberOfConnectedItems();
+    }
+
+    public function count(): int
+    {
+        return $this->connectedItems->count();
     }
 }

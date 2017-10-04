@@ -39,6 +39,8 @@ class TwigTemplate extends BaseTwigTemplate
     public function __construct(bool $addToReference = true)
     {
         $container = Model::getContainer();
+        $this->debugMode = $container->getParameter('kernel.debug');
+
         parent::__construct(
             $this->buildTwigEnvironmentForTheBackend(),
             $container->get('templating.name_parser'),
@@ -50,7 +52,10 @@ class TwigTemplate extends BaseTwigTemplate
         }
 
         $this->forkSettings = $container->get('fork.settings');
-        $this->debugMode = $container->getParameter('kernel.debug');
+        if ($this->debugMode) {
+            $this->environment->enableAutoReload();
+            $this->environment->setCache(false);
+        }
         $this->language = BL::getWorkingLanguage();
         $this->connectSymfonyForms();
         $this->connectSymfonyTranslator();

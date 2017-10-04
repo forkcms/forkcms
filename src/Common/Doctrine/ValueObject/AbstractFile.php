@@ -118,9 +118,14 @@ abstract class AbstractFile
         return $file;
     }
 
-    public function getFile(): UploadedFile
+    public function getFile(): ?UploadedFile
     {
         return $this->file;
+    }
+
+    final public function hasFile(): bool
+    {
+        return $this->file instanceof UploadedFile;
     }
 
     /**
@@ -128,7 +133,7 @@ abstract class AbstractFile
      */
     public function prepareToUpload(): void
     {
-        if ($this->getFile() === null) {
+        if (!$this->hasFile()) {
             return;
         }
 
@@ -150,7 +155,7 @@ abstract class AbstractFile
             $this->removeOldFile();
         }
 
-        if ($this->getFile() === null) {
+        if (!$this->hasFile()) {
             return;
         }
 

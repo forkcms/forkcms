@@ -100,8 +100,9 @@ class MediaGroupType extends AbstractType
 
         $resolver->setDefaults(
             [
-                'label' => Language::lbl('ConnectedMedia'),
+                'label' => Language::lbl('MediaConnected'),
                 'aspect_ratio' => null,
+                'error_bubbling' => false,
             ]
         );
 

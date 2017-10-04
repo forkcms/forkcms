@@ -9,7 +9,7 @@
   "devDependencies": {
     "bootstrap-datepicker": "^1.7.0",
     "bootstrap-sass": "~3.3",
-    "bootstrap-tagsinput": "~0.7",
+    "bootstrap-tagsinput": "https://github.com/mathiashelin/bootstrap-tagsinput.git",
     "cropper": "^3.0.0-rc.2",
     "fine-uploader": "^5.14.1",
     "font-awesome": "^4.7.0",
@@ -24,6 +24,30 @@
     "jquery-ui-dist": "~1.12",
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
-    "slick-carousel": "^1.6.0"
+    "slick-carousel": "^1.6.0",
+    "standard": "^10.0.3"
+  },
+  "scripts": {
+    "test": "standard"
+  },
+  "standard": {
+    "globals": [
+      "$",
+      "jQuery",
+      "jsData",
+      "jsFrontend",
+      "jsBackend",
+      "utils"
+    ],
+    "ignore": [
+      "/js/",
+      "src/Backend/Core/Js/ckeditor/",
+      "src/Backend/Core/Js/ckfinder/",
+      "src/Backend/Core/Js/highcharts.js",
+      "src/Backend/Core/Layout/EditorTemplates/templates.js",
+      "src/Backend/Modules/Pages/Js/jstree/",
+      "src/Frontend/Cache/",
+      "src/Frontend/Core/Js/jquery/jquery.js"
+    ]
   }
 }

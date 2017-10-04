@@ -79,10 +79,13 @@ abstract class AbstractImage extends AbstractFile
      */
     public function upload(): void
     {
-        $file = $this->getFile();
+        if (!$this->hasFile()) {
+            return;
+        }
+
         parent::upload();
 
-        if (static::GENERATE_THUMBNAILS && $file instanceof UploadedFile) {
+        if (static::GENERATE_THUMBNAILS) {
             Model::generateThumbnails(
                 FRONTEND_FILES_PATH . '/' . $this->getTrimmedUploadDir(),
                 $this->getAbsolutePath('source')

@@ -14,6 +14,7 @@ use Backend\Core\Language\Language as BackendLanguage;
 use SpoonFormButton;
 use SpoonFormFile;
 use SpoonFormTextarea;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * This is our extended version of \SpoonForm
@@ -67,6 +68,10 @@ class Form extends \Common\Core\Form
      */
     public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true): SpoonFormTextarea
     {
+        if (!$this->header instanceof Header) {
+            throw new ServiceNotFoundException('header');
+        }
+
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $class = 'inputEditor ' . (string) $class;

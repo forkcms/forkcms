@@ -274,7 +274,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
 
             // validate the syntax
-            if ($table === false) {
+            if (empty($table)) {
                 $this->form->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
             } else {
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);

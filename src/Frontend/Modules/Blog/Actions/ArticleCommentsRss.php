@@ -68,7 +68,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
         $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'ArticleCommentsRss') .
                 '/' . $this->record['url'];
         $detailLink = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-        $description = null;
+        $description = '';
 
         // create new rss instance
         $rss = new FrontendRSS($title, $link, $description);
@@ -82,7 +82,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
             $rssItem = new FrontendRSSItem($title, $link, $description);
 
             $rssItem->setPublicationDate($item['created_on']);
-            $rssItem->setAuthor($item['author']);
+            $rssItem->setAuthor(empty($item['email']) ? $item['author'] : $item['email']);
 
             $rss->addItem($rssItem);
         }

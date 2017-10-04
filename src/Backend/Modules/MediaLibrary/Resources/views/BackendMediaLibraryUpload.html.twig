@@ -2,9 +2,6 @@
     ====================================================================== -->
 <script type="text/template" id="qq-template-gallery">
   <div class="qq-uploader-selector qq-uploader qq-gallery" qq-drop-area-text="{{ 'lbl.DropFilesHere'|trans|ucfirst }}">
-    <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
-      <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
-    </div>
     <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
       <span class="qq-upload-drop-area-text-selector"></span>
     </div>
@@ -203,6 +200,6 @@
 {% include "MediaLibrary/Resources/views/BackendMediaLibraryUploadDialogAddFolder.html.twig" %}
 
 {# Modal with cropper, don't use fade since it will mess up the initial width of the cropper #}
-<div class="modal" id="cropperMediaDialog" tabindex="-1" role="dialog" aria-hidden="true" data-role="media-library-cropper-dialog">
+<div class="modal" id="cropperMediaDialog" role="dialog" data-role="media-library-cropper-dialog">
   {% include "MediaLibrary/Resources/views/CropperDialog.html.twig" %}
 </div>

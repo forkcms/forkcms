@@ -36,7 +36,7 @@ final class GoogleAnalytics
 
     private function shouldAnonymize(): bool
     {
-        return $this->modulesSettings->get('Core', 'show_cookie_bar', false) && !Cookie::hasAllowedCookies();
+        return $this->modulesSettings->get('Core', 'show_cookie_bar', false) && !$this->cookie->hasAllowedCookies();
     }
 
     private function getGoogleAnalyticsEvent(): string
