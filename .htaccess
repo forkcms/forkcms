@@ -77,16 +77,12 @@ deny from env=stayout
     RewriteRule docker-compose\.override\.yml - [F]
 
     # @remark: custom for Sumocoders
-	RewriteRule .*\.rb - [F]
-	RewriteRule Capfile - [F]
-	RewriteRule Gemfile - [F]
-	RewriteRule Gemfile\.lock - [F]
+    RewriteRule .*\.rb - [F]
+    RewriteRule Capfile - [F]
+    RewriteRule Gemfile - [F]
+    RewriteRule Gemfile\.lock - [F]
 
-	# these used to be custom but will be added to fork in 5.0.3, afterwards they can be removed
-	RewriteRule gulpfile\.js - [F]
-	RewriteRule package\.json - [F]
-
-	# redirect all trafic to https
+    # redirect all traffic to https
     # <IfModule headers_module>
     #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
     # </IfModule>

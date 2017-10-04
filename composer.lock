@@ -2007,16 +2007,16 @@
         },
         {
             "name": "mailmotor/mailchimp-bundle",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/mailchimp-bundle.git",
-                "reference": "b07df3d65adc267704b7dec43e400e9318941ffe"
+                "reference": "4b5c4acde74955249d8671cc2d2d11cd633e7cdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/mailchimp-bundle/zipball/b07df3d65adc267704b7dec43e400e9318941ffe",
-                "reference": "b07df3d65adc267704b7dec43e400e9318941ffe",
+                "url": "https://api.github.com/repos/mailmotor/mailchimp-bundle/zipball/4b5c4acde74955249d8671cc2d2d11cd633e7cdd",
+                "reference": "4b5c4acde74955249d8671cc2d2d11cd633e7cdd",
                 "shasum": ""
             },
             "require": {
@@ -2049,7 +2049,7 @@
                 "bundle",
                 "php"
             ],
-            "time": "2017-06-20T14:44:53+00:00"
+            "time": "2017-09-28T07:55:04+00:00"
         },
         {
             "name": "mailmotor/mailmotor-bundle",

@@ -138,6 +138,7 @@ final class Header extends KernelLoader
      * @param string $file The name of the file to load.
      * @param string $module The module wherein the file is located.
      * @param bool $overwritePath Should we overwrite the full path?
+     *                            An external url will always be handled with $overwritePath as true.
      * @param bool $minify Should the CSS be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority $priority the files are added based on the priority
@@ -152,13 +153,17 @@ final class Header extends KernelLoader
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
+        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $overwritePath = $overwritePath || $isExternalUrl; // external urls always overwrite the path
+        $minify = $minify && !$isExternalUrl;
+
         $this->cssFiles->add(
             new Asset(
                 $overwritePath ? $file : $this->buildPathForModule($file, $module, 'Layout/Css'),
                 $addTimestamp,
                 $priority ?? ($overwritePath ? Priority::standard() : Priority::forModule($module))
             ),
-            $minify && !$this->getContainer()->getParameter('kernel.debug')
+            $minify
         );
     }
 
@@ -169,8 +174,9 @@ final class Header extends KernelLoader
      *
      * @param string $file The file to load.
      * @param string $module The module wherein the file is located.
-     * @param bool $minify Should the module be minified?
+     * @param bool $minify Should the javascript be minified?
      * @param bool $overwritePath Should we overwrite the full path?
+     *                            An external url will always be handled with $overwritePath as true.
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority $priority the files are added based on the priority
      *                           defaults to standard for full links or core or module for core or module css
@@ -184,6 +190,9 @@ final class Header extends KernelLoader
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
+        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $overwritePath = $overwritePath || $isExternalUrl; // external urls always overwrite the path
+        $minify = $minify && !$isExternalUrl;
 
         $this->jsFiles->add(
             new Asset(

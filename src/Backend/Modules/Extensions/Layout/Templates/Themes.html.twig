@@ -57,11 +57,11 @@
                             </div>
                           </div>
                           {% if showExtensionsInstallTheme %}
-                            <div class="modal fade" id="confirmInstall{{ installableTheme.value|ucfirst }}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal fade" id="confirmInstall{{ installableTheme.value|ucfirst }}" role="dialog" aria-labelledby="confirmInstall{{ installableTheme.value|ucfirst }}Title">
                               <div class="modal-dialog">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <span class="modal-title h4">{{ 'lbl.Install'|trans|ucfirst }}</span>
+                                    <h4 class="modal-title" id="confirmInstall{{ installableTheme.value|ucfirst }}Title">{{ 'lbl.Install'|trans|ucfirst }}</h4>
                                   </div>
                                   <div class="modal-body">
                                     <p>{{ 'msg.ConfirmThemeInstall'|trans }}</p>
