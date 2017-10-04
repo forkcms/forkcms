@@ -75,6 +75,18 @@ class Model
         );
     }
 
+    public static function getMostUsed(int $limit): array
+    {
+        return (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT t.tag AS name, t.url, t.number
+             FROM tags AS t
+             WHERE t.language = ? AND t.number > 0
+             ORDER BY t.number DESC
+             LIMIT ?',
+            [FrontendLocale::frontendLanguage(), $limit]
+        );
+    }
+
     /**
      * @param string $module The module wherein the otherId occurs.
      * @param int $otherId The id of the item.

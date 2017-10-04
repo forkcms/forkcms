@@ -154,9 +154,9 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        if (mb_strpos($file, 'http') !== 0) {
-            $file = Theme::getPath($file);
-        }
+        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $file = $isExternalUrl ? $file : Theme::getPath($file);
+        $minify = $minify && !$isExternalUrl;
 
         $this->cssFiles->add(new Asset($file, $addTimestamp, $priority), $minify);
     }
@@ -165,7 +165,7 @@ class Header extends KernelLoader
      * Add a javascript file into the array
      *
      * @param string $file The path to the javascript-file that should be loaded.
-     * @param bool $minify Should the file be minified?
+     * @param bool $minify Should the javascript be minified?
      * @param bool $addTimestamp May we add a timestamp for caching purposes?
      * @param Priority|null $priority Provides a way to change the order that things are loaded
      */
@@ -175,9 +175,9 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        if (mb_strpos($file, 'http') !== 0) {
-            $file = Theme::getPath($file);
-        }
+        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $file = $isExternalUrl ? $file : Theme::getPath($file);
+        $minify = $minify && !$isExternalUrl;
 
         $this->jsFiles->add(new Asset($file, $addTimestamp, $priority), $minify);
     }
@@ -276,7 +276,7 @@ class Header extends KernelLoader
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (strpos($image, 'http://') !== 0 && strpos($image, 'https://') !== 0) {
+        if (!$this->getContainer()->get('fork.validator.url')->isExternalUrl($image)) {
             if (!is_file(PATH_WWW . strtok($image, '?'))) {
                 return;
             }
