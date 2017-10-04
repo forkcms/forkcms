@@ -10,13 +10,14 @@ namespace Backend\Modules\ContentBlocks\Installer;
  */
 
 use Backend\Core\Engine\Model;
-use Backend\Core\Installer\ModuleInstaller;
+use Backend\Core\Installer\AbstractModuleInstaller;
+use Backend\Core\Installer\InstallerInterface;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 
 /**
  * Installer for the content blocks module
  */
-class Installer extends ModuleInstaller
+class Installer extends AbstractModuleInstaller implements InstallerInterface
 {
     public function install(): void
     {

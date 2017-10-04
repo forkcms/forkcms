@@ -5,6 +5,14 @@
   <requirements>
     <minimum_version>3.0.0</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Dashboard</module>
+    <module>Settings</module>
+    <module>Pages</module>
+    <module>Search</module>
+  </depends_on>
   <description>
     <![CDATA[
       Creating a place on your website where visitors find their answers fast and accurate, not always an easy task. The FAQ modules gives you a head start.

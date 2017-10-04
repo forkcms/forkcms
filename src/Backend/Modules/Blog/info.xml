@@ -5,6 +5,14 @@
   <requirements>
     <minimum_version>2.0.0</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Dashboard</module>
+    <module>Settings</module>
+    <module>Pages</module>
+    <module>Search</module>
+  </depends_on>
   <description>
     <![CDATA[
       The Blog (you could also call it 'News') module features everything you need to easily post articles on your website. All you need to do is provide the content. Your visitors will be able to discuss your article and share it to friends via social networks.

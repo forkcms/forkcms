@@ -5,6 +5,12 @@
   <requirements>
     <minimum_version>5.0.0</minimum_version>
   </requirements>
+  <depends_on>
+    <module>Extensions</module>
+    <module>Locale</module>
+    <module>Settings</module>
+    <module>MediaLibrary</module>
+  </depends_on>
   <description>
     <![CDATA[Creating media galleries has never been this easy.]]>
   </description>

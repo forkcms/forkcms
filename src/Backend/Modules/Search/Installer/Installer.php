@@ -9,13 +9,14 @@ namespace Backend\Modules\Search\Installer;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Installer\AbstractModuleInstaller;
+use Backend\Core\Installer\InstallerInterface;
 use Common\ModuleExtraType;
-use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the search module
  */
-class Installer extends ModuleInstaller
+class Installer extends AbstractModuleInstaller implements InstallerInterface
 {
     /** @var int */
     private $searchBlockId;

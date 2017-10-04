@@ -9,13 +9,14 @@ namespace Backend\Modules\Faq\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleInstaller;
+use Backend\Core\Installer\AbstractModuleInstaller;
+use Backend\Core\Installer\InstallerInterface;
 use Common\ModuleExtraType;
 
 /**
  * Installer for the faq module
  */
-class Installer extends ModuleInstaller
+class Installer extends AbstractModuleInstaller implements InstallerInterface
 {
     /** @var int */
     private $defaultCategoryId;

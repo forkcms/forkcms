@@ -12,7 +12,7 @@ namespace Backend\Core\Installer;
 /**
  * Installer for the core
  */
-class CoreInstaller extends ModuleInstaller
+class CoreInstaller extends AbstractModuleInstaller
 {
     public function install(): void
     {

@@ -2,9 +2,17 @@
 
 namespace Backend\Modules\MediaLibrary\Installer;
 
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 use Backend\Core\Engine\Model;
-use Backend\Core\Installer\ModuleInstaller;
+use Backend\Core\Installer\AbstractModuleInstaller;
+use Backend\Core\Installer\InstallerInterface;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
@@ -13,7 +21,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 /**
  * Installer for the MediaLibrary module
  */
-class Installer extends ModuleInstaller
+class Installer extends AbstractModuleInstaller implements InstallerInterface
 {
     public function install(): void
     {

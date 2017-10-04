@@ -5,6 +5,8 @@
   <requirements>
     <minimum_version>2.0.0</minimum_version>
   </requirements>
+  <depends_on>
+  </depends_on>
   <description>
     <![CDATA[
       Translate all module-generated tidbits of content with this translation module, either through the "point and click" translations overview or via XML export/import.
