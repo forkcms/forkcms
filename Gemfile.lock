@@ -13,7 +13,7 @@ GEM
       capistrano (>= 3.0.0.pre)
     capistrano-deploytags (1.0.7)
       capistrano (>= 3.7.0)
-    capistrano-forkcms (2.0.4)
+    capistrano-forkcms (3.0.0)
       capistrano (~> 3.8)
       capistrano-cachetool (~> 1.0)
       capistrano-composer (~> 0.0.6)
@@ -34,7 +34,7 @@ DEPENDENCIES
   capistrano (~> 3.8)
   capistrano-cachetool (~> 1.0.0)
   capistrano-deploytags (~> 1.0)
-  capistrano-forkcms (~> 2.0)
+  capistrano-forkcms (~> 3.0)
   capistrano-sumo (~> 1.2)
 
 BUNDLED WITH
