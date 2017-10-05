@@ -2,8 +2,7 @@
 
 namespace Backend\Modules\Search\Engine;
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
+use Psr\Cache\CacheItemPoolInterface;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -119,7 +118,9 @@ class Model
     public static function invalidateCache(): void
     {
         // clear the cache
-        BackendModel::get('cache.pool')->clear();
+        if (BackendModel::get('cache.pool') instanceof CacheItemPoolInterface) {
+            BackendModel::get('cache.pool')->clear();
+        }
 
         // clear the php5.5+ opcode cache
         if (function_exists('opcache_reset')) {
