@@ -2,13 +2,6 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Uri as CommonUri;
 
 /**
@@ -124,7 +117,7 @@ class RssItem extends \SpoonFeedRSSItem
     private function prependWithSiteUrlIfHttpIsMissing(string $link): string
     {
         // if link doesn't start with http(s), we prepend the URL of the site
-        if (mb_stripos($link, 'http://') !== 0 || mb_stripos($link, 'https://')) {
+        if (!Model::getContainer()->get('fork.validator.url')->isExternalUrl($link)) {
             return SITE_URL . $link;
         }
 

@@ -2193,7 +2193,8 @@ VALUES
 	(1515, 1, 'en', 'Backend', 'Profiles', 'err', 'NoProfilesSelected', 'You must select minimum 1 profile to perfom this action.', '2017-08-31 14:28:26'),
 	(1516, 1, 'en', 'Backend', 'Profiles', 'err', 'UnknownAction', 'Unknown action.', '2017-08-31 14:28:26'),
 	(1517, 1, 'en', 'Backend', 'Core', 'lbl', 'LoginLink', 'login link', '2017-08-31 14:28:26'),
-	(1518, 1, 'en', 'Backend', 'Core', 'lbl', 'SecurePage', 'secure page', '2017-08-31 14:28:26');
+	(1518, 1, 'en', 'Backend', 'Core', 'lbl', 'SecurePage', 'secure page', '2017-08-31 14:28:26'),
+	(1519, 1, 'en', 'Backend', 'Core', 'lbl', 'Close', 'close', '2017-08-31 14:28:26');
 
 /*!40000 ALTER TABLE `locale` ENABLE KEYS */;
 UNLOCK TABLES;

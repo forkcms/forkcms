@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Faq\Installer;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Installer\ModuleInstaller;
 use Common\ModuleExtraType;
 
@@ -225,8 +218,8 @@ class Installer extends ModuleInstaller
         $database->update(
             'modules_extras',
             $extra,
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            [$item['extra_id'], $this->getModule(), ModuleExtraType::widget(), 'category_list']
+            'id = ?',
+            [$item['extra_id']]
         );
 
         return $item['id'];

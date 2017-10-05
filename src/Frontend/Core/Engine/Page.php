@@ -2,13 +2,6 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Block\ModuleExtraInterface;
@@ -246,8 +239,8 @@ class Page extends KernelLoader
             $firstChildId = Navigation::getFirstChildId($record['id']);
 
             // check if we actually have a first child
-            if (Navigation::getFirstChildId($record['id']) !== false) {
-                $this->redirect(Navigation::getUrl($firstChildId), RedirectResponse::HTTP_MOVED_PERMANENTLY);
+            if ($firstChildId !== 0) {
+                $this->redirect(Navigation::getUrl($firstChildId));
             }
         }
 

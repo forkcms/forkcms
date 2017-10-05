@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Location\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
@@ -54,7 +47,7 @@ class Edit extends BackendBaseActionEdit
             }
 
             // add js
-            $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, null, false, true, false);
+            $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey);
 
             $this->loadData();
 

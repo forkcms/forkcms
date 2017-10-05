@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Location\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
@@ -36,7 +29,7 @@ class Index extends FrontendBaseBlock
         if ($apikey == null) {
             trigger_error('Please provide a Google Maps API key.');
         }
-        $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey, true, false);
+        $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey);
         $this->addJS(FrontendLocationModel::getPathToMapStyles(false), true);
 
         parent::execute();
