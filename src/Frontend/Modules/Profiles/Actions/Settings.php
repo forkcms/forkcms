@@ -11,143 +11,108 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Model;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile;
-use Symfony\Component\Intl\Intl as Intl;
+use Symfony\Component\Intl\Intl;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
-/**
- * Change the settings for the current logged in profile.
- */
 class Settings extends FrontendBaseBlock
 {
     /**
-     * FrontendForm instance.
-     *
      * @var FrontendForm
      */
     private $form;
 
     /**
-     * The current profile.
-     *
      * @var Profile
      */
     private $profile;
 
     public function execute(): void
     {
-        // profile logged in
-        if (FrontendProfilesAuthentication::isLoggedIn()) {
-            parent::execute();
-            $this->getData();
-            $this->loadTemplate();
-            $this->buildForm();
-            $this->validateForm();
-            $this->parse();
-        } else {
-            // profile not logged in
-            $this->redirect(
-                FrontendNavigation::getUrlForBlock(
-                    'Profiles',
-                    'Login'
-                ) . '?queryString=' . FrontendNavigation::getUrlForBlock('Profiles', 'Settings'),
-                307
-            );
+        if (!FrontendProfilesAuthentication::isLoggedIn()) {
+            throw new InsufficientAuthenticationException('You need to log in to change your settings');
         }
+
+        parent::execute();
+        $this->loadTemplate();
+        $this->profile = FrontendProfilesAuthentication::getProfile();
+
+        $this->buildForm();
+        $this->handleForm();
+        $this->parse();
     }
 
-    private function getData(): void
+    private function getGenderOptions(): array
     {
-        // get profile
-        $this->profile = FrontendProfilesAuthentication::getProfile();
+        return [
+            'male' => \SpoonFilter::ucfirst(FL::getLabel('Male')),
+            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female')),
+        ];
+    }
+
+    private function getBirthDateOptions(): array
+    {
+        return [
+            'days' => range(1, 31),
+            'months' => \SpoonLocale::getMonths(LANGUAGE),
+            'years' => range(date('Y'), 1900),
+        ];
+    }
+
+    private function getBirthDate(): array
+    {
+        $birthDate = $this->profile->getSetting('birth_date');
+
+        return array_combine(
+            ['year', 'month', 'day'],
+            (empty($birthDate) ? ['', '', ''] : explode('-', $birthDate))
+        );
     }
 
     private function buildForm(): void
     {
-        // gender dropdown values
-        $genderValues = [
-            'male' => \SpoonFilter::ucfirst(FL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female')),
-        ];
-
-        // birthdate dropdown values
-        $days = range(1, 31);
-        $months = \SpoonLocale::getMonths(LANGUAGE);
-        $years = range(date('Y'), 1900);
-
-        // get settings
-        $birthDate = $this->profile->getSetting('birth_date');
-        $nameChanges = (int) $this->profile->getSetting('display_name_changes');
-
-        // get day, month and year
-        if ($birthDate) {
-            list($birthYear, $birthMonth, $birthDay) = explode('-', $birthDate);
-        } else {
-            // no birth date setting
-            $birthDay = '';
-            $birthMonth = '';
-            $birthYear = '';
-        }
-
-        // create the form
         $this->form = new FrontendForm('updateSettings', null, null, 'updateSettingsForm');
 
-        // create & add elements
-        $this->form->addText('display_name', $this->profile->getDisplayName());
+        $this->form->addText('display_name', $this->profile->getDisplayName())->makeRequired();
+        if (!$this->displayNameCanStillBeChanged()) {
+            $this->form->getField('display_name')->setAttribute('disabled', 'disabled');
+        }
         $this->form->addText('first_name', $this->profile->getSetting('first_name'));
         $this->form->addText('last_name', $this->profile->getSetting('last_name'));
-        $this->form->addText('email', $this->profile->getEmail());
+        $this->form->addText('email', $this->profile->getEmail())->setAttribute('disabled', 'disabled');
         $this->form->addText('city', $this->profile->getSetting('city'));
         $this->form->addDropdown(
             'country',
             Intl::getRegionBundle()->getCountryNames(LANGUAGE),
             $this->profile->getSetting('country')
-        );
-        $this->form->addDropdown('gender', $genderValues, $this->profile->getSetting('gender'));
-        $this->form->addDropdown('day', array_combine($days, $days), $birthDay);
-        $this->form->addDropdown('month', $months, $birthMonth);
-        $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear);
-
-        // set default elements drop-downs
-        $this->form->getField('gender')->setDefaultElement('');
-        $this->form->getField('day')->setDefaultElement('');
-        $this->form->getField('month')->setDefaultElement('');
-        $this->form->getField('year')->setDefaultElement('');
-        $this->form->getField('country')->setDefaultElement('');
-
-        // set email disabled
-        $this->form->getField('email')->setAttribute('disabled', 'disabled');
-
-        // set avatar
+        )->setDefaultElement('');
+        $this->form->addDropdown(
+            'gender',
+            $this->getGenderOptions(),
+            $this->profile->getSetting('gender')
+        )->setDefaultElement('');
+        ['days' => $days, 'months' => $months, 'years' => $years] = $this->getBirthDateOptions();
+        ['year' => $birthYear, 'month' => $birthMonth, 'day' => $birthDay] = $this->getBirthDate();
+        $this->form->addDropdown('day', array_combine($days, $days), $birthDay)->setDefaultElement('');
+        $this->form->addDropdown('month', $months, $birthMonth)->setDefaultElement('');
+        $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear)->setDefaultElement('');
         $this->form->addImage('avatar');
-
-        // when user exceeded the number of name changes set field disabled
-        if ($nameChanges >= FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES) {
-            $this->form->getField(
-                'display_name'
-            )->setAttribute('disabled', 'disabled');
-        }
     }
 
     private function parse(): void
     {
-        // have the settings been saved?
-        if ($this->url->getParameter('sent') == 'true') {
-            // show success message
+        if ($this->url->getParameter('settingsUpdated') === 'true') {
             $this->template->assign('updateSettingsSuccess', true);
         }
 
-        // assign avatar
-        $avatar = $this->profile->getSetting('avatar');
-        if (empty($avatar)) {
-            $avatar = '';
-        }
-        $this->template->assign('avatar', $avatar);
+        // assign avatar the current avatar for the preview image
+        $this->template->assign('avatar', (string) $this->profile->getSetting('avatar', ''));
 
-        // parse the form
         $this->form->parse($this->template);
 
         // display name changes
@@ -158,124 +123,131 @@ class Settings extends FrontendBaseBlock
         );
     }
 
-    private function validateForm(): void
+    private function getAmountOfDisplayNameChanges(): int
     {
-        // is the form submitted
-        if ($this->form->isSubmitted()) {
-            // get fields
-            $txtDisplayName = $this->form->getField('display_name');
-            $txtFirstName = $this->form->getField('first_name');
-            $txtLastName = $this->form->getField('last_name');
-            $txtCity = $this->form->getField('city');
-            $ddmCountry = $this->form->getField('country');
-            $ddmGender = $this->form->getField('gender');
-            $ddmDay = $this->form->getField('day');
-            $ddmMonth = $this->form->getField('month');
-            $ddmYear = $this->form->getField('year');
+        return (int) FrontendProfilesModel::getSetting($this->profile->getId(), 'display_name_changes');
+    }
 
-            // get number of display name changes
-            $nameChanges = (int) FrontendProfilesModel::getSetting($this->profile->getId(), 'display_name_changes');
+    private function displayNameCanStillBeChanged(): bool
+    {
+        return $this->getAmountOfDisplayNameChanges() < FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES;
+    }
 
-            // has there been a valid display name change request?
-            if ($this->profile->getDisplayName() !== $txtDisplayName->getValue() &&
-                $nameChanges <= FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES
-            ) {
-                // display name filled in?
-                if ($txtDisplayName->isFilled(FL::getError('FieldIsRequired'))) {
-                    // display name exists?
-                    if (FrontendProfilesModel::existsDisplayName(
-                        $txtDisplayName->getValue(),
-                        $this->profile->getId()
-                    )
-                    ) {
-                        // set error
-                        $txtDisplayName->addError(FL::getError('DisplayNameExists'));
-                    }
-                }
-            }
+    private function validateForm(): bool
+    {
+        $txtDisplayName = $this->form->getField('display_name');
+        $ddmDay = $this->form->getField('day');
+        $ddmMonth = $this->form->getField('month');
+        $ddmYear = $this->form->getField('year');
 
-            // birthdate is not required but if one is filled we need all
-            if ($ddmMonth->isFilled() || $ddmDay->isFilled() || $ddmYear->isFilled()) {
-                // valid birth date?
-                if (!checkdate($ddmMonth->getValue(), $ddmDay->getValue(), $ddmYear->getValue())) {
-                    // set error
-                    $ddmYear->addError(FL::getError('DateIsInvalid'));
-                }
-            }
+        if ($this->displayNameCanStillBeChanged()
+            && $this->profile->getDisplayName() !== $txtDisplayName->getValue()
+            && $txtDisplayName->isFilled(FL::getError('FieldIsRequired'))
+            && FrontendProfilesModel::existsDisplayName($txtDisplayName->getValue(), $this->profile->getId())) {
+            $txtDisplayName->addError(FL::getError('DisplayNameExists'));
+        }
 
-            // validate avatar when given
-            $this->form->getField('avatar')->isFilled();
-
-            // no errors
-            if ($this->form->isCorrect()) {
-                // init
-                $values = [];
-                $settings = [];
-
-                // has there been a valid display name change request?
-                if ($this->profile->getDisplayName() !== $txtDisplayName->getValue() &&
-                    $nameChanges <= FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES
-                ) {
-                    // get display name value
-                    $values['display_name'] = $txtDisplayName->getValue();
-
-                    // update url based on the new display name
-                    $values['url'] = FrontendProfilesModel::getUrl(
-                        $txtDisplayName->getValue(),
-                        $this->profile->getId()
-                    );
-
-                    // update display name count
-                    $settings['display_name_changes'] = $nameChanges + 1;
-                }
-
-                // update values
-                if (!empty($values)) {
-                    FrontendProfilesModel::update($this->profile->getId(), $values);
-                }
-
-                // build settings
-                $settings['first_name'] = $txtFirstName->getValue();
-                $settings['last_name'] = $txtLastName->getValue();
-                $settings['city'] = $txtCity->getValue();
-                $settings['country'] = $ddmCountry->getValue();
-                $settings['gender'] = $ddmGender->getValue();
-
-                // birthday is filled in
-                if ($ddmYear->isFilled()) {
-                    // mysql format
-                    $settings['birth_date'] = $ddmYear->getValue() . '-';
-                    $settings['birth_date'] .= str_pad($ddmMonth->getValue(), 2, '0', STR_PAD_LEFT) . '-';
-                    $settings['birth_date'] .= str_pad($ddmDay->getValue(), 2, '0', STR_PAD_LEFT);
-                } else {
-                    // not filled in
-                    $settings['birth_date'] = null;
-                }
-
-                // avatar
-                $settings['avatar'] = $this->profile->getSetting('avatar');
-
-                // create new filename
-                if ($this->form->getField('avatar')->isFilled()) {
-                    // field value
-                    $settings['avatar'] = \SpoonFilter::urlise($this->profile->getDisplayName()) . '.' .
-                                          $this->form->getField('avatar')->getExtension();
-
-                    // move the file
-                    $this->form->getField('avatar')->generateThumbnails(
-                        FRONTEND_FILES_PATH . '/Profiles/Avatars/',
-                        $settings['avatar']
-                    );
-                }
-
-                // save settings
-                $this->profile->setSettings($settings);
-
-                // redirect
-                $this->redirect(SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'Settings') . '?sent=true');
-            } else {
-                $this->template->assign('updateSettingsHasFormError', true);
+        // birthdate is not required but if one is filled we need all
+        if ($ddmMonth->isFilled() || $ddmDay->isFilled() || $ddmYear->isFilled()) {
+            // valid birth date?
+            if (!checkdate($ddmMonth->getValue(), $ddmDay->getValue(), $ddmYear->getValue())) {
+                $ddmYear->addError(FL::getError('DateIsInvalid'));
             }
         }
+
+        // do some basic image checks if an avatar was uploaded
+        $this->form->getField('avatar')->isFilled();
+
+        return $this->form->isCorrect();
+    }
+
+    private function displayNameWasChanged(): bool
+    {
+        $txtDisplayName = $this->form->getField('display_name');
+
+        if (!$this->displayNameCanStillBeChanged()
+            || $this->profile->getDisplayName() === $txtDisplayName->getValue()) {
+            // no change or not allowed to change the display name
+            return false;
+        }
+
+        $this->profile->setDisplayName($txtDisplayName->getValue());
+        $this->profile->setUrl(FrontendProfilesModel::getUrl($txtDisplayName->getValue(), $this->profile->getId()));
+
+        FrontendProfilesModel::update(
+            $this->profile->getId(),
+            [
+                'display_name' => $this->profile->getDisplayName(),
+                'url' => $this->profile->getUrl(),
+            ]
+        );
+
+        return true;
+    }
+
+    private function handleForm(): void
+    {
+        if (!$this->form->isSubmitted()) {
+            return;
+        }
+
+        if (!$this->validateForm()) {
+            $this->template->assign('updateSettingsHasFormError', true);
+
+            return;
+        }
+
+        $displayNameChanges = $this->getAmountOfDisplayNameChanges();
+        if ($this->displayNameWasChanged()) {
+            ++$displayNameChanges;
+        }
+
+        $this->profile->setSettings(
+            [
+                'display_name_changes' => $displayNameChanges,
+                'first_name' => $this->form->getField('first_name')->getValue(),
+                'last_name' => $this->form->getField('last_name')->getValue(),
+                'city' => $this->form->getField('city')->getValue(),
+                'country' => $this->form->getField('country')->getValue(),
+                'gender' => $this->form->getField('gender')->getValue(),
+                'birth_date' => $this->getSubmittedBirthDate(),
+                'avatar' => $this->getAvatar(),
+            ]
+        );
+
+        $this->redirect(
+            FrontendNavigation::getUrlForBlock($this->getModule(), $this->getAction()) . '?settingsUpdated=true'
+        );
+    }
+
+    private function getAvatar(): ?string
+    {
+        $currentAvatar = $this->profile->getSetting('avatar');
+        if (!$this->form->getField('avatar')->isFilled()) {
+            return $currentAvatar;
+        }
+
+        $baseAvatarPath = FRONTEND_FILES_PATH . '/Profiles/Avatars/';
+        Model::deleteThumbnails($baseAvatarPath, $currentAvatar);
+
+        $newAvatar = $this->profile->getUrl() . '.' . $this->form->getField('avatar')->getExtension();
+
+        $this->form->getField('avatar')->generateThumbnails($baseAvatarPath, $newAvatar);
+
+        return $newAvatar;
+    }
+
+    private function getSubmittedBirthDate(): ?string
+    {
+        if (!$this->form->getField('year')->isFilled()) {
+            return null;
+        }
+
+        return sprintf(
+            '%1$s-%2$s-%3$s',
+            $this->form->getField('year')->getValue(),
+            str_pad($this->form->getField('month')->getValue(), 2, '0', STR_PAD_LEFT),
+            str_pad($this->form->getField('day')->getValue(), 2, '0', STR_PAD_LEFT)
+        );
     }
 }
