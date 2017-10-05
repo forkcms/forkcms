@@ -118,11 +118,8 @@ class Model
 
     public static function invalidateCache(): void
     {
-        $finder = new Finder();
-        $filesystem = new Filesystem();
-        foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
-            $filesystem->remove($file->getRealPath());
-        }
+        // clear the cache
+        BackendModel::get('cache.pool')->clear();
 
         // clear the php5.5+ opcode cache
         if (function_exists('opcache_reset')) {
