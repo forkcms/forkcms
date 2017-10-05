@@ -9,11 +9,9 @@ namespace Frontend\Modules\Profiles\Widgets;
  * file that was distributed with this source code.
  */
 
-use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Navigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**
  * This is a widget to help you secure a page and make it only accessible for logged-in users.
@@ -25,13 +23,8 @@ class SecurePage extends FrontendBaseWidget
         parent::execute();
         $this->loadTemplate();
 
-        // Check if we're logged in, else redirect to the login form.
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
-            $queryString = $this->url->getQueryString();
-            throw new RedirectException(
-                'Redirect',
-                new RedirectResponse(Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $queryString)
-            );
+            throw new InsufficientAuthenticationException('You need to log in to access this page');
         }
     }
 }
