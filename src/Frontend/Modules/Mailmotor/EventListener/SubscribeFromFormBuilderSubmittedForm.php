@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Mailmotor\EventListener;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use Common\ModulesSettings;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;

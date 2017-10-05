@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Tags\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Locale;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -71,6 +64,18 @@ class Model
              WHERE t.language = ? AND t.number > 0
              ORDER BY t.tag',
             [FrontendLocale::frontendLanguage()]
+        );
+    }
+
+    public static function getMostUsed(int $limit): array
+    {
+        return (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT t.tag AS name, t.url, t.number
+             FROM tags AS t
+             WHERE t.language = ? AND t.number > 0
+             ORDER BY t.number DESC
+             LIMIT ?',
+            [FrontendLocale::frontendLanguage(), $limit]
         );
     }
 

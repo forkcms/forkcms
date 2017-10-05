@@ -76,7 +76,7 @@ deny from env=stayout
     RewriteRule \.env - [F]
     RewriteRule \.env.dist - [F]
 
-    # redirect all trafic to https
+    # redirect all traffic to https
     # <IfModule headers_module>
     #   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
     # </IfModule>

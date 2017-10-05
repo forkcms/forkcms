@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Search\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Base\Action;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
