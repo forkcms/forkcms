@@ -569,7 +569,7 @@ class Model implements FrontendTagsInterface
         $itemUrl = (string) $url->getParameter(1);
 
         // return the item
-        return self::get($itemUrl)['id'];
+        return self::get($itemUrl)['id'] ?? 0;
     }
 
     /**
