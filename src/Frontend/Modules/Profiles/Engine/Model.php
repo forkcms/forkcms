@@ -191,7 +191,7 @@ class Model
             'SELECT ps.profile_id
              FROM profiles_settings AS ps
              WHERE ps.name = ? AND ps.value = ?',
-            [(string) $name, serialize($value)]
+            [$name, serialize($value)]
         );
     }
 

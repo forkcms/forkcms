@@ -23,112 +23,103 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ResetPassword extends FrontendBaseBlock
 {
     /**
-     * FrontendForm instance.
-     *
      * @var FrontendForm
      */
     private $form;
 
+    /** @var int */
+    private $profileId;
+
     public function execute(): void
     {
-        // get reset key
-        $key = $this->url->getParameter(0);
+        parent::execute();
+        $this->loadTemplate();
 
-        // do we have an reset key?
-        if (isset($key)) {
-            // load parent
-            parent::execute();
+        if ($this->url->getParameter('passwordHasBeenReset') === 'true') {
+            $this->template->assign('resetPasswordSuccess', true);
+            $this->template->assign('resetPasswordHideForm', true);
 
-            // load template
-            $this->loadTemplate();
+            return;
+        }
 
-            // get profile id
-            $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $key);
+        $this->profileId = $this->getProfileId();
 
-            // have id?
-            if ($profileId !== 0) {
-                // load
-                $this->buildForm();
+        $this->buildForm();
+        $this->handleForm();
+        $this->form->parse($this->template);
+    }
 
-                // validate
-                $this->validateForm();
-            } elseif ($this->url->getParameter('sent') !== 'true') {
-                throw new NotFoundHttpException();
-            }
+    private function getProfileId(): int
+    {
+        $key = $this->getResetPasswordOneTimeAccessKey();
 
-            // parse
-            $this->parse();
-        } else {
+        $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $key);
+
+        if ($profileId === 0) {
             throw new NotFoundHttpException();
         }
+
+        return $profileId;
+    }
+
+    private function getResetPasswordOneTimeAccessKey(): string
+    {
+        $key = $this->url->getParameter(0);
+
+        if ($key === null) {
+            throw new NotFoundHttpException();
+        }
+
+        return $key;
     }
 
     private function buildForm(): void
     {
-        // create the form
         $this->form = new FrontendForm('resetPassword', null, null, 'resetPasswordForm');
 
-        // create & add elements
-        $this->form->addPassword('password')->setAttributes(
-            [
-                'required' => null,
-                'data-role' => 'fork-new-password',
-            ]
-        );
-        $this->form->addCheckbox('show_password')->setAttributes(
-            ['data-role' => 'fork-toggle-visible-password']
-        );
+        $this->form->addPassword('password')->makeRequired()->setAttribute('data-role', 'fork-new-password');
+        $this->form->addCheckbox('show_password')->setAttribute('data-role', 'fork-toggle-visible-password');
     }
 
-    private function parse(): void
+    private function validateForm(): bool
     {
-        // has the password been saved?
-        if ($this->url->getParameter('sent') == 'true') {
-            // show message
-            $this->template->assign('resetPasswordSuccess', true);
+        $this->form->getField('password')->isFilled(FL::getError('PasswordIsRequired'));
 
-            // hide form
-            $this->template->assign('resetPasswordHideForm', true);
-        } else {
-            $this->form->parse($this->template);
+        return $this->form->isCorrect();
+    }
+
+    private function cleanUpResetPasswordOneTimeAccessToken(): void
+    {
+        FrontendProfilesModel::deleteSetting($this->profileId, 'forgot_password_key');
+    }
+
+    private function handleForm(): void
+    {
+        if (!$this->form->isSubmitted()) {
+            return;
         }
+
+        if (!$this->validateForm()) {
+            $this->template->assign('forgotPasswordHasError', true);
+
+            return;
+        }
+
+        $this->cleanUpResetPasswordOneTimeAccessToken();
+
+        FrontendProfilesAuthentication::updatePassword($this->profileId, $this->form->getField('password')->getValue());
+
+        $this->login();
+
+        $this->redirect(
+            FrontendNavigation::getUrlForBlock($this->getModule(), $this->getAction()) . '?passwordHasBeenReset=true'
+        );
     }
 
-    private function validateForm(): void
+    private function login(): void
     {
-        // is the form submitted
-        if ($this->form->isSubmitted()) {
-            // get fields
-            $txtPassword = $this->form->getField('password');
-
-            // field is filled in?
-            $txtPassword->isFilled(FL::getError('PasswordIsRequired'));
-
-            // valid
-            if ($this->form->isCorrect()) {
-                // get profile id
-                $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $this->url->getParameter(0));
-
-                // remove key (we can only update the password once with this key)
-                FrontendProfilesModel::deleteSetting($profileId, 'forgot_password_key');
-
-                // update password
-                FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
-
-                // login (check again because we might have logged in in the meanwhile)
-                if (!FrontendProfilesAuthentication::isLoggedIn()) {
-                    FrontendProfilesAuthentication::login($profileId);
-                }
-
-                // redirect
-                $this->redirect(
-                    FrontendNavigation::getUrlForBlock('Profiles', 'ResetPassword') . '/' . $this->url->getParameter(
-                        0
-                    ) . '?sent=true'
-                );
-            } else {
-                $this->template->assign('forgotPasswordHasError', true);
-            }
+        if (!FrontendProfilesAuthentication::isLoggedIn()) {
+            FrontendProfilesAuthentication::login($this->profileId);
         }
     }
 }
