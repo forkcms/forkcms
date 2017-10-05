@@ -34,6 +34,8 @@ class Autocomplete extends FrontendBaseAJAXAction
             array_map(
                 function (array $match) use ($url) {
                     $match['url'] = $url . '?form=search&q=' . $match['term'];
+
+                    return $match;
                 },
                 FrontendSearchModel::getStartsWith($term, LANGUAGE, $limit)
             )
