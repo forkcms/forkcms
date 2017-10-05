@@ -14,36 +14,29 @@ class Autocomplete extends FrontendBaseAJAXAction
 {
     public function execute(): void
     {
-        // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        // get parameters
         $charset = $this->getContainer()->getParameter('kernel.charset');
         $searchTerm = $this->getRequest()->request->get('term', '');
-        $term = ($charset === 'utf-8') ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities(
-            $searchTerm
-        );
+        $term = ($charset === 'utf-8')
+            ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities($searchTerm);
         $limit = (int) $this->get('fork.settings')->get('Search', 'autocomplete_num_items', 10);
 
-        // validate
         if ($term === '') {
             $this->output(Response::HTTP_BAD_REQUEST, null, 'term-parameter is missing.');
 
             return;
         }
 
-        // get matches
-        $matches = FrontendSearchModel::getStartsWith($term, LANGUAGE, $limit);
-
-        // get search url
         $url = FrontendNavigation::getUrlForBlock('Search');
-
-        // loop items and set search url
-        foreach ($matches as &$match) {
-            $match['url'] = $url . '?form=search&q=' . $match['term'];
-        }
-
-        // output
-        $this->output(Response::HTTP_OK, $matches);
+        $this->output(
+            Response::HTTP_OK,
+            array_map(
+                function (array $match) use ($url) {
+                    $match['url'] = $url . '?form=search&q=' . $match['term'];
+                },
+                FrontendSearchModel::getStartsWith($term, LANGUAGE, $limit)
+            )
+        );
     }
 }
