@@ -99,7 +99,7 @@ class ResendActivation extends FrontendBaseBlock
 
         $this->resendActivationEmail();
 
-        $this->redirect(SITE_URL . $this->url->getQueryString() . '?activationHasBeenResent=true');
+        $this->redirect($this->url->getQueryString() . '?activationHasBeenResent=true');
     }
 
     private function resendActivationEmail(): void

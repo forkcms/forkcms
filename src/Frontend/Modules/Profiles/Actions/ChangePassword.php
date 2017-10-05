@@ -115,7 +115,7 @@ class ChangePassword extends FrontendBaseBlock
         );
 
         $this->redirect(
-            SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangePassword') . '?changedPassword=true'
+            FrontendNavigation::getUrlForBlock('Profiles', 'ChangePassword') . '?changedPassword=true'
         );
     }
 }

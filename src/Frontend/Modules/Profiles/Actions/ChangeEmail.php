@@ -109,7 +109,7 @@ class ChangeEmail extends FrontendBaseBlock
         FrontendProfilesModel::update($this->profile->getId(), ['email' => $this->form->getField('email')->getValue()]);
 
         $this->redirect(
-            SITE_URL . FrontendNavigation::getUrlForBlock('Profiles', 'ChangeEmail') . '?changedEmail=true'
+            FrontendNavigation::getUrlForBlock('Profiles', 'ChangeEmail') . '?changedEmail=true'
         );
     }
 }

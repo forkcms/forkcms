@@ -95,7 +95,7 @@ class ForgotPassword extends FrontendBaseBlock
         $profileId = FrontendProfilesModel::getIdByEmail($this->form->getField('email')->getValue());
         $this->sendForgotPasswordEmail($profileId, $this->createResetUrl($profileId));
 
-        $this->redirect(SITE_URL . $this->url->getQueryString() . '?newPasswordRequested=true');
+        $this->redirect($this->url->getQueryString() . '?newPasswordRequested=true');
     }
 
     private function sendForgotPasswordEmail(int $profileId, string $resetUrl): void

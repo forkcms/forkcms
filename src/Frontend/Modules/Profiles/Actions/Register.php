@@ -118,7 +118,7 @@ class Register extends FrontendBaseBlock
 
         $this->sendActivationEmail($profile, $activationKey);
 
-        $this->redirect(SITE_URL . $this->url->getQueryString() . '?registered=true');
+        $this->redirect($this->url->getQueryString() . '?registered=true');
     }
 
     private function sendActivationEmail(array $profile, string $activationKey): void

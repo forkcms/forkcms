@@ -28,7 +28,7 @@ class Login extends FrontendBaseBlock
         parent::execute();
 
         if (FrontendProfilesAuthentication::isLoggedIn()) {
-            $this->redirect(urldecode($this->getRequest()->query->get('queryString', SITE_URL)));
+            $this->redirectToPreviousPage();
 
             return;
         }
@@ -89,6 +89,11 @@ class Login extends FrontendBaseBlock
             $this->form->getField('remember')->getChecked()
         );
 
+        $this->redirectToPreviousPage();
+    }
+
+    private function redirectToPreviousPage(): void
+    {
         $this->redirect(urldecode($this->getRequest()->query->get('queryString', SITE_URL)));
     }
 }
