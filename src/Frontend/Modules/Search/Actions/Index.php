@@ -24,11 +24,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class Index extends FrontendBaseBlock
 {
     /**
-     * The form instance
-     *
      * @var FrontendForm
      */
-    protected $form;
+    private $form;
 
     /**
      * Name of the cache file
@@ -59,20 +57,6 @@ class Index extends FrontendBaseBlock
     private $offset;
 
     /**
-     * The pagination array
-     * It will hold all needed parameters, some of them need initialization.
-     *
-     * @var array
-     */
-    protected $pagination = [
-        'limit' => 20,
-        'offset' => 0,
-        'requested_page' => 1,
-        'num_items' => null,
-        'num_pages' => null,
-    ];
-
-    /**
      * The requested page
      *
      * @var int
@@ -88,7 +72,6 @@ class Index extends FrontendBaseBlock
 
     private function display(): void
     {
-        // set variables
         $this->requestedPage = $this->url->getParameter('page', 'int', 1);
         $this->limit = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
@@ -96,13 +79,11 @@ class Index extends FrontendBaseBlock
                            LANGUAGE . '_' . md5($this->term) . '_' .
                            $this->offset . '_' . $this->limit . '.php';
 
-        // load the cached data
         if (!$this->getCachedData()) {
-            // ... or load the real data
+            // no valid cache so we get fresh data
             $this->getRealData();
         }
 
-        // parse
         $this->parse();
     }
 
@@ -116,32 +97,24 @@ class Index extends FrontendBaseBlock
         $this->saveStatistics();
     }
 
-    private function getCachedData(): bool
+    private function isCacheFileTooOld(): bool
     {
-        // no search term = no search
-        if (!$this->term) {
-            return false;
-        }
-
-        // debug mode = no cache
-        if ($this->getContainer()->getParameter('kernel.debug')) {
-            return false;
-        }
-
-        // check if cache file exists
-        if (!is_file($this->cacheFile)) {
-            return false;
-        }
-
-        // get cache file modification time
         $cacheInfo = @filemtime($this->cacheFile);
 
-        // check if cache file is recent enough (1 hour)
-        if (!$cacheInfo || $cacheInfo < strtotime('-1 hour')) {
+        return !$cacheInfo || $cacheInfo < strtotime('-1 hour');
+    }
+
+    private function getCachedData(): bool
+    {
+        if (!$this->term
+            || !is_file($this->cacheFile)
+            || $this->isCacheFileTooOld()
+            || $this->getContainer()->getParameter('kernel.debug')) {
             return false;
         }
 
-        // include cache file
+        /** @var array $pagination */
+        /** @var array $items */
         require_once $this->cacheFile;
 
         // set info (received from cache)
@@ -153,75 +126,52 @@ class Index extends FrontendBaseBlock
 
     private function getRealData(): void
     {
-        // no search term = no search
         if (!$this->term) {
             return;
         }
 
-        // set url
-        $this->pagination['url'] = FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term;
-
-        // populate calculated fields in pagination
-        $this->pagination['limit'] = $this->limit;
-        $this->pagination['offset'] = $this->offset;
-        $this->pagination['requested_page'] = $this->requestedPage;
-
-        // get items
-        $this->items = FrontendSearchModel::search(
-            $this->term,
-            $this->pagination['limit'],
-            $this->pagination['offset']
-        );
+        $this->items = FrontendSearchModel::search($this->term, $this->limit, $this->offset);
 
         // populate count fields in pagination
         // this is done after actual search because some items might be
         // activated/deactivated (getTotal only does rough checking)
-        $this->pagination['num_items'] = FrontendSearchModel::getTotal($this->term);
-        $this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
+        $numberOfItems = FrontendSearchModel::getTotal($this->term);
+        $this->pagination = [
+            'url' => FrontendNavigation::getUrlForBlock('Search') . '?form=search&q=' . $this->term,
+            'limit' => $this->limit,
+            'offset' => $this->offset,
+            'requested_page' => $this->requestedPage,
+            'num_items' => FrontendSearchModel::getTotal($this->term),
+            'num_pages' => (int) ceil($numberOfItems / $this->limit)
+        ];
 
         // num pages is always equal to at least 1
         if ($this->pagination['num_pages'] === 0) {
             $this->pagination['num_pages'] = 1;
         }
 
-        // redirect if the request page doesn't exist
         if ($this->requestedPage < 1 || $this->requestedPage > $this->pagination['num_pages']) {
             throw new NotFoundHttpException();
         }
 
-        // debug mode = no cache
         if ($this->getContainer()->getParameter('kernel.debug')) {
             return;
         }
 
-        // set cache content
         $filesystem = new Filesystem();
         $filesystem->dumpFile(
             $this->cacheFile,
-            "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
-                $this->items,
-                true
-            ) . ";\n?>"
+            "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = '
+            . var_export($this->items, true) . ";\n?>"
         );
     }
 
     private function buildForm(): void
     {
-        // create form
         $this->form = new FrontendForm('search', null, 'get', null, false);
 
-        // could also have been submitted by our widget
-        if ($this->getRequest()->query->has('q')) {
-            $query = $this->getRequest()->query->get('q', '');
-        } else {
-            $query = $this->getRequest()->query->get('q_widget', '');
-            // set $_GET variable to keep SpoonForm happy
-            // should be refactored out when Symfony form are implemented here
-            $_GET['q'] = $this->getRequest()->query->get('q_widget', '');
-        }
-
-        // create elements
-        $this->form->addText('q')->setAttributes(
+        $query = $this->getQuery();
+        $this->form->addText('q', $query)->setAttributes(
             [
                 'data-role' => 'fork-search-field',
                 'data-autocomplete' => 'enabled',
@@ -229,12 +179,32 @@ class Index extends FrontendBaseBlock
             ]
         );
 
-        // since we know the term just here we should set the canonical url here
-        $canonicalUrl = SITE_URL . FrontendNavigation::getUrlForBlock('Search');
-        if ($query !== '') {
-            $canonicalUrl .= '?q=' . \SpoonFilter::htmlspecialchars($query);
+        $this->header->setCanonicalUrl($this->getCanonicalUrl($query));
+    }
+
+    private function getQuery(): string
+    {
+        if ($this->getRequest()->query->has('q')) {
+            return $this->getRequest()->query->get('q', '');
         }
-        $this->header->setCanonicalUrl($canonicalUrl);
+
+        // search query was submitted by our search widget
+        $query = $this->getRequest()->query->get('q_widget', '');
+        // set $_GET variable to keep SpoonForm happy
+        // should be refactored out when Symfony form are implemented here
+        $_GET['q'] = $query;
+
+        return $query;
+    }
+
+    private function getCanonicalUrl(string $query): string
+    {
+        $canonicalUrl = SITE_URL . FrontendNavigation::getUrlForBlock('Search');
+        if ($query === '') {
+            return $canonicalUrl;
+        }
+
+        return $canonicalUrl . '?q=' . \SpoonFilter::htmlspecialchars($query);
     }
 
     private function parse(): void
@@ -242,34 +212,27 @@ class Index extends FrontendBaseBlock
         $this->addJS('/js/vendors/typeahead.bundle.min.js', true, false);
         $this->addCSS('Search.css');
 
-        // parse the form
         $this->form->parse($this->template);
 
-        // no search term = no search
         if (!$this->term) {
             return;
         }
 
-        // assign articles
         $this->template->assign('searchResults', $this->items);
         $this->template->assign('searchTerm', $this->term);
-
-        // parse the pagination
         $this->parsePagination();
     }
 
     private function saveStatistics(): void
     {
-        // no search term = no search
         if (!$this->term) {
             return;
         }
 
-        // previous search result
         $previousTerm = FrontendModel::getSession()->get('searchTerm', '');
         FrontendModel::getSession()->set('searchTerm', '');
 
-        // save this term?
+        // don't save the search term in the database if it is the same as the last time
         if ($previousTerm !== $this->term) {
             FrontendSearchModel::save(
                 [
@@ -282,7 +245,6 @@ class Index extends FrontendBaseBlock
             );
         }
 
-        // save current search term in session
         FrontendModel::getSession()->set('searchTerm', $this->term);
     }
 
@@ -292,15 +254,10 @@ class Index extends FrontendBaseBlock
             return;
         }
 
-        // cleanup the submitted fields, ignore fields that were added by hackers
         $this->form->cleanupFields();
-
-        // validate required fields
         $this->form->getField('q')->isFilled(FL::err('TermIsRequired'));
 
-        // no errors?
         if ($this->form->isCorrect()) {
-            // get search term
             $this->term = $this->form->getField('q')->getValue();
         }
     }
