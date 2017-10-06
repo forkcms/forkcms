@@ -514,7 +514,7 @@ class Add extends BackendBaseActionAdd
                     }
 
 
-                    if ($redirectValue == 'none') {
+                    if ($redirectValue === 'none') {
                         // add to search index
                         BackendSearchModel::saveIndex(
                             $this->getModule(),

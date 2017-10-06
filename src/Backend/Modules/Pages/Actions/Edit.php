@@ -778,7 +778,7 @@ class Edit extends BackendBaseActionEdit
                         $text .= ' ' . $block['html'];
                     }
 
-                    if ($data['remove_from_search_index'] == true || $redirectValue != 'none') {
+                    if ($data['remove_from_search_index'] === true || $redirectValue !== 'none') {
                         BackendSearchModel::removeIndex(
                             $this->getModule(),
                             $page['id']
