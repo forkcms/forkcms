@@ -55,6 +55,9 @@ class Model
 
         // init var
         $rows = count($table);
+        if ($rows === 0) {
+            throw new Exception('Invalid template-format.');
+        }
         $cells = count($table[0]);
 
         $htmlContent = [];
@@ -955,6 +958,11 @@ class Model
         $syntax = trim(str_replace(["\n", "\r", ' '], '', $syntax));
         $table = [];
 
+        // check template settings format
+        if (!static::isValidTemplateSyntaxFormat($syntax)) {
+            return $table;
+        }
+
         // split into rows
         $rows = explode('],[', $syntax);
 
@@ -976,6 +984,20 @@ class Model
         }
 
         return $table;
+    }
+
+    /**
+     * Validate template syntax format
+     *
+     * @param string $syntax
+     * @return bool
+     */
+    public static function isValidTemplateSyntaxFormat(string $syntax): bool
+    {
+        return \SpoonFilter::isValidAgainstRegexp(
+            '/^\[(\/|[a-z0-9])+(,(\/|[a-z0-9]+))*\](,\[(\/|[a-z0-9])+(,(\/|[a-z0-9]+))*\])*$/i',
+            $syntax
+        );
     }
 
     public static function updateTemplate(array $templateData): void
