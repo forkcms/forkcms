@@ -703,7 +703,11 @@ class ModuleInstaller
             $revision['type']
         );
         $revision['meta_id'] = $revision['meta_id'] ?? $this->getNewMetaId($meta, $revision['title']);
-
+        foreach ($this->getLanguages() as $language) {
+            if ($language !== $revision['language']) {
+                $revision['data']['hreflang_' . $language] = $revision['id'];
+            }
+        }
         if (!isset($revision['data']['image']) && $this->installExample()) {
             $revision['data']['image'] = $this->getAndCopyRandomImage();
         }
