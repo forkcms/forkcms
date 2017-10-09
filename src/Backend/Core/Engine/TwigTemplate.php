@@ -18,13 +18,6 @@ use Twig_Extension_Debug;
 use Twig_FactoryRuntimeLoader;
 use Twig_Loader_Filesystem;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig.
