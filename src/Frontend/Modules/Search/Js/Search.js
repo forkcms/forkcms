@@ -14,7 +14,7 @@ jsFrontend.search =
     if ($('input[data-role=fork-search-field][data-autocomplete=enabled]').length > 0) jsFrontend.search.autocomplete()
 
     // live suggest (search results page: live feed of matches)
-    if ($('input[data-role=fork-search-field][data-live-suggest=enabled]').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest()
+    if ($('input[data-role=fork-search-field][data-live-suggest=enabled]').length > 0 && $('[data-role="search-results-container"]').length > 0) jsFrontend.search.livesuggest()
   },
 
   // autocomplete (search results page: autocomplete based on known search terms)
