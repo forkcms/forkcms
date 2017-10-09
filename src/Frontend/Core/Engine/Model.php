@@ -122,7 +122,7 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getPage(int $pageId, string $language = LANGUAGE): array
+    public static function getPage(int $pageId): array
     {
         // get data
         $revisionId = (int) self::getContainer()->get('database')->getVar(
@@ -130,7 +130,7 @@ class Model extends \Common\Core\Model
              FROM pages AS p
              WHERE p.id = ? AND p.status = ? AND p.language = ?
              LIMIT 1',
-            [$pageId, 'active', $language]
+            [$pageId, 'active', LANGUAGE]
         );
 
         // No page found
@@ -138,7 +138,7 @@ class Model extends \Common\Core\Model
             return [];
         }
 
-        return self::getPageRevision($revisionId, false, $language);
+        return self::getPageRevision($revisionId, false);
     }
 
     /**
@@ -149,7 +149,7 @@ class Model extends \Common\Core\Model
      *
      * @return array
      */
-    public static function getPageRevision(int $revisionId, bool $allowHidden = true, string $language = LANGUAGE): array
+    public static function getPageRevision(int $revisionId, bool $allowHidden = true): array
     {
         $pageRevision = (array) self::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title,
@@ -166,7 +166,7 @@ class Model extends \Common\Core\Model
              INNER JOIN themes_templates AS t ON p.template_id = t.id
              WHERE p.revision_id = ? AND p.language = ?
              LIMIT 1',
-            [$revisionId, $language]
+            [$revisionId, LANGUAGE]
         );
 
         if (empty($pageRevision)) {
