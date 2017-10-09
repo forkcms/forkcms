@@ -455,18 +455,17 @@
       //<![CDATA[
       // all the possible templates
       var templates = {};
-      {% for template in templates %}templates[{{ template.id }}] = {{ template.json|raw }};
+      {% for template in templates %}
+      templates[{{ template.id }}] = {{ template.json|raw }};
       {% endfor %}
 
       // the data for the extra's
       var extrasData = {};
-      {% if extrasData %}extrasData = {{ extrasData|raw }};
-      {% endif %}
+      {% if extrasData %}extrasData = {{ extrasData|raw }};{% endif %}
 
       // the extra's, but in a way we can access them based on their ID
       var extrasById = {};
-      {% if extrasById %}extrasById = {{ extrasById|raw }};
-      {% endif %}
+      {% if extrasById %}extrasById = {{ extrasById|raw }};{% endif %}
 
       // indicator that the default blocks may be set on pageload
       var initDefaults = true;
