@@ -87,8 +87,12 @@ liip_imagine:
             filters:
                 scale: { dim : [1600, 800] }
         media_library_slider_pano:
+            quality: 95
             filters:
-                scale: { dim : [1600, 600] }
+                ## Using the "thumbnail + background" combination will crop the
+                ## the centered image to create your required width/height.
+                thumbnail: { size : [1600, 600], mode : outbound }
+                background: { size : [1600, 600], position : center }
         media_library_one_image_large:
             filters:
                 thumbnail: { size : [1600, 500], mode : inbound }
