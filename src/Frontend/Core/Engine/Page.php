@@ -377,9 +377,13 @@ class Page extends KernelLoader
 
         // Check if hreflang is set for language
         if (!isset($pageInfo['data']['hreflang_' . $language])) {
-            return;
+            // check if there is a page in this language with the same ID
+            $pageInOtherLanguage = Model::getPage($this->pageId, $language);
+            if (empty($pageInOtherLanguage)) return;
+            $url = Navigation::getUrl($pageInOtherLanguage['id'], $language);
+        } else {
+            $url = Navigation::getUrl($pageInfo['data']['hreflang_' . $language], $language);
         }
-        $url = Navigation::getUrl($pageInfo['data']['hreflang_' . $language], $language);
 
         // Ignore 404 links
         if ($this->pageId !== Response::HTTP_NOT_FOUND
