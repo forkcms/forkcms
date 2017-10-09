@@ -49,5 +49,8 @@
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
+  },
+  "dependencies": {
+    "ckeditor": "^4.7.3"
   }
 }
