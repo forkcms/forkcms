@@ -24,6 +24,30 @@
     "jquery-ui-dist": "~1.12",
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
-    "slick-carousel": "^1.6.0"
+    "slick-carousel": "^1.6.0",
+    "standard": "^10.0.3"
+  },
+  "scripts": {
+    "test": "standard"
+  },
+  "standard": {
+    "globals": [
+      "$",
+      "jQuery",
+      "jsData",
+      "jsFrontend",
+      "jsBackend",
+      "utils"
+    ],
+    "ignore": [
+      "/js/",
+      "src/Backend/Core/Js/ckeditor/",
+      "src/Backend/Core/Js/ckfinder/",
+      "src/Backend/Core/Js/highcharts.js",
+      "src/Backend/Core/Layout/EditorTemplates/templates.js",
+      "src/Backend/Modules/Pages/Js/jstree/",
+      "src/Frontend/Cache/",
+      "src/Frontend/Core/Js/jquery/jquery.js"
+    ]
   }
 }

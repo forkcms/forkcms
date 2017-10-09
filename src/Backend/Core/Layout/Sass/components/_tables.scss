@@ -26,7 +26,10 @@
 
 .table > tbody > tr > td.dragAndDropHandle,
 .table > tbody > tr > th.dragAndDropHandle,
-.table > thead > tr > th.dragAndDropHandle {
+.table > thead > tr > th.dragAndDropHandle,
+.table > tbody > tr > td.sortHandle,
+.table > tbody > tr > th.sortHandle,
+.table > thead > tr > th.sortHandle {
   width: 5%;
 }
 

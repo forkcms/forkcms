@@ -809,17 +809,16 @@ class Edit extends BackendBaseActionEdit
                         $text .= ' ' . $block['html'];
                     }
 
-                    // add to search index, only if authentication is false
-                    if ($data['remove_from_search_index'] == false) {
+                    if ($data['remove_from_search_index'] === true || $redirectValue !== 'none') {
+                        BackendSearchModel::removeIndex(
+                            $this->getModule(),
+                            $page['id']
+                        );
+                    } else {
                         BackendSearchModel::saveIndex(
                             $this->getModule(),
                             $page['id'],
                             ['title' => $page['title'], 'text' => $text]
-                        );
-                    } else {
-                        BackendSearchModel::removeIndex(
-                            $this->getModule(),
-                            $page['id']
                         );
                     }
 

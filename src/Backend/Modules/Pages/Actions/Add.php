@@ -544,12 +544,20 @@ class Add extends BackendBaseActionAdd
                         $text .= ' ' . $block['html'];
                     }
 
-                    // add to search index
-                    BackendSearchModel::saveIndex(
-                        $this->getModule(),
-                        $page['id'],
-                        ['title' => $page['title'], 'text' => $text]
-                    );
+
+                    if ($redirectValue === 'none') {
+                        // add to search index
+                        BackendSearchModel::saveIndex(
+                            $this->getModule(),
+                            $page['id'],
+                            ['title' => $page['title'], 'text' => $text]
+                        );
+                    } else {
+                        BackendSearchModel::removeIndex(
+                            $this->getModule(),
+                            $page['id']
+                        );
+                    }
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(
