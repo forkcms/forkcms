@@ -1,0 +1,57 @@
+.btn:focus {
+  outline: dotted 2px black;
+}
+div.active:focus {
+  outline: dotted 1px black;
+}
+a:focus {
+  outline: dotted 1px black;
+}
+.close:hover,
+.close:focus {
+  outline: dotted 1px black;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+  outline: dotted 1px black;
+}
+
+.carousel-inner > .item {
+  position: absolute;
+  top: -999999em; 
+  display: block;
+  -webkit-transition: 0.6s ease-in-out left;
+          transition: 0.6s ease-in-out left;
+}
+.carousel-inner > .active {
+  top: 0;
+}
+.carousel-inner > .active,
+.carousel-inner > .next,
+.carousel-inner > .prev {
+  position: relative;
+}
+.carousel-inner > .next,
+.carousel-inner > .prev {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.alert-success {
+    color: #2d4821;
+}
+.alert-info {
+    color: #214c62;
+}
+.alert-warning {
+    color: #6c4a00;
+    background-color: #f9f1c6;
+}
+.alert-danger {
+    color: #d2322d;
+}
+.alert-danger:hover {
+    color: #c12f2a;
+}

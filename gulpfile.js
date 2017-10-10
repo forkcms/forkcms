@@ -14,7 +14,8 @@ gulp.task('build:backend:assets:copy-css-vendors', function () {
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css',
     'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.standalone.min.css',
-    'node_modules/cropper/dist/cropper.css'
+    'node_modules/cropper/dist/cropper.css',
+    'node_modules/bootstrap-accessibility-plugin/plugins/css/bootstrap-accessibility.css'
   ])
   .pipe(gulp.dest('./css/vendors'))
 })
@@ -52,7 +53,8 @@ gulp.task('build:backend:assets:copy-js-vendors', function () {
     'node_modules/fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min.js',
     'node_modules/simple-ajax-uploader/SimpleAjaxUploader.min.js',
     'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
-    'node_modules/cropper/dist/cropper.js'
+    'node_modules/cropper/dist/cropper.js',
+    'node_modules/bootstrap-accessibility-plugin/plugins/js/bootstrap-accessibility.min.js'
   ])
   .pipe(gulp.dest('js/vendors'))
 })
