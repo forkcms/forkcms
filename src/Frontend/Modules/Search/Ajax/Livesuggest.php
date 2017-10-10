@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Search\Ajax;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
@@ -105,7 +98,10 @@ class Livesuggest extends FrontendBaseAJAXAction
         // output
         $this->output(
             Response::HTTP_OK,
-            $this->template->render(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
+            $this->template->render(
+                FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig',
+                $this->template->getAssignedVariables()
+            )
         );
     }
 

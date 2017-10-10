@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Users\Installer;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
@@ -161,6 +154,10 @@ class Installer extends ModuleInstaller
             $settings['password_strength'] = $this->getPasswordStrength();
             $settings['current_password_change'] = time();
             $settings['avatar'] = 'god.jpg';
+            $possibleCSVSplitCharacters = BackendUsersModel::getCSVSplitCharacters();
+            $settings['csv_split_character'] = reset($possibleCSVSplitCharacters);
+            $possibleCSVLineEndings = BackendUsersModel::getCSVLineEndings();
+            $settings['csv_line_ending'] = reset($possibleCSVLineEndings);
 
             // build user
             $user = [];

@@ -2194,14 +2194,19 @@ VALUES
 	(1516, 1, 'en', 'Backend', 'Profiles', 'err', 'UnknownAction', 'Unknown action.', '2017-08-31 14:28:26'),
 	(1517, 1, 'en', 'Backend', 'Core', 'lbl', 'LoginLink', 'login link', '2017-08-31 14:28:26'),
 	(1518, 1, 'en', 'Backend', 'Core', 'lbl', 'SecurePage', 'secure page', '2017-08-31 14:28:26'),
-    (1519, 1, 'en', 'Backend', 'Pages', 'lbl', 'MoveThisPage', 'move this page', '2017-08-31 14:28:26'),
-    (1520, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageTree', 'navigation tree', '2017-08-31 14:28:26'),
-    (1521, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageReferencePage', 'reference page', '2017-08-31 14:28:26'),
-    (1522, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageType', 'action with respect to the reference page', '2017-08-31 14:28:26'),
-    (1523, 1, 'en', 'Backend', 'Pages', 'lbl', 'AppendToTree', 'append to navigation tree', '2017-08-31 14:28:26'),
-    (1524, 1, 'en', 'Backend', 'Pages', 'lbl', 'BeforePage', 'add before reference page', '2017-08-31 14:28:26'),
-    (1525, 1, 'en', 'Backend', 'Pages', 'lbl', 'InsidePage', 'add as subpage of the reference page', '2017-08-31 14:28:26'),
-    (1526, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26');
+	(1519, 1, 'nl', 'Backend', 'Core', 'lbl', 'MoveUpOnePosition', 'verplaats één positie omhoog', '2017-08-31 14:28:26'),
+	(1520, 1, 'en', 'Backend', 'Core', 'lbl', 'MoveUpOnePosition', 'move up one position', '2017-08-31 14:28:26'),
+	(1521, 1, 'nl', 'Backend', 'Core', 'lbl', 'MoveDownOnePosition', 'verplaats één positie omlaag', '2017-08-31 14:28:26'),
+	(1522, 1, 'en', 'Backend', 'Core', 'lbl', 'MoveDownOnePosition', 'move down one position', '2017-08-31 14:28:26'),
+	(1523, 1, 'en', 'Backend', 'Core', 'lbl', 'Close', 'close', '2017-08-31 14:28:26');
+    (1524, 1, 'en', 'Backend', 'Pages', 'lbl', 'MoveThisPage', 'move this page', '2017-08-31 14:28:26'),
+    (1525, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageTree', 'navigation tree', '2017-08-31 14:28:26'),
+    (1526, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageReferencePage', 'reference page', '2017-08-31 14:28:26'),
+    (1527, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageType', 'action with respect to the reference page', '2017-08-31 14:28:26'),
+    (1528, 1, 'en', 'Backend', 'Pages', 'lbl', 'AppendToTree', 'append to navigation tree', '2017-08-31 14:28:26'),
+    (1529, 1, 'en', 'Backend', 'Pages', 'lbl', 'BeforePage', 'add before reference page', '2017-08-31 14:28:26'),
+    (1530, 1, 'en', 'Backend', 'Pages', 'lbl', 'InsidePage', 'add as subpage of the reference page', '2017-08-31 14:28:26'),
+    (1531, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26');
 
 /*!40000 ALTER TABLE `locale` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -2,13 +2,6 @@
 
 namespace Frontend\Core\Engine\Base;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Core\Header\Priority;
 use Common\Doctrine\Entity\Meta;
 use Common\Exception\RedirectException;
@@ -137,6 +130,9 @@ class Block extends KernelLoader
         bool $minify = true,
         bool $addTimestamp = false
     ): void {
+        // external urls always overwrite the path
+        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
@@ -165,6 +161,9 @@ class Block extends KernelLoader
         bool $minify = true,
         bool $addTimestamp = false
     ): void {
+        // external urls always overwrite the path
+        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+
         // use module path
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;

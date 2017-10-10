@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Blog\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -112,7 +105,7 @@ class Rss extends FrontendBaseBlock
             // set item properties
             $rssItem->setPublicationDate($item['publish_on']);
             $rssItem->addCategory($item['category_title']);
-            $rssItem->setAuthor(FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
+            $rssItem->setAuthor(FrontendUser::getBackendUser($item['user_id'])->getEmail());
 
             // add item
             $rss->addItem($rssItem);

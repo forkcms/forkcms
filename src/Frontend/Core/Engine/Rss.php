@@ -2,13 +2,6 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Uri as CommonUri;
 
 /**
@@ -25,9 +18,14 @@ class Rss extends \SpoonFeedRSS
         // call the parent
         parent::__construct(
             $title,
-            Model::addUrlParameters(
-                $link,
-                ['utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title)]
+            str_replace(
+                '&',
+                '&amp;',
+                Model::addUrlParameters(
+                    $link,
+                    ['utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title)],
+                    '&amp;'
+                )
             ),
             $description,
             $items
@@ -71,7 +69,8 @@ class Rss extends \SpoonFeedRSS
                 'utm_source' => 'feed',
                 'utm_medium' => 'rss',
                 'utm_campaign' => CommonUri::getUrl($this->getTitle()),
-            ]
+            ],
+            '&amp;'
         );
 
         // call the parent

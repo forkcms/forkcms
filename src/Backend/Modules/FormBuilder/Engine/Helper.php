@@ -2,21 +2,12 @@
 
 namespace Backend\Modules\FormBuilder\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 
 /**
  * Helper class for the form_builder module.
- *
- * @todo this class should be in helper.php like the other modules do
  *
  * Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */

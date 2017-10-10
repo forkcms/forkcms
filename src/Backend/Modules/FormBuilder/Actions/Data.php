@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\FormBuilder\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
@@ -221,7 +214,8 @@ class Data extends BackendBaseActionIndex
             }
         }
 
-        $this->form = new BackendForm('filter', BackendModel::createUrlForAction() . '&amp;id=' . $this->id, 'get');
+        $this->form = new BackendForm('filter', BackendModel::createUrlForAction(), 'get');
+        $this->form->addText('id', $this->id, 255, 'hidden');
         $this->form->addDate('start_date', $startDate);
         $this->form->addDate('end_date', $endDate);
 

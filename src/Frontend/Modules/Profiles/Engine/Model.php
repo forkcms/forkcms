@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Profiles\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Uri as CommonUri;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -40,23 +33,37 @@ class Model
 
     public static function existsByEmail(string $email, int $excludedId = null): bool
     {
+        $where = 'p.email = :email';
+        $parameters = ['email' => $email];
+
+        if ($excludedId !== null) {
+            $where .= ' AND p.id != :excludedId';
+            $parameters['excludedId'] = $excludedId;
+        }
+
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles AS p
-             WHERE p.email = ? AND p.id != ?
-             LIMIT 1',
-            [$email, $excludedId]
+             WHERE ' . $where . ' LIMIT 1',
+            $parameters
         );
     }
 
-    public static function existsDisplayName($displayName, int $excludedId = null): bool
+    public static function existsDisplayName(string $displayName, int $excludedId = null): bool
     {
+        $where = 'p.display_name = :displayName';
+        $parameters = ['displayName' => $displayName];
+
+        if ($excludedId !== null) {
+            $where .= ' AND p.id != :excludedId';
+            $parameters['excludedId'] = $excludedId;
+        }
+
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM profiles AS p
-             WHERE p.id != ? AND p.display_name = ?
-             LIMIT 1',
-            [$excludedId, $displayName]
+             WHERE ' . $where . ' LIMIT 1',
+            $parameters
         );
     }
 

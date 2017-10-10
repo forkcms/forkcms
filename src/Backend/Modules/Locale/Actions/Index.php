@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Locale\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
@@ -152,8 +145,8 @@ class Index extends BackendBaseActionIndex
                 $dataGrid->setColumnAttributes(
                     $lang,
                     [
-                        'data-id' => '{language: \'' .
-                            $lang . '\',application: \'[application]\',module: \'[module]\',name: \'[name]\',type: \'' .
+                        'data-id' => '{\'language\': \'' .
+                            $lang . '\',\'application\': \'[application]\',\'module\': \'[module]\',\'name\': \'[name]\',\'type\': \'' .
                             $type . '\'}',
                     ]
                 );

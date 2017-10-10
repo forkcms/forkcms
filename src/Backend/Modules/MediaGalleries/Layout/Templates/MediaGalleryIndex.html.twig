@@ -45,12 +45,12 @@
       </div>
     </div>
 
-    <div class="modal fade" id="addMediaGroupTypeDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="addMediaGroupTypeDialog" role="dialog" aria-labelledby="addMediaGroupTypeDialogTitle">
       {{ form_start(form) }}
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <span class="modal-title h4">{{ 'lbl.MediaGalleryAdd'|trans|capitalize }}</span>
+            <h4 class="modal-title" id="addMediaGroupTypeDialogTitle">{{ 'lbl.MediaGalleryAdd'|trans|capitalize }}</h4>
           </div>
           <div class="modal-body">
             {{ form_label(form.type) }}

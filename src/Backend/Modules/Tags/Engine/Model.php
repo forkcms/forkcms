@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Tags\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -77,6 +70,16 @@ class Model
             'SELECT i.tag AS name
              FROM tags AS i
              WHERE i.language = ?',
+            [$language ?? BL::getWorkingLanguage()]
+        );
+    }
+
+    public static function getTagNames(string $language = null): array
+    {
+        return (array) BackendModel::getContainer()->get('database')->getColumn(
+            'SELECT tag
+             FROM tags
+             WHERE language = ?',
             [$language ?? BL::getWorkingLanguage()]
         );
     }

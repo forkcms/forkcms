@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Pages\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -523,12 +516,20 @@ class Add extends BackendBaseActionAdd
                         $text .= ' ' . $block['html'];
                     }
 
-                    // add to search index
-                    BackendSearchModel::saveIndex(
-                        $this->getModule(),
-                        $page['id'],
-                        ['title' => $page['title'], 'text' => $text]
-                    );
+
+                    if ($redirectValue === 'none') {
+                        // add to search index
+                        BackendSearchModel::saveIndex(
+                            $this->getModule(),
+                            $page['id'],
+                            ['title' => $page['title'], 'text' => $text]
+                        );
+                    } else {
+                        BackendSearchModel::removeIndex(
+                            $this->getModule(),
+                            $page['id']
+                        );
+                    }
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(

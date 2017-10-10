@@ -2,13 +2,6 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Uri as CommonUri;
 
 /**
@@ -33,7 +26,7 @@ class RssItem extends \SpoonFeedRSSItem
         $this->utm['utm_campaign'] = CommonUri::getUrl($title);
 
         // call parent
-        parent::__construct($title, Model::addUrlParameters($link, $this->utm), $content);
+        parent::__construct($title, Model::addUrlParameters($link, $this->utm, '&amp;'), $content);
 
         // set some properties
         $this->setGuid($link, true);
@@ -72,7 +65,7 @@ class RssItem extends \SpoonFeedRSSItem
         // loop old links
         foreach ((array) $matches[1] as $i => $link) {
             $searchLinks[] = $matches[0][$i];
-            $replaceLinks[] = 'href="' . Model::addUrlParameters($link, $this->utm) . '"';
+            $replaceLinks[] = 'href="' . Model::addUrlParameters($link, $this->utm, '&amp;') . '"';
         }
 
         // replace
@@ -84,13 +77,9 @@ class RssItem extends \SpoonFeedRSSItem
         // remove special chars
         $author = (string) \SpoonFilter::htmlspecialcharsDecode($author);
 
-        // add fake-emailaddress
+        // add fake emailaddress
         if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
             $author = CommonUri::getUrl($author) . '@example.com (' . $author . ')';
-        }
-        // add fake email address
-        if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
-            $author = \SpoonFilter::urlise($author) . '@example.com (' . $author . ')';
         }
 
         // set author
@@ -128,7 +117,7 @@ class RssItem extends \SpoonFeedRSSItem
     private function prependWithSiteUrlIfHttpIsMissing(string $link): string
     {
         // if link doesn't start with http(s), we prepend the URL of the site
-        if (mb_stripos($link, 'http://') !== 0 || mb_stripos($link, 'https://')) {
+        if (!Model::getContainer()->get('fork.validator.url')->isExternalUrl($link)) {
             return SITE_URL . $link;
         }
 

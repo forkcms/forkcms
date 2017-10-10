@@ -1,9 +1,8 @@
-version: '2'
+version: "2.1"
 
 services:
     app:
-        build:
-            context: .
+        build: .
         working_dir: /var/www/html
         ports:
             - "80:80"
@@ -13,8 +12,8 @@ services:
         environment:
             - FORK_DEBUG=1
             - FORK_ENV=dev
-            - DOCKER_HOST_IP
-            - XDEBUG_CONFIG="remote_host=${DOCKER_HOST_IP} idekey=PHPSTORM remote_log=/dev/stdout" # PHP CLI debug
+            - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+            - XDEBUG_CONFIG=remote_connect_back=0 remote_enable=1 idekey=${XDEBUG_IDEKEY} remote_port=${XDEBUG_PORT} remote_host=${DOCKER_HOST_IP}
         volumes:
             - .:/var/www/html:cached
             - ./src/Frontend/Files:/var/www/html/src/Frontend/Files:cached

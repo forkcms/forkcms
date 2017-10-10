@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Pages\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -760,7 +753,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         $this->movePage($page);
-        $this->saveSearchIndex($data['remove_from_search_index'], $page);
+        $this->saveSearchIndex($data['remove_from_search_index'] || $redirectValue !== 'none', $page);
 
         $this->redirect(
             BackendModel::createUrlForAction('Edit') . '&id=' . $page['id'] . '&report=edited&var='

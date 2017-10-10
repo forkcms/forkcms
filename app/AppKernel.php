@@ -2,13 +2,6 @@
 
 namespace ForkCMS\App;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -29,6 +22,7 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new \ForkCMS\Bundle\InstallerBundle\ForkCMSInstallerBundle(),
+            new \ForkCMS\Bundle\CoreBundle\ForkCMSCoreBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
             new \SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),

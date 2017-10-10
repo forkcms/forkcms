@@ -2,13 +2,6 @@
 
 namespace Backend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
 use SpoonDatagridSource;
@@ -288,12 +281,23 @@ class DataGrid extends \SpoonDataGrid
 
         // add a column for the handle, so users have something to hold while dragging
         $this->addColumn('dragAndDropHandle', null, '<span class="fa fa-reorder"></span>');
+        $this->addColumn(
+            'sortHandle',
+            null,
+            '<button data-role="order-move" data-direction="up" class="btn btn-default btn-xs">
+                     <i class="fa fa-arrow-up"><span class="sr-only">' . BackendLanguage::lbl('MoveUpOnePosition') . '</span></i>
+                   </button>
+                   <button data-role="order-move" data-direction="down" class="btn btn-default btn-xs">
+                     <i class="fa fa-arrow-down"><span class="sr-only">' . BackendLanguage::lbl('MoveDownOnePosition') . '</span></i>
+                   </button>'
+        );
 
         // make sure the column with the handler is the first one
-        $this->setColumnsSequence(['dragAndDropHandle']);
+        $this->setColumnsSequence(['dragAndDropHandle', 'sortHandle']);
 
         // add a class on the handler column, so JS knows this is just a handler
         $this->setColumnAttributes('dragAndDropHandle', ['class' => 'dragAndDropHandle fork-data-grid-sortable']);
+        $this->setColumnAttributes('sortHandle', ['class' => 'sortHandle']);
 
         // our JS needs to know an id, so we can send the new order
         $this->setRowAttributes(['data-id' => '[id]']);

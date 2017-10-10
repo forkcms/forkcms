@@ -13,11 +13,11 @@
 </div>
 
 <div class="hidden">
-  <div class="modal fade jsConfirmation" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade jsConfirmation" role="dialog" aria-labelledby="jsConfirmationDeleteDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <span class="modal-title h4">{{ 'lbl.Delete'|trans|ucfirst }}</span>
+          <h4 id="jsConfirmationDeleteDialogTitle" class="modal-title">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
         </div>
         <div class="modal-body">
           <p class="jsConfirmationMessage">{{ msg.Confirmation }}</p>
