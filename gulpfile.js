@@ -26,6 +26,47 @@ gulp.task('build:backend:assets:copy-fonts-vendors', function () {
   .pipe(gulp.dest('fonts/vendors'))
 })
 
+gulp.task('build:backend:assets:copy-ckeditor', function() {
+  var pluginFiles = '/**/*\.@(js|png|jpg|jpeg|gif|css|html|svg)';
+  return gulp.src(
+    [
+      'node_modules/ckeditor/adapters/*\.js',
+      'node_modules/ckeditor/lang/*\.js',
+      'node_modules/ckeditor/plugins/icons\.png',
+      'node_modules/ckeditor/plugins/icons_hidpi\.png',
+      'node_modules/ckeditor/plugins/clipboard' + pluginFiles,
+      'node_modules/ckeditor/plugins/codemirror' + pluginFiles,
+      'node_modules/ckeditor/plugins/colordialog' + pluginFiles,
+      'node_modules/ckeditor/plugins/copyformatting' + pluginFiles,
+      'node_modules/ckeditor/plugins/dialog' + pluginFiles,
+      'node_modules/ckeditor/plugins/dialogadvtab' + pluginFiles,
+      'node_modules/ckeditor/plugins/div' + pluginFiles,
+      'node_modules/ckeditor/plugins/docprops' + pluginFiles,
+      'node_modules/ckeditor/plugins/iframe' + pluginFiles,
+      'node_modules/ckeditor/plugins/iframe' + pluginFiles,
+      'node_modules/ckeditor/plugins/image' + pluginFiles,
+      'node_modules/ckeditor/plugins/image2' + pluginFiles,
+      'node_modules/ckeditor/plugins/link' + pluginFiles,
+      'node_modules/ckeditor/plugins/liststyle' + pluginFiles,
+      'node_modules/ckeditor/plugins/pastefromword' + pluginFiles,
+      'node_modules/ckeditor/plugins/specialchar' + pluginFiles,
+      'node_modules/ckeditor/plugins/table' + pluginFiles,
+      'node_modules/ckeditor/plugins/tabletools' + pluginFiles,
+      'node_modules/ckeditor/plugins/stylesheetparser' + pluginFiles,
+      'node_modules/ckeditor/plugins/templates' + pluginFiles,
+      'node_modules/ckeditor/plugins/uicolor' + pluginFiles,
+      'node_modules/ckeditor/plugins/widget' + pluginFiles,
+      'node_modules/ckeditor/plugins/wsc' + pluginFiles,
+      'node_modules/ckeditor/skins/moono-lisa/**/*\.@(css|png|gif)',
+      'node_modules/ckeditor/ckeditor\.js',
+      'node_modules/ckeditor/contents\.css',
+      'node_modules/ckeditor/styles\.js',
+      'node_modules/ckeditor/LICENSE\.md'
+    ],
+    {base: 'node_modules/ckeditor'}
+  ).pipe(gulp.dest('src/Backend/Core/Js/ckeditor'))
+})
+
 gulp.task('build:backend:assets:copy-fine-uploader-css-and-images', function () {
   return gulp.src([
     'node_modules/fine-uploader/jquery.fine-uploader/fine-uploader-new.min.css',
@@ -85,7 +126,8 @@ gulp.task('build:backend', function () {
     'build:backend:assets:copy-fonts-vendors',
     'build:backend:assets:copy-js-vendors',
     'build:backend:assets:copy-fine-uploader-css-and-images',
-    'build:backend:sass:generate-css'
+    'build:backend:sass:generate-css',
+    'build:backend:assets:copy-ckeditor'
   )
 })
 
