@@ -25,7 +25,8 @@
     "photoswipe": "^4.1.1",
     "simple-ajax-uploader": "^2.5.5",
     "slick-carousel": "^1.6.0",
-    "standard": "^10.0.3"
+    "standard": "^10.0.3",
+    "ckeditor": "^4.7.3"
   },
   "scripts": {
     "test": "standard"
@@ -49,8 +50,5 @@
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
-  },
-  "dependencies": {
-    "ckeditor": "^4.7.3"
   }
 }
