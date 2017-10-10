@@ -9,9 +9,7 @@
       {% block block_is_logged_in %}
         {{ 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard)|raw }}
       {% endblock %}
-    {% endif %}
-
-    {% if not isLoggedIn %}
+    {% else %}
       {% block block_is_not_logged_in %}
         <a href="{{ geturlforblock('Profiles', 'Login') }}?queryString={{ geturlforblock('Profiles') }}">
           {{ 'lbl.Login'|trans|ucfirst }}
