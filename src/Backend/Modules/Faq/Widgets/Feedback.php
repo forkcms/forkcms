@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Faq\Widgets;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;

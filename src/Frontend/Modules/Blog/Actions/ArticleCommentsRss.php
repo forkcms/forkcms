@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Blog\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Language as FL;
@@ -68,7 +61,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
         $link = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'ArticleCommentsRss') .
                 '/' . $this->record['url'];
         $detailLink = SITE_URL . FrontendNavigation::getUrlForBlock('Blog', 'Detail');
-        $description = null;
+        $description = '';
 
         // create new rss instance
         $rss = new FrontendRSS($title, $link, $description);
@@ -82,7 +75,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
             $rssItem = new FrontendRSSItem($title, $link, $description);
 
             $rssItem->setPublicationDate($item['created_on']);
-            $rssItem->setAuthor($item['author']);
+            $rssItem->setAuthor(empty($item['email']) ? $item['author'] : $item['email']);
 
             $rss->addItem($rssItem);
         }

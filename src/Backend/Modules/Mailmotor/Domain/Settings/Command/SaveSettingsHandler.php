@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Mailmotor\Domain\Settings\Command;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Language\Language;
 use Common\ModulesSettings;
 

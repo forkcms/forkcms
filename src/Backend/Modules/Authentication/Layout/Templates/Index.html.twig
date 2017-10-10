@@ -35,7 +35,7 @@
       <div class="col-md-6 col-md-offset-3">
         <div class="page-header page-header-login">
           <div class="site-info">
-            <img class="site-icon" src="/apple-touch-icon.png" alt="apple touch icon">
+            <img class="site-icon" src="/apple-touch-icon.png" alt="Fork CMS logo">
             <div class="site-text">
               <p class="site-title">{{ SITE_TITLE }}</p>
               <a class="site-url" data-url="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}" href="{{ SITE_URL }}{{ prefixURL }}/{{ item.url }}{% if appendRevision %}?page_revision={{ item.revision_id }}{% endif %}">
@@ -99,14 +99,14 @@
   </div>
 </div>
 
-<div class="modal fade" id="forgotPasswordHolder" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="forgotPasswordHolder" role="dialog" aria-labelledby="forgotPasswordLink">
   <div class="modal-dialog">
     <div class="modal-content">
       {% form forgotPassword %}
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'lbl.Close'|trans|ucfirst }}">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{ 'msg.ForgotPassword'|trans|ucfirst }}</h4>
+        <h4 class="modal-title" id="forgotPasswordDialogTitle">{{ 'msg.ForgotPassword'|trans|ucfirst }}</h4>
       </div>
       <div class="modal-body">
         <div class="form-group">

@@ -2,13 +2,6 @@
 
 namespace Common\Core;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Header as BackendHeader;
 use Exception;
 use Frontend\Core\Header\Header as FrontendHeader;
@@ -58,7 +51,9 @@ class Form extends \SpoonForm
         bool $useToken = true
     ) {
         $this->url = Model::getContainer()->get('url');
-        $this->header = Model::getContainer()->get('header');
+        if (Model::getContainer()->has('header')) {
+            $this->header = Model::getContainer()->get('header');
+        }
 
         $action = ($action === null) ? rtrim(Model::getRequest()->getRequestUri(), '/') : (string) $action;
 
@@ -133,7 +128,7 @@ class Form extends \SpoonForm
         $classError = null
     ): FormDate {
         $name = (string) $name;
-        $value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
+        $value = ($value === null || $value === '') ? null : (int) $value;
         $type = SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;

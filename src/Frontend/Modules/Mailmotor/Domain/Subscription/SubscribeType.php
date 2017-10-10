@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Mailmotor\Domain\Subscription;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\ModulesSettings;
 use DateTime;
 use Frontend\Core\Engine\Navigation;

@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Extensions\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
@@ -274,7 +267,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
 
             // validate the syntax
-            if ($table === false) {
+            if (empty($table)) {
                 $this->form->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
             } else {
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);

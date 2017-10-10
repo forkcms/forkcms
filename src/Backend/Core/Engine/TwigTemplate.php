@@ -18,13 +18,6 @@ use Twig_Extension_Debug;
 use Twig_FactoryRuntimeLoader;
 use Twig_Loader_Filesystem;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig.
@@ -39,6 +32,8 @@ class TwigTemplate extends BaseTwigTemplate
     public function __construct(bool $addToReference = true)
     {
         $container = Model::getContainer();
+        $this->debugMode = $container->getParameter('kernel.debug');
+
         parent::__construct(
             $this->buildTwigEnvironmentForTheBackend(),
             $container->get('templating.name_parser'),
@@ -50,7 +45,6 @@ class TwigTemplate extends BaseTwigTemplate
         }
 
         $this->forkSettings = $container->get('fork.settings');
-        $this->debugMode = $container->getParameter('kernel.debug');
         if ($this->debugMode) {
             $this->environment->enableAutoReload();
             $this->environment->setCache(false);

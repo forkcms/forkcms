@@ -1,4 +1,10 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
+{% use 'bootstrap_3_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
+
+{% block form_widget_simple %}
+  {{ block('base_form_widget_simple') }}
+  {{ block('help') }}
+{% endblock %}
 
 {% block form_label %}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
@@ -339,6 +345,10 @@
   {% endspaceless %}
 {% endblock bootstrap_collection_row %}
 
+{% block media_group_row %}
+  {{ form_widget(form) }}
+{% endblock %}
+
 {% block media_group_widget %}
   {% include "MediaLibrary/Resources/views/FormLayout.html.twig" %}
 {% endblock media_group_widget %}
@@ -373,4 +383,10 @@
       </div>
     {% endif %}
   </div>
+{% endblock %}
+
+{% block help %}
+  {% for attributeName, attributeValue in attr %}
+    {% if attributeName == 'help' %}<span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
+  {% endfor %}
 {% endblock %}

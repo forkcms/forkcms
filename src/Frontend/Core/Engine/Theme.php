@@ -2,13 +2,6 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 /**
  * This class will take care of functionality pertaining themes.
  */
@@ -33,11 +26,11 @@ class Theme
      */
     public static function getPath(string $filePath): string
     {
-        $filePath = self::getFilePathForcurrentTheme(self::getTheme(), $filePath);
+        $filePath = self::getFilePathForCurrentTheme(self::getTheme(), $filePath);
 
         // check if the file exists
         if (!is_file(PATH_WWW . str_replace(PATH_WWW, '', $filePath))) {
-            throw new Exception('The template (' . $filePath . ') does not exist.');
+            throw new Exception('The file (' . $filePath . ') does not exist.');
         }
 
         return $filePath;

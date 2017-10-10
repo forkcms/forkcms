@@ -35,7 +35,7 @@ class MovieStorageProvider implements StorageProviderInterface
 
     public function getLinkHTML(MediaItem $mediaItem): string
     {
-        return '<a href="' . $this->getAbsoluteWebPath($mediaItem) . '" title="' . $mediaItem->getTitle() . '" target="_blank">' . $mediaItem->getTitle() . '</a>';
+        return '<a href="' . $this->getAbsoluteWebPath($mediaItem) . '" title="' . $mediaItem->getTitle() . '">' . $mediaItem->getTitle() . '</a>';
     }
 
     public function getWebPath(MediaItem $mediaItem): string

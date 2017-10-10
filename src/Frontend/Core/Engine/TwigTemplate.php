@@ -13,13 +13,6 @@ use Symfony\Component\Templating\TemplateNameParserInterface;
 use Twig_Environment;
 use Twig_FactoryRuntimeLoader;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig
@@ -36,10 +29,11 @@ class TwigTemplate extends BaseTwigTemplate
         TemplateNameParserInterface $parser,
         FileLocatorInterface $locator
     ) {
-        parent::__construct($environment, $parser, $locator);
-
         $container = Model::getContainer();
         $this->forkSettings = $container->get('fork.settings');
+
+        parent::__construct($environment, $parser, $locator);
+
         $this->debugMode = $container->getParameter('kernel.debug');
         if ($this->debugMode) {
             $this->environment->enableAutoReload();

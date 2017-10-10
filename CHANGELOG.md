@@ -1,3 +1,65 @@
+5.0.5  (2017-10-09)
+------------------
+
+Added:
+* Locale: Translations for the Media Library [#2223](https://github.com/forkcms/forkcms/pull/2223)
+
+Removed:
+* Core: Removed the licence info blocks in the php files [#2289](https://github.com/forkcms/forkcms/pull/2289)
+* Core: Removed the obsolete and deprecated choices_as_values option in the MetaType [#2267](https://github.com/forkcms/forkcms/pull/2267)
+
+Fixed:
+* Core: Fix errors when trying to minify external assets by stopping to try [#2264](https://github.com/forkcms/forkcms/pull/2264)
+* Core: Fix exception message when a css or js file isn't found in the theme and core [#2258](https://github.com/forkcms/forkcms/pull/2258)
+* Core: Fix typo in htaccess comment [#2284](https://github.com/forkcms/forkcms/pull/2284)
+* Core: Fix wrong response from ajax calls when the call wasn't authenticated or the authentication had expired [#2263](https://github.com/forkcms/forkcms/pull/2263)
+* Core: Fixed the alt text of the Fork logo in the backend [#2292](https://github.com/forkcms/forkcms/pull/2292)
+* Core: Make the modals accessible to screen readers etc [#2272](https://github.com/forkcms/forkcms/pull/2272)
+* Analytics: Fix broken link to add api keys [#2275](https://github.com/forkcms/forkcms/pull/2275)
+* Analytics: Fix check to see if the cookie bar should be shown [#2281](https://github.com/forkcms/forkcms/pull/2281)
+* Extensions: Fix the validation of the layout settings of a template [#2293](https://github.com/forkcms/forkcms/pull/2293)
+* FAQ: Fix adding the default category widget on install [#2279](https://github.com/forkcms/forkcms/pull/2279)
+* Location: Add missing address to markers [#2257](https://github.com/forkcms/forkcms/pull/2257)
+* Location: Fix showing data in the marker [#2295](https://github.com/forkcms/forkcms/pull/2295)
+* Mailmotor: Pull in latest bugfixes for mailchimp [#2276](https://github.com/forkcms/forkcms/pull/2276)
+* MediaLibrary: Fix issues with symlinks [#2265](https://github.com/forkcms/forkcms/pull/2265)
+* MediaLibrary: Fix media group attributes not being parsed in the template [#2271](https://github.com/forkcms/forkcms/pull/2271)
+* MediaLibrary: Fix wrong return type when using the media_library_widget lightbox [#2274](https://github.com/forkcms/forkcms/pull/2274)
+* MediaLibrary: Removed the use of the target attribute since that could result in unwanted behaviour when clicking on links [#2277](https://github.com/forkcms/forkcms/pull/2277)
+* Pages: Codestyle fixes [#2300](https://github.com/forkcms/forkcms/pull/2300)
+* Pages: Don't redirect on empty pages [#2270](https://github.com/forkcms/forkcms/pull/2270)
+* Pages: Show page icon on pages tree for subpage elements with "module action" [#2297](https://github.com/forkcms/forkcms/pull/2297)
+* Profiles: Add missing new password button on the settings page [#2290](https://github.com/forkcms/forkcms/pull/2290)
+* Profiles: Fix adding a new profile in the backend [#2285](https://github.com/forkcms/forkcms/pull/2285)
+* Profiles: Fix checking if email or display name exists without excluding a profile [#2286](https://github.com/forkcms/forkcms/pull/2286)
+* Search: Content of pages with a redirect no longer shows up in the search results [#2296](https://github.com/forkcms/forkcms/pull/2296)
+* Search: Fix live suggest [#2291](https://github.com/forkcms/forkcms/pull/2291)
+* Tags: Fix tag cloud widget not showing the most used tags [#2283](https://github.com/forkcms/forkcms/pull/2283)
+* Users: Fix initialisation of the csv settings during installation [#2262](https://github.com/forkcms/forkcms/pull/2262)
+
+
+5.0.4  (2017-09-15)
+------------------
+
+Bugfixes:
+* Core: Https error when header module not installed [#2235](https://github.com/forkcms/forkcms/pull/2235)
+* Core: Fix type errors when trying to get the uploaded file when there is non [#2234](https://github.com/forkcms/forkcms/pull/2234)
+* Core: Fix gitignore users files avatars [#2239](https://github.com/forkcms/forkcms/pull/2239)
+* Core: Multiple RSS Fixes [#2241](https://github.com/forkcms/forkcms/pull/2241)
+* Core: Fix cookiebar hidden check always resulted in a hidden cookiebar [#2253](https://github.com/forkcms/forkcms/pull/2253)
+* Core: PHPDoc improvements [#2252](https://github.com/forkcms/forkcms/pull/2252)
+* Core: Fix dump in twig templates and related issues when debug sometimes isn't enabled when it should [#2255](https://github.com/forkcms/forkcms/pull/2255)
+* ContentBlocks: Fix Pages copy action sets content blocks of from language archived [#2249](https://github.com/forkcms/forkcms/pull/2249)
+* Extensions: Throw error when template syntax is faulty [#2246](https://github.com/forkcms/forkcms/pull/2246)
+* FormBuilder: Fix formbuilder data action [#2238](https://github.com/forkcms/forkcms/pull/2238)
+* FormBuilder: Fix error when saving form builder fields [#2240](https://github.com/forkcms/forkcms/pull/2240)
+* Mailmotor: Add missing translated error messages for list id and api key [#2250](https://github.com/forkcms/forkcms/pull/2250)
+* MediaLibrary: Fix media-group errors not showing up properly [#2244](https://github.com/forkcms/forkcms/pull/2244)
+* MediaLibrary: The label is already inside the media group widget [#2242](https://github.com/forkcms/forkcms/pull/2242)
+* Pages: Fix clicking "save draft" deleted the page instead of saving it as draft [#2251](https://github.com/forkcms/forkcms/pull/2251)
+* Tags: Fix tagsinput [#2232](https://github.com/forkcms/forkcms/pull/2232)
+
+
 5.0.3  (2017-09-01)
 ------------------
 

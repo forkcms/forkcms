@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Mailmotor\Widgets;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use Frontend\Core\Language\Locale;
