@@ -9,9 +9,9 @@
     {% block block_no_items %}
       {{ alerts.alert('info', 'msg.FaqNoItems'|trans) }}
     {% endblock %}
-  {% endif %}
+  {% else %}
+    {% block block_heading %}{% endblock %}
 
-  {% if faqCategories %}
     {% if allowMultipleCategories %}
       {% block block_allow_multiple_categories %}
         <nav class="block-list-categories">
@@ -48,5 +48,7 @@
         {% endfor %}
       </div>
     {% endblock %}
+
+    {% block block_footer %}{% endblock %}
   {% endif %}
 </section>
