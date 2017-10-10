@@ -40,11 +40,6 @@ final class SaveSettings
     public $overwriteInterests;
 
     /**
-     * @var bool
-     */
-    public $automaticallySubscribeFromFormBuilderSubmittedForm;
-
-    /**
      * @var array
      */
     public $languageListIds;
@@ -57,9 +52,6 @@ final class SaveSettings
         $this->listId = $settings['list_id'] ?? null;
         $this->overwriteInterests = (bool) ($settings['overwrite_interests'] ?? false);
         $this->doubleOptIn = (bool) ($settings['double_opt_in'] ?? false);
-        $this->automaticallySubscribeFromFormBuilderSubmittedForm = (bool) (
-            $settings['automatically_subscribe_from_form_builder_submitted_form'] ?? false
-        );
         $this->languageListIds = $this->setLanguageListIds($settings);
     }
 

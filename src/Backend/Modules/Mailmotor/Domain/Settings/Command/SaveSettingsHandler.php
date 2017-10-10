@@ -23,10 +23,6 @@ final class SaveSettingsHandler
         $this->saveSetting('mail_engine', $settings->mailEngine);
         $this->saveSetting('double_opt_in', $settings->doubleOptIn);
         $this->saveSetting('overwrite_interests', $settings->overwriteInterests);
-        $this->saveSetting(
-            'automatically_subscribe_from_form_builder_submitted_form',
-            $settings->automaticallySubscribeFromFormBuilderSubmittedForm
-        );
 
         // mail engine is empty
         if ($settings->mailEngine === 'not_implemented') {

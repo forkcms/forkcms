@@ -1952,7 +1952,6 @@ VALUES
 	(1274, 1, 'en', 'Backend', 'Location', 'msg', 'ShowMapUrl', 'Show the link to Google Maps', '2017-08-31 14:28:24'),
 	(1275, 1, 'en', 'Backend', 'Location', 'msg', 'ShowMarkerOverview', 'Show the marker on the large map', '2017-08-31 14:28:24'),
 	(1276, 1, 'en', 'Backend', 'Location', 'msg', 'WidthHelp', 'Minimum %1$spx and maximum %2$spx', '2017-08-31 14:28:24'),
-	(1277, 1, 'en', 'Backend', 'Mailmotor', 'msg', 'AutomaticallySubscribeFromFormBuilderSubmittedForm', 'Automatically add auto-reply-to email addresses from submitted FormBuilder forms in the mailing list.', '2017-08-31 14:28:24'),
 	(1278, 1, 'en', 'Backend', 'Mailmotor', 'lbl', 'ApiKey', 'API key', '2017-08-31 14:28:24'),
 	(1279, 1, 'en', 'Backend', 'Mailmotor', 'msg', 'DoubleOptIn', 'Enable double opt-in. If checked people who enroll will get a mail where they have to click the confirmation link. This helps to prevent your list from being spammed with fictional email addresses.', '2017-08-31 14:28:24'),
 	(1280, 1, 'en', 'Backend', 'Mailmotor', 'lbl', 'ListId', 'list id', '2017-08-31 14:28:24'),
@@ -2490,7 +2489,6 @@ VALUES
 	('Location','width_widget','i:400;'),
 	('Location','height_widget','i:300;'),
 	('Location','map_type_widget','s:7:\"ROADMAP\";'),
-	('Mailmotor','automatically_subscribe_from_form_builder_submitted_form','b:0;'),
 	('Mailmotor','mail_engine','s:15:\"not_implemented\";'),
 	('Mailmotor','overwrite_interests','b:0;'),
 	('Profiles','allow_gravatar','b:1;');
