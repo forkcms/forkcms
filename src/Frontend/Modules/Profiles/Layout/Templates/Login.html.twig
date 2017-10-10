@@ -1,6 +1,8 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 <section class="module-profiles block-profiles-login">
+  {% block block_heading %}{% endblock %}
+
   {% block block_alerts %}
     <div class="block-alerts">
       {% if formError %}
@@ -55,4 +57,6 @@
     </fieldset>
     {% endform %}
   {% endblock %}
+
+  {% block block_footer %}{% endblock %}
 </section>
