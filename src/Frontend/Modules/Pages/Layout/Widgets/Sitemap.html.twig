@@ -1,6 +1,10 @@
 <nav class="module-pages widget-pages-sitemap">
+  {% block widget_heading %}{% endblock %}
+
   {% block widget_body %}
     {{ getnavigation('page', 0, null, null, 'Modules/Pages/Layout/Templates/Sitemap.html.twig') }}
     {{ getnavigation('meta', 0, null, null, 'Modules/Pages/Layout/Templates/Sitemap.html.twig') }}
   {% endblock %}
+
+  {% block widget_footer %}{% endblock %}
 </nav>
