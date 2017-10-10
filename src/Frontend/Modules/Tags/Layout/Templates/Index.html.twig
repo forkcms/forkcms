@@ -5,6 +5,8 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 <section class="module-tags block-tags-index">
+  {% block block_heading %}{% endblock %}
+
   {% block block_body %}
     {% if not tags %}
       {{ alerts.alert('info', 'msg.TagsNoItems'|trans) }}
@@ -21,4 +23,6 @@
       </ul>
     {% endif %}
   {% endblock %}
+
+  {% block block_footer %}{% endblock %}
 </section>
