@@ -30,6 +30,7 @@ final class Ping extends ActionIndex
     {
         $gateway = $this->getContainer()->get('mailmotor.factory')->getSubscriberGateway();
 
+        // don't try to ping if you aren't using a service like mailchimp or campaign monitor
         if (!$gateway->ping($this->getContainer()->getParameter('mailmotor.list_id'))) {
             return false;
         }
