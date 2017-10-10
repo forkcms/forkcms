@@ -7,6 +7,8 @@ use Common\ModulesSettings;
 
 final class SaveSettingsHandler
 {
+    private const MODULE_NAME = 'Mailmotor';
+
     /**
      * @var ModulesSettings
      */
@@ -20,35 +22,25 @@ final class SaveSettingsHandler
 
     public function handle(SaveSettings $settings): void
     {
-        $this->saveSetting('mail_engine', $settings->mailEngine);
-        $this->saveSetting('double_opt_in', $settings->doubleOptIn);
-        $this->saveSetting('overwrite_interests', $settings->overwriteInterests);
+        $this->modulesSettings->set(self::MODULE_NAME, 'mail_engine', $settings->mailEngine);
+        $this->modulesSettings->set(self::MODULE_NAME, 'double_opt_in', $settings->doubleOptIn);
+        $this->modulesSettings->set(self::MODULE_NAME, 'overwrite_interests', $settings->overwriteInterests);
 
         // mail engine is empty
         if ($settings->mailEngine === 'not_implemented') {
-            $this->deleteSetting('api_key');
-            $this->deleteSetting('list_id');
+            $this->modulesSettings->delete(self::MODULE_NAME, 'api_key');
+            $this->modulesSettings->delete(self::MODULE_NAME, 'list_id');
 
             foreach (Language::getActiveLanguages() as $language) {
-                $this->deleteSetting('list_id_' . $language);
+                $this->modulesSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
             }
 
             return;
         }
 
-        $this->saveSetting('api_key', $settings->apiKey);
-        $this->saveSetting('list_id', $settings->listId);
+        $this->modulesSettings->set(self::MODULE_NAME, 'api_key', $settings->apiKey);
+        $this->modulesSettings->set(self::MODULE_NAME, 'list_id', $settings->listId);
         $this->saveLanguageListIds($settings->languageListIds);
-    }
-
-    private function saveSetting(string $key, $value): void
-    {
-        $this->modulesSettings->set('Mailmotor', $key, $value);
-    }
-
-    private function deleteSetting(string $key): void
-    {
-        $this->modulesSettings->delete('Mailmotor', $key);
     }
 
     public function isActiveLanguage(string $language): bool
@@ -60,12 +52,12 @@ final class SaveSettingsHandler
     {
         foreach ($languageListIds as $language => $languageListId) {
             if (empty($languageListId) || !$this->isActiveLanguage($language)) {
-                $this->deleteSetting('list_id_' . $language);
+                $this->modulesSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
 
                 continue;
             }
 
-            $this->saveSetting('list_id_' . $language, $languageListId);
+            $this->modulesSettings->set(self::MODULE_NAME, 'list_id_' . $language, $languageListId);
         }
     }
 }
