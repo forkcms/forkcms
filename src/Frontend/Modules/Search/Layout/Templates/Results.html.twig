@@ -12,26 +12,32 @@
         {{ alerts.alert('info', 'msg.SearchNoItems'|trans) }}
       </div>
     {% else %}
-      <div class="block-body">
-        <div class="media">
-          {% for result in searchResults %}
-            <section class="media-body">
-              <header role="banner">
-                <h3 class="media-heading" itemprop="name">
-                  <a href="{{ result.full_url }}" itemprop="url">
-                    {{ result.title }}
-                  </a>
-                </h3>
-              </header>
-              {% if not result.introduction %}
-                <div itemprop="description">{{ result.text|truncate(200)|cleanupplaintext|raw }}</div>
-              {% else %}
-                <div itemprop="description">{{ result.introduction|raw }}</div>
-              {% endif %}
-            </section>
-          {% endfor %}
+      {% block block_heading %}{% endblock %}
+
+      {% block block_body %}
+        <div class="block-body">
+          <div class="media">
+            {% for result in searchResults %}
+              <section class="media-body">
+                <header role="banner">
+                  <h3 class="media-heading" itemprop="name">
+                    <a href="{{ result.full_url }}" itemprop="url">
+                      {{ result.title }}
+                    </a>
+                  </h3>
+                </header>
+                {% if not result.introduction %}
+                  <div itemprop="description">{{ result.text|truncate(200)|cleanupplaintext|raw }}</div>
+                {% else %}
+                  <div itemprop="description">{{ result.introduction|raw }}</div>
+                {% endif %}
+              </section>
+            {% endfor %}
+          </div>
         </div>
-      </div>
+      {% endblock %}
+
+      {% block block_footer %}{% endblock %}
     {% endif %}
   </section>
 
