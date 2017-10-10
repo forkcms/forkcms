@@ -43,15 +43,10 @@ final class SaveSettingsHandler
         $this->saveLanguageListIds($settings->languageListIds);
     }
 
-    public function isActiveLanguage(string $language): bool
-    {
-        return in_array($language, Language::getActiveLanguages(), true);
-    }
-
     private function saveLanguageListIds(array $languageListIds): void
     {
         foreach ($languageListIds as $language => $languageListId) {
-            if (empty($languageListId) || !$this->isActiveLanguage($language)) {
+            if (empty($languageListId) || !Language::isActiveLanguage($language)) {
                 $this->modulesSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
 
                 continue;
