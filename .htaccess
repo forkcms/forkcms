@@ -72,6 +72,8 @@ deny from env=stayout
     RewriteRule \.dockerignore - [F]
     RewriteRule docker-compose\.yml - [F]
     RewriteRule docker-compose\.override\.yml - [F]
+    RewriteRule \.env - [F]
+    RewriteRule \.env.dist - [F]
 
     # redirect all traffic to https
     # <IfModule headers_module>

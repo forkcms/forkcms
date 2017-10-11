@@ -120,6 +120,9 @@
         <div class="col-sm-offset-2 col-sm-6">
           <input class="btn btn-primary" type="submit" value="{{ 'lbl.Save'|trans|ucfirst }}" />
         </div>
+        <div class="col-sm-4">
+          <a href="{{ geturlforblock('Profiles', 'ChangePassword') }}" class="btn btn-default pull-right">{{ 'lbl.NewPassword'|trans|ucfirst }}</a>
+        </div>
       </div>
       {% endform %}
     </div>

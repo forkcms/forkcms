@@ -136,7 +136,7 @@ class Model
      */
     public static function removeIndex(string $module, int $otherId, string $language = null): void
     {
-        if (BackendModel::isModuleInstalled('Search')) {
+        if (!BackendModel::isModuleInstalled('Search')) {
             return;
         }
 
