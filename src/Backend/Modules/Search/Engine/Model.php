@@ -5,6 +5,7 @@ namespace Backend\Modules\Search\Engine;
 use Psr\Cache\CacheItemPoolInterface;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the search module
@@ -118,8 +119,8 @@ class Model
     public static function invalidateCache(): void
     {
         // clear the cache
-        if (BackendModel::get('cache.pool') instanceof CacheItemPoolInterface) {
-            BackendModel::get('cache.pool')->clear();
+        if (BackendModel::get('cache.search') instanceof CacheItemPoolInterface) {
+            BackendModel::get('cache.search')->clear();
         }
 
         // clear the php5.5+ opcode cache

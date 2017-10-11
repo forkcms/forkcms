@@ -43,7 +43,7 @@ class Index extends FrontendBaseBlock
         $this->requestedPage = $this->url->getParameter('page', 'int', 1);
         $this->limit = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
-        $this->cache = $this->get('cache.pool');
+        $this->cache = $this->get('cache.search');
         $this->cacheKey = implode(
             '_',
             [$this->getModule(), LANGUAGE, md5($this->searchTerm), $this->offset, $this->limit]
