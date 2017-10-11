@@ -85,14 +85,26 @@ class Archive extends FrontendBaseBlock
         return $slug . '/01 00:00:00';
     }
 
+    private function getSlug(): string
+    {
+        $yearIndex = $this->url->getParameter(0) === FL::act('Archive') ? 1 : 0;
+        $monthIndex = $yearIndex + 1;
+        $this->hasMonth = !empty($this->url->getParameter($monthIndex));
+
+        if ($this->hasMonth) {
+            $this->format = 'Y/m';
+
+            return $this->url->getParameter($yearIndex) . '/' . $this->url->getParameter($monthIndex);
+        }
+
+        $this->format = 'Y';
+
+        return $this->url->getParameter($yearIndex);
+    }
+
     private function setDateRange(): void
     {
-        $baseUrl = Navigation::getUrlForBlock($this->getModule(), $this->getAction());
-        $slug = trim(str_replace($baseUrl, '', $this->getRequest()->getPathInfo()), '/');
-
-        $this->hasMonth = (bool) mb_strpos($slug, '/');
-        $this->format = $this->hasMonth ? 'Y/m' : 'Y';
-
+        $slug = $this->getSlug();
         $this->startDate = DateTimeImmutable::createFromFormat('Y/m/d H:i:s', $this->getStartDateSlug($slug));
 
         if (!$this->startDate instanceof DateTimeImmutable) {
@@ -101,8 +113,9 @@ class Archive extends FrontendBaseBlock
 
         if ($slug !== $this->startDate->format($this->format)) {
             // redirect /2010/6 to /2010/06 to avoid duplicate content
-            $redirectUrl = $baseUrl . '/' . $this->startDate->format($this->format);
-            if (!empty($this->getRequest()->getQueryString())) {
+            $redirectUrl = Navigation::getUrlForBlock($this->getModule(), $this->getAction())
+                           . '/' . $this->startDate->format($this->format);
+            if ($this->getRequest()->getQueryString() !== null) {
                 $redirectUrl .= '?' . $this->getRequest()->getQueryString();
             }
 
