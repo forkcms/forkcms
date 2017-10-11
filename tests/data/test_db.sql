@@ -2198,7 +2198,7 @@ VALUES
 	(1520, 1, 'en', 'Backend', 'Core', 'lbl', 'MoveUpOnePosition', 'move up one position', '2017-08-31 14:28:26'),
 	(1521, 1, 'nl', 'Backend', 'Core', 'lbl', 'MoveDownOnePosition', 'verplaats één positie omlaag', '2017-08-31 14:28:26'),
 	(1522, 1, 'en', 'Backend', 'Core', 'lbl', 'MoveDownOnePosition', 'move down one position', '2017-08-31 14:28:26'),
-	(1523, 1, 'en', 'Backend', 'Core', 'lbl', 'Close', 'close', '2017-08-31 14:28:26');
+	(1523, 1, 'en', 'Backend', 'Core', 'lbl', 'Close', 'close', '2017-08-31 14:28:26'),
     (1524, 1, 'en', 'Backend', 'Pages', 'lbl', 'MoveThisPage', 'move this page', '2017-08-31 14:28:26'),
     (1525, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageTree', 'navigation tree', '2017-08-31 14:28:26'),
     (1526, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageReferencePage', 'reference page', '2017-08-31 14:28:26'),
