@@ -86,7 +86,7 @@ class Livesuggest extends FrontendBaseAJAXAction
 
     private function getCachedData(): bool
     {
-        if (!$this->searchTerm || !$this->getContainer()->getParameter('kernel.debug')) {
+        if (!$this->searchTerm || $this->getContainer()->getParameter('kernel.debug')) {
             return false;
         }
 
