@@ -529,7 +529,7 @@ class Model extends \Common\Core\Model
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
-            return self::getUrl(BackendPagesModel::ERROR_PAGE_ID, $language);
+            return self::getUrl(BackendModel::ERROR_PAGE_ID, $language);
         }
 
         // return the unique URL!
