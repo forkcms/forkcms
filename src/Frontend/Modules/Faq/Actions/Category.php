@@ -41,8 +41,8 @@ class Category extends FrontendBaseBlock
             throw new NotFoundHttpException();
         }
 
-        $baseUrl = FrontendNavigation::getUrlForBlock($this->getModule(), $this->getAction());
-        $category['full_url'] = $baseUrl . '/' . $category['url'];
+        $category['full_url'] = FrontendNavigation::getUrlForBlock($this->getModule(), $this->getAction())
+                                . '/' . $category['url'];
 
         return $category;
     }
