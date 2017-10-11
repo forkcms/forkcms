@@ -31,90 +31,91 @@ jsBackend.pages = {
       }
     }).trigger('change')
 
-        // do meta
-        if($('#title').length > 0) $('#title').doMeta()
+    // do meta
+    if ($('#title').length > 0) $('#title').doMeta()
 
-if($('[data-role="move-page-toggle"]').length > 0) jsBackend.pages.move.init();
-    }
-};
+    if ($('[data-role="move-page-toggle"]').length > 0) jsBackend.pages.move.init()
+  }
+}
 
 jsBackend.pages.move = {
-    init: function() {
-        jsBackend.pages.move.allowGodUsersToEnableTheMovePageSetting();
-        jsBackend.pages.move.handleChangingPageTree();
-        jsBackend.pages.move.handleChangingReferencePage();
-    },
+  init: function () {
+    jsBackend.pages.move.allowGodUsersToEnableTheMovePageSetting()
+    jsBackend.pages.move.handleChangingPageTree()
+    jsBackend.pages.move.handleChangingReferencePage()
+  },
 
-    handleChangingReferencePage: function() {
-        $('[data-role="move-page-pages-select"]').on('change', function() {
-            var $this = $(this);
-            var $selectedOption = $this.find(':selected');
-            var $typeSelect = $('[data-role="move-page-type-changer"]');
-            var $typeSelectOptions = $typeSelect.find('option');
-            var selectedValue = $typeSelect.find('option:selected').val();
-            $typeSelectOptions.removeClass('disabled').prop('disabled', false).prop('selected', false);
+  handleChangingReferencePage: function () {
+    $('[data-role="move-page-pages-select"]').on('change', function () {
+      var $this = $(this)
+      var $selectedOption = $this.find(':selected')
+      var $typeSelect = $('[data-role="move-page-type-changer"]')
+      var $typeSelectOptions = $typeSelect.find('option')
+      var selectedValue = $typeSelect.find('option:selected').val()
+      $typeSelectOptions.removeClass('disabled').prop('disabled', false).prop('selected', false)
 
-            if ($selectedOption.data('allowInside') !== 1 && $this.val() !== '0') {
-                $typeSelect.find('[value=inside]').addClass('disabled').prop('disabled', true);
-            }
-            if ($selectedOption.data('allowBefore') !== 1) {
-                $typeSelect.find('[value=before]').addClass('disabled').prop('disabled', true);
-            }
-            if ($selectedOption.data('allowAfter') !== 1) {
-                $typeSelect.find('[value=after]').addClass('disabled').prop('disabled', true);
-            }
+      if ($selectedOption.data('allowInside') !== 1 && $this.val() !== '0') {
+        $typeSelect.find('[value=inside]').addClass('disabled').prop('disabled', true)
+      }
+      if ($selectedOption.data('allowBefore') !== 1) {
+        $typeSelect.find('[value=before]').addClass('disabled').prop('disabled', true)
+      }
+      if ($selectedOption.data('allowAfter') !== 1) {
+        $typeSelect.find('[value=after]').addClass('disabled').prop('disabled', true)
+      }
 
-            if ($typeSelect.find('option[value="' + selectedValue + '"]').is(':disabled')) {
-                selectedValue = $typeSelectOptions.not(':disabled').first().val();
-            }
+      if ($typeSelect.find('option[value="' + selectedValue + '"]').is(':disabled')) {
+        selectedValue = $typeSelectOptions.not(':disabled').first().val()
+      }
 
-            $typeSelect.val(selectedValue);
-            $typeSelect.trigger('change');
-        }).trigger('change');
-    },
+      $typeSelect.val(selectedValue)
+      $typeSelect.trigger('change')
+    }).trigger('change')
+  },
 
-    handleChangingPageTree: function() {
-        $('[data-role="move-page-tree-changer"]').on('change', function() {
-            var $this = $(this);
-            var $pagesSelect = $('[data-role="move-page-pages-select"]');
-            var selectedValue = $pagesSelect.find('option:selected').val();
+  handleChangingPageTree: function () {
+    $('[data-role="move-page-tree-changer"]').on('change', function () {
+      var $this = $(this)
+      var $pagesSelect = $('[data-role="move-page-pages-select"]')
+      var selectedValue = $pagesSelect.find('option:selected').val()
 
-            $pagesSelect.find('optgroup option').prop('selected', false).prop('disabled', true);
+      $pagesSelect.find('optgroup option').prop('selected', false).prop('disabled', true)
 
-            // only show the pages of the selected tree
-            $pagesSelect.find("optgroup").hide().children().hide();
-            var $visiblePages = $pagesSelect.find('[data-tree-name="' + $this.val() + '"]');
-            if ($visiblePages.length > 0) {
-                $visiblePages.show().prop('disabled', false);
-                $pagesSelect.find('optgroup[label="' + $visiblePages.first().attr('data-tree-label') + '"]').show();
-            }
+      // only show the pages of the selected tree
+      $pagesSelect.find('optgroup').hide().children().hide()
+      var $visiblePages = $pagesSelect.find('[data-tree-name="' + $this.val() + '"]')
+      if ($visiblePages.length > 0) {
+        $visiblePages.show().prop('disabled', false)
+        $pagesSelect.find('optgroup[label="' + $visiblePages.first().attr('data-tree-label') + '"]').show()
+      }
 
-            if ($pagesSelect.find('option[value="' + selectedValue + '"]').is(':disabled')) {
-                selectedValue = 0;
-            }
+      if ($pagesSelect.find('option[value="' + selectedValue + '"]').is(':disabled')) {
+        selectedValue = 0
+      }
 
-            $pagesSelect.val(selectedValue);
-            $pagesSelect.trigger('change');
-        }).trigger('change');
-    },
+      $pagesSelect.val(selectedValue)
+      $pagesSelect.trigger('change')
+    }).trigger('change')
+  },
 
-    allowGodUsersToEnableTheMovePageSetting: function() {
-        var $toggle = $('[data-role="allow-move-toggle"]');
-        if ($toggle.length === 0) {
-            return;
-        }
+  allowGodUsersToEnableTheMovePageSetting: function () {
+    var $toggle = $('[data-role="allow-move-toggle"]')
+    if ($toggle.length === 0) {
+      return
+    }
 
-        $toggle.on('change', function() {
-            var $movePageToggle = $('[data-role="move-page-toggle"]');
-            if ($(this).is(':checked')) {
-                $movePageToggle.removeClass('disabled').prop('disabled', false);
+    $toggle.on('change', function () {
+      var $movePageToggle = $('[data-role="move-page-toggle"]')
+      if ($(this).is(':checked')) {
+        $movePageToggle.removeClass('disabled').prop('disabled', false)
 
-                return;
-            }
+        return
+      }
 
-            $movePageToggle.addClass('disabled').prop('disabled', true).prop('checked', false).trigger('change');
-        }).trigger('change');
-    }}
+      $movePageToggle.addClass('disabled').prop('disabled', true).prop('checked', false).trigger('change')
+    }).trigger('change')
+  }
+}
 
 /**
  * All methods related to the controls (buttons, ...)

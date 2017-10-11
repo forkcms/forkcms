@@ -596,18 +596,18 @@ jsBackend.controls = {
       var multiple = !!$this.data('multiple') || false
 
       if ($this.find('input:checkbox').length > 0 && $this.find('select').length > 0) {
-        $this.find('input:checkbox').eq(0).on('change', function(e) {
+        $this.find('input:checkbox').eq(0).on('change', function (e) {
           var $combo = $(this).parents().filter($checkboxDropdownCombo)
           var $field = $($combo.find('select'))
           if (!multiple) {
-            $field = $field.eq(0);
+            $field = $field.eq(0)
           }
           var $this = $(this)
 
           if ($this.is(':checked')) {
             $field.removeClass('disabled').prop('disabled', false)
-            var $focusDropdown = ((!multiple) ? $field : $field.eq(0));
-            $focusDropdown.focus();
+            var $focusDropdown = ((!multiple) ? $field : $field.eq(0))
+            $focusDropdown.focus()
 
             return
           }
