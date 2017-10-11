@@ -82,7 +82,7 @@ class Archive extends FrontendBaseBlock
             $slug .= '/01';
         }
 
-        return $slug . '/01';
+        return $slug . '/01 00:00:00';
     }
 
     private function setDateRange(): void
@@ -93,8 +93,7 @@ class Archive extends FrontendBaseBlock
         $this->hasMonth = (bool) mb_strpos($slug, '/');
         $this->format = $this->hasMonth ? 'Y/m' : 'Y';
 
-        $this->startDate = DateTimeImmutable::createFromFormat('Y/m/d', $this->getStartDateSlug($slug))
-            ->setTime(0, 0);
+        $this->startDate = DateTimeImmutable::createFromFormat('Y/m/d H:i:s', $this->getStartDateSlug($slug));
 
         if (!$this->startDate instanceof DateTimeImmutable) {
             throw new NotFoundHttpException();
