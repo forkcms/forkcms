@@ -50,7 +50,7 @@ class Index extends FrontendBaseBlock
         $this->articles = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
     }
 
-    private function addLinkToRssFeeds(): void
+    private function addLinksToRssFeeds(): void
     {
         // General rss feed
         $this->header->addRssLink(
@@ -67,7 +67,7 @@ class Index extends FrontendBaseBlock
 
     private function parse(): void
     {
-        $this->addLinkToRssFeeds();
+        $this->addLinksToRssFeeds();
         $this->parsePagination();
 
         $this->template->assign('items', $this->articles);
