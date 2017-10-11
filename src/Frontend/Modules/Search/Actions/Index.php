@@ -113,7 +113,8 @@ class Index extends FrontendBaseBlock
             throw new NotFoundHttpException();
         }
 
-        if (!$this->getContainer()->getParameter('kernel.debug')) {
+        // Don't save the result in the cache when debug is enabled
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             return;
         }
 
