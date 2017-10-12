@@ -1,2 +1,3 @@
 imports:
+    - { resource: eventListeners.yml }
     - { resource: repositories.yml }

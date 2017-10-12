@@ -1,0 +1,7 @@
+services:
+  sitemap_generator.listener.item_changed:
+    class: Backend\Modules\SitemapGenerator\EventListener\SitemapItemChangedListener
+    arguments:
+      - "@sitemap_generator.sitemap_entry_repository"
+    tags:
+      - { name: kernel.event_listener, event: sitemap.item_changed, method: onSitemapItemChanged }
