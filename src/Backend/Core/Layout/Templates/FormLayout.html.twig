@@ -1,8 +1,7 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
-{% use 'bootstrap_3_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
 
 {% block form_widget_simple %}
-  {{ block('base_form_widget_simple') }}
+  {{ parent() }}
   {{ block('help') }}
 {% endblock %}
 
@@ -24,15 +23,6 @@
       {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
       <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
       {{ label }}{% if required %}{{- block('label_asterisk') }}{% endif %}
-      {% if help_label %}
-        {{ block('help_label') }}
-      {% endif %}
-      {% if help_label_tooltip.title %}
-        {{ block('help_label_tooltip') }}
-      {% endif %}
-      {% if help_label_popover.title %}
-        {{ block('help_label_popover') }}
-      {% endif %}
       </label>
 
     {% endif %}
@@ -62,34 +52,6 @@
     </label>
   {% endif %}
 {% endblock checkbox_radio_label %}
-
-
-{% block help_label_tooltip %}
-  <span class="help-block{% if help_label_tooltip.icon is not same as(false) %} inline{% endif %}">
-    <a href="#" data-toggle="tooltip" data-placement="{{ help_label_tooltip.placement }}" data-title="{{ help_label_tooltip.title|trans({}, translation_domain) }}">
-      {% if help_label_tooltip.icon is not same as(false) %}
-        <i class="fa fa-question"></i>
-      {% endif %}
-      {% if help_label_tooltip.text is not same as(null) %}
-        <span class="text-muted">{{ help_label_tooltip.text }}</span>
-      {% endif %}
-    </a>
-  </span>
-{% endblock help_label_tooltip %}
-
-{% block help_label_popover %}
-  <span class="help-block{% if help_label_popover.icon is not same as(false) %} inline{% endif %}">
-    <a href="#" data-toggle="popover" data-trigger="hover" data-placement="{{ help_label_popover.placement }}" data-title="{{ help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ help_label_popover.content|trans({}, translation_domain) }}">
-      {% if help_label_popover.icon is not same as(false) %}
-        <i class="fa fa-question"></i>
-      {% endif %}
-      {% if help_label_popover.text is not same as(null) %}
-        <span class="text-muted">{{ help_label_popover.text }}</span>
-      {% endif %}
-    </a>
-  </span>
-{% endblock help_label_popover %}
-
 
 {%- block label_asterisk -%}
   <abbr tabindex="0" title="{{ 'lbl.RequiredField'|trans({}, translation_domain)|ucfirst }}">*</abbr>
