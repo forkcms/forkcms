@@ -9,11 +9,12 @@ class SitemapEntryRepository extends EntityRepository
     public function add(SitemapEntry $sitemapEntry): void
     {
         $this->getEntityManager()->persist($sitemapEntry);
+        $this->getEntityManager()->flush($sitemapEntry);
     }
 
-    public function update(SitemapEntry $sitemapEntry): void
+    public function update(): void
     {
-        $this->getEntityManager()->flush($sitemapEntry);
+        $this->getEntityManager()->flush();
     }
 
     public function getChildren(SitemapEntry $parent): array

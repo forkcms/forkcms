@@ -40,8 +40,6 @@ final class SitemapItemChangedListener
                 $child->getSlug(),
                 $newUrl
             );
-
-            $this->sitemapEntryRepository->update($child);
         }
 
         $currentItem->update(
@@ -49,7 +47,7 @@ final class SitemapItemChangedListener
             $event->getUrl()
         );
 
-        $this->sitemapEntryRepository->update($currentItem);
+        $this->sitemapEntryRepository->update();
     }
 
     private function getCurrentItem(SitemapItemChanged $event): ?SitemapEntry
