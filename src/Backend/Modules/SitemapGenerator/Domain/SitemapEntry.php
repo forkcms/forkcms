@@ -72,6 +72,17 @@ class SitemapEntry
         $this->url = $url;
     }
 
+    public static function fromEvent(SitemapItemChanged $event): self
+    {
+        return new self(
+            $event->getModule(),
+            $event->getEntity(),
+            $event->getId(),
+            $event->getSlug(),
+            $event->getUrl()
+        );
+    }
+
     public function getModule(): string
     {
         return $this->module;
