@@ -1,5 +1,6 @@
 {# Note: we can use general variables names here since this template is parsed within its own scope #}
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+{% import "Core/Layout/Templates/Macros.html.twig" as macro %}
 
 <section class="module-formbuilder widget-formbuilder-form" id="formbuilder{{ formName|ucfirst }}">
   <div class="row">
@@ -41,7 +42,7 @@
                         <div class="form-group{% if field.error %} has-error{% endif %}">
                           <label class="control-label" for="{{ field.name }}">
                             {{ field.label|raw }}{% if field.required %}
-                            <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>{% endif %}
+                            {{ macro.required }}{% endif %}
                           </label>
                           {{ field.html|raw }}
                           {% if field.error %}<span class="text-danger help-inline">{{ field.error }}</span>{% endif %}
@@ -53,7 +54,7 @@
                         <div class="form-group{% if field.error %} has-error{% endif %}">
                           <p class="control-label">
                             {{ field.label|raw }}{% if field.required %}
-                            <abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>{% endif %}
+                            {{ macro.required }}{% endif %}
                           </p>
                           {% for checkbox in field.html %}
                             <div class="checkbox">

@@ -1,3 +1,4 @@
+{% import "Layout/Templates/macros.html.twig" as macro %}
 <!-- Fine Uploader Gallery template
     ====================================================================== -->
 <script type="text/template" id="qq-template-gallery">
@@ -107,7 +108,7 @@
       </div>
       <div class="panel-body">
         <p>
-          <label for="folder">{{ 'lbl.MediaFolder'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <label for="folder">{{ 'lbl.MediaFolder'|trans|capitalize }}{{ macro.required }}</label>
           <select id="uploadMediaFolderId" name="uploadMediaFolderId">
             <option></option>
           </select>&nbsp;&nbsp;
@@ -152,17 +153,17 @@
       </div>
       <div class="panel-body">
         <p>
-          <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
           {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
           <select id="mediaMovieStorageType" name="media_movie_source"></select>
         </p>
         <p>
-          <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
           <input id="mediaMovieId" name="media_movie_id" type="text" class="inputText" />
           <span class="helpTxt">{{ 'msg.MediaMovieIdHelp'|trans }}</span>
         </p>
         <p>
-          <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr></label>
+          <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}{{ macro.required }}</label>
           <input id="mediaMovieTitle" name="media_movie_title" type="text" class="inputText" />
         </p>
       </div>

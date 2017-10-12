@@ -1,3 +1,5 @@
+{% import "Core/Layout/Templates/Macros.html.twig" as macro %}
+
 <aside class="module-mailmotor widget-mailmotor-subscribe">
   {% block widget_heading %}
     <header class="widget-heading">
@@ -11,7 +13,7 @@
         <input type="hidden" name="form_token" id="formToken" value="{{ formToken }}" />
         <input type="hidden" name="form" value="subscribe" />
         <label class="control-label" for="email">
-          {{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+          {{ 'lbl.Email'|trans|ucfirst }}{{ macro.required }}
         </label>
         <div class="input-group">
           <input type="email" value="" id="email" name="email" class="form-control" placeholder="{{ 'lbl.YourEmail'|trans|ucfirst }}" />

@@ -1,4 +1,5 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+{% import "Core/Layout/Templates/Macros.html.twig" as macro %}
 
 <section class="module-profiles block-profiles-login">
   {% block block_alerts %}
@@ -19,7 +20,7 @@
     <fieldset class="form-horizontal">
       <div class="form-group{% if txtEmailError %} has-error{% endif %}">
         <label class="control-label col-sm-2" for="email">
-          {{ 'lbl.Email'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+          {{ 'lbl.Email'|trans|ucfirst }}{{ macro.required }}
         </label>
         <div class="col-sm-6">
           {% form_field email %}
@@ -28,7 +29,7 @@
       </div>
       <div class="form-group{% if txtPasswordError %} has-error{% endif %}">
         <label class="control-label col-sm-2" for="password">
-          {{ 'lbl.Password'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+          {{ 'lbl.Password'|trans|ucfirst }}{{ macro.required }}
         </label>
         <div class="col-sm-6">
           {% form_field_error password %}{% form_field password %}

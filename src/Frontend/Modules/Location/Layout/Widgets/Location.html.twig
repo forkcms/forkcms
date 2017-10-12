@@ -3,6 +3,7 @@
   - {{ widgetLocationItem }}: contains data about this location
   - {{ widgetLocationSettings }}: contains this module's settings
 #}
+{% import "Core/Layout/Templates/Macros.html.twig" as macro %}
 
 {% if widgetLocationItem %}
   <aside class="module-location widget-location-location">
@@ -35,7 +36,7 @@
             <form method="get" action="#" data-role="fork-directions-form" data-map-id="{{ widgetLocationItem.id }}">
               <div class="form-group">
                 <label class="control-label" for="locationSearchAddress{{ widgetLocationItem.id }}">
-                  {{ 'lbl.Start'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>&nbsp;
+                  {{ 'lbl.Start'|trans|ucfirst }}{{ macro.required }}&nbsp;
                 </label>
                 <div class="input-group">
                   <input type="text" id="locationSearchAddress{{ widgetLocationItem.id }}" name="locationSearchAddress" class="form-control" data-role="fork-directions-start" data-map-id="{{ widgetLocationItem.id }}" />

@@ -1,7 +1,8 @@
+{% import "Core/Layout/Templates/Macros.html.twig" as macro %}
 {% block widget_body %}
   {% form search %}
   <label for="qWidget" class="sr-only sr-only-focusable">
-    {{ 'lbl.SearchTerm'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+    {{ 'lbl.SearchTerm'|trans|ucfirst }}{{ macro.required }}
   </label>
   <div class="form-group">
     <div class="input-group">
