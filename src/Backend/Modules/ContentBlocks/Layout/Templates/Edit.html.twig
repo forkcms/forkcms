@@ -1,4 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
 
@@ -28,7 +29,7 @@
                   <div class="content-title">
                     <p>
                       {{ 'lbl.PreviousVersions'|trans|ucfirst }}
-                      <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans|ucfirst }}"></abbr>
+                      {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
                     </p>
                   </div>
                   {% if revisions %}

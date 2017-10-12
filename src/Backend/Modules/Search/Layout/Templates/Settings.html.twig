@@ -1,4 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
 
@@ -73,7 +74,7 @@
               <th>{{ 'lbl.Module'|trans|ucfirst }}</th>
               <th>
                 {{ 'lbl.Weight'|trans|ucfirst }}
-                <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ 'msg.HelpWeight'|trans|ucfirst }}"></abbr>
+                {{ macro.infoTooltip('msg.HelpWeight'|trans|ucfirst) }}
               </th>
             </tr>
             {% for module in modules %}

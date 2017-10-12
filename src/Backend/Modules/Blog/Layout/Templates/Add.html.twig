@@ -68,7 +68,7 @@
                   <div class="panel-heading">
                     <p>
                       {{ 'lbl.Summary'|trans|ucfirst }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr><br>
+                      {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
                     </p>
                   </div>
                   <div class="panel-body">

@@ -161,7 +161,7 @@
                   <div class="content-block content-block-pb">
                     <div class="content-title">
                       <p>{{ 'lbl.Drafts'|trans|ucfirst }}
-                        <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpDrafts'|trans }}"></abbr>
+                        {{ macro.infoTooltip('msg.HelpDrafts'|trans) }}
                       </p>
                     </div>
                     <div class="table-responsive">
@@ -176,7 +176,7 @@
                 <div class="content-block">
                   <div class="content-title">
                     <p>{{ 'lbl.PreviousVersions'|trans|ucfirst }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans }}"></abbr>
+                      {{ macro.infoTooltip('msg.HelpRevisions'|trans) }}
                     </p>
                   </div>
                   {% if revisions %}

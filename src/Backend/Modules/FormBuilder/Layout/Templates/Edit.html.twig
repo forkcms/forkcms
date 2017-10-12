@@ -203,7 +203,7 @@
               <div class="col-md-12">
                 <label for="identifier" class="control-label">
                   {{ 'lbl.Identifier'|trans|ucfirst }}
-                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans|ucfirst }}"></abbr>
+                  {{ macro.infoTooltip('msg.HelpIdentifier'|trans|ucfirst) }}
                 </label>
                 {% form_field identifier %} {% form_field_error identifier %}
               </div>
@@ -280,7 +280,7 @@
                       <li class="checkbox">
                         <label for="textboxReplyTo" class="control-label">
                           {% form_field textbox_reply_to %} {{ 'lbl.ReplyTo'|trans|ucfirst }}
-                          <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpReplyTo'|trans }}"></abbr>
+                          {{ macro.infoTooltip('msg.HelpReplyTo'|trans) }}
                         </label>
                       </li>
                     </ul>

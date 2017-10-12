@@ -28,7 +28,7 @@
                   <div class="panel-heading">
                     <p>
                       {{ 'lbl.WidgetView'|trans|ucfirst }}{{ macro.required }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.WidgetViewsHelp'|trans|ucfirst }}"></abbr><br>
+                      {{ macro.infoTooltip('msg.WidgetViewsHelp'|trans|ucfirst) }}
                     </p>
                   </div>
                   <div class="panel-body">

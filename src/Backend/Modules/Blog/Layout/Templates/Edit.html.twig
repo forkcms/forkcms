@@ -91,8 +91,9 @@
                 {% endif %}
                 <div class="panel panel-default panel-editor last">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.Summary'|trans|ucfirst }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr>
+                    <p>
+                      {{ 'lbl.Summary'|trans|ucfirst }}
+                      {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
                     </p>
                   </div>
                   <div class="panel-body">
@@ -159,7 +160,7 @@
                   <div class="content-block">
                     <div class="content-title">
                       <p>{{ 'lbl.Drafts'|trans|ucfirst }}
-                        <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpDrafts'|trans|ucfirst }}"></abbr>
+                        {{ macro.infoTooltip('msg.HelpDrafts'|trans|ucfirst) }}
                       </p>
                     </div>
                     {{ drafts|raw }}
@@ -169,7 +170,7 @@
                   <div class="content-title">
                     <p>
                       {{ 'lbl.PreviousVersions'|trans|ucfirst }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans|ucfirst }}"></abbr>
+                      {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
                     </p>
                   </div>
                   {% if revisions %}

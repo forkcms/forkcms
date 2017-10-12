@@ -90,7 +90,7 @@
               <div class="col-md-12">
                 <label for="identifier" class="control-label">
                   {{ 'lbl.Identifier'|trans|ucfirst }}
-                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans }}"></abbr>
+                  {{ macro.infoTooltip('msg.HelpIdentifier'|trans|ucfirst) }}
                 </label>
                 {% form_field identifier %} {% form_field_error identifier %}
               </div>
