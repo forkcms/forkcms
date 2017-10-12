@@ -59,11 +59,12 @@
 {%- endblock label_asterisk -%}
 
 {% block form_errors -%}
+  {% import "Layout/Templates/macros.html.twig" as macro %}
   {% if errors|length > 0 -%}
     {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
         {%- for error in errors -%}
-          <li class="formError"><span class="fa fa-exclamation-triangle"></span> {{ error.message }}</li>
+          <li class="formError">{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
         {%- endfor -%}
     </ul>
     {% if form.parent %}</span>{% else %}</div>{% endif %}
@@ -235,6 +236,7 @@
 {% endblock %}
 
 {% block fork_file_widget %}
+  {% import "Layout/Templates/macros.html.twig" as macro %}
   {% spaceless %}
     <div class="form-group">
       {{ form_widget(form.file) }}
@@ -248,7 +250,7 @@
       <div class="form-group">
         {% if show_preview and preview_url %}
           <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank">
-            <i class="fa fa-eye"></i>
+            {{ macro.icon('eye') }}
             {{ preview_label|trans|ucfirst }}
           </a>
         {% endif %}

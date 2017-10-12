@@ -9,7 +9,7 @@
   {% form edit %}
   {% if notifyProfile %}
     <p class="text-warning">
-      <span class="fa fa-warning"></span> {{ 'lbl.UpdatedProfileWillBeNotified'|trans|ucfirst }}</p>
+      {{ macro.icon('warning') }} {{ 'lbl.UpdatedProfileWillBeNotified'|trans|ucfirst }}</p>
   {% endif %}
   <div class="row fork-module-content">
     <div class="col-md-12">
@@ -155,26 +155,26 @@
             {% endif %}
             {% if not deleted %}
               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-                <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+                {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
               </button>
             {% endif %}
           {% endif %}
           {% if showProfilesBlock %}
             {% if blocked %}
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmUnblock">
-                <span class="fa fa-check"></span>{{ 'lbl.Unblock'|trans|ucfirst }}
+                {{ macro.icon('check') }}{{ 'lbl.Unblock'|trans|ucfirst }}
               </button>
             {% endif %}
             {% if not blocked %}
               <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#confirmBlock">
-                <span class="fa fa-ban"></span>{{ 'lbl.Block'|trans|ucfirst }}
+                {{ macro.icon('ban') }}{{ 'lbl.Block'|trans|ucfirst }}
               </button>
             {% endif %}
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -195,16 +195,16 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+                  {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 {% if not blocked %}
                   <a href="{{ geturl('block') }}&amp;id={{ profile.id }}" class="btn btn-warning">
-                    <span class="fa fa-ban"></span>{{ 'lbl.Block'|trans|ucfirst}}
+                    {{ macro.icon('ban') }}{{ 'lbl.Block'|trans|ucfirst}}
                   </a>
                 {% endif %}
                 {% if blocked %}
                   <a href="{{ geturl('block') }}&amp;id={{ profile.id }}" class="btn btn-primary">
-                    <span class="fa fa-check"></span>{{ 'lbl.Unblock'|trans|ucfirst}}
+                    {{ macro.icon('check') }}{{ 'lbl.Unblock'|trans|ucfirst}}
                   </a>
                 {% endif %}
               </div>
@@ -236,13 +236,13 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
               {% if deleted %}
                 {{ 'lbl.Undelete'|trans|ucfirst }}
               {% else %}
-                <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+                {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
               {% endif %}
             </button>
           </div>

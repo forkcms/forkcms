@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-
+{% import "Layout/Templates/macros.html.twig" as macro %}
 {% block actionbar %}
 
 {% endblock %}
@@ -23,10 +23,10 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+                    {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
                   </button>
                   <button type="submit" class="btn btn-danger">
-                    <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+                    {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
                   </button>
                 </div>
               </div>

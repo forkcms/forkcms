@@ -5,7 +5,7 @@
   <div class="sub-navigation">
     <div id="mediaTree" class="pages-tree">
       <div class="alert alert-warning visible-xs visible-sm">
-        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
+        <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
       </div>
       <div id="tree">
         {{ tree|raw }}
@@ -79,14 +79,14 @@
                 {% if showMediaLibraryMediaFolderDelete %}
                   {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
                     <button type="button" class="btn btn-danger" id="media-folder-delete" data-toggle="modal" data-target="#confirmMediaFolderDelete">
-                      <span class="fa fa-trash-o"></span>
+                      {{ macro.icon('trash-o') }}
                       {{ 'lbl.MediaFolderDelete'|trans|ucfirst }}
                     </button>
                   {% endif %}
                 {% endif %}
                 {% if showMediaLibraryMediaFolderEdit %}
                   <button type="button" class="btn" id="media-folder-edit" data-toggle="modal" data-target="#editMediaFolderDialog">
-                    <span class="fa fa-pencil"></span>
+                    {{ macro.icon('pencil') }}
                     {{ 'lbl.EditMediaFolder'|trans|ucfirst }}
                   </button>
                 {% endif %}
@@ -112,10 +112,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <a href="{{ geturl('MediaItemCleanup') }}" class="btn btn-danger">
-            <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
           </a>
         </div>
       </div>
@@ -141,10 +141,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button type="submit" class="btn btn-primary">
-            <span class="fa fa-check"></span>{{ 'lbl.Move'|trans|ucfirst }}
+            {{ macro.icon('check') }}{{ 'lbl.Move'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -178,10 +178,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <a href="{{ geturl('MediaFolderDelete') }}&amp;id={{ mediaFolder.id }}" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
             </a>
           </div>
         </div>
@@ -210,10 +210,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button id="editMediaFolderSubmit" type="submit" name="edit" class="btn btn-primary">
-              <span class="fa fa-check"></span>{{ 'lbl.Save'|trans|ucfirst }}
+              {{ macro.icon('check') }}{{ 'lbl.Save'|trans|ucfirst }}
             </button>
           </div>
         </div>

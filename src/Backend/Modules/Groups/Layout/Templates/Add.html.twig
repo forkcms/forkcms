@@ -61,7 +61,7 @@
                           <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="permission-list-{{ permission.id }}">
                             <h4 class="panel-title">
                               {{ permission.chk|raw }}
-                              <span class="fa fa-caret-right fa-fw"></span> {{ permission.label }}
+                              {{ macro.icon('caret-right fa-fw') }} {{ permission.label }}
                             </h4>
                           </div>
                         </div>
@@ -84,7 +84,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
+            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>

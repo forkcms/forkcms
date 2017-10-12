@@ -1,3 +1,4 @@
+{% import "Layout/Templates/macros.html.twig" as macro %}
 {# Add new media dialog #}
 <div class="modal fade" id="addMediaDialog" role="dialog" aria-labelledby="addMediaDialogTitle" data-role="media-library-add-dialog">
   <div class="modal-dialog modal-lg" data-role="media-library-select-modal">
@@ -64,10 +65,10 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">
-          <span class="fa fa-times"></span><span class="btn-text">{{ 'lbl.Cancel'|trans|ucfirst }}</span>
+          {{ macro.icon('times') }}<span class="btn-text">{{ 'lbl.Cancel'|trans|ucfirst }}</span>
         </button>
         <button id="addMediaSubmit" type="button" class="btn btn-primary">
-          <span class="fa fa-check"></span><span class="btn-text">{{ 'lbl.OK'|trans|ucfirst }}</span></button>
+          {{ macro.icon('check') }}<span class="btn-text">{{ 'lbl.OK'|trans|ucfirst }}</span></button>
       </div>
     </div>
   </div>

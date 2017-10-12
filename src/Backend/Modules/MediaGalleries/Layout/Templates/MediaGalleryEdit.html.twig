@@ -74,14 +74,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showMediaGalleriesMediaGalleryDelete %}
             <button type="button" class="btn btn-danger" id="blog-delete" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
+              {{ macro.icon('trash-o') }}
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>&nbsp;
+            {{ macro.icon('floppy-o') }}&nbsp;
             {{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
@@ -105,10 +105,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           </div>
         </div>

@@ -1,3 +1,4 @@
+{% import "Layout/Templates/macros.html.twig" as macro %}
 <div class="main-navigation">
   <nav class="navbar navbar-default">
     <ul class="nav navbar-nav">
@@ -13,7 +14,7 @@
   <a href="#" class="arrow-left js-nav-prev"></a>
   <div class="toggle-nav-collapse hidden-xs">
     <a href="#" class="js-toggle-nav">
-      <span class="fa fa-chevron-left"></span>
+      {{ macro.icon('chevron-left') }}
     </a>
   </div>
 </div>

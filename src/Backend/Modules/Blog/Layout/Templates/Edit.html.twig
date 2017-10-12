@@ -28,7 +28,7 @@
         {% endif %}
         {% if not detailURL %}
           <p class="alert alert-warning alert-xs">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+            {{ macro.icon('exclamation-triangle') }}{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
         {% endif %}
       </div>
     </div>
@@ -209,17 +209,17 @@
         <div class="btn-group pull-left" role="group">
           {% if showBlogDelete %}
             <button type="button" class="btn btn-danger" id="blog-delete" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
+              {{ macro.icon('trash-o') }}
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <a href="#" id="saveAsDraft" class="btn btn-default">
-            <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
+            {{ macro.icon('file-o') }}{{ 'lbl.SaveDraft'|trans|ucfirst }}
           </a>
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-check"></span>{{ 'lbl.Publish'|trans|ucfirst }}
+            {{ macro.icon('check') }}{{ 'lbl.Publish'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -243,10 +243,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="addCategorySubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.AddCategory'|trans|ucfirst }}
+            {{ macro.icon('plus-square') }}{{ 'lbl.AddCategory'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -270,10 +270,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           </div>
         </div>

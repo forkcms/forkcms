@@ -7,7 +7,7 @@
       <span class="qq-upload-drop-area-text-selector"></span>
     </div>
     <div class="qq-upload-button-selector btn btn-default">
-      <span class="fa fa-plus-square"></span>
+      {{ macro.icon('plus-square') }}
       <span class="btn-text">{{ 'lbl.AddMediaItems'|trans|ucfirst }}</span>
     </div>
     <span class="qq-drop-processing-selector qq-drop-processing">
@@ -171,7 +171,7 @@
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
             <a href="#" id="addMediaMovie" class="btn btn-default" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
-              <span class="fa fa-plus-square"></span><span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
+              {{ macro.icon('plus-square') }}<span class="btn-text">{{ 'lbl.MediaAddMovie'|trans|ucfirst }}</span>
             </a>
           </div>
         </div>
