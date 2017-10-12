@@ -280,15 +280,15 @@ class DataGrid extends \SpoonDataGrid
         }
 
         // add a column for the handle, so users have something to hold while dragging
-        $this->addColumn('dragAndDropHandle', null, '<span class="fa fa-reorder"></span>');
+        $this->addColumn('dragAndDropHandle', null, '<span class="fa fa-reorder" aria-hidden="true"></span>');
         $this->addColumn(
             'sortHandle',
             null,
-            '<button data-role="order-move" data-direction="up" class="btn btn-default btn-xs">
-                     <i class="fa fa-arrow-up"><span class="sr-only">' . BackendLanguage::lbl('MoveUpOnePosition') . '</span></i>
+            '<button data-role="order-move" data-direction="up" class="btn btn-default btn-xs" aria-label="' . BackendLanguage::lbl('MoveUpOnePosition') . '">
+                     <span class="fa fa-arrow-up" aria-hidden="true"></span>
                    </button>
-                   <button data-role="order-move" data-direction="down" class="btn btn-default btn-xs">
-                     <i class="fa fa-arrow-down"><span class="sr-only">' . BackendLanguage::lbl('MoveDownOnePosition') . '</span></i>
+                   <button data-role="order-move" data-direction="down" class="btn btn-default btn-xs" aria-label="' . BackendLanguage::lbl('MoveDownOnePosition') . '">
+                     <span class="fa fa-arrow-down" aria-hidden="true"></span>
                    </button>'
         );
 
