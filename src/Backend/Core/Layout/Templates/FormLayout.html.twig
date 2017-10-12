@@ -54,7 +54,8 @@
 {% endblock checkbox_radio_label %}
 
 {%- block label_asterisk -%}
-  <abbr tabindex="0" title="{{ 'lbl.RequiredField'|trans({}, translation_domain)|ucfirst }}">*</abbr>
+  {% import 'Layout/Templates/macros.html.twig' as macro %}
+  {{ macro.required }}
 {%- endblock label_asterisk -%}
 
 {% block form_errors -%}
