@@ -82,4 +82,33 @@ class SitemapEntryTest extends TestCase
             $sitemapEntry->getUrl()
         );
     }
+
+    public function testUpdate():void
+    {
+        $this->baseSitemapEntry->update(
+            'bar-foo',
+            '/en/news/detail/bar-foo'
+        );
+
+        $this->assertSame(
+            'Blog',
+            $this->baseSitemapEntry->getModule()
+        );
+        $this->assertSame(
+            'BlogPost',
+            $this->baseSitemapEntry->getEntity()
+        );
+        $this->assertSame(
+            23,
+            $this->baseSitemapEntry->getOtherId()
+        );
+        $this->assertSame(
+            'bar-foo',
+            $this->baseSitemapEntry->getSlug()
+        );
+        $this->assertSame(
+            '/en/news/detail/bar-foo',
+            $this->baseSitemapEntry->getUrl()
+        );
+    }
 }

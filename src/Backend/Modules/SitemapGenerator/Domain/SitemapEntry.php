@@ -83,6 +83,12 @@ class SitemapEntry
         );
     }
 
+    public function update(string $slug, string $url): void
+    {
+        $this->slug = $slug;
+        $this->url = $url;
+    }
+
     public function getModule(): string
     {
         return $this->module;
