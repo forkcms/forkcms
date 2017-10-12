@@ -11,9 +11,20 @@ class SitemapEntryTest extends TestCase
     /** @var SitemapItemChanged */
     protected $sitemapItemChangedEvent;
 
+    /** @var SitemapEntry */
+    protected $baseSitemapEntry;
+
     public function setUp(): void
     {
         $this->sitemapItemChangedEvent = new SitemapItemChanged(
+            'Blog',
+            'BlogPost',
+            23,
+            'foo-bar',
+            '/en/news/detail/foo-bar'
+        );
+
+        $this->baseSitemapEntry = new SitemapEntry(
             'Blog',
             'BlogPost',
             23,
@@ -24,33 +35,25 @@ class SitemapEntryTest extends TestCase
 
     public function testConstructor(): void
     {
-        $sitemapEntry = new SitemapEntry(
-            'Blog',
-            'BlogPost',
-            23,
-            'foo-bar',
-            '/en/news/detail/foo-bar'
-        );
-
         $this->assertSame(
             'Blog',
-            $sitemapEntry->getModule()
+            $this->baseSitemapEntry->getModule()
         );
         $this->assertSame(
             'BlogPost',
-            $sitemapEntry->getEntity()
+            $this->baseSitemapEntry->getEntity()
         );
         $this->assertSame(
             23,
-            $sitemapEntry->getOtherId()
+            $this->baseSitemapEntry->getOtherId()
         );
         $this->assertSame(
             'foo-bar',
-            $sitemapEntry->getSlug()
+            $this->baseSitemapEntry->getSlug()
         );
         $this->assertSame(
             '/en/news/detail/foo-bar',
-            $sitemapEntry->getUrl()
+            $this->baseSitemapEntry->getUrl()
         );
     }
 
