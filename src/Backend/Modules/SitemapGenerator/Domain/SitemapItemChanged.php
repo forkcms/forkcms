@@ -6,6 +6,8 @@ use Symfony\Component\EventDispatcher\Event;
 
 class SitemapItemChanged extends Event
 {
+    const EVENT_NAME = 'sitemap.item_changed';
+
     /** @var string */
     private $module;
 
