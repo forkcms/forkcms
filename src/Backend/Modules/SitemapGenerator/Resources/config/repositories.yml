@@ -1,0 +1,6 @@
+services:
+    sitemap_generator.sitemap_entry_repository:
+        class: Backend\Modules\SitemapGenerator\Domain\SitemapEntryRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\SitemapGenerator\Domain\SitemapEntry

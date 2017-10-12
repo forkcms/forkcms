@@ -1,1 +1,2 @@
-services:
+imports:
+    - { resource: repositories.yml }
