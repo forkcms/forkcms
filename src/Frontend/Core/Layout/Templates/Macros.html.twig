@@ -8,3 +8,7 @@
 {% macro required() %}
   <abbr tabindex="0" data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
 {% endmacro %}
+
+{% macro infoTooltip(title) %}
+  <abbr tabindex="0" data-toggle="tooltip" title="{{ title }}"><i class="fa fa-info-circle" aria-hidden="true"></i></abbr>
+{% endmacro %}
