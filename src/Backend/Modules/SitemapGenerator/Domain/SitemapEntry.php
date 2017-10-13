@@ -38,6 +38,14 @@ class SitemapEntry
     /**
      * @var string
      *
+     * @ORM\Id
+     * @ORM\Column(type="string")
+     */
+    private $language;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string")
      */
     private $slug;
@@ -63,11 +71,18 @@ class SitemapEntry
      */
     private $editedOn;
 
-    public function __construct(string $module, string $entity, int $otherId, string $slug, string $url)
-    {
+    public function __construct(
+        string $module,
+        string $entity,
+        int $otherId,
+        string $language,
+        string $slug,
+        string $url
+    ) {
         $this->module = $module;
         $this->entity = $entity;
         $this->otherId = $otherId;
+        $this->language = $language;
         $this->slug = $slug;
         $this->url = $url;
     }
@@ -78,6 +93,7 @@ class SitemapEntry
             $event->getModule(),
             $event->getEntity(),
             $event->getId(),
+            $event->getLanguage(),
             $event->getSlug(),
             $event->getUrl()
         );
@@ -102,6 +118,11 @@ class SitemapEntry
     public function getOtherId(): int
     {
         return $this->otherId;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
     }
 
     public function getSlug(): string

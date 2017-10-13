@@ -57,6 +57,7 @@ final class SitemapItemChangedListener
                 'module' => $event->getModule(),
                 'entity' => $event->getEntity(),
                 'otherId' => $event->getId(),
+                'language' => $event->getLanguage(),
             ]
         );
     }
