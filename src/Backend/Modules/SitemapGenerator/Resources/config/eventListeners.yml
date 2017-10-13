@@ -3,5 +3,6 @@ services:
     class: Backend\Modules\SitemapGenerator\EventListener\SitemapItemChangedListener
     arguments:
       - "@sitemap_generator.sitemap_entry_repository"
+      - "@command_bus"
     tags:
       - { name: kernel.event_listener, event: sitemap.item_changed, method: onSitemapItemChanged }

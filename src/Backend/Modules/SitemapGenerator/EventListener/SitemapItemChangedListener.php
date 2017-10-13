@@ -2,18 +2,24 @@
 
 namespace Backend\Modules\SitemapGenerator\EventListener;
 
+use Backend\Modules\SitemapGenerator\Domain\Command\GenerateSitemap;
 use Backend\Modules\SitemapGenerator\Domain\SitemapEntry;
 use Backend\Modules\SitemapGenerator\Domain\SitemapEntryRepository;
 use Backend\Modules\SitemapGenerator\Domain\SitemapItemChanged;
+use SimpleBus\Message\Bus\MessageBus;
 
 final class SitemapItemChangedListener
 {
     /** @var SitemapEntryRepository */
     private $sitemapEntryRepository;
 
-    public function __construct(SitemapEntryRepository $sitemapEntryRepository)
+    /** @var MessageBus */
+    private $commandBus;
+
+    public function __construct(SitemapEntryRepository $sitemapEntryRepository, MessageBus $commandBus)
     {
         $this->sitemapEntryRepository = $sitemapEntryRepository;
+        $this->commandBus = $commandBus;
     }
 
     public function onSitemapItemChanged(SitemapItemChanged $event)
@@ -48,6 +54,8 @@ final class SitemapItemChangedListener
         );
 
         $this->sitemapEntryRepository->update();
+
+        $this->commandBus->handle(new GenerateSitemap());
     }
 
     private function getCurrentItem(SitemapItemChanged $event): ?SitemapEntry
