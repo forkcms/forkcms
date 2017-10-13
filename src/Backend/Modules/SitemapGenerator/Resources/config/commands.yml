@@ -1,0 +1,9 @@
+services:
+    sitemap_generator.handler.generate_sitemap:
+        class: Backend\Modules\SitemapGenerator\Domain\Command\GenerateSitemapHandler
+        arguments:
+            - "@filesystem"
+            - "@sitemap_generator.sitemap_entry_repository"
+            - "%site.path_www%"
+        tags:
+            - { name: command_handler, handles: Backend\Modules\SitemapGenerator\Domain\Command\GenerateSitemap }
