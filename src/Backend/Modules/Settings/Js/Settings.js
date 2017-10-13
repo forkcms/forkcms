@@ -98,7 +98,7 @@ jsBackend.settings =
         $statusAlert.toggleClass('hidden');
 
         // start the dot animation
-        var dotAnimation = jsBackend.settings.startDotAnimation();
+        var dotAnimation = jsBackend.settings.startDotAnimation($statusAlert);
 
         // start the action clearing
         $.ajax(
@@ -129,7 +129,7 @@ jsBackend.settings =
                 complete: function()
                 {
                     // stop the dot animation
-                    jsBackend.settings.stopDotAnimation(dotAnimation);
+                    jsBackend.settings.stopDotAnimation(dotAnimation, $statusAlert);
                     // hide the status
                     $statusAlert.toggleClass('hidden');
                     // reset the button
@@ -140,7 +140,7 @@ jsBackend.settings =
         );
     },
 
-    startDotAnimation: function (speed, dotAmount)
+    startDotAnimation: function ($element, speed, dotAmount)
     {
         // set the default speed
         if (!speed) {
@@ -152,7 +152,7 @@ jsBackend.settings =
             dotAmount = 3;
         }
 
-        var $dotsAnimation = $('[data-role="fork-dots-animation"]');
+        var $dotsAnimation = $element.find('[data-role="fork-dots-animation"]');
 
         // clear the initial content
         $dotsAnimation.text('');
@@ -170,10 +170,10 @@ jsBackend.settings =
         )
     },
 
-    stopDotAnimation: function (animation)
+    stopDotAnimation: function (animation, $element)
     {
         // clear the text
-        $('[data-role="fork-dots-animation"]').text('');
+        $element.find('[data-role="fork-dots-animation"]').text('');
 
         // clear the interval
         clearInterval(animation);
