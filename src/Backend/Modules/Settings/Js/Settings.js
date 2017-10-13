@@ -15,6 +15,7 @@ jsBackend.settings =
 
         $('#testEmailConnection').on('click', jsBackend.settings.testEmailConnection);
         $('[data-role="fork-clear-cache"]').on('click', jsBackend.settings.clearCache);
+        $('[data-role="fork-generate-sitemap"]').on('click', jsBackend.settings.generateSitemap);
 
         $('#activeLanguages input:checkbox').on('change', jsBackend.settings.changeActiveLanguage).change();
     },
@@ -135,6 +136,57 @@ jsBackend.settings =
                     // reset the button
                     $clearCacheButton.on('click', jsBackend.settings.clearCache);
                     $clearCacheButton.attr('disabled', false);
+                }
+            }
+        );
+    },
+
+    generateSitemap: function (e)
+    {
+        // prevent default
+        e.preventDefault();
+
+        // save the button for later use
+        var $generateSitemapButton = $('[data-role="fork-generate-sitemap"]');
+
+        // disable the handler to prevent sending too many requests
+        $generateSitemapButton.off('click', jsBackend.settings.generateSitemap);
+        $generateSitemapButton.attr('disabled', 'disabled');
+
+        // display the status alert
+        var $statusAlert = $('[data-role="fork-generate-sitemap-status"]');
+        $statusAlert.toggleClass('hidden');
+
+        // start the dot animation
+        var dotAnimation = jsBackend.settings.startDotAnimation($statusAlert);
+
+        $.ajax(
+            {
+                timeout: 60000, // generating the sitemap might take a while
+                data: {
+                    fork: {
+                        module: 'SitemapGenerator',
+                        action: 'GenerateSitemap'
+                    }
+                },
+                success: function(data)
+                {
+                    jsBackend.messages.add('success', jsBackend.locale.msg('SitemapGenerated'));
+                },
+                error: function()
+                {
+                    // show error in case something goes wrong with the call itself
+                    jsBackend.messages.add('danger', jsBackend.locale.err('SomethingWentWrong'));
+                },
+                complete: function()
+                {
+                    // stop the dot animation
+                    jsBackend.settings.stopDotAnimation(dotAnimation, $statusAlert);
+                    // hide the status
+                    $statusAlert.toggleClass('hidden');
+                    // reset the button
+                    $generateSitemapButton.on('click', jsBackend.settings.generateSitemap);
+                    $generateSitemapButton.attr('disabled', false);
                 }
             }
         );
