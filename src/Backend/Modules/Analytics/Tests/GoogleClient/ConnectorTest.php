@@ -214,50 +214,67 @@ class ConnectorTest extends TestCase
             ->getMock()
         ;
 
-        $metricsReturnMock = [
-            'totalsForAllResults' => [
+        $metricsReturnMock = $this->getMockBuilder('Google_Service_Analytics_GaData')->getMock();
+        $metricsReturnMock
+            ->method('getTotalsForAllResults')
+            ->willReturn([
                 'ga:pageviews' => 1,
                 'ga:users' => 2,
                 'ga:pageviewsPerSession' => 3.14,
                 'ga:avgSessionDuration' => 1.02,
                 'ga:percentNewSessions' => 78.23,
                 'ga:bounceRate' => 23.25,
-            ],
-        ];
+            ])
+        ;
 
-        $visitGraphDataMock = [
-            'rows' => [
+        $visitGraphDataMock = $this->getMockBuilder('Google_Service_Analytics_GaData')->getMock();
+        $visitGraphDataMock
+            ->method('getRows')
+            ->willReturn([
                 ['20150511', '0', '0'],
                 ['20150512', '1', '1'],
-            ],
-            'columnHeaders' => [
+            ])
+        ;
+        $visitGraphDataMock
+            ->method('getColumnHeaders')
+            ->willReturn([
                 ['name' => 'ga:date'],
                 ['name' => 'ga:pageviews'],
                 ['name' => 'ga:users'],
-            ],
-        ];
+            ])
+        ;
 
-        $sourceGraphDataMock = [
-            'rows' => [
+        $sourceGraphDataMock = $this->getMockBuilder('Google_Service_Analytics_GaData')->getMock();
+        $sourceGraphDataMock
+            ->method('getRows')
+            ->willReturn([
                 ['(none)', '8'],
                 ['organic', '6'],
-            ],
-            'columnHeaders' => [
+            ])
+        ;
+        $sourceGraphDataMock
+            ->method('getColumnHeaders')
+            ->willReturn([
                 ['name' => 'ga:medium'],
                 ['name' => 'ga:pageviews'],
-            ],
-        ];
+            ])
+        ;
 
-        $pageViewsDataMock = [
-            'rows' => [
+        $pageViewsDataMock = $this->getMockBuilder('Google_Service_Analytics_GaData')->getMock();
+        $pageViewsDataMock
+            ->method('getRows')
+            ->willReturn([
                 ['/en', '15'],
                 ['/en/blog', '8'],
-            ],
-            'columnHeaders' => [
+            ])
+        ;
+        $pageViewsDataMock
+            ->method('getColumnHeaders')
+            ->willReturn([
                 ['name' => 'ga:pagePath'],
                 ['name' => 'ga:pageviews'],
-            ],
-        ];
+            ])
+        ;
 
         $dataGateway->method('get')
             ->will(self::onConsecutiveCalls(
