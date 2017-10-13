@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e61d3f75fbcb5b0412b6e5c72721db89",
+    "content-hash": "fbfc136ff2b514d58b2d26e8f5342599",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -3888,6 +3888,50 @@
                 "framework"
             ],
             "time": "2017-08-01T10:26:30+00:00"
+        },
+        {
+            "name": "thepixeldeveloper/sitemap",
+            "version": "4.5.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ThePixelDeveloper/Sitemap.git",
+                "reference": "65063910023c62cb4e3293c64a75acfe06189866"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ThePixelDeveloper/Sitemap/zipball/65063910023c62cb4e3293c64a75acfe06189866",
+                "reference": "65063910023c62cb4e3293c64a75acfe06189866",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Thepixeldeveloper\\Sitemap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mathew Davies",
+                    "homepage": "http://mathew-davies.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "XML sitemap generation",
+            "keywords": [
+                "Sitemap",
+                "xml"
+            ],
+            "time": "2017-10-02T20:06:17+00:00"
         },
         {
             "name": "tijsverkoyen/akismet",
