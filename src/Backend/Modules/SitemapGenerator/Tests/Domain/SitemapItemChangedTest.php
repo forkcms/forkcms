@@ -13,6 +13,7 @@ class SitemapItemChangedTest extends TestCase
             'Blog',
             'BlogPost',
             23,
+            'en',
             'foo-bar',
             '/en/news/detail/foo-bar'
         );
@@ -28,6 +29,10 @@ class SitemapItemChangedTest extends TestCase
         $this->assertSame(
             23,
             $event->getId()
+        );
+        $this->assertSame(
+            'en',
+            $event->getLanguage()
         );
         $this->assertSame(
             'foo-bar',

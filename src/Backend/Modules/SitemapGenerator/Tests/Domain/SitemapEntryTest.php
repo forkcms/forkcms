@@ -20,6 +20,7 @@ class SitemapEntryTest extends TestCase
             'Blog',
             'BlogPost',
             23,
+            'en',
             'foo-bar',
             '/en/news/detail/foo-bar'
         );
@@ -28,6 +29,7 @@ class SitemapEntryTest extends TestCase
             'Blog',
             'BlogPost',
             23,
+            'en',
             'foo-bar',
             '/en/news/detail/foo-bar'
         );
@@ -46,6 +48,10 @@ class SitemapEntryTest extends TestCase
         $this->assertSame(
             23,
             $this->baseSitemapEntry->getOtherId()
+        );
+        $this->assertSame(
+            'en',
+            $this->baseSitemapEntry->getLanguage()
         );
         $this->assertSame(
             'foo-bar',
@@ -72,6 +78,10 @@ class SitemapEntryTest extends TestCase
         $this->assertSame(
             $this->sitemapItemChangedEvent->getId(),
             $sitemapEntry->getOtherId()
+        );
+        $this->assertSame(
+            $this->sitemapItemChangedEvent->getLanguage(),
+            $sitemapEntry->getLanguage()
         );
         $this->assertSame(
             $this->sitemapItemChangedEvent->getSlug(),
@@ -101,6 +111,10 @@ class SitemapEntryTest extends TestCase
         $this->assertSame(
             23,
             $this->baseSitemapEntry->getOtherId()
+        );
+        $this->assertSame(
+            'en',
+            $this->baseSitemapEntry->getLanguage()
         );
         $this->assertSame(
             'bar-foo',
