@@ -84,9 +84,11 @@ liip_imagine:
             quality: 95
             # list of transformations to apply (the "filters")
             filters:
-                # create a thumbnail: set size to 120x90 and use the "outbound" mode
-                # to crop the image when the size ratio of the input differs
+                ## Using the "thumbnail + background" combination will crop the
+                ## the centered image to create your required width/height.
+                # Use the "outbound" mode to crop the image when the size ratio of the input differs
                 thumbnail: { size : [140, 90], mode : outbound }
+                background: { size : [140, 90], position : center }
         media_library_lightbox_small:
             filters:
                 scale: { dim : [800, 600] }
