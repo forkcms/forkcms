@@ -16,6 +16,8 @@
       {% endblock %}
 
       {% if fields %}
+        {% block widget_heading %}{% endblock %}
+
         {% block widget_body %}
           <div class="widget-body">
             <form id="{{ formName }}" method="post" action="{{ formAction }}">
@@ -88,6 +90,8 @@
             </form>
           </div>
         {% endblock %}
+
+        {% block widget_footer %}{% endblock %}
       {% endif %}
     </div>
   </div>
