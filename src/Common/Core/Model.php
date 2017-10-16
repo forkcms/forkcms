@@ -338,6 +338,12 @@ class Model extends BaseModel
         return $session;
     }
 
+    /**
+     * This method will return a mock session that will be only available while the code is running.
+     * It is used for instance in the console
+     *
+     * @return Session
+     */
     private static function getMockSession(): Session
     {
         if (!self::getContainer()->has('fork.mock.session')) {
