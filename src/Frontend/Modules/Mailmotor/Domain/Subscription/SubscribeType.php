@@ -76,7 +76,7 @@ class SubscribeType extends AbstractType
             'subscribe',
             SubmitType::class,
             [
-                'label' => 'lbl.Subscribe',
+                'label' => ucfirst(Language::lbl('Subscribe')),
             ]
         );
     }

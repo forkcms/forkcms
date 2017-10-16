@@ -28,7 +28,7 @@ class UnsubscribeType extends AbstractType
             'unsubscribe',
             SubmitType::class,
             [
-                'label' => 'lbl.Unsubscribe',
+                'label' => ucfirst(Language::lbl('Unsubscribe')),
             ]
         );
     }
