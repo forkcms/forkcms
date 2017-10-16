@@ -342,6 +342,8 @@ class Model extends BaseModel
      * This method will return a mock session that will be only available while the code is running.
      * It is used for instance in the console
      *
+     * @deprecated This has been added to fix an issue but should be fixed properly in fork 6.0.0
+     *
      * @return Session
      */
     private static function getMockSession(): Session
