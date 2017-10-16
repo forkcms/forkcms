@@ -179,7 +179,7 @@
         </div>
       </div>
       {% if showProfilesBlock %}
-        <div class="modal fade" id="{% if blocked %}confirmUnblock{% else %}confirmBlock{% endif %}" role="dialog" aria-labelledby="{% if blocked %}confirmUnblock{% else %}confirmBlock{% endif %}Title">
+        <div class="modal fade" id="{% if blocked %}confirmUnblock{% else %}confirmBlock{% endif %}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="{% if blocked %}confirmUnblock{% else %}confirmBlock{% endif %}Title">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -220,7 +220,7 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="{% if deleted %}confirmUndelete{% else %}confirmDelete{% endif %}" role="dialog" aria-labelledby="{% if deleted %}confirmUndelete{% else %}confirmDelete{% endif %}Title">
+    <div class="modal fade" id="{% if deleted %}confirmUndelete{% else %}confirmDelete{% endif %}" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="{% if deleted %}confirmUndelete{% else %}confirmDelete{% endif %}Title">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

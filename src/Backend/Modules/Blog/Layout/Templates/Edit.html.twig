@@ -225,7 +225,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="addCategoryDialog" role="dialog" aria-labelledby="addCategoryDialogTitle">
+  <div class="modal fade" id="addCategoryDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addCategoryDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -259,7 +259,7 @@
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
     {{ form_row(deleteForm.categoryId) }}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
