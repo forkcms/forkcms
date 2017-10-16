@@ -20,6 +20,13 @@ framework:
         engines: ['twig']
     session:
         handler_id: ~
+    cache:
+        app: cache.adapter.filesystem
+        pools:
+            cache.search:
+                adapter: cache.app
+                public: true
+                default_lifetime: 3600
 
 # Assetic Configuration
 assetic:

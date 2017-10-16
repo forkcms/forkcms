@@ -2,7 +2,7 @@
 <section class="module-profiles block-profiles-settings">
   {% block block_alerts %}
     <div class="block-alerts">
-      {% if updateSettingsSuccess %}
+      {% if updateSettingsSuccess and not updateSettingsHasFormError%}
         {{ alerts.alert('success', 'msg.UpdateSettingsIsSuccess'|trans) }}
       {% endif %}
       {% if updateSettingsHasFormError %}

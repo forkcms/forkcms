@@ -5,9 +5,6 @@ namespace Frontend\Modules\Tags\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
-/**
- * This is the index-action
- */
 class Index extends FrontendBaseBlock
 {
     /**
@@ -31,7 +28,6 @@ class Index extends FrontendBaseBlock
 
     private function parse(): void
     {
-        // make tags available
         $this->template->assign('tags', $this->tags);
 
         // tag-pages don't have any SEO-value, so don't index them

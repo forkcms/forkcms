@@ -3,6 +3,7 @@
 namespace Backend\Core\Installer;
 
 use Backend\Core\Engine\Model;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -174,13 +175,7 @@ class ModuleInstaller
             );
         }
 
-        // invalidate the cache for search
-        $finder = new Finder();
-        $filesystem = new Filesystem();
-        foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
-            /** @var $file \SplFileInfo */
-            $filesystem->remove($file->getRealPath());
-        }
+        BackendSearchModel::invalidateCache();
     }
 
     /**
