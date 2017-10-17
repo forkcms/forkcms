@@ -28,7 +28,7 @@ class AddTest extends WebTestCase
 
         $client->request('GET', '/private/en/content_blocks/add');
         self::assertContains(
-            'Title<abbr title="Required field">*</abbr>',
+            'Title    <abbr tabindex="0" data-toggle="tooltip" title="" data-original-title="Required field">*</abbr>',
             $client->getResponse()->getContent()
         );
         self::assertContains(
