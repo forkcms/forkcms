@@ -35,6 +35,7 @@ monolog:
 parameters:
     doctrine.dbal.connection_factory.class: ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory
     fork.is_installed: false
+    fork.form.theme: "ForkCMSInstallerBundle:Installer:form_theme.html.twig"
 
 services:
     # dummy service during the installation
