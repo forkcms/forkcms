@@ -65,9 +65,11 @@ var jsBackend =
 
       $modals.on('shown.bs.modal', function () {
         $('#ajaxSpinner').addClass('light')
+        $(this).attr('aria-hidden', 'false')
       })
       $modals.on('hide.bs.modal', function () {
         $('#ajaxSpinner').removeClass('light')
+        $(this).attr('aria-hidden', 'true')
       })
     },
 
