@@ -767,10 +767,12 @@ class Model implements FrontendTagsInterface
 
     public static function insertComment(array $comment): int
     {
-        // get database
         $database = FrontendModel::getContainer()->get('database');
 
-        // insert comment
+        if (array_key_exists('data', $comment) && $comment['data'] !== null) {
+            $comment['data'] = serialize($comment['data']);
+        }
+
         $comment['id'] = (int) $database->insert('blog_comments', $comment);
 
         // recalculate if published

@@ -38,7 +38,7 @@ class EditComment extends BackendBaseActionEdit
     private function getData(): void
     {
         // get the record
-        $this->record = (array) BackendBlogModel::getComment($this->id);
+        $this->record = BackendBlogModel::getComment($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record)) {

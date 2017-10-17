@@ -497,9 +497,9 @@ class Model
      */
     public static function getComment($id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
+        $comment = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
-             p.id AS post_id, p.title AS post_title, m.url AS post_url
+             p.id AS post_id, p.title AS post_title, m.url AS post_url, i.data
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
@@ -507,6 +507,12 @@ class Model
              LIMIT 1',
             [(int) $id, 'active']
         );
+
+        if ($comment['data'] !== null) {
+            $comment['data'] = unserialize($comment['data'], ['allowed_classes' => false]);
+        }
+
+        return $comment;
     }
 
     /**
@@ -1116,18 +1122,21 @@ class Model
     /**
      * Update an existing comment
      *
-     * @param array $item The new data.
+     * @param array $comment The new comment.
      *
      * @return int
      */
-    public static function updateComment(array $item): int
+    public static function updateComment(array $comment): int
     {
-        // update category
+        if (array_key_exists('data', $comment) && $comment['data'] !== null) {
+            $comment['data'] = serialize($comment['data']);
+        }
+
         return BackendModel::getContainer()->get('database')->update(
             'blog_comments',
-            $item,
+            $comment,
             'id = ?',
-            [(int) $item['id']]
+            [(int) $comment['id']]
         );
     }
 
