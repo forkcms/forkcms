@@ -28,6 +28,8 @@
     </div>
   {% endblock %}
 
+  {% block block_heading %}{% endblock %}
+
   {% block block_body %}
     <div class="block-body">
       {% if not mailmotorSubscribeHideForm %}
@@ -47,4 +49,6 @@
       {% endif %}
     </div>
   {% endblock %}
+
+  {% block block_footer %}{% endblock %}
 </section>

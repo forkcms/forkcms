@@ -20,37 +20,31 @@ final class NewNotImplementedMailingListSubscription
     /**
      * @var ModulesSettings
      */
-    protected $modulesSettings;
+    private $modulesSettings;
 
     /**
      * @var Swift_Mailer
      */
-    protected $mailer;
+    private $mailer;
 
-    public function __construct(
-        Swift_Mailer $mailer,
-        ModulesSettings $modulesSettings
-    ) {
+    public function __construct(Swift_Mailer $mailer, ModulesSettings $modulesSettings)
+    {
         $this->mailer = $mailer;
         $this->modulesSettings = $modulesSettings;
     }
 
-    public function onNotImplementedSubscribedEvent(
-        NotImplementedSubscribedEvent $event
-    ): void {
-        // define title
+    public function onNotImplementedSubscribedEvent(NotImplementedSubscribedEvent $event): void
+    {
         $title = sprintf(
             Language::lbl('MailTitleSubscribeSubscriber'),
             $event->getSubscription()->email,
             strtoupper((string) $event->getSubscription()->locale)
         );
 
-        // define sender/receiver(s)
         $to = $this->modulesSettings->get('Core', 'mailer_to');
         $from = $this->modulesSettings->get('Core', 'mailer_from');
         $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
 
-        // define message
         $message = Message::newInstance($title)
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$to['email'] => $to['name']])
@@ -64,7 +58,6 @@ final class NewNotImplementedMailingListSubscription
             )
         ;
 
-        // send mail
         $this->mailer->send($message);
     }
 }
