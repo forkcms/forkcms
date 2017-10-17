@@ -5,6 +5,8 @@
 #}
 {% import "Core/Layout/Templates/Macros.html.twig" as macro %}
 <section class="module-search block-search-index" role="search">
+  {% block block_heading %}{% endblock %}
+
   {% block block_body %}
     {% form search %}
     <label for="q">
@@ -19,6 +21,8 @@
     {% form_field_error q %}
     {% endform %}
   {% endblock %}
+
+  {% block block_footer %}{% endblock %}
 </section>
 
 {% block block_results_container %}

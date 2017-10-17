@@ -2,6 +2,8 @@
 {% import "Core/Layout/Templates/Macros.html.twig" as macro %}
 
 <section class="module-profiles block-profiles-resend-activation">
+  {% block block_heading %}{% endblock %}
+
   {% block block_alerts %}
     <div class="block-alerts">
       {% if resendActivationSuccess %}
@@ -30,4 +32,6 @@
       </div>
     {% endif %}
   {% endblock %}
+
+  {% block block_footer %}{% endblock %}
 </section>

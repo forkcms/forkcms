@@ -27,7 +27,6 @@ class CacheClearCommand extends Command
         $this->removeFilesInFolder('/src/Frontend/Cache/MinifiedCss', $io, 'frontend minified css');
         $this->removeFilesInFolder('/src/Frontend/Cache/MinifiedJs', $io, 'frontend minified js');
         $this->removeFilesInFolder('/src/Frontend/Cache/Navigation', $io, 'frontend cached navigation');
-        $this->removeFilesInFolder('/src/Frontend/Cache/Search', $io, 'frontend cached search results');
 
         $this->removeFilesInFolder('/src/Backend/Cache/CompiledTemplates', $io, 'backend compiled templates');
         $this->removeFilesInFolder('/src/Backend/Cache/Locale', $io, 'backend cached locale');
