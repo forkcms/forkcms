@@ -78,12 +78,10 @@ class Add extends BackendBaseActionAdd
         parent::parse();
         $this->template->assign('imageIsAllowed', $this->imageIsAllowed);
 
-        // get url
-        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'detail');
+        // parse base url for preview
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
         $url404 = BackendModel::getUrl(404);
-
-        // parse additional variables
-        if ($url404 != $url) {
+        if ($url404 !== $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }
     }

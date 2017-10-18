@@ -3,10 +3,10 @@ body {
   box-sizing: border-box;
   color: #000;
   cursor: text;
+  font-size: 16px; // min height so we can work with rems and not have super tiny text in the editors
   height: 100%;
   height: expression((window) && ((document.documentElement.clientHeight - 6) + "px"));
   height: auto;
-  font-size: 16px; // min height so we can work with rems and not have super tiny text in the editors
   margin: 0;
   padding: 6px;
   width: auto;

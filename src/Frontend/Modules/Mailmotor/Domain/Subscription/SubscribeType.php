@@ -54,7 +54,7 @@ class SubscribeType extends AbstractType
                 'required' => true,
                 'label' => 'lbl.Email',
                 'attr' => [
-                    'placeholder' => ucfirst(Language::lbl('YourEmail')),
+                    'placeholder' => \SpoonFilter::ucfirst(Language::lbl('YourEmail')),
                 ],
             ]
         );
@@ -75,7 +75,7 @@ class SubscribeType extends AbstractType
             'subscribe',
             SubmitType::class,
             [
-                'label' => 'lbl.Subscribe',
+                'label' => \SpoonFilter::ucfirst(Language::lbl('Subscribe')),
             ]
         );
     }
