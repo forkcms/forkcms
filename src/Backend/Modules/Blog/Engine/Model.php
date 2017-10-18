@@ -128,7 +128,7 @@ class Model
     /**
      * Deletes one or more items
      *
-     * @param mixed $ids The ids to delete.
+     * @param array|int $ids The ids to delete.
      */
     public static function delete($ids): void
     {
@@ -457,7 +457,7 @@ class Model
      *
      * @return array
      */
-    public static function getCategory($id): array
+    public static function getCategory(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*
@@ -495,7 +495,7 @@ class Model
      *
      * @return array
      */
-    public static function getComment($id): array
+    public static function getComment(int $id): array
     {
         $comment = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
@@ -669,11 +669,8 @@ class Model
      *
      * @return string
      */
-    public static function getUrlForCategory($url, int $id = null): string
+    public static function getUrlForCategory(string $url, int $id = null): string
     {
-        // redefine URL
-        $url = (string) $url;
-
         // get database
         $database = BackendModel::getContainer()->get('database');
 
@@ -751,7 +748,7 @@ class Model
      *
      * @return int
      */
-    public static function insertCompletePost(array $item, array $meta = [], $tags = [], $comments = []): int
+    public static function insertCompletePost(array $item, array $meta = [], array $tags = [], array $comments = []): int
     {
         // Build item
         if (!isset($item['id'])) {
@@ -1190,10 +1187,10 @@ class Model
      * Update a page revision without generating a new revision.
      * Needed to add an image to a page.
      *
-     * @param $revision_id
-     * @param $item
+     * @param int $revision_id
+     * @param array $item
      */
-    public static function updateRevision($revision_id, $item): void
+    public static function updateRevision(int $revision_id, array $item): void
     {
         BackendModel::getContainer()->get('database')->update(
             'blog_posts',
