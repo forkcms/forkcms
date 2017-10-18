@@ -5,6 +5,7 @@ namespace Frontend\Modules\Blog\Actions;
 use Common\Doctrine\Entity\Meta;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\User;
 use Frontend\Core\Header\MetaLink;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -236,6 +237,7 @@ class Detail extends FrontendBaseBlock
         $this->template->assign('item', $this->blogPost);
         $this->template->assign('commentsCount', $this->blogPost['comments_count']);
         $this->template->assign('comments', $this->comments);
+        $this->template->assign('author', User::getBackendUser($this->blogPost['user_id']));
         if ($this->blogPost['comments_count'] > 1) {
             $this->template->assign('blogCommentsMultiple', true);
         }

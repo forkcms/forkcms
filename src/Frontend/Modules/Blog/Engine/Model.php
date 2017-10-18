@@ -494,7 +494,7 @@ class Model implements FrontendTagsInterface
         // get the comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
-             c.author, c.email, c.website
+             c.author, c.email, c.website, c.data
              FROM blog_comments AS c
              WHERE c.post_id = ? AND c.status = ? AND c.language = ?
              ORDER BY c.id ASC',
@@ -506,6 +506,9 @@ class Model implements FrontendTagsInterface
             $row['author'] = htmlspecialchars($row['author']);
             $row['text'] = htmlspecialchars($row['text']);
             $row['gravatar_id'] = md5($row['email']);
+            if ($row['data'] !== null) {
+                $row['data'] = unserialize($row['data'], ['allowed_classes' => false]);
+            }
         }
 
         // return

@@ -443,4 +443,13 @@
       </item>
     </Blog>
   </Backend>
+  <Frontend>
+    <Core>
+      <item type="label" name="Replied">
+        <translation language="nl"><![CDATA[antwoordde]]></translation>
+        <translation language="en"><![CDATA[replied]]></translation>
+        <translation language="fr"><![CDATA[répondu]]></translation>
+      </item>
+    </Core>
+  </Frontend>
 </locale>
