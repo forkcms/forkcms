@@ -2,16 +2,10 @@
 
 namespace Frontend\Modules\Mailmotor\Domain\Subscription;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\ModulesSettings;
 use DateTime;
 use Frontend\Core\Engine\Navigation;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
@@ -41,10 +35,8 @@ class SubscribeType extends AbstractType
      */
     protected $subscriber;
 
-    public function __construct(
-        Subscriber $subscriber,
-        ModulesSettings $modulesSettings
-    ) {
+    public function __construct(Subscriber $subscriber, ModulesSettings $modulesSettings)
+    {
         $this->subscriber = $subscriber;
         $this->modulesSettings = $modulesSettings;
         $this->interests = $this->getInterests();
@@ -110,14 +102,15 @@ class SubscribeType extends AbstractType
                 return $mailMotorInterests;
             }
 
-            $mailMotorInterests = $this->subscriber->getInterests();
+            $mailMotorInterests = $this->subscriber->getInterests(
+                $this->modulesSettings->get('Mailmotor', 'list_id_' . Locale::frontendLanguage())
+            );
 
             // Has interests
             if (empty($mailMotorInterests) || !is_array($mailMotorInterests)) {
                 return $interests;
             }
 
-            // Loop interests
             foreach ($mailMotorInterests as $categoryId => $categoryInterest) {
                 if (empty($categoryInterest['children']) || !is_array($categoryInterest['children'])) {
                     continue;

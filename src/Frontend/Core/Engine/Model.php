@@ -2,14 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use InvalidArgumentException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * In this file we store all generic functions that we will be using in the frontend.
@@ -181,7 +175,7 @@ class Model extends \Common\Core\Model
         }
 
         if (!$allowHidden && (int) $pageRevision['id'] !== 404 && $pageRevision['hidden']) {
-            return self::getPage(404);
+            throw new NotFoundHttpException('The requested page revision is not available');
         }
 
         $pageRevision = self::unserializeArrayContent($pageRevision, 'data');

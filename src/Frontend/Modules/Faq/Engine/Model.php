@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Faq\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
@@ -258,6 +251,7 @@ class Model implements FrontendTagsInterface
     public static function saveFeedback(array $feedback): void
     {
         $feedback['created_on'] = FrontendModel::getUTCDate();
+        $feedback['edited_on'] = FrontendModel::getUTCDate();
         unset($feedback['sentOn']);
 
         FrontendModel::getContainer()->get('database')->insert('faq_feedback', $feedback);

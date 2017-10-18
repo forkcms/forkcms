@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Pages\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Model as BackendModel;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -155,6 +148,7 @@ class CacheBuilder
             'hidden' => (bool) $page['hidden'],
             'extra_blocks' => null,
             'has_children' => (bool) $page['has_children'],
+            'data' => $page['data']
         ];
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);

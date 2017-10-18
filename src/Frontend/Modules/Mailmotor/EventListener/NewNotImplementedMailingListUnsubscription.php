@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Mailmotor\EventListener;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Language;
 use Common\Mailer\Message;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedUnsubscribedEvent;
@@ -27,37 +20,31 @@ final class NewNotImplementedMailingListUnsubscription
     /**
      * @var ModulesSettings
      */
-    protected $modulesSettings;
+    private $modulesSettings;
 
     /**
      * @var Swift_Mailer
      */
-    protected $mailer;
+    private $mailer;
 
-    public function __construct(
-        Swift_Mailer $mailer,
-        ModulesSettings $modulesSettings
-    ) {
+    public function __construct(Swift_Mailer $mailer, ModulesSettings $modulesSettings)
+    {
         $this->mailer = $mailer;
         $this->modulesSettings = $modulesSettings;
     }
 
-    public function onNotImplementedUnsubscribedEvent(
-        NotImplementedUnsubscribedEvent $event
-    ): void {
-        // define title
+    public function onNotImplementedUnsubscribedEvent(NotImplementedUnsubscribedEvent $event): void
+    {
         $title = sprintf(
             Language::lbl('MailTitleUnsubscribeSubscriber'),
             $event->getUnsubscription()->email,
             strtoupper((string) $event->getUnsubscription()->locale)
         );
 
-        // define sender/receiver(s)
         $to = $this->modulesSettings->get('Core', 'mailer_to');
         $from = $this->modulesSettings->get('Core', 'mailer_from');
         $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
 
-        // define message
         $message = Message::newInstance($title)
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$to['email'] => $to['name']])
@@ -71,7 +58,6 @@ final class NewNotImplementedMailingListUnsubscription
             )
         ;
 
-        // send mail
         $this->mailer->send($message);
     }
 }

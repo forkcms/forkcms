@@ -2,17 +2,11 @@
 
 namespace Frontend\Modules\Tags\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Locale;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Language\Language;
 use Frontend\Core\Language\Locale as FrontendLocale;
 
 /**
@@ -71,6 +65,18 @@ class Model
              WHERE t.language = ? AND t.number > 0
              ORDER BY t.tag',
             [FrontendLocale::frontendLanguage()]
+        );
+    }
+
+    public static function getMostUsed(int $limit): array
+    {
+        return (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT t.tag AS name, t.url, t.number
+             FROM tags AS t
+             WHERE t.language = ? AND t.number > 0
+             ORDER BY t.number DESC
+             LIMIT ?',
+            [FrontendLocale::frontendLanguage(), $limit]
         );
     }
 
@@ -215,5 +221,41 @@ class Model
              LIMIT ?',
             [$id, $module, $otherModule, $limit]
         );
+    }
+
+    public static function getItemsForTag(int $id): array
+    {
+        return array_map(
+            function (string $module) use ($id) {
+                return self::getItemsForTagAndModule($id, $module);
+            },
+            self::getModulesForTag($id)
+        );
+    }
+
+    public static function getItemsForTagAndModule(int $id, string $module): array
+    {
+        // get the ids of the items linked to the tag
+        $otherIds = (array) FrontendModel::getContainer()->get('database')->getColumn(
+            'SELECT other_id
+                 FROM modules_tags
+                 WHERE module = ? AND tag_id = ?',
+            [$module, $id]
+        );
+
+        $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
+
+        // get the items that are linked to the tags
+        $items = (array) self::callFromInterface($module, $class, 'getForTags', $otherIds);
+
+        if (empty($items)) {
+            return $items;
+        }
+
+        return [
+            'name' => $module,
+            'label' => Language::lbl(\SpoonFilter::ucfirst($module)),
+            'items' => $items,
+        ];
     }
 }

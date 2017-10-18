@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Profiles\Widgets;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -43,8 +36,8 @@ class LoginBox extends FrontendBaseWidget
             'login',
             FrontendNavigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $this->url->getQueryString()
         );
-        $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
-        $this->form->addPassword('password')->setAttributes(['required' => null]);
+        $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
+        $this->form->addPassword('password')->makeRequired();
         $this->form->addCheckbox('remember', true);
 
         // parse the form

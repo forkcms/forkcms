@@ -2,21 +2,17 @@
 
 namespace Backend\Modules\Mailmotor\Domain\Settings\Command;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
+use Backend\Core\Language\Language;
 use Common\ModulesSettings;
 
 final class SaveSettingsHandler
 {
+    private const MODULE_NAME = 'Mailmotor';
+
     /**
      * @var ModulesSettings
      */
-    protected $modulesSettings;
+    private $modulesSettings;
 
     public function __construct(
         ModulesSettings $modulesSettings
@@ -26,24 +22,37 @@ final class SaveSettingsHandler
 
     public function handle(SaveSettings $settings): void
     {
-        // Define module
-        $module = 'Mailmotor';
-
-        // set our settings
-        $this->modulesSettings->set($module, 'mail_engine', $settings->mailEngine);
-        $this->modulesSettings->set($module, 'double_opt_in', $settings->doubleOptIn);
-        $this->modulesSettings->set($module, 'overwrite_interests', $settings->overwriteInterests);
-        $this->modulesSettings->set($module, 'automatically_subscribe_from_form_builder_submitted_form', $settings->automaticallySubscribeFromFormBuilderSubmittedForm);
+        $this->modulesSettings->set(self::MODULE_NAME, 'mail_engine', $settings->mailEngine);
+        $this->modulesSettings->set(self::MODULE_NAME, 'double_opt_in', $settings->doubleOptIn);
+        $this->modulesSettings->set(self::MODULE_NAME, 'overwrite_interests', $settings->overwriteInterests);
 
         // mail engine is empty
         if ($settings->mailEngine === 'not_implemented') {
-            $this->modulesSettings->delete($module, 'api_key');
-            $this->modulesSettings->delete($module, 'list_id');
+            $this->modulesSettings->delete(self::MODULE_NAME, 'api_key');
+            $this->modulesSettings->delete(self::MODULE_NAME, 'list_id');
+
+            foreach (Language::getActiveLanguages() as $language) {
+                $this->modulesSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
+            }
 
             return;
         }
 
-        $this->modulesSettings->set($module, 'api_key', $settings->apiKey);
-        $this->modulesSettings->set($module, 'list_id', $settings->listId);
+        $this->modulesSettings->set(self::MODULE_NAME, 'api_key', $settings->apiKey);
+        $this->modulesSettings->set(self::MODULE_NAME, 'list_id', $settings->listId);
+        $this->saveLanguageListIds($settings->languageListIds);
+    }
+
+    private function saveLanguageListIds(array $languageListIds): void
+    {
+        foreach ($languageListIds as $language => $languageListId) {
+            if (empty($languageListId) || !Language::isActiveLanguage($language)) {
+                $this->modulesSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
+
+                continue;
+            }
+
+            $this->modulesSettings->set(self::MODULE_NAME, 'list_id_' . $language, $languageListId);
+        }
     }
 }

@@ -2,13 +2,6 @@
 
 namespace Backend\Core\Language;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Model;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use RuntimeException;
@@ -333,5 +326,10 @@ class Language
     public static function msg(string $key, string $module = null): string
     {
         return self::getMessage($key, $module);
+    }
+
+    public static function isActiveLanguage(string $language): bool
+    {
+        return in_array($language, self::getActiveLanguages(), true);
     }
 }

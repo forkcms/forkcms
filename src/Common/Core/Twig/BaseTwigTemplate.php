@@ -9,13 +9,6 @@ use SpoonForm;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Twig_Environment;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 /**
  * This is a twig template wrapper
  * that glues spoon libraries and code standards with twig.

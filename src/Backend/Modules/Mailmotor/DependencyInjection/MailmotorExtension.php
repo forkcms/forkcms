@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Mailmotor\DependencyInjection;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Modules\Mailmotor\DependencyInjection\Compiler\MailmotorCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

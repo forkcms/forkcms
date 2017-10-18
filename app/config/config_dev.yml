@@ -18,7 +18,7 @@ monolog:
             path: php://stdout
             level: debug
             formatter: monolog.full_trace_formatter
-            channels: [!event]
+            channels: ["!event"]
 
 services:
     database_collector:

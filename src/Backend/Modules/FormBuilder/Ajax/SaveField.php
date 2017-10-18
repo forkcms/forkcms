@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\FormBuilder\Ajax;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;

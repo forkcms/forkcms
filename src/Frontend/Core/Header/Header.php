@@ -2,13 +2,6 @@
 
 namespace Frontend\Core\Header;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\Core\Header\Asset;
 use Common\Core\Header\AssetCollection;
 use Common\Core\Header\JsData;
@@ -519,5 +512,10 @@ class Header extends KernelLoader
         if ($creatorHandle !== null) {
             $this->meta->addMetaData(MetaData::forName('twitter:creator', $creatorHandle));
         }
+    }
+
+    public function addMetaLink(MetaLink $metaLink, bool $overwrite = false): void
+    {
+        $this->meta->addMetaLink($metaLink, $overwrite);
     }
 }

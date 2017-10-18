@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Extensions\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\ModulesSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -62,6 +55,9 @@ class Model
 
         // init var
         $rows = count($table);
+        if ($rows === 0) {
+            throw new Exception('Invalid template-format.');
+        }
         $cells = count($table[0]);
 
         $htmlContent = [];
@@ -962,6 +958,11 @@ class Model
         $syntax = trim(str_replace(["\n", "\r", ' '], '', $syntax));
         $table = [];
 
+        // check template settings format
+        if (!static::isValidTemplateSyntaxFormat($syntax)) {
+            return $table;
+        }
+
         // split into rows
         $rows = explode('],[', $syntax);
 
@@ -983,6 +984,20 @@ class Model
         }
 
         return $table;
+    }
+
+    /**
+     * Validate template syntax format
+     *
+     * @param string $syntax
+     * @return bool
+     */
+    public static function isValidTemplateSyntaxFormat(string $syntax): bool
+    {
+        return \SpoonFilter::isValidAgainstRegexp(
+            '/^\[(\/|[a-z0-9])+(,(\/|[a-z0-9]+))*\](,\[(\/|[a-z0-9])+(,(\/|[a-z0-9]+))*\])*$/i',
+            $syntax
+        );
     }
 
     public static function updateTemplate(array $templateData): void

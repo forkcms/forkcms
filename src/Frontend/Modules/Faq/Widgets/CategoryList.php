@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Faq\Widgets;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
@@ -19,7 +12,6 @@ class CategoryList extends FrontendBaseWidget
 {
     public function execute(): void
     {
-        // call parent
         parent::execute();
 
         $this->loadTemplate();
@@ -33,7 +25,7 @@ class CategoryList extends FrontendBaseWidget
             'widgetFaqCategoryList',
             FrontendFaqModel::getAllForCategory(
                 $this->data['id'],
-                $this->get('fork.settings')->get('Faq', 'most_read_num_items', 10)
+                $this->get('fork.settings')->get($this->getModule(), 'most_read_num_items', 10)
             )
         );
     }

@@ -2,17 +2,10 @@
 
 namespace Backend\Modules\Search\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
+use Psr\Cache\CacheItemPoolInterface;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the search module
@@ -125,10 +118,9 @@ class Model
 
     public static function invalidateCache(): void
     {
-        $finder = new Finder();
-        $filesystem = new Filesystem();
-        foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
-            $filesystem->remove($file->getRealPath());
+        // clear the cache
+        if (BackendModel::get('cache.search') instanceof CacheItemPoolInterface) {
+            BackendModel::get('cache.search')->clear();
         }
 
         // clear the php5.5+ opcode cache
@@ -144,7 +136,7 @@ class Model
      */
     public static function removeIndex(string $module, int $otherId, string $language = null): void
     {
-        if (BackendModel::isModuleInstalled('Search')) {
+        if (!BackendModel::isModuleInstalled('Search')) {
             return;
         }
 

@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Settings\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use TijsVerkoyen\Akismet\Akismet;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;

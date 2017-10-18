@@ -2,13 +2,6 @@
 
 namespace Backend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Common\ModuleExtraType;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -219,29 +212,6 @@ class Model extends \Common\Core\Model
         if (!empty($ids)) {
             // delete extras
             self::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
-        }
-    }
-
-    /**
-     * Delete thumbnails based on the folders in the path
-     *
-     * @param string $path The path wherein the thumbnail-folders exist.
-     * @param string|null $thumbnail The filename to be deleted.
-     */
-    public static function deleteThumbnails(string $path, ?string $thumbnail): void
-    {
-        // if there is no image provided we can't do anything
-        if ($thumbnail === null || $thumbnail === '') {
-            return;
-        }
-
-        $finder = new Finder();
-        $filesystem = new Filesystem();
-        foreach ($finder->directories()->in($path) as $directory) {
-            $fileName = $directory->getRealPath() . '/' . $thumbnail;
-            if (is_file($fileName)) {
-                $filesystem->remove($fileName);
-            }
         }
     }
 

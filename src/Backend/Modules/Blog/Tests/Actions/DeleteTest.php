@@ -57,7 +57,7 @@ class DeleteTest extends WebTestCase
         $client = static::createClient();
         $this->login($client);
 
-        $crawler = $client->request('GET', '/private/en/blog/edit?token=1234&id=1');
+        $crawler = $client->request('GET', '/private/en/blog/edit?id=1');
         self::assertContains(
             'Blogpost for functional tests',
             $client->getResponse()->getContent()

@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Mailmotor\Installer;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Installer\ModuleInstaller;
 use Common\ModuleExtraType;
 
@@ -89,7 +82,6 @@ class Installer extends ModuleInstaller
     private function configureSettings(): void
     {
         $this->setSetting($this->getModule(), 'api_key', null);
-        $this->setSetting($this->getModule(), 'automatically_subscribe_from_form_builder_submitted_form', false);
         $this->setSetting($this->getModule(), 'double_opt_in', true);
         $this->setSetting($this->getModule(), 'list_id', null);
         $this->setSetting($this->getModule(), 'mail_engine', null);

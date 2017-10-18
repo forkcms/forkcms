@@ -2,13 +2,6 @@
 
 namespace Frontend\Modules\Faq\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
@@ -20,7 +13,7 @@ class Index extends FrontendBaseBlock
     /**
      * @var array
      */
-    private $items = [];
+    private $categories = [];
 
     public function execute(): void
     {
@@ -33,28 +26,31 @@ class Index extends FrontendBaseBlock
 
     private function getData(): void
     {
-        $categories = FrontendFaqModel::getCategories();
-        $limit = $this->get('fork.settings')->get('Faq', 'overview_num_items_per_category', 10);
+        $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items_per_category', 10);
 
-        foreach ($categories as $item) {
-            $item['questions'] = FrontendFaqModel::getAllForCategory($item['id'], $limit);
+        $categoriesWithQuestions = array_map(
+            function (array $category) use ($limit) {
+                $category['questions'] = FrontendFaqModel::getAllForCategory($category['id'], $limit);
 
-            // no questions? next!
-            if (empty($item['questions'])) {
-                continue;
+                return $category;
+            },
+            FrontendFaqModel::getCategories()
+        );
+
+        $this->categories = array_filter(
+            $categoriesWithQuestions,
+            function (array $category) {
+                return !empty($category['questions']);
             }
-
-            // add the category item including the questions
-            $this->items[] = $item;
-        }
+        );
     }
 
     private function parse(): void
     {
-        $this->template->assign('faqCategories', (array) $this->items);
+        $this->template->assign('faqCategories', $this->categories);
         $this->template->assign(
             'allowMultipleCategories',
-            $this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true)
+            $this->get('fork.settings')->get($this->getModule(), 'allow_multiple_categories', true)
         );
     }
 }

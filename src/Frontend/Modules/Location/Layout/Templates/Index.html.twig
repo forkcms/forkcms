@@ -17,7 +17,7 @@
     {% block block_marker_texts %}
       <div class="block-marker-texts">
         {% for locationItem in locationItems %}
-          <div data-role="fork-marker-text-container" data-map-id="{{ locationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">
+          <div data-role="fork-marker-data-container" data-map-id="{{ locationItem.id }}" class="hidden" itemscope itemtype="http://schema.org/Place">
             <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
               <meta itemprop="latitude" content="{{ locationItem.lat }}" />
               <meta itemprop="longitude" content="{{ locationItem.lng }}" />

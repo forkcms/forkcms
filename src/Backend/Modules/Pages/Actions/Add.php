@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Pages\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -54,6 +47,13 @@ class Add extends BackendBaseActionAdd
      * @var array
      */
     private $extras = [];
+
+    /**
+     * The hreflang fields
+     *
+     * @var array
+     */
+    private $hreflangFields = [];
 
     /**
      * The template data
@@ -127,6 +127,19 @@ class Add extends BackendBaseActionAdd
 
         // image related fields
         $this->form->addImage('image');
+
+        // just execute if the site is multi-language
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
+            // loop active languages
+            foreach (BL::getActiveLanguages() as $language) {
+                if ($language != BL::getWorkingLanguage()) {
+                    $pages = BackendPagesModel::getPagesForDropdown($language);
+                    // add field for each language
+                    $field = $this->form->addDropdown('hreflang_' . $language, $pages)->setDefaultElement('');
+                    $this->hreflangFields[$language]['field_hreflang'] = $field->parse();
+                }
+            }
+        }
 
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
@@ -328,6 +341,7 @@ class Add extends BackendBaseActionAdd
         );
         $this->template->assign('formErrors', (string) $this->form->getErrors());
         $this->template->assign('showTags', $this->showTags());
+        $this->template->assign('hreflangFields', $this->hreflangFields);
 
         // get default template id
         $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
@@ -418,6 +432,16 @@ class Add extends BackendBaseActionAdd
                 }
                 if (array_key_exists('image', $this->templates[$templateId]['data'])) {
                     $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
+                }
+
+                // just execute if the site is multi-language
+                if ($this->getContainer()->getParameter('site.multilanguage')) {
+                    // loop active languages
+                    foreach (BL::getActiveLanguages() as $language) {
+                        if ($language != BL::getWorkingLanguage() && $this->form->getfield('hreflang_' . $language)->isFilled()) {
+                            $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
+                        }
+                    }
                 }
 
                 // build page record
@@ -520,12 +544,20 @@ class Add extends BackendBaseActionAdd
                         $text .= ' ' . $block['html'];
                     }
 
-                    // add to search index
-                    BackendSearchModel::saveIndex(
-                        $this->getModule(),
-                        $page['id'],
-                        ['title' => $page['title'], 'text' => $text]
-                    );
+
+                    if ($redirectValue === 'none') {
+                        // add to search index
+                        BackendSearchModel::saveIndex(
+                            $this->getModule(),
+                            $page['id'],
+                            ['title' => $page['title'], 'text' => $text]
+                        );
+                    } else {
+                        BackendSearchModel::removeIndex(
+                            $this->getModule(),
+                            $page['id']
+                        );
+                    }
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(

@@ -189,7 +189,8 @@
     &[rel="error"],
     &[rel="hidden"],
     &[rel="sitemap"],
-    &[rel="redirect"]{
+    &[rel="redirect"],
+    &[rel="direct_action"] {
 
       > a {
         position: relative;
@@ -206,7 +207,8 @@
 
     &[rel="page"],
     &[rel="home"],
-    &[rel="hidden"] {
+    &[rel="hidden"],
+    &[rel="direct_action"] {
 
       > a:before {
         content: "\f016";

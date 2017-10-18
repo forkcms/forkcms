@@ -1,6 +1,8 @@
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
 
 <section class="module-profiles block-profiles-change-email">
+  {% block block_heading %}{% endblock %}
+
   {% block block_alerts %}
     <div class="block-alerts">
       {% if updateEmailSuccess %}
@@ -41,4 +43,6 @@
       {% endform %}
     </div>
   {% endblock %}
+
+  {% block block_footer %}{% endblock %}
 </section>

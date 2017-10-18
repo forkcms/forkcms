@@ -2,13 +2,6 @@
 
 namespace Backend\Modules\Pages\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -51,6 +44,13 @@ class Edit extends BackendBaseActionEdit
      * @var array
      */
     private $extras = [];
+
+    /**
+     * The hreflang fields
+     *
+     * @var array
+     */
+    private $hreflangFields = [];
 
     /**
      * Is the current user a god user?
@@ -244,6 +244,19 @@ class Edit extends BackendBaseActionEdit
         // image related fields
         $this->form->addImage('image');
         $this->form->addCheckbox('remove_image');
+
+        // just execute if the site is multi-language
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
+            // loop active languages
+            foreach (BL::getActiveLanguages() as $language) {
+                if ($language != BL::getWorkingLanguage()) {
+                    $pages = BackendPagesModel::getPagesForDropdown($language);
+                    // add field for each language
+                    $field = $this->form->addDropdown('hreflang_' . $language, $pages, (!empty($this->record['data']['hreflang_' . $language]) ? $this->record['data']['hreflang_' . $language] : null))->setDefaultElement('');
+                    $this->hreflangFields[$language]['field_hreflang'] = $field->parse();
+                }
+            }
+        }
 
         // page auth related fields
         // check if profiles module is installed
@@ -566,6 +579,7 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('prefixURL', rtrim(BackendPagesModel::getFullUrl($this->record['parent_id']), '/'));
         $this->template->assign('formErrors', (string) $this->form->getErrors());
         $this->template->assign('showTags', $this->userCanSeeAndEditTags());
+        $this->template->assign('hreflangFields', $this->hreflangFields);
 
         // init var
         $showDelete = true;
@@ -690,6 +704,16 @@ class Edit extends BackendBaseActionEdit
                     $data['remove_from_search_index'] = true;
                 }
 
+                // just execute if the site is multi-language
+                if ($this->getContainer()->getParameter('site.multilanguage')) {
+                    // loop active languages
+                    foreach (BL::getActiveLanguages() as $language) {
+                        if ($language != BL::getWorkingLanguage() && $this->form->getfield('hreflang_' . $language)->isFilled()) {
+                            $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
+                        }
+                    }
+                }
+
                 // build page record
                 $page = [];
                 $page['id'] = $this->record['id'];
@@ -785,17 +809,16 @@ class Edit extends BackendBaseActionEdit
                         $text .= ' ' . $block['html'];
                     }
 
-                    // add to search index, only if authentication is false
-                    if ($data['remove_from_search_index'] == false) {
+                    if ($data['remove_from_search_index'] === true || $redirectValue !== 'none') {
+                        BackendSearchModel::removeIndex(
+                            $this->getModule(),
+                            $page['id']
+                        );
+                    } else {
                         BackendSearchModel::saveIndex(
                             $this->getModule(),
                             $page['id'],
                             ['title' => $page['title'], 'text' => $text]
-                        );
-                    } else {
-                        BackendSearchModel::removeIndex(
-                            $this->getModule(),
-                            $page['id']
                         );
                     }
 

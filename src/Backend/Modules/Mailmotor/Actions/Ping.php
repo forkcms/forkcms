@@ -2,15 +2,9 @@
 
 namespace Backend\Modules\Mailmotor\Actions;
 
-/*
- * This file is part of the Fork CMS Mailmotor Module from SIESQO.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
 use Backend\Core\Engine\Base\ActionIndex;
 use Backend\Core\Engine\Model;
+use Backend\Core\Language\Language;
 use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
 use Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
 
@@ -24,12 +18,38 @@ final class Ping extends ActionIndex
         parent::execute();
 
         // Successful API connection
-        if ($this->get('mailmotor.subscriber')->ping()) {
+        if ($this->ping()) {
             $this->redirect($this->getBackLink(['report' => 'successful-mail-engine-api-connection']));
         }
 
         $this->resetMailEngine();
         $this->redirect($this->getBackLink(['error' => 'wrong-mail-engine-credentials']));
+    }
+
+    private function ping(): bool
+    {
+        $gateway = $this->getContainer()->get('mailmotor.factory')->getSubscriberGateway();
+
+        // don't try to ping if you aren't using a service like mailchimp or campaign monitor
+        if (!$gateway->ping($this->getContainer()->getParameter('mailmotor.list_id'))) {
+            return false;
+        }
+
+        $settings = $this->getContainer()->get('fork.settings');
+        foreach (Language::getActiveLanguages() as $language) {
+            $languageListId = $settings->get('Mailmotor', 'list_id_' . $language);
+
+            // If there isn't a specific list for the language we don't need to check it
+            if ($languageListId === null) {
+                continue;
+            }
+
+            if (!$gateway->ping($languageListId)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private function getBackLink(array $parameters = []): string

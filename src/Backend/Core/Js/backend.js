@@ -375,10 +375,10 @@ jsBackend.ckeditor = {
     uploadUrl: '/src/Backend/Core/Js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
 
     // load some extra plugins
-    extraPlugins: 'stylesheetparser,mediaembed',
+    extraPlugins: 'stylesheetparser,templates,iframe,dialogadvtab',
 
     // remove useless plugins
-    removePlugins: 'a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools',
+    removePlugins: 'a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools,magicline',
 
     // templates
     templates_files: [],
@@ -1236,6 +1236,19 @@ jsBackend.forms = {
     jsBackend.forms.tagsInput()
     jsBackend.forms.meta()
     jsBackend.forms.datePicker()
+    jsBackend.forms.bootstrapTabFormValidation()
+  },
+
+  bootstrapTabFormValidation: function () {
+    $('.tab-pane input, .tab-pane textarea, .tab-pane select').on('invalid', function () {
+      var $invalidField = $(this)
+      // Find the tab-pane that this element is inside, and get the id
+      var invalidTabId = $invalidField.closest('.tab-pane').attr('id')
+
+      // Find the link that corresponds to the pane and have it show
+      $('a[href=#' + invalidTabId + '], [data-target=#' + invalidTabId + ']').tab('show')
+      $invalidField.focus()
+    })
   },
 
   meta: function () {

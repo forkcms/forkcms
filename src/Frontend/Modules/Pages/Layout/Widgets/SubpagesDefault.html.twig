@@ -12,6 +12,8 @@
 
 {% if widgetSubpages is not empty %}
   <aside class="module-pages widget-pages-subpages-default">
+    {% block widget_heading %}{% endblock %}
+
     {% block widget_body %}
       <div class="widget-body media">
         {% for subpage in widgetSubpages %}
@@ -26,5 +28,7 @@
         {% endfor %}
       </div>
     {% endblock %}
+
+    {% block widget_footer %}{% endblock %}
   </aside>
 {% endif %}
