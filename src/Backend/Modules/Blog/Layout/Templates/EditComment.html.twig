@@ -47,8 +47,8 @@
           </label>
           {% form_field_error enableReplyAndSendNotificationToAuthor %}
         </div>
-        <div class="form-group">
-          <label for="reply" class="control-label">{{ 'lbl.Reply'|trans|ucfirst }} <span data-role="reply">{{ macro.required }}</span></label>
+        <div class="form-group" data-role="reply">
+          <label for="reply" class="control-label">{{ 'lbl.Reply'|trans|ucfirst }} {{ macro.required }}</label>
           {% form_field reply %}{% form_field_error reply %}
         </div>
       </fieldset>

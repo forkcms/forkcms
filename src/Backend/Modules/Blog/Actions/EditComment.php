@@ -84,7 +84,7 @@ class EditComment extends BackendBaseActionEdit
             'enableReplyAndSendNotificationToAuthor',
             $this->alreadyHasReply()
         )->setAttribute('data-role', 'enable-reply');
-        $form->addTextarea('reply', $this->record['data']['reply'] ?? null)->setAttribute('data-role', 'reply');
+        $form->addTextarea('reply', $this->record['data']['reply'] ?? null);
 
         return $form;
     }
