@@ -55,7 +55,12 @@ class EditComment extends BackendBaseActionEdit
             'website' => $this->form->getField('website')->isFilled()
                 ? $this->form->getField('website')->getValue() : null,
             'text' => $this->form->getField('text')->getValue(),
+            'data' => null,
         ];
+
+        if ($this->form->getField('enableReplyAndSendNotificationToAuthor')->isFilled()) {
+            $comment['data']['reply'] = $this->form->getField('reply')->getValue();
+        }
 
         BackendBlogModel::updateComment($comment);
 
@@ -75,7 +80,18 @@ class EditComment extends BackendBaseActionEdit
         $form->addText('website', $this->record['website'], null);
         $form->addTextarea('text', $this->record['text']);
 
+        $form->addCheckbox(
+            'enableReplyAndSendNotificationToAuthor',
+            $this->alreadyHasReply()
+        )->setAttribute('data-role', 'enable-reply');
+        $form->addTextarea('reply', $this->record['data']['reply'] ?? null)->setAttribute('data-role', 'reply');
+
         return $form;
+    }
+
+    private function alreadyHasReply(): bool
+    {
+        return isset($this->record['data']['reply']);
     }
 
     protected function parse(): void
@@ -99,6 +115,10 @@ class EditComment extends BackendBaseActionEdit
         $this->form->getField('text')->isFilled(BL::err('FieldIsRequired'));
         if ($this->form->getField('website')->isFilled()) {
             $this->form->getField('website')->isURL(BL::err('InvalidURL'));
+        }
+
+        if ($this->form->getField('enableReplyAndSendNotificationToAuthor')->isFilled()) {
+            $this->form->getField('reply')->isFilled(BL::err('FieldIsRequired'));
         }
 
         return $this->form->isCorrect();
