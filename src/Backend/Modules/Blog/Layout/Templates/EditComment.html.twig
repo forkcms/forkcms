@@ -38,6 +38,20 @@
         </label>
         {% form_field text %} {% form_field_error text %}
       </div>
+      <fieldset>
+        <legend>{{ 'lbl.ReplyToComment'|trans|ucfirst }}</legend>
+        <div class="form-group">
+          <label for="enableReplyAndSendNotificationToAuthor" class="control-label">
+            {% form_field enableReplyAndSendNotificationToAuthor %}
+            {{ 'lbl.EnableReplyAndSendNotificationToAuthor'|trans|ucfirst }}
+          </label>
+          {% form_field_error enableReplyAndSendNotificationToAuthor %}
+        </div>
+        <div class="form-group" data-role="reply">
+          <label for="reply" class="control-label">{{ 'lbl.Reply'|trans|ucfirst }} {{ macro.required }}</label>
+          {% form_field reply %}{% form_field_error reply %}
+        </div>
+      </fieldset>
     </div>
   </div>
   <div class="row fork-module-actions">

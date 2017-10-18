@@ -128,7 +128,7 @@ class Model
     /**
      * Deletes one or more items
      *
-     * @param mixed $ids The ids to delete.
+     * @param array|int $ids The ids to delete.
      */
     public static function delete($ids): void
     {
@@ -457,7 +457,7 @@ class Model
      *
      * @return array
      */
-    public static function getCategory($id): array
+    public static function getCategory(int $id): array
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*
@@ -495,11 +495,11 @@ class Model
      *
      * @return array
      */
-    public static function getComment($id): array
+    public static function getComment(int $id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
+        $comment = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
-             p.id AS post_id, p.title AS post_title, m.url AS post_url
+             p.id AS post_id, p.title AS post_title, m.url AS post_url, i.data
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
@@ -507,6 +507,12 @@ class Model
              LIMIT 1',
             [(int) $id, 'active']
         );
+
+        if ($comment['data'] !== null) {
+            $comment['data'] = unserialize($comment['data'], ['allowed_classes' => false]);
+        }
+
+        return $comment;
     }
 
     /**
@@ -663,11 +669,8 @@ class Model
      *
      * @return string
      */
-    public static function getUrlForCategory($url, int $id = null): string
+    public static function getUrlForCategory(string $url, int $id = null): string
     {
-        // redefine URL
-        $url = (string) $url;
-
         // get database
         $database = BackendModel::getContainer()->get('database');
 
@@ -745,7 +748,7 @@ class Model
      *
      * @return int
      */
-    public static function insertCompletePost(array $item, array $meta = [], $tags = [], $comments = []): int
+    public static function insertCompletePost(array $item, array $meta = [], array $tags = [], array $comments = []): int
     {
         // Build item
         if (!isset($item['id'])) {
@@ -1116,18 +1119,21 @@ class Model
     /**
      * Update an existing comment
      *
-     * @param array $item The new data.
+     * @param array $comment The new comment.
      *
      * @return int
      */
-    public static function updateComment(array $item): int
+    public static function updateComment(array $comment): int
     {
-        // update category
+        if (array_key_exists('data', $comment) && $comment['data'] !== null) {
+            $comment['data'] = serialize($comment['data']);
+        }
+
         return BackendModel::getContainer()->get('database')->update(
             'blog_comments',
-            $item,
+            $comment,
             'id = ?',
-            [(int) $item['id']]
+            [(int) $comment['id']]
         );
     }
 
@@ -1181,10 +1187,10 @@ class Model
      * Update a page revision without generating a new revision.
      * Needed to add an image to a page.
      *
-     * @param $revision_id
-     * @param $item
+     * @param int $revision_id
+     * @param array $item
      */
-    public static function updateRevision($revision_id, $item): void
+    public static function updateRevision(int $revision_id, array $item): void
     {
         BackendModel::getContainer()->get('database')->update(
             'blog_posts',

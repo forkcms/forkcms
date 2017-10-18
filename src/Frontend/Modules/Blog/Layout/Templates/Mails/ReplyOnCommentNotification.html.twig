@@ -1,0 +1,12 @@
+{% extends 'Core/Layout/Templates/Mails/Default.html.twig' %}
+
+{% block title %}
+  <title>{{ SITE_TITLE }} - {{ 'msg.BlogPostAuthorRepliedToYourCommentSubject'|trans|format(post_title) }}</title>
+{% endblock %}
+
+{% block main %}
+  <h2>{{ 'msg.BlogPostAuthorRepliedToYourCommentSubject'|trans|format(post_title) }}</h2>
+  <p>{{ 'msg.BlogPostAuthorRepliedToYourCommentSalutation'|trans }}</p>
+  <p>{{ 'msg.BlogPostAuthorRepliedToYourCommentBody'|trans|format(comment_url)|raw }}</p>
+  <p>{{ 'msg.BlogPostAuthorRepliedToYourCommentClosure'|trans|raw }}</p>
+{% endblock %}

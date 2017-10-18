@@ -153,6 +153,29 @@
               </div>
             </div>
           </div>
+          {% if comment.data.reply %}
+            <div
+              id="comment-{{ comment.id }}" class="block-blog-article-comments-comment row"
+              itemprop="comment"
+              itemscope
+              itemtype="http://schema.org/UserComments"
+            >
+              <div class="col-xs-push-1 col-sm-1 block-blog-article-comments-comment-avatar">
+                <meta itemprop="discusses" content="{{ item.title }}" />
+                <img src="{{ FRONTEND_FILES_URL }}/Users/avatars/64x64/{{ author.setting('avatar') }}" width="48" height="48" alt="{{ author.setting('nickname') }}" class="img-circle" />
+              </div>
+
+              <div class="col-xs-push-1 col-xs-push-0 col-sm-7">
+                <div class="block-blog-article-comments-comment-meta" itemscope itemtype="http://schema.org/Person">
+                  <span itemprop="creator name">{{ author.setting('nickname') }}</span>
+                  {{ 'lbl.Replied'|trans }}
+                </div>
+                <div class="commentText block-blog-article-comments-comment-content" itemprop="commentText">
+                  {{ comment.data.reply|raw }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
         {% endfor %}
       {% endif %}
     </section>
