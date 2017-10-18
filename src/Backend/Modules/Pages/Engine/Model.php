@@ -71,8 +71,10 @@ class Model
         $cacheBuilder = static::getCacheBuilder();
         $cacheBuilder->buildCache($language ?? BL::getWorkingLanguage());
 
-        // We rebuild the entire cache, because other modules can depend on pages
-        BackendModel::get('sitemap.builder')->buildCache();
+        if (BackendModel::has('sitemap.builder')) {
+            // We rebuild the entire cache, because other modules can depend on pages
+            BackendModel::get('sitemap.builder')->buildCache();
+        }
     }
 
     public static function copy(string $fromLanguage, string $toLanguage): void
