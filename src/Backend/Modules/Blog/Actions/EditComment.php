@@ -101,7 +101,7 @@ class EditComment extends BackendBaseActionEdit
         $this->template->assign(
             'itemURL',
             BackendModel::getUrlForBlock($this->getModule(), 'detail') . '/' .
-            $this->record['post_url'] . '#comment-' . $this->record['post_id']
+            $this->record['post_url'] . '#comment-' . $this->record['id']
         );
         $this->template->assign('itemTitle', $this->record['post_title']);
     }
