@@ -1,0 +1,66 @@
+{% if pagination %}
+  {% if pagination.multiple_pages %}
+    <nav role="navigation">
+      <ul class="pagination">
+
+        {# Previous page arrow #}
+        <li class="page-item{% if not pagination.show_previous %} disabled{% endif %}">
+          {% if pagination.show_previous %}
+            <a class="page-link" href="{{ pagination.previous_url }}" rel="prev nofollow" title="{{ 'lbl.PreviousPage'|trans|ucfirst }}">
+              &larr;<span class="sr-only"> {{ 'lbl.PreviousPage'|trans|ucfirst }}</span>
+            </a>
+          {% else %}
+            <span class="page-link">&larr;<span class="sr-only"> {{ 'lbl.PreviousPage'|trans|ucfirst }}</span></span>
+          {% endif %}
+        </li>
+
+        {# First page #}
+        {% if pagination.first %}
+          {% for pagination in pagination.first %}
+            <li class="page-item">
+              <a class="page-link" href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">{{ pagination.label }}</a>
+            </li>
+          {% endfor %}
+          <li class="page-item disabled">
+            <span class="page-link">…</span>
+          </li>
+        {% endif %}
+
+        {# Middle pages #}
+        {% for pagination in pagination.pages %}
+          <li class="page-item {% if pagination.current %} active{% endif %}">
+            <a class="page-link" href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage|ucfirst'|trans|ucfirst }}{{ pagination.label }}">
+              {{ pagination.label }}
+            </a>
+          </li>
+        {% endfor %}
+
+        {# Last page #}
+        {% if pagination.last %}
+          <li class="page-item disabled">
+            <span class="page-link">…</span>
+          </li>
+          {% for pagination in pagination.last %}
+            <li class="page-item">
+              <a class="page-link" href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">
+                {{ pagination.label }}
+              </a>
+            </li>
+          {% endfor %}
+        {% endif %}
+
+        {# Next page arrow #}
+        <li class="page-item{% if not pagination.show_next %} disabled{% endif %}">
+          {% if pagination.show_next %}
+            <a class="page-link" href="{{ pagination.next_url }}" rel="next nofollow" title="{{ 'lbl.NextPage'|trans|ucfirst }}">
+              <span class="sr-only">{{ 'lbl.NextPage' }} </span>&rarr;
+            </a>
+          {% else %}
+            <span class="page-link"><span class="sr-only">{{ 'lbl.NextPage' }} </span>&rarr;</span>
+          {% endif %}
+        </li>
+      </ul>
+    </nav>
+  {% endif %}
+{% endif %}
+

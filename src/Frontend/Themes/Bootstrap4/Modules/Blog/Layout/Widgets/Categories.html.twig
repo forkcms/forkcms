@@ -1,0 +1,20 @@
+{#
+  variables that are available:
+  - {{ widgetBlogCategories }}:
+#}
+
+{% if widgetBlogCategories %}
+  <section id="blogCategoriesWidget" class="blog blog-widget card mb-3">
+    <header class="card-header">
+      <h4 class="mb-0">{{ 'lbl.Categories'|trans|ucfirst }}</h4>
+    </header>
+    <div class="list-group list-group-flush">
+      {% for category in widgetBlogCategories %}
+        <a class="list-group-item list-group-item-action" href="{{ category.url }}">
+          {{ category.label }}
+          &nbsp;<span class="badge badge-pill badge-default">{{ category.total }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

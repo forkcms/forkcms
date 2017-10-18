@@ -1,0 +1,34 @@
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+
+<div id="mailmotorSubscribe" class="mailmotor">
+  {% if mailmotorSubscribeHasFormError %}
+    {{ alerts.alert('danger', 'err.FormError'|trans) }}
+  {% endif %}
+  {% if mailmotorSubscribeHasError %}
+    {{ alerts.alert('danger', 'err.SubscribeFailed'|trans) }}
+  {% endif %}
+  {% if mailmotorSubscribeIsSuccess %}
+    {% if mailmotorSubscribeHasDoubleOptIn %}
+      {{ alerts.alert('success', 'msg.SubscribeSuccessForDoubleOptIn'|trans) }}
+    {% endif %}
+    {% if not mailmotorSubscribeHasDoubleOptIn %}
+      {{ alerts.alert('success', 'msg.SubscribeSuccess'|trans) }}
+    {% endif %}
+  {% endif %}
+
+  {% if not mailmotorSubscribeHideForm %}
+    {{ form_start(form) }}
+    <div class="form-group">
+      <label for="{{ form.email.vars.id }}" class="form-control-label">{{ form.email.vars.label|trans|ucfirst }}</label>
+      <div class="input-group">
+        {{ form_widget(form.email) }}
+        <div class="input-group-btn">
+          <button type="submit" id="{{ form.subscribe.vars.id }}" class="btn btn-secondary">{{ form.subscribe.vars.label|trans }}</button>
+          {% do form.subscribe.setRendered %}
+        </div>
+      </div>
+      {{ form_rest(form) }}
+      {{ form_end(form) }}
+    </div>
+  {% endif %}
+</div>

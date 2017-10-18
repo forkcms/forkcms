@@ -1,2 +1,5 @@
-<iframe src="http://notfound-static.fwebservices.be/404/index.html" width="100%" height="650" frameborder="0"></iframe>
-<p>Страница не существует или сейчас не доступна. Взгляните на карту сайта:</p>
+<div id="error">
+<p>Страница не существует или сейчас не доступна.</p>
+<a href="/">Главная</a>
+<h2>404</h2>
+</div>

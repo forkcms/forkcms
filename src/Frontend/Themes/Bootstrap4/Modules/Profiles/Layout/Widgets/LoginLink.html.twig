@@ -1,0 +1,13 @@
+{#
+  variables that are available:
+  - {{ isLoggedIn }}
+  - {{ profile }}: only available when logged in
+#}
+
+{% if isLoggedIn %}
+  {{ 'msg.ProfilesLoggedInAs'|trans|format(profile.display_name, profile.url.dashboard)|raw }}
+{% endif %}
+
+{% if not isLoggedIn %}
+  <a href="{{ geturlforblock('Profiles', 'Login') }}?queryString={{ geturlforblock('Profiles') }}">{{ 'lbl.Login'|trans|ucfirst }}</a>
+{% endif %}

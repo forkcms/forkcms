@@ -1,0 +1,30 @@
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+<div id="mailmotorUnsubscribe" class="mailmotor">
+  {% if mailmotorUnsubscribeHasFormError %}
+    {{ alerts.alert('danger', 'err.FormError'|trans) }}
+  {% endif %}
+  {% if mailmotorUnsubscribeHasError %}
+    {{ alerts.alert('danger', 'err.UnsubscribeFailed'|trans) }}
+  {% endif %}
+  {% if mailmotorUnsubscribeIsSuccess %}
+    {{ alerts.alert('success', 'msg.UnsubscribeSuccess'|trans) }}
+  {% endif %}
+
+  <h3>{{ 'lbl.UnsubscribeFromNewsletter'|trans|ucfirst }}</h3>
+
+  {% if not mailmotorUnsubscribeHideForm %}
+    {{ form_start(form) }}
+    <div class="form-group">
+      <label for="{{ form.email.vars.id }}" class="form-control-label">{{ form.email.vars.label|trans|ucfirst }}</label>
+      <div class="input-group">
+        {{ form_widget(form.email) }}
+        <div class="input-group-btn">
+          <button type="submit" id="{{ form.unsubscribe.vars.id }}" class="btn btn-secondary">{{ form.unsubscribe.vars.label|trans }}</button>
+          {% do form.unsubscribe.setRendered %}
+        </div>
+      </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+  {% endif %}
+</div>

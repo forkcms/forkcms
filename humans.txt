@@ -1,0 +1,44 @@
+/* TEAM */
+	Frontender: Mathias Helin
+	Contact: mathias-is-a-human [at] sumocoders.be
+	Twitter: @mathiashelin
+	Github: https://github.com/mathiashelin
+	From: Belgium, Ghent
+
+	Frontender: Katrien Vanhaute
+	Contact: katrien-is-a-human [at] sumocoders.be
+	From: Belgium, Ghent
+
+	Developer: Jonas De Keukelaere
+	Contact: jonas-is-a-human [at] sumocoders.be
+	Twitter: @jonasdk89
+	From: United Kingdom, London
+
+	Developer: Jelmer Prins
+	Contact: jelmer-is-a-human [at] sumocoders.be
+	Twitter: @justCarakas
+	From: Belgium, Ghent
+
+	Developer: Stijn Vrolijk
+	Contact: stijn-is-a-human [at] sumocoders.be
+	From: Belgium, Ghent
+
+	Developer: Bruno Vitorino
+	Contact: bruno-is-a-human [at] sumocoders.be
+	From: Belgium, Ghent
+
+	Developer: Bjorn Van Acker
+	Contact: bjorn-is-a-human [at] sumocoders.be
+	From: Belgium, Ghent
+
+	Developer: Tijs Verkoyen
+	Contact: tijs-is-a-human [at] sumocoders.be
+	Twitter: @tijsverkoyen
+	Github: https://github.com/tijsverkoyen
+	From: Belgium, Ghent
+
+/* SITE */
+	Doctype: HTML5
+	IDE: WebStorm, PHPStorm, Photoshop
+	Components: jQuery, Twitter Bootstrap
+	Runs on: Fork CMS, PHP, MySQL, Symfony
