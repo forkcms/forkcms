@@ -1,0 +1,3 @@
+services:
+    sitemap.manager:
+        class: Backend\Modules\Sitemap\Manager\SitemapManager

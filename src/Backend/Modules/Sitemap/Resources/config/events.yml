@@ -1,0 +1,8 @@
+services:
+    sitemap.subscriber:
+        class: Backend\Modules\Sitemap\EventListener\SitemapSubscriber
+        tags:
+            - { name: doctrine.event_subscriber }
+        arguments:
+            - "@sitemap.manager"
+            - "@sitemap.builder"
