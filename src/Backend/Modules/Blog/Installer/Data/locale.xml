@@ -2,6 +2,64 @@
 <locale>
   <Backend>
     <Blog>
+      <item type="label" name="ReplyToComment">
+        <translation language="nl"><![CDATA[reageer op reactie]]></translation>
+        <translation language="en"><![CDATA[reply to comment]]></translation>
+        <translation language="fr"><![CDATA[répondre au commentaire]]></translation>
+      </item>
+      <item type="label" name="Reply">
+        <translation language="nl"><![CDATA[reactie]]></translation>
+        <translation language="en"><![CDATA[reply]]></translation>
+        <translation language="fr"><![CDATA[réponse]]></translation>
+      </item>
+      <item type="label" name="EnableReplyAndSendNotificationToAuthor">
+        <translation language="nl"><![CDATA[reageer op deze reactie en verstuur melding naar de auteur]]></translation>
+        <translation language="en"><![CDATA[reply to this comment and send a notification to the author]]></translation>
+        <translation language="fr"><![CDATA[répondre à ce commentaire et envoyer une notification à l'auteur]]></translation>
+      </item>
+      <item type="message" name="BlogPostAuthorRepliedToYourCommentSalutation">
+        <translation language="nl"><![CDATA[Beste,]]></translation>
+        <translation language="en"><![CDATA[Dear,]]></translation>
+        <translation language="fr"><![CDATA[Bonjour,]]></translation>
+        <translation language="hu"><![CDATA[Kedves]]></translation>
+        <translation language="it"><![CDATA[Caro,]]></translation>
+        <translation language="ru"><![CDATA[Уважаемый,]]></translation>
+        <translation language="zh"><![CDATA[你好，]]></translation>
+        <translation language="de"><![CDATA[Liebe(r),]]></translation>
+        <translation language="es"><![CDATA[Hola,]]></translation>
+        <translation language="lt"><![CDATA[Sveiki,]]></translation>
+        <translation language="uk"><![CDATA[Шановний,]]></translation>
+        <translation language="sv"><![CDATA[Kära,]]></translation>
+        <translation language="el"><![CDATA[Αγαπητέ/ή,]]></translation>
+        <translation language="pl"><![CDATA[Drogi,]]></translation>
+        <translation language="tr"><![CDATA[Sayın,]]></translation>
+      </item>
+      <item type="message" name="BlogPostAuthorRepliedToYourCommentSubject">
+        <translation language="nl"><![CDATA[De auteur heeft gereageerd op u reactie op %1$s]]></translation>
+        <translation language="en"><![CDATA[The author replied to your comment on %1$s]]></translation>
+        <translation language="fr"><![CDATA[L'auteur a répondu à votre commentaire sur %1$s]]></translation>
+      </item>
+      <item type="message" name="BlogPostAuthorRepliedToYourCommentBody">
+        <translation language="nl"><![CDATA[Je hebt juist een reactie gekregen van de auteur van de blogpost waar je een reactie op had achter gelaten. Om de reactie te zien dien je op onderstaande link te klikken.<br /><br /><a href="%1$s">%1$s</a>]]></translation>
+        <translation language="en"><![CDATA[You have just received a reply from the author of the blog post you commented on. Follow the link below to read the reply.<br /><br /><a href="%1$s">%1$s</a>]]></translation>
+        <translation language="fr"><![CDATA[Vous venez de recevoir une réponse de l'auteur du billet de blog que vous avez commenté. Suivez le lien ci-dessous pour lire la réponse.<br /><br /><a href="%1$s">%1$s</a>]]></translation>
+      </item>
+      <item type="message" name="BlogPostAuthorRepliedToYourCommentClosure">
+        <translation language="nl"><![CDATA[Met vriendelijke groeten,<br/><br/>Het Fork CMS team]]></translation>
+        <translation language="en"><![CDATA[With kind regards,<br/><br/>The Fork CMS team]]></translation>
+        <translation language="fr"><![CDATA[Cordialement,<br/><br/>L'équipe Fork CMS]]></translation>
+        <translation language="hu"><![CDATA[Üdvözlettel,<br/><br/>The Fork CMS team]]></translation>
+        <translation language="it"><![CDATA[Cordiali Saluti,<br/><br/>Il team di Fork CMS]]></translation>
+        <translation language="ru"><![CDATA[С уважением,<br/><br/>Команда Fork CMS]]></translation>
+        <translation language="zh"><![CDATA[Fork CMS团队敬上]]></translation>
+        <translation language="de"><![CDATA[Mit besten Grüßen, <br /><br /> Das Fork CMS Team]]></translation>
+        <translation language="es"><![CDATA[Cordialmente,<br/><br/>el equipo Fork CMS]]></translation>
+        <translation language="lt"><![CDATA[Su pagarba,<br/><br/>Fork CMS]]></translation>
+        <translation language="uk"><![CDATA[З повагою,<br/><br/>Команда Fork CMS]]></translation>
+        <translation language="sv"><![CDATA[Med vänlig hälsning,<br/><br/>The Fork CMS teamet]]></translation>
+        <translation language="el"><![CDATA[Με τιμή,<br/><br/>η ομάδα του Fork CMS]]></translation>
+        <translation language="pl"><![CDATA[Z poważaniem,<br /><br />Zespół Fork CMS]]></translation>
+      </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[artikel toevoegen]]></translation>
         <translation language="en"><![CDATA[add article]]></translation>

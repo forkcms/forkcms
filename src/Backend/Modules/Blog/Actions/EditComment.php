@@ -81,7 +81,7 @@ class EditComment extends BackendBaseActionEdit
     private function sendNotificationToCommentAuthor(array $comment): void
     {
         $comment['post_title'] = $this->record['post_title'];
-        $comment['comment_url'] = $this->getLinkToComment();
+        $comment['comment_url'] = SITE_URL . $this->getLinkToComment();
         $from = $this->get('fork.settings')->get('Core', 'mailer_from');
         $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
         $message = Message::newInstance(
