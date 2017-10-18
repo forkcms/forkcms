@@ -19,6 +19,7 @@
     float: none;
 
     .site-title {
+      color: $text-color;
       font-size: $font-size-btn;
     }
   }
@@ -46,17 +47,18 @@
     color: $gray-light;
     font-size: $font-size-base;
 
-    &:hover {
-      color: $gray-base;
-      text-decoration: none;
-    }
-
     &:active,
     &:focus {
       -webkit-box-shadow: none;
       -moz-box-shadow: none;
       box-shadow: none;
       outline: none;
+    }
+
+    &:focus,
+    &:hover {
+      color: $gray-base;
+      text-decoration: underline;
     }
   }
 }

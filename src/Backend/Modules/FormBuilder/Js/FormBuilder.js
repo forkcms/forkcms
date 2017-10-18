@@ -310,8 +310,9 @@ jsBackend.FormBuilder.Fields = {
     // bind sortable
     $('#fieldsHolder').sortable({
       items: 'div.jsField',
-      handle: 'span.dragAndDropHandle',
+      handle: 'button.dragAndDropHandle',
       containment: '#fieldsHolder',
+      cancel: '',
       stop: function (e, ui) {
         // init var
         var rowIds = $(this).sortable('toArray')

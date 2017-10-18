@@ -169,9 +169,20 @@ jsBackend.navigation = {
     var $navCollapse = $('.js-toggle-nav')
     var collapsed = $wrapper.hasClass('navigation-collapsed')
 
+    if ($wrapper.hasClass('navigation-collapsed')) {
+      $('.js-nav-screen-text').html(jsBackend.locale.lbl('OpenNavigation'))
+    } else {
+      $('.js-nav-screen-text').html(jsBackend.locale.lbl('CloseNavigation'))
+    }
+
     $navCollapse.on('click', function (e) {
       e.preventDefault()
       $wrapper.toggleClass('navigation-collapsed')
+      if ($wrapper.hasClass('navigation-collapsed')) {
+        $('.js-nav-screen-text').html(jsBackend.locale.lbl('OpenNavigation'))
+      } else {
+        $('.js-nav-screen-text').html(jsBackend.locale.lbl('CloseNavigation'))
+      }
       collapsed = !collapsed
       utils.cookies.setCookie('navigation-collapse', collapsed)
       setTimeout(function () {
@@ -1833,7 +1844,7 @@ jsBackend.messages = {
 
     var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
       '<div class="container-fluid">' +
-      '<i class="fa fa-' + icon + '"></i>' + ' ' +
+      '<i class="fa fa-' + icon + '" aria-hidden="true"></i>' + ' ' +
       content +
       '<button type="button" class="close" data-dismiss="alert" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
       '<span aria-hidden="true" class="fa fa-close"></span>' +

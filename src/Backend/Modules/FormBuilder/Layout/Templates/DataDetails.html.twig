@@ -62,7 +62,7 @@
         <div class="btn-group pull-left" role="group">
           {% if showFormBuilderMassDataAction %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
+              <span class="fa fa-trash-o" aria-hidden="true"></span>
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
@@ -80,10 +80,10 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+                  <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 <a href="{{ geturl('mass_data_action') }}&amp;action=delete&amp;form_id={{ formId }}&amp;id={{ id }}" class="btn btn-succes">
-                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+                  <span class="fa fa-trash" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
                 </a>
               </div>
             </div>
