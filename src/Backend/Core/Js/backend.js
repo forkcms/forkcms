@@ -364,10 +364,10 @@ jsBackend.ckeditor = {
     uploadUrl: '/src/Backend/Core/Js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
 
     // load some extra plugins
-    extraPlugins: 'stylesheetparser,mediaembed',
+    extraPlugins: 'stylesheetparser,templates,iframe,dialogadvtab',
 
     // remove useless plugins
-    removePlugins: 'a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools',
+    removePlugins: 'a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools,magicline',
 
     // templates
     templates_files: [],
