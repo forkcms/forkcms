@@ -1,0 +1,5 @@
+services:
+    sitemap.console.build_sitemap:
+        class: Backend\Modules\Sitemap\Console\BuildSitemapCommand
+        tags:
+            -  { name: console.command }

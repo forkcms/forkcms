@@ -2,3 +2,4 @@ imports:
   - { resource: builders.yml }
   - { resource: managers.yml }
   - { resource: events.yml }
+  - { resource: console.yml }
