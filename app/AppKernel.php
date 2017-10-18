@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new \SimpleBus\SymfonyBridge\SimpleBusEventBusBundle(),
             new \Backend\Modules\MediaLibrary\MediaLibrary(),
             new \Backend\Modules\Mailmotor\Mailmotor(),
+            new \Backend\Modules\Sitemap\Sitemap(),
             new \MailMotor\Bundle\MailMotorBundle\MailMotorMailMotorBundle(),
             new \MailMotor\Bundle\MailChimpBundle\MailMotorMailChimpBundle(),
             new \MailMotor\Bundle\CampaignMonitorBundle\MailMotorCampaignMonitorBundle(),
