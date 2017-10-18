@@ -6,7 +6,9 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Language;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use Common\Mailer\Message;
 
 class EditComment extends BackendBaseActionEdit
 {
@@ -64,11 +66,37 @@ class EditComment extends BackendBaseActionEdit
 
         BackendBlogModel::updateComment($comment);
 
+        // Only send the notification email when there is a new reply
+        if (!$this->alreadyHasReply() && $this->form->getField('enableReplyAndSendNotificationToAuthor')->isFilled()) {
+            $this->sendNotificationToCommentAuthor($comment);
+        }
+
         $this->redirect(
             BackendModel::createUrlForAction('Comments') . '&report=edited-comment&id=' .
             $comment['id'] . '&highlight=row-' . $comment['id'] . '#tab' .
             \SpoonFilter::toCamelCase($comment['status'])
         );
+    }
+
+    private function sendNotificationToCommentAuthor(array $comment): void
+    {
+        $comment['post_title'] = $this->record['post_title'];
+        $comment['comment_url'] = $this->getLinkToComment();
+        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
+        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+        $message = Message::newInstance(
+            sprintf(Language::getMessage('BlogPostAuthorRepliedToYourCommentSubject'), $comment['post_title'])
+        )
+            ->setFrom([$from['email'] => $from['name']])
+            ->setTo([$comment['email'] => $comment['author']])
+            ->setReplyTo([$replyTo['email'] => $replyTo['name']])
+            ->parseHtml(
+                FRONTEND_MODULES_PATH . '/Blog/Layout/Templates/Mails/ReplyOnCommentNotification.html.twig',
+                $comment,
+                true
+            );
+
+        $this->get('mailer')->send($message);
     }
 
     private function buildForm(): BackendForm
@@ -100,10 +128,15 @@ class EditComment extends BackendBaseActionEdit
 
         $this->template->assign(
             'itemURL',
-            BackendModel::getUrlForBlock($this->getModule(), 'detail') . '/' .
-            $this->record['post_url'] . '#comment-' . $this->record['id']
+            $this->getLinkToComment()
         );
         $this->template->assign('itemTitle', $this->record['post_title']);
+    }
+
+    private function getLinkToComment(): string
+    {
+        return BackendModel::getUrlForBlock($this->getModule(), 'detail') . '/' .
+               $this->record['post_url'] . '#comment-' . $this->record['id'];
     }
 
     private function validateForm(): bool
