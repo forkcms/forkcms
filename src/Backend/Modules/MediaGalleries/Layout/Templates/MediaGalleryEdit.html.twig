@@ -28,7 +28,7 @@
                   <div class="panel-heading">
                     <p>
                       {{ 'lbl.WidgetView'|trans|ucfirst }}{{ macro.required }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.WidgetViewsHelp'|trans|ucfirst }}"></abbr><br>
+                      <abbr class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="{{ 'msg.WidgetViewsHelp'|trans|ucfirst }}"></abbr><br>
                     </p>
                   </div>
                   <div class="panel-body">
@@ -74,14 +74,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showMediaGalleriesMediaGalleryDelete %}
             <button type="button" class="btn btn-danger" id="blog-delete" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
+              <span class="fa fa-trash-o" aria-hidden="true"></span>
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>&nbsp;
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>&nbsp;
             {{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
@@ -105,10 +105,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              <span class="fa fa-trash" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           </div>
         </div>

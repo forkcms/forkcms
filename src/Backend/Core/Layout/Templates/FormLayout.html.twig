@@ -1,4 +1,10 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
+{% use 'bootstrap_3_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
+
+{% block form_widget_simple %}
+  {{ block('base_form_widget_simple') }}
+  {{ block('help') }}
+{% endblock %}
 
 {% block form_label %}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
@@ -62,7 +68,7 @@
   <span class="help-block{% if help_label_tooltip.icon is not same as(false) %} inline{% endif %}">
     <a href="#" data-toggle="tooltip" data-placement="{{ help_label_tooltip.placement }}" data-title="{{ help_label_tooltip.title|trans({}, translation_domain) }}">
       {% if help_label_tooltip.icon is not same as(false) %}
-        <i class="fa fa-question"></i>
+        <i class="fa fa-question" aria-hidden="true"></i>
       {% endif %}
       {% if help_label_tooltip.text is not same as(null) %}
         <span class="text-muted">{{ help_label_tooltip.text }}</span>
@@ -75,7 +81,7 @@
   <span class="help-block{% if help_label_popover.icon is not same as(false) %} inline{% endif %}">
     <a href="#" data-toggle="popover" data-trigger="hover" data-placement="{{ help_label_popover.placement }}" data-title="{{ help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ help_label_popover.content|trans({}, translation_domain) }}">
       {% if help_label_popover.icon is not same as(false) %}
-        <i class="fa fa-question"></i>
+        <i class="fa fa-question" aria-hidden="true"></i>
       {% endif %}
       {% if help_label_popover.text is not same as(null) %}
         <span class="text-muted">{{ help_label_popover.text }}</span>
@@ -94,7 +100,7 @@
     {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
         {%- for error in errors -%}
-          <li class="formError"><span class="fa fa-exclamation-triangle"></span> {{ error.message }}</li>
+          <li class="formError"><span class="fa fa-exclamation-triangle" aria-hidden="true"></span> {{ error.message }}</li>
         {%- endfor -%}
     </ul>
     {% if form.parent %}</span>{% else %}</div>{% endif %}
@@ -279,7 +285,7 @@
       <div class="form-group">
         {% if show_preview and preview_url %}
           <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank">
-            <i class="fa fa-eye"></i>
+            <i class="fa fa-eye" aria-hidden="true"></i>
             {{ preview_label|trans|ucfirst }}
           </a>
         {% endif %}
@@ -377,4 +383,10 @@
       </div>
     {% endif %}
   </div>
+{% endblock %}
+
+{% block help %}
+  {% for attributeName, attributeValue in attr %}
+    {% if attributeName == 'help' %}<span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
+  {% endfor %}
 {% endblock %}

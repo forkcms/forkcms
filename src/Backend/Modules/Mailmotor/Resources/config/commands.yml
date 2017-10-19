@@ -16,5 +16,6 @@ services:
     class: Frontend\Modules\Mailmotor\Domain\Subscription\Command\UnsubscriptionHandler
     arguments:
       - "@mailmotor.subscriber"
+      - "@fork.settings"
     tags:
       - { name: command_handler, handles: Frontend\Modules\Mailmotor\Domain\Subscription\Command\Unsubscription }

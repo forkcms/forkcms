@@ -28,7 +28,7 @@
                   {% form_field mailer_type %} {% form_field_error mailer_type %}
                   <a id="testEmailConnection" href="#">{{ 'msg.SendTestMail'|trans|ucfirst }}</a>
                   <span id="testEmailConnectionSpinner" style="display: none; padding-top: 3px;">
-                    <i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i>
+                    <i class="fa fa-spinner fa-pulse fa-lg fa-fw" aria-hidden="true"></i>
                   </span>
                 </div>
                 <span id="testEmailConnectionError" style="display: none;" class="alert alert-danger">{{ 'err.ErrorWhileSendingEmail'|trans }}</span>
@@ -142,7 +142,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="save" type="submit" name="save" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>

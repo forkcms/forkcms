@@ -8,10 +8,14 @@ use MailMotor\Bundle\MailMotorBundle\Manager\SubscriberGatewayManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class SettingsType extends AbstractType
 {
@@ -55,7 +59,17 @@ class SettingsType extends AbstractType
             TextType::class,
             [
                 'required' => true,
-                'label' => 'lbl.ListId',
+                'label' => 'lbl.Default',
+            ]
+        )->add(
+            'languageListIds',
+            CollectionType::class,
+            [
+                'entry_type' => TextType::class,
+                'allow_add' => false,
+                'allow_delete' => false,
+                'required' => false,
+                'label' => false,
             ]
         );
 
@@ -68,17 +82,6 @@ class SettingsType extends AbstractType
             'required' => false,
         ];
 
-        $automaticallySubscribeFromFormBuilderSubmittedForm = [
-            'label' => 'msg.AutomaticallySubscribeFromFormBuilderSubmittedForm',
-            'required' => false,
-        ];
-
-        if (!array_key_exists('data', $options)) {
-            $overwriteInterests['attr']['checked'] = 'checked';
-            $doubleOptIn['attr']['checked'] = 'checked';
-            $automaticallySubscribeFromFormBuilderSubmittedForm['attr']['checked'] = 'checked';
-        }
-
         $builder->add(
             'doubleOptIn',
             CheckboxType::class,
@@ -89,12 +92,6 @@ class SettingsType extends AbstractType
             'overwriteInterests',
             CheckboxType::class,
             $overwriteInterests
-        );
-
-        $builder->add(
-            'automaticallySubscribeFromFormBuilderSubmittedForm',
-            CheckboxType::class,
-            $automaticallySubscribeFromFormBuilderSubmittedForm
         );
     }
 
