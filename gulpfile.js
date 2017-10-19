@@ -57,6 +57,7 @@ gulp.task('build:backend:assets:copy-ckeditor', function() {
       'node_modules/ckeditor/plugins/uicolor' + pluginFiles,
       'node_modules/ckeditor/plugins/widget' + pluginFiles,
       'node_modules/ckeditor/plugins/wsc' + pluginFiles,
+      'node_modules/ckeditor/plugins/lineutils' + pluginFiles,
       'node_modules/ckeditor/skins/moono-lisa/**/*\.@(css|png|gif)',
       'node_modules/ckeditor/ckeditor\.js',
       'node_modules/ckeditor/contents\.css',
