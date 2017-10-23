@@ -48,7 +48,7 @@
     </header>
 
     <div class="module-body" itemprop="text">
-      {% if item.image %}<img itemprop="image" class="article-image img-responsive" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
+      {% if item.image %}<img itemprop="image" class="article-image img-responsive" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
       <div class="article-content">
         {% if item.introduction %}
           {{ item.introduction|raw }}
@@ -69,7 +69,7 @@
     <meta itemprop="author" itemprop="creator" content="{{ item.user_id|usersetting('nickname' ) }}">
 
     {% if item.image %}
-      <img itemprop="image" class="card-img-top" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />
+      <img itemprop="image" class="card-img-top" src="{{ FRONTEND_FILES_URL }}/Blog/images/source/{{ item.image }}" alt="{{ item.title }}" />
     {% else %}
       <img itemprop="image" class="card-img-top" src="https://placehold.it/400x300" alt="{{ item.title }}" />
     {% endif %}
