@@ -6,6 +6,7 @@ imports:
 
 parameters:
     fork.is_installed: true
+    fork.form.theme: 'Core/Layout/Templates/FormLayout.html.twig'
 
 framework:
     secret: "%kernel.secret%"
@@ -33,7 +34,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
-        - 'Core/Layout/Templates/FormLayout.html.twig'
+        - "%fork.form.theme%"
     paths:
       '%site.path_www%/src/Frontend/Modules/': ForkFrontendModules
 

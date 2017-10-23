@@ -10,6 +10,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use TijsVerkoyen\Akismet\Akismet;
 
 /**
@@ -322,7 +323,7 @@ class Model extends BaseModel
     public static function getSession(): SessionInterface
     {
         if (!self::requestIsAvailable()) {
-            throw new RuntimeException('No request available');
+            return self::getMockSession();
         }
 
         $request = self::getRequest();
@@ -335,5 +336,22 @@ class Model extends BaseModel
         $request->setSession($session);
 
         return $session;
+    }
+
+    /**
+     * This method will return a mock session that will be only available while the code is running.
+     * It is used for instance in the console
+     *
+     * @deprecated This has been added to fix an issue but should be fixed properly in fork 6.0.0
+     *
+     * @return Session
+     */
+    private static function getMockSession(): Session
+    {
+        if (!self::getContainer()->has('fork.mock.session')) {
+            self::getContainer()->set('fork.mock.session', new Session(new MockArraySessionStorage()));
+        }
+
+        return self::get('fork.mock.session');
     }
 }

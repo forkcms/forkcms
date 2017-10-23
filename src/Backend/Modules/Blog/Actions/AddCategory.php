@@ -35,6 +35,18 @@ class AddCategory extends BackendBaseActionAdd
         $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getUrlForCategory');
     }
 
+    protected function parse(): void
+    {
+        parent::parse();
+
+        // parse base url for preview
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
+        $url404 = BackendModel::getUrl(404);
+        if ($url404 !== $url) {
+            $this->template->assign('detailURL', SITE_URL . $url);
+        }
+    }
+
     private function validateForm(): void
     {
         if ($this->form->isSubmitted()) {

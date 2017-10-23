@@ -1,6 +1,9 @@
 imports:
     - { resource: config_dev.yml }
 
+parameters:
+    site.multilanguage: true
+
 framework:
     test: ~
     session:

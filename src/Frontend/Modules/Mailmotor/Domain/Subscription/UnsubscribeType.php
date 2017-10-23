@@ -21,14 +21,14 @@ class UnsubscribeType extends AbstractType
                 'required' => true,
                 'label' => 'lbl.Email',
                 'attr' => [
-                    'placeholder' => ucfirst(Language::lbl('YourEmail')),
+                    'placeholder' => \SpoonFilter::ucfirst(Language::lbl('YourEmail')),
                 ],
             ]
         )->add(
             'unsubscribe',
             SubmitType::class,
             [
-                'label' => 'lbl.Unsubscribe',
+                'label' => \SpoonFilter::ucfirst(Language::lbl('Unsubscribe')),
             ]
         );
     }
