@@ -13,6 +13,8 @@ var jsFrontend = {
     // init stuff
     jsFrontend.initAjax()
 
+    jsFrontend.addModalEvents()
+
     jsFrontend.cookieBar.init()
 
     // init controls
@@ -29,6 +31,21 @@ var jsFrontend = {
 
     // init twitter
     jsFrontend.twitter.init()
+  },
+
+  addModalEvents: function () {
+    var $modals = $('[role=dialog].modal')
+
+    if ($modals.length === 0) {
+      return
+    }
+
+    $modals.on('shown.bs.modal', function () {
+      $(this).attr('aria-hidden', 'false')
+    })
+    $modals.on('hide.bs.modal', function () {
+      $(this).attr('aria-hidden', 'true')
+    })
   },
 
   // init

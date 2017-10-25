@@ -65,9 +65,11 @@ var jsBackend =
 
       $modals.on('shown.bs.modal', function () {
         $('#ajaxSpinner').addClass('light')
+        $(this).attr('aria-hidden', 'false')
       })
       $modals.on('hide.bs.modal', function () {
         $('#ajaxSpinner').removeClass('light')
+        $(this).attr('aria-hidden', 'true')
       })
     },
 
@@ -1842,7 +1844,7 @@ jsBackend.messages = {
         break
     }
 
-    var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
+    var html = '<div role="alert" id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
       '<div class="container-fluid">' +
       '<i class="fa fa-' + icon + '" aria-hidden="true"></i>' + ' ' +
       content +

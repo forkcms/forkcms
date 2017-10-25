@@ -45,12 +45,12 @@
           {% if item.tags %}
             {{ 'lbl.Tags'|trans|ucfirst }}:
             <span itemprop="keywords">
-                  {% for tag in item.tags %}
-                    <a class="label label-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
-                    {{ tag.name }}
-                    </a>
-                  {% endfor %}
-                </span>
+              {% for tag in item.tags %}
+                <a class="label label-primary" href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">
+                  {{ tag.name }}
+                </a>
+              {% endfor %}
+            </span>
           {% endif %}
         </div>
       </div>

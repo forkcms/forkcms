@@ -1,3 +1,4 @@
+{% import "Layout/Templates/macros.html.twig" as macro %}
 {% include "Layout/Templates/messaging.html.twig" %}
 
 <div class="header clearfix">
@@ -19,7 +20,7 @@
             <div class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ LANGUAGE|uppercase }}">
                 <span class="dropdown-text">{{ ('lbl.'~LANGUAGE|uppercase)|trans|ucfirst }}</span>
-                <span class="dropdown-angle"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                <span class="dropdown-angle">{{ macro.icon('angle-right') }}</span>
               </a>
               <ul class="dropdown-menu">
                 {% for workingLanguage in workingLanguages %}
@@ -39,7 +40,7 @@
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ authenticatedUserNickname }}">
         <img src="{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ authenticatedUserAvatar }}" class="img-circle" alt="{{ authenticatedUserNickname }}" />
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
+        {{ macro.icon('angle-right') }}
       </a>
       <ul class="dropdown-menu pull-right">
         {% if authenticatedUserEditUrl %}
@@ -51,6 +52,6 @@
   </ul>
 </div>
 
-<div id="ajaxSpinner">
-  <i class="fa fa-spinner fa-pulse fa-lg fa-fw" aria-hidden="true"></i>
+<div id="ajaxSpinner" style="display: none;" aria-label="{{ 'lbl.Loading'|trans|ucfirst }}">
+  {{ macro.icon('spinner fa-pulse fa-lg fa-fw') }}
 </div>

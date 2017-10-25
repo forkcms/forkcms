@@ -1,12 +1,20 @@
 {% macro buttonIcon(url, icon, label, buttonType, extra) %}
   <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {{ extra }}>
-    <span class="fa fa-{{ icon }}" aria-hidden="true"></span>
+    {{ _self.icon(icon) }}
     <span class="btn-text">{{ label }}</span>
   </a>
 {% endmacro %}
 
 {% macro required() %}
-  <abbr data-toggle="tooltip" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}"  title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+{% endmacro %}
+
+{% macro icon(icon) %}
+  <span class="fa fa-{{ icon }}" aria-hidden="true"></span>
+{% endmacro %}
+
+{% macro infoTooltip(title) %}
+  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ _self.icon('info-circle') }}</abbr>
 {% endmacro %}
 
 {% macro dataGrid(dataGrid, noItemsMessage) %}

@@ -5,7 +5,7 @@
   <div class="sub-navigation hidden-xs">
     <div class="pages-tree">
       <div class="alert alert-warning visible-sm">
-        <p><span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.MovePagesNotPossible'|trans|ucfirst }}</p>
+        <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans|ucfirst }}</p>
       </div>
       <div id="tree">
         {{ tree|raw }}
@@ -38,7 +38,7 @@
       {% if showPagesAdd %}
         <div class="btn-group">
           <a type="button" href="{{ geturl('add') }}" class="btn btn-default pull-left">
-            <span class="fa fa-plus-square" aria-hidden="true"></span>
+            {{ macro.icon('plus-square') }}
             <span class="btn-text">{{ 'lbl.AddPage'|trans|ucfirst }}</span>
           </a>
           <button type="button" class="btn btn-default dropdown-toggle pull-left" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -121,7 +121,7 @@
                     <div class="col-md-6">
                       <div id="fallbackInfo">
                         <div class="alert alert-warning">
-                          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.FallbackInfo'|trans|raw }}
+                          {{ macro.icon('exclamation-triangle') }}{{ 'msg.FallbackInfo'|trans|raw }}
                         </div>
                       </div>
                     </div>
@@ -161,7 +161,7 @@
                   <div class="content-block content-block-pb">
                     <div class="content-title">
                       <p>{{ 'lbl.Drafts'|trans|ucfirst }}
-                        <abbr class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="{{ 'msg.HelpDrafts'|trans }}"></abbr>
+                        {{ macro.infoTooltip('msg.HelpDrafts'|trans) }}
                       </p>
                     </div>
                     <div class="table-responsive">
@@ -176,9 +176,7 @@
                 <div class="content-block">
                   <div class="content-title">
                     <p>{{ 'lbl.PreviousVersions'|trans|ucfirst }}
-                      <a href="#" class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans }}">
-                        <span class="sr-only">{{ 'msg.HelpRevisions'|trans }}</span>
-                      </a>
+                      {{ macro.infoTooltip('msg.HelpRevisions'|trans) }}
                     </p>
                   </div>
                   {% if revisions %}
@@ -342,18 +340,18 @@
         <div class="btn-group pull-left" role="group">
           {% if showPagesDelete and allowPagesDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o" aria-hidden="true"></span>
+              {{ macro.icon('trash-o') }}
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="saveAsDraft" class="btn btn-default">
-            <span class="fa fa-file-o" aria-hidden="true"></span>&nbsp;
+            {{ macro.icon('file-o') }}&nbsp;
             {{ 'lbl.SaveDraft'|trans|ucfirst }}
           </button>
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o" aria-hidden="true"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -364,7 +362,7 @@
     {% for position in positions %}
       {% for block in position.blocks %}
         <div class="alert alert-warning">
-          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.ContentSaveWarning'|trans }}
+          {{ macro.icon('exclamation-triangle') }}{{ 'msg.ContentSaveWarning'|trans }}
         </div>
         <div class="box contentBlock" style="margin: 0;">
           <div class="blockContent HTML optionsRTE">
@@ -396,7 +394,7 @@
   </div>
 
   {# Dialog to select the content (editor, module or widget). Do not change the ID! #}
-  <div class="modal fade" id="addBlock" role="dialog" aria-labelledby="addBlockTitle" tabindex="-1">
+  <div class="modal fade" id="addBlock" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addBlockTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -410,9 +408,9 @@
           <p>{{ 'msg.HelpBlockContent'|trans }}</p>
 
           <div id="extraWarningAlreadyBlock" class="alert alert-warning alert-xs">
-            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
+            {{ macro.icon('exclamation-triangle') }}{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
           <div id="extraWarningHomeNoBlock" class="alert alert-warning alert-xs">
-            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.HomeNoBlock'|trans }}</div>
+            {{ macro.icon('exclamation-triangle') }}{{ 'msg.HomeNoBlock'|trans }}</div>
           <br>
           <div class="form-group">
             <label for="extraType" class="control-label">{{ 'lbl.Type'|trans|ucfirst }}</label>
@@ -440,10 +438,10 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="addBlockSubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square" aria-hidden="true"></span>{{ 'lbl.Add'|trans|ucfirst }}
+            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -451,7 +449,7 @@
   </div>
 
   {# Dialog to select user templates #}
-  <div class="modal fade" id="addUserTemplate" role="dialog" aria-labelledby="addUserTemplateTitle" tabindex="-1">
+  <div class="modal fade" id="addUserTemplate" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addUserTemplateTitle">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -466,10 +464,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|capitalize }}
           </button>
           <button type="button" class="btn btn-primary js-submit-user-template">
-            <span class="fa fa-check" aria-hidden="true"></span>{{ 'lbl.OK'|trans|capitalize }}
+            {{ macro.icon('check') }}{{ 'lbl.OK'|trans|capitalize }}
           </button>
         </div>
       </div>
@@ -477,7 +475,7 @@
   </div>
 
   {# Dialog to select another template. Do not change the ID! #}
-  <div class="modal fade" id="changeTemplate" role="dialog" aria-labelledby="changeTemplateTitle" tabindex="-1">
+  <div class="modal fade" id="changeTemplate" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="changeTemplateTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -487,7 +485,8 @@
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.TemplateChangeWarning'|trans|raw }}</div>
+            {{ macro.icon('exclamation-triangle') }}{{ 'msg.TemplateChangeWarning'|trans|raw }}
+          </div>
           <div id="templateList">
             <div class="row">
               {% for template in templates %}
@@ -513,10 +512,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="changeTemplateSubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-check" aria-hidden="true"></span>{{ 'lbl.OK'|trans|ucfirst }}
+            {{ macro.icon('check') }}{{ 'lbl.OK'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -524,20 +523,20 @@
   </div>
 
   {# Dialog to confirm block removal. Do not change the ID! #}
-  <div class="modal fade" id="confirmDeleteBlock" role="dialog" aria-labelledby="confirmDeleteBlockBody" tabindex="-1">
+  <div class="modal fade" id="confirmDeleteBlock" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="confirmDeleteBlockTitle">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</h4>
         </div>
-        <div class="modal-body" id="confirmDeleteBlockBody">
+        <div class="modal-body">
           <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}</button>
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}</button>
           <button id="confirmDeleteBlockSubmit" type="button" class="btn btn-danger">
-            <span class="fa fa-trash" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -545,7 +544,7 @@
   </div>
 
   {# Text editor block #}
-  <div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="blockHtmlTitle" tabindex="-1">
+  <div class="modal fade" id="blockHtml" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="blockHtmlTitle">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -556,7 +555,7 @@
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>{{ 'msg.ContentSaveWarning'|trans|raw }}
+            {{ macro.icon('exclamation-triangle') }}{{ 'msg.ContentSaveWarning'|trans|raw }}
           </div>
           <br>
           <div class="form-group">
@@ -566,10 +565,10 @@
         </div>
         <div class="modal-footer">
           <button id="blockHtmlCancel" type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="blockHtmlSubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square" aria-hidden="true"></span>{{ 'lbl.Add'|trans|ucfirst }}
+            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -582,7 +581,7 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle" tabindex="-1">
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -593,10 +592,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash" aria-hidden="true"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           </div>
         </div>
