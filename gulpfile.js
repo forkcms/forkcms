@@ -28,13 +28,13 @@ gulp.task('build:backend:assets:copy-fonts-vendors', function () {
 })
 
 gulp.task('build:backend:assets:copy-ckeditor', function () {
-  var pluginFiles = '/**/*\.@(js|png|jpg|jpeg|gif|css|html|svg)'
+  var pluginFiles = '/**/*.@(js|png|jpg|jpeg|gif|css|html|svg)'
   return gulp.src(
     [
-      'node_modules/ckeditor/adapters/*\.js',
-      'node_modules/ckeditor/lang/*\.js',
-      'node_modules/ckeditor/plugins/icons\.png',
-      'node_modules/ckeditor/plugins/icons_hidpi\.png',
+      'node_modules/ckeditor/adapters/*.js',
+      'node_modules/ckeditor/lang/*.js',
+      'node_modules/ckeditor/plugins/icons.png',
+      'node_modules/ckeditor/plugins/icons_hidpi.png',
       'node_modules/ckeditor/plugins/clipboard' + pluginFiles,
       'node_modules/ckeditor/plugins/codemirror' + pluginFiles,
       'node_modules/ckeditor/plugins/colordialog' + pluginFiles,
@@ -58,11 +58,11 @@ gulp.task('build:backend:assets:copy-ckeditor', function () {
       'node_modules/ckeditor/plugins/uicolor' + pluginFiles,
       'node_modules/ckeditor/plugins/widget' + pluginFiles,
       'node_modules/ckeditor/plugins/wsc' + pluginFiles,
-      'node_modules/ckeditor/skins/moono-lisa/**/*\.@(css|png|gif)',
-      'node_modules/ckeditor/ckeditor\.js',
-      'node_modules/ckeditor/contents\.css',
-      'node_modules/ckeditor/styles\.js',
-      'node_modules/ckeditor/LICENSE\.md'
+      'node_modules/ckeditor/skins/moono-lisa/**/*.@(css|png|gif)',
+      'node_modules/ckeditor/ckeditor.js',
+      'node_modules/ckeditor/contents.css',
+      'node_modules/ckeditor/styles.js',
+      'node_modules/ckeditor/LICENSE.md'
     ],
     {base: 'node_modules/ckeditor'}
   ).pipe(gulp.dest('src/Backend/Core/Js/ckeditor'))
