@@ -11,8 +11,8 @@
 
 1. Make sure you have [composer](https://getcomposer.org/) installed.
 2. Run `composer create-project forkcms/forkcms .` in your document root.
-3. Browse to your website
-4. Follow the steps on-screen
+3. Browse to your website.
+4. Follow the steps on-screen.
 5. Have fun!
 
 ### Dependencies
@@ -36,7 +36,7 @@ If you want to activate https redirection, go into the .htaccess file and uncomm
 ## Bugs
 
 If you encounter any bugs, please create an issue on [Github](https://github.com/forkcms/forkcms/issues).
-If you're stuck or would like to discuss Fork CMS, talk to us on [slack](https://fork-cms.herokuapp.com/)!
+If you're stuck or would like to discuss Fork CMS, contact us on [slack](https://fork-cms.herokuapp.com/)!
 
 ## Running the tests
 
