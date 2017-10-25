@@ -4,6 +4,7 @@ namespace Backend\Core\Installer;
 
 use Backend\Core\Engine\Model;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
