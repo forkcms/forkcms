@@ -174,7 +174,7 @@ class Model extends \Common\Core\Model
             return [];
         }
 
-        if (!$allowHidden && (int) $pageRevision['id'] !== 404 && $pageRevision['hidden']) {
+        if (!$allowHidden && (int) $pageRevision['id'] !== self::ERROR_PAGE_ID && $pageRevision['hidden']) {
             throw new NotFoundHttpException('The requested page revision is not available');
         }
 
