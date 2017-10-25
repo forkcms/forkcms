@@ -26,13 +26,25 @@ class AddCategory extends BackendBaseActionAdd
     private function loadForm(): void
     {
         $this->form = new BackendForm('addCategory');
-        $this->form->addText('title', null, 255, 'form-control title', 'form-control danger title');
+        $this->form->addText('title', null, 255, 'form-control title', 'form-control danger title')->makeRequired();
 
         // meta
         $this->meta = new BackendMeta($this->form, null, 'title', true);
 
         // set callback for generating an unique URL
         $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getUrlForCategory');
+    }
+
+    protected function parse(): void
+    {
+        parent::parse();
+
+        // parse base url for preview
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
+        $url404 = BackendModel::getUrl(404);
+        if ($url404 !== $url) {
+            $this->template->assign('detailURL', SITE_URL . $url);
+        }
     }
 
     private function validateForm(): void

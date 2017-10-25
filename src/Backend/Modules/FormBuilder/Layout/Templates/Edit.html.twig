@@ -104,8 +104,8 @@
             <div class="row">
               <div class="col-md-12">
                 <p class="alert alert-warning alert-xs">
-                  <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ImportantImmediateUpdate'|trans|raw }}
-                  {% if recaptchaMissing %}<br><span class="fa fa-exclamation-triangle"></span>{{ 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw }}{% endif %}
+                  {{ macro.icon('exclamation-triangle') }}{{ 'msg.ImportantImmediateUpdate'|trans|raw }}
+                  {% if recaptchaMissing %}<br>{{ macro.icon('exclamation-triangle') }}{{ 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw }}{% endif %}
                 </p>
                 <br>
               </div>
@@ -142,9 +142,10 @@
                         </div>
                         <div class="col-md-4">
                           <div class="btn-group pull-right" role="group">
-                            <a href="#edit-{{ submitId }}" class="btn btn-default btn-second btn-icon-only jsFieldEdit" rel="{{ submitId }}" title="{{ 'lbl.Edit'|trans|ucfirst }}">
-                              <span class="fa fa-pencil fa-fw"></span>
-                            </a>
+                            <button class="btn btn-default btn-second btn-icon-only jsFieldEdit" data-field-id="{{ submitId }}">
+                              {{ macro.icon('pencil fa-fw') }}
+                              <span class="sr-only">{{ 'lbl.Edit'|trans|ucfirst }}</span>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -162,34 +163,34 @@
                   <div class="panel-body">
                     <div class="list-group first">
                       <h5>{{ 'lbl.FormElements'|trans|ucfirst }}</h5>
-                      <a id="textboxSelector" href="#textbox" rel="textboxDialog" class="list-group-item jsFieldDialogTrigger">
+                      <button id="textboxSelector" data-field-id="textboxDialog" class="list-group-item jsFieldDialogTrigger">
                         <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textbox.svg" alt="textbox">{{ 'lbl.Textbox'|trans|ucfirst }}
-                      </a>
-                      <a id="textareaSelector" href="#textarea" rel="textareaDialog" class="list-group-item jsFieldDialogTrigger">
+                      </button>
+                      <button id="textareaSelector" data-field-id="textareaDialog" class="list-group-item jsFieldDialogTrigger">
                         <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textarea.svg" alt="textarea">{{ 'lbl.Textarea'|trans|ucfirst }}
-                      </a>
-                      <a id="datetimeSelector" href="#datetime" rel="datetimeDialog" class="list-group-item jsFieldDialogTrigger">
+                      </button>
+                      <button id="datetimeSelector" data-field-id="datetimeDialog" class="list-group-item jsFieldDialogTrigger">
                         <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>{{ 'lbl.Datetime'|trans|ucfirst }}
-                      </a>
-                      <a id="dropdownSelector" href="#dropdown" rel="dropdownDialog" class="list-group-item jsFieldDialogTrigger">
+                      </button>
+                      <button id="dropdownSelector" data-field-id="dropdownDialog" class="list-group-item jsFieldDialogTrigger">
                         <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-dropdown.svg" alt="dropdown">{{ 'lbl.Dropdown'|trans|ucfirst }}
-                      </a>
-                      <a id="checkboxSelector" href="#checkbox" rel="checkboxDialog" class="list-group-item jsFieldDialogTrigger">
+                      </button>
+                      <button id="checkboxSelector" data-field-id="checkboxDialog" class="list-group-item jsFieldDialogTrigger">
                         <i class="fa fa-check-square fa-fw" aria-hidden="true"></i>{{ 'lbl.Checkbox'|trans|ucfirst }}
-                      </a>
-                      <a id="radiobuttonSelector" href="#radiobutton" rel="radiobuttonDialog" class="list-group-item jsFieldDialogTrigger">
+                      </button>
+                      <button id="radiobuttonSelector" data-field-id="radiobuttonDialog" class="list-group-item jsFieldDialogTrigger">
                         <i class="fa fa-dot-circle-o fa-fw" aria-hidden="true"></i>{{ 'lbl.Radiobutton'|trans|ucfirst }}
-                      </a>
-                      <a id="recaptchaSelector" href="#recaptcha" class="list-group-item jsRecaptchaTrigger">
+                      </button>
+                      <button id="recaptchaSelector" class="list-group-item jsRecaptchaTrigger">
                         <i class="fa fa-repeat fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
-                      </a>
+                      </button>
                     </div>
                     <div class="list-group">
                       <h5>{{ 'lbl.TextElements'|trans|ucfirst }}</h5>
-                      <a id="headingSelector" href="#heading" rel="headingDialog" class="list-group-item jsFieldDialogTrigger">
+                      <a id="headingSelector" href="#heading" data-field-id="headingDialog" class="list-group-item jsFieldDialogTrigger">
                         <i class="fa fa-header fa-fw" aria-hidden="true"></i>{{ 'lbl.Heading'|trans|ucfirst }}
                       </a>
-                      <a id="paragraphSelector" href="#paragraph" rel="paragraphDialog" class="list-group-item jsFieldDialogTrigger">
+                      <a id="paragraphSelector" href="#paragraph" data-field-id="paragraphDialog" class="list-group-item jsFieldDialogTrigger">
                         <i class="fa fa-paragraph fa-fw" aria-hidden="true"></i>{{ 'lbl.Paragraph'|trans|ucfirst }}
                       </a>
                     </div>
@@ -203,7 +204,7 @@
               <div class="col-md-12">
                 <label for="identifier" class="control-label">
                   {{ 'lbl.Identifier'|trans|ucfirst }}
-                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans|ucfirst }}"></abbr>
+                  {{ macro.infoTooltip('msg.HelpIdentifier'|trans|ucfirst) }}
                 </label>
                 {% form_field identifier %} {% form_field_error identifier %}
               </div>
@@ -219,14 +220,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showFormBuilderDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
+              {{ macro.icon('trash-o') }}
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -234,7 +235,7 @@
   </div>
   {# Dialog for a textbox #}
 
-  <div class="modal fade jsFieldDialog" id="textboxDialog" role="dialog" aria-labelledby="textboxDialogTitle">
+  <div class="modal fade jsFieldDialog" id="textboxDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="textboxDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -280,7 +281,7 @@
                       <li class="checkbox">
                         <label for="textboxReplyTo" class="control-label">
                           {% form_field textbox_reply_to %} {{ 'lbl.ReplyTo'|trans|ucfirst }}
-                          <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpReplyTo'|trans }}"></abbr>
+                          {{ macro.infoTooltip('msg.HelpReplyTo'|trans) }}
                         </label>
                       </li>
                     </ul>
@@ -362,10 +363,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="textboxDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -373,7 +374,7 @@
   </div>
 
   {# Dialog for a textarea #}
-  <div class="modal fade jsFieldDialog" id="textareaDialog" role="dialog" aria-labelledby="textareaDialogTitle">
+  <div class="modal fade jsFieldDialog" id="textareaDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="textareaDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -473,10 +474,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="textareaDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -484,7 +485,7 @@
   </div>
 
   {# Dialog for a datetime #}
-  <div class="modal fade jsFieldDialog" id="datetimeDialog" role="dialog" aria-labelledby="datetimeDialogTitle">
+  <div class="modal fade jsFieldDialog" id="datetimeDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="datetimeDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -581,10 +582,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="textareaDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -592,7 +593,7 @@
   </div>
 
   {# Dialog for a dropdown #}
-  <div class="modal fade jsFieldDialog" id="dropdownDialog" role="dialog" aria-labelledby="dropdownDialogTitle">
+  <div class="modal fade jsFieldDialog" id="dropdownDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="dropdownDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -672,10 +673,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="dropdownDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -683,7 +684,7 @@
   </div>
 
   {# Dialog for a radiobutton #}
-  <div class="modal fade jsFieldDialog" id="radiobuttonDialog" role="dialog" aria-labelledby="radiobuttonDialogTitle">
+  <div class="modal fade jsFieldDialog" id="radiobuttonDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="radiobuttonDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -762,10 +763,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="radiobuttonDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -773,7 +774,7 @@
   </div>
 
   {# Dialog for a checkbox #}
-  <div class="modal fade jsFieldDialog" id="checkboxDialog" role="dialog" aria-labelledby="checkboxDialogTitle">
+  <div class="modal fade jsFieldDialog" id="checkboxDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="checkboxDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -852,10 +853,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="checkboxDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -863,7 +864,7 @@
   </div>
 
   {# Dialog for the submit button #}
-  <div class="modal fade jsFieldDialog" id="submitDialog" role="dialog" aria-labelledby="submitDialogTitle">
+  <div class="modal fade jsFieldDialog" id="submitDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="submitDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -882,10 +883,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="submitDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -893,7 +894,7 @@
   </div>
 
   {# Dialog for a heading #}
-  <div class="modal fade jsFieldDialog" id="headingDialog" role="dialog" aria-labelledby="headingDialogTitle">
+  <div class="modal fade jsFieldDialog" id="headingDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="headingDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -912,10 +913,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="headingDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -923,7 +924,7 @@
   </div>
 
   {# Dialog for a paragraph #}
-  <div class="modal fade jsFieldDialog" id="paragraphDialog" role="dialog" aria-labelledby="paragraphDialogTitle">
+  <div class="modal fade jsFieldDialog" id="paragraphDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="paragraphDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -938,10 +939,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="paragraphDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -956,7 +957,7 @@
         {{ form_start(deleteForm) }}
         {{ form_row(deleteForm._token) }}
         {{ form_row(deleteForm.id) }}
-        <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+        <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -967,10 +968,10 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+                  {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
                 </button>
                 <button type="submit" class="btn btn-danger">
-                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+                  {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
                 </button>
               </div>
             </div>

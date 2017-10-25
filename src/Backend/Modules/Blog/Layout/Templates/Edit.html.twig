@@ -21,14 +21,14 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}</label>
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }} {{ macro.required }}</label>
         {% form_field title %} {% form_field_error title %}
         {% if detailURL %}
           <a class="site-url" href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
         {% endif %}
         {% if not detailURL %}
           <p class="alert alert-warning alert-xs">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+            {{ macro.icon('exclamation-triangle') }}{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
         {% endif %}
       </div>
     </div>
@@ -36,18 +36,18 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
+        <ul class="nav nav-tabs nav-tabs-flex" role="tablist">
+          <li role="presentation" class="active mr-auto">
             <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right" role="presentation">
-            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+          <li role="presentation">
+            <a href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right" role="presentation">
+          <li role="presentation">
             <a href="#tabComments" aria-controls="tabComments" role="tab" data-toggle="tab">{{ 'lbl.Comments'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right" role="presentation">
-            <a href="#tabVersions" aria-controls="tabVersions" role="tab" data-toggle="tab">{{ 'lbl.Versions'|trans|ucfirst }}</a>
+          <li role="presentation">
+            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -91,8 +91,9 @@
                 {% endif %}
                 <div class="panel panel-default panel-editor last">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.Summary'|trans|ucfirst }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr>
+                    <p>
+                      {{ 'lbl.Summary'|trans|ucfirst }}
+                      {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
                     </p>
                   </div>
                   <div class="panel-body">
@@ -159,7 +160,7 @@
                   <div class="content-block">
                     <div class="content-title">
                       <p>{{ 'lbl.Drafts'|trans|ucfirst }}
-                        <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpDrafts'|trans|ucfirst }}"></abbr>
+                        {{ macro.infoTooltip('msg.HelpDrafts'|trans|ucfirst) }}
                       </p>
                     </div>
                     {{ drafts|raw }}
@@ -169,7 +170,7 @@
                   <div class="content-title">
                     <p>
                       {{ 'lbl.PreviousVersions'|trans|ucfirst }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans|ucfirst }}"></abbr>
+                      {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
                     </p>
                   </div>
                   {% if revisions %}
@@ -208,23 +209,23 @@
         <div class="btn-group pull-left" role="group">
           {% if showBlogDelete %}
             <button type="button" class="btn btn-danger" id="blog-delete" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
+              {{ macro.icon('trash-o') }}
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <a href="#" id="saveAsDraft" class="btn btn-default">
-            <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
+            {{ macro.icon('file-o') }}{{ 'lbl.SaveDraft'|trans|ucfirst }}
           </a>
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-check"></span>{{ 'lbl.Publish'|trans|ucfirst }}
+            {{ macro.icon('check') }}{{ 'lbl.Publish'|trans|ucfirst }}
           </button>
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade" id="addCategoryDialog" role="dialog" aria-labelledby="addCategoryDialogTitle">
+  <div class="modal fade" id="addCategoryDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addCategoryDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -242,10 +243,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="addCategorySubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.AddCategory'|trans|ucfirst }}
+            {{ macro.icon('plus-square') }}{{ 'lbl.AddCategory'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -258,7 +259,7 @@
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
     {{ form_row(deleteForm.categoryId) }}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -269,10 +270,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           </div>
         </div>

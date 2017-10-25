@@ -46,7 +46,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->form = new BackendForm('editCategory');
 
         // create elements
-        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
+        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title')->makeRequired();
 
         // meta object
         $this->meta = new BackendMeta($this->form, $this->record['meta_id'], 'title', true);
@@ -66,6 +66,14 @@ class EditCategory extends BackendBaseActionEdit
             'allowBlogDeleteCategory',
             BackendBlogModel::deleteCategoryAllowed($this->id)
         );
+
+        // parse base url for preview
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Category');
+        $url404 = BackendModel::getUrl(404);
+        if ($url404 !== $url) {
+            $this->template->assign('detailURL', SITE_URL . $url);
+            $this->template->assign('categorySlug', $this->meta->getUrl());
+        }
     }
 
     private function validateForm(): void

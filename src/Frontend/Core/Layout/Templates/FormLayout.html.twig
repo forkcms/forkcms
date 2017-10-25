@@ -1,6 +1,7 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
 
 {%- block form_label -%}
+  {% import 'Core/Layout/Templates/Macros.html.twig' as macro %}
   {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) -%}
   {% if label is not same as(false) -%}
     {% if not compound -%}
@@ -21,9 +22,7 @@
     {%- endif -%}
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
       {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain)|capitalize }}
-      {%- if required -%}
-        <abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
-      {%- endif -%}
+      {%- if required -%}{{ macro.required }}{%- endif -%}
     </label>
   {%- endif -%}
 {%- endblock form_label -%}

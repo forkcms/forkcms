@@ -185,8 +185,8 @@ class Edit extends BackendBaseActionEdit
         $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
         // create elements
-        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
-        $this->form->addEditor('text', $this->record['text']);
+        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title')->makeRequired();
+        $this->form->addEditor('text', $this->record['text'])->makeRequired();
         $this->form->addEditor('introduction', $this->record['introduction']);
         $this->form->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
         $this->form->addCheckbox('allow_comments', $this->record['allow_comments']);
@@ -271,12 +271,10 @@ class Edit extends BackendBaseActionEdit
     {
         parent::parse();
 
-        // get url
-        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'detail');
+        // parse base url for preview
+        $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
         $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
-
-        // parse additional variables
-        if ($url404 != $url) {
+        if ($url404 !== $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }
 

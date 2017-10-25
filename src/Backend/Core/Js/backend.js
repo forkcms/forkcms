@@ -65,9 +65,11 @@ var jsBackend =
 
       $modals.on('shown.bs.modal', function () {
         $('#ajaxSpinner').addClass('light')
+        $(this).attr('aria-hidden', 'false')
       })
       $modals.on('hide.bs.modal', function () {
         $('#ajaxSpinner').removeClass('light')
+        $(this).attr('aria-hidden', 'true')
       })
     },
 
@@ -169,9 +171,20 @@ jsBackend.navigation = {
     var $navCollapse = $('.js-toggle-nav')
     var collapsed = $wrapper.hasClass('navigation-collapsed')
 
+    if ($wrapper.hasClass('navigation-collapsed')) {
+      $('.js-nav-screen-text').html(jsBackend.locale.lbl('OpenNavigation'))
+    } else {
+      $('.js-nav-screen-text').html(jsBackend.locale.lbl('CloseNavigation'))
+    }
+
     $navCollapse.on('click', function (e) {
       e.preventDefault()
       $wrapper.toggleClass('navigation-collapsed')
+      if ($wrapper.hasClass('navigation-collapsed')) {
+        $('.js-nav-screen-text').html(jsBackend.locale.lbl('OpenNavigation'))
+      } else {
+        $('.js-nav-screen-text').html(jsBackend.locale.lbl('CloseNavigation'))
+      }
       collapsed = !collapsed
       utils.cookies.setCookie('navigation-collapse', collapsed)
       setTimeout(function () {
@@ -364,10 +377,10 @@ jsBackend.ckeditor = {
     uploadUrl: '/src/Backend/Core/Js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
 
     // load some extra plugins
-    extraPlugins: 'stylesheetparser,mediaembed',
+    extraPlugins: 'stylesheetparser,templates,iframe,dialogadvtab',
 
     // remove useless plugins
-    removePlugins: 'a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools',
+    removePlugins: 'a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools,magicline',
 
     // templates
     templates_files: [],
@@ -1219,6 +1232,19 @@ jsBackend.forms = {
     jsBackend.forms.tagsInput()
     jsBackend.forms.meta()
     jsBackend.forms.datePicker()
+    jsBackend.forms.bootstrapTabFormValidation()
+  },
+
+  bootstrapTabFormValidation: function () {
+    $('.tab-pane input, .tab-pane textarea, .tab-pane select').on('invalid', function () {
+      var $invalidField = $(this)
+      // Find the tab-pane that this element is inside, and get the id
+      var invalidTabId = $invalidField.closest('.tab-pane').attr('id')
+
+      // Find the link that corresponds to the pane and have it show
+      $('a[href=#' + invalidTabId + '], [data-target=#' + invalidTabId + ']').tab('show')
+      $invalidField.focus()
+    })
   },
 
   meta: function () {
@@ -1812,9 +1838,9 @@ jsBackend.messages = {
         break
     }
 
-    var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
+    var html = '<div role="alert" id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
       '<div class="container-fluid">' +
-      '<i class="fa fa-' + icon + '"></i>' + ' ' +
+      '<i class="fa fa-' + icon + '" aria-hidden="true"></i>' + ' ' +
       content +
       '<button type="button" class="close" data-dismiss="alert" aria-label="' + utils.string.ucfirst(jsBackend.locale.lbl('Close')) + '">' +
       '<span aria-hidden="true" class="fa fa-close"></span>' +

@@ -4,6 +4,7 @@ namespace Backend\Modules\Analytics\GoogleClient;
 
 use Common\ModulesSettings;
 use Google_Service_Analytics;
+use Google_Service_Analytics_GaData;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -211,13 +212,11 @@ final class Connector
      */
     private function getMetrics(int $startDate, int $endDate): array
     {
-        $metrics = $this->getAnalyticsData(
+        return $this->getAnalyticsData(
             $startDate,
             $endDate,
             'ga:pageviews,ga:users,ga:pageviewsPerSession,ga:avgSessionDuration,ga:percentNewSessions,ga:bounceRate'
-        );
-
-        return $metrics['totalsForAllResults'];
+        )->getTotalsForAllResults();
     }
 
     /**
@@ -242,10 +241,10 @@ final class Connector
 
         // make sure our column headers are the metric names, not just numbers
         $namedRows = [];
-        foreach ((array) $visitGraphData['rows'] as $dataRow) {
+        foreach ((array) $visitGraphData->getRows() as $dataRow) {
             $namedRow = [];
             foreach ($dataRow as $key => $value) {
-                $headerName = $visitGraphData['columnHeaders'][$key]['name'];
+                $headerName = $visitGraphData->getColumnHeaders()[$key]['name'];
 
                 // convert the date to a timestamp
                 if ($headerName === 'ga:date') {
@@ -281,10 +280,10 @@ final class Connector
 
         // make sure our column headers are the metric names, not just numbers
         $namedRows = [];
-        foreach ((array) $sourceGraphData['rows'] as $dataRow) {
+        foreach ((array) $sourceGraphData->getRows() as $dataRow) {
             $namedRow = [];
             foreach ($dataRow as $key => $value) {
-                $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
+                $headerName = $sourceGraphData->getColumnHeaders()[$key]['name'];
                 $namedRow[str_replace(':', '_', $headerName)] = $value;
             }
             $namedRows[] = $namedRow;
@@ -316,10 +315,10 @@ final class Connector
 
         // make sure our column headers are the metric names, not just numbers
         $namedRows = [];
-        foreach ((array) $sourceGraphData['rows'] as $dataRow) {
+        foreach ((array) $sourceGraphData->getRows() as $dataRow) {
             $namedRow = [];
             foreach ($dataRow as $key => $value) {
-                $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
+                $headerName = $sourceGraphData->getColumnHeaders()[$key]['name'];
                 $namedRow[str_replace(':', '_', $headerName)] = $value;
             }
             $namedRows[] = $namedRow;
@@ -336,14 +335,14 @@ final class Connector
      * @param string $metrics A comma-separated list of Analytics metrics.
      * @param array $optParams Optional parameters.
      *
-     * @return array
+     * @return Google_Service_Analytics_GaData
      */
     private function getAnalyticsData(
         int $startDate,
         int $endDate,
         string $metrics,
         array $optParams = []
-    ): array {
+    ): Google_Service_Analytics_GaData {
         return $this->analytics->data_ga->get(
             'ga:' . $this->settings->get('Analytics', 'profile'),
             date('Y-m-d', $startDate),

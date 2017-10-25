@@ -2,6 +2,8 @@
 
 namespace Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints;
 
+use Frontend\Core\Engine\Model;
+use Frontend\Core\Language\Locale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -17,26 +19,19 @@ class EmailUnsubscriptionValidator extends ConstraintValidator
      */
     protected $subscriber;
 
-    /**
-     * Set subscriber - using a constructor didn't work.
-     *
-     * @param Subscriber $subscriber
-     */
-    public function setSubscriber(
-        Subscriber $subscriber
-    ): void {
+    public function setSubscriber(Subscriber $subscriber): void
+    {
         $this->subscriber = $subscriber;
     }
 
-    /**
-     * @param mixed $value
-     * @param Constraint $constraint
-     */
     public function validate($value, Constraint $constraint): void
     {
         try {
             // The email doesn't exists in the mailing list
-            if (!$this->subscriber->exists($value)) {
+            if (!$this->subscriber->exists(
+                $value,
+                Model::get('fork.settings')->get('Mailmotor', 'list_id_' . Locale::frontendLanguage())
+            )) {
                 $this->context->buildViolation($constraint->notExistsMessage)->addViolation();
             } elseif ($this->subscriber->isUnsubscribed($value)) {
                 $this->context->buildViolation($constraint->alreadyUnsubscribedMessage)->addViolation();

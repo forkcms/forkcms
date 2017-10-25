@@ -3,7 +3,7 @@
 namespace Backend\Core\Installer;
 
 use Backend\Core\Engine\Model;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -175,13 +175,7 @@ class ModuleInstaller
             );
         }
 
-        // invalidate the cache for search
-        $finder = new Finder();
-        $filesystem = new Filesystem();
-        foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
-            /** @var $file \SplFileInfo */
-            $filesystem->remove($file->getRealPath());
-        }
+        BackendSearchModel::invalidateCache();
     }
 
     /**
@@ -706,7 +700,11 @@ class ModuleInstaller
             $revision['type']
         );
         $revision['meta_id'] = $revision['meta_id'] ?? $this->getNewMetaId($meta, $revision['title']);
-
+        foreach ($this->getLanguages() as $language) {
+            if ($language !== $revision['language']) {
+                $revision['data']['hreflang_' . $language] = $revision['id'];
+            }
+        }
         if (!isset($revision['data']['image']) && $this->installExample()) {
             $revision['data']['image'] = $this->getAndCopyRandomImage();
         }

@@ -89,7 +89,7 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $value = (string) $value;
         $type = (string) $type;
-        $class = ($class !== null) ? (string) $class : 'btn btn-primary';
+        $class = (string) ($class ?? 'btn btn-primary');
 
         // do a check
         if ($type === 'submit' && $name === 'submit') {
@@ -132,8 +132,8 @@ class Form extends \SpoonForm
         $type = SpoonFilter::getValue($type, ['from', 'till', 'range'], 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
-        $class = ($class !== null) ? (string) $class : 'form-control fork-form-date inputDate';
-        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+        $class = (string) ($class ?? 'form-control fork-form-date inputDate');
+        $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // validate
         if ($type === 'from' && ($date === 0 || $date === null)) {
@@ -211,8 +211,8 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $checked = (bool) $checked;
-        $class = ($class !== null) ? (string) $class : 'fork-form-checkbox';
-        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+        $class = (string) ($class ?? 'fork-form-checkbox');
+        $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // create and return a checkbox
         $this->add(new CommonFormCheckbox($name, $checked, $class, $classError));
@@ -243,8 +243,8 @@ class Form extends \SpoonForm
     ): SpoonFormDropdown {
         $name = (string) $name;
         $multipleSelection = (bool) $multipleSelection;
-        $class = ($class !== null) ? (string) $class : 'form-control fork-form-select';
-        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+        $class = (string) ($class ?? 'form-control fork-form-select');
+        $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // special classes for multiple
         if ($multipleSelection) {
@@ -268,9 +268,8 @@ class Form extends \SpoonForm
     public function addMultiCheckbox($name, array $values, $checked = null, $class = null)
     {
         $name = (string) $name;
-        $values = (array) $values;
         $checked = ($checked !== null) ? (array) $checked : null;
-        $class = ($class !== null) ? (string) $class : 'fork-form-multi-checkbox';
+        $class = (string) ($class ?? 'fork-form-multi-checkbox');
 
         // create and return a multi checkbox
         return parent::addMultiCheckbox($name, $values, $checked, $class);
@@ -299,8 +298,8 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
-        $class = ($class !== null) ? (string) $class : 'form-control fork-form-password inputPassword';
-        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+        $class = (string) ($class ?? 'form-control fork-form-password inputPassword');
+        $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
         $HTML = (bool) $HTML;
 
         // create and return a password field
@@ -321,7 +320,7 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $checked = ($checked !== null) ? (string) $checked : null;
-        $class = ($class !== null) ? (string) $class : 'fork-form-radio';
+        $class = (string) ($class ?? 'fork-form-radio');
 
         // create and return a radio button
         return parent::addRadiobutton($name, $values, $checked, $class);
@@ -349,9 +348,9 @@ class Form extends \SpoonForm
     ): SpoonFormText {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
-        $maxLength = ($maxLength !== null) ? (int) $maxLength : 255;
-        $class = ($class !== null) ? (string) $class : 'form-control fork-form-text';
-        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+        $maxLength = (int) ($maxLength ?? 255);
+        $class = (string) ($class ?? 'form-control fork-form-text');
+        $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
         $HTML = (bool) $HTML;
 
         // create and return a textfield
@@ -378,8 +377,8 @@ class Form extends \SpoonForm
     ): SpoonFormTextarea {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
-        $class = ($class !== null) ? (string) $class : 'form-control fork-form-textarea';
-        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+        $class = (string) ($class ?? 'form-control fork-form-textarea');
+        $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
         $HTML = (bool) $HTML;
 
         // create and return a textarea
@@ -400,8 +399,8 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
-        $class = ($class !== null) ? (string) $class : 'form-control fork-form-time inputTime';
-        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+        $class = (string) ($class ?? 'form-control fork-form-time inputTime');
+        $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // create and return a time field
         return parent::addTime($name, $value, $class, $classError);

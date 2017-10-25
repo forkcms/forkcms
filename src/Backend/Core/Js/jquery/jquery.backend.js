@@ -151,7 +151,7 @@
 
       // append the button
       $(this).closest('.input-group input').after(
-        '        <a href="#" data-id="' + id + '" class="generatePasswordButton btn btn-default input-group-addon"><span>' + options.generateLabel + '</span></a>'
+        '        <span class="input-group-btn"><button data-id="' + id + '" class="generatePasswordButton btn btn-default" type="button"><span>' + options.generateLabel + '</span></button></span>'
       )
 
       $('.generatePasswordButton').live('click', generatePassword)
@@ -280,16 +280,15 @@
 (function ($) {
   $.fn.inlineTextEdit = function (options) {
     // define defaults
-    var defaults =
-      {
-        params: {},
-        current: {},
-        extraParams: {},
-        inputClasses: 'inputText',
-        allowEmpty: false,
-        tooltip: 'click to edit',
-        afterSave: null
-      }
+    var defaults = {
+      params: {},
+      current: {},
+      extraParams: {},
+      inputClasses: 'inputText',
+      allowEmpty: false,
+      tooltip: 'click to edit',
+      afterSave: null
+    }
 
     // extend options
     options = $.extend(defaults, options)
@@ -460,18 +459,17 @@
 (function ($) {
   $.fn.keyValueBox = function (options) {
     // define defaults
-    var defaults =
-      {
-        splitChar: ',',
-        secondSplitChar: '|',
-        emptyMessage: '',
-        errorMessage: 'Add the item before submitting',
-        addLabel: 'add',
-        removeLabel: 'delete',
-        params: {},
-        showIconOnly: true,
-        multiple: true
-      }
+    var defaults = {
+      splitChar: ',',
+      secondSplitChar: '|',
+      emptyMessage: '',
+      errorMessage: 'Add the item before submitting',
+      addLabel: 'add',
+      removeLabel: 'delete',
+      params: {},
+      showIconOnly: true,
+      multiple: true
+    }
 
     // extend options
     options = $.extend(defaults, options)
@@ -511,10 +509,10 @@
         '<div class="form-inline form-group keyValueWrapper">' +
         '    <div class="form-group input-group">' +
         '        <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '        <a href="#" id="addButton-' + id + '" class="btn btn-primary input-group-addon">' +
-        '           <span class="fa fa-plus-square"></span>' +
-        (options.showIconOnly ? '' : '            <span>' + options.addLabel + '</span>') +
-        '        </a>' +
+        '        <span class="input-group-btn"><button type="button" id="addButton-' + id + '" class="btn btn-primary">' +
+        '           <span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
+        '        </button></span>' +
         '   </div>' +
         '</div>' +
         '<div class="form-inline form-group">' +
@@ -681,7 +679,7 @@
           for (var i in elements) {
             var humanValue = elements[i].split(options.secondSplitChar)[1]
 
-            html += '    <li><span><strong>' + humanValue + '</strong>' + '        <a href="#" class="deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + '    </li>'
+            html += '    <li><span><strong>' + humanValue + '</strong>' + '        <button type="button" class="btn btn-danger deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</button></span>' + '    </li>'
           }
 
           // end html
@@ -732,18 +730,17 @@
 (function ($) {
   $.fn.tagsBox = function (options) {
     // define defaults
-    var defaults =
-      {
-        splitChar: ',',
-        emptyMessage: '',
-        errorMessage: 'Add the tag before submitting',
-        addLabel: 'add',
-        removeLabel: 'delete',
-        params: {},
-        canAddNew: false,
-        showIconOnly: true,
-        multiple: true
-      }
+    var defaults = {
+      splitChar: ',',
+      emptyMessage: '',
+      errorMessage: 'Add the tag before submitting',
+      addLabel: 'add',
+      removeLabel: 'delete',
+      params: {},
+      canAddNew: false,
+      showIconOnly: true,
+      multiple: true
+    }
 
     // extend options
     options = $.extend(defaults, options)
@@ -779,16 +776,14 @@
       })
 
       // build replace html
-      var html = '<div class="form-inline form-group tagsWrapper">' +
+      var html = '<div class="form-inline tagsWrapper">' +
         '    <div class="form-group input-group">' +
         '       <input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '       <a href="#" id="addButton-' + id + '" class="btn btn-default btn-second btn-xs input-group-addon">' +
-        '           <span class="fa fa-plus-square"></span>' +
-        (options.showIconOnly ? '' : '          <span>' + options.addLabel + '</span>') +
-        '       </a>' +
+        '       <span class="input-group-btn"><button type="button" id="addButton-' + id + '" class="btn btn-default">' +
+        '           <span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '           <span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
+        '       </button></span>' +
         '   </div>' +
-        '</div>' +
-        '<div class="form-inline form-group">' +
         '    <div id="elementList-' + id + '" class="form-group tagList">' +
         '    </div>' +
         '</div>'
@@ -882,7 +877,7 @@
       })
 
       // bind click on delete-button
-      $('.deleteButton-' + id).live('click', function (e) {
+      $('#elementList-' + id).on('click', '.deleteButton-' + id, function (e) {
         // dont submit
         e.preventDefault()
         e.stopPropagation()
@@ -947,7 +942,7 @@
             var value = utils.string.stripForTag(elements[i])
 
             html += '    <li class="list-group-item">' +
-              '        <a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash"></span></a></span>' +
+              '        <button type="button" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash" aria-hidden="true"></span></button></span>' +
               '       <span><strong>' + value + '</strong>' +
               '    </li>'
           }
@@ -1000,17 +995,16 @@
 (function ($) {
   $.fn.multipleSelectbox = function (options) {
     // define defaults
-    var defaults =
-      {
-        splitChar: ',',
-        emptyMessage: '',
-        addLabel: 'add',
-        removeLabel: 'delete',
-        showIconOnly: false,
-        afterAdd: null,
-        afterBuild: null,
-        maxItems: null
-      }
+    var defaults = {
+      splitChar: ',',
+      emptyMessage: '',
+      addLabel: 'add',
+      removeLabel: 'delete',
+      showIconOnly: false,
+      afterAdd: null,
+      afterBuild: null,
+      maxItems: null
+    }
 
     // extend options
     options = $.extend(defaults, options)
@@ -1036,24 +1030,18 @@
       // build replace html
       var html = '<div class="multipleSelectWrapper">' +
         '    <div id="elementList-' + id + '" class="multipleSelectList">' + '    </div>' +
-        '    <div class="oneLiner">' +
-        '        <p>' +
-        '            <select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">'
-
+        '    <div class="input-group">' +
+        '        <select size="1" class="form-control select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">'
       for (var i = 0; i < possibleOptions.length; i++) {
-        html += '                <option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>'
+        html += '            <option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>'
       }
 
-      html += '            </select>' +
-        '        </p>' +
-        '        <div class="buttonHolder">' +
-        '            <a href="#" id="addButton-' + id + '" class="button icon iconAdd'
-
-      if (options.showIconOnly) html += ' iconOnly'
-
-      html += '">' +
-        '                <span>' + options.addLabel + '</span>' +
-        '            </a>' +
+      html += '        </select>' +
+        '        <div class="input-group-btn">' +
+        '            <button id="addButton-' + id + '" class="btn btn-success">' +
+        '                <span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '                <span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
+        '            </button>' +
         '        </div>' +
         '    </div>' +
         '</div>'
@@ -1137,21 +1125,19 @@
           html = '<p class="helpTxt">' + options.emptyMessage + '</p>'
         } else {
           // start html
-          html = '<ul>'
+          html = '<ul class="list-group">'
 
           // loop elements
           for (var i in elements) {
-            html += '    <li class="oneLiner">' +
-              '        <p><span style="width: ' + $('#' + id).width() + 'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' +
-              '        <div class="buttonHolder">' +
-              '            <a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
-              '                <span>' + options.removeLabel + '</span></a>' +
-              '            </a>' +
-              '        </div>' +
+            html += '    <li class="list-group-item">' +
+              '        <button class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+              '            <span class="fa fa-trash" aria-hidden="true"></span><span class="sr-only">' + options.removeLabel + '</span>' +
+              '        </button>' +
+              '        <span><strong>' + $('#' + id + ' option[value="' + elements[i] + '"]').html() + '</strong></span>' +
               '    </li>'
 
             // remove from dropdown
-            $('#addValue-' + id + ' option[value=' + elements[i] + ']').prop('disabled', true)
+            $('#addValue-' + id + ' option[value="' + elements[i] + '"]').prop('disabled', true)
           }
 
           // end html
@@ -1181,6 +1167,10 @@
         var elements = []
         var value = ''
 
+        if (!Array.isArray(chunks)) {
+          chunks = [chunks]
+        }
+
         // loop elements and trim them from spaces
         for (var i in chunks) {
           value = chunks[i].replace(/^\s+|\s+$/g, '')
@@ -1201,7 +1191,7 @@
         // set new value
         $('#' + id).val(elements)
 
-        $('#addValue-' + id + ' option[value=' + value + ']').prop('disabled', false)
+        $('#addValue-' + id + ' option[value="' + value + '"]').prop('disabled', false)
 
         // rebuild element list
         build()
@@ -1256,10 +1246,10 @@
         '</div>' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '<a href="#" id="addButton-' + id + '" class="btn btn-default btn-second input-group-addon">' +
-        '<span class="fa fa-plus-square"></span>' +
-        (options.showIconOnly ? '' : '<span>' + options.addLabel + '</span>') +
-        '</a>' +
+        '<span class="input-group-btn"><button id="addButton-' + id + '" class="btn btn-success">' +
+        '<span class="fa fa-plus-square" aria-hidden="true"></span>' +
+        '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
+        '</button></span>' +
         '</div>' +
         '</div>'
 
@@ -1431,17 +1421,17 @@
           html = '<p class="helpTxt">' + options.emptyMessage + '</p>'
         } else {
           // start html
-          html = '<ul class="list-unstyled">'
+          html = '<ul class="list-group">'
 
           // loop elements
           for (var i in elements) {
-            html += '    <li class="form-group input-group">' +
+            html += '    <li class="list-group-item"><div class="input-group">' +
               '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
-              '        <a href="#" class="btn btn-danger input-group-addon deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
-              '           <span class="fa fa-trash"></span>' +
+              '        <span class="input-group-btn"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+              '           <span class="fa fa-trash" aria-hidden="true"></span>' +
               '            <span>' + options.removeLabel + '</span>' +
-              '        </a>' +
-              '    </li>'
+              '        </button></span>' +
+              '    </div></li>'
           }
 
           // end html

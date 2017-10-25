@@ -5,6 +5,7 @@ namespace Frontend\Modules\Mailmotor\Domain\Subscription;
 use Common\ModulesSettings;
 use DateTime;
 use Frontend\Core\Engine\Navigation;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
@@ -34,10 +35,8 @@ class SubscribeType extends AbstractType
      */
     protected $subscriber;
 
-    public function __construct(
-        Subscriber $subscriber,
-        ModulesSettings $modulesSettings
-    ) {
+    public function __construct(Subscriber $subscriber, ModulesSettings $modulesSettings)
+    {
         $this->subscriber = $subscriber;
         $this->modulesSettings = $modulesSettings;
         $this->interests = $this->getInterests();
@@ -55,7 +54,7 @@ class SubscribeType extends AbstractType
                 'required' => true,
                 'label' => 'lbl.Email',
                 'attr' => [
-                    'placeholder' => ucfirst(Language::lbl('YourEmail')),
+                    'placeholder' => \SpoonFilter::ucfirst(Language::lbl('YourEmail')),
                 ],
             ]
         );
@@ -76,7 +75,7 @@ class SubscribeType extends AbstractType
             'subscribe',
             SubmitType::class,
             [
-                'label' => 'lbl.Subscribe',
+                'label' => \SpoonFilter::ucfirst(Language::lbl('Subscribe')),
             ]
         );
     }
@@ -103,14 +102,15 @@ class SubscribeType extends AbstractType
                 return $mailMotorInterests;
             }
 
-            $mailMotorInterests = $this->subscriber->getInterests();
+            $mailMotorInterests = $this->subscriber->getInterests(
+                $this->modulesSettings->get('Mailmotor', 'list_id_' . Locale::frontendLanguage())
+            );
 
             // Has interests
             if (empty($mailMotorInterests) || !is_array($mailMotorInterests)) {
                 return $interests;
             }
 
-            // Loop interests
             foreach ($mailMotorInterests as $categoryId => $categoryInterest) {
                 if (empty($categoryInterest['children']) || !is_array($categoryInterest['children'])) {
                     continue;

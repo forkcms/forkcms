@@ -133,8 +133,8 @@ jsBackend.pages.extras = {
     $('#extraModule').on('change', jsBackend.pages.extras.populateExtraIds)
 
     // bind buttons
-    $(document).on('click', 'a.addBlock', jsBackend.pages.extras.showAddDialog)
-    $(document).on('click', 'a.deleteBlock', jsBackend.pages.extras.showDeleteDialog)
+    $(document).on('click', 'button.addBlock', jsBackend.pages.extras.showAddDialog)
+    $(document).on('click', 'button.deleteBlock', jsBackend.pages.extras.showDeleteDialog)
     $(document).on('click', '.showEditor', jsBackend.pages.extras.editContent)
     $(document).on('click', '.editUserTemplate', jsBackend.pages.extras.editUserTemplate)
     $(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility)
@@ -267,12 +267,12 @@ jsBackend.pages.extras = {
 
     // create html to be appended in template-view
     var blockHTML = '<div class="templatePositionCurrentType' + (visible ? ' ' : ' templateDisabled') + '" data-block-id="' + index + '">' +
-      '<span class="templateTitle">' + title + '</span>' +
+      '<span class="templateTitle" id="templateTitle' + index + '">' + title + '</span>' +
       '<span class="templateDescription">' + description + '</span>' +
       '<div class="btn-group buttonHolder">' +
-      '<a href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '"></span></a>' +
-      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil"></span></a>' +
-      '<a href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o"></span></a>' +
+      '<button href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-labelledby="ViewBlockText' + index + ' templateTitle' + index + '"></span><span class="sr-only" id="ViewBlockText' + index + '">' + jsBackend.locale.lbl('View') + '</span></span></button>' +
+      '<button href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + ' aria-labelledby="EditBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-pencil"></span><span class="sr-only" id="EditBlockText' + index + '">' + jsBackend.locale.lbl('EditBlock') + '</span></button>' +
+      '<button href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs" aria-labelledby="DeleteBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-trash-o"></span><span class="sr-only" id="DeleteBlockText' + index + '">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
       '</div>' +
       '</div>'
 
