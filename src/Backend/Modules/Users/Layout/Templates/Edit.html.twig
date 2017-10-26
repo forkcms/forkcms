@@ -123,10 +123,10 @@
               {% if showPasswordStrength %}
                 <div class="row">
                   <div class="col-md-12">
-                    <div class="content-block">
-                      <div class="content-title">
-                        <p>{{ 'lbl.CurrentPassword'|trans|ucfirst }}</p>
-                      </div>
+                    <fieldset>
+                      <legend>
+                        {{ 'lbl.CurrentPassword'|trans|ucfirst }}
+                      </legend>
                       <div class="form-group">
                         <label>{{ 'lbl.PasswordStrength'|trans|ucfirst }}:</label>
                       <span class="strength strength-{{ record.settings.password_strength }}">
@@ -135,17 +135,16 @@
                         </span>
                       </span>
                       </div>
-                    </div>
-
+                    </fieldset>
                   </div>
                 </div>
               {% endif %}
               <div class="row">
                 <div class="col-md-12">
-                  <div class="content-block">
-                    <div class="content-title">
-                      <p>{{ 'lbl.ChangePassword'|trans|ucfirst }}</p>
-                    </div>
+                  <fieldset class="last">
+                    <legend>
+                      {{ 'lbl.ChangePassword'|trans|ucfirst }}
+                    </legend>
                     <div class="form-group">
                       <label for="newPassword" class="control-label">
                         {{ 'lbl.Password'|trans|ucfirst }}
@@ -189,7 +188,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </fieldset>
                 </div>
               </div>
             </div>
@@ -219,22 +218,22 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="content-block">
-                  <div class="content-title">
-                    <p>{{ 'lbl.CSV'|trans|ucfirst }}</p>
+                <fieldset class="last">
+                  <legend>{{ 'lbl.CSV'|trans|ucfirst }}</legend>
+                  <div class="content-block">
+                    <div class="form-group">
+                      <label for="csvSplitCharacter" class="control-label">{{ 'lbl.SplitCharacter'|trans|ucfirst }}</label>
+                      {% form_field csv_split_character %} {% form_field_error csv_split_character %}
+                    </div>
+                    <div class="form-group last">
+                      <label for="csvLineEnding" class="control-label">{{ 'lbl.LineEnding'|trans|ucfirst }}</label>
+                      {% form_field csv_line_ending %} {% form_field_error csv_line_ending %}
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="csvSplitCharacter" class="control-label">{{ 'lbl.SplitCharacter'|trans|ucfirst }}</label>
-                    {% form_field csv_split_character %} {% form_field_error csv_split_character %}
-                  </div>
-                  <div class="form-group last">
-                    <label for="csvLineEnding" class="control-label">{{ 'lbl.LineEnding'|trans|ucfirst }}</label>
-                    {% form_field csv_line_ending %} {% form_field_error csv_line_ending %}
-                  </div>
-                </div>
-
+                </fieldset>
               </div>
             </div>
+
           </div>
           {% if allowUserRights %}
             <div role="tabpanel" class="tab-pane" id="tabPermissions">
