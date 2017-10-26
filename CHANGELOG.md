@@ -1,3 +1,23 @@
+5.0.6  (2017-10-18)
+------------------
+
+Bugfixes:
+* Core: Fix tests when site.multilanguage is false [#2322](https://github.com/forkcms/forkcms/pull/2322)
+* Core: Fix bootstrap tabs html5 form validation [#2319](https://github.com/forkcms/forkcms/pull/2319)
+* Core: Fix sessions in the console [#2301](https://github.com/forkcms/forkcms/pull/2301)
+* Core: Set a minimum font size on the body for the backend editors [#2326](https://github.com/forkcms/forkcms/pull/2326)
+* Core: Fix labels in seo tab [#2325](https://github.com/forkcms/forkcms/pull/2325)
+* Analytics: Fix google analytics [#2317](https://github.com/forkcms/forkcms/pull/2317)
+* Blog: Fix preview url blog categories [#2330](https://github.com/forkcms/forkcms/pull/2330)
+* Installer: Properly fix the form template in the installer [#2323](https://github.com/forkcms/forkcms/pull/2323)
+* Mailmotor: Mailmotor SubscribeType/UnsubscribeType: ucfirst was missing in label [#2321](https://github.com/forkcms/forkcms/pull/2321)
+* Pages: Fetch the page data from the database and assign it to the pages in navigation [#2313](https://github.com/forkcms/forkcms/pull/2313)
+* Pages: Fix dropdown styling when adding a page block [#2333](https://github.com/forkcms/forkcms/pull/2333)
+* Search: Bad url on livesuggest paging numbers [#2328](https://github.com/forkcms/forkcms/pull/2328)
+
+Improvements:
+* Core: Add a comment to clarify where custom Symfony routes should be placed [#2315](https://github.com/forkcms/forkcms/pull/2315)
+
 5.0.5  (2017-10-09)
 ------------------
 
