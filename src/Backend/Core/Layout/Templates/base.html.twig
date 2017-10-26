@@ -54,7 +54,7 @@
 </div>
 
 <div class="hidden">
-  <div class="modal fade jsConfirmation" role="dialog" aria-labelledby="jsConfirmationDeleteDialogTitle">
+  <div class="modal fade jsConfirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="jsConfirmationDeleteDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -65,16 +65,17 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times" aria-hidden="true"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <a href="#" class="btn btn-primary jsConfirmationSubmit">
-            <span class="fa fa-check" aria-hidden="true"></span>{{ 'lbl.OK'|trans|ucfirst }}
+            {{ macro.icon('check') }}{{ 'lbl.OK'|trans|ucfirst }}
           </a>
         </div>
       </div>
     </div>
   </div>
   {# Scripts should be placed here #}
+  <script src="/js/vendors/bootstrap-accessibility.min.js"></script>
 </div>
 </body>
 </html>

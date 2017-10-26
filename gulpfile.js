@@ -14,7 +14,8 @@ gulp.task('build:backend:assets:copy-css-vendors', function () {
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css',
     'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.standalone.min.css',
-    'node_modules/cropper/dist/cropper.css'
+    'node_modules/cropper/dist/cropper.css',
+    'node_modules/bootstrap-accessibility-plugin/plugins/css/bootstrap-accessibility.css'
   ])
   .pipe(gulp.dest('./css/vendors'))
 })
@@ -26,14 +27,14 @@ gulp.task('build:backend:assets:copy-fonts-vendors', function () {
   .pipe(gulp.dest('fonts/vendors'))
 })
 
-gulp.task('build:backend:assets:copy-ckeditor', function() {
-  var pluginFiles = '/**/*\.@(js|png|jpg|jpeg|gif|css|html|svg)';
+gulp.task('build:backend:assets:copy-ckeditor', function () {
+  var pluginFiles = '/**/*.@(js|png|jpg|jpeg|gif|css|html|svg)'
   return gulp.src(
     [
-      'node_modules/ckeditor/adapters/*\.js',
-      'node_modules/ckeditor/lang/*\.js',
-      'node_modules/ckeditor/plugins/icons\.png',
-      'node_modules/ckeditor/plugins/icons_hidpi\.png',
+      'node_modules/ckeditor/adapters/*.js',
+      'node_modules/ckeditor/lang/*.js',
+      'node_modules/ckeditor/plugins/icons.png',
+      'node_modules/ckeditor/plugins/icons_hidpi.png',
       'node_modules/ckeditor/plugins/clipboard' + pluginFiles,
       'node_modules/ckeditor/plugins/codemirror' + pluginFiles,
       'node_modules/ckeditor/plugins/colordialog' + pluginFiles,
@@ -58,11 +59,11 @@ gulp.task('build:backend:assets:copy-ckeditor', function() {
       'node_modules/ckeditor/plugins/widget' + pluginFiles,
       'node_modules/ckeditor/plugins/wsc' + pluginFiles,
       'node_modules/ckeditor/plugins/lineutils' + pluginFiles,
-      'node_modules/ckeditor/skins/moono-lisa/**/*\.@(css|png|gif)',
-      'node_modules/ckeditor/ckeditor\.js',
-      'node_modules/ckeditor/contents\.css',
-      'node_modules/ckeditor/styles\.js',
-      'node_modules/ckeditor/LICENSE\.md'
+      'node_modules/ckeditor/skins/moono-lisa/**/*.@(css|png|gif)',
+      'node_modules/ckeditor/ckeditor.js',
+      'node_modules/ckeditor/contents.css',
+      'node_modules/ckeditor/styles.js',
+      'node_modules/ckeditor/LICENSE.md'
     ],
     {base: 'node_modules/ckeditor'}
   ).pipe(gulp.dest('src/Backend/Core/Js/ckeditor'))
@@ -94,7 +95,8 @@ gulp.task('build:backend:assets:copy-js-vendors', function () {
     'node_modules/fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min.js',
     'node_modules/simple-ajax-uploader/SimpleAjaxUploader.min.js',
     'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
-    'node_modules/cropper/dist/cropper.js'
+    'node_modules/cropper/dist/cropper.js',
+    'node_modules/bootstrap-accessibility-plugin/plugins/js/bootstrap-accessibility.min.js'
   ])
   .pipe(gulp.dest('js/vendors'))
 })

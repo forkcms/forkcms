@@ -202,7 +202,7 @@
     {% if form.parent %}<span class="help-block errorMessage">{% else %}<div class="alert alert-danger errorMessage">{% endif %}
     <ul class="list-unstyled">
 {%- for error in errors -%}
-  <li><span class="fa fa-exclamation-circle"></span> {{ error.message }}</li>
+  <li><span class="fa fa-exclamation-circle" aria-hidden="true"></span> {{ error.message }}</li>
 {%- endfor -%}
 </ul>
     {% if form.parent %}</span>{% else %}</div>{% endif %}

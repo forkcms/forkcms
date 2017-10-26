@@ -65,9 +65,11 @@ var jsBackend =
 
       $modals.on('shown.bs.modal', function () {
         $('#ajaxSpinner').addClass('light')
+        $(this).attr('aria-hidden', 'false')
       })
       $modals.on('hide.bs.modal', function () {
         $('#ajaxSpinner').removeClass('light')
+        $(this).attr('aria-hidden', 'true')
       })
     },
 
@@ -603,34 +605,28 @@ jsBackend.controls = {
     var $checkboxDropdownCombo = $('.jsCheckboxDropdownCombo')
 
     $checkboxDropdownCombo.each(function () {
-      // variables
       var $this = $(this)
+      var multiple = !!$this.data('multiple') || false
 
-      // check if needed element exists
       if ($this.find('input:checkbox').length > 0 && $this.find('select').length > 0) {
-        // variables
-        var $checkbox = $this.find('input:checkbox').eq(0)
-        var $dropdown = $this.find('select').eq(0)
-
-        $checkbox.on('change', function (e) {
-          // variables
+        $this.find('input:checkbox').eq(0).on('change', function (e) {
           var $combo = $(this).parents().filter($checkboxDropdownCombo)
-          var $field = $($combo.find('select')[0])
+          var $field = $($combo.find('select'))
+          if (!multiple) {
+            $field = $field.eq(0)
+          }
           var $this = $(this)
 
           if ($this.is(':checked')) {
             $field.removeClass('disabled').prop('disabled', false)
-            $field.focus()
-          } else {
-            $field.addClass('disabled').prop('disabled', true)
-          }
-        })
+            var $focusDropdown = ((!multiple) ? $field : $field.eq(0))
+            $focusDropdown.focus()
 
-        if ($checkbox.is(':checked')) {
-          $dropdown.removeClass('disabled').prop('disabled', false)
-        } else {
-          $dropdown.addClass('disabled').prop('disabled', true)
-        }
+            return
+          }
+
+          $field.addClass('disabled').prop('disabled', true)
+        }).trigger('change')
       }
     })
   },
@@ -1842,7 +1838,7 @@ jsBackend.messages = {
         break
     }
 
-    var html = '<div id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
+    var html = '<div role="alert" id="' + uniqueId + '" class="alert-main alert alert-' + type + ' ' + optionalClass + ' alert-dismissible formMessage ' + type + 'Message">' +
       '<div class="container-fluid">' +
       '<i class="fa fa-' + icon + '" aria-hidden="true"></i>' + ' ' +
       content +

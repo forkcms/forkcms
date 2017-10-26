@@ -230,6 +230,10 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
+bootstrap-accessibility-plugin@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/bootstrap-accessibility-plugin/-/bootstrap-accessibility-plugin-1.0.5.tgz#5487ae5e07b3d870fbba6982e6339e163459b6bd"
+
 bootstrap-datepicker@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/bootstrap-datepicker/-/bootstrap-datepicker-1.7.0.tgz#d639be3fcade88bc9e6f16ef7e227e50580b7668"

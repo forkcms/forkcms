@@ -131,7 +131,7 @@ class DataGridFunctions
         // get the time ago as a string
         $timeAgo = SpoonDate::getTimeAgo($timestamp, BackendLanguage::getInterfaceLanguage(), $format);
 
-        return '<time data-toggle="tooltip" datetime="'
+        return '<time tabindex="0" data-toggle="tooltip" datetime="'
                . SpoonDate::getDate('Y-m-d H:i:s', $timestamp)
                . '" title="' . SpoonDate::getDate($format, $timestamp, BackendLanguage::getInterfaceLanguage())
                . '">' . $timeAgo . '</time>';

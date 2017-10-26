@@ -126,7 +126,7 @@ jsBackend.FormBuilder.Fields = {
       e.preventDefault()
 
       // get id
-      var id = $(this).attr('rel')
+      var id = $(this).attr('data-field-id')
 
       // only when set
       if (id !== '') {
@@ -288,7 +288,7 @@ jsBackend.FormBuilder.Fields = {
       e.preventDefault()
 
       // get id
-      var id = $(this).attr('rel')
+      var id = $(this).attr('data-field-id')
 
       // bind
       if (id !== '') {
@@ -377,7 +377,7 @@ jsBackend.FormBuilder.Fields = {
       jsBackend.FormBuilder.Fields.lockEditRequest = true
 
       // get id
-      var id = $(this).attr('rel')
+      var id = $(this).attr('data-field-id')
 
       // only when set
       if (id !== '') {
