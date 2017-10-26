@@ -145,3 +145,23 @@ select[size="1"] {
     width: 25%;
   }
 }
+
+fieldset {
+  border-bottom: 1px solid $gray-lighter;
+  margin-bottom: 15px;
+
+  legend {
+    border: 0;
+    font-size: $font-size-large;
+    margin-bottom: 15px;
+
+    .help-block {
+      margin: 0;
+    }
+  }
+
+  &.last {
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
+}

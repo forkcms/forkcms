@@ -17,11 +17,11 @@
         </div>
         <div class="panel-body">
         {% if isGod %}
-          <div class="content-block">
-            <div class="content-title">
-              <p>{{ 'lbl.SendingEmails'|trans|ucfirst }}</p>
+          <fieldset>
+            <legend>
+              {{ 'lbl.SendingEmails'|trans|ucfirst }}
               <p class="help-block">{{ 'msg.HelpSendingEmails'|trans }}</p>
-            </div>
+            </legend>
             <div class="form-inline">
               <small>
                 <div class="form-group">
@@ -36,13 +36,13 @@
                 <span id="testEmailConnectionSuccess" style="display: none;" class="alert alert-success">{{ 'msg.TestWasSent'|trans }}</span>
               </small>
             </div>
-          </div>
+          </fieldset>
           {% endif %}
-          <div class="content-block">
-            <div class="content-title">
-              <p>{{ 'lbl.From'|trans|ucfirst }}</p>
+          <fieldset>
+            <legend>
+              {{ 'lbl.From'|trans|ucfirst }}
               <p class="help-block">{{ 'msg.HelpEmailFrom'|trans }}</p>
-            </div>
+            </legend>
             <div class="form-group">
               <label for="mailerFromName" class="control-label">
                 {{ 'lbl.Name'|trans|ucfirst }}
@@ -57,12 +57,12 @@
               </label>
               {% form_field mailer_from_email %} {% form_field_error mailer_from_email %}
             </div>
-          </div>
-          <div class="content-block">
-            <div class="content-title">
-              <p>{{ 'lbl.To'|trans|ucfirst }}</p>
+          </fieldset>
+          <fieldset>
+            <legend>
+              {{ 'lbl.To'|trans|ucfirst }}
               <p class="help-block">{{ 'msg.HelpEmailTo'|trans }}</p>
-            </div>
+            </legend>
             <div class="form-group">
               <label for="mailerToName" class="control-label">
                 {{ 'lbl.Name'|trans|ucfirst }}
@@ -77,11 +77,11 @@
               </label>
               {% form_field mailer_to_email %} {% form_field_error mailer_to_email %}
             </div>
-          </div>
-          <div class="content-block">
-            <div class="content-title">
-              <p>{{ 'lbl.ReplyTo'|trans|ucfirst }}</p>
-            </div>
+          </fieldset>
+          <fieldset class="last">
+            <legend>
+              {{ 'lbl.ReplyTo'|trans|ucfirst }}
+            </legend>
             <div class="form-group">
               <label for="mailerReplyToName" class="control-label">
                 {{ 'lbl.Name'|trans|ucfirst }}
@@ -96,7 +96,7 @@
               </label>
               {% form_field mailer_reply_to_email %} {% form_field_error mailer_reply_to_email %}
             </div>
-          </div>
+          </fieldset>
         </div>
       </div>
     </div>
