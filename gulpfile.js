@@ -92,8 +92,7 @@ gulp.task("build:backend", function() {
 gulp.task("serve:backend", function() {
   livereload.listen();
   gulp.watch([
-        "src/Backend/Core/Layout/Sass/screen.scss",
-        "src/Backend/Core/Layout/Sass/debug.scss",
+        "src/Backend/Core/Layout/Sass/**/*.scss"
       ],
       ["build:backend:sass:generate-css"]
   );
