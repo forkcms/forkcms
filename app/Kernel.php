@@ -69,7 +69,7 @@ abstract class Kernel extends BaseKernel
     }
 
     /**
-     * This will disappear in time in favour of container-driven parameters.
+     * This will disappear in time in favor of container-driven parameters.
      *
      * @deprecated
      */
