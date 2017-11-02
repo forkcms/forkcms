@@ -17,7 +17,6 @@ CKEDITOR.plugins.add(
                 'ForkLink',
                 {
                     command: 'addLink',
-                    icon: this.path + 'icons/link.png',
                     label: 'Insert Link',
                     toolbar: 'insert,0'
                 }
@@ -27,7 +26,6 @@ CKEDITOR.plugins.add(
                 'ForkImage',
                 {
                     command: 'addImage',
-                    // icon: this.path + 'icons/image.png',
                     label: 'Insert Image',
                     toolbar: 'insert,0'
                 }
