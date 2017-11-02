@@ -1,8 +1,8 @@
 <p><strong>Deze website is eigendom van [Bedrijfsnaam].</strong></p>
 <p><strong>Contactgegevens:</strong><br />[Bedrijfsnaam]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>
 <p><strong>Adres maatschappelijk zetel:</strong><br />[Maatschappelijke zetel]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>
-<p>Telefoon:<br />E-mail:</p>
-<p>Ondernemingsnummer: BTW BE 0 [BTW-nummer]</p>
+<p>Telefoon: [Telefoon nummer]<br />E-mail: [Email adres bedrijf]</p>
+<p>Ondernemingsnummer: BTW [BTW-nummer]</p>
 <p>De toezichthoudende autoriteit: (wanneer uw activiteit aan een vergunningsstelsel is onderworpen)</p>
 <p>Door de toegang tot en het gebruik van de website verklaart u zich uitdrukkelijk akkoord met de volgende algemene voorwaarden.</p>
 <h3>Intellectuele eigendomsrechten</h3>
