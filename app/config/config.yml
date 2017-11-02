@@ -48,9 +48,10 @@ twig:
 monolog:
     handlers:
         main:
-            type:  stream
+            type:  rotating_file
             path:  "%site.path_www%/var/logs/%kernel.environment%.log"
             level: error
+            max_files: 10
         # swift:
         #     type:       swift_mailer
         #     from_email: %fork.debug_email%
