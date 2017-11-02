@@ -2,17 +2,22 @@
 
 namespace Backend\Modules\Location\Command;
 
-use Backend\Core\Engine\Model;
 use Common\ModuleExtraType;
 use SpoonDatabase;
 
 final class CopyLocationWidgetsToOtherLocaleHandler
 {
+    /** @var SpoonDatabase */
+    private $database;
+
+    public function __construct(SpoonDatabase $database)
+    {
+        $this->database = $database;
+    }
+
     public function handle(CopyLocationWidgetsToOtherLocale $copyLocationWidgetsToOtherLocale): void
     {
-        /** @var SpoonDatabase $database */
-        $database = Model::get('database');
-        $currentWidgets = $database->getRecords(
+        $currentWidgets = $this->database->getRecords(
             'SELECT * FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
             [
                 'Location',
@@ -43,7 +48,7 @@ final class CopyLocationWidgetsToOtherLocaleHandler
             unset($currentWidget['id']);
 
             // Insert the new widget and save the id
-            $newId = $database->insert('modules_extras', $currentWidget);
+            $newId = $this->database->insert('modules_extras', $currentWidget);
 
             // Map the new ID
             $copyLocationWidgetsToOtherLocale->extraIdMap[$oldId] = $newId;
