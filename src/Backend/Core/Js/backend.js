@@ -332,7 +332,7 @@ jsBackend.ckeditor =
             { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Blockquote' ] },
             { name: 'links', items: [ 'ForkLink', 'Unlink', 'Anchor' ] },
             { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', 'Templates' ] },
-            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar', 'Iframe' ] },
+            { name: 'insert', items: [ 'ForkImage', 'Table', 'SpecialChar', 'Iframe' ] },
             { name: 'styles', items: [ 'Format', 'Styles' ] }
         ],
 
