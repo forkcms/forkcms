@@ -3,6 +3,7 @@
 namespace Common\Doctrine\Entity;
 
 use Backend\Core\Engine\Meta as BackendMeta;
+use Common\Core\Model;
 use Common\Doctrine\ValueObject\SEOFollow;
 use Common\Doctrine\ValueObject\SEOIndex;
 use Doctrine\ORM\Mapping as ORM;
@@ -167,6 +168,12 @@ class Meta
         $this->seoIndex = $seoIndex;
     }
 
+    public function __clone()
+    {
+        $this->id = null;
+        $this->url = Model::addNumber($this->url);
+    }
+
     /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
@@ -245,7 +252,7 @@ class Meta
         );
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
