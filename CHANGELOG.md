@@ -1,3 +1,63 @@
+5.0.6  (2017-10-18)
+------------------
+
+Bugfixes:
+* Core: Fix tests when site.multilanguage is false [#2322](https://github.com/forkcms/forkcms/pull/2322)
+* Core: Fix bootstrap tabs html5 form validation [#2319](https://github.com/forkcms/forkcms/pull/2319)
+* Core: Fix sessions in the console [#2301](https://github.com/forkcms/forkcms/pull/2301)
+* Core: Set a minimum font size on the body for the backend editors [#2326](https://github.com/forkcms/forkcms/pull/2326)
+* Core: Fix labels in seo tab [#2325](https://github.com/forkcms/forkcms/pull/2325)
+* Analytics: Fix google analytics [#2317](https://github.com/forkcms/forkcms/pull/2317)
+* Blog: Fix preview url blog categories [#2330](https://github.com/forkcms/forkcms/pull/2330)
+* Installer: Properly fix the form template in the installer [#2323](https://github.com/forkcms/forkcms/pull/2323)
+* Mailmotor: Mailmotor SubscribeType/UnsubscribeType: ucfirst was missing in label [#2321](https://github.com/forkcms/forkcms/pull/2321)
+* Pages: Fetch the page data from the database and assign it to the pages in navigation [#2313](https://github.com/forkcms/forkcms/pull/2313)
+* Pages: Fix dropdown styling when adding a page block [#2333](https://github.com/forkcms/forkcms/pull/2333)
+* Search: Bad url on livesuggest paging numbers [#2328](https://github.com/forkcms/forkcms/pull/2328)
+
+Improvements:
+* Core: Add a comment to clarify where custom Symfony routes should be placed [#2315](https://github.com/forkcms/forkcms/pull/2315)
+
+5.0.5  (2017-10-09)
+------------------
+
+Added:
+* Locale: Translations for the Media Library [#2223](https://github.com/forkcms/forkcms/pull/2223)
+
+Removed:
+* Core: Removed the licence info blocks in the php files [#2289](https://github.com/forkcms/forkcms/pull/2289)
+* Core: Removed the obsolete and deprecated choices_as_values option in the MetaType [#2267](https://github.com/forkcms/forkcms/pull/2267)
+
+Fixed:
+* Core: Fix errors when trying to minify external assets by stopping to try [#2264](https://github.com/forkcms/forkcms/pull/2264)
+* Core: Fix exception message when a css or js file isn't found in the theme and core [#2258](https://github.com/forkcms/forkcms/pull/2258)
+* Core: Fix typo in htaccess comment [#2284](https://github.com/forkcms/forkcms/pull/2284)
+* Core: Fix wrong response from ajax calls when the call wasn't authenticated or the authentication had expired [#2263](https://github.com/forkcms/forkcms/pull/2263)
+* Core: Fixed the alt text of the Fork logo in the backend [#2292](https://github.com/forkcms/forkcms/pull/2292)
+* Core: Make the modals accessible to screen readers etc [#2272](https://github.com/forkcms/forkcms/pull/2272)
+* Analytics: Fix broken link to add api keys [#2275](https://github.com/forkcms/forkcms/pull/2275)
+* Analytics: Fix check to see if the cookie bar should be shown [#2281](https://github.com/forkcms/forkcms/pull/2281)
+* Extensions: Fix the validation of the layout settings of a template [#2293](https://github.com/forkcms/forkcms/pull/2293)
+* FAQ: Fix adding the default category widget on install [#2279](https://github.com/forkcms/forkcms/pull/2279)
+* Location: Add missing address to markers [#2257](https://github.com/forkcms/forkcms/pull/2257)
+* Location: Fix showing data in the marker [#2295](https://github.com/forkcms/forkcms/pull/2295)
+* Mailmotor: Pull in latest bugfixes for mailchimp [#2276](https://github.com/forkcms/forkcms/pull/2276)
+* MediaLibrary: Fix issues with symlinks [#2265](https://github.com/forkcms/forkcms/pull/2265)
+* MediaLibrary: Fix media group attributes not being parsed in the template [#2271](https://github.com/forkcms/forkcms/pull/2271)
+* MediaLibrary: Fix wrong return type when using the media_library_widget lightbox [#2274](https://github.com/forkcms/forkcms/pull/2274)
+* MediaLibrary: Removed the use of the target attribute since that could result in unwanted behaviour when clicking on links [#2277](https://github.com/forkcms/forkcms/pull/2277)
+* Pages: Codestyle fixes [#2300](https://github.com/forkcms/forkcms/pull/2300)
+* Pages: Don't redirect on empty pages [#2270](https://github.com/forkcms/forkcms/pull/2270)
+* Pages: Show page icon on pages tree for subpage elements with "module action" [#2297](https://github.com/forkcms/forkcms/pull/2297)
+* Profiles: Add missing new password button on the settings page [#2290](https://github.com/forkcms/forkcms/pull/2290)
+* Profiles: Fix adding a new profile in the backend [#2285](https://github.com/forkcms/forkcms/pull/2285)
+* Profiles: Fix checking if email or display name exists without excluding a profile [#2286](https://github.com/forkcms/forkcms/pull/2286)
+* Search: Content of pages with a redirect no longer shows up in the search results [#2296](https://github.com/forkcms/forkcms/pull/2296)
+* Search: Fix live suggest [#2291](https://github.com/forkcms/forkcms/pull/2291)
+* Tags: Fix tag cloud widget not showing the most used tags [#2283](https://github.com/forkcms/forkcms/pull/2283)
+* Users: Fix initialisation of the csv settings during installation [#2262](https://github.com/forkcms/forkcms/pull/2262)
+
+
 5.0.4  (2017-09-15)
 ------------------
 

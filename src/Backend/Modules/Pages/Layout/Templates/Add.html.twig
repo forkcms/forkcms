@@ -273,19 +273,19 @@
           </div>
           <div id="extraModuleHolder" class="form-group" style="display: none;">
             <label for="extraModule" class="control-label">{{ 'lbl.WhichModule'|trans|ucfirst }}</label>
-            <select id="extraModule" class="form-control">
+            <select id="extraModule" class="form-control" size="1">
               <option value="-1">-</option>
             </select>
           </div>
           <div id="extraExtraIdHolder" class="form-group" style="display: none;">
             <label for="extraExtraId" class="control-label">{{ 'lbl.WhichWidget'|trans|ucfirst }}</label>
-            <select id="extraExtraId" class="form-control">
+            <select id="extraExtraId" class="form-control" size="1">
               <option value="-1">-</option>
             </select>
           </div>
           <div id="userTemplateHolder" class="form-group"  style="display: none;">
             <label for="userTemplate">{{ 'lbl.WhichTemplate'|trans|capitalize }}</label>
-            <select class="form-control" id="userTemplate">
+            <select class="form-control" id="userTemplate" size="1">
               <option value="-1">-</option>
             </select>
           </div>
@@ -455,18 +455,17 @@
       //<![CDATA[
       // all the possible templates
       var templates = {};
-      {% for template in templates %}templates[{{ template.id }}] = {{ template.json|raw }};
+      {% for template in templates %}
+      templates[{{ template.id }}] = {{ template.json|raw }};
       {% endfor %}
 
       // the data for the extra's
       var extrasData = {};
-      {% if extrasData %}extrasData = {{ extrasData|raw }};
-      {% endif %}
+      {% if extrasData %}extrasData = {{ extrasData|raw }};{% endif %}
 
       // the extra's, but in a way we can access them based on their ID
       var extrasById = {};
-      {% if extrasById %}extrasById = {{ extrasById|raw }};
-      {% endif %}
+      {% if extrasById %}extrasById = {{ extrasById|raw }};{% endif %}
 
       // indicator that the default blocks may be set on pageload
       var initDefaults = true;

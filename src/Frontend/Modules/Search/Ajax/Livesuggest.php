@@ -98,7 +98,10 @@ class Livesuggest extends FrontendBaseAJAXAction
         // output
         $this->output(
             Response::HTTP_OK,
-            $this->template->render(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig')
+            $this->template->render(
+                FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig',
+                $this->template->getAssignedVariables()
+            )
         );
     }
 
@@ -290,7 +293,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             if ($useQuestionMark) {
                 $url = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
             } else {
-                $url = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
+                $url = $this->pagination['url'] . '&page=' . ($this->pagination['requested_page'] - 1);
             }
 
             // set
@@ -310,7 +313,7 @@ class Livesuggest extends FrontendBaseAJAXAction
                 if ($useQuestionMark) {
                     $url = $this->pagination['url'] . '?page=' . $i;
                 } else {
-                    $url = $this->pagination['url'] . '&amp;page=' . $i;
+                    $url = $this->pagination['url'] . '&page=' . $i;
                 }
 
                 // add
@@ -327,7 +330,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             if ($useQuestionMark) {
                 $url = $this->pagination['url'] . '?page=' . $i;
             } else {
-                $url = $this->pagination['url'] . '&amp;page=' . $i;
+                $url = $this->pagination['url'] . '&page=' . $i;
             }
 
             // add
@@ -346,7 +349,7 @@ class Livesuggest extends FrontendBaseAJAXAction
                 if ($useQuestionMark) {
                     $url = $this->pagination['url'] . '?page=' . $i;
                 } else {
-                    $url = $this->pagination['url'] . '&amp;page=' . $i;
+                    $url = $this->pagination['url'] . '&page=' . $i;
                 }
 
                 // add
@@ -360,7 +363,7 @@ class Livesuggest extends FrontendBaseAJAXAction
             if ($useQuestionMark) {
                 $url = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
             } else {
-                $url = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
+                $url = $this->pagination['url'] . '&page=' . ($this->pagination['requested_page'] + 1);
             }
 
             // set

@@ -148,6 +148,7 @@ class CacheBuilder
             'hidden' => (bool) $page['hidden'],
             'extra_blocks' => null,
             'has_children' => (bool) $page['has_children'],
+            'data' => $page['data']
         ];
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);
