@@ -236,7 +236,7 @@ class Installer extends ModuleInstaller
         $this->setSetting('Core', 'theme', 'Custom', true);
 
         // set default template
-        $this->setSetting('Pages', 'default_template', $this->getTemplateId('Default', 'Custom'));
+        $this->setSetting('Pages', 'default_template', $this->getTemplateId('Default', 'Custom'), true);
 
         // disable meta navigation
         $this->setSetting('Pages', 'meta_navigation', false);
