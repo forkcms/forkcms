@@ -54,15 +54,15 @@
           <div class="btn-toolbar">
             <div class="btn-group pull-left" role="group">
               <a href="{{ path('install_step4') }}" class="btn btn-default">
-                <span class="fa fa-chevron-left"></span>&nbsp;
+                <span class="fa fa-chevron-left" aria-hidden="true"></span>&nbsp;
                 Previous
               </a>
             </div>
             <div class="btn-group pull-right" role="group">
               <button type="submit" id="installerButton" name="installer" class="btn btn-primary">
                 Finish installation
-                <div id="ajaxSpinner" style="float: left; margin-top: 4px; display: none;">
-                  <i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i>
+                <div id="ajaxSpinner" style="float: left; margin-top: 4px; display: none;" aria-label="please wait while fork is installing">
+                  <i class="fa fa-spinner fa-pulse fa-lg fa-fw" aria-hidden="true"></i>
                 </div>
               </button>
             </div>

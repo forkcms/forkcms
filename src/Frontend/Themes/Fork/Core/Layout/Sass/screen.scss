@@ -20,6 +20,9 @@ $fa-font-path: '/fonts/vendors';
 @import 'base/type';
 @import 'base/base';
 
+// Accessibility
+@import './css/vendors/bootrstrap-accessibility.css';
+
 // Components
 @import 'components/breadcrumbs';
 @import 'components/buttons';

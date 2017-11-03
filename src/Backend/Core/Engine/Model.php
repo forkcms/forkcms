@@ -216,29 +216,6 @@ class Model extends \Common\Core\Model
     }
 
     /**
-     * Delete thumbnails based on the folders in the path
-     *
-     * @param string $path The path wherein the thumbnail-folders exist.
-     * @param string|null $thumbnail The filename to be deleted.
-     */
-    public static function deleteThumbnails(string $path, ?string $thumbnail): void
-    {
-        // if there is no image provided we can't do anything
-        if ($thumbnail === null || $thumbnail === '') {
-            return;
-        }
-
-        $finder = new Finder();
-        $filesystem = new Filesystem();
-        foreach ($finder->directories()->in($path) as $directory) {
-            $fileName = $directory->getRealPath() . '/' . $thumbnail;
-            if (is_file($fileName)) {
-                $filesystem->remove($fileName);
-            }
-        }
-    }
-
-    /**
      * Generate a random string
      *
      * @param int $length Length of random string.
@@ -529,7 +506,7 @@ class Model extends \Common\Core\Model
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
-            return self::getUrl(404, $language);
+            return self::getUrl(BackendModel::ERROR_PAGE_ID, $language);
         }
 
         // return the unique URL!
@@ -617,7 +594,7 @@ class Model extends \Common\Core\Model
 
         // Page not found so return the 404 url
         if ($pageIdForUrl === null) {
-            return self::getUrl(404, $language);
+            return self::getUrl(self::ERROR_PAGE_ID, $language);
         }
 
         $url = self::getUrl($pageIdForUrl, $language);

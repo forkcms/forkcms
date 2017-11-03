@@ -12,6 +12,9 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.js]
+indent_size = 2
+
 [*.{html,rb,tpl,twig,xml}]
 charset = utf-8
 end_of_line = lf

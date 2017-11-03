@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-
+{% import "Layout/Templates/macros.html.twig" as macro %}
 {% block content %}
   {{ form_start(form) }}
   <div class="row fork-module-content">
@@ -10,7 +10,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>&nbsp;
+            {{ macro.icon('plus-square') }}&nbsp;
             {{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>

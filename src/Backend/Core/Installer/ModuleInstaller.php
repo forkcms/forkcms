@@ -3,6 +3,8 @@
 namespace Backend\Core\Installer;
 
 use Backend\Core\Engine\Model;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -174,13 +176,7 @@ class ModuleInstaller
             );
         }
 
-        // invalidate the cache for search
-        $finder = new Finder();
-        $filesystem = new Filesystem();
-        foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
-            /** @var $file \SplFileInfo */
-            $filesystem->remove($file->getRealPath());
-        }
+        BackendSearchModel::invalidateCache();
     }
 
     /**
@@ -684,7 +680,9 @@ class ModuleInstaller
         $revision['user_id'] = $revision['user_id'] ?? $this->getDefaultUserID();
         $revision['template_id'] = $revision['template_id'] ?? $this->getTemplateId('Default');
         $revision['type'] = $revision['type'] ?? 'page';
-        $revision['parent_id'] = $revision['parent_id'] ?? ($revision['type'] === 'page' ? 1 : 0);
+        $revision['parent_id'] = $revision['parent_id'] ?? (
+            $revision['type'] === 'page' ? Model::HOME_PAGE_ID : BackendPagesModel::NO_PARENT_PAGE_ID
+        );
         $revision['navigation_title'] = $revision['navigation_title'] ?? $revision['title'];
         $revision['navigation_title_overwrite'] = $revision['navigation_title_overwrite'] ?? false;
         $revision['hidden'] = $revision['hidden'] ?? false;
@@ -703,7 +701,11 @@ class ModuleInstaller
             $revision['type']
         );
         $revision['meta_id'] = $revision['meta_id'] ?? $this->getNewMetaId($meta, $revision['title']);
-
+        foreach ($this->getLanguages() as $language) {
+            if ($language !== $revision['language']) {
+                $revision['data']['hreflang_' . $language] = $revision['id'];
+            }
+        }
         if (!isset($revision['data']['image']) && $this->installExample()) {
             $revision['data']['image'] = $this->getAndCopyRandomImage();
         }

@@ -140,14 +140,9 @@ abstract class WebTestCase extends BaseWebTestCase
 
     protected function assertIs404(Client $client)
     {
-        $client->followRedirect();
         self::assertEquals(
             404,
             $client->getResponse()->getStatusCode()
-        );
-        self::assertStringEndsWith(
-            '404',
-            $client->getHistory()->current()->getUri()
         );
     }
 

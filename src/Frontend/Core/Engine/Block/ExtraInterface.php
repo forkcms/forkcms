@@ -102,7 +102,7 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
 
         // is the requested action possible? If not we throw an exception.
         // We don't redirect because that could trigger a redirect loop
-        if (!in_array($this->getAction(), $this->config->getPossibleActions())) {
+        if (!in_array($this->getAction(), $this->config->getPossibleActions(), true)) {
             $this->setAction($this->config->getDefaultAction());
         }
     }
@@ -142,10 +142,11 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
      * Get the current action
      * REMARK: You should not use this method from your code, but it has to be
      * public so we can access it later on in the core-code
+     * When the action is null the default action of the module will be used
      *
-     * @return string
+     * @return string|null
      */
-    public function getAction(): string
+    public function getAction(): ?string
     {
         if ($this->action !== null) {
             return $this->action;
