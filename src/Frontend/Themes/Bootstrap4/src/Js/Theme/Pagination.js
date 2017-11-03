@@ -15,9 +15,13 @@ export class Pagination {
   }
 
   getParameters () {
+    if (typeof window.location.href.split('?')[1] === 'undefined') {
+      return {}
+    }
+
+    let parameters = {}
     let queryString = window.location.href.split('?')[1]
     let rawParameters = queryString.split('&')
-    let parameters = {}
 
     $.each(rawParameters, (index, rawParameter) => {
       let parameterPair = rawParameter.split('=')
