@@ -30,7 +30,7 @@
           {# Middle pages #}
           {% for pagination in pagination.pages %}
             <li class="page-item {% if pagination.current %} active{% endif %}">
-              <a class="page-link" href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage|ucfirst'|trans|ucfirst }}{{ pagination.label }}">
+              <a class="page-link" href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }}{{ pagination.label }}">
                 {{ pagination.label }}
               </a>
             </li>
@@ -54,10 +54,10 @@
           <li class="page-item{% if not pagination.show_next %} disabled{% endif %}">
             {% if pagination.show_next %}
               <a class="page-link" href="{{ pagination.next_url }}" rel="next nofollow" title="{{ 'lbl.NextPage'|trans|ucfirst }}">
-                <span class="sr-only">{{ 'lbl.NextPage' }} </span>&rarr;
+                <span class="sr-only">{{ 'lbl.NextPage'|trans }} </span>&rarr;
               </a>
             {% else %}
-              <span class="page-link"><span class="sr-only">{{ 'lbl.NextPage' }} </span>&rarr;</span>
+              <span class="page-link"><span class="sr-only">{{ 'lbl.NextPage'|trans }} </span>&rarr;</span>
             {% endif %}
           </li>
         </ul>
