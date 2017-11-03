@@ -18,17 +18,18 @@
 
   {% if not mailmotorSubscribeHideForm %}
     {{ form_start(form) }}
-    <div class="form-group">
-      <label for="{{ form.email.vars.id }}" class="form-control-label">{{ form.email.vars.label|trans|ucfirst }}</label>
-      <div class="input-group">
-        {{ form_widget(form.email) }}
-        <div class="input-group-btn">
-          <button type="submit" id="{{ form.subscribe.vars.id }}" class="btn btn-secondary">{{ form.subscribe.vars.label|trans }}</button>
-          {% do form.subscribe.setRendered %}
+      <div class="form-group">
+        <label for="{{ form.email.vars.id }}" class="form-control-label">{{ form.email.vars.label|trans|ucfirst }}</label>
+        <div class="input-group">
+          {{ form_widget(form.email) }}
+          <div class="input-group-btn">
+            <button type="submit" id="{{ form.subscribe.vars.id }}" class="btn btn-secondary">{{ form.subscribe.vars.label|trans }}</button>
+            {% do form.subscribe.setRendered %}
+          </div>
         </div>
+        {{ form_errors(form.email) }}
       </div>
       {{ form_rest(form) }}
-      {{ form_end(form) }}
-    </div>
+    {{ form_end(form) }}
   {% endif %}
 </div>
