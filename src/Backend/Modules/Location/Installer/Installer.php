@@ -2,7 +2,9 @@
 
 namespace Backend\Modules\Location\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Location\Domain\Location;
 use Common\ModuleExtraType;
 
 /**
@@ -19,6 +21,8 @@ class Installer extends ModuleInstaller
         $this->configureBackendNavigation();
         $this->configureBackendRights();
         $this->configureFrontendExtras();
+
+        Model::get('fork.entity.create_schema')->forEntityClass(Location::class);
     }
 
     private function configureBackendNavigation(): void
