@@ -43,6 +43,7 @@
               {% do form.subscribe.setRendered %}
             </div>
           </div>
+          {{ form_errors(form.email) }}
         </div>
         {{ form_rest(form) }}
         {{ form_end(form) }}
