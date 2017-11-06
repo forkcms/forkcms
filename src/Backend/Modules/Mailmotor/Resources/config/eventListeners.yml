@@ -19,10 +19,3 @@ services:
       - "@fork.settings"
     tags:
       - { name: kernel.event_listener, event: mailmotor.event.not_implemented.unsubscribed, method: onNotImplementedUnsubscribedEvent }
-  mailmotor.listener.subscribe_from_form_builder_submitted_form:
-    class: Frontend\Modules\Mailmotor\EventListener\SubscribeFromFormBuilderSubmittedForm
-    arguments:
-      - "@mailmotor.subscriber"
-      - "@fork.settings"
-    tags:
-      - { name: kernel.event_listener, event: form.submitted, method: onFormBuilderSubmittedEvent }

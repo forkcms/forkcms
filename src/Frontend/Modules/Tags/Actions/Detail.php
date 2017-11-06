@@ -4,12 +4,9 @@ namespace Frontend\Modules\Tags\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * This is the detail-action
- */
 class Detail extends FrontendBaseBlock
 {
     /**
@@ -17,21 +14,14 @@ class Detail extends FrontendBaseBlock
      *
      * @var array
      */
-    private $record = [];
+    private $tag = [];
 
     /**
      * The items per module with this tag
      *
      * @var array
      */
-    private $results = [];
-
-    /**
-     * Used modules
-     *
-     * @var array
-     */
-    private $modules;
+    private $tagsModules = [];
 
     public function execute(): void
     {
@@ -43,61 +33,32 @@ class Detail extends FrontendBaseBlock
         $this->parse();
     }
 
+    private function getTag(): array
+    {
+        if ($this->url->getParameter(1) === null) {
+            throw new NotFoundHttpException();
+        }
+
+        $tag = FrontendTagsModel::get($this->url->getParameter(1));
+
+        if (empty($tag)) {
+            throw new NotFoundHttpException();
+        }
+
+        return $tag;
+    }
+
     private function getData(): void
     {
-        // validate incoming parameters
-        if ($this->url->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getUrl(404));
-        }
-
-        // fetch record
-        $this->record = FrontendTagsModel::get($this->url->getParameter(1));
-
-        // validate record
-        if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getUrl(404));
-        }
-
-        // fetch modules
-        $this->modules = FrontendTagsModel::getModulesForTag($this->record['id']);
-
-        // loop modules
-        foreach ($this->modules as $module) {
-            // get the ids of the items linked to the tag
-            $otherIds = (array) $this->get('database')->getColumn(
-                'SELECT other_id
-                 FROM modules_tags
-                 WHERE module = ? AND tag_id = ?',
-                [$module, $this->record['id']]
-            );
-
-            // set module class
-            $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
-
-            // get the items that are linked to the tags
-            $items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);
-
-            // add into results array
-            if (!empty($items)) {
-                $this->results[] = [
-                    'name' => $module,
-                    'label' => FL::lbl(\SpoonFilter::ucfirst($module)),
-                    'items' => $items,
-                ];
-            }
-        }
+        $this->tag = $this->getTag();
+        $this->tagsModules = FrontendTagsModel::getItemsForTag($this->tag['id']);
     }
 
     private function parse(): void
     {
-        // assign tag
-        $this->template->assign('tag', $this->record);
-
-        // assign tags
-        $this->template->assign('tagsModules', $this->results);
-
-        // update breadcrumb
-        $this->breadcrumb->addElement($this->record['name']);
+        $this->template->assign('tag', $this->tag);
+        $this->template->assign('tagsModules', $this->tagsModules);
+        $this->breadcrumb->addElement($this->tag['name']);
 
         // tag-pages don't have any SEO-value, so don't index them
         $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, follow'], true);

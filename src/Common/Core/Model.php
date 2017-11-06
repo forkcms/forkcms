@@ -18,6 +18,9 @@ use TijsVerkoyen\Akismet\Akismet;
  */
 class Model extends BaseModel
 {
+    const HOME_PAGE_ID = 1;
+    const ERROR_PAGE_ID = 404;
+
     /**
      * Cached modules
      *
@@ -169,6 +172,29 @@ class Model extends BaseModel
                 $thumbnail->setForceOriginalAspectRatio(false);
             }
             $thumbnail->parseToFile($folder['path'] . '/' . $filename);
+        }
+    }
+
+    /**
+     * Delete thumbnails based on the folders in the path
+     *
+     * @param string $path The path wherein the thumbnail-folders exist.
+     * @param string|null $thumbnail The filename to be deleted.
+     */
+    public static function deleteThumbnails(string $path, ?string $thumbnail): void
+    {
+        // if there is no image provided we can't do anything
+        if ($thumbnail === null || $thumbnail === '') {
+            return;
+        }
+
+        $finder = new Finder();
+        $filesystem = new Filesystem();
+        foreach ($finder->directories()->in($path) as $directory) {
+            $fileName = $directory->getRealPath() . '/' . $thumbnail;
+            if (is_file($fileName)) {
+                $filesystem->remove($fileName);
+            }
         }
     }
 

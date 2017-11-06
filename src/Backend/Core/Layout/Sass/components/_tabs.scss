@@ -52,6 +52,21 @@
   }
 }
 
+@supports (display: flex) {
+
+  .nav-tabs-flex {
+    display: flex;
+    justify-content: end;
+
+    > li {
+      float: none;
+    }
+    .mr-auto {
+      margin-right: auto;
+    }
+  }
+}
+
 .fork-dashboard-column .nav-tabs li {
    a {
      background-color: $gray-lighter;

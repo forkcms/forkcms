@@ -3,11 +3,14 @@
   - {{ searchResults }}: contains an array with all items, each element contains data about the item
   - {{ searchTerm }}: the term that has been searched for
 #}
+{% import "Core/Layout/Templates/Macros.html.twig" as macro %}
 <section class="module-search block-search-index" role="search">
+  {% block block_heading %}{% endblock %}
+
   {% block block_body %}
     {% form search %}
     <label for="q">
-      {{ 'lbl.SearchTerm'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+      {{ 'lbl.SearchTerm'|trans|ucfirst }}{{ macro.required }}
     </label>
     <div class="input-group{% if txtQError %} error{% endif %}">
       {% form_field q %}
@@ -18,6 +21,8 @@
     {% form_field_error q %}
     {% endform %}
   {% endblock %}
+
+  {% block block_footer %}{% endblock %}
 </section>
 
 {% block block_results_container %}

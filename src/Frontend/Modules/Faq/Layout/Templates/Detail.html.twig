@@ -4,6 +4,7 @@
   - {{ related }}: the related items
 #}
 {% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+{% import "Core/Layout/Templates/Macros.html.twig" as macro %}
 
 <article class="module-faq block-faq-detail" itemscope itemtype="http://schema.org/Question">
   {% block block_heading %}
@@ -84,7 +85,7 @@
                           <p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
                             <label for="message">
                               {{ 'msg.HowToImprove'|trans|ucfirst }}
-                              <abbr title="{{ 'lbl.RequiredField'|trans }}">*</abbr>
+                              {{ macro.required }}
                             </label>
                             {% form_field message %} {% form_field_error message %}
                           </p>

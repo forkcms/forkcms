@@ -123,10 +123,10 @@
               {% if showPasswordStrength %}
                 <div class="row">
                   <div class="col-md-12">
-                    <div class="content-block">
-                      <div class="content-title">
-                        <p>{{ 'lbl.CurrentPassword'|trans|ucfirst }}</p>
-                      </div>
+                    <fieldset>
+                      <legend>
+                        {{ 'lbl.CurrentPassword'|trans|ucfirst }}
+                      </legend>
                       <div class="form-group">
                         <label>{{ 'lbl.PasswordStrength'|trans|ucfirst }}:</label>
                       <span class="strength strength-{{ record.settings.password_strength }}">
@@ -135,17 +135,16 @@
                         </span>
                       </span>
                       </div>
-                    </div>
-
+                    </fieldset>
                   </div>
                 </div>
               {% endif %}
               <div class="row">
                 <div class="col-md-12">
-                  <div class="content-block">
-                    <div class="content-title">
-                      <p>{{ 'lbl.ChangePassword'|trans|ucfirst }}</p>
-                    </div>
+                  <fieldset class="last">
+                    <legend>
+                      {{ 'lbl.ChangePassword'|trans|ucfirst }}
+                    </legend>
                     <div class="form-group">
                       <label for="newPassword" class="control-label">
                         {{ 'lbl.Password'|trans|ucfirst }}
@@ -189,7 +188,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </fieldset>
                 </div>
               </div>
             </div>
@@ -219,22 +218,22 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="content-block">
-                  <div class="content-title">
-                    <p>{{ 'lbl.CSV'|trans|ucfirst }}</p>
+                <fieldset class="last">
+                  <legend>{{ 'lbl.CSV'|trans|ucfirst }}</legend>
+                  <div class="content-block">
+                    <div class="form-group">
+                      <label for="csvSplitCharacter" class="control-label">{{ 'lbl.SplitCharacter'|trans|ucfirst }}</label>
+                      {% form_field csv_split_character %} {% form_field_error csv_split_character %}
+                    </div>
+                    <div class="form-group last">
+                      <label for="csvLineEnding" class="control-label">{{ 'lbl.LineEnding'|trans|ucfirst }}</label>
+                      {% form_field csv_line_ending %} {% form_field_error csv_line_ending %}
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label for="csvSplitCharacter" class="control-label">{{ 'lbl.SplitCharacter'|trans|ucfirst }}</label>
-                    {% form_field csv_split_character %} {% form_field_error csv_split_character %}
-                  </div>
-                  <div class="form-group last">
-                    <label for="csvLineEnding" class="control-label">{{ 'lbl.LineEnding'|trans|ucfirst }}</label>
-                    {% form_field csv_line_ending %} {% form_field_error csv_line_ending %}
-                  </div>
-                </div>
-
+                </fieldset>
               </div>
             </div>
+
           </div>
           {% if allowUserRights %}
             <div role="tabpanel" class="tab-pane" id="tabPermissions">
@@ -274,14 +273,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showUsersDelete and allowUsersDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
+              {{ macro.icon('trash-o') }}
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -293,7 +292,7 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -304,10 +303,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           </div>
         </div>

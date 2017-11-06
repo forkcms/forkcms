@@ -11,6 +11,8 @@
       {{ alerts.alert('info', 'msg.BlogNoItems'|trans) }}
     {% endblock %}
   {% else %}
+    {% block block_heading %}{% endblock %}
+
     {% block block_body %}
       <div class="block-body">
         {% for item in items %}
@@ -96,5 +98,7 @@
         {% include "Core/Layout/Templates/Pagination.html.twig" %}
       </div>
     {% endblock %}
+
+    {% block block_footer %}{% endblock %}
   {% endif %}
 </section>
