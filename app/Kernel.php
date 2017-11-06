@@ -83,7 +83,7 @@ abstract class Kernel extends BaseKernel
         Spoon::setCharset($container->getParameter('kernel.charset'));
 
         /**
-         * @deprecated SPOON_* constants are deprecated in favor of Spoon::set*().
+         * @deprecated SPOON_* constants are deprecated in favour of Spoon::set*().
          * Will be removed in the next major release.
          */
         defined('PATH_WWW') || define('PATH_WWW', realpath($container->getParameter('site.path_www')));

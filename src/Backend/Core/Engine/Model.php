@@ -76,17 +76,19 @@ class Model extends \Common\Core\Model
         }
 
         $parameters['token'] = self::getToken();
-        $queryParameterBag = self::getRequest()->query;
+        if (self::requestIsAvailable()) {
+            $queryParameterBag = self::getRequest()->query;
 
-        // add offset, order & sort (only if not yet manually added)
-        if (!isset($parameters['offset']) && $queryParameterBag->has('offset')) {
-            $parameters['offset'] = $queryParameterBag->getInt('offset');
-        }
-        if (!isset($parameters['order']) && $queryParameterBag->has('order')) {
-            $parameters['order'] = $queryParameterBag->get('order');
-        }
-        if (!isset($parameters['sort']) && $queryParameterBag->has('sort')) {
-            $parameters['sort'] = $queryParameterBag->get('sort');
+            // add offset, order & sort (only if not yet manually added)
+            if (!isset($parameters['offset']) && $queryParameterBag->has('offset')) {
+                $parameters['offset'] = $queryParameterBag->getInt('offset');
+            }
+            if (!isset($parameters['order']) && $queryParameterBag->has('order')) {
+                $parameters['order'] = $queryParameterBag->get('order');
+            }
+            if (!isset($parameters['sort']) && $queryParameterBag->has('sort')) {
+                $parameters['sort'] = $queryParameterBag->get('sort');
+            }
         }
 
         $queryString = '?' . http_build_query($parameters);
