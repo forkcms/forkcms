@@ -2227,7 +2227,7 @@ DROP TABLE IF EXISTS `location`;
 
 CREATE TABLE `location` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:locale)',
   `extra_id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `street` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2235,13 +2235,13 @@ CREATE TABLE `location` (
   `zip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lat` float DEFAULT NULL,
-  `lng` float DEFAULT NULL,
-  `show_overview` tinyint(1) NOT NULL DEFAULT '1',
-  `created_on` datetime NOT NULL,
-  `edited_on` datetime NOT NULL,
+  `lat` double NOT NULL,
+  `lng` double NOT NULL,
+  `show_overview` tinyint(1) NOT NULL DEFAULT 1,
+  `created_on` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+  `edited_on` datetime NOT NULL COMMENT '(DC2Type:datetime)',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
