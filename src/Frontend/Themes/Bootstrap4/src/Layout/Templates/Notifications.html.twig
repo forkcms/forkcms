@@ -10,7 +10,7 @@
 {{ alerts.alert('danger', 'msg.OldBrowser'|trans, true, 'ie') }}
 <![endif]-->
 
-<a href="#main" class="sr-only">{$lblSkipToContent|ucfirst}</a>
+<a href="#main" class="sr-only">{{ 'lbl.SkipToContent'|trans|ucfirst }}</a>
 
 {% if not cookieBarHide %}
   <div id="cookie-bar" class="cookiebar alert alert-fullwidth">
