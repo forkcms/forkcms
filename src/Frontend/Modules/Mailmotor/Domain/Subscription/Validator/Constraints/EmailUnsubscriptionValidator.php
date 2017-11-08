@@ -18,7 +18,8 @@ class EmailUnsubscriptionValidator extends ConstraintValidator
     protected $subscriber;
 
     /**
-     * Set subscriber - using a constructor didn't work.
+     * Set subscriber
+     * Note: it's not possible by using a constructor
      *
      * @param Subscriber $subscriber
      */
