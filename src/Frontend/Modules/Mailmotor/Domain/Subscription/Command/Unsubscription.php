@@ -12,7 +12,7 @@ final class Unsubscription
      * @var string
      *
      * @Assert\NotBlank(message="err.FieldIsRequired")
-     * @Assert\Email
+     * @Assert\Email(message="err.FieldIsRequired")
      * @MailingListAssert\EmailUnsubscription
      */
     public $email;

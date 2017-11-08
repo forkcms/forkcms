@@ -12,7 +12,7 @@ final class Subscription
      * @var string
      *
      * @Assert\NotBlank(message="err.FieldIsRequired")
-     * @Assert\Email
+     * @Assert\Email(message="err.EmailIsInvalid")
      * @MailingListAssert\EmailSubscription
      */
     public $email;
