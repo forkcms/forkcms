@@ -2,10 +2,10 @@
 
 namespace Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints;
 
+use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
  * @Annotation
