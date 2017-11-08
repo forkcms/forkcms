@@ -23,9 +23,8 @@ class EmailSubscriptionValidator extends ConstraintValidator
      *
      * @param Subscriber $subscriber
      */
-    public function setSubscriber(
-        Subscriber $subscriber
-    ): void {
+    public function setSubscriber(Subscriber $subscriber): void
+    {
         $this->subscriber = $subscriber;
     }
 
