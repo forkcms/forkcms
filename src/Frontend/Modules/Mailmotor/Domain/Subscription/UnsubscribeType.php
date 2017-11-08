@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UnsubscribeType extends AbstractType
@@ -37,6 +38,15 @@ class UnsubscribeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Unsubscription::class,
+            'validation_groups' => function (FormInterface $form) {
+                $groups = ['Default'];
+
+                if (\SpoonFilter::isEmail($form->getData()->email)) {
+                    $groups[] = 'is_email';
+                }
+
+                return $groups;
+            },
         ]);
     }
 
