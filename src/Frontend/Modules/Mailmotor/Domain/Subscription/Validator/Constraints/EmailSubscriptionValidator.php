@@ -34,6 +34,11 @@ class EmailSubscriptionValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
+        // There are already violations thrown, so we return immediately
+        if (count($this->context->getViolations()) > 0) {
+            return;
+        }
+
         try {
             // The email is already in our mailing list
             if ($this->subscriber->isSubscribed($value)) {
