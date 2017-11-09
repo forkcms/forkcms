@@ -6,6 +6,7 @@ use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
+use Backend\Modules\Blog\Domain\Comment;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
@@ -319,15 +320,11 @@ class Model
         );
     }
 
-    public static function existsComment(int $id): int
+    public static function existsComment(int $id): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM blog_comments AS i
-             WHERE i.id = ? AND i.language = ?
-             LIMIT 1',
-            [(int) $id, BL::getWorkingLanguage()]
-        );
+        $repository = BackendModel::get('doctrine.orm.default_entity_manager')->getRepository(Comment::class);
+
+        return $repository->find($id) instanceof Comment;
     }
 
     /**
