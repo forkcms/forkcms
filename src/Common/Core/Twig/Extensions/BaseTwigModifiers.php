@@ -229,7 +229,7 @@ class BaseTwigModifiers
      * @return string
      */
     public static function truncate(
-        string $string = null,
+        ?string $string,
         int $length,
         bool $useHellip = true,
         bool $closestWord = false
