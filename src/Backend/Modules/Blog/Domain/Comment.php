@@ -23,7 +23,7 @@ class Comment
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="post_id")
      */
     private $postId;
 
