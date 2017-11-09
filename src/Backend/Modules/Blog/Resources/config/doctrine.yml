@@ -1,0 +1,9 @@
+doctrine:
+  orm:
+    mappings:
+      blog:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/Blog/Domain"
+        alias: BlogComment
+        prefix: Backend\Modules\Blog\Domain
