@@ -1146,7 +1146,7 @@ class Model
     {
         $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository(Comment::class);
-        $comment = $foo = $repository->find($item['id']);
+        $comment = $repository->find($item['id']);
 
         if (!$comment instanceof Comment) {
             return;
