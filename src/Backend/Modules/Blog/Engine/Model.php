@@ -234,11 +234,6 @@ class Model
         );
     }
 
-    /**
-     * Deletes one or more comments
-     *
-     * @param array $ids The id(s) of the items(s) to delete.
-     */
     public static function deleteComments(array $ids): void
     {
         $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
@@ -526,20 +521,12 @@ class Model
         );
     }
 
-    /**
-     * Get a count per comment
-     *
-     * @return array
-     */
     public static function getCommentStatusCount(): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getPairs(
-            'SELECT i.status, COUNT(i.id)
-             FROM blog_comments AS i
-             WHERE i.language = ?
-             GROUP BY i.status',
-            [BL::getWorkingLanguage()]
-        );
+        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
+                                  ->getRepository(Comment::class);
+
+        return $repository->listCountPerStatus(Locale::workingLocale());
     }
 
     /**

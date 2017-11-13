@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="blog_comments")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Blog\Domain\CommentRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Comment
