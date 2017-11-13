@@ -210,17 +210,7 @@ class Model
             'Location'
         );
 
-        $location->update(
-            $extraId,
-            $location->getTitle(),
-            $location->getStreet(),
-            $location->getNumber(),
-            $location->getZip(),
-            $location->getCity(),
-            $location->getCountry(),
-            $location->getLatitude(),
-            $location->getLongitude()
-        );
+        $location->setExtraId($extraId);
 
         $entityManager->persist($location);
         $entityManager->flush();
@@ -277,7 +267,6 @@ class Model
         $updatedLocation = Location::fromArray($item);
 
         $currentLocation->update(
-            $updatedLocation->getExtraId(),
             $updatedLocation->getTitle(),
             $updatedLocation->getStreet(),
             $updatedLocation->getNumber(),

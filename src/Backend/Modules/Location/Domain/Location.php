@@ -4,6 +4,7 @@ namespace Backend\Modules\Location\Domain;
 
 use Common\Locale;
 use Backend\Core\Language\Locale as BackendLocale;
+use Exception;
 use Frontend\Core\Language\Locale as FrontendLocale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -143,7 +144,6 @@ class Location
     }
 
     public function update(
-        int $extraId,
         string $title,
         string $street,
         string $number,
@@ -154,7 +154,6 @@ class Location
         float $longitude,
         bool $showInOverview = true
     ) {
-        $this->extraId = $extraId;
         $this->title = $title;
         $this->street = $street;
         $this->number = $number;
@@ -234,6 +233,15 @@ class Location
     public function getEditedOn(): DateTime
     {
         return $this->editedOn;
+    }
+
+    public function setExtraId(int $extraId): void
+    {
+        if ($this->extraId !== null) {
+            throw new Exception('You can only set the extra ID once');
+        }
+
+        $this->extraId = $extraId;
     }
 
     /**
