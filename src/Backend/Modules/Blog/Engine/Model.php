@@ -1122,22 +1122,27 @@ class Model
         return $updated;
     }
 
-    /**
-     * Update an existing comment
-     *
-     * @param array $item The new data.
-     *
-     * @return int
-     */
-    public static function updateComment(array $item): int
+    public static function updateComment(array $item)
     {
-        // update category
-        return BackendModel::getContainer()->get('database')->update(
-            'blog_comments',
-            $item,
-            'id = ?',
-            [(int) $item['id']]
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
+        $repository = $entityManager->getRepository(Comment::class);
+        $comment = $foo = $repository->find($item['id']);
+
+        if (!$comment instanceof Comment) {
+            return;
+        }
+
+        $comment->update(
+            $item['author'],
+            $item['email'],
+            $item['website'],
+            $item['text'],
+            $comment->getType(),
+            $item['status'],
+            $comment->getData()
         );
+
+        $entityManager->flush($comment);
     }
 
     /**
