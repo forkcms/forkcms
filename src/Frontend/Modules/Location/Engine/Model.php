@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Location\Engine;
 
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Theme as FrontendTheme;
 
@@ -59,20 +60,12 @@ class Model
 
     public static function get(int $id): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT *
-             FROM location
-             WHERE id = ? AND language = ?',
-            [$id, LANGUAGE]
-        );
+        return BackendLocationModel::get($id);
     }
 
     public static function getAll(): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT * FROM location WHERE language = ? AND show_overview = ?',
-            [LANGUAGE, true]
-        );
+        return BackendLocationModel::getAll();
     }
 
     /**
