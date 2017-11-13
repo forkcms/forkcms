@@ -348,6 +348,7 @@ class Model
 
     /**
      * Get the comments
+     * @deprecated
      *
      * @param string $status The type of comments to get.
      * @param int    $limit  The maximum number of items to retrieve.

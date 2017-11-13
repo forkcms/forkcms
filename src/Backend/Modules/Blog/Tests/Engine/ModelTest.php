@@ -49,29 +49,6 @@ class ModelTest extends WebTestCase
         self::assertEquals(false, Model::existsComment(2));
     }
 
-    public function testGettingAllComments(): void
-    {
-        $comments = Model::getAllCommentsForStatus('published');
-
-        self::assertCount(1, $comments);
-
-        $firstComment = $comments[0];
-
-        $commentData = $this->getCommentData();
-
-        self::assertEquals(1, $firstComment['post_id']);
-        self::assertEquals($commentData['post_id'], $firstComment['post_id']);
-        self::assertEquals(strtotime($commentData['created_on']), $firstComment['created_on']);
-        self::assertEquals($commentData['author'], $firstComment['author']);
-        self::assertEquals($commentData['email'], $firstComment['email']);
-        self::assertEquals($commentData['website'], $firstComment['website']);
-        self::assertEquals($commentData['text'], $firstComment['text']);
-        self::assertEquals($commentData['type'], $firstComment['type']);
-        self::assertEquals($commentData['status'], $firstComment['status']);
-        self::assertEquals($this->getBlogpostData()['title'], $firstComment['post_title']);
-        self::assertEquals($this->getBlogpostData()['language'], $firstComment['post_language']);
-    }
-
     public function testEditingComment(): void
     {
         $commentData = $this->getUpdatedCommentData();
