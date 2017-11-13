@@ -6,6 +6,7 @@ use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Locale;
 use Backend\Modules\Blog\Domain\Comment;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -907,38 +908,56 @@ class Model
         return $item['id'];
     }
 
-    /**
-     * Inserts a new comment (Taken from FrontendBlogModel)
-     *
-     * @param array $comment The comment to add.
-     *
-     * @return int
-     */
-    public static function insertComment(array $comment): int
+    public static function insertComment(array $data): int
     {
-        // get database
-        $database = BackendModel::getContainer()->get('database');
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
 
-        // insert comment
-        $comment['id'] = (int) $database->insert('blog_comments', $comment);
+        $comment = new Comment(
+            $data['post_id'],
+            Locale::fromString($data['language']),
+            $data['author'],
+            $data['email'],
+            $data['website'],
+            $data['text'],
+            'comment',
+            $data['status'],
+            $data['data']
+        );
+
+        $entityManager->persist($comment);
+        $entityManager->flush($comment);
 
         // recalculate if published
-        if ($comment['status'] == 'published') {
+        if ($comment->getStatus() == 'published') {
+            $database = BackendModel::getContainer()->get('database');
+
             // num comments
-            $numComments = (int) BackendModel::getContainer()->get('database')->getVar(
+            $numComments = (int) $database->getVar(
                 'SELECT COUNT(i.id) AS comment_count
                  FROM blog_comments AS i
                  INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
                  WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
                  GROUP BY i.post_id',
-                ['published', $comment['post_id'], BL::getWorkingLanguage(), 'active']
+                [
+                    'published',
+                    $comment->getPostId(),
+                    BL::getWorkingLanguage(),
+                    'active',
+                ]
             );
 
             // update num comments
-            $database->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
+            $database->update(
+                'blog_posts',
+                [
+                    'num_comments' => $numComments,
+                ],
+                'id = ?',
+                $comment->getPostId()
+            );
         }
 
-        return $comment['id'];
+        return $comment->getId();
     }
 
     /**
