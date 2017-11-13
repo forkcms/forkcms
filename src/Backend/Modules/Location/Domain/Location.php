@@ -4,10 +4,10 @@ namespace Backend\Modules\Location\Domain;
 
 use Common\Locale;
 use Backend\Core\Language\Locale as BackendLocale;
-use Exception;
-use Frontend\Core\Language\Locale as FrontendLocale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use Frontend\Core\Language\Locale as FrontendLocale;
 
 /**
  * @ORM\Table(name="location")
