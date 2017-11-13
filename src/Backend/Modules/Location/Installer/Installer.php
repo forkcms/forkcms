@@ -17,11 +17,15 @@ class Installer extends ModuleInstaller
         $this->addModule('Location');
         $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
         $this->configureFrontendExtras();
+    }
 
+    private function configureEntities(): void
+    {
         Model::get('fork.entity.create_schema')->forEntityClass(Location::class);
     }
 
