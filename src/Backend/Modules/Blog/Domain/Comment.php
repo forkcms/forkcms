@@ -187,4 +187,21 @@ class Comment
     {
         $this->createdOn = new DateTime();
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'post_id' => $this->postId,
+            'language' => $this->locale->getLocale(),
+            'created_on' => $this->createdOn->format('U'),
+            'author' => $this->author,
+            'email' => $this->email,
+            'website' => $this->website,
+            'text' => $this->text,
+            'type' => $this->type,
+            'status' => $this->status,
+            'data' => $this->data,
+        ];
+    }
 }
