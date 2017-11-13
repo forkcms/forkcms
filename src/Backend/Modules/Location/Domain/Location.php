@@ -27,7 +27,7 @@ class Location
     /**
      * @var Locale
      *
-     * @ORM\Column(type="locale", name="language")
+     * @ORM\Column(type="locale")
      */
     private $locale;
 
@@ -35,7 +35,7 @@ class Location
      * @TODO: map this to some sort of Extra entity
      * @var integer
      *
-     * @ORM\Column(type="integer", name="extra_id")
+     * @ORM\Column(type="integer")
      */
     private $extraId;
 
@@ -84,35 +84,35 @@ class Location
     /**
      * @var float
      *
-     * @ORM\Column(type="float", name="lat")
+     * @ORM\Column(type="float")
      */
     private $latitude;
 
     /**
      * @var float
      *
-     * @ORM\Column(type="float", name="lng")
+     * @ORM\Column(type="float")
      */
     private $longitude;
 
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", options={"default" = true}, name="show_overview")
+     * @ORM\Column(type="boolean", options={"default" = true})
      */
     private $showInOverview;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="created_on")
+     * @ORM\Column(type="datetime")
      */
     private $createdOn;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="edited_on")
+     * @ORM\Column(type="datetime")
      */
     private $editedOn;
 

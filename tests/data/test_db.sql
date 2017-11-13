@@ -2226,21 +2226,21 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `location`;
 
 CREATE TABLE `location` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:locale)',
-  `extra_id` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `street` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `zip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lat` double NOT NULL,
-  `lng` double NOT NULL,
-  `show_overview` tinyint(1) NOT NULL DEFAULT 1,
-  `created_on` datetime NOT NULL COMMENT '(DC2Type:datetime)',
-  `edited_on` datetime NOT NULL COMMENT '(DC2Type:datetime)',
-  PRIMARY KEY (`id`)
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`locale` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:locale)',
+	`extraId` int(11) NOT NULL,
+	`title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+	`street` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+	`number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+	`zip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+	`city` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+	`country` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+	`latitude` double NOT NULL,
+	`longitude` double NOT NULL,
+	`showInOverview` tinyint(1) NOT NULL DEFAULT 1,
+	`createdOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+	`editedOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
