@@ -245,7 +245,7 @@ class Location
     }
 
     /**
-     * @ORM\PreUpdate()
+     * @ORM\PreUpdate
      */
     public function preUpdate(): void
     {
