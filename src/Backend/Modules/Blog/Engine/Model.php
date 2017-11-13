@@ -519,20 +519,19 @@ class Model
         return [];
     }
 
-    /**
-     * Get multiple comments at once
-     *
-     * @param array $ids The id(s) of the comment(s).
-     *
-     * @return array
-     */
     public static function getComments(array $ids): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT *
-             FROM blog_comments AS i
-             WHERE i.id IN (' . implode(', ', array_fill(0, count($ids), '?')) . ')',
-            $ids
+        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
+                                  ->getRepository(Comment::class);
+        return array_map(
+            function(Comment $comment) {
+                $commentData = $comment->toArray();
+                // I really don't know why this is returned in a non UNIX-timestamp format
+                $commentData['created_on'] = $comment->getCreatedOn()->format('Y-m-d H:i:s');
+
+                return $commentData;
+            },
+            $repository->findById($ids)
         );
     }
 
