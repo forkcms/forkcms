@@ -27,17 +27,13 @@ class Model
      */
     public static function delete(int $id): void
     {
-        /** @var EntityRepository $repository */
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')->getRepository(Location::class);
-
-        $location = $repository->find($id);
+        $location = self::getRepository()->find($id);
 
         if ($location instanceof Location) {
             BackendModel::deleteExtraById($location->getExtraId());
             BackendModel::getContainer()->get('database')->delete('location_settings', 'map_id = ?', [$location->getId()]);
 
-            /** @var EntityManager $entityManager */
-            $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
+            $entityManager = self::getEntityManager();
 
             $entityManager->remove($location);
             $entityManager->flush();
@@ -53,10 +49,7 @@ class Model
      */
     public static function exists(int $id): bool
     {
-        /** @var EntityRepository $repository */
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')->getRepository(Location::class);
-
-        return $repository->find($id) instanceof Location;
+        return self::getRepository()->find($id) instanceof Location;
     }
 
     /**
@@ -68,10 +61,7 @@ class Model
      */
     public static function get(int $id): array
     {
-        /** @var EntityRepository $repository */
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')->getRepository(Location::class);
-
-        $location = $repository->find($id);
+        $location = self::getRepository()->find($id);
 
         if ($location instanceof Location) {
             return $location->toArray();
@@ -87,10 +77,7 @@ class Model
      */
     public static function getAll(): array
     {
-        /** @var EntityRepository $repository */
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')->getRepository(Location::class);
-
-        $locations = $repository->findAll();
+        $locations = self::getRepository()->findAll();
 
         return array_map(
             function (Location $location) {
@@ -213,9 +200,7 @@ class Model
     {
         $location = Location::fromArray($item);
 
-        /** @var EntityManager $entityManager */
-        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
-
+        $entityManager = self::getEntityManager();
         $entityManager->persist($location);
 
         // insert extra
@@ -283,10 +268,7 @@ class Model
      */
     public static function update(array $item): int
     {
-        /** @var EntityRepository $repository */
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')->getRepository(Location::class);
-
-        $currentLocation = $repository->find($item['id']);
+        $currentLocation = self::getRepository()->find($item['id']);
 
         if (!$currentLocation instanceof Location) {
             return 0;
@@ -307,10 +289,7 @@ class Model
             $updatedLocation->isShowInOverview()
         );
 
-        /** @var EntityManager $entityManager */
-        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
-
-        $entityManager->flush($currentLocation);
+        self::getEntityManager()->flush($currentLocation);
 
         // update extra
         BackendModel::updateExtra(
@@ -325,5 +304,15 @@ class Model
         );
 
         return $currentLocation->getId();
+    }
+
+    private static function getEntityManager(): EntityManager
+    {
+        return BackendModel::get('doctrine.orm.default_entity_manager');
+    }
+
+    private static function getRepository(): EntityRepository
+    {
+        return self::getEntityManager()->getRepository(Location::class);
     }
 }
