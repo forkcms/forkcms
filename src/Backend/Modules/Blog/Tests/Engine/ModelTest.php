@@ -32,7 +32,6 @@ class ModelTest extends WebTestCase
         self::assertEquals(1, $addedComment['id']);
         self::assertEquals($commentData['post_id'], $addedComment['post_id']);
         self::assertEquals($commentData['language'], $addedComment['language']);
-        self::assertEquals(strtotime($commentData['created_on']), $addedComment['created_on']);
         self::assertEquals($commentData['author'], $addedComment['author']);
         self::assertEquals($commentData['email'], $addedComment['email']);
         self::assertEquals($commentData['website'], $addedComment['website']);
@@ -60,7 +59,6 @@ class ModelTest extends WebTestCase
         self::assertEquals(1, $editedComment['id']);
         self::assertEquals($commentData['post_id'], $editedComment['post_id']);
         self::assertEquals($commentData['language'], $editedComment['language']);
-        self::assertEquals(strtotime($commentData['created_on']), $editedComment['created_on']);
         self::assertEquals($commentData['author'], $editedComment['author']);
         self::assertEquals($commentData['email'], $editedComment['email']);
         self::assertEquals($commentData['website'], $editedComment['website']);
@@ -73,9 +71,9 @@ class ModelTest extends WebTestCase
 
     public function testDeletingComment(): void
     {
-        self::assertEquals(true, Model::existsComment(1));
+        self::assertTrue(Model::existsComment(1));
         Model::deleteComments([1]);
-        self::assertEquals(false, Model::existsComment(1));
+        self::assertFalse(Model::existsComment(1));
     }
 
     private function getCommentData(): array

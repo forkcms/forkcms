@@ -181,7 +181,9 @@ class Comment
      */
     public function prePersist(): void
     {
-        $this->createdOn = new DateTime();
+        if($this->createdOn === null) {
+            $this->createdOn = new DateTime();
+        }
     }
 
     public function toArray(): array

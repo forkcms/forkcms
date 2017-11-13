@@ -241,34 +241,23 @@ class Model
      */
     public static function deleteComments(array $ids): void
     {
-        // make sure $ids is an array
-        $ids = (array) $ids;
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
+        $repository = $entityManager->getRepository(Comment::class);
 
-        // loop and cast to integers
-        foreach ($ids as &$id) {
-            $id = (int) $id;
+        $comments = $repository->findById($ids);
+        $postsToRecalculate = [];
+
+        foreach ($comments as $comment) {
+            $postsToRecalculate[] = $comment->getPostId();
+            $entityManager->remove($comment);
         }
 
-        // create an array with an equal amount of questionmarks as ids provided
-        $idPlaceHolders = array_fill(0, count($ids), '?');
-
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
-        // get ids
-        $itemIds = (array) $database->getColumn(
-            'SELECT i.post_id
-             FROM blog_comments AS i
-             WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')',
-            $ids
-        );
-
-        // update record
-        $database->delete('blog_comments', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
+        $entityManager->flush();
 
         // recalculate the comment count
-        if (!empty($itemIds)) {
-            self::reCalculateCommentCount($itemIds);
+        if (!empty($postsToRecalculate)) {
+            $postsToRecalculate = array_unique($postsToRecalculate);
+            self::reCalculateCommentCount($postsToRecalculate);
         }
     }
 
