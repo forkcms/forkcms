@@ -104,18 +104,14 @@ class Comment
     }
 
     public function update(
-        int $postId,
-        Locale $locale,
         string $author,
         string $email,
-        string $website,
+        string $website = null,
         string $text,
         string $type,
         string $status,
         string $data
     ) {
-        $this->postId = $postId;
-        $this->locale = $locale;
         $this->author = $author;
         $this->email = $email;
         $this->website = $website;
