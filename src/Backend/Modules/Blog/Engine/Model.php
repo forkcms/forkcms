@@ -485,25 +485,38 @@ class Model
         );
     }
 
-    /**
-     * Get all data for a given id
-     *
-     * @param int $id The Id of the comment to fetch?
-     *
-     * @return array
-     */
-    public static function getComment($id): array
+    public static function getComment(int $id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
-             p.id AS post_id, p.title AS post_title, m.url AS post_url
-             FROM blog_comments AS i
-             INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-             INNER JOIN meta AS m ON p.meta_id = m.id
-             WHERE i.id = ? AND p.status = ?
-             LIMIT 1',
-            [(int) $id, 'active']
-        );
+        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
+            ->getRepository(Comment::class);
+        $comment = $repository->find($id);
+
+        if ($comment instanceof Comment) {
+            $commentData = $comment->toArray();
+
+            // I know this is dirty, but as we don't have full entities yet we
+            // need to fetch the post separately and inject it into the comment
+            $postData = (array)BackendModel::getContainer()->get('database')
+                ->getRecord(
+                    'SELECT p.id AS post_id, p.title AS post_title, m.url AS post_url
+                     FROM blog_posts AS p
+                     INNER JOIN meta AS m ON p.meta_id = m.id
+                     WHERE p.id = ? AND p.status = ? AND p.language = ?
+                     LIMIT 1',
+                    [
+                        (int)$comment->getId(),
+                        'active',
+                        $comment->getLocale()->getLocale(),
+                    ]
+                );
+
+            return array_merge(
+                $commentData,
+                $postData
+            );
+        }
+
+        return [];
     }
 
     /**
