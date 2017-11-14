@@ -30,7 +30,7 @@ class Model
             $entityManager = self::getEntityManager();
 
             $entityManager->remove($location);
-            $entityManager->flush();
+            $entityManager->flush($location);
         }
     }
 
