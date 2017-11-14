@@ -481,33 +481,35 @@ class Model
         $comment = BackendModel::get('blog.repository.comment')
                                ->find($id);
 
-        if ($comment instanceof Comment) {
-            $commentData = $comment->toArray();
 
-            // I know this is dirty, but as we don't have full entities yet we
-            // need to fetch the post separately and inject it into the comment
-            // @todo: fix this when there is a POST entity
-            $postData = (array) BackendModel::getContainer()->get('database')
-                ->getRecord(
-                    'SELECT p.id AS post_id, p.title AS post_title, m.url AS post_url
-                     FROM blog_posts AS p
-                     INNER JOIN meta AS m ON p.meta_id = m.id
-                     WHERE p.id = ? AND p.status = ? AND p.language = ?
-                     LIMIT 1',
-                    [
-                        (int) $comment->getPostId(),
-                        'active',
-                        $comment->getLocale()->getLocale(),
-                    ]
-                );
 
-            return array_merge(
-                $commentData,
-                $postData
-            );
+        if (!$comment instanceof Comment) {
+            return [];
         }
 
-        return [];
+        $commentData = $comment->toArray();
+
+        // I know this is dirty, but as we don't have full entities yet we
+        // need to fetch the post separately and inject it into the comment
+        // @todo: fix this when there is a POST entity
+        $postData = (array) BackendModel::getContainer()->get('database')
+            ->getRecord(
+                'SELECT p.id AS post_id, p.title AS post_title, m.url AS post_url
+                 FROM blog_posts AS p
+                 INNER JOIN meta AS m ON p.meta_id = m.id
+                 WHERE p.id = ? AND p.status = ? AND p.language = ?
+                 LIMIT 1',
+                [
+                    (int) $comment->getPostId(),
+                    'active',
+                    $comment->getLocale()->getLocale(),
+                ]
+            );
+
+        return array_merge(
+            $commentData,
+            $postData
+        );
     }
 
     public static function getComments(array $ids): array
