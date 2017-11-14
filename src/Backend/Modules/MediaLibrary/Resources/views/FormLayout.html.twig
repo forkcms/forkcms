@@ -13,11 +13,7 @@
         <div class="panel-body">
           {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'panel panel-default mediaGroup' }) %}
           <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-            <!--[if lt IE 7 ]><div class="panel-body mediaConnectedBox ie6"><![endif]-->
-            <!--[if IE 7 ]><div class="panel-body mediaConnectedBox ie7"><![endif]-->
-            <!--[if IE 8 ]><div class="panel-body mediaConnectedBox ie8"><![endif]-->
-            <!--[if IE 9 ]><div class="panel-body mediaConnectedBox ie9"><![endif]-->
-            <!--[if (gt IE 9)|!(IE)]><!--><div class="panel-body mediaConnectedBox"><!--<![endif]-->
+            <div class="panel-body mediaConnectedBox">
               <ul class="mediaConnectedItems ui-sortable">
                 {% for connectedItem in mediaGroup.connectedItems %}
                   <li id="media-{{ connectedItem.item.id }}" data-folder-id="{{ connectedItem.item.folder.id }}" class="ui-state-default">
