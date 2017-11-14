@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Blog\Engine;
 
-use Backend\Modules\Blog\Domain\Comment;
+use Backend\Modules\Blog\Domain\Comment\Comment;
 use Common\Mailer\Message;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;

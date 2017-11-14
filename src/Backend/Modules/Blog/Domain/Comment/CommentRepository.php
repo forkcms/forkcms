@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Blog\Domain;
+namespace Backend\Modules\Blog\Domain\Comment;
 
 use Common\Locale;
 use Doctrine\DBAL\Connection;

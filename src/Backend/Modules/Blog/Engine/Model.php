@@ -7,7 +7,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Language\Locale;
-use Backend\Modules\Blog\Domain\Comment;
+use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**

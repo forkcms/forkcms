@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Blog\Domain;
+namespace Backend\Modules\Blog\Domain\Comment;
 
 use Common\Locale;
 use DateTime;
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="blog_comments")
- * @ORM\Entity(repositoryClass="Backend\Modules\Blog\Domain\CommentRepository")
+ * @ORM\Entity(repositoryClass="Backend\Modules\Blog\Domain\Comment\CommentRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Comment
