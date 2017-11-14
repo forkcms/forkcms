@@ -236,23 +236,26 @@ class Model
 
     public static function deleteComments(array $ids): void
     {
-        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
-        $repository = $entityManager->getRepository(Comment::class);
+        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
+            ->getRepository(Comment::class);
 
         $comments = $repository->findById($ids);
-        $postsToRecalculate = [];
 
-        foreach ($comments as $comment) {
-            $postsToRecalculate[] = $comment->getPostId();
-            $entityManager->remove($comment);
+        if (empty($comments)) {
+            return;
         }
 
-        $entityManager->flush();
+        $postIdsToRecalculate = [];
+        foreach ($comments as $comment) {
+            $postIdsToRecalculate[] = $comment->getPostId();
+        }
+
+        $repository->deleteMultipleById($ids);
 
         // recalculate the comment count
-        if (!empty($postsToRecalculate)) {
-            $postsToRecalculate = array_unique($postsToRecalculate);
-            self::reCalculateCommentCount($postsToRecalculate);
+        if (!empty($postIdsToRecalculate)) {
+            $postIdsToRecalculate = array_unique($postIdsToRecalculate);
+            self::reCalculateCommentCount($postIdsToRecalculate);
         }
     }
 

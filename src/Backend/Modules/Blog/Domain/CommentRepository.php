@@ -3,11 +3,12 @@
 namespace Backend\Modules\Blog\Domain;
 
 use Common\Locale;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
 
 class CommentRepository extends EntityRepository
 {
-    public function listCountPerStatus(Locale $locale) :array
+    public function listCountPerStatus(Locale $locale): array
     {
         $builder = $this->getEntityManager()
                         ->createQueryBuilder()
@@ -25,5 +26,19 @@ class CommentRepository extends EntityRepository
         }
 
         return $data;
+    }
+
+    public function deleteMultipleById(array $ids): void
+    {
+        $builder = $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->delete(Comment::class, 'c')
+                        ->where('c.id IN(:ids)')
+                        ->setParameter(
+                            ':ids',
+                            $ids,
+                            Connection::PARAM_INT_ARRAY
+                        );
+        $builder->getQuery()->execute();
     }
 }
