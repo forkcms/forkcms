@@ -487,7 +487,7 @@ class Model
             // I know this is dirty, but as we don't have full entities yet we
             // need to fetch the post separately and inject it into the comment
             // @todo: fix this when there is a POST entity
-            $postData = (array)BackendModel::getContainer()->get('database')
+            $postData = (array) BackendModel::getContainer()->get('database')
                 ->getRecord(
                     'SELECT p.id AS post_id, p.title AS post_title, m.url AS post_url
                      FROM blog_posts AS p
@@ -908,7 +908,7 @@ class Model
         $entityManager->flush($comment);
 
         // recalculate if published
-        if ($comment->getStatus() == 'published') {
+        if ($comment->getStatus() === 'published') {
             self::reCalculateCommentCount([$comment->getPostId()]);
         }
 
@@ -1097,7 +1097,7 @@ class Model
         return $updated;
     }
 
-    public static function updateComment(array $item)
+    public static function updateComment(array $item): void
     {
         $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
         $comment = BackendModel::get('blog.repository.comment')
@@ -1120,7 +1120,8 @@ class Model
         $entityManager->flush($comment);
     }
 
-    public static function updateCommentStatuses(array $ids, string $status): void{
+    public static function updateCommentStatuses(array $ids, string $status): void
+    {
         $repository = BackendModel::get('blog.repository.comment');
         $comments = $repository->findById($ids);
 
@@ -1135,11 +1136,13 @@ class Model
 
         $repository->updateMultipleStatusById($ids, $status);
 
-        // recalculate the comment count
-        if (!empty($postIdsToRecalculate)) {
-            $postIdsToRecalculate = array_unique($postIdsToRecalculate);
-            self::reCalculateCommentCount($postIdsToRecalculate);
+        if (empty($postIdsToRecalculate)) {
+            return;
         }
+
+        $postIdsToRecalculate = array_unique($postIdsToRecalculate);
+        self::reCalculateCommentCount($postIdsToRecalculate);
+
     }
 
     /**
