@@ -89,8 +89,8 @@ class Comment
         string $text,
         string $type,
         string $status,
-        ?string $website = null,
-        ?string $data = null
+        ?string $website,
+        ?string $data
     ){
         $this->postId = $postId;
         $this->locale = $locale;
@@ -109,8 +109,8 @@ class Comment
         string $text,
         string $type,
         string $status,
-        ?string $website = null,
-        ?string $data = null
+        ?string $website,
+        ?string $data
     ){
         $this->author = $author;
         $this->email = $email;
