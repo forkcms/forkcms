@@ -46,7 +46,7 @@ class Comment
     private $email;
 
     /**
-     * @var string
+     * @var null|string
      * @ORM\Column(type="string", nullable=true)
      */
     private $website;
@@ -70,7 +70,7 @@ class Comment
     private $status;
 
     /**
-     * @var string
+     * @var null|string
      * @ORM\Column(type="text", nullable=true)
      */
     private $data;
@@ -86,12 +86,12 @@ class Comment
         Locale $locale,
         string $author,
         string $email,
-        string $website,
+        ?string $website = null,
         string $text,
         string $type,
         string $status,
-        string $data
-    ) {
+        ?string $data = null
+    ){
         $this->postId = $postId;
         $this->locale = $locale;
         $this->author = $author;
@@ -106,12 +106,12 @@ class Comment
     public function update(
         string $author,
         string $email,
-        string $website = null,
+        ?string $website = null,
         string $text,
         string $type,
         string $status,
-        string $data
-    ) {
+        ?string $data = null
+    ){
         $this->author = $author;
         $this->email = $email;
         $this->website = $website;
@@ -146,7 +146,7 @@ class Comment
         return $this->email;
     }
 
-    public function getWebsite(): string
+    public function getWebsite(): ?string
     {
         return $this->website;
     }
@@ -166,7 +166,7 @@ class Comment
         return $this->status;
     }
 
-    public function getData(): string
+    public function getData(): ?string
     {
         return $this->data;
     }
@@ -181,7 +181,7 @@ class Comment
      */
     public function prePersist(): void
     {
-        if($this->createdOn === null) {
+        if ($this->createdOn === null) {
             $this->createdOn = new DateTime();
         }
     }
