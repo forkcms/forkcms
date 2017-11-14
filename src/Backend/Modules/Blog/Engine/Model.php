@@ -486,6 +486,7 @@ class Model
 
             // I know this is dirty, but as we don't have full entities yet we
             // need to fetch the post separately and inject it into the comment
+            // @todo: fix this when there is a POST entity
             $postData = (array)BackendModel::getContainer()->get('database')
                 ->getRecord(
                     'SELECT p.id AS post_id, p.title AS post_title, m.url AS post_url
