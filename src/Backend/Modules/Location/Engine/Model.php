@@ -5,9 +5,11 @@ namespace Backend\Modules\Location\Engine;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Domain\Location;
+use Backend\Modules\Location\Domain\LocationSetting;
 use Common\ModuleExtraType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use InvalidArgumentException;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**
@@ -230,23 +232,39 @@ class Model
         return $location->getId();
     }
 
-    /**
-     * Save the map settings
-     *
-     * @param int $mapId
-     * @param string $key
-     * @param mixed $value
-     */
-    public static function setMapSetting(int $mapId, string $key, $value): void
+    public static function setMapSetting(int $locationId, string $name, $value): void
     {
-        $value = serialize($value);
+        /** @var Location|null $location */
+        $location = self::getLocationRepository()->find($locationId);
 
-        BackendModel::getContainer()->get('database')->execute(
-            'INSERT INTO location_settings(map_id, name, value)
-             VALUES(?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            [$mapId, $key, $value, $value]
+        if (!$location instanceof Location) {
+            throw new InvalidArgumentException('Location with id ' . $locationId . ' doesn\'t exist');
+        }
+
+        $setting = self::getLocationSettingRepository()->findOneBy(
+            [
+                'location' => $location,
+                'name' => $name
+            ]
         );
+
+        if ($setting instanceof LocationSetting) {
+            $setting->update($value);
+
+            self::getEntityManager()->flush($setting);
+
+            return;
+        }
+
+        $location->addSetting(
+            new LocationSetting(
+                $location,
+                $name,
+                $value
+            )
+        );
+
+        self::getEntityManager()->flush($location);
     }
 
     /**
@@ -303,5 +321,10 @@ class Model
     private static function getLocationRepository(): EntityRepository
     {
         return self::getEntityManager()->getRepository(Location::class);
+    }
+
+    private static function getLocationSettingRepository(): EntityRepository
+    {
+        return self::getEntityManager()->getRepository(LocationSetting::class);
     }
 }
