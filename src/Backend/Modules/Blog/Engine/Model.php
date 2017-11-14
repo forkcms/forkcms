@@ -1111,9 +1111,9 @@ class Model
             $item['email'],
             $item['website'],
             $item['text'],
-            $comment->getType(),
+            (isset($item['type'])) ? $item['type'] : $comment->getType(),
             $item['status'],
-            $comment->getData()
+            (isset($item['data'])) ? $item['data'] : $comment->getData()
         );
 
         $entityManager->flush($comment);
