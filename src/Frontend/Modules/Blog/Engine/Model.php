@@ -9,6 +9,7 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
@@ -767,29 +768,7 @@ class Model implements FrontendTagsInterface
 
     public static function insertComment(array $comment): int
     {
-        // get database
-        $database = FrontendModel::getContainer()->get('database');
-
-        // insert comment
-        $comment['id'] = (int) $database->insert('blog_comments', $comment);
-
-        // recalculate if published
-        if ($comment['status'] == 'published') {
-            // num comments
-            $numComments = (int) FrontendModel::getContainer()->get('database')->getVar(
-                'SELECT COUNT(i.id) AS comment_count
-                 FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-                 WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
-                 GROUP BY i.post_id',
-                ['published', $comment['post_id'], LANGUAGE, 'active']
-            );
-
-            // update num comments
-            $database->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
-        }
-
-        return $comment['id'];
+        return BackendBlogModel::insertComment($comment);
     }
 
     /**
