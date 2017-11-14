@@ -33,7 +33,6 @@ class Model
 
         if ($location instanceof Location) {
             BackendModel::deleteExtraById($location->getExtraId());
-            BackendModel::getContainer()->get('database')->delete('location_settings', 'map_id = ?', [$location->getId()]);
 
             $entityManager = self::getEntityManager();
 

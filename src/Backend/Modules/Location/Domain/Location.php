@@ -111,7 +111,8 @@ class Location
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Location\Domain\LocationSetting",
      *     mappedBy="location",
-     *     cascade={"persist"}
+     *     cascade={"persist"},
+     *     orphanRemoval=true
      * )
      */
     private $settings;
