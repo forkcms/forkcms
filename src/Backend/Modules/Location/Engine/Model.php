@@ -151,25 +151,24 @@ class Model
         ];
     }
 
-    /**
-     * Retrieve a map setting
-     *
-     * @param int $mapId
-     * @param string $name
-     *
-     * @return mixed
-     */
-    public static function getMapSetting(int $mapId, string $name)
+    public static function getMapSetting(int $locationId, string $name)
     {
-        $serializedData = (string) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ? AND s.name = ?',
-            [$mapId, $name]
+        /** @var Location|null $location */
+        $location = self::getLocationRepository()->find($locationId);
+
+        if (!$location instanceof Location) {
+            return false;
+        }
+
+        $setting = self::getLocationSettingRepository()->findOneBy(
+            [
+                'location' => $location,
+                'name' => $name
+            ]
         );
 
-        if ($serializedData !== null) {
-            return unserialize($serializedData);
+        if ($setting instanceof LocationSetting) {
+            return $setting->getValue();
         }
 
         return false;
