@@ -221,7 +221,7 @@ class BaseTwigModifiers
      * Truncate a string
      *    syntax: {{ $string|truncate($max-length, $append-hellip, $closest-word) }}.
      *
-     * @param string $string The string passed from the template.
+     * @param null|string $string The string passed from the template.
      * @param int $length The maximum length of the truncated string.
      * @param bool $useHellip Should a hellip be appended if the length exceeds the requested length?
      * @param bool $closestWord Truncate on exact length or on closest word?
@@ -229,11 +229,15 @@ class BaseTwigModifiers
      * @return string
      */
     public static function truncate(
-        string $string,
+        ?string $string,
         int $length,
         bool $useHellip = true,
         bool $closestWord = false
     ): string {
+        if ($string === null) {
+            return '';
+        }
+
         // remove special chars, all of them, also the ones that shouldn't be there.
         $string = SpoonFilter::htmlentitiesDecode($string, null, ENT_QUOTES);
 
