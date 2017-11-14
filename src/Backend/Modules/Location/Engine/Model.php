@@ -174,27 +174,24 @@ class Model
         return false;
     }
 
-    /**
-     * Fetch all the settings for a specific map
-     *
-     * @param int $mapId
-     *
-     * @return array
-     */
-    public static function getMapSettings(int $mapId): array
+    public static function getMapSettings(int $locationId): array
     {
-        $mapSettings = (array) BackendModel::getContainer()->get('database')->getPairs(
-            'SELECT s.name, s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ?',
-            [$mapId]
-        );
+        /** @var Location|null $location */
+        $location = self::getLocationRepository()->find($locationId);
 
-        foreach ($mapSettings as $key => $value) {
-            $mapSettings[$key] = unserialize($value);
+        if (!$location instanceof Location) {
+            return [];
         }
 
-        return $mapSettings;
+        return array_reduce(
+            $location->getSettings()->toArray(),
+            function (array $carry, LocationSetting $setting) {
+                $carry[$setting->getName()] = $setting->getValue();
+
+                return $carry;
+            },
+            []
+        );
     }
 
     public static function insert(array $item): int
