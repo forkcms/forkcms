@@ -243,10 +243,12 @@ class Model
             return;
         }
 
-        $postIdsToRecalculate = [];
-        foreach ($comments as $comment) {
-            $postIdsToRecalculate[] = $comment->getPostId();
-        }
+        $postIdsToRecalculate = array_map(
+            function ($comment) {
+                return $comment->getPostId();
+            },
+            $comments
+        );
 
         $repository->deleteMultipleById($ids);
 
