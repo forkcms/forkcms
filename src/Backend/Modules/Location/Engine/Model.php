@@ -153,25 +153,7 @@ class Model
 
     public static function getMapSetting(int $locationId, string $name)
     {
-        /** @var Location|null $location */
-        $location = self::getLocationRepository()->find($locationId);
-
-        if (!$location instanceof Location) {
-            return false;
-        }
-
-        $setting = self::getLocationSettingRepository()->findOneBy(
-            [
-                'location' => $location,
-                'name' => $name
-            ]
-        );
-
-        if ($setting instanceof LocationSetting) {
-            return $setting->getValue();
-        }
-
-        return false;
+        return self::getMapSettings($locationId)[$name] ?? false;
     }
 
     public static function getMapSettings(int $locationId): array
