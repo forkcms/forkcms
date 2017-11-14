@@ -237,7 +237,7 @@ class Location
         return $this->longitude;
     }
 
-    public function isShowInOverview(): ?bool
+    public function isShowInOverview(): bool
     {
         return $this->showInOverview;
     }
