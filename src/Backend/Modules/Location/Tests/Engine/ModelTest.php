@@ -84,6 +84,12 @@ class ModelTest extends WebTestCase
         self::assertEquals('bar', $settings['ping']);
     }
 
+    public function testGettingNonexistantSettingReturnsFalse(): void
+    {
+        self::assertFalse(Model::getMapSetting(1, 'i-dont-exist'));
+        self::assertFalse(Model::getMapSetting(3, 'the-location-also-doesnt-exist'));
+    }
+
     public function testLocationExists(): void
     {
         self::assertEquals(true, Model::exists(1));
