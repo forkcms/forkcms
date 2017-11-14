@@ -1,7 +1,8 @@
 <?php
 
-namespace Backend\Modules\Location\Domain;
+namespace Backend\Modules\Location\Domain\LocationSetting;
 
+use Backend\Modules\Location\Domain\Location\Location;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,7 +15,7 @@ class LocationSetting
      * @var Location
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Backend\Modules\Location\Domain\Location", inversedBy="settings")
+     * @ORM\ManyToOne(targetEntity="Backend\Modules\Location\Domain\Location\Location", inversedBy="settings")
      */
     private $location;
 

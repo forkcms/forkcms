@@ -4,8 +4,8 @@ namespace Backend\Modules\Location\Engine;
 
 use Backend\Core\Language\Language;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Location\Domain\Location;
-use Backend\Modules\Location\Domain\LocationSetting;
+use Backend\Modules\Location\Domain\Location\Location;
+use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
 use Common\ModuleExtraType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;

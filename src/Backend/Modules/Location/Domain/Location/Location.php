@@ -1,7 +1,8 @@
 <?php
 
-namespace Backend\Modules\Location\Domain;
+namespace Backend\Modules\Location\Domain\Location;
 
+use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
 use Common\Locale;
 use Backend\Core\Language\Locale as BackendLocale;
 use DateTime;
@@ -109,7 +110,7 @@ class Location
      * @var Collection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\Location\Domain\LocationSetting",
+     *     targetEntity="Backend\Modules\Location\Domain\LocationSetting\LocationSetting",
      *     mappedBy="location",
      *     cascade={"persist"},
      *     orphanRemoval=true
