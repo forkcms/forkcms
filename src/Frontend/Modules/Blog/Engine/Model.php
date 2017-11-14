@@ -494,10 +494,7 @@ class Model implements FrontendTagsInterface
 
     public static function getComments(int $blogPostId): array
     {
-        $repository = FrontendModel::get('doctrine.orm.default_entity_manager')
-                                  ->getRepository(Comment::class);
-
-        $comments = $repository->findBy(
+        $comments = FrontendModel::get('blog.repository.comment')->findBy(
             [
                 'postId' => $blogPostId,
                 'status' => 'published',

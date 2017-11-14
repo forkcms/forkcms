@@ -236,9 +236,7 @@ class Model
 
     public static function deleteComments(array $ids): void
     {
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
-            ->getRepository(Comment::class);
-
+        $repository = BackendModel::get('blog.repository.comment');
         $comments = $repository->findById($ids);
 
         if (empty($comments)) {
@@ -261,10 +259,7 @@ class Model
 
     public static function deleteSpamComments(): void
     {
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
-            ->getRepository(Comment::class);
-
-        $comments = $repository->findBy(
+        $comments = BackendModel::get('blog.repository.comment')->findBy(
             [
                 'status' => 'spam',
                 'locale' => BL::getWorkingLanguage(),
@@ -315,7 +310,7 @@ class Model
 
     public static function existsComment(int $id): bool
     {
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')->getRepository(Comment::class);
+        $repository = BackendModel::get('blog.repository.comment');
 
         return $repository->find($id) instanceof Comment;
     }
@@ -481,9 +476,8 @@ class Model
 
     public static function getComment(int $id): array
     {
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
-            ->getRepository(Comment::class);
-        $comment = $repository->find($id);
+        $comment = BackendModel::get('blog.repository.comment')
+                               ->find($id);
 
         if ($comment instanceof Comment) {
             $commentData = $comment->toArray();
@@ -498,7 +492,7 @@ class Model
                      WHERE p.id = ? AND p.status = ? AND p.language = ?
                      LIMIT 1',
                     [
-                        (int)$comment->getId(),
+                        (int) $comment->getPostId(),
                         'active',
                         $comment->getLocale()->getLocale(),
                     ]
@@ -515,8 +509,8 @@ class Model
 
     public static function getComments(array $ids): array
     {
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
-                                  ->getRepository(Comment::class);
+        $repository = BackendModel::get('blog.repository.comment');
+
         return array_map(
             function(Comment $comment) {
                 $commentData = $comment->toArray();
@@ -531,8 +525,7 @@ class Model
 
     public static function getCommentStatusCount(): array
     {
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
-                                  ->getRepository(Comment::class);
+        $repository = BackendModel::get('blog.repository.comment');
 
         return $repository->listCountPerStatus(Locale::workingLocale());
     }
@@ -1104,8 +1097,8 @@ class Model
     public static function updateComment(array $item)
     {
         $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
-        $repository = $entityManager->getRepository(Comment::class);
-        $comment = $repository->find($item['id']);
+        $comment = BackendModel::get('blog.repository.comment')
+                               ->find($item['id']);
 
         if (!$comment instanceof Comment) {
             return;
@@ -1125,9 +1118,7 @@ class Model
     }
 
     public static function updateCommentStatuses(array $ids, string $status): void{
-        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
-            ->getRepository(Comment::class);
-
+        $repository = BackendModel::get('blog.repository.comment');
         $comments = $repository->findById($ids);
 
         if (empty($comments)) {

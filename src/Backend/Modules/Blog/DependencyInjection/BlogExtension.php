@@ -12,7 +12,8 @@ class BlogExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        // no services to load, so an empty method
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.yml');
     }
 
     public function prepend(ContainerBuilder $container)
