@@ -2252,7 +2252,7 @@ DROP TABLE IF EXISTS `location_settings`;
 
 CREATE TABLE `location_settings` (
 	`location_id` int(11) NOT NULL,
-	`name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+	`name` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
 	`value` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:object)',
 	PRIMARY KEY (`location_id`,`name`),
 	KEY `IDX_3410822764D218E` (`location_id`),

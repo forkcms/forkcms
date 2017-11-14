@@ -22,7 +22,7 @@ class LocationSetting
      * @var string
      *
      * @ORM\Id
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=180)
      */
     private $name;
 
