@@ -258,23 +258,28 @@ class Model
 
     public static function deleteSpamComments(): void
     {
-        $database = BackendModel::getContainer()->get('database');
+        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
+            ->getRepository(Comment::class);
 
-        // get ids
-        $itemIds = (array) $database->getColumn(
-            'SELECT i.post_id
-             FROM blog_comments AS i
-             WHERE status = ? AND i.language = ?',
-            ['spam', BL::getWorkingLanguage()]
+        $comments = $repository->findBy(
+            [
+                'status' => 'spam',
+                'locale' => BL::getWorkingLanguage(),
+            ]
         );
 
-        // update record
-        $database->delete('blog_comments', 'status = ? AND language = ?', ['spam', BL::getWorkingLanguage()]);
-
-        // recalculate the comment count
-        if (!empty($itemIds)) {
-            self::reCalculateCommentCount($itemIds);
+        if (empty($comments)) {
+            return;
         }
+
+        $ids = array_map(
+            function ($comment){
+                return $comment->getId();
+            },
+            $comments
+        );
+
+        self::deleteComments($ids);
     }
 
     /**
