@@ -910,32 +910,7 @@ class Model
 
         // recalculate if published
         if ($comment->getStatus() == 'published') {
-            $database = BackendModel::getContainer()->get('database');
-
-            // num comments
-            $numComments = (int) $database->getVar(
-                'SELECT COUNT(i.id) AS comment_count
-                 FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-                 WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
-                 GROUP BY i.post_id',
-                [
-                    'published',
-                    $comment->getPostId(),
-                    BL::getWorkingLanguage(),
-                    'active',
-                ]
-            );
-
-            // update num comments
-            $database->update(
-                'blog_posts',
-                [
-                    'num_comments' => $numComments,
-                ],
-                'id = ?',
-                $comment->getPostId()
-            );
+            self::reCalculateCommentCount([$comment->getPostId()]);
         }
 
         return $comment->getId();
