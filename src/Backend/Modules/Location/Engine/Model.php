@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Location\Engine;
 
-use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Language;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Domain\Location;
 use Backend\Modules\Location\Domain\LocationSetting;
@@ -10,11 +10,9 @@ use Common\ModuleExtraType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
-use Symfony\Component\Intl\Intl as Intl;
+use SpoonFilter;
+use Symfony\Component\Intl\Intl;
 
-/**
- * In this file we store all generic functions that we will be using in the location module
- */
 class Model
 {
     const QUERY_DATAGRID_BROWSE =
@@ -22,11 +20,6 @@ class Model
          FROM location
          WHERE locale = ?';
 
-    /**
-     * Delete an item
-     *
-     * @param int $id The id of the record to delete.
-     */
     public static function delete(int $id): void
     {
         $location = self::getLocationRepository()->find($id);
@@ -41,25 +34,11 @@ class Model
         }
     }
 
-    /**
-     * Check if an item exists
-     *
-     * @param int $id The id of the record to look for.
-     *
-     * @return bool
-     */
     public static function exists(int $id): bool
     {
         return self::getLocationRepository()->find($id) instanceof Location;
     }
 
-    /**
-     * Fetch a record from the database
-     *
-     * @param int $id The id of the record to fetch.
-     *
-     * @return array
-     */
     public static function get(int $id): array
     {
         $location = self::getLocationRepository()->find($id);
@@ -71,11 +50,6 @@ class Model
         return [];
     }
 
-    /**
-     * Fetch a record from the database
-     *
-     * @return array
-     */
     public static function getAll(): array
     {
         $locations = self::getLocationRepository()->findAll();
@@ -127,7 +101,7 @@ class Model
         }
 
         if (!empty($country)) {
-            $item[] = Intl::getRegionBundle()->getCountryName($country, BL::getInterfaceLanguage());
+            $item[] = Intl::getRegionBundle()->getCountryName($country, Language::getInterfaceLanguage());
         }
 
         // define address
@@ -200,9 +174,13 @@ class Model
             'data',
             [
                 'id' => $location->getId(),
-                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $location->getTitle(),
+                'extra_label' => SpoonFilter::ucfirst(Language::lbl('Location', 'Core'))
+                    . ': '
+                    . $location->getTitle(),
                 'language' => $location->getLocale()->getLocale(),
-                'edit_url' => BackendModel::createUrlForAction('Edit', 'Blog') . '&id=' . $location->getId(),
+                'edit_url' => BackendModel::createUrlForAction('Edit', 'Blog')
+                    . '&id='
+                    . $location->getId(),
             ]
         );
 
@@ -244,13 +222,6 @@ class Model
         self::getEntityManager()->flush($location);
     }
 
-    /**
-     * Update an item
-     *
-     * @param array $item The data of the record to update.
-     *
-     * @return int
-     */
     public static function update(array $item): int
     {
         $currentLocation = self::getLocationRepository()->find($item['id']);
@@ -281,9 +252,13 @@ class Model
             'data',
             [
                 'id' => $currentLocation->getId(),
-                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $currentLocation->getTitle(),
+                'extra_label' => SpoonFilter::ucfirst(Language::lbl('Location', 'Core'))
+                    . ': '
+                    . $currentLocation->getTitle(),
                 'language' => $currentLocation->getLocale()->getLocale(),
-                'edit_url' => BackendModel::createUrlForAction('Edit', 'Blog') . '&id=' . $currentLocation->getId(),
+                'edit_url' => BackendModel::createUrlForAction('Edit', 'Blog')
+                    . '&id='
+                    . $currentLocation->getId(),
             ]
         );
 
