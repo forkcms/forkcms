@@ -305,8 +305,8 @@ class Location
             $item['country'],
             $item['lat'],
             $item['lng'],
-            isset($item['show_overview']) ? (bool) $item['show_overview'] : true,
-            isset($item['extra_id']) ? $item['extra_id'] : null
+            $item['show_overview'] ?? true,
+            $item['extra_id'] ?? null
         );
     }
 
