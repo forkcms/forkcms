@@ -1124,49 +1124,27 @@ class Model
         $entityManager->flush($comment);
     }
 
-    /**
-     * Updates one or more comments' status
-     *
-     * @param array  $ids    The id(s) of the comment(s) to change the status for.
-     * @param string $status The new status.
-     */
-    public static function updateCommentStatuses(array $ids, string $status): void
-    {
-        // make sure $ids is an array
-        $ids = (array) $ids;
+    public static function updateCommentStatuses(array $ids, string $status): void{
+        $repository = BackendModel::get('doctrine.orm.default_entity_manager')
+            ->getRepository(Comment::class);
 
-        // loop and cast to integers
-        foreach ($ids as &$id) {
-            $id = (int) $id;
+        $comments = $repository->findById($ids);
+
+        if (empty($comments)) {
+            return;
         }
 
-        // create an array with an equal amount of questionmarks as ids provided
-        $idPlaceHolders = array_fill(0, count($ids), '?');
+        $postIdsToRecalculate = [];
+        foreach ($comments as $comment) {
+            $postIdsToRecalculate[] = $comment->getPostId();
+        }
 
-        // get the items and their languages
-        $items = (array) BackendModel::getContainer()->get('database')->getPairs(
-            'SELECT i.post_id, i.language
-             FROM blog_comments AS i
-             WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')',
-            $ids,
-            'post_id'
-        );
+        $repository->updateMultipleStatusById($ids, $status);
 
-        // only proceed if there are items
-        if (!empty($items)) {
-            // get the ids
-            $itemIds = array_keys($items);
-
-            // update records
-            BackendModel::getContainer()->get('database')->execute(
-                'UPDATE blog_comments
-                 SET status = ?
-                 WHERE id IN (' . implode(', ', $idPlaceHolders) . ')',
-                array_merge([(string) $status], $ids)
-            );
-
-            // recalculate the comment count
-            self::reCalculateCommentCount($itemIds);
+        // recalculate the comment count
+        if (!empty($postIdsToRecalculate)) {
+            $postIdsToRecalculate = array_unique($postIdsToRecalculate);
+            self::reCalculateCommentCount($postIdsToRecalculate);
         }
     }
 

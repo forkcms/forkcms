@@ -28,6 +28,25 @@ class CommentRepository extends EntityRepository
         return $data;
     }
 
+    public function updateMultipleStatusById(array $ids, string $status): void
+    {
+        $builder = $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->update(Comment::class, 'c')
+                        ->set('c.status', ':newStatus')
+                        ->where('c.id IN(:ids)')
+                        ->setParameter(
+                            ':newStatus',
+                            $status
+                        )
+                        ->setParameter(
+                            ':ids',
+                            $ids,
+                            Connection::PARAM_INT_ARRAY
+                        );
+        $builder->getQuery()->execute();
+    }
+
     public function deleteMultipleById(array $ids): void
     {
         $builder = $this->getEntityManager()
