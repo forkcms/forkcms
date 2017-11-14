@@ -2,11 +2,13 @@
 
 namespace Frontend\Modules\Blog\Engine;
 
+use Backend\Modules\Blog\Domain\Comment;
 use Common\Mailer\Message;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
@@ -492,25 +494,36 @@ class Model implements FrontendTagsInterface
 
     public static function getComments(int $blogPostId): array
     {
-        // get the comments
-        $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
-             c.author, c.email, c.website
-             FROM blog_comments AS c
-             WHERE c.post_id = ? AND c.status = ? AND c.language = ?
-             ORDER BY c.id ASC',
-            [$blogPostId, 'published', LANGUAGE]
+        $repository = FrontendModel::get('doctrine.orm.default_entity_manager')
+                                  ->getRepository(Comment::class);
+
+        $comments = $repository->findBy(
+            [
+                'postId' => $blogPostId,
+                'status' => 'published',
+                'locale' => LANGUAGE,
+            ],
+            [
+                'id' => 'ASC'
+            ]
         );
 
-        // loop comments and create gravatar id
-        foreach ($comments as &$row) {
-            $row['author'] = htmlspecialchars($row['author']);
-            $row['text'] = htmlspecialchars($row['text']);
-            $row['gravatar_id'] = md5($row['email']);
+        if(empty($comments)) {
+            return [];
         }
 
-        // return
-        return $comments;
+        return array_map(
+            function($comment) {
+                $commentData = $comment->toArray();
+
+                $commentData['author'] = htmlspecialchars($comment->getAuthor());
+                $commentData['text'] = htmlspecialchars($comment->getText());
+                $commentData['gravatar_id'] = md5($comment->getEmail());
+
+                return $commentData;
+            },
+            $comments
+        );
     }
 
     /**
