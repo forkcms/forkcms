@@ -145,6 +145,7 @@ class ModelTest extends WebTestCase
         Model::delete(1);
 
         self::assertEquals(false, Model::exists(1));
+        self::assertEmpty(Model::getMapSettings(1));
     }
 
     private function getLocationArray(): array
