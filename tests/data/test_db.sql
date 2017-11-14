@@ -2251,11 +2251,13 @@ CREATE TABLE `location` (
 DROP TABLE IF EXISTS `location_settings`;
 
 CREATE TABLE `location_settings` (
-  `map_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`map_id`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+	`location_id` int(11) NOT NULL,
+	`name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+	`value` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:object)',
+	PRIMARY KEY (`location_id`,`name`),
+	KEY `IDX_3410822764D218E` (`location_id`),
+	CONSTRAINT `FK_3410822764D218E` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 

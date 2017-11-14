@@ -5,6 +5,8 @@ namespace Backend\Modules\Location\Domain;
 use Common\Locale;
 use Backend\Core\Language\Locale as BackendLocale;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Frontend\Core\Language\Locale as FrontendLocale;
@@ -104,6 +106,17 @@ class Location
     private $showInOverview;
 
     /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Backend\Modules\Location\Domain\LocationSetting",
+     *     mappedBy="location",
+     *     cascade={"persist"}
+     * )
+     */
+    private $settings;
+
+    /**
      * @var DateTime
      *
      * @ORM\Column(type="datetime")
@@ -141,6 +154,8 @@ class Location
         $this->longitude = $longitude;
         $this->showInOverview = $showInOverview;
         $this->extraId = $extraId;
+
+        $this->settings = new ArrayCollection();
     }
 
     public function update(
@@ -225,6 +240,11 @@ class Location
         return $this->showInOverview;
     }
 
+    public function getSettings(): Collection
+    {
+        return $this->settings;
+    }
+
     public function getCreatedOn(): DateTime
     {
         return $this->createdOn;
@@ -242,6 +262,11 @@ class Location
         }
 
         $this->extraId = $extraId;
+    }
+
+    public function addSetting(LocationSetting $setting): void
+    {
+        $this->settings->add($setting);
     }
 
     /**
@@ -298,6 +323,7 @@ class Location
             'lng' => $this->longitude,
             'show_overview' => (int) $this->showInOverview,
             'extra_id' => $this->extraId,
+            'settings' => $this->settings->toArray(),
         ];
     }
 }
