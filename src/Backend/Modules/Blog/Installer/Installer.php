@@ -2,7 +2,9 @@
 
 namespace Backend\Modules\Blog\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Blog\Domain\Comment\Comment;
 use Common\ModuleExtraType;
 
 /**
@@ -20,6 +22,7 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('Blog');
         $this->makeSearchable($this->getModule());
+        $this->configureEntities();
         $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->configureSettings();
@@ -28,6 +31,15 @@ class Installer extends ModuleInstaller
         $this->configureBackendWidgets();
         $this->configureFrontendExtras();
         $this->configureFrontendPages();
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Comment::class,
+            ]
+        );
     }
 
     private function configureBackendActionRightsForBlogArticle(): void
@@ -320,9 +332,9 @@ class Installer extends ModuleInstaller
             $database->insert(
                 'blog_comments',
                 [
-                    'post_id' => 1,
-                    'language' => $language,
-                    'created_on' => gmdate('Y-m-d H:i:00'),
+                    'postId' => 1,
+                    'locale' => $language,
+                    'createdOn' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Davy Hellemans',
                     'email' => 'forkcms-sample@spoon-library.com',
                     'website' => 'http://www.spoon-library.com',
@@ -337,9 +349,9 @@ class Installer extends ModuleInstaller
             $database->insert(
                 'blog_comments',
                 [
-                    'post_id' => 1,
-                    'language' => $language,
-                    'created_on' => gmdate('Y-m-d H:i:00'),
+                    'postId' => 1,
+                    'locale' => $language,
+                    'createdOn' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Tijs Verkoyen',
                     'email' => 'forkcms-sample@sumocoders.be',
                     'website' => 'https://www.sumocoders.be',

@@ -161,23 +161,21 @@ CREATE TABLE `blog_categories` (
 
 DROP TABLE IF EXISTS `blog_comments`;
 
-CREATE TABLE `blog_comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `post_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_on` datetime NOT NULL,
-  `author` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `website` text COLLATE utf8mb4_unicode_ci,
-  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'comment',
-  `status` varchar(249) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'moderation',
-  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'Serialized array with extra data',
-  PRIMARY KEY (`id`),
-  KEY `idx_post_id_status` (`post_id`,`status`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
+CREATE TABLE IF NOT EXISTS `blog_comments` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `postId` INT NOT NULL,
+  `locale` VARCHAR(5) NOT NULL COMMENT '(DC2Type:locale)',
+  `author` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `website` VARCHAR(255) DEFAULT NULL,
+  `text` LONGTEXT NOT NULL,
+  `type` VARCHAR(255) DEFAULT 'comment' NOT NULL,
+  `status` VARCHAR(255) DEFAULT 'moderation' NOT NULL,
+  `data` LONGTEXT DEFAULT NULL,
+  `createdOn` DATETIME NOT NULL COMMENT '(DC2Type:datetime)',
+  PRIMARY KEY(`id`),
+  KEY `idx_post_id_status` (`postId`,`status`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
 # Dump of table blog_posts
 # ------------------------------------------------------------

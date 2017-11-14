@@ -34,12 +34,12 @@ class Model
 
     const QUERY_DATAGRID_BROWSE_COMMENTS =
         'SELECT
-             i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
+             i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.text,
              p.id AS post_id, p.title AS post_title, m.url AS post_url
          FROM blog_comments AS i
-         INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+         INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
          INNER JOIN meta AS m ON p.meta_id = m.id
-         WHERE i.status = ? AND i.language = ? AND p.status = ?
+         WHERE i.status = ? AND i.locale = ? AND p.status = ?
          GROUP BY i.id';
 
     const QUERY_DATAGRID_BROWSE_DRAFTS =
@@ -357,7 +357,7 @@ class Model
         // no status passed
         if ($status === null) {
             return (array) BackendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
+                'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
                  p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
                  FROM blog_comments AS i
                  INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
@@ -370,7 +370,7 @@ class Model
         }
 
         return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
+            'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
@@ -543,15 +543,14 @@ class Model
      */
     public static function getLatestComments(string $status, int $limit = 10): array
     {
-        // get the comments (order by id, this is faster then on date, the higher the id, the more recent
         $comments = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.author, i.text, UNIX_TIMESTAMP(i.created_on) AS created_in,
+            'SELECT i.id, i.author, i.text, UNIX_TIMESTAMP(i.createdOn) AS created_on,
              p.title, p.language, m.url
              FROM blog_comments AS i
-             INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+             INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
-             WHERE i.status = ? AND p.status = ? AND i.language = ?
-             ORDER BY i.created_on DESC
+             WHERE i.status = ? AND p.status = ? AND i.locale = ?
+             ORDER BY i.createdOn DESC
              LIMIT ?',
             [(string) $status, 'active', BL::getWorkingLanguage(), (int) $limit]
         );
@@ -937,11 +936,11 @@ class Model
 
         // get counts
         $commentCounts = (array) $database->getPairs(
-            'SELECT i.post_id, COUNT(i.id) AS comment_count
+            'SELECT i.postId as post_id, COUNT(i.id) AS comment_count
              FROM blog_comments AS i
-             INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-             WHERE i.status = ? AND i.post_id IN (' . implode(',', $ids) . ') AND i.language = ? AND p.status = ?
-             GROUP BY i.post_id',
+             INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
+             WHERE i.status = ? AND i.postId IN (' . implode(',', $ids) . ') AND i.locale = ? AND p.status = ?
+             GROUP BY i.postId',
             ['published', BL::getWorkingLanguage(), 'active']
         );
 

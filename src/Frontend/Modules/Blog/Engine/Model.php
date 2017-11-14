@@ -170,7 +170,7 @@ class Model implements FrontendTagsInterface
     public static function getAllComments(int $limit = 10, int $offset = 0): array
     {
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
+            'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.text,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, i.email
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
@@ -665,11 +665,11 @@ class Model implements FrontendTagsInterface
 
         // get comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text,
+            'SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.createdOn) AS created_on, c.text,
              i.id AS post_id, i.title AS post_title,
              m.url AS post_url
              FROM blog_comments AS c
-             INNER JOIN blog_posts AS i ON c.post_id = i.id AND c.language = i.language
+             INNER JOIN blog_posts AS i ON c.postId = i.id AND c.locale = i.language
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC

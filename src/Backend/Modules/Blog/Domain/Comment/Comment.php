@@ -23,13 +23,13 @@ class Comment
 
     /**
      * @var int
-     * @ORM\Column(type="integer", name="post_id")
+     * @ORM\Column(type="integer")
      */
     private $postId;
 
     /**
      * @var Locale
-     * @ORM\Column(type="locale", name="language")
+     * @ORM\Column(type="locale")
      */
     private $locale;
 
@@ -77,7 +77,7 @@ class Comment
 
     /**
      * @var DateTime
-     * @ORM\Column(type="datetime", name="created_on")
+     * @ORM\Column(type="datetime")
      */
     private $createdOn;
 
