@@ -39,6 +39,51 @@ class ModelTest extends WebTestCase
         self::assertEquals($locationArray['show_overview'], $addedLocation['show_overview']);
     }
 
+    public function testInsertingLocationSetting(): void
+    {
+        Model::setMapSetting(
+            1,
+            'foo',
+            'bar'
+        );
+
+        Model::setMapSetting(
+            1,
+            'ping',
+            'pong'
+        );
+
+        self::assertEquals('bar', Model::getMapSetting(1, 'foo'));
+        self::assertEquals('pong', Model::getMapSetting(1, 'ping'));
+    }
+
+    public function testEditingLocationSetting(): void
+    {
+        Model::setMapSetting(
+            1,
+            'foo',
+            'pong'
+        );
+
+        Model::setMapSetting(
+            1,
+            'ping',
+            'bar'
+        );
+
+        self::assertEquals('pong', Model::getMapSetting(1, 'foo'));
+        self::assertEquals('bar', Model::getMapSetting(1, 'ping'));
+    }
+
+    public function testGettingAllLocationSettings(): void
+    {
+        $settings = Model::getMapSettings(1);
+
+        self::assertCount(2, $settings);
+        self::assertEquals('pong', $settings['foo']);
+        self::assertEquals('bar', $settings['ping']);
+    }
+
     public function testLocationExists(): void
     {
         self::assertEquals(true, Model::exists(1));
