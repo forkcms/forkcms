@@ -896,10 +896,10 @@ class Model
             Locale::fromString($data['language']),
             $data['author'],
             $data['email'],
-            $data['website'],
             $data['text'],
             'comment',
             $data['status'],
+            $data['website'],
             $data['data']
         );
 
@@ -1109,10 +1109,10 @@ class Model
         $comment->update(
             $item['author'],
             $item['email'],
-            $item['website'],
             $item['text'],
             (isset($item['type'])) ? $item['type'] : $comment->getType(),
             $item['status'],
+            $item['website'],
             (isset($item['data'])) ? $item['data'] : $comment->getData()
         );
 

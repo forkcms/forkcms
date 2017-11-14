@@ -86,38 +86,38 @@ class Comment
         Locale $locale,
         string $author,
         string $email,
-        ?string $website = null,
         string $text,
         string $type,
         string $status,
+        ?string $website = null,
         ?string $data = null
     ){
         $this->postId = $postId;
         $this->locale = $locale;
         $this->author = $author;
         $this->email = $email;
-        $this->website = $website;
         $this->text = $text;
         $this->type = $type;
         $this->status = $status;
+        $this->website = $website;
         $this->data = $data;
     }
 
     public function update(
         string $author,
         string $email,
-        ?string $website = null,
         string $text,
         string $type,
         string $status,
+        ?string $website = null,
         ?string $data = null
     ){
         $this->author = $author;
         $this->email = $email;
-        $this->website = $website;
         $this->text = $text;
         $this->type = $type;
         $this->status = $status;
+        $this->website = $website;
         $this->data = $data;
     }
 
