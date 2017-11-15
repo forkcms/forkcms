@@ -11,7 +11,7 @@
 
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div role="tabpanel">
+      <div>
         <ul class="nav nav-tabs" role="tablist">
           <li class="active" role="presentation">
             <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
@@ -27,7 +27,7 @@
                   <div class="panel-heading">
                     <p>
                       {{ 'lbl.WidgetView'|trans|ucfirst }}{{ macro.required }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.WidgetViewsHelp'|trans|ucfirst }}"></abbr><br>
+                      {{ macro.infoTooltip('msg.WidgetViewsHelp'|trans|ucfirst) }}
                     </p>
                   </div>
                   <div class="panel-body">
@@ -71,7 +71,7 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>&nbsp;
+            {{ macro.icon('plus-square') }}&nbsp;
             {{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
