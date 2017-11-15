@@ -517,7 +517,7 @@ class Model
         $repository = BackendModel::get('blog.repository.comment');
 
         return array_map(
-            function(Comment $comment) {
+            function (Comment $comment) {
                 $commentData = $comment->toArray();
                 // I really don't know why this is returned in a non UNIX-timestamp format
                 $commentData['created_on'] = $comment->getCreatedOn()->format('Y-m-d H:i:s');

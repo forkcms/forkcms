@@ -505,12 +505,12 @@ class Model implements FrontendTagsInterface
             ]
         );
 
-        if(empty($comments)) {
+        if (empty($comments)) {
             return [];
         }
 
         return array_map(
-            function($comment) {
+            function ($comment) {
                 $commentData = $comment->toArray();
 
                 $commentData['author'] = htmlspecialchars($comment->getAuthor());

@@ -91,7 +91,7 @@ class Comment
         string $status,
         ?string $website,
         ?string $data
-    ){
+    ) {
         $this->postId = $postId;
         $this->locale = $locale;
         $this->author = $author;
@@ -111,7 +111,7 @@ class Comment
         string $status,
         ?string $website,
         ?string $data
-    ){
+    ) {
         $this->author = $author;
         $this->email = $email;
         $this->text = $text;
