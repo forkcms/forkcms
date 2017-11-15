@@ -1143,7 +1143,6 @@ class Model
 
         $postIdsToRecalculate = array_unique($postIdsToRecalculate);
         self::reCalculateCommentCount($postIdsToRecalculate);
-
     }
 
     /**

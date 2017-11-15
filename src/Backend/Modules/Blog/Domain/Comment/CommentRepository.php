@@ -47,15 +47,22 @@ class CommentRepository extends EntityRepository
 
     public function deleteMultipleById(array $ids): void
     {
-        $builder = $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->delete(Comment::class, 'c')
-                        ->where('c.id IN(:ids)')
-                        ->setParameter(
-                            ':ids',
-                            $ids,
-                            Connection::PARAM_INT_ARRAY
-                        );
+        $entityManager = $this->getEntityManager();
+
+        $comments = $this->findById($ids);
+        foreach ($comments as $comment) {
+            $entityManager->detach($comment);
+        }
+
+        $builder = $entityManager
+            ->createQueryBuilder()
+            ->delete(Comment::class, 'c')
+            ->where('c.id IN(:ids)')
+            ->setParameter(
+                ':ids',
+                $ids,
+                Connection::PARAM_INT_ARRAY
+            );
         $builder->getQuery()->execute();
     }
 }
