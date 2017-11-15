@@ -39,7 +39,10 @@ class ModelTest extends WebTestCase
         self::assertEquals($commentData['type'], $addedComment['type']);
         self::assertEquals($commentData['status'], $addedComment['status']);
         self::assertEquals($commentData['data'], $addedComment['data']);
-        self::assertEquals($this->getBlogpostData()['title'], $addedComment['post_title']);
+        self::assertEquals(
+            $this->getBlogpostData()['title'],
+            $addedComment['post_title']
+        );
     }
 
     public function testCommentExists(): void
@@ -58,7 +61,10 @@ class ModelTest extends WebTestCase
 
         self::assertEquals(1, $editedComment['id']);
         self::assertEquals($commentData['post_id'], $editedComment['post_id']);
-        self::assertEquals($commentData['language'], $editedComment['language']);
+        self::assertEquals(
+            $commentData['language'],
+            $editedComment['language']
+        );
         self::assertEquals($commentData['author'], $editedComment['author']);
         self::assertEquals($commentData['email'], $editedComment['email']);
         self::assertEquals($commentData['website'], $editedComment['website']);
@@ -66,7 +72,10 @@ class ModelTest extends WebTestCase
         self::assertEquals($commentData['type'], $editedComment['type']);
         self::assertEquals($commentData['status'], $editedComment['status']);
         self::assertEquals($commentData['data'], $editedComment['data']);
-        self::assertEquals($this->getBlogpostData()['title'], $editedComment['post_title']);
+        self::assertEquals(
+            $this->getBlogpostData()['title'],
+            $editedComment['post_title']
+        );
     }
 
     public function testDeletingComment(): void
@@ -109,14 +118,14 @@ class ModelTest extends WebTestCase
         ];
     }
 
-    private function insertBlogPost()
+    private function insertBlogPost(): void
     {
         Model::insert(
             $this->getBlogpostData()
         );
     }
 
-    private function getBlogpostData()
+    private function getBlogpostData(): array
     {
         return [
             'id' => 1,
