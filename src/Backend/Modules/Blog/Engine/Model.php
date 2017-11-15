@@ -273,7 +273,7 @@ class Model
         }
 
         $ids = array_map(
-            function ($comment){
+            function ($comment) {
                 return $comment->getId();
             },
             $comments
