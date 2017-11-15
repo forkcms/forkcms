@@ -181,7 +181,7 @@ class Model
         );
         $database->delete(
             'blog_comments',
-            'post_id IN (' . $idPlaceHolders . ') AND language = ?',
+            'postId IN (' . $idPlaceHolders . ') AND locale = ?',
             array_merge($ids, [BL::getWorkingLanguage()])
         );
 
@@ -360,9 +360,9 @@ class Model
                 'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
                  p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
                  FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+                 INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
                  INNER JOIN meta AS m ON p.meta_id = m.id
-                 WHERE i.language = ?
+                 WHERE i.locale = ?
                  GROUP BY i.id
                  LIMIT ?, ?',
                 [BL::getWorkingLanguage(), $offset, $limit]
@@ -373,9 +373,9 @@ class Model
             'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
              FROM blog_comments AS i
-             INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+             INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
-             WHERE i.status = ? AND i.language = ?
+             WHERE i.status = ? AND i.locale = ?
              GROUP BY i.id
              LIMIT ?, ?',
             [$status, BL::getWorkingLanguage(), $offset, $limit]
