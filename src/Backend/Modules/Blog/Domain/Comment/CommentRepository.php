@@ -28,31 +28,32 @@ class CommentRepository extends EntityRepository
 
     public function updateMultipleStatusById(array $ids, string $status): void
     {
-        $builder = $this->getEntityManager()
-                        ->createQueryBuilder()
-                        ->update(Comment::class, 'c')
-                        ->set('c.status', ':newStatus')
-                        ->where('c.id IN(:ids)')
-                        ->setParameter(
-                            ':newStatus',
-                            $status
-                        )
-                        ->setParameter(
-                            ':ids',
-                            $ids,
-                            Connection::PARAM_INT_ARRAY
-                        );
+        $entityManager = $this->getEntityManager();
+
+        $builder = $entityManager
+            ->createQueryBuilder()
+            ->update(Comment::class, 'c')
+            ->set('c.status', ':newStatus')
+            ->where('c.id IN(:ids)')
+            ->setParameter(
+                ':newStatus',
+                $status
+            )
+            ->setParameter(
+                ':ids',
+                $ids,
+                Connection::PARAM_INT_ARRAY
+            );
         $builder->getQuery()->execute();
+
+        // clear all the entities, as they won't get detached automatically on
+        // removal
+        $entityManager->clear(Comment::class);
     }
 
     public function deleteMultipleById(array $ids): void
     {
         $entityManager = $this->getEntityManager();
-
-        $comments = $this->findById($ids);
-        foreach ($comments as $comment) {
-            $entityManager->detach($comment);
-        }
 
         $builder = $entityManager
             ->createQueryBuilder()
@@ -64,5 +65,9 @@ class CommentRepository extends EntityRepository
                 Connection::PARAM_INT_ARRAY
             );
         $builder->getQuery()->execute();
+
+        // clear all the entities, as they won't get detached automatically on
+        // removal
+        $entityManager->clear(Comment::class);
     }
 }
