@@ -100,8 +100,8 @@
       </item>
       <item type="label" name="MediaItemDelete">
         <translation language="de"><![CDATA[Entfernen von Medien]]></translation>
-        <translation language="en"><![CDATA[charging media]]></translation>
-        <translation language="fr"><![CDATA[médias de charge]]></translation>
+        <translation language="en"><![CDATA[removing media]]></translation>
+        <translation language="fr"><![CDATA[supprimer les médias]]></translation>
         <translation language="nl"><![CDATA[media verwijderen]]></translation>
         <translation language="ru"><![CDATA[удаление медиа]]></translation>
       </item>
@@ -113,9 +113,9 @@
         <translation language="ru"><![CDATA[обзор]]></translation>
       </item>
       <item type="label" name="MediaItemUpload">
-        <translation language="de"><![CDATA[Entfernen von Medien]]></translation>
-        <translation language="en"><![CDATA[removing media]]></translation>
-        <translation language="fr"><![CDATA[supression de media]]></translation>
+        <translation language="de"><![CDATA[medien hochladen]]></translation>
+        <translation language="en"><![CDATA[adding media]]></translation>
+        <translation language="fr"><![CDATA[chargement les médias]]></translation>
         <translation language="nl"><![CDATA[media opladen]]></translation>
         <translation language="ru"><![CDATA[удаление медиа]]></translation>
       </item>
