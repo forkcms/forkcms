@@ -20,8 +20,8 @@ class LoadFaqCategories
             'faq_categories',
             [
                 'meta_id' => $metaId,
-                'extra_id' => 0,
-                'language' => 'en',
+                'extraId' => 0,
+                'locale' => 'en',
                 'title' => 'Faq for tests',
                 'sequence' => 1,
             ]

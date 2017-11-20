@@ -2,7 +2,11 @@
 
 namespace Backend\Modules\Faq\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Faq\Domain\Category\Category;
+use Backend\Modules\Faq\Domain\Feedback\Feedback;
+use Backend\Modules\Faq\Domain\Question\Question;
 use Common\ModuleExtraType;
 
 /**
@@ -20,8 +24,8 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('Faq');
         $this->makeSearchable($this->getModule());
-        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -186,7 +190,7 @@ class Installer extends ModuleInstaller
         // build array
         $item = [];
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['extra_id'] = $this->insertExtra(
+        $item['extraId'] = $this->insertExtra(
             $this->getModule(),
             ModuleExtraType::widget(),
             $this->getModule(),
@@ -195,7 +199,7 @@ class Installer extends ModuleInstaller
             false,
             $sequenceExtra
         );
-        $item['language'] = $language;
+        $item['locale'] = $language;
         $item['title'] = $title;
         $item['sequence'] = 1;
 
@@ -223,5 +227,16 @@ class Installer extends ModuleInstaller
         );
 
         return $item['id'];
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Category::class,
+                Question::class,
+                Feedback::class,
+            ]
+        );
     }
 }
