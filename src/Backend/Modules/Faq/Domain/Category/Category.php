@@ -79,9 +79,10 @@ class Category
         $this->questions = new ArrayCollection();
     }
 
-    public function update(string $title): void
+    public function update(string $title, int $sequence): void
     {
         $this->title = $title;
+        $this->sequence = $sequence;
     }
 
     public function getId(): int

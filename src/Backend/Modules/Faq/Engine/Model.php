@@ -440,7 +440,8 @@ class Model
             BackendModel::get('faq.repository.category')->find($item['category_id']),
             $item['question'],
             $item['answer'],
-            $item['hidden']
+            $item['hidden'],
+            $item['sequence']
         );
 
         BackendModel::getEntityManager()->flush();
@@ -454,7 +455,7 @@ class Model
             return;
         }
 
-        $category->update($item['title']);
+        $category->update($item['title'], $item['sequence']);
 
         BackendModel::getEntityManager()->flush();
 

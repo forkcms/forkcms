@@ -135,12 +135,14 @@ final class Question
         Category $category,
         string $question,
         string $answer,
-        bool $hidden
+        bool $hidden,
+        int $sequence
     ) {
         $this->category = $category;
         $this->question = $question;
         $this->answer = $answer;
         $this->hidden = $hidden;
+        $this->sequence = $sequence;
     }
 
     public function getId(): int

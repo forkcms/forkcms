@@ -114,6 +114,7 @@ class Edit extends BackendBaseActionEdit
                 $item['question'] = $this->form->getField('title')->getValue();
                 $item['answer'] = $this->form->getField('answer')->getValue(true);
                 $item['hidden'] = $this->form->getField('hidden')->getValue();
+                $item['sequence'] = $this->record['sequence'];
 
                 // update the item
                 BackendFaqModel::update($item);
