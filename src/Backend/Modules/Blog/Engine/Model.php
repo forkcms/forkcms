@@ -299,7 +299,7 @@ class Model
         );
     }
 
-    public static function existsCategory(int $id): int
+    public static function existsCategory(int $id): bool
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
