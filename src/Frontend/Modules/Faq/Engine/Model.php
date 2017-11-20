@@ -37,7 +37,7 @@ class Model implements FrontendTagsInterface
      *
      * @return array
      */
-    public static function getAllForCategory(int $categoryId, int $limit = null, $excludeIds = null): array
+    public static function getAllForCategory(int $categoryId, int $limit = null, array $excludeIds = array()): array
     {
         $questions = FrontendModel::get('faq.repository.question')->findByCategory(
             FrontendModel::get('faq.repository.category')->find($categoryId),
