@@ -17,7 +17,8 @@ class ModelTest extends WebTestCase
         }
     }
 
-    public function testInsertingComment(): void
+    // comments
+    public function testCreateComment(): void
     {
         $client = self::createClient();
         $this->loadFixtures($client);
@@ -29,29 +30,32 @@ class ModelTest extends WebTestCase
 
         $addedComment = Model::getComment(1);
 
-        self::assertEquals(1, $addedComment['id']);
-        self::assertEquals($commentData['post_id'], $addedComment['post_id']);
-        self::assertEquals($commentData['language'], $addedComment['language']);
-        self::assertEquals($commentData['author'], $addedComment['author']);
-        self::assertEquals($commentData['email'], $addedComment['email']);
-        self::assertEquals($commentData['website'], $addedComment['website']);
-        self::assertEquals($commentData['text'], $addedComment['text']);
-        self::assertEquals($commentData['type'], $addedComment['type']);
-        self::assertEquals($commentData['status'], $addedComment['status']);
-        self::assertEquals($commentData['data'], $addedComment['data']);
-        self::assertEquals(
+        $this->assertEquals(1, $addedComment['id']);
+        $this->assertEquals($commentData['post_id'], $addedComment['post_id']);
+        $this->assertEquals(
+            $commentData['language'],
+            $addedComment['language']
+        );
+        $this->assertEquals($commentData['author'], $addedComment['author']);
+        $this->assertEquals($commentData['email'], $addedComment['email']);
+        $this->assertEquals($commentData['website'], $addedComment['website']);
+        $this->assertEquals($commentData['text'], $addedComment['text']);
+        $this->assertEquals($commentData['type'], $addedComment['type']);
+        $this->assertEquals($commentData['status'], $addedComment['status']);
+        $this->assertEquals($commentData['data'], $addedComment['data']);
+        $this->assertEquals(
             $this->getBlogpostData()['title'],
             $addedComment['post_title']
         );
     }
 
-    public function testCommentExists(): void
+    public function testIfCommentExists(): void
     {
-        self::assertEquals(true, Model::existsComment(1));
-        self::assertEquals(false, Model::existsComment(2));
+        $this->assertTrue(Model::existsComment(1));
+        $this->assertFalse(Model::existsComment(2));
     }
 
-    public function testEditingComment(): void
+    public function testUpdateComment(): void
     {
         $commentData = $this->getUpdatedCommentData();
 
@@ -59,30 +63,30 @@ class ModelTest extends WebTestCase
 
         $editedComment = Model::getComment(1);
 
-        self::assertEquals(1, $editedComment['id']);
-        self::assertEquals($commentData['post_id'], $editedComment['post_id']);
-        self::assertEquals(
+        $this->assertEquals(1, $editedComment['id']);
+        $this->assertEquals($commentData['post_id'], $editedComment['post_id']);
+        $this->assertEquals(
             $commentData['language'],
             $editedComment['language']
         );
-        self::assertEquals($commentData['author'], $editedComment['author']);
-        self::assertEquals($commentData['email'], $editedComment['email']);
-        self::assertEquals($commentData['website'], $editedComment['website']);
-        self::assertEquals($commentData['text'], $editedComment['text']);
-        self::assertEquals($commentData['type'], $editedComment['type']);
-        self::assertEquals($commentData['status'], $editedComment['status']);
-        self::assertEquals($commentData['data'], $editedComment['data']);
-        self::assertEquals(
+        $this->assertEquals($commentData['author'], $editedComment['author']);
+        $this->assertEquals($commentData['email'], $editedComment['email']);
+        $this->assertEquals($commentData['website'], $editedComment['website']);
+        $this->assertEquals($commentData['text'], $editedComment['text']);
+        $this->assertEquals($commentData['type'], $editedComment['type']);
+        $this->assertEquals($commentData['status'], $editedComment['status']);
+        $this->assertEquals($commentData['data'], $editedComment['data']);
+        $this->assertEquals(
             $this->getBlogpostData()['title'],
             $editedComment['post_title']
         );
     }
 
-    public function testDeletingComment(): void
+    public function testDeleteComment(): void
     {
-        self::assertTrue(Model::existsComment(1));
+        $this->assertTrue(Model::existsComment(1));
         Model::deleteComments([1]);
-        self::assertFalse(Model::existsComment(1));
+        $this->assertFalse(Model::existsComment(1));
     }
 
     private function getCommentData(): array
