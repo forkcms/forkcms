@@ -19,11 +19,11 @@ class LoadFaqQuestions
         $categoryId = $database->getVar(
             'SELECT id
              FROM faq_categories
-             WHERE title = :title AND language = :language
+             WHERE title = :title AND locale = :locale
              LIMIT 1',
             [
                 'title' => 'Faq for tests',
-                'language' => 'en',
+                'locale' => 'en',
             ]
         );
 
