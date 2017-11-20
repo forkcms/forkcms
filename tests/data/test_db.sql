@@ -158,6 +158,15 @@ CREATE TABLE `blog_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+LOCK TABLES `blog_categories` WRITE;
+/*!40000 ALTER TABLE `blog_categories` DISABLE KEYS */;
+
+INSERT INTO `blog_categories` (`id`, `meta_id`, `language`, `title`)
+VALUES
+	(1,28,'en','Blog category for functional tests');
+
+/*!40000 ALTER TABLE `blog_categories` ENABLE KEYS */;
+UNLOCK TABLES;
 
 # Dump of table blog_comments
 # ------------------------------------------------------------
@@ -2329,7 +2338,8 @@ VALUES
 	(24,'Change email',0,'Change email',0,'Change email',0,'change-email',0,NULL,NULL,NULL,NULL),
 	(25,'Change password',0,'Change password',0,'Change password',0,'change-password',0,NULL,NULL,NULL,NULL),
 	(26,'BlogCategory for tests',0,'BlogCategory for tests',0,'BlogCategory for tests',0,'blogcategory-for-tests',0,NULL,NULL,NULL,NULL),
-	(27,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'blogpost-for-functional-tests',0,NULL,NULL,NULL,NULL);
+	(27,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'blogpost-for-functional-tests',0,NULL,NULL,NULL,NULL),
+	(28,'Blog category for functional tests',0,'Blog category for functional tests',0,'Blog category for functional tests',0,'blog-category-for-functional-tests',0,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;
