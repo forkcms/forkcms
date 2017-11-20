@@ -1,11 +1,3 @@
-CREATE TABLE IF NOT EXISTS `blog_categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `meta_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
-
 CREATE TABLE IF NOT EXISTS `blog_posts` (
   `id` int(11) NOT NULL COMMENT 'The real post id',
   `revision_id` int(11) NOT NULL AUTO_INCREMENT,

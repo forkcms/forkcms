@@ -7,7 +7,7 @@ use Common\Locale;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Blog\Domain\Category\CategoryRepository")
  * @ORM\Table(name="blog_categories")
  */
 class Category
@@ -48,6 +48,12 @@ class Category
         $this->meta = $meta;
     }
 
+    public function update(string $title, Meta $meta)
+    {
+        $this->title = $title;
+        $this->meta = $meta;
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -66,5 +72,15 @@ class Category
     public function getMeta(): Meta
     {
         return $this->meta;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'language' => $this->locale->getLocale(),
+            'title' => $this->title,
+            'meta_id' => $this->meta->getId(),
+        ];
     }
 }
