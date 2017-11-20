@@ -3,6 +3,7 @@
 namespace Backend\Modules\Faq\Domain\Question;
 
 use Backend\Modules\Faq\Domain\Category\Category;
+use Common\Core\Model;
 use Doctrine\ORM\EntityRepository;
 use Common\Locale;
 
@@ -80,5 +81,47 @@ final class QuestionRepository extends EntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function findMaximumSequence(Category $category, Locale $locale): int
+    {
+        $queryBuilder = $this->createQueryBuilder('q');
+
+        return (int) $queryBuilder
+            ->select($queryBuilder->expr()->max('q.sequence'))
+            ->andWhere('q.category = :category')
+            ->andWhere('q.locale = :locale')
+            ->setParameter(':category', $category)
+            ->setParameter(':locale', $locale)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function getUrl(string $url, Locale $locale, ?int $id = null): string
+    {
+        $queryBuilder = $this->createQueryBuilder('q');
+
+        $query = $queryBuilder
+            ->select($queryBuilder->expr()->count('q.id'))
+            ->innerJoin('q.meta', 'm')
+            ->andWhere('m.url = :url')
+            ->andWhere('q.locale = :locale')
+            ->setParameter(':url', $url)
+            ->setParameter(':locale', $locale)
+        ;
+
+        if ($id !== null) {
+            $query
+                ->andWhere('q.id != :id')
+                ->setParameter(':id', $id)
+            ;
+        }
+
+        if ((int) $query->getQuery()->getSingleScalarResult() === 0) {
+            return $url;
+        }
+
+        return $this->getUrl(Model::addNumber($url), $locale, $id);
     }
 }

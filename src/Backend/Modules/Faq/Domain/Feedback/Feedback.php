@@ -7,7 +7,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Domain\Feedback\FeedbackRepository")
  * @ORM\Table(name="faq_feedback")
  * @ORM\HasLifecycleCallbacks
  */
@@ -25,7 +25,7 @@ final class Feedback
     /**
      * @var Question
      *
-     * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Question\Question")
+     * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Question\Question", inversedBy="feedbackItems")
      */
     private $question;
 
@@ -127,5 +127,10 @@ final class Feedback
             'created_on' => $this->getCreatedOn(),
             'edited_on' => $this->getEditedOn(),
         ];
+    }
+
+    public function process()
+    {
+        $this->processed = true;
     }
 }

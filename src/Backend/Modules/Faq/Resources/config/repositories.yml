@@ -10,3 +10,10 @@ services:
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
       - Backend\Modules\Faq\Domain\Question\Question
+
+
+  faq.repository.feedback:
+    class: Backend\Modules\Faq\Domain\Feedback\FeedbackRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Faq\Domain\Feedback\Feedback

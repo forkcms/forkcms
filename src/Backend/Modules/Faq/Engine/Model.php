@@ -4,6 +4,7 @@ namespace Backend\Modules\Faq\Engine;
 
 use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Core\Language\Locale;
+use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Backend\Modules\Faq\Domain\Question\Question;
 use Common\ModuleExtraType;
 use Common\Uri as CommonUri;
@@ -69,24 +70,17 @@ class Model
             return false;
         }
 
-        // check if the category does not contain questions
-        return !(bool) BackendModel::get('database')->getVar(
-            'SELECT 1
-                 FROM faq_questions AS i
-                 WHERE i.category_id = ? AND i.locale = ?
-                 LIMIT 1',
-            [$id, BL::getWorkingLanguage()]
-        );
+        $category = BackendModel::get('faq.repository.category')->find($id);
+
+        return $category->getQuestions()->isEmpty();
     }
 
     public static function deleteFeedback(int $itemId): void
     {
-        BackendModel::getContainer()->get('database')->update(
-            'faq_feedback',
-            ['processed' => true, 'edited_on' => \SpoonDate::getDate('Y-m-d H:i:s')],
-            'id = ?',
-            $itemId
-        );
+        $feedback = BackendModel::get('faq.repository.feedback')->find($itemId);
+        $feedback->process();
+
+        BackendModel::getEntityManager()->flush();
     }
 
     /**
@@ -98,33 +92,28 @@ class Model
      */
     public static function exists(int $id): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM faq_questions AS i
-             WHERE i.id = ? AND i.locale = ?
-             LIMIT 1',
-            [$id, BL::getWorkingLanguage()]
+        $question = BackendModel::get('faq.repository.question')->findOneBy(
+            [
+                'id' => $id,
+                'locale' => Locale::workingLocale(),
+            ]
         );
+
+        return $question instanceof Question;
     }
 
     public static function existsCategory(int $id): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM faq_categories AS i
-             WHERE i.id = ? AND i.locale = ?
-             LIMIT 1',
-            [$id, BL::getWorkingLanguage()]
+        $category = BackendModel::get('faq.repository.category')->findOneBy(
+            [
+                'id' => $id,
+                'locale' => Locale::workingLocale(),
+            ]
         );
+
+        return $category instanceof Category;
     }
 
-    /**
-     * Fetch a question
-     *
-     * @param int $id
-     *
-     * @return array
-     */
     public static function get(int $id): array
     {
         $question = BackendModel::get('faq.repository.question')->find($id);
@@ -134,23 +123,30 @@ class Model
 
     public static function getAllFeedback(int $limit = 5): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT f.*
-             FROM faq_feedback AS f
-             WHERE f.processed = ?
-             LIMIT ?',
-            [false, $limit]
+        $feedback = BackendModel::get('faq.repository.feedback')->findAllForWidget($limit);
+
+        return array_map(
+            function (Feedback $feedback) {
+                return $feedback->toArray();
+            },
+            $feedback
         );
     }
 
     public static function getAllFeedbackForQuestion(int $id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT f.*
-             FROM faq_feedback AS f
-             WHERE f.question_id = ? AND f.processed = ?',
-            [$id, false]
-        );
+        $question = BackendModel::get('faq.repository.question')->find($id);
+
+        return $question
+            ->getFeedbackItems()
+            ->filter(function (Feedback $feedback) {
+                return !$feedback->isProcessed();
+            })
+            ->map(function (Feedback $feedback) {
+                return $feedback->toArray();
+            })
+            ->toArray()
+        ;
     }
 
     /**
@@ -162,44 +158,58 @@ class Model
      */
     public static function getByTag(int $tagId): array
     {
-        $items = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id AS url, i.question AS name, mt.module
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             INNER JOIN faq_questions AS i ON mt.other_id = i.id
-             WHERE mt.module = ? AND mt.tag_id = ? AND i.locale = ?',
-            ['Faq', $tagId, BL::getWorkingLanguage()]
+        $questionIds = (array) BackendModel::get('database')->getColumn(
+            'SELECT other_id
+             FROM modules_tags AS t
+             WHERE t.tag_id = :tagId
+             AND t.module = :module',
+            [
+                'tagId' => $tagId,
+                'module' => 'Faq',
+            ]
         );
 
-        foreach ($items as &$row) {
-            $row['url'] = BackendModel::createUrlForAction('Edit', 'Faq', null, ['id' => $row['url']]);
-        }
+        $questions = BackendModel::get('faq.repository.question')->findMultiple(
+            $questionIds,
+            Locale::workingLocale()
+        );
 
-        return $items;
+        return array_map(
+            function (Question $question) {
+                $questionArray = $question->toArray();
+                $questionArray['url'] = BackendModel::createUrlForAction(
+                    'Edit',
+                    'Faq',
+                    null,
+                    ['id' => $question->getMeta()->getUrl()]
+                );
+                $questionArray['name'] = $question->getQuestion();
+                $questionArray['module'] = 'Faq';
+
+                return $questionArray;
+            },
+            $questions
+        );
     }
 
     public static function getCategories(bool $includeCount = false): array
     {
-        $database = BackendModel::getContainer()->get('database');
+        $categories = BackendModel::get('faq.repository.category')->findBy(
+            ['locale' => Locale::workingLocale()],
+            ['sequence' => 'DESC']
+        );
 
-        if ($includeCount) {
-            return (array) $database->getPairs(
-                'SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
-                 FROM faq_categories AS i
-                 LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND i.locale = p.locale
-                 WHERE i.locale = ?
-                 GROUP BY i.id
-                 ORDER BY i.sequence',
-                [BL::getWorkingLanguage()]
-            );
+        $categoriesArray = [];
+        foreach ($categories as $category) {
+            $title = $category->getTitle();
+            if ($includeCount) {
+                $title .= ' (' . $category->getQuestions()->count() . ')';
+            }
+
+            $categoriesArray[$category->getId()] = $title;
         }
 
-        return (array) $database->getPairs(
-            'SELECT i.id, i.title
-             FROM faq_categories AS i
-             WHERE i.locale = ?',
-            [BL::getWorkingLanguage()]
-        );
+        return $categoriesArray;
     }
 
     public static function getCategory(int $id): array
@@ -215,48 +225,28 @@ class Model
 
     public static function getCategoryCount(): int
     {
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT COUNT(i.id)
-             FROM faq_categories AS i
-             WHERE i.locale = ?',
-            [BL::getWorkingLanguage()]
-        );
+        return BackendModel::get('faq.repository.category')->findCount(Locale::workingLocale());
     }
 
     public static function getFeedback(int $id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT f.*
-             FROM faq_feedback AS f
-             WHERE f.id = ?',
-            [$id]
-        );
+        return BackendModel::get('faq.repository.feedback')->find($id)->toArray();
     }
 
     public static function getMaximumCategorySequence(): int
     {
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(i.sequence)
-             FROM faq_categories AS i
-             WHERE i.locale = ?',
-            [BL::getWorkingLanguage()]
+        return BackendModel::get('faq.repository.category')->findMaximumSequence(
+            Locale::workingLocale()
         );
     }
 
-    /**
-     * Get the max sequence id for a question belonging to a category
-     *
-     * @param int $categoryId
-     *
-     * @return int
-     */
     public static function getMaximumSequence(int $categoryId): int
     {
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(i.sequence)
-             FROM faq_questions AS i
-             WHERE i.category_id = ?',
-            [$categoryId]
+        $category = BackendModel::get('faq.repository.category')->find($categoryId);
+
+        return BackendModel::get('faq.repository.question')->findMaximumSequence(
+            $category,
+            Locale::workingLocale()
         );
     }
 
@@ -270,42 +260,13 @@ class Model
      */
     public static function getUrl(string $url, int $id = null): string
     {
-        $url = CommonUri::getUrl((string) $url);
-        $database = BackendModel::get('database');
+        $url = CommonUri::getUrl($url);
 
-        // new item
-        if ($id === null) {
-            if ((bool) $database->getVar(
-                'SELECT 1
-                 FROM faq_questions AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.locale = ? AND m.url = ?
-                 LIMIT 1',
-                [BL::getWorkingLanguage(), $url]
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
-
-                return self::getUrl($url);
-            }
-        } else {
-            // current category should be excluded
-            if ((bool) $database->getVar(
-                'SELECT 1
-                 FROM faq_questions AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.locale = ? AND m.url = ? AND i.id != ?
-                 LIMIT 1',
-                [BL::getWorkingLanguage(), $url, $id]
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
-
-                return self::getUrl($url, $id);
-            }
-        }
-
-        return $url;
+        return BackendModel::get('faq.repository.question')->getUrl(
+            $url,
+            Locale::workingLocale(),
+            $id
+        );
     }
 
     /**
@@ -319,43 +280,12 @@ class Model
     public static function getUrlForCategory(string $url, int $id = null): string
     {
         $url = CommonUri::getUrl($url);
-        $database = BackendModel::get('database');
 
-        // new category
-        if ($id === null) {
-            if ((bool) $database->getVar(
-                'SELECT 1
-                 FROM faq_categories AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.locale = ? AND m.url = ?
-                 LIMIT 1',
-                [BL::getWorkingLanguage(), $url]
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
-
-                return self::getUrlForCategory($url);
-            }
-
-            return $url;
-        }
-
-        // current category should be excluded
-        if ((bool) $database->getVar(
-            'SELECT 1
-                 FROM faq_categories AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.locale = ? AND m.url = ? AND i.id != ?
-                 LIMIT 1',
-            [BL::getWorkingLanguage(), $url, $id]
-        )
-        ) {
-            $url = BackendModel::addNumber($url);
-
-            return self::getUrlForCategory($url, $id);
-        }
-
-        return $url;
+        return BackendModel::get('faq.repository.category')->getUrl(
+            $url,
+            Locale::workingLocale(),
+            $id
+        );
     }
 
     public static function insert(array $item): int
@@ -423,11 +353,6 @@ class Model
         return $category->getId();
     }
 
-    /**
-     * Update a certain question
-     *
-     * @param array $item
-     */
     public static function update(array $item): void
     {
         $question = BackendModel::get('faq.repository.question')->find($item['id']);

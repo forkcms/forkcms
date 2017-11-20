@@ -6,6 +6,7 @@ use Backend\Modules\Faq\Domain\Category\Category;
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="faq_questions")
  * @ORM\HasLifecycleCallbacks
  */
-final class Question
+class Question
 {
     /**
      * @var int
@@ -107,6 +108,17 @@ final class Question
      * @ORM\Column(type="integer")
      */
     private $sequence;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Backend\Modules\Faq\Domain\Feedback\Feedback",
+     *     mappedBy="question",
+     *     cascade={"remove"}
+     * )
+     */
+    private $feedbackItems;
 
     public function __construct(
         Locale $locale,
@@ -208,6 +220,11 @@ final class Question
     public function getSequence(): int
     {
         return $this->sequence;
+    }
+
+    public function getFeedbackItems(): Collection
+    {
+        return $this->feedbackItems;
     }
 
     /**
