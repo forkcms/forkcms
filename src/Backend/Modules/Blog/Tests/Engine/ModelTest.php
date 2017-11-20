@@ -145,4 +145,119 @@ class ModelTest extends WebTestCase
             'status' => 'active',
         ];
     }
+
+    // categories
+    public function testCreateCategory(): void
+    {
+        $client = self::createClient();
+        $this->loadFixtures($client);
+
+        $categoryData = $this->getCategoryData();
+        $categoryMetaData = $this->getCategoryMetaData();
+        $id = Model::insertCategory($categoryData, $categoryMetaData);
+        $createdCategory = Model::getCategory($id);
+
+        $this->assertArrayHasKey('meta_id', $createdCategory);
+        $this->assertEquals($id, $createdCategory['id']);
+        $this->assertEquals(
+            $categoryData['language'],
+            $createdCategory['language']
+        );
+        $this->assertEquals($categoryData['title'], $createdCategory['title']);
+    }
+
+    public function testIfCategoryExists(): void
+    {
+        $this->assertTrue(Model::existsCategory(1));
+        $this->assertFalse(Model::existsCategory(1337));
+    }
+
+    public function testUpdateCategory(): void
+    {
+        $client = self::createClient();
+        $this->loadFixtures($client);
+
+        $categoryData = $this->getUpdateCategoryData();
+        $categoryMetaData = $this->getUpdatedCategoryMetaData();
+
+        Model::updateCategory($categoryData, $categoryMetaData);
+
+        $updatedCategory = Model::getCategory(1);
+
+        $this->assertEquals($categoryData['id'], $updatedCategory['id']);
+        $this->assertArrayHasKey('meta_id', $updatedCategory);
+        $this->assertEquals($categoryData['language'], $updatedCategory['language']);
+        $this->assertEquals($categoryData['title'], $updatedCategory['title']);
+    }
+
+    public function testDeleteCategory(): void
+    {
+        $client = self::createClient();
+        $this->loadFixtures($client);
+
+        $id = Model::insertCategory(
+            $this->getCategoryData(),
+            $this->getCategoryMetaData()
+        );
+
+        $this->assertTrue(Model::existsCategory($id));
+        Model::deleteCategory($id);
+        $this->assertFalse(Model::existsCategory($id));
+    }
+
+    public function testCalculatingCategoryUrl(): void
+    {
+        $client = self::createClient();
+        $this->loadFixtures($client);
+
+        $this->assertEquals('foo-bar', Model::getUrlForCategory('foo-bar'));
+
+        // check if 2 is appended for an existing category
+        $id = Model::insertCategory(
+            $this->getCategoryData(),
+            $this->getCategoryMetaData()
+        );
+        $this->assertEquals('meta-url-2', Model::getUrlForCategory('meta-url'));
+
+        // check if the same url is returned when we pass the id
+        $this->assertEquals('meta-url', Model::getUrlForCategory('meta-url', $id));
+    }
+
+    private function getCategoryData(): array
+    {
+        return [
+            'language' => 'en',
+            'title' => 'category title',
+        ];
+    }
+
+    private function getCategoryMetaData(): array
+    {
+        return [
+            'keywords' => 'keywords',
+            'description' => 'description',
+            'title' => 'meta title',
+            'url' => 'meta-url',
+        ];
+    }
+
+    private function getUpdateCategoryData(): array
+    {
+        return [
+            'id' => 1,
+            'language' => 'en',
+            'title' => 'category title edited',
+        ];
+    }
+
+    private function getUpdatedCategoryMetaData(): array
+    {
+        return [
+            'id' => 28,
+            'keywords' => 'keywords',
+            'description' => 'description',
+            'title' => 'meta title',
+            'url' => 'meta-url',
+        ];
+    }
 }
