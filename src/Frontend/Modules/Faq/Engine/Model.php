@@ -5,6 +5,7 @@ namespace Frontend\Modules\Faq\Engine;
 use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Backend\Modules\Faq\Domain\Question\Question;
+use Doctrine\ORM\NoResultException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
@@ -19,10 +20,14 @@ class Model implements FrontendTagsInterface
 {
     public static function get(string $url): array
     {
-        return FrontendModel::get('faq.repository.question')->findOneByUrl(
-            $url,
-            Locale::frontendLanguage()
-        )->toArray();
+        try {
+            return FrontendModel::get('faq.repository.question')->findOneByUrl(
+                $url,
+                Locale::frontendLanguage()
+            )->toArray();
+        } catch (NoResultException $exception) {
+            return [];
+        }
     }
 
     /**
@@ -74,10 +79,14 @@ class Model implements FrontendTagsInterface
 
     public static function getCategory(string $url): array
     {
-        return FrontendModel::get('faq.repository.category')->findOneByUrl(
-            $url,
-            Locale::frontendLanguage()
-        )->toArray();
+        try {
+            return FrontendModel::get('faq.repository.category')->findOneByUrl(
+                $url,
+                Locale::frontendLanguage()
+            )->toArray();
+        } catch (NoResultException $exception) {
+            return [];
+        }
     }
 
     public static function getCategoryById(int $id): array
@@ -129,10 +138,14 @@ class Model implements FrontendTagsInterface
     {
         $itemUrl = (string) $url->getParameter(1);
 
-        return FrontendModel::get('faq.repository.question')->findOneByUrl(
-            $itemUrl,
-            Locale::frontendLanguage()
-        )->getId();
+        try {
+            return FrontendModel::get('faq.repository.question')->findOneByUrl(
+                $itemUrl,
+                Locale::frontendLanguage()
+            )->getId();
+        } catch (NoResultException $exception) {
+            return 0;
+        }
     }
 
     public static function getMostRead(int $limit): array

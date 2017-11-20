@@ -6,9 +6,18 @@ use Backend\Modules\Faq\Domain\Category\Category;
 use Common\Core\Model;
 use Doctrine\ORM\EntityRepository;
 use Common\Locale;
+use Doctrine\ORM\NoResultException;
 
 final class QuestionRepository extends EntityRepository
 {
+    /**
+     * @param string $url
+     * @param Locale $locale
+     *
+     * @return Question
+     *
+     * @throws NoResultException When no result is found
+     */
     public function findOneByUrl(string $url, Locale $locale): Question
     {
         return $this

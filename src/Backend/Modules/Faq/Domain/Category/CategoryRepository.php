@@ -5,9 +5,18 @@ namespace Backend\Modules\Faq\Domain\Category;
 use Common\Core\Model;
 use Doctrine\ORM\EntityRepository;
 use Common\Locale;
+use Doctrine\ORM\NoResultException;
 
 final class CategoryRepository extends EntityRepository
 {
+    /**
+     * @param string $url
+     * @param Locale $locale
+     *
+     * @return Category
+     *
+     * @throws NoResultException When no result is found
+     */
     public function findOneByUrl(string $url, Locale $locale): Category
     {
         return $this
