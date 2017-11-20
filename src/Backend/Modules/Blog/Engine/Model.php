@@ -440,24 +440,27 @@ class Model
     }
 
     /**
-     * Get a category id by title
-     *
-     * @param string $title    The title of the category.
-     * @param string $language The language to use, if not provided we will use the working language.
-     *
-     * @return int
+     * @deprecated
      */
-    public static function getCategoryId(string $title, string $language = null): int
+    public static function getCategoryId(string $title, ?string $language): int
     {
-        $title = (string) $title;
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
+        if ($language === null) {
+            $language = BL::getWorkingLanguage();
+        }
 
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.id
-             FROM blog_categories AS i
-             WHERE i.title = ? AND i.locale = ?',
-            [$title, $language]
-        );
+        $categories = BackendModel::get('blog.repository.category')
+                                  ->findBy(
+                                      [
+                                          'title' => $title,
+                                          'locale' => $language,
+                                      ]
+                                  );
+
+        if (empty($categories)) {
+            return 0;
+        }
+
+        return $categories[0]->getId();
     }
 
     public static function getComment(int $id): array
