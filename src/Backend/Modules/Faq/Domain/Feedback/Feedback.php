@@ -61,6 +61,7 @@ final class Feedback
     {
         $this->question = $question;
         $this->text = $text;
+        $this->processed = false;
     }
 
     public function update(Question $question, string $text, bool $processed)

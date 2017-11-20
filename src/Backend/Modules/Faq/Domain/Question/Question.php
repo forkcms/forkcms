@@ -9,7 +9,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Domain\Question\QuestionRepository")
  * @ORM\Table(name="faq_questions")
  * @ORM\HasLifecycleCallbacks
  */
@@ -235,6 +235,35 @@ final class Question
             'hidden' => (int) $this->isHidden(),
             'sequence' => $this->getSequence(),
             'url' => $this->getMeta()->getUrl(),
+            'title' => $this->getQuestion(),
+            'text' => $this->getAnswer(),
+            'category_title' => $this->getCategory()->getTitle(),
+            'category_url' => $this->getCategory()->getMeta()->getUrl(),
         ];
+    }
+
+    public function increaseViewCount(): void
+    {
+        $this->numberOfViews++;
+    }
+
+    public function increaseUsefulYesCount(): void
+    {
+        $this->numberOfUsefulYes++;
+    }
+
+    public function increaseUsefulNoCount(): void
+    {
+        $this->numberOfUsefulNo++;
+    }
+
+    public function decreaseUsefulYesCount(): void
+    {
+        $this->numberOfUsefulYes--;
+    }
+
+    public function decreaseUsefulNoCount(): void
+    {
+        $this->numberOfUsefulNo--;
     }
 }

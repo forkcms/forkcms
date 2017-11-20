@@ -2,9 +2,13 @@
 
 namespace Frontend\Modules\Faq\Engine;
 
+use Backend\Modules\Faq\Domain\Category\Category;
+use Backend\Modules\Faq\Domain\Feedback\Feedback;
+use Backend\Modules\Faq\Domain\Question\Question;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -15,16 +19,10 @@ class Model implements FrontendTagsInterface
 {
     public static function get(string $url): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, m.url, c.title AS category_title, m2.url AS category_url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             INNER JOIN faq_categories AS c ON i.category_id = c.id
-             INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE m.url = ? AND i.language = ? AND i.hidden = ?
-             ORDER BY i.sequence',
-            [$url, LANGUAGE, false]
-        );
+        return FrontendModel::get('faq.repository.question')->findOneByUrl(
+            $url,
+            Locale::frontendLanguage()
+        )->toArray();
     }
 
     /**
@@ -36,87 +34,60 @@ class Model implements FrontendTagsInterface
      */
     public static function getAllForCategory(int $categoryId, int $limit = null, $excludeIds = null): array
     {
-        $excludeIds = empty($excludeIds) ? [0] : (array) $excludeIds;
-
-        // get items
-        if ($limit !== null) {
-            $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.*, m.url
-                 FROM faq_questions AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
-                 AND i.id NOT IN (' . implode(',', $excludeIds) . ')
-             ORDER BY i.sequence
-             LIMIT ?',
-                [$categoryId, LANGUAGE, false, $limit]
-            );
-        } else {
-            $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.*, m.url
-                 FROM faq_questions AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
-                 AND i.id NOT IN (' . implode(',', $excludeIds) . ')
-             ORDER BY i.sequence',
-                [$categoryId, LANGUAGE, false]
-            );
-        }
-
-        // init var
+        $questions = FrontendModel::get('faq.repository.question')->findByCategory(
+            FrontendModel::get('faq.repository.category')->find($categoryId),
+            Locale::frontendLanguage(),
+            $limit,
+            $excludeIds
+        );
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
-        // build the item urls
-        foreach ($items as &$item) {
-            $item['full_url'] = $link . '/' . $item['url'];
-        }
+        return array_map(
+            function (Question $question) use ($link) {
+                $questionArray = $question->toArray();
+                $questionArray['full_url'] = $link . '/' . $question->getMeta()->getUrl();
 
-        return $items;
+                return $questionArray;
+            },
+            $questions
+        );
     }
 
     public static function getCategories(): array
     {
-        $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.*, m.url
-             FROM faq_categories AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.language = ?
-             ORDER BY i.sequence',
-            [LANGUAGE]
+        $categories = FrontendModel::get('faq.repository.category')->findBy(
+            ['locale' => Locale::frontendLanguage()],
+            ['sequence' => 'DESC']
         );
-
-        // init var
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Category');
 
-        // build the item url
-        foreach ($items as &$item) {
-            $item['full_url'] = $link . '/' . $item['url'];
-        }
+        return array_map(
+            function (Category $category) use ($link) {
+                $categoryArray = $category->toArray();
+                $categoryArray['full_url'] = $link . '/' . $category->getMeta()->getUrl();
 
-        return $items;
+                return $categoryArray;
+            },
+            $categories
+        );
     }
 
     public static function getCategory(string $url): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, m.url
-             FROM faq_categories AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE m.url = ? AND i.language = ?
-             ORDER BY i.sequence',
-            [$url, LANGUAGE]
-        );
+        return FrontendModel::get('faq.repository.category')->findOneByUrl(
+            $url,
+            Locale::frontendLanguage()
+        )->toArray();
     }
 
     public static function getCategoryById(int $id): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, m.url
-             FROM faq_categories AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.id = ? AND i.language = ?
-             ORDER BY i.sequence',
-            [$id, LANGUAGE]
-        );
+        return FrontendModel::get('faq.repository.category')->findOne(
+            [
+                'id' => $id,
+                'locale' => Locale::frontendLanguage()
+            ]
+        )->toArray();
     }
 
     /**
@@ -128,25 +99,22 @@ class Model implements FrontendTagsInterface
      */
     public static function getForTags(array $ids): array
     {
-        $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.question AS title, m.url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.hidden = ? AND i.id IN (' . implode(',', $ids) . ')
-             ORDER BY i.question',
-            [false]
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
+
+        $questions = FrontendModel::get('faq.repository.question')->findMultiple(
+            $ids,
+            Locale::frontendLanguage()
         );
 
-        if (!empty($items)) {
-            $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
+        return array_map(
+            function (Question $question) use ($link) {
+                $questionArray = $question->toArray();
+                $questionArray['full_url'] = $link . '/' . $question->getMeta()->getUrl();
 
-            // build the item urls
-            foreach ($items as &$row) {
-                $row['full_url'] = $link . '/' . $row['url'];
-            }
-        }
-
-        return $items;
+                return $questionArray;
+            },
+            $questions
+        );
     }
 
     /**
@@ -161,47 +129,49 @@ class Model implements FrontendTagsInterface
     {
         $itemUrl = (string) $url->getParameter(1);
 
-        return self::get($itemUrl)['id'];
+        return FrontendModel::get('faq.repository.question')->findOneByUrl(
+            $itemUrl,
+            Locale::frontendLanguage()
+        )->getId();
     }
 
     public static function getMostRead(int $limit): array
     {
-        $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.*, m.url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.num_views > 0 AND i.language = ? AND i.hidden = ?
-             ORDER BY (i.num_usefull_yes + i.num_usefull_no) DESC
-             LIMIT ?',
-            [LANGUAGE, false, $limit]
-        );
-
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
-        foreach ($items as &$item) {
-            $item['full_url'] = $link . '/' . $item['url'];
-        }
 
-        return $items;
+        return array_map(
+            function (Question $question) use ($link) {
+                $questionArray = $question->toArray();
+                $questionArray['full_url'] = $link . '/' . $question->getMeta()->getUrl();
+
+                return $questionArray;
+            },
+            FrontendModel::get('faq.repository.question')->findMostRead(
+                $limit,
+                Locale::frontendLanguage()
+            )
+        );
     }
 
     public static function getFaqsForCategory(int $categoryId): array
     {
-        $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence, m.url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.language = ? AND i.category_id = ?
-             ORDER BY i.sequence ASC',
-            [LANGUAGE, $categoryId]
-        );
-
+        $category = FrontendModel::get('faq.repository.category')->find($categoryId);
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
 
-        foreach ($items as &$item) {
-            $item['full_url'] = $link . '/' . $item['url'];
-        }
+        $questions = FrontendModel::get('faq.repository.question')->findByCategory(
+            $category,
+            Locale::frontendLanguage()
+        );
 
-        return $items;
+        return array_map(
+            function (Question $question) use ($link) {
+                $questionArray = $question->toArray();
+                $questionArray['full_url'] = $link . '/' . $question->getMeta()->getUrl();
+
+                return $questionArray;
+            },
+            $questions
+        );
     }
 
     /**
@@ -214,7 +184,7 @@ class Model implements FrontendTagsInterface
      */
     public static function getRelated(int $questionId, int $limit = 5): array
     {
-        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags((int) $questionId, 'Faq', 'Faq');
+        $relatedIDs = FrontendTagsModel::getRelatedItemsByTags($questionId, 'Faq', 'Faq');
 
         // there are no items, so return an empty array
         if (empty($relatedIDs)) {
@@ -222,39 +192,42 @@ class Model implements FrontendTagsInterface
         }
 
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
-        $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.question, m.url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.language = ? AND i.hidden = ? AND i.id IN(' . implode(',', $relatedIDs) . ')
-             ORDER BY i.question
-             LIMIT ?',
-            [LANGUAGE, false, $limit],
-            'id'
+
+        $questions = FrontendModel::get('faq.repository.question')->findMultiple(
+            $relatedIDs,
+            Locale::frontendLanguage()
         );
 
-        foreach ($items as &$row) {
-            $row['full_url'] = $link . '/' . $row['url'];
-        }
+        return array_map(
+            function (Question $question) use ($link) {
+                $questionArray = $question->toArray();
+                $questionArray['title'] = $question->getQuestion();
+                $questionArray['full_url'] = $link . '/' . $question->getMeta()->getUrl();
 
-        return $items;
+                return $questionArray;
+            },
+            $questions
+        );
     }
 
     public static function increaseViewCount(int $questionId): void
     {
-        FrontendModel::getContainer()->get('database')->execute(
-            'UPDATE faq_questions SET num_views = num_views + 1 WHERE id = ?',
-            [$questionId]
-        );
+        $question = FrontendModel::get('faq.repository.question')->find($questionId);
+        $question->increaseViewCount();
+
+        FrontendModel::get('doctrine.orm.default_entity_manager')->flush();
     }
 
     public static function saveFeedback(array $feedback): void
     {
-        $feedback['created_on'] = FrontendModel::getUTCDate();
-        $feedback['edited_on'] = FrontendModel::getUTCDate();
-        unset($feedback['sentOn']);
+        $feedback = new Feedback(
+            FrontendModel::get('faq.repository.question')->find($feedback['question_id']),
+            $feedback['text']
+        );
 
-        FrontendModel::getContainer()->get('database')->insert('faq_feedback', $feedback);
+        $entityManager = FrontendModel::getEntityManager();
+        $entityManager->persist($feedback);
+        $entityManager->flush();
     }
 
     /**
@@ -271,25 +244,29 @@ class Model implements FrontendTagsInterface
      */
     public static function search(array $ids): array
     {
-        $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.question AS title, i.answer AS text, m.url,
-             c.title AS category_title, m2.url AS category_url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             INNER JOIN faq_categories AS c ON c.id = i.category_id
-             INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.hidden = ? AND i.language = ? AND i.id IN (' . implode(',', $ids) . ')',
-            [false, LANGUAGE],
-            'id'
+        $link = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
+
+        $questions = FrontendModel::get('faq.repository.question')->findMultiple(
+            $ids,
+            Locale::frontendLanguage()
+        );
+        $questions = array_map(
+            function (Question $question) use ($link) {
+                $questionArray = $question->toArray();
+                $questionArray['full_url'] = $link . '/' . $question->getMeta()->getUrl();
+
+                return $questionArray;
+            },
+            $questions
         );
 
-        // prepare items for search
-        $detailUrl = FrontendNavigation::getUrlForBlock('Faq', 'Detail');
-        foreach ($items as &$item) {
-            $item['full_url'] = $detailUrl . '/' . $item['url'];
+        // make sure the search array is indexed by id
+        $questionsArray = [];
+        foreach ($questions as $question) {
+            $questionsArray[$question['id']] = $question;
         }
 
-        return $items;
+        return $questionsArray;
     }
 
     /**
@@ -306,40 +283,22 @@ class Model implements FrontendTagsInterface
             return;
         }
 
-        $database = FrontendModel::getContainer()->get('database');
+        $question = FrontendModel::get('faq.repository.question')->find($id);
 
         // update counter with current feedback (increase)
         if ($useful) {
-            $database->execute(
-                'UPDATE faq_questions
-                 SET num_usefull_yes = num_usefull_yes + 1
-                 WHERE id = ?',
-                [$id]
-            );
+            $question->increaseUsefulYesCount();
         } else {
-            $database->execute(
-                'UPDATE faq_questions
-                 SET num_usefull_no = num_usefull_no + 1
-                 WHERE id = ?',
-                [$id]
-            );
+            $question->increaseUsefulNoCount();
         }
 
         // update counter with previous feedback (decrease)
         if ($previousFeedback) {
-            $database->execute(
-                'UPDATE faq_questions
-                 SET num_usefull_yes = num_usefull_yes - 1
-                 WHERE id = ?',
-                [$id]
-            );
+            $question->decreaseUsefulYesCount();
         } elseif ($previousFeedback !== null) {
-            $database->execute(
-                'UPDATE faq_questions
-                 SET num_usefull_no = num_usefull_no - 1
-                 WHERE id = ?',
-                [$id]
-            );
+            $question->decreaseUsefulNoCount();
         }
+
+        FrontendModel::getEntityManager()->flush();
     }
 }

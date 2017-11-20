@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Domain\Category\CategoryRepository")
  * @ORM\Table(name="faq_categories")
  */
 class Category

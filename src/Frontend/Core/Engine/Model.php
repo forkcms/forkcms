@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -302,5 +303,10 @@ class Model extends \Common\Core\Model
         }
 
         return $array;
+    }
+
+    public static function getEntityManager(): EntityManager
+    {
+        return self::get('doctrine.orm.default_entity_manager');
     }
 }

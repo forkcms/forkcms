@@ -1,12 +1,12 @@
 services:
   faq.repository.category:
-    class: Doctrine\ORM\EntityRepository
+    class: Backend\Modules\Faq\Domain\Category\CategoryRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
       - Backend\Modules\Faq\Domain\Category\Category
 
   faq.repository.question:
-    class: Doctrine\ORM\EntityRepository
+    class: Backend\Modules\Faq\Domain\Question\QuestionRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
       - Backend\Modules\Faq\Domain\Question\Question
