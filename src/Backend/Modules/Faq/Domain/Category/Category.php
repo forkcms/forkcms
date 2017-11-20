@@ -13,7 +13,7 @@ use Exception;
  * @ORM\Entity
  * @ORM\Table(name="faq_categories")
  */
-final class Category
+class Category
 {
     /**
      * @var int

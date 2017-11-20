@@ -4,6 +4,7 @@ namespace Backend\Modules\Faq\Engine;
 
 use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Core\Language\Locale;
+use Backend\Modules\Faq\Domain\Question\Question;
 use Common\ModuleExtraType;
 use Common\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
@@ -36,14 +37,13 @@ class Model
      */
     public static function delete(int $id): void
     {
-        $question = self::get($id);
+        $question = BackendModel::get('faq.repository.question')->find($id);
 
-        /** @var $database \SpoonDatabase */
-        $database = BackendModel::getContainer()->get('database');
-        $database->delete('faq_questions', 'id = ?', [$id]);
-        $database->delete('meta', 'id = ?', [(int) $question['meta_id']]);
+        $entityManager = BackendModel::getEntityManager();
 
         BackendTagsModel::saveTags($id, '', 'Faq');
+        $entityManager->remove($question);
+        $entityManager->flush();
     }
 
     public static function deleteCategory(int $id): void
@@ -127,13 +127,9 @@ class Model
      */
     public static function get(int $id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, m.url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.id = ? AND i.locale = ?',
-            [$id, BL::getWorkingLanguage()]
-        );
+        $question = BackendModel::get('faq.repository.question')->find($id);
+
+        return $question->toArray();
     }
 
     public static function getAllFeedback(int $limit = 5): array
@@ -362,18 +358,24 @@ class Model
         return $url;
     }
 
-    /**
-     * Insert a question in the database
-     *
-     * @param array $item
-     *
-     * @return int
-     */
     public static function insert(array $item): int
     {
-        $insertId = BackendModel::getContainer()->get('database')->insert('faq_questions', $item);
+        $question = new Question(
+            Locale::fromString($item['language']),
+            $item['meta']->getMetaEntity(),
+            BackendModel::get('faq.repository.category')->find($item['category_id']),
+            $item['user_id'],
+            $item['question'],
+            $item['answer'],
+            $item['hidden'],
+            $item['sequence']
+        );
 
-        return $insertId;
+        $entityManager = BackendModel::getEntityManager();
+        $entityManager->persist($question);
+        $entityManager->flush();
+
+        return $question->getId();
     }
 
     public static function insertCategory(array $item, array $meta = null): int
@@ -428,12 +430,20 @@ class Model
      */
     public static function update(array $item): void
     {
-        BackendModel::getContainer()->get('database')->update(
-            'faq_questions',
-            $item,
-            'id = ?',
-            [(int) $item['id']]
+        $question = BackendModel::get('faq.repository.question')->find($item['id']);
+
+        if (!$question instanceof Question) {
+            return;
+        }
+
+        $question->update(
+            BackendModel::get('faq.repository.category')->find($item['category_id']),
+            $item['question'],
+            $item['answer'],
+            $item['hidden']
         );
+
+        BackendModel::getEntityManager()->flush();
     }
 
     public static function updateCategory(array $item): void

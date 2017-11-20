@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="faq_questions")
+ * @ORM\HasLifecycleCallbacks
  */
 final class Question
 {
@@ -114,7 +115,6 @@ final class Question
         int $userId,
         string $question,
         string $answer,
-        DateTime $createdOn,
         bool $hidden,
         int $sequence
     ) {
@@ -124,7 +124,6 @@ final class Question
         $this->userId = $userId;
         $this->question = $question;
         $this->answer = $answer;
-        $this->createdOn = $createdOn;
         $this->hidden = $hidden;
         $this->sequence = $sequence;
         $this->numberOfViews = 0;
@@ -134,20 +133,14 @@ final class Question
 
     public function update(
         Category $category,
-        int $userId,
         string $question,
         string $answer,
-        DateTime $createdOn,
-        bool $hidden,
-        int $sequence
+        bool $hidden
     ) {
         $this->category = $category;
-        $this->userId = $userId;
         $this->question = $question;
         $this->answer = $answer;
-        $this->createdOn = $createdOn;
         $this->hidden = $hidden;
-        $this->sequence = $sequence;
     }
 
     public function getId(): int
@@ -215,6 +208,14 @@ final class Question
         return $this->sequence;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist(): void
+    {
+        $this->createdOn = new DateTime();
+    }
+
     public function toArray(): array
     {
         return [
@@ -231,6 +232,7 @@ final class Question
             'num_useful_no' => $this->getNumberOfUsefulNo(),
             'hidden' => (int) $this->isHidden(),
             'sequence' => $this->getSequence(),
+            'url' => $this->getMeta()->getUrl(),
         ];
     }
 }
