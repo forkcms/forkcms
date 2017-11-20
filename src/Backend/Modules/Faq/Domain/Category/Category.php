@@ -4,7 +4,10 @@ namespace Backend\Modules\Faq\Domain\Category;
 
 use Common\Doctrine\Entity\Meta;
 use Common\Locale;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 /**
  * @ORM\Entity
@@ -31,7 +34,7 @@ final class Category
     /**
      * @var Meta
      *
-     * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"},  orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"}, orphanRemoval=true)
      */
     private $meta;
 
@@ -56,20 +59,29 @@ final class Category
      */
     private $sequence;
 
-    public function __construct(Locale $locale, Meta $meta, int $extraId, string $title, int $sequence)
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Backend\Modules\Faq\Domain\Question\Question",
+     *     mappedBy="category",
+     *     cascade={"remove"}
+     * )
+     */
+    private $questions;
+
+    public function __construct(Locale $locale, Meta $meta, string $title, int $sequence)
     {
         $this->locale = $locale;
         $this->meta = $meta;
-        $this->extraId = $extraId;
         $this->title = $title;
         $this->sequence = $sequence;
+        $this->questions = new ArrayCollection();
     }
 
-    public function update(int $extraId, string $title, int $sequence): void
+    public function update(string $title): void
     {
-        $this->extraId = $extraId;
         $this->title = $title;
-        $this->sequence = $sequence;
     }
 
     public function getId(): int
@@ -87,6 +99,15 @@ final class Category
         return $this->meta;
     }
 
+    public function setExtraId(int $extraId): void
+    {
+        if ($this->extraId !== null) {
+            throw new Exception('You can only set the extra ID once');
+        }
+
+        $this->extraId = $extraId;
+    }
+
     public function getExtraId(): int
     {
         return $this->extraId;
@@ -102,6 +123,11 @@ final class Category
         return $this->sequence;
     }
 
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
     public function toArray(): array
     {
         return [
@@ -111,6 +137,7 @@ final class Category
             'extra_id' => $this->getExtraId(),
             'title' => $this->getTitle(),
             'sequence' => $this->getSequence(),
+            'url' => $this->getMeta()->getUrl(),
         ];
     }
 }

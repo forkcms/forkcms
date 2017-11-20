@@ -40,7 +40,7 @@ final class Question
     /**
      * @var Category
      *
-     * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Category\Category")
+     * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Category\Category", inversedBy="questions")
      */
     private $category;
 

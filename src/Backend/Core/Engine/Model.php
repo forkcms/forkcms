@@ -3,6 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Common\ModuleExtraType;
+use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -893,5 +894,10 @@ class Model extends \Common\Core\Model
         $data = $data === null ? [] : unserialize($data);
         $data[$key] = $value;
         $database->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
+    }
+
+    public static function getEntityManager(): EntityManager
+    {
+        return self::get('doctrine.orm.default_entity_manager');
     }
 }
