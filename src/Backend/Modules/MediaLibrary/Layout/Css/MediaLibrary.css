@@ -98,12 +98,6 @@
   height: 90px;
   vertical-align: top;
 }
-.ie9 .mediaConnectedItems .ui-state-default,
-.ie8 .mediaConnectedItems .ui-state-default,
-.ie7 .mediaConnectedItems .ui-state-default,
-.ie6 .mediaConnectedItems .ui-state-default {
-  display: inline;
-}
   .mediaHolder {
     float: left;
     cursor: pointer;
@@ -148,7 +142,6 @@
   }
   .mediaConnectedItems li.selected .mediaHolder {
     opacity: 0.4;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
   }
 
   .editMediaItem,
