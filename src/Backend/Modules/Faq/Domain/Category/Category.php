@@ -3,11 +3,11 @@
 namespace Backend\Modules\Faq\Domain\Category;
 
 use Common\Doctrine\Entity\Meta;
+use Common\Exception\CanNotSetExtraIdException;
 use Common\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Domain\Category\CategoryRepository")
@@ -100,10 +100,15 @@ class Category
         return $this->meta;
     }
 
+    /**
+     * @param int $extraId
+     *
+     * @throws CanNotSetExtraIdException
+     */
     public function setExtraId(int $extraId): void
     {
         if ($this->extraId !== null) {
-            throw new Exception('You can only set the extra ID once');
+            throw new CanNotSetExtraIdException();
         }
 
         $this->extraId = $extraId;
