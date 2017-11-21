@@ -304,9 +304,4 @@ class Model extends \Common\Core\Model
 
         return $array;
     }
-
-    public static function getEntityManager(): EntityManager
-    {
-        return self::get('doctrine.orm.default_entity_manager');
-    }
 }

@@ -238,9 +238,7 @@ class Model implements FrontendTagsInterface
             $feedback['text']
         );
 
-        $entityManager = FrontendModel::getEntityManager();
-        $entityManager->persist($feedback);
-        $entityManager->flush();
+        FrontendModel::get('faq.repository.feedback')->add($feedback);
     }
 
     /**
@@ -312,6 +310,6 @@ class Model implements FrontendTagsInterface
             $question->decreaseUsefulNoCount();
         }
 
-        FrontendModel::getEntityManager()->flush();
+        FrontendModel::get('doctrine.orm.default_entity_manager')->flush();
     }
 }

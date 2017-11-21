@@ -9,6 +9,18 @@ use Doctrine\ORM\NoResultException;
 
 final class CategoryRepository extends EntityRepository
 {
+    public function add(Category $category): void
+    {
+        $this->getEntityManager()->persist($category);
+        $this->getEntityManager()->flush();
+    }
+
+    public function remove(Category $category): void
+    {
+        $this->getEntityManager()->remove($category);
+        $this->getEntityManager()->flush();
+    }
+
     /**
      * @param string $url
      * @param Locale $locale

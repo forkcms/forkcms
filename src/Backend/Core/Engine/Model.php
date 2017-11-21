@@ -895,9 +895,4 @@ class Model extends \Common\Core\Model
         $data[$key] = $value;
         $database->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
     }
-
-    public static function getEntityManager(): EntityManager
-    {
-        return self::get('doctrine.orm.default_entity_manager');
-    }
 }

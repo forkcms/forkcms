@@ -10,6 +10,18 @@ use Doctrine\ORM\NoResultException;
 
 final class QuestionRepository extends EntityRepository
 {
+    public function add(Question $question): void
+    {
+        $this->getEntityManager()->persist($question);
+        $this->getEntityManager()->flush();
+    }
+
+    public function remove(Question $question): void
+    {
+        $this->getEntityManager()->remove($question);
+        $this->getEntityManager()->flush();
+    }
+
     /**
      * @param string $url
      * @param Locale $locale

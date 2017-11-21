@@ -41,11 +41,8 @@ class Model
     {
         $question = BackendModel::get('faq.repository.question')->find($id);
 
-        $entityManager = BackendModel::getEntityManager();
-
         BackendTagsModel::saveTags($id, '', 'Faq');
-        $entityManager->remove($question);
-        $entityManager->flush();
+        BackendModel::get('faq.repository.category')->remove($question);
     }
 
     public static function deleteCategory(int $id): void
@@ -56,11 +53,8 @@ class Model
             return;
         }
 
-        $entityManager = BackendModel::getEntityManager();
-
         BackendModel::deleteExtraById($category->getExtraId());
-        $entityManager->remove($category);
-        $entityManager->flush();
+        BackendModel::get('faq.repository.category')->remove($category);
     }
 
     public static function deleteCategoryAllowed(int $id): bool
@@ -81,7 +75,7 @@ class Model
         $feedback = BackendModel::get('faq.repository.feedback')->find($itemId);
         $feedback->process();
 
-        BackendModel::getEntityManager()->flush();
+        BackendModel::get('doctrine.orm.default_entity_manager')->flush();
     }
 
     /**
@@ -302,9 +296,7 @@ class Model
             $item['sequence']
         );
 
-        $entityManager = BackendModel::getEntityManager();
-        $entityManager->persist($question);
-        $entityManager->flush();
+        BackendModel::get('faq.repository.question')->add($question);
 
         return $question->getId();
     }
@@ -331,9 +323,7 @@ class Model
         );
         $category->setExtraId($extraId);
 
-        $entityManager = BackendModel::getEntityManager();
-        $entityManager->persist($category);
-        $entityManager->flush();
+        BackendModel::get('faq.repository.category')->add($category);
 
         // update extra (item id is now known)
         BackendModel::updateExtra(
@@ -387,7 +377,7 @@ class Model
             $sequence
         );
 
-        BackendModel::getEntityManager()->flush();
+        BackendModel::get('doctrine.orm.default_entity_manager')->flush();
     }
 
     public static function updateCategory(array $item): void
@@ -405,7 +395,7 @@ class Model
 
         $category->update($item['title'], $sequence);
 
-        BackendModel::getEntityManager()->flush();
+        BackendModel::get('doctrine.orm.default_entity_manager')->flush();
 
         // update extra
         BackendModel::updateExtra(
