@@ -442,25 +442,22 @@ class Model
     /**
      * @deprecated
      */
-    public static function getCategoryId(string $title, ?string $language): int
-    {
-        if ($language === null) {
-            $language = BL::getWorkingLanguage();
-        }
+    public static function getCategoryId(string $title, string $language = null): int {
+        $category = BackendModel::get('blog.repository.category')
+                                ->findOneBy(
+                                    [
+                                        'title' => $title,
+                                        'locale' => Locale::fromString(
+                                            $language ?? BL::getWorkingLanguage()
+                                        ),
+                                    ]
+                                );
 
-        $categories = BackendModel::get('blog.repository.category')
-                                  ->findBy(
-                                      [
-                                          'title' => $title,
-                                          'locale' => $language,
-                                      ]
-                                  );
-
-        if (empty($categories)) {
+        if (!$category instanceof Category) {
             return 0;
         }
 
-        return $categories[0]->getId();
+        return $category->getId();
     }
 
     public static function getComment(int $id): array
