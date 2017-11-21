@@ -4,6 +4,7 @@ namespace Backend\Modules\Blog\Installer;
 
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Common\ModuleExtraType;
 
@@ -38,6 +39,7 @@ class Installer extends ModuleInstaller
         Model::get('fork.entity.create_schema')->forEntityClasses(
             [
                 Comment::class,
+                Category::class,
             ]
         );
     }
@@ -172,7 +174,6 @@ class Installer extends ModuleInstaller
      * Fetch the id of the first category in this language we come across
      *
      * @param string $language The language to use.
-     *
      * @return int
      */
     private function getCategory(string $language): int
@@ -222,7 +223,7 @@ class Installer extends ModuleInstaller
     {
         $item = [];
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['language'] = $language;
+        $item['locale'] = $language;
         $item['title'] = $title;
 
         return (int) $this->getDatabase()->insert('blog_categories', $item);
