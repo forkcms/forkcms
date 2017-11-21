@@ -202,9 +202,7 @@ class Model
             return;
         }
 
-        $entityManager = BackendModel::get(
-            'doctrine.orm.default_entity_manager'
-        );
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
         $entityManager->remove($category);
         $entityManager->flush($category);
     }
@@ -442,7 +440,8 @@ class Model
     /**
      * @deprecated
      */
-    public static function getCategoryId(string $title, string $language = null): int {
+    public static function getCategoryId(string $title, string $language = null): int
+    {
         $category = BackendModel::get('blog.repository.category')
                                 ->findOneBy(
                                     [
@@ -631,7 +630,7 @@ class Model
         return $url;
     }
 
-    public static function getUrlForCategory($url, int $id = null): string
+    public static function getUrlForCategory(string $url, int $id = null): string
     {
         $repository = BackendModel::get('blog.repository.category');
 
@@ -803,11 +802,8 @@ class Model
         return $item['revision_id'];
     }
 
-    public static function insertCategory(array $item, ?array $meta = null): int
+    public static function insertCategory(array $item, array $meta = null): int
     {
-        $entityManager = BackendModel::get(
-            'doctrine.orm.default_entity_manager'
-        );
 
         if ($meta === null) {
             $meta = BackendModel::get('fork.repository.meta')
@@ -815,11 +811,11 @@ class Model
         } else {
             $meta = new Meta(
                 $meta['keywords'],
-                (isset($meta['keywords_overwrite'])) ? $meta['keywords_overwrite'] : false,
+                $meta['keywords_overwrite'] ?? false,
                 $meta['description'],
-                (isset($meta['description_overwrite'])) ? $meta['description_overwrite'] : false,
+                $meta['description_overwrite'] ?? false,
                 $meta['title'],
-                (isset($meta['title_overwrite'])) ? $meta['title_overwrite'] : false,
+                $meta['title_overwrite'] ?? false,
                 $meta['url'],
                 false
             );
@@ -831,6 +827,7 @@ class Model
             $meta
         );
 
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
         $entityManager->persist($category);
         $entityManager->flush($category);
 
@@ -839,10 +836,6 @@ class Model
 
     public static function insertComment(array $data): int
     {
-        $entityManager = BackendModel::get(
-            'doctrine.orm.default_entity_manager'
-        );
-
         $comment = new Comment(
             $data['post_id'],
             Locale::fromString($data['language']),
@@ -855,6 +848,7 @@ class Model
             $data['data']
         );
 
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
         $entityManager->persist($comment);
         $entityManager->flush($comment);
 
@@ -1020,13 +1014,8 @@ class Model
         return $item['revision_id'];
     }
 
-    public static function updateCategory(
-        array $item,
-        ?array $meta = null
-    ): void {
-        $entityManager = BackendModel::get(
-            'doctrine.orm.default_entity_manager'
-        );
+    public static function updateCategory(array $item, array $meta = null): void
+    {
         $category = BackendModel::get('blog.repository.category')
                                 ->find($item['id']);
 
@@ -1054,14 +1043,11 @@ class Model
             $metaEntity
         );
 
-        $entityManager->flush($category);
+        BackendModel::get('doctrine.orm.default_entity_manager')->flush($category);
     }
 
     public static function updateComment(array $item): void
     {
-        $entityManager = BackendModel::get(
-            'doctrine.orm.default_entity_manager'
-        );
         $comment = BackendModel::get('blog.repository.comment')
                                ->find($item['id']);
 
@@ -1079,7 +1065,7 @@ class Model
             (isset($item['data'])) ? $item['data'] : $comment->getData()
         );
 
-        $entityManager->flush($comment);
+        BackendModel::get('doctrine.orm.default_entity_manager')->flush($comment);
     }
 
     public static function updateCommentStatuses(array $ids, string $status): void
