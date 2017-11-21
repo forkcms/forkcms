@@ -69,7 +69,7 @@ final class CategoryRepository extends EntityRepository
         ;
     }
 
-    public function getUrl(string $url, Locale $locale, ?int $id = null): string
+    public function getUrl(string $url, Locale $locale, int $id = null): string
     {
         $queryBuilder = $this->createQueryBuilder('c');
 

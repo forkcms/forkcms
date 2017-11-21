@@ -47,7 +47,7 @@ final class QuestionRepository extends EntityRepository
     public function findByCategory(
         Category $category,
         Locale $locale,
-        ?int $limit = null,
+        int $limit = null,
         array $excludeIds = array()
     ): array {
         $query = $this
@@ -119,7 +119,7 @@ final class QuestionRepository extends EntityRepository
         ;
     }
 
-    public function getUrl(string $url, Locale $locale, ?int $id = null): string
+    public function getUrl(string $url, Locale $locale, int $id = null): string
     {
         $queryBuilder = $this->createQueryBuilder('q');
 
