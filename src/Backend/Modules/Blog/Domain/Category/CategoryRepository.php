@@ -3,10 +3,25 @@
 namespace Backend\Modules\Blog\Domain\Category;
 
 use Common\Core\Model;
+use Common\Locale;
 use Doctrine\ORM\EntityRepository;
 
 class CategoryRepository extends EntityRepository
 {
+    public function findOneByUrl(string $url, Locale $locale): Category
+    {
+        return $this
+            ->createQueryBuilder('c')
+            ->innerJoin('c.meta', 'm')
+            ->andWhere('m.url = :url')
+            ->andWhere('c.locale = :locale')
+            ->setParameter(':url', $url)
+            ->setParameter(':locale', $locale)
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
+
     public function remove(Category $category): void
     {
         $this->getEntityManager()->remove($category);
