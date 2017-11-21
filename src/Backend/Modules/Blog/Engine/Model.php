@@ -106,7 +106,12 @@ class Model
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Settings', 'Blog')) {
             // rss title
-            if (BackendModel::get('fork.settings')->get('Blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
+            $rssTitle = BackendModel::get('fork.settings')->get(
+                'Blog',
+                'rss_title_' . BL::getWorkingLanguage(),
+                null
+            );
+            if ($rssTitle == '') {
                 $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSTitle', 'Blog'),
@@ -116,7 +121,12 @@ class Model
             }
 
             // rss description
-            if (BackendModel::get('fork.settings')->get('Blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
+            $rssDescription = BackendModel::get('fork.settings')->get(
+                'Blog',
+                'rss_description_' . BL::getWorkingLanguage(),
+                null
+            );
+            if ($rssDescription == '') {
                 $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSDescription', 'Blog'),
@@ -211,7 +221,6 @@ class Model
      * Checks if it is allowed to delete the a category
      *
      * @param int $id The id of the category.
-     *
      * @return bool
      */
     public static function deleteCategoryAllowed(int $id): bool
@@ -277,7 +286,6 @@ class Model
      * Checks if an item exists
      *
      * @param int $id The id of the item to check for existence.
-     *
      * @return bool
      */
     public static function exists(int $id): bool
@@ -308,7 +316,6 @@ class Model
      * Get all data for a given id
      *
      * @param int $id The Id of the item to fetch?
-     *
      * @return array
      */
     public static function get(int $id): array
@@ -325,12 +332,11 @@ class Model
 
     /**
      * Get the comments
+     *
      * @deprecated
-     *
      * @param string $status The type of comments to get.
-     * @param int    $limit  The maximum number of items to retrieve.
-     * @param int    $offset The offset.
-     *
+     * @param int $limit The maximum number of items to retrieve.
+     * @param int $offset The offset.
      * @return array
      */
     public static function getAllCommentsForStatus(string $status, int $limit = 30, int $offset = 0): array
@@ -373,7 +379,6 @@ class Model
      * Get all items by a given tag id
      *
      * @param int $tagId The id of the tag.
-     *
      * @return array
      */
     public static function getByTag(int $tagId): array
@@ -399,7 +404,6 @@ class Model
      * Get all categories
      *
      * @param bool $includeCount Include the count?
-     *
      * @return array
      */
     public static function getCategories(bool $includeCount = false): array
@@ -464,8 +468,6 @@ class Model
         $comment = BackendModel::get('blog.repository.comment')
                                ->find($id);
 
-
-
         if (!$comment instanceof Comment) {
             return [];
         }
@@ -522,8 +524,7 @@ class Model
      * Get the latest comments for a given type
      *
      * @param string $status The status for the comments to retrieve.
-     * @param int    $limit  The maximum number of items to retrieve.
-     *
+     * @param int $limit The maximum number of items to retrieve.
      * @return array
      */
     public static function getLatestComments(string $status, int $limit = 10): array
@@ -563,9 +564,8 @@ class Model
     /**
      * Get all data for a given revision
      *
-     * @param int $id         The id of the item.
+     * @param int $id The id of the item.
      * @param int $revisionId The revision to get.
-     *
      * @return array
      */
     public static function getRevision(int $id, int $revisionId): array
@@ -583,8 +583,7 @@ class Model
      * Retrieve the unique URL for an item
      *
      * @param string $url The URL to base on.
-     * @param int    $id  The id of the item to ignore.
-     *
+     * @param int $id The id of the item to ignore.
      * @return string
      */
     public static function getUrl(string $url, int $id = null): string
@@ -641,7 +640,6 @@ class Model
      * Inserts an item into the database
      *
      * @param array $item The data to insert.
-     *
      * @return int
      */
     public static function insert(array $item): int
@@ -655,24 +653,20 @@ class Model
 
     /**
      * Inserts a complete post item based on some arrays of data
-     *
      * This method's purpose is to be able to insert a post (possibly with all its metadata, tags, and comments)
      * in one method call. As much data as possible has been made optional, to be able to do imports where only
      * fractions of the data we need are known.
-     *
      * The item array should have at least a 'title' and a 'text' property other properties are optional.
      * The meta array has only optional properties. You can use these to override the defaults.
      * The tags array is just a list of tagnames as string.
      * The comments array is an array of arrays with comment properties. A comment should have
      * at least 'author', 'email', and 'text' properties.
      *
-     * @param array $item     The data to insert.
-     * @param array $meta     The metadata to insert.
-     * @param array $tags     The tags to connect to this post.
+     * @param array $item The data to insert.
+     * @param array $meta The metadata to insert.
+     * @param array $tags The tags to connect to this post.
      * @param array $comments The comments attached to this post.
-     *
      * @throws Exception
-     *
      * @return int
      */
     public static function insertCompletePost(array $item, array $meta = [], $tags = [], $comments = []): int
@@ -864,7 +858,6 @@ class Model
      * Recalculate the commentcount
      *
      * @param array $ids The id(s) of the post wherefore the commentcount should be recalculated.
-     *
      * @return bool
      */
     public static function reCalculateCommentCount(array $ids): bool
@@ -910,7 +903,6 @@ class Model
      * Update an existing item
      *
      * @param array $item The new data.
-     *
      * @return int
      */
     public static function update(array $item): int
