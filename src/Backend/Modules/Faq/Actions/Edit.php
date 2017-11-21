@@ -108,13 +108,12 @@ class Edit extends BackendBaseActionEdit
                 // build item
                 $item = [];
                 $item['id'] = $this->id;
-                $item['meta'] = $this->meta;
+                $item['meta_id'] = $this->meta->save();
                 $item['category_id'] = $this->form->getField('category_id')->getValue();
                 $item['language'] = $this->record['language'];
                 $item['question'] = $this->form->getField('title')->getValue();
                 $item['answer'] = $this->form->getField('answer')->getValue(true);
                 $item['hidden'] = $this->form->getField('hidden')->getValue();
-                $item['sequence'] = $this->record['sequence'];
 
                 // update the item
                 BackendFaqModel::update($item);

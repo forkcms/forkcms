@@ -35,14 +35,16 @@ class SequenceQuestions extends BackendBaseAJAXAction
 
         // is the question moved to a new category?
         if ($fromCategoryId != $toCategoryId) {
-            $item = BackendFaqModel::get($questionId);
+            $item = [];
+            $item['id'] = $questionId;
             $item['category_id'] = $toCategoryId;
 
             BackendFaqModel::update($item);
 
             // loop id's and set new sequence
             foreach ($toCategorySequence as $i => $id) {
-                $item = BackendFaqModel::get((int) $id);
+                $item = [];
+                $item['id'] = (int) $id;
                 $item['sequence'] = $i + 1;
 
                 // update sequence if the item exists
@@ -54,7 +56,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
 
         // loop id's and set new sequence
         foreach ($fromCategorySequence as $i => $id) {
-            $item = BackendFaqModel::get((int) $id);
+            $item['id'] = (int) $id;
             $item['sequence'] = $i + 1;
 
             // update sequence if the item exists

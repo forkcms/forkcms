@@ -6,6 +6,7 @@ use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Core\Language\Locale;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Backend\Modules\Faq\Domain\Question\Question;
+use Common\Doctrine\Entity\Meta;
 use Common\ModuleExtraType;
 use Common\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
@@ -292,7 +293,7 @@ class Model
     {
         $question = new Question(
             Locale::fromString($item['language']),
-            $item['meta']->getMetaEntity(),
+            BackendModel::get('fork.repository.meta')->find($item['meta_id']),
             BackendModel::get('faq.repository.category')->find($item['category_id']),
             $item['user_id'],
             $item['question'],
@@ -324,7 +325,7 @@ class Model
 
         $category = new Category(
             Locale::fromString($item['language']),
-            $item['meta']->getMetaEntity(),
+            BackendModel::get('fork.repository.meta')->find($item['meta_id']),
             $item['title'],
             $item['sequence']
         );
@@ -361,12 +362,29 @@ class Model
             return;
         }
 
+        $questionData = $question->getQuestion();
+        if (!array_key_exists('question', $item)) {
+            $questionData = $item['question'];
+        }
+        $answer = $question->getAnswer();
+        if (!array_key_exists('answer', $item)) {
+            $answer = $item['answer'];
+        }
+        $hidden = $question->isHidden();
+        if (!array_key_exists('hidden', $item)) {
+            $hidden = $item['hidden'];
+        }
+        $sequence = $question->getSequence();
+        if (!array_key_exists('sequence', $item)) {
+            $sequence = $item['sequence'];
+        }
+
         $question->update(
             BackendModel::get('faq.repository.category')->find($item['category_id']),
-            $item['question'],
-            $item['answer'],
-            $item['hidden'],
-            $item['sequence']
+            $questionData,
+            $answer,
+            $hidden,
+            $sequence
         );
 
         BackendModel::getEntityManager()->flush();
@@ -380,7 +398,12 @@ class Model
             return;
         }
 
-        $category->update($item['title'], $item['sequence']);
+        $sequence = $category->getSequence();
+        if (array_key_exists('sequence', $item)) {
+            $sequence = $item['sequence'];
+        }
+
+        $category->update($item['title'], $sequence);
 
         BackendModel::getEntityManager()->flush();
 
