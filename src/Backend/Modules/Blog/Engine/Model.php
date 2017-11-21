@@ -6,6 +6,8 @@ use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Locale;
+use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
@@ -32,12 +34,12 @@ class Model
 
     const QUERY_DATAGRID_BROWSE_COMMENTS =
         'SELECT
-             i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
+             i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.text,
              p.id AS post_id, p.title AS post_title, m.url AS post_url
          FROM blog_comments AS i
-         INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+         INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
          INNER JOIN meta AS m ON p.meta_id = m.id
-         WHERE i.status = ? AND i.language = ? AND p.status = ?
+         WHERE i.status = ? AND i.locale = ? AND p.status = ?
          GROUP BY i.id';
 
     const QUERY_DATAGRID_BROWSE_DRAFTS =
@@ -179,7 +181,7 @@ class Model
         );
         $database->delete(
             'blog_comments',
-            'post_id IN (' . $idPlaceHolders . ') AND language = ?',
+            'postId IN (' . $idPlaceHolders . ') AND locale = ?',
             array_merge($ids, [BL::getWorkingLanguage()])
         );
 
@@ -232,63 +234,52 @@ class Model
         );
     }
 
-    /**
-     * Deletes one or more comments
-     *
-     * @param array $ids The id(s) of the items(s) to delete.
-     */
     public static function deleteComments(array $ids): void
     {
-        // make sure $ids is an array
-        $ids = (array) $ids;
+        $repository = BackendModel::get('blog.repository.comment');
+        $comments = $repository->findById($ids);
 
-        // loop and cast to integers
-        foreach ($ids as &$id) {
-            $id = (int) $id;
+        if (empty($comments)) {
+            return;
         }
 
-        // create an array with an equal amount of questionmarks as ids provided
-        $idPlaceHolders = array_fill(0, count($ids), '?');
-
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
-        // get ids
-        $itemIds = (array) $database->getColumn(
-            'SELECT i.post_id
-             FROM blog_comments AS i
-             WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')',
-            $ids
+        $postIdsToRecalculate = array_map(
+            function ($comment) {
+                return $comment->getPostId();
+            },
+            $comments
         );
 
-        // update record
-        $database->delete('blog_comments', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
+        $repository->deleteMultipleById($ids);
 
         // recalculate the comment count
-        if (!empty($itemIds)) {
-            self::reCalculateCommentCount($itemIds);
+        if (!empty($postIdsToRecalculate)) {
+            $postIdsToRecalculate = array_unique($postIdsToRecalculate);
+            self::reCalculateCommentCount($postIdsToRecalculate);
         }
     }
 
     public static function deleteSpamComments(): void
     {
-        $database = BackendModel::getContainer()->get('database');
-
-        // get ids
-        $itemIds = (array) $database->getColumn(
-            'SELECT i.post_id
-             FROM blog_comments AS i
-             WHERE status = ? AND i.language = ?',
-            ['spam', BL::getWorkingLanguage()]
+        $comments = BackendModel::get('blog.repository.comment')->findBy(
+            [
+                'status' => 'spam',
+                'locale' => BL::getWorkingLanguage(),
+            ]
         );
 
-        // update record
-        $database->delete('blog_comments', 'status = ? AND language = ?', ['spam', BL::getWorkingLanguage()]);
-
-        // recalculate the comment count
-        if (!empty($itemIds)) {
-            self::reCalculateCommentCount($itemIds);
+        if (empty($comments)) {
+            return;
         }
+
+        $ids = array_map(
+            function ($comment) {
+                return $comment->getId();
+            },
+            $comments
+        );
+
+        self::deleteComments($ids);
     }
 
     /**
@@ -319,15 +310,11 @@ class Model
         );
     }
 
-    public static function existsComment(int $id): int
+    public static function existsComment(int $id): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM blog_comments AS i
-             WHERE i.id = ? AND i.language = ?
-             LIMIT 1',
-            [(int) $id, BL::getWorkingLanguage()]
-        );
+        $repository = BackendModel::get('blog.repository.comment');
+
+        return $repository->find($id) instanceof Comment;
     }
 
     /**
@@ -351,6 +338,7 @@ class Model
 
     /**
      * Get the comments
+     * @deprecated
      *
      * @param string $status The type of comments to get.
      * @param int    $limit  The maximum number of items to retrieve.
@@ -369,12 +357,12 @@ class Model
         // no status passed
         if ($status === null) {
             return (array) BackendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
+                'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
                  p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
                  FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+                 INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
                  INNER JOIN meta AS m ON p.meta_id = m.id
-                 WHERE i.language = ?
+                 WHERE i.locale = ?
                  GROUP BY i.id
                  LIMIT ?, ?',
                 [BL::getWorkingLanguage(), $offset, $limit]
@@ -382,12 +370,12 @@ class Model
         }
 
         return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
+            'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
              FROM blog_comments AS i
-             INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+             INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
-             WHERE i.status = ? AND i.language = ?
+             WHERE i.status = ? AND i.locale = ?
              GROUP BY i.id
              LIMIT ?, ?',
             [$status, BL::getWorkingLanguage(), $offset, $limit]
@@ -488,58 +476,63 @@ class Model
         );
     }
 
-    /**
-     * Get all data for a given id
-     *
-     * @param int $id The Id of the comment to fetch?
-     *
-     * @return array
-     */
-    public static function getComment($id): array
+    public static function getComment(int $id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
-             p.id AS post_id, p.title AS post_title, m.url AS post_url
-             FROM blog_comments AS i
-             INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-             INNER JOIN meta AS m ON p.meta_id = m.id
-             WHERE i.id = ? AND p.status = ?
-             LIMIT 1',
-            [(int) $id, 'active']
+        $comment = BackendModel::get('blog.repository.comment')
+                               ->find($id);
+
+
+
+        if (!$comment instanceof Comment) {
+            return [];
+        }
+
+        $commentData = $comment->toArray();
+
+        // I know this is dirty, but as we don't have full entities yet we
+        // need to fetch the post separately and inject it into the comment
+        // @todo: fix this when there is a POST entity
+        $postData = (array) BackendModel::getContainer()->get('database')
+            ->getRecord(
+                'SELECT p.id AS post_id, p.title AS post_title, m.url AS post_url
+                 FROM blog_posts AS p
+                 INNER JOIN meta AS m ON p.meta_id = m.id
+                 WHERE p.id = ? AND p.status = ? AND p.language = ?
+                 LIMIT 1',
+                [
+                    (int) $comment->getPostId(),
+                    'active',
+                    $comment->getLocale()->getLocale(),
+                ]
+            );
+
+        return array_merge(
+            $commentData,
+            $postData
         );
     }
 
-    /**
-     * Get multiple comments at once
-     *
-     * @param array $ids The id(s) of the comment(s).
-     *
-     * @return array
-     */
     public static function getComments(array $ids): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT *
-             FROM blog_comments AS i
-             WHERE i.id IN (' . implode(', ', array_fill(0, count($ids), '?')) . ')',
-            $ids
+        $repository = BackendModel::get('blog.repository.comment');
+
+        return array_map(
+            function (Comment $comment) {
+                $commentData = $comment->toArray();
+                // I really don't know why this is returned in a non UNIX-timestamp format
+                $commentData['created_on'] = $comment->getCreatedOn()->format('Y-m-d H:i:s');
+
+                return $commentData;
+            },
+            $repository->findById($ids)
         );
     }
 
-    /**
-     * Get a count per comment
-     *
-     * @return array
-     */
     public static function getCommentStatusCount(): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getPairs(
-            'SELECT i.status, COUNT(i.id)
-             FROM blog_comments AS i
-             WHERE i.language = ?
-             GROUP BY i.status',
-            [BL::getWorkingLanguage()]
-        );
+        $repository = BackendModel::get('blog.repository.comment');
+
+        return $repository->listCountPerStatus(Locale::workingLocale());
     }
 
     /**
@@ -552,15 +545,14 @@ class Model
      */
     public static function getLatestComments(string $status, int $limit = 10): array
     {
-        // get the comments (order by id, this is faster then on date, the higher the id, the more recent
         $comments = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.author, i.text, UNIX_TIMESTAMP(i.created_on) AS created_in,
+            'SELECT i.id, i.author, i.text, UNIX_TIMESTAMP(i.createdOn) AS created_on,
              p.title, p.language, m.url
              FROM blog_comments AS i
-             INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+             INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
-             WHERE i.status = ? AND p.status = ? AND i.language = ?
-             ORDER BY i.created_on DESC
+             WHERE i.status = ? AND p.status = ? AND i.locale = ?
+             ORDER BY i.createdOn DESC
              LIMIT ?',
             [(string) $status, 'active', BL::getWorkingLanguage(), (int) $limit]
         );
@@ -897,38 +889,31 @@ class Model
         return $item['id'];
     }
 
-    /**
-     * Inserts a new comment (Taken from FrontendBlogModel)
-     *
-     * @param array $comment The comment to add.
-     *
-     * @return int
-     */
-    public static function insertComment(array $comment): int
+    public static function insertComment(array $data): int
     {
-        // get database
-        $database = BackendModel::getContainer()->get('database');
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
 
-        // insert comment
-        $comment['id'] = (int) $database->insert('blog_comments', $comment);
+        $comment = new Comment(
+            $data['post_id'],
+            Locale::fromString($data['language']),
+            $data['author'],
+            $data['email'],
+            $data['text'],
+            'comment',
+            $data['status'],
+            $data['website'],
+            $data['data']
+        );
+
+        $entityManager->persist($comment);
+        $entityManager->flush($comment);
 
         // recalculate if published
-        if ($comment['status'] == 'published') {
-            // num comments
-            $numComments = (int) BackendModel::getContainer()->get('database')->getVar(
-                'SELECT COUNT(i.id) AS comment_count
-                 FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-                 WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
-                 GROUP BY i.post_id',
-                ['published', $comment['post_id'], BL::getWorkingLanguage(), 'active']
-            );
-
-            // update num comments
-            $database->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
+        if ($comment->getStatus() === 'published') {
+            self::reCalculateCommentCount([$comment->getPostId()]);
         }
 
-        return $comment['id'];
+        return $comment->getId();
     }
 
     /**
@@ -953,11 +938,11 @@ class Model
 
         // get counts
         $commentCounts = (array) $database->getPairs(
-            'SELECT i.post_id, COUNT(i.id) AS comment_count
+            'SELECT i.postId as post_id, COUNT(i.id) AS comment_count
              FROM blog_comments AS i
-             INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-             WHERE i.status = ? AND i.post_id IN (' . implode(',', $ids) . ') AND i.language = ? AND p.status = ?
-             GROUP BY i.post_id',
+             INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
+             WHERE i.status = ? AND i.postId IN (' . implode(',', $ids) . ') AND i.locale = ? AND p.status = ?
+             GROUP BY i.postId',
             ['published', BL::getWorkingLanguage(), 'active']
         );
 
@@ -1113,68 +1098,51 @@ class Model
         return $updated;
     }
 
-    /**
-     * Update an existing comment
-     *
-     * @param array $item The new data.
-     *
-     * @return int
-     */
-    public static function updateComment(array $item): int
+    public static function updateComment(array $item): void
     {
-        // update category
-        return BackendModel::getContainer()->get('database')->update(
-            'blog_comments',
-            $item,
-            'id = ?',
-            [(int) $item['id']]
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
+        $comment = BackendModel::get('blog.repository.comment')
+                               ->find($item['id']);
+
+        if (!$comment instanceof Comment) {
+            return;
+        }
+
+        $comment->update(
+            $item['author'],
+            $item['email'],
+            $item['text'],
+            (isset($item['type'])) ? $item['type'] : $comment->getType(),
+            $item['status'],
+            $item['website'],
+            (isset($item['data'])) ? $item['data'] : $comment->getData()
         );
+
+        $entityManager->flush($comment);
     }
 
-    /**
-     * Updates one or more comments' status
-     *
-     * @param array  $ids    The id(s) of the comment(s) to change the status for.
-     * @param string $status The new status.
-     */
     public static function updateCommentStatuses(array $ids, string $status): void
     {
-        // make sure $ids is an array
-        $ids = (array) $ids;
+        $repository = BackendModel::get('blog.repository.comment');
+        $comments = $repository->findById($ids);
 
-        // loop and cast to integers
-        foreach ($ids as &$id) {
-            $id = (int) $id;
+        if (empty($comments)) {
+            return;
         }
 
-        // create an array with an equal amount of questionmarks as ids provided
-        $idPlaceHolders = array_fill(0, count($ids), '?');
-
-        // get the items and their languages
-        $items = (array) BackendModel::getContainer()->get('database')->getPairs(
-            'SELECT i.post_id, i.language
-             FROM blog_comments AS i
-             WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')',
-            $ids,
-            'post_id'
-        );
-
-        // only proceed if there are items
-        if (!empty($items)) {
-            // get the ids
-            $itemIds = array_keys($items);
-
-            // update records
-            BackendModel::getContainer()->get('database')->execute(
-                'UPDATE blog_comments
-                 SET status = ?
-                 WHERE id IN (' . implode(', ', $idPlaceHolders) . ')',
-                array_merge([(string) $status], $ids)
-            );
-
-            // recalculate the comment count
-            self::reCalculateCommentCount($itemIds);
+        $postIdsToRecalculate = [];
+        foreach ($comments as $comment) {
+            $postIdsToRecalculate[] = $comment->getPostId();
         }
+
+        $repository->updateMultipleStatusById($ids, $status);
+
+        if (empty($postIdsToRecalculate)) {
+            return;
+        }
+
+        $postIdsToRecalculate = array_unique($postIdsToRecalculate);
+        self::reCalculateCommentCount($postIdsToRecalculate);
     }
 
     /**

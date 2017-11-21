@@ -2,13 +2,16 @@
 
 namespace Frontend\Modules\Blog\Engine;
 
+use Backend\Modules\Blog\Domain\Comment\Comment;
 use Common\Mailer\Message;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
@@ -167,7 +170,7 @@ class Model implements FrontendTagsInterface
     public static function getAllComments(int $limit = 10, int $offset = 0): array
     {
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
+            'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.text,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, i.email
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
@@ -491,25 +494,33 @@ class Model implements FrontendTagsInterface
 
     public static function getComments(int $blogPostId): array
     {
-        // get the comments
-        $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
-             c.author, c.email, c.website
-             FROM blog_comments AS c
-             WHERE c.post_id = ? AND c.status = ? AND c.language = ?
-             ORDER BY c.id ASC',
-            [$blogPostId, 'published', LANGUAGE]
+        $comments = FrontendModel::get('blog.repository.comment')->findBy(
+            [
+                'postId' => $blogPostId,
+                'status' => 'published',
+                'locale' => LANGUAGE,
+            ],
+            [
+                'id' => 'ASC'
+            ]
         );
 
-        // loop comments and create gravatar id
-        foreach ($comments as &$row) {
-            $row['author'] = htmlspecialchars($row['author']);
-            $row['text'] = htmlspecialchars($row['text']);
-            $row['gravatar_id'] = md5($row['email']);
+        if (empty($comments)) {
+            return [];
         }
 
-        // return
-        return $comments;
+        return array_map(
+            function ($comment) {
+                $commentData = $comment->toArray();
+
+                $commentData['author'] = htmlspecialchars($comment->getAuthor());
+                $commentData['text'] = htmlspecialchars($comment->getText());
+                $commentData['gravatar_id'] = md5($comment->getEmail());
+
+                return $commentData;
+            },
+            $comments
+        );
     }
 
     /**
@@ -654,11 +665,11 @@ class Model implements FrontendTagsInterface
 
         // get comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text,
+            'SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.createdOn) AS created_on, c.text,
              i.id AS post_id, i.title AS post_title,
              m.url AS post_url
              FROM blog_comments AS c
-             INNER JOIN blog_posts AS i ON c.post_id = i.id AND c.language = i.language
+             INNER JOIN blog_posts AS i ON c.postId = i.id AND c.locale = i.language
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
@@ -767,29 +778,7 @@ class Model implements FrontendTagsInterface
 
     public static function insertComment(array $comment): int
     {
-        // get database
-        $database = FrontendModel::getContainer()->get('database');
-
-        // insert comment
-        $comment['id'] = (int) $database->insert('blog_comments', $comment);
-
-        // recalculate if published
-        if ($comment['status'] == 'published') {
-            // num comments
-            $numComments = (int) FrontendModel::getContainer()->get('database')->getVar(
-                'SELECT COUNT(i.id) AS comment_count
-                 FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-                 WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
-                 GROUP BY i.post_id',
-                ['published', $comment['post_id'], LANGUAGE, 'active']
-            );
-
-            // update num comments
-            $database->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
-        }
-
-        return $comment['id'];
+        return BackendBlogModel::insertComment($comment);
     }
 
     /**
