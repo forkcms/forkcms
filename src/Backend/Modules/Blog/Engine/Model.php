@@ -205,16 +205,14 @@ class Model
 
     public static function deleteCategory(int $id): void
     {
-        $category = BackendModel::get('blog.repository.category')
-                                ->find($id);
+        $repository = BackendModel::get('blog.repository.category');
+        $category = $repository->find($id);
 
         if (!$category instanceof Category) {
             return;
         }
 
-        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
-        $entityManager->remove($category);
-        $entityManager->flush($category);
+        $repository->remove($category);
     }
 
     /**

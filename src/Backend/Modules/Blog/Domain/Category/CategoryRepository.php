@@ -7,7 +7,13 @@ use Doctrine\ORM\EntityRepository;
 
 class CategoryRepository extends EntityRepository
 {
-    public function getUrl(string $url, ?int $id)
+    public function remove(Category $category): void
+    {
+        $this->getEntityManager()->remove($category);
+        $this->getEntityManager()->flush($category);
+    }
+
+    public function getUrl(string $url, ?int $id): string
     {
         $query = $this
             ->createQueryBuilder('i')
