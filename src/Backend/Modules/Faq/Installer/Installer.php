@@ -161,7 +161,7 @@ class Installer extends ModuleInstaller
         return (int) $this->getDatabase()->getVar(
             'SELECT id
              FROM faq_categories
-             WHERE language = ?',
+             WHERE locale = ?',
             [$language]
         );
     }
@@ -212,7 +212,7 @@ class Installer extends ModuleInstaller
                 [
                     'id' => $item['id'],
                     'extra_label' => 'Category: ' . $item['title'],
-                    'language' => $item['language'],
+                    'language' => $item['locale'],
                     'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
                 ]
             ),
@@ -223,7 +223,7 @@ class Installer extends ModuleInstaller
             'modules_extras',
             $extra,
             'id = ?',
-            [$item['extra_id']]
+            [$item['extraId']]
         );
 
         return $item['id'];
