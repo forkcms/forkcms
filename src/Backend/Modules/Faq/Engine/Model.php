@@ -404,7 +404,7 @@ class Model
                 'id' => $category->getId(),
                 'extra_label' => 'Category: ' . $category->getTitle(),
                 'language' => $category->getLocale()->getLocale(),
-                'edit_url' => BackendModel::createUrlForAction('EditCategory') . '&id=' . $category->getId(),
+                'edit_url' => BackendModel::createUrlForAction('EditCategory', 'Faq') . '&id=' . $category->getId(),
             ]
         );
     }
