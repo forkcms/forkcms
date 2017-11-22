@@ -410,11 +410,9 @@ class Add extends BackendBaseActionAdd
                         'code' => '301',
                     ];
                 }
-                if (array_key_exists('image', $this->templates[$templateId]['data'])) {
-                    $data['image'] = $this->getImage(
-                        $this->templates[$templateId]['data']['image'],
-                        $this->templates[$templateId]['default_image']
-                    );
+                $template = $this->templates[$templateId];
+                if (array_key_exists('image', $template['data'])) {
+                    $data['image'] = $this->getImage($template['data']['image'], $template['default_image']);
                 }
 
                 // build page record
@@ -556,19 +554,19 @@ class Add extends BackendBaseActionAdd
 
     private function getImage(bool $allowImage, ?string $defaultImage): ?string
     {
-        if (!$allowImage) {
+        $hasDefaultImage = $defaultImage !== null;
+        $imageField = $this->form->getField('image');
+        $hasSubmittedImage = $imageField->isFilled();
+
+        if (!$allowImage || (!$hasDefaultImage && !$hasSubmittedImage)) {
             return null;
         }
 
-        if ($defaultImage === null && !$this->form->getField('image')->isFilled()) {
-            return null;
-        }
-
-        if (!$this->form->getField('image')->isFilled()) {
+        if (!$hasSubmittedImage) {
             $templatesImagePath = FRONTEND_FILES_PATH . '/Templates/images/source';
             $pagesImagePath = FRONTEND_FILES_PATH . '/Pages/images';
             $imageFilename = $this->meta->getUrl() . '_' . time();
-            $imageFilename .= '.' . $this->form->getField('image')->getExtension();
+            $imageFilename .= '.' . $imageField->getExtension();
 
             $filesystem = new Filesystem();
             $filesystem->copy(
@@ -582,8 +580,8 @@ class Add extends BackendBaseActionAdd
         }
 
         $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
-        $imageFilename = $this->meta->getUrl() . '_' . time() . '.' . $this->form->getField('image')->getExtension();
-        $this->form->getField('image')->generateThumbnails($imagePath, $imageFilename);
+        $imageFilename = $this->meta->getUrl() . '_' . time() . '.' . $imageField->getExtension();
+        $imageField->generateThumbnails($imagePath, $imageFilename);
 
         return $imageFilename;
     }

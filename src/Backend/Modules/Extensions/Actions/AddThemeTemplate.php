@@ -295,11 +295,12 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
                 $imagePath = FRONTEND_FILES_PATH . '/Templates/images';
 
-                if ($this->form->getField('default_image')->isFilled()) {
+                $defaultImageField = $this->form->getField('default_image');
+                if ($defaultImageField->isFilled()) {
                     $imageFilename = Uri::getUrl($item['label']) . '_' . time();
-                    $imageFilename .= '.' . $this->form->getField('default_image')->getExtension();
+                    $imageFilename .= '.' . $defaultImageField->getExtension();
 
-                    $this->form->getField('default_image')->generateThumbnails($imagePath, $imageFilename);
+                    $defaultImageField->generateThumbnails($imagePath, $imageFilename);
                     $item['default_image'] = $imageFilename;
                 }
 

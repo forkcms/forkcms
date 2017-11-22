@@ -353,19 +353,20 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
                 $imagePath = FRONTEND_FILES_PATH . '/Templates/images';
 
-                if ($this->record['default_image'] !== null
-                    && ($this->form->getField('remove_default_image')->isChecked()
-                        || $this->form->getField('default_image')->isFilled())
-                ) {
+                $templateHasDefaultImage = $this->record['default_image'] !== null;
+                $shouldRemoveDefaultImage = $this->form->getField('remove_default_image')->isChecked();
+                $defaultImageField = $this->form->getField('default_image');
+                $hasSubmittedDefaultImage = $defaultImageField->isFilled();
+                if ($templateHasDefaultImage && ($shouldRemoveDefaultImage || $hasSubmittedDefaultImage)) {
                     BackendModel::deleteThumbnails($imagePath, $this->record['default_image']);
                     $item['default_image'] = null;
                 }
 
-                if ($this->form->getField('default_image')->isFilled()) {
+                if ($defaultImageField->isFilled()) {
                     $imageFilename = Uri::getUrl($item['label']) . '_' . time();
-                    $imageFilename .= '.' . $this->form->getField('default_image')->getExtension();
+                    $imageFilename .= '.' . $defaultImageField->getExtension();
 
-                    $this->form->getField('default_image')->generateThumbnails($imagePath, $imageFilename);
+                    $defaultImageField->generateThumbnails($imagePath, $imageFilename);
                     $item['default_image'] = $imageFilename;
                 }
 
