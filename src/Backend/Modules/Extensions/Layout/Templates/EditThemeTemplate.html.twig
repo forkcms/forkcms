@@ -34,6 +34,18 @@
               <label for="image">{% form_field image %} {% form_field_error image %} {{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
             </li>
           </ul>
+          <div class="form-group">
+            <label for="label" class="control-label">{{ 'lbl.DefaultImage'|trans|ucfirst }}</label>
+            {% form_field default_image %} {% form_field_error default_image %}
+          </div>
+          {% if chkRemoveDefaultImage %}
+            <div>
+              <img src="{{ FRONTEND_FILES_URL }}/Templates/images/x250/{{ template.default_image }}" alt="{{ template.label }}" />
+            </div>
+            <div class="checkbox">
+                <label for="removeDefaultImage">{% form_field remove_default_image %} {% form_field_error remove_default_image %} {{ 'msg.RemoveDefaultImage'|trans|ucfirst }}</label>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>

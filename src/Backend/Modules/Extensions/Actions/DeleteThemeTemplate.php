@@ -51,6 +51,9 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
         $success = false;
         $item = BackendExtensionsModel::getTemplate($this->id);
         if (!empty($item)) {
+            $imagePath = FRONTEND_FILES_PATH . '/Templates/images';
+            BackendModel::deleteThumbnails($imagePath, $item['default_image']);
+
             $success = BackendExtensionsModel::deleteTemplate($this->id);
         }
 
