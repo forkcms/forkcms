@@ -5,6 +5,7 @@ namespace Backend\Modules\Blog\Installer;
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Blog\Domain\Category\Category;
+use Backend\Modules\Blog\Domain\Category\CategoryRepository;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Common\ModuleExtraType;
 
@@ -170,19 +171,15 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'spamfilter', false);
     }
 
-    /**
-     * Fetch the id of the first category in this language we come across
-     *
-     * @param string $language The language to use.
-     * @return int
-     */
     private function getCategory(string $language): int
     {
-        // @todo: Replace this with a BlogCategoryRepository method when it exists.
-        return (int) $this->getDatabase()->getVar(
-            'SELECT id FROM blog_categories WHERE language = ?',
-            [$language]
-        );
+        $category = Model::get('blog.repository.category')->findOneByLocale($language);
+
+        if(!$category instanceof Category) {
+            return 0;
+        }
+
+        return $category->getId();
     }
 
     private function getSearchWidgetId(): int
