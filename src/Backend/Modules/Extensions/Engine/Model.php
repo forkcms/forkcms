@@ -548,7 +548,7 @@ class Model
         );
 
         $templates = (array) $database->getRecords(
-            'SELECT i.id, i.label, i.path, i.data
+            'SELECT i.id, i.label, i.path, i.data, i.default_image
             FROM themes_templates AS i
             WHERE i.theme = ? AND i.active = ?
             ORDER BY i.label ASC',

@@ -14,6 +14,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use SpoonFormHidden;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -410,7 +411,10 @@ class Add extends BackendBaseActionAdd
                     ];
                 }
                 if (array_key_exists('image', $this->templates[$templateId]['data'])) {
-                    $data['image'] = $this->getImage($this->templates[$templateId]['data']['image']);
+                    $data['image'] = $this->getImage(
+                        $this->templates[$templateId]['data']['image'],
+                        $this->templates[$templateId]['default_image']
+                    );
                 }
 
                 // build page record
@@ -550,10 +554,31 @@ class Add extends BackendBaseActionAdd
         }
     }
 
-    private function getImage(bool $allowImage): ?string
+    private function getImage(bool $allowImage, ?string $defaultImage): ?string
     {
-        if (!$allowImage || !$this->form->getField('image')->isFilled()) {
+        if (!$allowImage) {
             return null;
+        }
+
+        if ($defaultImage === null && !$this->form->getField('image')->isFilled()) {
+            return null;
+        }
+
+        if (!$this->form->getField('image')->isFilled()) {
+            $templatesImagePath = FRONTEND_FILES_PATH . '/Templates/images/source';
+            $pagesImagePath = FRONTEND_FILES_PATH . '/Pages/images';
+            $imageFilename = $this->meta->getUrl() . '_' . time();
+            $imageFilename .= '.' . $this->form->getField('image')->getExtension();
+
+            $filesystem = new Filesystem();
+            $filesystem->copy(
+                $templatesImagePath . '/' . $defaultImage,
+                $pagesImagePath . '/source/' . $imageFilename
+            );
+
+            BackendModel::generateThumbnails($pagesImagePath, $pagesImagePath . '/source/' . $imageFilename);
+
+            return $imageFilename;
         }
 
         $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
