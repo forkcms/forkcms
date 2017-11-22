@@ -175,7 +175,7 @@ class Installer extends ModuleInstaller
     {
         $category = Model::get('blog.repository.category')->findOneByLocale($language);
 
-        if(!$category instanceof Category) {
+        if (!$category instanceof Category) {
             return 0;
         }
 

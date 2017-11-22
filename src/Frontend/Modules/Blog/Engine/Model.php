@@ -147,13 +147,13 @@ class Model implements FrontendTagsInterface
 
     public static function getCategory(string $slug): array
     {
-        try{
+        try {
             $category = FrontendModel::get('blog.repository.category')
                                      ->findOneByUrl(
                                          $slug,
                                          Locale::frontendLanguage()
                                      );
-        } catch (NoResultException $e){
+        } catch (NoResultException $e) {
             return [];
         }
 

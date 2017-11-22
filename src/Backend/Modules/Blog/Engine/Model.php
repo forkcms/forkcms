@@ -8,7 +8,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Language\Locale;
 use Backend\Modules\Blog\Domain\Comment\Comment;
-Use Backend\Modules\Blog\Domain\Category\Category;
+use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Common\Doctrine\Entity\Meta;
 
@@ -796,7 +796,6 @@ class Model
 
     public static function insertCategory(array $item, array $meta = null): int
     {
-
         if ($meta === null) {
             $meta = BackendModel::get('fork.repository.meta')
                                 ->find($item['meta_id']);
