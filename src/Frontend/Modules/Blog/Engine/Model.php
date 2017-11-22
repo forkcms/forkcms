@@ -881,6 +881,7 @@ class Model implements FrontendTagsInterface
 
     /**
      * Parse the search results for this module
+     *
      * Note: a module's search function should always:
      *        - accept an array of entry id's
      *        - return only the entries that are allowed to be displayed, with their array's index being the entry's id
