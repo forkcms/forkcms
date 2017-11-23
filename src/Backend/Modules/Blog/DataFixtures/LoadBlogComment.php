@@ -9,7 +9,7 @@ use Common\Doctrine\Entity\Meta;
 use SpoonDatabase;
 use Symfony\Bundle\FrameworkBundle\Client;
 
-class LoadBlogPosts
+class LoadBlogComment
 {
     /**
      * @var Client
@@ -22,6 +22,27 @@ class LoadBlogPosts
     }
 
     public function load(SpoonDatabase $database): void
+    {
+        $this->insertPost($database);
+
+        $comment = new Comment(
+            1,
+            Locale::fromString('en'),
+            'John Doe',
+            'john@example.com',
+            'This is just a short text, that represents a comment',
+            'comment',
+            'published',
+            'http://example.com',
+            null
+        );
+
+        $entityManager = $this->client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $entityManager->persist($comment);
+        $entityManager->flush($comment);
+    }
+
+    private function insertPost(SpoonDatabase $database)
     {
         $meta = new Meta(
             'Blogpost for functional tests', false,
@@ -77,7 +98,7 @@ class LoadBlogPosts
 
         $category = new Category(
             Locale::fromString('en'),
-            'Blogcategory for functional tests',
+            'Blog category for functional tests',
             $meta
         );
 

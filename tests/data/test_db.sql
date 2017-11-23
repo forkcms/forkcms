@@ -157,16 +157,6 @@ CREATE TABLE blog_categories (
 ) ENGINE = InnoDB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 ALTER TABLE blog_categories ADD CONSTRAINT FK_DC35648139FCA6F9 FOREIGN KEY (meta_id) REFERENCES meta (id);
 
-LOCK TABLES `blog_categories` WRITE;
-/*!40000 ALTER TABLE `blog_categories` DISABLE KEYS */;
-
-INSERT INTO `blog_categories` (`id`, `meta_id`, `locale`, `title`)
-VALUES
-	(1,28,'en','Blog category for functional tests');
-
-/*!40000 ALTER TABLE `blog_categories` ENABLE KEYS */;
-UNLOCK TABLES;
-
 # Dump of table blog_comments
 # ------------------------------------------------------------
 
@@ -214,11 +204,6 @@ CREATE TABLE `blog_posts` (
   PRIMARY KEY (`revision_id`),
   KEY `idx_status_language_hidden` (`status`,`language`,`hidden`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-LOCK TABLES `blog_posts` WRITE;
-/*!40000 ALTER TABLE `blog_posts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `blog_posts` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table content_blocks
@@ -2309,10 +2294,7 @@ VALUES
 	(22,'Profile',0,'Profile',0,'Profile',0,'profile',0,NULL,NULL,NULL,NULL),
 	(23,'Profile settings',0,'Profile settings',0,'Profile settings',0,'profile-settings',0,NULL,NULL,NULL,NULL),
 	(24,'Change email',0,'Change email',0,'Change email',0,'change-email',0,NULL,NULL,NULL,NULL),
-	(25,'Change password',0,'Change password',0,'Change password',0,'change-password',0,NULL,NULL,NULL,NULL),
-	(26,'BlogCategory for tests',0,'BlogCategory for tests',0,'BlogCategory for tests',0,'blogcategory-for-tests',0,NULL,NULL,NULL,NULL),
-	(27,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'blogpost-for-functional-tests',0,NULL,NULL,NULL,NULL),
-	(28,'Blog category for functional tests',0,'Blog category for functional tests',0,'Blog category for functional tests',0,'blog-category-for-functional-tests',0,NULL,NULL,NULL,NULL);
+	(25,'Change password',0,'Change password',0,'Change password',0,'change-password',0,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;

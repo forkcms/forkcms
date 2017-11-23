@@ -2,29 +2,41 @@
 
 namespace Backend\Modules\Blog\DataFixtures;
 
+use Backend\Core\Language\Locale;
+use Backend\Modules\Blog\Domain\Category\Category;
+use Common\Doctrine\Entity\Meta;
 use SpoonDatabase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class LoadBlogCategories
 {
+    /**
+     * @var Client
+     */
+    private $client;
+
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+
     public function load(SpoonDatabase $database): void
     {
-        $metaId = $database->insert(
-            'meta',
-            [
-                'keywords' => 'BlogCategory for tests',
-                'description' => 'BlogCategory for tests',
-                'title' => 'BlogCategory for tests',
-                'url' => 'blogcategory-for-tests',
-            ]
+        $meta = new Meta(
+            'BlogCategory for tests', false,
+            'BlogCategory for tests', false,
+            'BlogCategory for tests', false,
+            'blogcategory-for-tests', false
         );
 
-        $database->insert(
-            'blog_categories',
-            [
-                'meta_id' => $metaId,
-                'locale' => 'en',
-                'title' => 'BlogCategory for tests',
-            ]
+        $category = new Category(
+            Locale::fromString('en'),
+            'Blog category for functional tests',
+            $meta
         );
+
+        $entityManager = $this->client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $entityManager->persist($category);
+        $entityManager->flush($category);
     }
 }
