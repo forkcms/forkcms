@@ -282,26 +282,32 @@ class Language
             file_get_contents(BACKEND_CACHE_PATH . '/Locale/' . $language . '.json'),
             true
         );
-        $err = (array) $translations['err'];
-        $lbl = (array) $translations['lbl'];
-        $msg = (array) $translations['msg'];
-        foreach ($err as $module => $translations) {
-            if (!isset(self::$err[$module])) {
-                self::$err[$module] = [];
+        if (array_key_exists('err', $translations)) {
+            $err = (array)$translations['err'];
+            foreach ($err as $module => $translations) {
+                if (!isset(self::$err[$module])) {
+                    self::$err[$module] = [];
+                }
+                self::$err[$module] = array_merge(self::$err[$module], $translations);
             }
-            self::$err[$module] = array_merge(self::$err[$module], $translations);
         }
-        foreach ($lbl as $module => $translations) {
-            if (!isset(self::$lbl[$module])) {
-                self::$lbl[$module] = [];
+        if (array_key_exists('lbl', $translations)) {
+            $lbl = (array)$translations['lbl'];
+            foreach ($lbl as $module => $translations) {
+                if (!isset(self::$lbl[$module])) {
+                    self::$lbl[$module] = [];
+                }
+                self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
             }
-            self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
         }
-        foreach ($msg as $module => $translations) {
-            if (!isset(self::$msg[$module])) {
-                self::$msg[$module] = [];
+        if (array_key_exists('msg', $translations)) {
+            $msg = (array)$translations['msg'];
+            foreach ($msg as $module => $translations) {
+                if (!isset(self::$msg[$module])) {
+                    self::$msg[$module] = [];
+                }
+                self::$msg[$module] = array_merge(self::$msg[$module], $translations);
             }
-            self::$msg[$module] = array_merge(self::$msg[$module], $translations);
         }
     }
 
