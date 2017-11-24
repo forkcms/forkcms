@@ -235,12 +235,12 @@ CREATE TABLE `content_blocks` (
 
 
 
-# Dump of table faq_categories
+# Dump of table FaqCategory
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faq_categories`;
+DROP TABLE IF EXISTS `FaqCategory`;
 
-CREATE TABLE `faq_categories` (
+CREATE TABLE `FaqCategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `meta_id` int(11) NOT NULL,
   `extraId` int(11) NOT NULL,
@@ -252,12 +252,12 @@ CREATE TABLE `faq_categories` (
 
 
 
-# Dump of table faq_feedback
+# Dump of table FaqFeedback
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faq_feedback`;
+DROP TABLE IF EXISTS `FaqFeedback`;
 
-CREATE TABLE `faq_feedback` (
+CREATE TABLE `FaqFeedback` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `question_id` int(11) unsigned NOT NULL,
   `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -269,12 +269,12 @@ CREATE TABLE `faq_feedback` (
 
 
 
-# Dump of table faq_questions
+# Dump of table FaqQuestion
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faq_questions`;
+DROP TABLE IF EXISTS `FaqQuestion`;
 
-CREATE TABLE `faq_questions` (
+CREATE TABLE `FaqQuestion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL,
   `userId` int(11) NOT NULL,

@@ -160,7 +160,7 @@ class Installer extends ModuleInstaller
     {
         return (int) $this->getDatabase()->getVar(
             'SELECT id
-             FROM faq_categories
+             FROM FaqCategory
              WHERE locale = ?',
             [$language]
         );
@@ -204,7 +204,7 @@ class Installer extends ModuleInstaller
         $item['sequence'] = 1;
 
         // insert category
-        $item['id'] = (int) $database->insert('faq_categories', $item);
+        $item['id'] = (int) $database->insert('FaqCategory', $item);
 
         // build data for widget
         $extra = [

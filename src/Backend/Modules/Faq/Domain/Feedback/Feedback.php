@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Domain\Feedback\FeedbackRepository")
- * @ORM\Table(name="faq_feedback")
+ * @ORM\Table(name="FaqFeedback")
  * @ORM\HasLifecycleCallbacks
  */
 final class Feedback

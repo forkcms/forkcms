@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Domain\Question\QuestionRepository")
- * @ORM\Table(name="faq_questions")
+ * @ORM\Table(name="FaqQuestion")
  * @ORM\HasLifecycleCallbacks
  */
 class Question

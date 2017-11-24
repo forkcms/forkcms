@@ -18,7 +18,7 @@ class LoadFaqQuestions
 
         $categoryId = $database->getVar(
             'SELECT id
-             FROM faq_categories
+             FROM FaqCategory
              WHERE title = :title AND locale = :locale
              LIMIT 1',
             [
@@ -28,7 +28,7 @@ class LoadFaqQuestions
         );
 
         $database->insert(
-            'faq_questions',
+            'FaqQuestion',
             [
                 'meta_id' => $metaId,
                 'category_id' => $categoryId,

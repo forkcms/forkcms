@@ -17,7 +17,7 @@ class LoadFaqCategories
         );
 
         $database->insert(
-            'faq_categories',
+            'FaqCategory',
             [
                 'meta_id' => $metaId,
                 'extraId' => 0,
