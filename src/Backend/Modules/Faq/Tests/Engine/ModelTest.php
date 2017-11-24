@@ -15,13 +15,13 @@ final class ModelTest extends WebTestCase
         if (!defined('APPLICATION')) {
             define('APPLICATION', 'Backend');
         }
+
+        $client = self::createClient();
+        $this->loadFixtures($client);
     }
 
     public function testInsertingFaqCategory(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         $categoryId = $this->addCategory();
 
         $categoryData = $this->getCategoryData();
@@ -36,9 +36,6 @@ final class ModelTest extends WebTestCase
 
     public function testIfCategoryExists(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         $categoryId = $this->addCategory();
 
         $this->assertTrue(Model::existsCategory($categoryId));
@@ -47,9 +44,6 @@ final class ModelTest extends WebTestCase
 
     public function testGeneratingCategoryUrl(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         // new url
         $this->assertEquals('new-url', Model::getUrlForCategory('new-url'));
 
@@ -63,9 +57,6 @@ final class ModelTest extends WebTestCase
 
     public function testEditCategory(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         $categoryId = $this->addCategory();
 
         $categoryData = $this->getUpdateCategoryData();
@@ -86,9 +77,6 @@ final class ModelTest extends WebTestCase
 
     public function testDeleteCategory(): void
     {
-        $client = self::createClient();
-        $this->loadFixtures($client);
-
         $categoryId = $this->addCategory();
 
         $this->assertTrue(Model::existsCategory($categoryId));
