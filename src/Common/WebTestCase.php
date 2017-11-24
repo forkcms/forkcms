@@ -93,7 +93,7 @@ abstract class WebTestCase extends BaseWebTestCase
 
         // load all the fixtures
         foreach ($fixtureClasses as $class) {
-            $fixture = new $class($client);
+            $fixture = new $class($client->getContainer());
             $fixture->load($database);
         }
     }

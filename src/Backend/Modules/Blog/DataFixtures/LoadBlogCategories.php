@@ -6,18 +6,23 @@ use Backend\Core\Language\Locale;
 use Backend\Modules\Blog\Domain\Category\Category;
 use Common\Doctrine\Entity\Meta;
 use SpoonDatabase;
-use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadBlogCategories
 {
     /**
-     * @var Client
+     * @var ContainerInterface
      */
-    private $client;
+    private $container;
 
-    public function __construct(Client $client)
+    /**
+     * LoadBlogCategories constructor.
+     *
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
     {
-        $this->client = $client;
+        $this->container = $container;
     }
 
     public function load(SpoonDatabase $database): void
@@ -35,7 +40,7 @@ class LoadBlogCategories
             $meta
         );
 
-        $entityManager = $this->client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
         $entityManager->persist($category);
         $entityManager->flush($category);
     }

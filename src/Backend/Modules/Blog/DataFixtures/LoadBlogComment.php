@@ -7,18 +7,23 @@ use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Common\Doctrine\Entity\Meta;
 use SpoonDatabase;
-use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadBlogComment
 {
     /**
-     * @var Client
+     * @var ContainerInterface
      */
-    private $client;
+    private $container;
 
-    public function __construct(Client $client)
+    /**
+     * LoadBlogCategories constructor.
+     *
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
     {
-        $this->client = $client;
+        $this->container = $container;
     }
 
     public function load(SpoonDatabase $database): void
@@ -37,7 +42,7 @@ class LoadBlogComment
             null
         );
 
-        $entityManager = $this->client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
         $entityManager->persist($comment);
         $entityManager->flush($comment);
     }
@@ -51,7 +56,7 @@ class LoadBlogComment
             'blogpost-for-functional-tests', false
         );
 
-        $entityManager = $this->client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
         $entityManager->persist($meta);
         $entityManager->flush($meta);
 
@@ -102,7 +107,7 @@ class LoadBlogComment
             $meta
         );
 
-        $entityManager = $this->client->getContainer()->get('doctrine.orm.default_entity_manager');
+        $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
         $entityManager->persist($category);
         $entityManager->flush($category);
 
