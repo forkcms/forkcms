@@ -4,10 +4,10 @@ namespace Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints;
 
 use Frontend\Core\Engine\Model;
 use Frontend\Core\Language\Locale;
+use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**
  * @Annotation
@@ -26,6 +26,11 @@ class EmailSubscriptionValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint): void
     {
+        // There are already violations thrown, so we return immediately
+        if (count($this->context->getViolations()) > 0) {
+            return;
+        }
+
         try {
             // The email is already in our mailing list
             if ($this->subscriber->isSubscribed(
