@@ -28,10 +28,14 @@ class LoadBlogCategories
     public function load(SpoonDatabase $database): void
     {
         $meta = new Meta(
-            'BlogCategory for tests', false,
-            'BlogCategory for tests', false,
-            'BlogCategory for tests', false,
-            'blogcategory-for-tests', false
+            'BlogCategory for tests',
+            false,
+            'BlogCategory for tests',
+            false,
+            'BlogCategory for tests',
+            false,
+            'blogcategory-for-tests',
+            false
         );
 
         $category = new Category(

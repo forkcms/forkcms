@@ -50,10 +50,14 @@ class LoadBlogComment
     private function insertPost(SpoonDatabase $database)
     {
         $meta = new Meta(
-            'Blogpost for functional tests', false,
-            'Blogpost for functional tests', false,
-            'Blogpost for functional tests', false,
-            'blogpost-for-functional-tests', false
+            'Blogpost for functional tests',
+            false,
+            'Blogpost for functional tests',
+            false,
+            'Blogpost for functional tests',
+            false,
+            'blogpost-for-functional-tests',
+            false
         );
 
         $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
@@ -95,10 +99,14 @@ class LoadBlogComment
     private function insertCategory(): Category
     {
         $meta = new Meta(
-            'BlogCategory for tests', false,
-            'BlogCategory for tests', false,
-            'BlogCategory for tests', false,
-            'blogcategory-for-tests', false
+            'BlogCategory for tests',
+            false,
+            'BlogCategory for tests',
+            false,
+            'BlogCategory for tests',
+            false,
+            'blogcategory-for-tests',
+            false
         );
 
         $category = new Category(

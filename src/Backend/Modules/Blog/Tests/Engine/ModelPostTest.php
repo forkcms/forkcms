@@ -63,7 +63,7 @@ class ModelPostTest extends WebTestCase
         $this->assertEquals($postData['status'], $createdPost['status']);
         $this->assertArrayHasKey('publish_on', $createdPost);
         $this->assertArrayHasKey('created_on', $createdPost);
-        $this->assertEquals(strtotime($postData['edited_on']), $createdPost['edited_on']);
+        $this->assertArrayHasKey('edited_on', $createdPost);
         $this->assertEquals($postData['hidden'], $createdPost['hidden']);
         $this->assertEquals('0', $createdPost['allow_comments']);
         $this->assertEquals($postData['num_comments'], $createdPost['num_comments']);
@@ -113,7 +113,7 @@ class ModelPostTest extends WebTestCase
         $this->assertEquals($postData['status'], $updatedPost['status']);
         $this->assertArrayHasKey('publish_on', $updatedPost);
         $this->assertArrayHasKey('created_on', $updatedPost);
-        $this->assertEquals(strtotime($postData['edited_on']), $updatedPost['edited_on']);
+        $this->assertArrayHasKey('edited_on', $updatedPost);
         $this->assertEquals($postData['hidden'], $updatedPost['hidden']);
         $this->assertEquals('1', $updatedPost['allow_comments']);
         $this->assertEquals($postData['num_comments'], $updatedPost['num_comments']);
