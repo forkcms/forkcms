@@ -4,7 +4,7 @@ CKEDITOR.dialog.add(
         var urlRegex = '(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}(\\.[a-z]{2,6})?)?\\/([-a-zA-Z0-9@:%_\\+.~#?&//=]*)';
 
         return {
-            title: 'Add image',
+            title: editor.lang.medialibrary.addImage,
 
             minWidth: 400,
             minHeight: 200,
@@ -21,8 +21,8 @@ CKEDITOR.dialog.add(
                                 {
                                     type: 'text',
                                     id: 'url',
-                                    label: 'URL',
-                                    validate: CKEDITOR.dialog.validate.regex(new RegExp(urlRegex), 'URL is not valid.'),
+                                    label: editor.lang.medialibrary.url,
+                                    validate: CKEDITOR.dialog.validate.regex(new RegExp(urlRegex), editor.lang.medialibrary.urlNotValid),
                                     setup: function (element) {
                                         this.setValue(element.getAttribute('src'));
                                     },
@@ -34,7 +34,7 @@ CKEDITOR.dialog.add(
                                 {
                                     type: 'button',
                                     id: 'browseServer',
-                                    label: 'Browse server',
+                                    label: editor.lang.medialibrary.browseServer,
                                     onClick: function () {
                                         var editor = this.getDialog().getParentEditor();
                                         editor.popup(window.location.origin + jsData.MediaLibrary.browseAction, 800, 800);
@@ -52,7 +52,7 @@ CKEDITOR.dialog.add(
                         {
                             type: 'text',
                             id: 'alternativeText',
-                            label: 'Alternative Text',
+                            label: editor.lang.medialibrary.alternativeText,
                             setup: function (element) {
                                 this.setValue(element.getAttribute('alt'));
                             },

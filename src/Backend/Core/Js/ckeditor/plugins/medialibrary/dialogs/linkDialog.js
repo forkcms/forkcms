@@ -4,7 +4,7 @@ CKEDITOR.dialog.add(
         var urlRegex = '(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}(\\.[a-z]{2,6})?)?\\/([-a-zA-Z0-9@:%_\\+.~#?&//=]*)';
 
         return {
-            title: 'Add link',
+            title: editor.lang.medialibrary.addLink,
 
             minWidth: 400,
             minHeight: 200,
@@ -17,8 +17,8 @@ CKEDITOR.dialog.add(
                         {
                             type: 'text',
                             id: 'displayText',
-                            label: 'Display Text',
-                            validate: CKEDITOR.dialog.validate.notEmpty('Display cannot be empty.'),
+                            label: editor.lang.medialibrary.displayText,
+                            validate: CKEDITOR.dialog.validate.notEmpty(editor.lang.medialibrary.displayCannotBeEmpty),
                             setup: function (element) {
                                 this.setValue(element.getText());
                             },
@@ -34,7 +34,7 @@ CKEDITOR.dialog.add(
                                     type: 'text',
                                     id: 'url',
                                     label: 'URL',
-                                    validate: CKEDITOR.dialog.validate.regex(new RegExp(urlRegex), 'URL is not valid.'),
+                                    validate: CKEDITOR.dialog.validate.regex(new RegExp(urlRegex), editor.lang.medialibrary.urlNotValid),
                                     setup: function (element) {
                                         this.setValue(element.getAttribute('href'));
                                     },
@@ -50,7 +50,7 @@ CKEDITOR.dialog.add(
                                 {
                                     type: 'button',
                                     id: 'browseServer',
-                                    label: 'Browse server',
+                                    label: editor.lang.medialibrary.browseServer,
                                     onClick: function () {
                                         var editor = this.getDialog().getParentEditor();
                                         editor.popup(window.location.origin + jsData.MediaLibrary.browseAction, 800, 800);

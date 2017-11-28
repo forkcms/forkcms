@@ -1,7 +1,7 @@
 CKEDITOR.plugins.add(
     'medialibrary',
     {
-        icons: 'medialibrary',
+        lang: 'en',
         init: function (editor) {
             editor.addCommand(
                 'addLink',
@@ -17,7 +17,7 @@ CKEDITOR.plugins.add(
                 'ForkLink',
                 {
                     command: 'addLink',
-                    label: 'Insert Link',
+                    label: editor.lang.medialibrary.insertLink,
                     toolbar: 'insert,0'
                 }
             );
@@ -26,7 +26,7 @@ CKEDITOR.plugins.add(
                 'ForkImage',
                 {
                     command: 'addImage',
-                    label: 'Insert Image',
+                    label: editor.lang.medialibrary.insertImage,
                     toolbar: 'insert,0'
                 }
             );
