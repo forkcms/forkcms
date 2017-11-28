@@ -52,7 +52,7 @@ class MediaBrowser extends BackendBaseAction
         $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
     }
 
-    private function parseJsFiles(): void
+    protected function parseJsFiles(): void
     {
         $this->header->addJS('jstree/jquery.tree.js', 'Pages');
         $this->header->addJS('jstree/lib/jquery.cookie.js', 'Pages');
@@ -68,7 +68,7 @@ class MediaBrowser extends BackendBaseAction
         $this->template->assign('hasResults', $this->hasResults($dataGrids));
     }
 
-    private function getDataGrids(MediaFolder $mediaFolder = null): array
+    protected function getDataGrids(MediaFolder $mediaFolder = null): array
     {
         return array_map(
             function ($type) use ($mediaFolder) {

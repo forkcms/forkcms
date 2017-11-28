@@ -53,6 +53,7 @@ class Installer extends ModuleInstaller
     protected function configureBackendActionRightsForMediaBrowser(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaBrowser');
+        $this->setActionRights(1, $this->getModule(), 'MediaBrowserImages');
     }
 
     protected function configureBackendNavigation(): void

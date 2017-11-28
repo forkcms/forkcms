@@ -37,7 +37,7 @@ CKEDITOR.dialog.add(
                                     label: editor.lang.medialibrary.browseServer,
                                     onClick: function () {
                                         var editor = this.getDialog().getParentEditor();
-                                        editor.popup(window.location.origin + jsData.MediaLibrary.browseAction, 800, 800);
+                                        editor.popup(window.location.origin + jsData.MediaLibrary.browseActionImages, 800, 800);
 
                                         window.onmessage = function (event) {
                                             if (event.data) {
