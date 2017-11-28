@@ -9,6 +9,7 @@ jsBackend.mediaLibraryHelper = {
     jsBackend.mediaLibraryHelper.group.init()
     jsBackend.mediaLibraryHelper.upload.preInit()
     jsBackend.mediaLibraryHelper.upload.init()
+    jsBackend.mediaLibraryHelper.modalSelection.init()
   },
 
   buildMovieStorageTypeDropdown: function () {
@@ -1101,6 +1102,16 @@ jsBackend.mediaLibraryHelper.upload = {
           jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes()
 
           $fineUploaderGallery.find('.qq-upload-success[qq-file-id=' + id + ']').hide()
+
+          // Add select button if tab in selection context
+          if ($('#tabUploadMedia').data('context') === 'selection') {
+            var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' +
+              responseJSON.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
+
+            $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
+            $('.mediaHolder.mediaHolderImage[data-item-id="' + responseJSON.id + '"]')
+              .append($link)
+          }
         },
         onAllComplete: function (succeeded, failed) {
           // clear if already exists
@@ -1223,6 +1234,14 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // show message
           jsBackend.messages.add('success', jsBackend.locale.msg('MediaMovieIsAdded'))
+
+          // Add select button if tab in selection context
+          if ($('#tabUploadMedia').data('context') === 'selection') {
+            var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
+            $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
+            $('.mediaHolder[data-item-id="' + json.data.id + '"]')
+              .append($link)
+          }
         }
       }
     })
@@ -1441,6 +1460,24 @@ jsBackend.mediaLibraryHelper.templates = {
     return html
   }
 }
+
+jsBackend.mediaLibraryHelper.modalSelection = {
+  init: function () {
+    $('tr[data-direct-url] a').on('click', this.selectItemAndSendToParent)
+  },
+
+  selectItemAndSendToParent: function () {
+    var directUrl = $(this).data('directUrl')
+
+    window.opener.postMessage(directUrl, '*')
+    window.close();
+  },
+
+  sendToParent: function () {
+    window.opener.postMessage($(this).data('directUrl'), '*')
+    window.close()
+  }
+};
 
 /** global: jsBackend */
 $(jsBackend.mediaLibraryHelper.init)
