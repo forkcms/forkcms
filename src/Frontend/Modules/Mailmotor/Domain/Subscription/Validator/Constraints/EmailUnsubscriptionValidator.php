@@ -26,6 +26,11 @@ class EmailUnsubscriptionValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint): void
     {
+        // There are already violations thrown, so we return immediately
+        if (count($this->context->getViolations()) > 0) {
+            return;
+        }
+
         try {
             // The email doesn't exists in the mailing list
             if (!$this->subscriber->exists(

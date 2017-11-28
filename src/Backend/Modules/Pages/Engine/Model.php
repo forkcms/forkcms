@@ -3,6 +3,8 @@
 namespace Backend\Modules\Pages\Engine;
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
+use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
+use SimpleBus\Message\Bus\MessageBus;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -89,13 +91,27 @@ class Model
         // get database
         $database = BackendModel::getContainer()->get('database');
 
+        /** @var MessageBus $commanBus */
+        $commandBus = BackendModel::get('command_bus');
+
+        $toLocale = Locale::fromString($toLanguage);
+        $fromLocale = Locale::fromString($fromLanguage);
+
         // copy contentBlocks and get copied contentBlockIds
-        $copyContentBlocks = new CopyContentBlocksToOtherLocale(Locale::fromString($toLanguage), Locale::fromString($fromLanguage));
-        BackendModel::get('command_bus')->handle($copyContentBlocks);
+        $copyContentBlocks = new CopyContentBlocksToOtherLocale($toLocale, $fromLocale);
+        $commandBus->handle($copyContentBlocks);
         $contentBlockIds = $copyContentBlocks->extraIdMap;
 
         // define old block ids
         $contentBlockOldIds = array_keys($contentBlockIds);
+
+        // copy location widgets and get copied widget ids
+        $copyLocationWidgets = new CopyLocationWidgetsToOtherLocale($toLocale, $fromLocale);
+        $commandBus->handle($copyLocationWidgets);
+        $locationWidgetIds = $copyLocationWidgets->extraIdMap;
+
+        // define old block ids
+        $locationWidgetOldIds = array_keys($locationWidgetIds);
 
         // get all old pages
         $ids = $database->getColumn(
@@ -217,8 +233,14 @@ class Model
                 $block['created_on'] = BackendModel::getUTCDate();
                 $block['edited_on'] = BackendModel::getUTCDate();
 
+                // Overwrite the extra_id of the old content block with the id of the new one
                 if (in_array($block['extra_id'], $contentBlockOldIds)) {
                     $block['extra_id'] = $contentBlockIds[$block['extra_id']];
+                }
+
+                // Overwrite the extra_id of the old location widget with the id of the new one
+                if (in_array($block['extra_id'], $locationWidgetOldIds)) {
+                    $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
                 }
 
                 // add block
