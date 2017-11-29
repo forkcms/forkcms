@@ -35,3 +35,8 @@ services:
         arguments:
             - "@media_library.cache.media_folder"
             - "MediaBrowser"
+    media_library.manager.tree_media_browser_images:
+        class: Backend\Modules\MediaLibrary\Manager\TreeManager
+        arguments:
+            - "@media_library.cache.media_folder"
+            - "MediaBrowserImages"

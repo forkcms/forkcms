@@ -60,7 +60,7 @@ class MediaBrowser extends BackendBaseAction
         $this->header->addJS('MediaLibraryHelper.js', 'MediaLibrary');
     }
 
-    private function parseDataGrids(MediaFolder $mediaFolder = null): void
+    protected function parseDataGrids(MediaFolder $mediaFolder = null): void
     {
         $dataGrids = $this->getDataGrids($mediaFolder);
 
