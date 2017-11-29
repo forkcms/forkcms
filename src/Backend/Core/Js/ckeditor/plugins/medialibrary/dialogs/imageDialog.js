@@ -83,11 +83,6 @@ CKEDITOR.dialog.add(
                 var initialText = selection.getSelectedText();
                 var element = selection.getStartElement();
 
-                if (element) {
-                    // First element should the img element
-                    element = element.getChild(0);
-                }
-
                 dialog.insertMode = !element || element.getName() !== 'img';
                 if (dialog.insertMode) {
                     element = editor.document.createElement('img');

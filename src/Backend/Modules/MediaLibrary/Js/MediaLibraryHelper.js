@@ -1109,7 +1109,7 @@ jsBackend.mediaLibraryHelper.upload = {
               responseJSON.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
 
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
-            $('.mediaHolder.mediaHolderImage[data-item-id="' + responseJSON.id + '"]')
+            $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder.mediaHolderImage')
               .append($link)
           }
         },
@@ -1239,7 +1239,7 @@ jsBackend.mediaLibraryHelper.upload = {
           if ($('#tabUploadMedia').data('context') === 'selection') {
             var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
-            $('.mediaHolder[data-item-id="' + json.data.id + '"]')
+            $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder.mediaHolderImage')
               .append($link)
           }
         }
