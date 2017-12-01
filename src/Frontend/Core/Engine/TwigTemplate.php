@@ -11,6 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Twig_Environment;
+use Twig_Extensions_Extension_Text;
 use Twig_FactoryRuntimeLoader;
 
 /**
@@ -50,6 +51,7 @@ class TwigTemplate extends BaseTwigTemplate
 
         $this->addFrontendPathsToTheTemplateLoader($this->forkSettings->get('Core', 'theme', 'Fork'));
         $this->connectSymfonyForms();
+        $this->connectTwigExtensionForText();
     }
 
     private function addFrontendPathsToTheTemplateLoader(string $theme): void
@@ -79,6 +81,11 @@ class TwigTemplate extends BaseTwigTemplate
         if (!$this->environment->hasExtension(SymfonyFormExtension::class)) {
             $this->environment->addExtension(new SymfonyFormExtension());
         }
+    }
+
+    private function connectTwigExtensionForText(): void
+    {
+        $this->environment->addExtension(new Twig_Extensions_Extension_Text());
     }
 
     /**

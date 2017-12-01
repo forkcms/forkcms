@@ -15,6 +15,7 @@ use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
 use Twig_Environment;
 use Twig_Extension_Debug;
+use Twig_Extensions_Extension_Text;
 use Twig_FactoryRuntimeLoader;
 use Twig_Loader_Filesystem;
 
@@ -53,6 +54,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->connectSymfonyForms();
         $this->connectSymfonyTranslator();
         $this->connectSpoonForm();
+        $this->connectTwigExtensionForText();
         TwigFilters::addFilters($this->environment, 'Backend');
     }
 
@@ -130,6 +132,11 @@ class TwigTemplate extends BaseTwigTemplate
     private function connectSpoonForm(): void
     {
         new FormExtension($this->environment);
+    }
+
+    private function connectTwigExtensionForText(): void
+    {
+        $this->environment->addExtension(new Twig_Extensions_Extension_Text());
     }
 
     private function parseUserDefinedConstants(): void
