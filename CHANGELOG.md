@@ -1,3 +1,21 @@
+5.0.7  (2017-11-22)
+------------------
+
+Bugfixes:
+* Core: Update symfony [042b032](https://github.com/forkcms/forkcms/commit/042b0326c9691a6f7e6ca34fd7244326ccdfe08d)
+* Core: Fix gulp serve backend  [#2339](https://github.com/forkcms/forkcms/pull/2339)
+* Core: meta viewport added to make the mobile version work [#2345](https://github.com/forkcms/forkcms/pull/2345)
+* Core: Only attempt to get the request if the request is available [#2347](https://github.com/forkcms/forkcms/pull/2347)
+* Core: Fix in "truncate" Twig modifier [#2354](https://github.com/forkcms/forkcms/pull/2354)
+* Core: Fix active breadcrumb state [#2356](https://github.com/forkcms/forkcms/pull/2356)
+* Blog: Specify form ID to avoid deleting all entries. [#2363](https://github.com/forkcms/forkcms/pull/2363)
+* Mailmotor: Show subscribe/unsubscribe form errors [#2348](https://github.com/forkcms/forkcms/pull/2348)
+* Mailmotor: Fix in mailmotor email validation [#2353](https://github.com/forkcms/forkcms/pull/2353)
+* MediaLibrary: Fixed some incorrect locales [#2358](https://github.com/forkcms/forkcms/pull/2358)
+
+Improvements:
+* Pages: Update disclaimer nl [#2344](https://github.com/forkcms/forkcms/pull/2344)
+
 5.0.6  (2017-10-18)
 ------------------
 
