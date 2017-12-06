@@ -3,6 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Common\ModuleExtraType;
+use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;

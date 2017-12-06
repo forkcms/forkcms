@@ -233,62 +233,62 @@ CREATE TABLE `content_blocks` (
 
 
 
-# Dump of table faq_categories
+# Dump of table FaqCategory
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faq_categories`;
+DROP TABLE IF EXISTS `FaqCategory`;
 
-CREATE TABLE `faq_categories` (
+CREATE TABLE `FaqCategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `meta_id` int(11) NOT NULL,
-  `extra_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `extraId` int(11) NOT NULL,
+  `locale` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sequence` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table faq_feedback
+# Dump of table FaqFeedback
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faq_feedback`;
+DROP TABLE IF EXISTS `FaqFeedback`;
 
-CREATE TABLE `faq_feedback` (
+CREATE TABLE `FaqFeedback` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `question_id` int(11) unsigned NOT NULL,
   `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `processed` tinyint(1) NOT NULL DEFAULT '0',
-  `created_on` datetime NOT NULL,
-  `edited_on` datetime NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table faq_questions
+# Dump of table FaqQuestion
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faq_questions`;
+DROP TABLE IF EXISTS `FaqQuestion`;
 
-CREATE TABLE `faq_questions` (
+CREATE TABLE `FaqQuestion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
   `meta_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `locale` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `question` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `answer` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_on` datetime NOT NULL,
-  `num_views` int(11) NOT NULL DEFAULT '0',
-  `num_usefull_yes` int(11) NOT NULL DEFAULT '0',
-  `num_usefull_no` int(11) NOT NULL DEFAULT '0',
+  `createdOn` datetime NOT NULL,
+  `numberOfviews` int(11) NOT NULL DEFAULT '0',
+  `numberOfUsefulYes` int(11) NOT NULL DEFAULT '0',
+  `numberOfUsefulNo` int(11) NOT NULL DEFAULT '0',
   `hidden` tinyint(1) NOT NULL DEFAULT '0',
   `sequence` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_faq_questions_faq_categories` (`hidden`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `fk_faq_questions_faq_categories` (`hidden`,`locale`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
