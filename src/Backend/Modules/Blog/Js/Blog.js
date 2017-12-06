@@ -27,7 +27,7 @@ jsBackend.Blog.controls = {
     var $categoryId = $('#categoryId')
 
     $saveAsDraft.on('click', function (e) {
-      $('form').append('<input type="hidden" name="status" value="draft" />').submit()
+      $('form#edit').append('<input type="hidden" name="status" value="draft" />').submit()
     })
 
     if ($addCategorySubmit.length > 0 && $addCategoryDialog.length > 0) {
