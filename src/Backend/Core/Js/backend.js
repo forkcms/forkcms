@@ -1149,15 +1149,21 @@ jsBackend.data = {
   },
 
   exists: function (key) {
-    return (typeof jsBackend.data.data[key] !== 'undefined')
+    return (typeof jsBackend.data.get(key) !== 'undefined')
   },
 
   get: function (key) {
     // init if needed
     if (!jsBackend.data.initialized) jsBackend.data.init()
 
+    var keys = key.split('.')
+    var data = jsBackend.data.data
+    for (var i = 0; i < keys.length; i++) {
+      data = data[keys[i]]
+    }
+
     // return
-    return jsBackend.data.data[key]
+    return data
   }
 }
 
