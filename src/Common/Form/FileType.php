@@ -96,7 +96,7 @@ class FileType extends AbstractType
             [
                 'data_class' => AbstractFile::class,
                 'empty_data' => function () {
-                    return new class extends StdClass {
+                    return new class extends stdClass {
                         /** @var UploadedFile */
                         protected $file;
 
