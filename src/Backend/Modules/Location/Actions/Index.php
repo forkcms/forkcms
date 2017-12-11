@@ -70,7 +70,7 @@ class Index extends BackendBaseActionIndex
             $this->settings = $this->get('fork.settings')->getForModule('Location');
 
             $this->settings['map_type'] = $this->settings['map_type_widget'];
-            $this->settings['map_style'] = isset($this->settings['map_style_widget']) ? $this->settings['map_style_widget'] : 'standard';
+            $this->settings['map_style'] = $this->settings['map_style_widget'] ?? 'standard';
 
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
@@ -140,7 +140,7 @@ class Index extends BackendBaseActionIndex
         $this->form->addDropdown(
             'map_style',
             $mapStyles,
-            isset($this->settings['map_style']) ? $this->settings['map_style'] : null
+            $this->settings['map_style'] ?? null
         );
     }
 

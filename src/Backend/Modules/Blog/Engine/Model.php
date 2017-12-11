@@ -948,7 +948,7 @@ class Model
 
         foreach ($ids as $id) {
             // get count
-            $count = (isset($commentCounts[$id])) ? (int) $commentCounts[$id] : 0;
+            $count = (int) ($commentCounts[$id] ?? 0);
 
             // update
             $database->update(
@@ -1112,10 +1112,10 @@ class Model
             $item['author'],
             $item['email'],
             $item['text'],
-            (isset($item['type'])) ? $item['type'] : $comment->getType(),
+            $item['type'] ?? $comment->getType(),
             $item['status'],
             $item['website'],
-            (isset($item['data'])) ? $item['data'] : $comment->getData()
+            $item['data'] ?? $comment->getData()
         );
 
         $entityManager->flush($comment);
