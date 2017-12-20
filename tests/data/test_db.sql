@@ -147,14 +147,25 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `blog_categories`;
 
-CREATE TABLE `blog_categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `meta_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE blog_categories (
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `meta_id` INT DEFAULT NULL,
+  `locale` VARCHAR(5) NOT NULL COMMENT '(DC2Type:locale)',
+  `title` VARCHAR(255) NOT NULL,
+  UNIQUE INDEX UNIQ_DC35648139FCA6F9 (meta_id),
+  PRIMARY KEY(id)
+) ENGINE = InnoDB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
+ALTER TABLE blog_categories ADD CONSTRAINT FK_DC35648139FCA6F9 FOREIGN KEY (meta_id) REFERENCES meta (id);
 
+LOCK TABLES `blog_categories` WRITE;
+/*!40000 ALTER TABLE `blog_categories` DISABLE KEYS */;
+
+INSERT INTO `blog_categories` (`id`, `meta_id`, `locale`, `title`)
+VALUES
+	(1,28,'en','Blog category for functional tests');
+
+/*!40000 ALTER TABLE `blog_categories` ENABLE KEYS */;
+UNLOCK TABLES;
 
 # Dump of table blog_comments
 # ------------------------------------------------------------
@@ -2300,7 +2311,8 @@ VALUES
 	(24,'Change email',0,'Change email',0,'Change email',0,'change-email',0,NULL,NULL,NULL,NULL),
 	(25,'Change password',0,'Change password',0,'Change password',0,'change-password',0,NULL,NULL,NULL,NULL),
 	(26,'BlogCategory for tests',0,'BlogCategory for tests',0,'BlogCategory for tests',0,'blogcategory-for-tests',0,NULL,NULL,NULL,NULL),
-	(27,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'blogpost-for-functional-tests',0,NULL,NULL,NULL,NULL);
+	(27,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'blogpost-for-functional-tests',0,NULL,NULL,NULL,NULL),
+	(28,'Blog category for functional tests',0,'Blog category for functional tests',0,'Blog category for functional tests',0,'blog-category-for-functional-tests',0,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;

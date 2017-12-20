@@ -8,7 +8,9 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Language\Locale;
 use Backend\Modules\Blog\Domain\Comment\Comment;
+use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Doctrine\Entity\Meta;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
@@ -28,8 +30,8 @@ class Model
     const QUERY_DATAGRID_BROWSE_CATEGORIES =
         'SELECT i.id, i.title, COUNT(p.id) AS num_items
          FROM blog_categories AS i
-         LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND p.status = ? AND p.language = i.language
-         WHERE i.language = ?
+         LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND p.status = ? AND p.language = i.locale
+         WHERE i.locale = ?
          GROUP BY i.id';
 
     const QUERY_DATAGRID_BROWSE_COMMENTS =
@@ -104,7 +106,12 @@ class Model
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Settings', 'Blog')) {
             // rss title
-            if (BackendModel::get('fork.settings')->get('Blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
+            $rssTitle = BackendModel::get('fork.settings')->get(
+                'Blog',
+                'rss_title_' . BL::getWorkingLanguage(),
+                null
+            );
+            if ($rssTitle == '') {
                 $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSTitle', 'Blog'),
@@ -114,7 +121,12 @@ class Model
             }
 
             // rss description
-            if (BackendModel::get('fork.settings')->get('Blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
+            $rssDescription = BackendModel::get('fork.settings')->get(
+                'Blog',
+                'rss_description_' . BL::getWorkingLanguage(),
+                null
+            );
+            if ($rssDescription == '') {
                 $warnings[] = [
                     'message' => sprintf(
                         BL::err('RSSDescription', 'Blog'),
@@ -191,36 +203,22 @@ class Model
         }
     }
 
-    /**
-     * Deletes a category
-     *
-     * @param int $id The id of the category to delete.
-     */
     public static function deleteCategory(int $id): void
     {
-        $id = (int) $id;
-        $database = BackendModel::getContainer()->get('database');
+        $repository = BackendModel::get('blog.repository.category');
+        $category = $repository->find($id);
 
-        // get item
-        $item = self::getCategory($id);
-
-        if (!empty($item)) {
-            // delete meta
-            $database->delete('meta', 'id = ?', [$item['meta_id']]);
-
-            // delete category
-            $database->delete('blog_categories', 'id = ?', [$id]);
-
-            // update category for the posts that might be in this category
-            $database->update('blog_posts', ['category_id' => null], 'category_id = ?', [$id]);
+        if (!$category instanceof Category) {
+            return;
         }
+
+        $repository->remove($category);
     }
 
     /**
      * Checks if it is allowed to delete the a category
      *
      * @param int $id The id of the category.
-     *
      * @return bool
      */
     public static function deleteCategoryAllowed(int $id): bool
@@ -286,7 +284,6 @@ class Model
      * Checks if an item exists
      *
      * @param int $id The id of the item to check for existence.
-     *
      * @return bool
      */
     public static function exists(int $id): bool
@@ -299,15 +296,11 @@ class Model
         );
     }
 
-    public static function existsCategory(int $id): int
+    public static function existsCategory(int $id): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM blog_categories AS i
-             WHERE i.id = ? AND i.language = ?
-             LIMIT 1',
-            [(int) $id, BL::getWorkingLanguage()]
-        );
+        $repository = BackendModel::get('blog.repository.category');
+
+        return $repository->find($id) instanceof Category;
     }
 
     public static function existsComment(int $id): bool
@@ -321,7 +314,6 @@ class Model
      * Get all data for a given id
      *
      * @param int $id The Id of the item to fetch?
-     *
      * @return array
      */
     public static function get(int $id): array
@@ -338,12 +330,11 @@ class Model
 
     /**
      * Get the comments
+     *
      * @deprecated
-     *
      * @param string $status The type of comments to get.
-     * @param int    $limit  The maximum number of items to retrieve.
-     * @param int    $offset The offset.
-     *
+     * @param int $limit The maximum number of items to retrieve.
+     * @param int $offset The offset.
      * @return array
      */
     public static function getAllCommentsForStatus(string $status, int $limit = 30, int $offset = 0): array
@@ -386,7 +377,6 @@ class Model
      * Get all items by a given tag id
      *
      * @param int $tagId The id of the tag.
-     *
      * @return array
      */
     public static function getByTag(int $tagId): array
@@ -412,7 +402,6 @@ class Model
      * Get all categories
      *
      * @param bool $includeCount Include the count?
-     *
      * @return array
      */
     public static function getCategories(bool $includeCount = false): array
@@ -423,8 +412,8 @@ class Model
             return (array) $database->getPairs(
                 'SELECT i.id, CONCAT(i.title, " (", COUNT(p.category_id) ,")") AS title
                  FROM blog_categories AS i
-                 LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND i.language = p.language AND p.status = ?
-                 WHERE i.language = ?
+                 LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND i.locale = p.language AND p.status = ?
+                 WHERE i.locale = ?
                  GROUP BY i.id',
                 ['active', BL::getWorkingLanguage()]
             );
@@ -433,55 +422,49 @@ class Model
         return (array) $database->getPairs(
             'SELECT i.id, i.title
              FROM blog_categories AS i
-             WHERE i.language = ?',
+             WHERE i.locale = ?',
             [BL::getWorkingLanguage()]
         );
     }
 
-    /**
-     * Get all data for a given id
-     *
-     * @param int $id The id of the category to fetch.
-     *
-     * @return array
-     */
     public static function getCategory($id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*
-             FROM blog_categories AS i
-             WHERE i.id = ? AND i.language = ?',
-            [(int) $id, BL::getWorkingLanguage()]
-        );
+        $category = BackendModel::get('blog.repository.category')
+                                ->find($id);
+
+        if (!$category instanceof Category) {
+            return [];
+        }
+
+        return $category->toArray();
     }
 
     /**
-     * Get a category id by title
-     *
-     * @param string $title    The title of the category.
-     * @param string $language The language to use, if not provided we will use the working language.
-     *
-     * @return int
+     * @deprecated
      */
     public static function getCategoryId(string $title, string $language = null): int
     {
-        $title = (string) $title;
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
+        $category = BackendModel::get('blog.repository.category')
+                                ->findOneBy(
+                                    [
+                                        'title' => $title,
+                                        'locale' => Locale::fromString(
+                                            $language ?? BL::getWorkingLanguage()
+                                        ),
+                                    ]
+                                );
 
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.id
-             FROM blog_categories AS i
-             WHERE i.title = ? AND i.language = ?',
-            [$title, $language]
-        );
+        if (!$category instanceof Category) {
+            return 0;
+        }
+
+        return $category->getId();
     }
 
     public static function getComment(int $id): array
     {
         $comment = BackendModel::get('blog.repository.comment')
                                ->find($id);
-
-
 
         if (!$comment instanceof Comment) {
             return [];
@@ -539,8 +522,7 @@ class Model
      * Get the latest comments for a given type
      *
      * @param string $status The status for the comments to retrieve.
-     * @param int    $limit  The maximum number of items to retrieve.
-     *
+     * @param int $limit The maximum number of items to retrieve.
      * @return array
      */
     public static function getLatestComments(string $status, int $limit = 10): array
@@ -580,9 +562,8 @@ class Model
     /**
      * Get all data for a given revision
      *
-     * @param int $id         The id of the item.
+     * @param int $id The id of the item.
      * @param int $revisionId The revision to get.
-     *
      * @return array
      */
     public static function getRevision(int $id, int $revisionId): array
@@ -600,8 +581,7 @@ class Model
      * Retrieve the unique URL for an item
      *
      * @param string $url The URL to base on.
-     * @param int    $id  The id of the item to ignore.
-     *
+     * @param int $id The id of the item to ignore.
      * @return string
      */
     public static function getUrl(string $url, int $id = null): string
@@ -647,63 +627,17 @@ class Model
         return $url;
     }
 
-    /**
-     * Retrieve the unique URL for a category
-     *
-     * @param string $url The string whereon the URL will be based.
-     * @param int    $id  The id of the category to ignore.
-     *
-     * @return string
-     */
-    public static function getUrlForCategory($url, int $id = null): string
+    public static function getUrlForCategory(string $url, int $id = null): string
     {
-        // redefine URL
-        $url = (string) $url;
+        $repository = BackendModel::get('blog.repository.category');
 
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
-        // new category
-        if ($id === null) {
-            // already exists
-            if ((bool) $database->getVar(
-                'SELECT 1
-                 FROM blog_categories AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ?
-                 LIMIT 1',
-                [BL::getWorkingLanguage(), $url]
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
-
-                return self::getUrlForCategory($url);
-            }
-        } else {
-            // current category should be excluded
-            if ((bool) $database->getVar(
-                'SELECT 1
-                 FROM blog_categories AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ? AND i.id != ?
-                 LIMIT 1',
-                [BL::getWorkingLanguage(), $url, $id]
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
-
-                return self::getUrlForCategory($url, $id);
-            }
-        }
-
-        return $url;
+        return $repository->getUrl($url, $id);
     }
 
     /**
      * Inserts an item into the database
      *
      * @param array $item The data to insert.
-     *
      * @return int
      */
     public static function insert(array $item): int
@@ -717,24 +651,20 @@ class Model
 
     /**
      * Inserts a complete post item based on some arrays of data
-     *
      * This method's purpose is to be able to insert a post (possibly with all its metadata, tags, and comments)
      * in one method call. As much data as possible has been made optional, to be able to do imports where only
      * fractions of the data we need are known.
-     *
      * The item array should have at least a 'title' and a 'text' property other properties are optional.
      * The meta array has only optional properties. You can use these to override the defaults.
      * The tags array is just a list of tagnames as string.
      * The comments array is an array of arrays with comment properties. A comment should have
      * at least 'author', 'email', and 'text' properties.
      *
-     * @param array $item     The data to insert.
-     * @param array $meta     The metadata to insert.
-     * @param array $tags     The tags to connect to this post.
+     * @param array $item The data to insert.
+     * @param array $meta The metadata to insert.
+     * @param array $tags The tags to connect to this post.
      * @param array $comments The comments attached to this post.
-     *
      * @throws Exception
-     *
      * @return int
      */
     public static function insertCompletePost(array $item, array $meta = [], $tags = [], $comments = []): int
@@ -864,35 +794,39 @@ class Model
         return $item['revision_id'];
     }
 
-    /**
-     * Inserts a new category into the database
-     *
-     * @param array $item The data for the category to insert.
-     * @param array $meta The metadata for the category to insert.
-     *
-     * @return int
-     */
     public static function insertCategory(array $item, array $meta = null): int
     {
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
-        // meta given?
-        if ($meta !== null) {
-            $item['meta_id'] = $database->insert('meta', $meta);
+        if ($meta === null) {
+            $meta = BackendModel::get('fork.repository.meta')
+                                ->find($item['meta_id']);
+        } else {
+            $meta = new Meta(
+                $meta['keywords'],
+                $meta['keywords_overwrite'] ?? false,
+                $meta['description'],
+                $meta['description_overwrite'] ?? false,
+                $meta['title'],
+                $meta['title_overwrite'] ?? false,
+                $meta['url'],
+                false
+            );
         }
 
-        // create category
-        $item['id'] = $database->insert('blog_categories', $item);
+        $category = new Category(
+            Locale::fromString($item['language']),
+            $item['title'],
+            $meta
+        );
 
-        // return the id
-        return $item['id'];
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
+        $entityManager->persist($category);
+        $entityManager->flush($category);
+
+        return $category->getId();
     }
 
     public static function insertComment(array $data): int
     {
-        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
-
         $comment = new Comment(
             $data['post_id'],
             Locale::fromString($data['language']),
@@ -905,6 +839,7 @@ class Model
             $data['data']
         );
 
+        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
         $entityManager->persist($comment);
         $entityManager->flush($comment);
 
@@ -920,7 +855,6 @@ class Model
      * Recalculate the commentcount
      *
      * @param array $ids The id(s) of the post wherefore the commentcount should be recalculated.
-     *
      * @return bool
      */
     public static function reCalculateCommentCount(array $ids): bool
@@ -966,7 +900,6 @@ class Model
      * Update an existing item
      *
      * @param array $item The new data.
-     *
      * @return int
      */
     public static function update(array $item): int
@@ -1070,37 +1003,40 @@ class Model
         return $item['revision_id'];
     }
 
-    /**
-     * Update an existing category
-     *
-     * @param array       $item The new data.
-     * @param array $meta The new meta-data.
-     *
-     * @return int
-     */
-    public static function updateCategory(array $item, array $meta = null): int
+    public static function updateCategory(array $item, array $meta = null): void
     {
-        // get database
-        $database = BackendModel::getContainer()->get('database');
+        $category = BackendModel::get('blog.repository.category')
+                                ->find($item['id']);
 
-        // update category
-        $updated = $database->update('blog_categories', $item, 'id = ?', [(int) $item['id']]);
-
-        // meta passed?
-        if ($meta !== null) {
-            // get current category
-            $category = self::getCategory($item['id']);
-
-            // update the meta
-            $database->update('meta', $meta, 'id = ?', [(int) $category['meta_id']]);
+        if (!$category instanceof Category) {
+            return;
         }
 
-        return $updated;
+        $metaEntity = $category->getMeta();
+
+        if ($meta !== null) {
+            $metaEntity->update(
+                $meta['keywords'],
+                (isset($meta['keywords_overwrite'])) ? $meta['keywords_overwrite'] : false,
+                $meta['description'],
+                (isset($meta['description_overwrite'])) ? $meta['description_overwrite'] : false,
+                $meta['title'],
+                (isset($meta['title_overwrite'])) ? $meta['title_overwrite'] : false,
+                $meta['url'],
+                false
+            );
+        }
+
+        $category->update(
+            $item['title'],
+            $metaEntity
+        );
+
+        BackendModel::get('doctrine.orm.default_entity_manager')->flush($category);
     }
 
     public static function updateComment(array $item): void
     {
-        $entityManager = BackendModel::get('doctrine.orm.default_entity_manager');
         $comment = BackendModel::get('blog.repository.comment')
                                ->find($item['id']);
 
@@ -1118,7 +1054,7 @@ class Model
             $item['data'] ?? $comment->getData()
         );
 
-        $entityManager->flush($comment);
+        BackendModel::get('doctrine.orm.default_entity_manager')->flush($comment);
     }
 
     public static function updateCommentStatuses(array $ids, string $status): void

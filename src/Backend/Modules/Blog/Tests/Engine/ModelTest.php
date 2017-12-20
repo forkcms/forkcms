@@ -17,7 +17,8 @@ class ModelTest extends WebTestCase
         }
     }
 
-    public function testInsertingComment(): void
+    // comments
+    public function testCreateComment(): void
     {
         $client = self::createClient();
         $this->loadFixtures($client);
@@ -29,26 +30,32 @@ class ModelTest extends WebTestCase
 
         $addedComment = Model::getComment(1);
 
-        self::assertEquals(1, $addedComment['id']);
-        self::assertEquals($commentData['post_id'], $addedComment['post_id']);
-        self::assertEquals($commentData['language'], $addedComment['language']);
-        self::assertEquals($commentData['author'], $addedComment['author']);
-        self::assertEquals($commentData['email'], $addedComment['email']);
-        self::assertEquals($commentData['website'], $addedComment['website']);
-        self::assertEquals($commentData['text'], $addedComment['text']);
-        self::assertEquals($commentData['type'], $addedComment['type']);
-        self::assertEquals($commentData['status'], $addedComment['status']);
-        self::assertEquals($commentData['data'], $addedComment['data']);
-        self::assertEquals($this->getBlogpostData()['title'], $addedComment['post_title']);
+        $this->assertEquals(1, $addedComment['id']);
+        $this->assertEquals($commentData['post_id'], $addedComment['post_id']);
+        $this->assertEquals(
+            $commentData['language'],
+            $addedComment['language']
+        );
+        $this->assertEquals($commentData['author'], $addedComment['author']);
+        $this->assertEquals($commentData['email'], $addedComment['email']);
+        $this->assertEquals($commentData['website'], $addedComment['website']);
+        $this->assertEquals($commentData['text'], $addedComment['text']);
+        $this->assertEquals($commentData['type'], $addedComment['type']);
+        $this->assertEquals($commentData['status'], $addedComment['status']);
+        $this->assertEquals($commentData['data'], $addedComment['data']);
+        $this->assertEquals(
+            $this->getBlogpostData()['title'],
+            $addedComment['post_title']
+        );
     }
 
-    public function testCommentExists(): void
+    public function testIfCommentExists(): void
     {
-        self::assertEquals(true, Model::existsComment(1));
-        self::assertEquals(false, Model::existsComment(2));
+        $this->assertTrue(Model::existsComment(1));
+        $this->assertFalse(Model::existsComment(2));
     }
 
-    public function testEditingComment(): void
+    public function testUpdateComment(): void
     {
         $commentData = $this->getUpdatedCommentData();
 
@@ -56,24 +63,30 @@ class ModelTest extends WebTestCase
 
         $editedComment = Model::getComment(1);
 
-        self::assertEquals(1, $editedComment['id']);
-        self::assertEquals($commentData['post_id'], $editedComment['post_id']);
-        self::assertEquals($commentData['language'], $editedComment['language']);
-        self::assertEquals($commentData['author'], $editedComment['author']);
-        self::assertEquals($commentData['email'], $editedComment['email']);
-        self::assertEquals($commentData['website'], $editedComment['website']);
-        self::assertEquals($commentData['text'], $editedComment['text']);
-        self::assertEquals($commentData['type'], $editedComment['type']);
-        self::assertEquals($commentData['status'], $editedComment['status']);
-        self::assertEquals($commentData['data'], $editedComment['data']);
-        self::assertEquals($this->getBlogpostData()['title'], $editedComment['post_title']);
+        $this->assertEquals(1, $editedComment['id']);
+        $this->assertEquals($commentData['post_id'], $editedComment['post_id']);
+        $this->assertEquals(
+            $commentData['language'],
+            $editedComment['language']
+        );
+        $this->assertEquals($commentData['author'], $editedComment['author']);
+        $this->assertEquals($commentData['email'], $editedComment['email']);
+        $this->assertEquals($commentData['website'], $editedComment['website']);
+        $this->assertEquals($commentData['text'], $editedComment['text']);
+        $this->assertEquals($commentData['type'], $editedComment['type']);
+        $this->assertEquals($commentData['status'], $editedComment['status']);
+        $this->assertEquals($commentData['data'], $editedComment['data']);
+        $this->assertEquals(
+            $this->getBlogpostData()['title'],
+            $editedComment['post_title']
+        );
     }
 
-    public function testDeletingComment(): void
+    public function testDeleteComment(): void
     {
-        self::assertTrue(Model::existsComment(1));
+        $this->assertTrue(Model::existsComment(1));
         Model::deleteComments([1]);
-        self::assertFalse(Model::existsComment(1));
+        $this->assertFalse(Model::existsComment(1));
     }
 
     private function getCommentData(): array
@@ -109,14 +122,14 @@ class ModelTest extends WebTestCase
         ];
     }
 
-    private function insertBlogPost()
+    private function insertBlogPost(): void
     {
         Model::insert(
             $this->getBlogpostData()
         );
     }
 
-    private function getBlogpostData()
+    private function getBlogpostData(): array
     {
         return [
             'id' => 1,
@@ -134,6 +147,121 @@ class ModelTest extends WebTestCase
             'allow_comments' => 1,
             'num_comments' => 0,
             'status' => 'active',
+        ];
+    }
+
+    // categories
+    public function testCreateCategory(): void
+    {
+        $client = self::createClient();
+        $this->loadFixtures($client);
+
+        $categoryData = $this->getCategoryData();
+        $categoryMetaData = $this->getCategoryMetaData();
+        $id = Model::insertCategory($categoryData, $categoryMetaData);
+        $createdCategory = Model::getCategory($id);
+
+        $this->assertArrayHasKey('meta_id', $createdCategory);
+        $this->assertEquals($id, $createdCategory['id']);
+        $this->assertEquals(
+            $categoryData['language'],
+            $createdCategory['language']
+        );
+        $this->assertEquals($categoryData['title'], $createdCategory['title']);
+    }
+
+    public function testIfCategoryExists(): void
+    {
+        $this->assertTrue(Model::existsCategory(1));
+        $this->assertFalse(Model::existsCategory(1337));
+    }
+
+    public function testUpdateCategory(): void
+    {
+        $client = self::createClient();
+        $this->loadFixtures($client);
+
+        $categoryData = $this->getUpdateCategoryData();
+        $categoryMetaData = $this->getUpdatedCategoryMetaData();
+
+        Model::updateCategory($categoryData, $categoryMetaData);
+
+        $updatedCategory = Model::getCategory(1);
+
+        $this->assertEquals($categoryData['id'], $updatedCategory['id']);
+        $this->assertArrayHasKey('meta_id', $updatedCategory);
+        $this->assertEquals($categoryData['language'], $updatedCategory['language']);
+        $this->assertEquals($categoryData['title'], $updatedCategory['title']);
+    }
+
+    public function testDeleteCategory(): void
+    {
+        $client = self::createClient();
+        $this->loadFixtures($client);
+
+        $id = Model::insertCategory(
+            $this->getCategoryData(),
+            $this->getCategoryMetaData()
+        );
+
+        $this->assertTrue(Model::existsCategory($id));
+        Model::deleteCategory($id);
+        $this->assertFalse(Model::existsCategory($id));
+    }
+
+    public function testCalculatingCategoryUrl(): void
+    {
+        $client = self::createClient();
+        $this->loadFixtures($client);
+
+        $this->assertEquals('foo-bar', Model::getUrlForCategory('foo-bar'));
+
+        // check if 2 is appended for an existing category
+        $id = Model::insertCategory(
+            $this->getCategoryData(),
+            $this->getCategoryMetaData()
+        );
+        $this->assertEquals('meta-url-2', Model::getUrlForCategory('meta-url'));
+
+        // check if the same url is returned when we pass the id
+        $this->assertEquals('meta-url', Model::getUrlForCategory('meta-url', $id));
+    }
+
+    private function getCategoryData(): array
+    {
+        return [
+            'language' => 'en',
+            'title' => 'category title',
+        ];
+    }
+
+    private function getCategoryMetaData(): array
+    {
+        return [
+            'keywords' => 'keywords',
+            'description' => 'description',
+            'title' => 'meta title',
+            'url' => 'meta-url',
+        ];
+    }
+
+    private function getUpdateCategoryData(): array
+    {
+        return [
+            'id' => 1,
+            'language' => 'en',
+            'title' => 'category title edited',
+        ];
+    }
+
+    private function getUpdatedCategoryMetaData(): array
+    {
+        return [
+            'id' => 28,
+            'keywords' => 'keywords',
+            'description' => 'description',
+            'title' => 'meta title',
+            'url' => 'meta-url',
         ];
     }
 }
