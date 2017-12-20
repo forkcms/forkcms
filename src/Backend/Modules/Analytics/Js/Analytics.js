@@ -3,17 +3,17 @@
  */
 jsBackend.analytics =
 {
-    chartPieChart: null,
-    chartDoubleMetricPerDay: null,
+    $chartPieChart: null,
+    $chartDoubleMetricPerDay: null,
     init: function()
     {
         // variables
-        jsBackend.analytics.chartPieChart = $('#chartPieChart');
-        jsBackend.analytics.chartDoubleMetricPerDay = $('#chartDoubleMetricPerDay');
+        jsBackend.analytics.$chartPieChart = $('#chartPieChart');
+        jsBackend.analytics.$chartDoubleMetricPerDay = $('#chartDoubleMetricPerDay');
 
-        jsBackend.analytics.charts();
-        jsBackend.analytics.chartPieChart();
-        jsBackend.analytics.chartDoubleMetricPerDay();
+        jsBackend.analytics.charts.init();
+        jsBackend.analytics.chartPieChart.init();
+        jsBackend.analytics.chartDoubleMetricPerDay.init();
     }
 };
 
@@ -21,7 +21,7 @@ jsBackend.analytics.charts =
 {
     init: function()
     {
-        if (jsBackend.analytics.chartPieChart.length > 0 || jsBackend.analytics.chartDoubleMetricPerDay.length > 0)
+        if (jsBackend.analytics.$chartPieChart.length > 0 || jsBackend.analytics.$chartDoubleMetricPerDay.length > 0)
         {
             Highcharts.setOptions(
             {
@@ -48,7 +48,7 @@ jsBackend.analytics.chartPieChart =
 
     init: function()
     {
-        if (jsBackend.analytics.chartPieChart.length > 0) { jsBackend.analytics.chartPieChart.create(); }
+        if (jsBackend.analytics.$chartPieChart.length > 0) { jsBackend.analytics.chartPieChart.create(); }
     },
 
     // add new chart
@@ -71,9 +71,9 @@ jsBackend.analytics.chartPieChart =
             });
         });
 
-        var containerWidth = jsBackend.analytics.chartPieChart.width();
+        var containerWidth = jsBackend.analytics.$chartPieChart.width();
 
-        jsBackend.analytics.chartPieChart.chart = new Highcharts.Chart(
+        jsBackend.analytics.$chartPieChart.chart = new Highcharts.Chart(
         {
             chart: { renderTo: 'chartPieChart', height: 200, width: containerWidth, margin: [0, 160, 0, 0], backgroundColor:'transparent' },
             credits: { enabled: false },
@@ -107,7 +107,7 @@ jsBackend.analytics.chartPieChart =
     // destroy chart
     destroy: function()
     {
-        jsBackend.analytics.chartPieChart.chart.destroy();
+        jsBackend.analytics.$chartPieChart.chart.destroy();
     }
 };
 
@@ -117,7 +117,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 
     init: function()
     {
-        if (jsBackend.analytics.chartDoubleMetricPerDay.length > 0) { jsBackend.analytics.chartDoubleMetricPerDay.create(); }
+        if (jsBackend.analytics.$chartDoubleMetricPerDay.length > 0) { jsBackend.analytics.chartDoubleMetricPerDay.create(); }
     },
 
     // add new chart
@@ -165,7 +165,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 
         var containerWidth = $('#chartDoubleMetricPerDay').width();
 
-        jsBackend.analytics.chartDoubleMetricPerDay.chart = new Highcharts.Chart(
+        jsBackend.analytics.$chartDoubleMetricPerDay.chart = new Highcharts.Chart(
         {
             chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'line', backgroundColor:'transparent' },
             xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
@@ -187,7 +187,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
     // destroy chart
     destroy: function()
     {
-        jsBackend.analytics.chartDoubleMetricPerDay.chart.destroy();
+        jsBackend.analytics.$chartDoubleMetricPerDay.chart.destroy();
     }
 };
 
