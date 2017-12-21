@@ -12,7 +12,7 @@ jsBackend.Profiles = {
   massAddToGroup: {
     init: function () {
       // update the hidden input for the new group's ID with the remembered value
-      var $txtNewGroup = $('input[name="newGroup"]').val()
+      var $txtNewGroup = $('input[name="newGroup"]')
 
       // clone the groups SELECT into the "add to group" mass action dialog
       $('.jsMassActionAddToGroupSelectGroup').replaceWith(
