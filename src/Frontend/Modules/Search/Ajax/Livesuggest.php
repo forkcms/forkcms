@@ -2,12 +2,13 @@
 
 namespace Frontend\Modules\Search\Ajax;
 
-use Symfony\Component\Filesystem\Filesystem;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Theme as FrontendTheme;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -95,11 +96,14 @@ class Livesuggest extends FrontendBaseAJAXAction
         // parse
         $this->parse();
 
+        // modules path
+        $widgetTemplatesPath = FRONTEND_MODULES_PATH . '/Search/Layout/Templates';
+
         // output
         $this->output(
             Response::HTTP_OK,
             $this->template->render(
-                FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig',
+                FrontendTheme::getPath($widgetTemplatesPath . '/Results.html.twig'),
                 $this->template->getAssignedVariables()
             )
         );
