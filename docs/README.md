@@ -92,7 +92,8 @@ Questions? Feel free to discuss on our [Slack channel](https://fork-cms.herokuap
 1. [Open sourcing your modules/themes](docs/06. contribute/08. open_sourcing_fork_cms_modules_and_themes.md)
 
 ### 7. Media Library
-1. [Introduction](docs/07. media library/01. introduction.md)
-1. [Integrating in your module](docs/07. media library/02. integrating in your module.md)
-1. [Console commands](docs/07. media library/03. console commands.md)
-1. [Cropper](docs/07. media library/04. cropper.md)
+1. [Introduction](07.%20media%20library/01.%20introduction.md)
+1. [Console commands](07.%20media%20library/02.%20module%20structure.md)
+1. [Integrating in your module](07.%20media%20library/03.%20integrating%20in%20your%20module.md)
+1. [Cropper](07.%20media%20library/04.%20image%20management.md)
+1. [Console commands](07.%20media%20library/05.%20console%20commands.md)
