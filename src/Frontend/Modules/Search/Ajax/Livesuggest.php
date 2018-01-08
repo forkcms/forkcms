@@ -132,7 +132,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // check if cache file exists
-        if (is_file($this->cacheFile)) {
+        if (!is_file($this->cacheFile)) {
             return false;
         }
 
