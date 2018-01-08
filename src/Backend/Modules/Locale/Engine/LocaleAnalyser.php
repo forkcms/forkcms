@@ -79,12 +79,14 @@ final class LocaleAnalyser
         foreach ($finder->files()->in($this->paths)->getIterator() as $file) {
             $module = $this->getInBetweenStrings('Modules/', '/', $file->getPath());
             if (!in_array($module, $this->installedModules, true)) {
-                if (strpos($file->getPath(), $this->application . '/Core') === false) {
+                if (strpos($file->getPath(), $this->application . '/Core') === false &&
+                    strpos($file->getPath(), 'Themes') === false) {
                     continue;
                 }
 
                 $module = 'Core';
             }
+
             $filename = $file->getFilename();
             $moduleFiles[$module][$filename] = $file;
         }
