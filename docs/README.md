@@ -96,6 +96,8 @@ Questions? Feel free to discuss on our [Slack channel](https://fork-cms.herokuap
 
 ### 7. Media Library
 1. [Introduction](07.%20media%20library/01.%20introduction.md)
-1. [Integrating in your module](07.%20media%20library/02.%20integrating%20in%20your%20module.md)
-1. [Console commands](07.%20media%20library/03.%20console%20commands.md)
-1. [Cropper](07.%20media%20library/04.%20cropper.md)
+1. [Console commands](07.%20media%20library/02.%20module%20structure.md)
+1. [Integrating in your module](07.%20media%20library/03.%20integrating%20in%20your%20module.md)
+1. [Cropper](07.%20media%20library/04.%20image%20management.md)
+1. [Console commands](07.%20media%20library/05.%20console%20commands.md)
+
