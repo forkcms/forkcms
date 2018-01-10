@@ -145,7 +145,7 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
      *
      * @return string
      */
-    public function getAction(): string
+    public function getAction(): ?string
     {
         if ($this->action !== null) {
             return $this->action;
