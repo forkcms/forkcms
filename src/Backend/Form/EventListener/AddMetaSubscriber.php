@@ -81,14 +81,10 @@ class AddMetaSubscriber implements EventSubscriberInterface
         $parameters = [];
 
         foreach ($this->generateUrlCallbackParameterMethods as $generateUrlCallbackParameterMethod) {
-            $parameter = null;
+            $parameter = $event;
             $methods = explode('.', $generateUrlCallbackParameterMethod);
 
             foreach ($methods as $method) {
-                if ($parameter == null) {
-                    $parameter = $event;
-                }
-
                 $parameter = $parameter->{$method}();
             }
 
