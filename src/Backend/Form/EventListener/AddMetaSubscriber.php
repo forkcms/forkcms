@@ -16,14 +16,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class AddMetaSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var string - The URL shown in the backend will need this "module" to be generated.
-     */
-    private $moduleForUrl;
-
-    /**
      * @var string - The URL shown in the backend will need this "action" to be generated.
      */
     private $actionForUrl;
+
+    /**
+     * @var string - The field in the form where the URL should be generated for.
+     */
+    private $baseFieldName;
 
     /**
      * @var string - Name of the class or the container service id, f.e.: 'moduleForUrl.repository.item',
@@ -40,15 +40,22 @@ class AddMetaSubscriber implements EventSubscriberInterface
      */
     private $generateUrlCallbackParameterMethods;
 
+    /**
+     * @var string - The URL shown in the backend will need this "module" to be generated.
+     */
+    private $moduleForUrl;
+
     public function __construct(
         string $moduleForUrl,
         string $actionForUrl,
+        string $baseFieldName = 'title',
         string $generateUrlCallbackClass,
         string $generateUrlCallbackMethod,
         array $generateUrlCallbackParameterMethods
     ) {
         $this->moduleForUrl = $moduleForUrl;
         $this->actionForUrl = $actionForUrl;
+        $this->baseFieldName = $baseFieldName;
         $this->generateUrlCallbackClass = $generateUrlCallbackClass;
         $this->generateUrlCallbackMethod = $generateUrlCallbackMethod;
         $this->generateUrlCallbackParameterMethods = $generateUrlCallbackParameterMethods;
@@ -68,7 +75,7 @@ class AddMetaSubscriber implements EventSubscriberInterface
             MetaType::class,
             [
                 'detail_url' => Model::getUrlForBlock($this->moduleForUrl, $this->actionForUrl),
-                'base_field_name' => 'name',
+                'base_field_name' => $this->baseFieldName,
                 'generate_url_callback_class' => $this->generateUrlCallbackClass,
                 'generate_url_callback_method' => $this->generateUrlCallbackMethod,
                 'generate_url_callback_parameters' => $this->buildCallbackParameters($event),
