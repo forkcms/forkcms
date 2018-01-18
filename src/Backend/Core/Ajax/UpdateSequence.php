@@ -5,9 +5,6 @@ namespace Backend\Core\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Update sequence
- */
 class UpdateSequence extends BackendBaseAJAXAction
 {
     /**
