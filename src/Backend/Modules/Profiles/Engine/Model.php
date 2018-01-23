@@ -595,9 +595,8 @@ class Model
 
                 // update counter
                 $statistics['count']['inserted'] += 1;
-                // already exists
             } else {
-                // get profile
+                //  already exists get profile
                 $profile = self::getByEmail($item['email']);
                 $id = $profile['id'];
 
