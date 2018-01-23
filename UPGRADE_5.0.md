@@ -559,6 +559,15 @@ The following form types have been moved
 | `\Backend\Form\Type\ImageType`      | `\Common\Form\ImageType`      |
 | `\Backend\Form\Type\CollectionType` | `\Common\Form\CollectionType` |
 
+## Page Blocks Extra
+
+The `pages_blocks` table structure have been updated.
+
+```mysql
+ALTER TABLE pages_blocks ADD extra_type varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'rich_text';
+ALTER TABLE pages_blocks ADD extra_data text COLLATE utf8mb4_unicode_ci;
+```
+
 ## Swiftmailer
 
 The default used to be `mail` but that has been removed in favour of `sendmail`.

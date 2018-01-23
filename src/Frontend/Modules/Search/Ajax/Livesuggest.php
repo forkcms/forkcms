@@ -7,6 +7,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,7 +65,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         $this->output(
             Response::HTTP_OK,
             $this->template->render(
-                FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.html.twig',
+                Theme::getPath(FRONTEND_MODULES_PATH . '/Search/Layout/Templates/Results.html.twig'),
                 $this->template->getAssignedVariables()
             )
         );
