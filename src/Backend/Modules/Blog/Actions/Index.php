@@ -10,6 +10,8 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use Backend\Modules\SitemapGenerator\Domain\SitemapItemChanged;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * This is the index-action (default), it will display the overview of blog posts

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Core>
+      <item type="label" name="SitemapGenerator">
+        <translation language="nl"><![CDATA[automatische sitemap generator]]></translation>
+        <translation language="en"><![CDATA[automatic sitemap generator]]></translation>
+        <translation language="hu"><![CDATA[automatikus webhelytérkép-generátor]]></translation>
+        <translation language="it"><![CDATA[generatore di sitemap automatico]]></translation>
+        <translation language="ru"><![CDATA[автоматический генератор карты сайта]]></translation>
+        <translation language="zh"><![CDATA[自动站点地图生成器]]></translation>
+        <translation language="de"><![CDATA[automatischer Sitemap-Generator]]></translation>
+        <translation language="fr"><![CDATA[générateur de sitemap automatique]]></translation>
+        <translation language="es"><![CDATA[generador de sitemap automático]]></translation>
+        <translation language="uk"><![CDATA[автоматичний генератор Sitemap]]></translation>
+        <translation language="lt"><![CDATA[automatinis svetainės schemos generatorius]]></translation>
+        <translation language="sv"><![CDATA[automatisk sitemapgenerator]]></translation>
+        <translation language="el"><![CDATA[αυτόματη γεννήτρια χάρτη]]></translation>
+      </item>
+    </Core>
+  </Backend>
+</locale>

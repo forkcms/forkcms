@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <name>SitemapGenerator</name>
+  <version>1.0.0</version>
+  <requirements>
+    <minimum_version>5.0.5</minimum_version>
+  </requirements>
+  <description>
+    <![CDATA[
+      This module houses an event to throw every time something about your website changes.
+      It also houses a listener which will re-generate the sitemap.xml file every time the event is thrown.
+    ]]>
+  </description>
+  <authors>
+    <author>
+      <name><![CDATA[Stijn Vrolijk]]></name>
+      <url><![CDATA[https://www.sumocoders.be]]></url>
+    </author>
+  </authors>
+</module>

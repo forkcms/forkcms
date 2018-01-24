@@ -1,0 +1,9 @@
+doctrine:
+  orm:
+    mappings:
+      sitemap_entry:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/SitemapGenerator/Domain"
+        alias: SitemapGeneratorSitemapEntry
+        prefix: Backend\Modules\SitemapGenerator\Domain
