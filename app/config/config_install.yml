@@ -52,13 +52,16 @@ services:
     # dummy service during the installation
     fork.settings:
         class: stdClass
+        public: true
 
     # dummy service during the installation
     cache.pool:
         class: stdClass
+        public: true
 
     database:
         class: SpoonDatabase
+        public: true
         arguments:
             - "%database.driver%"
             - "%database.host%"

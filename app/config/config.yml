@@ -118,6 +118,7 @@ services:
           - { name: form.type, alias: meta}
     database:
         class: SpoonDatabase
+        public: true
         arguments:
             - "%database.driver%"
             - "%database.host%"
@@ -158,22 +159,26 @@ services:
             - "@cache.adapter"
     cache.pool:
         class: MatthiasMullie\Scrapbook\Psr6\Pool
+        public: true
         arguments:
             - "@cache.buffer"
     cache.backend_navigation:
         class: Backend\Core\Engine\NavigationCache
+        public: true
         arguments:
             - "@database"
             - "@cache.pool"
 
     fork.settings:
         class: Common\ModulesSettings
+        public: true
         arguments:
             - "@database"
             - "@cache.pool"
 
     fork.cookie:
         class: Common\Core\Cookie
+        public: true
 
     fork.cookie_setter:
         class: Common\EventListener\ForkCookieSetter
@@ -189,6 +194,7 @@ services:
 
     templating:
         class: Frontend\Core\Engine\TwigTemplate
+        public: true
         arguments:
             - "@twig"
             - "@templating.name_parser"
@@ -196,5 +202,6 @@ services:
 
     translator:
         class: Common\Language
+        public: true
         arguments:
             - "@translator.selector"
