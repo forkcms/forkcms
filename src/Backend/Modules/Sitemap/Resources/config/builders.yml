@@ -1,0 +1,6 @@
+services:
+    sitemap.builder:
+        class: Backend\Modules\Sitemap\Builder\SitemapBuilder
+        arguments:
+            - "%site.path_www%"
+            - "@sitemap.manager"

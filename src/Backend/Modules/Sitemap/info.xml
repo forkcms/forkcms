@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>Sitemap</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>5.0.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			The sitemap module.
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Jeroen Desloovere]]></name>
+			<url><![CDATA[http://www.jeroendesloovere.be]]></url>
+		</author>
+	</authors>
+</module>

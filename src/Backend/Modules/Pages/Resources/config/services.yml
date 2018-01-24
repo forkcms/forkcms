@@ -1,0 +1,5 @@
+services:
+    pages.sitemap_provider.page:
+        class: Backend\Modules\Pages\Provider\PageSitemapProvider
+        tags:
+            - { name: sitemap.provider }
