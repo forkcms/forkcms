@@ -34,7 +34,6 @@ CKEDITOR.dialog.add(
                                     type: 'text',
                                     id: 'url',
                                     label: 'URL',
-                                    validate: CKEDITOR.dialog.validate.regex(new RegExp(urlRegex), editor.lang.medialibrary.urlNotValid),
                                     setup: function (element) {
                                         this.setValue(element.getAttribute('href'));
                                     },
