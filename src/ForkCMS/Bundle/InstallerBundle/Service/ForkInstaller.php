@@ -93,6 +93,7 @@ class ForkInstaller
             'Search',
             'ContentBlocks',
             'Tags',
+            'MediaLibrary',
         ];
     }
 

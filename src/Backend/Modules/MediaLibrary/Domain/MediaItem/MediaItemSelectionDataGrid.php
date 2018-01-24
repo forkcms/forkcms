@@ -6,20 +6,19 @@ use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
-use SpoonFormDropdown;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
  */
-class MediaItemDataGrid extends DataGridDatabase
+class MediaItemSelectionDataGrid extends DataGridDatabase
 {
     public function __construct(Type $type, int $folderId = null)
     {
         parent::__construct(
-            'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
-                COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
+            'SELECT i.url AS directUrl, i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
+                COUNT(gi.mediaItemId) AS num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
              FROM MediaItem AS i
-             LEFT OUTER JOIN MediaGroupMediaItem as gi ON gi.mediaItemId = i.id
+             LEFT OUTER JOIN MediaGroupMediaItem AS gi ON gi.mediaItemId = i.id
              WHERE i.type = ?' . $this->getWhere($folderId) . ' GROUP BY i.id',
             $this->getParameters($type, $folderId)
         );
@@ -30,13 +29,6 @@ class MediaItemDataGrid extends DataGridDatabase
         }
 
         $this->setExtras($type);
-        $this->addMassActions($type);
-    }
-
-    private function addMassActions(Type $type): void
-    {
-        $this->setMassActionCheckboxes('check', '[id]');
-        $this->setMassAction($this->getMassActionDropdown($type));
     }
 
     private function getColumnHeaderLabels(Type $type): array
@@ -46,12 +38,14 @@ class MediaItemDataGrid extends DataGridDatabase
                 'storageType' => ucfirst(Language::lbl('MediaStorageType')),
                 'url' => ucfirst(Language::lbl('MediaMovieId')),
                 'title' => ucfirst(Language::lbl('MediaMovieTitle')),
+                'directUrl' => '',
             ];
         }
 
         return [
             'type' => '',
             'url' => ucfirst(Language::lbl('Image')),
+            'directUrl' => '',
         ];
     }
 
@@ -78,22 +72,6 @@ class MediaItemDataGrid extends DataGridDatabase
         return (string) (new self($type, $folderId))->getContent();
     }
 
-    private function getMassActionDropdown(Type $type): SpoonFormDropdown
-    {
-        $ddmMediaItemMassAction = new SpoonFormDropdown(
-            'action',
-            ['move' => Language::lbl('Move')],
-            'move',
-            false,
-            'form-control',
-            'form-control danger'
-        );
-        $ddmMediaItemMassAction->setAttribute('id', 'mass-action-' . (string) $type);
-        $ddmMediaItemMassAction->setOptionAttributes('move', ['data-target' => '#confirmMassActionMediaItemMove']);
-
-        return $ddmMediaItemMassAction;
-    }
-
     private function getParameters(Type $type, int $folderId = null): array
     {
         $parameters = [(string) $type];
@@ -110,11 +88,10 @@ class MediaItemDataGrid extends DataGridDatabase
         return ($folderId !== null) ? ' AND i.mediaFolderId = ?' : '';
     }
 
-    private function setExtras(Type $type, int $folderId = null): void
+    private function setExtras(Type $type): void
     {
-        $editActionUrl = Model::createUrlForAction('MediaItemEdit');
+        $this->addDataAttributes($type);
         $this->setHeaderLabels($this->getColumnHeaderLabels($type));
-        $this->setActiveTab('tab' . ucfirst((string) $type));
         $this->setColumnsHidden($this->getColumnsThatNeedToBeHidden($type));
         $this->setSortingColumns(
             [
@@ -127,39 +104,20 @@ class MediaItemDataGrid extends DataGridDatabase
             'title'
         );
         $this->setSortParameter('asc');
-        $this->setColumnURL(
-            'title',
-            $editActionUrl
-            . '&id=[id]'
-            . ($folderId ? '&folder=' . $folderId : '')
-        );
-
-        if ($type->isMovie()) {
-            $this->setColumnURL(
-                'url',
-                $editActionUrl
-                . '&id=[id]'
-                . ($folderId ? '&folder=' . $folderId : '')
-            );
-        }
-
-        $this->setColumnURL(
-            'num_connected',
-            $editActionUrl
-            . '&id=[id]'
-            . ($folderId ? '&folder=' . $folderId : '')
-        );
 
         // If we have an image, show the image
         if ($type->isImage()) {
             // Add image url
             $this->setColumnFunction(
-                [BackendDataGridFunctions::class, 'showImage'],
+                [
+                    new BackendDataGridFunctions(),
+                    'showImage',
+                ],
                 [
                     Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
-                    Model::createUrlForAction('MediaItemEdit') . '&id=[id]' . '&folder=' . $folderId,
+                    null,
                     null,
                     null,
                     'media_library_backend_thumbnail',
@@ -169,6 +127,22 @@ class MediaItemDataGrid extends DataGridDatabase
             );
         }
 
+        // Add a button to select an item
+        $this->setColumnFunction(
+            [
+                MediaItemSelectionDataGrid::class,
+                'addButton',
+            ],
+            [
+                '[id]',
+                $type,
+                '[storageType]',
+                '[directUrl]'
+            ],
+            'directUrl',
+            true
+        );
+
         // set column functions
         $this->setColumnFunction(
             [new BackendDataGridFunctions(), 'getLongDate'],
@@ -176,17 +150,50 @@ class MediaItemDataGrid extends DataGridDatabase
             'createdOn',
             true
         );
+    }
 
-        // add edit column
-        $this->addColumn(
-            'edit',
-            null,
-            Language::lbl('Edit'),
-            $editActionUrl . '&id=[id]' . '&folder=' . $folderId,
-            Language::lbl('Edit')
-        );
-
+    private function addDataAttributes(Type $type): void
+    {
         // our JS needs to know an id, so we can highlight it
-        $this->setRowAttributes(['id' => 'row-[id]']);
+        $attributes = [
+            'id' => 'row-[id]',
+            'data-direct-url' => '[directUrl]',
+        ];
+        $this->setRowAttributes($attributes);
+    }
+
+    protected function addButton(string $id, string $type, string $storageType)
+    {
+        switch ($type) {
+            case Type::MOVIE:
+                if ($storageType === StorageType::YOUTUBE) {
+                    $absoluteUrl = Model::get('media_library.storage.youtube')->getAbsoluteWebPath(
+                        Model::get('media_library.repository.item')->find($id)
+                    );
+
+                    break;
+                }
+
+                if ($storageType === StorageType::VIMEO) {
+                    $absoluteUrl =  Model::get('media_library.storage.vimeo')->getAbsoluteWebPath(
+                        Model::get('media_library.repository.item')->find($id)
+                    );
+
+                    break;
+                }
+
+                $absoluteUrl = Model::get('media_library.storage.local')->getWebPath(
+                    Model::get('media_library.repository.item')->find($id)
+                );
+
+                break;
+            default:
+                $absoluteUrl = Model::get('media_library.storage.local')->getWebPath(
+                    Model::get('media_library.repository.item')->find($id)
+                );
+        }
+
+        return '<a class="btn btn-success" data-direct-url="' . $absoluteUrl . '">' .
+            ucfirst(Language::lbl('Select')) . '</a>';
     }
 }
