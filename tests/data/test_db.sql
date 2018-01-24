@@ -1952,7 +1952,6 @@ VALUES
 	(1274, 1, 'en', 'Backend', 'Location', 'msg', 'ShowMapUrl', 'Show the link to Google Maps', '2017-08-31 14:28:24'),
 	(1275, 1, 'en', 'Backend', 'Location', 'msg', 'ShowMarkerOverview', 'Show the marker on the large map', '2017-08-31 14:28:24'),
 	(1276, 1, 'en', 'Backend', 'Location', 'msg', 'WidthHelp', 'Minimum %1$spx and maximum %2$spx', '2017-08-31 14:28:24'),
-	(1277, 1, 'en', 'Backend', 'Mailmotor', 'msg', 'AutomaticallySubscribeFromFormBuilderSubmittedForm', 'Automatically add auto-reply-to email addresses from submitted FormBuilder forms in the mailing list.', '2017-08-31 14:28:24'),
 	(1278, 1, 'en', 'Backend', 'Mailmotor', 'lbl', 'ApiKey', 'API key', '2017-08-31 14:28:24'),
 	(1279, 1, 'en', 'Backend', 'Mailmotor', 'msg', 'DoubleOptIn', 'Enable double opt-in. If checked people who enroll will get a mail where they have to click the confirmation link. This helps to prevent your list from being spammed with fictional email addresses.', '2017-08-31 14:28:24'),
 	(1280, 1, 'en', 'Backend', 'Mailmotor', 'lbl', 'ListId', 'list id', '2017-08-31 14:28:24'),
@@ -2194,7 +2193,19 @@ VALUES
 	(1516, 1, 'en', 'Backend', 'Profiles', 'err', 'UnknownAction', 'Unknown action.', '2017-08-31 14:28:26'),
 	(1517, 1, 'en', 'Backend', 'Core', 'lbl', 'LoginLink', 'login link', '2017-08-31 14:28:26'),
 	(1518, 1, 'en', 'Backend', 'Core', 'lbl', 'SecurePage', 'secure page', '2017-08-31 14:28:26'),
-	(1519, 1, 'en', 'Backend', 'Core', 'lbl', 'Close', 'close', '2017-08-31 14:28:26');
+	(1519, 1, 'nl', 'Backend', 'Core', 'lbl', 'MoveUpOnePosition', 'verplaats één positie omhoog', '2017-08-31 14:28:26'),
+	(1520, 1, 'en', 'Backend', 'Core', 'lbl', 'MoveUpOnePosition', 'move up one position', '2017-08-31 14:28:26'),
+	(1521, 1, 'nl', 'Backend', 'Core', 'lbl', 'MoveDownOnePosition', 'verplaats één positie omlaag', '2017-08-31 14:28:26'),
+	(1522, 1, 'en', 'Backend', 'Core', 'lbl', 'MoveDownOnePosition', 'move down one position', '2017-08-31 14:28:26'),
+	(1523, 1, 'en', 'Backend', 'Core', 'lbl', 'Close', 'close', '2017-08-31 14:28:26'),
+    (1524, 1, 'en', 'Backend', 'Pages', 'lbl', 'MoveThisPage', 'move this page', '2017-08-31 14:28:26'),
+    (1525, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageTree', 'navigation tree', '2017-08-31 14:28:26'),
+    (1526, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageReferencePage', 'reference page', '2017-08-31 14:28:26'),
+    (1527, 1, 'en', 'Backend', 'Pages', 'lbl', 'MovePageType', 'action with respect to the reference page', '2017-08-31 14:28:26'),
+    (1528, 1, 'en', 'Backend', 'Pages', 'lbl', 'AppendToTree', 'append to navigation tree', '2017-08-31 14:28:26'),
+    (1529, 1, 'en', 'Backend', 'Pages', 'lbl', 'BeforePage', 'add before reference page', '2017-08-31 14:28:26'),
+    (1530, 1, 'en', 'Backend', 'Pages', 'lbl', 'InsidePage', 'add as subpage of the reference page', '2017-08-31 14:28:26'),
+    (1531, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26');
 
 /*!40000 ALTER TABLE `locale` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -2486,7 +2497,6 @@ VALUES
 	('Location','width_widget','i:400;'),
 	('Location','height_widget','i:300;'),
 	('Location','map_type_widget','s:7:\"ROADMAP\";'),
-	('Mailmotor','automatically_subscribe_from_form_builder_submitted_form','b:0;'),
 	('Mailmotor','mail_engine','s:15:\"not_implemented\";'),
 	('Mailmotor','overwrite_interests','b:0;'),
 	('Profiles','allow_gravatar','b:1;');

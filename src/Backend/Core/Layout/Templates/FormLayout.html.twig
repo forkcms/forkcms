@@ -1,5 +1,10 @@
 {% extends 'bootstrap_3_layout.html.twig' %}
 
+{% block form_widget_simple %}
+  {{ parent() }}
+  {{ block('help') }}
+{% endblock %}
+
 {% block form_label %}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
     {% if label is not same as(false) %}
@@ -18,15 +23,6 @@
       {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
       <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
       {{ label }}{% if required %}{{- block('label_asterisk') }}{% endif %}
-      {% if help_label is defined %}
-        {{ block('help_label') }}
-      {% endif %}
-      {% if help_label_tooltip is defined and help_label_tooltip.title %}
-        {{ block('help_label_tooltip') }}
-      {% endif %}
-      {% if help_label_popover is defined and help_label_popover.title %}
-        {{ block('help_label_popover') }}
-      {% endif %}
       </label>
 
     {% endif %}
@@ -57,44 +53,18 @@
   {% endif %}
 {% endblock checkbox_radio_label %}
 
-
-{% block help_label_tooltip %}
-  <span class="help-block{% if help_label_tooltip.icon is not same as(false) %} inline{% endif %}">
-    <a href="#" data-toggle="tooltip" data-placement="{{ help_label_tooltip.placement }}" data-title="{{ help_label_tooltip.title|trans({}, translation_domain) }}">
-      {% if help_label_tooltip.icon is not same as(false) %}
-        <i class="fa fa-question"></i>
-      {% endif %}
-      {% if help_label_tooltip.text is not same as(null) %}
-        <span class="text-muted">{{ help_label_tooltip.text }}</span>
-      {% endif %}
-    </a>
-  </span>
-{% endblock help_label_tooltip %}
-
-{% block help_label_popover %}
-  <span class="help-block{% if help_label_popover.icon is not same as(false) %} inline{% endif %}">
-    <a href="#" data-toggle="popover" data-trigger="hover" data-placement="{{ help_label_popover.placement }}" data-title="{{ help_label_popover.title|trans({}, translation_domain) }}" data-content="{{ help_label_popover.content|trans({}, translation_domain) }}">
-      {% if help_label_popover.icon is not same as(false) %}
-        <i class="fa fa-question"></i>
-      {% endif %}
-      {% if help_label_popover.text is not same as(null) %}
-        <span class="text-muted">{{ help_label_popover.text }}</span>
-      {% endif %}
-    </a>
-  </span>
-{% endblock help_label_popover %}
-
-
 {%- block label_asterisk -%}
-  <abbr title="{{ 'lbl.RequiredField'|trans({}, translation_domain)|ucfirst }}">*</abbr>
+  {% import 'Layout/Templates/macros.html.twig' as macro %}
+  {{ macro.required }}
 {%- endblock label_asterisk -%}
 
 {% block form_errors -%}
+  {% import "Layout/Templates/macros.html.twig" as macro %}
   {% if errors|length > 0 -%}
     {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
         {%- for error in errors -%}
-          <li class="formError"><span class="fa fa-exclamation-triangle"></span> {{ error.message }}</li>
+          <li class="formError">{{ macro.icon('exclamation-triangle') }} {{ error.message }}</li>
         {%- endfor -%}
     </ul>
     {% if form.parent %}</span>{% else %}</div>{% endif %}
@@ -266,6 +236,7 @@
 {% endblock %}
 
 {% block fork_file_widget %}
+  {% import "Layout/Templates/macros.html.twig" as macro %}
   {% spaceless %}
     <div class="form-group">
       {{ form_widget(form.file) }}
@@ -279,7 +250,7 @@
       <div class="form-group">
         {% if show_preview and preview_url %}
           <a href="{{ preview_url }}" class="btn btn-xs btn-default" target="_blank">
-            <i class="fa fa-eye"></i>
+            {{ macro.icon('eye') }}
             {{ preview_label|trans|ucfirst }}
           </a>
         {% endif %}
@@ -377,4 +348,10 @@
       </div>
     {% endif %}
   </div>
+{% endblock %}
+
+{% block help %}
+  {% for attributeName, attributeValue in attr %}
+    {% if attributeName == 'help' %}<span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
+  {% endfor %}
 {% endblock %}

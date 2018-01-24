@@ -12,7 +12,6 @@ class MostReadQuestions extends FrontendBaseWidget
 {
     public function execute(): void
     {
-        // call parent
         parent::execute();
 
         $this->loadTemplate();
@@ -23,7 +22,9 @@ class MostReadQuestions extends FrontendBaseWidget
     {
         $this->template->assign(
             'widgetFaqMostRead',
-            FrontendFaqModel::getMostRead($this->get('fork.settings')->get('Faq', 'most_read_num_items', 10))
+            FrontendFaqModel::getMostRead(
+                $this->get('fork.settings')->get($this->getModule(), 'most_read_num_items', 10)
+            )
         );
     }
 }

@@ -5,7 +5,7 @@
   <div class="sub-navigation hidden-xs">
     <div class="pages-tree">
       <div class="alert alert-warning visible-sm">
-        <p><span class="fa fa-exclamation-triangle"></span>{{ 'msg.MovePagesNotPossible'|trans }}</p>
+        <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans }}</p>
       </div>
       <div id="tree">
         {{ tree|raw }}
@@ -43,27 +43,27 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
+      <div>
+        <ul class="nav nav-tabs nav-tabs-flex" role="tablist">
+          <li role="presentation" class="active mr-auto">
             <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right" role="presentation">
-            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+          <li class="js-page-image-tab" role="presentation">
+            <a href="#tabImage" aria-controls="image" role="tab" data-toggle="tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right" role="presentation">
-            <a href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
+          <li role="presentation">
+            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
           {% if showTags %}
-            <li class="pull-right" role="presentation">
+            <li role="presentation">
               <a href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
             </li>
           {% endif %}
-          <li class="pull-right" role="presentation">
-            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+          <li role="presentation">
+            <a href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right js-page-image-tab" role="presentation">
-            <a href="#tabImage" aria-controls="image" role="tab" data-toggle="tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
+          <li role="presentation">
+            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -73,7 +73,7 @@
               {# Do not change the ID! #}
               <p class="current-template">{{ 'lbl.Template'|trans|ucfirst }}:
                 <span id="tabTemplateLabel">&nbsp;</span>
-                <a data-toggle="modal" data-target="#changeTemplate">
+                <a href="#" data-toggle="modal" data-target="#changeTemplate" role="button">
                   {{ 'lbl.ChangeTemplate'|trans|ucfirst }}
                 </a>
               </p>
@@ -196,6 +196,25 @@
           {% endif %}
           <div role="tabpanel" class="tab-pane" id="tabSEO">
             {% seo %}
+            {% if hreflangFields %}
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <p class="tab-pane-title">{{ 'lbl.Languages'|trans|ucfirst }}</p>
+                    </div>
+                    <div class="panel-body">
+                      {% for language, field in hreflangFields %}
+                        <div class="form-group{% if loop.last %} last{% endif %}">
+                          <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>
+                          {{ field.field_hreflang|raw }}
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -205,11 +224,11 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <a href="#" id="saveAsDraft" class="btn btn-default">
-            <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
-          </a>
+          <button id="saveAsDraft" class="btn btn-default">
+            {{ macro.icon('file-o') }}{{ 'lbl.SaveDraft'|trans|ucfirst }}
+          </button>
           <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.AddPage'|trans|ucfirst }}
+            {{ macro.icon('plus-square') }}{{ 'lbl.AddPage'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -220,7 +239,7 @@
     {% for position in positions %}
       {% for block in position.blocks %}
         <div class="alert alert-warning">
-          <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ContentSaveWarning'|trans }}
+          {{ macro.icon('exclamation-triangle') }}{{ 'msg.ContentSaveWarning'|trans }}
         </div>
         <div class="box contentBlock" style="margin: 0;">
           <div class="blockContent HTML optionsRTE">
@@ -250,7 +269,7 @@
   </div>
 
   {# Dialog to select the content (editor, module or widget). Do not change the ID! #}
-  <div class="modal fade" id="addBlock" role="dialog" aria-labelledby="addBlockTitle">
+  <div class="modal fade" id="addBlock" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addBlockTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -264,9 +283,9 @@
           <p>{{ 'msg.HelpBlockContent'|trans }}</p>
 
           <div id="extraWarningAlreadyBlock" class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
+            {{ macro.icon('exclamation-triangle') }}{{ 'msg.ModuleBlockAlreadyLinked'|trans }}</div>
           <div id="extraWarningHomeNoBlock" class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'msg.HomeNoBlock'|trans }}</div>
+            {{ macro.icon('exclamation-triangle') }}{{ 'msg.HomeNoBlock'|trans }}</div>
           <div class="form-group">
             <label for="extraType" class="control-label">{{ 'lbl.Type'|trans|ucfirst }}</label>
             {% form_field extra_type %}
@@ -292,17 +311,17 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="addBlockSubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}</button>
+            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}</button>
         </div>
       </div>
     </div>
   </div>
 
   {# Dialog to select user templates #}
-  <div class="modal fade" id="addUserTemplate" role="dialog" aria-labelledby="addUserTemplateTitle">
+  <div class="modal fade" id="addUserTemplate" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addUserTemplateTitle">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -315,10 +334,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|capitalize }}
           </button>
           <button type="button" class="btn btn-primary js-submit-user-template">
-            <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|capitalize }}
+            {{ macro.icon('check') }}{{ 'lbl.OK'|trans|capitalize }}
           </button>
         </div>
       </div>
@@ -326,7 +345,7 @@
   </div>
 
   {# Dialog to select another template. Do not change the ID! #}
-  <div class="modal fade" id="changeTemplate" role="dialog" aria-labelledby="changeTemplateTitle">
+  <div class="modal fade" id="changeTemplate" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="changeTemplateTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -336,7 +355,7 @@
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'msg.TemplateChangeWarning'|trans|raw }}</div>
+            {{ macro.icon('exclamation-triangle') }}{{ 'msg.TemplateChangeWarning'|trans|raw }}</div>
           <div id="templateList">
             <div class="row">
               {% for template in templates %}
@@ -362,10 +381,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="changeTemplateSubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
+            {{ macro.icon('check') }}{{ 'lbl.OK'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -373,7 +392,7 @@
   </div>
 
   {# Dialog to confirm block removal. Do not change the ID! #}
-  <div class="modal fade" id="confirmDeleteBlock" role="dialog" aria-labelledby="confirmDeleteBlockTitle">
+  <div class="modal fade" id="confirmDeleteBlock" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteBlockTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -384,10 +403,10 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="confirmDeleteBlockSubmit" type="button" class="btn btn-danger">
-            <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+            {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -395,7 +414,7 @@
   </div>
 
   {# Text editor block #}
-  <div class="modal fade" id="blockHtml" role="dialog" aria-labelledby="blockHtmlTitle">
+  <div class="modal fade" id="blockHtml" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="blockHtmlTitle">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -406,7 +425,7 @@
         </div>
         <div class="modal-body">
           <div class="alert alert-warning">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'msg.ContentSaveWarning'|trans|raw }}
+            {{ macro.icon('exclamation-triangle') }}{{ 'msg.ContentSaveWarning'|trans|raw }}
           </div>
           <br>
           <div class="form-group">
@@ -416,10 +435,10 @@
         </div>
         <div class="modal-footer">
           <button id="blockHtmlCancel" type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <button id="blockHtmlSubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
+            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -428,7 +447,7 @@
 
   {# Page delete confirm block #}
   {% if item %}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -439,10 +458,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
             </a>
           </div>
         </div>

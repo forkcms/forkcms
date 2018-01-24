@@ -49,21 +49,6 @@
             </item>
         </Core>
         <Mailmotor>
-            <item type="message" name="AutomaticallySubscribeFromFormBuilderSubmittedForm">
-                <translation language="de"><![CDATA[Auto-Antwort-E-Mail-Adressen zu eingereichten Formbuilder -Anwendungen in der Mailing-Liste hinzuzufügen.]]></translation>
-                <translation language="el"><![CDATA[Αυτόματη προσθήκη αυτόματη απάντηση σε email διευθύνσεις από υπέβαλαν έντυπα FormBuilder στη λίστα.]]></translation>
-                <translation language="en"><![CDATA[Automatically add auto-reply-to email addresses from submitted FormBuilder forms in the mailing list.]]></translation>
-                <translation language="es"><![CDATA[Agregue automáticamente direcciones de correo electrónico de respuesta automática a los formularios FormBuilder enviados en la lista de correo.]]></translation>
-                <translation language="fr"><![CDATA[Ajoutez automatiquement des adresses de courrier électronique à réponse automatique aux formulaires FormBuilder envoyés dans la liste de diffusion.]]></translation>
-                <translation language="hu"><![CDATA[Automatikus hozzáadása automatikus válasz-e-mail címeket a benyújtott FormBuilder formák a levelezési listán.]]></translation>
-                <translation language="it"><![CDATA[Aggiungi automaticamente risposta automatica a indirizzi e-mail dalle forme FormBuilder presentate nella mailing list.]]></translation>
-                <translation language="lt"><![CDATA[Automatiškai pridėti automatinį atsakymą iki pašto adresus iš pateiktų formbuilder formų pašto sąrašo.]]></translation>
-                <translation language="nl"><![CDATA[Automatisch reply-to e-mailadressen van ingezonden FormBuilder aanvragen toevoegen in de mailing lijst.]]></translation>
-                <translation language="ru"><![CDATA[Автоматически добавлять автоответ-адресам электронной почты из представленных FormBuilder форм в списке рассылки.]]></translation>
-                <translation language="sv"><![CDATA[lägger automatiskt till autosvar till e-postadresser från inlämnade FormBuilder former i sändlistan .]]></translation>
-                <translation language="uk"><![CDATA[Автоматично додавати автовідповідь-адресами електронної пошти з представлених FormBuilder форм в списку розсилки.]]></translation>
-                <translation language="zh"><![CDATA[在邮件列表中自动添加来自已提交的FormBuilder表单的自动回复电子邮件地址。]]></translation>
-            </item>
             <item type="label" name="ApiKey">
                 <translation language="de"><![CDATA[API key]]></translation>
                 <translation language="el"><![CDATA[κλειδί API]]></translation>

@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\FormBuilder\Installer;
 
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Common\ModuleExtraType;
 
@@ -154,7 +155,7 @@ class Installer extends ModuleInstaller
             $this->insertPage(
                 [
                     'title' => \SpoonFilter::ucfirst($this->getLocale('Contact', 'Core', $language, 'lbl', 'Frontend')),
-                    'parent_id' => 1,
+                    'parent_id' => BackendModel::HOME_PAGE_ID,
                     'language' => $language,
                 ],
                 null,
