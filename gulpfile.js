@@ -46,7 +46,6 @@ gulp.task('build:backend:assets:copy-ckeditor', function () {
       'node_modules/ckeditor/plugins/iframe' + pluginFiles,
       'node_modules/ckeditor/plugins/iframe' + pluginFiles,
       'node_modules/ckeditor/plugins/image' + pluginFiles,
-      'node_modules/ckeditor/plugins/image2' + pluginFiles,
       'node_modules/ckeditor/plugins/link' + pluginFiles,
       'node_modules/ckeditor/plugins/liststyle' + pluginFiles,
       'node_modules/ckeditor/plugins/pastefromword' + pluginFiles,

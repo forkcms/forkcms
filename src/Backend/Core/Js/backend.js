@@ -380,7 +380,7 @@ jsBackend.ckeditor = {
     extraPlugins: 'stylesheetparser,templates,iframe,dialogadvtab,oembed,lineutils,medialibrary',
 
     // remove useless plugins
-    removePlugins: 'a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools,magicline',
+    removePlugins: 'image2,a11yhelp,about,bidi,colorbutton,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks,devtools,magicline',
 
     // templates
     templates_files: [],
