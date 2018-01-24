@@ -31,6 +31,16 @@ CKEDITOR.plugins.add(
                 }
             );
 
+            editor.addMenuItem("image", {
+              command: "addImage",
+              group: "image",
+              label: editor.lang.image.menu
+            })
+            editor.addMenuItem("link", {
+              command: "addLink",
+              group: "link",
+              label: editor.lang.link.menu
+            })
             CKEDITOR.dialog.add('linkDialog', this.path + 'dialogs/linkDialog.js');
             CKEDITOR.dialog.add('imageDialog', this.path + 'dialogs/imageDialog.js');
 
