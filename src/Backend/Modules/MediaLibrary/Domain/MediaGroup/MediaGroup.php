@@ -163,7 +163,7 @@ class MediaGroup implements JsonSerializable
     {
         $connectedMediaItems = $this->getConnectedMediaItems();
 
-        return $connectedMediaItems instanceof Collection ? $this->getConnectedMediaItems()->first() : null;
+        return $connectedMediaItems->isEmpty() ? null : $connectedMediaItems->first();
     }
 
     public function hasConnectedItems(): bool
