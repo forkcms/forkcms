@@ -105,17 +105,6 @@ liip_imagine:
                 thumbnail: { size : [1600, 500], mode : inbound }
 
 services:
-    form.type.editor:
-        class: Backend\Form\Type\EditorType
-        tags:
-          - { name: form.type, alias: editor}
-    form.type.meta:
-        class: Backend\Form\Type\MetaType
-        arguments:
-          - "@fork.repository.meta"
-          - "@translator"
-        tags:
-          - { name: form.type, alias: meta}
     database:
         class: SpoonDatabase
         public: true
