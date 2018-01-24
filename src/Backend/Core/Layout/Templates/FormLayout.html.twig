@@ -12,19 +12,19 @@
         {% set label_attr = label_attr|merge({'for': id}) %}
       {% endif %}
       {% set label_attr_class = '' %}
-      {% if horizontal %}
+      {% if horizontal is defined and horizontal %}
         {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
       {% endif %}
       {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
       <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
       {{ label }}{% if required %}{{- block('label_asterisk') }}{% endif %}
-      {% if help_label %}
+      {% if help_label is defined %}
         {{ block('help_label') }}
       {% endif %}
-      {% if help_label_tooltip.title %}
+      {% if help_label_tooltip is defined and help_label_tooltip.title %}
         {{ block('help_label_tooltip') }}
       {% endif %}
-      {% if help_label_popover.title %}
+      {% if help_label_popover is defined and help_label_popover.title %}
         {{ block('help_label_popover') }}
       {% endif %}
       </label>
