@@ -17,7 +17,7 @@
         {% set label_attr = label_attr|merge({'for': id}) %}
       {% endif %}
       {% set label_attr_class = '' %}
-      {% if horizontal %}
+      {% if horizontal is defined and horizontal %}
         {% set label_attr_class = 'control-label ' ~ label_attr_class ~ horizontal_label_class %}
       {% endif %}
       {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}

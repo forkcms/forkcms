@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Locale\Engine;
 
+use Frontend\Core\Engine\Theme;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -37,9 +38,16 @@ class AnalyseModel extends Model
      */
     public static function getNonExistingFrontendLocale(string $language): array
     {
+        $themePath = FRONTEND_THEMES_PATH . '/' .Theme::getTheme() . '/';
+
         $frontendAnalyser = new LocaleAnalyser(
             'Frontend',
-            [FRONTEND_MODULES_PATH, FRONTEND_CORE_PATH],
+            [
+                FRONTEND_MODULES_PATH,
+                FRONTEND_CORE_PATH,
+                $themePath . 'Core',
+                $themePath . 'Modules'
+            ],
             BackendModel::getModules()
         );
 
