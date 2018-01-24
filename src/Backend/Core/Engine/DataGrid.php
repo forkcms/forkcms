@@ -117,7 +117,7 @@ class DataGrid extends \SpoonDataGrid
             // rebuild value, it should have special markup
             $value =
                 '<a href="' . $url . '" class="btn btn-default btn-xs pull-right">' .
-                ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
+                ($icon ? '<span class="fa ' . $icon . '" aria-hidden="true"></span>&nbsp;' : '') .
                 $value .
                 '</a>';
 
@@ -280,13 +280,24 @@ class DataGrid extends \SpoonDataGrid
         }
 
         // add a column for the handle, so users have something to hold while dragging
-        $this->addColumn('dragAndDropHandle', null, '<span class="fa fa-reorder"></span>');
+        $this->addColumn('dragAndDropHandle', null, '<span class="fa fa-reorder" aria-hidden="true"></span>');
+        $this->addColumn(
+            'sortHandle',
+            null,
+            '<button data-role="order-move" data-direction="up" class="btn btn-default btn-xs" aria-label="' . BackendLanguage::lbl('MoveUpOnePosition') . '">
+                     <span class="fa fa-arrow-up" aria-hidden="true"></span>
+                   </button>
+                   <button data-role="order-move" data-direction="down" class="btn btn-default btn-xs" aria-label="' . BackendLanguage::lbl('MoveDownOnePosition') . '">
+                     <span class="fa fa-arrow-down" aria-hidden="true"></span>
+                   </button>'
+        );
 
         // make sure the column with the handler is the first one
-        $this->setColumnsSequence(['dragAndDropHandle']);
+        $this->setColumnsSequence(['dragAndDropHandle', 'sortHandle']);
 
         // add a class on the handler column, so JS knows this is just a handler
         $this->setColumnAttributes('dragAndDropHandle', ['class' => 'dragAndDropHandle fork-data-grid-sortable']);
+        $this->setColumnAttributes('sortHandle', ['class' => 'sortHandle']);
 
         // our JS needs to know an id, so we can send the new order
         $this->setRowAttributes(['data-id' => '[id]']);

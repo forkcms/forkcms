@@ -20,8 +20,8 @@ class Form extends \Common\Core\Form
     /**
      * Adds a single file field.
      *
-     * @param string $name       Name of the element.
-     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $name Name of the element.
+     * @param string $class Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
      * @return SpoonFormFile
@@ -29,8 +29,8 @@ class Form extends \Common\Core\Form
     public function addFile($name, $class = null, $classError = null): SpoonFormFile
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'inputFile';
-        $classError = ($classError !== null) ? (string) $classError : 'inputFileError';
+        $class = (string) ($class ?? 'inputFile');
+        $classError = (string) ($classError ?? 'inputFileError error form-control-danger is-invalid');
 
         // create and return a file field
         return parent::addFile($name, $class, $classError);
@@ -39,8 +39,8 @@ class Form extends \Common\Core\Form
     /**
      * Adds a single image field.
      *
-     * @param string $name       The name of the element.
-     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $name The name of the element.
+     * @param string $class Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
      * @return FormImage
@@ -48,8 +48,8 @@ class Form extends \Common\Core\Form
     public function addImage($name, $class = null, $classError = null): FormImage
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'inputFile inputImage';
-        $classError = ($classError !== null) ? (string) $classError : 'inputFileError inputImageError';
+        $class = (string) ($class ?? 'inputFile inputImage');
+        $classError = (string) ($classError ?? 'inputFileError error form-control-danger is-invalid inputImageError');
 
         // add element
         $this->add(new FormImage($name, $class, $classError));

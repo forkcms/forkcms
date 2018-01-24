@@ -2,6 +2,38 @@
 <locale>
   <Backend>
     <Pages>
+      <item type="label" name="MoveThisPage">
+        <translation language="nl"><![CDATA[verplaats deze pagina]]></translation>
+        <translation language="en"><![CDATA[move this page]]></translation>
+      </item>
+      <item type="label" name="MovePageTree">
+        <translation language="nl"><![CDATA[navigatie boom]]></translation>
+        <translation language="en"><![CDATA[navigation tree]]></translation>
+      </item>
+      <item type="label" name="MovePageReferencePage">
+        <translation language="nl"><![CDATA[referentie pagina]]></translation>
+        <translation language="en"><![CDATA[reference page]]></translation>
+      </item>
+      <item type="label" name="MovePageType">
+        <translation language="nl"><![CDATA[actie ten opzichte van de referentie pagina]]></translation>
+        <translation language="en"><![CDATA[action with respect to the reference page]]></translation>
+      </item>
+      <item type="label" name="AppendToTree">
+        <translation language="nl"><![CDATA[toevoegen aan navigatie boom]]></translation>
+        <translation language="en"><![CDATA[append to navigation tree]]></translation>
+      </item>
+      <item type="label" name="BeforePage">
+        <translation language="nl"><![CDATA[voeg toe voor referentie pagina]]></translation>
+        <translation language="en"><![CDATA[add before reference page]]></translation>
+      </item>
+      <item type="label" name="InsidePage">
+        <translation language="nl"><![CDATA[voeg toe als subpagina van de referentie pagina]]></translation>
+        <translation language="en"><![CDATA[add as subpage of the reference page]]></translation>
+      </item>
+      <item type="label" name="AfterPage">
+        <translation language="nl"><![CDATA[voeg toe achter referentie pagina]]></translation>
+        <translation language="en"><![CDATA[add after reference page]]></translation>
+      </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[toevoegen]]></translation>
         <translation language="en"><![CDATA[add]]></translation>

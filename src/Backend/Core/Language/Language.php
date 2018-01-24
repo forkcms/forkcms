@@ -327,4 +327,9 @@ class Language
     {
         return self::getMessage($key, $module);
     }
+
+    public static function isActiveLanguage(string $language): bool
+    {
+        return in_array($language, self::getActiveLanguages(), true);
+    }
 }
