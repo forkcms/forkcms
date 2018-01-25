@@ -21,21 +21,7 @@
       </li>
     </ul>
     <p class="hidden-md hidden-lg">
-      Step
-      {% if step == 'step-1' %}
-        1
-      {% elseif step == 'step-2' %}
-        2
-      {% elseif step == 'step-3' %}
-        3
-      {% elseif step == 'step-4' %}
-        4
-      {% elseif step == 'step-5' %}
-        5
-      {% elseif step == 'step-6' %}
-        6
-      {% endif %}
-      of 6
+      Step {{ step|replace({'step-': ''}) }} of 6
     </p>
   </div>
 {% endmacro %}
