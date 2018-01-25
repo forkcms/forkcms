@@ -48,17 +48,17 @@ class AddMetaSubscriber implements EventSubscriberInterface
     public function __construct(
         string $moduleForUrl,
         string $actionForUrl,
-        string $baseFieldName = 'title',
         string $generateUrlCallbackClass,
         string $generateUrlCallbackMethod,
-        array $generateUrlCallbackParameterMethods
+        array $generateUrlCallbackParameterMethods,
+        string $baseFieldName = 'title'
     ) {
         $this->moduleForUrl = $moduleForUrl;
         $this->actionForUrl = $actionForUrl;
-        $this->baseFieldName = $baseFieldName;
         $this->generateUrlCallbackClass = $generateUrlCallbackClass;
         $this->generateUrlCallbackMethod = $generateUrlCallbackMethod;
         $this->generateUrlCallbackParameterMethods = $generateUrlCallbackParameterMethods;
+        $this->baseFieldName = $baseFieldName;
     }
 
     public static function getSubscribedEvents()
@@ -74,8 +74,8 @@ class AddMetaSubscriber implements EventSubscriberInterface
             'meta',
             MetaType::class,
             [
-                'detail_url' => Model::getUrlForBlock($this->moduleForUrl, $this->actionForUrl),
                 'base_field_name' => $this->baseFieldName,
+                'detail_url' => Model::getUrlForBlock($this->moduleForUrl, $this->actionForUrl),
                 'generate_url_callback_class' => $this->generateUrlCallbackClass,
                 'generate_url_callback_method' => $this->generateUrlCallbackMethod,
                 'generate_url_callback_parameters' => $this->buildCallbackParameters($event),
