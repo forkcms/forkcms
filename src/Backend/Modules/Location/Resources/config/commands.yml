@@ -1,6 +1,7 @@
 services:
     location.handler.copy_widgets_to_other_locale:
         class: Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocaleHandler
+        public: true
         arguments:
             - "@database"
         tags:
