@@ -1,0 +1,27 @@
+{% macro navigation(step) %}
+  <div class="installer-navigation">
+    <ul class="visible-md-block visible-lg-block">
+      <li{% if step == 'step-1' %} class="active"{% endif %}>
+        Step 1
+      </li>
+      <li{% if step == 'step-2' %} class="active"{% endif %}>
+        Step 2
+      </li>
+      <li{% if step == 'step-3' %} class="active"{% endif %}>
+        Step 3
+      </li>
+      <li{% if step == 'step-4' %} class="active"{% endif %}>
+        Step 4
+      </li>
+      <li{% if step == 'step-5' %} class="active"{% endif %}>
+        Step 5
+      </li>
+      <li{% if step == 'step-6' %} class="active"{% endif %}>
+        Step 6
+      </li>
+    </ul>
+    <p class="hidden-md hidden-lg">
+      Step {{ step|replace({'step-': ''}) }} of 6
+    </p>
+  </div>
+{% endmacro %}

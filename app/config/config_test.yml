@@ -26,6 +26,7 @@ doctrine:
 services:
     database:
         class: SpoonDatabase
+        public: true
         arguments:
             - "%database.driver%"
             - "%database.host%"

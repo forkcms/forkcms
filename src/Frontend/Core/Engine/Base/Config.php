@@ -84,11 +84,6 @@ class Config extends KernelLoader
         return $this->possibleActions;
     }
 
-    public function getPossibleAJAXActions(): array
-    {
-        return $this->possibleAJAXActions;
-    }
-
     /**
      * Set the possible actions, based on files in folder.
      * You can disable action in the config file. (Populate $disabledActions)

@@ -1,3 +1,70 @@
+5.1.0  (2018-01-25)
+------------------
+
+Added:
+* Core: Added subscriber to make it more simple to configure the meta tab in a symfony form [#2398](https://github.com/forkcms/forkcms/pull/2398)
+* Core: CKEditor plugin for media library [#2261](https://github.com/forkcms/forkcms/pull/2261)
+* Core: Added ajax UpdateSequence base action to make it more simple to implement those [#2400](https://github.com/forkcms/forkcms/pull/2400)
+* Core: Skip rewriting and enabling https on localhost (thank you google…) [#2389](https://github.com/forkcms/forkcms/pull/2389)
+* Core: Accessibility improvements [#2287](https://github.com/forkcms/forkcms/pull/2287) [#2351](https://github.com/forkcms/forkcms/pull/2351) [#2338](https://github.com/forkcms/forkcms/pull/2338) [#2320](https://github.com/forkcms/forkcms/pull/2320)
+* Core: Enable monolog rotating log file feature [#2346](https://github.com/forkcms/forkcms/pull/2346)
+* Core: Added bootstrap 4 validation classes [#2334](https://github.com/forkcms/forkcms/pull/2334)
+* Core: Add method to remove the last element from a breadcrumb [#2282](https://github.com/forkcms/forkcms/pull/2282)
+* Core: Added standard js [#2212](https://github.com/forkcms/forkcms/pull/2212)
+* Core: Added help text to form field template [#2205](https://github.com/forkcms/forkcms/pull/2205)
+* Core: Added accessible way to change the order of items in a datagrid [#2229](https://github.com/forkcms/forkcms/pull/2229)
+* Location: copy location widgets when copying pages to an other language [#2342](https://github.com/forkcms/forkcms/pull/2342)
+* Mailmotor: Add option to have a different list for all languages [#2237](https://github.com/forkcms/forkcms/pull/2237)
+* MediaLibrary: Make it possible to count the number of connected items so we can use contraints on them [#2243](https://github.com/forkcms/forkcms/pull/2243)
+* Pages: Add HREFLang dropdowns in seo tab [#2298](https://github.com/forkcms/forkcms/pull/2298)
+* Pages: Make it possible to change the page order in the page settings form [#2230](https://github.com/forkcms/forkcms/pull/2230)
+* Search: Added short term search for terms of less than 3 chars [#2327](https://github.com/forkcms/forkcms/pull/2327)
+
+Changed:
+* Core: Upgraded symfony to 3.4 and updated the outdated composer packages [#2406](https://github.com/forkcms/forkcms/pull/2406)
+* Core: Load ckeditor with yarn [#2314](https://github.com/forkcms/forkcms/pull/2314)
+* Blog: Extend core templates instead of overwriting them [#2312](https://github.com/forkcms/forkcms/pull/2312)
+* Blog: Make the module templates more extendable [#2303](https://github.com/forkcms/forkcms/pull/2303)
+* Docker: Multiple improvements [#2168](https://github.com/forkcms/forkcms/pull/2168)
+* Faq: Make the module templates more extendable [#2304](https://github.com/forkcms/forkcms/pull/2304)
+* FormBuilder: Make the module templates more extendable [#2305](https://github.com/forkcms/forkcms/pull/2305)
+* Github: Turn PR hints into comments [#2386](https://github.com/forkcms/forkcms/pull/2386)
+* Installer: Visual update and added progressbar [#2404](https://github.com/forkcms/forkcms/pull/2404)
+* Mailmotor: Make the module templates more extendable [#2302](https://github.com/forkcms/forkcms/pull/2302)
+* MediaGalleries: Make the module templates more extendable [#2308](https://github.com/forkcms/forkcms/pull/2308)
+* MediaLibrary: Make the module templates more extendable [#2309](https://github.com/forkcms/forkcms/pull/2309)
+* MediaLibrary: Updated documentation [#2390](https://github.com/forkcms/forkcms/pull/2390)
+* Pages: Improved the handling of 404 and formbidden pages [#2278](https://github.com/forkcms/forkcms/pull/2278)
+* Pages: Make the module templates more extendable [#2310](https://github.com/forkcms/forkcms/pull/2310)
+* Profiles: Make the module templates more extendable [#2311](https://github.com/forkcms/forkcms/pull/2311)
+* Search: Make the module templates more extendable [#2306](https://github.com/forkcms/forkcms/pull/2306)
+* Tags: Make the module templates more extendable [#2307](https://github.com/forkcms/forkcms/pull/2307)
+
+Fixed:
+* Core: Fix edge case where the getAction method returned null instead of the default action [#2405](https://github.com/forkcms/forkcms/pull/2405)
+* Core: Fix slow external url check plus it didn't work inside docker containers [#2402](https://github.com/forkcms/forkcms/pull/2402)
+* Core: Fix variable horizontal does not exist in form templates [#2397](https://github.com/forkcms/forkcms/pull/2397)
+* Core: Add correct error class with html5 validation [#2366](https://github.com/forkcms/forkcms/pull/2366)
+* Core: Fix stdClass casing [#2374](https://github.com/forkcms/forkcms/pull/2374)
+* Analytics: Fix charts [#2379](https://github.com/forkcms/forkcms/pull/2379)
+* Docs: Add missing queries for v5 migration [#2391](https://github.com/forkcms/forkcms/pull/2391)
+* Docs: Use proper relative links to docs pages [#2385](https://github.com/forkcms/forkcms/pull/2385)
+* FAQ: Fix url in spam message [#2371](https://github.com/forkcms/forkcms/pull/2371)
+* Locale: Fix locale analyse action [#2387](https://github.com/forkcms/forkcms/pull/2387)
+* MediaLibrary: Documentation fixes [#2393](https://github.com/forkcms/forkcms/pull/2393)
+* MediaLibrary: Fix absolute width/height crop [#2299](https://github.com/forkcms/forkcms/pull/2299)
+* MediaLibrary: Fix getConnectedMediaItems returning false instead of null [#2401](https://github.com/forkcms/forkcms/pull/2401)
+* Profiles: Fix js error on the groups checkboxes [#2382](https://github.com/forkcms/forkcms/pull/2382)
+* Search: Fix get cached results when a cacheFile is found [#2384](https://github.com/forkcms/forkcms/pull/2384)
+* Search: Fix live suggest not using the theme templates [#2392](https://github.com/forkcms/forkcms/pull/2392)
+
+Removed:
+* Core: removed some old IE6-IE9 fallbacks [#2357](https://github.com/forkcms/forkcms/pull/2357)
+
+Deprecated:
+* Core: CKFinder is deprecated in favour of the media library, more info can be found here [#2408](https://github.com/forkcms/forkcms/pull/2408)
+
+
 5.0.7  (2017-11-22)
 ------------------
 

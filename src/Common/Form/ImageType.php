@@ -125,7 +125,6 @@ class ImageType extends AbstractType
                         }
                     };
                 },
-                'compound' => true,
                 'preview_class' => 'img-thumbnail img-responsive',
                 'show_preview' => true,
                 'show_remove_image' => true,
@@ -144,15 +143,6 @@ class ImageType extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'fork_image';
-    }
-
-    public function getParent(): string
-    {
-        if (!$this instanceof self) {
-            return self::class;
-        }
-
-        return SymfonyFileType::class;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

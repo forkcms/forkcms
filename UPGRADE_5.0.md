@@ -206,7 +206,7 @@ SPOON_CHARSET is removed. From now on you need to get the charset by using the k
 
 ## PATH_WWW
 
-PATH_WWW is removed. From now on you need to get the path to the web directory by using the site.path_www parameter, f.e.
+PATH_WWW is deprecated. From now on you need to get the path to the web directory by using the site.path_www parameter, f.e.
 Twig has trouble with traversing directories, so in that or similar cases you can wrap it with the `realpath` function.
 
     $this->getContainer()->getParameter('site.path_www')
@@ -558,6 +558,15 @@ The following form types have been moved
 | `\Backend\Form\Type\FileType`       | `\Common\Form\FileType`       |
 | `\Backend\Form\Type\ImageType`      | `\Common\Form\ImageType`      |
 | `\Backend\Form\Type\CollectionType` | `\Common\Form\CollectionType` |
+
+## Page Blocks Extra
+
+The `pages_blocks` table structure have been updated.
+
+```mysql
+ALTER TABLE pages_blocks ADD extra_type varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'rich_text';
+ALTER TABLE pages_blocks ADD extra_data text COLLATE utf8mb4_unicode_ci;
+```
 
 ## Swiftmailer
 

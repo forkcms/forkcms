@@ -18,6 +18,7 @@
     <div id="content" class="content-wrapper">
 
       <div class="content-main content-main-tree">
+        {% block contentActionBar %}
         <div class="content-action-bar">
           <div class="container-fluid">
             <div class="row fork-module-heading">
@@ -38,6 +39,7 @@
             </div>
           </div>
         </div>
+        {% endblock %}
         <div class="content">
           <div class="container-fluid container-fluid-large">
             {% block content %}

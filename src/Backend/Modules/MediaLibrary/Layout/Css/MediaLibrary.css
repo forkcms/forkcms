@@ -95,14 +95,12 @@
   margin: 0 3px 3px 0;
   background: #eee;
   width: 140px;
-  height: 90px;
   vertical-align: top;
 }
   .mediaHolder {
     float: left;
     cursor: pointer;
     width: 140px;
-    height: 90px;
     display: block;
   }
     .mediaHolderFile .icon,

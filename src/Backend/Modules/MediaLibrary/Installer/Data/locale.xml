@@ -280,7 +280,7 @@
         <translation language="ru"><![CDATA[видео]]></translation>
       </item>
       <item type="label" name="MediaNew">
-        <translation language="en"><![CDATA[nieuwe media]]></translation>
+        <translation language="en"><![CDATA[new media]]></translation>
         <translation language="nl"><![CDATA[nieuwe media]]></translation>
         <translation language="ru"><![CDATA[новый медиа-файл]]></translation>
       </item>
@@ -625,6 +625,10 @@
         <translation language="en"><![CDATA[You are required to connect media.]]></translation>
         <translation language="nl"><![CDATA[Je bent verplicht om media te koppelen.]]></translation>
         <translation language="ru"><![CDATA[Вы должны подключать медиа.]]></translation>
+      </item>
+      <item type="label" name="Select">
+        <translation language="en"><![CDATA[select]]></translation>
+        <translation language="nl"><![CDATA[selecteer]]></translation>
       </item>
     </MediaLibrary>
   </Backend>
