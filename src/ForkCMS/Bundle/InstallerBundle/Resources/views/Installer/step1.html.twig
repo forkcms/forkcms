@@ -1,4 +1,9 @@
 {% extends 'ForkCMSInstallerBundle:Installer:base.html.twig' %}
+{% import 'ForkCMSInstallerBundle:Installer:navigation.html.twig' as macro %}
+
+{% block navigation %}
+  {{ macro.navigation('step-1') }}
+{% endblock %}
 
 {% block content %}
   <div class="row fork-module-messages">

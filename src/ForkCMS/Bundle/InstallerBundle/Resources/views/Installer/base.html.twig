@@ -24,7 +24,7 @@
   {% endjavascripts %}
 </head>
 <body id="installer">
-<div id="root">
+<div id="root-installer">
   <div id="genericBox">
     <div class="header">
       <div class="container">
@@ -35,6 +35,12 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="installer-navigation-wrapper">
+      <div class="container">
+        {% block navigation %}
+        {% endblock %}
       </div>
     </div>
     <div class="content">
@@ -48,9 +54,9 @@
       </div>
     </div>
   </div>
-  <div id="root-footer"></div>
+  <div id="root-footer-installer"></div>
 </div>
-<footer id="footer" class="installer-footer">
+<footer id="footer-installer" class="installer-footer">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
