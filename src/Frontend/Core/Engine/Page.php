@@ -378,7 +378,7 @@ class Page extends KernelLoader
 
     protected function processExtra(ModuleExtraInterface $extra): void
     {
-        $this->getContainer()->get('logger')->info(
+        $this->getContainer()->get('logger.public')->info(
             'Executing ' . get_class($extra) . " '{$extra->getAction()}' for module '{$extra->getModule()}'."
         );
 

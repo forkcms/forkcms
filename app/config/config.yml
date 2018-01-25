@@ -105,6 +105,24 @@ liip_imagine:
                 thumbnail: { size : [1600, 500], mode : inbound }
 
 services:
+    templating.name_parser.public:
+        alias: templating.name_parser
+        public: true
+    file_locator.public:
+        alias: file_locator
+        public: true
+    logger.public:
+        alias: logger
+        public: true
+    command_bus.public:
+        alias: command_bus
+        public: true
+    liip_imagine.cache.manager.public:
+        alias: liip_imagine.cache.manager
+        public: true
+    mailmotor.factory.public:
+        alias: mailmotor.factory
+        public: true
     database:
         class: SpoonDatabase
         public: true

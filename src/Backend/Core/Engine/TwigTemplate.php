@@ -36,8 +36,8 @@ class TwigTemplate extends BaseTwigTemplate
 
         parent::__construct(
             $this->buildTwigEnvironmentForTheBackend(),
-            $container->get('templating.name_parser'),
-            new TemplateLocator($container->get('file_locator'), $container->getParameter('kernel.cache_dir'))
+            $container->get('templating.name_parser.public'),
+            new TemplateLocator($container->get('file_locator.public'), $container->getParameter('kernel.cache_dir'))
         );
 
         if ($addToReference) {
