@@ -61,7 +61,7 @@ class AddMetaSubscriber implements EventSubscriberInterface
         $this->baseFieldName = $baseFieldName;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         // Tells the dispatcher that you want to listen on the form.pre_set_data
         // event and that the preSetData method should be called.
