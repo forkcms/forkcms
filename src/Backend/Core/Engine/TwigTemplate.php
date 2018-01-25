@@ -10,9 +10,9 @@ use ReflectionClass;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
+use Symfony\Component\Form\FormRenderer;
 use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_FactoryRuntimeLoader;
@@ -110,8 +110,8 @@ class TwigTemplate extends BaseTwigTemplate
         $this->environment->addRuntimeLoader(
             new Twig_FactoryRuntimeLoader(
                 [
-                    TwigRenderer::class => function () use ($rendererEngine, $csrfTokenManager): TwigRenderer {
-                        return new TwigRenderer($rendererEngine, $csrfTokenManager);
+                    FormRenderer::class => function () use ($rendererEngine, $csrfTokenManager): FormRenderer {
+                        return new FormRenderer($rendererEngine, $csrfTokenManager);
                     },
                 ]
             )
