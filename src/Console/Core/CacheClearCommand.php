@@ -3,6 +3,7 @@
 namespace Console\Core;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -33,7 +34,8 @@ class CacheClearCommand extends Command
         $this->removeFilesInFolder('/src/Backend/Cache/MinifiedCss', $io, 'backend minified css');
         $this->removeFilesInFolder('/src/Backend/Cache/MinifiedJs', $io, 'backend minified js');
 
-        $this->removeFilesInFolder('/var/cache', $io, 'general cache');
+        $symfonyCacheClearCommand = $this->getApplication()->find('cache:clear');
+        $symfonyCacheClearCommand->run(new ArrayInput(['--no-warmup' => true]), $output);
 
         $io->success('Cache is cleared');
     }
