@@ -13,5 +13,19 @@
   .list-group-item-warning {
     color: $white;
   }
+
+  .header {
+    background: $white;
+
+    h2 {
+      color: $text-color;
+      font-size: 25px;
+    }
+  }
+
+  .installer-footer {
+    margin-left: 0;
+    padding-left: 0;
+  }
 }
 
