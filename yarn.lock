@@ -786,9 +786,9 @@ bootstrap-sass@~3.3:
   version "0.8.0"
   resolved "https://github.com/mathiashelin/bootstrap-tagsinput.git#a3671e453c996d397aad312d0a0526984231a422"
 
-"bootstrap4@npm:bootstrap@4.0.0-beta":
-  version "4.0.0-beta"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-beta.tgz#dc5928175d2e71310bc668cf9e05a907211b72a6"
+bootstrap@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0.tgz#ceb03842c145fcc1b9b4e15da2a05656ba68469a"
 
 brace-expansion@^1.0.0:
   version "1.1.6"
