@@ -36,16 +36,21 @@ class DatabaseDataCollector extends DataCollector
 
     public function getQueryCount(): int
     {
-        return $this->data['queryCount'];
+        return $this->data['queryCount'] ?? 0;
     }
 
     public function getQueries(): array
     {
-        return $this->data['queries'];
+        return $this->data['queries'] ?? [];
     }
 
     public function getName(): string
     {
         return 'database';
+    }
+
+    public function reset()
+    {
+        $this->data = [];
     }
 }
