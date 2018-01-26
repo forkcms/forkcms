@@ -124,7 +124,6 @@ class FileType extends AbstractType
                         }
                     };
                 },
-                'compound' => true,
                 'preview_label' => 'lbl.ViewCurrentFile',
                 'show_preview' => true,
                 'show_remove_file' => true,
@@ -142,15 +141,6 @@ class FileType extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'fork_file';
-    }
-
-    public function getParent(): string
-    {
-        if (!$this instanceof self) {
-            return self::class;
-        }
-
-        return SymfonyFileType::class;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

@@ -3,6 +3,8 @@
 namespace Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints;
 
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
+use Frontend\Core\Engine\Model;
+use Frontend\Core\Language\Locale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -17,21 +19,11 @@ class EmailSubscriptionValidator extends ConstraintValidator
      */
     protected $subscriber;
 
-    /**
-     * Set subscriber
-     * Note: it's not possible by using a constructor
-     *
-     * @param Subscriber $subscriber
-     */
     public function setSubscriber(Subscriber $subscriber): void
     {
         $this->subscriber = $subscriber;
     }
 
-    /**
-     * @param mixed $value
-     * @param Constraint $constraint
-     */
     public function validate($value, Constraint $constraint): void
     {
         // There are already violations thrown, so we return immediately
@@ -41,7 +33,10 @@ class EmailSubscriptionValidator extends ConstraintValidator
 
         try {
             // The email is already in our mailing list
-            if ($this->subscriber->isSubscribed($value)) {
+            if ($this->subscriber->isSubscribed(
+                $value,
+                Model::get('fork.settings')->get('Mailmotor', 'list_id_' . Locale::frontendLanguage())
+            )) {
                 $this->context->buildViolation($constraint->alreadySubscribedMessage)->addViolation();
             }
             // fallback for when no mail-engine is chosen in the Backend

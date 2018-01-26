@@ -46,11 +46,13 @@ doctrine_orm_bridge:
 services:
     fork.entity.create_schema:
         class: Common\Doctrine\Entity\CreateSchema
+        public: true
         arguments:
             - "@doctrine.orm.entity_manager"
 
     fork.repository.meta:
         class: Common\Doctrine\Repository\MetaRepository
+        public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
             - Common\Doctrine\Entity\Meta

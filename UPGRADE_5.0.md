@@ -206,7 +206,7 @@ SPOON_CHARSET is removed. From now on you need to get the charset by using the k
 
 ## PATH_WWW
 
-PATH_WWW is removed. From now on you need to get the path to the web directory by using the site.path_www parameter, f.e.
+PATH_WWW is deprecated. From now on you need to get the path to the web directory by using the site.path_www parameter, f.e.
 Twig has trouble with traversing directories, so in that or similar cases you can wrap it with the `realpath` function.
 
     $this->getContainer()->getParameter('site.path_www')

@@ -68,13 +68,14 @@ deny from env=stayout
     RewriteRule var/logs - [F]
     RewriteRule app/config - [F]
     RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
-    RewriteRule src/Frontend/Cache/Search - [F]
     RewriteRule src/Backend/Cache/CompiledTemplates - [F]
     RewriteRule var/docker/.* - [F]
     RewriteRule Dockerfile - [F]
     RewriteRule \.dockerignore - [F]
     RewriteRule docker-compose\.yml - [F]
     RewriteRule docker-compose\.override\.yml - [F]
+    RewriteRule \.env - [F]
+    RewriteRule \.env.dist - [F]
 
     # @remark: custom for Sumocoders
     RewriteRule .*\.rb - [F]

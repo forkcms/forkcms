@@ -1,6 +1,7 @@
 services:
     media_library.cache.media_folder:
         class: Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache
+        public: true
         arguments:
             - "@cache.pool"
             - "@service_container"

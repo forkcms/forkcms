@@ -3,6 +3,9 @@
 namespace Backend\Modules\Pages\Engine;
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
+use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
+use SimpleBus\Message\Bus\MessageBus;
+use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
@@ -19,6 +22,17 @@ use Frontend\Core\Language\Language as FrontendLanguage;
  */
 class Model
 {
+    const NO_PARENT_PAGE_ID = 0;
+
+    const TYPE_OF_DROP_BEFORE = 'before';
+    const TYPE_OF_DROP_AFTER = 'after';
+    const TYPE_OF_DROP_INSIDE = 'inside';
+    const POSSIBLE_TYPES_OF_DROP = [
+        self::TYPE_OF_DROP_BEFORE,
+        self::TYPE_OF_DROP_AFTER,
+        self::TYPE_OF_DROP_INSIDE,
+    ];
+
     const QUERY_BROWSE_RECENT =
         'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
@@ -77,13 +91,27 @@ class Model
         // get database
         $database = BackendModel::getContainer()->get('database');
 
+        /** @var MessageBus $commanBus */
+        $commandBus = BackendModel::get('command_bus');
+
+        $toLocale = Locale::fromString($toLanguage);
+        $fromLocale = Locale::fromString($fromLanguage);
+
         // copy contentBlocks and get copied contentBlockIds
-        $copyContentBlocks = new CopyContentBlocksToOtherLocale(Locale::fromString($toLanguage), Locale::fromString($fromLanguage));
-        BackendModel::get('command_bus')->handle($copyContentBlocks);
+        $copyContentBlocks = new CopyContentBlocksToOtherLocale($toLocale, $fromLocale);
+        $commandBus->handle($copyContentBlocks);
         $contentBlockIds = $copyContentBlocks->extraIdMap;
 
         // define old block ids
         $contentBlockOldIds = array_keys($contentBlockIds);
+
+        // copy location widgets and get copied widget ids
+        $copyLocationWidgets = new CopyLocationWidgetsToOtherLocale($toLocale, $fromLocale);
+        $commandBus->handle($copyLocationWidgets);
+        $locationWidgetIds = $copyLocationWidgets->extraIdMap;
+
+        // define old block ids
+        $locationWidgetOldIds = array_keys($locationWidgetIds);
 
         // get all old pages
         $ids = $database->getColumn(
@@ -192,7 +220,6 @@ class Model
             // insert page, store the id, we need it when building the blocks
             $revisionId = self::insert($page);
 
-            // init var
             $blocks = [];
 
             // get the blocks
@@ -206,8 +233,14 @@ class Model
                 $block['created_on'] = BackendModel::getUTCDate();
                 $block['edited_on'] = BackendModel::getUTCDate();
 
+                // Overwrite the extra_id of the old content block with the id of the new one
                 if (in_array($block['extra_id'], $contentBlockOldIds)) {
                     $block['extra_id'] = $contentBlockIds[$block['extra_id']];
+                }
+
+                // Overwrite the extra_id of the old location widget with the id of the new one
+                if (in_array($block['extra_id'], $locationWidgetOldIds)) {
+                    $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
                 }
 
                 // add block
@@ -217,7 +250,6 @@ class Model
             // insert the blocks
             self::insertBlocks($blocks);
 
-            // init var
             $text = '';
 
             // build search-text
@@ -258,7 +290,7 @@ class Model
     public static function createHtml(
         string $navigationType = 'page',
         int $depth = 0,
-        int $parentId = 1,
+        int $parentId = BackendModel::HOME_PAGE_ID,
         string $html = ''
     ): string {
         $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
@@ -408,26 +440,24 @@ class Model
             return false;
         }
 
-        // can't be deleted
-        if (in_array($return['id'], [1, 404])) {
+        $return['move_allowed'] = (bool) $return['allow_move'];
+        $return['children_allowed'] = (bool) $return['allow_children'];
+        $return['delete_allowed'] = (bool) $return['allow_delete'];
+
+        if (self::isForbiddenToDelete($return['id'])) {
             $return['allow_delete'] = false;
         }
 
-        // can't be moved
-        if (in_array($return['id'], [1, 404])) {
+        if (self::isForbiddenToMove($return['id'])) {
             $return['allow_move'] = false;
         }
 
-        // can't have children
-        if (in_array($return['id'], [404])) {
-            $return['allow_move'] = false;
+        if (self::isForbiddenToHaveChildren($return['id'])) {
+            $return['allow_children'] = false;
         }
 
         // convert into bools for use in template engine
-        $return['move_allowed'] = (bool) $return['allow_move'];
-        $return['children_allowed'] = (bool) $return['allow_children'];
         $return['edit_allowed'] = (bool) $return['allow_edit'];
-        $return['delete_allowed'] = (bool) $return['allow_delete'];
         $return['has_extra'] = (bool) $return['has_extra'];
 
         // unserialize data
@@ -437,6 +467,21 @@ class Model
 
         // return
         return $return;
+    }
+
+    public static function isForbiddenToDelete(int $pageId): bool
+    {
+        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+    }
+
+    public static function isForbiddenToMove(int $pageId): bool
+    {
+        return in_array($pageId, [BackendModel::HOME_PAGE_ID, BackendModel::ERROR_PAGE_ID], true);
+    }
+
+    public static function isForbiddenToHaveChildren(int $pageId): bool
+    {
+        return $pageId === BackendModel::ERROR_PAGE_ID;
     }
 
     public static function getBlocks(int $pageId, int $revisionId = null, string $language = null): array
@@ -522,7 +567,7 @@ class Model
         // available in generated file?
         if (isset($keys[$id])) {
             $url = $keys[$id];
-        } elseif ($id == 0) {
+        } elseif ($id == self::NO_PARENT_PAGE_ID) {
             // parent id 0 hasn't an url
             $url = '/';
 
@@ -612,8 +657,8 @@ class Model
         ];
         $keys = [];
         $pages = [];
-        $pageTree = self::getTree([0], null, 1, $language);
-        $homepageTitle = $pageTree[1][1]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
+        $pageTree = self::getTree([self::NO_PARENT_PAGE_ID], null, 1, $language);
+        $homepageTitle = $pageTree[1][BackendModel::HOME_PAGE_ID]['title'] ?? \SpoonFilter::ucfirst(BL::lbl('Home'));
 
         foreach ($pageTree as $pageTreePages) {
             foreach ((array) $pageTreePages as $pageID => $page) {
@@ -623,8 +668,8 @@ class Model
 
                 $sequences[$page['type'] === 'footer' ? 'footer' : 'pages'][$keys[$pageID]] = $pageID;
 
-                $parentTitle = str_replace([$homepageTitle . ' > ', $homepageTitle], '', $titles[$parentID] ?? '');
-                $titles[$pageID] = trim($parentTitle . ' > ' . $page['title'], ' > ');
+                $parentTitle = str_replace([$homepageTitle . ' → ', $homepageTitle], '', $titles[$parentID] ?? '');
+                $titles[$pageID] = trim($parentTitle . ' → ' . $page['title'], ' → ');
             }
         }
 
@@ -639,6 +684,137 @@ class Model
         }
 
         return $pages;
+    }
+
+    private static function getSubTreeForDropdown(
+        array $navigation,
+        int $parentId,
+        string $parentTitle,
+        callable $attributesFunction
+    ): array {
+        if (!isset($navigation['page'][$parentId]) || empty($navigation['page'][$parentId])) {
+            return [];
+        }
+        $tree = self::getEmptyTreeArray();
+
+        foreach ($navigation['page'][$parentId] as $page) {
+            $pageId = $page['page_id'];
+            $pageTitle = $parentTitle . ' → ' . $page['navigation_title'];
+            $tree['pages'][$pageId] = $pageTitle;
+            $tree['attributes'][$pageId] = $attributesFunction($page);
+
+            $tree = self::mergeTreeForDropdownArrays(
+                $tree,
+                self::getSubTreeForDropdown($navigation, $pageId, $pageTitle, $attributesFunction)
+            );
+        }
+
+        return $tree;
+    }
+
+    private static function mergeTreeForDropdownArrays(array $tree, array $subTree, string $treeLabel = null): array
+    {
+        if (empty($subTree)) {
+            return $tree;
+        }
+
+        $tree['attributes'] += $subTree['attributes'];
+
+        if ($treeLabel === null) {
+            $tree['pages'] += $subTree['pages'];
+
+            return $tree;
+        }
+
+        $tree['pages'][$treeLabel] += $subTree['pages'];
+
+        return $tree;
+    }
+
+    private static function getEmptyTreeArray(): array
+    {
+        return [
+            'pages' => [],
+            'attributes' => [],
+        ];
+    }
+
+    private static function getAttributesFunctionForTreeName(
+        string $treeName,
+        string $treeLabel,
+        int $currentPageId
+    ): callable {
+        return function (array $page) use ($treeName, $treeLabel, $currentPageId) {
+            $isCurrentPage = $currentPageId === $page['page_id'];
+
+            return [
+                'data-tree-name' => $treeName,
+                'data-tree-label' => $treeLabel,
+                'data-allow-after' => (int) (!$isCurrentPage && $page['page_id'] !== BackendModel::HOME_PAGE_ID),
+                'data-allow-inside' => (int) (!$isCurrentPage && $page['allow_children']),
+                'data-allow-before' => (int) (!$isCurrentPage && $page['page_id'] !== BackendModel::HOME_PAGE_ID),
+            ];
+        };
+    }
+
+    private static function addMainPageToTreeForDropdown(
+        array $tree,
+        string $branchLabel,
+        callable $attributesFunction,
+        array $page,
+        array $navigation
+    ): array {
+        $tree['pages'][$branchLabel][$page['page_id']] = $page['navigation_title'];
+        $tree['attributes'][$page['page_id']] = $attributesFunction($page);
+
+        return self::mergeTreeForDropdownArrays(
+            $tree,
+            self::getSubTreeForDropdown(
+                $navigation,
+                $page['page_id'],
+                $page['navigation_title'],
+                $attributesFunction
+            ),
+            BL::lbl('MainNavigation')
+        );
+    }
+
+    public static function getMoveTreeForDropdown(int $currentPageId, string $language = null): array
+    {
+        $navigation = static::getCacheBuilder()->getNavigation($language = $language ?? BL::getWorkingLanguage());
+
+        $tree = self::addMainPageToTreeForDropdown(
+            self::getEmptyTreeArray(),
+            BL::lbl('MainNavigation'),
+            self::getAttributesFunctionForTreeName('main', BL::lbl('MainNavigation'), $currentPageId),
+            $navigation['page'][0][BackendModel::HOME_PAGE_ID],
+            $navigation
+        );
+
+        $treeBranches = [];
+        if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
+            $treeBranches['meta'] = BL::lbl('Meta');
+        }
+        $treeBranches['footer'] = BL::lbl('Footer');
+        $treeBranches['root'] = BL::lbl('Root');
+
+        foreach ($treeBranches as $branchName => $branchLabel) {
+            if (!isset($navigation[$branchName][0]) || !is_array($navigation[$branchName][0])) {
+                continue;
+            }
+
+            foreach ($navigation[$branchName][0] as $page) {
+                $tree = self::addMainPageToTreeForDropdown(
+                    $tree,
+                    $branchLabel,
+                    self::getAttributesFunctionForTreeName($branchName, $branchLabel, $currentPageId),
+                    $page,
+                    $navigation
+                );
+            }
+        }
+
+        return $tree;
     }
 
     public static function getSubtree(array $navigation, int $parentId): string
@@ -697,7 +873,7 @@ class Model
         $data[$level] = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT
                  i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.data,
-                m.url, m.data AS meta_data, m.seo_follow, m.seo_index,
+                m.url, m.data AS meta_data, m.seo_follow, m.seo_index, i.allow_children,
                 IF(COUNT(e.id) > 0, 1, 0) AS has_extra,
                 GROUP_CONCAT(b.extra_id) AS extra_ids,
                 IF(COUNT(p.id), 1, 0) AS has_children
@@ -750,20 +926,20 @@ class Model
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
         $html .= '<div class="clearfix" data-tree="main">' . "\n";
         $html .= '    <ul>' . "\n";
-        $html .= '        <li id="page-1" rel="home">';
+        $html .= '        <li id="page-"' . BackendModel::HOME_PAGE_ID . ' rel="home">';
 
         // create homepage anchor from title
-        $homePage = self::get(1);
+        $homePage = self::get(BackendModel::HOME_PAGE_ID);
         $html .= '            <a href="' .
                  BackendModel::createUrlForAction(
                      'Edit',
                      null,
                      null,
-                     ['id' => 1]
+                     ['id' => BackendModel::HOME_PAGE_ID]
                  ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
-        $html .= self::getSubtree($navigation, 1);
+        $html .= self::getSubtree($navigation, BackendModel::HOME_PAGE_ID);
 
         // end
         $html .= '        </li>' . "\n";
@@ -892,13 +1068,18 @@ class Model
 
     public static function getUrl(string $url, int $id = null, int $parentId = null, bool $isAction = false): string
     {
-        $parentIds = [$parentId ?? 0];
+        $parentIds = [$parentId ?? self::NO_PARENT_PAGE_ID];
 
         // 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
-        if ($parentId == 0 || $parentId == 1 || $parentId == 2 || $parentId == 3 || $parentId == 4) {
+        if ($parentId === self::NO_PARENT_PAGE_ID
+            || $parentId === BackendModel::HOME_PAGE_ID
+            || $parentId === 2
+            || $parentId === 3
+            || $parentId === 4
+        ) {
             $parentIds = [
-                0,
-                1,
+                self::NO_PARENT_PAGE_ID,
+                BackendModel::HOME_PAGE_ID,
                 2,
                 3,
                 4,
@@ -1062,157 +1243,44 @@ class Model
         string $tree,
         string $language = null
     ): bool {
-        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, ['before', 'after', 'inside'], 'inside');
-        $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'inside');
+        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
+        $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
         $language = $language ?? BL::getWorkingLanguage();
 
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
         // reset type of drop for special pages
-        if ($droppedOnPageId == 1) {
-            $typeOfDrop = 'inside';
-        }
-        if ($droppedOnPageId == 0) {
-            $typeOfDrop = 'inside';
+        if ($droppedOnPageId === BackendModel::HOME_PAGE_ID || $droppedOnPageId === self::NO_PARENT_PAGE_ID) {
+            $typeOfDrop = self::TYPE_OF_DROP_INSIDE;
         }
 
-        // get data for pages
         $page = self::get($pageId, null, $language);
-        $droppedOnPage = self::get($droppedOnPageId, null, $language);
+        $droppedOnPage = self::get(
+            ($droppedOnPageId === self::NO_PARENT_PAGE_ID ? BackendModel::HOME_PAGE_ID : $droppedOnPageId),
+            null,
+            $language
+        );
 
-        // reset if the drop was on 0 (new meta)
-        if ($droppedOnPageId == 0) {
-            $droppedOnPage = self::get(1, null, $language);
-        }
-
-        // validate
         if (empty($page) || empty($droppedOnPage)) {
             return false;
         }
 
-        // calculate new parent for items that should be moved inside
-        if ($droppedOnPageId == 0) {
-            $newParent = 0;
-        } elseif ($typeOfDrop === 'inside') {
-            // check if item allows children
-            if (!$droppedOnPage['allow_children']) {
-                return false;
-            }
-
-            // set new parent to the dropped on page.
-            $newParent = $droppedOnPage['id'];
-        } else {
-            // if the item has to be moved before or after
-            $newParent = $droppedOnPage['parent_id'];
-        }
-
-        // decide new type
-        if ($droppedOnPageId == 0) {
-            if ($tree === 'footer') {
-                $newType = 'footer';
-            } else {
-                $newType = 'meta';
-            }
-        } elseif ($newParent == 0) {
-            $newType = $droppedOnPage['type'];
-        } else {
-            $newType = 'page';
-        }
-
-        // calculate new sequence for items that should be moved inside
-        if ($typeOfDrop == 'inside') {
-            // get highest sequence + 1
-            $newSequence = (int) $database->getVar(
-                'SELECT MAX(i.sequence)
-                 FROM pages AS i
-                 WHERE i.id = ? AND i.language = ? AND i.status = ?',
-                [$newParent, $language, 'active']
-            ) + 1;
-
-            // update
-            $database->update(
-                'pages',
-                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
-                'id = ? AND language = ? AND status = ?',
-                [$pageId, $language, 'active']
-            );
-        } elseif ($typeOfDrop == 'before') {
-            // calculate new sequence for items that should be moved before
-            // get new sequence
-            $newSequence = (int) $database->getVar(
-                'SELECT i.sequence
-                 FROM pages AS i
-                 WHERE i.id = ? AND i.language = ? AND i.status = ?
-                 LIMIT 1',
-                [$droppedOnPage['id'], $language, 'active']
-            ) - 1;
-
-            // increment all pages with a sequence that is higher or equal to the current sequence;
-            $database->execute(
-                'UPDATE pages
-                 SET sequence = sequence + 1
-                 WHERE parent_id = ? AND language = ? AND sequence >= ?',
-                [$newParent, $language, $newSequence + 1]
-            );
-
-            // update
-            $database->update(
-                'pages',
-                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
-                'id = ? AND language = ? AND status = ?',
-                [$pageId, $language, 'active']
-            );
-        } elseif ($typeOfDrop == 'after') {
-            // calculate new sequence for items that should be moved after
-            // get new sequence
-            $newSequence = (int) $database->getVar(
-                'SELECT i.sequence
-                FROM pages AS i
-                WHERE i.id = ? AND i.language = ? AND i.status = ?
-                LIMIT 1',
-                [$droppedOnPage['id'], $language, 'active']
-            ) + 1;
-
-            // increment all pages with a sequence that is higher then the current sequence;
-            $database->execute(
-                'UPDATE pages
-                 SET sequence = sequence + 1
-                 WHERE parent_id = ? AND language = ? AND sequence > ?',
-                [$newParent, $language, $newSequence]
-            );
-
-            // update
-            $database->update(
-                'pages',
-                ['parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType],
-                'id = ? AND language = ? AND status = ?',
-                [$pageId, $language, 'active']
-            );
-        } else {
+        try {
+            $newParent = self::getNewParent($droppedOnPageId, $typeOfDrop, $droppedOnPage);
+        } catch (InvalidArgumentException $invalidArgumentException) {
+            // parent doesn't allow children
             return false;
         }
 
-        // get current url
-        $currentUrl = (string) $database->getVar(
-            'SELECT url
-             FROM meta AS m
-             WHERE m.id = ?',
-            [$page['meta_id']]
-        );
-
-        // rebuild url
-        $newUrl = self::getUrl(
-            $currentUrl,
+        self::recalculateSequenceAfterMove(
+            $typeOfDrop,
+            self::getNewType($droppedOnPageId, $tree, $newParent, $droppedOnPage),
             $pageId,
+            $language,
             $newParent,
-            isset($page['data']['is_action']) && $page['data']['is_action']
+            $droppedOnPage['id']
         );
 
-        // store
-        $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
+        self::updateUrlAfterMove($pageId, $page, $newParent);
 
-        // return
         return true;
     }
 
@@ -1220,6 +1288,18 @@ class Model
     {
         // get database
         $database = BackendModel::getContainer()->get('database');
+
+        if (self::isForbiddenToDelete($page['id'])) {
+            $page['allow_delete'] = false;
+        }
+
+        if (self::isForbiddenToMove($page['id'])) {
+            $page['allow_move'] = false;
+        }
+
+        if (self::isForbiddenToHaveChildren($page['id'])) {
+            $page['allow_children'] = false;
+        }
 
         // update old revisions
         if ($page['status'] != 'draft') {
@@ -1316,7 +1396,6 @@ class Model
 
             // overwrite all blocks with current defaults
             if ($overwrite) {
-                // init var
                 $blocksContent = [];
 
                 // fetch default blocks for this page
@@ -1375,5 +1454,130 @@ class Model
         }
 
         return $redirectUrl;
+    }
+
+    private static function getNewParent(int $droppedOnPageId, string $typeOfDrop, array $droppedOnPage): int
+    {
+        if ($droppedOnPageId === self::NO_PARENT_PAGE_ID) {
+            return self::NO_PARENT_PAGE_ID;
+        }
+
+        if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
+            // check if item allows children
+            if (!$droppedOnPage['allow_children']) {
+                throw new InvalidArgumentException('Parent page is not allowed to have child pages');
+            }
+
+            return $droppedOnPage['id'];
+        }
+
+        // if the item has to be moved before or after
+        return $droppedOnPage['parent_id'];
+    }
+
+    private static function getNewType(int $droppedOnPageId, string $tree, int $newParent, array $droppedOnPage): string
+    {
+        if ($droppedOnPageId === self::NO_PARENT_PAGE_ID) {
+            if ($tree === 'footer') {
+                return 'footer';
+            }
+
+            if ($tree === 'meta') {
+                return 'meta';
+            }
+
+            return 'root';
+        }
+
+        if ($newParent === self::NO_PARENT_PAGE_ID) {
+            return $droppedOnPage['type'];
+        }
+
+        return 'page';
+    }
+
+    private static function recalculateSequenceAfterMove(
+        string $typeOfDrop,
+        string $newType,
+        int $pageId,
+        string $language,
+        string $newParent,
+        int $droppedOnPageId
+    ): void {
+        $database = BackendModel::getContainer()->get('database');
+
+        // calculate new sequence for items that should be moved inside
+        if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
+            $newSequence = (int) $database->getVar(
+                'SELECT MAX(i.sequence)
+                 FROM pages AS i
+                 WHERE i.id = ? AND i.language = ? AND i.status = ?',
+                [$newParent, $language, 'active']
+            ) + 1;
+
+            $database->update(
+                'pages',
+                [
+                    'parent_id' => $newParent,
+                    'sequence' => $newSequence,
+                    'type' => $newType
+                ],
+                'id = ? AND language = ? AND status = ?',
+                [$pageId, $language, 'active']
+            );
+
+            return;
+        }
+
+        // calculate new sequence for items that should be moved before or after
+        $droppedOnPageSequence = (int) $database->getVar(
+            'SELECT i.sequence
+             FROM pages AS i
+             WHERE i.id = ? AND i.language = ? AND i.status = ?
+             LIMIT 1',
+            [$droppedOnPageId, $language, 'active']
+        );
+
+        $newSequence = $droppedOnPageSequence + ($typeOfDrop === self::TYPE_OF_DROP_BEFORE ? -1 : 1);
+
+        // increment all pages with a sequence that is higher than the new sequence;
+        $database->execute(
+            'UPDATE pages
+                 SET sequence = sequence + 1
+                 WHERE parent_id = ? AND language = ? AND sequence > ?',
+            [$newParent, $language, $newSequence]
+        );
+
+        $database->update(
+            'pages',
+            [
+                'parent_id' => $newParent,
+                'sequence' => $newSequence,
+                'type' => $newType
+            ],
+            'id = ? AND language = ? AND status = ?',
+            [$pageId, $language, 'active']
+        );
+    }
+
+    private static function updateUrlAfterMove(int $pageId, array $page, int $newParent): void
+    {
+        $database = BackendModel::getContainer()->get('database');
+
+        $currentUrl = (string) $database->getVar(
+            'SELECT url
+             FROM meta AS m
+             WHERE m.id = ?',
+            [$page['meta_id']]
+        );
+
+        $newUrl = self::getUrl(
+            $currentUrl,
+            $pageId,
+            $newParent,
+            isset($page['data']['is_action']) && $page['data']['is_action']
+        );
+
+        $database->update('meta', ['url' => $newUrl], 'id = ?', [$page['meta_id']]);
     }
 }

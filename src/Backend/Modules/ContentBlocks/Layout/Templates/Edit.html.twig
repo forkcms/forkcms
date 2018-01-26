@@ -1,4 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
 
@@ -8,9 +9,9 @@
   {{ form_start(form) }}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
+      <div>
+        <ul class="nav nav-tabs nav-tabs-flex" role="tablist">
+          <li role="presentation" class="active mr-auto">
             <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
           <li class="pull-right" role="presentation">
@@ -28,7 +29,7 @@
                   <div class="content-title">
                     <p>
                       {{ 'lbl.PreviousVersions'|trans|ucfirst }}
-                      <abbr class="fa fa-question-circle" data-toggle="tooltip" title="{{ 'msg.HelpRevisions'|trans|ucfirst }}"></abbr>
+                      {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
                     </p>
                   </div>
                   {% if revisions %}
@@ -53,14 +54,14 @@
         <div class="btn-group pull-left" role="group">
           {% if showContentBlocksDelete %}
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
+              {{ macro.icon('trash-o') }}
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
+            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
           </button>
         </div>
       </div>
@@ -72,7 +73,7 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -83,10 +84,10 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
             </button>
             <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
+              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           </div>
         </div>

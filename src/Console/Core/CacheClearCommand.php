@@ -3,6 +3,7 @@
 namespace Console\Core;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -27,14 +28,14 @@ class CacheClearCommand extends Command
         $this->removeFilesInFolder('/src/Frontend/Cache/MinifiedCss', $io, 'frontend minified css');
         $this->removeFilesInFolder('/src/Frontend/Cache/MinifiedJs', $io, 'frontend minified js');
         $this->removeFilesInFolder('/src/Frontend/Cache/Navigation', $io, 'frontend cached navigation');
-        $this->removeFilesInFolder('/src/Frontend/Cache/Search', $io, 'frontend cached search results');
 
         $this->removeFilesInFolder('/src/Backend/Cache/CompiledTemplates', $io, 'backend compiled templates');
         $this->removeFilesInFolder('/src/Backend/Cache/Locale', $io, 'backend cached locale');
         $this->removeFilesInFolder('/src/Backend/Cache/MinifiedCss', $io, 'backend minified css');
         $this->removeFilesInFolder('/src/Backend/Cache/MinifiedJs', $io, 'backend minified js');
 
-        $this->removeFilesInFolder('/var/cache', $io, 'general cache');
+        $symfonyCacheClearCommand = $this->getApplication()->find('cache:clear');
+        $symfonyCacheClearCommand->run(new ArrayInput(['--no-warmup' => true]), $output);
 
         $io->success('Cache is cleared');
     }

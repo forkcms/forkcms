@@ -14,7 +14,24 @@
           {{ form_row(form.mailEngine) }}
           <div class="mail-engine-selected">
             {{ form_row(form.apiKey) }}
-            {{ form_row(form.listId) }}
+
+            <div class="panel form-group panel-default">
+              <div class="panel-heading"><label>{{ 'lbl.ListId'|trans|ucfirst }}</label></div>
+              <div class="panel-body">
+                <div class="form-group">
+                  {{ form_label(form.listId) }}
+                  {{ form_widget(form.listId) }}
+                  {{ form_errors(form.listId) }}
+                </div>
+                {% for languageListIdForm in form.languageListIds %}
+                  <div class="form-group{% if loop.last %} last{% endif %}">
+                    {{ form_label(languageListIdForm, languageListIdForm.vars.name|upper|tolabel) }}
+                    {{ form_widget(languageListIdForm) }}
+                    {{ form_errors(languageListIdForm) }}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
           </div>
           {{ form_rest(form) }}
         </div>

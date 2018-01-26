@@ -57,7 +57,7 @@ class Action extends KernelLoader
 
         /** @var $action BackendBaseAction */
         $action = new $actionClass($this->getKernel());
-        $this->getContainer()->get('logger')->info(
+        $this->getContainer()->get('logger.public')->info(
             "Executing backend action '{$action->getAction()}' for module '{$action->getModule()}'."
         );
         $action->execute();
