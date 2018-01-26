@@ -775,7 +775,7 @@ jsBackend.pages.extras = {
   /**
    * Creates the html for an image field
    */
-  getImageFieldHtml: function (src, alt, label, isVisible, key) {
+  getImageFieldHtml: function (src, alt, label, isVisible, optionalHide, key) {
     var html = '<div class="panel panel-default" id="user-template-image-' + key + '">'
 
     html += '<div class="panel-heading">'
@@ -798,7 +798,7 @@ jsBackend.pages.extras = {
     html += '<input class="form-control" type="text" id="alt' + key + '" value="' + alt + '" />'
     html += '</div>'
 
-    html += '<div class="checkbox">'
+    html += '<div class="checkbox"' + (optionalHide ? '' : ' style="display: none;"') + '>';
     html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
     html += '</div>'
 
@@ -877,6 +877,7 @@ jsBackend.pages.extras = {
           $element.attr('alt'),
           $element.data('ft-label'),
           $element.attr('style') !== 'display: none;',
+          $element.data('ft-block-optional'),
           key
         )
       )
