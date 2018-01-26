@@ -15,7 +15,8 @@
 {% endmacro %}
 
 {% macro infoTooltip(title) %}
-  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ _self.icon('info-circle') }}</abbr>
+  {% import _self as macro %}
+  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ macro.icon('info-circle') }}</abbr>
 {% endmacro %}
 
 {% macro dataGrid(dataGrid, noItemsMessage) %}
