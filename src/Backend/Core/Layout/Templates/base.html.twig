@@ -12,7 +12,7 @@
   <div class="sidebar">
     {% include "Layout/Templates/navigation.html.twig" %}
     <div class="sub-navigation">
-      <nav id="content-subnavigation" class="fork-nav-sidebar">
+      <nav id="content-subnavigation" class="fork-nav-sidebar" aria-label="{{ 'lbl.Settings'|trans }}">
         {% include "Layout/Templates/subnavigation.html.twig" with { 'navigation': navigation } %}
       </nav>
     </div>
