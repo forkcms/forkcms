@@ -584,6 +584,11 @@
         <translation language="es"><![CDATA[No hay grupos aun.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη ομάδες.]]></translation>
       </item>
+      <item type="message" name="NoGroupsForThisProfile">
+        <translation language="nl"><![CDATA[Dit profiel zit in geen enkele groep]]></translation>
+        <translation language="en"><![CDATA[This profile is not in any group]]></translation>
+        <translation language="fr"><![CDATA[Ce profil n'appartient à aucun groupe]]></translation>
+      </item>
       <item type="message" name="NotificationNewProfileLoginCredentials">
         <translation language="nl"><![CDATA[<p>Beste,</p><p>vanaf heden kan u inloggen op onze website met volgende gegevens:</p><p>Email: %1$s<br/>Wachtwoord: %2$s</p><p>Log in op <a href="%3$s/nl">%3$s</a></p>]]></translation>
         <translation language="en"><![CDATA[<p>Dear,</p><p>from now on you can log in to our website with the following information: </p><p>Email: %1$s<br/>Password: %2$s</p><p>Log in on <a href="%3$s/fr">%3$s</a></p>]]></translation>
