@@ -658,7 +658,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default" id="user-template-link-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -687,7 +687,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -710,7 +710,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default" id="user-template-text-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -733,7 +733,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -756,7 +756,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -779,7 +779,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default" id="user-template-image-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body clearfix">'
@@ -816,7 +816,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default" id="user-template-image-background-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body clearfix">'

@@ -132,7 +132,7 @@
                               <div class="panel panel-default panel-pages-block">
                                 <div class="panel-heading">
                                   <div class="heading linkedBlocksTitle">
-                                    <p>{{ 'lbl.Fallback'|trans|ucfirst }}</p>
+                                    <h2>{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
                                   </div>
                                 </div>
                                 <div class="panel-body">
@@ -158,9 +158,9 @@
                 <div class="col-md-12">
                   <div class="content-block content-block-pb">
                     <div class="content-title">
-                      <p>{{ 'lbl.Drafts'|trans|ucfirst }}
+                      <h2>{{ 'lbl.Drafts'|trans|ucfirst }}
                         {{ macro.infoTooltip('msg.HelpDrafts'|trans) }}
-                      </p>
+                      </h2>
                     </div>
                     <div class="table-responsive">
                       {{ drafts|raw }}
@@ -173,9 +173,9 @@
               <div class="col-md-12">
                 <div class="content-block">
                   <div class="content-title">
-                    <p>{{ 'lbl.PreviousVersions'|trans|ucfirst }}
+                    <h2>{{ 'lbl.PreviousVersions'|trans|ucfirst }}
                       {{ macro.infoTooltip('msg.HelpRevisions'|trans) }}
-                    </p>
+                    </h2>
                   </div>
                   {% if revisions %}
                     <div class="table-responsive">
@@ -340,7 +340,7 @@
                 <div class="col-md-12">
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <p class="tab-pane-title">{{ 'lbl.Languages'|trans|ucfirst }}</p>
+                      <h2 class="tab-pane-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
                     </div>
                     <div class="panel-body">
                       {% for language, field in hreflangFields %}
