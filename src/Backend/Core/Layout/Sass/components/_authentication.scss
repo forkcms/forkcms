@@ -44,7 +44,7 @@
   }
 
   .forgot-password {
-    color: $gray-light;
+    color: $gray;
     font-size: $font-size-base;
 
     &:active,
@@ -57,7 +57,7 @@
 
     &:focus,
     &:hover {
-      color: $gray-base;
+      color: $brand-primary;
       text-decoration: underline;
     }
   }
