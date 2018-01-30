@@ -74,6 +74,14 @@
     color: $white;
     font-size: $font-size-btn;
   }
+
+  &.alert-warning {
+
+    .fa,
+    .close {
+      color: $gray-base;
+    }
+  }
 }
 
 .alert-static {
