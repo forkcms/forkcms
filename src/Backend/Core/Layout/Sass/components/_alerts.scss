@@ -74,13 +74,15 @@
     color: $white;
     font-size: $font-size-btn;
   }
+}
 
-  &.alert-warning {
+.alert-warning {
 
-    .fa,
-    .close {
-      color: $gray-base;
-    }
+  a,
+  .fa,
+  .close {
+    border-color: $gray-base;
+    color: $gray-base;
   }
 }
 
