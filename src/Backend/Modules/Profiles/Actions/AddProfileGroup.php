@@ -104,4 +104,11 @@ class AddProfileGroup extends BackendBaseActionAdd
             }
         }
     }
+
+    protected function parse(): void
+    {
+        parent::parse();
+
+        $this->template->assign('id', $this->id);
+    }
 }
