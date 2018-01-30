@@ -79,7 +79,7 @@ class Category extends FrontendBaseBlock
     private function addLinkToRssFeed(): void
     {
         $this->header->addRssLink(
-            $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE),
+            $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
             FrontendNavigation::getUrlForBlock($this->getModule(), 'Rss')
         );
     }
