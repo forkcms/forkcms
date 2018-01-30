@@ -551,6 +551,30 @@ jsBackend.ckeditor = {
       // set a beter default for the width
       infoTab.get('txtWidth')['default'] = '100%'
     }
+
+    if (evt.data.name === 'oembed') {
+      debugger
+
+      dialogDefinition.getContents('general').elements.splice(
+        2,
+        0,
+        {
+          type: 'button',
+          id: 'browseServer',
+          label: 'Browse Server',
+          onClick: function () {
+            var editor = this.getDialog().getParentEditor()
+            editor.popup(window.location.origin + jsData.MediaLibrary.browseActionVideos, 800, 800)
+
+            window.onmessage = function (event) {
+              if (event.data) {
+                this.setValueOf('general', 'embedCode', event.data)
+              }
+            }.bind(this.getDialog())
+          },
+          style: 'margin-top: 20px;'
+        })
+    }
   },
 
   onReady: function (evt) {
