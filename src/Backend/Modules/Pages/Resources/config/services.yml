@@ -1,6 +1,8 @@
+imports:
+  - { resource: commands.yml }
+
 services:
-    fork.pages.copy_module_to_other_locale:
-        class: Backend\Modules\Pages\Command\CopyModuleToOtherLocale
-        public: true
+    pages.copy:
+        class: Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocale
         tags:
             - { name: fork.copy_module_to_other_locale }
