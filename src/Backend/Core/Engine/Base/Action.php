@@ -209,6 +209,8 @@ class Action extends KernelLoader
             'browseActionImages',
             BackendModel::createUrlForAction('MediaBrowserImages', 'MediaLibrary') . '#tabLibrary'
         );
+
+        $this->header->addJsData('Core', 'preferred_editor', BackendModel::getPreferredEditor());
     }
 
     /**

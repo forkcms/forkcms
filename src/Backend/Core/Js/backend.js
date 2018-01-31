@@ -48,7 +48,7 @@ var jsBackend =
       jsBackend.messages.init()
       jsBackend.tooltip.init()
       jsBackend.tableSequenceByDragAndDrop.init()
-      jsBackend.ckeditor.init()
+      if (jsData.Core.preferred_editor === 'ck-editor') jsBackend.ckeditor.init()
       jsBackend.resizeFunctions.init()
       jsBackend.navigation.init()
 
