@@ -1,5 +1,6 @@
 services:
     pages.handler.copy_pages_to_other_locale:
         class: Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocaleHandler
+        public: true
         tags:
             - { name: command_handler, handles: Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocale }
