@@ -694,7 +694,7 @@ class Model extends \Common\Core\Model
      */
     public static function getPreferredEditor(): string
     {
-        $defaultPreferredEditor = self::getContainer()->getParameter('fork.default_preferred_editor');
+        $defaultPreferredEditor = self::getContainer()->getParameter('fork.form.default_preferred_editor');
 
         if (!Authentication::isLoggedIn()) {
             return $defaultPreferredEditor;
