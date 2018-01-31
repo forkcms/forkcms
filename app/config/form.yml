@@ -1,3 +1,7 @@
+parameters:
+    fork.form.theme: 'Core/Layout/Templates/FormLayout.html.twig'
+    fork.form.default_preferred_editor: 'ck-editor'
+
 services:
     fork.datepicker.form:
         class: Common\Form\DatePickerType
