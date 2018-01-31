@@ -1,11 +1,13 @@
 <?php
 
-namespace ForkCMS\Component\Module;
+namespace ForkCMS\Bundle\CoreBundle\Manager;
 
 use Common\Locale;
+use ForkCMS\Component\Module\CopyModulesToOtherLocaleResults;
+use ForkCMS\Component\Module\CopyModuleToOtherLocaleCommandInterface;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 
-final class CopyModulesToOtherLocale
+final class CopyModulesToOtherLocaleManager
 {
     /**
      * @var MessageBusSupportingMiddleware
