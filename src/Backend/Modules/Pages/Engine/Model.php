@@ -1317,11 +1317,11 @@ class Model
         // calculate new sequence for items that should be moved inside
         if ($typeOfDrop === self::TYPE_OF_DROP_INSIDE) {
             $newSequence = (int) $database->getVar(
-                    'SELECT MAX(i.sequence)
+                'SELECT MAX(i.sequence)
                  FROM pages AS i
                  WHERE i.id = ? AND i.language = ? AND i.status = ?',
-                    [$newParent, $language, 'active']
-                ) + 1;
+                [$newParent, $language, 'active']
+            ) + 1;
 
             $database->update(
                 'pages',
