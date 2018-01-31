@@ -99,13 +99,13 @@ class Model extends \Common\Core\Model
         }
 
         return self::get('router')->generate(
-                'backend',
-                [
-                    '_locale' => $language,
-                    'module' => self::camelCaseToLowerSnakeCase($module),
-                    'action' => self::camelCaseToLowerSnakeCase($action),
-                ]
-            ) . $queryString;
+            'backend',
+            [
+                '_locale' => $language,
+                'module' => self::camelCaseToLowerSnakeCase($module),
+                'action' => self::camelCaseToLowerSnakeCase($action),
+            ]
+        ) . $queryString;
     }
 
     /**
