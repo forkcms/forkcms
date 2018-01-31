@@ -145,7 +145,7 @@ class Installer extends ModuleInstaller
             $settings = [];
             $settings['nickname'] = 'Fork CMS';
             $settings['name'] = 'Fork';
-            $settings['preferred_editor'] = Model::getContainer()->getParameter('fork.default_preferred_editor');
+            $settings['preferred_editor'] = Model::getContainer()->getParameter('fork.form.default_preferred_editor');
             $settings['surname'] = 'CMS';
             $settings['interface_language'] = $this->getVariable('default_interface_language');
             $settings['date_format'] = 'j F Y';
