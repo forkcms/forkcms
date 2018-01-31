@@ -50,7 +50,7 @@ final class CopyContentBlocksToOtherLocaleHandler implements CopyModuleToOtherLo
 
     private function getContentBlocksToCopy(Locale $locale): array
     {
-        return (array)$this->contentBlockRepository->findBy(
+        return (array) $this->contentBlockRepository->findBy(
             [
                 'locale' => $locale,
                 'status' => Status::active()
