@@ -3,9 +3,11 @@
 namespace Backend\Modules\Location\Command;
 
 use Common\ModuleExtraType;
+use ForkCMS\Component\Module\CopyModuleToOtherLocaleCommandHandlerInterface;
+use ForkCMS\Component\Module\CopyModuleToOtherLocaleCommandInterface;
 use SpoonDatabase;
 
-final class CopyLocationWidgetsToOtherLocaleHandler
+final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleToOtherLocaleCommandHandlerInterface
 {
     /** @var SpoonDatabase */
     private $database;
@@ -15,8 +17,12 @@ final class CopyLocationWidgetsToOtherLocaleHandler
         $this->database = $database;
     }
 
-    public function handle(CopyLocationWidgetsToOtherLocale $copyLocationWidgetsToOtherLocale): void
+    public function handle(CopyModuleToOtherLocaleCommandInterface $command): void
     {
+        if (!$command instanceof CopyLocationWidgetsToOtherLocale) {
+            throw new \Exception('The class should be ' . CopyLocationWidgetsToOtherLocale::class);
+        }
+
         $currentWidgets = $this->database->getRecords(
             'SELECT * FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
             [
@@ -26,19 +32,23 @@ final class CopyLocationWidgetsToOtherLocaleHandler
             ]
         );
 
+        if (empty($currentWidgets)) {
+            return;
+        }
+
         foreach ($currentWidgets as $currentWidget) {
             $data = unserialize($currentWidget['data']);
 
             if (!is_array($data)
                 || !isset($data['language'])
-                || $data['language'] !== $copyLocationWidgetsToOtherLocale->fromLocale->getLocale()
+                || $data['language'] !== $command->getFromLocale()->getLocale()
             ) {
                 // This is not a widget we want to duplicate
                 continue;
             }
 
             // Replace the language of our widget
-            $data['language'] = $copyLocationWidgetsToOtherLocale->toLocale->getLocale();
+            $data['language'] = $command->getToLocale()->getLocale();
             $currentWidget['data'] = serialize($data);
 
             // Save the old ID
@@ -51,7 +61,7 @@ final class CopyLocationWidgetsToOtherLocaleHandler
             $newId = $this->database->insert('modules_extras', $currentWidget);
 
             // Map the new ID
-            $copyLocationWidgetsToOtherLocale->extraIdMap[$oldId] = $newId;
+            $command->setExtraId($oldId, $newId);
         }
     }
 }
