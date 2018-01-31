@@ -1,4 +1,10 @@
 services:
+    fork.copy_modules_to_other_locale:
+        class: ForkCMS\Component\Module\CopyModulesToOtherLocale
+        public: true
+        arguments:
+          - "@command_bus"
     fork.validator.url:
         class: ForkCMS\Bundle\CoreBundle\Validator\UrlValidator
         public: true
+
