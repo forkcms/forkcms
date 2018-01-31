@@ -5,7 +5,7 @@ namespace Console\Locale;
 use Backend\Core\Language\Locale;
 use Common\Locale as CommonLocale;
 use Common\ModulesSettings;
-use ForkCMS\Component\Module\CopyModulesToOtherLocale;
+use ForkCMS\Bundle\CoreBundle\Manager\CopyModulesToOtherLocaleManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,9 +17,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CopyLocaleCommand extends Command
 {
     /**
-     * @var CopyModulesToOtherLocale
+     * @var CopyModulesToOtherLocaleManager
      */
-    private $copyModulesToOtherLocale;
+    private $copyModulesToOtherLocaleManager;
 
     /**
      * @var SymfonyStyle
@@ -38,12 +38,12 @@ class CopyLocaleCommand extends Command
 
     public function __construct(
         ModulesSettings $settings,
-        CopyModulesToOtherLocale $copyModulesToOtherLocale
+        CopyModulesToOtherLocaleManager $copyModulesToOtherLocaleManager
     ) {
         parent::__construct();
 
         $this->settings = $settings;
-        $this->copyModulesToOtherLocale = $copyModulesToOtherLocale;
+        $this->copyModulesToOtherLocaleManager = $copyModulesToOtherLocaleManager;
     }
 
     protected function configure(): void
@@ -81,7 +81,7 @@ class CopyLocaleCommand extends Command
 
     private function copyModules(CommonLocale $fromLocale, CommonLocale $toLocale)
     {
-        $this->copyModulesToOtherLocale->copy($fromLocale, $toLocale);
+        $this->copyModulesToOtherLocaleManager->copy($fromLocale, $toLocale);
 
         $this->io->success('All modules are copied from "' . $fromLocale . '" to "' . $toLocale . '".');
     }
