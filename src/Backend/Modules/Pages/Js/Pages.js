@@ -1074,6 +1074,9 @@ jsBackend.pages.extras = {
     // save element to variable
     var element = $(this)
 
+    // save add block button from the position of the element
+    var $templateAddBlock = element.closest('.templatePosition').find('.addBlock')
+
     // initialize the modal for deleting a block
     if ($('#confirmDeleteBlock').length > 0) {
       $('#confirmDeleteBlockSubmit').unbind('click').on('click', function (e) {
@@ -1085,6 +1088,11 @@ jsBackend.pages.extras = {
 
         // close dialog
         $('#confirmDeleteBlock').modal('hide')
+
+        // set focus to add block button
+        setTimeout(function () {
+          $templateAddBlock.focus()
+        },500)
       })
 
       $('#confirmDeleteBlock').modal('show')
