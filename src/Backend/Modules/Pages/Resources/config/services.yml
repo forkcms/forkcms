@@ -1,0 +1,6 @@
+services:
+    fork.pages.copy_module_to_other_locale:
+        class: Backend\Modules\Pages\Command\CopyModuleToOtherLocale
+        public: true
+        tags:
+            - { name: fork.copy_module_to_other_locale }
