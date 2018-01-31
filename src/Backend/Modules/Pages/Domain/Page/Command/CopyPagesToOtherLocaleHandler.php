@@ -23,12 +23,18 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleToOtherLocaleComm
         $fromLanguage = (string) $command->getFromLocale();
 
         // Get already copied ContentBlock ids
-        $contentBlockIds = $command->getPreviousResults()->getExtraIds('ContentBlocks');
-        $contentBlockOldIds = array_keys($contentBlockIds);
+        $hasContentBlocks = $command->getPreviousResults()->hasModule('ContentBlocks');
+        if ($hasContentBlocks) {
+            $contentBlockIds = $command->getPreviousResults()->getExtraIds('ContentBlocks');
+            $contentBlockOldIds = array_keys($contentBlockIds);
+        }
 
         // Get already copied Location ids
-        $locationWidgetIds = $command->getPreviousResults()->getExtraIds('Location');
-        $locationWidgetOldIds = array_keys($locationWidgetIds);
+        $hasLocations = $command->getPreviousResults()->hasModule('Location');
+        if ($hasLocations) {
+            $locationWidgetIds = $command->getPreviousResults()->getExtraIds('Location');
+            $locationWidgetOldIds = array_keys($locationWidgetIds);
+        }
 
         // get all old pages
         $ids = $database->getColumn(
@@ -85,7 +91,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleToOtherLocaleComm
         $database->delete('search_index', 'module = ? AND language = ?', ['pages', $toLanguage]);
 
         // get all active pages
-        $ids = BackendModel::getContainer()->get('database')->getColumn(
+        $ids = $database->getColumn(
             'SELECT id
              FROM pages AS i
              WHERE i.language = ? AND i.status = ?',
@@ -150,14 +156,18 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleToOtherLocaleComm
                 $block['created_on'] = BackendModel::getUTCDate();
                 $block['edited_on'] = BackendModel::getUTCDate();
 
-                // Overwrite the extra_id of the old content block with the id of the new one
-                if (in_array($block['extra_id'], $contentBlockOldIds)) {
-                    $block['extra_id'] = $contentBlockIds[$block['extra_id']];
+                if ($hasContentBlocks) {
+                    // Overwrite the extra_id of the old content block with the id of the new one
+                    if (in_array($block['extra_id'], $contentBlockOldIds)) {
+                        $block['extra_id'] = $contentBlockIds[$block['extra_id']];
+                    }
                 }
 
-                // Overwrite the extra_id of the old location widget with the id of the new one
-                if (in_array($block['extra_id'], $locationWidgetOldIds)) {
-                    $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
+                if ($hasLocations) {
+                    // Overwrite the extra_id of the old location widget with the id of the new one
+                    if (in_array($block['extra_id'], $locationWidgetOldIds)) {
+                        $block['extra_id'] = $locationWidgetIds[$block['extra_id']];
+                    }
                 }
 
                 // add block

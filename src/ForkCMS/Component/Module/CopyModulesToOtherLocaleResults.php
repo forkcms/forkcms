@@ -44,7 +44,7 @@ final class CopyModulesToOtherLocaleResults
     {
         if (!array_key_exists($moduleName, $map)) {
             throw new \Exception(
-                'The module "' . $moduleName . '" has not yet been copied.
+                'The module "' . $moduleName . '" has not yet been copied or is not installed.
                  You should increase the priority, if you want it to be executed before this handler.
                  Then you can access eventual ids.'
             );
@@ -57,16 +57,17 @@ final class CopyModulesToOtherLocaleResults
         return $map[$moduleName][$id];
     }
 
-    private function getValues(array $map, string $moduleName)
+    private function getValues(array $map, string $moduleName): array
     {
         if (!array_key_exists($moduleName, $map)) {
-            throw new \Exception(
-                'The module "' . $moduleName . '" has not yet been copied.
-                 You should increase the priority, if you want it to be executed before this handler.
-                 Then you can access eventual ids.'
-            );
+            return [];
         }
 
         return $map[$moduleName];
+    }
+
+    public function hasModule(string $moduleName): bool
+    {
+        return array_key_exists($moduleName, $this->idMap) || array_key_exists($moduleName, $this->extraIdMap);
     }
 }
