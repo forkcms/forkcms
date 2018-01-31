@@ -1,3 +1,9 @@
 imports:
   - { resource: commands.yml }
   - { resource: repositories.yml }
+
+services:
+    content_blocks.copy:
+        class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale
+        tags:
+            - { name: fork.copy_module_to_other_locale }
