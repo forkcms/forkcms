@@ -113,7 +113,7 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleToOtherLocaleComm
 
             // build page
             $page['id'] = $sourceData['id'];
-            $page['user_id'] = BackendAuthentication::getUser()->getUserId();
+            $page['user_id'] = $sourceData['user_id'];
             $page['parent_id'] = $sourceData['parent_id'];
             $page['template_id'] = $sourceData['template_id'];
             $page['meta_id'] = (int) $database->insert('meta', $meta);
