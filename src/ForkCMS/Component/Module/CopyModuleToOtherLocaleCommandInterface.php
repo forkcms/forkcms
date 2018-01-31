@@ -9,9 +9,9 @@ interface CopyModuleToOtherLocaleCommandInterface
     public function compare(CopyModuleToOtherLocaleCommandInterface $command);
     public function getExtraId($oldExtraId);
     public function getExtraIdMap(): array;
+    public function getFromLocale(): Locale;
     public function getId($oldId);
     public function getIdMap(): array;
-    public function getFromLocale(): Locale;
     public function getModuleName(): string;
     public function getPreviousResults(): CopyModulesToOtherLocaleResults;
     public function getPriority(): int;

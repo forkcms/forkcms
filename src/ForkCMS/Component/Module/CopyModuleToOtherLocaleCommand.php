@@ -57,6 +57,11 @@ abstract class CopyModuleToOtherLocaleCommand implements CopyModuleToOtherLocale
         return $this->extraIdMap;
     }
 
+    public function getFromLocale(): Locale
+    {
+        return $this->fromLocale;
+    }
+
     public function getId($oldId)
     {
         if (!array_key_exists($oldId, $this->idMap)) {
@@ -69,11 +74,6 @@ abstract class CopyModuleToOtherLocaleCommand implements CopyModuleToOtherLocale
     public function getIdMap(): array
     {
         return $this->idMap;
-    }
-
-    public function getFromLocale(): Locale
-    {
-        return $this->fromLocale;
     }
 
     abstract public function getModuleName(): string;
