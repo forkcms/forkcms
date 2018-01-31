@@ -99,13 +99,13 @@ class Model extends \Common\Core\Model
         }
 
         return self::get('router')->generate(
-            'backend',
-            [
-                '_locale' => $language,
-                'module' => self::camelCaseToLowerSnakeCase($module),
-                'action' => self::camelCaseToLowerSnakeCase($action),
-            ]
-        ) . $queryString;
+                'backend',
+                [
+                    '_locale' => $language,
+                    'module' => self::camelCaseToLowerSnakeCase($module),
+                    'action' => self::camelCaseToLowerSnakeCase($action),
+                ]
+            ) . $queryString;
     }
 
     /**
@@ -685,6 +685,22 @@ class Model extends \Common\Core\Model
                 'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
             ]
         );
+    }
+
+    /**
+     * This returns the identifier for the editor the logged in user prefers to use in forms.
+     *
+     * @return string
+     */
+    public static function getPreferredEditor(): string
+    {
+        $defaultPreferredEditor = self::getContainer()->getParameter('fork.default_preferred_editor');
+
+        if (!Authentication::isLoggedIn()) {
+            return $defaultPreferredEditor;
+        }
+
+        return Authentication::getUser()->getSetting('preferred_editor', $defaultPreferredEditor);
     }
 
     /**
