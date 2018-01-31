@@ -18,9 +18,6 @@ abstract class CopyModuleToOtherLocaleCommand implements CopyModuleToOtherLocale
     /** @var array this is used to be able to convert the old ids to the new ones if used in other places */
     private $extraIdMap;
 
-    /** @var string */
-    private $moduleName;
-
     /**
      * @var CopyModulesToOtherLocaleResults
      */
