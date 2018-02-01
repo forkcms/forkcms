@@ -12,6 +12,10 @@
         <translation language="nl"><![CDATA[van het volgende type:]]></translation>
         <translation language="ru"><![CDATA[со следующим типом:]]></translation>
       </item>
+      <item type="message" name="IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst">
+        <translation language="en"><![CDATA[If you want to crop an image you should check this checkbox first]]></translation>
+        <translation language="nl"><![CDATA[Als je een afbeelding wilt croppen moet je deze checkbox eerst aanvinken]]></translation>
+      </item>
       <item type="label" name="DropFilesHere">
         <translation language="en"><![CDATA[drop files here]]></translation>
         <translation language="nl"><![CDATA[sleep hier je bestanden]]></translation>
