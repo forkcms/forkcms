@@ -129,12 +129,12 @@
         <p>2) {{ 'msg.MediaChoseToUpload'|trans }}</p>
         <div class="form-group" data-role="cropper-is-mandatory-form-group">
           <div class="checkbox">
-            <label>
-              <input type="checkbox" data-role="enable-cropper-checkbox">
+            <label for="enableCropperCheckbox">
+              <input type="checkbox" data-role="enable-cropper-checkbox" aria-describedby="helpBlockEnableCropper" id="enableCropperCheckbox">
               {{ 'lbl.EnableCropper'|trans|ucfirst }}
-              <span class="help-block">{{ 'msg.IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst'|trans }}</span>
-              <span class="help-block hidden" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</span>
             </label>
+            <span class="help-block" id="helpBlockEnableCropper">{{ 'msg.IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst'|trans }}</span>
+            <span class="help-block hidden" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</span>
           </div>
         </div>
       </div>
