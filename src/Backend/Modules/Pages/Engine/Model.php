@@ -287,6 +287,9 @@ class Model
         self::buildCache($toLanguage);
     }
 
+    /**
+     * @deprecated We don't use this method anymore apparently
+     */
     public static function createHtml(
         string $navigationType = 'page',
         int $depth = 0,
