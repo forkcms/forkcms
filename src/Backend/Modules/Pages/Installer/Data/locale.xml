@@ -641,9 +641,9 @@
         <translation language="fr"><![CDATA[Ajouter des tags ici.]]></translation>
       </item>
       <item type="message" name="MovePagesNotPossible">
-        <translation language="nl"><![CDATA[Het verplaatsen van pagina's is niet mogelijk hier op touch-apparaten. Ga naar de tab instellingen bij het bewerken van een pagina om de pagina te verplaatsen.]]></translation>
-        <translation language="en"><![CDATA[Moving pages on touch devices is not possible here. Go to the settings tab when editing a page to move it.]]></translation>
-        <translation language="de"><![CDATA[Verschieben von Seiten auf Touch-Geräten ist nicht möglich hier. Wechseln Sie zum Tab Einstellungen, wenn Sie eine Seite bearbeiten, um die Seite zu verschieben.]]></translation>
+        <translation language="nl"><![CDATA[Het verplaatsen van pagina's is niet mogelijk op touch-apparaten. Ga naar de tab instellingen bij het bewerken van een pagina om de pagina te verplaatsen.]]></translation>
+        <translation language="en"><![CDATA[Moving pages on touch devices is not possible. Go to the settings tab when editing a page to move it.]]></translation>
+        <translation language="de"><![CDATA[Verschieben von Seiten auf Touch-Geräten ist nicht möglich. Wechseln Sie zum Tab Einstellungen, wenn Sie eine Seite bearbeiten, um die Seite zu verschieben.]]></translation>
       </item>
       <item type="error" name="CantAdd2Blocks">
         <translation language="nl"><![CDATA[Het is onmogelijk om 2 (of meer) modules aan dezelfde pagina te koppelen.]]></translation>
