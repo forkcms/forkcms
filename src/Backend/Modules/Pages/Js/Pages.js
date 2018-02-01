@@ -1401,6 +1401,8 @@ jsBackend.pages.tree = {
 
     // set the item selected
     if (typeof selectedId !== 'undefined') $('#' + selectedId).addClass('selected')
+
+    jsBackend.pages.tree.toggleJsTreeCollapse()
   },
 
   // before an item will be moved we have to do some checks
@@ -1497,6 +1499,25 @@ jsBackend.pages.tree = {
           jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title))
         }
       }
+    })
+  },
+
+  toggleJsTreeCollapse: function () {
+    $('[data-role="toggle-js-tree-collapse"]').on('click', function () {
+      var $this = $(this)
+      $this.toggleClass('tree-collapsed')
+      var collapsed = $this.hasClass('tree-collapsed')
+      var $buttonText = $('[data-role="toggle-js-tree-collapse-text"]')
+
+      if (collapsed) {
+        $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
+        $.tree.reference('#tree div').close_all()
+
+        return
+      }
+
+      $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
+      $.tree.reference('#tree div').open_all()
     })
   }
 }
