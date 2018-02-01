@@ -574,7 +574,7 @@ jsBackend.pages.extras = {
             $('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click()
           }
         }).modal('hide')
-        
+
         // set focus on position add block button
         setTimeout(function () {
           $('[data-position="' + position + '"]').find('.addBlock').focus()
