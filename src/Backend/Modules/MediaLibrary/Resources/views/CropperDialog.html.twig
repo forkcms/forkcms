@@ -8,22 +8,50 @@
       <div class="img-responsive" data-role="media-library-cropper-dialog-canvas-wrapper"></div>
     </div>
     <div class="modal-footer">
-      <div class="button-group pull-left">
-        <button type="button" class="btn btn-default" data-role="media-library-cropper-rotate" data-degrees="-90">
-          {{ macro.icon('rotate-left') }}<span class="sr-only">{{ 'lbl.RotateLeft'|trans|ucfirst }}</span>
-        </button>
-        <button type="button" class="btn btn-default" data-role="media-library-cropper-rotate" data-degrees="90">
-          {{ macro.icon('rotate-right') }}<span class="sr-only">{{ 'lbl.RotateRight'|trans|ucfirst }}</span>
-        </button>
-        <button type="button" class="btn btn-default" data-role="media-library-cropper-zoom" data-zoom="-0.05">
-          {{ macro.icon('search-minus') }}<span class="sr-only">{{ 'lbl.ZoomOut'|trans|ucfirst }}</span>
-        </button>
-        <button type="button" class="btn btn-default" data-role="media-library-cropper-zoom" data-zoom="0.05">
-          {{ macro.icon('search-plus') }}<span class="sr-only">{{ 'lbl.ZoomIn'|trans|ucfirst }}</span>
-        </button>
-        <button type="button" class="btn btn-warning" data-role="media-library-cropper-reset">
-          {{ macro.icon('refresh') }}<span class="sr-only">{{ 'lbl.Reset'|trans|ucfirst }}</span>
-        </button>
+      <div class="btn-toolbar pull-left" role="toolbar">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-rotate" data-degrees="-90">
+            {{ macro.icon('rotate-left') }}<span class="sr-only">{{ 'lbl.RotateLeft'|trans|ucfirst }}</span>
+          </button>
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-rotate" data-degrees="90">
+            {{ macro.icon('rotate-right') }}<span class="sr-only">{{ 'lbl.RotateRight'|trans|ucfirst }}</span>
+          </button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-zoom" data-zoom="-0.05">
+            {{ macro.icon('search-minus') }}<span class="sr-only">{{ 'lbl.ZoomOut'|trans|ucfirst }}</span>
+          </button>
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-zoom" data-zoom="0.05">
+            {{ macro.icon('search-plus') }}<span class="sr-only">{{ 'lbl.ZoomIn'|trans|ucfirst }}</span>
+          </button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-move" data-x="-10" data-y="0">
+            {{ macro.icon('arrow-left') }}<span class="sr-only">{{ 'lbl.MoveLeft'|trans|ucfirst }}</span>
+          </button>
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-move" data-x="10" data-y="0">
+            {{ macro.icon('arrow-right') }}<span class="sr-only">{{ 'lbl.MoveRight'|trans|ucfirst }}</span>
+          </button>
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-move" data-x="0" data-y="-10">
+            {{ macro.icon('arrow-up') }}<span class="sr-only">{{ 'lbl.MoveUp'|trans|ucfirst }}</span>
+          </button>
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-move" data-x="0" data-y="10">
+            {{ macro.icon('arrow-down') }}<span class="sr-only">{{ 'lbl.MoveDown'|trans|ucfirst }}</span>
+          </button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-flip" data-direction="horizontal">
+            {{ macro.icon('arrows-h') }}<span class="sr-only">{{ 'lbl.FlipHorizontal'|trans|ucfirst }}</span>
+          </button>
+          <button type="button" class="btn btn-default" data-role="media-library-cropper-flip" data-direction="vertical">
+            {{ macro.icon('arrows-v') }}<span class="sr-only">{{ 'lbl.FlipVertical'|trans|ucfirst }}</span>
+          </button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-warning" data-role="media-library-cropper-reset">
+            {{ macro.icon('refresh') }}<span class="sr-only">{{ 'lbl.Reset'|trans|ucfirst }}</span>
+          </button>
+        </div>
       </div>
       <button type="button" class="btn btn-primary" data-role="media-library-cropper-crop">
         {{ macro.icon('crop') }}{{ 'lbl.Crop'|trans|ucfirst }}
