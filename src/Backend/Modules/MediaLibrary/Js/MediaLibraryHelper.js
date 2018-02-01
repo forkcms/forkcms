@@ -1012,9 +1012,9 @@ jsBackend.mediaLibraryHelper.cropper = {
       jsBackend.mediaLibraryHelper.cropper.getZoomEventFunction()
     )
     $dialog.find('[data-role=media-library-cropper-reset]')
-    .off('click.media-library-cropper.zoom')
+    .off('click.media-library-cropper.reset')
     .on(
-      'click.media-library-cropper.zoom',
+      'click.media-library-cropper.reset',
       jsBackend.mediaLibraryHelper.cropper.getResetEventFunction()
     )
   }
