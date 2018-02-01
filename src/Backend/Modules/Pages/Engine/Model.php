@@ -1059,6 +1059,52 @@ class Model
         return $html;
     }
 
+    private static function pageIsChildOfParent(array $navigation, int $childId, int $parentId): bool
+    {
+        if (isset($navigation['page'][$parentId]) && !empty($navigation['page'][$parentId])) {
+            foreach ($navigation['page'][$parentId] as $page) {
+                if ($page['page_id'] === $childId) {
+                    return true;
+                }
+
+                if (self::pageIsChildOfParent($navigation, $childId, $page['page_id'])) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static function getTreeNameForPageId(int $pageId): ?string
+    {
+        $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
+
+        if ($pageId === BackendModel::HOME_PAGE_ID || self::pageIsChildOfParent($navigation, $pageId, BackendModel::HOME_PAGE_ID)) {
+            return 'main';
+        }
+
+        $treeNames = ['footer', 'root'];
+
+        // only show meta if needed
+        if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
+            $treeNames[] = 'meta';
+        }
+
+        foreach ($treeNames as $treeName) {
+            if (isset($navigation[$treeName][0]) && !empty($navigation[$treeName][0])) {
+                // loop the items
+                foreach ($navigation[$treeName][0] as $page) {
+                    if ($pageId === $page['page_id'] || self::pageIsChildOfParent($navigation, $pageId, $page['page_id'])) {
+                        return $treeName;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     public static function getTypes(): array
     {
         return [
