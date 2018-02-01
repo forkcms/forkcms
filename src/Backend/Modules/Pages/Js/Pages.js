@@ -308,6 +308,9 @@ jsBackend.pages.extras = {
     // fetch block index
     var index = $(this).closest('*[data-block-id]').data('block-id')
 
+    // fetch block position
+    var $templatePosition = $(this).closest('.templatePosition')
+
     // save unaltered content
     var previousContent = $('#blockHtml' + index).val()
 
@@ -329,6 +332,11 @@ jsBackend.pages.extras = {
 
       // close dialog
       $('#blockHtml').modal('hide')
+
+      // set focus on position add block button
+      setTimeout(function () {
+        $templatePosition.find('.addBlock').focus()
+      },500)
     })
 
     $('#blockHtmlCancel').unbind('click').on('click', function (e) {
@@ -339,6 +347,11 @@ jsBackend.pages.extras = {
 
       // close the dialog
       $('#blockHtml').modal('hide')
+
+      // set focus on position add block button
+      setTimeout(function () {
+        $templatePosition.find('.addBlock').focus()
+      },500)
     })
 
     $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
@@ -561,6 +574,11 @@ jsBackend.pages.extras = {
             $('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click()
           }
         }).modal('hide')
+        
+        // set focus on position add block button
+        setTimeout(function () {
+          $('[data-position="' + position + '"]').find('.addBlock').focus()
+        },500)
 
         // if the added block was an editor, show the editor immediately
         if (!isUserTemplate && index && !(typeof extrasById !== 'undefined' && typeof extrasById[selectedExtraId] !== 'undefined')) {
@@ -577,6 +595,9 @@ jsBackend.pages.extras = {
 
     // fetch block index
     var index = $(this).parent().parent().attr('data-block-id')
+
+    // fetch block position
+    var $templatePosition = $(this).closest('.templatePosition')
 
     // fetch user template id
     var userTemplateId = $('#blockExtraId' + index).val()
@@ -630,6 +651,11 @@ jsBackend.pages.extras = {
       jsBackend.pages.template.original = false
 
       $('#addUserTemplate').modal('hide')
+
+      // set focus on position add block button
+      setTimeout(function () {
+        $templatePosition.find('.addBlock').focus()
+      },500)
     })
     $modal.off('hidden.bs.modal').on('hidden.bs.modal', function () {
       // the ajax file uploader inserts an input field in the body, remove it
