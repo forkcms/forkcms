@@ -1247,6 +1247,12 @@ class Model
         $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
         $language = $language ?? BL::getWorkingLanguage();
 
+        // When dropping on the main navigation it should be added as a child of the home page
+        if ($tree === 'main' && $droppedOnPageId === 0) {
+            $droppedOnPageId = BackendModel::HOME_PAGE_ID;
+            $typeOfDrop = self::TYPE_OF_DROP_INSIDE;
+        }
+
         // reset type of drop for special pages
         if ($droppedOnPageId === BackendModel::HOME_PAGE_ID || $droppedOnPageId === self::NO_PARENT_PAGE_ID) {
             $typeOfDrop = self::TYPE_OF_DROP_INSIDE;
