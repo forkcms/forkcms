@@ -109,3 +109,13 @@
 a.btn {
   text-decoration: none;
 }
+
+.btn-toolbar .btn-group {
+  .btn {
+    margin-bottom: 6px;
+  }
+
+  & + .btn-group {
+    margin-left: 1em;
+  }
+}
