@@ -976,6 +976,14 @@ jsBackend.mediaLibraryHelper.cropper = {
     }
   },
 
+  getMoveEventFunction: function () {
+    return function () {
+      var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
+      $cropper.cropper('move', $(this).data('x'), $(this).data('y'))
+      $cropper.cropper('crop')
+    }
+  },
+
   getFlipEventFunction: function () {
     return function () {
       var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
@@ -1044,6 +1052,12 @@ jsBackend.mediaLibraryHelper.cropper = {
     .on(
       'click.media-library-cropper.flip',
       jsBackend.mediaLibraryHelper.cropper.getFlipEventFunction()
+    )
+    $dialog.find('[data-role=media-library-cropper-move]')
+    .off('click.media-library-cropper.move')
+    .on(
+      'click.media-library-cropper.move',
+      jsBackend.mediaLibraryHelper.cropper.getMoveEventFunction()
     )
   }
 }
