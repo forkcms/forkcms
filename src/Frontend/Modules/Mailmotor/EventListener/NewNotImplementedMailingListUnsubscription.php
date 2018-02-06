@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Mailmotor\EventListener;
 
 use Common\Language;
-use Common\Mailer\Message;
+use App\Service\Mailer\Message;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedUnsubscribedEvent;
 use Swift_Mailer;
 use Common\ModulesSettings;

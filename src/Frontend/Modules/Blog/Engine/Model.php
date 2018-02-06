@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Blog\Engine;
 
-use Common\Mailer\Message;
+use App\Service\Mailer\Message;
 use Doctrine\ORM\NoResultException;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
