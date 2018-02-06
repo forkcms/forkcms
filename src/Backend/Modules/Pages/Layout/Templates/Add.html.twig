@@ -227,8 +227,8 @@
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst) }}
         </div>
         <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', 'id="saveAsDraft"' ) }}
-          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddPage'|trans|ucfirst, 'btn-primary', 'id="addButton" type="submit" name="add"' ) }}
+          {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', { "id":"saveAsDraft" } ) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddPage'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" } ) }}
         </div>
       </div>
     </div>
