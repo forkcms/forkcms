@@ -3,7 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
-use Common\Exception\RedirectException;
+use App\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Exception;
+namespace App\Exception;
 
 use Common\ModuleExtraType;
 use Exception;

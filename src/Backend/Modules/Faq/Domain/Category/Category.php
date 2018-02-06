@@ -3,7 +3,7 @@
 namespace Backend\Modules\Faq\Domain\Category;
 
 use Common\Doctrine\Entity\Meta;
-use Common\Exception\CanNotSetExtraIdException;
+use App\Exception\CanNotSetExtraIdException;
 use Common\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

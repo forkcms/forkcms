@@ -9,7 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFoun
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
-use Common\Exception\AjaxExitException;
+use App\Exception\AjaxExitException;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 
