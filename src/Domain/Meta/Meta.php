@@ -1,15 +1,15 @@
 <?php
 
-namespace Common\Doctrine\Entity;
+namespace App\Domain\Meta;
 
 use Backend\Core\Engine\Meta as BackendMeta;
-use Common\Doctrine\ValueObject\SEOFollow;
-use Common\Doctrine\ValueObject\SEOIndex;
+use App\Domain\Meta\SEOFollow;
+use App\Domain\Meta\SEOIndex;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="meta", indexes={@ORM\Index(name="idx_url", columns={"url"})})
- * @ORM\Entity(repositoryClass="Common\Doctrine\Repository\MetaRepository")
+ * @ORM\Entity(repositoryClass="App\Domain\Meta\MetaRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Meta

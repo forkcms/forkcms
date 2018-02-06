@@ -3,7 +3,7 @@
 namespace Backend\Modules\Blog\Tests\Engine;
 
 use Backend\Modules\Blog\Engine\Model;
-use Common\Doctrine\Entity\Meta;
+use App\Domain\Meta\Meta;
 use Common\WebTestCase;
 
 class ModelTest extends WebTestCase
