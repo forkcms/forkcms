@@ -2,7 +2,7 @@
 
 namespace Common;
 
-use App\Exception\InvalidModuleExtraType;
+use Common\Exception\InvalidModuleExtraType;
 
 final class ModuleExtraType
 {
