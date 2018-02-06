@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Tests\Core\Header;
+namespace App\Tests\Component\Header;
 
-use Common\Core\Header\JsData;
+use App\Component\Header\JsData;
 use PHPUnit\Framework\TestCase;
 
 class JsDataTest extends TestCase
