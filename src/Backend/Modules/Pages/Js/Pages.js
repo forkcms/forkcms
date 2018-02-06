@@ -333,10 +333,10 @@ jsBackend.pages.extras = {
       // close dialog
       $('#blockHtml').modal('hide')
 
-      // set focus on position add block button
-      setTimeout(function () {
+      // set focus on position add block button after the modal is closed
+      $('#blockHtml').on('hidden.bs.modal', function (e) {
         $templatePosition.find('.addBlock').focus()
-      },500)
+      })
     })
 
     $('#blockHtmlCancel').unbind('click').on('click', function (e) {
@@ -348,10 +348,10 @@ jsBackend.pages.extras = {
       // close the dialog
       $('#blockHtml').modal('hide')
 
-      // set focus on position add block button
-      setTimeout(function () {
+      // set focus on position add block button after the modal is closed
+      $('#blockHtml').on('hidden.bs.modal', function (e) {
         $templatePosition.find('.addBlock').focus()
-      },500)
+      })
     })
 
     $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
@@ -575,10 +575,10 @@ jsBackend.pages.extras = {
           }
         }).modal('hide')
 
-        // set focus on position add block button
-        setTimeout(function () {
+        // set focus on position add block button after the modal is closed
+        $('#addBlock').on('hidden.bs.modal', function (e) {
           $('[data-position="' + position + '"]').find('.addBlock').focus()
-        },500)
+        })
 
         // if the added block was an editor, show the editor immediately
         if (!isUserTemplate && index && !(typeof extrasById !== 'undefined' && typeof extrasById[selectedExtraId] !== 'undefined')) {
@@ -652,10 +652,10 @@ jsBackend.pages.extras = {
 
       $('#addUserTemplate').modal('hide')
 
-      // set focus on position add block button
-      setTimeout(function () {
+      // set focus on position add block button after the modal is closed
+      $('#addUserTemplate').on('hidden.bs.modal', function (e) {
         $templatePosition.find('.addBlock').focus()
-      },500)
+      })
     })
     $modal.off('hidden.bs.modal').on('hidden.bs.modal', function () {
       // the ajax file uploader inserts an input field in the body, remove it
@@ -1115,10 +1115,10 @@ jsBackend.pages.extras = {
         // close dialog
         $('#confirmDeleteBlock').modal('hide')
 
-        // set focus to add block button
-        setTimeout(function () {
+        // set focus to add block button after modal is closed
+        $('#confirmDeleteBlock').on('hidden.bs.modal', function (e) {
           $templateAddBlock.focus()
-        },500)
+        })
       })
 
       $('#confirmDeleteBlock').modal('show')
