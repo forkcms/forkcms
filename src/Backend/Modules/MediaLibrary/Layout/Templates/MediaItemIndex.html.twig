@@ -78,17 +78,11 @@
               <div class="btn-group pull-left" role="group">
                 {% if showMediaLibraryMediaFolderDelete %}
                   {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
-                    <button type="button" class="btn btn-danger" id="media-folder-delete" data-toggle="modal" data-target="#confirmMediaFolderDelete">
-                      {{ macro.icon('trash-o') }}
-                      {{ 'lbl.MediaFolderDelete'|trans|ucfirst }}
-                    </button>
+                    {{ macro.buttonIcon('', 'trash-o', 'lbl.MediaFolderDelete'|trans|ucfirst, 'btn-danger', { "id":"media-folder-delete", "data-toggle":"modal", "data-target":"#confirmMediaFolderDelete", "type":"button" } ) }}
                   {% endif %}
                 {% endif %}
                 {% if showMediaLibraryMediaFolderEdit %}
-                  <button type="button" class="btn" id="media-folder-edit" data-toggle="modal" data-target="#editMediaFolderDialog">
-                    {{ macro.icon('pencil') }}
-                    {{ 'lbl.EditMediaFolder'|trans|ucfirst }}
-                  </button>
+                  {{ macro.buttonIcon('', 'pencil', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-default', { "id":"media-folder-edit", "data-toggle":"modal", "data-target":"#editMediaFolderDialog", "type":"button" } ) }}
                 {% endif %}
               </div>
             {% endif %}
@@ -111,12 +105,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
-            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-          </button>
-          <a href="{{ geturl('MediaItemCleanup') }}" class="btn btn-danger">
-            {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-          </a>
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+          {{ macro.buttonIcon(geturl('MediaItemCleanup'), 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger') }}
         </div>
       </div>
     </div>
@@ -140,12 +130,8 @@
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
-            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-          </button>
-          <button type="submit" class="btn btn-primary">
-            {{ macro.icon('check') }}{{ 'lbl.Move'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+          {{ macro.buttonIcon('', 'check', 'lbl.Move'|trans|ucfirst, 'btn-primary', { "type":"submit" } ) }}
         </div>
       </div>
     </div>
@@ -177,12 +163,8 @@
             {% endif %}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <a href="{{ geturl('MediaFolderDelete') }}&amp;id={{ mediaFolder.id }}" class="btn btn-danger">
-              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-            </a>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon(geturl('MediaFolderDelete') ~ '&id=' ~ mediaFolder.id, 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger') }}
           </div>
         </div>
       </div>
@@ -209,12 +191,8 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button id="editMediaFolderSubmit" type="submit" name="edit" class="btn btn-primary">
-              {{ macro.icon('check') }}{{ 'lbl.Save'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'check', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editMediaFolderSubmit", 'type':"submit", "name":"edit" } ) }}
           </div>
         </div>
       </div>

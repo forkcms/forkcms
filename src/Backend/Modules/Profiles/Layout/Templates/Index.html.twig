@@ -44,10 +44,7 @@
         <div class="panel-footer">
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
-              <button id="search" type="submit" class="btn btn-primary" name="search">
-                {{ macro.icon('refresh') }}&nbsp;
-                {{ 'lbl.UpdateFilter'|trans|ucfirst }}
-              </button>
+              {{ macro.buttonIcon('', 'refresh', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"search", "name":"search" }) }}
             </div>
           </div>
         </div>
@@ -80,12 +77,8 @@
                 <p>{{ 'msg.ConfirmMassDelete'|trans }}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                <button type="submit" class="btn btn-danger">
-                  {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-                </button>
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal" }) }}
+                {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" }) }}
               </div>
             </div>
           </div>
@@ -103,12 +96,8 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                <button type="submit" class="btn btn-primary">
-                  {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}
-                </button>
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal" }) }}
+                {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"submit" }) }}
               </div>
             </div>
           </div>

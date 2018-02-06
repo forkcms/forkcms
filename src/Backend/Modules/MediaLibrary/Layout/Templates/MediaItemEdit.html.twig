@@ -48,17 +48,12 @@
         <div class="btn-group pull-left" role="group">
           {% if showMediaLibraryMediaItemDelete %}
             {% if mediaItem.groups.count == 0 %}
-              <button type="button" class="btn btn-danger" id="blog-delete" data-toggle="modal" data-target="#confirmDelete">
-                {{ macro.icon('trash-o') }}
-                {{ 'lbl.Delete'|trans|ucfirst }}
-              </button>
+              {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete", "id":"blog-delete" } ) }}
             {% endif %}
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            {{ macro.icon('check') }}{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'check', 'lbl.Save'|trans|ucfirst, 'btn-default', { "id":"editButton", "type":"submit", "name":"edit" } ) }}
         </div>
       </div>
     </div>
@@ -79,12 +74,8 @@
             <p>{{ 'msg.ConfirmMediaItemDelete'|trans|format(mediaItem.title)|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" } ) }}
           </div>
         </div>
       </div>
