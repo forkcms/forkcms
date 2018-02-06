@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core;
+namespace App\Component;
 
 use Symfony\Component\HttpFoundation\Cookie as SymfonyCookie;
 use Symfony\Component\HttpFoundation\Response;
