@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core\Twig\Extensions;
+namespace App\Twig\Extensions;
 
 use SpoonFilter;
 

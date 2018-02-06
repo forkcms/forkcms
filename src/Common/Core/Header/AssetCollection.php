@@ -2,7 +2,7 @@
 
 namespace Common\Core\Header;
 
-use Common\Core\Twig\BaseTwigTemplate;
+use App\Twig\BaseTwigTemplate;
 
 final class AssetCollection
 {

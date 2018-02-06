@@ -9,7 +9,7 @@ use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Frontend\Core\Language\Language;
 use Frontend\Core\Language\Locale;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
-use Common\Core\Twig\Extensions\BaseTwigModifiers;
+use App\Twig\Extensions\BaseTwigModifiers;
 use SpoonDate;
 
 /**
