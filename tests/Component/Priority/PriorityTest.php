@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Tests\Core\Header;
+namespace App\Tests\Component\Priority;
 
 use App\Component\Priority\Priority;
 use PHPUnit\Framework\TestCase;
