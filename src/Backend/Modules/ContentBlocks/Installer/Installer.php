@@ -14,8 +14,8 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('ContentBlocks');
+        $this->addEntity(ContentBlock::class);
         $this->importLocale(__DIR__ . '/Data/locale.xml');
-        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -41,11 +41,6 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'Delete');
         $this->setActionRights(1, $this->getModule(), 'Edit');
         $this->setActionRights(1, $this->getModule(), 'Index');
-    }
-
-    private function configureEntities(): void
-    {
-        Model::get('fork.entity.create_schema')->forEntityClass(ContentBlock::class);
     }
 
     private function configureSettings(): void

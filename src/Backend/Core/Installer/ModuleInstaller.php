@@ -2,6 +2,7 @@
 
 namespace Backend\Core\Installer;
 
+use App\Service\Doctrine\EntitySchema;
 use Backend\Core\Engine\Model;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
@@ -23,6 +24,13 @@ class ModuleInstaller
      * @var SpoonDatabase
      */
     private $database;
+
+    /**
+     * Entity schema
+     *
+     * @var EntitySchema
+     */
+    private $entitySchema;
 
     /**
      * The module name.
@@ -85,13 +93,15 @@ class ModuleInstaller
         array $languages,
         array $interfaceLanguages,
         bool $example = false,
-        array $variables = []
+        array $variables = [],
+        EntitySchema $entitySchema
     ) {
         $this->database = $database;
         $this->languages = $languages;
         $this->interfaceLanguages = $interfaceLanguages;
         $this->example = $example;
         $this->variables = $variables;
+        $this->entitySchema = $entitySchema;
     }
 
     /**
@@ -103,6 +113,16 @@ class ModuleInstaller
     protected function addDefaultExtra(int $extraId, string $position): void
     {
         $this->defaultExtras[] = ['id' => $extraId, 'position' => $position];
+    }
+
+    public function addEntities(array $entityClasses): void
+    {
+        $this->entitySchema->createForEntityClasses($entityClasses);
+    }
+
+    public function addEntity(string $entityClass): void
+    {
+        $this->entitySchema->createForEntityClass($entityClass);
     }
 
     /**

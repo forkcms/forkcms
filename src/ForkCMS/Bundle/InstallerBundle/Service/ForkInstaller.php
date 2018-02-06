@@ -187,7 +187,8 @@ class ForkInstaller
                     $data->getLanguages(),
                     $data->getInterfaceLanguages(),
                     $data->hasExampleData(),
-                    $this->getInstallerData($data)
+                    $this->getInstallerData($data),
+                    $this->container->get('fork.doctrine.entity_schema')
                 );
 
                 // install the module

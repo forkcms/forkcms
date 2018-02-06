@@ -18,8 +18,13 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('MediaLibrary');
+        $this->addEntities([
+            MediaFolder::class,
+            MediaGroup::class,
+            MediaGroupMediaItem::class,
+            MediaItem::class,
+        ]);
         $this->importLocale(__DIR__ . '/Data/locale.xml');
-        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -79,18 +84,6 @@ class Installer extends ModuleInstaller
         $this->configureBackendActionRightsForMediaFolder();
         $this->configureBackendActionRightsForMediaItem();
         $this->configureBackendActionRightsForMediaBrowser();
-    }
-
-    private function configureEntities(): void
-    {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
-            [
-                MediaFolder::class,
-                MediaGroup::class,
-                MediaGroupMediaItem::class,
-                MediaItem::class,
-            ]
-        );
     }
 
     protected function configureSettings(): void
