@@ -3,7 +3,7 @@
 namespace Backend\Modules\Tags\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * Installer for the tags module
@@ -43,9 +43,9 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->tagsBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), $this->getModule());
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'TagCloud', 'TagCloud');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Related', 'Related');
+        $this->tagsBlockId = $this->insertExtra($this->getModule(), Type::block(), $this->getModule());
+        $this->insertExtra($this->getModule(), Type::widget(), 'TagCloud', 'TagCloud');
+        $this->insertExtra($this->getModule(), Type::widget(), 'Related', 'Related');
     }
 
     private function configureFrontendPages(): void
@@ -77,7 +77,7 @@ class Installer extends ModuleInstaller
         // @todo: Replace with a ModuleExtraRepository method when it exists.
         return (int) $this->getDatabase()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::widget(), 'Form']
+            ['Search', Type::widget(), 'Form']
         );
     }
 

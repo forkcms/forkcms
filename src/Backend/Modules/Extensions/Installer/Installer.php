@@ -3,7 +3,7 @@
 namespace Backend\Modules\Extensions\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * Installer for the extensions module.
@@ -93,7 +93,7 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form');
+        $this->insertExtra('Search', Type::widget(), 'SearchForm', 'Form');
     }
 
     private function configureFrontendForkTheme(): void

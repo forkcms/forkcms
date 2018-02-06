@@ -4,7 +4,7 @@ namespace Backend\Modules\FormBuilder\Engine;
 
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 use Frontend\Core\Language\Language as FL;
 use Symfony\Component\Finder\Finder;
 
@@ -493,7 +493,7 @@ class Model
 
         // insert extra
         BackendModel::insertExtra(
-            ModuleExtraType::widget(),
+            Type::widget(),
             'FormBuilder',
             'Form',
             'FormBuilder',

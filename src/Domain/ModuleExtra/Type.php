@@ -1,10 +1,10 @@
 <?php
 
-namespace Common;
+namespace App\Domain\ModuleExtra;
 
-use Common\Exception\InvalidModuleExtraType;
+use App\Domain\ModuleExtra\Exception\InvalidType;
 
-final class ModuleExtraType
+final class Type
 {
     private const BLOCK = 'block';
     private const HOMEPAGE = 'homepage';
@@ -21,12 +21,12 @@ final class ModuleExtraType
     /**
      * @param string $type
      *
-     * @throws InvalidModuleExtraType
+     * @throws InvalidType
      */
     public function __construct(string $type)
     {
         if (!in_array($type, self::POSSIBLE_TYPES, true)) {
-            throw InvalidModuleExtraType::withType($type);
+            throw InvalidType::for($type);
         }
 
         $this->type = $type;

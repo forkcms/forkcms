@@ -3,7 +3,7 @@
 namespace Backend\Modules\Mailmotor\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * Installer for the Mailmotor module
@@ -45,9 +45,9 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->subscribeBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'SubscribeForm', 'Subscribe');
-        $this->unsubscribeBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'UnsubscribeForm', 'Unsubscribe');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SubscribeForm', 'Subscribe');
+        $this->subscribeBlockId = $this->insertExtra($this->getModule(), Type::block(), 'SubscribeForm', 'Subscribe');
+        $this->unsubscribeBlockId = $this->insertExtra($this->getModule(), Type::block(), 'UnsubscribeForm', 'Unsubscribe');
+        $this->insertExtra($this->getModule(), Type::widget(), 'SubscribeForm', 'Subscribe');
     }
 
     private function configureFrontendPages(): void

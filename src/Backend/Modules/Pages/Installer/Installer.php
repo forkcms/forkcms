@@ -5,7 +5,7 @@ namespace Backend\Modules\Pages\Installer;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * Installer for the pages module
@@ -59,119 +59,119 @@ class Installer extends ModuleInstaller
     {
         // insert/get extra ids
         $extras = [];
-        $extras['blog_block'] = $this->insertExtra('Blog', ModuleExtraType::block(), 'Blog');
+        $extras['blog_block'] = $this->insertExtra('Blog', Type::block(), 'Blog');
         $extras['blog_widget_recent_comments'] = $this->insertExtra(
             'Blog',
-            ModuleExtraType::widget(),
+            Type::widget(),
             'RecentComments',
             'RecentComments'
         );
         $extras['blog_widget_categories'] = $this->insertExtra(
             'Blog',
-            ModuleExtraType::widget(),
+            Type::widget(),
             'Categories',
             'Categories'
         );
-        $extras['blog_widget_archive'] = $this->insertExtra('Blog', ModuleExtraType::widget(), 'Archive', 'Archive');
+        $extras['blog_widget_archive'] = $this->insertExtra('Blog', Type::widget(), 'Archive', 'Archive');
         $extras['blog_widget_recent_articles_full'] = $this->insertExtra(
             'Blog',
-            ModuleExtraType::widget(),
+            Type::widget(),
             'RecentArticlesFull',
             'RecentArticlesFull'
         );
         $extras['blog_widget_recent_articles_list'] = $this->insertExtra(
             'Blog',
-            ModuleExtraType::widget(),
+            Type::widget(),
             'RecentArticlesList',
             'RecentArticlesList'
         );
         if (in_array('Faq', $this->getVariable('selected_modules'))) {
-            $extras['faq_block'] = $this->insertExtra('Faq', ModuleExtraType::block(), 'Faq');
+            $extras['faq_block'] = $this->insertExtra('Faq', Type::block(), 'Faq');
         }
         if (in_array('Mailmotor', $this->getVariable('selected_modules'))) {
             $extras['mailmotor_subscribe'] = $this->insertExtra(
                 'Mailmotor',
-                ModuleExtraType::block(),
+                Type::block(),
                 'SubscribeForm',
                 'Subscribe'
             );
             $extras['mailmotor_unsubscribe'] = $this->insertExtra(
                 'Mailmotor',
-                ModuleExtraType::block(),
+                Type::block(),
                 'UnsubscribeForm',
                 'Unsubscribe'
             );
         }
-        $extras['tags_block'] = $this->insertExtra('Tags', ModuleExtraType::block(), 'Tags');
+        $extras['tags_block'] = $this->insertExtra('Tags', Type::block(), 'Tags');
         if (in_array('Profiles', $this->getVariable('selected_modules'))) {
             $extras['profiles_forgot_password'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::block(),
+                Type::block(),
                 'ForgotPassword',
                 'ForgotPassword'
             );
             $extras['profiles_block'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::block(),
+                Type::block(),
                 'Dashboard'
             );
             $extras['profiles_login'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::block(),
+                Type::block(),
                 'Login',
                 'Login'
             );
             $extras['profiles_logout'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::block(),
+                Type::block(),
                 'Logout',
                 'Logout'
             );
             $extras['profiles_change_email'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::block(),
+                Type::block(),
                 'ChangeEmail',
                 'ChangeEmail'
             );
             $extras['profiles_change_password'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::block(),
+                Type::block(),
                 'ChangePassword',
                 'ChangePassword'
             );
             $extras['profiles_settings'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::block(),
+                Type::block(),
                 'Settings',
                 'Settings'
             );
             $extras['profiles_register'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::block(),
+                Type::block(),
                 'Register',
                 'Register'
             );
             $extras['profiles_resend_activation'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::block(),
+                Type::block(),
                 'ResendActivation',
                 'ResendActivation'
             );
             $extras['profiles_login_box'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::widget(),
+                Type::widget(),
                 'LoginBox',
                 'LoginBox'
             );
             $extras['profiles_login_link'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::widget(),
+                Type::widget(),
                 'LoginLink',
                 'LoginLink'
             );
             $extras['profiles_secure_page'] = $this->insertExtra(
                 'Profiles',
-                ModuleExtraType::widget(),
+                Type::widget(),
                 'SecurePage',
                 'SecurePage'
             );
@@ -392,17 +392,17 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->extraIds['search'] = $this->insertExtra('Search', ModuleExtraType::block(), 'Search');
-        $this->extraIds['search_form'] = $this->insertExtra('Search', ModuleExtraType::widget(), 'SearchForm', 'Form');
-        $this->extraIds['sitemap'] = $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Sitemap', 'Sitemap');
+        $this->extraIds['search'] = $this->insertExtra('Search', Type::block(), 'Search');
+        $this->extraIds['search_form'] = $this->insertExtra('Search', Type::widget(), 'SearchForm', 'Form');
+        $this->extraIds['sitemap'] = $this->insertExtra($this->getModule(), Type::widget(), 'Sitemap', 'Sitemap');
         $this->extraIds['subpages'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::widget(),
+            Type::widget(),
             'Subpages',
             'Subpages',
             ['template' => 'SubpagesDefault.html.twig']
         );
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Navigation', 'PreviousNextNavigation');
+        $this->insertExtra($this->getModule(), Type::widget(), 'Navigation', 'PreviousNextNavigation');
     }
 
     private function configureFrontendPages(): void
