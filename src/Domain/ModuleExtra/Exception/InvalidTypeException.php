@@ -5,7 +5,7 @@ namespace App\Domain\ModuleExtra\Exception;
 use App\Domain\ModuleExtra\Type;
 use Exception;
 
-final class InvalidType extends Exception
+final class InvalidTypeException extends Exception
 {
     public static function for(string $type): self
     {

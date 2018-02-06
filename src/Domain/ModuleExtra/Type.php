@@ -2,7 +2,7 @@
 
 namespace App\Domain\ModuleExtra;
 
-use App\Domain\ModuleExtra\Exception\InvalidType;
+use App\Domain\ModuleExtra\Exception\InvalidTypeException;
 
 final class Type
 {
@@ -21,12 +21,12 @@ final class Type
     /**
      * @param string $type
      *
-     * @throws InvalidType
+     * @throws InvalidTypeException
      */
     public function __construct(string $type)
     {
         if (!in_array($type, self::POSSIBLE_TYPES, true)) {
-            throw InvalidType::for($type);
+            throw InvalidTypeException::for($type);
         }
 
         $this->type = $type;
