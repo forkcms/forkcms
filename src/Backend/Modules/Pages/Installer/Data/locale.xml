@@ -68,9 +68,9 @@
         <translation language="fr"><![CDATA[ajouter une sous-page]]></translation>
       </item>
       <item type="label" name="ToggleAddPageDropdown">
-        <translation language="nl"><![CDATA[wissel pagina toevoegen dropdown]]></translation>
-        <translation language="en"><![CDATA[toggle add page dropdown]]></translation>
-        <translation language="fr"><![CDATA[basculer ajouter la page déroulante]]></translation>
+        <translation language="nl"><![CDATA[meer opties voor pagina toevoegen]]></translation>
+        <translation language="en"><![CDATA[add more options for page]]></translation>
+        <translation language="fr"><![CDATA[ajouter plus d'options pour la page]]></translation>
       </item>
       <item type="label" name="ChangeTemplate">
         <translation language="nl"><![CDATA[Wijzig template]]></translation>
