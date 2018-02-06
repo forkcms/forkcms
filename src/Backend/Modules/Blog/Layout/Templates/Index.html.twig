@@ -32,10 +32,7 @@
 
       <div class="btn-toolbar">
         <div class="btn-group pull-right">
-          <button id="search" type="submit" class="btn btn-primary" name="search">
-            {{ macro.icon('refresh') }}&nbsp;
-            {{ 'lbl.UpdateFilter'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'refresh', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary', { "type":"submit", "name":"search", "id":"search" }) }}
         </div>
       </div>
       {% endform %}

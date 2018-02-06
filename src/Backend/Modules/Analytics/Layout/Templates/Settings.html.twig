@@ -122,9 +122,7 @@
         {% endif %}
         {% if not profile and (noAccounts == false or noAccounts is not defined) %}
           <div class="btn-group pull-right" role="group">
-            <button id="save" type="submit" name="save" class="btn btn-primary">
-              {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
           </div>
         {% endif %}
       </div>

@@ -224,15 +224,11 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group" role="group">
-          {{ macro.cancelButton(geturl('Index')) }}
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst) }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="saveAsDraft" class="btn btn-default">
-            {{ macro.icon('file-o') }}{{ 'lbl.SaveDraft'|trans|ucfirst }}
-          </button>
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            {{ macro.icon('plus-square') }}{{ 'lbl.AddPage'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', 'id="saveAsDraft"' ) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddPage'|trans|ucfirst, 'btn-primary', 'id="addButton" type="submit" name="add"' ) }}
         </div>
       </div>
     </div>
@@ -313,11 +309,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
-            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-          </button>
-          <button id="addBlockSubmit" type="button" class="btn btn-primary">
-            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}</button>
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-default', { "type":"button", "id":"addBlockSubmit" }) }}
         </div>
       </div>
     </div>
@@ -336,12 +329,8 @@
           <div id="userTemplatePlaceholder"></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
-            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|capitalize }}
-          </button>
-          <button type="button" class="btn btn-primary js-submit-user-template">
-            {{ macro.icon('check') }}{{ 'lbl.OK'|trans|capitalize }}
-          </button>
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+          {{ macro.buttonIcon('', 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary js-submit-user-template') }}
         </div>
       </div>
     </div>
@@ -383,12 +372,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
-            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-          </button>
-          <button id="changeTemplateSubmit" type="button" class="btn btn-primary">
-            {{ macro.icon('check') }}{{ 'lbl.OK'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+          {{ macro.buttonIcon('', 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary', { "type":"button", "id":"changeTemplateSubmit" }) }}
         </div>
       </div>
     </div>
@@ -405,12 +390,8 @@
           <p>{{ 'msg.ConfirmDeleteBlock'|trans }}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
-            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-          </button>
-          <button id="confirmDeleteBlockSubmit" type="button" class="btn btn-danger">
-            {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+          {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "id":"confirmDeleteBlockSubmit" }) }}
         </div>
       </div>
     </div>
@@ -437,12 +418,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button id="blockHtmlCancel" type="button" class="btn btn-default" data-dismiss="modal">
-            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-          </button>
-          <button id="blockHtmlSubmit" type="button" class="btn btn-primary">
-            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal", "id":"blockHtmlCancel"}) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"button", "id":"blockHtmlSubmit" }) }}
         </div>
       </div>
     </div>
@@ -460,12 +437,8 @@
             <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <a href="{{ geturl('delete') }}&amp;id={{ item.id }}" class="btn btn-danger">
-              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-            </a>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal"}) }}
+            {{ macro.buttonIcon(geturl('delete') ~ '&id=' ~ item.id, 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger') }}
           </div>
         </div>
       </div>

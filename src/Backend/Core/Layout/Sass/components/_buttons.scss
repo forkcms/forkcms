@@ -15,7 +15,7 @@
   @media screen and (min-width: $screen-sm) {
     .btn-text {
       display: inline-block;
-      font-size: $font-size-small;
+      font-size: $font-size-base;
       margin: 0;
     }
   }
@@ -31,14 +31,6 @@
   &.btn-md {
     font-size: $font-size-small;
     padding: 4px 15px 5px;
-  }
-
-  &.btn-cancel {
-    @extend .btn-default;
-
-    .btn-text {
-      font-size: $font-size-base;
-    }
   }
 }
 
