@@ -2,10 +2,10 @@
 
 namespace Frontend\Core\Header;
 
-use Common\Core\Header\Minifier;
 use App\Component\Asset\Asset;
 use App\Component\Asset\AssetCollection;
 use App\Component\Header\JsData;
+use App\Service\Asset\Minifier;
 use App\Component\Priority\Priority;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Model;
