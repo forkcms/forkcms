@@ -3,7 +3,7 @@
 namespace Backend\Modules\Faq\Domain\Category;
 
 use Common\Doctrine\Entity\Meta;
-use Common\Exception\CanNotSetExtraIdException;
+use App\Domain\ModuleExtra\Exception\InvalidModuleExtraException;
 use Common\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -103,12 +103,12 @@ class Category
     /**
      * @param int $extraId
      *
-     * @throws CanNotSetExtraIdException
+     * @throws InvalidModuleExtraException
      */
     public function setExtraId(int $extraId): void
     {
         if ($this->extraId !== null) {
-            throw new CanNotSetExtraIdException();
+            throw InvalidModuleExtraException::alreadySet();
         }
 
         $this->extraId = $extraId;
