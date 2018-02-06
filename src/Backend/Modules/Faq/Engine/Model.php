@@ -7,7 +7,7 @@ use Backend\Core\Language\Locale;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Backend\Modules\Faq\Domain\Question\Question;
 use Common\ModuleExtraType;
-use Common\Uri as CommonUri;
+use App\Component\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;

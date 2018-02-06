@@ -8,7 +8,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Common\Uri as CommonUri;
+use App\Component\Uri as CommonUri;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Common\ModuleExtraType;
 
