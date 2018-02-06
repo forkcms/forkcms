@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\EventListener;
+namespace App\EventListener;
 
 use Common\Core\Cookie;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
