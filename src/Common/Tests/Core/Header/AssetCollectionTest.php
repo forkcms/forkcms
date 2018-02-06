@@ -3,9 +3,9 @@
 namespace Common\Tests\Core\Header;
 
 use Common\Core\Header\Minifier;
-use Common\Core\Header\Priority;
 use App\Component\Asset\Asset;
 use App\Component\Asset\AssetCollection;
+use App\Component\Priority\Priority;
 
 class AssetCollectionTest extends \PHPUnit_Framework_TestCase
 {

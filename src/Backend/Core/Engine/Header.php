@@ -4,9 +4,9 @@ namespace Backend\Core\Engine;
 
 use Common\Core\Header\JsData;
 use Common\Core\Header\Minifier;
-use Common\Core\Header\Priority;
 use App\Component\Asset\Asset;
 use App\Component\Asset\AssetCollection;
+use App\Component\Priority\Priority;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Language\Language as BL;

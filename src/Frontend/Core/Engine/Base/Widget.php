@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine\Base;
 
-use Common\Core\Header\Priority;
+use App\Component\Priority\Priority;
 use Common\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Model;

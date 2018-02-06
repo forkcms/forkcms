@@ -3,7 +3,7 @@
 namespace Common\Form;
 
 use Backend\Core\Engine\Header as BackendHeader;
-use Common\Core\Header\Priority;
+use App\Component\Priority\Priority;
 use Frontend\Core\Header\Header as FrontendHeader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;

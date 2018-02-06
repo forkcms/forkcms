@@ -4,9 +4,9 @@ namespace Frontend\Core\Header;
 
 use Common\Core\Header\JsData;
 use Common\Core\Header\Minifier;
-use Common\Core\Header\Priority;
 use App\Component\Asset\Asset;
 use App\Component\Asset\AssetCollection;
+use App\Component\Priority\Priority;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Theme;

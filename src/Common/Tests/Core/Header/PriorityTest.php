@@ -2,7 +2,7 @@
 
 namespace Common\Tests\Core\Header;
 
-use Common\Core\Header\Priority;
+use App\Component\Priority\Priority;
 use PHPUnit\Framework\TestCase;
 
 class PriorityTest extends TestCase
