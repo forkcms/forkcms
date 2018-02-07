@@ -3,7 +3,7 @@
 namespace Frontend\Core\Engine\Base;
 
 use App\Component\Priority\Priority;
-use Common\Doctrine\Entity\Meta;
+use App\Domain\Meta\Meta;
 use App\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Breadcrumb;

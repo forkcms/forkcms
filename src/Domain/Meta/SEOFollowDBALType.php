@@ -1,12 +1,12 @@
 <?php
 
-namespace Common\Doctrine\Type;
+namespace App\Domain\Meta;
 
-use Common\Doctrine\ValueObject\SEOFollow;
+use App\Domain\Meta\SEOFollow;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 
-final class SEOFollowType extends StringType
+final class SEOFollowDBALType extends StringType
 {
     const SEO_FOLLOW = 'seo_follow';
 

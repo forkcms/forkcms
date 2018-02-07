@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Blog\Domain\Category;
 
-use Common\Doctrine\Entity\Meta;
+use App\Domain\Meta\Meta;
 use Common\Locale;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,7 +37,7 @@ class Category
     /**
      * @var Meta
      *
-     * @ORM\OneToOne(targetEntity="Common\Doctrine\Entity\Meta", cascade={"persist","remove"}, orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="App\Domain\Meta\Meta", cascade={"persist","remove"}, orphanRemoval=true)
      */
     private $meta;
 

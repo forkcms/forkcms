@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Doctrine\Repository;
+namespace App\Domain\Meta;
 
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model;

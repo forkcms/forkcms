@@ -2,10 +2,10 @@
 
 namespace Backend\Form\Type;
 
-use Common\Doctrine\Entity\Meta;
-use Common\Doctrine\Repository\MetaRepository;
-use Common\Doctrine\ValueObject\SEOFollow;
-use Common\Doctrine\ValueObject\SEOIndex;
+use App\Domain\Meta\Meta;
+use App\Domain\Meta\MetaRepository;
+use App\Domain\Meta\SEOFollow;
+use App\Domain\Meta\SEOIndex;
 use SpoonFilter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;

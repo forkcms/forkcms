@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Doctrine\ValueObject;
+namespace App\Domain\Meta;
 
 final class SEOFollow
 {

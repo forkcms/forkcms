@@ -1,12 +1,12 @@
 <?php
 
-namespace Common\Doctrine\Type;
+namespace App\Domain\Meta;
 
-use Common\Doctrine\ValueObject\SEOIndex;
+use App\Domain\Meta\SEOIndex;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 
-final class SEOIndexType extends StringType
+final class SEOIndexDBALType extends StringType
 {
     const SEO_INDEX = 'seo_index';
 
