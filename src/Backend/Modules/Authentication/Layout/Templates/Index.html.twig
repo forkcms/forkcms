@@ -67,7 +67,7 @@
                 <a href="#" id="forgotPasswordLink" class="btn forgot-password" data-toggle="modal" data-target="#forgotPasswordHolder">{{ 'msg.ForgotPassword'|trans }}</a>
               </div>
               <div class="btn-group">
-                {{ macro.buttonIcon('', 'sign-in', 'lbl.SignIn'|trans|ucfirst, 'btn-primary', { "name":"login", "type":"submit" }) }}
+                {{ macro.buttonIcon('', 'sign-in', 'lbl.SignIn'|trans|ucfirst, 'btn-primary', {"name":"login", "type":"submit"}) }}
               </div>
             </div>
           </div>
@@ -95,8 +95,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal" }) }}
-        {{ macro.buttonIcon('', 'envelope', 'lbl.Send'|trans|ucfirst, 'btn-primary', { 'id':"send", "name":"send", "type":"submit" }) }}
+        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+        {{ macro.buttonIcon('', 'envelope', 'lbl.Send'|trans|ucfirst, 'btn-primary', {"id":"send", "name":"send", "type":"submit"}) }}
       </div>
       {% endform %}
     </div>
