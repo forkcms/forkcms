@@ -2,7 +2,7 @@
 
 namespace Common\Core;
 
-use ForkCMS\App\BaseModel;
+use App\Component\Model\BaseModel;
 use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;

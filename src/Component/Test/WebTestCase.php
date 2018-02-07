@@ -3,7 +3,7 @@
 namespace App\Component\Test;
 
 use ForkCMS\App\AppKernel;
-use ForkCMS\App\BaseModel;
+use App\Component\Model\BaseModel;
 use SpoonDatabase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\FileSystem\Filesystem;

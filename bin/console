@@ -11,7 +11,7 @@ require_once __DIR__ . '/../autoload.php';
 
 use Common\ModulesSettings;
 use ForkCMS\App\AppKernel;
-use ForkCMS\App\BaseModel;
+use App\Component\Model\BaseModel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
