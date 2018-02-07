@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Component\Uri;
+namespace App\Component\Uri\Uri;
 
 use Behat\Transliterator\Transliterator;
 

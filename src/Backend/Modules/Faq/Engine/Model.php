@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Faq\Engine;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri\Uri as CommonUri;
 use App\Domain\ModuleExtra\Type;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;

@@ -3,7 +3,7 @@
 namespace App\Service\Mailer;
 
 use Backend\Core\Engine\TwigTemplate as BackendTemplate;
-use App\Component\Uri;
+use App\Component\Uri\Uri;
 use Frontend\Core\Engine\Model;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 

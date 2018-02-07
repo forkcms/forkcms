@@ -5,7 +5,7 @@ namespace Backend\Modules\Pages\Ajax;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
 use Common\Core\Model;
-use App\Component\Uri;
+use App\Component\Uri\Uri;
 use Backend\Core\Engine\Base\AjaxAction;
 use Backend\Core\Engine\Exception;
 use Symfony\Component\HttpFoundation\Response;
