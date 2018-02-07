@@ -1,7 +1,8 @@
 <?php
 
-namespace Common\Core\Header;
+namespace App\Service\Asset;
 
+use App\Component\Asset\Asset;
 use Common\Core\Model;
 use MatthiasMullie\Minify;
 

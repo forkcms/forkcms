@@ -2,7 +2,7 @@
 
 namespace Common\EventListener;
 
-use Common\Core\Cookie;
+use App\Component\Cookie;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class ForkCookieSetter

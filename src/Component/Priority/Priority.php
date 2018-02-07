@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core\Header;
+namespace App\Component\Priority;
 
 use InvalidArgumentException;
 

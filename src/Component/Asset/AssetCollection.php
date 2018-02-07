@@ -1,7 +1,8 @@
 <?php
 
-namespace Common\Core\Header;
+namespace App\Component\Asset;
 
+use App\Service\Asset\Minifier;
 use Common\Core\Twig\BaseTwigTemplate;
 
 final class AssetCollection

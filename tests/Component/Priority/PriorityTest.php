@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Tests\Core\Header;
+namespace App\Tests\Component\Priority;
 
-use Common\Core\Header\Priority;
+use App\Component\Priority\Priority;
 use PHPUnit\Framework\TestCase;
 
 class PriorityTest extends TestCase

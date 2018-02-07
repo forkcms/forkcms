@@ -1,7 +1,8 @@
 <?php
 
-namespace Common\Core\Header;
+namespace App\Component\Asset;
 
+use App\Component\Priority\Priority;
 use DateTimeImmutable;
 
 final class Asset

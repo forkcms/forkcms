@@ -184,7 +184,7 @@ services:
             - "@cache.pool"
 
     fork.cookie:
-        class: Common\Core\Cookie
+        class: App\Component\Cookie
         public: true
 
     fork.cookie_setter:

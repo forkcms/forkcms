@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
-use Common\Uri as CommonUri;
+use App\Component\Uri as CommonUri;
 
 /**
  * Frontend RSS class.
