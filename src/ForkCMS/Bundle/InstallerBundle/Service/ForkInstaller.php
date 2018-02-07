@@ -183,12 +183,12 @@ class ForkInstaller
                 // create installer
                 /** @var $install ModuleInstaller */
                 $installer = new $class(
+                    $this->container->get('fork.doctrine.entity_schema'),
                     $this->container->get('database'),
                     $data->getLanguages(),
                     $data->getInterfaceLanguages(),
                     $data->hasExampleData(),
-                    $this->getInstallerData($data),
-                    $this->container->get('fork.doctrine.entity_schema')
+                    $this->getInstallerData($data)
                 );
 
                 // install the module

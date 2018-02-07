@@ -82,6 +82,7 @@ class ModuleInstaller
     private $example;
 
     /**
+     * @param EntitySchema $entitySchema - The Doctrine entity schema.
      * @param SpoonDatabase $database The database-connection.
      * @param array $languages The selected frontend languages.
      * @param array $interfaceLanguages The selected backend languages.
@@ -89,12 +90,12 @@ class ModuleInstaller
      * @param array $variables The passed variables.
      */
     public function __construct(
+        EntitySchema $entitySchema,
         SpoonDatabase $database,
         array $languages,
         array $interfaceLanguages,
         bool $example = false,
-        array $variables = [],
-        EntitySchema $entitySchema
+        array $variables = []
     ) {
         $this->database = $database;
         $this->languages = $languages;
