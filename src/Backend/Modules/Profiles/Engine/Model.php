@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Profiles\Engine;
 
-use Common\Mailer\Message;
+use App\Service\Mailer\Message;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;

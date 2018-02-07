@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\FormBuilder\EventListener;
 
-use Common\Mailer\Message;
+use App\Service\Mailer\Message;
 use Swift_Mailer;
 use Common\ModulesSettings;
 use Frontend\Core\Language\Language;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Mailer;
+namespace App\Service\Mailer;
 
 use PDOException;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
