@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\DataCollector;
+namespace App\Service\Database;
 
 use SpoonDatabase;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
