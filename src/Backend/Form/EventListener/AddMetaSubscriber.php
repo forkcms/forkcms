@@ -3,7 +3,7 @@
 namespace Backend\Form\EventListener;
 
 use Backend\Core\Engine\Model;
-use Backend\Form\Type\MetaType;
+use App\Form\Type\Backend\MetaType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

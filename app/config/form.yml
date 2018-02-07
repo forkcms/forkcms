@@ -6,11 +6,11 @@ services:
         tags:
           - { name: form.type }
     form.type.editor:
-        class: Backend\Form\Type\EditorType
+        class: App\Form\Type\Backend\EditorType
         tags:
             - { name: form.type, alias: editor}
     form.type.meta:
-        class: Backend\Form\Type\MetaType
+        class: App\Form\Type\Backend\MetaType
         arguments:
             - "@fork.repository.meta"
             - "@translator"

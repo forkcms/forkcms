@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaGalleries\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;

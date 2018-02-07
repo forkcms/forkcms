@@ -5,7 +5,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockDeleted;

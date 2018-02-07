@@ -9,7 +9,7 @@ use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Symfony\Component\Finder\Finder;

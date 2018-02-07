@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**

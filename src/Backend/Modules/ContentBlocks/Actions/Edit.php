@@ -6,7 +6,7 @@ use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Locale;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;

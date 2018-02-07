@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Users\Actions;
 
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;

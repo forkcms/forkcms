@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Form\Type;
+namespace App\Form\Type\Backend;
 
 use App\Domain\Meta\Meta;
 use App\Domain\Meta\MetaRepository;

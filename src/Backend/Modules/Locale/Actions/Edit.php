@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Locale\Actions;
 
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use App\Component\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;

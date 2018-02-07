@@ -11,7 +11,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;

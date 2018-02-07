@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Frontend\Core\Language\Language as FL;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;

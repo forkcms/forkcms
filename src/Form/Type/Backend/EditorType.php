@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Form\Type;
+namespace App\Form\Type\Backend;
 
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
