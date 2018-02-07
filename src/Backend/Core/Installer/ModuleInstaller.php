@@ -2,15 +2,15 @@
 
 namespace Backend\Core\Installer;
 
+use App\Component\Uri\Uri as CommonUri;
+use App\Domain\ModuleExtra\Type;
 use Backend\Core\Engine\Model;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use App\Component\Uri as CommonUri;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use App\Domain\ModuleExtra\Type;
 
 /**
  * The base-class for the installer

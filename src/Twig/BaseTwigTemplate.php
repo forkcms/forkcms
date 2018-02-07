@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core\Twig;
+namespace App\Twig;
 
 use Common\Core\Form;
 use Common\Core\Model;

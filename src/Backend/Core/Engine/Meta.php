@@ -3,7 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Common\Doctrine\Entity\Meta as MetaEntity;
-use App\Component\Uri as CommonUri;
+use App\Component\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BackendLanguage;
 

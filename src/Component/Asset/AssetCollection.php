@@ -3,7 +3,7 @@
 namespace App\Component\Asset;
 
 use App\Service\Asset\Minifier;
-use Common\Core\Twig\BaseTwigTemplate;
+use App\Twig\BaseTwigTemplate;
 
 final class AssetCollection
 {

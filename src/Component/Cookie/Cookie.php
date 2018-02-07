@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Component;
+namespace App\Component\Cookie;
 
+use Common\Core\Model;
 use Symfony\Component\HttpFoundation\Cookie as SymfonyCookie;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
