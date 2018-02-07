@@ -4,6 +4,7 @@ namespace Backend\Core\Installer;
 
 use App\Component\Uri\Uri as CommonUri;
 use App\Domain\ModuleExtra\Type;
+use App\Service\Doctrine\EntitySchema;
 use Backend\Core\Engine\Model;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
@@ -23,6 +24,13 @@ class ModuleInstaller
      * @var SpoonDatabase
      */
     private $database;
+
+    /**
+     * Entity schema
+     *
+     * @var EntitySchema
+     */
+    private $entitySchema;
 
     /**
      * The module name.
@@ -74,6 +82,7 @@ class ModuleInstaller
     private $example;
 
     /**
+     * @param EntitySchema $entitySchema - The Doctrine entity schema.
      * @param SpoonDatabase $database The database-connection.
      * @param array $languages The selected frontend languages.
      * @param array $interfaceLanguages The selected backend languages.
@@ -81,6 +90,7 @@ class ModuleInstaller
      * @param array $variables The passed variables.
      */
     public function __construct(
+        EntitySchema $entitySchema,
         SpoonDatabase $database,
         array $languages,
         array $interfaceLanguages,
@@ -92,6 +102,7 @@ class ModuleInstaller
         $this->interfaceLanguages = $interfaceLanguages;
         $this->example = $example;
         $this->variables = $variables;
+        $this->entitySchema = $entitySchema;
     }
 
     /**
@@ -103,6 +114,16 @@ class ModuleInstaller
     protected function addDefaultExtra(int $extraId, string $position): void
     {
         $this->defaultExtras[] = ['id' => $extraId, 'position' => $position];
+    }
+
+    public function addEntities(array $entityClasses): void
+    {
+        $this->entitySchema->createForEntityClasses($entityClasses);
+    }
+
+    public function addEntity(string $entityClass): void
+    {
+        $this->entitySchema->createForEntityClass($entityClass);
     }
 
     /**

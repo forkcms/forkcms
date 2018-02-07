@@ -213,6 +213,7 @@
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
+          {{ macro.cancelButton(geturl('Index')) }}
         </div>
         <div class="btn-group pull-right" role="group">
           <a href="#" id="saveAsDraft" class="btn btn-default">

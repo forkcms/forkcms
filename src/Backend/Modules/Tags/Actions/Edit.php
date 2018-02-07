@@ -102,7 +102,7 @@ class Edit extends BackendBaseActionEdit
 
         // assign id, name
         $this->template->assign('id', $this->id);
-        $this->template->assign('name', $this->record['name'])->makeRequired();
+        $this->template->assign('name', $this->record['name']);
 
         // assign usage-datagrid
         $this->template->assign('usage', $this->dgUsage->getContent());

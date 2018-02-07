@@ -14,15 +14,11 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('MediaGalleries');
+        $this->addEntity(MediaGallery::class);
         $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->configureEntities();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
-    }
-
-    private function configureEntities(): void
-    {
-        Model::get('fork.entity.create_schema')->forEntityClass(MediaGallery::class);
     }
 
     protected function configureBackendNavigation(): void
