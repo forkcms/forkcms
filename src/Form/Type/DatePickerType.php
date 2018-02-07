@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Form;
+namespace App\Form\Type;
 
 use Backend\Core\Engine\Header as BackendHeader;
 use App\Component\Priority\Priority;

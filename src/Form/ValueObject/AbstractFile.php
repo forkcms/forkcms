@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Doctrine\ValueObject;
+namespace App\Form\ValueObject;
 
 use App\Component\Uri\Uri;
 use Doctrine\ORM\Mapping as ORM;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Doctrine\Type;
+namespace App\Form\DBALType;
 
 use Backend\Core\Language\Locale as BackendLocale;
 use Common\Locale;

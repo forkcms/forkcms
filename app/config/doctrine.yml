@@ -20,10 +20,10 @@ doctrine:
         types:
             seo_follow: App\Domain\Meta\SEOFollowDBALType
             seo_index: App\Domain\Meta\SEOIndexDBALType
-            locale: Common\Doctrine\Type\LocaleType
-            datetime: Common\Doctrine\Type\UTCDateTimeType
-            datetimetz: Common\Doctrine\Type\UTCDateTimeType
-            time: Common\Doctrine\Type\UTCTimeType
+            locale: App\Form\DBALType\LocaleType
+            datetime: App\Form\DBALType\UTCDateTimeType
+            datetimetz: App\Form\DBALType\UTCDateTimeType
+            time: App\Form\DBALType\UTCTimeType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

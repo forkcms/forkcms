@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Doctrine\ValueObject;
+namespace App\Form\ValueObject;
 
 use Backend\Core\Engine\Model;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

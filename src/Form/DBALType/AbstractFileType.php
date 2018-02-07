@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Doctrine\Type;
+namespace App\Form\DBALType;
 
-use Common\Doctrine\ValueObject\AbstractFile;
+use App\Form\ValueObject\AbstractFile;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 
