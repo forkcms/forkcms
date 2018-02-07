@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Faq\Tests\Actions;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 class IndexTest extends WebTestCase
 {

@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Filesystem\Filesystem;

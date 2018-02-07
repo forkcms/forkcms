@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Faq\Actions;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 class CategoryTest extends WebTestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common;
+namespace App\Component\Test;
 
 use ForkCMS\App\AppKernel;
 use ForkCMS\App\BaseModel;

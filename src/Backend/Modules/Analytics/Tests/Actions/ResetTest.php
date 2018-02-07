@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Analytics\Tests\Action;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 class ResetTest extends WebTestCase
 {

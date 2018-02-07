@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\Tests\Action;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 class IndexTest extends WebTestCase
 {

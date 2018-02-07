@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Extensions\Tests\Actions;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\Filesystem\Filesystem;

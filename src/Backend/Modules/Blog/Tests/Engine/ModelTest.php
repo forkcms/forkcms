@@ -4,7 +4,7 @@ namespace Backend\Modules\Blog\Tests\Engine;
 
 use Backend\Modules\Blog\Engine\Model;
 use App\Domain\Meta\Meta;
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 class ModelTest extends WebTestCase
 {

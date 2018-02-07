@@ -4,7 +4,7 @@ namespace Backend\Modules\Faq\Tests\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model;
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 final class ModelTest extends WebTestCase
 {

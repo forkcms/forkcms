@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Tests;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 class AjaxTest extends WebTestCase
 {
