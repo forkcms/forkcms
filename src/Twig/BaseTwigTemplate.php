@@ -2,7 +2,7 @@
 
 namespace App\Twig;
 
-use Common\Core\Form;
+use App\Form\Spoon\Form;
 use Common\Core\Model;
 use Common\ModulesSettings;
 use SpoonForm;

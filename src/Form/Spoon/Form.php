@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core;
+namespace App\Form\Spoon;
 
 use Backend\Core\Engine\Header as BackendHeader;
 use Exception;
@@ -205,7 +205,7 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
      *
-     * @return CommonFormCheckbox
+     * @return FormCheckbox
      */
     public function addCheckbox($name, $checked = false, $class = null, $classError = null)
     {
@@ -215,7 +215,7 @@ class Form extends \SpoonForm
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // create and return a checkbox
-        $this->add(new CommonFormCheckbox($name, $checked, $class, $classError));
+        $this->add(new FormCheckbox($name, $checked, $class, $classError));
 
         // return element
         return $this->getField($name);

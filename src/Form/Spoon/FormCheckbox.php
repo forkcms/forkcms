@@ -1,11 +1,11 @@
 <?php
 
-namespace Common\Core;
+namespace App\Form\Spoon;
 
 /**
  * This is our extended version of \SpoonFormCheckbox
  */
-class CommonFormCheckbox extends \SpoonFormCheckbox
+class FormCheckbox extends \SpoonFormCheckbox
 {
     /**
      * Returns the value corresponding with the state of the checkbox

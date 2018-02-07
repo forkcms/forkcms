@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 /**
  * This is our extended version of \SpoonForm
  */
-class Form extends \Common\Core\Form
+class Form extends \App\Form\Spoon\Form
 {
     /**
      * Show the global error

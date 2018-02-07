@@ -15,7 +15,7 @@ use SpoonFormTime;
 /**
  * This is our extended version of SpoonForm.
  */
-class Form extends \Common\Core\Form
+class Form extends \App\Form\Spoon\Form
 {
     /**
      * Adds a single file field.
