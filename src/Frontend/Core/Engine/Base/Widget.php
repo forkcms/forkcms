@@ -2,13 +2,8 @@
 
 namespace Frontend\Core\Engine\Base;
 
-<<<<<<< HEAD
 use App\Component\Priority\Priority;
-use Common\Exception\RedirectException;
-=======
-use Common\Core\Header\Priority;
 use App\Exception\RedirectException;
->>>>>>> f14c35534c18db00eb2093f410a8f816bfbb4297
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Url;
