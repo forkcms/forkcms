@@ -2,8 +2,12 @@
 
 namespace Backend\Modules\Faq\Installer;
 
+use Backend\Core\Engine\Model;
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use Backend\Modules\Faq\Domain\Category\Category;
+use Backend\Modules\Faq\Domain\Feedback\Feedback;
+use Backend\Modules\Faq\Domain\Question\Question;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * Installer for the faq module
@@ -20,8 +24,8 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('Faq');
         $this->makeSearchable($this->getModule());
-        $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
+        $this->configureEntities();
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -100,10 +104,10 @@ class Installer extends ModuleInstaller
      */
     private function configureFrontendExtras(): void
     {
-        $this->faqBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), $this->getModule());
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'MostReadQuestions', 'MostReadQuestions');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
+        $this->faqBlockId = $this->insertExtra($this->getModule(), Type::block(), $this->getModule());
+        $this->insertExtra($this->getModule(), Type::widget(), 'MostReadQuestions', 'MostReadQuestions');
+        $this->insertExtra($this->getModule(), Type::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
+        $this->insertExtra($this->getModule(), Type::widget(), 'Categories', 'Categories');
     }
 
     private function configureFrontendPages(): void
@@ -156,8 +160,8 @@ class Installer extends ModuleInstaller
     {
         return (int) $this->getDatabase()->getVar(
             'SELECT id
-             FROM faq_categories
-             WHERE language = ?',
+             FROM FaqCategory
+             WHERE locale = ?',
             [$language]
         );
     }
@@ -186,21 +190,21 @@ class Installer extends ModuleInstaller
         // build array
         $item = [];
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['extra_id'] = $this->insertExtra(
+        $item['extraId'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::widget(),
+            Type::widget(),
             $this->getModule(),
             'CategoryList',
             null,
             false,
             $sequenceExtra
         );
-        $item['language'] = $language;
+        $item['locale'] = $language;
         $item['title'] = $title;
         $item['sequence'] = 1;
 
         // insert category
-        $item['id'] = (int) $database->insert('faq_categories', $item);
+        $item['id'] = (int) $database->insert('FaqCategory', $item);
 
         // build data for widget
         $extra = [
@@ -208,7 +212,7 @@ class Installer extends ModuleInstaller
                 [
                     'id' => $item['id'],
                     'extra_label' => 'Category: ' . $item['title'],
-                    'language' => $item['language'],
+                    'language' => $item['locale'],
                     'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'],
                 ]
             ),
@@ -219,9 +223,20 @@ class Installer extends ModuleInstaller
             'modules_extras',
             $extra,
             'id = ?',
-            [$item['extra_id']]
+            [$item['extraId']]
         );
 
         return $item['id'];
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Category::class,
+                Question::class,
+                Feedback::class,
+            ]
+        );
     }
 }

@@ -3,7 +3,7 @@
 namespace Backend\Modules\Location\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * Installer for the location module
@@ -49,7 +49,7 @@ class Installer extends ModuleInstaller
     {
         $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'Location',
             null,
             ['url' => '/private/location/index?token=true'],

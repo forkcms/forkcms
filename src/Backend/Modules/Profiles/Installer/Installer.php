@@ -3,7 +3,7 @@
 namespace Backend\Modules\Profiles\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Language\Language;
 
@@ -101,73 +101,73 @@ class Installer extends ModuleInstaller
     {
         $this->extraIds['activate'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'Activate',
             'Activate'
         );
         $this->extraIds['forgot_password'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'ForgotPassword',
             'ForgotPassword'
         );
         $this->extraIds['index'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'Dashboard'
         );
         $this->extraIds['login'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'Login',
             'Login'
         );
         $this->extraIds['logout'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'Logout',
             'Logout'
         );
         $this->extraIds['change_email'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'ChangeEmail',
             'ChangeEmail'
         );
         $this->extraIds['change_password'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'ChangePassword',
             'ChangePassword'
         );
         $this->extraIds['settings'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'Settings',
             'Settings'
         );
         $this->extraIds['register'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'Register',
             'Register'
         );
         $this->extraIds['reset_password'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'ResetPassword',
             'ResetPassword'
         );
         $this->extraIds['resend_activation'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::block(),
+            Type::block(),
             'ResendActivation',
             'ResendActivation'
         );
 
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'LoginBox', 'LoginBox');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'LoginLink', 'LoginLink');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SecurePage', 'SecurePage');
+        $this->insertExtra($this->getModule(), Type::widget(), 'LoginBox', 'LoginBox');
+        $this->insertExtra($this->getModule(), Type::widget(), 'LoginLink', 'LoginLink');
+        $this->insertExtra($this->getModule(), Type::widget(), 'SecurePage', 'SecurePage');
     }
 
     private function configureFrontendFilesDirectories(): void

@@ -2,9 +2,9 @@
 
 namespace Frontend\Core\Engine\Base;
 
-use Common\Core\Header\Priority;
-use Common\Doctrine\Entity\Meta;
-use Common\Exception\RedirectException;
+use App\Component\Priority\Priority;
+use App\Domain\Meta\Meta;
+use App\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;

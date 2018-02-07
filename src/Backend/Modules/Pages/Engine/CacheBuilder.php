@@ -123,7 +123,7 @@ class CacheBuilder
         // init URLs
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
         $languageUrl = ($hasMultiLanguages) ? '/' . $language . '/' : '/';
-        $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+        $url = $keys[$parentID] ?? '';
 
         // home is special
         if ($page['id'] == BackendModel::HOME_PAGE_ID) {

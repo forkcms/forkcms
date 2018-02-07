@@ -18,27 +18,30 @@ class LoadFaqQuestions
 
         $categoryId = $database->getVar(
             'SELECT id
-             FROM faq_categories
-             WHERE title = :title AND language = :language
+             FROM FaqCategory
+             WHERE title = :title AND locale = :locale
              LIMIT 1',
             [
                 'title' => 'Faq for tests',
-                'language' => 'en',
+                'locale' => 'en',
             ]
         );
 
         $database->insert(
-            'faq_questions',
+            'FaqQuestion',
             [
                 'meta_id' => $metaId,
                 'category_id' => $categoryId,
-                'user_id' => 1,
-                'language' => 'en',
+                'userId' => 1,
+                'locale' => 'en',
                 'question' => 'Is this a working test?',
                 'answer' => '<p>I hope so.</p>',
-                'created_on' => '2015-02-23 00:00:00',
+                'createdOn' => '2015-02-23 00:00:00',
                 'hidden' => false,
                 'sequence' => 1,
+                'numberOfViews' => 0,
+                'numberOfUsefulYes' => 0,
+                'numberOfUsefulNo' => 0,
             ]
         );
     }

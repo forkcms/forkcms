@@ -3,7 +3,7 @@
 namespace Backend\Core\Engine\Base;
 
 use Backend\Core\Engine\TwigTemplate;
-use Common\Exception\RedirectException;
+use App\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Location\Command;
 
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 use SpoonDatabase;
 
 final class CopyLocationWidgetsToOtherLocaleHandler
@@ -21,7 +21,7 @@ final class CopyLocationWidgetsToOtherLocaleHandler
             'SELECT * FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
             [
                 'Location',
-                ModuleExtraType::widget(),
+                Type::widget(),
                 'Location'
             ]
         );

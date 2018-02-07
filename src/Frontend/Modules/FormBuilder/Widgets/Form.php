@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\FormBuilder\Widgets;
 
-use Common\Exception\RedirectException;
+use App\Exception\RedirectException;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;

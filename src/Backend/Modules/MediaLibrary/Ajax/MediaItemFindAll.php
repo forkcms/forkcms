@@ -10,7 +10,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Common\Exception\AjaxExitException;
+use App\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

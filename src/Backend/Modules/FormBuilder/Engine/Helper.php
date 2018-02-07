@@ -31,12 +31,9 @@ class Helper
             );
             $fieldHTML = '';
             $fieldName = 'field' . $field['id'];
-            $values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);
-            $defaultValues = (isset($field['settings']['default_values']) ?
-                $field['settings']['default_values'] :
-                null
-            );
-            $placeholder = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
+            $values = $field['settings']['values'] ?? null;
+            $defaultValues = $field['settings']['default_values'] ?? null;
+            $placeholder = $field['settings']['placeholder'] ?? null;
 
             /*
              * Create form and parse to HTML

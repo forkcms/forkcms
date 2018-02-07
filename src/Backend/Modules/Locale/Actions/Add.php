@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Locale\Actions;
 
-use Common\Uri as CommonUri;
+use App\Component\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;

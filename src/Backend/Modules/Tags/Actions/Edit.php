@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Tags\Actions;
 
-use Common\Uri as CommonUri;
+use App\Component\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;

@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
-use Common\Uri as CommonUri;
+use App\Component\Uri\Uri as CommonUri;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

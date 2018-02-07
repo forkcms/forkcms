@@ -18,8 +18,8 @@ doctrine:
                     # Remove when we don't have legacy tables anymore
                     enum: string
         types:
-            seo_follow: Common\Doctrine\Type\SEOFollowType
-            seo_index: Common\Doctrine\Type\SEOIndexType
+            seo_follow: App\Domain\Meta\SEOFollowDBALType
+            seo_index: App\Domain\Meta\SEOIndexDBALType
             locale: Common\Doctrine\Type\LocaleType
             datetime: Common\Doctrine\Type\UTCDateTimeType
             datetimetz: Common\Doctrine\Type\UTCDateTimeType
@@ -59,8 +59,8 @@ services:
             - "@doctrine.orm.entity_manager"
 
     fork.repository.meta:
-        class: Common\Doctrine\Repository\MetaRepository
+        class: App\Domain\Meta\MetaRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - Common\Doctrine\Entity\Meta
+            - App\Domain\Meta\Meta

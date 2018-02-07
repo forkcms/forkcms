@@ -2,7 +2,8 @@
 
 namespace Backend\Core\Engine;
 
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
+use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -651,7 +652,7 @@ class Model extends \Common\Core\Model
     /**
      * Insert extra
      *
-     * @param ModuleExtraType $type What type do you want to insert, 'homepage', 'block' or 'widget'.
+     * @param Type $type What type do you want to insert, 'homepage', 'block' or 'widget'.
      * @param string $module The module you are inserting this extra for.
      * @param string $action The action this extra will use.
      * @param string $label Label which will be used when you want to connect this block.
@@ -664,7 +665,7 @@ class Model extends \Common\Core\Model
      * @return int The new extra id
      */
     public static function insertExtra(
-        ModuleExtraType $type,
+        Type $type,
         string $module,
         string $action = null,
         string $label = null,

@@ -2,7 +2,7 @@
 
 namespace Common\Doctrine\ValueObject;
 
-use Common\Uri;
+use App\Component\Uri\Uri;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
