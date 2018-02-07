@@ -5,7 +5,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -35,8 +35,8 @@ class Add extends BackendBaseActionAdd
 
         // set hidden values
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden'), 'value' => 1],
-            ['label' => BL::lbl('Published'), 'value' => 0],
+            ['label' => BackendLanguage::lbl('Hidden'), 'value' => 1],
+            ['label' => BackendLanguage::lbl('Published'), 'value' => 0],
         ];
         // get categories
         $categories = BackendFaqModel::getCategories();
@@ -72,9 +72,9 @@ class Add extends BackendBaseActionAdd
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('title')->isFilled(BL::err('QuestionIsRequired'));
-            $this->form->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
-            $this->form->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
+            $this->form->getField('title')->isFilled(BackendLanguage::err('QuestionIsRequired'));
+            $this->form->getField('answer')->isFilled(BackendLanguage::err('AnswerIsRequired'));
+            $this->form->getField('category_id')->isFilled(BackendLanguage::err('CategoryIsRequired'));
             $this->meta->validate();
 
             if ($this->form->isCorrect()) {
@@ -83,7 +83,7 @@ class Add extends BackendBaseActionAdd
                 $item['meta_id'] = $this->meta->save();
                 $item['category_id'] = $this->form->getField('category_id')->getValue();
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['language'] = BL::getWorkingLanguage();
+                $item['language'] = BackendLanguage::getWorkingLanguage();
                 $item['question'] = $this->form->getField('title')->getValue();
                 $item['answer'] = $this->form->getField('answer')->getValue(true);
                 $item['created_on'] = BackendModel::getUTCDate();

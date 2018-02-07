@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Language;
+namespace App\Component\Locale;
 
 use Backend\Core\Engine\Model;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
@@ -10,8 +10,10 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 /**
  * This class will store the language-dependant content for the Backend, it will also store the
  * current language for the user.
+ *
+ * @todo: should be replaced by symfony translator
  */
-class Language
+final class BackendLanguage
 {
     /**
      * The errors

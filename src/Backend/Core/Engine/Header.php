@@ -9,7 +9,7 @@ use App\Service\Asset\Minifier;
 use App\Component\Priority\Priority;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
@@ -215,7 +215,7 @@ final class Header extends KernelLoader
      */
     public function parse(): void
     {
-        $this->template->assign('page_title', BL::getLabel($this->url->getModule()));
+        $this->template->assign('page_title', BackendLanguage::getLabel($this->url->getModule()));
         $this->cssFiles->parse($this->template, 'cssFiles');
         $this->jsFiles->parse($this->template, 'jsFiles');
 
@@ -241,7 +241,7 @@ final class Header extends KernelLoader
             return (string) Authentication::getUser()->getSetting('interface_language');
         }
 
-        return BL::getInterfaceLanguage();
+        return BackendLanguage::getInterfaceLanguage();
     }
 
     /**

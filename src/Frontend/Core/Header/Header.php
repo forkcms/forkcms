@@ -12,7 +12,7 @@ use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
-use Frontend\Core\Language\Locale;
+use App\Component\Locale\FrontendLocale;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -115,7 +115,7 @@ class Header extends KernelLoader
                 FRONTEND_CACHE_PATH . '/MinifiedJs/'
             )
         );
-        $this->jsData = new JsData(['LANGUAGE' => Locale::frontendLanguage()]);
+        $this->jsData = new JsData(['LANGUAGE' => FrontendLocale::frontendLanguage()]);
         $this->meta = new MetaCollection();
 
         // add some default CSS files

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Header;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Url;
 
@@ -175,9 +175,9 @@ class Action extends KernelLoader
 
             // if we have data to use it will be passed as the var parameter
             if (!empty($var)) {
-                $this->template->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
+                $this->template->assign('reportMessage', vsprintf(BackendLanguage::msg($messageName), $var));
             } else {
-                $this->template->assign('reportMessage', BL::msg($messageName));
+                $this->template->assign('reportMessage', BackendLanguage::msg($messageName));
             }
 
             // highlight an element with the given id if needed
@@ -193,9 +193,9 @@ class Action extends KernelLoader
 
             // if we have data to use it will be passed as the var parameter
             if (!empty($var)) {
-                $this->template->assign('errorMessage', vsprintf(BL::err($errorName), $var));
+                $this->template->assign('errorMessage', vsprintf(BackendLanguage::err($errorName), $var));
             } else {
-                $this->template->assign('errorMessage', BL::err($errorName));
+                $this->template->assign('errorMessage', BackendLanguage::err($errorName));
             }
         }
 

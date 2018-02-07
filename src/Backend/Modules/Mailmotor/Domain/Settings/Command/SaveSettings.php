@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Mailmotor\Domain\Settings\Command;
 
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Common\ModulesSettings;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -58,7 +58,7 @@ final class SaveSettings
     private function setLanguageListIds(array $settings): array
     {
         $languageListIds = [];
-        foreach (Language::getActiveLanguages() as $language) {
+        foreach (BackendLanguage::getActiveLanguages() as $language) {
             $languageListIds[$language] = $settings['list_id_' . $language] ?? null;
         }
 

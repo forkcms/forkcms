@@ -75,7 +75,7 @@ use Backend\Core\Engine\Language as ...;
 After:
 
 ```php
-use Backend\Core\Language\Language as ...;
+use App\Component\Locale\BackendLanguage as ...;
 ```
 
 

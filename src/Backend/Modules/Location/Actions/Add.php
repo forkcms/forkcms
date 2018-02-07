@@ -4,7 +4,7 @@ namespace Backend\Modules\Location\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\Intl\Intl as Intl;
@@ -31,7 +31,7 @@ class Add extends BackendBaseActionAdd
         $this->form->addText('number')->makeRequired();
         $this->form->addText('zip')->makeRequired();
         $this->form->addText('city')->makeRequired();
-        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), 'BE')->makeRequired();
+        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BackendLanguage::getInterfaceLanguage()), 'BE')->makeRequired();
     }
 
     private function validateForm(): void
@@ -40,16 +40,16 @@ class Add extends BackendBaseActionAdd
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->form->getField('street')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('number')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('zip')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('city')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('title')->isFilled(BackendLanguage::err('TitleIsRequired'));
+            $this->form->getField('street')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('number')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('zip')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('city')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
             if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
-                $item['language'] = BL::getWorkingLanguage();
+                $item['language'] = BackendLanguage::getWorkingLanguage();
                 $item['title'] = $this->form->getField('title')->getValue();
                 $item['street'] = $this->form->getField('street')->getValue();
                 $item['number'] = $this->form->getField('number')->getValue();

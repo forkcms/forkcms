@@ -5,7 +5,7 @@ namespace Backend\Core\Engine;
 use SpoonFilter;
 use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * This is our extended version of \SpoonFormFile

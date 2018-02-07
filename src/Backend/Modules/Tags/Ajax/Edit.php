@@ -3,7 +3,7 @@
 namespace Backend\Modules\Tags\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use App\Component\Uri\Uri as CommonUri;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,13 +29,13 @@ class Edit extends BackendBaseAJAXAction
         }
         // validate tag name
         if ($tag === '') {
-            $this->output(Response::HTTP_BAD_REQUEST, null, BL::err('NameIsRequired'));
+            $this->output(Response::HTTP_BAD_REQUEST, null, BackendLanguage::err('NameIsRequired'));
 
             return;
         }
         // check if tag exists
         if (BackendTagsModel::existsTag($tag)) {
-            $this->output(Response::HTTP_BAD_REQUEST, null, BL::err('TagAlreadyExists'));
+            $this->output(Response::HTTP_BAD_REQUEST, null, BackendLanguage::err('TagAlreadyExists'));
 
             return;
         }
@@ -48,6 +48,6 @@ class Edit extends BackendBaseAJAXAction
         );
 
         BackendTagsModel::update($item);
-        $this->output(Response::HTTP_OK, $item, vsprintf(BL::msg('Edited'), [$item['tag']]));
+        $this->output(Response::HTTP_OK, $item, vsprintf(BackendLanguage::msg('Edited'), [$item['tag']]));
     }
 }

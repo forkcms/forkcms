@@ -4,7 +4,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -72,7 +72,7 @@ class Settings extends BackendBaseActionEdit
         if ($this->form->isSubmitted()) {
             if ($this->form->getField('send_new_profile_admin_mail')->isChecked()) {
                 if ($this->form->getField('overwrite_profile_notification_email')->isChecked()) {
-                    $this->form->getField('profile_notification_email')->isEmail(BL::msg('EmailIsRequired'));
+                    $this->form->getField('profile_notification_email')->isEmail(BackendLanguage::msg('EmailIsRequired'));
                 }
             }
 

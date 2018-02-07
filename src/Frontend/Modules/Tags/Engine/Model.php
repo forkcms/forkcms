@@ -6,8 +6,8 @@ use App\Component\Locale\Locale;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Language\Language;
-use Frontend\Core\Language\Locale as FrontendLocale;
+use App\Component\Locale\FrontendLanguage;
+use App\Component\Locale\FrontendLocale as FrontendLocale;
 
 /**
  * In this file we store all generic functions that we will be using in the tags module
@@ -254,7 +254,7 @@ class Model
 
         return [
             'name' => $module,
-            'label' => Language::lbl(\SpoonFilter::ucfirst($module)),
+            'label' => FrontendLanguage::lbl(\SpoonFilter::ucfirst($module)),
             'items' => $items,
         ];
     }

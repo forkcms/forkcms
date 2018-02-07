@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridDatabase;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -32,7 +32,7 @@ class MediaItemIndex extends BackendBaseActionIndex
                 );
 
                 return [
-                    'label' => Language::lbl('MediaMultiple' . ucfirst($type)),
+                    'label' => BackendLanguage::lbl('MediaMultiple' . ucfirst($type)),
                     'tabName' => 'tab' . ucfirst($type),
                     'mediaType' => $type,
                     'html' => $dataGrid->getContent(),

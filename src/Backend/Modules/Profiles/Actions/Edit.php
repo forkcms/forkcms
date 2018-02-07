@@ -7,7 +7,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
@@ -72,13 +72,13 @@ class Edit extends BackendBaseActionEdit
     {
         // gender dropdown values
         $genderValues = [
-            'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
+            'male' => \SpoonFilter::ucfirst(BackendLanguage::getLabel('Male')),
+            'female' => \SpoonFilter::ucfirst(BackendLanguage::getLabel('Female')),
         ];
 
         // birthdate dropdown values
         $days = range(1, 31);
-        $months = \SpoonLocale::getMonths(BL::getInterfaceLanguage());
+        $months = \SpoonLocale::getMonths(BackendLanguage::getInterfaceLanguage());
         $years = range(date('Y'), 1900);
 
         // get settings
@@ -113,7 +113,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown('year', array_combine($years, $years), (int) $birthYear);
         $this->form->addDropdown(
             'country',
-            Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()),
+            Intl::getRegionBundle()->getCountryNames(BackendLanguage::getInterfaceLanguage()),
             BackendProfilesModel::getSetting($this->id, 'country')
         );
 
@@ -159,9 +159,9 @@ class Edit extends BackendBaseActionEdit
             $this->dgGroups->addColumn(
                 'edit',
                 null,
-                BL::getLabel('Edit'),
+                BackendLanguage::getLabel('Edit'),
                 BackendModel::createUrlForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id,
-                BL::getLabel('Edit')
+                BackendLanguage::getLabel('Edit')
             );
         }
     }
@@ -213,41 +213,41 @@ class Edit extends BackendBaseActionEdit
             $ddmCountry = $this->form->getField('country');
 
             // email filled in?
-            if ($chkNewEmail->isChecked() && $txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
+            if ($chkNewEmail->isChecked() && $txtEmail->isFilled(BackendLanguage::getError('EmailIsRequired'))) {
                 // email must not be the same as previous one
                 if ($txtEmail->getValue() == $this->profile['email']) {
-                    $txtEmail->addError(BL::getError('EmailMatchesPrevious'));
+                    $txtEmail->addError(BackendLanguage::getError('EmailMatchesPrevious'));
                 }
 
                 // valid email?
-                if ($txtEmail->isEmail(BL::getError('EmailIsInvalid'))) {
+                if ($txtEmail->isEmail(BackendLanguage::getError('EmailIsInvalid'))) {
                     // email already exists?
                     if (BackendProfilesModel::existsByEmail($txtEmail->getValue(), $this->id)) {
                         // set error
-                        $txtEmail->addError(BL::getError('EmailExists'));
+                        $txtEmail->addError(BackendLanguage::getError('EmailExists'));
                     }
                 }
             }
 
             // display name filled in?
-            if ($txtDisplayName->isFilled(BL::getError('DisplayNameIsRequired'))) {
+            if ($txtDisplayName->isFilled(BackendLanguage::getError('DisplayNameIsRequired'))) {
                 // display name already exists?
                 if (BackendProfilesModel::existsDisplayName($txtDisplayName->getValue(), $this->id)) {
                     // set error
-                    $txtDisplayName->addError(BL::getError('DisplayNameExists'));
+                    $txtDisplayName->addError(BackendLanguage::getError('DisplayNameExists'));
                 }
             }
 
             // new_password is checked, so verify new password (only if profile should not be notified)
             // because then if the password field is empty, it will generate a new password
             if ($chkNewPassword->isChecked() && !$this->notifyProfile) {
-                $txtPassword->isFilled(BL::err('FieldIsRequired'));
-                $txtPasswordRepeat->isFilled(BL::err('FieldIsRequired'));
+                $txtPassword->isFilled(BackendLanguage::err('FieldIsRequired'));
+                $txtPasswordRepeat->isFilled(BackendLanguage::err('FieldIsRequired'));
 
                 // both password fields are filled in and should match
                 if ($txtPassword->isFilled() && $txtPasswordRepeat->isFilled()
                     && ($txtPassword->getValue() != $txtPasswordRepeat->getValue())) {
-                    $txtPasswordRepeat->addError(BL::err('PasswordRepeatIsRequired'));
+                    $txtPasswordRepeat->addError(BackendLanguage::err('PasswordRepeatIsRequired'));
                 }
             }
 
@@ -256,7 +256,7 @@ class Edit extends BackendBaseActionEdit
                 // valid date?
                 if (!checkdate($ddmMonth->getValue(), $ddmDay->getValue(), $ddmYear->getValue())) {
                     // set error
-                    $ddmYear->addError(BL::getError('DateIsInvalid'));
+                    $ddmYear->addError(BackendLanguage::getError('DateIsInvalid'));
                 }
             }
 
@@ -319,7 +319,7 @@ class Edit extends BackendBaseActionEdit
                 ) {
                     // no new password
                     if (!$chkNewPassword->isChecked()) {
-                        $password = BL::lbl('YourExistingPassword');
+                        $password = BackendLanguage::lbl('YourExistingPassword');
                     }
 
                     // notify values

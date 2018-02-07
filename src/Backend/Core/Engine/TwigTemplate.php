@@ -2,7 +2,7 @@
 
 namespace Backend\Core\Engine;
 
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use App\Twig\BaseTwigTemplate;
 use App\Twig\Extensions\TwigFilters;
 use Frontend\Core\Engine\FormExtension;
@@ -49,7 +49,7 @@ class TwigTemplate extends BaseTwigTemplate
             $this->environment->enableAutoReload();
             $this->environment->setCache(false);
         }
-        $this->language = BL::getWorkingLanguage();
+        $this->language = BackendLanguage::getWorkingLanguage();
         $this->connectSymfonyForms();
         $this->connectSymfonyTranslator();
         $this->connectSpoonForm();
@@ -143,7 +143,7 @@ class TwigTemplate extends BaseTwigTemplate
         }
 
         // we use some abbreviations and common terms, these should also be assigned
-        $this->assign('LANGUAGE', BL::getWorkingLanguage());
+        $this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
 
         // check on url object
         if (Model::getContainer()->has('url')) {
@@ -184,7 +184,7 @@ class TwigTemplate extends BaseTwigTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            Model::get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
     }
 
@@ -280,12 +280,12 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function parseTranslations(): void
     {
-        $currentModule = BL::getCurrentModule();
-        $this->parseLabels(BL::getErrors(), $currentModule, 'err');
-        $this->parseLabels(BL::getLabels(), $currentModule, 'lbl');
-        $this->parseLabels(BL::getMessages(), $currentModule, 'msg');
+        $currentModule = BackendLanguage::getCurrentModule();
+        $this->parseLabels(BackendLanguage::getErrors(), $currentModule, 'err');
+        $this->parseLabels(BackendLanguage::getLabels(), $currentModule, 'lbl');
+        $this->parseLabels(BackendLanguage::getMessages(), $currentModule, 'msg');
 
-        $interfaceLanguage = BL::getInterfaceLanguage();
+        $interfaceLanguage = BackendLanguage::getInterfaceLanguage();
         $this->assignArray($this->prefixArrayKeys('locMonthLong', \SpoonLocale::getMonths($interfaceLanguage, false)));
         $this->assignArray($this->prefixArrayKeys('locMonthShort', \SpoonLocale::getMonths($interfaceLanguage, true)));
         $this->assignArray($this->prefixArrayKeys('locDayLong', \SpoonLocale::getWeekDays($interfaceLanguage, false)));

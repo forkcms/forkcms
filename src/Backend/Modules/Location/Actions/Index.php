@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
@@ -87,7 +87,7 @@ class Index extends BackendBaseActionIndex
     {
         $this->dataGrid = new BackendDataGridDatabase(
             BackendLocationModel::QUERY_DATAGRID_BROWSE,
-            [BL::getWorkingLanguage()]
+            [BackendLanguage::getWorkingLanguage()]
         );
         $this->dataGrid->setSortingColumns(['address', 'title'], 'address');
         $this->dataGrid->setSortParameter('ASC');
@@ -101,9 +101,9 @@ class Index extends BackendBaseActionIndex
             $this->dataGrid->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }
@@ -111,22 +111,22 @@ class Index extends BackendBaseActionIndex
     protected function loadSettingsForm(): void
     {
         $mapTypes = [
-            'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
-            'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
-            'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
-            'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
-            'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
+            'ROADMAP' => BackendLanguage::lbl('Roadmap', $this->getModule()),
+            'SATELLITE' => BackendLanguage::lbl('Satellite', $this->getModule()),
+            'HYBRID' => BackendLanguage::lbl('Hybrid', $this->getModule()),
+            'TERRAIN' => BackendLanguage::lbl('Terrain', $this->getModule()),
+            'STREET_VIEW' => BackendLanguage::lbl('StreetView', $this->getModule()),
         ];
         $mapStyles = [
-            'standard' => BL::lbl('Default', $this->getModule()),
-            'custom' => BL::lbl('Custom', $this->getModule()),
-            'gray' => BL::lbl('Gray', $this->getModule()),
-            'blue' => BL::lbl('Blue', $this->getModule()),
+            'standard' => BackendLanguage::lbl('Default', $this->getModule()),
+            'custom' => BackendLanguage::lbl('Custom', $this->getModule()),
+            'gray' => BackendLanguage::lbl('Gray', $this->getModule()),
+            'blue' => BackendLanguage::lbl('Blue', $this->getModule()),
         ];
 
         $zoomLevels = array_combine(
             array_merge(['auto'], range(1, 18)),
-            array_merge([BL::lbl('Auto', $this->getModule())], range(1, 18))
+            array_merge([BackendLanguage::lbl('Auto', $this->getModule())], range(1, 18))
         );
 
         $this->form = new BackendForm('settings');

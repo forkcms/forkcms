@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Mailmotor\Domain\Subscription\Command;
 
 use Common\ModulesSettings;
-use Frontend\Core\Language\Locale;
+use App\Component\Locale\FrontendLocale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
@@ -29,7 +29,7 @@ final class SubscriptionHandler
     {
         $mergeFields = [];
         $interests = [];
-        $languageSpecificListId = $this->modulesSettings->get('Mailmotor', 'list_id_' . Locale::frontendLanguage());
+        $languageSpecificListId = $this->modulesSettings->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage());
 
         try {
             if ($this->modulesSettings->get('Mailmotor', 'overwrite_interests', true)) {

@@ -2,18 +2,18 @@
 
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use Backend\Core\Language\Locale;
+use App\Component\Locale\BackendLocale;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
 
 final class CreateContentBlock extends ContentBlockDataTransferObject
 {
-    public function __construct(Locale $locale = null)
+    public function __construct(BackendLocale $locale = null)
     {
         parent::__construct();
 
         if ($locale === null) {
-            $locale = Locale::workingLocale();
+            $locale = BackendLocale::workingLocale();
         }
 
         $this->locale = $locale;

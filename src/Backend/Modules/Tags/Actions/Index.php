@@ -5,7 +5,7 @@ namespace Backend\Modules\Tags\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -27,13 +27,13 @@ class Index extends BackendBaseActionIndex
         // create datagrid
         $this->dataGrid = new BackendDataGridDatabase(
             BackendTagsModel::QUERY_DATAGRID_BROWSE,
-            [BL::getWorkingLanguage()]
+            [BackendLanguage::getWorkingLanguage()]
         );
 
         // header labels
         $this->dataGrid->setHeaderLabels([
-            'tag' => \SpoonFilter::ucfirst(BL::lbl('Name')),
-            'num_tags' => \SpoonFilter::ucfirst(BL::lbl('Amount')),
+            'tag' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Name')),
+            'num_tags' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Amount')),
         ]);
 
         // sorting columns
@@ -46,7 +46,7 @@ class Index extends BackendBaseActionIndex
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
-            ['delete' => BL::lbl('Delete')],
+            ['delete' => BackendLanguage::lbl('Delete')],
             'delete',
             false,
             'form-control',
@@ -66,9 +66,9 @@ class Index extends BackendBaseActionIndex
             $this->dataGrid->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }

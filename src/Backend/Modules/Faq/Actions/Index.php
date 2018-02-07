@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
@@ -47,7 +47,7 @@ class Index extends BackendBaseActionIndex
         foreach ($categories as $categoryId => $categoryTitle) {
             $dataGrid = new BackendDataGridDatabase(
                 BackendFaqModel::QUERY_DATAGRID_BROWSE,
-                [BL::getWorkingLanguage(), $categoryId]
+                [BackendLanguage::getWorkingLanguage(), $categoryId]
             );
             $dataGrid->enableSequenceByDragAndDrop();
             $dataGrid->setColumnsHidden(['category_id', 'sequence']);
@@ -60,9 +60,9 @@ class Index extends BackendBaseActionIndex
                 $dataGrid->addColumn(
                     'edit',
                     null,
-                    BL::lbl('Edit'),
+                    BackendLanguage::lbl('Edit'),
                     BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
-                    BL::lbl('Edit')
+                    BackendLanguage::lbl('Edit')
                 );
             }
 
@@ -78,7 +78,7 @@ class Index extends BackendBaseActionIndex
         $this->emptyDatagrid = new BackendDataGridArray(
             [[
                 'dragAndDropHandle' => '',
-                'question' => BL::msg('NoQuestionInCategory'),
+                'question' => BackendLanguage::msg('NoQuestionInCategory'),
                 'edit' => '',
             ]]
         );

@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
@@ -47,7 +47,7 @@ class Index extends BackendBaseActionIndex
         // create datagrid
         $this->dgDrafts = new BackendDataGridDatabase(
             BackendPagesModel::QUERY_DATAGRID_BROWSE_DRAFTS,
-            ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
+            ['draft', BackendAuthentication::getUser()->getUserId(), BackendLanguage::getWorkingLanguage()]
         );
 
         // hide columns
@@ -72,8 +72,8 @@ class Index extends BackendBaseActionIndex
         // set headers
         $this->dgDrafts->setHeaderLabels(
             [
-                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
+                 'user_id' => \SpoonFilter::ucfirst(BackendLanguage::lbl('By')),
+                 'edited_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('LastEdited')),
             ]
         );
 
@@ -89,9 +89,9 @@ class Index extends BackendBaseActionIndex
             $this->dgDrafts->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }
@@ -101,7 +101,7 @@ class Index extends BackendBaseActionIndex
         // create dgRecentlyEdited
         $this->dgRecentlyEdited = new BackendDataGridDatabase(
             BackendPagesModel::QUERY_BROWSE_RECENT,
-            ['active', BL::getWorkingLanguage(), 7]
+            ['active', BackendLanguage::getWorkingLanguage(), 7]
         );
 
         // disable paging
@@ -125,8 +125,8 @@ class Index extends BackendBaseActionIndex
         // set headers
         $this->dgRecentlyEdited->setHeaderLabels(
             [
-                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited')),
+                 'user_id' => \SpoonFilter::ucfirst(BackendLanguage::lbl('By')),
+                 'edited_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('LastEdited')),
             ]
         );
 
@@ -136,16 +136,16 @@ class Index extends BackendBaseActionIndex
             $this->dgRecentlyEdited->setColumnURL(
                 'title',
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
 
             // add column
             $this->dgRecentlyEdited->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }

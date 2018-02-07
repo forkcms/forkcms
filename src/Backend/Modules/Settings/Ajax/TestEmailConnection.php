@@ -3,7 +3,7 @@
 namespace Backend\Modules\Settings\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use App\Service\Mailer\TransportFactory;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,13 +28,13 @@ class TestEmailConnection extends BackendBaseAJAXAction
 
         // validate
         if (!filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
-            $errors['from'] = BL::err('EmailIsInvalid');
+            $errors['from'] = BackendLanguage::err('EmailIsInvalid');
         }
         if (!filter_var($toEmail, FILTER_VALIDATE_EMAIL)) {
-            $errors['to'] = BL::err('EmailIsInvalid');
+            $errors['to'] = BackendLanguage::err('EmailIsInvalid');
         }
         if (!filter_var($replyToEmail, FILTER_VALIDATE_EMAIL)) {
-            $errors['reply'] = BL::err('EmailIsInvalid');
+            $errors['reply'] = BackendLanguage::err('EmailIsInvalid');
         }
 
         // got errors?
@@ -53,7 +53,7 @@ class TestEmailConnection extends BackendBaseAJAXAction
             ->setFrom([$fromEmail => $fromName])
             ->setTo([$toEmail => $toName])
             ->setReplyTo([$replyToEmail => $replyToName])
-            ->setBody(BL::msg('TestMessage'), 'text/plain')
+            ->setBody(BackendLanguage::msg('TestMessage'), 'text/plain')
         ;
 
         $mailerType = $this->getRequest()->request->get('mailer_type');

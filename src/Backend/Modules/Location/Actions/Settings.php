@@ -5,7 +5,7 @@ namespace Backend\Modules\Location\Actions;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -27,17 +27,17 @@ class Settings extends BackendBaseActionEdit
         $this->form = new BackendForm('settings');
 
         // add map info (widgets)
-        $this->form->addDropdown('zoom_level_widget', array_combine(array_merge(['auto'], range(3, 18)), array_merge([BL::lbl('Auto', $this->getModule())], range(3, 18))), $this->get('fork.settings')->get($this->url->getModule(), 'zoom_level_widget', 13));
+        $this->form->addDropdown('zoom_level_widget', array_combine(array_merge(['auto'], range(3, 18)), array_merge([BackendLanguage::lbl('Auto', $this->getModule())], range(3, 18))), $this->get('fork.settings')->get($this->url->getModule(), 'zoom_level_widget', 13));
         $this->form->addText('width_widget', $this->get('fork.settings')->get($this->url->getModule(), 'width_widget'));
         $this->form->addText('height_widget', $this->get('fork.settings')->get($this->url->getModule(), 'height_widget'));
         $this->form->addDropdown(
             'map_type_widget',
             [
-                'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
-                'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
-                'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
-                'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
-                'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
+                'ROADMAP' => BackendLanguage::lbl('Roadmap', $this->getModule()),
+                'SATELLITE' => BackendLanguage::lbl('Satellite', $this->getModule()),
+                'HYBRID' => BackendLanguage::lbl('Hybrid', $this->getModule()),
+                'TERRAIN' => BackendLanguage::lbl('Terrain', $this->getModule()),
+                'STREET_VIEW' => BackendLanguage::lbl('StreetView', $this->getModule()),
             ],
             $this->get('fork.settings')->get(
                 $this->url->getModule(),

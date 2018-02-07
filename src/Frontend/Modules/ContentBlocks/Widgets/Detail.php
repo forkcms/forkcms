@@ -3,7 +3,7 @@
 namespace Frontend\Modules\ContentBlocks\Widgets;
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Language\Locale;
+use App\Component\Locale\FrontendLocale;
 
 /**
  * This is the detail widget.
@@ -16,7 +16,7 @@ class Detail extends FrontendBaseWidget
 
         $contentBlock = $this->get('content_blocks.repository.content_block')->findOneByIdAndLocale(
             (int) $this->data['id'],
-            Locale::frontendLanguage()
+            FrontendLocale::frontendLanguage()
         );
 
         $this->template->assign('widgetContentBlocks', $contentBlock);

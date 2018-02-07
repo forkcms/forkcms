@@ -3,7 +3,7 @@
 namespace Backend\Modules\ContentBlocks\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Locale;
+use App\Component\Locale\BackendLocale;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataGrid;
 
 /**
@@ -14,7 +14,7 @@ class Index extends BackendBaseActionIndex
     public function execute(): void
     {
         parent::execute();
-        $this->template->assign('dataGrid', ContentBlockDataGrid::getHtml(Locale::workingLocale()));
+        $this->template->assign('dataGrid', ContentBlockDataGrid::getHtml(BackendLocale::workingLocale()));
         $this->parse();
         $this->display();
     }

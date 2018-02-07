@@ -5,7 +5,7 @@ namespace Backend\Modules\Profiles\Engine;
 use App\Service\Mailer\Message;
 use App\Component\Uri\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Exception as BackendException;
 
@@ -424,7 +424,7 @@ class Model
 
         // loop and build labels
         foreach ($labels as &$row) {
-            $row = \SpoonFilter::ucfirst(BL::getLabel(\SpoonFilter::ucfirst($row)));
+            $row = \SpoonFilter::ucfirst(BackendLanguage::getLabel(\SpoonFilter::ucfirst($row)));
         }
 
         // build array
@@ -676,7 +676,7 @@ class Model
         // set variables
         $variables = [
             'message' => vsprintf(
-                BL::msg('NotificationNewProfileToAdmin', 'Profiles'),
+                BackendLanguage::msg('NotificationNewProfileToAdmin', 'Profiles'),
                 [
                     $values['display_name'],
                     $values['email'],
@@ -687,7 +687,7 @@ class Model
 
         // define subject
         $subject = vsprintf(
-            BL::lbl('NotificationNewProfileToAdmin', 'Profiles'),
+            BackendLanguage::lbl('NotificationNewProfileToAdmin', 'Profiles'),
             [
                 $values['email'],
             ]
@@ -716,7 +716,7 @@ class Model
         // set variables
         $variables = [
             'message' => vsprintf(
-                BL::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
+                BackendLanguage::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
                 [
                     $values['email'],
                     $values['unencrypted_password'],
@@ -727,7 +727,7 @@ class Model
 
         // define subject
         $notificationSubject = $forUpdate ? 'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';
-        $subject = BL::lbl($notificationSubject, 'Profiles');
+        $subject = BackendLanguage::lbl($notificationSubject, 'Profiles');
 
         self::sendMail(
             $subject,

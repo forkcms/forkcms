@@ -10,8 +10,8 @@ use Symfony\Component\Finder\Finder;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Language\Language as FrontendLanguage;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\FrontendLanguage as FrontendLanguage;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.

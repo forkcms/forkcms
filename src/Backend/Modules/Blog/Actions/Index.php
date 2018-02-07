@@ -3,7 +3,7 @@
 namespace Backend\Modules\Blog\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
@@ -73,7 +73,7 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgPosts = new BackendDataGridDatabase(
                 BackendBlogModel::QUERY_DATAGRID_BROWSE_FOR_CATEGORY,
-                [$this->categoryId, 'active', BL::getWorkingLanguage()]
+                [$this->categoryId, 'active', BackendLanguage::getWorkingLanguage()]
             );
 
             // set the URL
@@ -82,15 +82,15 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgPosts = new BackendDataGridDatabase(
                 BackendBlogModel::QUERY_DATAGRID_BROWSE,
-                ['active', BL::getWorkingLanguage()]
+                ['active', BackendLanguage::getWorkingLanguage()]
             );
         }
 
         // set headers
         $this->dgPosts->setHeaderLabels(
             [
-                'user_id' => \SpoonFilter::ucfirst(BL::lbl('Author')),
-                'publish_on' => \SpoonFilter::ucfirst(BL::lbl('PublishedOn')),
+                'user_id' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Author')),
+                'publish_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('PublishedOn')),
             ]
         );
 
@@ -131,10 +131,10 @@ class Index extends BackendBaseActionIndex
             $this->dgPosts->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }
@@ -150,7 +150,7 @@ class Index extends BackendBaseActionIndex
                     $this->categoryId,
                     'draft',
                     BackendAuthentication::getUser()->getUserId(),
-                    BL::getWorkingLanguage(),
+                    BackendLanguage::getWorkingLanguage(),
                 ]
             );
 
@@ -160,12 +160,12 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgDrafts = new BackendDataGridDatabase(
                 BackendBlogModel::QUERY_DATAGRID_BROWSE_DRAFTS,
-                ['draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()]
+                ['draft', BackendAuthentication::getUser()->getUserId(), BackendLanguage::getWorkingLanguage()]
             );
         }
 
         // set headers
-        $this->dgDrafts->setHeaderLabels(['user_id' => \SpoonFilter::ucfirst(BL::lbl('Author'))]);
+        $this->dgDrafts->setHeaderLabels(['user_id' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Author'))]);
 
         // hide columns
         $this->dgDrafts->setColumnsHidden(['revision_id']);
@@ -205,11 +205,11 @@ class Index extends BackendBaseActionIndex
             $this->dgDrafts->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' .
                 $this->categoryId,
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }
@@ -221,7 +221,7 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgRecent = new BackendDataGridDatabase(
                 BackendBlogModel::QUERY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY,
-                [$this->categoryId, 'active', BL::getWorkingLanguage(), 4]
+                [$this->categoryId, 'active', BackendLanguage::getWorkingLanguage(), 4]
             );
 
             // set the URL
@@ -230,12 +230,12 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgRecent = new BackendDataGridDatabase(
                 BackendBlogModel::QUERY_DATAGRID_BROWSE_RECENT,
-                ['active', BL::getWorkingLanguage(), 4]
+                ['active', BackendLanguage::getWorkingLanguage(), 4]
             );
         }
 
         // set headers
-        $this->dgRecent->setHeaderLabels(['user_id' => \SpoonFilter::ucfirst(BL::lbl('Author'))]);
+        $this->dgRecent->setHeaderLabels(['user_id' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Author'))]);
 
         // hide columns
         $this->dgRecent->setColumnsHidden(['revision_id']);
@@ -273,10 +273,10 @@ class Index extends BackendBaseActionIndex
             $this->dgRecent->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }

@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -124,7 +124,7 @@ class Groups extends BackendBaseActionIndex
             $this->dgGroups->addColumn(
                 'edit',
                 null,
-                BL::getLabel('Edit'),
+                BackendLanguage::getLabel('Edit'),
                 BackendModel::createUrlForAction('EditGroup') . '&amp;id=[id]'
             );
         }
@@ -162,10 +162,10 @@ class Groups extends BackendBaseActionIndex
     {
         // 1 item
         if ($numProfiles == 1) {
-            $output = '1 ' . BL::getLabel('Profile');
+            $output = '1 ' . BackendLanguage::getLabel('Profile');
         } else {
             // no items
-            $output = $numProfiles . ' ' . BL::getLabel('Profiles');
+            $output = $numProfiles . ' ' . BackendLanguage::getLabel('Profiles');
         }
 
         // check if this action is allowed

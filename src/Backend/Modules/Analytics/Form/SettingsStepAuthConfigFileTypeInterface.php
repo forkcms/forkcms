@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\Form;
 
 use Backend\Core\Engine\Form;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\TwigTemplate;
 use Common\ModulesSettings;
 
@@ -66,11 +66,11 @@ final class SettingsStepAuthConfigFileTypeInterface implements SettingsStepTypeI
         $fileField = $this->form->getField('certificate');
         $emailField = $this->form->getField('email');
 
-        if ($fileField->isFilled(Language::err('FieldIsRequired'))) {
-            $fileField->isAllowedExtension(['p12'], Language::err('P12Only'));
+        if ($fileField->isFilled(BackendLanguage::err('FieldIsRequired'))) {
+            $fileField->isAllowedExtension(['p12'], BackendLanguage::err('P12Only'));
         }
-        $emailField->isFilled(Language::err('FieldIsRequired'));
-        $emailField->isEmail(Language::err('EmailIsInvalid'));
+        $emailField->isFilled(BackendLanguage::err('FieldIsRequired'));
+        $emailField->isEmail(BackendLanguage::err('EmailIsInvalid'));
 
         return $this->form->isCorrect();
     }

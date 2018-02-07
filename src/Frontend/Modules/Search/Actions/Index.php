@@ -6,7 +6,7 @@ use DateInterval;
 use Psr\Cache\CacheItemPoolInterface;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
@@ -213,7 +213,7 @@ class Index extends FrontendBaseBlock
         }
 
         $this->form->cleanupFields();
-        $this->form->getField('q')->isFilled(FL::err('TermIsRequired'));
+        $this->form->getField('q')->isFilled(FrontendLanguage::err('TermIsRequired'));
 
         if ($this->form->isCorrect()) {
             $this->searchTerm = $this->form->getField('q')->getValue();

@@ -5,7 +5,7 @@ namespace Backend\Modules\Settings\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * This is the email-action, it will display a form to set email settings
@@ -72,7 +72,7 @@ class Email extends BackendBaseActionIndex
             $this->form->addPassword('smtp_password', $this->get('fork.settings')->get('Core', 'smtp_password', ''));
             $this->form->addDropdown(
                 'smtp_secure_layer',
-                ['no' => ucfirst(BL::lbl('None')), 'ssl' => 'SSL', 'tls' => 'TLS'],
+                ['no' => ucfirst(BackendLanguage::lbl('None')), 'ssl' => 'SSL', 'tls' => 'TLS'],
                 $this->get('fork.settings')->get('Core', 'smtp_secure_layer', 'no')
             );
         }
@@ -93,19 +93,19 @@ class Email extends BackendBaseActionIndex
         // is the form submitted?
         if ($this->form->isSubmitted()) {
             // validate required fields
-            $this->form->getField('mailer_from_name')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('mailer_from_email')->isEmail(BL::err('EmailIsInvalid'));
-            $this->form->getField('mailer_to_name')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('mailer_to_email')->isEmail(BL::err('EmailIsInvalid'));
-            $this->form->getField('mailer_reply_to_name')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('mailer_reply_to_email')->isEmail(BL::err('EmailIsInvalid'));
+            $this->form->getField('mailer_from_name')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('mailer_from_email')->isEmail(BackendLanguage::err('EmailIsInvalid'));
+            $this->form->getField('mailer_to_name')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('mailer_to_email')->isEmail(BackendLanguage::err('EmailIsInvalid'));
+            $this->form->getField('mailer_reply_to_name')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('mailer_reply_to_email')->isEmail(BackendLanguage::err('EmailIsInvalid'));
 
             if ($this->isGod) {
                 // SMTP type was chosen
                 if ($this->form->getField('mailer_type')->getValue() == 'smtp') {
                     // server & port are required
-                    $this->form->getField('smtp_server')->isFilled(BL::err('FieldIsRequired'));
-                    $this->form->getField('smtp_port')->isFilled(BL::err('FieldIsRequired'));
+                    $this->form->getField('smtp_server')->isFilled(BackendLanguage::err('FieldIsRequired'));
+                    $this->form->getField('smtp_port')->isFilled(BackendLanguage::err('FieldIsRequired'));
                 }
             }
 
@@ -170,7 +170,7 @@ class Email extends BackendBaseActionIndex
 
                 // assign report
                 $this->template->assign('report', true);
-                $this->template->assign('reportMessage', BL::msg('Saved'));
+                $this->template->assign('reportMessage', BackendLanguage::msg('Saved'));
             }
         }
     }

@@ -3,7 +3,7 @@
 namespace Frontend\Core\Engine;
 
 use ForkCMS\App\KernelLoader;
-use Frontend\Core\Language\Language;
+use App\Component\Locale\FrontendLanguage;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -553,7 +553,7 @@ class Navigation extends KernelLoader
 
         // append action
         if ($action !== null) {
-            $url .= '/' . Language::act(\SpoonFilter::toCamelCase($action));
+            $url .= '/' . FrontendLanguage::act(\SpoonFilter::toCamelCase($action));
         }
 
         // return the URL

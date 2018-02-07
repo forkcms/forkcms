@@ -4,7 +4,7 @@ namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Language\Language;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -60,7 +60,7 @@ class Index extends FrontendBaseBlock
 
         // Rss feed for the comments of this blog
         $this->header->addRssLink(
-            Language::lbl('RecentComments'),
+            FrontendLanguage::lbl('RecentComments'),
             FrontendNavigation::getUrlForBlock($this->getModule(), 'CommentsRss')
         );
     }

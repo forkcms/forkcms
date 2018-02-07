@@ -1,10 +1,8 @@
 <?php
 
-namespace Frontend\Core\Language;
+namespace App\Component\Locale;
 
-use App\Component\Locale\Locale as CommonLocale;
-
-final class Locale extends CommonLocale
+final class FrontendLocale extends Locale
 {
     public static function frontendLanguage(): self
     {
@@ -13,6 +11,6 @@ final class Locale extends CommonLocale
 
     protected function getPossibleLanguages(): array
     {
-        return array_flip(Language::getActiveLanguages());
+        return array_flip(FrontendLanguage::getActiveLanguages());
     }
 }

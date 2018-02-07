@@ -3,7 +3,7 @@
 namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
@@ -68,7 +68,7 @@ class DetailTheme extends BackendBaseActionIndex
     {
         // inform that the theme is not installed yet
         if (!BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
-            $this->warnings[] = ['message' => BL::getMessage('InformationThemeIsNotInstalled')];
+            $this->warnings[] = ['message' => BackendLanguage::getMessage('InformationThemeIsNotInstalled')];
         }
 
         // path to information file
@@ -86,16 +86,16 @@ class DetailTheme extends BackendBaseActionIndex
                 // empty data (nothing useful)
                 if (empty($this->information)) {
                     $this->warnings[] = [
-                        'message' => BL::getMessage('InformationFileIsEmpty'),
+                        'message' => BackendLanguage::getMessage('InformationFileIsEmpty'),
                     ];
                 }
             } catch (\Exception $e) {
                 // warning that the information file is corrupt
-                $this->warnings[] = ['message' => BL::getMessage('InformationFileCouldNotBeLoaded')];
+                $this->warnings[] = ['message' => BackendLanguage::getMessage('InformationFileCouldNotBeLoaded')];
             }
         } else {
             // warning that the information file is missing
-            $this->warnings[] = ['message' => BL::getMessage('InformationFileIsMissing')];
+            $this->warnings[] = ['message' => BackendLanguage::getMessage('InformationFileIsMissing')];
         }
     }
 
@@ -129,7 +129,7 @@ class DetailTheme extends BackendBaseActionIndex
         $this->dataGridTemplates = new BackendDataGridArray($templates);
 
         // add label for path
-        $this->dataGridTemplates->setHeaderLabels(['path' => BL::msg('PathToTemplate')]);
+        $this->dataGridTemplates->setHeaderLabels(['path' => BackendLanguage::msg('PathToTemplate')]);
 
         // no paging
         $this->dataGridTemplates->setPaging(false);

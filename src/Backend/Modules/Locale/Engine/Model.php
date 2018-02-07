@@ -4,7 +4,7 @@ namespace Backend\Modules\Locale\Engine;
 
 use App\Component\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -118,8 +118,8 @@ class Model
         );
 
         // rebuild cache
-        self::buildCache(BL::getWorkingLanguage(), 'Backend');
-        self::buildCache(BL::getWorkingLanguage(), 'Frontend');
+        self::buildCache(BackendLanguage::getWorkingLanguage(), 'Backend');
+        self::buildCache(BackendLanguage::getWorkingLanguage(), 'Frontend');
     }
 
     public static function exists(int $id): bool
@@ -198,11 +198,11 @@ class Model
     public static function getLanguagesForMultiCheckbox(bool $includeInterfaceLanguages = false): array
     {
         // get working languages
-        $aLanguages = BL::getWorkingLanguages();
+        $aLanguages = BackendLanguage::getWorkingLanguages();
 
         // add the interface languages if needed
         if ($includeInterfaceLanguages) {
-            $aLanguages = array_merge($aLanguages, BL::getInterfaceLanguages());
+            $aLanguages = array_merge($aLanguages, BackendLanguage::getInterfaceLanguages());
         }
 
         // create a new array to redefine the languages for the multicheckbox
@@ -378,7 +378,7 @@ class Model
 
         // loop and build labels
         foreach ($labels as &$row) {
-            $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
+            $row = \SpoonFilter::ucfirst(BackendLanguage::msg(mb_strtoupper($row), 'Core'));
         }
 
         // build array
@@ -391,7 +391,7 @@ class Model
 
         // loop and build labels
         foreach ($labels as &$row) {
-            $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
+            $row = \SpoonFilter::ucfirst(BackendLanguage::msg(mb_strtoupper($row), 'Core'));
         }
 
         // build array
@@ -428,10 +428,10 @@ class Model
         // we can't simply use these right away, because this function is also calls by the installer,
         // which does not have Backend-functions
         if ($frontendLanguages === null) {
-            $frontendLanguages = array_keys(BL::getWorkingLanguages());
+            $frontendLanguages = array_keys(BackendLanguage::getWorkingLanguages());
         }
         if ($backendLanguages === null) {
-            $backendLanguages = array_keys(BL::getInterfaceLanguages());
+            $backendLanguages = array_keys(BackendLanguage::getInterfaceLanguages());
         }
         if ($userId === null) {
             $userId = BackendAuthentication::getUser()->getUserId();

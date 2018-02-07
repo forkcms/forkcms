@@ -5,7 +5,7 @@ namespace Frontend\Modules\FormBuilder\EventListener;
 use App\Service\Mailer\Message;
 use Swift_Mailer;
 use Common\ModulesSettings;
-use Frontend\Core\Language\Language;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use Swift_Mime_SimpleMessage;
 
@@ -72,7 +72,7 @@ final class FormBuilderSubmittedMailSubscriber
         bool $isConfirmationMail = false
     ) : Swift_Mime_SimpleMessage {
         if ($subject === null) {
-            $subject = Language::getMessage('FormBuilderSubject');
+            $subject = FrontendLanguage::getMessage('FormBuilderSubject');
         }
 
         $from = $this->modulesSettings->get('Core', 'mailer_from');

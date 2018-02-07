@@ -3,7 +3,7 @@
 namespace Backend\Modules\Error\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use App\Exception\ExitException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -64,7 +64,7 @@ class Index extends BackendBaseActionIndex
         }
 
         // assign the correct message into the template
-        $this->template->assign('message', BL::err(\SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
+        $this->template->assign('message', BackendLanguage::err(\SpoonFilter::toCamelCase(htmlspecialchars($errorType), '-')));
     }
 
     public function getContent(): Response

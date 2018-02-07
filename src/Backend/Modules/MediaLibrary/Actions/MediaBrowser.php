@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
@@ -78,7 +78,7 @@ class MediaBrowser extends BackendBaseAction
                 );
 
                 return [
-                    'label' => Language::lbl('MediaMultiple' . ucfirst($type)),
+                    'label' => BackendLanguage::lbl('MediaMultiple' . ucfirst($type)),
                     'tabName' => 'tab' . ucfirst($type),
                     'mediaType' => $type,
                     'html' => $dataGrid->getContent(),

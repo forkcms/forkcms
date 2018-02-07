@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\Form;
 
 use Backend\Core\Engine\Form;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\TwigTemplate;
 use Common\ModulesSettings;
 use Google_Service_Analytics;
@@ -71,7 +71,7 @@ final class SettingsStepWebPropertyTypeInterface implements SettingsStepTypeInte
 
     private function isValid(): bool
     {
-        $this->form->getField('web_property_id')->isFilled(Language::err('FieldIsRequired'));
+        $this->form->getField('web_property_id')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
         return $this->form->isCorrect();
     }

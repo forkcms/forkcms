@@ -4,7 +4,7 @@ namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Exception;
@@ -97,8 +97,8 @@ class UploadTheme extends BackendBaseActionAdd
         $zipFiles = null;
 
         // Validate the file. Check if the file field is filled and if it's a zip.
-        if ($fileFile->isFilled(BL::err('FieldIsRequired')) &&
-            $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))
+        if ($fileFile->isFilled(BackendLanguage::err('FieldIsRequired')) &&
+            $fileFile->isAllowedExtension(['zip'], sprintf(BackendLanguage::getError('ExtensionNotAllowed'), 'zip'))
         ) {
             // Create ziparchive instance
             $zip = new ZipArchive();
@@ -112,7 +112,7 @@ class UploadTheme extends BackendBaseActionAdd
                     // Throw error if info.xml is not found
                     if ($infoXml === null) {
                         $fileFile->addError(
-                            sprintf(BL::getError('NoInformationFile'), $fileFile->getFileName())
+                            sprintf(BackendLanguage::getError('NoInformationFile'), $fileFile->getFileName())
                         );
 
                         return;
@@ -128,7 +128,7 @@ class UploadTheme extends BackendBaseActionAdd
 
                         // Empty data (nothing useful)
                         if (empty($this->info)) {
-                            $fileFile->addError(BL::getMessage('InformationFileIsEmpty'));
+                            $fileFile->addError(BackendLanguage::getMessage('InformationFileIsEmpty'));
 
                             return;
                         }
@@ -137,14 +137,14 @@ class UploadTheme extends BackendBaseActionAdd
                         $this->themeName = $this->info['name'];
                     } catch (Exception $e) {
                         // Warning that the information file is corrupt
-                        $fileFile->addError(BL::getMessage('InformationFileCouldNotBeLoaded'));
+                        $fileFile->addError(BackendLanguage::getMessage('InformationFileCouldNotBeLoaded'));
 
                         return;
                     }
 
                     // Wow wow, you are trying to upload an already existing theme
                     if (BackendExtensionsModel::existsTheme($this->themeName)) {
-                        $fileFile->addError(sprintf(BL::getError('ThemeAlreadyExists'), $this->themeName));
+                        $fileFile->addError(sprintf(BackendLanguage::getError('ThemeAlreadyExists'), $this->themeName));
 
                         return;
                     }
@@ -152,11 +152,11 @@ class UploadTheme extends BackendBaseActionAdd
                     $zipFiles = $this->getValidatedFilesList($zip);
                 } else {
                     // Empty zip file
-                    $fileFile->addError(BL::getError('FileIsEmpty'));
+                    $fileFile->addError(BackendLanguage::getError('FileIsEmpty'));
                 }
             } else {
                 // Something went very wrong, probably corrupted
-                $fileFile->addError(BL::getError('CorruptedFile'));
+                $fileFile->addError(BackendLanguage::getError('CorruptedFile'));
 
                 return;
             }

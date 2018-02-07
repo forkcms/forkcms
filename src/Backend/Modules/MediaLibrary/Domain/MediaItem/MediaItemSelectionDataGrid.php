@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
@@ -35,16 +35,16 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
     {
         if ($type->isMovie()) {
             return [
-                'storageType' => ucfirst(Language::lbl('MediaStorageType')),
-                'url' => ucfirst(Language::lbl('MediaMovieId')),
-                'title' => ucfirst(Language::lbl('MediaMovieTitle')),
+                'storageType' => ucfirst(BackendLanguage::lbl('MediaStorageType')),
+                'url' => ucfirst(BackendLanguage::lbl('MediaMovieId')),
+                'title' => ucfirst(BackendLanguage::lbl('MediaMovieTitle')),
                 'directUrl' => '',
             ];
         }
 
         return [
             'type' => '',
-            'url' => ucfirst(Language::lbl('Image')),
+            'url' => ucfirst(BackendLanguage::lbl('Image')),
             'directUrl' => '',
         ];
     }
@@ -194,6 +194,6 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         }
 
         return '<a class="btn btn-success" data-direct-url="' . $absoluteUrl . '">' .
-            ucfirst(Language::lbl('Select')) . '</a>';
+            ucfirst(BackendLanguage::lbl('Select')) . '</a>';
     }
 }

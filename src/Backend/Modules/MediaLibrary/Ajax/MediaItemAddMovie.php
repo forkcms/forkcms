@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -29,7 +29,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
         $this->output(
             Response::HTTP_OK,
             $createMediaItemFromMovieUrl->getMediaItem(),
-            Language::msg('MediaUploadedSuccessful')
+            BackendLanguage::msg('MediaUploadedSuccessful')
         );
     }
 
@@ -56,12 +56,12 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
         // Movie id not null
         if ($movieId === null) {
-            throw new AjaxExitException(Language::err('MediaMovieIdIsRequired'));
+            throw new AjaxExitException(BackendLanguage::err('MediaMovieIdIsRequired'));
         }
 
         // Movie url (= externalVideoId) already exists in our repository
         if ($this->get('media_library.repository.item')->existsOneByUrl((string) $movieId)) {
-            throw new AjaxExitException(Language::err('MediaMovieIdAlreadyExists'));
+            throw new AjaxExitException(BackendLanguage::err('MediaMovieIdAlreadyExists'));
         }
 
         return $movieId;
@@ -73,7 +73,7 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
 
         // Title not valid
         if ($movieTitle === null) {
-            throw new AjaxExitException(Language::err('MediaMovieTitleIsRequired'));
+            throw new AjaxExitException(BackendLanguage::err('MediaMovieTitleIsRequired'));
         }
 
         return $movieTitle;
@@ -84,14 +84,14 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
         $id = $this->getRequest()->request->getInt('folder_id');
 
         if ($id === 0) {
-            throw new AjaxExitException(Language::err('MediaFolderIsRequired'));
+            throw new AjaxExitException(BackendLanguage::err('MediaFolderIsRequired'));
         }
 
         try {
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
-            throw new AjaxExitException(Language::err('ParentNotExists'));
+            throw new AjaxExitException(BackendLanguage::err('ParentNotExists'));
         }
     }
 
@@ -106,13 +106,13 @@ class MediaItemAddMovie extends BackendBaseAJAXAction
                 true
             )
         ) {
-            throw new AjaxExitException(Language::err('MovieStorageTypeNotExists'));
+            throw new AjaxExitException(BackendLanguage::err('MovieStorageTypeNotExists'));
         }
 
         try {
             return StorageType::fromString($movieStorageType);
         } catch (InvalidArgumentException $invalidArgumentException) {
-            throw new AjaxExitException(Language::err('MovieStorageTypeNotExists'));
+            throw new AjaxExitException(BackendLanguage::err('MovieStorageTypeNotExists'));
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use App\Exception\AjaxExitException;
@@ -38,7 +38,7 @@ class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
 
         // GroupId not valid
         if ($id === null) {
-            throw new AjaxExitException(Language::err('GroupIdIsRequired'));
+            throw new AjaxExitException(BackendLanguage::err('GroupIdIsRequired'));
         }
 
         try {

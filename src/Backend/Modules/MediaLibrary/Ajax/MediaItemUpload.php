@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -194,14 +194,14 @@ class MediaItemUpload extends BackendBaseAJAXAction
         $id = $this->getRequest()->query->getInt('folder_id');
 
         if ($id === 0) {
-            throw new AjaxExitException(Language::err('MediaFolderIsRequired'));
+            throw new AjaxExitException(BackendLanguage::err('MediaFolderIsRequired'));
         }
 
         try {
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
-            throw new AjaxExitException(Language::err('NonExistingMediaFolder'));
+            throw new AjaxExitException(BackendLanguage::err('NonExistingMediaFolder'));
         }
     }
 

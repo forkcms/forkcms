@@ -5,7 +5,7 @@ namespace Frontend\Modules\Profiles\Actions;
 use App\Service\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -58,13 +58,13 @@ class ResendActivation extends FrontendBaseBlock
     {
         $txtEmail = $this->form->getField('email');
 
-        if (!$txtEmail->isFilled(FL::getError('EmailIsRequired'))
-            || !$txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
+        if (!$txtEmail->isFilled(FrontendLanguage::getError('EmailIsRequired'))
+            || !$txtEmail->isEmail(FrontendLanguage::getError('EmailIsInvalid'))) {
             return $this->form->isCorrect();
         }
 
         if (!FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
-            $txtEmail->addError(FL::getError('EmailIsInvalid'));
+            $txtEmail->addError(FrontendLanguage::getError('EmailIsInvalid'));
 
             return $this->form->isCorrect();
         }
@@ -72,7 +72,7 @@ class ResendActivation extends FrontendBaseBlock
         $this->profile = FrontendProfilesModel::get(FrontendProfilesModel::getIdByEmail($txtEmail->getValue()));
 
         if ($this->profile->getStatus() !== FrontendProfilesAuthentication::LOGIN_INACTIVE) {
-            $txtEmail->addError(FL::getError('ProfileIsActive'));
+            $txtEmail->addError(FrontendLanguage::getError('ProfileIsActive'));
         }
 
         return $this->form->isCorrect();
@@ -101,7 +101,7 @@ class ResendActivation extends FrontendBaseBlock
                          . '/' . $this->profile->getSetting('activation_key');
         $from = $this->get('fork.settings')->get('Core', 'mailer_from');
         $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-        $message = Message::newInstance(FL::getMessage('RegisterSubject'))
+        $message = Message::newInstance(FrontendLanguage::getMessage('RegisterSubject'))
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$this->profile->getEmail() => $this->profile->getDisplayName()])
             ->setReplyTo([$replyTo['email'] => $replyTo['name']])

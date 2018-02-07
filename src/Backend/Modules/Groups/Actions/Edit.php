@@ -7,7 +7,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
@@ -264,9 +264,9 @@ class Edit extends BackendBaseActionEdit
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit', 'Users')) {
             // add columns
-            $this->dataGridUsers->addColumn('nickname', \SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createUrlForAction('Edit', 'Users') . '&amp;id=[id]');
-            $this->dataGridUsers->addColumn('surname', \SpoonFilter::ucfirst(BL::lbl('Surname')), null, BackendModel::createUrlForAction('Edit', 'Users') . '&amp;id=[id]');
-            $this->dataGridUsers->addColumn('name', \SpoonFilter::ucfirst(BL::lbl('Name')), null, BackendModel::createUrlForAction('Edit', 'Users') . '&amp;id=[id]');
+            $this->dataGridUsers->addColumn('nickname', \SpoonFilter::ucfirst(BackendLanguage::lbl('Nickname')), null, BackendModel::createUrlForAction('Edit', 'Users') . '&amp;id=[id]');
+            $this->dataGridUsers->addColumn('surname', \SpoonFilter::ucfirst(BackendLanguage::lbl('Surname')), null, BackendModel::createUrlForAction('Edit', 'Users') . '&amp;id=[id]');
+            $this->dataGridUsers->addColumn('name', \SpoonFilter::ucfirst(BackendLanguage::lbl('Name')), null, BackendModel::createUrlForAction('Edit', 'Users') . '&amp;id=[id]');
 
             // add column URL
             $this->dataGridUsers->setColumnURL('email', BackendModel::createUrlForAction('Edit', 'Users') . '&amp;id=[id]');
@@ -310,7 +310,7 @@ class Edit extends BackendBaseActionEdit
 
                     // add widget checkboxes
                     $widgetBoxes[$j]['check'] = '<span>' . $this->form->addCheckbox('widgets_' . $widget['checkbox_name'], $selectedWidgets[$j] ?? null)->parse() . '</span>';
-                    $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BL::lbl($widget['module_name']));
+                    $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BackendLanguage::lbl($widget['module_name']));
                     $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['checkbox_name']) . '">' . $widget['label'] . '</label>';
                     $widgetBoxes[$j]['description'] = $widget['description'];
                 }
@@ -589,13 +589,13 @@ class Edit extends BackendBaseActionEdit
             }
 
             // validate fields
-            $nameField->isFilled(BL::err('NameIsRequired'));
+            $nameField->isFilled(BackendLanguage::err('NameIsRequired'));
 
             // new name given?
             if ($nameField->getValue() !== $this->record['name']) {
                 // group already exists?
                 if (BackendGroupsModel::alreadyExists($nameField->getValue())) {
-                    $nameField->setError(BL::err('GroupAlreadyExists'));
+                    $nameField->setError(BackendLanguage::err('GroupAlreadyExists'));
                 }
             }
 

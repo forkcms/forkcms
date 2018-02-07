@@ -5,7 +5,7 @@ namespace Frontend\Modules\Search\Ajax;
 use DateInterval;
 use Psr\Cache\CacheItemPoolInterface;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -137,8 +137,8 @@ class Autosuggest extends FrontendBaseAJAXAction
 
             // add reference to full search results page
             $this->searchResults[] = [
-                'title' => FL::lbl('More'),
-                'text' => FL::msg('MoreResults'),
+                'title' => FrontendLanguage::lbl('More'),
+                'text' => FrontendLanguage::msg('MoreResults'),
                 'full_url' => FrontendNavigation::getUrlForBlock($this->getModule())
                               . '?form=search&q=' . $this->searchTerm,
             ];

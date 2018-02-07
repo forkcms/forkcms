@@ -208,7 +208,7 @@ services:
             - "@templating.locator"
 
     translator:
-        class: Common\Language
+        class: App\Component\Locale\Language
         public: true
         arguments:
             - "@translator.selector"

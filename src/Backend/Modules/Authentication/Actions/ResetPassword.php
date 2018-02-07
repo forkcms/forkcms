@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\User as BackendUser;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
@@ -101,18 +101,18 @@ class ResetPassword extends BackendBaseActionAdd
             $newPasswordRepeated = $this->form->getField('backend_new_password_repeated');
 
             // required fields
-            $newPassword->isFilled(BL::err('PasswordIsRequired'));
-            $newPasswordRepeated->isFilled(BL::err('PasswordRepeatIsRequired'));
+            $newPassword->isFilled(BackendLanguage::err('PasswordIsRequired'));
+            $newPasswordRepeated->isFilled(BackendLanguage::err('PasswordRepeatIsRequired'));
 
             // all fields are ok?
             if ($newPassword->isFilled() && $newPasswordRepeated->isFilled()) {
                 // the passwords entered match
                 if ($newPassword->getValue() !== $newPasswordRepeated->getValue()) {
                     // add error
-                    $this->form->addError(BL::err('PasswordsDontMatch'));
+                    $this->form->addError(BackendLanguage::err('PasswordsDontMatch'));
 
                     // show error
-                    $this->template->assign('error', BL::err('PasswordsDontMatch'));
+                    $this->template->assign('error', BackendLanguage::err('PasswordsDontMatch'));
                 }
             }
 

@@ -4,7 +4,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Locale;
+use App\Component\Locale\BackendLocale;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
@@ -55,7 +55,7 @@ class Delete extends BackendBaseActionDelete
         try {
             return $this->get('content_blocks.repository.content_block')->findOneByIdAndLocale(
                 $id,
-                Locale::workingLocale()
+                BackendLocale::workingLocale()
             );
         } catch (ContentBlockNotFound $e) {
             $this->redirect($this->getBackLink(['error' => 'non-existing']));

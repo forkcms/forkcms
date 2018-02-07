@@ -4,7 +4,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
@@ -98,12 +98,12 @@ class EditProfileGroup extends BackendBaseActionEdit
             $txtExpirationTime = $this->form->getField('expiration_time');
 
             // fields filled?
-            $ddmGroup->isFilled(BL::getError('GroupIsRequired'));
+            $ddmGroup->isFilled(BackendLanguage::getError('GroupIsRequired'));
             if ($txtExpirationDate->isFilled()) {
-                $txtExpirationDate->isValid(BL::getError('DateIsInvalid'));
+                $txtExpirationDate->isValid(BackendLanguage::getError('DateIsInvalid'));
             }
             if ($txtExpirationTime->isFilled()) {
-                $txtExpirationTime->isValid(BL::getError('TimeIsInvalid'));
+                $txtExpirationTime->isValid(BackendLanguage::getError('TimeIsInvalid'));
             }
 
             // no errors?

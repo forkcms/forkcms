@@ -6,7 +6,7 @@ use App\Domain\Meta\Meta;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Header\MetaLink;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
@@ -134,7 +134,7 @@ class Detail extends FrontendBaseBlock
 
         // Rss feed for the comments of this blog post
         $this->header->addRssLink(
-            vsprintf(FL::msg('CommentsOn'), [$this->blogPost['title']]),
+            vsprintf(FrontendLanguage::msg('CommentsOn'), [$this->blogPost['title']]),
             FrontendNavigation::getUrlForBlock($this->getModule(), 'ArticleCommentsRss') . '/' . $this->blogPost['url']
         );
     }
@@ -246,7 +246,7 @@ class Detail extends FrontendBaseBlock
     private function buildForm(): void
     {
         $this->form = new FrontendForm('commentsForm');
-        $this->form->setAction($this->form->getAction() . '#' . FL::act('Comment'));
+        $this->form->setAction($this->form->getAction() . '#' . FrontendLanguage::act('Comment'));
 
         $cookie = FrontendModel::getContainer()->get('fork.cookie');
         $author = $cookie->get('comment_author');
@@ -351,9 +351,9 @@ class Detail extends FrontendBaseBlock
 
         switch ($comment['status']) {
             case 'moderation':
-                return $redirectLink . 'comment=moderation#' . FL::act('Comment');
+                return $redirectLink . 'comment=moderation#' . FrontendLanguage::act('Comment');
             case 'spam':
-                return $redirectLink . 'comment=spam#' . FL::act('Comment');
+                return $redirectLink . 'comment=spam#' . FrontendLanguage::act('Comment');
             case 'published':
                 return $redirectLink . 'comment=true#comment-' . $comment['id'];
             default:
@@ -384,19 +384,19 @@ class Detail extends FrontendBaseBlock
 
             // calculate difference, it it isn't 10 seconds the we tell the user to slow down
             if ($diff < 10 && $diff !== 0) {
-                $this->form->getField('message')->addError(FL::err('CommentTimeout'));
+                $this->form->getField('message')->addError(FrontendLanguage::err('CommentTimeout'));
             }
         }
 
         // validate required fields
-        $this->form->getField('author')->isFilled(FL::err('AuthorIsRequired'));
-        $this->form->getField('email')->isEmail(FL::err('EmailIsRequired'));
-        $this->form->getField('message')->isFilled(FL::err('MessageIsRequired'));
+        $this->form->getField('author')->isFilled(FrontendLanguage::err('AuthorIsRequired'));
+        $this->form->getField('email')->isEmail(FrontendLanguage::err('EmailIsRequired'));
+        $this->form->getField('message')->isFilled(FrontendLanguage::err('MessageIsRequired'));
 
         // validate optional fields
         if ($this->form->getField('website')->isFilled()
             && $this->form->getField('website')->getValue() !== 'http://') {
-            $this->form->getField('website')->isURL(FL::err('InvalidURL'));
+            $this->form->getField('website')->isURL(FrontendLanguage::err('InvalidURL'));
         }
 
         return $this->form->isCorrect();

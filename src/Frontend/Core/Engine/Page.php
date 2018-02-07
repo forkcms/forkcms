@@ -6,7 +6,7 @@ use App\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Block\ModuleExtraInterface;
 use Frontend\Core\Header\Header;
-use Frontend\Core\Language\Language;
+use App\Component\Locale\FrontendLanguage;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -311,7 +311,7 @@ class Page extends KernelLoader
     protected function parseLanguages(): void
     {
         // just execute if the site is multi-language
-        if (!$this->getContainer()->getParameter('site.multilanguage') || count(Language::getActiveLanguages()) === 1) {
+        if (!$this->getContainer()->getParameter('site.multilanguage') || count(FrontendLanguage::getActiveLanguages()) === 1) {
             return;
         }
 
@@ -322,11 +322,11 @@ class Page extends KernelLoader
                     return [
                         'url' => '/' . $language,
                         'label' => $language,
-                        'name' => Language::msg(mb_strtoupper($language)),
+                        'name' => FrontendLanguage::msg(mb_strtoupper($language)),
                         'current' => $language === LANGUAGE,
                     ];
                 },
-                Language::getActiveLanguages()
+                FrontendLanguage::getActiveLanguages()
             )
         );
     }
@@ -395,7 +395,7 @@ class Page extends KernelLoader
             return;
         }
 
-        array_map([$this, 'addAlternateLinkForLanguage'], Language::getActiveLanguages());
+        array_map([$this, 'addAlternateLinkForLanguage'], FrontendLanguage::getActiveLanguages());
     }
 
     private function addAlternateLinkForLanguage(string $language): void

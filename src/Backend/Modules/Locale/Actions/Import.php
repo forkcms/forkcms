@@ -4,7 +4,7 @@ namespace Backend\Modules\Locale\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -48,7 +48,7 @@ class Import extends BackendBaseActionAdd
         // get filter values
         $this->filter['language'] = $this->getRequest()->query->get('language', []);
         if (empty($this->filter['language'])) {
-            $this->filter['language'] = BL::getWorkingLanguage();
+            $this->filter['language'] = BackendLanguage::getWorkingLanguage();
         }
         $this->filter['application'] = $this->getRequest()->query->get('application');
         $this->filter['module'] = $this->getRequest()->query->get('module');
@@ -74,15 +74,15 @@ class Import extends BackendBaseActionAdd
             $chkOverwrite = $this->form->getField('overwrite');
 
             // name checks
-            if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
+            if ($fileFile->isFilled(BackendLanguage::err('FieldIsRequired'))) {
                 // only xml files allowed
-                if ($fileFile->isAllowedExtension(['xml'], sprintf(BL::getError('ExtensionNotAllowed'), 'xml'))) {
+                if ($fileFile->isAllowedExtension(['xml'], sprintf(BackendLanguage::getError('ExtensionNotAllowed'), 'xml'))) {
                     // load xml
                     $xml = @simplexml_load_file($fileFile->getTempFileName());
 
                     // invalid xml
                     if ($xml === false) {
-                        $fileFile->addError(BL::getError('InvalidXML'));
+                        $fileFile->addError(BackendLanguage::getError('InvalidXML'));
                     }
                 }
             }

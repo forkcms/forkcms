@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Rss as FrontendRSS;
 use Frontend\Core\Engine\RssItem as FrontendRSSItem;
@@ -25,7 +25,7 @@ class CommentsRss extends FrontendBaseBlock
     {
         $blogPostComments = FrontendBlogModel::getAllComments();
         $rss = new FrontendRSS(
-            \SpoonFilter::ucfirst(FL::msg('BlogAllComments')),
+            \SpoonFilter::ucfirst(FrontendLanguage::msg('BlogAllComments')),
             SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule()),
             ''
         );
@@ -43,7 +43,7 @@ class CommentsRss extends FrontendBaseBlock
         string $blogPostUrlBase
     ): FrontendRSSItem {
         $rssItem = new FrontendRSSItem(
-            $blogPostComment['author'] . ' ' . FL::lbl('On') . ' ' . $blogPostComment['post_title'],
+            $blogPostComment['author'] . ' ' . FrontendLanguage::lbl('On') . ' ' . $blogPostComment['post_title'],
             $blogPostUrlBase . '/' . $blogPostComment['post_irl'] . '/#comment-' . $blogPostComment['id'],
             $blogPostComment['text']
         );

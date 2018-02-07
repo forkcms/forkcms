@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaGalleries\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataGrid;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\TypeType;
@@ -45,7 +45,7 @@ class MediaGalleryIndex extends BackendBaseActionIndex
         return [
             [
                 'message' => sprintf(
-                    Language::err('MediaLibraryModuleRequired', 'MediaGalleries'),
+                    BackendLanguage::err('MediaLibraryModuleRequired', 'MediaGalleries'),
                     BackendModel::createUrlForAction('Modules', 'Extensions')
                 ),
             ],

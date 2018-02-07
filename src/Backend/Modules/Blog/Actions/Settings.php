@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * This is the settings-action, it will display a form to set general blog settings
@@ -76,9 +76,9 @@ class Settings extends BackendBaseActionEdit
         );
 
         // add fields for RSS
-        $this->form->addCheckbox('rss_meta', $this->get('fork.settings')->get($this->url->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), true));
-        $this->form->addText('rss_title', $this->get('fork.settings')->get($this->url->getModule(), 'rss_title_' . BL::getWorkingLanguage()));
-        $this->form->addTextarea('rss_description', $this->get('fork.settings')->get($this->url->getModule(), 'rss_description_' . BL::getWorkingLanguage()));
+        $this->form->addCheckbox('rss_meta', $this->get('fork.settings')->get($this->url->getModule(), 'rss_meta_' . BackendLanguage::getWorkingLanguage(), true));
+        $this->form->addText('rss_title', $this->get('fork.settings')->get($this->url->getModule(), 'rss_title_' . BackendLanguage::getWorkingLanguage()));
+        $this->form->addTextarea('rss_description', $this->get('fork.settings')->get($this->url->getModule(), 'rss_description_' . BackendLanguage::getWorkingLanguage()));
 
         // god user?
         if ($this->isGod) {
@@ -99,7 +99,7 @@ class Settings extends BackendBaseActionEdit
     {
         if ($this->form->isSubmitted()) {
             // validation
-            $this->form->getField('rss_title')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('rss_title')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
             if ($this->form->isCorrect()) {
                 // set our settings
@@ -111,9 +111,9 @@ class Settings extends BackendBaseActionEdit
                 $this->get('fork.settings')->set($this->url->getModule(), 'moderation', (bool) $this->form->getField('moderation')->getValue());
                 $this->get('fork.settings')->set($this->url->getModule(), 'notify_by_email_on_new_comment_to_moderate', (bool) $this->form->getField('notify_by_email_on_new_comment_to_moderate')->getValue());
                 $this->get('fork.settings')->set($this->url->getModule(), 'notify_by_email_on_new_comment', (bool) $this->form->getField('notify_by_email_on_new_comment')->getValue());
-                $this->get('fork.settings')->set($this->url->getModule(), 'rss_title_' . BL::getWorkingLanguage(), $this->form->getField('rss_title')->getValue());
-                $this->get('fork.settings')->set($this->url->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->form->getField('rss_description')->getValue());
-                $this->get('fork.settings')->set($this->url->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->form->getField('rss_meta')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'rss_title_' . BackendLanguage::getWorkingLanguage(), $this->form->getField('rss_title')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'rss_description_' . BackendLanguage::getWorkingLanguage(), $this->form->getField('rss_description')->getValue());
+                $this->get('fork.settings')->set($this->url->getModule(), 'rss_meta_' . BackendLanguage::getWorkingLanguage(), $this->form->getField('rss_meta')->getValue());
                 if ($this->isGod) {
                     $this->get('fork.settings')->set($this->url->getModule(), 'show_image_form', (bool) $this->form->getField('show_image_form')->getChecked());
                 }

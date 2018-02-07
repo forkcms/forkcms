@@ -4,7 +4,7 @@ namespace Backend\Modules\Settings\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * This is the SEO-action, it will display a form to set SEO settings
@@ -62,7 +62,7 @@ class Seo extends BackendBaseActionIndex
 
                 // assign report
                 $this->template->assign('report', true);
-                $this->template->assign('reportMessage', BL::msg('Saved'));
+                $this->template->assign('reportMessage', BackendLanguage::msg('Saved'));
             }
         }
     }

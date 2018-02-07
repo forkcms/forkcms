@@ -6,7 +6,7 @@ use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
@@ -119,8 +119,8 @@ class Add extends BackendBaseActionAdd
         $this->form->addRadiobutton(
             'hidden',
             [
-                ['label' => BL::lbl('Hidden'), 'value' => 1],
-                ['label' => BL::lbl('Published'), 'value' => 0],
+                ['label' => BackendLanguage::lbl('Hidden'), 'value' => 1],
+                ['label' => BackendLanguage::lbl('Published'), 'value' => 0],
             ],
             0
         );
@@ -131,8 +131,8 @@ class Add extends BackendBaseActionAdd
         // just execute if the site is multi-language
         if ($this->getContainer()->getParameter('site.multilanguage')) {
             // loop active languages
-            foreach (BL::getActiveLanguages() as $language) {
-                if ($language != BL::getWorkingLanguage()) {
+            foreach (BackendLanguage::getActiveLanguages() as $language) {
+                if ($language != BackendLanguage::getWorkingLanguage()) {
                     $pages = BackendPagesModel::getPagesForDropdown($language);
                     // add field for each language
                     $field = $this->form->addDropdown('hreflang_' . $language, $pages)->setDefaultElement('');
@@ -154,7 +154,7 @@ class Add extends BackendBaseActionAdd
             $values = [];
 
             foreach ($items as $value => $itemIsChecked) {
-                $values[] = ['label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value];
+                $values[] = ['label' => BackendLanguage::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value];
 
                 if ($itemIsChecked) {
                     $checked[] = $value;
@@ -224,7 +224,7 @@ class Add extends BackendBaseActionAdd
                     if (isset($this->extras[$block['extra_id']]['type']) && $this->extras[$block['extra_id']]['type'] == 'block') {
                         // set error
                         if ($hasBlock) {
-                            $this->form->addError(BL::err('CantAdd2Blocks'));
+                            $this->form->addError(BackendLanguage::err('CantAdd2Blocks'));
                         }
 
                         // reset var
@@ -282,15 +282,15 @@ class Add extends BackendBaseActionAdd
 
         // redirect
         $redirectValues = [
-            ['value' => 'none', 'label' => \SpoonFilter::ucfirst(BL::lbl('None'))],
+            ['value' => 'none', 'label' => \SpoonFilter::ucfirst(BackendLanguage::lbl('None'))],
             [
                 'value' => 'internal',
-                'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
+                'label' => \SpoonFilter::ucfirst(BackendLanguage::lbl('InternalLink')),
                 'variables' => ['isInternal' => true],
             ],
             [
                 'value' => 'external',
-                'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
+                'label' => \SpoonFilter::ucfirst(BackendLanguage::lbl('ExternalLink')),
                 'variables' => ['isExternal' => true],
             ],
         ];
@@ -379,11 +379,11 @@ class Add extends BackendBaseActionAdd
             $redirectValue = $this->form->getField('redirect')->getValue();
             if ($redirectValue == 'internal') {
                 $this->form->getField('internal_redirect')->isFilled(
-                    BL::err('FieldIsRequired')
+                    BackendLanguage::err('FieldIsRequired')
                 );
             }
             if ($redirectValue == 'external') {
-                $this->form->getField('external_redirect')->isURL(BL::err('InvalidURL'));
+                $this->form->getField('external_redirect')->isURL(BackendLanguage::err('InvalidURL'));
             }
 
             // set callback for generating an unique URL
@@ -397,7 +397,7 @@ class Add extends BackendBaseActionAdd
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BackendLanguage::err('TitleIsRequired'));
 
             // validate meta
             $this->meta->validate();
@@ -440,8 +440,8 @@ class Add extends BackendBaseActionAdd
                 // just execute if the site is multi-language
                 if ($this->getContainer()->getParameter('site.multilanguage')) {
                     // loop active languages
-                    foreach (BL::getActiveLanguages() as $language) {
-                        if ($language != BL::getWorkingLanguage() && $this->form->getfield('hreflang_' . $language)->isFilled()) {
+                    foreach (BackendLanguage::getActiveLanguages() as $language) {
+                        if ($language != BackendLanguage::getWorkingLanguage() && $this->form->getfield('hreflang_' . $language)->isFilled()) {
                             $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
                         }
                     }
@@ -454,7 +454,7 @@ class Add extends BackendBaseActionAdd
                 $page['parent_id'] = $parentId;
                 $page['template_id'] = $templateId;
                 $page['meta_id'] = (int) $this->meta->save();
-                $page['language'] = BL::getWorkingLanguage();
+                $page['language'] = BackendLanguage::getWorkingLanguage();
                 $page['type'] = $parentPage ? 'page' : 'root';
                 $page['title'] = $this->form->getField('title')->getValue();
                 $page['navigation_title'] = ($this->form->getField('navigation_title')->getValue(
@@ -535,7 +535,7 @@ class Add extends BackendBaseActionAdd
                 }
 
                 // build the cache
-                BackendPagesModel::buildCache(BL::getWorkingLanguage());
+                BackendPagesModel::buildCache(BackendLanguage::getWorkingLanguage());
 
                 // active
                 if ($page['status'] == 'active') {

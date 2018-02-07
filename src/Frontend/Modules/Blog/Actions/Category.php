@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -86,13 +86,13 @@ class Category extends FrontendBaseBlock
 
     private function addCategoryToBreadcrumb(): void
     {
-        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FL::lbl('Category')));
+        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FrontendLanguage::lbl('Category')));
         $this->breadcrumb->addElement($this->category['label']);
     }
 
     private function setPageTitle(): void
     {
-        $this->header->setPageTitle(\SpoonFilter::ucfirst(FL::lbl('Category')));
+        $this->header->setPageTitle(\SpoonFilter::ucfirst(FrontendLanguage::lbl('Category')));
         $this->header->setPageTitle($this->category['label']);
     }
 

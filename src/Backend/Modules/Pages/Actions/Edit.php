@@ -8,7 +8,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use App\Form\Type\Backend\DeleteType;
@@ -170,7 +170,7 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgDrafts = new BackendDataGridDatabase(
             BackendPagesModel::QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
-            [$this->record['id'], 'draft', BL::getWorkingLanguage()]
+            [$this->record['id'], 'draft', BackendLanguage::getWorkingLanguage()]
         );
 
         // hide columns
@@ -182,8 +182,8 @@ class Edit extends BackendBaseActionEdit
         // set headers
         $this->dgDrafts->setHeaderLabels(
             [
-                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
+                 'user_id' => \SpoonFilter::ucfirst(BackendLanguage::lbl('By')),
+                 'edited_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('LastEditedOn')),
             ]
         );
 
@@ -210,9 +210,9 @@ class Edit extends BackendBaseActionEdit
             $this->dgDrafts->addColumn(
                 'use_draft',
                 null,
-                BL::lbl('UseThisDraft'),
+                BackendLanguage::lbl('UseThisDraft'),
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
-                BL::lbl('UseThisDraft')
+                BackendLanguage::lbl('UseThisDraft')
             );
         }
     }
@@ -235,8 +235,8 @@ class Edit extends BackendBaseActionEdit
         $this->form->addRadiobutton(
             'hidden',
             [
-                 ['label' => BL::lbl('Hidden'), 'value' => 1],
-                 ['label' => BL::lbl('Published'), 'value' => 0],
+                 ['label' => BackendLanguage::lbl('Hidden'), 'value' => 1],
+                 ['label' => BackendLanguage::lbl('Published'), 'value' => 0],
             ],
             $this->record['hidden']
         );
@@ -253,10 +253,10 @@ class Edit extends BackendBaseActionEdit
             $chkMovePage->setAttribute('class', 'fork-form-checkbox disabled');
         }
         $movePageTreeOptions = [
-            'main' => BL::lbl('MainNavigation'),
-            'meta' => BL::lbl('Meta'),
-            'footer' => BL::lbl('Footer'),
-            'root' => BL::lbl('Root'),
+            'main' => BackendLanguage::lbl('MainNavigation'),
+            'meta' => BackendLanguage::lbl('Meta'),
+            'footer' => BackendLanguage::lbl('Footer'),
+            'root' => BackendLanguage::lbl('Root'),
         ];
         if (!BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
             unset($movePageTreeOptions['meta']);
@@ -269,9 +269,9 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown(
             'move_page_type',
             [
-                BackendPagesModel::TYPE_OF_DROP_BEFORE => BL::lbl('BeforePage'),
-                BackendPagesModel::TYPE_OF_DROP_AFTER  => BL::lbl('AfterPage'),
-                BackendPagesModel::TYPE_OF_DROP_INSIDE  => BL::lbl('InsidePage')
+                BackendPagesModel::TYPE_OF_DROP_BEFORE => BackendLanguage::lbl('BeforePage'),
+                BackendPagesModel::TYPE_OF_DROP_AFTER  => BackendLanguage::lbl('AfterPage'),
+                BackendPagesModel::TYPE_OF_DROP_INSIDE  => BackendLanguage::lbl('InsidePage')
             ],
             BackendPagesModel::TYPE_OF_DROP_INSIDE
         )->setAttribute('data-role', 'move-page-type-changer');
@@ -279,7 +279,7 @@ class Edit extends BackendBaseActionEdit
         $ddmMovePageReferencePage = $this->form->addDropdown(
             'move_page_reference_page',
             (array) $dropdownPageTree['pages']
-        )->setDefaultElement(BL::lbl('AppendToTree'), 0)->setAttribute('data-role', 'move-page-pages-select');
+        )->setDefaultElement(BackendLanguage::lbl('AppendToTree'), 0)->setAttribute('data-role', 'move-page-pages-select');
         foreach ((array) $dropdownPageTree['attributes'] as $value => $attributes) {
             $ddmMovePageReferencePage->setOptionAttributes($value, $attributes);
         }
@@ -287,8 +287,8 @@ class Edit extends BackendBaseActionEdit
         // just execute if the site is multi-language
         if ($this->getContainer()->getParameter('site.multilanguage')) {
             // loop active languages
-            foreach (BL::getActiveLanguages() as $language) {
-                if ($language != BL::getWorkingLanguage()) {
+            foreach (BackendLanguage::getActiveLanguages() as $language) {
+                if ($language != BackendLanguage::getWorkingLanguage()) {
                     $pages = BackendPagesModel::getPagesForDropdown($language);
                     // add field for each language
                     $field = $this->form->addDropdown('hreflang_' . $language, $pages, (!empty($this->record['data']['hreflang_' . $language]) ? $this->record['data']['hreflang_' . $language] : null))->setDefaultElement('');
@@ -353,7 +353,7 @@ class Edit extends BackendBaseActionEdit
 
             foreach ($permissions as $permission => $attributes) {
                 $values[] = [
-                    'label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $permission)),
+                    'label' => BackendLanguage::msg(\SpoonFilter::toCamelCase('allow_' . $permission)),
                     'value' => $permission,
                     'attributes' => $attributes,
                 ];
@@ -426,12 +426,12 @@ class Edit extends BackendBaseActionEdit
                     if (isset($this->extras[$block['extra_id']]['type']) && $this->extras[$block['extra_id']]['type'] == 'block') {
                         // set error
                         if ($hasBlock) {
-                            $this->form->addError(BL::err('CantAdd2Blocks'));
+                            $this->form->addError(BackendLanguage::err('CantAdd2Blocks'));
                         }
 
                         // home can't have blocks
                         if ($this->record['id'] == BackendModel::HOME_PAGE_ID) {
-                            $this->form->addError(BL::err('HomeCantHaveBlocks'));
+                            $this->form->addError(BackendLanguage::err('HomeCantHaveBlocks'));
                         }
 
                         // reset var
@@ -496,15 +496,15 @@ class Edit extends BackendBaseActionEdit
             $redirectValue = 'external';
         }
         $redirectValues = [
-            ['value' => 'none', 'label' => \SpoonFilter::ucfirst(BL::lbl('None'))],
+            ['value' => 'none', 'label' => \SpoonFilter::ucfirst(BackendLanguage::lbl('None'))],
             [
                 'value' => 'internal',
-                'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
+                'label' => \SpoonFilter::ucfirst(BackendLanguage::lbl('InternalLink')),
                 'variables' => ['isInternal' => true],
             ],
             [
                 'value' => 'external',
-                'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
+                'label' => \SpoonFilter::ucfirst(BackendLanguage::lbl('ExternalLink')),
                 'variables' => ['isExternal' => true],
             ],
         ];
@@ -565,7 +565,7 @@ class Edit extends BackendBaseActionEdit
             [
                  $this->id,
                  'archive',
-                 BL::getWorkingLanguage(
+                 BackendLanguage::getWorkingLanguage(
                  ),
             ]
         );
@@ -579,8 +579,8 @@ class Edit extends BackendBaseActionEdit
         // set headers
         $this->dgRevisions->setHeaderLabels(
             [
-                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
+                 'user_id' => \SpoonFilter::ucfirst(BackendLanguage::lbl('By')),
+                 'edited_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('LastEditedOn')),
             ]
         );
 
@@ -608,9 +608,9 @@ class Edit extends BackendBaseActionEdit
             $this->dgRevisions->addColumn(
                 'use_revision',
                 null,
-                BL::lbl('UseThisVersion'),
+                BackendLanguage::lbl('UseThisVersion'),
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]',
-                BL::lbl('UseThisVersion')
+                BackendLanguage::lbl('UseThisVersion')
             );
         }
     }
@@ -693,11 +693,11 @@ class Edit extends BackendBaseActionEdit
         $redirectValue = $this->form->getField('redirect')->getValue();
         if ($redirectValue === 'internal') {
             $this->form->getField('internal_redirect')->isFilled(
-                BL::err('FieldIsRequired')
+                BackendLanguage::err('FieldIsRequired')
             );
         }
         if ($redirectValue === 'external') {
-            $this->form->getField('external_redirect')->isURL(BL::err('InvalidURL'));
+            $this->form->getField('external_redirect')->isURL(BackendLanguage::err('InvalidURL'));
         }
 
         // set callback for generating an unique URL
@@ -708,13 +708,13 @@ class Edit extends BackendBaseActionEdit
         );
 
         $this->form->cleanupFields();
-        $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+        $this->form->getField('title')->isFilled(BackendLanguage::err('TitleIsRequired'));
         $this->meta->validate();
 
         if ($this->form->getField('move_page')->isChecked()) {
-            $this->form->getField('move_page_tree')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('move_page_type')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('move_page_reference_page')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('move_page_tree')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('move_page_type')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('move_page_reference_page')->isFilled(BackendLanguage::err('FieldIsRequired'));
         }
 
         if (!$this->form->isCorrect()) {
@@ -729,7 +729,7 @@ class Edit extends BackendBaseActionEdit
             'parent_id' => $this->record['parent_id'],
             'template_id' => (int) $this->form->getField('template_id')->getValue(),
             'meta_id' => $this->meta->save(),
-            'language' => BL::getWorkingLanguage(),
+            'language' => BackendLanguage::getWorkingLanguage(),
             'type' => $this->record['type'],
             'title' => $this->form->getField('title')->getValue(),
             'navigation_title' => !empty($this->form->getField('navigation_title')->getValue())
@@ -761,7 +761,7 @@ class Edit extends BackendBaseActionEdit
 
         $this->saveTags($page['id']);
 
-        BackendPagesModel::buildCache(BL::getWorkingLanguage());
+        BackendPagesModel::buildCache(BackendLanguage::getWorkingLanguage());
 
         if ($page['status'] === 'draft') {
             $this->redirect(
@@ -824,7 +824,7 @@ class Edit extends BackendBaseActionEdit
             $this->form->getField('move_page_type')->getValue(),
             $this->form->getField('move_page_tree')->getValue()
         );
-        BackendPagesModel::buildCache(BL::getWorkingLanguage());
+        BackendPagesModel::buildCache(BackendLanguage::getWorkingLanguage());
     }
 
     private function buildPageData(string $redirectValue): array
@@ -874,8 +874,8 @@ class Edit extends BackendBaseActionEdit
         // just execute if the site is multi-language
         if ($this->getContainer()->getParameter('site.multilanguage')) {
             // loop active languages
-            foreach (BL::getActiveLanguages() as $language) {
-                if ($language != BL::getWorkingLanguage()
+            foreach (BackendLanguage::getActiveLanguages() as $language) {
+                if ($language != BackendLanguage::getWorkingLanguage()
                     && $this->form->getfield('hreflang_' . $language)->isFilled()) {
                     $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
                 }

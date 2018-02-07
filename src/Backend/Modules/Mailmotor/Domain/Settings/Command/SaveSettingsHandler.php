@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Mailmotor\Domain\Settings\Command;
 
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Common\ModulesSettings;
 
 final class SaveSettingsHandler
@@ -31,7 +31,7 @@ final class SaveSettingsHandler
             $this->modulesSettings->delete(self::MODULE_NAME, 'api_key');
             $this->modulesSettings->delete(self::MODULE_NAME, 'list_id');
 
-            foreach (Language::getActiveLanguages() as $language) {
+            foreach (BackendLanguage::getActiveLanguages() as $language) {
                 $this->modulesSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
             }
 
@@ -46,7 +46,7 @@ final class SaveSettingsHandler
     private function saveLanguageListIds(array $languageListIds): void
     {
         foreach ($languageListIds as $language => $languageListId) {
-            if (empty($languageListId) || !Language::isActiveLanguage($language)) {
+            if (empty($languageListId) || !BackendLanguage::isActiveLanguage($language)) {
                 $this->modulesSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
 
                 continue;

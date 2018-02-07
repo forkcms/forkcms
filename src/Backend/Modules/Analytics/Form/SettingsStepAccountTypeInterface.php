@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\Form;
 
 use Backend\Core\Engine\Form;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\TwigTemplate;
 use Common\ModulesSettings;
 use Google_Service_Exception;
@@ -86,7 +86,7 @@ final class SettingsStepAccountTypeInterface implements SettingsStepTypeInterfac
 
     private function isValid(): bool
     {
-        $this->form->getField('account')->isFilled(Language::err('FieldIsRequired'));
+        $this->form->getField('account')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
         return $this->form->isCorrect();
     }

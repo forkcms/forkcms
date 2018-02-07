@@ -5,7 +5,7 @@ namespace Backend\Modules\Locale\Ajax;
 use App\Component\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +22,9 @@ class SaveTranslation extends BackendBaseAJAXAction
 
         // get possible languages
         if ($isGod) {
-            $possibleLanguages = array_unique(array_merge(BL::getWorkingLanguages(), BL::getInterfaceLanguages()));
+            $possibleLanguages = array_unique(array_merge(BackendLanguage::getWorkingLanguages(), BackendLanguage::getInterfaceLanguages()));
         } else {
-            $possibleLanguages = BL::getWorkingLanguages();
+            $possibleLanguages = BackendLanguage::getWorkingLanguages();
         }
 
         // get parameters
@@ -55,13 +55,13 @@ class SaveTranslation extends BackendBaseAJAXAction
             || $application === ''
             || ($application === 'Frontend' && $module !== 'Core')
         ) {
-            $error = BL::err('InvalidValue');
+            $error = BackendLanguage::err('InvalidValue');
         }
 
         // in case this is a 'act' type, there are special rules concerning possible values
         if ($type === 'act' && !isset($error)) {
             if (rawurlencode($value) != CommonUri::getUrl($value)) {
-                $error = BL::err('InvalidActionValue', $this->getModule());
+                $error = BackendLanguage::err('InvalidActionValue', $this->getModule());
             }
         }
 

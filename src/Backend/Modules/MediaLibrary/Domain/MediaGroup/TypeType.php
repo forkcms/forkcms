@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +19,7 @@ class TypeType extends AbstractType
                     'label' => 'msg.ChooseTypeForNewGroup',
                     'choices' => $this->getTypeChoices(),
                     'choice_label' => function (Type $type) {
-                        return Language::lbl('MediaLibraryGroupType' . \SpoonFilter::toCamelCase($type, '-'), 'Core');
+                        return BackendLanguage::lbl('MediaLibraryGroupType' . \SpoonFilter::toCamelCase($type, '-'), 'Core');
                     },
                     'choice_translation_domain' => false,
                     'choice_value' => function (Type $type = null) {

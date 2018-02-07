@@ -5,7 +5,7 @@ namespace Backend\Modules\Extensions\Actions;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
@@ -57,8 +57,8 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // unserialize
         $this->record['data'] = unserialize($this->record['data']);
         $this->names = $this->record['data']['names'];
-        if (isset($this->record['data']['default_extras_' . BL::getWorkingLanguage()])) {
-            $this->extras = $this->record['data']['default_extras_' . BL::getWorkingLanguage()];
+        if (isset($this->record['data']['default_extras_' . BackendLanguage::getWorkingLanguage()])) {
+            $this->extras = $this->record['data']['default_extras_' . BackendLanguage::getWorkingLanguage()];
         } elseif (isset($this->record['data']['default_extras'])) {
             $this->extras = $this->record['data']['default_extras'];
         }
@@ -131,14 +131,14 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // loop extras to populate the default extras
         foreach ($extras as $item) {
             if ($item['type'] == 'block') {
-                $blocks[$item['id']] = \SpoonFilter::ucfirst(BL::lbl($item['label']));
+                $blocks[$item['id']] = \SpoonFilter::ucfirst(BackendLanguage::lbl($item['label']));
                 if (isset($item['data']['extra_label'])) {
                     $blocks[$item['id']] = \SpoonFilter::ucfirst($item['data']['extra_label']);
                 }
             } elseif ($item['type'] == 'widget') {
-                $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . \SpoonFilter::ucfirst(BL::lbl($item['label']));
+                $widgets[$item['id']] = \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . \SpoonFilter::ucfirst(BackendLanguage::lbl($item['label']));
                 if (isset($item['data']['extra_label'])) {
-                    $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+                    $widgets[$item['id']] = \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
                 }
             }
         }
@@ -149,8 +149,8 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
         // create array
         $defaultExtras = [
-            '' => [0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))],
-            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
+            '' => [0 => \SpoonFilter::ucfirst(BackendLanguage::lbl('Editor'))],
+            \SpoonFilter::ucfirst(BackendLanguage::lbl('Widgets')) => $widgets,
         ];
 
         // create default position field
@@ -189,17 +189,17 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
                 // position already exists -> error
                 if (in_array($name, $this->names)) {
-                    $errors[] = sprintf(BL::getError('DuplicatePositionName'), $name);
+                    $errors[] = sprintf(BackendLanguage::getError('DuplicatePositionName'), $name);
                 }
 
                 // position name == fallback -> error
                 if ($name == 'fallback') {
-                    $errors[] = sprintf(BL::getError('ReservedPositionName'), $name);
+                    $errors[] = sprintf(BackendLanguage::getError('ReservedPositionName'), $name);
                 }
 
                 // not alphanumeric -> error
                 if (!\SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) {
-                    $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
+                    $errors[] = sprintf(BackendLanguage::getError('NoAlphaNumPositionName'), $name);
                 }
 
                 // save positions
@@ -249,15 +249,15 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $this->form->cleanupFields();
 
             // required fields
-            $this->form->getField('file')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('label')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('format')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('file')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('label')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('format')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
             $templateFile = $this->getContainer()->getParameter('site.path_www');
             // check if the template file exists
             $templateFile .= '/src/Frontend/Themes/' . $this->form->getField('theme')->getValue() . '/Core/Layout/Templates/' . $this->form->getField('file')->getValue();
             if (!is_file($templateFile)) {
-                $this->form->getField('file')->addError(BL::err('TemplateFileNotFound'));
+                $this->form->getField('file')->addError(BackendLanguage::err('TemplateFileNotFound'));
             }
 
             // validate syntax
@@ -268,7 +268,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
             // validate the syntax
             if (empty($table)) {
-                $this->form->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
+                $this->form->getField('format')->addError(BackendLanguage::err('InvalidTemplateSyntax'));
             } else {
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);
                 $cellCount = 0;
@@ -285,7 +285,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                     // not same number of cells
                     if (count($row) != $cellCount) {
                         // add error
-                        $errors[] = BL::err('InvalidTemplateSyntax');
+                        $errors[] = BackendLanguage::err('InvalidTemplateSyntax');
 
                         // stop
                         break;
@@ -297,10 +297,10 @@ class EditThemeTemplate extends BackendBaseActionEdit
                         if ($cell != '/') {
                             // not alphanumeric -> error
                             if (!in_array($cell, $this->names)) {
-                                $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+                                $errors[] = sprintf(BackendLanguage::getError('NonExistingPositionName'), $cell);
                             } elseif (mb_substr_count($html, '"#position-' . $cell . '"') != 1) {
                                 // can't build proper html -> error
-                                $errors[] = BL::err('InvalidTemplateSyntax');
+                                $errors[] = BackendLanguage::err('InvalidTemplateSyntax');
                             }
                         }
                     }
@@ -330,7 +330,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $item['data']['format'] = trim(str_replace(["\n", "\r", ' '], '', $this->form->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
-                $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
+                $item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()] = $this->extras;
                 $item['data']['image'] = $this->form->getField('image')->isChecked();
 
                 // serialize

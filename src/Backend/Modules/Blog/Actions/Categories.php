@@ -3,7 +3,7 @@
 namespace Backend\Modules\Blog\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
@@ -27,12 +27,12 @@ class Categories extends BackendBaseActionIndex
         // create datagrid
         $this->dataGrid = new BackendDataGridDatabase(
             BackendBlogModel::QUERY_DATAGRID_BROWSE_CATEGORIES,
-            ['active', BL::getWorkingLanguage()]
+            ['active', BackendLanguage::getWorkingLanguage()]
         );
 
         // set headers
         $this->dataGrid->setHeaderLabels([
-            'num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount')),
+            'num_items' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Amount')),
         ]);
 
         // sorting columns
@@ -64,9 +64,9 @@ class Categories extends BackendBaseActionIndex
             $this->dataGrid->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }
@@ -89,11 +89,11 @@ class Categories extends BackendBaseActionIndex
     public static function setClickableCount(int $count, string $link): string
     {
         if ($count > 1) {
-            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
+            return '<a href="' . $link . '">' . $count . ' ' . BackendLanguage::getLabel('Articles') . '</a>';
         }
 
         if ($count === 1) {
-            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
+            return '<a href="' . $link . '">' . $count . ' ' . BackendLanguage::getLabel('Article') . '</a>';
         }
 
         return '';

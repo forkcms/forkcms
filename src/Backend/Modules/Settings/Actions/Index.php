@@ -5,7 +5,7 @@ namespace Backend\Modules\Settings\Actions;
 use TijsVerkoyen\Akismet\Akismet;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Settings\Engine\Model as BackendSettingsModel;
@@ -62,7 +62,7 @@ class Index extends BackendBaseActionIndex
         // general settings
         $this->form->addText(
             'site_title',
-            $this->get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            $this->get('fork.settings')->get('Core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
         $this->form->addTextarea(
             'site_html_header',
@@ -160,7 +160,7 @@ class Index extends BackendBaseActionIndex
             $redirectAttributes['id'] = 'redirect_language_' . $abbreviation;
 
             // fetch label
-            $label = BL::lbl(mb_strtoupper($abbreviation), 'Core');
+            $label = BackendLanguage::lbl(mb_strtoupper($abbreviation), 'Core');
 
             // default may not be unselected
             if ($defaultLanguage) {
@@ -285,15 +285,15 @@ class Index extends BackendBaseActionIndex
         // is the form submitted?
         if ($this->form->isSubmitted()) {
             // validate required fields
-            $this->form->getField('site_title')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('site_title')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
             // date & time
-            $this->form->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('date_format_short')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('date_format_long')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('time_format')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('date_format_short')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('date_format_long')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
             // number
-            $this->form->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('number_format')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
             // akismet key may be filled in
             if ($this->needsAkismet && $this->form->getField('akismet_key')->isFilled()) {
@@ -304,7 +304,7 @@ class Index extends BackendBaseActionIndex
 
                     // invalid key
                     if (!$akismet->verifyKey()) {
-                        $this->form->getField('akismet_key')->setError(BL::err('InvalidAPIKey'));
+                        $this->form->getField('akismet_key')->setError(BackendLanguage::err('InvalidAPIKey'));
                     }
                 }
             }
@@ -322,7 +322,7 @@ class Index extends BackendBaseActionIndex
                     // invalid URL
                     if (!\SpoonFilter::isURL('http://' . $domain)) {
                         // set error
-                        $this->form->getField('site_domains')->setError(BL::err('InvalidDomain'));
+                        $this->form->getField('site_domains')->setError(BackendLanguage::err('InvalidDomain'));
 
                         // stop looping domains
                         break;
@@ -333,12 +333,12 @@ class Index extends BackendBaseActionIndex
             if ($this->form->getField('ckfinder_image_max_width')->isFilled()) {
                 $this->form->getField(
                     'ckfinder_image_max_width'
-                )->isInteger(BL::err('InvalidInteger'));
+                )->isInteger(BackendLanguage::err('InvalidInteger'));
             }
             if ($this->form->getField('ckfinder_image_max_height')->isFilled()) {
                 $this->form->getField(
                     'ckfinder_image_max_height'
-                )->isInteger(BL::err('InvalidInteger'));
+                )->isInteger(BackendLanguage::err('InvalidInteger'));
             }
 
             // no errors ?
@@ -346,7 +346,7 @@ class Index extends BackendBaseActionIndex
                 // general settings
                 $this->get('fork.settings')->set(
                     'Core',
-                    'site_title_' . BL::getWorkingLanguage(),
+                    'site_title_' . BackendLanguage::getWorkingLanguage(),
                     $this->form->getField('site_title')->getValue()
                 );
                 $this->get('fork.settings')->set(
@@ -519,7 +519,7 @@ class Index extends BackendBaseActionIndex
 
                 // assign report
                 $this->template->assign('report', true);
-                $this->template->assign('reportMessage', BL::msg('Saved'));
+                $this->template->assign('reportMessage', BackendLanguage::msg('Saved'));
             }
         }
     }

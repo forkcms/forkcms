@@ -3,7 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\BackendLanguage;
 use SpoonDatagridSource;
 use SpoonFormDropdown;
 

@@ -4,7 +4,7 @@ namespace Backend\Modules\Search\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
@@ -128,7 +128,7 @@ class Settings extends BackendBaseActionEdit
                 if ($this->form->getField('search_' . $module['module'])->getChecked()) {
                     // valid weight?
                     $this->form->getField('search_' . $module['module'] . '_weight')->isDigital(
-                        BL::err('WeightNotNumeric')
+                        BackendLanguage::err('WeightNotNumeric')
                     );
                     $this->modules[$i]['txtError'] = $this->form->getField(
                         'search_' . $module['module'] . '_weight'

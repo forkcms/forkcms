@@ -4,7 +4,7 @@ namespace Backend\Modules\Mailmotor\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex;
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
 use Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
 
@@ -36,7 +36,7 @@ final class Ping extends ActionIndex
         }
 
         $settings = $this->getContainer()->get('fork.settings');
-        foreach (Language::getActiveLanguages() as $language) {
+        foreach (BackendLanguage::getActiveLanguages() as $language) {
             $languageListId = $settings->get('Mailmotor', 'list_id_' . $language);
 
             // If there isn't a specific list for the language we don't need to check it

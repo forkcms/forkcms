@@ -4,7 +4,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Symfony\Component\Intl\Intl as Intl;
@@ -58,13 +58,13 @@ class Add extends BackendBaseActionAdd
     {
         // gender dropdown values
         $genderValues = [
-            'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
+            'male' => \SpoonFilter::ucfirst(BackendLanguage::getLabel('Male')),
+            'female' => \SpoonFilter::ucfirst(BackendLanguage::getLabel('Female')),
         ];
 
         // birthdate dropdown values
         $days = range(1, 31);
-        $months = \SpoonLocale::getMonths(BL::getInterfaceLanguage());
+        $months = \SpoonLocale::getMonths(BackendLanguage::getInterfaceLanguage());
         $years = range(date('Y'), 1900);
 
         // create form
@@ -85,7 +85,7 @@ class Add extends BackendBaseActionAdd
         $this->form->addDropdown('day', array_combine($days, $days));
         $this->form->addDropdown('month', $months);
         $this->form->addDropdown('year', array_combine($years, $years));
-        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()));
+        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BackendLanguage::getInterfaceLanguage()));
 
         // set default elements dropdowns
         $this->form->getField('gender')->setDefaultElement('');
@@ -116,29 +116,29 @@ class Add extends BackendBaseActionAdd
             $ddmCountry = $this->form->getField('country');
 
             // email filled in?
-            if ($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
+            if ($txtEmail->isFilled(BackendLanguage::getError('EmailIsRequired'))) {
                 // valid email?
-                if ($txtEmail->isEmail(BL::getError('EmailIsInvalid'))) {
+                if ($txtEmail->isEmail(BackendLanguage::getError('EmailIsInvalid'))) {
                     // email already exists?
                     if (BackendProfilesModel::existsByEmail($txtEmail->getValue())) {
                         // set error
-                        $txtEmail->addError(BL::getError('EmailExists'));
+                        $txtEmail->addError(BackendLanguage::getError('EmailExists'));
                     }
                 }
             }
 
             // display name filled in?
-            if ($txtDisplayName->isFilled(BL::getError('DisplayNameIsRequired'))) {
+            if ($txtDisplayName->isFilled(BackendLanguage::getError('DisplayNameIsRequired'))) {
                 // display name already exists?
                 if (BackendProfilesModel::existsDisplayName($txtDisplayName->getValue())) {
                     // set error
-                    $txtDisplayName->addError(BL::getError('DisplayNameExists'));
+                    $txtDisplayName->addError(BackendLanguage::getError('DisplayNameExists'));
                 }
             }
 
             // profile must not be notified, password must not be empty
             if (!$this->notifyProfile) {
-                $txtPassword->isFilled(BL::err('FieldIsRequired'));
+                $txtPassword->isFilled(BackendLanguage::err('FieldIsRequired'));
             }
 
             // one of the birthday fields are filled in
@@ -146,7 +146,7 @@ class Add extends BackendBaseActionAdd
                 // valid date?
                 if (!checkdate($ddmMonth->getValue(), $ddmDay->getValue(), $ddmYear->getValue())) {
                     // set error
-                    $ddmYear->addError(BL::getError('DateIsInvalid'));
+                    $ddmYear->addError(BackendLanguage::getError('DateIsInvalid'));
                 }
             }
 

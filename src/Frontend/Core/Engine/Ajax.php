@@ -5,7 +5,7 @@ namespace Frontend\Core\Engine;
 use ForkCMS\App\ApplicationInterface;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use Frontend\Core\Language\Language;
+use App\Component\Locale\FrontendLanguage;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -129,7 +129,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
      */
     public function setLanguage(string $language): void
     {
-        $possibleLanguages = Language::getActiveLanguages();
+        $possibleLanguages = FrontendLanguage::getActiveLanguages();
 
         if (!in_array($language, $possibleLanguages)) {
             if (count($possibleLanguages) !== 1 && Model::getContainer()->getParameter('site.multilanguage')) {
@@ -144,7 +144,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
 
         defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $this->language);
         defined('LANGUAGE') || define('LANGUAGE', $this->language);
-        Language::setLocale($this->language);
+        FrontendLanguage::setLocale($this->language);
     }
 
     public function setModule(string $module): void

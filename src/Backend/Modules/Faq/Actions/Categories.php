@@ -5,7 +5,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
@@ -39,9 +39,9 @@ class Categories extends BackendBaseActionIndex
         // create dataGrid
         $this->dataGrid = new BackendDataGridDatabase(
             BackendFaqModel::QUERY_DATAGRID_BROWSE_CATEGORIES,
-            [BL::getWorkingLanguage()]
+            [BackendLanguage::getWorkingLanguage()]
         );
-        $this->dataGrid->setHeaderLabels(['num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))]);
+        $this->dataGrid->setHeaderLabels(['num_items' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Amount'))]);
         if ($this->multipleCategoriesAllowed) {
             $this->dataGrid->enableSequenceByDragAndDrop();
         } else {
@@ -66,9 +66,9 @@ class Categories extends BackendBaseActionIndex
             $this->dataGrid->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('EditCategory') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }
@@ -95,11 +95,11 @@ class Categories extends BackendBaseActionIndex
     {
         // return link in case of more than one item, one item, other
         if ($count > 1) {
-            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Questions') . '</a>';
+            return '<a href="' . $link . '">' . $count . ' ' . BackendLanguage::getLabel('Questions') . '</a>';
         }
 
         if ($count === 1) {
-            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Question') . '</a>';
+            return '<a href="' . $link . '">' . $count . ' ' . BackendLanguage::getLabel('Question') . '</a>';
         }
 
         return '';

@@ -3,7 +3,7 @@
 namespace Backend\Modules\Location\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -75,7 +75,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
 
         $item = [
             'id' => $itemId,
-            'language' => BL::getWorkingLanguage(),
+            'language' => BackendLanguage::getWorkingLanguage(),
             'show_overview' => $showOverview,
         ];
         BackendLocationModel::update($item);

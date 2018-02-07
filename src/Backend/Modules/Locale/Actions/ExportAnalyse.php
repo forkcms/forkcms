@@ -3,7 +3,7 @@
 namespace Backend\Modules\Locale\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,7 +61,7 @@ class ExportAnalyse extends BackendBaseActionIndex
     {
         $this->filter['language'] = $this->getRequest()->query->has('language')
             ? $this->getRequest()->query->get('language')
-            : BL::getWorkingLanguage();
+            : BackendLanguage::getWorkingLanguage();
     }
 
     /**

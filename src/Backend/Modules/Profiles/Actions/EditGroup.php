@@ -5,7 +5,7 @@ namespace Backend\Modules\Profiles\Actions;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
@@ -71,11 +71,11 @@ class EditGroup extends BackendBaseActionEdit
             $txtName = $this->form->getField('name');
 
             // name filled in?
-            if ($txtName->isFilled(BL::getError('NameIsRequired'))) {
+            if ($txtName->isFilled(BackendLanguage::getError('NameIsRequired'))) {
                 // name already exists?
                 if (BackendProfilesModel::existsGroupName($txtName->getValue(), $this->id)) {
                     // set error
-                    $txtName->addError(BL::getError('GroupNameExists'));
+                    $txtName->addError(BackendLanguage::getError('GroupNameExists'));
                 }
             }
 

@@ -4,7 +4,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -73,15 +73,15 @@ class ChangeEmail extends FrontendBaseBlock
         $txtPassword = $this->form->getField('password');
         $txtEmail = $this->form->getField('email');
 
-        if ($txtPassword->isFilled(FL::getError('PasswordIsRequired'))
+        if ($txtPassword->isFilled(FrontendLanguage::getError('PasswordIsRequired'))
             && !$this->isValidLoginCredentials($this->profile->getEmail(), $txtPassword->getValue())) {
-            $txtPassword->addError(FL::getError('InvalidPassword'));
+            $txtPassword->addError(FrontendLanguage::getError('InvalidPassword'));
         }
 
-        if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))
-            && $txtEmail->isEmail(FL::getError('EmailIsInvalid'))
+        if ($txtEmail->isFilled(FrontendLanguage::getError('EmailIsRequired'))
+            && $txtEmail->isEmail(FrontendLanguage::getError('EmailIsInvalid'))
             && FrontendProfilesModel::existsByEmail($txtEmail->getValue(), $this->profile->getId())) {
-            $txtEmail->setError(FL::getError('EmailExists'));
+            $txtEmail->setError(FrontendLanguage::getError('EmailExists'));
         }
 
         return $this->form->isCorrect(true);

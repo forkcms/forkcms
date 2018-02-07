@@ -5,9 +5,9 @@ namespace Frontend\Modules\FormBuilder\Widgets;
 use App\Exception\RedirectException;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Language\Locale;
+use App\Component\Locale\FrontendLocale;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
@@ -331,7 +331,7 @@ class Form extends FrontendBaseWidget
         $this->template->assign('successMessage', false);
 
         if ($this->hasRecaptchaField) {
-            $this->header->addJS('https://www.google.com/recaptcha/api.js?hl=' . Locale::frontendLanguage());
+            $this->header->addJS('https://www.google.com/recaptcha/api.js?hl=' . FrontendLocale::frontendLanguage());
             $this->template->assign('hasRecaptchaField', true);
             $this->template->assign('siteKey', FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key'));
         }
@@ -400,7 +400,7 @@ class Form extends FrontendBaseWidget
             if ($this->hasRecaptchaField) {
                 $request = $this->getRequest()->request;
                 if (!$request->has('g-recaptcha-response')) {
-                    $this->form->addError(FL::err('RecaptchaInvalid'));
+                    $this->form->addError(FrontendLanguage::err('RecaptchaInvalid'));
                 }
 
                 $response = $request->get('g-recaptcha-response');
@@ -408,7 +408,7 @@ class Form extends FrontendBaseWidget
                 $secret = FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
 
                 if (!$secret) {
-                    $this->form->addError(FL::err('RecaptchaInvalid'));
+                    $this->form->addError(FrontendLanguage::err('RecaptchaInvalid'));
                 }
 
                 $recaptcha = new ReCaptcha($secret);
@@ -416,7 +416,7 @@ class Form extends FrontendBaseWidget
                 $response = $recaptcha->verify($response);
 
                 if (!$response->isSuccess()) {
-                    $this->form->addError(FL::err('RecaptchaInvalid'));
+                    $this->form->addError(FrontendLanguage::err('RecaptchaInvalid'));
                 }
             }
             // does the key exists?
@@ -426,7 +426,7 @@ class Form extends FrontendBaseWidget
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
                 if ($diff < 10 && $diff != 0) {
-                    $this->form->addError(FL::err('FormTimeout'));
+                    $this->form->addError(FrontendLanguage::err('FormTimeout'));
                 }
             }
 
@@ -560,7 +560,7 @@ class Form extends FrontendBaseWidget
                     $this->template->assign('formBuilderError', $this->form->getErrors());
                 } else {
                     // general error
-                    $this->template->assign('formBuilderError', FL::err('FormError'));
+                    $this->template->assign('formBuilderError', FrontendLanguage::err('FormError'));
                 }
             }
         }

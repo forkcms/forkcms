@@ -5,7 +5,7 @@ namespace Frontend\Modules\Profiles\Actions;
 use App\Service\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -52,10 +52,10 @@ class ForgotPassword extends FrontendBaseBlock
     {
         $txtEmail = $this->form->getField('email');
 
-        if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))
-            && $txtEmail->isEmail(FL::getError('EmailIsInvalid'))
+        if ($txtEmail->isFilled(FrontendLanguage::getError('EmailIsRequired'))
+            && $txtEmail->isEmail(FrontendLanguage::getError('EmailIsInvalid'))
             && !FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
-            $txtEmail->addError(FL::getError('EmailIsUnknown'));
+            $txtEmail->addError(FrontendLanguage::getError('EmailIsUnknown'));
         }
 
         return $this->form->isCorrect();
@@ -95,7 +95,7 @@ class ForgotPassword extends FrontendBaseBlock
     {
         $from = $this->get('fork.settings')->get('Core', 'mailer_from');
         $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-        $message = Message::newInstance(FL::getMessage('ForgotPasswordSubject'))
+        $message = Message::newInstance(FrontendLanguage::getMessage('ForgotPasswordSubject'))
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$this->form->getField('email')->getValue() => ''])
             ->setReplyTo([$replyTo['email'] => $replyTo['name']])

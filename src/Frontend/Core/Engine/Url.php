@@ -4,7 +4,7 @@ namespace Frontend\Core\Engine;
 
 use App\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
-use Frontend\Core\Language\Language;
+use App\Component\Locale\FrontendLanguage;
 use SpoonFilter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -154,7 +154,7 @@ class Url extends KernelLoader
         defined('LANGUAGE') || define('LANGUAGE', $language);
 
         // sets the locale file
-        Language::setLocale($language);
+        FrontendLanguage::setLocale($language);
 
         // remove language from query string
         if ($hasMultiLanguages) {
@@ -223,8 +223,8 @@ class Url extends KernelLoader
         }
 
         // get possible languages
-        $possibleLanguages = (array) Language::getActiveLanguages();
-        $redirectLanguages = (array) Language::getRedirectLanguages();
+        $possibleLanguages = (array) FrontendLanguage::getActiveLanguages();
+        $redirectLanguages = (array) FrontendLanguage::getRedirectLanguages();
 
         // split into chunks
         $chunks = (array) explode('/', $queryString);
@@ -248,7 +248,7 @@ class Url extends KernelLoader
         }
 
         // default browser language
-        $language = Language::getBrowserLanguage();
+        $language = FrontendLanguage::getBrowserLanguage();
         $this->setLanguageCookie($language);
         $this->redirectToLanguage($language);
     }

@@ -3,7 +3,7 @@
 namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
@@ -70,20 +70,20 @@ class Modules extends BackendBaseActionIndex
         $this->dataGridInstallableModules = new BackendDataGridArray($this->installableModules);
 
         $this->dataGridInstallableModules->setSortingColumns(['raw_name']);
-        $this->dataGridInstallableModules->setHeaderLabels(['raw_name' => \SpoonFilter::ucfirst(BL::getLabel('Name'))]);
+        $this->dataGridInstallableModules->setHeaderLabels(['raw_name' => \SpoonFilter::ucfirst(BackendLanguage::getLabel('Name'))]);
         $this->dataGridInstallableModules->setColumnsHidden(['installed', 'name']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('DetailModule')) {
             $this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]');
-            $this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
+            $this->dataGridInstallableModules->addColumn('details', null, BackendLanguage::lbl('Details'), BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]', BackendLanguage::lbl('Details'));
         }
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('InstallModule')) {
             // add install column
-            $this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createUrlForAction('InstallModule') . '&amp;module=[raw_name]', BL::lbl('Install'));
-            $this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'), null, \SpoonFilter::ucfirst(BL::lbl('Install')) . '?');
+            $this->dataGridInstallableModules->addColumn('install', null, BackendLanguage::lbl('Install'), BackendModel::createUrlForAction('InstallModule') . '&amp;module=[raw_name]', BackendLanguage::lbl('Install'));
+            $this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BackendLanguage::msg('ConfirmModuleInstall'), '[raw_name]'), null, \SpoonFilter::ucfirst(BackendLanguage::lbl('Install')) . '?');
         }
     }
 
@@ -98,7 +98,7 @@ class Modules extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('DetailModule')) {
             $this->dataGridInstalledModules->setColumnURL('name', BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]');
-            $this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
+            $this->dataGridInstalledModules->addColumn('details', null, BackendLanguage::lbl('Details'), BackendModel::createUrlForAction('DetailModule') . '&amp;module=[raw_name]', BackendLanguage::lbl('Details'));
         }
 
         // add the greyed out option to modules that have warnings

@@ -5,9 +5,9 @@ namespace Backend\Modules\FormBuilder\Actions;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use App\Form\Type\Backend\DeleteType;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 
@@ -55,9 +55,9 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown(
             'method',
             [
-                'database' => BL::getLabel('MethodDatabase'),
-                'database_email' => BL::getLabel('MethodDatabaseEmail'),
-                'email' => BL::getLabel('MethodEmail'),
+                'database' => BackendLanguage::getLabel('MethodDatabase'),
+                'database_email' => BackendLanguage::getLabel('MethodDatabaseEmail'),
+                'email' => BackendLanguage::getLabel('MethodEmail'),
             ],
             $this->record['method']
         )->makeRequired();
@@ -87,8 +87,8 @@ class Edit extends BackendBaseActionEdit
             'textbox_validation',
             [
                 '' => '',
-                'email' => BL::getLabel('Email'),
-                'number' => BL::getLabel('Numeric'),
+                'email' => BackendLanguage::getLabel('Email'),
+                'number' => BackendLanguage::getLabel('Numeric'),
             ]
         );
         $this->form->addCheckbox('textbox_send_confirmation_mail_to');
@@ -125,18 +125,18 @@ class Edit extends BackendBaseActionEdit
             'datetime_value_type',
             [
                 '' => '',
-                'today' => BL::getLabel('Today'),
-                'day' => BL::getLabel('Day'),
-                'week' => BL::getLabel('Week'),
-                'month' => BL::getLabel('Month'),
-                'year' => BL::getLabel('Year'),
+                'today' => BackendLanguage::getLabel('Today'),
+                'day' => BackendLanguage::getLabel('Day'),
+                'week' => BackendLanguage::getLabel('Week'),
+                'month' => BackendLanguage::getLabel('Month'),
+                'year' => BackendLanguage::getLabel('Year'),
             ]
         );
         $this->form->addDropdown(
             'datetime_type',
             [
-                'date' => BL::getLabel('Date'),
-                'time' => BL::getLabel('Time'),
+                'date' => BackendLanguage::getLabel('Date'),
+                'time' => BackendLanguage::getLabel('Time'),
             ]
         );
         $this->form->addCheckbox('datetime_required');
@@ -144,15 +144,15 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown(
             'datetime_type',
             [
-                'date' => BL::getLabel('Date'),
-                'time' => BL::getLabel('Time'),
+                'date' => BackendLanguage::getLabel('Date'),
+                'time' => BackendLanguage::getLabel('Time'),
             ]
         );
         $this->form->addDropdown(
             'datetime_validation',
             [
                 '' => '',
-                'time' => BL::getLabel('Time'),
+                'time' => BackendLanguage::getLabel('Time'),
             ]
         );
         $this->form->addText('datetime_classname');
@@ -218,7 +218,7 @@ class Edit extends BackendBaseActionEdit
     private function parseErrorMessages(): void
     {
         // set frontend locale
-        FL::setLocale(BL::getWorkingLanguage(), true);
+        FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage(), true);
 
         // assign error messages
         $this->template->assign('errors', BackendFormBuilderModel::getErrors());
@@ -275,9 +275,9 @@ class Edit extends BackendBaseActionEdit
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
             // validate fields
-            $txtName->isFilled(BL::getError('NameIsRequired'));
-            $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
-            if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
+            $txtName->isFilled(BackendLanguage::getError('NameIsRequired'));
+            $txtSuccessMessage->isFilled(BackendLanguage::getError('SuccessMessageIsRequired'));
+            if ($ddmMethod->isFilled(BackendLanguage::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
                 $error = false;
 
                 // check the addresses
@@ -292,7 +292,7 @@ class Edit extends BackendBaseActionEdit
 
                 // add error
                 if ($error) {
-                    $txtEmail->addError(BL::getError('EmailIsInvalid'));
+                    $txtEmail->addError(BackendLanguage::getError('EmailIsInvalid'));
                 }
             }
 
@@ -300,9 +300,9 @@ class Edit extends BackendBaseActionEdit
             if ($txtIdentifier->isFilled()) {
                 // invalid characters
                 if (!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) {
-                    $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
+                    $txtIdentifier->setError(BackendLanguage::getError('InvalidIdentifier'));
                 } elseif (BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue(), $this->id)) {
-                    $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
+                    $txtIdentifier->setError(BackendLanguage::getError('UniqueIdentifier'));
                 }
             }
 

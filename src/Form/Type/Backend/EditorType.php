@@ -3,7 +3,7 @@
 namespace App\Form\Type\Backend;
 
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,12 +24,12 @@ class EditorType extends TextareaType
         $header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
         // add the internal link lists-file
-        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
+        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js')) {
             $timestamp = @filemtime(
-                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js'
+                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js'
             );
             $header->addJS(
-                '/src/Frontend/Cache/Navigation/editor_link_list_' . Language::getWorkingLanguage(
+                '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
                 ) . '.js?m=' . $timestamp,
                 null,
                 false,

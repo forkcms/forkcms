@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Language;
+namespace App\Component\Locale;
 
 use Backend\Core\Engine\Model;
 use Frontend\Core\Engine\Exception;
@@ -9,8 +9,10 @@ use Backend\Modules\Locale\Engine\CacheBuilder;
 
 /**
  * This class will store the language-dependant content for the frontend.
+ *
+ * @todo: should be replaced by symfony translator
  */
-class Language
+final class FrontendLanguage
 {
     /**
      * @var array

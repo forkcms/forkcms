@@ -5,7 +5,7 @@ namespace Frontend\Modules\Profiles\Actions;
 use App\Service\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -51,14 +51,14 @@ class Register extends FrontendBaseBlock
 
     private function validateForm(): bool
     {
-        $this->form->getField('password')->isFilled(FL::getError('PasswordIsRequired'));
-        $this->form->getField('display_name')->isFilled(FL::getError('FieldIsRequired'));
+        $this->form->getField('password')->isFilled(FrontendLanguage::getError('PasswordIsRequired'));
+        $this->form->getField('display_name')->isFilled(FrontendLanguage::getError('FieldIsRequired'));
         $txtEmail = $this->form->getField('email');
 
-        if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))
-            && $txtEmail->isEmail(FL::getError('EmailIsInvalid'))
+        if ($txtEmail->isFilled(FrontendLanguage::getError('EmailIsRequired'))
+            && $txtEmail->isEmail(FrontendLanguage::getError('EmailIsInvalid'))
             && FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
-            $txtEmail->setError(FL::getError('EmailExists'));
+            $txtEmail->setError(FrontendLanguage::getError('EmailExists'));
         }
 
         return $this->form->isCorrect();
@@ -119,7 +119,7 @@ class Register extends FrontendBaseBlock
         $activationUrl = SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule(), 'Activate');
         $from = $this->get('fork.settings')->get('Core', 'mailer_from');
         $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-        $message = Message::newInstance(FL::getMessage('RegisterSubject'))
+        $message = Message::newInstance(FrontendLanguage::getMessage('RegisterSubject'))
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$profile['email'] => $profile['display_name']])
             ->setReplyTo([$replyTo['email'] => $replyTo['name']])

@@ -6,15 +6,15 @@ use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions;
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
-use Backend\Core\Language\Locale;
+use App\Component\Locale\BackendLanguage;
+use App\Component\Locale\BackendLocale;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
  */
 class ContentBlockRevisionDataGrid extends DataGridDatabase
 {
-    public function __construct(ContentBlock $contentBlock, Locale $locale)
+    public function __construct(ContentBlock $contentBlock, BackendLocale $locale)
     {
         parent::__construct(
             'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
@@ -33,8 +33,8 @@ class ContentBlockRevisionDataGrid extends DataGridDatabase
         // set headers
         $this->setHeaderLabels(
             [
-                'user_id' => ucfirst(Language::lbl('By')),
-                'edited_on' => ucfirst(Language::lbl('LastEditedOn')),
+                'user_id' => ucfirst(BackendLanguage::lbl('By')),
+                'edited_on' => ucfirst(BackendLanguage::lbl('LastEditedOn')),
             ]
         );
 
@@ -58,14 +58,14 @@ class ContentBlockRevisionDataGrid extends DataGridDatabase
             $this->addColumn(
                 'use_revision',
                 null,
-                Language::lbl('UseThisVersion'),
+                BackendLanguage::lbl('UseThisVersion'),
                 $editRevisionUrl,
-                Language::lbl('UseThisVersion')
+                BackendLanguage::lbl('UseThisVersion')
             );
         }
     }
 
-    public static function getHtml(ContentBlock $contentBlock, Locale $locale): string
+    public static function getHtml(ContentBlock $contentBlock, BackendLocale $locale): string
     {
         return (new self($contentBlock, $locale))->getContent();
     }

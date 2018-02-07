@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Actions;
 
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemSelectionDataGrid;
@@ -44,7 +44,7 @@ class MediaBrowserImages extends MediaBrowser
                 );
 
                 return [
-                    'label' => Language::lbl('MediaMultiple' . ucfirst($type)),
+                    'label' => BackendLanguage::lbl('MediaMultiple' . ucfirst($type)),
                     'tabName' => 'tab' . ucfirst($type),
                     'mediaType' => $type,
                     'html' => $dataGrid->getContent(),

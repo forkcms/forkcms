@@ -5,7 +5,7 @@ namespace Backend\Modules\Groups\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
@@ -30,7 +30,7 @@ class Index extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL('name', BackendModel::createUrlForAction('Edit') . '&amp;id=[id]');
             $this->dataGrid->setColumnURL('num_users', BackendModel::createUrlForAction('Edit') . '&amp;id=[id]#tabUsers');
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createUrlForAction('Edit') . '&amp;id=[id]');
+            $this->dataGrid->addColumn('edit', null, BackendLanguage::lbl('Edit'), BackendModel::createUrlForAction('Edit') . '&amp;id=[id]');
         }
     }
 

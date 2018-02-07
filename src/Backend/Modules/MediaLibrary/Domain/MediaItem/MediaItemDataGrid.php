@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use SpoonFormDropdown;
 
 /**
@@ -43,15 +43,15 @@ class MediaItemDataGrid extends DataGridDatabase
     {
         if ($type->isMovie()) {
             return [
-                'storageType' => ucfirst(Language::lbl('MediaStorageType')),
-                'url' => ucfirst(Language::lbl('MediaMovieId')),
-                'title' => ucfirst(Language::lbl('MediaMovieTitle')),
+                'storageType' => ucfirst(BackendLanguage::lbl('MediaStorageType')),
+                'url' => ucfirst(BackendLanguage::lbl('MediaMovieId')),
+                'title' => ucfirst(BackendLanguage::lbl('MediaMovieTitle')),
             ];
         }
 
         return [
             'type' => '',
-            'url' => ucfirst(Language::lbl('Image')),
+            'url' => ucfirst(BackendLanguage::lbl('Image')),
         ];
     }
 
@@ -82,7 +82,7 @@ class MediaItemDataGrid extends DataGridDatabase
     {
         $ddmMediaItemMassAction = new SpoonFormDropdown(
             'action',
-            ['move' => Language::lbl('Move')],
+            ['move' => BackendLanguage::lbl('Move')],
             'move',
             false,
             'form-control',
@@ -181,9 +181,9 @@ class MediaItemDataGrid extends DataGridDatabase
         $this->addColumn(
             'edit',
             null,
-            Language::lbl('Edit'),
+            BackendLanguage::lbl('Edit'),
             $editActionUrl . '&id=[id]' . '&folder=' . $folderId,
-            Language::lbl('Edit')
+            BackendLanguage::lbl('Edit')
         );
 
         // our JS needs to know an id, so we can highlight it

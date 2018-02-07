@@ -6,8 +6,8 @@ use App\Exception\RedirectException;
 use DateTime;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
-use Frontend\Core\Language\Language;
-use Frontend\Core\Language\Locale;
+use App\Component\Locale\FrontendLanguage;
+use App\Component\Locale\FrontendLocale;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use App\Twig\Extensions\BaseTwigModifiers;
 use SpoonDate;
@@ -35,7 +35,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // format the date
-        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
+        return SpoonDate::getDate($format, (int) $var, FrontendLocale::frontendLanguage());
     }
 
     /**
@@ -56,7 +56,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // format the date
-        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
+        return SpoonDate::getDate($format, (int) $var, FrontendLocale::frontendLanguage());
     }
 
     /**
@@ -122,7 +122,7 @@ class TemplateModifiers extends BaseTwigModifiers
         }
 
         // format the date
-        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
+        return SpoonDate::getDate($format, (int) $var, FrontendLocale::frontendLanguage());
     }
 
     /**
@@ -190,8 +190,8 @@ class TemplateModifiers extends BaseTwigModifiers
             FrontendModel::get('fork.settings')->get('Core', 'date_format_long') .', '
             . FrontendModel::get('fork.settings')->get('Core', 'time_format'),
             $timestamp,
-            Locale::frontendLanguage()
-        ).'">'.\SpoonDate::getTimeAgo($timestamp, Locale::frontendLanguage()).'</abbr>';
+            FrontendLocale::frontendLanguage()
+        ).'">'.\SpoonDate::getTimeAgo($timestamp, FrontendLocale::frontendLanguage()).'</abbr>';
     }
 
     /**
@@ -511,6 +511,6 @@ class TemplateModifiers extends BaseTwigModifiers
      */
     public static function toLabel(string $value): string
     {
-        return \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
+        return \SpoonFilter::ucfirst(FrontendLanguage::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
     }
 }

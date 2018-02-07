@@ -5,7 +5,7 @@ namespace Backend\Modules\Locale\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 
@@ -68,7 +68,7 @@ class Analyse extends BackendBaseActionIndex
         /*
          * Frontend datagrid
          */
-        $nonExistingFrontendLocale = BackendLocaleModel::getNonExistingFrontendLocale(BL::getWorkingLanguage());
+        $nonExistingFrontendLocale = BackendLocaleModel::getNonExistingFrontendLocale(BackendLanguage::getWorkingLanguage());
         $this->dgFrontend = new BackendDataGridArray($nonExistingFrontendLocale);
 
         // overrule default URL
@@ -89,7 +89,7 @@ class Analyse extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('SaveTranslation')) {
             // add columns
-            $this->dgFrontend->addColumn('translation', null, null, null, BL::lbl('Add'));
+            $this->dgFrontend->addColumn('translation', null, null, null, BackendLanguage::lbl('Add'));
 
             // add a class for the inline edit
             $this->dgFrontend->setColumnAttributes('translation', ['class' => 'translationValue']);
@@ -105,7 +105,7 @@ class Analyse extends BackendBaseActionIndex
         /*
          * Backend datagrid
          */
-        $getNonExistingBackendLocale = BackendLocaleModel::getNonExistingBackendLocale(BL::getWorkingLanguage());
+        $getNonExistingBackendLocale = BackendLocaleModel::getNonExistingBackendLocale(BackendLanguage::getWorkingLanguage());
         $this->dgBackend = new BackendDataGridArray($getNonExistingBackendLocale);
 
         // overrule default URL
@@ -126,7 +126,7 @@ class Analyse extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('SaveTranslation')) {
             // add columns
-            $this->dgBackend->addColumn('translation', null, null, null, BL::lbl('Add'));
+            $this->dgBackend->addColumn('translation', null, null, null, BackendLanguage::lbl('Add'));
 
             // add a class for the inline edit
             $this->dgBackend->setColumnAttributes('translation', ['class' => 'translationValue']);
@@ -149,6 +149,6 @@ class Analyse extends BackendBaseActionIndex
         $this->template->assign('dgFrontend', ($this->dgFrontend->getNumResults() != 0) ? $this->dgFrontend->getContent() : false);
 
         // parse filter
-        $this->template->assign('language', BL::getWorkingLanguage());
+        $this->template->assign('language', BackendLanguage::getWorkingLanguage());
     }
 }

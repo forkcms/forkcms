@@ -5,7 +5,7 @@ namespace Backend\Modules\Authentication\Actions;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\User;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
@@ -51,12 +51,12 @@ class Index extends BackendBaseActionIndex
         $this->form = new BackendForm(null, null, 'post', true, false);
         $this->form
             ->addText('backend_email')
-            ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Email')))
+            ->setAttribute('placeholder', \SpoonFilter::ucfirst(BackendLanguage::lbl('Email')))
             ->setAttribute('type', 'email')
         ;
         $this->form
             ->addPassword('backend_password')
-            ->setAttribute('placeholder', \SpoonFilter::ucfirst(BL::lbl('Password')))
+            ->setAttribute('placeholder', \SpoonFilter::ucfirst(BackendLanguage::lbl('Password')))
         ;
 
         $this->formForgotPassword = new BackendForm('forgotPassword');
@@ -68,7 +68,7 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // assign the interface language ourself, because it won't be assigned automagically
-        $this->template->assign('INTERFACE_LANGUAGE', BL::getInterfaceLanguage());
+        $this->template->assign('INTERFACE_LANGUAGE', BackendLanguage::getInterfaceLanguage());
 
         $this->form->parse($this->template);
         $this->formForgotPassword->parse($this->template);
@@ -188,10 +188,10 @@ class Index extends BackendBaseActionIndex
             $email = $this->formForgotPassword->getField('backend_email_forgot')->getValue();
 
             // required fields
-            if ($this->formForgotPassword->getField('backend_email_forgot')->isEmail(BL::err('EmailIsInvalid'))) {
+            if ($this->formForgotPassword->getField('backend_email_forgot')->isEmail(BackendLanguage::err('EmailIsInvalid'))) {
                 // check if there is a user with the given emailaddress
                 if (!BackendUsersModel::existsEmail($email)) {
-                    $this->formForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
+                    $this->formForgotPassword->getField('backend_email_forgot')->addError(BackendLanguage::err('EmailIsUnknown'));
                 }
             }
 
@@ -210,7 +210,7 @@ class Index extends BackendBaseActionIndex
                 $from = $this->get('fork.settings')->get('Core', 'mailer_from');
                 $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = Message::newInstance(
-                    \SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject'))
+                    \SpoonFilter::ucfirst(BackendLanguage::msg('ResetYourPasswordMailSubject'))
                 )
                     ->setFrom([$from['email'] => $from['name']])
                     ->setTo([$email])

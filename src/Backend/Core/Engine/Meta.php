@@ -5,7 +5,7 @@ namespace Backend\Core\Engine;
 use App\Component\Uri\Uri as CommonUri;
 use App\Domain\Meta\Meta as MetaEntity;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * This class represents a META-object

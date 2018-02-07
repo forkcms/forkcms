@@ -3,7 +3,7 @@
 namespace Backend\Modules\Search\Engine;
 
 use Psr\Cache\CacheItemPoolInterface;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 
@@ -144,7 +144,7 @@ class Model
         BackendModel::getContainer()->get('database')->delete(
             'search_index',
             'module = ? AND other_id = ? AND language = ?',
-            [$module, $otherId, $language ?? BL::getWorkingLanguage()]
+            [$module, $otherId, $language ?? BackendLanguage::getWorkingLanguage()]
         );
 
         // invalidate the cache for search
@@ -168,7 +168,7 @@ class Model
             return;
         }
 
-        $language = $language ?? BL::getWorkingLanguage();
+        $language = $language ?? BackendLanguage::getWorkingLanguage();
 
         // get database
         $database = BackendModel::getContainer()->get('database');

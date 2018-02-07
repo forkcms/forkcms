@@ -3,7 +3,7 @@
 namespace Backend\Modules\Tags\Engine;
 
 use App\Component\Uri\Uri as CommonUri;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
@@ -70,7 +70,7 @@ class Model
             'SELECT i.tag AS name
              FROM tags AS i
              WHERE i.language = ?',
-            [$language ?? BL::getWorkingLanguage()]
+            [$language ?? BackendLanguage::getWorkingLanguage()]
         );
     }
 
@@ -80,7 +80,7 @@ class Model
             'SELECT tag
              FROM tags
              WHERE language = ?',
-            [$language ?? BL::getWorkingLanguage()]
+            [$language ?? BackendLanguage::getWorkingLanguage()]
         );
     }
 
@@ -99,7 +99,7 @@ class Model
              FROM tags AS i
              WHERE i.language = ? AND i.tag LIKE ?
              ORDER BY i.tag ASC',
-            [$language ?? BL::getWorkingLanguage(), $term . '%']
+            [$language ?? BackendLanguage::getWorkingLanguage(), $term . '%']
         );
     }
 
@@ -124,7 +124,7 @@ class Model
              INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
              WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?
              ORDER BY i.tag ASC',
-            [$module, $otherId, $language ?? BL::getWorkingLanguage()]
+            [$module, $otherId, $language ?? BackendLanguage::getWorkingLanguage()]
         );
 
         // return as an imploded string
@@ -147,7 +147,7 @@ class Model
     public static function getUrl(string $url, int $id = null): string
     {
         $url = CommonUri::getUrl($url);
-        $language = BL::getWorkingLanguage();
+        $language = BackendLanguage::getWorkingLanguage();
 
         // get database
         $database = BackendModel::getContainer()->get('database');
@@ -209,7 +209,7 @@ class Model
         return (int) BackendModel::getContainer()->get('database')->insert(
             'tags',
             [
-                'language' => $language ?? BL::getWorkingLanguage(),
+                'language' => $language ?? BackendLanguage::getWorkingLanguage(),
                 'tag' => $tag,
                 'number' => 0,
                 'url' => self::getUrl($tag),
@@ -228,7 +228,7 @@ class Model
      */
     public static function saveTags(int $otherId, $tags, string $module, string $language = null)
     {
-        $language = $language ?? BL::getWorkingLanguage();
+        $language = $language ?? BackendLanguage::getWorkingLanguage();
 
         // redefine the tags as an array
         if (!is_array($tags)) {

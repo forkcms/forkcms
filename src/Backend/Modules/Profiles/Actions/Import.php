@@ -4,7 +4,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Backend\Core\Engine\Csv;
@@ -48,12 +48,12 @@ class Import extends BackendBaseActionAdd
         $csv = [];
 
         // validate input
-        $ddmGroup->isFilled(BL::getError('FieldIsRequired'));
-        if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
-            if ($fileFile->isAllowedExtension(['csv'], sprintf(BL::getError('ExtensionNotAllowed'), 'csv'))) {
+        $ddmGroup->isFilled(BackendLanguage::getError('FieldIsRequired'));
+        if ($fileFile->isFilled(BackendLanguage::err('FieldIsRequired'))) {
+            if ($fileFile->isAllowedExtension(['csv'], sprintf(BackendLanguage::getError('ExtensionNotAllowed'), 'csv'))) {
                 $csv = Csv::fileToArray($fileFile->getTempFileName());
                 if ($csv === false) {
-                    $fileFile->addError(BL::getError('InvalidCSV'));
+                    $fileFile->addError(BackendLanguage::getError('InvalidCSV'));
                 }
             }
         }
