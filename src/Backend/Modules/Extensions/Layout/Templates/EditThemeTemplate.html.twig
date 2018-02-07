@@ -188,11 +188,11 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-danger', { "type":"submit", "id":"editButton", "name":"edit" }) }}
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-danger', {"type":"submit", "id":"editButton", "name":"edit"}) }}
         </div>
       </div>
     </div>
@@ -213,8 +213,8 @@
             <p>{{ 'msg.ConfirmDeleteTemplate'|trans|format(template.label)|raw }}</p>
           </div>
           <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" }) }}
-            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" }) }}
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal", "type":"button"}) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
           </div>
         </div>
       </div>

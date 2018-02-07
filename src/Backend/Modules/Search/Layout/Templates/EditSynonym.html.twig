@@ -34,12 +34,12 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showSearchDeleteSynonym %}
-            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete"}) }}
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "type":"button", "data-target":"#confirmDelete"}) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Synonyms'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddSynonym'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add"}) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddSynonym'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
             <p>{{ 'msg.ConfirmDeleteSynonym'|trans|format(term)|raw }}</p>
           </div>
           <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal" }) }}
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
             {{ macro.buttonIcon('', 'plus-trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger') }}
           </div>
         </div>
