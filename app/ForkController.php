@@ -9,7 +9,7 @@ use Frontend\Core\Engine\Frontend;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Backend\Init as BackendInit;
 use Frontend\Init as FrontendInit;
-use Common\Exception\RedirectException;
+use App\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\Response;
 use Twig_Error;
 

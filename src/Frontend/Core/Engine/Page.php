@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
-use Common\Exception\RedirectException;
+use App\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Block\ModuleExtraInterface;
 use Frontend\Core\Header\Header;

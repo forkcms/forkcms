@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Common\Exception\AjaxExitException;
+use App\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

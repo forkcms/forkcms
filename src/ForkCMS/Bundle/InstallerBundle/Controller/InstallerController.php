@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Controller;
 
-use Common\Exception\ExitException;
+use App\Exception\ExitException;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\InstallerHandler;
