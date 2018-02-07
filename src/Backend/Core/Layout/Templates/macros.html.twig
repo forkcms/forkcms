@@ -1,5 +1,5 @@
 {% macro buttonIcon(url, icon, label, buttonType, extra) %}
-  {# When url is empty you a button, otherwise use an anchor #}
+  {# When url is an empty string, use a button, otherwise use a hyperlink/anchor #}
   {% if url %}
     <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}>
       {% import _self as macro %}
