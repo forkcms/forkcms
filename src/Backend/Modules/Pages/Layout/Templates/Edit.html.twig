@@ -26,7 +26,7 @@
         {% if appendRevision %}
           {% set url = (url ~ '?page_revision=' ~ item.revision_id) %}
         {% endif %}
-        {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, '', { "target":"_blank" }) }}
+        {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst, 'btn-default', { "target":"_blank" }) }}
 
       {% endif %}
 
@@ -367,7 +367,7 @@
           {% if showPagesDelete and allowPagesDelete %}
             {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
           {% endif %}
-          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst) }}
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group pull-right" role="group">
           {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', { "id":"saveAsDraft" }) }}
