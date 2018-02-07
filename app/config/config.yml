@@ -188,14 +188,14 @@ services:
         public: true
 
     fork.cookie_setter:
-        class: Common\EventListener\ForkCookieSetter
+        class: App\EventListener\ForkCookieSetter
         arguments:
             - "@fork.cookie"
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     fork.response_securer:
-        class: Common\EventListener\ResponseSecurer
+        class: App\EventListener\ResponseSecurer
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
