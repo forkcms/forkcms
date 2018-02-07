@@ -8,7 +8,7 @@ use Backend\Core\Language\Language;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Common\Exception\AjaxExitException;
+use App\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

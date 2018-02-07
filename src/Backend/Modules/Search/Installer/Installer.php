@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Search\Installer;
 
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 use Backend\Core\Installer\ModuleInstaller;
 
 /**
@@ -58,8 +58,8 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->searchBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Search');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'SearchForm', 'Form');
+        $this->searchBlockId = $this->insertExtra($this->getModule(), Type::block(), 'Search');
+        $this->insertExtra($this->getModule(), Type::widget(), 'SearchForm', 'Form');
     }
 
     private function configureFrontendPages(): void

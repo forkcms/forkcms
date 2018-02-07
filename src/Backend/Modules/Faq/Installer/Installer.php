@@ -7,7 +7,7 @@ use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Backend\Modules\Faq\Domain\Question\Question;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * Installer for the faq module
@@ -104,10 +104,10 @@ class Installer extends ModuleInstaller
      */
     private function configureFrontendExtras(): void
     {
-        $this->faqBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), $this->getModule());
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'MostReadQuestions', 'MostReadQuestions');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
+        $this->faqBlockId = $this->insertExtra($this->getModule(), Type::block(), $this->getModule());
+        $this->insertExtra($this->getModule(), Type::widget(), 'MostReadQuestions', 'MostReadQuestions');
+        $this->insertExtra($this->getModule(), Type::widget(), 'AskOwnQuestion', 'AskOwnQuestion');
+        $this->insertExtra($this->getModule(), Type::widget(), 'Categories', 'Categories');
     }
 
     private function configureFrontendPages(): void
@@ -192,7 +192,7 @@ class Installer extends ModuleInstaller
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
         $item['extraId'] = $this->insertExtra(
             $this->getModule(),
-            ModuleExtraType::widget(),
+            Type::widget(),
             $this->getModule(),
             'CategoryList',
             null,

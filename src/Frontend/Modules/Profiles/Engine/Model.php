@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Engine;
 
-use Common\Uri as CommonUri;
+use App\Component\Uri as CommonUri;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;

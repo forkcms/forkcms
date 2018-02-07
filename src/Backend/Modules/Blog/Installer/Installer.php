@@ -7,7 +7,7 @@ use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Blog\Domain\Category\CategoryRepository;
 use Backend\Modules\Blog\Domain\Comment\Comment;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * Installer for the blog module
@@ -114,12 +114,12 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendExtras(): void
     {
-        $this->blogBlockId = $this->insertExtra($this->getModule(), ModuleExtraType::block(), 'Blog');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Archive', 'Archive');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'Categories', 'Categories');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList');
-        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentComments', 'RecentComments');
+        $this->blogBlockId = $this->insertExtra($this->getModule(), Type::block(), 'Blog');
+        $this->insertExtra($this->getModule(), Type::widget(), 'Archive', 'Archive');
+        $this->insertExtra($this->getModule(), Type::widget(), 'Categories', 'Categories');
+        $this->insertExtra($this->getModule(), Type::widget(), 'RecentArticlesFull', 'RecentArticlesFull');
+        $this->insertExtra($this->getModule(), Type::widget(), 'RecentArticlesList', 'RecentArticlesList');
+        $this->insertExtra($this->getModule(), Type::widget(), 'RecentComments', 'RecentComments');
     }
 
     private function configureFrontendPages(): void
@@ -188,7 +188,7 @@ class Installer extends ModuleInstaller
         return (int) $this->getDatabase()->getVar(
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::widget(), 'Form']
+            ['Search', Type::widget(), 'Form']
         );
     }
 

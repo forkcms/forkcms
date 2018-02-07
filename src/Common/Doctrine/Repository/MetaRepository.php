@@ -4,7 +4,7 @@ namespace Common\Doctrine\Repository;
 
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model;
-use Common\Uri;
+use App\Component\Uri;
 use Doctrine\ORM\EntityRepository;
 use SpoonFilter;
 
