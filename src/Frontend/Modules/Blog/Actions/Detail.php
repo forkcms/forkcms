@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Blog\Actions;
 
-use Common\Doctrine\Entity\Meta;
+use App\Domain\Meta\Meta;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Header\MetaLink;

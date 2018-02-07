@@ -10,7 +10,7 @@ use Backend\Core\Language\Locale;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use Common\Doctrine\Entity\Meta;
+use App\Domain\Meta\Meta;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
