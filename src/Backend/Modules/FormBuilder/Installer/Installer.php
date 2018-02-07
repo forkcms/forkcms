@@ -4,7 +4,7 @@ namespace Backend\Modules\FormBuilder\Installer;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * Installer for the form_builder module
@@ -139,7 +139,7 @@ class Installer extends ModuleInstaller
             // insert extra
             $extraId = $this->insertExtra(
                 'FormBuilder',
-                ModuleExtraType::widget(),
+                Type::widget(),
                 'FormBuilder',
                 'Form',
                 [
@@ -173,7 +173,7 @@ class Installer extends ModuleInstaller
             'SELECT id
              FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
-            ['Search', ModuleExtraType::widget(), 'Form']
+            ['Search', Type::widget(), 'Form']
         );
     }
 }
