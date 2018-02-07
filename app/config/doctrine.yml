@@ -50,14 +50,6 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
 
-    # @todo: remove this service in the next major release.
-    fork.entity.create_schema:
-        class: Common\Doctrine\Entity\CreateSchema
-        deprecated: 'The "%service_id%" service is deprecated. Use "fork.entity_schema" instead'
-        public: true
-        arguments:
-            - "@doctrine.orm.entity_manager"
-
     fork.repository.meta:
         class: App\Domain\Meta\MetaRepository
         public: true
