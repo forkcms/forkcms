@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Form\EventListener;
+namespace App\EventListener\Backend;
 
 use Backend\Core\Engine\Model;
 use App\Form\Type\Backend\MetaType;
