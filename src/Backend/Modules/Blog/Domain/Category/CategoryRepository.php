@@ -3,7 +3,7 @@
 namespace Backend\Modules\Blog\Domain\Category;
 
 use Common\Core\Model;
-use Common\Locale;
+use App\Component\Locale\Locale;
 use Doctrine\ORM\EntityRepository;
 
 class CategoryRepository extends EntityRepository

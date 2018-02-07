@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Tags\Engine;
 
-use Common\Locale;
+use App\Component\Locale\Locale;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;

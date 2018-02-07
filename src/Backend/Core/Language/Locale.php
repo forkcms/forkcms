@@ -2,7 +2,7 @@
 
 namespace Backend\Core\Language;
 
-use Common\Locale as CommonLocale;
+use App\Component\Locale\Locale as CommonLocale;
 
 final class Locale extends CommonLocale
 {

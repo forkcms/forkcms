@@ -3,7 +3,7 @@
 namespace App\Form\DBALType;
 
 use Backend\Core\Language\Locale as BackendLocale;
-use Common\Locale;
+use App\Component\Locale\Locale;
 use Frontend\Core\Language\Locale as FrontendLocale;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;

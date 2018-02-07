@@ -1,6 +1,6 @@
 <?php
 
-namespace Common;
+namespace App\Component\Locale;
 
 use InvalidArgumentException;
 use JsonSerializable;
