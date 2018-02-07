@@ -6,8 +6,13 @@ use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Core\Language\Locale;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Backend\Modules\Faq\Domain\Question\Question;
+<<<<<<< HEAD
 use Common\ModuleExtraType;
 use App\Component\Uri as CommonUri;
+=======
+use App\Domain\ModuleExtra\Type;
+use Common\Uri as CommonUri;
+>>>>>>> f14c35534c18db00eb2093f410a8f816bfbb4297
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
@@ -309,7 +314,7 @@ class Model
 
         // insert extra
         $extraId = BackendModel::insertExtra(
-            ModuleExtraType::widget(),
+            Type::widget(),
             'Faq',
             'CategoryList'
         );

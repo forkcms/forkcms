@@ -9,8 +9,8 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFoun
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageType;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Component\UploadHandler;
-use Common\Exception\AjaxExitException;
-use Common\Exception\RedirectException;
+use App\Exception\AjaxExitException;
+use App\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

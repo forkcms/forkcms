@@ -140,7 +140,7 @@ services:
             - [ execute, [ 'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'] ]
             - [ setDebug, [ "%kernel.debug%" ]]
     mailer_configurator:
-        class: Common\Mailer\Configurator
+        class: App\Service\Mailer\Configurator
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
@@ -188,14 +188,14 @@ services:
         public: true
 
     fork.cookie_setter:
-        class: Common\EventListener\ForkCookieSetter
+        class: App\EventListener\ForkCookieSetter
         arguments:
             - "@fork.cookie"
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     fork.response_securer:
-        class: Common\EventListener\ResponseSecurer
+        class: App\EventListener\ResponseSecurer
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 

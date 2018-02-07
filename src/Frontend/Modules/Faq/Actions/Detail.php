@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Faq\Actions;
 
-use Common\Mailer\Message;
+use App\Service\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;

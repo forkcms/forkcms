@@ -7,7 +7,7 @@ use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 final class CopyContentBlocksToOtherLocaleHandler
 {
@@ -55,7 +55,7 @@ final class CopyContentBlocksToOtherLocaleHandler
     private function getNewExtraId(): int
     {
         return Model::insertExtra(
-            ModuleExtraType::widget(),
+            Type::widget(),
             'ContentBlocks',
             'Detail'
         );

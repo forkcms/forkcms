@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Common\Exception\AjaxExitException;
+use App\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

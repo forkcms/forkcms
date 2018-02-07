@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Faq\Widgets;
 
-use Common\Mailer\Message;
+use App\Service\Mailer\Message;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;

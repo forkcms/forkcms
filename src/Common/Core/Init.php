@@ -2,7 +2,7 @@
 
 namespace Common\Core;
 
-use Common\Exception\InvalidInitTypeException;
+use App\Exception\InvalidInitTypeException;
 use ForkCMS\App\KernelLoader;
 
 /**

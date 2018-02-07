@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Mailer;
+namespace App\Service\Mailer;
 
 use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 use App\Component\Uri;

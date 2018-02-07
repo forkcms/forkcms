@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
-use Common\Exception\RedirectException;
+use App\Exception\RedirectException;
 use DateTime;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;

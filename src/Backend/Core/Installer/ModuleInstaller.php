@@ -10,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use App\Component\Uri as CommonUri;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use Common\ModuleExtraType;
+use App\Domain\ModuleExtra\Type;
 
 /**
  * The base-class for the installer
@@ -479,7 +479,7 @@ class ModuleInstaller
      * Insert an extra
      *
      * @param string $module The module for the extra.
-     * @param ModuleExtraType $type The type, possible values are: homepage, widget, block.
+     * @param Type $type The type, possible values are: homepage, widget, block.
      * @param string $label The label for the extra.
      * @param string|null $action The action.
      * @param array|null $data data, will be passed in the extra.
@@ -490,7 +490,7 @@ class ModuleInstaller
      */
     protected function insertExtra(
         string $module,
-        ModuleExtraType $type,
+        Type $type,
         string $label,
         string $action = null,
         array $data = null,
@@ -515,13 +515,13 @@ class ModuleInstaller
 
     /**
      * @param string $module
-     * @param ModuleExtraType $type
+     * @param Type $type
      * @param string $label
      * @param array|null $data
      *
      * @return int
      */
-    private function findModuleExtraId(string $module, ModuleExtraType $type, string $label, array $data = null): int
+    private function findModuleExtraId(string $module, Type $type, string $label, array $data = null): int
     {
         // build query
         $query = 'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND label = ?';

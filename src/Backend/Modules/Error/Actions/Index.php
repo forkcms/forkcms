@@ -4,7 +4,7 @@ namespace Backend\Modules\Error\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Language\Language as BL;
-use Common\Exception\ExitException;
+use App\Exception\ExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
