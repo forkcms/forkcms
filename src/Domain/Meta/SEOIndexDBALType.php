@@ -2,7 +2,6 @@
 
 namespace App\Domain\Meta;
 
-use App\Domain\Meta\SEOIndex;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

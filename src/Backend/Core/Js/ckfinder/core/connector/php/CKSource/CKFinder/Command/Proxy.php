@@ -17,7 +17,6 @@ namespace CKSource\CKFinder\Command;
 use CKSource\CKFinder\Acl\Permission;
 use CKSource\CKFinder\Config;
 use CKSource\CKFinder\Event\CKFinderEvent;
-use CKSource\CKFinder\Event\DownloadFileEvent;
 use CKSource\CKFinder\Event\ProxyDownloadEvent;
 use CKSource\CKFinder\Exception\AccessDeniedException;
 use CKSource\CKFinder\Exception\FileNotFoundException;

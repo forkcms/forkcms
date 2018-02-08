@@ -3,7 +3,6 @@
 namespace App\Form\ValueObject;
 
 use Backend\Core\Engine\Model;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * The following things are mandatory to use this class.

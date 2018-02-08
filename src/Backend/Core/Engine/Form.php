@@ -4,7 +4,6 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use App\Component\Locale\BackendLanguage;
-use SpoonFormButton;
 use SpoonFormFile;
 use SpoonFormTextarea;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
