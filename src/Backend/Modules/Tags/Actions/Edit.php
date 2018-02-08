@@ -2,12 +2,12 @@
 
 namespace Backend\Modules\Tags\Actions;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
@@ -58,7 +58,7 @@ class Edit extends BackendBaseActionEdit
             // build class name
             $className = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
             if ($module == 'Core') {
-                $className = 'Backend\\Core\\Engine\\Model';
+                $className = 'Backend\\Core\\Engine\\BackendModel';
             }
 
             // check if the getByTag-method is available
@@ -125,7 +125,7 @@ class Edit extends BackendBaseActionEdit
                 $item['id'] = $this->id;
                 $item['tag'] = $this->form->getField('name')->getValue();
                 $item['url'] = BackendTagsModel::getUrl(
-                    CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+                    Uri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
                     $this->id
                 );
 

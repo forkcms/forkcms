@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 
@@ -23,6 +23,6 @@ final class DeleteContentBlockHandler
             $deleteContentBlock->contentBlock->getLocale()
         );
 
-        Model::deleteExtraById($deleteContentBlock->contentBlock->getExtraId());
+        BackendModel::deleteExtraById($deleteContentBlock->contentBlock->getExtraId());
     }
 }

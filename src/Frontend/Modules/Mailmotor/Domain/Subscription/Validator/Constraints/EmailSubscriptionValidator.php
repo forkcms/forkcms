@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints;
 
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
-use Frontend\Core\Engine\Model;
+use App\Component\Model\FrontendModel;
 use App\Component\Locale\FrontendLocale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use Symfony\Component\Validator\Constraint;
@@ -35,7 +35,7 @@ class EmailSubscriptionValidator extends ConstraintValidator
             // The email is already in our mailing list
             if ($this->subscriber->isSubscribed(
                 $value,
-                Model::get('forkcms.settings')->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
+                FrontendModel::get('forkcms.settings')->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
             )) {
                 $this->context->buildViolation($constraint->alreadySubscribedMessage)->addViolation();
             }

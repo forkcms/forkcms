@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Pages\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Filesystem\Filesystem;
 

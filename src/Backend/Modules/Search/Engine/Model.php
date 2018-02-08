@@ -4,7 +4,7 @@ namespace Backend\Modules\Search\Engine;
 
 use Psr\Cache\CacheItemPoolInterface;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 /**

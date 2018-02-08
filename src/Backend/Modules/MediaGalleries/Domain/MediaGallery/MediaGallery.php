@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Ramsey\Uuid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use App\Domain\ModuleExtra\Type;
 
@@ -206,7 +206,7 @@ class MediaGallery
     {
         $this->createdOn = $this->editedOn = new \Datetime();
 
-        $this->moduleExtraId = Model::insertExtra(
+        $this->moduleExtraId = BackendModel::insertExtra(
             Type::widget(),
             'MediaGalleries',
             'Gallery',
@@ -229,7 +229,7 @@ class MediaGallery
      */
     public function onPostRemove()
     {
-        Model::deleteExtraById(
+        BackendModel::deleteExtraById(
             $this->moduleExtraId,
             true
         );
@@ -244,13 +244,13 @@ class MediaGallery
     public function updateModuleExtraData()
     {
         // Update ModuleExtra data
-        Model::updateExtra(
+        BackendModel::updateExtra(
             $this->getModuleExtraId(),
             'data',
             [
                 'gallery_id' => $this->id,
                 'extra_label' => $this->getExtraLabel(),
-                'edit_url' => Model::createUrlForAction(
+                'edit_url' => BackendModel::createUrlForAction(
                     'MediaGalleryEdit',
                     'MediaGalleries',
                     null,
@@ -260,7 +260,7 @@ class MediaGallery
         );
 
         // Update hidden
-        Model::updateExtra(
+        BackendModel::updateExtra(
             $this->moduleExtraId,
             'hidden',
             false

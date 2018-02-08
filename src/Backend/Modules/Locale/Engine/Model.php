@@ -2,10 +2,10 @@
 
 namespace Backend\Modules\Locale\Engine;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module
@@ -571,7 +571,7 @@ class Model
     {
         // actions should be urlized
         if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
-            $item['value'] = CommonUri::getUrl(
+            $item['value'] = Uri::getUrl(
                 $item['value']
             );
         }
@@ -590,7 +590,7 @@ class Model
     {
         // actions should be urlized
         if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
-            $item['value'] = CommonUri::getUrl(
+            $item['value'] = Uri::getUrl(
                 $item['value']
             );
         }

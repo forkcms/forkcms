@@ -2,7 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Model\FrontendModel;
+use App\Component\Uri\Uri;
 
 /**
  * Frontend RSS class.
@@ -21,9 +22,9 @@ class Rss extends \SpoonFeedRSS
             str_replace(
                 '&',
                 '&amp;',
-                Model::addUrlParameters(
+                FrontendModel::addUrlParameters(
                     $link,
-                    ['utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title)],
+                    ['utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => Uri::getUrl($title)],
                     '&amp;'
                 )
             ),
@@ -32,7 +33,7 @@ class Rss extends \SpoonFeedRSS
         );
 
         $siteTitle = \SpoonFilter::htmlspecialcharsDecode(
-            Model::get('forkcms.settings')->get('Core', 'site_title_' . LANGUAGE)
+            FrontendModel::get('forkcms.settings')->get('Core', 'site_title_' . LANGUAGE)
         );
 
         // set feed properties
@@ -42,12 +43,12 @@ class Rss extends \SpoonFeedRSS
         $this->setImage(SITE_URL . FRONTEND_CORE_URL . '/Layout/images/rss_image.png', $title, $link);
 
         // theme was set
-        if (Model::get('forkcms.settings')->get('Core', 'theme', null) === null) {
+        if (FrontendModel::get('forkcms.settings')->get('Core', 'theme', null) === null) {
             return;
         }
 
         // theme name
-        $theme = Model::get('forkcms.settings')->get('Core', 'theme', 'Fork');
+        $theme = FrontendModel::get('forkcms.settings')->get('Core', 'theme', 'Fork');
 
         // theme rss image exists
         if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/Core/images/rss_image.png')) {
@@ -63,12 +64,12 @@ class Rss extends \SpoonFeedRSS
     public function setImage($url, $title, $link, $width = null, $height = null, $description = null): void
     {
         // add UTM-parameters
-        $link = Model::addUrlParameters(
+        $link = FrontendModel::addUrlParameters(
             $link,
             [
                 'utm_source' => 'feed',
                 'utm_medium' => 'rss',
-                'utm_campaign' => CommonUri::getUrl($this->getTitle()),
+                'utm_campaign' => Uri::getUrl($this->getTitle()),
             ],
             '&amp;'
         );

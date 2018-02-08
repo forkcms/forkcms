@@ -3,7 +3,7 @@
 namespace Backend\Modules\Mailmotor\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
 use Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
 use Backend\Modules\Mailmotor\Domain\Settings\SettingsType;
@@ -48,7 +48,7 @@ final class Settings extends ActionIndex
         $redirectAction = $settings->mailEngine === 'not_implemented' ? 'Settings' : 'Ping';
 
         $this->redirect(
-            Model::createUrlForAction(
+            BackendModel::createUrlForAction(
                 $redirectAction,
                 null,
                 null,

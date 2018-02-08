@@ -2,7 +2,7 @@
 
 namespace App\Component\Locale;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Frontend\Core\Engine\Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Modules\Locale\Engine\CacheBuilder;
@@ -69,7 +69,7 @@ final class FrontendLanguage
      */
     public static function buildCache(string $language, string $application): void
     {
-        $cacheBuilder = new CacheBuilder(Model::get('database'));
+        $cacheBuilder = new CacheBuilder(BackendModel::get('database'));
         $cacheBuilder->buildCache($language, $application);
     }
 
@@ -94,7 +94,7 @@ final class FrontendLanguage
         // If we should fallback and the fallback label exists, return it
         if (isset(self::$fallbackAct[$key])
             && $fallback === true
-            && Model::getContainer()->getParameter('kernel.debug') === false
+            && BackendModel::getContainer()->getParameter('kernel.debug') === false
         ) {
             return self::$fallbackAct[$key];
         }
@@ -105,7 +105,7 @@ final class FrontendLanguage
 
     public static function getActions(): array
     {
-        return Model::getContainer()->getParameter('kernel.debug') ? self::$act : array_merge(
+        return BackendModel::getContainer()->getParameter('kernel.debug') ? self::$act : array_merge(
             self::$fallbackAct,
             self::$act
         );
@@ -116,7 +116,7 @@ final class FrontendLanguage
         // validate the cache
         if (empty(self::$languages['active'])) {
             // grab from settings
-            $activeLanguages = (array) Model::get('forkcms.settings')->get('Core', 'active_languages');
+            $activeLanguages = (array) BackendModel::get('forkcms.settings')->get('Core', 'active_languages');
 
             // store in cache
             self::$languages['active'] = $activeLanguages;
@@ -199,7 +199,7 @@ final class FrontendLanguage
         // If we should fallback and the fallback label exists, return it
         if (isset(self::$fallbackErr[$key])
             && $fallback === true
-            && Model::getContainer()->getParameter('kernel.debug') === false
+            && BackendModel::getContainer()->getParameter('kernel.debug') === false
         ) {
             return self::$fallbackErr[$key];
         }
@@ -210,7 +210,7 @@ final class FrontendLanguage
 
     public static function getErrors(): array
     {
-        return Model::getContainer()->getParameter('kernel.debug') ? self::$err : array_merge(
+        return BackendModel::getContainer()->getParameter('kernel.debug') ? self::$err : array_merge(
             self::$fallbackErr,
             self::$err
         );
@@ -237,7 +237,7 @@ final class FrontendLanguage
         // If we should fallback and the fallback label exists, return it
         if (isset(self::$fallbackLbl[$key])
             && $fallback === true
-            && Model::getContainer()->getParameter('kernel.debug') === false
+            && BackendModel::getContainer()->getParameter('kernel.debug') === false
         ) {
             return self::$fallbackLbl[$key];
         }
@@ -248,7 +248,7 @@ final class FrontendLanguage
 
     public static function getLabels(): array
     {
-        return (Model::getContainer()->getParameter('kernel.debug')) ? self::$lbl : array_merge(
+        return (BackendModel::getContainer()->getParameter('kernel.debug')) ? self::$lbl : array_merge(
             self::$fallbackLbl,
             self::$lbl
         );
@@ -275,7 +275,7 @@ final class FrontendLanguage
         // If we should fallback and the fallback label exists, return it
         if (isset(self::$fallbackMsg[$key])
             && $fallback === true
-            && Model::getContainer()->getParameter('kernel.debug') === false
+            && BackendModel::getContainer()->getParameter('kernel.debug') === false
         ) {
             return self::$fallbackMsg[$key];
         }
@@ -286,7 +286,7 @@ final class FrontendLanguage
 
     public static function getMessages(): array
     {
-        return (Model::getContainer()->getParameter('kernel.debug') === true)
+        return (BackendModel::getContainer()->getParameter('kernel.debug') === true)
             ? self::$msg : array_merge(self::$fallbackMsg, self::$msg);
     }
 
@@ -295,7 +295,7 @@ final class FrontendLanguage
         // validate the cache
         if (empty(self::$languages['possible_redirect'])) {
             // grab from settings
-            $redirectLanguages = (array) Model::get('forkcms.settings')->get('Core', 'redirect_languages');
+            $redirectLanguages = (array) BackendModel::get('forkcms.settings')->get('Core', 'redirect_languages');
 
             // store in cache
             self::$languages['possible_redirect'] = $redirectLanguages;

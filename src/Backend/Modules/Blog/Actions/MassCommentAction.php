@@ -3,7 +3,7 @@
 namespace Backend\Modules\Blog\Actions;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**

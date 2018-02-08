@@ -2,8 +2,9 @@
 
 namespace Frontend\Core\Engine;
 
+use App\Component\Model\FrontendModel;
 use App\Exception\RedirectException;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use App\Component\Locale\FrontendLanguage;
 use SpoonFilter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,20 +37,20 @@ class Url extends KernelLoader
         $this->getContainer()->set('url', $this);
 
         // if there is a trailing slash we permanent redirect to the page without slash
-        if (mb_strlen(Model::getRequest()->getRequestUri()) !== 1 &&
-            mb_substr(Model::getRequest()->getRequestUri(), -1) === '/'
+        if (mb_strlen(FrontendModel::getRequest()->getRequestUri()) !== 1 &&
+            mb_substr(FrontendModel::getRequest()->getRequestUri(), -1) === '/'
         ) {
             throw new RedirectException(
                 'Redirect',
                 new RedirectResponse(
-                    mb_substr(Model::getRequest()->getRequestUri(), 0, -1),
+                    mb_substr(FrontendModel::getRequest()->getRequestUri(), 0, -1),
                     301
                 )
             );
         }
 
         // set query-string and parameters for later use
-        $this->parameters = Model::getRequest()->query->all();
+        $this->parameters = FrontendModel::getRequest()->query->all();
 
         // process URL
         $this->processQueryString();
@@ -63,7 +64,7 @@ class Url extends KernelLoader
     public function getDomain(): string
     {
         // replace
-        return str_replace('www.', '', Model::getRequest()->getHttpHost());
+        return str_replace('www.', '', FrontendModel::getRequest()->getHttpHost());
     }
 
     /**
@@ -121,12 +122,12 @@ class Url extends KernelLoader
      */
     public function getParameters(bool $includeGet = true): array
     {
-        return $includeGet ? $this->parameters : array_diff_assoc($this->parameters, Model::getRequest()->query->all());
+        return $includeGet ? $this->parameters : array_diff_assoc($this->parameters, FrontendModel::getRequest()->query->all());
     }
 
     public function getQueryString(): string
     {
-        return rtrim(Model::getRequest()->getRequestUri(), '/');
+        return rtrim(FrontendModel::getRequest()->getRequestUri(), '/');
     }
 
     /**
@@ -144,7 +145,7 @@ class Url extends KernelLoader
     private function processQueryString(): void
     {
         // store the query string local, so we don't alter it.
-        $queryString = trim(Model::getRequest()->getPathInfo(), '/');
+        $queryString = trim(FrontendModel::getRequest()->getPathInfo(), '/');
 
         $hasMultiLanguages = $this->getContainer()->getParameter('site.multilanguage');
         $language = $this->determineLanguage($queryString);
@@ -177,7 +178,7 @@ class Url extends KernelLoader
         // invalid page, or parameters but no extra
         if ($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra'])) {
             // get 404 URL
-            $url = Navigation::getUrl(Model::ERROR_PAGE_ID);
+            $url = Navigation::getUrl(FrontendModel::ERROR_PAGE_ID);
 
             // remove language
             if ($hasMultiLanguages) {
@@ -235,12 +236,12 @@ class Url extends KernelLoader
             $language = (string) $chunks[0];
             $this->setLanguageCookie($language);
 
-            Model::getSession()->set('frontend_language', $language);
+            FrontendModel::getSession()->set('frontend_language', $language);
 
             return $language;
         }
 
-        $cookie = $this->getContainer()->get('fork.cookie');
+        $cookie = $this->getContainer()->get('forkcms.cookie');
         if ($cookie->has('frontend_language')
             && in_array($cookie->get('frontend_language'), $redirectLanguages, true)
         ) {
@@ -256,7 +257,7 @@ class Url extends KernelLoader
     private function setLanguageCookie(string $language): void
     {
         try {
-            self::getContainer()->get('fork.cookie')->set('frontend_language', $language);
+            self::getContainer()->get('forkcms.cookie')->set('frontend_language', $language);
         } catch (\RuntimeException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
@@ -283,7 +284,7 @@ class Url extends KernelLoader
         if (isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] !== '') {
             // get url for item
             $newPageUrl = Navigation::getUrl((int) $pageInfo['redirect_page_id']);
-            $errorURL = Navigation::getUrl(Model::ERROR_PAGE_ID);
+            $errorURL = Navigation::getUrl(FrontendModel::ERROR_PAGE_ID);
 
             // not an error?
             if ($newPageUrl !== $errorURL) {
@@ -344,7 +345,7 @@ class Url extends KernelLoader
         // if it's the homepage AND parameters were given (not allowed!)
         if ($url === '' && $queryString !== '') {
             // get 404 URL
-            $url = Navigation::getUrl(Model::ERROR_PAGE_ID);
+            $url = Navigation::getUrl(FrontendModel::ERROR_PAGE_ID);
 
             // remove language
             if ($this->getContainer()->getParameter('site.multilanguage')) {

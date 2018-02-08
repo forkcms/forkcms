@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -68,7 +68,7 @@ class MediaItemMassAction extends BackendBaseAction
             $parameters['folder'] = $mediaFolder->getId();
         }
 
-        $url = Model::createUrlForAction(
+        $url = BackendModel::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

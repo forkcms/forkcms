@@ -5,7 +5,7 @@ namespace Backend\Modules\Analytics\Form;
 use Backend\Core\Engine\Form;
 use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\TwigTemplate;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Analytics\DateRange\DateRange;
 
 /**
@@ -44,8 +44,8 @@ final class DateRangeType
 
         $fields = $this->form->getFields();
 
-        $newStartDate = Model::getUTCTimestamp($fields['start_date']);
-        $newEndDate = Model::getUTCTimestamp($fields['end_date']);
+        $newStartDate = BackendModel::getUTCTimestamp($fields['start_date']);
+        $newEndDate = BackendModel::getUTCTimestamp($fields['end_date']);
 
         $this->dateRange->update($newStartDate, $newEndDate);
 
@@ -86,8 +86,8 @@ final class DateRangeType
             return $this->form->isCorrect();
         }
 
-        $newStartDate = Model::getUTCTimestamp($fields['start_date']);
-        $newEndDate = Model::getUTCTimestamp($fields['end_date']);
+        $newStartDate = BackendModel::getUTCTimestamp($fields['start_date']);
+        $newEndDate = BackendModel::getUTCTimestamp($fields['end_date']);
 
         // startdate cannot be before 2005 (earliest valid google startdate)
         if ($newStartDate < mktime(0, 0, 0, 1, 1, 2005)) {

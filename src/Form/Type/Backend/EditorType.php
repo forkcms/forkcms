@@ -2,7 +2,7 @@
 
 namespace App\Form\Type\Backend;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,11 +13,11 @@ class EditorType extends TextareaType
     {
         $optionsResolver->setDefaults(['attr' => ['class' => 'inputEditor']]);
 
-        if (!Model::has('header')) {
+        if (!BackendModel::has('header')) {
             return;
         }
         // add the needed javascript to the header;
-        $header = Model::get('header');
+        $header = BackendModel::get('header');
         // we add JS because we need CKEditor
         $header->addJS('ckeditor/ckeditor.js', 'Core', false);
         $header->addJS('ckeditor/adapters/jquery.js', 'Core', false);

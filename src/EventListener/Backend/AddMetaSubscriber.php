@@ -2,7 +2,7 @@
 
 namespace App\EventListener\Backend;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Form\Type\Backend\MetaType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -75,7 +75,7 @@ class AddMetaSubscriber implements EventSubscriberInterface
             MetaType::class,
             [
                 'base_field_name' => $this->baseFieldName,
-                'detail_url' => Model::getUrlForBlock($this->moduleForUrl, $this->actionForUrl),
+                'detail_url' => BackendModel::getUrlForBlock($this->moduleForUrl, $this->actionForUrl),
                 'generate_url_callback_class' => $this->generateUrlCallbackClass,
                 'generate_url_callback_method' => $this->generateUrlCallbackMethod,
                 'generate_url_callback_parameters' => $this->buildCallbackParameters($event),

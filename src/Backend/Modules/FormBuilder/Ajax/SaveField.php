@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use App\Component\Locale\BackendLanguage;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -217,12 +217,12 @@ class SaveField extends BackendBaseAJAXAction
 
             foreach ($postedValues as $postedValue) {
                 $values[] = [
-                    'value' => CommonUri::getUrl($postedValue),
+                    'value' => Uri::getUrl($postedValue),
                     'label' => $postedValue,
                 ];
             }
             if ($defaultValues !== '') {
-                $defaultValues = CommonUri::getUrl($defaultValues);
+                $defaultValues = Uri::getUrl($defaultValues);
             }
         }
 

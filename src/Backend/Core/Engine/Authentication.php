@@ -2,7 +2,7 @@
 
 namespace Backend\Core\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**

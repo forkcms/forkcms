@@ -6,7 +6,7 @@ use App\Controller\InstallerController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\DependencyInjection\Container;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
@@ -39,7 +39,7 @@ class ForkInstaller
     {
         $this->container = $container;
 
-        Model::setContainer($container);
+        BackendModel::setContainer($container);
     }
 
     /**
@@ -319,7 +319,7 @@ class ForkInstaller
             '<path-www>' => PATH_WWW,
             '<action-group-tag>' => '\@actiongroup',
             '<action-rights-level>' => 7,
-            '<secret>' => Model::generateRandomString(32, true, true, true, false),
+            '<secret>' => BackendModel::generateRandomString(32, true, true, true, false),
         ];
     }
 

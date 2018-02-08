@@ -4,7 +4,7 @@ namespace Backend\Modules\Locale\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLocale;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
@@ -54,7 +54,7 @@ final class CopyContentBlocksToOtherLocaleHandler
 
     private function getNewExtraId(): int
     {
-        return Model::insertExtra(
+        return BackendModel::insertExtra(
             Type::widget(),
             'ContentBlocks',
             'Detail'

@@ -6,7 +6,7 @@ use SimpleXMLElement;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Exception;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Form;
 use Backend\Modules\Blog\Engine\Model;

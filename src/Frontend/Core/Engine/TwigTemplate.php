@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use App\Component\Model\FrontendModel;
 use App\Twig\BaseTwigTemplate;
 use App\Twig\Extensions\TwigFilters;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
@@ -29,7 +30,7 @@ class TwigTemplate extends BaseTwigTemplate
         TemplateNameParserInterface $parser,
         FileLocatorInterface $locator
     ) {
-        $container = Model::getContainer();
+        $container = FrontendModel::getContainer();
         $this->forkSettings = $container->get('forkcms.settings');
 
         parent::__construct($environment, $parser, $locator);
@@ -44,7 +45,7 @@ class TwigTemplate extends BaseTwigTemplate
         TwigFilters::addFilters($this->environment, 'Frontend');
         $this->startGlobals($this->environment);
 
-        if (!$container->getParameter('fork.is_installed')) {
+        if (!$container->getParameter('forkcms.is_installed')) {
             return;
         }
 
@@ -65,7 +66,7 @@ class TwigTemplate extends BaseTwigTemplate
     private function connectSymfonyForms(): void
     {
         $rendererEngine = new TwigRendererEngine($this->getFormTemplates('FormLayout.html.twig'), $this->environment);
-        $csrfTokenManager = Model::get('security.csrf.token_manager');
+        $csrfTokenManager = FrontendModel::get('security.csrf.token_manager');
         $this->environment->addRuntimeLoader(
             new Twig_FactoryRuntimeLoader(
                 [

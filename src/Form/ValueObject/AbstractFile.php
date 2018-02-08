@@ -75,7 +75,7 @@ abstract class AbstractFile
 
     /**
      * The dir in the web folder where the file needs to be uploaded.
-     * The base directory is always the src/Frontend/Files/ directory
+     * The base directory is always the public/files/ directory
      *
      * @return string
      */

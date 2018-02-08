@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -93,7 +93,7 @@ class MediaFolderDelete extends BackendBaseActionDelete
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createUrlForAction(
+        return BackendModel::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

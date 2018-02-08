@@ -2,7 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Model\FrontendModel;
+use App\Component\Uri\Uri;
 
 /**
  * FrontendRSSItem, this is our extended version of SpoonRSSItem
@@ -23,10 +24,10 @@ class RssItem extends \SpoonFeedRSSItem
         $content = \SpoonFilter::htmlspecialcharsDecode($content);
 
         // set UTM-campaign
-        $this->utm['utm_campaign'] = CommonUri::getUrl($title);
+        $this->utm['utm_campaign'] = Uri::getUrl($title);
 
         // call parent
-        parent::__construct($title, Model::addUrlParameters($link, $this->utm, '&amp;'), $content);
+        parent::__construct($title, FrontendModel::addUrlParameters($link, $this->utm, '&amp;'), $content);
 
         // set some properties
         $this->setGuid($link, true);
@@ -65,7 +66,7 @@ class RssItem extends \SpoonFeedRSSItem
         // loop old links
         foreach ((array) $matches[1] as $i => $link) {
             $searchLinks[] = $matches[0][$i];
-            $replaceLinks[] = 'href="' . Model::addUrlParameters($link, $this->utm, '&amp;') . '"';
+            $replaceLinks[] = 'href="' . FrontendModel::addUrlParameters($link, $this->utm, '&amp;') . '"';
         }
 
         // replace
@@ -79,7 +80,7 @@ class RssItem extends \SpoonFeedRSSItem
 
         // add fake emailaddress
         if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
-            $author = CommonUri::getUrl($author) . '@example.com (' . $author . ')';
+            $author = Uri::getUrl($author) . '@example.com (' . $author . ')';
         }
 
         // set author
@@ -117,7 +118,7 @@ class RssItem extends \SpoonFeedRSSItem
     private function prependWithSiteUrlIfHttpIsMissing(string $link): string
     {
         // if link doesn't start with http(s), we prepend the URL of the site
-        if (!Model::getContainer()->get('fork.validator.url')->isExternalUrl($link)) {
+        if (!FrontendModel::getContainer()->get('forkcms.validator.url')->isExternalUrl($link)) {
             return SITE_URL . $link;
         }
 

@@ -1,21 +1,20 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Component\Model;
 
+use App\Component\Locale\BackendLanguage;
+use App\Component\Locale\FrontendLanguage;
 use App\Domain\ModuleExtra\Type;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Backend\Core\Engine\Model as BackendModel;
-use App\Component\Locale\FrontendLanguage as FrontendLanguage;
-use App\Component\Locale\BackendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
  */
-class Model extends \Common\Core\Model
+class BackendModel extends Model
 {
     /**
      * Checks the settings and optionally returns an array with warnings
@@ -396,7 +395,7 @@ class Model extends \Common\Core\Model
     {
         $modules = $includeCore ? ['Core'] : [];
         $finder = new Finder();
-        $directories = $finder->directories()->in(__DIR__ . '/../../Modules')->depth('==0');
+        $directories = $finder->directories()->in(__DIR__ . '/../../Backend/Modules')->depth('==0');
         foreach ($directories as $directory) {
             $modules[] = $directory->getBasename();
         }

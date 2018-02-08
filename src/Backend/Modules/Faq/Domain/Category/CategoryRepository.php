@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Faq\Domain\Category;
 
-use Common\Core\Model;
+use App\Component\Model\Model;
 use Doctrine\ORM\EntityRepository;
 use App\Component\Locale\Locale;
 use Doctrine\ORM\NoResultException;

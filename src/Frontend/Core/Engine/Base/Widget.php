@@ -4,8 +4,8 @@ namespace Frontend\Core\Engine\Base;
 
 use App\Component\Priority\Priority;
 use App\Exception\RedirectException;
-use ForkCMS\App\KernelLoader;
-use Frontend\Core\Engine\Model;
+use App\Component\Application\KernelLoader;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
@@ -106,7 +106,7 @@ class Widget extends KernelLoader
         bool $addTimestamp = false
     ): void {
         // external urls always overwrite the path
-        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+        $overwritePath = $overwritePath || $this->get('forkcms.validator.url')->isExternalUrl($file);
 
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
@@ -130,7 +130,7 @@ class Widget extends KernelLoader
         bool $addTimestamp = false
     ): void {
         // external urls always overwrite the path
-        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+        $overwritePath = $overwritePath || $this->get('forkcms.validator.url')->isExternalUrl($file);
 
         if (!$overwritePath) {
             $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;
@@ -293,6 +293,6 @@ class Widget extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return Model::getRequest();
+        return FrontendModel::getRequest();
     }
 }

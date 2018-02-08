@@ -4,7 +4,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
 
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockCreated;

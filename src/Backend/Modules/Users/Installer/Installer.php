@@ -189,19 +189,19 @@ class Installer extends ModuleInstaller
 
         // store files
         $filesystem->dumpFile(
-            PATH_WWW . '/src/Frontend/Files/Users/avatars/source/god.jpg',
+            PATH_WWW . '/public/files/Users/avatars/source/god.jpg',
             base64_decode($avatar124x124)
         );
         $filesystem->dumpFile(
-            PATH_WWW . '/src/Frontend/Files/Users/avatars/128x128/god.jpg',
+            PATH_WWW . '/public/files/Users/avatars/128x128/god.jpg',
             base64_decode($avatar124x124)
         );
         $filesystem->dumpFile(
-            PATH_WWW . '/src/Frontend/Files/Users/avatars/64x64/god.jpg',
+            PATH_WWW . '/public/files/Users/avatars/64x64/god.jpg',
             base64_decode($avatar64x64)
         );
         $filesystem->dumpFile(
-            PATH_WWW . '/src/Frontend/Files/Users/avatars/32x32/god.jpg',
+            PATH_WWW . '/public/files/Users/avatars/32x32/god.jpg',
             base64_decode($avatar32x32)
         );
     }

@@ -20,13 +20,17 @@ monolog:
             formatter: monolog.full_trace_formatter
             channels: ["!event"]
 
+twig:
+    paths:
+      '%kernel.project_dir%/templates/bundles/WebProfilerBundle': WebProfilerBundle
+
 services:
     database_collector:
         class: App\Service\Database\DatabaseDataCollector
         arguments:
             - "@database"
         tags:
-            - { name: data_collector, template: "database_data_collector.html.twig", id: "database" }
+            - { name: data_collector, template: "@WebProfilerBundle/Profiler/database_data_collector.html.twig", id: "database" }
 
     monolog.full_trace_formatter:
         class: Monolog\Formatter\LineFormatter

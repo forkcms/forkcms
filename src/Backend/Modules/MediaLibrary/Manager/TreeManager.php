@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaLibrary\Manager;
 
 use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
 
 /**

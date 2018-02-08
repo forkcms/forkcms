@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaGalleries\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
@@ -25,7 +25,7 @@ class MediaGalleryDelete extends BackendBaseActionDelete
         );
         $deleteForm->handleRequest($this->getRequest());
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
-            $this->redirect(Model::createUrlForAction('MediaGalleryIndex') . '&error=something-went-wrong');
+            $this->redirect(BackendModel::createUrlForAction('MediaGalleryIndex') . '&error=something-went-wrong');
         }
         $deleteFormData = $deleteForm->getData();
 
@@ -66,7 +66,7 @@ class MediaGalleryDelete extends BackendBaseActionDelete
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createUrlForAction(
+        return BackendModel::createUrlForAction(
             'MediaGalleryIndex',
             null,
             null,

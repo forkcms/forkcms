@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Faq\Tests\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Faq\Engine\Model;
 use App\Component\Test\WebTestCase;
 

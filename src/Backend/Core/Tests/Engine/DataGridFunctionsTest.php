@@ -9,7 +9,7 @@ class DataGridFunctionsTest extends TestCase
 {
     public function testShowImage(): void
     {
-        $path = '/src/Frontend/Files/Media/Backend/01';
+        $path = '/public/files/Media/Backend/01';
         $imageName = 'image-01.jpg';
         $title = 'cowboy henk';
         $url = 'http://www.test.com/private/nl/edit?id=1';

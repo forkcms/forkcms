@@ -3,7 +3,7 @@
 namespace Backend\Modules\Users\Engine;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Core\Engine\User as BackendUser;
 
 /**

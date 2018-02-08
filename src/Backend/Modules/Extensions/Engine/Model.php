@@ -10,7 +10,7 @@ use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Navigation;
 use Backend\Core\Engine\Exception;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the extensions module.

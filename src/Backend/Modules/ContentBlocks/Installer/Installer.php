@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\Installer;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 

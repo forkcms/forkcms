@@ -4,7 +4,7 @@ namespace Backend\Modules\Pages\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 
 /**
  * This is the settings-action, it will display a form to set general pages settings

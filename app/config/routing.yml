@@ -33,22 +33,22 @@ install:
 backend:
     path: /private/{_locale}/{module}/{action}
     defaults:
-        _controller: \ForkCMS\App\ForkController::backendController
+        _controller: \App\Controller\ForkController::backendController
         _locale: ~
         module: ~
         action: ~
 backend_ajax:
     path: /backend/ajax
     defaults:
-        _controller: \ForkCMS\App\ForkController::backendAjaxController
+        _controller: \App\Controller\ForkController::backendAjaxController
 frontend_ajax:
     path: /frontend/ajax
     defaults:
-        _controller: \ForkCMS\App\ForkController::frontendAjaxController
+        _controller: \App\Controller\ForkController::frontendAjaxController
 frontend:
     path: /{route}
     defaults:
-        _controller: \ForkCMS\App\ForkController::frontendController
+        _controller: \App\Controller\ForkController::frontendController
         route: ~
     requirements:
         route: (.*)

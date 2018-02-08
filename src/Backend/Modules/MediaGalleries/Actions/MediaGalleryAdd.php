@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaGalleries\Actions;
 
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionAdd;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
@@ -52,7 +52,7 @@ class MediaGalleryAdd extends ActionAdd
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createUrlForAction(
+        return BackendModel::createUrlForAction(
             'MediaGalleryIndex',
             null,
             null,

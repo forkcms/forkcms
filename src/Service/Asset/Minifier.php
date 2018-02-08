@@ -3,7 +3,7 @@
 namespace App\Service\Asset;
 
 use App\Component\Asset\Asset;
-use Common\Core\Model;
+use App\Component\Model\Model;
 use MatthiasMullie\Minify;
 
 final class Minifier

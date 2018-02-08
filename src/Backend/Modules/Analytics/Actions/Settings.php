@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Analytics\Form\SettingsType;
 
 /**
@@ -23,7 +23,7 @@ final class Settings extends ActionIndex
         );
 
         if ($settingsForm->handle()) {
-            $this->redirect(Model::createUrlForAction('Settings'));
+            $this->redirect(BackendModel::createUrlForAction('Settings'));
         }
         $settingsForm->parse($this->template);
 

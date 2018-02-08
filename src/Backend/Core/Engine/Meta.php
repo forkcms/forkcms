@@ -2,9 +2,9 @@
 
 namespace Backend\Core\Engine;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use App\Domain\Meta\Meta as MetaEntity;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 
 /**
@@ -118,7 +118,7 @@ class Meta
      */
     public function generateUrl(string $url): string
     {
-        return Model::get('fork.repository.meta')->generateUrl(
+        return BackendModel::get('forkcms.repository.meta')->generateUrl(
             $url,
             $this->callback['class'],
             $this->callback['method'],
@@ -446,7 +446,7 @@ class Meta
             $generatedUrl = $this->generateUrl($url);
 
             // check if urls are different
-            if (CommonUri::getUrl($url) !== $generatedUrl) {
+            if (Uri::getUrl($url) !== $generatedUrl) {
                 $this->form->getField('url')->addError(
                     BackendLanguage::err('URLAlreadyExists')
                 );

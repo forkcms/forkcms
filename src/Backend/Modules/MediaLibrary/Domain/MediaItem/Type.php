@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Exception;
 use InvalidArgumentException;
 
@@ -42,11 +42,11 @@ final class Type
         $mimeType = strtolower($mimeType);
 
         // Extension not exists, throw exception
-        if (!in_array($mimeType, Model::get('media_library.manager.mime_type')->getAll())) {
+        if (!in_array($mimeType, BackendModel::get('media_library.manager.mime_type')->getAll())) {
             throw new Exception(
                 'MimeType is not one of the allowed ones: ' . implode(
                     ', ',
-                    Model::get('media_library.manager.mime_type')->getAll()
+                    BackendModel::get('media_library.manager.mime_type')->getAll()
                 )
             );
         }
@@ -54,7 +54,7 @@ final class Type
         foreach (self::POSSIBLE_VALUES as $mediaItemType) {
             if (in_array(
                 $mimeType,
-                Model::get('media_library.manager.mime_type')->get(self::fromString($mediaItemType))
+                BackendModel::get('media_library.manager.mime_type')->get(self::fromString($mediaItemType))
             )) {
                 return self::fromString($mediaItemType);
             }

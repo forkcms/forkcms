@@ -16,7 +16,7 @@ services:
             - XDEBUG_CONFIG=remote_connect_back=0 remote_enable=1 idekey=${XDEBUG_IDEKEY} remote_port=${XDEBUG_PORT} remote_host=${DOCKER_HOST_IP}
         volumes:
             - .:/var/www/html:cached
-            - ./src/Frontend/Files:/var/www/html/src/Frontend/Files:cached
+            - ./public/files:/var/www/html/public/files:cached
 
     db:
         image: "mariadb:latest"

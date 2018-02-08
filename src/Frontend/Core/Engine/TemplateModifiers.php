@@ -4,7 +4,7 @@ namespace Frontend\Core\Engine;
 
 use App\Exception\RedirectException;
 use DateTime;
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use App\Component\Locale\FrontendLanguage;
 use App\Component\Locale\FrontendLocale;

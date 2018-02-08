@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 
 class MediaItemCleanup extends BackendBaseActionIndex
 {
@@ -26,7 +26,7 @@ class MediaItemCleanup extends BackendBaseActionIndex
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createUrlForAction(
+        return BackendModel::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

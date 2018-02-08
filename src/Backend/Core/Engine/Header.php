@@ -7,7 +7,7 @@ use App\Component\Asset\AssetCollection;
 use App\Component\Header\JsData;
 use App\Service\Asset\Minifier;
 use App\Component\Priority\Priority;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use App\Component\Locale\BackendLanguage;
 
@@ -147,7 +147,7 @@ final class Header extends KernelLoader
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
-        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $isExternalUrl = $this->get('forkcms.validator.url')->isExternalUrl($file);
         $overwritePath = $overwritePath || $isExternalUrl; // external urls always overwrite the path
         $minify = $minify && !$isExternalUrl;
 
@@ -184,7 +184,7 @@ final class Header extends KernelLoader
         Priority $priority = null
     ): void {
         $module = $module ?? $this->url->getModule();
-        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $isExternalUrl = $this->get('forkcms.validator.url')->isExternalUrl($file);
         $overwritePath = $overwritePath || $isExternalUrl; // external urls always overwrite the path
         $minify = $minify && !$isExternalUrl;
 

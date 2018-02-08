@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 
 /**
  * This is the reset-action. It will remove your coupling with analytics
@@ -18,6 +18,6 @@ final class Reset extends ActionDelete
         $this->get('forkcms.settings')->delete($this->getModule(), 'web_property_id');
         $this->get('forkcms.settings')->delete($this->getModule(), 'profile');
 
-        $this->redirect(Model::createUrlForAction('Settings'));
+        $this->redirect(BackendModel::createUrlForAction('Settings'));
     }
 }

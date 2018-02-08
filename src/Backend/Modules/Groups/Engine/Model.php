@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Groups\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the groups module.

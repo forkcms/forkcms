@@ -3,7 +3,7 @@
 namespace Backend\Modules\Tags\Actions;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**

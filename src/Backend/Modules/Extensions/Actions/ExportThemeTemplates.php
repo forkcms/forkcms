@@ -3,7 +3,7 @@
 namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Extensions\Engine\Model;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -9,13 +9,13 @@ use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLocale;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use ForkCMS\App\ForkController;
-use App\Component\Locale\FrontendLanguage as FrontendLanguage;
+use App\Controller\ForkController;
+use App\Component\Locale\FrontendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the PagesModule

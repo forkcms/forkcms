@@ -4,15 +4,20 @@ namespace Frontend\Core\Header;
 
 use App\Component\Asset\Asset;
 use App\Component\Asset\AssetCollection;
+use App\Component\Header\Facebook;
+use App\Component\Header\GoogleAnalytics;
 use App\Component\Header\JsData;
-use App\Service\Asset\Minifier;
+use App\Component\Header\MetaCollection;
+use App\Component\Header\MetaData;
+use App\Component\Header\MetaLink;
+use App\Component\Locale\FrontendLocale;
+use App\Component\Model\FrontendModel;
 use App\Component\Priority\Priority;
-use ForkCMS\App\KernelLoader;
-use Frontend\Core\Engine\Model;
+use App\Service\Asset\Minifier;
+use App\Component\Application\KernelLoader;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
-use App\Component\Locale\FrontendLocale;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -147,7 +152,7 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $isExternalUrl = $this->get('forkcms.validator.url')->isExternalUrl($file);
         $file = $isExternalUrl ? $file : Theme::getPath($file);
         $minify = $minify && !$isExternalUrl;
 
@@ -168,7 +173,7 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $isExternalUrl = $this->get('forkcms.validator.url')->isExternalUrl($file);
         $file = $isExternalUrl ? $file : Theme::getPath($file);
         $minify = $minify && !$isExternalUrl;
 
@@ -269,7 +274,7 @@ class Header extends KernelLoader
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (!$this->getContainer()->get('fork.validator.url')->isExternalUrl($image)) {
+        if (!$this->getContainer()->get('forkcms.validator.url')->isExternalUrl($image)) {
             if (!is_file(PATH_WWW . strtok($image, '?'))) {
                 return;
             }
@@ -354,8 +359,8 @@ class Header extends KernelLoader
         $siteHTMLHeader = (string) $this->get('forkcms.settings')->get('Core', 'site_html_header', '') . "\n";
         $siteHTMLHeader .= new GoogleAnalytics(
             $this->get('forkcms.settings'),
-            Model::getRequest()->getHttpHost(),
-            $this->get('fork.cookie')
+            FrontendModel::getRequest()->getHttpHost(),
+            $this->get('forkcms.cookie')
         );
         $siteHTMLHeader .= "\n" . $this->jsData;
         $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHeader));
@@ -398,11 +403,11 @@ class Header extends KernelLoader
         }
 
         // any items provided through GET?
-        if (!isset($urlChunks['query']) || !Model::getRequest()->query->has('page')) {
+        if (!isset($urlChunks['query']) || !FrontendModel::getRequest()->query->has('page')) {
             return $url;
         }
 
-        return $url . '?page=' . Model::getRequest()->query->get('page');
+        return $url . '?page=' . FrontendModel::getRequest()->query->get('page');
     }
 
     /**

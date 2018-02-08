@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Engine;
 
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
 
@@ -136,9 +136,9 @@ class Authentication
 
             // invalid session
             FrontendModel::getSession()->set('frontend_profile_logged_in', false);
-        } elseif (FrontendModel::getContainer()->get('fork.cookie')->get('frontend_profile_secret_key', '') !== '') {
+        } elseif (FrontendModel::getContainer()->get('forkcms.cookie')->get('frontend_profile_secret_key', '') !== '') {
             // secret
-            $secret = FrontendModel::getContainer()->get('fork.cookie')->get('frontend_profile_secret_key');
+            $secret = FrontendModel::getContainer()->get('forkcms.cookie')->get('frontend_profile_secret_key');
 
             // get profile id
             $profileId = (int) FrontendModel::getContainer()->get('database')->getVar(
@@ -169,7 +169,7 @@ class Authentication
                     $secret
                 );
 
-                FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $profileSecret);
+                FrontendModel::getContainer()->get('forkcms.cookie')->set('frontend_profile_secret_key', $profileSecret);
 
                 FrontendModel::getSession()->set('frontend_profile_logged_in', true);
 
@@ -181,7 +181,7 @@ class Authentication
             }
 
             // invalid cookie
-            FrontendModel::getContainer()->get('fork.cookie')->delete('frontend_profile_secret_key');
+            FrontendModel::getContainer()->get('forkcms.cookie')->delete('frontend_profile_secret_key');
         }
 
         // no one is logged in
@@ -211,7 +211,7 @@ class Authentication
             );
 
             // set cookie
-            FrontendModel::getContainer()->get('fork.cookie')->set('frontend_profile_secret_key', $secretKey);
+            FrontendModel::getContainer()->get('forkcms.cookie')->set('frontend_profile_secret_key', $secretKey);
         }
 
         // delete all records for this session to prevent duplicate keys (this should never happen)
@@ -251,7 +251,7 @@ class Authentication
         // set is_logged_in to false
         FrontendModel::getSession()->set('frontend_profile_logged_in', false);
 
-        FrontendModel::getContainer()->get('fork.cookie')->delete('frontend_profile_secret_key');
+        FrontendModel::getContainer()->get('forkcms.cookie')->delete('frontend_profile_secret_key');
     }
 
     /**

@@ -78,8 +78,8 @@ abstract class Kernel extends BaseKernel
         $container = $this->getContainer();
 
         Spoon::setDebug($container->getParameter('kernel.debug'));
-        Spoon::setDebugEmail($container->getParameter('fork.debug_email'));
-        Spoon::setDebugMessage($container->getParameter('fork.debug_message'));
+        Spoon::setDebugEmail($container->getParameter('forkcms.debug_email'));
+        Spoon::setDebugMessage($container->getParameter('forkcms.debug_message'));
         Spoon::setCharset($container->getParameter('kernel.charset'));
 
         /**
@@ -95,7 +95,7 @@ abstract class Kernel extends BaseKernel
         defined('SITE_PROTOCOL') || define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
         defined('SITE_URL') || define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
 
-        defined('FORK_VERSION') || define('FORK_VERSION', $container->getParameter('fork.version'));
+        defined('FORK_VERSION') || define('FORK_VERSION', $container->getParameter('forkcms.version'));
 
         defined('ACTION_GROUP_TAG') || define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
         defined('ACTION_RIGHTS_LEVEL') || define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
@@ -112,8 +112,8 @@ abstract class Kernel extends BaseKernel
         defined('FRONTEND_THEMES_PATH') || define('FRONTEND_THEMES_PATH', FRONTEND_PATH . '/Themes');
         defined('FRONTEND_CORE_PATH') || define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
         defined('FRONTEND_MODULES_PATH') || define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
-        defined('FRONTEND_FILES_PATH') || define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
-        defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/Frontend/Files');
+        defined('FRONTEND_FILES_PATH') || define('FRONTEND_FILES_PATH', PATH_WWW . '/public/files');
+        defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/public/files');
         defined('FRONTEND_CORE_URL') || define('FRONTEND_CORE_URL', '/src/Frontend/Core');
         defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/var/frontend');
     }

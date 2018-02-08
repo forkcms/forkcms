@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 
 /**
@@ -54,7 +54,7 @@ class MediaGalleryDataGrid extends DataGridDatabase
 
         if (Authentication::isAllowedAction('MediaGalleryEdit')) {
             // Define edit url
-            $editUrl = Model::createUrlForAction('MediaGalleryEdit', null, null, ['id' => '[id]'], false);
+            $editUrl = BackendModel::createUrlForAction('MediaGalleryEdit', null, null, ['id' => '[id]'], false);
             $this->setColumnURL('title', $editUrl);
             $this->addColumn('edit', null, BackendLanguage::lbl('Edit'), $editUrl, BackendLanguage::lbl('MediaGalleryEdit'));
         }

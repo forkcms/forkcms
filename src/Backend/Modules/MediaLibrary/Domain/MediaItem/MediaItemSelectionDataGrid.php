@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 
 /**
@@ -114,7 +114,7 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
                     'showImage',
                 ],
                 [
-                    Model::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
+                    BackendModel::get('media_library.storage.local')->getWebDir() . '/[shardingFolderName]',
                     '[url]',
                     '[url]',
                     null,
@@ -167,29 +167,29 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         switch ($type) {
             case Type::MOVIE:
                 if ($storageType === StorageType::YOUTUBE) {
-                    $absoluteUrl = Model::get('media_library.storage.youtube')->getAbsoluteWebPath(
-                        Model::get('media_library.repository.item')->find($id)
+                    $absoluteUrl = BackendModel::get('media_library.storage.youtube')->getAbsoluteWebPath(
+                        BackendModel::get('media_library.repository.item')->find($id)
                     );
 
                     break;
                 }
 
                 if ($storageType === StorageType::VIMEO) {
-                    $absoluteUrl =  Model::get('media_library.storage.vimeo')->getAbsoluteWebPath(
-                        Model::get('media_library.repository.item')->find($id)
+                    $absoluteUrl =  BackendModel::get('media_library.storage.vimeo')->getAbsoluteWebPath(
+                        BackendModel::get('media_library.repository.item')->find($id)
                     );
 
                     break;
                 }
 
-                $absoluteUrl = Model::get('media_library.storage.local')->getWebPath(
-                    Model::get('media_library.repository.item')->find($id)
+                $absoluteUrl = BackendModel::get('media_library.storage.local')->getWebPath(
+                    BackendModel::get('media_library.repository.item')->find($id)
                 );
 
                 break;
             default:
-                $absoluteUrl = Model::get('media_library.storage.local')->getWebPath(
-                    Model::get('media_library.repository.item')->find($id)
+                $absoluteUrl = BackendModel::get('media_library.storage.local')->getWebPath(
+                    BackendModel::get('media_library.repository.item')->find($id)
                 );
         }
 

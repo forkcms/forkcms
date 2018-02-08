@@ -5,10 +5,10 @@ namespace Frontend\Core\Engine\Base;
 use App\Component\Priority\Priority;
 use App\Domain\Meta\Meta;
 use App\Exception\RedirectException;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
-use Frontend\Core\Engine\Model;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Header\Header;
 use Frontend\Core\Engine\TwigTemplate;
@@ -131,7 +131,7 @@ class Block extends KernelLoader
         bool $addTimestamp = false
     ): void {
         // external urls always overwrite the path
-        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+        $overwritePath = $overwritePath || $this->get('forkcms.validator.url')->isExternalUrl($file);
 
         // use module path
         if (!$overwritePath) {
@@ -162,7 +162,7 @@ class Block extends KernelLoader
         bool $addTimestamp = false
     ): void {
         // external urls always overwrite the path
-        $overwritePath = $overwritePath || $this->get('fork.validator.url')->isExternalUrl($file);
+        $overwritePath = $overwritePath || $this->get('forkcms.validator.url')->isExternalUrl($file);
 
         // use module path
         if (!$overwritePath) {
@@ -565,6 +565,6 @@ class Block extends KernelLoader
      */
     public function getRequest(): Request
     {
-        return Model::getRequest();
+        return FrontendModel::getRequest();
     }
 }

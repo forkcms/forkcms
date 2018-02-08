@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Engine;
 
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 

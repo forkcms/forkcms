@@ -5,8 +5,8 @@ imports:
     - { resource: form.yml }
 
 parameters:
-    fork.is_installed: true
-    fork.form.theme: 'Core/Layout/Templates/FormLayout.html.twig'
+    forkcms.is_installed: true
+    forkcms.form.theme: 'Core/Layout/Templates/FormLayout.html.twig'
 
 framework:
     secret: "%kernel.secret%"
@@ -40,7 +40,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
-        - "%fork.form.theme%"
+        - "%forkcms.form.theme%"
     paths:
       '%site.path_www%/src/Frontend/Modules/': ForkFrontendModules
       '%kernel.project_dir%/templates/installer': installer
@@ -54,9 +54,9 @@ monolog:
             max_files: 10
         # swift:
         #     type:       swift_mailer
-        #     from_email: %fork.debug_email%
-        #     to_email:   %fork.debug_email%
-        #     subject:    %site.default_title% %fork.debug_message%
+        #     from_email: %forkcms.debug_email%
+        #     to_email:   %forkcms.debug_email%
+        #     subject:    %site.default_title% %forkcms.debug_message%
         #     level:      error
         #     formatter:  monolog.formatter.html
         #     content_type: text/html
@@ -69,7 +69,7 @@ liip_imagine:
        default:
           web_path:
             web_root: "%kernel.project_dir%/"
-            cache_prefix: src/Frontend/Files/Cache
+            cache_prefix: public/files/Cache
     loaders:
         default:
             filesystem:
@@ -183,18 +183,18 @@ services:
             - "@database"
             - "@cache.pool"
 
-    fork.cookie:
+    forkcms.cookie:
         class: App\Component\Cookie\Cookie
         public: true
 
-    fork.cookie_setter:
+    forkcms.cookie_setter:
         class: App\EventListener\ForkCookieSetter
         arguments:
-            - "@fork.cookie"
+            - "@forkcms.cookie"
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    fork.response_securer:
+    forkcms.response_securer:
         class: App\EventListener\ResponseSecurer
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
@@ -213,7 +213,7 @@ services:
         arguments:
             - "@translator.selector"
 
-    fork.validator.url:
+    forkcms.validator.url:
         class: App\Service\Validator\UrlValidator
         public: true
 

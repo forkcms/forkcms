@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\Faq\Engine;
 
-use App\Component\Uri\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use App\Domain\ModuleExtra\Type;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 use App\Component\Locale\BackendLocale;
 use Backend\Modules\Faq\Domain\Category\Category;
@@ -254,7 +254,7 @@ class Model
      */
     public static function getUrl(string $url, int $id = null): string
     {
-        $url = CommonUri::getUrl($url);
+        $url = Uri::getUrl($url);
 
         return BackendModel::get('faq.repository.question')->getUrl(
             $url,
@@ -273,7 +273,7 @@ class Model
      */
     public static function getUrlForCategory(string $url, int $id = null): string
     {
-        $url = CommonUri::getUrl($url);
+        $url = Uri::getUrl($url);
 
         return BackendModel::get('faq.repository.category')->getUrl(
             $url,
@@ -286,7 +286,7 @@ class Model
     {
         $question = new Question(
             BackendLocale::fromString($item['language']),
-            BackendModel::get('fork.repository.meta')->find($item['meta_id']),
+            BackendModel::get('forkcms.repository.meta')->find($item['meta_id']),
             BackendModel::get('faq.repository.category')->find($item['category_id']),
             $item['user_id'],
             $item['question'],
@@ -316,7 +316,7 @@ class Model
 
         $category = new Category(
             BackendLocale::fromString($item['language']),
-            BackendModel::get('fork.repository.meta')->find($item['meta_id']),
+            BackendModel::get('forkcms.repository.meta')->find($item['meta_id']),
             $item['title'],
             $item['sequence']
         );

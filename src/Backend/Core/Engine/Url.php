@@ -4,9 +4,9 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Config;
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Exception\RedirectException;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -245,9 +245,9 @@ class Url extends KernelLoader
             return Authentication::getUser()->getSetting('interface_language', $default);
         }
 
-        if ($this->getContainer()->get('fork.cookie')->has('interface_language')) {
+        if ($this->getContainer()->get('forkcms.cookie')->has('interface_language')) {
             // no authenticated user, but available from a cookie
-            return $this->getContainer()->get('fork.cookie')->get('interface_language');
+            return $this->getContainer()->get('forkcms.cookie')->get('interface_language');
         }
 
         return $default;

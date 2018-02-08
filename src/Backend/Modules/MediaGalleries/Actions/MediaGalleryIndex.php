@@ -4,7 +4,7 @@ namespace Backend\Modules\MediaGalleries\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataGrid;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\TypeType;
 

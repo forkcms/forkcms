@@ -3,7 +3,7 @@
 namespace App\Form\Spoon;
 
 use Backend\Core\Engine\Header as BackendHeader;
-use Common\Core\Model;
+use App\Component\Model\Model;
 use Exception;
 use Frontend\Core\Header\Header as FrontendHeader;
 use Backend\Core\Engine\Url as BackendUrl;

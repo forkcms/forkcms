@@ -4,7 +4,7 @@ namespace Backend\Modules\Pages\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Exception as BackendException;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**

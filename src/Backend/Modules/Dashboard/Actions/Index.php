@@ -9,7 +9,7 @@ use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Exception as BackendException;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**

@@ -2,11 +2,11 @@
 
 namespace Backend\Modules\Locale\Ajax;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -60,7 +60,7 @@ class SaveTranslation extends BackendBaseAJAXAction
 
         // in case this is a 'act' type, there are special rules concerning possible values
         if ($type === 'act' && !isset($error)) {
-            if (rawurlencode($value) != CommonUri::getUrl($value)) {
+            if (rawurlencode($value) != Uri::getUrl($value)) {
                 $error = BackendLanguage::err('InvalidActionValue', $this->getModule());
             }
         }

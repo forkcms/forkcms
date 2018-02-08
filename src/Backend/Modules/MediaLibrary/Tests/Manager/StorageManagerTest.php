@@ -22,7 +22,7 @@ class StorageManagerTest extends TestCase
     {
         $cacheManager = $this->createMock('Liip\ImagineBundle\Imagine\Cache\CacheManager');
         $localStorageProvider = new LocalStorageProvider(
-            'src/Frontend/Files/MediaLibrary',
+            'public/files/MediaLibrary',
             'https://www.website.be',
             'https://www.website.be',
             $cacheManager

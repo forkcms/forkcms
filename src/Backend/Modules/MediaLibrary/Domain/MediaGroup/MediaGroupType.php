@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
 
@@ -178,7 +178,7 @@ class MediaGroupType extends AbstractType
         // Currently Fork CMS can't load in the dependency "@header", since it is defined later when loading in
         // That's why we still use a static function to get the header
         /** @var Header $header */
-        $header = Model::get('header');
+        $header = BackendModel::get('header');
 
         // Add "fine-uploader" css/js
         $header->addCSS('/css/vendors/fine-uploader/fine-uploader-new.min.css', null, true, false);
@@ -194,7 +194,7 @@ class MediaGroupType extends AbstractType
         $header->addJsData(
             'MediaLibrary',
             'mediaAllowedExtensions',
-            Model::get('media_library.manager.extension')->getAll()
+            BackendModel::get('media_library.manager.extension')->getAll()
         );
     }
 

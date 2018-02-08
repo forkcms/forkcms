@@ -2,7 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
-use ForkCMS\App\KernelLoader;
+use App\Component\Model\FrontendModel;
+use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
@@ -57,7 +58,7 @@ class Footer extends KernelLoader
         // add Google sitelinks search box code if wanted.
         if ($this->get('forkcms.settings')->get('Search', 'use_sitelinks_search_box', true)) {
             $searchUrl = FrontendNavigation::getUrlForBlock('Search');
-            $url404 = FrontendNavigation::getUrl(Model::ERROR_PAGE_ID);
+            $url404 = FrontendNavigation::getUrl(FrontendModel::ERROR_PAGE_ID);
             if ($searchUrl !== $url404) {
                 $siteHTMLFooter .= $this->getSiteLinksCode($searchUrl);
             }

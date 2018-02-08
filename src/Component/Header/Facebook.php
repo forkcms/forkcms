@@ -1,9 +1,10 @@
 <?php
 
-namespace Frontend\Core\Header;
+namespace App\Component\Header;
 
 use App\Service\Module\ModuleSettings;
 use Frontend\Core\Engine\Theme;
+use Frontend\Core\Header\Header;
 
 final class Facebook
 {

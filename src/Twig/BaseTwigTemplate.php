@@ -3,7 +3,7 @@
 namespace App\Twig;
 
 use App\Form\Spoon\Form;
-use Common\Core\Model;
+use App\Component\Model\Model;
 use App\Service\Module\ModuleSettings;
 use SpoonForm;
 use Symfony\Bundle\TwigBundle\TwigEngine;
@@ -133,7 +133,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         }
 
         /* Setup Backend for the Twig environment. */
-        if (!$this->forkSettings || !Model::getContainer()->getParameter('fork.is_installed')) {
+        if (!$this->forkSettings || !Model::getContainer()->getParameter('forkcms.is_installed')) {
             return;
         }
 

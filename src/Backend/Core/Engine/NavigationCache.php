@@ -2,6 +2,7 @@
 
 namespace Backend\Core\Engine;
 
+use App\Component\Model\BackendModel;
 use Psr\Cache\CacheItemPoolInterface;
 use SpoonDatabase;
 
@@ -106,7 +107,7 @@ final class NavigationCache
      */
     private function getNavigationUrl(int $id): string
     {
-        $url = (array) Model::getContainer()->get('database')->getRecord(
+        $url = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT id, url FROM backend_navigation WHERE id = ?',
             [$id]
         );
@@ -120,7 +121,7 @@ final class NavigationCache
         }
 
         // get the first child as fallback
-        $childId = (int) Model::getContainer()->get('database')->getVar(
+        $childId = (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT id FROM backend_navigation WHERE parent_id = ? ORDER BY sequence ASC LIMIT 1',
             [$id]
         );

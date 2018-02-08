@@ -3,6 +3,7 @@
 namespace Backend\Core\Engine;
 
 use App\Component\Locale\BackendLanguage;
+use App\Component\Model\BackendModel;
 use App\Twig\BaseTwigTemplate;
 use App\Twig\Extensions\TwigFilters;
 use Frontend\Core\Engine\FormExtension;
@@ -31,7 +32,7 @@ class TwigTemplate extends BaseTwigTemplate
      */
     public function __construct(bool $addToReference = true)
     {
-        $container = Model::getContainer();
+        $container = BackendModel::getContainer();
         $this->debugMode = $container->getParameter('kernel.debug');
 
         parent::__construct(
@@ -97,7 +98,7 @@ class TwigTemplate extends BaseTwigTemplate
         return new Twig_Environment(
             $loader,
             [
-                'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
+                'cache' => BackendModel::getContainer()->getParameter('kernel.cache_dir') . '/twig',
                 'debug' => $this->debugMode,
             ]
         );
@@ -106,7 +107,7 @@ class TwigTemplate extends BaseTwigTemplate
     private function connectSymfonyForms(): void
     {
         $rendererEngine = new TwigRendererEngine(['Layout/Templates/FormLayout.html.twig'], $this->environment);
-        $csrfTokenManager = Model::get('security.csrf.token_manager');
+        $csrfTokenManager = BackendModel::get('security.csrf.token_manager');
         $this->environment->addRuntimeLoader(
             new Twig_FactoryRuntimeLoader(
                 [
@@ -124,7 +125,7 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function connectSymfonyTranslator(): void
     {
-        $this->environment->addExtension(new TranslationExtension(Model::get('translator')));
+        $this->environment->addExtension(new TranslationExtension(BackendModel::get('translator')));
     }
 
     private function connectSpoonForm(): void
@@ -146,8 +147,8 @@ class TwigTemplate extends BaseTwigTemplate
         $this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
 
         // check on url object
-        if (Model::getContainer()->has('url')) {
-            $url = Model::get('url');
+        if (BackendModel::getContainer()->has('url')) {
+            $url = BackendModel::get('url');
 
             if ($url instanceof Url) {
                 // assign the current module
@@ -184,7 +185,7 @@ class TwigTemplate extends BaseTwigTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            Model::get('forkcms.settings')->get('Core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            BackendModel::get('forkcms.settings')->get('Core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
     }
 
@@ -207,7 +208,7 @@ class TwigTemplate extends BaseTwigTemplate
                 // assign special vars
                 $this->assign(
                     'authenticatedUserEditUrl',
-                    Model::createUrlForAction(
+                    BackendModel::createUrlForAction(
                         'Edit',
                         'Users',
                         null,
@@ -240,7 +241,7 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function parseDebug(): void
     {
-        $this->assign('debug', Model::getContainer()->getParameter('kernel.debug'));
+        $this->assign('debug', BackendModel::getContainer()->getParameter('kernel.debug'));
 
         if ($this->debugMode === true && !$this->environment->hasExtension(Twig_Extension_Debug::class)) {
             $this->environment->addExtension(new Twig_Extension_Debug());
@@ -306,16 +307,16 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        $this->assign('cookies', Model::getRequest()->cookies->all());
+        $this->assign('cookies', BackendModel::getRequest()->cookies->all());
     }
 
     private function parseNavigation(): void
     {
-        if (!Model::has('navigation')) {
+        if (!BackendModel::has('navigation')) {
             return;
         }
 
-        $navigation = Model::get('navigation');
+        $navigation = BackendModel::get('navigation');
         if ($navigation instanceof Navigation) {
             $navigation->parse($this);
         }
@@ -323,11 +324,11 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function addBodyClassAndId(): void
     {
-        if (!Model::getContainer()->has('url')) {
+        if (!BackendModel::getContainer()->has('url')) {
             return;
         }
 
-        $url = Model::get('url');
+        $url = BackendModel::get('url');
 
         if (!$url instanceof Url) {
             return;
