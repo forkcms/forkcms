@@ -28,7 +28,7 @@ final class Language extends IdentityTranslator
             $application = 'Frontend';
         }
 
-        return $application . '\Core\Language\Language';
+        return 'App\Component\Locale\\' . $application . 'Language';
     }
 
     /**
