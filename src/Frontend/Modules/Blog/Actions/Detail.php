@@ -5,7 +5,7 @@ namespace Frontend\Modules\Blog\Actions;
 use App\Domain\Meta\Meta;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Header\MetaLink;
+use App\Component\Component\Header\MetaLink;
 use App\Component\Locale\FrontendLanguage;
 use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
