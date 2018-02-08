@@ -69,7 +69,7 @@ liip_imagine:
        default:
           web_path:
             web_root: "%kernel.project_dir%/"
-            cache_prefix: src/Frontend/Files/Cache
+            cache_prefix: public/files/Cache
     loaders:
         default:
             filesystem:

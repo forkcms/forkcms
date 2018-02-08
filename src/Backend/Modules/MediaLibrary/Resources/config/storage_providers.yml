@@ -3,7 +3,7 @@ services:
         class: Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider
         public: true
         arguments:
-            - "src/Frontend/Files/MediaLibrary"
+            - "public/files/MediaLibrary"
             - "%site.protocol%://%site.domain%"
             - "%site.path_www%"
             - "@liip_imagine.cache.manager"

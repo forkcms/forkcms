@@ -346,8 +346,8 @@ final class RequirementsChecker
                 RequirementStatus::error()
             ),
             Requirement::check(
-                $this->rootDir . 'src/Frontend/Files/*',
-                $this->isRecursivelyWritable($this->rootDir . 'src/Frontend/Files/'),
+                $this->rootDir . 'public/files/*',
+                $this->isRecursivelyWritable($this->rootDir . 'public/files/'),
                 'In this location all files uploaded by the user/modules will be stored. This location and all subdirectories are be writable.',
                 'In this location all files uploaded by the user/modules will be stored. This location and all subdirectories must be writable.',
                 RequirementStatus::error()

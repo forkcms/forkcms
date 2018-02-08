@@ -24,7 +24,7 @@ class GenerateThumbnailsCommand extends Command
                 'folder',
                 'f',
                 InputOption::VALUE_OPTIONAL,
-                'Name of the folder in /src/Frontend/Files where you want to generate thumbnails for.'
+                'Name of the folder in /public/files where you want to generate thumbnails for.'
             );
     }
 
@@ -63,6 +63,6 @@ class GenerateThumbnailsCommand extends Command
      */
     private function getFolderPath(string $folderOption): string
     {
-        return __DIR__ . '/../../..' . '/src/Frontend/Files/' . $folderOption;
+        return __DIR__ . '/../../..' . '/public/files/' . $folderOption;
     }
 }

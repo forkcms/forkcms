@@ -27,7 +27,7 @@ $loader->passContainerToModels();
  *   $baseUrl = '/userfiles/';
  * ATTENTION: The trailing slash is required.
  */
-$baseUrl = '/src/Frontend/Files/Core/CKFinder/';
+$baseUrl = '/public/files/Core/CKFinder/';
 
 /*
  * $baseDir : the path to the local directory (in the server) which points to the
