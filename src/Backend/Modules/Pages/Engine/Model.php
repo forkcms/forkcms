@@ -15,7 +15,7 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use App\Controller\ForkController;
-use App\Component\Locale\FrontendLanguage as FrontendLanguage;
+use App\Component\Locale\FrontendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the PagesModule

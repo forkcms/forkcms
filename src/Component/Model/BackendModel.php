@@ -3,7 +3,7 @@
 namespace App\Component\Model;
 
 use App\Component\Locale\BackendLanguage;
-use App\Component\Locale\FrontendLanguage as FrontendLanguage;
+use App\Component\Locale\FrontendLanguage;
 use App\Domain\ModuleExtra\Type;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
