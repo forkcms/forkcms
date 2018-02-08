@@ -24,7 +24,10 @@ class Installer extends ModuleInstaller
     {
         $this->addModule('Blog');
         $this->makeSearchable($this->getModule());
-        $this->configureEntities();
+        $this->addEntities([
+            Comment::class,
+            Category::class,
+        ]);
         $this->importSQL(__DIR__ . '/Data/install.sql');
         $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->configureSettings();
@@ -33,16 +36,6 @@ class Installer extends ModuleInstaller
         $this->configureBackendWidgets();
         $this->configureFrontendExtras();
         $this->configureFrontendPages();
-    }
-
-    private function configureEntities(): void
-    {
-        Model::get('forkcms.doctrine.entity_schema')->forEntityClasses(
-            [
-                Comment::class,
-                Category::class,
-            ]
-        );
     }
 
     private function configureBackendActionRightsForBlogArticle(): void

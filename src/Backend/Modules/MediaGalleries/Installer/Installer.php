@@ -16,7 +16,6 @@ class Installer extends ModuleInstaller
         $this->addModule('MediaGalleries');
         $this->addEntity(MediaGallery::class);
         $this->importLocale(__DIR__ . '/Data/locale.xml');
-        $this->configureEntities();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
     }

@@ -25,7 +25,11 @@ class Installer extends ModuleInstaller
         $this->addModule('Faq');
         $this->makeSearchable($this->getModule());
         $this->importLocale(__DIR__ . '/Data/locale.xml');
-        $this->configureEntities();
+        $this->addEntities([
+            Category::class,
+            Question::class,
+            Feedback::class,
+        ]);
         $this->configureSettings();
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -227,16 +231,5 @@ class Installer extends ModuleInstaller
         );
 
         return $item['id'];
-    }
-
-    private function configureEntities(): void
-    {
-        Model::get('forkcms.doctrine.entity_schema')->forEntityClasses(
-            [
-                Category::class,
-                Question::class,
-                Feedback::class,
-            ]
-        );
     }
 }
