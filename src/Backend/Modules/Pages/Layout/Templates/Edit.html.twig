@@ -131,9 +131,7 @@
                               colspan="1" class="box">
                               <div class="panel panel-default panel-pages-block">
                                 <div class="panel-heading">
-                                  <div class="heading linkedBlocksTitle">
-                                    <h2>{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
-                                  </div>
+                                  <h2 class="panel-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
                                 </div>
                                 <div class="panel-body">
                                   <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
@@ -340,7 +338,7 @@
                 <div class="col-md-12">
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <h2 class="tab-pane-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
+                      <h2 class="panel-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
                     </div>
                     <div class="panel-body">
                       {% for language, field in hreflangFields %}
