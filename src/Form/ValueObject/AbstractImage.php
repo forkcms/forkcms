@@ -2,7 +2,7 @@
 
 namespace App\Form\ValueObject;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 
 /**
  * The following things are mandatory to use this class.
@@ -85,7 +85,7 @@ abstract class AbstractImage extends AbstractFile
         parent::upload();
 
         if (static::GENERATE_THUMBNAILS) {
-            Model::generateThumbnails(
+            BackendModel::generateThumbnails(
                 FRONTEND_FILES_PATH . '/' . $this->getTrimmedUploadDir(),
                 $this->getAbsolutePath('source')
             );
@@ -98,7 +98,7 @@ abstract class AbstractImage extends AbstractFile
     protected function removeOldFile(): void
     {
         if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
-            Model::deleteThumbnails($this->getUploadRootDir(), $this->oldFileName);
+            BackendModel::deleteThumbnails($this->getUploadRootDir(), $this->oldFileName);
 
             return;
         }
@@ -112,7 +112,7 @@ abstract class AbstractImage extends AbstractFile
     public function remove(): void
     {
         if (static::GENERATE_THUMBNAILS && is_dir($this->getUploadRootDir())) {
-            Model::deleteThumbnails($this->getUploadRootDir(), $this->fileName);
+            BackendModel::deleteThumbnails($this->getUploadRootDir(), $this->fileName);
 
             return;
         }

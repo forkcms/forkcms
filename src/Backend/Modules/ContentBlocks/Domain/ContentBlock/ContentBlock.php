@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -229,11 +229,11 @@ class ContentBlock
      */
     private function updateWidget()
     {
-        $editUrl = Model::createUrlForAction('Edit', 'ContentBlocks', (string) $this->locale) . '&id=' . $this->id;
+        $editUrl = BackendModel::createUrlForAction('Edit', 'ContentBlocks', (string) $this->locale) . '&id=' . $this->id;
 
         // update data for the extra
         // @TODO replace this with an implementation with doctrine
-        $extras = Model::getExtras([$this->extraId]);
+        $extras = BackendModel::getExtras([$this->extraId]);
         $extra = reset($extras);
         $data = [
             'id' => $this->id,
@@ -246,7 +246,7 @@ class ContentBlock
         $data['custom_template'] = $this->template;
         $data['extra_label'] = $this->title;
 
-        Model::updateExtra($this->extraId, 'data', $data);
+        BackendModel::updateExtra($this->extraId, 'data', $data);
     }
 
     public function archive()

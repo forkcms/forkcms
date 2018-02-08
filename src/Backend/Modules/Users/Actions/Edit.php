@@ -8,7 +8,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Core\Engine\User as BackendUser;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;

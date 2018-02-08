@@ -2,6 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
+use App\Component\Model\FrontendModel;
+
 /**
  * This class will take care of functionality pertaining themes.
  */
@@ -63,7 +65,7 @@ class Theme
     {
         // theme name has not yet been saved, fetch and save it
         if (!self::$theme) {
-            self::$theme = Model::get('forkcms.settings')->get('Core', 'theme', null);
+            self::$theme = FrontendModel::get('forkcms.settings')->get('Core', 'theme', null);
         }
 
         // return theme name

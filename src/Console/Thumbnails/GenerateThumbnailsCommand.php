@@ -2,7 +2,7 @@
 
 namespace Console\Thumbnails;
 
-use Common\Core\Model;
+use App\Component\Model\Model;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

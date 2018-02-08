@@ -3,7 +3,7 @@
 namespace Backend\Modules\Locale\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
 

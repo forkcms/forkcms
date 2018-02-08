@@ -3,7 +3,7 @@
 namespace App\Twig;
 
 use App\Form\Spoon\Form;
-use Common\Core\Model;
+use App\Component\Model\Model;
 use App\Service\Module\ModuleSettings;
 use SpoonForm;
 use Symfony\Bundle\TwigBundle\TwigEngine;

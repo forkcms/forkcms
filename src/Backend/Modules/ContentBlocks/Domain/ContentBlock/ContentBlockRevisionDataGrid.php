@@ -5,7 +5,7 @@ namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 use App\Component\Locale\BackendLocale;
 
@@ -44,7 +44,7 @@ class ContentBlockRevisionDataGrid extends DataGridDatabase
 
         // check if this action is allowed
         if (Authentication::isAllowedAction('Edit')) {
-            $editRevisionUrl = Model::createUrlForAction(
+            $editRevisionUrl = BackendModel::createUrlForAction(
                 'Edit',
                 null,
                 null,

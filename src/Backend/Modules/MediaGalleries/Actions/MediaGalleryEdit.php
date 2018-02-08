@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaGalleries\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
@@ -92,7 +92,7 @@ class MediaGalleryEdit extends BackendBaseActionEdit
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createUrlForAction(
+        return BackendModel::createUrlForAction(
             'MediaGalleryIndex',
             null,
             null,

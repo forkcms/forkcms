@@ -4,7 +4,7 @@ namespace Backend\Modules\FormBuilder\Actions;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 

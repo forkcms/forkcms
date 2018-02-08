@@ -6,7 +6,7 @@ use ForkCMS\App\KernelLoader;
 use App\Component\Locale\FrontendLanguage;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
 
 /**
@@ -194,7 +194,7 @@ class Navigation extends KernelLoader
      */
     private static function hasMetaNavigation(array $navigation): bool
     {
-        return isset($navigation['meta']) && Model::get('forkcms.settings')->get('Pages', 'meta_navigation', true);
+        return isset($navigation['meta']) && FrontendModel::get('forkcms.settings')->get('Pages', 'meta_navigation', true);
     }
 
     /**
@@ -363,7 +363,7 @@ class Navigation extends KernelLoader
         }
 
         // return parsed content
-        return Model::get('templating')->render(
+        return FrontendModel::get('templating')->render(
             $template,
             ['navigation' => $navigation[$type][$parentId]]
         );

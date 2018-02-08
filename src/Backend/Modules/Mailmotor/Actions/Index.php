@@ -3,7 +3,7 @@
 namespace Backend\Modules\Mailmotor\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 
 /**
  * This redirects to settings
@@ -15,7 +15,7 @@ final class Index extends ActionIndex
         parent::execute();
 
         $this->redirect(
-            Model::createUrlForAction(
+            BackendModel::createUrlForAction(
                 'Settings'
             )
         );

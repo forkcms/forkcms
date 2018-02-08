@@ -2,7 +2,7 @@
 
 namespace App\Component\Locale;
 
-use Common\Core\Model;
+use App\Component\Model\Model;
 use App\Component\Locale\FrontendLanguage as FrontendLanguage;
 use InvalidArgumentException;
 use Symfony\Component\Translation\IdentityTranslator;

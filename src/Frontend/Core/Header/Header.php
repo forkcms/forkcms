@@ -8,7 +8,7 @@ use App\Component\Header\JsData;
 use App\Service\Asset\Minifier;
 use App\Component\Priority\Priority;
 use ForkCMS\App\KernelLoader;
-use Frontend\Core\Engine\Model;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
@@ -354,7 +354,7 @@ class Header extends KernelLoader
         $siteHTMLHeader = (string) $this->get('forkcms.settings')->get('Core', 'site_html_header', '') . "\n";
         $siteHTMLHeader .= new GoogleAnalytics(
             $this->get('forkcms.settings'),
-            Model::getRequest()->getHttpHost(),
+            FrontendModel::getRequest()->getHttpHost(),
             $this->get('forkcms.cookie')
         );
         $siteHTMLHeader .= "\n" . $this->jsData;
@@ -398,11 +398,11 @@ class Header extends KernelLoader
         }
 
         // any items provided through GET?
-        if (!isset($urlChunks['query']) || !Model::getRequest()->query->has('page')) {
+        if (!isset($urlChunks['query']) || !FrontendModel::getRequest()->query->has('page')) {
             return $url;
         }
 
-        return $url . '?page=' . Model::getRequest()->query->get('page');
+        return $url . '?page=' . FrontendModel::getRequest()->query->get('page');
     }
 
     /**

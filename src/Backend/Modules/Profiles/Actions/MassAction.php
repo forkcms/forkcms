@@ -3,7 +3,7 @@
 namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**

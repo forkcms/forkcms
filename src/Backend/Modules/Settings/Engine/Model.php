@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Settings\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the settings module.
@@ -24,7 +24,7 @@ class Model
             // model class
             $class = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
             if ($module === 'Core') {
-                $class = 'Backend\\Core\\Engine\\Model';
+                $class = 'Backend\\Core\\Engine\\BackendModel';
             }
 
             // method exists

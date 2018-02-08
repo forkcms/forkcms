@@ -7,7 +7,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use App\Component\Locale\FrontendLanguage;
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

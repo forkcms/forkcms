@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use App\Component\Model\FrontendModel;
 use ForkCMS\App\ApplicationInterface;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
@@ -132,7 +133,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
         $possibleLanguages = FrontendLanguage::getActiveLanguages();
 
         if (!in_array($language, $possibleLanguages)) {
-            if (count($possibleLanguages) !== 1 && Model::getContainer()->getParameter('site.multilanguage')) {
+            if (count($possibleLanguages) !== 1 && FrontendModel::getContainer()->getParameter('site.multilanguage')) {
                 // multiple languages available but none selected
                 throw new Exception('Language invalid.');
             }
@@ -149,7 +150,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
 
     public function setModule(string $module): void
     {
-        if (!in_array($module, Model::getModules())) {
+        if (!in_array($module, FrontendModel::getModules())) {
             throw new Exception('Module not correct');
         }
 
@@ -158,7 +159,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
 
     private function getForkData(): array
     {
-        $request = Model::getRequest();
+        $request = FrontendModel::getRequest();
 
         if ($request->request->has('fork')) {
             return (array) $request->request->get('fork');

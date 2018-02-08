@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
@@ -104,7 +104,7 @@ class MediaItemEdit extends BackendBaseActionEdit
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createUrlForAction(
+        return BackendModel::createUrlForAction(
             'MediaItemIndex',
             null,
             null,

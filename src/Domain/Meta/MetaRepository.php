@@ -3,7 +3,7 @@
 namespace App\Domain\Meta;
 
 use Backend\Core\Engine\Exception;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Component\Uri\Uri;
 use Doctrine\ORM\EntityRepository;
 use SpoonFilter;
@@ -25,8 +25,8 @@ class MetaRepository extends EntityRepository
     public function generateUrl(string $url, string $class, string $method, array $parameters = []): string
     {
         // check if the class is a service
-        if (Model::getContainer()->has($class)) {
-            $class = Model::getContainer()->get($class);
+        if (BackendModel::getContainer()->has($class)) {
+            $class = BackendModel::getContainer()->get($class);
         }
 
         // validate (check if the function exists)

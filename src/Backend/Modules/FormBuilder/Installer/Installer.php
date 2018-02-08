@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\FormBuilder\Installer;
 
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use App\Domain\ModuleExtra\Type;
 

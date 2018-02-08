@@ -4,7 +4,7 @@ namespace Backend\Modules\Pages\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;

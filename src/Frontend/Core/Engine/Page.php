@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use App\Component\Model\FrontendModel;
 use App\Exception\RedirectException;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Block\ModuleExtraInterface;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
@@ -107,7 +108,7 @@ class Page extends KernelLoader
     public function load(): void
     {
         // set tracking cookie
-        Model::getVisitorId();
+        FrontendModel::getVisitorId();
 
         // create header instance
         $this->header = new Header($this->getKernel());
@@ -231,7 +232,7 @@ class Page extends KernelLoader
     private function redirectToLogin()
     {
         $this->redirect(
-            Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . Model::getRequest()->getRequestUri(),
+            Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . FrontendModel::getRequest()->getRequestUri(),
             Response::HTTP_TEMPORARY_REDIRECT
         );
     }
@@ -249,13 +250,13 @@ class Page extends KernelLoader
     private function getPageRecord(int $pageId): array
     {
         if ($this->url->getParameter('page_revision', 'int') === null) {
-            return Model::getPage($pageId);
+            return FrontendModel::getPage($pageId);
         }
 
         // add no-index to meta-custom, so the draft won't get accidentally indexed
         $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
 
-        return Model::getPageRevision($this->url->getParameter('page_revision', 'int'));
+        return FrontendModel::getPageRevision($this->url->getParameter('page_revision', 'int'));
     }
 
     protected function getPageContent(int $pageId): array
@@ -405,7 +406,7 @@ class Page extends KernelLoader
         }
 
         // Get page data
-        $pageInfo = Model::getPage($this->pageId);
+        $pageInfo = FrontendModel::getPage($this->pageId);
 
         // Check if hreflang is set for language
         if (isset($pageInfo['data']['hreflang_' . $language])) {

@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Tests;
 
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\TemplateModifiers;
 use PHPUnit\Framework\TestCase;
 

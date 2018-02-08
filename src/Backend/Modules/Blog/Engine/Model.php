@@ -4,7 +4,7 @@ namespace Backend\Modules\Blog\Engine;
 
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 use App\Component\Locale\BackendLocale;
 use Backend\Modules\Blog\Domain\Comment\Comment;

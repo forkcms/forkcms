@@ -2,7 +2,7 @@
 
 namespace App\Component\Locale;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
@@ -61,7 +61,7 @@ final class BackendLanguage
     {
         // validate the cache
         if (empty(self::$activeLanguages)) {
-            self::$activeLanguages = (array) Model::get('forkcms.settings')->get('Core', 'active_languages');
+            self::$activeLanguages = (array) BackendModel::get('forkcms.settings')->get('Core', 'active_languages');
         }
 
         // return from cache
@@ -101,12 +101,12 @@ final class BackendLanguage
             return 'Core';
         }
 
-        if (Model::getContainer()->has('url')) {
-            return Model::get('url')->getModule();
+        if (BackendModel::getContainer()->has('url')) {
+            return BackendModel::get('url')->getModule();
         }
 
-        if (Model::requestIsAvailable() && Model::getRequest()->query->has('module')) {
-            return Model::getRequest()->query->get('module');
+        if (BackendModel::requestIsAvailable() && BackendModel::getRequest()->query->has('module')) {
+            return BackendModel::getRequest()->query->get('module');
         }
 
         return 'Core';
@@ -140,7 +140,7 @@ final class BackendLanguage
     public static function getInterfaceLanguage(): string
     {
         if (self::$currentInterfaceLanguage === null) {
-            self::$currentInterfaceLanguage = Model::getContainer()->getParameter('site.default_language');
+            self::$currentInterfaceLanguage = BackendModel::getContainer()->getParameter('site.default_language');
         }
 
         return self::$currentInterfaceLanguage;
@@ -151,7 +151,7 @@ final class BackendLanguage
         $languages = [];
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('forkcms.settings')->get('Core', 'interface_languages', ['en']) as $key) {
+        foreach ((array) BackendModel::get('forkcms.settings')->get('Core', 'interface_languages', ['en']) as $key) {
             // fetch language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
@@ -215,7 +215,7 @@ final class BackendLanguage
     public static function getWorkingLanguage(): string
     {
         if (self::$currentWorkingLanguage === null) {
-            self::$currentWorkingLanguage = Model::getContainer()->getParameter('site.default_language');
+            self::$currentWorkingLanguage = BackendModel::getContainer()->getParameter('site.default_language');
         }
 
         return self::$currentWorkingLanguage;
@@ -226,7 +226,7 @@ final class BackendLanguage
         $languages = [];
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('forkcms.settings')->get('Core', 'languages', ['en']) as $key) {
+        foreach ((array) BackendModel::get('forkcms.settings')->get('Core', 'languages', ['en']) as $key) {
             // fetch the language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
@@ -264,7 +264,7 @@ final class BackendLanguage
         try {
             // Needed to make it possible to use the backend language in the console.
             if (defined('APPLICATION') && APPLICATION !== 'Console') {
-                Model::getContainer()->get('forkcms.cookie')->set('interface_language', $language);
+                BackendModel::getContainer()->get('forkcms.cookie')->set('interface_language', $language);
             }
         } catch (RuntimeException|ServiceNotFoundException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception

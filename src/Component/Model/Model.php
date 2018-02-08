@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core;
+namespace App\Component\Model;
 
 use App\Component\Model\BaseModel;
 use InvalidArgumentException;

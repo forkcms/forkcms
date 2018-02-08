@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Faq\Installer;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;

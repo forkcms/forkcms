@@ -5,7 +5,7 @@ namespace Backend\Modules\MediaLibrary\Manager;
 use Symfony\Component\Filesystem\Filesystem;
 use App\Service\Module\ModuleSettings;
 use App\Component\Uri\Uri;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 
 final class FileManager
 {

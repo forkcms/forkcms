@@ -4,7 +4,7 @@ namespace Backend\Modules\Users\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Core\Engine\User as BackendUser;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;

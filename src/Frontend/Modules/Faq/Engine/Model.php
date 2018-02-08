@@ -6,7 +6,7 @@ use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Backend\Modules\Faq\Domain\Question\Question;
 use Doctrine\ORM\NoResultException;
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use App\Component\Locale\FrontendLocale;

@@ -8,7 +8,7 @@ use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Form as BackendForm;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**

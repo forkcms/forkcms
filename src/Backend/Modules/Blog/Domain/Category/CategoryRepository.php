@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Blog\Domain\Category;
 
-use Common\Core\Model;
+use App\Component\Model\Model;
 use App\Component\Locale\Locale;
 use Doctrine\ORM\EntityRepository;
 

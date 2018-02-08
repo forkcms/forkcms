@@ -4,7 +4,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Model;
+use App\Component\Model\FrontendModel;
 use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -221,7 +221,7 @@ class Settings extends FrontendBaseBlock
         }
 
         $baseAvatarPath = FRONTEND_FILES_PATH . '/Profiles/Avatars/';
-        Model::deleteThumbnails($baseAvatarPath, $currentAvatar);
+        FrontendModel::deleteThumbnails($baseAvatarPath, $currentAvatar);
 
         $newAvatar = $this->profile->getUrl() . '.' . $this->form->getField('avatar')->getExtension();
 

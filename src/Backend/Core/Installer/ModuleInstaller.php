@@ -5,7 +5,7 @@ namespace Backend\Core\Installer;
 use App\Component\Uri\Uri as CommonUri;
 use App\Domain\ModuleExtra\Type;
 use App\Service\Doctrine\EntitySchema;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -523,7 +523,7 @@ class ModuleInstaller
             return $extraId;
         }
 
-        return Model::insertExtra(
+        return BackendModel::insertExtra(
             $type,
             $module,
             $action,
@@ -702,7 +702,7 @@ class ModuleInstaller
         $revision['template_id'] = $revision['template_id'] ?? $this->getTemplateId('Default');
         $revision['type'] = $revision['type'] ?? 'page';
         $revision['parent_id'] = $revision['parent_id'] ?? (
-            $revision['type'] === 'page' ? Model::HOME_PAGE_ID : BackendPagesModel::NO_PARENT_PAGE_ID
+            $revision['type'] === 'page' ? BackendModel::HOME_PAGE_ID : BackendPagesModel::NO_PARENT_PAGE_ID
         );
         $revision['navigation_title'] = $revision['navigation_title'] ?? $revision['title'];
         $revision['navigation_title_overwrite'] = $revision['navigation_title_overwrite'] ?? false;

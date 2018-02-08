@@ -3,7 +3,7 @@
 namespace Backend\Core\Engine\Base;
 
 use Backend\Core\Engine\Exception as BackendException;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use ForkCMS\App\KernelLoader;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\KernelInterface;

@@ -4,7 +4,7 @@ namespace Backend\Modules\Faq\Engine;
 
 use App\Component\Uri\Uri\Uri as CommonUri;
 use App\Domain\ModuleExtra\Type;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 use App\Component\Locale\BackendLocale;
 use Backend\Modules\Faq\Domain\Category\Category;

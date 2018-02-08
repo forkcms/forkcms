@@ -6,7 +6,7 @@ use App\Component\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
 

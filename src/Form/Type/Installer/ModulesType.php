@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use App\Service\Installer\ForkInstaller;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 
 /**
  * Builds the form to select modules to install

@@ -57,10 +57,10 @@ You should remove all usages of:
 
 * `Backend\Core\Installer\ModuleInstaller->subscribeToEvent()`
 * `BackendModel::triggerEvent()`
-* `Common\Core\Model::subscribeToEvent()`
-* `Common\Core\Model::triggerEvent()`
-* `Common\Core\Model::startProcessingHooks()`
-* `Common\Core\Model::unsubscribeFromEvent()`
+* `App\Component\Model\Model::subscribeToEvent()`
+* `App\Component\Model\Model::triggerEvent()`
+* `App\Component\Model\Model::startProcessingHooks()`
+* `App\Component\Model\Model::unsubscribeFromEvent()`
 * `FrontendModel::triggerEvent()`
 
 
@@ -621,7 +621,7 @@ The values of cookies are also no longer automatically serialized.
 
 We removed SpoonSession and have switched fully to the symfony sessions
 ``
-We also added a shortcut to get the current session: \Common\Core\Model::getSession()`
+We also added a shortcut to get the current session: \App\Component\Model\Model::getSession()`
 
 ## Tests
 

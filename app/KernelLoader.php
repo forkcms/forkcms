@@ -4,8 +4,8 @@ namespace ForkCMS\App;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\BackendModel;
+use App\Component\Model\FrontendModel;
 
 /**
  * This class is used in several Fork applications to bubble down the AppKernel/Kernel object.

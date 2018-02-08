@@ -3,7 +3,7 @@
 namespace Backend\Modules\Mailmotor\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
 use Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
@@ -54,7 +54,7 @@ final class Ping extends ActionIndex
 
     private function getBackLink(array $parameters = []): string
     {
-        return Model::createUrlForAction(
+        return BackendModel::createUrlForAction(
             'Settings',
             null,
             null,

@@ -4,7 +4,7 @@ namespace Backend\Modules\FormBuilder\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use App\Component\Locale\BackendLanguage;
 use App\Component\Locale\FrontendLanguage;

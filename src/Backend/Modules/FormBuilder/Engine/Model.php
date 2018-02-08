@@ -3,7 +3,7 @@
 namespace Backend\Modules\FormBuilder\Engine;
 
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Domain\ModuleExtra\Type;
 use App\Component\Locale\FrontendLanguage;
 use Symfony\Component\Finder\Finder;

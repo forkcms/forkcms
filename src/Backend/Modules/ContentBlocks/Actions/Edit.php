@@ -4,7 +4,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
 
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLocale;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock;

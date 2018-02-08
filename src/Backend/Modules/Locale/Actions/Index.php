@@ -7,7 +7,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**

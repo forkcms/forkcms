@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\MediaGalleries\Installer;
 
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
 

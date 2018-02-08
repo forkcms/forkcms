@@ -12,7 +12,7 @@ use JsonSerializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 
 /**
  * MediaItem
@@ -418,28 +418,28 @@ class MediaItem implements JsonSerializable
 
     public function getAbsolutePath(): string
     {
-        return Model::get('media_library.manager.storage')->getStorageProvider(
+        return BackendModel::get('media_library.manager.storage')->getStorageProvider(
             $this->getStorageType()
         )->getAbsolutePath($this);
     }
 
     public function getAbsoluteWebPath(): string
     {
-        return Model::get('media_library.manager.storage')->getStorageProvider(
+        return BackendModel::get('media_library.manager.storage')->getStorageProvider(
             $this->getStorageType()
         )->getAbsoluteWebPath($this);
     }
 
     public function getLinkHTML(): string
     {
-        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getLinkHTML(
+        return BackendModel::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getLinkHTML(
             $this
         );
     }
 
     public function getIncludeHTML(): string
     {
-        return Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getIncludeHTML(
+        return BackendModel::get('media_library.manager.storage')->getStorageProvider($this->getStorageType())->getIncludeHTML(
             $this
         );
     }
@@ -452,7 +452,7 @@ class MediaItem implements JsonSerializable
     public function getWebPath(string $liipImagineBundleFilter = null): string
     {
         /** @var StorageProviderInterface $storage */
-        $storage = Model::get('media_library.manager.storage')->getStorageProvider($this->getStorageType());
+        $storage = BackendModel::get('media_library.manager.storage')->getStorageProvider($this->getStorageType());
 
         if (!$storage instanceof LiipImagineBundleStorageProviderInterface || $liipImagineBundleFilter === null) {
             return $storage->getWebPath($this);

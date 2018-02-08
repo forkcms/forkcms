@@ -4,7 +4,7 @@ namespace App\Service\Mailer;
 
 use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 use App\Component\Uri\Uri;
-use Frontend\Core\Engine\Model;
+use App\Component\Model\FrontendModel;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /**
@@ -123,7 +123,7 @@ class Message extends \Swift_Message
             // loop old links
             foreach ($matches[1] as $i => $link) {
                 $searchLinks[] = $matches[0][$i];
-                $replaceLinks[] = 'href="' . Model::addUrlParameters($link, $utm) . '"';
+                $replaceLinks[] = 'href="' . FrontendModel::addUrlParameters($link, $utm) . '"';
             }
 
             $html = str_replace($searchLinks, $replaceLinks, $html);
@@ -145,7 +145,7 @@ class Message extends \Swift_Message
         // with the strpos we check if it is a frontend template, in that case we use the frontend template to prevent
         // errors that the template could not be found. This way we don't have a backwards compatibility break.
         if (APPLICATION !== 'Backend' || strpos($template, FRONTEND_CORE_PATH) !== false) {
-            return Model::get('templating')->render(
+            return FrontendModel::get('templating')->render(
                 $template,
                 $variables
             );

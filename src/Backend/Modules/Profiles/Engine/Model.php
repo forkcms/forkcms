@@ -6,7 +6,7 @@ use App\Service\Mailer\Message;
 use App\Component\Uri\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Core\Engine\Exception as BackendException;
 
 /**

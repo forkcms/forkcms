@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Pages\Engine;
 
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;

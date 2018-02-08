@@ -3,7 +3,7 @@
 namespace Backend\Modules\Search\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 

@@ -3,7 +3,7 @@
 namespace Backend\Modules\Pages\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use App\Domain\ModuleExtra\Type;
 

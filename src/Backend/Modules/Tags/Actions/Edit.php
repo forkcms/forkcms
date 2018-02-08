@@ -7,7 +7,7 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
 use App\Component\Locale\BackendLanguage;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
@@ -58,7 +58,7 @@ class Edit extends BackendBaseActionEdit
             // build class name
             $className = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
             if ($module == 'Core') {
-                $className = 'Backend\\Core\\Engine\\Model';
+                $className = 'Backend\\Core\\Engine\\BackendModel';
             }
 
             // check if the getByTag-method is available

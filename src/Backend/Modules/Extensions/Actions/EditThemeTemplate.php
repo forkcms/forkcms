@@ -3,7 +3,7 @@
 namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use App\Component\Locale\BackendLanguage;
 use App\Form\Type\Backend\DeleteType;

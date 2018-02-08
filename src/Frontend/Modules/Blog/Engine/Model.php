@@ -5,7 +5,7 @@ namespace Frontend\Modules\Blog\Engine;
 use App\Service\Mailer\Message;
 use Doctrine\ORM\NoResultException;
 use App\Component\Locale\FrontendLanguage;
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
 use App\Component\Locale\FrontendLocale;

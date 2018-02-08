@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Location\Engine;
 
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Theme as FrontendTheme;
 
 /**

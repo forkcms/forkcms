@@ -6,7 +6,7 @@ use App\Exception\RedirectException;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use App\Component\Locale\FrontendLanguage;
-use Frontend\Core\Engine\Model as FrontendModel;
+use App\Component\Model\FrontendModel;
 use App\Component\Locale\FrontendLocale;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;

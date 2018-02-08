@@ -2,6 +2,8 @@
 
 namespace Frontend\Core\Engine;
 
+use App\Component\Model\FrontendModel;
+
 /**
  * The class below will handle all stuff relates to users
  */
@@ -104,7 +106,7 @@ class User
     public function loadUser(int $userId): void
     {
         // get database instance
-        $database = Model::getContainer()->get('database');
+        $database = FrontendModel::getContainer()->get('database');
 
         // get user-data
         $userData = (array) $database->getRecord(

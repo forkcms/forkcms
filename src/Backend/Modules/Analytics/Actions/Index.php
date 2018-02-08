@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Model;
+use App\Component\Model\BackendModel;
 use Backend\Core\Engine\DataGridArray;
 use Backend\Modules\Analytics\DateRange\DateRange;
 use Backend\Modules\Analytics\Form\DateRangeType;
@@ -54,7 +54,7 @@ final class Index extends ActionIndex
             || $this->get('forkcms.settings')->get($this->getModule(), 'web_property_id') === null
             || $this->get('forkcms.settings')->get($this->getModule(), 'profile') === null
         ) {
-            $this->redirect(Model::createUrlForAction('Settings'));
+            $this->redirect(BackendModel::createUrlForAction('Settings'));
         }
 
         $this->header->addJS('highcharts.js', 'Core', false);

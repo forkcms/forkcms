@@ -3,7 +3,7 @@
 namespace Backend\Modules\FormBuilder\Engine;
 
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Component\Model\BackendModel;
 use Backend\Core\Engine\TwigTemplate as BackendTemplate;
 
 /**
