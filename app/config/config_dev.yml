@@ -30,7 +30,7 @@ services:
         arguments:
             - "@database"
         tags:
-            - { name: data_collector, template: "@WebProfilerBundle/Profiler/database_data_collector.html.twig", id: "database" }
+            - { name: data_collector, template: "@WebProfilerBundle/Profiler/spoon_database_data_collector.html.twig", id: "database" }
 
     monolog.full_trace_formatter:
         class: Monolog\Formatter\LineFormatter
