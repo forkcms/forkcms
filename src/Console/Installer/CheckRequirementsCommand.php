@@ -18,6 +18,7 @@ class CheckRequirementsCommand extends Command
     const RETURN_SERVER_DOES_NOT_MEET_REQUIREMENTS = 2;
     const RETURN_SERVER_MEETS_REQUIREMENTS = 0;
     const RETURN_SERVER_MEETS_REQUIREMENTS_BUT_HAS_WARNINGS = 1;
+
     /** @var InputInterface */
     private $input;
 
@@ -40,7 +41,7 @@ class CheckRequirementsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('forkcms:install:check-requirements')
+            ->setName('forkcms:installer:check-requirements')
             ->setDescription('Command to check if the server meets the install requirements');
     }
 

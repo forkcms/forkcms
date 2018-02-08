@@ -19,7 +19,7 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
 
     protected function configure(): void
     {
-        $this->setName('forkcms:install:prepare-for-reinstall')
+        $this->setName('forkcms:installer:prepare-for-reinstall')
             ->setDescription('Revert Fork CMS to an uninstalled state, prompting the install wizard.');
     }
 
