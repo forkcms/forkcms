@@ -1007,7 +1007,7 @@ Improvements:
 * Locale: improve performance of the index page
 * Core: reduced database queries in BackendDataGridFunctions::getUser().
 * Core: Replace SITE_MULTILANGUAGE with $container->getParameter('site.multilanguage')
-* Core: Replace SPOON_DEBUG_EMAIL with $container->getParameter('fork.debug_email')
+* Core: Replace SPOON_DEBUG_EMAIL with $container->getParameter('forkcms.debug_email')
 * Core: Replace SPOON_CHARSET with $container->getParameter('kernel.charset')
 * FormBuilder: use the event dispatcher from Symfony to send the email
 * Core: allow installed modules to subscribe their own configuration/services

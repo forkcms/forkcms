@@ -374,10 +374,10 @@ class Model extends BaseModel
      */
     private static function getMockSession(): Session
     {
-        if (!self::getContainer()->has('fork.mock.session')) {
-            self::getContainer()->set('fork.mock.session', new Session(new MockArraySessionStorage()));
+        if (!self::getContainer()->has('forkcms.mock.session')) {
+            self::getContainer()->set('forkcms.mock.session', new Session(new MockArraySessionStorage()));
         }
 
-        return self::get('fork.mock.session');
+        return self::get('forkcms.mock.session');
     }
 }

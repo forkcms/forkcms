@@ -50,7 +50,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
 
-    fork.repository.meta:
+    forkcms.repository.meta:
         class: App\Domain\Meta\MetaRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]

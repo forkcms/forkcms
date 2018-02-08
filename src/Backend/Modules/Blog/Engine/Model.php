@@ -797,7 +797,7 @@ class Model
     public static function insertCategory(array $item, array $meta = null): int
     {
         if ($meta === null) {
-            $meta = BackendModel::get('fork.repository.meta')
+            $meta = BackendModel::get('forkcms.repository.meta')
                                 ->find($item['meta_id']);
         } else {
             $meta = new Meta(

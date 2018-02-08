@@ -117,7 +117,7 @@ class RssItem extends \SpoonFeedRSSItem
     private function prependWithSiteUrlIfHttpIsMissing(string $link): string
     {
         // if link doesn't start with http(s), we prepend the URL of the site
-        if (!Model::getContainer()->get('fork.validator.url')->isExternalUrl($link)) {
+        if (!Model::getContainer()->get('forkcms.validator.url')->isExternalUrl($link)) {
             return SITE_URL . $link;
         }
 

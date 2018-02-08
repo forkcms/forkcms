@@ -8,9 +8,9 @@ parameters:
 
     kernel.secret:          <secret>
 
-    fork.debug_email:       <debug-email>
-    fork.debug_message:     'Internal error.'
-    fork.version:           '5.1.0'
+    forkcms.debug_email:    <debug-email>
+    forkcms.debug_message:  'Internal error.'
+    forkcms.version:        '6.0.0'
 
     site.protocol:          <site-protocol>
     site.domain:            <site-domain>

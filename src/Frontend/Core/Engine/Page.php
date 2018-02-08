@@ -193,7 +193,7 @@ class Page extends KernelLoader
             $this->template->assignGlobal(
                 'cookieBarHide',
                 !$this->get('forkcms.settings')->get('Core', 'show_cookie_bar', false)
-                || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
+                || $this->getContainer()->get('forkcms.cookie')->hasHiddenCookieBar()
             );
 
             $this->parsePositions();

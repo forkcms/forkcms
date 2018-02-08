@@ -118,7 +118,7 @@ class Meta
      */
     public function generateUrl(string $url): string
     {
-        return Model::get('fork.repository.meta')->generateUrl(
+        return Model::get('forkcms.repository.meta')->generateUrl(
             $url,
             $this->callback['class'],
             $this->callback['method'],

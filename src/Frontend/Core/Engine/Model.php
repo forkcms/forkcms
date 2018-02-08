@@ -236,7 +236,7 @@ class Model extends \Common\Core\Model
         if (self::$visitorId !== null) {
             return self::$visitorId;
         }
-        $cookie = self::getContainer()->get('fork.cookie');
+        $cookie = self::getContainer()->get('forkcms.cookie');
 
         // get/init tracking identifier
         (self::$visitorId = $cookie->has('track') && $cookie->get('track', '') !== '')

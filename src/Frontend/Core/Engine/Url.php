@@ -240,7 +240,7 @@ class Url extends KernelLoader
             return $language;
         }
 
-        $cookie = $this->getContainer()->get('fork.cookie');
+        $cookie = $this->getContainer()->get('forkcms.cookie');
         if ($cookie->has('frontend_language')
             && in_array($cookie->get('frontend_language'), $redirectLanguages, true)
         ) {
@@ -256,7 +256,7 @@ class Url extends KernelLoader
     private function setLanguageCookie(string $language): void
     {
         try {
-            self::getContainer()->get('fork.cookie')->set('frontend_language', $language);
+            self::getContainer()->get('forkcms.cookie')->set('frontend_language', $language);
         } catch (\RuntimeException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }

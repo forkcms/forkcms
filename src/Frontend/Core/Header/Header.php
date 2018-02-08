@@ -147,7 +147,7 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $isExternalUrl = $this->get('forkcms.validator.url')->isExternalUrl($file);
         $file = $isExternalUrl ? $file : Theme::getPath($file);
         $minify = $minify && !$isExternalUrl;
 
@@ -168,7 +168,7 @@ class Header extends KernelLoader
         bool $addTimestamp = false,
         Priority $priority = null
     ): void {
-        $isExternalUrl = $this->get('fork.validator.url')->isExternalUrl($file);
+        $isExternalUrl = $this->get('forkcms.validator.url')->isExternalUrl($file);
         $file = $isExternalUrl ? $file : Theme::getPath($file);
         $minify = $minify && !$isExternalUrl;
 
@@ -269,7 +269,7 @@ class Header extends KernelLoader
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (!$this->getContainer()->get('fork.validator.url')->isExternalUrl($image)) {
+        if (!$this->getContainer()->get('forkcms.validator.url')->isExternalUrl($image)) {
             if (!is_file(PATH_WWW . strtok($image, '?'))) {
                 return;
             }
@@ -355,7 +355,7 @@ class Header extends KernelLoader
         $siteHTMLHeader .= new GoogleAnalytics(
             $this->get('forkcms.settings'),
             Model::getRequest()->getHttpHost(),
-            $this->get('fork.cookie')
+            $this->get('forkcms.cookie')
         );
         $siteHTMLHeader .= "\n" . $this->jsData;
         $this->template->assignGlobal('siteHTMLHeader', trim($siteHTMLHeader));

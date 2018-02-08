@@ -177,6 +177,6 @@ class Ajax extends KernelLoader implements ApplicationInterface
             return $exception->getMessage();
         }
 
-        return $this->getContainer()->getParameter('fork.debug_message');
+        return $this->getContainer()->getParameter('forkcms.debug_message');
     }
 }

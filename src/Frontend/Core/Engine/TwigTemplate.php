@@ -44,7 +44,7 @@ class TwigTemplate extends BaseTwigTemplate
         TwigFilters::addFilters($this->environment, 'Frontend');
         $this->startGlobals($this->environment);
 
-        if (!$container->getParameter('fork.is_installed')) {
+        if (!$container->getParameter('forkcms.is_installed')) {
             return;
         }
 

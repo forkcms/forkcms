@@ -133,7 +133,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         }
 
         /* Setup Backend for the Twig environment. */
-        if (!$this->forkSettings || !Model::getContainer()->getParameter('fork.is_installed')) {
+        if (!$this->forkSettings || !Model::getContainer()->getParameter('forkcms.is_installed')) {
             return;
         }
 

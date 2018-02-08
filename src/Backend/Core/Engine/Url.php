@@ -245,9 +245,9 @@ class Url extends KernelLoader
             return Authentication::getUser()->getSetting('interface_language', $default);
         }
 
-        if ($this->getContainer()->get('fork.cookie')->has('interface_language')) {
+        if ($this->getContainer()->get('forkcms.cookie')->has('interface_language')) {
             // no authenticated user, but available from a cookie
-            return $this->getContainer()->get('fork.cookie')->get('interface_language');
+            return $this->getContainer()->get('forkcms.cookie')->get('interface_language');
         }
 
         return $default;

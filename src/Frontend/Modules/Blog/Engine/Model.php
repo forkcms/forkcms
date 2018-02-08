@@ -752,7 +752,7 @@ class Model implements FrontendTagsInterface
     private static function completeBlogPost(array $blogPost)
     {
         if (isset($blogPost['meta_id'])) {
-            $blogPost['meta'] = FrontendModel::get('fork.repository.meta')->find($blogPost['meta_id']);
+            $blogPost['meta'] = FrontendModel::get('forkcms.repository.meta')->find($blogPost['meta_id']);
         }
 
         if (isset($blogPost['meta_data'])) {

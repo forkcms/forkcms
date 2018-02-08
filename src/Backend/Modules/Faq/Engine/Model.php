@@ -286,7 +286,7 @@ class Model
     {
         $question = new Question(
             BackendLocale::fromString($item['language']),
-            BackendModel::get('fork.repository.meta')->find($item['meta_id']),
+            BackendModel::get('forkcms.repository.meta')->find($item['meta_id']),
             BackendModel::get('faq.repository.category')->find($item['category_id']),
             $item['user_id'],
             $item['question'],
@@ -316,7 +316,7 @@ class Model
 
         $category = new Category(
             BackendLocale::fromString($item['language']),
-            BackendModel::get('fork.repository.meta')->find($item['meta_id']),
+            BackendModel::get('forkcms.repository.meta')->find($item['meta_id']),
             $item['title'],
             $item['sequence']
         );
