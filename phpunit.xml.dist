@@ -79,7 +79,7 @@
                 <directory>src/*/*Bundle/Tests</directory>
                 <directory>src/*/Bundle/*Bundle/Resources</directory>
                 <directory>src/*/Bundle/*Bundle/Tests</directory>
-                <directory>src/Backend/Cache</directory>
+                <directory>var/backend</directory>
                 <directory>src/Backend/Core/Js</directory>
                 <directory>src/Frontend/Cache</directory>
             </exclude>

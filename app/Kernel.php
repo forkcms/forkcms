@@ -105,7 +105,7 @@ abstract class Kernel extends BaseKernel
         defined('BACKEND_CORE_PATH') || define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
         defined('BACKEND_MODULES_PATH') || define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
         defined('BACKEND_CORE_URL') || define('BACKEND_CORE_URL', '/src/Backend/Core');
-        defined('BACKEND_CACHE_URL') || define('BACKEND_CACHE_URL', '/src/Backend/Cache');
+        defined('BACKEND_CACHE_URL') || define('BACKEND_CACHE_URL', '/var/backend');
 
         defined('FRONTEND_PATH') || define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
         defined('FRONTEND_CACHE_PATH') || define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');

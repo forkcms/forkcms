@@ -66,7 +66,7 @@ deny from env=stayout
     RewriteRule var/logs - [F]
     RewriteRule app/config - [F]
     RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
-    RewriteRule src/Backend/Cache/CompiledTemplates - [F]
+    RewriteRule var/backend/CompiledTemplates - [F]
     RewriteRule var/docker/.* - [F]
     RewriteRule Dockerfile - [F]
     RewriteRule \.dockerignore - [F]

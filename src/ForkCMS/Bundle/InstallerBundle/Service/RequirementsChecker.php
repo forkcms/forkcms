@@ -325,8 +325,8 @@ final class RequirementsChecker
         return new RequirementCategory(
             'Required permissions and files',
             Requirement::check(
-                $this->rootDir . 'src/Backend/Cache/*',
-                $this->isRecursivelyWritable($this->rootDir . 'src/Backend/Cache/'),
+                $this->rootDir . 'var/backend/*',
+                $this->isRecursivelyWritable($this->rootDir . 'var/backend/'),
                 'In this location all files created by the backend will be stored. This location and all subdirectories are be writable.',
                 'In this location all files created by the backend will be stored. This location and all subdirectories must be writable.',
                 RequirementStatus::error()

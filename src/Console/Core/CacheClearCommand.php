@@ -29,10 +29,10 @@ class CacheClearCommand extends Command
         $this->removeFilesInFolder('/src/Frontend/Cache/MinifiedJs', $io, 'frontend minified js');
         $this->removeFilesInFolder('/src/Frontend/Cache/Navigation', $io, 'frontend cached navigation');
 
-        $this->removeFilesInFolder('/src/Backend/Cache/CompiledTemplates', $io, 'backend compiled templates');
-        $this->removeFilesInFolder('/src/Backend/Cache/Locale', $io, 'backend cached locale');
-        $this->removeFilesInFolder('/src/Backend/Cache/MinifiedCss', $io, 'backend minified css');
-        $this->removeFilesInFolder('/src/Backend/Cache/MinifiedJs', $io, 'backend minified js');
+        $this->removeFilesInFolder('/var/backend/CompiledTemplates', $io, 'backend compiled templates');
+        $this->removeFilesInFolder('/var/backend/Locale', $io, 'backend cached locale');
+        $this->removeFilesInFolder('/var/backend/MinifiedCss', $io, 'backend minified css');
+        $this->removeFilesInFolder('/var/backend/MinifiedJs', $io, 'backend minified js');
 
         $symfonyCacheClearCommand = $this->getApplication()->find('cache:clear');
         $symfonyCacheClearCommand->run(new ArrayInput(['--no-warmup' => true]), $output);
