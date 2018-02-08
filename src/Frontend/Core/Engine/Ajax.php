@@ -3,7 +3,7 @@
 namespace Frontend\Core\Engine;
 
 use App\Component\Model\FrontendModel;
-use ForkCMS\App\ApplicationInterface;
+use App\Component\Application\ApplicationInterface;
 use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use App\Component\Locale\FrontendLanguage;

@@ -14,7 +14,7 @@ use App\Component\Locale\BackendLocale;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use ForkCMS\App\ForkController;
+use App\Controller\ForkController;
 use App\Component\Locale\FrontendLanguage as FrontendLanguage;
 
 /**
