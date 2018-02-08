@@ -17,7 +17,7 @@ use Twig_Error;
 /**
  * Application routing
  */
-class ForkController extends Controller
+final class ForkController extends Controller
 {
     const DEFAULT_APPLICATION = 'Frontend';
 
