@@ -8,7 +8,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Exception as BackendException;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
@@ -100,7 +100,7 @@ class Index extends BackendBaseActionIndex
                     $instance->execute();
 
                     // user sequence provided?
-                    $title = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($module))) . ': ' . BL::lbl(\SpoonFilter::toCamelCase($widgetName));
+                    $title = \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($module))) . ': ' . BackendLanguage::lbl(\SpoonFilter::toCamelCase($widgetName));
                     $templatePath = $instance->getTemplatePath();
 
                     // reset template path
@@ -136,7 +136,7 @@ class Index extends BackendBaseActionIndex
 
         // show report
         if ($this->getRequest()->query->get('password_reset') === 'success') {
-            $this->template->assign('reportMessage', BL::msg('PasswordResetSuccess', 'Core'));
+            $this->template->assign('reportMessage', BackendLanguage::msg('PasswordResetSuccess', 'Core'));
             $this->template->assign('report', true);
         }
 

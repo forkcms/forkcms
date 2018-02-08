@@ -3,7 +3,7 @@
 namespace Backend\Modules\Blog\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
@@ -46,7 +46,7 @@ class Comments extends BackendBaseActionIndex
         $url = BackendModel::getUrlForBlock('Blog', 'Detail') . '/' . $url . '#comment-' . $id;
 
         // build HTML
-        return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $url, $title) . '</em></p>' . "\n" . (string) $text;
+        return '<p><em>' . sprintf(BackendLanguage::msg('CommentOnWithURL'), $url, $title) . '</em></p>' . "\n" . (string) $text;
     }
 
     public function execute(): void
@@ -64,7 +64,7 @@ class Comments extends BackendBaseActionIndex
          */
         $this->dgPublished = new BackendDataGridDatabase(
             BackendBlogModel::QUERY_DATAGRID_BROWSE_COMMENTS,
-            ['published', BL::getWorkingLanguage(), 'active']
+            ['published', BackendLanguage::getWorkingLanguage(), 'active']
         );
 
         // active tab
@@ -75,8 +75,8 @@ class Comments extends BackendBaseActionIndex
 
         // header labels
         $this->dgPublished->setHeaderLabels([
-            'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
-            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
+            'created_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Date')),
+            'text' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Comment')),
         ]);
 
         // add the multicheckbox column
@@ -115,9 +115,9 @@ class Comments extends BackendBaseActionIndex
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
             [
-                'moderation' => BL::lbl('MoveToModeration'),
-                'spam' => BL::lbl('MoveToSpam'),
-                'delete' => BL::lbl('Delete'),
+                'moderation' => BackendLanguage::lbl('MoveToModeration'),
+                'spam' => BackendLanguage::lbl('MoveToSpam'),
+                'delete' => BackendLanguage::lbl('Delete'),
             ],
             'spam',
             false,
@@ -134,9 +134,9 @@ class Comments extends BackendBaseActionIndex
             $this->dgPublished->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('EditComment') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
 
@@ -145,10 +145,10 @@ class Comments extends BackendBaseActionIndex
             $this->dgPublished->addColumn(
                 'mark_as_spam',
                 null,
-                BL::lbl('MarkAsSpam'),
+                BackendLanguage::lbl('MarkAsSpam'),
                 BackendModel::createUrlForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=spam',
-                BL::lbl('MarkAsSpam')
+                BackendLanguage::lbl('MarkAsSpam')
             );
         }
 
@@ -159,7 +159,7 @@ class Comments extends BackendBaseActionIndex
         // datagrid for the comments that are awaiting moderation
         $this->dgModeration = new BackendDataGridDatabase(
             BackendBlogModel::QUERY_DATAGRID_BROWSE_COMMENTS,
-            ['moderation', BL::getWorkingLanguage(), 'active']
+            ['moderation', BackendLanguage::getWorkingLanguage(), 'active']
         );
 
         // active tab
@@ -170,8 +170,8 @@ class Comments extends BackendBaseActionIndex
 
         // header labels
         $this->dgModeration->setHeaderLabels([
-            'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
-            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
+            'created_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Date')),
+            'text' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Comment')),
         ]);
 
         // add the multicheckbox column
@@ -210,9 +210,9 @@ class Comments extends BackendBaseActionIndex
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
             [
-                'published' => BL::lbl('MoveToPublished'),
-                'spam' => BL::lbl('MoveToSpam'),
-                'delete' => BL::lbl('Delete'),
+                'published' => BackendLanguage::lbl('MoveToPublished'),
+                'spam' => BackendLanguage::lbl('MoveToSpam'),
+                'delete' => BackendLanguage::lbl('Delete'),
             ],
             'published',
             false,
@@ -229,9 +229,9 @@ class Comments extends BackendBaseActionIndex
             $this->dgModeration->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('EditComment') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
 
@@ -240,10 +240,10 @@ class Comments extends BackendBaseActionIndex
             $this->dgModeration->addColumn(
                 'approve',
                 null,
-                BL::lbl('Approve'),
+                BackendLanguage::lbl('Approve'),
                 BackendModel::createUrlForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=published',
-                BL::lbl('Approve')
+                BackendLanguage::lbl('Approve')
             );
         }
 
@@ -252,7 +252,7 @@ class Comments extends BackendBaseActionIndex
          */
         $this->dgSpam = new BackendDataGridDatabase(
             BackendBlogModel::QUERY_DATAGRID_BROWSE_COMMENTS,
-            ['spam', BL::getWorkingLanguage(), 'active']
+            ['spam', BackendLanguage::getWorkingLanguage(), 'active']
         );
 
         // active tab
@@ -263,8 +263,8 @@ class Comments extends BackendBaseActionIndex
 
         // header labels
         $this->dgSpam->setHeaderLabels([
-            'created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')),
-            'text' => \SpoonFilter::ucfirst(BL::lbl('Comment')),
+            'created_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Date')),
+            'text' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Comment')),
         ]);
 
         // add the multicheckbox column
@@ -303,9 +303,9 @@ class Comments extends BackendBaseActionIndex
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
             [
-                'published' => BL::lbl('MoveToPublished'),
-                'moderation' => BL::lbl('MoveToModeration'),
-                'delete' => BL::lbl('Delete'),
+                'published' => BackendLanguage::lbl('MoveToPublished'),
+                'moderation' => BackendLanguage::lbl('MoveToModeration'),
+                'delete' => BackendLanguage::lbl('Delete'),
             ],
             'published',
             false,
@@ -321,10 +321,10 @@ class Comments extends BackendBaseActionIndex
             $this->dgSpam->addColumn(
                 'approve',
                 null,
-                BL::lbl('Approve'),
+                BackendLanguage::lbl('Approve'),
                 BackendModel::createUrlForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=spam&amp;action=published',
-                BL::lbl('Approve')
+                BackendLanguage::lbl('Approve')
             );
         }
     }

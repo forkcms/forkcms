@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Blog\Tests\Action;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 class EditTest extends WebTestCase
 {

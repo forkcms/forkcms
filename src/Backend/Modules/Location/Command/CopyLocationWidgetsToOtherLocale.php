@@ -2,23 +2,23 @@
 
 namespace Backend\Modules\Location\Command;
 
-use Backend\Core\Language\Locale;
+use App\Component\Locale\BackendLocale;
 
 final class CopyLocationWidgetsToOtherLocale
 {
-    /** @var Locale */
+    /** @var BackendLocale */
     public $toLocale;
 
-    /** @var Locale */
+    /** @var BackendLocale */
     public $fromLocale;
 
     /** @var array this is used to be able to convert the old ids to the new ones if used in other places */
     public $extraIdMap;
 
-    public function __construct(Locale $toLocale, Locale $fromLocale = null)
+    public function __construct(BackendLocale $toLocale, BackendLocale $fromLocale = null)
     {
         if ($fromLocale === null) {
-            $fromLocale = Locale::workingLocale();
+            $fromLocale = BackendLocale::workingLocale();
         }
 
         $this->toLocale = $toLocale;

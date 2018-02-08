@@ -2,12 +2,12 @@
 
 namespace Backend\Modules\Locale\Actions;
 
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use App\Component\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -60,7 +60,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
         $this->form->addText('name', $this->record['name']);
         $this->form->addTextarea('value', $this->record['value'], null, null, true);
-        $this->form->addDropdown('language', BL::getWorkingLanguages(), $this->record['language']);
+        $this->form->addDropdown('language', BackendLanguage::getWorkingLanguages(), $this->record['language']);
     }
 
     protected function parse(): void
@@ -86,7 +86,7 @@ class Edit extends BackendBaseActionEdit
     {
         $this->filter['language'] = $this->getRequest()->query->get('language', []);
         if (empty($this->filter['language'])) {
-            $this->filter['language'] = BL::getWorkingLanguage();
+            $this->filter['language'] = BackendLanguage::getWorkingLanguage();
         }
         $this->filter['application'] = $this->getRequest()->query->get('application');
         $this->filter['module'] = $this->getRequest()->query->get('module');
@@ -111,34 +111,34 @@ class Edit extends BackendBaseActionEdit
             $txtValue = $this->form->getField('value');
 
             // name checks
-            if ($txtName->isFilled(BL::err('FieldIsRequired'))) {
+            if ($txtName->isFilled(BackendLanguage::err('FieldIsRequired'))) {
                 // allowed regex (a-z and 0-9)
-                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
+                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BackendLanguage::err('InvalidName'))) {
                     // first letter does not seem to be a capital one
                     if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
-                        $txtName->setError(BL::err('InvalidName'));
+                        $txtName->setError(BackendLanguage::err('InvalidName'));
                     } else {
                         // check if exists
                         if (BackendLocaleModel::existsByName($txtName->getValue(), $this->form->getField('type')->getValue(), $this->form->getField('module')->getValue(), $this->form->getField('language')->getValue(), $this->form->getField('application')->getValue(), $this->id)) {
-                            $txtName->setError(BL::err('AlreadyExists'));
+                            $txtName->setError(BackendLanguage::err('AlreadyExists'));
                         }
                     }
                 }
             }
 
             // value checks
-            if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
+            if ($txtValue->isFilled(BackendLanguage::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if ($this->form->getField('type')->getValue() == 'act') {
                     if (rawurlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
-                        $txtValue->addError(BL::err('InvalidValue'));
+                        $txtValue->addError(BackendLanguage::err('InvalidValue'));
                     }
                 }
             }
 
             // module should be 'Core' for any other application than backend
             if ($this->form->getField('application')->getValue() != 'Backend' && $this->form->getField('module')->getValue() != 'Core') {
-                $this->form->getField('module')->setError(BL::err('ModuleHasToBeCore', $this->getModule()));
+                $this->form->getField('module')->setError(BackendLanguage::err('ModuleHasToBeCore', $this->getModule()));
             }
 
             if ($this->form->isCorrect()) {

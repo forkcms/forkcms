@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Analytics\GoogleClient;
 
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use Google_Service_Analytics;
 use Google_Service_Analytics_GaData;
 use Psr\Cache\CacheItemPoolInterface;
@@ -23,14 +23,14 @@ final class Connector
     private $cache;
 
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
     private $settings;
 
     public function __construct(
         Google_Service_Analytics $analytics,
         CacheItemPoolInterface $cache,
-        ModulesSettings $settings
+        ModuleSettings $settings
     ) {
         $this->analytics = $analytics;
         $this->cache = $cache;

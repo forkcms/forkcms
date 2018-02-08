@@ -32,7 +32,7 @@ class Rss extends \SpoonFeedRSS
         );
 
         $siteTitle = \SpoonFilter::htmlspecialcharsDecode(
-            Model::get('fork.settings')->get('Core', 'site_title_' . LANGUAGE)
+            Model::get('forkcms.settings')->get('Core', 'site_title_' . LANGUAGE)
         );
 
         // set feed properties
@@ -42,12 +42,12 @@ class Rss extends \SpoonFeedRSS
         $this->setImage(SITE_URL . FRONTEND_CORE_URL . '/Layout/images/rss_image.png', $title, $link);
 
         // theme was set
-        if (Model::get('fork.settings')->get('Core', 'theme', null) === null) {
+        if (Model::get('forkcms.settings')->get('Core', 'theme', null) === null) {
             return;
         }
 
         // theme name
-        $theme = Model::get('fork.settings')->get('Core', 'theme', 'Fork');
+        $theme = Model::get('forkcms.settings')->get('Core', 'theme', 'Fork');
 
         // theme rss image exists
         if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/Core/images/rss_image.png')) {

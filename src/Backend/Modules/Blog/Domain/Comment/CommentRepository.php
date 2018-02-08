@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Blog\Domain\Comment;
 
-use Common\Locale;
+use App\Component\Locale\Locale;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
 

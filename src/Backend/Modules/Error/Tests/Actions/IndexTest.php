@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Error\Tests\Action;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexTest extends WebTestCase

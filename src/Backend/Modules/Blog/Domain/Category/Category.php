@@ -3,7 +3,7 @@
 namespace Backend\Modules\Blog\Domain\Category;
 
 use App\Domain\Meta\Meta;
-use Common\Locale;
+use App\Component\Locale\Locale;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

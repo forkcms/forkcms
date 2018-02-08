@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -46,7 +46,7 @@ class Category extends FrontendBaseBlock
         $requestedPage = $this->url->getParameter('page', 'int', 1);
         $numberOfItems = FrontendBlogModel::getAllForCategoryCount($this->category['url']);
 
-        $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items', 10);
+        $limit = $this->get('forkcms.settings')->get($this->getModule(), 'overview_num_items', 10);
         $numberOfPages = (int) ceil($numberOfItems / $limit);
 
         // Check if the page exists
@@ -79,20 +79,20 @@ class Category extends FrontendBaseBlock
     private function addLinkToRssFeed(): void
     {
         $this->header->addRssLink(
-            $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
+            $this->get('forkcms.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
             FrontendNavigation::getUrlForBlock($this->getModule(), 'Rss')
         );
     }
 
     private function addCategoryToBreadcrumb(): void
     {
-        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FL::lbl('Category')));
+        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FrontendLanguage::lbl('Category')));
         $this->breadcrumb->addElement($this->category['label']);
     }
 
     private function setPageTitle(): void
     {
-        $this->header->setPageTitle(\SpoonFilter::ucfirst(FL::lbl('Category')));
+        $this->header->setPageTitle(\SpoonFilter::ucfirst(FrontendLanguage::lbl('Category')));
         $this->header->setPageTitle($this->category['label']);
     }
 

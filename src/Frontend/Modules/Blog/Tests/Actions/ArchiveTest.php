@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Blog\Tests\Actions;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 class ArchiveTest extends WebTestCase
 {

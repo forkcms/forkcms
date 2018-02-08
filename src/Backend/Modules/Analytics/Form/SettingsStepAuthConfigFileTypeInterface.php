@@ -3,9 +3,9 @@
 namespace Backend\Modules\Analytics\Form;
 
 use Backend\Core\Engine\Form;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\TwigTemplate;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 
 /**
  * A form to change the settings of the analytics module
@@ -15,10 +15,10 @@ final class SettingsStepAuthConfigFileTypeInterface implements SettingsStepTypeI
     /** @var Form */
     private $form;
 
-    /** @var ModulesSettings */
+    /** @var ModuleSettings */
     private $settings;
 
-    public function __construct(string $name, ModulesSettings $settings)
+    public function __construct(string $name, ModuleSettings $settings)
     {
         $this->form = new Form($name);
         $this->settings = $settings;
@@ -66,11 +66,11 @@ final class SettingsStepAuthConfigFileTypeInterface implements SettingsStepTypeI
         $fileField = $this->form->getField('certificate');
         $emailField = $this->form->getField('email');
 
-        if ($fileField->isFilled(Language::err('FieldIsRequired'))) {
-            $fileField->isAllowedExtension(['p12'], Language::err('P12Only'));
+        if ($fileField->isFilled(BackendLanguage::err('FieldIsRequired'))) {
+            $fileField->isAllowedExtension(['p12'], BackendLanguage::err('P12Only'));
         }
-        $emailField->isFilled(Language::err('FieldIsRequired'));
-        $emailField->isEmail(Language::err('EmailIsInvalid'));
+        $emailField->isFilled(BackendLanguage::err('FieldIsRequired'));
+        $emailField->isEmail(BackendLanguage::err('EmailIsInvalid'));
 
         return $this->form->isCorrect();
     }

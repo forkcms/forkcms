@@ -4,11 +4,11 @@ namespace Frontend\Modules\Blog\Engine;
 
 use App\Service\Mailer\Message;
 use Doctrine\ORM\NoResultException;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
-use Frontend\Core\Language\Locale;
+use App\Component\Locale\FrontendLocale;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
@@ -95,7 +95,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
-            if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
+            if (!FrontendModel::get('forkcms.settings')->get('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -151,7 +151,7 @@ class Model implements FrontendTagsInterface
             $category = FrontendModel::get('blog.repository.category')
                                      ->findOneByUrl(
                                          $slug,
-                                         Locale::frontendLanguage()
+                                         FrontendLocale::frontendLanguage()
                                      );
         } catch (NoResultException $e) {
             return [];
@@ -256,7 +256,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
-            if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
+            if (!FrontendModel::get('forkcms.settings')->get('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -355,7 +355,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
-            if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
+            if (!FrontendModel::get('forkcms.settings')->get('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -807,12 +807,12 @@ class Model implements FrontendTagsInterface
         }
 
         // get settings
-        $notifyByMailOnComment = FrontendModel::get('fork.settings')->get(
+        $notifyByMailOnComment = FrontendModel::get('forkcms.settings')->get(
             'Blog',
             'notify_by_email_on_new_comment',
             false
         );
-        $notifyByMailOnCommentToModerate = FrontendModel::get('fork.settings')->get(
+        $notifyByMailOnCommentToModerate = FrontendModel::get('forkcms.settings')->get(
             'Blog',
             'notify_by_email_on_new_comment_to_moderate',
             false
@@ -830,21 +830,21 @@ class Model implements FrontendTagsInterface
             // comment to moderate
             if ($comment['status'] == 'moderation') {
                 $variables['message'] = vsprintf(
-                    FL::msg('BlogEmailNotificationsNewCommentToModerate'),
+                    FrontendLanguage::msg('BlogEmailNotificationsNewCommentToModerate'),
                     [$comment['author'], $url, $comment['post_title'], $backendUrl]
                 );
             } elseif ($comment['status'] == 'published') {
                 // comment was published
                 $variables['message'] = vsprintf(
-                    FL::msg('BlogEmailNotificationsNewComment'),
+                    FrontendLanguage::msg('BlogEmailNotificationsNewComment'),
                     [$comment['author'], $url, $comment['post_title']]
                 );
             }
 
-            $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
-            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
-            $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
-            $message = Message::newInstance(FL::msg('NotificationSubject'))
+            $to = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_to');
+            $from = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_from');
+            $replyTo = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_reply_to');
+            $message = Message::newInstance(FrontendLanguage::msg('NotificationSubject'))
                               ->setFrom([$from['email'] => $from['name']])
                               ->setTo([$to['email'] => $to['name']])
                               ->setReplyTo([$replyTo['email'] => $replyTo['name']])
@@ -859,14 +859,14 @@ class Model implements FrontendTagsInterface
             // set variables
             $variables = [];
             $variables['message'] = vsprintf(
-                FL::msg('BlogEmailNotificationsNewCommentToModerate'),
+                FrontendLanguage::msg('BlogEmailNotificationsNewCommentToModerate'),
                 [$comment['author'], $url, $comment['post_title'], $backendUrl]
             );
 
-            $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
-            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
-            $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
-            $message = Message::newInstance(FL::msg('NotificationSubject'))
+            $to = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_to');
+            $from = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_from');
+            $replyTo = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_reply_to');
+            $message = Message::newInstance(FrontendLanguage::msg('NotificationSubject'))
                               ->setFrom([$from['email'] => $from['name']])
                               ->setTo([$to['email'] => $to['name']])
                               ->setReplyTo([$replyTo['email'] => $replyTo['name']])

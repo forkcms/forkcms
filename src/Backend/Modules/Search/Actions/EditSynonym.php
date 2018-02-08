@@ -4,9 +4,9 @@ namespace Backend\Modules\Search\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
@@ -59,10 +59,10 @@ class EditSynonym extends BackendBaseActionEdit
             return;
         }
         $this->form->cleanupFields();
-        $this->form->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
-        $this->form->getField('term')->isFilled(BL::err('TermIsRequired'));
+        $this->form->getField('synonym')->isFilled(BackendLanguage::err('SynonymIsRequired'));
+        $this->form->getField('term')->isFilled(BackendLanguage::err('TermIsRequired'));
         if (BackendSearchModel::existsSynonymByTerm($this->form->getField('term')->getValue(), $this->id)) {
-            $this->form->getField('term')->addError(BL::err('TermExists'));
+            $this->form->getField('term')->addError(BackendLanguage::err('TermExists'));
         }
 
         if (!$this->form->isCorrect()) {

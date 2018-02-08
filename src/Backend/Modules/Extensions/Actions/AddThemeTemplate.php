@@ -4,7 +4,7 @@ namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
@@ -68,7 +68,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
         // determine selected theme, based upon submitted form or default theme
         if (!array_key_exists($this->selectedTheme, $this->availableThemes)) {
-            $this->selectedTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+            $this->selectedTheme = $this->get('forkcms.settings')->get('Core', 'theme', 'Fork');
         }
     }
 
@@ -94,14 +94,14 @@ class AddThemeTemplate extends BackendBaseActionAdd
         // loop extras to populate the default extras
         foreach ($extras as $item) {
             if ($item['type'] == 'block') {
-                $blocks[$item['id']] = \SpoonFilter::ucfirst(BL::lbl($item['label']));
+                $blocks[$item['id']] = \SpoonFilter::ucfirst(BackendLanguage::lbl($item['label']));
                 if (isset($item['data']['extra_label'])) {
                     $blocks[$item['id']] = \SpoonFilter::ucfirst($item['data']['extra_label']);
                 }
             } elseif ($item['type'] == 'widget') {
-                $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . \SpoonFilter::ucfirst(BL::lbl($item['label']));
+                $widgets[$item['id']] = \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . \SpoonFilter::ucfirst(BackendLanguage::lbl($item['label']));
                 if (isset($item['data']['extra_label'])) {
-                    $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+                    $widgets[$item['id']] = \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
                 }
             }
         }
@@ -112,8 +112,8 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
         // create array
         $defaultExtras = [
-            '' => [0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))],
-            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets,
+            '' => [0 => \SpoonFilter::ucfirst(BackendLanguage::lbl('Editor'))],
+            \SpoonFilter::ucfirst(BackendLanguage::lbl('Widgets')) => $widgets,
         ];
 
         // create default position field
@@ -152,17 +152,17 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
                 // position already exists -> error
                 if (in_array($name, $this->names)) {
-                    $errors[] = sprintf(BL::getError('DuplicatePositionName'), $name);
+                    $errors[] = sprintf(BackendLanguage::getError('DuplicatePositionName'), $name);
                 }
 
                 // position name == fallback -> error
                 if ($name == 'fallback') {
-                    $errors[] = sprintf(BL::getError('ReservedPositionName'), $name);
+                    $errors[] = sprintf(BackendLanguage::getError('ReservedPositionName'), $name);
                 }
 
                 // not alphanumeric -> error
                 if (!\SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) {
-                    $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
+                    $errors[] = sprintf(BackendLanguage::getError('NoAlphaNumPositionName'), $name);
                 }
 
                 // save positions
@@ -208,15 +208,15 @@ class AddThemeTemplate extends BackendBaseActionAdd
             $this->form->cleanupFields();
 
             // required fields
-            $this->form->getField('file')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('label')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('format')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('file')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('label')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('format')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
             $templateFile = $this->getContainer()->getParameter('site.path_www');
             // check if the template file exists
             $templateFile .= '/src/Frontend/Themes/' . $this->form->getField('theme')->getValue() . '/Core/Layout/Templates/' . $this->form->getField('file')->getValue();
             if (!is_file($templateFile)) {
-                $this->form->getField('file')->addError(BL::err('TemplateFileNotFound'));
+                $this->form->getField('file')->addError(BackendLanguage::err('TemplateFileNotFound'));
             }
 
             // validate syntax
@@ -227,7 +227,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
             // validate the syntax
             if (empty($table)) {
-                $this->form->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
+                $this->form->getField('format')->addError(BackendLanguage::err('InvalidTemplateSyntax'));
             } else {
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);
                 $cellCount = 0;
@@ -244,7 +244,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                     // not same number of cells
                     if (count($row) != $cellCount) {
                         // add error
-                        $errors[] = BL::err('InvalidTemplateSyntax');
+                        $errors[] = BackendLanguage::err('InvalidTemplateSyntax');
 
                         // stop
                         break;
@@ -256,10 +256,10 @@ class AddThemeTemplate extends BackendBaseActionAdd
                         if ($cell != '/') {
                             // not alphanumeric -> error
                             if (!in_array($cell, $this->names)) {
-                                $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+                                $errors[] = sprintf(BackendLanguage::getError('NonExistingPositionName'), $cell);
                             } elseif (mb_substr_count($html, '"#position-' . $cell . '"') != 1) {
                                 // can't build proper html -> error
-                                $errors[] = BL::err('InvalidTemplateSyntax');
+                                $errors[] = BackendLanguage::err('InvalidTemplateSyntax');
                             }
                         }
                     }
@@ -285,7 +285,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $item['data']['format'] = trim(str_replace(["\n", "\r", ' '], '', $this->form->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
-                $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
+                $item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()] = $this->extras;
                 $item['data']['image'] = $this->form->getField('image')->isChecked();
 
                 // serialize the data
@@ -295,8 +295,8 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $item['id'] = BackendExtensionsModel::insertTemplate($item);
 
                 // set default template
-                if ($this->form->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'Fork')) {
-                    $this->get('fork.settings')->set($this->getModule(), 'default_template', $item['id']);
+                if ($this->form->getField('default')->getChecked() && $item['theme'] == $this->get('forkcms.settings')->get('Core', 'theme', 'Fork')) {
+                    $this->get('forkcms.settings')->set($this->getModule(), 'default_template', $item['id']);
                 }
 
                 // everything is saved, so redirect to the overview

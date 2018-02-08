@@ -102,7 +102,7 @@ class Model
         $avatar = $user->getSetting('avatar');
 
         // no custom avatar defined, get gravatar if allowed
-        if (empty($avatar) && FrontendModel::get('fork.settings')->get('Profiles', 'allow_gravatar', true)) {
+        if (empty($avatar) && FrontendModel::get('forkcms.settings')->get('Profiles', 'allow_gravatar', true)) {
             // define hash
             $hash = md5(mb_strtolower(trim('d' . $email)));
 

@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Authentication\Tests\Action;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 use Backend\Core\Engine\Authentication as Authentication;
 
 class IndexTest extends WebTestCase

@@ -1,5 +1,5 @@
 services:
   forkcms.console.cache.clear:
-    class: Console\Core\CacheClearCommand
+    class: Console\Cache\CacheClearCommand
     tags:
       - { name: console.command }

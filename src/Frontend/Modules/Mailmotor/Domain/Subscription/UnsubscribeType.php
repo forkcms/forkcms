@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Mailmotor\Domain\Subscription;
 
 use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Unsubscription;
-use Common\Language;
+use App\Component\Locale\Language;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

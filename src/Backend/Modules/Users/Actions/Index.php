@@ -5,7 +5,7 @@ namespace Backend\Modules\Users\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
@@ -32,10 +32,10 @@ class Index extends BackendBaseActionIndex
             // add column
             $this->dataGrid->addColumn(
                 'nickname',
-                \SpoonFilter::ucfirst(BL::lbl('Nickname')),
+                \SpoonFilter::ucfirst(BackendLanguage::lbl('Nickname')),
                 null,
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
 
             // add edit column
@@ -43,7 +43,7 @@ class Index extends BackendBaseActionIndex
                 $this->dataGrid->addColumn(
                     'edit',
                     null,
-                    BL::lbl('Edit'),
+                    BackendLanguage::lbl('Edit'),
                     BackendModel::createUrlForAction('Edit') . '&amp;id=[id]'
                 );
             }

@@ -3,7 +3,7 @@
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Backend\Core\Engine\Model;
-use Common\Locale;
+use App\Component\Locale\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 

@@ -20,10 +20,10 @@ doctrine:
         types:
             seo_follow: App\Domain\Meta\SEOFollowDBALType
             seo_index: App\Domain\Meta\SEOIndexDBALType
-            locale: Common\Doctrine\Type\LocaleType
-            datetime: Common\Doctrine\Type\UTCDateTimeType
-            datetimetz: Common\Doctrine\Type\UTCDateTimeType
-            time: Common\Doctrine\Type\UTCTimeType
+            locale: App\Form\DBALType\LocaleType
+            datetime: App\Form\DBALType\UTCDateTimeType
+            datetimetz: App\Form\DBALType\UTCDateTimeType
+            time: App\Form\DBALType\UTCTimeType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -35,25 +35,17 @@ doctrine:
                     common:
                         type: annotation
                         is_bundle: false
-                        dir: "%kernel.project_dir%/src/Common/Doctrine/Entity"
-                        alias: Common
-                        prefix: Common\Doctrine\Entity
+                        dir: "%kernel.project_dir%/src/Domain"
+                        alias: App
+                        prefix: App\Domain
 
 doctrine_orm_bridge:
     entity_manager: default
     connection: default
 
 services:
-    fork.doctrine.entity_schema:
+    forkcms.doctrine.entity_schema:
         class: App\Service\Doctrine\EntitySchema
-        public: true
-        arguments:
-            - "@doctrine.orm.entity_manager"
-
-    # @todo: remove this service in the next major release.
-    fork.entity.create_schema:
-        class: Common\Doctrine\Entity\CreateSchema
-        deprecated: 'The "%service_id%" service is deprecated. Use "fork.entity_schema" instead'
         public: true
         arguments:
             - "@doctrine.orm.entity_manager"

@@ -5,8 +5,8 @@ namespace Backend\Modules\Faq\Engine;
 use App\Component\Uri\Uri\Uri as CommonUri;
 use App\Domain\ModuleExtra\Type;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Language\Locale;
+use App\Component\Locale\BackendLanguage;
+use App\Component\Locale\BackendLocale;
 use Backend\Modules\Faq\Domain\Category\Category;
 use Backend\Modules\Faq\Domain\Feedback\Feedback;
 use Backend\Modules\Faq\Domain\Question\Question;
@@ -58,7 +58,7 @@ class Model
 
     public static function deleteCategoryAllowed(int $id): bool
     {
-        if (!BackendModel::get('fork.settings')->get('Faq', 'allow_multiple_categories', true)
+        if (!BackendModel::get('forkcms.settings')->get('Faq', 'allow_multiple_categories', true)
             && self::getCategoryCount() == 1
         ) {
             return false;
@@ -89,7 +89,7 @@ class Model
         $question = BackendModel::get('faq.repository.question')->findOneBy(
             [
                 'id' => $id,
-                'locale' => Locale::workingLocale(),
+                'locale' => BackendLocale::workingLocale(),
             ]
         );
 
@@ -101,7 +101,7 @@ class Model
         $category = BackendModel::get('faq.repository.category')->findOneBy(
             [
                 'id' => $id,
-                'locale' => Locale::workingLocale(),
+                'locale' => BackendLocale::workingLocale(),
             ]
         );
 
@@ -165,7 +165,7 @@ class Model
 
         $questions = BackendModel::get('faq.repository.question')->findMultiple(
             $questionIds,
-            Locale::workingLocale()
+            BackendLocale::workingLocale()
         );
 
         return array_map(
@@ -189,7 +189,7 @@ class Model
     public static function getCategories(bool $includeCount = false): array
     {
         $categories = BackendModel::get('faq.repository.category')->findBy(
-            ['locale' => Locale::workingLocale()],
+            ['locale' => BackendLocale::workingLocale()],
             ['sequence' => 'DESC']
         );
 
@@ -219,7 +219,7 @@ class Model
 
     public static function getCategoryCount(): int
     {
-        return BackendModel::get('faq.repository.category')->findCount(Locale::workingLocale());
+        return BackendModel::get('faq.repository.category')->findCount(BackendLocale::workingLocale());
     }
 
     public static function getFeedback(int $id): array
@@ -230,7 +230,7 @@ class Model
     public static function getMaximumCategorySequence(): int
     {
         return BackendModel::get('faq.repository.category')->findMaximumSequence(
-            Locale::workingLocale()
+            BackendLocale::workingLocale()
         );
     }
 
@@ -240,7 +240,7 @@ class Model
 
         return BackendModel::get('faq.repository.question')->findMaximumSequence(
             $category,
-            Locale::workingLocale()
+            BackendLocale::workingLocale()
         );
     }
 
@@ -258,7 +258,7 @@ class Model
 
         return BackendModel::get('faq.repository.question')->getUrl(
             $url,
-            Locale::workingLocale(),
+            BackendLocale::workingLocale(),
             $id
         );
     }
@@ -277,7 +277,7 @@ class Model
 
         return BackendModel::get('faq.repository.category')->getUrl(
             $url,
-            Locale::workingLocale(),
+            BackendLocale::workingLocale(),
             $id
         );
     }
@@ -285,7 +285,7 @@ class Model
     public static function insert(array $item): int
     {
         $question = new Question(
-            Locale::fromString($item['language']),
+            BackendLocale::fromString($item['language']),
             BackendModel::get('fork.repository.meta')->find($item['meta_id']),
             BackendModel::get('faq.repository.category')->find($item['category_id']),
             $item['user_id'],
@@ -315,7 +315,7 @@ class Model
         );
 
         $category = new Category(
-            Locale::fromString($item['language']),
+            BackendLocale::fromString($item['language']),
             BackendModel::get('fork.repository.meta')->find($item['meta_id']),
             $item['title'],
             $item['sequence']
@@ -330,7 +330,7 @@ class Model
             'data',
             [
                 'id' => $category->getId(),
-                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Category', 'Faq')) . ': ' . $category->getTitle(),
+                'extra_label' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Category', 'Faq')) . ': ' . $category->getTitle(),
                 'language' => $category->getLocale()->getLocale(),
                 'edit_url' => BackendModel::createUrlForAction(
                     'EditCategory',

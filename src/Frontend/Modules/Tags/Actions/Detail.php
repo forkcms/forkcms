@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Tags\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

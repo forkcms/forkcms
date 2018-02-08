@@ -6,7 +6,7 @@ use App\Component\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -72,7 +72,7 @@ class Edit extends BackendBaseActionEdit
                     if (isset($row['url'], $row['name'], $row['module'])) {
                         // add
                         $items[] = [
-                            'module' => \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module']))),
+                            'module' => \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($row['module']))),
                             'name' => $row['name'],
                             'url' => $row['url'],
                         ];
@@ -85,9 +85,9 @@ class Edit extends BackendBaseActionEdit
         $this->dgUsage = new BackendDataGridArray($items);
         $this->dgUsage->setPaging(false);
         $this->dgUsage->setColumnsHidden(['url']);
-        $this->dgUsage->setHeaderLabels(['name' => \SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => '']);
-        $this->dgUsage->setColumnURL('name', '[url]', \SpoonFilter::ucfirst(BL::lbl('Edit')));
-        $this->dgUsage->addColumn('edit', null, \SpoonFilter::ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
+        $this->dgUsage->setHeaderLabels(['name' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Title')), 'url' => '']);
+        $this->dgUsage->setColumnURL('name', '[url]', \SpoonFilter::ucfirst(BackendLanguage::lbl('Edit')));
+        $this->dgUsage->addColumn('edit', null, \SpoonFilter::ucfirst(BackendLanguage::lbl('Edit')), '[url]', BackendLanguage::lbl('Edit'));
     }
 
     private function loadForm(): void
@@ -116,7 +116,7 @@ class Edit extends BackendBaseActionEdit
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('name')->isFilled(BL::err('NameIsRequired'));
+            $this->form->getField('name')->isFilled(BackendLanguage::err('NameIsRequired'));
 
             // no errors?
             if ($this->form->isCorrect()) {

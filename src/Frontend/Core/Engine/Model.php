@@ -243,7 +243,7 @@ class Model extends \Common\Core\Model
             ? $cookie->get('track')
             : md5(uniqid('', true) . self::getSession()->getId());
 
-        if ($cookie->hasAllowedCookies() || !self::get('fork.settings')->get('Core', 'show_cookie_bar', false)) {
+        if ($cookie->hasAllowedCookies() || !self::get('forkcms.settings')->get('Core', 'show_cookie_bar', false)) {
             $cookie->set('track', self::$visitorId, 86400 * 365);
         }
 

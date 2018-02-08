@@ -4,7 +4,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
@@ -40,11 +40,11 @@ class AddGroup extends BackendBaseActionAdd
             $txtName = $this->form->getField('name');
 
             // name filled in?
-            if ($txtName->isFilled(BL::getError('NameIsRequired'))) {
+            if ($txtName->isFilled(BackendLanguage::getError('NameIsRequired'))) {
                 // name exists?
                 if (BackendProfilesModel::existsGroupName($txtName->getValue())) {
                     // set error
-                    $txtName->addError(BL::getError('GroupNameExists'));
+                    $txtName->addError(BackendLanguage::getError('GroupNameExists'));
                 }
             }
 

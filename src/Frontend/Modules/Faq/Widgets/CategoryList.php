@@ -25,7 +25,7 @@ class CategoryList extends FrontendBaseWidget
             'widgetFaqCategoryList',
             FrontendFaqModel::getAllForCategory(
                 $this->data['id'],
-                $this->get('fork.settings')->get($this->getModule(), 'most_read_num_items', 10)
+                $this->get('forkcms.settings')->get($this->getModule(), 'most_read_num_items', 10)
             )
         );
     }

@@ -2,24 +2,24 @@
 
 namespace Frontend\Core\Header;
 
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use Frontend\Core\Engine\Theme;
 
 final class Facebook
 {
-    /** @var ModulesSettings */
-    private $modulesSettings;
+    /** @var ModuleSettings */
+    private $moduleSettings;
 
-    public function __construct(ModulesSettings $modulesSettings)
+    public function __construct(ModuleSettings $moduleSettings)
     {
-        $this->modulesSettings = $modulesSettings;
+        $this->moduleSettings = $moduleSettings;
     }
 
     public function addOpenGraphMeta(Header $header): void
     {
         $parseFacebook = false;
-        $facebookAdminIds = $this->modulesSettings->get('Core', 'facebook_admin_ids', null);
-        $facebookAppId = $this->modulesSettings->get('Core', 'facebook_app_id', null);
+        $facebookAdminIds = $this->moduleSettings->get('Core', 'facebook_admin_ids', null);
+        $facebookAppId = $this->moduleSettings->get('Core', 'facebook_app_id', null);
 
         // check if facebook admins are set
         if ($facebookAdminIds !== null) {

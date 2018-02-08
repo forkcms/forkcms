@@ -6,7 +6,7 @@ use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions;
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid
@@ -20,7 +20,7 @@ class MediaGalleryDataGrid extends DataGridDatabase
              FROM MediaGallery AS i'
         );
 
-        $this->setHeaderLabels(['title' => ucfirst(Language::lbl('Title'))]);
+        $this->setHeaderLabels(['title' => ucfirst(BackendLanguage::lbl('Title'))]);
         $this->setSortingFunctions();
         $this->setExtraFunctions();
     }
@@ -56,7 +56,7 @@ class MediaGalleryDataGrid extends DataGridDatabase
             // Define edit url
             $editUrl = Model::createUrlForAction('MediaGalleryEdit', null, null, ['id' => '[id]'], false);
             $this->setColumnURL('title', $editUrl);
-            $this->addColumn('edit', null, Language::lbl('Edit'), $editUrl, Language::lbl('MediaGalleryEdit'));
+            $this->addColumn('edit', null, BackendLanguage::lbl('Edit'), $editUrl, BackendLanguage::lbl('MediaGalleryEdit'));
         }
     }
 }

@@ -30,5 +30,5 @@ vendor/
 var/cache/*
 var/logs/*
 app/config/parameters.yml
-src/Backend/Cache/*/*
-src/Frontend/Cache/*/*
+var/backend/*/*
+var/frontend/*/*

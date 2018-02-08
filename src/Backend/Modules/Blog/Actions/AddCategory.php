@@ -6,7 +6,7 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Meta as BackendMeta;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -54,7 +54,7 @@ class AddCategory extends BackendBaseActionAdd
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BackendLanguage::err('TitleIsRequired'));
 
             // validate meta
             $this->meta->validate();
@@ -64,7 +64,7 @@ class AddCategory extends BackendBaseActionAdd
                 // build item
                 $item = [
                     'title' => $this->form->getField('title')->getValue(),
-                    'language' => BL::getWorkingLanguage(),
+                    'language' => BackendLanguage::getWorkingLanguage(),
                     'meta_id' => $this->meta->save(),
                 ];
 

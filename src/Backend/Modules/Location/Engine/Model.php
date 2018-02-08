@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Location\Engine;
 
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use App\Domain\ModuleExtra\Type;
 use Symfony\Component\Intl\Intl as Intl;
@@ -33,7 +33,7 @@ class Model
         BackendModel::deleteExtraById($item['extra_id']);
 
         // delete location and its settings
-        $database->delete('location', 'id = ? AND language = ?', [$id, BL::getWorkingLanguage()]);
+        $database->delete('location', 'id = ? AND language = ?', [$id, BackendLanguage::getWorkingLanguage()]);
         $database->delete('location_settings', 'map_id = ?', [$id]);
     }
 
@@ -51,7 +51,7 @@ class Model
              FROM location AS i
              WHERE i.id = ? AND i.language = ?
              LIMIT 1',
-            [$id, BL::getWorkingLanguage()]
+            [$id, BackendLanguage::getWorkingLanguage()]
         );
     }
 
@@ -68,7 +68,7 @@ class Model
             'SELECT i.*
              FROM location AS i
              WHERE i.id = ? AND i.language = ?',
-            [$id, BL::getWorkingLanguage()]
+            [$id, BackendLanguage::getWorkingLanguage()]
         );
     }
 
@@ -83,7 +83,7 @@ class Model
             'SELECT i.*
              FROM location AS i
              WHERE i.language = ? AND i.show_overview = ?',
-            [BL::getWorkingLanguage(), true]
+            [BackendLanguage::getWorkingLanguage(), true]
         );
     }
 
@@ -126,7 +126,7 @@ class Model
         }
 
         if (!empty($country)) {
-            $item[] = Intl::getRegionBundle()->getCountryName($country, BL::getInterfaceLanguage());
+            $item[] = Intl::getRegionBundle()->getCountryName($country, BackendLanguage::getInterfaceLanguage());
         }
 
         // define address
@@ -224,7 +224,7 @@ class Model
             'data',
             [
                 'id' => $item['id'],
-                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
+                'extra_label' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Location', 'Core')) . ': ' . $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
             ]
@@ -272,7 +272,7 @@ class Model
                 'data',
                 [
                     'id' => $item['id'],
-                    'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
+                    'extra_label' => \SpoonFilter::ucfirst(BackendLanguage::lbl('Location', 'Core')) . ': ' . $item['title'],
                     'language' => $item['language'],
                     'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $item['id'],
                 ]

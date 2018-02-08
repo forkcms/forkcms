@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\BackendLanguage;
 use Twig_Compiler;
 
 /**

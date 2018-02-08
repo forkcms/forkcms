@@ -3,7 +3,6 @@
 namespace Frontend\Modules\MediaLibrary\Twig\Extensions;
 
 use Frontend\Modules\MediaLibrary\Helper\FrontendHelper;
-use Twig_Markup;
 
 class FrontendHelperExtensions extends \Twig_Extension
 {

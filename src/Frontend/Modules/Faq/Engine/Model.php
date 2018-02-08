@@ -9,7 +9,7 @@ use Doctrine\ORM\NoResultException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
-use Frontend\Core\Language\Locale;
+use App\Component\Locale\FrontendLocale;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -23,7 +23,7 @@ class Model implements FrontendTagsInterface
         try {
             return FrontendModel::get('faq.repository.question')->findOneByUrl(
                 $url,
-                Locale::frontendLanguage()
+                FrontendLocale::frontendLanguage()
             )->toArray();
         } catch (NoResultException $exception) {
             return [];
@@ -41,7 +41,7 @@ class Model implements FrontendTagsInterface
     {
         $questions = FrontendModel::get('faq.repository.question')->findByCategory(
             FrontendModel::get('faq.repository.category')->find($categoryId),
-            Locale::frontendLanguage(),
+            FrontendLocale::frontendLanguage(),
             $limit,
             $excludeIds
         );
@@ -61,7 +61,7 @@ class Model implements FrontendTagsInterface
     public static function getCategories(): array
     {
         $categories = FrontendModel::get('faq.repository.category')->findBy(
-            ['locale' => Locale::frontendLanguage()],
+            ['locale' => FrontendLocale::frontendLanguage()],
             ['sequence' => 'DESC']
         );
         $link = FrontendNavigation::getUrlForBlock('Faq', 'Category');
@@ -82,7 +82,7 @@ class Model implements FrontendTagsInterface
         try {
             return FrontendModel::get('faq.repository.category')->findOneByUrl(
                 $url,
-                Locale::frontendLanguage()
+                FrontendLocale::frontendLanguage()
             )->toArray();
         } catch (NoResultException $exception) {
             return [];
@@ -94,7 +94,7 @@ class Model implements FrontendTagsInterface
         return FrontendModel::get('faq.repository.category')->findOne(
             [
                 'id' => $id,
-                'locale' => Locale::frontendLanguage()
+                'locale' => FrontendLocale::frontendLanguage()
             ]
         )->toArray();
     }
@@ -112,7 +112,7 @@ class Model implements FrontendTagsInterface
 
         $questions = FrontendModel::get('faq.repository.question')->findMultiple(
             $ids,
-            Locale::frontendLanguage()
+            FrontendLocale::frontendLanguage()
         );
 
         return array_map(
@@ -141,7 +141,7 @@ class Model implements FrontendTagsInterface
         try {
             return FrontendModel::get('faq.repository.question')->findOneByUrl(
                 $itemUrl,
-                Locale::frontendLanguage()
+                FrontendLocale::frontendLanguage()
             )->getId();
         } catch (NoResultException $exception) {
             return 0;
@@ -161,7 +161,7 @@ class Model implements FrontendTagsInterface
             },
             FrontendModel::get('faq.repository.question')->findMostRead(
                 $limit,
-                Locale::frontendLanguage()
+                FrontendLocale::frontendLanguage()
             )
         );
     }
@@ -173,7 +173,7 @@ class Model implements FrontendTagsInterface
 
         $questions = FrontendModel::get('faq.repository.question')->findByCategory(
             $category,
-            Locale::frontendLanguage()
+            FrontendLocale::frontendLanguage()
         );
 
         return array_map(
@@ -208,7 +208,7 @@ class Model implements FrontendTagsInterface
 
         $questions = FrontendModel::get('faq.repository.question')->findMultiple(
             $relatedIDs,
-            Locale::frontendLanguage()
+            FrontendLocale::frontendLanguage()
         );
 
         return array_map(
@@ -259,7 +259,7 @@ class Model implements FrontendTagsInterface
 
         $questions = FrontendModel::get('faq.repository.question')->findMultiple(
             $ids,
-            Locale::frontendLanguage()
+            FrontendLocale::frontendLanguage()
         );
         $questions = array_map(
             function (Question $question) use ($link) {

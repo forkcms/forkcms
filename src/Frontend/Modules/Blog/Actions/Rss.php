@@ -3,7 +3,7 @@
 namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Rss as FrontendRSS;
 use Frontend\Core\Engine\RssItem as FrontendRSSItem;
@@ -25,16 +25,16 @@ class Rss extends FrontendBaseBlock
         $blogPosts = FrontendBlogModel::getAll(30);
 
         $rss = new FrontendRSS(
-            $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
+            $this->get('forkcms.settings')->get('Blog', 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
             SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule()),
-            $this->get('fork.settings')->get('Blog', 'rss_description_' . LANGUAGE, '')
+            $this->get('forkcms.settings')->get('Blog', 'rss_description_' . LANGUAGE, '')
         );
 
         foreach ($blogPosts as $blogPost) {
             $rss->addItem(
                 $this->getRssFeedItemForBlogPost(
                     $blogPost,
-                    $this->get('fork.settings')->get($this->getModule(), 'rss_meta_' . LANGUAGE, true)
+                    $this->get('forkcms.settings')->get($this->getModule(), 'rss_meta_' . LANGUAGE, true)
                 )
             );
         }
@@ -68,8 +68,8 @@ class Rss extends FrontendBaseBlock
             '<p><a href="%1$s" title="%2$s">%2$s</a> %3$s %4$s <a href="%5$s" title="%6$s">%6$s</a></p>',
             $blogPostLink,
             $blogPostTitle,
-            sprintf(FL::msg('WrittenBy'), $blogPostAuthor),
-            FL::lbl('In'),
+            sprintf(FrontendLanguage::msg('WrittenBy'), $blogPostAuthor),
+            FrontendLanguage::lbl('In'),
             $categoryLink,
             $categoryTitle
         );
@@ -108,7 +108,7 @@ class Rss extends FrontendBaseBlock
 
         return sprintf(
             '<p>%1$s: %2$s</p>',
-            SpoonFilter::ucfirst(FL::lbl('Tags')),
+            SpoonFilter::ucfirst(FrontendLanguage::lbl('Tags')),
             implode(
                 ', ',
                 array_map(

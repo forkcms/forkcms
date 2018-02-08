@@ -4,7 +4,7 @@ namespace Backend\Modules\Profiles\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -31,7 +31,7 @@ class Settings extends BackendBaseActionEdit
         // send email for new profile to admin
         $this->form->addCheckbox(
             'send_new_profile_admin_mail',
-            $this->get('fork.settings')->get(
+            $this->get('forkcms.settings')->get(
                 $this->url->getModule(),
                 'send_new_profile_admin_mail',
                 false
@@ -40,7 +40,7 @@ class Settings extends BackendBaseActionEdit
 
         $this->form->addCheckbox(
             'overwrite_profile_notification_email',
-            (bool) ($this->get('fork.settings')->get(
+            (bool) ($this->get('forkcms.settings')->get(
                 $this->url->getModule(),
                 'profile_notification_email',
                 null
@@ -49,7 +49,7 @@ class Settings extends BackendBaseActionEdit
 
         $this->form->addText(
             'profile_notification_email',
-            $this->get('fork.settings')->get(
+            $this->get('forkcms.settings')->get(
                 $this->url->getModule(),
                 'profile_notification_email',
                 null
@@ -59,7 +59,7 @@ class Settings extends BackendBaseActionEdit
         // send email for new profile to profile
         $this->form->addCheckbox(
             'send_new_profile_mail',
-            $this->get('fork.settings')->get(
+            $this->get('forkcms.settings')->get(
                 $this->url->getModule(),
                 'send_new_profile_mail',
                 false
@@ -72,13 +72,13 @@ class Settings extends BackendBaseActionEdit
         if ($this->form->isSubmitted()) {
             if ($this->form->getField('send_new_profile_admin_mail')->isChecked()) {
                 if ($this->form->getField('overwrite_profile_notification_email')->isChecked()) {
-                    $this->form->getField('profile_notification_email')->isEmail(BL::msg('EmailIsRequired'));
+                    $this->form->getField('profile_notification_email')->isEmail(BackendLanguage::msg('EmailIsRequired'));
                 }
             }
 
             if ($this->form->isCorrect()) {
                 // set our settings
-                $this->get('fork.settings')->set(
+                $this->get('forkcms.settings')->set(
                     $this->url->getModule(),
                     'send_new_profile_admin_mail',
                     (bool) $this->form->getField('send_new_profile_admin_mail')->getValue()
@@ -90,12 +90,12 @@ class Settings extends BackendBaseActionEdit
                     $profileNotificationEmail = $this->form->getField('profile_notification_email')->getValue();
                 }
 
-                $this->get('fork.settings')->set(
+                $this->get('forkcms.settings')->set(
                     $this->url->getModule(),
                     'profile_notification_email',
                     $profileNotificationEmail
                 );
-                $this->get('fork.settings')->set(
+                $this->get('forkcms.settings')->set(
                     $this->url->getModule(),
                     'send_new_profile_mail',
                     (bool) $this->form->getField('send_new_profile_mail')->getValue()

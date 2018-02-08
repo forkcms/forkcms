@@ -7,7 +7,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
@@ -161,7 +161,7 @@ class Data extends BackendBaseActionIndex
             $this->dataGrid->addColumn(
                 'details',
                 null,
-                BL::getLabel('Details'),
+                BackendLanguage::getLabel('Details'),
                 BackendModel::createUrlForAction(
                     'DataDetails',
                     null,
@@ -171,7 +171,7 @@ class Data extends BackendBaseActionIndex
                         'end_date' => $this->filter['end_date'],
                     ]
                 ) . '&amp;id=[id]',
-                BL::getLabel('Details')
+                BackendLanguage::getLabel('Details')
             );
         }
 
@@ -188,7 +188,7 @@ class Data extends BackendBaseActionIndex
         $this->dataGrid->setMassActionCheckboxes('check', '[id]');
 
         // mass action
-        $ddmMassAction = new \SpoonFormDropdown('action', ['delete' => BL::getLabel('Delete')], 'delete');
+        $ddmMassAction = new \SpoonFormDropdown('action', ['delete' => BackendLanguage::getLabel('Delete')], 'delete');
         $ddmMassAction->setOptionAttributes('delete', ['data-target' => '#confirmDelete']);
         $this->dataGrid->setMassAction($ddmMassAction);
     }

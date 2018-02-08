@@ -10,7 +10,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Meta as BackendMeta;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
@@ -80,7 +80,7 @@ class Edit extends BackendBaseActionEdit
     private function getData(): void
     {
         $this->record = (array) BackendBlogModel::get($this->id);
-        $this->imageIsAllowed = $this->get('fork.settings')->get($this->url->getModule(), 'show_image_form', true);
+        $this->imageIsAllowed = $this->get('forkcms.settings')->get($this->url->getModule(), 'show_image_form', true);
 
         // is there a revision specified?
         $revisionToLoad = $this->getRequest()->query->getInt('revision');
@@ -120,7 +120,7 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgDrafts = new BackendDataGridDatabase(
             BackendBlogModel::QUERY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
-            ['draft', $this->record['id'], BL::getWorkingLanguage()]
+            ['draft', $this->record['id'], BackendLanguage::getWorkingLanguage()]
         );
 
         // hide columns
@@ -131,8 +131,8 @@ class Edit extends BackendBaseActionEdit
 
         // set headers
         $this->dgDrafts->setHeaderLabels([
-            'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
+            'user_id' => \SpoonFilter::ucfirst(BackendLanguage::lbl('By')),
+            'edited_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('LastEditedOn')),
         ]);
 
         // set column-functions
@@ -162,9 +162,9 @@ class Edit extends BackendBaseActionEdit
             $this->dgDrafts->addColumn(
                 'use_draft',
                 null,
-                BL::lbl('UseThisDraft'),
+                BackendLanguage::lbl('UseThisDraft'),
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
-                BL::lbl('UseThisDraft')
+                BackendLanguage::lbl('UseThisDraft')
             );
         }
     }
@@ -176,13 +176,13 @@ class Edit extends BackendBaseActionEdit
 
         // set hidden values
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => 1],
-            ['label' => BL::lbl('Published'), 'value' => 0],
+            ['label' => BackendLanguage::lbl('Hidden', $this->url->getModule()), 'value' => 1],
+            ['label' => BackendLanguage::lbl('Published'), 'value' => 0],
         ];
 
         // get categories
         $categories = BackendBlogModel::getCategories();
-        $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
+        $categories['new_category'] = \SpoonFilter::ucfirst(BackendLanguage::getLabel('AddCategory'));
 
         // create elements
         $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title')->makeRequired();
@@ -221,7 +221,7 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgRevisions = new BackendDataGridDatabase(
             BackendBlogModel::QUERY_DATAGRID_BROWSE_REVISIONS,
-            ['archived', $this->record['id'], BL::getWorkingLanguage()]
+            ['archived', $this->record['id'], BackendLanguage::getWorkingLanguage()]
         );
 
         // hide columns
@@ -232,8 +232,8 @@ class Edit extends BackendBaseActionEdit
 
         // set headers
         $this->dgRevisions->setHeaderLabels([
-            'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn')),
+            'user_id' => \SpoonFilter::ucfirst(BackendLanguage::lbl('By')),
+            'edited_on' => \SpoonFilter::ucfirst(BackendLanguage::lbl('LastEditedOn')),
         ]);
 
         // set column-functions
@@ -260,9 +260,9 @@ class Edit extends BackendBaseActionEdit
             $this->dgRevisions->addColumn(
                 'use_revision',
                 null,
-                BL::lbl('UseThisVersion'),
+                BackendLanguage::lbl('UseThisVersion'),
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]',
-                BL::lbl('UseThisVersion')
+                BackendLanguage::lbl('UseThisVersion')
             );
         }
     }
@@ -283,7 +283,7 @@ class Edit extends BackendBaseActionEdit
 
         // assign the active record and additional variables
         $this->template->assign('item', $this->record);
-        $this->template->assign('status', BL::lbl(\SpoonFilter::ucfirst($this->record['status'])));
+        $this->template->assign('status', BackendLanguage::lbl(\SpoonFilter::ucfirst($this->record['status'])));
 
         // assign revisions-datagrid
         $this->template->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
@@ -311,11 +311,11 @@ class Edit extends BackendBaseActionEdit
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->form->getField('text')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
-            $this->form->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
-            $this->form->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('title')->isFilled(BackendLanguage::err('TitleIsRequired'));
+            $this->form->getField('text')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('publish_on_date')->isValid(BackendLanguage::err('DateIsInvalid'));
+            $this->form->getField('publish_on_time')->isValid(BackendLanguage::err('TimeIsInvalid'));
+            $this->form->getField('category_id')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
             // validate meta
             $this->meta->validate();
@@ -329,7 +329,7 @@ class Edit extends BackendBaseActionEdit
                     'revision_id' => $this->record['revision_id'],
                     'category_id' => (int) $this->form->getField('category_id')->getValue(),
                     'user_id' => $this->form->getField('user_id')->getValue(),
-                    'language' => BL::getWorkingLanguage(),
+                    'language' => BackendLanguage::getWorkingLanguage(),
                     'title' => $this->form->getField('title')->getValue(),
                     'introduction' => $this->form->getField('introduction')->getValue(),
                     'text' => $this->form->getField('text')->getValue(),
@@ -369,7 +369,7 @@ class Edit extends BackendBaseActionEdit
                         // the different revisions, to prevent that a new file would
                         // overwrite images of previous revisions that have the same title, and thus, the same filename
                         $item['image'] = $this->meta->getUrl() .
-                                         '-' . BL::getWorkingLanguage() .
+                                         '-' . BackendLanguage::getWorkingLanguage() .
                                             '-' . $item['revision_id'] .
                                             '.' . $this->form->getField('image')->getExtension();
 
@@ -379,7 +379,7 @@ class Edit extends BackendBaseActionEdit
                         // generate the new filename
                         $image = new File($imagePath . '/source/' . $item['image']);
                         $newName = $this->meta->getUrl() .
-                                   '-' . BL::getWorkingLanguage() .
+                                   '-' . BackendLanguage::getWorkingLanguage() .
                                             '-' . $item['revision_id'] .
                                             '.' . $image->getExtension();
 

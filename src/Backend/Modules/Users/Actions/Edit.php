@@ -2,12 +2,12 @@
 
 namespace Backend\Modules\Users\Actions;
 
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\User as BackendUser;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
@@ -140,7 +140,7 @@ class Edit extends BackendBaseActionEdit
         // settings
         $this->form->addDropdown(
             'interface_language',
-            BL::getInterfaceLanguages(),
+            BackendLanguage::getInterfaceLanguages(),
             $this->record['settings']['interface_language']
         );
         $this->form->addDropdown(
@@ -215,7 +215,7 @@ class Edit extends BackendBaseActionEdit
 
         // check if we need to show the password strength and parse the label
         $this->template->assign('showPasswordStrength', ($this->record['settings']['password_strength'] !== 'strong'));
-        $this->template->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
+        $this->template->assign('passwordStrengthLabel', BackendLanguage::lbl($this->record['settings']['password_strength']));
     }
 
     private function validateForm(): void
@@ -228,14 +228,14 @@ class Edit extends BackendBaseActionEdit
 
             // email is present
             if (!$this->user->isGod()) {
-                if ($fields['email']->isFilled(BL::err('EmailIsRequired'))) {
+                if ($fields['email']->isFilled(BackendLanguage::err('EmailIsRequired'))) {
                     // is this an email-address
-                    if ($fields['email']->isEmail(BL::err('EmailIsInvalid'))) {
+                    if ($fields['email']->isEmail(BackendLanguage::err('EmailIsInvalid'))) {
                         // was this emailaddress deleted before
                         if (BackendUsersModel::emailDeletedBefore($fields['email']->getValue())) {
                             $fields['email']->addError(
                                 sprintf(
-                                    BL::err('EmailWasDeletedBefore'),
+                                    BackendLanguage::err('EmailWasDeletedBefore'),
                                     BackendModel::createUrlForAction(
                                         'UndoDelete',
                                         null,
@@ -246,7 +246,7 @@ class Edit extends BackendBaseActionEdit
                             );
                         } elseif (BackendUsersModel::existsEmail($fields['email']->getValue(), $this->id)) {
                             // email already exists
-                            $fields['email']->addError(BL::err('EmailAlreadyExists'));
+                            $fields['email']->addError(BackendLanguage::err('EmailAlreadyExists'));
                         }
                     }
                 }
@@ -256,25 +256,25 @@ class Edit extends BackendBaseActionEdit
             if ($this->user->isGod() && $fields['email']->getValue() != ''
                 && $this->user->getEmail() != $fields['email']->getValue()
             ) {
-                $fields['email']->addError(BL::err('CantChangeGodsEmail'));
+                $fields['email']->addError(BackendLanguage::err('CantChangeGodsEmail'));
             }
             if (!$this->user->isGod()) {
-                $fields['email']->isEmail(BL::err('EmailIsInvalid'));
+                $fields['email']->isEmail(BackendLanguage::err('EmailIsInvalid'));
             }
-            $fields['nickname']->isFilled(BL::err('NicknameIsRequired'));
-            $fields['name']->isFilled(BL::err('NameIsRequired'));
-            $fields['surname']->isFilled(BL::err('SurnameIsRequired'));
-            $fields['interface_language']->isFilled(BL::err('FieldIsRequired'));
-            $fields['date_format']->isFilled(BL::err('FieldIsRequired'));
-            $fields['time_format']->isFilled(BL::err('FieldIsRequired'));
-            $fields['number_format']->isFilled(BL::err('FieldIsRequired'));
+            $fields['nickname']->isFilled(BackendLanguage::err('NicknameIsRequired'));
+            $fields['name']->isFilled(BackendLanguage::err('NameIsRequired'));
+            $fields['surname']->isFilled(BackendLanguage::err('SurnameIsRequired'));
+            $fields['interface_language']->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $fields['date_format']->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $fields['time_format']->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $fields['number_format']->isFilled(BackendLanguage::err('FieldIsRequired'));
             if ($this->allowUserRights) {
-                $fields['groups']->isFilled(BL::err('FieldIsRequired'));
+                $fields['groups']->isFilled(BackendLanguage::err('FieldIsRequired'));
             }
             if (isset($fields['new_password']) && $fields['new_password']->isFilled()) {
                 if ($fields['new_password']->getValue() !== $fields['confirm_password']->getValue()
                 ) {
-                    $fields['confirm_password']->addError(BL::err('ValuesDontMatch'));
+                    $fields['confirm_password']->addError(BackendLanguage::err('ValuesDontMatch'));
                 }
             }
 

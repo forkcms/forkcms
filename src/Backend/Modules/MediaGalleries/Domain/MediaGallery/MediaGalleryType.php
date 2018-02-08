@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Backend\Core\Engine\TemplateModifiers;
-use Backend\Form\Type\EditorType;
+use App\Form\Type\Backend\EditorType;
 use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
 use Backend\Modules\MediaLibrary\ValueObject\MediaWidget;

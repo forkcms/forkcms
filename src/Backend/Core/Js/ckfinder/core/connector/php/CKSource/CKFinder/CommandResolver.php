@@ -18,7 +18,6 @@ use CKSource\CKFinder\Command\CommandAbstract;
 use CKSource\CKFinder\Event\BeforeCommandEvent;
 use CKSource\CKFinder\Event\CKFinderEvent;
 use CKSource\CKFinder\Exception\InvalidCommandException;
-use CKSource\CKFinder\Exception\InvalidRequestException;
 use CKSource\CKFinder\Exception\MethodNotAllowedException;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpFoundation\Request;

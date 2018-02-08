@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Blog\Actions;
 
-use Common\WebTestCase;
+use App\Component\Test\WebTestCase;
 
 class DetailTest extends WebTestCase
 {

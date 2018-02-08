@@ -9,7 +9,7 @@ use App\Service\Asset\Minifier;
 use App\Component\Priority\Priority;
 use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
@@ -215,16 +215,16 @@ final class Header extends KernelLoader
      */
     public function parse(): void
     {
-        $this->template->assign('page_title', BL::getLabel($this->url->getModule()));
+        $this->template->assign('page_title', BackendLanguage::getLabel($this->url->getModule()));
         $this->cssFiles->parse($this->template, 'cssFiles');
         $this->jsFiles->parse($this->template, 'jsFiles');
 
         $this->jsData->add('site', 'domain', SITE_DOMAIN);
         $this->jsData->add('editor', 'language', $this->getCKEditorLanguage());
 
-        if (!empty($this->get('fork.settings')->get('Core', 'theme'))) {
-            $this->jsData->add('theme', 'theme', $this->get('fork.settings')->get('Core', 'theme'));
-            $themePath = FRONTEND_PATH . '/Themes/' . $this->get('fork.settings')->get('Core', 'theme');
+        if (!empty($this->get('forkcms.settings')->get('Core', 'theme'))) {
+            $this->jsData->add('theme', 'theme', $this->get('forkcms.settings')->get('Core', 'theme'));
+            $themePath = FRONTEND_PATH . '/Themes/' . $this->get('forkcms.settings')->get('Core', 'theme');
             $this->jsData->add('theme', 'path', $themePath);
             $this->jsData->add('theme', 'has_css', is_file($themePath . '/Core/Layout/Css/screen.css'));
             $this->jsData->add('theme', 'has_editor_css', is_file($themePath . '/Core/Layout/Css/editor_content.css'));
@@ -241,7 +241,7 @@ final class Header extends KernelLoader
             return (string) Authentication::getUser()->getSetting('interface_language');
         }
 
-        return BL::getInterfaceLanguage();
+        return BackendLanguage::getInterfaceLanguage();
     }
 
     /**

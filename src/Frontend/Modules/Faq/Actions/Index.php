@@ -26,7 +26,7 @@ class Index extends FrontendBaseBlock
 
     private function getData(): void
     {
-        $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items_per_category', 10);
+        $limit = $this->get('forkcms.settings')->get($this->getModule(), 'overview_num_items_per_category', 10);
 
         $categoriesWithQuestions = array_map(
             function (array $category) use ($limit) {
@@ -50,7 +50,7 @@ class Index extends FrontendBaseBlock
         $this->template->assign('faqCategories', $this->categories);
         $this->template->assign(
             'allowMultipleCategories',
-            $this->get('fork.settings')->get($this->getModule(), 'allow_multiple_categories', true)
+            $this->get('forkcms.settings')->get($this->getModule(), 'allow_multiple_categories', true)
         );
     }
 }

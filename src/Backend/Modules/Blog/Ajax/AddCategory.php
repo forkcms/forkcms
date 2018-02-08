@@ -3,7 +3,7 @@
 namespace Backend\Modules\Blog\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +21,7 @@ class AddCategory extends BackendBaseAJAXAction
 
         // validate
         if ($categoryTitle === '') {
-            $this->output(Response::HTTP_BAD_REQUEST, null, BL::err('TitleIsRequired'));
+            $this->output(Response::HTTP_BAD_REQUEST, null, BackendLanguage::err('TitleIsRequired'));
 
             return;
         }
@@ -30,7 +30,7 @@ class AddCategory extends BackendBaseAJAXAction
         // build array
         $item = [
             'title' => \SpoonFilter::htmlspecialchars($categoryTitle),
-            'language' => BL::getWorkingLanguage(),
+            'language' => BackendLanguage::getWorkingLanguage(),
         ];
 
         $meta = [
@@ -47,6 +47,6 @@ class AddCategory extends BackendBaseAJAXAction
         $item['id'] = BackendBlogModel::insertCategory($item, $meta);
 
         // output
-        $this->output(Response::HTTP_OK, $item, vsprintf(BL::msg('AddedCategory'), [$item['title']]));
+        $this->output(Response::HTTP_OK, $item, vsprintf(BackendLanguage::msg('AddedCategory'), [$item['title']]));
     }
 }

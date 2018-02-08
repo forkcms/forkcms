@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Core\Language\Locale;
+use App\Component\Locale\BackendLocale;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ContentBlockDataTransferObject
@@ -54,7 +54,7 @@ class ContentBlockDataTransferObject
     public $isVisible = true;
 
     /**
-     * @var Locale
+     * @var BackendLocale
      */
     public $locale;
 
@@ -90,7 +90,7 @@ class ContentBlockDataTransferObject
         $this->revisionId = $contentBlock->getRevisionId();
     }
 
-    public function forOtherLocale(int $id, int $extraId, Locale $locale)
+    public function forOtherLocale(int $id, int $extraId, BackendLocale $locale)
     {
         $this->id = $id;
         $this->contentBlockEntity = null;

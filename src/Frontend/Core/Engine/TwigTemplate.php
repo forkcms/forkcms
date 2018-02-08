@@ -30,7 +30,7 @@ class TwigTemplate extends BaseTwigTemplate
         FileLocatorInterface $locator
     ) {
         $container = Model::getContainer();
-        $this->forkSettings = $container->get('fork.settings');
+        $this->forkSettings = $container->get('forkcms.settings');
 
         parent::__construct($environment, $parser, $locator);
 

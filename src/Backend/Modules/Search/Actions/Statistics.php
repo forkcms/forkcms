@@ -5,7 +5,7 @@ namespace Backend\Modules\Search\Actions;
 use Backend\Core\Engine\Base\Action;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
@@ -24,11 +24,11 @@ class Statistics extends Action
     {
         $dataGrid = new BackendDataGridDatabase(
             BackendSearchModel::QUERY_DATAGRID_BROWSE_STATISTICS,
-            [BL::getWorkingLanguage()]
+            [BackendLanguage::getWorkingLanguage()]
         );
         $dataGrid->setColumnsHidden(['data']);
-        $dataGrid->addColumn('referrer', BL::lbl('Referrer'));
-        $dataGrid->setHeaderLabels(['time' => \SpoonFilter::ucfirst(BL::lbl('SearchedOn'))]);
+        $dataGrid->addColumn('referrer', BackendLanguage::lbl('Referrer'));
+        $dataGrid->setHeaderLabels(['time' => \SpoonFilter::ucfirst(BackendLanguage::lbl('SearchedOn'))]);
 
         // set column function
         $dataGrid->setColumnFunction([__CLASS__, 'parseRefererInDataGrid'], '[data]', 'referrer');

@@ -7,7 +7,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Form;
 use Backend\Modules\Blog\Engine\Model;
 
@@ -61,10 +61,10 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // XML provided?
         if ($this->form->getField('wordpress')->isFilled()) {
-            $this->form->getField('wordpress')->isAllowedExtension(['xml'], BL::err('XMLFilesOnly'));
+            $this->form->getField('wordpress')->isAllowedExtension(['xml'], BackendLanguage::err('XMLFilesOnly'));
         } else {
             // No file
-            $this->form->getField('wordpress')->addError(BL::err('FieldIsRequired'));
+            $this->form->getField('wordpress')->addError(BackendLanguage::err('FieldIsRequired'));
         }
 
         if (!$this->form->isCorrect()) {
@@ -389,7 +389,7 @@ class ImportWordpress extends BackendBaseActionEdit
         $database = BackendModel::getContainer()->get('database');
         $id = (int) $database->getVar(
             'SELECT id FROM blog_categories WHERE title=? AND language=?',
-            [$category, BL::getWorkingLanguage()]
+            [$category, BackendLanguage::getWorkingLanguage()]
         );
 
         // We found an id!
@@ -404,7 +404,7 @@ class ImportWordpress extends BackendBaseActionEdit
 
         // We should create a new category
         $cat = [];
-        $cat['language'] = BL::getWorkingLanguage();
+        $cat['language'] = BackendLanguage::getWorkingLanguage();
         $cat['title'] = $category;
         $meta = [];
         $meta['keywords'] = $category;

@@ -3,12 +3,12 @@
 namespace Frontend\Core\Header;
 
 use App\Component\Cookie\Cookie;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 
 final class GoogleAnalytics
 {
-    /** @var ModulesSettings */
-    private $modulesSettings;
+    /** @var ModuleSettings */
+    private $moduleSettings;
 
     /** @var string */
     private $httpHost;
@@ -16,18 +16,18 @@ final class GoogleAnalytics
     /** @var Cookie */
     private $cookie;
 
-    public function __construct(ModulesSettings $modulesSettings, string $httpHost, Cookie $cookie)
+    public function __construct(ModuleSettings $moduleSettings, string $httpHost, Cookie $cookie)
     {
-        $this->modulesSettings = $modulesSettings;
+        $this->moduleSettings = $moduleSettings;
         $this->httpHost = $httpHost;
         $this->cookie = $cookie;
     }
 
     private function shouldAddGoogleAnalyticsHtml(): bool
     {
-        $siteHTMLHeader = (string) $this->modulesSettings->get('Core', 'site_html_header', '');
-        $siteHTMLFooter = (string) $this->modulesSettings->get('Core', 'site_html_footer', '');
-        $webPropertyId = (string) $this->modulesSettings->get('Analytics', 'web_property_id', null);
+        $siteHTMLHeader = (string) $this->moduleSettings->get('Core', 'site_html_header', '');
+        $siteHTMLFooter = (string) $this->moduleSettings->get('Core', 'site_html_footer', '');
+        $webPropertyId = (string) $this->moduleSettings->get('Analytics', 'web_property_id', null);
 
         return $webPropertyId !== ''
                && mb_strpos($siteHTMLHeader, $webPropertyId) === false
@@ -36,7 +36,7 @@ final class GoogleAnalytics
 
     private function shouldAnonymize(): bool
     {
-        return $this->modulesSettings->get('Core', 'show_cookie_bar', false) && !$this->cookie->hasAllowedCookies();
+        return $this->moduleSettings->get('Core', 'show_cookie_bar', false) && !$this->cookie->hasAllowedCookies();
     }
 
     private function getGoogleAnalyticsEvent(): string
@@ -54,7 +54,7 @@ final class GoogleAnalytics
             return '';
         }
 
-        $webPropertyId = $this->modulesSettings->get('Analytics', 'web_property_id', null);
+        $webPropertyId = $this->moduleSettings->get('Analytics', 'web_property_id', null);
 
         $trackingCode = '<script>
                           (function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){

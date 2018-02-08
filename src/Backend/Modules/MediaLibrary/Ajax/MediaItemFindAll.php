@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
@@ -63,7 +63,7 @@ class MediaItemFindAll extends BackendBaseAJAXAction
             /** @var MediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
-            throw new AjaxExitException(Language::err('NonExistingMediaFolder'));
+            throw new AjaxExitException(BackendLanguage::err('NonExistingMediaFolder'));
         }
     }
 

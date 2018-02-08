@@ -5,7 +5,7 @@ namespace Frontend\Modules\Faq\Widgets;
 use App\Service\Mailer\Message;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
@@ -34,7 +34,7 @@ class AskOwnQuestion extends FrontendBaseWidget
 
         $this->loadTemplate();
 
-        if (!$this->get('fork.settings')->get($this->getModule(), 'allow_own_question', false)) {
+        if (!$this->get('forkcms.settings')->get($this->getModule(), 'allow_own_question', false)) {
             return;
         }
 
@@ -45,7 +45,7 @@ class AskOwnQuestion extends FrontendBaseWidget
 
     private function buildForm(): void
     {
-        $this->form = new FrontendForm('own_question', '#' . FL::getAction('OwnQuestion'));
+        $this->form = new FrontendForm('own_question', '#' . FrontendLanguage::getAction('OwnQuestion'));
         $this->form->addText('name')->setAttributes(['required' => null]);
         $this->form->addText('email')->setAttributes(['required' => null, 'type' => 'email']);
         $this->form->addTextarea('message')->setAttributes(['required' => null]);
@@ -70,16 +70,16 @@ class AskOwnQuestion extends FrontendBaseWidget
     {
         $this->form->cleanupFields();
 
-        $this->form->getField('name')->isFilled(FL::err('NameIsRequired'));
-        $this->form->getField('email')->isEmail(FL::err('EmailIsInvalid'));
-        $this->form->getField('message')->isFilled(FL::err('QuestionIsRequired'));
+        $this->form->getField('name')->isFilled(FrontendLanguage::err('NameIsRequired'));
+        $this->form->getField('email')->isEmail(FrontendLanguage::err('EmailIsInvalid'));
+        $this->form->getField('message')->isFilled(FrontendLanguage::err('QuestionIsRequired'));
 
         return $this->form->isCorrect();
     }
 
     private function isSpamFilterEnabled(): bool
     {
-        return $this->get('fork.settings')->get($this->getModule(), 'spamfilter', false);
+        return $this->get('forkcms.settings')->get($this->getModule(), 'spamfilter', false);
     }
 
     private function getSubmittedQuestion(): array
@@ -122,10 +122,10 @@ class AskOwnQuestion extends FrontendBaseWidget
 
     private function sendNewQuestionNotification(array $question): void
     {
-        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
-        $to = $this->get('fork.settings')->get('Core', 'mailer_to');
-        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
-        $message = Message::newInstance(sprintf(FL::getMessage('FaqOwnQuestionSubject'), $question['name']))
+        $from = $this->get('forkcms.settings')->get('Core', 'mailer_from');
+        $to = $this->get('forkcms.settings')->get('Core', 'mailer_to');
+        $replyTo = $this->get('forkcms.settings')->get('Core', 'mailer_reply_to');
+        $message = Message::newInstance(sprintf(FrontendLanguage::getMessage('FaqOwnQuestionSubject'), $question['name']))
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$to['email'] => $to['name']])
             ->setReplyTo([$replyTo['email'] => $replyTo['name']])

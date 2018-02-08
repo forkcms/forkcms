@@ -5,7 +5,7 @@ namespace Backend\Modules\Blog\Actions;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
@@ -73,11 +73,11 @@ class EditComment extends BackendBaseActionEdit
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('author')->isFilled(BL::err('AuthorIsRequired'));
-            $this->form->getField('email')->isEmail(BL::err('EmailIsInvalid'));
-            $this->form->getField('text')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('author')->isFilled(BackendLanguage::err('AuthorIsRequired'));
+            $this->form->getField('email')->isEmail(BackendLanguage::err('EmailIsInvalid'));
+            $this->form->getField('text')->isFilled(BackendLanguage::err('FieldIsRequired'));
             if ($this->form->getField('website')->isFilled()) {
-                $this->form->getField('website')->isURL(BL::err('InvalidURL'));
+                $this->form->getField('website')->isURL(BackendLanguage::err('InvalidURL'));
             }
 
             // no errors?

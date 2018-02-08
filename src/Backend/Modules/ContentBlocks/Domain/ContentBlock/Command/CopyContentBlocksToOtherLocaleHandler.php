@@ -3,7 +3,7 @@
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Locale;
+use App\Component\Locale\BackendLocale;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
@@ -42,7 +42,7 @@ final class CopyContentBlocksToOtherLocaleHandler
         );
     }
 
-    private function getContentBlocksToCopy(Locale $locale): array
+    private function getContentBlocksToCopy(BackendLocale $locale): array
     {
         return (array) $this->contentBlockRepository->findBy(
             [

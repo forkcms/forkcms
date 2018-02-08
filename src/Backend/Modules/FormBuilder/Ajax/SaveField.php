@@ -3,7 +3,7 @@
 namespace Backend\Modules\FormBuilder\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use App\Component\Uri\Uri as CommonUri;
@@ -101,93 +101,93 @@ class SaveField extends BackendBaseAJAXAction
         // validate textbox
         if ($type === 'textbox') {
             if ($label === '') {
-                $errors['label'] = BL::getError('LabelIsRequired');
+                $errors['label'] = BackendLanguage::getError('LabelIsRequired');
             }
             if ($required && $requiredErrorMessage === '') {
-                $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                $errors['required_error_message'] = BackendLanguage::getError('ErrorMessageIsRequired');
             }
             if ($validation !== '' && $errorMessage === '') {
-                $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
+                $errors['error_message'] = BackendLanguage::getError('ErrorMessageIsRequired');
             }
             if ($replyTo && $validation !== 'email') {
-                $errors['reply_to_error_message'] = BL::getError('EmailValidationIsRequired');
+                $errors['reply_to_error_message'] = BackendLanguage::getError('EmailValidationIsRequired');
             }
             if ($sendConfirmationMailTo && $validation !== 'email') {
-                $errors['send_confirmation_mail_to_error_message'] = BL::getError(
+                $errors['send_confirmation_mail_to_error_message'] = BackendLanguage::getError(
                     'ActivateEmailValidationToUseThisOption'
                 );
             }
             if ($sendConfirmationMailTo && empty($confirmationMailSubject)) {
-                $errors['confirmation_mail_subject_error_message'] = BL::getError(
+                $errors['confirmation_mail_subject_error_message'] = BackendLanguage::getError(
                     'ConfirmationSubjectIsEmpty'
                 );
             }
         } elseif ($type === 'textarea') {
             // validate textarea
             if ($label === '') {
-                $errors['label'] = BL::getError('LabelIsRequired');
+                $errors['label'] = BackendLanguage::getError('LabelIsRequired');
             }
             if ($required && $requiredErrorMessage === '') {
-                $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                $errors['required_error_message'] = BackendLanguage::getError('ErrorMessageIsRequired');
             }
             if ($validation !== '' && $errorMessage === '') {
-                $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
+                $errors['error_message'] = BackendLanguage::getError('ErrorMessageIsRequired');
             }
         } elseif ($type === 'datetime') {
             // validate datetime
             if ($label === '') {
-                $errors['label'] = BL::getError('LabelIsRequired');
+                $errors['label'] = BackendLanguage::getError('LabelIsRequired');
             }
             if (in_array($valueType, ['day', 'week', 'month', 'year']) && $valueAmount === '') {
-                $errors['default_value_error_message'] = BL::getError('ValueIsRequired');
+                $errors['default_value_error_message'] = BackendLanguage::getError('ValueIsRequired');
             }
             if ($required && $requiredErrorMessage === '') {
-                $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                $errors['required_error_message'] = BackendLanguage::getError('ErrorMessageIsRequired');
             }
             if ($validation !== '' && $errorMessage === '') {
-                $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
+                $errors['error_message'] = BackendLanguage::getError('ErrorMessageIsRequired');
             }
         } elseif ($type === 'heading' && $values === '') {
             // validate heading
-            $errors['values'] = BL::getError('ValueIsRequired');
+            $errors['values'] = BackendLanguage::getError('ValueIsRequired');
         } elseif ($type === 'paragraph' && $values === '') {
             // validate paragraphs
-            $errors['values'] = BL::getError('ValueIsRequired');
+            $errors['values'] = BackendLanguage::getError('ValueIsRequired');
         } elseif ($type === 'submit' && $values === '') {
             // validate submitbuttons
-            $errors['values'] = BL::getError('ValueIsRequired');
+            $errors['values'] = BackendLanguage::getError('ValueIsRequired');
         } elseif ($type === 'dropdown') {
             // validate dropdown
             $values = trim($values, ',');
 
             // validate
             if ($label === '') {
-                $errors['label'] = BL::getError('LabelIsRequired');
+                $errors['label'] = BackendLanguage::getError('LabelIsRequired');
             }
             if ($required && $requiredErrorMessage === '') {
-                $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                $errors['required_error_message'] = BackendLanguage::getError('ErrorMessageIsRequired');
             }
             if ($values === '') {
-                $errors['values'] = BL::getError('ValueIsRequired');
+                $errors['values'] = BackendLanguage::getError('ValueIsRequired');
             }
         } elseif ($type === 'radiobutton') {
             // validate radiobutton
             if ($label === '') {
-                $errors['label'] = BL::getError('LabelIsRequired');
+                $errors['label'] = BackendLanguage::getError('LabelIsRequired');
             }
             if ($required && $requiredErrorMessage === '') {
-                $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                $errors['required_error_message'] = BackendLanguage::getError('ErrorMessageIsRequired');
             }
             if ($values === '') {
-                $errors['values'] = BL::getError('ValueIsRequired');
+                $errors['values'] = BackendLanguage::getError('ValueIsRequired');
             }
         } elseif ($type === 'checkbox') {
             // validate checkbox
             if ($label === '') {
-                $errors['label'] = BL::getError('LabelIsRequired');
+                $errors['label'] = BackendLanguage::getError('LabelIsRequired');
             }
             if ($required && $requiredErrorMessage === '') {
-                $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                $errors['required_error_message'] = BackendLanguage::getError('ErrorMessageIsRequired');
             }
         }
 

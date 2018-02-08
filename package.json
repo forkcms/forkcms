@@ -48,7 +48,7 @@
       "src/Backend/Core/Js/highcharts.js",
       "src/Backend/Core/Layout/EditorTemplates/templates.js",
       "src/Backend/Modules/Pages/Js/jstree/",
-      "src/Frontend/Cache/",
+      "var/frontend/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
   }

@@ -5,7 +5,7 @@ namespace Backend\Modules\Profiles\Installer;
 use Backend\Core\Installer\ModuleInstaller;
 use App\Domain\ModuleExtra\Type;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * Installer for the profiles module.
@@ -181,7 +181,7 @@ class Installer extends ModuleInstaller
 
     private function configureFrontendPages(): void
     {
-        $originalLocale = Language::getInterfaceLanguage();
+        $originalLocale = BackendLanguage::getInterfaceLanguage();
 
         // get search widget id
         $searchExtraId = $this->getSearchWidgetId();
@@ -189,13 +189,13 @@ class Installer extends ModuleInstaller
         // loop languages
         foreach ($this->getLanguages() as $language) {
             // We must define the locale we want to insert the page into
-            Language::setLocale($language);
+            BackendLanguage::setLocale($language);
 
             // index page
             if (!$this->hasPageWithProfilesBlock($language)) {
                 $indexPageId = $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Profile')),
+                        'title' => ucfirst(BackendLanguage::lbl('Profile')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -209,7 +209,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'Activate')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Activate')),
+                        'title' => ucfirst(BackendLanguage::lbl('Activate')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -223,7 +223,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'ForgotPassword')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ForgotPassword')),
+                        'title' => ucfirst(BackendLanguage::lbl('ForgotPassword')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -237,7 +237,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'ResetPassword')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ResetPassword')),
+                        'title' => ucfirst(BackendLanguage::lbl('ResetPassword')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -251,7 +251,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'ResendActivation')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ResendActivation')),
+                        'title' => ucfirst(BackendLanguage::lbl('ResendActivation')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -265,7 +265,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'Login')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Login')),
+                        'title' => ucfirst(BackendLanguage::lbl('Login')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -279,7 +279,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'Register')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Register')),
+                        'title' => ucfirst(BackendLanguage::lbl('Register')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -293,7 +293,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'Logout')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('Logout')),
+                        'title' => ucfirst(BackendLanguage::lbl('Logout')),
                         'type' => 'root',
                         'language' => $language,
                     ],
@@ -307,7 +307,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'Settings')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ProfileSettings')),
+                        'title' => ucfirst(BackendLanguage::lbl('ProfileSettings')),
                         'parent_id' => $indexPageId,
                         'language' => $language,
                     ],
@@ -321,7 +321,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'ChangeEmail')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ChangeEmail')),
+                        'title' => ucfirst(BackendLanguage::lbl('ChangeEmail')),
                         'parent_id' => $indexPageId,
                         'language' => $language,
                     ],
@@ -335,7 +335,7 @@ class Installer extends ModuleInstaller
             if (!$this->hasPageWithProfilesAction($language, 'ChangePassword')) {
                 $this->insertPage(
                     [
-                        'title' => ucfirst(Language::lbl('ChangePassword')),
+                        'title' => ucfirst(BackendLanguage::lbl('ChangePassword')),
                         'parent_id' => $indexPageId,
                         'language' => $language,
                     ],
@@ -348,7 +348,7 @@ class Installer extends ModuleInstaller
 
         // restore the original locale
         if (!empty($originalLocale)) {
-            Language::setLocale($originalLocale);
+            BackendLanguage::setLocale($originalLocale);
         }
     }
 

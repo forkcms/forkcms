@@ -41,7 +41,7 @@ class ExportThemeTemplates extends ActionEdit
 
         // determine selected theme, based upon submitted form or default theme
         if (!array_key_exists($this->selectedTheme, $this->availableThemes)) {
-            $this->selectedTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+            $this->selectedTheme = $this->get('forkcms.settings')->get('Core', 'theme', 'Fork');
         }
     }
 

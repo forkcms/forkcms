@@ -33,7 +33,6 @@ framework:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ 'ForkCMSInstallerBundle' ]
     filters:
         cssrewrite: ~
 
@@ -44,6 +43,7 @@ twig:
         - "%fork.form.theme%"
     paths:
       '%site.path_www%/src/Frontend/Modules/': ForkFrontendModules
+      '%kernel.project_dir%/templates/installer': installer
 
 monolog:
     handlers:
@@ -145,7 +145,7 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
         arguments:
-            - "@fork.settings"
+            - "@forkcms.settings"
             - "@service_container"
 
     cache.filesystem.adapter:
@@ -176,8 +176,8 @@ services:
             - "@database"
             - "@cache.pool"
 
-    fork.settings:
-        class: Common\ModulesSettings
+    forkcms.settings:
+        class: App\Service\Module\ModuleSettings
         public: true
         arguments:
             - "@database"
@@ -208,7 +208,30 @@ services:
             - "@templating.locator"
 
     translator:
-        class: Common\Language
+        class: App\Component\Locale\Language
         public: true
         arguments:
             - "@translator.selector"
+
+    fork.validator.url:
+        class: App\Service\Validator\UrlValidator
+        public: true
+
+    forkcms.installer:
+        class: App\Service\Installer\ForkInstaller
+        arguments: ['@service_container']
+
+    forkcms.installer.requirements.checker:
+        class: App\Service\Installer\RequirementsChecker
+        arguments: ['%kernel.project_dir%/']
+
+    forkcms.console.installer.prepare_for_reinstall:
+        class: App\Console\Installer\PrepareForReinstallCommand
+        tags:
+            - { name: console.command }
+
+    forkcms.console.installer.check_requirements:
+        class: App\Console\Installer\CheckRequirementsCommand
+        tags:
+            - { name: console.command }
+        arguments: ['@forkcms.installer.requirements.checker']

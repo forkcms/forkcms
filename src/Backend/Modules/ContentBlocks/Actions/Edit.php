@@ -5,8 +5,8 @@ namespace Backend\Modules\ContentBlocks\Actions;
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Locale;
-use Backend\Form\Type\DeleteType;
+use App\Component\Locale\BackendLocale;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
@@ -39,7 +39,7 @@ class Edit extends BackendBaseActionEdit
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->template->assign('form', $form->createView());
             $this->template->assign('contentBlock', $contentBlock);
-            $this->template->assign('revisions', ContentBlockRevisionDataGrid::getHtml($contentBlock, Locale::workingLocale()));
+            $this->template->assign('revisions', ContentBlockRevisionDataGrid::getHtml($contentBlock, BackendLocale::workingLocale()));
 
             $this->parse();
             $this->display();
@@ -88,7 +88,7 @@ class Edit extends BackendBaseActionEdit
             $this->template->assign('usingRevision', true);
 
             try {
-                return $contentBlockRepository->findOneByRevisionIdAndLocale($revisionId, Locale::workingLocale());
+                return $contentBlockRepository->findOneByRevisionIdAndLocale($revisionId, BackendLocale::workingLocale());
             } catch (ContentBlockNotFound $e) {
                 $this->redirect($this->getBackLink(['error' => 'non-existing']));
             }
@@ -97,7 +97,7 @@ class Edit extends BackendBaseActionEdit
         try {
             return $contentBlockRepository->findOneByIdAndLocale(
                 $this->getRequest()->query->getInt('id'),
-                Locale::workingLocale()
+                BackendLocale::workingLocale()
             );
         } catch (ContentBlockNotFound $e) {
             $this->redirect($this->getBackLink(['error' => 'non-existing']));
@@ -110,7 +110,7 @@ class Edit extends BackendBaseActionEdit
             ContentBlockType::class,
             new UpdateContentBlock($contentBlock),
             [
-                'theme' => $this->get('fork.settings')->get('Core', 'theme', 'Fork'),
+                'theme' => $this->get('forkcms.settings')->get('Core', 'theme', 'Fork'),
             ]
         );
 

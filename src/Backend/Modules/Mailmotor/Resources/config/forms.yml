@@ -9,7 +9,7 @@ services:
     class: Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType
     arguments:
       - "@mailmotor.subscriber"
-      - "@fork.settings"
+      - "@forkcms.settings"
     tags:
       - {name: 'form.type'}
   mailmotor.form.unsubscription:

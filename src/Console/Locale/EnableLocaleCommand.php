@@ -4,7 +4,7 @@ namespace Console\Locale;
 
 use Backend\Core\Engine\Authentication;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -26,7 +26,7 @@ class EnableLocaleCommand extends Command
     /** @var SymfonyStyle */
     private $formatter;
 
-    /** @var ModulesSettings */
+    /** @var ModuleSettings */
     private $settings;
 
     /** @var string */
@@ -57,7 +57,7 @@ class EnableLocaleCommand extends Command
     private $multiLanguageIsEnabled;
 
     public function __construct(
-        ModulesSettings $settings,
+        ModuleSettings $settings,
         array $installedModules,
         bool $multiLanguageIsEnabled,
         string $name = null

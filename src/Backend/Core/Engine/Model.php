@@ -3,15 +3,14 @@
 namespace Backend\Core\Engine;
 
 use App\Domain\ModuleExtra\Type;
-use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Language\Language as FrontendLanguage;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\FrontendLanguage as FrontendLanguage;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
@@ -275,7 +274,7 @@ class Model extends \Common\Core\Model
         $possibleFormats = [];
 
         // loop available formats
-        foreach ((array) self::get('fork.settings')->get('Core', 'date_formats_long') as $format) {
+        foreach ((array) self::get('forkcms.settings')->get('Core', 'date_formats_long') as $format) {
             // get date based on given format
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
@@ -297,7 +296,7 @@ class Model extends \Common\Core\Model
         $possibleFormats = [];
 
         // loop available formats
-        foreach ((array) self::get('fork.settings')->get('Core', 'date_formats_short') as $format) {
+        foreach ((array) self::get('forkcms.settings')->get('Core', 'date_formats_short') as $format) {
             // get date based on given format
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
@@ -450,7 +449,7 @@ class Model extends \Common\Core\Model
      */
     public static function getNumberFormats(): array
     {
-        return (array) self::get('fork.settings')->get('Core', 'number_formats');
+        return (array) self::get('forkcms.settings')->get('Core', 'number_formats');
     }
 
     /**
@@ -463,7 +462,7 @@ class Model extends \Common\Core\Model
         $possibleFormats = [];
         $interfaceLanguage = Authentication::getUser()->getSetting('interface_language');
 
-        foreach (self::get('fork.settings')->get('Core', 'time_formats') as $format) {
+        foreach (self::get('forkcms.settings')->get('Core', 'time_formats') as $format) {
             $possibleFormats[$format] = \SpoonDate::getDate($format, null, $interfaceLanguage);
         }
 

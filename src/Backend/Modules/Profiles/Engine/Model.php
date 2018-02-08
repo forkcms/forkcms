@@ -5,7 +5,7 @@ namespace Backend\Modules\Profiles\Engine;
 use App\Service\Mailer\Message;
 use App\Component\Uri\Uri\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Exception as BackendException;
 
@@ -201,7 +201,7 @@ class Model
         }
 
         // no custom avatar defined, get gravatar if allowed
-        if (empty($avatar) && BackendModel::get('fork.settings')->get('Profiles', 'allow_gravatar', true)) {
+        if (empty($avatar) && BackendModel::get('forkcms.settings')->get('Profiles', 'allow_gravatar', true)) {
             // define hash
             $hash = md5(mb_strtolower(trim('d' . $email)));
 
@@ -424,7 +424,7 @@ class Model
 
         // loop and build labels
         foreach ($labels as &$row) {
-            $row = \SpoonFilter::ucfirst(BL::getLabel(\SpoonFilter::ucfirst($row)));
+            $row = \SpoonFilter::ucfirst(BackendLanguage::getLabel(\SpoonFilter::ucfirst($row)));
         }
 
         // build array
@@ -663,10 +663,10 @@ class Model
     public static function notifyAdmin(array $values, string $templatePath = null): void
     {
         // to email
-        $toEmail = BackendModel::get('fork.settings')->get('Profiles', 'profile_notification_email', null);
+        $toEmail = BackendModel::get('forkcms.settings')->get('Profiles', 'profile_notification_email', null);
 
         if ($toEmail === null) {
-            $to = BackendModel::get('fork.settings')->get('Core', 'mailer_to');
+            $to = BackendModel::get('forkcms.settings')->get('Core', 'mailer_to');
             $toEmail = $to['email'];
         }
 
@@ -676,7 +676,7 @@ class Model
         // set variables
         $variables = [
             'message' => vsprintf(
-                BL::msg('NotificationNewProfileToAdmin', 'Profiles'),
+                BackendLanguage::msg('NotificationNewProfileToAdmin', 'Profiles'),
                 [
                     $values['display_name'],
                     $values['email'],
@@ -687,7 +687,7 @@ class Model
 
         // define subject
         $subject = vsprintf(
-            BL::lbl('NotificationNewProfileToAdmin', 'Profiles'),
+            BackendLanguage::lbl('NotificationNewProfileToAdmin', 'Profiles'),
             [
                 $values['email'],
             ]
@@ -716,7 +716,7 @@ class Model
         // set variables
         $variables = [
             'message' => vsprintf(
-                BL::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
+                BackendLanguage::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
                 [
                     $values['email'],
                     $values['unencrypted_password'],
@@ -727,7 +727,7 @@ class Model
 
         // define subject
         $notificationSubject = $forUpdate ? 'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';
-        $subject = BL::lbl($notificationSubject, 'Profiles');
+        $subject = BackendLanguage::lbl($notificationSubject, 'Profiles');
 
         self::sendMail(
             $subject,
@@ -759,8 +759,8 @@ class Model
         }
 
         // define variables
-        $from = BackendModel::get('fork.settings')->get('Core', 'mailer_from');
-        $replyTo = BackendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
+        $from = BackendModel::get('forkcms.settings')->get('Core', 'mailer_from');
+        $replyTo = BackendModel::get('forkcms.settings')->get('Core', 'mailer_reply_to');
 
         // create a message object and set all the needed properties
         $message = Message::newInstance($subject)

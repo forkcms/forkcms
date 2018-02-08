@@ -5,9 +5,9 @@ namespace Backend\Modules\Location\Actions;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\Intl\Intl as Intl;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
@@ -39,7 +39,7 @@ class Edit extends BackendBaseActionEdit
             parent::execute();
 
             // define Google Maps API key
-            $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+            $apikey = $this->get('forkcms.settings')->get('Core', 'google_maps_key');
 
             // check Google Maps API key, otherwise redirect to settings
             if ($apikey === null) {
@@ -77,7 +77,7 @@ class Edit extends BackendBaseActionEdit
 
         // load the settings from the general settings
         if (empty($this->settings)) {
-            $settings = $this->get('fork.settings')->getForModule('Location');
+            $settings = $this->get('forkcms.settings')->getForModule('Location');
 
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];
@@ -106,29 +106,29 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('number', $this->record['number'])->makeRequired();
         $this->form->addText('zip', $this->record['zip'])->makeRequired();
         $this->form->addText('city', $this->record['city'])->makeRequired();
-        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), $this->record['country'])->makeRequired();
+        $this->form->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BackendLanguage::getInterfaceLanguage()), $this->record['country'])->makeRequired();
         $this->form->addHidden('redirect', 'overview');
     }
 
     protected function loadSettingsForm(): void
     {
         $mapTypes = [
-            'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
-            'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
-            'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
-            'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
-            'STREET_VIEW' => BL::lbl('StreetView', $this->getModule()),
+            'ROADMAP' => BackendLanguage::lbl('Roadmap', $this->getModule()),
+            'SATELLITE' => BackendLanguage::lbl('Satellite', $this->getModule()),
+            'HYBRID' => BackendLanguage::lbl('Hybrid', $this->getModule()),
+            'TERRAIN' => BackendLanguage::lbl('Terrain', $this->getModule()),
+            'STREET_VIEW' => BackendLanguage::lbl('StreetView', $this->getModule()),
         ];
         $mapStyles = [
-            'standard' => BL::lbl('Default', $this->getModule()),
-            'custom' => BL::lbl('Custom', $this->getModule()),
-            'gray' => BL::lbl('Gray', $this->getModule()),
-            'blue' => BL::lbl('Blue', $this->getModule()),
+            'standard' => BackendLanguage::lbl('Default', $this->getModule()),
+            'custom' => BackendLanguage::lbl('Custom', $this->getModule()),
+            'gray' => BackendLanguage::lbl('Gray', $this->getModule()),
+            'blue' => BackendLanguage::lbl('Blue', $this->getModule()),
         ];
 
         $zoomLevels = array_combine(
             array_merge(['auto'], range(1, 18)),
-            array_merge([BL::lbl('Auto', $this->getModule())], range(1, 18))
+            array_merge([BackendLanguage::lbl('Auto', $this->getModule())], range(1, 18))
         );
 
         $this->settingsForm = new BackendForm('settings');
@@ -162,7 +162,7 @@ class Edit extends BackendBaseActionEdit
 
         // assign message if address was not be geocoded
         if ($this->record['lat'] == null || $this->record['lng'] == null) {
-            $this->template->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
+            $this->template->assign('errorMessage', BackendLanguage::err('AddressCouldNotBeGeocoded'));
         }
     }
 
@@ -172,17 +172,17 @@ class Edit extends BackendBaseActionEdit
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->form->getField('street')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('number')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('zip')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('city')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('title')->isFilled(BackendLanguage::err('TitleIsRequired'));
+            $this->form->getField('street')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('number')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('zip')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('city')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
             if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
                 $item['id'] = $this->id;
-                $item['language'] = BL::getWorkingLanguage();
+                $item['language'] = BackendLanguage::getWorkingLanguage();
                 $item['extra_id'] = $this->record['extra_id'];
                 $item['title'] = $this->form->getField('title')->getValue();
                 $item['street'] = $this->form->getField('street')->getValue();

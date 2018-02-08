@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -28,7 +28,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
             Response::HTTP_OK,
             $updateMediaFolder->getMediaFolderEntity(),
             sprintf(
-                Language::msg('MediaFolderIsEdited'),
+                BackendLanguage::msg('MediaFolderIsEdited'),
                 $updateMediaFolder->getMediaFolderEntity()->getName()
             )
         );
@@ -40,14 +40,14 @@ class MediaFolderEdit extends BackendBaseAJAXAction
 
         // validate values
         if ($id === null) {
-            throw new AjaxExitException(Language::err('FolderIdIsRequired'));
+            throw new AjaxExitException(BackendLanguage::err('FolderIdIsRequired'));
         }
 
         try {
             /** @var MediaFolder $mediaFolder */
             return $this->get('media_library.repository.folder')->findOneById($id);
         } catch (MediaFolderNotFound $mediaFolderNotFound) {
-            throw new AjaxExitException(Language::err('MediaFolderDoesNotExists'));
+            throw new AjaxExitException(BackendLanguage::err('MediaFolderDoesNotExists'));
         }
     }
 
@@ -56,7 +56,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
         $name = $this->getRequest()->request->get('name');
 
         if ($name === null) {
-            throw new AjaxExitException(Language::err('TitleIsRequired'));
+            throw new AjaxExitException(BackendLanguage::err('TitleIsRequired'));
         }
 
         return Uri::getUrl($name);

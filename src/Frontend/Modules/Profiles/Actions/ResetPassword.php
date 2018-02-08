@@ -4,7 +4,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -76,7 +76,7 @@ class ResetPassword extends FrontendBaseBlock
 
     private function validateForm(): bool
     {
-        $this->form->getField('password')->isFilled(FL::getError('PasswordIsRequired'));
+        $this->form->getField('password')->isFilled(FrontendLanguage::getError('PasswordIsRequired'));
 
         return $this->form->isCorrect();
     }

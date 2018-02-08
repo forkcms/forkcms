@@ -20,7 +20,7 @@ final class Settings extends ActionIndex
 
         $form = $this->createForm(
             SettingsType::class,
-            new SaveSettings($this->get('fork.settings'))
+            new SaveSettings($this->get('forkcms.settings'))
         );
 
         $form->handleRequest($this->getRequest());

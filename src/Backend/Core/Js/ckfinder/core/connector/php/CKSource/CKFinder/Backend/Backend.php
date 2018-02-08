@@ -16,7 +16,6 @@ namespace CKSource\CKFinder\Backend;
 
 use CKSource\CKFinder\Acl\AclInterface;
 use CKSource\CKFinder\Acl\Permission;
-use CKSource\CKFinder\Backend\Adapter\AwsS3;
 use CKSource\CKFinder\Backend\Adapter\EmulateRenameDirectoryInterface;
 use CKSource\CKFinder\CKFinder;
 use CKSource\CKFinder\Config;

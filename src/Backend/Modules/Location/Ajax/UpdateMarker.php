@@ -3,7 +3,7 @@
 namespace Backend\Modules\Location\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,7 @@ class UpdateMarker extends BackendBaseAJAXAction
 
         // validate id
         if ($itemId === 0) {
-            $this->output(Response::HTTP_BAD_REQUEST, null, BL::err('NonExisting'));
+            $this->output(Response::HTTP_BAD_REQUEST, null, BackendLanguage::err('NonExisting'));
 
             return;
         }
@@ -33,7 +33,7 @@ class UpdateMarker extends BackendBaseAJAXAction
             'id' => $itemId,
             'lat' => $lat,
             'lng' => $lng,
-            'language' => BL::getWorkingLanguage(),
+            'language' => BackendLanguage::getWorkingLanguage(),
         ];
 
         BackendLocationModel::update($updateData);

@@ -6,8 +6,8 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\BackendLanguage;
+use App\Component\Locale\FrontendLanguage;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
@@ -39,9 +39,9 @@ class Add extends BackendBaseActionAdd
         $this->form->addDropdown(
             'method',
             [
-                'database' => BL::getLabel('MethodDatabase'),
-                'database_email' => BL::getLabel('MethodDatabaseEmail'),
-                'email' => BL::getLabel('MethodEmail'),
+                'database' => BackendLanguage::getLabel('MethodDatabase'),
+                'database_email' => BackendLanguage::getLabel('MethodDatabaseEmail'),
+                'email' => BackendLanguage::getLabel('MethodEmail'),
             ],
             'database_email'
         )->makeRequired();
@@ -72,9 +72,9 @@ class Add extends BackendBaseActionAdd
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
             // validate fields
-            $txtName->isFilled(BL::getError('NameIsRequired'));
-            $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
-            if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
+            $txtName->isFilled(BackendLanguage::getError('NameIsRequired'));
+            $txtSuccessMessage->isFilled(BackendLanguage::getError('SuccessMessageIsRequired'));
+            if ($ddmMethod->isFilled(BackendLanguage::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
                 $error = false;
 
                 // check the addresses
@@ -89,7 +89,7 @@ class Add extends BackendBaseActionAdd
 
                 // add error
                 if ($error) {
-                    $txtEmail->addError(BL::getError('EmailIsInvalid'));
+                    $txtEmail->addError(BackendLanguage::getError('EmailIsInvalid'));
                 }
             }
 
@@ -97,17 +97,17 @@ class Add extends BackendBaseActionAdd
             if ($txtIdentifier->isFilled()) {
                 // invalid characters
                 if (!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) {
-                    $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
+                    $txtIdentifier->setError(BackendLanguage::getError('InvalidIdentifier'));
                 } elseif (BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue())) {
                     // unique identifier
-                    $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
+                    $txtIdentifier->setError(BackendLanguage::getError('UniqueIdentifier'));
                 }
             }
 
             if ($this->form->isCorrect()) {
                 // build array
                 $values = [];
-                $values['language'] = BL::getWorkingLanguage();
+                $values['language'] = BackendLanguage::getWorkingLanguage();
                 $values['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();
@@ -128,13 +128,13 @@ class Add extends BackendBaseActionAdd
                 $id = BackendFormBuilderModel::insert($values);
 
                 // set frontend locale
-                FL::setLocale(BL::getWorkingLanguage(), true);
+                FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage(), true);
 
                 // create submit button
                 $field = [];
                 $field['form_id'] = $id;
                 $field['type'] = 'submit';
-                $field['settings'] = serialize(['values' => \SpoonFilter::ucfirst(FL::getLabel('Send'))]);
+                $field['settings'] = serialize(['values' => \SpoonFilter::ucfirst(FrontendLanguage::getLabel('Send'))]);
                 BackendFormBuilderModel::insertField($field);
 
                 // everything is saved, so redirect to the editform

@@ -5,7 +5,7 @@ namespace Backend\Modules\FormBuilder\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
@@ -26,10 +26,10 @@ class Index extends BackendBaseActionIndex
     {
         $this->dataGrid = new BackendDataGridDatabase(
             BackendFormBuilderModel::QUERY_BROWSE,
-            [BL::getWorkingLanguage()]
+            [BackendLanguage::getWorkingLanguage()]
         );
         $this->dataGrid->setHeaderLabels([
-            'email' => \SpoonFilter::ucfirst(BL::getLabel('Recipient')),
+            'email' => \SpoonFilter::ucfirst(BackendLanguage::getLabel('Recipient')),
             'sent_forms' => '',
         ]);
         $this->dataGrid->setSortingColumns(['name', 'email', 'method', 'sent_forms'], 'name');
@@ -58,9 +58,9 @@ class Index extends BackendBaseActionIndex
             $this->dataGrid->addColumn(
                 'edit',
                 null,
-                BL::getLabel('Edit'),
+                BackendLanguage::getLabel('Edit'),
                 BackendModel::createUrlForAction('Edit') . '&amp;id=[id]',
-                BL::getLabel('Edit')
+                BackendLanguage::getLabel('Edit')
             );
         }
     }
@@ -90,13 +90,13 @@ class Index extends BackendBaseActionIndex
 
         // one form sent
         if ($sentForms === 1) {
-            $output = BL::getMessage('OneSentForm');
+            $output = BackendLanguage::getMessage('OneSentForm');
         } elseif ($sentForms > 1) {
             // multiple forms sent
-            $output = sprintf(BL::getMessage('SentForms'), $sentForms);
+            $output = sprintf(BackendLanguage::getMessage('SentForms'), $sentForms);
         } else {
             // no forms sent
-            $output = sprintf(BL::getMessage('SentForms'), $sentForms);
+            $output = sprintf(BackendLanguage::getMessage('SentForms'), $sentForms);
         }
 
         // check if data action is allowed

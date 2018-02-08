@@ -7,7 +7,7 @@ use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
@@ -134,8 +134,8 @@ class Index extends BackendBaseActionIndex
         $ddmMassAction = new \SpoonFormDropdown(
             'action',
             [
-                'addToGroup' => BL::getLabel('AddToGroup'),
-                'delete' => BL::getLabel('Delete'),
+                'addToGroup' => BackendLanguage::getLabel('AddToGroup'),
+                'delete' => BackendLanguage::getLabel('Delete'),
             ],
             'addToGroup',
             false,
@@ -160,9 +160,9 @@ class Index extends BackendBaseActionIndex
             $this->dgProfiles->addColumn(
                 'edit',
                 null,
-                BL::getLabel('Edit'),
+                BackendLanguage::getLabel('Edit'),
                 BackendModel::createUrlForAction('Edit', null, null, null) . '&amp;id=[id]',
-                BL::getLabel('Edit')
+                BackendLanguage::getLabel('Edit')
             );
         }
     }

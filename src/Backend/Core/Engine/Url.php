@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\BackendLanguage;
 
 /**
  * This class will handle the incoming URL.
@@ -225,7 +225,7 @@ class Url extends KernelLoader
 
     private function setLocale(): void
     {
-        $defaultLocale = $this->get('fork.settings')->get('Core', 'default_interface_language');
+        $defaultLocale = $this->get('forkcms.settings')->get('Core', 'default_interface_language');
         $locale = $this->getInterfaceLanguage();
         $possibleLocale = array_keys(BackendLanguage::getInterfaceLanguages());
 
@@ -239,7 +239,7 @@ class Url extends KernelLoader
 
     private function getInterfaceLanguage(): string
     {
-        $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
+        $default = $this->get('forkcms.settings')->get('Core', 'default_interface_language');
 
         if (Authentication::getUser()->isAuthenticated()) {
             return Authentication::getUser()->getSetting('interface_language', $default);

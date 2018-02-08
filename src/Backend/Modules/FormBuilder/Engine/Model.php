@@ -2,10 +2,10 @@
 
 namespace Backend\Modules\FormBuilder\Engine;
 
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use App\Domain\ModuleExtra\Type;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -42,23 +42,23 @@ class Model
         if ($timestamp >= $todayStart) {
             // today
             if ($hours >= 1) {
-                return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
+                return BackendLanguage::getLabel('Today') . ' ' . date('H:i', $timestamp);
             } elseif ($minutes > 1) {
                 // more than one minute
-                return sprintf(BL::getLabel('MinutesAgo'), $minutes);
+                return sprintf(BackendLanguage::getLabel('MinutesAgo'), $minutes);
             } elseif ($minutes == 1) {
                 // one minute
-                return BL::getLabel('OneMinuteAgo');
+                return BackendLanguage::getLabel('OneMinuteAgo');
             } elseif ($seconds > 1) {
                 // more than one second
-                return sprintf(BL::getLabel('SecondsAgo'), $seconds);
+                return sprintf(BackendLanguage::getLabel('SecondsAgo'), $seconds);
             } elseif ($seconds <= 1) {
                 // one second
-                return BL::getLabel('OneSecondAgo');
+                return BackendLanguage::getLabel('OneSecondAgo');
             }
         } elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) {
             // yesterday
-            return BL::getLabel('Yesterday') . ' ' . date('H:i', $timestamp);
+            return BackendLanguage::getLabel('Yesterday') . ' ' . date('H:i', $timestamp);
         } else {
             // older
             return date('d/m/Y H:i', $timestamp);
@@ -352,10 +352,10 @@ class Model
     public static function getErrors(string $type = null)
     {
         $errors = [];
-        $errors['required'] = FL::getError('FieldIsRequired');
-        $errors['email'] = FL::getError('EmailIsInvalid');
-        $errors['number'] = FL::getError('NumericCharactersOnly');
-        $errors['time'] = FL::getError('TimeIsInvalid');
+        $errors['required'] = FrontendLanguage::getError('FieldIsRequired');
+        $errors['email'] = FrontendLanguage::getError('EmailIsInvalid');
+        $errors['number'] = FrontendLanguage::getError('NumericCharactersOnly');
+        $errors['time'] = FrontendLanguage::getError('TimeIsInvalid');
 
         // specific type
         if ($type !== null) {
@@ -455,7 +455,7 @@ class Model
     public static function getLocale(string $name, string $type = 'label', string $application = 'Backend'): string
     {
         $name = \SpoonFilter::toCamelCase($name);
-        $class = \SpoonFilter::ucfirst($application) . '\Core\Language\Language';
+        $class = 'App\Language\\' . \SpoonFilter::ucfirst($application) . 'Language';
         $function = 'get' . \SpoonFilter::ucfirst($type);
 
         // execute and return value
@@ -553,7 +553,7 @@ class Model
         $extra = [
             'data' => serialize(
                 [
-                    'language' => BL::getWorkingLanguage(),
+                    'language' => BackendLanguage::getWorkingLanguage(),
                     'extra_label' => $values['name'],
                     'id' => $id,
                     'edit_url' => BackendModel::createUrlForAction('Edit') . '&id=' . $id,
@@ -600,7 +600,7 @@ class Model
         $finder->in(FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails');
 
         // if there is a custom theme we should include the templates there also
-        $theme = BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork');
+        $theme = BackendModel::get('forkcms.settings')->get('Core', 'theme', 'Fork');
         if ($theme !== 'core') {
             $path = FRONTEND_PATH . '/Themes/' . $theme . '/Modules/FormBuilder/Layout/Templates/Mails';
             if (is_dir($path)) {

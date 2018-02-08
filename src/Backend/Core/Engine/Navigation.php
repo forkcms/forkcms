@@ -6,7 +6,7 @@ use ForkCMS\App\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\BackendLanguage;
 
 final class Navigation extends KernelLoader
 {

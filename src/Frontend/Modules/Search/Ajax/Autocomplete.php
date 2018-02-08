@@ -20,7 +20,7 @@ class Autocomplete extends FrontendBaseAJAXAction
         $searchTerm = $this->getRequest()->request->get('term', '');
         $term = ($charset === 'utf-8')
             ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities($searchTerm);
-        $limit = (int) $this->get('fork.settings')->get('Search', 'autocomplete_num_items', 10);
+        $limit = (int) $this->get('forkcms.settings')->get('Search', 'autocomplete_num_items', 10);
 
         if ($term === '') {
             $this->output(Response::HTTP_BAD_REQUEST, null, 'term-parameter is missing.');

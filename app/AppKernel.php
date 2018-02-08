@@ -21,8 +21,6 @@ class AppKernel extends Kernel
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
             new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new \ForkCMS\Bundle\InstallerBundle\ForkCMSInstallerBundle(),
-            new \ForkCMS\Bundle\CoreBundle\ForkCMSCoreBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \SimpleBus\SymfonyBridge\SimpleBusCommandBusBundle(),
             new \SimpleBus\SymfonyBridge\DoctrineOrmBridgeBundle(),

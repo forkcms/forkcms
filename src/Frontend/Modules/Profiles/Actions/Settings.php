@@ -5,7 +5,7 @@ namespace Frontend\Modules\Profiles\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Model;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -43,8 +43,8 @@ class Settings extends FrontendBaseBlock
     private function getGenderOptions(): array
     {
         return [
-            'male' => \SpoonFilter::ucfirst(FL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female')),
+            'male' => \SpoonFilter::ucfirst(FrontendLanguage::getLabel('Male')),
+            'female' => \SpoonFilter::ucfirst(FrontendLanguage::getLabel('Female')),
         ];
     }
 
@@ -135,16 +135,16 @@ class Settings extends FrontendBaseBlock
 
         if ($this->displayNameCanStillBeChanged()
             && $this->profile->getDisplayName() !== $txtDisplayName->getValue()
-            && $txtDisplayName->isFilled(FL::getError('FieldIsRequired'))
+            && $txtDisplayName->isFilled(FrontendLanguage::getError('FieldIsRequired'))
             && FrontendProfilesModel::existsDisplayName($txtDisplayName->getValue(), $this->profile->getId())) {
-            $txtDisplayName->addError(FL::getError('DisplayNameExists'));
+            $txtDisplayName->addError(FrontendLanguage::getError('DisplayNameExists'));
         }
 
         // birthdate is not required but if one is filled we need all
         if ($ddmMonth->isFilled() || $ddmDay->isFilled() || $ddmYear->isFilled()) {
             // valid birth date?
             if (!checkdate($ddmMonth->getValue(), $ddmDay->getValue(), $ddmYear->getValue())) {
-                $ddmYear->addError(FL::getError('DateIsInvalid'));
+                $ddmYear->addError(FrontendLanguage::getError('DateIsInvalid'));
             }
         }
 

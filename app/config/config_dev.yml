@@ -22,7 +22,7 @@ monolog:
 
 services:
     database_collector:
-        class: Common\DataCollector\DatabaseDataCollector
+        class: App\Service\Database\DatabaseDataCollector
         arguments:
             - "@database"
         tags:

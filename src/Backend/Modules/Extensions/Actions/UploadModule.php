@@ -5,7 +5,7 @@ namespace Backend\Modules\Extensions\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -58,12 +58,12 @@ class UploadModule extends BackendBaseActionAdd
 
         // try and open it
         if ($zip->open($fileFile->getTempFileName()) !== true) {
-            $fileFile->addError(BL::getError('CorruptedFile'));
+            $fileFile->addError(BackendLanguage::getError('CorruptedFile'));
         }
 
         // zip file needs to contain some files
         if ($zip->numFiles == 0) {
-            $fileFile->addError(BL::getError('FileIsEmpty'));
+            $fileFile->addError(BackendLanguage::getError('FileIsEmpty'));
 
             return null;
         }
@@ -124,21 +124,21 @@ class UploadModule extends BackendBaseActionAdd
 
         // after filtering no files left (nothing useful found)
         if (count($files) == 0) {
-            $fileFile->addError(BL::getError('FileContentsIsUseless'));
+            $fileFile->addError(BackendLanguage::getError('FileContentsIsUseless'));
 
             return null;
         }
 
         // module already exists on the filesystem
         if (BackendExtensionsModel::existsModule($moduleName)) {
-            $fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
+            $fileFile->addError(sprintf(BackendLanguage::getError('ModuleAlreadyExists'), $moduleName));
 
             return null;
         }
 
         // installer in array?
         if (!in_array($prefix . 'src/Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
-            $fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
+            $fileFile->addError(sprintf(BackendLanguage::getError('NoInstallerFile'), $moduleName));
 
             return null;
         }
@@ -231,7 +231,7 @@ class UploadModule extends BackendBaseActionAdd
             $fileFile = $this->form->getField('file');
 
             // validate the file
-            if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(['zip'], sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
+            if ($fileFile->isFilled(BackendLanguage::err('FieldIsRequired')) && $fileFile->isAllowedExtension(['zip'], sprintf(BackendLanguage::getError('ExtensionNotAllowed'), 'zip'))) {
                 $moduleName = $this->uploadModuleFromZip();
             }
 

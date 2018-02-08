@@ -2,14 +2,14 @@
 
 namespace Backend\Modules\Extensions\Engine;
 
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Navigation;
 use Backend\Core\Engine\Exception;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -147,11 +147,11 @@ class Model
         }
 
         // check if the akismet key is available if there are modules that require it
-        if (!empty($akismetModules) && BackendModel::get('fork.settings')->get('Core', 'akismet_key', null) == '') {
+        if (!empty($akismetModules) && BackendModel::get('forkcms.settings')->get('Core', 'akismet_key', null) == '') {
             // add warning
             $warnings[] = [
                 'message' => sprintf(
-                    BL::err('AkismetKey'),
+                    BackendLanguage::err('AkismetKey'),
                     BackendModel::createUrlForAction('Index', 'Settings')
                 ),
             ];
@@ -159,11 +159,11 @@ class Model
 
         // check if the google maps key is available if there are modules that require it
         if (!empty($googleMapsModules)
-            && BackendModel::get('fork.settings')->get('Core', 'google_maps_key', null) == '') {
+            && BackendModel::get('forkcms.settings')->get('Core', 'google_maps_key', null) == '') {
             // add warning
             $warnings[] = [
                 'message' => sprintf(
-                    BL::err('GoogleMapsKey'),
+                    BackendLanguage::err('GoogleMapsKey'),
                     BackendModel::createUrlForAction('Index', 'Settings')
                 ),
             ];
@@ -215,7 +215,7 @@ class Model
         }
 
         // we can't delete the default template
-        if ($id == BackendModel::get('fork.settings')->get('Pages', 'default_template')) {
+        if ($id == BackendModel::get('forkcms.settings')->get('Pages', 'default_template')) {
             return false;
         }
         if (self::isTemplateInUse($id)) {
@@ -296,7 +296,7 @@ class Model
 
         foreach ($extras as $id => &$row) {
             $row['data'] = $row['data'] === null ? [] : @unserialize($row['data']);
-            if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
+            if (isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) {
                 $itemsToRemove[] = $id;
             }
 
@@ -305,7 +305,7 @@ class Model
                 $row['data']['url'] = BackendModel::createUrlForAction('', $row['module']);
             }
 
-            $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));
+            $name = \SpoonFilter::ucfirst(BackendLanguage::lbl($row['label']));
             if (isset($row['data']['extra_label'])) {
                 $name = $row['data']['extra_label'];
             }
@@ -314,8 +314,8 @@ class Model
             }
 
             // add human readable name
-            $module = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
-            $extraTypeLabel = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type'])));
+            $module = \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($row['module'])));
+            $extraTypeLabel = \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type'])));
             $row['human_name'] = $extraTypeLabel . ': ' . $name;
             $row['path'] = $extraTypeLabel . ' › ' . $module . ($module !== $name ? ' › ' . $name : '');
         }
@@ -346,7 +346,7 @@ class Model
             $row['data'] = @unserialize($row['data']);
 
             // remove items that are not for the current language
-            if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
+            if (isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) {
                 continue;
             }
 
@@ -358,14 +358,14 @@ class Model
                 );
             }
 
-            $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));
+            $name = \SpoonFilter::ucfirst(BackendLanguage::lbl($row['label']));
             if (isset($row['data']['extra_label'])) {
                 $name = $row['data']['extra_label'];
             }
             if (isset($row['data']['label_variables'])) {
                 $name = vsprintf($name, $row['data']['label_variables']);
             }
-            $moduleName = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
+            $moduleName = \SpoonFilter::ucfirst(BackendLanguage::lbl(\SpoonFilter::toCamelCase($row['module'])));
 
             if (!isset($values[$row['module']])) {
                 $values[$row['module']] = [
@@ -399,17 +399,17 @@ class Model
                 $information['data'] = self::processModuleXml($infoXml);
                 if (empty($information['data'])) {
                     $information['warnings'][] = [
-                        'message' => BL::getMessage('InformationFileIsEmpty'),
+                        'message' => BackendLanguage::getMessage('InformationFileIsEmpty'),
                     ];
                 }
             } catch (Exception $e) {
                 $information['warnings'][] = [
-                    'message' => BL::getMessage('InformationFileCouldNotBeLoaded'),
+                    'message' => BackendLanguage::getMessage('InformationFileCouldNotBeLoaded'),
                 ];
             }
         } else {
             $information['warnings'][] = [
-                'message' => BL::getMessage('InformationFileIsMissing'),
+                'message' => BackendLanguage::getMessage('InformationFileIsMissing'),
             ];
         }
 
@@ -439,7 +439,7 @@ class Model
             $module = [];
             $module['id'] = 'module_' . $moduleName;
             $module['raw_name'] = $moduleName;
-            $module['name'] = \SpoonFilter::ucfirst(BL::getLabel(\SpoonFilter::toCamelCase($moduleName)));
+            $module['name'] = \SpoonFilter::ucfirst(BackendLanguage::getLabel(\SpoonFilter::toCamelCase($moduleName)));
             $module['description'] = '';
             $module['version'] = '';
             $module['installed'] = false;
@@ -517,8 +517,8 @@ class Model
             return [];
         }
 
-        /** @var ModulesSettings $moduleSettings */
-        $moduleSettings = BackendModel::get('fork.settings');
+        /** @var ModuleSettings $moduleSettings */
+        $moduleSettings = BackendModel::get('forkcms.settings');
 
         return array_filter(
             BackendModel::getModules(),
@@ -544,7 +544,7 @@ class Model
         $theme = \SpoonFilter::getValue(
             (string) $theme,
             null,
-            BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork')
+            BackendModel::get('forkcms.settings')->get('Core', 'theme', 'Fork')
         );
 
         $templates = (array) $database->getRecords(
@@ -565,8 +565,8 @@ class Model
             $row['has_block'] = false;
 
             // reset
-            if (isset($row['data']['default_extras_' . BL::getWorkingLanguage()])) {
-                $row['data']['default_extras'] = $row['data']['default_extras_' . BL::getWorkingLanguage()];
+            if (isset($row['data']['default_extras_' . BackendLanguage::getWorkingLanguage()])) {
+                $row['data']['default_extras'] = $row['data']['default_extras_' . BackendLanguage::getWorkingLanguage()];
             }
 
             // any extras?
@@ -692,8 +692,8 @@ class Model
         // run installer
         $installer = new $class(
             BackendModel::getContainer()->get('database'),
-            BL::getActiveLanguages(),
-            array_keys(BL::getInterfaceLanguages()),
+            BackendLanguage::getActiveLanguages(),
+            array_keys(BackendLanguage::getInterfaceLanguages()),
             false,
             $variables
         );
@@ -858,7 +858,7 @@ class Model
             $item['description'] = $cronjob[0];
 
             // check if cronjob has already been run
-            $cronjobs = (array) BackendModel::get('fork.settings')->get('Core', 'cronjobs');
+            $cronjobs = (array) BackendModel::get('forkcms.settings')->get('Core', 'cronjobs');
             $item['active'] = in_array($information['name'] . '.' . $attributes['action'], $cronjobs);
 
             $information['cronjobs'][] = $item;

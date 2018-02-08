@@ -3,9 +3,9 @@
 namespace Backend\Modules\Analytics\Form;
 
 use Backend\Core\Engine\Form;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\TwigTemplate;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use Google_Service_Exception;
 use Google_Service_Analytics;
 
@@ -17,7 +17,7 @@ final class SettingsStepAccountTypeInterface implements SettingsStepTypeInterfac
     /** @var Form */
     private $form;
 
-    /** @var ModulesSettings */
+    /** @var ModuleSettings */
     private $settings;
 
     /** Google_Service_Analytics $googleServiceAnalytics */
@@ -28,7 +28,7 @@ final class SettingsStepAccountTypeInterface implements SettingsStepTypeInterfac
 
     public function __construct(
         string $name,
-        ModulesSettings $settings,
+        ModuleSettings $settings,
         Google_Service_Analytics $googleServiceAnalytics
     ) {
         $this->form = new Form($name);
@@ -86,7 +86,7 @@ final class SettingsStepAccountTypeInterface implements SettingsStepTypeInterfac
 
     private function isValid(): bool
     {
-        $this->form->getField('account')->isFilled(Language::err('FieldIsRequired'));
+        $this->form->getField('account')->isFilled(BackendLanguage::err('FieldIsRequired'));
 
         return $this->form->isCorrect();
     }

@@ -4,7 +4,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
@@ -50,9 +50,9 @@ class Login extends FrontendBaseBlock
         $txtEmail = $this->form->getField('email');
         $txtPassword = $this->form->getField('password');
 
-        if (!$txtEmail->isFilled(FL::getError('EmailIsRequired'))
-            || !$txtPassword->isFilled(FL::getError('PasswordIsRequired'))
-            || !$txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
+        if (!$txtEmail->isFilled(FrontendLanguage::getError('EmailIsRequired'))
+            || !$txtPassword->isFilled(FrontendLanguage::getError('PasswordIsRequired'))
+            || !$txtEmail->isEmail(FrontendLanguage::getError('EmailIsInvalid'))) {
             return $this->form->isCorrect();
         }
 
@@ -60,7 +60,7 @@ class Login extends FrontendBaseBlock
 
         if ($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
             $errorString = sprintf(
-                FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
+                FrontendLanguage::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
                 FrontendNavigation::getUrlForBlock('Profiles', 'ResendActivation')
             );
 

@@ -1,6 +1,3 @@
-installer:
-    resource: "@ForkCMSInstallerBundle/Resources/config/routing.yml"
-
 # default routes
 _main:
     resource: routing.yml

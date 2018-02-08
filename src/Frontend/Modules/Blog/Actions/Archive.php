@@ -6,7 +6,7 @@ use DateTimeImmutable;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation;
 use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,7 +52,7 @@ class Archive extends FrontendBaseBlock
             $this->endDate->getTimestamp()
         );
 
-        $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items', 10);
+        $limit = $this->get('forkcms.settings')->get($this->getModule(), 'overview_num_items', 10);
         $numberOfPages = (int) ceil($numberOfItems / $limit);
 
         // Check if the page exists
@@ -88,7 +88,7 @@ class Archive extends FrontendBaseBlock
 
     private function getSlug(): string
     {
-        $yearIndex = $this->url->getParameter(0) === FL::act('Archive') ? 1 : 0;
+        $yearIndex = $this->url->getParameter(0) === FrontendLanguage::act('Archive') ? 1 : 0;
         $monthIndex = $yearIndex + 1;
         $this->hasMonth = !empty($this->url->getParameter($monthIndex));
 
@@ -160,13 +160,13 @@ class Archive extends FrontendBaseBlock
         $this->template->assign('items', $this->articles);
         $this->template->assign(
             'allowComments',
-            $this->get('fork.settings')->get($this->getModule(), 'allow_comments')
+            $this->get('forkcms.settings')->get($this->getModule(), 'allow_comments')
         );
     }
 
     private function setPageTitle(): void
     {
-        $this->header->setPageTitle(\SpoonFilter::ucfirst(FL::lbl('Archive')));
+        $this->header->setPageTitle(\SpoonFilter::ucfirst(FrontendLanguage::lbl('Archive')));
         $this->header->setPageTitle($this->startDate->format('Y'));
         if ($this->hasMonth) {
             $this->header->setPageTitle(
@@ -177,7 +177,7 @@ class Archive extends FrontendBaseBlock
 
     private function addPageToBreadcrumb(): void
     {
-        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FL::lbl('Archive')));
+        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FrontendLanguage::lbl('Archive')));
         $this->breadcrumb->addElement($this->startDate->format('Y'));
         if ($this->hasMonth) {
             $this->breadcrumb->addElement(
@@ -189,7 +189,7 @@ class Archive extends FrontendBaseBlock
     private function addLinkToRssFeed(): void
     {
         $this->header->addRssLink(
-            $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
+            $this->get('forkcms.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
             FrontendNavigation::getUrlForBlock($this->getModule(), 'Rss')
         );
     }

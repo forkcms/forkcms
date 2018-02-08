@@ -6,8 +6,8 @@ use App\Exception\RedirectException;
 use DateTime;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
-use Frontend\Core\Language\Language;
-use Frontend\Core\Language\Locale;
+use App\Component\Locale\FrontendLanguage;
+use App\Component\Locale\FrontendLocale;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use App\Twig\Extensions\BaseTwigModifiers;
 use SpoonDate;
@@ -28,14 +28,14 @@ class TemplateModifiers extends BaseTwigModifiers
     public static function formatDate($var): string
     {
         // get setting
-        $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_short');
+        $format = FrontendModel::get('forkcms.settings')->get('Core', 'date_format_short');
 
         if ($var instanceof DateTime) {
             $var = $var->getTimestamp();
         }
 
         // format the date
-        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
+        return SpoonDate::getDate($format, (int) $var, FrontendLocale::frontendLanguage());
     }
 
     /**
@@ -49,14 +49,14 @@ class TemplateModifiers extends BaseTwigModifiers
     public static function formatDateTime($var): string
     {
         // get setting
-        $format = FrontendModel::get('fork.settings')->get('Core', 'date_format_long');
+        $format = FrontendModel::get('forkcms.settings')->get('Core', 'date_format_long');
 
         if ($var instanceof DateTime) {
             $var = $var->getTimestamp();
         }
 
         // format the date
-        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
+        return SpoonDate::getDate($format, (int) $var, FrontendLocale::frontendLanguage());
     }
 
     /**
@@ -85,7 +85,7 @@ class TemplateModifiers extends BaseTwigModifiers
     public static function formatNumber(float $number, int $decimals = null): string
     {
         // get setting
-        $format = FrontendModel::get('fork.settings')->get('Core', 'number_format');
+        $format = FrontendModel::get('forkcms.settings')->get('Core', 'number_format');
 
         // get amount of decimals
         if ($decimals === null) {
@@ -115,14 +115,14 @@ class TemplateModifiers extends BaseTwigModifiers
     public static function formatTime($var): string
     {
         // get setting
-        $format = FrontendModel::get('fork.settings')->get('Core', 'time_format');
+        $format = FrontendModel::get('forkcms.settings')->get('Core', 'time_format');
 
         if ($var instanceof DateTime) {
             $var = $var->getTimestamp();
         }
 
         // format the date
-        return SpoonDate::getDate($format, (int) $var, Locale::frontendLanguage());
+        return SpoonDate::getDate($format, (int) $var, FrontendLocale::frontendLanguage());
     }
 
     /**
@@ -187,11 +187,11 @@ class TemplateModifiers extends BaseTwigModifiers
 
         // return
         return '<abbr title="'.\SpoonDate::getDate(
-            FrontendModel::get('fork.settings')->get('Core', 'date_format_long') .', '
-            . FrontendModel::get('fork.settings')->get('Core', 'time_format'),
+            FrontendModel::get('forkcms.settings')->get('Core', 'date_format_long') .', '
+            . FrontendModel::get('forkcms.settings')->get('Core', 'time_format'),
             $timestamp,
-            Locale::frontendLanguage()
-        ).'">'.\SpoonDate::getTimeAgo($timestamp, Locale::frontendLanguage()).'</abbr>';
+            FrontendLocale::frontendLanguage()
+        ).'">'.\SpoonDate::getTimeAgo($timestamp, FrontendLocale::frontendLanguage()).'</abbr>';
     }
 
     /**
@@ -471,7 +471,7 @@ class TemplateModifiers extends BaseTwigModifiers
         // detect links
         $string = \SpoonFilter::replaceURLsWithAnchors(
             $string,
-            FrontendModel::get('fork.settings')->get('Core', 'seo_nofollow_in_comments', false)
+            FrontendModel::get('forkcms.settings')->get('Core', 'seo_nofollow_in_comments', false)
         );
 
         // replace newlines
@@ -511,6 +511,6 @@ class TemplateModifiers extends BaseTwigModifiers
      */
     public static function toLabel(string $value): string
     {
-        return \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
+        return \SpoonFilter::ucfirst(FrontendLanguage::lbl(\SpoonFilter::toCamelCase($value, '_', false)));
     }
 }

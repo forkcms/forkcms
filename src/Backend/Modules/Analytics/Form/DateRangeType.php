@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\Form;
 
 use Backend\Core\Engine\Form;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\TwigTemplate;
 use Backend\Core\Engine\Model;
 use Backend\Modules\Analytics\DateRange\DateRange;
@@ -74,14 +74,14 @@ final class DateRangeType
     {
         $fields = $this->form->getFields();
 
-        if (!$fields['start_date']->isFilled(Language::err('FieldIsRequired')) ||
-            !$fields['end_date']->isFilled(Language::err('FieldIsRequired'))
+        if (!$fields['start_date']->isFilled(BackendLanguage::err('FieldIsRequired')) ||
+            !$fields['end_date']->isFilled(BackendLanguage::err('FieldIsRequired'))
         ) {
             return $this->form->isCorrect();
         }
 
-        if (!$fields['start_date']->isValid(Language::err('DateIsInvalid')) ||
-            !$fields['end_date']->isValid(Language::err('DateIsInvalid'))
+        if (!$fields['start_date']->isValid(BackendLanguage::err('DateIsInvalid')) ||
+            !$fields['end_date']->isValid(BackendLanguage::err('DateIsInvalid'))
         ) {
             return $this->form->isCorrect();
         }
@@ -91,17 +91,17 @@ final class DateRangeType
 
         // startdate cannot be before 2005 (earliest valid google startdate)
         if ($newStartDate < mktime(0, 0, 0, 1, 1, 2005)) {
-            $fields['start_date']->setError(Language::err('DateRangeIsInvalid'));
+            $fields['start_date']->setError(BackendLanguage::err('DateRangeIsInvalid'));
         }
 
         // enddate cannot be in the future
         if ($newEndDate > time()) {
-            $fields['start_date']->setError(Language::err('DateRangeIsInvalid'));
+            $fields['start_date']->setError(BackendLanguage::err('DateRangeIsInvalid'));
         }
 
         // enddate cannot be before the startdate
         if ($newStartDate > $newEndDate) {
-            $fields['start_date']->setError(Language::err('DateRangeIsInvalid'));
+            $fields['start_date']->setError(BackendLanguage::err('DateRangeIsInvalid'));
         }
 
         return $this->form->isCorrect();

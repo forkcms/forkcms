@@ -2,37 +2,37 @@
 
 namespace Frontend\Modules\Mailmotor\Domain\Subscription\Command;
 
-use Common\ModulesSettings;
-use Frontend\Core\Language\Locale;
+use App\Service\Module\ModuleSettings;
+use App\Component\Locale\FrontendLocale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 final class SubscriptionHandler
 {
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
-    private $modulesSettings;
+    private $moduleSettings;
 
     /**
      * @var Subscriber
      */
     private $subscriber;
 
-    public function __construct(Subscriber $subscriber, ModulesSettings $modulesSettings)
+    public function __construct(Subscriber $subscriber, ModuleSettings $moduleSettings)
     {
         $this->subscriber = $subscriber;
-        $this->modulesSettings = $modulesSettings;
+        $this->moduleSettings = $moduleSettings;
     }
 
     public function handle(Subscription $subscription): void
     {
         $mergeFields = [];
         $interests = [];
-        $languageSpecificListId = $this->modulesSettings->get('Mailmotor', 'list_id_' . Locale::frontendLanguage());
+        $languageSpecificListId = $this->moduleSettings->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage());
 
         try {
-            if ($this->modulesSettings->get('Mailmotor', 'overwrite_interests', true)) {
+            if ($this->moduleSettings->get('Mailmotor', 'overwrite_interests', true)) {
                 $possibleInterests = $this->subscriber->getInterests($languageSpecificListId);
 
                 foreach ($possibleInterests as $categoryId => $categoryInterest) {
@@ -55,7 +55,7 @@ final class SubscriptionHandler
             (string) $subscription->locale,
             $mergeFields,
             $interests,
-            $this->modulesSettings->get('Mailmotor', 'double_opt_in', true),
+            $this->moduleSettings->get('Mailmotor', 'double_opt_in', true),
             $languageSpecificListId
         );
     }

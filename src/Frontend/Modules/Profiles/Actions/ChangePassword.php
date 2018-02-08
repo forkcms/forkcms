@@ -4,7 +4,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Profile;
@@ -74,17 +74,17 @@ class ChangePassword extends FrontendBaseBlock
         $txtOldPassword = $this->form->getField('old_password');
         $txtNewPassword = $this->form->getField('new_password');
 
-        if (!$txtOldPassword->isFilled(FL::getError('PasswordIsRequired'))) {
+        if (!$txtOldPassword->isFilled(FrontendLanguage::getError('PasswordIsRequired'))) {
             return false;
         }
 
         if (!$this->isValidLoginCredentials($this->profile->getEmail(), $txtOldPassword->getValue())) {
-            $txtOldPassword->addError(FL::getError('InvalidPassword'));
+            $txtOldPassword->addError(FrontendLanguage::getError('InvalidPassword'));
         }
 
-        if ($txtNewPassword->isFilled(FL::getError('PasswordIsRequired'))
+        if ($txtNewPassword->isFilled(FrontendLanguage::getError('PasswordIsRequired'))
             && $txtNewPassword->getValue() !== $this->form->getField('verify_new_password')->getValue()) {
-            $this->form->getField('verify_new_password')->addError(FL::err('PasswordsDontMatch'));
+            $this->form->getField('verify_new_password')->addError(FrontendLanguage::err('PasswordsDontMatch'));
         }
 
         return $this->form->isCorrect();

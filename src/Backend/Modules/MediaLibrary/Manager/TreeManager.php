@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Manager;
 
 use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
 
@@ -28,7 +28,7 @@ final class TreeManager
     {
         $navigationItems = $this->mediaFolderCache->get();
 
-        $html = '<h4>' . ucfirst(Language::lbl('Folders')) . '</h4>' . "\n";
+        $html = '<h4>' . ucfirst(BackendLanguage::lbl('Folders')) . '</h4>' . "\n";
         $html .= $this->buildNavigationTree($navigationItems);
 
         return $html;

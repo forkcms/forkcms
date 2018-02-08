@@ -4,7 +4,7 @@ namespace Backend\Modules\Faq\Actions;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -17,7 +17,7 @@ class AddCategory extends BackendBaseActionAdd
     public function execute(): void
     {
         // only one category allowed, so we redirect
-        if (!$this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true)) {
+        if (!$this->get('forkcms.settings')->get('Faq', 'allow_multiple_categories', true)) {
             $this->redirect(BackendModel::createUrlForAction('Categories') . '&error=only-one-category-allowed');
         }
 
@@ -55,14 +55,14 @@ class AddCategory extends BackendBaseActionAdd
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $this->form->getField('title')->isFilled(BackendLanguage::err('TitleIsRequired'));
             $this->meta->validate();
 
             if ($this->form->isCorrect()) {
                 // build item
                 $item = [];
                 $item['title'] = $this->form->getField('title')->getValue();
-                $item['language'] = BL::getWorkingLanguage();
+                $item['language'] = BackendLanguage::getWorkingLanguage();
                 $item['meta_id'] = $this->meta->save();
                 $item['sequence'] = BackendFaqModel::getMaximumCategorySequence() + 1;
 

@@ -4,7 +4,7 @@ namespace Backend\Core\Engine;
 
 use App\Twig\Extensions\BaseTwigModifiers;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\BackendLanguage;
 use SpoonDate;
 
 /**

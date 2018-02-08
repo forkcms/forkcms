@@ -3,8 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BackendLanguage;
-use SpoonFormButton;
+use App\Component\Locale\BackendLanguage;
 use SpoonFormFile;
 use SpoonFormTextarea;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
@@ -12,7 +11,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 /**
  * This is our extended version of \SpoonForm
  */
-class Form extends \Common\Core\Form
+class Form extends \App\Form\Spoon\Form
 {
     /**
      * Show the global error
@@ -82,7 +81,7 @@ class Form extends \Common\Core\Form
                 FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js'
             );
             $this->header->addJS(
-                '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
+                '/var/frontend/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
                 ) . '.js?m=' . $timestamp,
                 null,
                 false,

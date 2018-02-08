@@ -28,7 +28,7 @@ class Settings extends BackendBaseActionEdit
         // add fields for meta navigation
         $this->form->addCheckbox(
             'meta_navigation',
-            $this->get('fork.settings')->get($this->getModule(), 'meta_navigation', false)
+            $this->get('forkcms.settings')->get($this->getModule(), 'meta_navigation', false)
         );
     }
 
@@ -39,7 +39,7 @@ class Settings extends BackendBaseActionEdit
             // form is validated
             if ($this->form->isCorrect()) {
                 // set our settings
-                $this->get('fork.settings')->set(
+                $this->get('forkcms.settings')->set(
                     $this->getModule(),
                     'meta_navigation',
                     (bool) $this->form->getField('meta_navigation')->getValue()

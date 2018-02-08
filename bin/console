@@ -9,9 +9,9 @@ set_time_limit(0);
 
 require_once __DIR__ . '/../autoload.php';
 
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use ForkCMS\App\AppKernel;
-use ForkCMS\App\BaseModel;
+use App\Component\Model\BaseModel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
@@ -43,10 +43,10 @@ $backend->initialize('Console');
 $application = new Application($kernel);
 $application->add(new \Console\Locale\ImportLocaleCommand());
 $application->add(new \Console\Thumbnails\GenerateThumbnailsCommand());
-if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
+if ($kernel->getContainer()->get('forkcms.settings') instanceof ModuleSettings) {
     $application->add(
         new \Console\Locale\EnableLocaleCommand(
-            $kernel->getContainer()->get('fork.settings'),
+            $kernel->getContainer()->get('forkcms.settings'),
             $kernel->getContainer()->getParameter('installed_modules'),
             $kernel->getContainer()->getParameter('site.multilanguage')
         )

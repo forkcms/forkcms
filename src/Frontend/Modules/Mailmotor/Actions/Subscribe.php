@@ -4,7 +4,7 @@ namespace Frontend\Modules\Mailmotor\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Language\Locale;
+use App\Component\Locale\FrontendLocale;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedSubscribedEvent;
 use Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType;
@@ -21,7 +21,7 @@ class Subscribe extends FrontendBaseBlock
 
         $form = $this->createForm(
             SubscribeType::class,
-            new Subscription(Locale::frontendLanguage(), $this->getEmail())
+            new Subscription(FrontendLocale::frontendLanguage(), $this->getEmail())
         );
 
         $form->handleRequest($this->getRequest());
@@ -48,7 +48,7 @@ class Subscribe extends FrontendBaseBlock
         $subscription = $form->getData();
 
         /** @var bool $doubleOptIn */
-        $doubleOptIn = $this->get('fork.settings')->get('Mailmotor', 'double_opt_in', false);
+        $doubleOptIn = $this->get('forkcms.settings')->get('Mailmotor', 'double_opt_in', false);
 
         try {
             // The command bus will handle the subscription

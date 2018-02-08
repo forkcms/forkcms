@@ -6,7 +6,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -126,7 +126,7 @@ class Index extends BackendBaseActionIndex
             $dataGrid->setPaging(false);
 
             // set header label for reference code
-            $dataGrid->setHeaderLabels(['name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))]);
+            $dataGrid->setHeaderLabels(['name' => \SpoonFilter::ucfirst(BackendLanguage::lbl('ReferenceCode'))]);
 
             // hide the application when only one application is shown
             if ($this->filter['application'] != '') {
@@ -163,7 +163,7 @@ class Index extends BackendBaseActionIndex
                 }
 
                 // set header labels
-                $dataGrid->setHeaderLabels([$lang => \SpoonFilter::ucfirst(BL::lbl(mb_strtoupper($lang)))]);
+                $dataGrid->setHeaderLabels([$lang => \SpoonFilter::ucfirst(BackendLanguage::lbl(mb_strtoupper($lang)))]);
 
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
@@ -182,7 +182,7 @@ class Index extends BackendBaseActionIndex
                         $dataGrid->addColumnAction(
                             'copy',
                             null,
-                            BL::lbl('Copy'),
+                            BackendLanguage::lbl('Copy'),
                             BackendModel::createUrlForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
@@ -193,7 +193,7 @@ class Index extends BackendBaseActionIndex
                         $dataGrid->addColumn(
                             'edit',
                             null,
-                            BL::lbl('Edit'),
+                            BackendLanguage::lbl('Edit'),
                             BackendModel::createUrlForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
@@ -321,8 +321,8 @@ class Index extends BackendBaseActionIndex
         $this->filter['language'] = $this->getRequest()->query->get('language', []);
         if (empty($this->filter['language'])) {
             // if no language is selected, set the working language as the selected
-            $_GET['language'] = [BL::getWorkingLanguage()];
-            $this->filter['language'] = [BL::getWorkingLanguage()];
+            $_GET['language'] = [BackendLanguage::getWorkingLanguage()];
+            $this->filter['language'] = [BackendLanguage::getWorkingLanguage()];
         }
         $this->filter['language'] = (array) $this->filter['language'];
         $this->filter['name'] = $this->getRequest()->query->get('name');

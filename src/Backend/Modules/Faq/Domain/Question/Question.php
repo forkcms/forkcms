@@ -4,7 +4,7 @@ namespace Backend\Modules\Faq\Domain\Question;
 
 use Backend\Modules\Faq\Domain\Category\Category;
 use App\Domain\Meta\Meta;
-use Common\Locale;
+use App\Component\Locale\Locale;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

@@ -5,7 +5,7 @@ namespace Frontend\Modules\Faq\Actions;
 use App\Service\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
@@ -52,7 +52,7 @@ class Detail extends FrontendBaseBlock
      */
     private function getSetting(string $name, $default = null)
     {
-        return $this->get('fork.settings')->get($this->getModule(), $name, $default);
+        return $this->get('forkcms.settings')->get($this->getModule(), $name, $default);
     }
 
     private function getQuestion(): array
@@ -90,9 +90,9 @@ class Detail extends FrontendBaseBlock
     private function getStatus(): ?string
     {
         switch ($this->url->getParameter(2)) {
-            case FL::getAction('Success'):
+            case FrontendLanguage::getAction('Success'):
                 return 'success';
-            case FL::getAction('Spam'):
+            case FrontendLanguage::getAction('Spam'):
                 return 'spam';
             default:
                 return null;
@@ -112,7 +112,7 @@ class Detail extends FrontendBaseBlock
             'useful',
             [
                 [
-                    'label' => FL::lbl('Yes'),
+                    'label' => FrontendLanguage::lbl('Yes'),
                     'value' => 1,
                     'attributes' => [
                         'data-role' => 'fork-feedback-useful',
@@ -120,7 +120,7 @@ class Detail extends FrontendBaseBlock
                     ],
                 ],
                 [
-                    'label' => FL::lbl('No'),
+                    'label' => FrontendLanguage::lbl('No'),
                     'value' => 0,
                     'attributes' => [
                         'data-role' => 'fork-feedback-useful',
@@ -162,7 +162,7 @@ class Detail extends FrontendBaseBlock
         $this->template->assign('item', $this->question);
         $this->template->assign('inSameCategory', $this->getRelatedQuestionsFromTheSameCategory());
         $this->template->assign('related', $this->getRelatedQuestions());
-        $this->template->assign('settings', $this->get('fork.settings')->getForModule($this->getModule()));
+        $this->template->assign('settings', $this->get('forkcms.settings')->getForModule($this->getModule()));
 
         if ($this->hasStatus()) {
             $this->template->assign($this->getStatus(), true);
@@ -202,7 +202,7 @@ class Detail extends FrontendBaseBlock
 
         // if the visitor didn't check whether the answer was useful the visitor should submit feedback
         if (!$this->isVisitorSayingTheAnswerWasUseful()) {
-            $this->feedbackForm->getField('message')->isFilled(FL::err('FeedbackIsRequired'));
+            $this->feedbackForm->getField('message')->isFilled(FrontendLanguage::err('FeedbackIsRequired'));
         }
 
         return $this->feedbackForm->isCorrect();
@@ -225,7 +225,7 @@ class Detail extends FrontendBaseBlock
             $this->saveUserFeedback();
         }
 
-        $this->redirect($this->question['full_url'] . '/' . FL::getAction('Success'));
+        $this->redirect($this->question['full_url'] . '/' . FrontendLanguage::getAction('Success'));
     }
 
     private function isSpamFilterEnabled(): bool
@@ -248,7 +248,7 @@ class Detail extends FrontendBaseBlock
 
         if ($this->isSpamFilterEnabled() && FrontendModel::isSpam($feedback['text'], $feedback['question_link'])) {
             // set the status to spam
-            $this->redirect($this->question['full_url'] . '/' . FL::getAction('Spam'));
+            $this->redirect($this->question['full_url'] . '/' . FrontendLanguage::getAction('Spam'));
         }
 
         // save the feedback
@@ -297,11 +297,11 @@ class Detail extends FrontendBaseBlock
     {
         $feedback['question'] = $this->question['question'];
 
-        $to = $this->get('fork.settings')->get('Core', 'mailer_to');
-        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
-        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+        $to = $this->get('forkcms.settings')->get('Core', 'mailer_to');
+        $from = $this->get('forkcms.settings')->get('Core', 'mailer_from');
+        $replyTo = $this->get('forkcms.settings')->get('Core', 'mailer_reply_to');
         $message = Message::newInstance(
-            sprintf(FL::getMessage('FaqFeedbackSubject'), $feedback['question'])
+            sprintf(FrontendLanguage::getMessage('FaqFeedbackSubject'), $feedback['question'])
         )
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$to['email'] => $to['name']])

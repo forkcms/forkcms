@@ -7,7 +7,7 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
@@ -401,7 +401,7 @@ class Add extends BackendBaseActionAdd
             foreach ($this->widgets as $j => $widget) {
                 // add widget checkboxes
                 $widgetBoxes[$j]['check'] = '<span>' . $this->form->addCheckbox('widgets_' . $widget['checkbox_name'], true)->parse() . '</span>';
-                $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BL::lbl($widget['module_name']));
+                $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BackendLanguage::lbl($widget['module_name']));
                 $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['checkbox_name']) . '">' . $widget['label'] . '</label>';
                 $widgetBoxes[$j]['description'] = $widget['description'];
             }
@@ -516,11 +516,11 @@ class Add extends BackendBaseActionAdd
             }
 
             // validate fields
-            $nameField->isFilled(BL::err('NameIsRequired'));
+            $nameField->isFilled(BackendLanguage::err('NameIsRequired'));
 
             // group already exists?
             if (BackendGroupsModel::alreadyExists($nameField->getValue())) {
-                $nameField->setError(BL::err('GroupAlreadyExists'));
+                $nameField->setError(BackendLanguage::err('GroupAlreadyExists'));
             }
 
             // no errors?

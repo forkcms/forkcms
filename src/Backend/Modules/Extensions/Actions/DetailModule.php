@@ -3,7 +3,7 @@
 namespace Backend\Modules\Extensions\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
@@ -78,7 +78,7 @@ class DetailModule extends BackendBaseActionIndex
     {
         // inform that the module is not installed yet
         if (!BackendModel::isModuleInstalled($this->currentModule)) {
-            $this->warnings[] = ['message' => BL::getMessage('InformationModuleIsNotInstalled')];
+            $this->warnings[] = ['message' => BackendLanguage::getMessage('InformationModuleIsNotInstalled')];
         }
 
         // fetch the module information

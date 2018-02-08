@@ -4,7 +4,7 @@ namespace Frontend\Core\Engine;
 
 use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
-use Frontend\Core\Language\Language as FL;
+use App\Component\Locale\FrontendLanguage;
 
 /**
  * This is our extended version of \SpoonFormImage
@@ -68,8 +68,8 @@ class FormImage extends SpoonFormImage
     {
         // do an image validation
         if ($this->isFilled()) {
-            $this->isAllowedExtension(['jpg', 'jpeg', 'gif', 'png'], FL::err('JPGGIFAndPNGOnly'));
-            $this->isAllowedMimeType(['image/jpeg', 'image/gif', 'image/png'], FL::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedExtension(['jpg', 'jpeg', 'gif', 'png'], FrontendLanguage::err('JPGGIFAndPNGOnly'));
+            $this->isAllowedMimeType(['image/jpeg', 'image/gif', 'image/png'], FrontendLanguage::err('JPGGIFAndPNGOnly'));
         }
 
         return $this->errors;

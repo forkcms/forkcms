@@ -4,7 +4,7 @@ namespace Backend\Modules\Groups\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**

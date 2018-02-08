@@ -3,7 +3,7 @@
 namespace Backend\Modules\Faq\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -66,6 +66,6 @@ class SequenceQuestions extends BackendBaseAJAXAction
         }
 
         // success output
-        $this->output(Response::HTTP_OK, null, Language::msg('SequenceSaved'));
+        $this->output(Response::HTTP_OK, null, BackendLanguage::msg('SequenceSaved'));
     }
 }

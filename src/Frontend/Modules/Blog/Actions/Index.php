@@ -4,7 +4,7 @@ namespace Frontend\Modules\Blog\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Language\Language;
+use App\Component\Locale\FrontendLanguage;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -26,7 +26,7 @@ class Index extends FrontendBaseBlock
         $requestedPage = $this->url->getParameter('page', 'int', 1);
         $numberOfItems = FrontendBlogModel::getAllCount();
 
-        $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items', 10);
+        $limit = $this->get('forkcms.settings')->get($this->getModule(), 'overview_num_items', 10);
         $numberOfPages = (int) ceil($numberOfItems / $limit);
 
         // Check if the page exists
@@ -54,13 +54,13 @@ class Index extends FrontendBaseBlock
     {
         // General rss feed
         $this->header->addRssLink(
-            $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
+            $this->get('forkcms.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
             FrontendNavigation::getUrlForBlock($this->getModule(), 'Rss')
         );
 
         // Rss feed for the comments of this blog
         $this->header->addRssLink(
-            Language::lbl('RecentComments'),
+            FrontendLanguage::lbl('RecentComments'),
             FrontendNavigation::getUrlForBlock($this->getModule(), 'CommentsRss')
         );
     }

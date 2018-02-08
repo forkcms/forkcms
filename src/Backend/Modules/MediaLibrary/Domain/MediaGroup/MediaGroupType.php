@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
 
 class MediaGroupType extends AbstractType
@@ -100,7 +100,7 @@ class MediaGroupType extends AbstractType
 
         $resolver->setDefaults(
             [
-                'label' => Language::lbl('MediaConnected'),
+                'label' => BackendLanguage::lbl('MediaConnected'),
                 'aspect_ratio' => null,
                 'error_bubbling' => false,
             ]
@@ -123,7 +123,7 @@ class MediaGroupType extends AbstractType
         return [
             new Constraints\NotBlank(
                 [
-                    'message' => Language::err('YouAreRequiredToConnectMedia', 'MediaLibrary'),
+                    'message' => BackendLanguage::err('YouAreRequiredToConnectMedia', 'MediaLibrary'),
                 ]
             ),
         ];

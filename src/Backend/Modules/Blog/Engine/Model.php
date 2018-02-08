@@ -5,8 +5,8 @@ namespace Backend\Modules\Blog\Engine;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Language\Locale;
+use App\Component\Locale\BackendLanguage;
+use App\Component\Locale\BackendLocale;
 use Backend\Modules\Blog\Domain\Comment\Comment;
 use Backend\Modules\Blog\Domain\Category\Category;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
@@ -106,30 +106,30 @@ class Model
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Settings', 'Blog')) {
             // rss title
-            $rssTitle = BackendModel::get('fork.settings')->get(
+            $rssTitle = BackendModel::get('forkcms.settings')->get(
                 'Blog',
-                'rss_title_' . BL::getWorkingLanguage(),
+                'rss_title_' . BackendLanguage::getWorkingLanguage(),
                 null
             );
             if ($rssTitle == '') {
                 $warnings[] = [
                     'message' => sprintf(
-                        BL::err('RSSTitle', 'Blog'),
+                        BackendLanguage::err('RSSTitle', 'Blog'),
                         BackendModel::createUrlForAction('Settings', 'Blog')
                     ),
                 ];
             }
 
             // rss description
-            $rssDescription = BackendModel::get('fork.settings')->get(
+            $rssDescription = BackendModel::get('forkcms.settings')->get(
                 'Blog',
-                'rss_description_' . BL::getWorkingLanguage(),
+                'rss_description_' . BackendLanguage::getWorkingLanguage(),
                 null
             );
             if ($rssDescription == '') {
                 $warnings[] = [
                     'message' => sprintf(
-                        BL::err('RSSDescription', 'Blog'),
+                        BackendLanguage::err('RSSDescription', 'Blog'),
                         BackendModel::createUrlForAction('Settings', 'Blog')
                     ),
                 ];
@@ -170,7 +170,7 @@ class Model
             'SELECT meta_id
              FROM blog_posts AS p
              WHERE id IN (' . $idPlaceHolders . ') AND language = ?',
-            array_merge($ids, [BL::getWorkingLanguage()])
+            array_merge($ids, [BackendLanguage::getWorkingLanguage()])
         );
 
         // delete meta
@@ -189,12 +189,12 @@ class Model
         $database->delete(
             'blog_posts',
             'id IN (' . $idPlaceHolders . ') AND language = ?',
-            array_merge($ids, [BL::getWorkingLanguage()])
+            array_merge($ids, [BackendLanguage::getWorkingLanguage()])
         );
         $database->delete(
             'blog_comments',
             'postId IN (' . $idPlaceHolders . ') AND locale = ?',
-            array_merge($ids, [BL::getWorkingLanguage()])
+            array_merge($ids, [BackendLanguage::getWorkingLanguage()])
         );
 
         // delete tags
@@ -228,7 +228,7 @@ class Model
              FROM blog_posts AS i
              WHERE i.category_id = ? AND i.language = ? AND i.status = ?
              LIMIT 1',
-            [(int) $id, BL::getWorkingLanguage(), 'active']
+            [(int) $id, BackendLanguage::getWorkingLanguage(), 'active']
         );
     }
 
@@ -262,7 +262,7 @@ class Model
         $comments = BackendModel::get('blog.repository.comment')->findBy(
             [
                 'status' => 'spam',
-                'locale' => BL::getWorkingLanguage(),
+                'locale' => BackendLanguage::getWorkingLanguage(),
             ]
         );
 
@@ -292,7 +292,7 @@ class Model
             'SELECT i.id
              FROM blog_posts AS i
              WHERE i.id = ? AND i.language = ?',
-            [(int) $id, BL::getWorkingLanguage()]
+            [(int) $id, BackendLanguage::getWorkingLanguage()]
         );
     }
 
@@ -324,7 +324,7 @@ class Model
              INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?
              ORDER BY i.revision_id DESC',
-            [(int) $id, 'active', 'draft', BL::getWorkingLanguage()]
+            [(int) $id, 'active', 'draft', BackendLanguage::getWorkingLanguage()]
         );
     }
 
@@ -356,7 +356,7 @@ class Model
                  WHERE i.locale = ?
                  GROUP BY i.id
                  LIMIT ?, ?',
-                [BL::getWorkingLanguage(), $offset, $limit]
+                [BackendLanguage::getWorkingLanguage(), $offset, $limit]
             );
         }
 
@@ -369,7 +369,7 @@ class Model
              WHERE i.status = ? AND i.locale = ?
              GROUP BY i.id
              LIMIT ?, ?',
-            [$status, BL::getWorkingLanguage(), $offset, $limit]
+            [$status, BackendLanguage::getWorkingLanguage(), $offset, $limit]
         );
     }
 
@@ -387,7 +387,7 @@ class Model
              INNER JOIN tags AS t ON mt.tag_id = t.id
              INNER JOIN blog_posts AS i ON mt.other_id = i.id
              WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?',
-            ['Blog', (int) $tagId, 'active', BL::getWorkingLanguage()]
+            ['Blog', (int) $tagId, 'active', BackendLanguage::getWorkingLanguage()]
         );
 
         // overwrite the url
@@ -415,7 +415,7 @@ class Model
                  LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND i.locale = p.language AND p.status = ?
                  WHERE i.locale = ?
                  GROUP BY i.id',
-                ['active', BL::getWorkingLanguage()]
+                ['active', BackendLanguage::getWorkingLanguage()]
             );
         }
 
@@ -423,7 +423,7 @@ class Model
             'SELECT i.id, i.title
              FROM blog_categories AS i
              WHERE i.locale = ?',
-            [BL::getWorkingLanguage()]
+            [BackendLanguage::getWorkingLanguage()]
         );
     }
 
@@ -448,8 +448,8 @@ class Model
                                 ->findOneBy(
                                     [
                                         'title' => $title,
-                                        'locale' => Locale::fromString(
-                                            $language ?? BL::getWorkingLanguage()
+                                        'locale' => BackendLocale::fromString(
+                                            $language ?? BackendLanguage::getWorkingLanguage()
                                         ),
                                     ]
                                 );
@@ -515,7 +515,7 @@ class Model
     {
         $repository = BackendModel::get('blog.repository.comment');
 
-        return $repository->listCountPerStatus(Locale::workingLocale());
+        return $repository->listCountPerStatus(BackendLocale::workingLocale());
     }
 
     /**
@@ -536,7 +536,7 @@ class Model
              WHERE i.status = ? AND p.status = ? AND i.locale = ?
              ORDER BY i.createdOn DESC
              LIMIT ?',
-            [(string) $status, 'active', BL::getWorkingLanguage(), (int) $limit]
+            [(string) $status, 'active', BackendLanguage::getWorkingLanguage(), (int) $limit]
         );
 
         // overwrite url
@@ -600,7 +600,7 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ?
                  LIMIT 1',
-                [BL::getWorkingLanguage(), $url]
+                [BackendLanguage::getWorkingLanguage(), $url]
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -615,7 +615,7 @@ class Model
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                [BL::getWorkingLanguage(), $url, $id]
+                [BackendLanguage::getWorkingLanguage(), $url, $id]
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -689,7 +689,7 @@ class Model
             $item['status'] = 'active';
         }
         if (!isset($item['language'])) {
-            $item['language'] = BL::getWorkingLanguage();
+            $item['language'] = BackendLanguage::getWorkingLanguage();
         }
         if (!isset($item['publish_on'])) {
             $item['publish_on'] = BackendModel::getUTCDate();
@@ -768,7 +768,7 @@ class Model
 
             // Set some defaults
             if (!isset($comment['language'])) {
-                $comment['language'] = BL::getWorkingLanguage();
+                $comment['language'] = BackendLanguage::getWorkingLanguage();
             }
             if (!isset($comment['created_on'])) {
                 $comment['created_on'] = BackendModel::getUTCDate();
@@ -813,7 +813,7 @@ class Model
         }
 
         $category = new Category(
-            Locale::fromString($item['language']),
+            BackendLocale::fromString($item['language']),
             $item['title'],
             $meta
         );
@@ -829,7 +829,7 @@ class Model
     {
         $comment = new Comment(
             $data['post_id'],
-            Locale::fromString($data['language']),
+            BackendLocale::fromString($data['language']),
             $data['author'],
             $data['email'],
             $data['text'],
@@ -877,7 +877,7 @@ class Model
              INNER JOIN blog_posts AS p ON i.postId = p.id AND i.locale = p.language
              WHERE i.status = ? AND i.postId IN (' . implode(',', $ids) . ') AND i.locale = ? AND p.status = ?
              GROUP BY i.postId',
-            ['published', BL::getWorkingLanguage(), 'active']
+            ['published', BackendLanguage::getWorkingLanguage(), 'active']
         );
 
         foreach ($ids as $id) {
@@ -889,7 +889,7 @@ class Model
                 'blog_posts',
                 ['num_comments' => $count],
                 'id = ? AND language = ?',
-                [$id, BL::getWorkingLanguage()]
+                [$id, BackendLanguage::getWorkingLanguage()]
             );
         }
 
@@ -936,7 +936,7 @@ class Model
         unset($item['revision_id']);
 
         // how many revisions should we keep
-        $rowsToKeep = (int) BackendModel::get('fork.settings')->get('Blog', 'max_num_revisions', 20);
+        $rowsToKeep = (int) BackendModel::get('forkcms.settings')->get('Blog', 'max_num_revisions', 20);
 
         // set type of archive
         $archiveType = ($item['status'] == 'active' ? 'archived' : $item['status']);
@@ -948,7 +948,7 @@ class Model
              WHERE i.id = ? AND i.status = ? AND i.language = ?
              ORDER BY i.edited_on DESC
              LIMIT ?',
-            [$item['id'], $archiveType, BL::getWorkingLanguage(), $rowsToKeep]
+            [$item['id'], $archiveType, BackendLanguage::getWorkingLanguage(), $rowsToKeep]
         );
 
         // delete other revisions

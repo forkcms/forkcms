@@ -7,7 +7,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
@@ -56,7 +56,7 @@ class ThemeTemplates extends BackendBaseActionEdit
 
         // determine selected theme, based upon submitted form or default theme
         if (!array_key_exists($this->selectedTheme, $this->availableThemes)) {
-            $this->selectedTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+            $this->selectedTheme = $this->get('forkcms.settings')->get('Core', 'theme', 'Fork');
         }
     }
 
@@ -80,9 +80,9 @@ class ThemeTemplates extends BackendBaseActionEdit
             $this->dataGrid->addColumn(
                 'edit',
                 null,
-                BL::lbl('Edit'),
+                BackendLanguage::lbl('Edit'),
                 BackendModel::createUrlForAction('EditThemeTemplate') . '&amp;id=[id]',
-                BL::lbl('Edit')
+                BackendLanguage::lbl('Edit')
             );
         }
     }

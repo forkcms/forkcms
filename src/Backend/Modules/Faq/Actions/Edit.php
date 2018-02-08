@@ -4,10 +4,10 @@ namespace Backend\Modules\Faq\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
+use App\Form\Type\Backend\DeleteType;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
@@ -53,8 +53,8 @@ class Edit extends BackendBaseActionEdit
     {
         // get values for the form
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden'), 'value' => 1],
-            ['label' => BL::lbl('Published'), 'value' => 0],
+            ['label' => BackendLanguage::lbl('Hidden'), 'value' => 1],
+            ['label' => BackendLanguage::lbl('Published'), 'value' => 0],
         ];
         $categories = BackendFaqModel::getCategories();
 
@@ -99,9 +99,9 @@ class Edit extends BackendBaseActionEdit
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('title')->isFilled(BL::err('QuestionIsRequired'));
-            $this->form->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
-            $this->form->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
+            $this->form->getField('title')->isFilled(BackendLanguage::err('QuestionIsRequired'));
+            $this->form->getField('answer')->isFilled(BackendLanguage::err('AnswerIsRequired'));
+            $this->form->getField('category_id')->isFilled(BackendLanguage::err('CategoryIsRequired'));
             $this->meta->validate();
 
             if ($this->form->isCorrect()) {

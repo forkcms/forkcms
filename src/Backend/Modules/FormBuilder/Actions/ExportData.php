@@ -3,7 +3,7 @@
 namespace Backend\Modules\FormBuilder\Actions;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Csv as BackendCSV;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
@@ -152,8 +152,8 @@ class ExportData extends BackendBaseAction
     private function setItems(): void
     {
         // init header labels
-        $lblSessionId = \SpoonFilter::ucfirst(BL::lbl('SessionId'));
-        $lblSentOn = \SpoonFilter::ucfirst(BL::lbl('SentOn'));
+        $lblSessionId = \SpoonFilter::ucfirst(BackendLanguage::lbl('SessionId'));
+        $lblSentOn = \SpoonFilter::ucfirst(BackendLanguage::lbl('SentOn'));
         $this->columnHeaders = [$lblSessionId, $lblSentOn];
 
         // fetch query and parameters
@@ -171,7 +171,7 @@ class ExportData extends BackendBaseAction
                 $data[$row['data_id']][$lblSentOn] = \SpoonDate::getDate(
                     'Y-m-d H:i:s',
                     $row['sent_on'],
-                    BL::getWorkingLanguage()
+                    BackendLanguage::getWorkingLanguage()
                 );
             }
 

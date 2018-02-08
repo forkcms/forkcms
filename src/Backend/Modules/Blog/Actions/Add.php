@@ -6,7 +6,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
@@ -37,26 +37,26 @@ class Add extends BackendBaseActionAdd
 
     private function loadForm(): void
     {
-        $this->imageIsAllowed = $this->get('fork.settings')->get($this->url->getModule(), 'show_image_form', true);
+        $this->imageIsAllowed = $this->get('forkcms.settings')->get($this->url->getModule(), 'show_image_form', true);
 
         $this->form = new BackendForm('add');
 
         // set hidden values
         $rbtHiddenValues = [
-            ['label' => BL::lbl('Hidden', $this->url->getModule()), 'value' => 1],
-            ['label' => BL::lbl('Published'), 'value' => 0],
+            ['label' => BackendLanguage::lbl('Hidden', $this->url->getModule()), 'value' => 1],
+            ['label' => BackendLanguage::lbl('Published'), 'value' => 0],
         ];
 
         // get categories
         $categories = BackendBlogModel::getCategories();
-        $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
+        $categories['new_category'] = \SpoonFilter::ucfirst(BackendLanguage::getLabel('AddCategory'));
 
         // create elements
         $this->form->addText('title', null, null, 'form-control title', 'form-control danger title')->makeRequired();
         $this->form->addEditor('text')->makeRequired();
         $this->form->addEditor('introduction');
         $this->form->addRadiobutton('hidden', $rbtHiddenValues, 0);
-        $this->form->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
+        $this->form->addCheckbox('allow_comments', $this->get('forkcms.settings')->get($this->getModule(), 'allow_comments', false));
         $this->form->addDropdown('category_id', $categories, $this->getRequest()->query->getInt('category'));
         if (count($categories) !== 2) {
             $this->form->getField('category_id')->setDefaultElement('');
@@ -100,13 +100,13 @@ class Add extends BackendBaseActionAdd
             $this->form->cleanupFields();
 
             // validate fields
-            $this->form->getField('title')->isFilled(BL::err('TitleIsRequired'));
-            $this->form->getField('text')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
-            $this->form->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
-            $this->form->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('title')->isFilled(BackendLanguage::err('TitleIsRequired'));
+            $this->form->getField('text')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('publish_on_date')->isValid(BackendLanguage::err('DateIsInvalid'));
+            $this->form->getField('publish_on_time')->isValid(BackendLanguage::err('TimeIsInvalid'));
+            $this->form->getField('category_id')->isFilled(BackendLanguage::err('FieldIsRequired'));
             if ($this->form->getField('category_id')->getValue() == 'new_category') {
-                $this->form->getField('category_id')->addError(BL::err('FieldIsRequired'));
+                $this->form->getField('category_id')->addError(BackendLanguage::err('FieldIsRequired'));
             }
 
             // validate meta
@@ -119,7 +119,7 @@ class Add extends BackendBaseActionAdd
                     'meta_id' => $this->meta->save(),
                     'category_id' => (int) $this->form->getField('category_id')->getValue(),
                     'user_id' => $this->form->getField('user_id')->getValue(),
-                    'language' => BL::getWorkingLanguage(),
+                    'language' => BackendLanguage::getWorkingLanguage(),
                     'title' => $this->form->getField('title')->getValue(),
                     'introduction' => $this->form->getField('introduction')->getValue(),
                     'text' => $this->form->getField('text')->getValue(),
@@ -153,7 +153,7 @@ class Add extends BackendBaseActionAdd
                     if ($this->form->getField('image')->isFilled()) {
                         // build the image name
                         $item['image'] = $this->meta->getUrl()
-                            . '-' . BL::getWorkingLanguage()
+                            . '-' . BackendLanguage::getWorkingLanguage()
                             . '-' . $item['revision_id']
                             . '.' . $this->form->getField('image')->getExtension();
 

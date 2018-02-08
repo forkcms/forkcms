@@ -2,7 +2,7 @@
 
 namespace Backend\Core\Engine;
 
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Component\Locale\BackendLanguage;
 use iSpoonDatagridPaging;
 
 /**

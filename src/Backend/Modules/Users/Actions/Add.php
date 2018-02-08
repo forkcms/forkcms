@@ -5,7 +5,7 @@ namespace Backend\Modules\Users\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
+use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
@@ -56,8 +56,8 @@ class Add extends BackendBaseActionAdd
 
         $this->form->addDropdown(
             'interface_language',
-            BL::getInterfaceLanguages(),
-            $this->get('fork.settings')->get('Core', 'default_interface_language')
+            BackendLanguage::getInterfaceLanguages(),
+            $this->get('forkcms.settings')->get('Core', 'default_interface_language')
         );
         $this->form->addDropdown(
             'date_format',
@@ -91,9 +91,9 @@ class Add extends BackendBaseActionAdd
             $this->form->cleanupFields();
 
             // email is present
-            if ($this->form->getField('email')->isFilled(BL::err('EmailIsRequired'))) {
+            if ($this->form->getField('email')->isFilled(BackendLanguage::err('EmailIsRequired'))) {
                 // is this an email-address
-                if ($this->form->getField('email')->isEmail(BL::err('EmailIsInvalid'))) {
+                if ($this->form->getField('email')->isEmail(BackendLanguage::err('EmailIsInvalid'))) {
                     // was this emailaddress deleted before
                     if (BackendUsersModel::emailDeletedBefore(
                         $this->form->getField('email')->getValue()
@@ -101,7 +101,7 @@ class Add extends BackendBaseActionAdd
                     ) {
                         $this->form->getField('email')->addError(
                             sprintf(
-                                BL::err('EmailWasDeletedBefore'),
+                                BackendLanguage::err('EmailWasDeletedBefore'),
                                 BackendModel::createUrlForAction(
                                     'UndoDelete',
                                     null,
@@ -116,25 +116,25 @@ class Add extends BackendBaseActionAdd
                             $this->form->getField('email')->getValue()
                         )
                         ) {
-                            $this->form->getField('email')->addError(BL::err('EmailAlreadyExists'));
+                            $this->form->getField('email')->addError(BackendLanguage::err('EmailAlreadyExists'));
                         }
                     }
                 }
             }
 
             // required fields
-            $this->form->getField('password')->isFilled(BL::err('PasswordIsRequired'));
-            $this->form->getField('nickname')->isFilled(BL::err('NicknameIsRequired'));
-            $this->form->getField('name')->isFilled(BL::err('NameIsRequired'));
-            $this->form->getField('surname')->isFilled(BL::err('SurnameIsRequired'));
-            $this->form->getField('interface_language')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('date_format')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
-            $this->form->getField('groups')->isFilled(BL::err('FieldIsRequired'));
+            $this->form->getField('password')->isFilled(BackendLanguage::err('PasswordIsRequired'));
+            $this->form->getField('nickname')->isFilled(BackendLanguage::err('NicknameIsRequired'));
+            $this->form->getField('name')->isFilled(BackendLanguage::err('NameIsRequired'));
+            $this->form->getField('surname')->isFilled(BackendLanguage::err('SurnameIsRequired'));
+            $this->form->getField('interface_language')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('date_format')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('time_format')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('number_format')->isFilled(BackendLanguage::err('FieldIsRequired'));
+            $this->form->getField('groups')->isFilled(BackendLanguage::err('FieldIsRequired'));
             if ($this->form->getField('password')->isFilled()) {
                 if ($this->form->getField('password')->getValue() !== $this->form->getField('confirm_password')->getValue()) {
-                    $this->form->getField('confirm_password')->addError(BL::err('ValuesDontMatch'));
+                    $this->form->getField('confirm_password')->addError(BackendLanguage::err('ValuesDontMatch'));
                 }
             }
 
