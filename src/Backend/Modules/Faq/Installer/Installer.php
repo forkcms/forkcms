@@ -231,7 +231,7 @@ class Installer extends ModuleInstaller
 
     private function configureEntities(): void
     {
-        Model::get('fork.entity.create_schema')->forEntityClasses(
+        Model::get('forkcms.doctrine.entity_schema')->forEntityClasses(
             [
                 Category::class,
                 Question::class,

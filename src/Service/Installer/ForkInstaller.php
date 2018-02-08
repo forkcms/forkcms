@@ -160,7 +160,7 @@ class ForkInstaller
     {
         // create the core installer
         return new CoreInstaller(
-            $this->container->get('fork.doctrine.entity_schema'),
+            $this->container->get('forkcms.doctrine.entity_schema'),
             $this->container->get('database'),
             $data->getLanguages(),
             $data->getInterfaceLanguages(),
@@ -184,7 +184,7 @@ class ForkInstaller
                 // create installer
                 /** @var $install ModuleInstaller */
                 $installer = new $class(
-                    $this->container->get('fork.doctrine.entity_schema'),
+                    $this->container->get('forkcms.doctrine.entity_schema'),
                     $this->container->get('database'),
                     $data->getLanguages(),
                     $data->getInterfaceLanguages(),

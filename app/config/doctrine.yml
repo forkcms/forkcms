@@ -44,7 +44,7 @@ doctrine_orm_bridge:
     connection: default
 
 services:
-    fork.doctrine.entity_schema:
+    forkcms.doctrine.entity_schema:
         class: App\Service\Doctrine\EntitySchema
         public: true
         arguments:
