@@ -68,7 +68,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
 
         // determine selected theme, based upon submitted form or default theme
         if (!array_key_exists($this->selectedTheme, $this->availableThemes)) {
-            $this->selectedTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+            $this->selectedTheme = $this->get('forkcms.settings')->get('Core', 'theme', 'Fork');
         }
     }
 
@@ -295,8 +295,8 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $item['id'] = BackendExtensionsModel::insertTemplate($item);
 
                 // set default template
-                if ($this->form->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'Fork')) {
-                    $this->get('fork.settings')->set($this->getModule(), 'default_template', $item['id']);
+                if ($this->form->getField('default')->getChecked() && $item['theme'] == $this->get('forkcms.settings')->get('Core', 'theme', 'Fork')) {
+                    $this->get('forkcms.settings')->set($this->getModule(), 'default_template', $item['id']);
                 }
 
                 // everything is saved, so redirect to the overview

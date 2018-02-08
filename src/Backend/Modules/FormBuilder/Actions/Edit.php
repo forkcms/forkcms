@@ -201,8 +201,8 @@ class Edit extends BackendBaseActionEdit
 
         $this->template->assign('id', $this->record['id']);
         $this->template->assign('name', $this->record['name']);
-        $recaptchaSiteKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key');
-        $recaptchaSecretKey = BackendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
+        $recaptchaSiteKey = BackendModel::get('forkcms.settings')->get('Core', 'google_recaptcha_site_key');
+        $recaptchaSecretKey = BackendModel::get('forkcms.settings')->get('Core', 'google_recaptcha_secret_key');
 
         if (!($recaptchaSiteKey || $recaptchaSecretKey)) {
             $this->template->assign('recaptchaMissing', true);

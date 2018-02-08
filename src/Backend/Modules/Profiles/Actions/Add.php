@@ -41,13 +41,13 @@ class Add extends BackendBaseActionAdd
 
     public function getData(): void
     {
-        $this->notifyAdmin = $this->get('fork.settings')->get(
+        $this->notifyAdmin = $this->get('forkcms.settings')->get(
             $this->url->getModule(),
             'send_new_profile_admin_mail',
             false
         );
 
-        $this->notifyProfile = $this->get('fork.settings')->get(
+        $this->notifyProfile = $this->get('forkcms.settings')->get(
             $this->url->getModule(),
             'send_new_profile_mail',
             false

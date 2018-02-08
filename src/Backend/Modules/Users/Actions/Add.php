@@ -57,7 +57,7 @@ class Add extends BackendBaseActionAdd
         $this->form->addDropdown(
             'interface_language',
             BackendLanguage::getInterfaceLanguages(),
-            $this->get('fork.settings')->get('Core', 'default_interface_language')
+            $this->get('forkcms.settings')->get('Core', 'default_interface_language')
         );
         $this->form->addDropdown(
             'date_format',

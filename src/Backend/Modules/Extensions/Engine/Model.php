@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Extensions\Engine;
 
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -147,7 +147,7 @@ class Model
         }
 
         // check if the akismet key is available if there are modules that require it
-        if (!empty($akismetModules) && BackendModel::get('fork.settings')->get('Core', 'akismet_key', null) == '') {
+        if (!empty($akismetModules) && BackendModel::get('forkcms.settings')->get('Core', 'akismet_key', null) == '') {
             // add warning
             $warnings[] = [
                 'message' => sprintf(
@@ -159,7 +159,7 @@ class Model
 
         // check if the google maps key is available if there are modules that require it
         if (!empty($googleMapsModules)
-            && BackendModel::get('fork.settings')->get('Core', 'google_maps_key', null) == '') {
+            && BackendModel::get('forkcms.settings')->get('Core', 'google_maps_key', null) == '') {
             // add warning
             $warnings[] = [
                 'message' => sprintf(
@@ -215,7 +215,7 @@ class Model
         }
 
         // we can't delete the default template
-        if ($id == BackendModel::get('fork.settings')->get('Pages', 'default_template')) {
+        if ($id == BackendModel::get('forkcms.settings')->get('Pages', 'default_template')) {
             return false;
         }
         if (self::isTemplateInUse($id)) {
@@ -517,8 +517,8 @@ class Model
             return [];
         }
 
-        /** @var ModulesSettings $moduleSettings */
-        $moduleSettings = BackendModel::get('fork.settings');
+        /** @var ModuleSettings $moduleSettings */
+        $moduleSettings = BackendModel::get('forkcms.settings');
 
         return array_filter(
             BackendModel::getModules(),
@@ -544,7 +544,7 @@ class Model
         $theme = \SpoonFilter::getValue(
             (string) $theme,
             null,
-            BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork')
+            BackendModel::get('forkcms.settings')->get('Core', 'theme', 'Fork')
         );
 
         $templates = (array) $database->getRecords(
@@ -858,7 +858,7 @@ class Model
             $item['description'] = $cronjob[0];
 
             // check if cronjob has already been run
-            $cronjobs = (array) BackendModel::get('fork.settings')->get('Core', 'cronjobs');
+            $cronjobs = (array) BackendModel::get('forkcms.settings')->get('Core', 'cronjobs');
             $item['active'] = in_array($information['name'] . '.' . $attributes['action'], $cronjobs);
 
             $information['cronjobs'][] = $item;

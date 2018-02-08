@@ -4,7 +4,7 @@ namespace Backend\Modules\Analytics\Form;
 
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\TwigTemplate;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use Google_Service_Analytics;
 
 /**
@@ -17,7 +17,7 @@ final class SettingsType
 
     public function __construct(
         string $name,
-        ModulesSettings $settings,
+        ModuleSettings $settings,
         Google_Service_Analytics $googleServiceAnalytics
     ) {
         // we don't even have a auth config file yet, let the user upload it

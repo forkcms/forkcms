@@ -53,7 +53,7 @@ services:
         class: stdClass
 
     # dummy service during the installation
-    fork.settings:
+    forkcms.settings:
         class: stdClass
         public: true
 

@@ -225,7 +225,7 @@ class Url extends KernelLoader
 
     private function setLocale(): void
     {
-        $defaultLocale = $this->get('fork.settings')->get('Core', 'default_interface_language');
+        $defaultLocale = $this->get('forkcms.settings')->get('Core', 'default_interface_language');
         $locale = $this->getInterfaceLanguage();
         $possibleLocale = array_keys(BackendLanguage::getInterfaceLanguages());
 
@@ -239,7 +239,7 @@ class Url extends KernelLoader
 
     private function getInterfaceLanguage(): string
     {
-        $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
+        $default = $this->get('forkcms.settings')->get('Core', 'default_interface_language');
 
         if (Authentication::getUser()->isAuthenticated()) {
             return Authentication::getUser()->getSetting('interface_language', $default);

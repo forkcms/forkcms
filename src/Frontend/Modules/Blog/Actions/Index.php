@@ -26,7 +26,7 @@ class Index extends FrontendBaseBlock
         $requestedPage = $this->url->getParameter('page', 'int', 1);
         $numberOfItems = FrontendBlogModel::getAllCount();
 
-        $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items', 10);
+        $limit = $this->get('forkcms.settings')->get($this->getModule(), 'overview_num_items', 10);
         $numberOfPages = (int) ceil($numberOfItems / $limit);
 
         // Check if the page exists
@@ -54,7 +54,7 @@ class Index extends FrontendBaseBlock
     {
         // General rss feed
         $this->header->addRssLink(
-            $this->get('fork.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
+            $this->get('forkcms.settings')->get($this->getModule(), 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE),
             FrontendNavigation::getUrlForBlock($this->getModule(), 'Rss')
         );
 

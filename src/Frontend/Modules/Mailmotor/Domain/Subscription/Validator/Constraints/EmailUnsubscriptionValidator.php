@@ -35,7 +35,7 @@ class EmailUnsubscriptionValidator extends ConstraintValidator
             // The email doesn't exists in the mailing list
             if (!$this->subscriber->exists(
                 $value,
-                Model::get('fork.settings')->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
+                Model::get('forkcms.settings')->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
             )) {
                 $this->context->buildViolation($constraint->notExistsMessage)->addViolation();
             } elseif ($this->subscriber->isUnsubscribed($value)) {

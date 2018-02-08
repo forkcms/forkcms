@@ -337,7 +337,7 @@ class Header extends KernelLoader
      */
     public function parse(): void
     {
-        $facebook = new Facebook($this->get('fork.settings'));
+        $facebook = new Facebook($this->get('forkcms.settings'));
         $facebook->addOpenGraphMeta($this);
         $this->parseSeo();
 
@@ -351,9 +351,9 @@ class Header extends KernelLoader
         $this->cssFiles->parse($this->template, 'cssFiles');
         $this->jsFiles->parse($this->template, 'jsFiles');
 
-        $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_header', '') . "\n";
+        $siteHTMLHeader = (string) $this->get('forkcms.settings')->get('Core', 'site_html_header', '') . "\n";
         $siteHTMLHeader .= new GoogleAnalytics(
-            $this->get('fork.settings'),
+            $this->get('forkcms.settings'),
             Model::getRequest()->getHttpHost(),
             $this->get('fork.cookie')
         );
@@ -364,14 +364,14 @@ class Header extends KernelLoader
         $this->template->assignGlobal('contentTitle', $this->getContentTitle());
         $this->template->assignGlobal(
             'siteTitle',
-            (string) $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) $this->get('forkcms.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE)
         );
     }
 
     private function getCanonical(): string
     {
         $queryString = trim($this->url->getQueryString(), '/');
-        $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
+        $language = $this->get('forkcms.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString === $language) {
             $this->canonical = rtrim(SITE_URL, '/');
 
@@ -410,11 +410,11 @@ class Header extends KernelLoader
      */
     private function parseSeo(): void
     {
-        if ($this->get('fork.settings')->get('Core', 'seo_noodp', false)) {
+        if ($this->get('forkcms.settings')->get('Core', 'seo_noodp', false)) {
             $this->meta->addMetaData(MetaData::forName('robots', 'noodp'));
         }
 
-        if ($this->get('fork.settings')->get('Core', 'seo_noydir', false)) {
+        if ($this->get('forkcms.settings')->get('Core', 'seo_noydir', false)) {
             $this->meta->addMetaData(MetaData::forName('robots', 'noydir'));
         }
 
@@ -469,13 +469,13 @@ class Header extends KernelLoader
         }
 
         if (empty($value)) {
-            $this->pageTitle = $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
+            $this->pageTitle = $this->get('forkcms.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
 
             return;
         }
 
         if ($this->pageTitle === null || $this->pageTitle === '') {
-            $this->pageTitle = $this->get('fork.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
+            $this->pageTitle = $this->get('forkcms.settings')->get('Core', 'site_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
             $this->pageTitle = $value . ' -  ' . $this->pageTitle;
 
             return;

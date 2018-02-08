@@ -2,26 +2,26 @@
 
 namespace Frontend\Modules\Mailmotor\Domain\Subscription\Command;
 
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use App\Component\Locale\FrontendLocale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 
 final class UnsubscriptionHandler
 {
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
-    private $modulesSettings;
+    private $moduleSettings;
 
     /**
      * @var Subscriber
      */
     private $subscriber;
 
-    public function __construct(Subscriber $subscriber, ModulesSettings $modulesSettings)
+    public function __construct(Subscriber $subscriber, ModuleSettings $moduleSettings)
     {
         $this->subscriber = $subscriber;
-        $this->modulesSettings = $modulesSettings;
+        $this->moduleSettings = $moduleSettings;
     }
 
     public function handle(Unsubscription $unsubscription): void
@@ -29,7 +29,7 @@ final class UnsubscriptionHandler
         // Unsubscribing the user, will dispatch an event
         $this->subscriber->unsubscribe(
             $unsubscription->email,
-            $this->modulesSettings->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
+            $this->moduleSettings->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
         );
     }
 }

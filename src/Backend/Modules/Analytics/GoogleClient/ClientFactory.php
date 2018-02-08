@@ -7,7 +7,7 @@ use Google_Cache_File;
 use Google_Client;
 use Google_Config;
 use Google_Service_Analytics;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 
 /**
  * Factory to easily create google client instances
@@ -15,7 +15,7 @@ use Common\ModulesSettings;
 class ClientFactory
 {
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
     private $settings;
 
@@ -24,9 +24,9 @@ class ClientFactory
      */
     private $cacheDir;
 
-    public function __construct(ModulesSettings $modulesSettings, string $cacheDir)
+    public function __construct(ModuleSettings $moduleSettings, string $cacheDir)
     {
-        $this->settings = $modulesSettings;
+        $this->settings = $moduleSettings;
         $this->cacheDir = $cacheDir;
     }
 

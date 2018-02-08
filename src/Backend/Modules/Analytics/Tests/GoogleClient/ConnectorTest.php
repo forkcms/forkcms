@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\Tests\GoogleClient;
 
 use Backend\Modules\Analytics\GoogleClient\Connector;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use Google_Client;
 use Google_Service_Analytics;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
@@ -18,7 +18,7 @@ class ConnectorTest extends TestCase
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new Pool(new MemoryStore()),
-            $this->getModulesSettingsMock()
+            $this->getModuleSettingsMock()
         );
 
         self::assertEquals(
@@ -35,7 +35,7 @@ class ConnectorTest extends TestCase
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new Pool(new MemoryStore()),
-            $this->getModulesSettingsMock()
+            $this->getModuleSettingsMock()
         );
 
         self::assertEquals(
@@ -52,7 +52,7 @@ class ConnectorTest extends TestCase
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new Pool(new MemoryStore()),
-            $this->getModulesSettingsMock()
+            $this->getModuleSettingsMock()
         );
 
         self::assertEquals(
@@ -69,7 +69,7 @@ class ConnectorTest extends TestCase
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new Pool(new MemoryStore()),
-            $this->getModulesSettingsMock()
+            $this->getModuleSettingsMock()
         );
 
         self::assertEquals(
@@ -86,7 +86,7 @@ class ConnectorTest extends TestCase
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new Pool(new MemoryStore()),
-            $this->getModulesSettingsMock()
+            $this->getModuleSettingsMock()
         );
 
         self::assertEquals(
@@ -103,7 +103,7 @@ class ConnectorTest extends TestCase
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new Pool(new MemoryStore()),
-            $this->getModulesSettingsMock()
+            $this->getModuleSettingsMock()
         );
 
         self::assertEquals(
@@ -122,7 +122,7 @@ class ConnectorTest extends TestCase
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new Pool(new MemoryStore()),
-            $this->getModulesSettingsMock()
+            $this->getModuleSettingsMock()
         );
 
         self::assertEquals(
@@ -150,7 +150,7 @@ class ConnectorTest extends TestCase
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new Pool(new MemoryStore()),
-            $this->getModulesSettingsMock()
+            $this->getModuleSettingsMock()
         );
 
         self::assertEquals(
@@ -176,7 +176,7 @@ class ConnectorTest extends TestCase
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new Pool(new MemoryStore()),
-            $this->getModulesSettingsMock()
+            $this->getModuleSettingsMock()
         );
 
         self::assertEquals(
@@ -197,9 +197,9 @@ class ConnectorTest extends TestCase
         );
     }
 
-    private function getModulesSettingsMock(): PHPUnit_Framework_MockObject_MockObject
+    private function getModuleSettingsMock(): PHPUnit_Framework_MockObject_MockObject
     {
-        return $this->getMockBuilder(ModulesSettings::class)
+        return $this->getMockBuilder(ModuleSettings::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;

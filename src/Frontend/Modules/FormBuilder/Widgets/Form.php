@@ -255,14 +255,14 @@ class Form extends FrontendBaseWidget
                         }
 
                         // Convert the php date format to a jquery date format
-                        $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery($this->get('fork.settings')->get('Core', 'date_format_short'));
+                        $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery($this->get('forkcms.settings')->get('Core', 'date_format_short'));
 
                         $datetime = $this->form->addText($item['name'], $defaultValues, 255, 'inputDatefield ' . $item['classname'])->setAttributes(
                             [
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
                                 'type' => 'date',
-                                'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : ''),
+                                'default-date' => (!empty($defaultValues) ? date($this->get('forkcms.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : ''),
                             ]
                         );
                     } else {
@@ -333,7 +333,7 @@ class Form extends FrontendBaseWidget
         if ($this->hasRecaptchaField) {
             $this->header->addJS('https://www.google.com/recaptcha/api.js?hl=' . FrontendLocale::frontendLanguage());
             $this->template->assign('hasRecaptchaField', true);
-            $this->template->assign('siteKey', FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_site_key'));
+            $this->template->assign('siteKey', FrontendModel::get('forkcms.settings')->get('Core', 'google_recaptcha_site_key'));
         }
 
         // got fields
@@ -405,7 +405,7 @@ class Form extends FrontendBaseWidget
 
                 $response = $request->get('g-recaptcha-response');
 
-                $secret = FrontendModel::get('fork.settings')->get('Core', 'google_recaptcha_secret_key');
+                $secret = FrontendModel::get('forkcms.settings')->get('Core', 'google_recaptcha_secret_key');
 
                 if (!$secret) {
                     $this->form->addError(FrontendLanguage::err('RecaptchaInvalid'));

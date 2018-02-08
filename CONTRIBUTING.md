@@ -142,8 +142,8 @@ If your pull request contained another amount of commits, you can change the num
 An editor will open up containing the hashes and the commit messages of your last 5 commits. It should look like this:
 
 ```
-pick c171aae Write tests for the new ModulesSettings class.
-pick f6cf11c Rename the modules_settings to fork.settings.
+pick c171aae Write tests for the new ModuleSettings class.
+pick f6cf11c Rename the modules_settings to forkcms.settings.
 pick 66a7f2b Refactor using rename method.
 pick 123491d Deprecate the module settings methods in the BackendModel
 pick cd64652 Deprecate the modulesettings methods in the frontend model.
@@ -153,8 +153,8 @@ If you want to put all changes in one commit, you can just leave "pick" on the f
 This way, git will know it has to merge all changes of the commits into the first one.
 
 ```
-pick c171aae Write tests for the new ModulesSettings class.
-squash f6cf11c Rename the modules_settings to fork.settings.
+pick c171aae Write tests for the new ModuleSettings class.
+squash f6cf11c Rename the modules_settings to forkcms.settings.
 squash 66a7f2b Refactor using rename method.
 squash 123491d Deprecate the module settings methods in the BackendModel
 squash cd64652 Deprecate the modulesettings methods in the frontend model.

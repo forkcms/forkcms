@@ -95,7 +95,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
-            if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
+            if (!FrontendModel::get('forkcms.settings')->get('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -256,7 +256,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
-            if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
+            if (!FrontendModel::get('forkcms.settings')->get('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -355,7 +355,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = (bool) $row['allow_comments'];
 
             // reset allow comments
-            if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
+            if (!FrontendModel::get('forkcms.settings')->get('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -807,12 +807,12 @@ class Model implements FrontendTagsInterface
         }
 
         // get settings
-        $notifyByMailOnComment = FrontendModel::get('fork.settings')->get(
+        $notifyByMailOnComment = FrontendModel::get('forkcms.settings')->get(
             'Blog',
             'notify_by_email_on_new_comment',
             false
         );
-        $notifyByMailOnCommentToModerate = FrontendModel::get('fork.settings')->get(
+        $notifyByMailOnCommentToModerate = FrontendModel::get('forkcms.settings')->get(
             'Blog',
             'notify_by_email_on_new_comment_to_moderate',
             false
@@ -841,9 +841,9 @@ class Model implements FrontendTagsInterface
                 );
             }
 
-            $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
-            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
-            $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
+            $to = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_to');
+            $from = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_from');
+            $replyTo = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_reply_to');
             $message = Message::newInstance(FrontendLanguage::msg('NotificationSubject'))
                               ->setFrom([$from['email'] => $from['name']])
                               ->setTo([$to['email'] => $to['name']])
@@ -863,9 +863,9 @@ class Model implements FrontendTagsInterface
                 [$comment['author'], $url, $comment['post_title'], $backendUrl]
             );
 
-            $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
-            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
-            $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
+            $to = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_to');
+            $from = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_from');
+            $replyTo = FrontendModel::get('forkcms.settings')->get('Core', 'mailer_reply_to');
             $message = Message::newInstance(FrontendLanguage::msg('NotificationSubject'))
                               ->setFrom([$from['email'] => $from['name']])
                               ->setTo([$to['email'] => $to['name']])

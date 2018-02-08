@@ -52,7 +52,7 @@ class Detail extends FrontendBaseBlock
      */
     private function getSetting(string $name, $default = null)
     {
-        return $this->get('fork.settings')->get($this->getModule(), $name, $default);
+        return $this->get('forkcms.settings')->get($this->getModule(), $name, $default);
     }
 
     private function getQuestion(): array
@@ -162,7 +162,7 @@ class Detail extends FrontendBaseBlock
         $this->template->assign('item', $this->question);
         $this->template->assign('inSameCategory', $this->getRelatedQuestionsFromTheSameCategory());
         $this->template->assign('related', $this->getRelatedQuestions());
-        $this->template->assign('settings', $this->get('fork.settings')->getForModule($this->getModule()));
+        $this->template->assign('settings', $this->get('forkcms.settings')->getForModule($this->getModule()));
 
         if ($this->hasStatus()) {
             $this->template->assign($this->getStatus(), true);
@@ -297,9 +297,9 @@ class Detail extends FrontendBaseBlock
     {
         $feedback['question'] = $this->question['question'];
 
-        $to = $this->get('fork.settings')->get('Core', 'mailer_to');
-        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
-        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+        $to = $this->get('forkcms.settings')->get('Core', 'mailer_to');
+        $from = $this->get('forkcms.settings')->get('Core', 'mailer_from');
+        $replyTo = $this->get('forkcms.settings')->get('Core', 'mailer_reply_to');
         $message = Message::newInstance(
             sprintf(FrontendLanguage::getMessage('FaqFeedbackSubject'), $feedback['question'])
         )

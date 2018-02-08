@@ -99,8 +99,8 @@ class ResendActivation extends FrontendBaseBlock
     {
         $activationUrl = SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule(), 'Activate')
                          . '/' . $this->profile->getSetting('activation_key');
-        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
-        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+        $from = $this->get('forkcms.settings')->get('Core', 'mailer_from');
+        $replyTo = $this->get('forkcms.settings')->get('Core', 'mailer_reply_to');
         $message = Message::newInstance(FrontendLanguage::getMessage('RegisterSubject'))
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$this->profile->getEmail() => $this->profile->getDisplayName()])

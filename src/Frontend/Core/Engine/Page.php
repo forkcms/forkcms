@@ -192,7 +192,7 @@ class Page extends KernelLoader
             // hide the cookiebar from within the code to prevent flickering
             $this->template->assignGlobal(
                 'cookieBarHide',
-                !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false)
+                !$this->get('forkcms.settings')->get('Core', 'show_cookie_bar', false)
                 || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
             );
 

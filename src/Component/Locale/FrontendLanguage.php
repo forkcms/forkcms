@@ -116,7 +116,7 @@ final class FrontendLanguage
         // validate the cache
         if (empty(self::$languages['active'])) {
             // grab from settings
-            $activeLanguages = (array) Model::get('fork.settings')->get('Core', 'active_languages');
+            $activeLanguages = (array) Model::get('forkcms.settings')->get('Core', 'active_languages');
 
             // store in cache
             self::$languages['active'] = $activeLanguages;
@@ -295,7 +295,7 @@ final class FrontendLanguage
         // validate the cache
         if (empty(self::$languages['possible_redirect'])) {
             // grab from settings
-            $redirectLanguages = (array) Model::get('fork.settings')->get('Core', 'redirect_languages');
+            $redirectLanguages = (array) Model::get('forkcms.settings')->get('Core', 'redirect_languages');
 
             // store in cache
             self::$languages['possible_redirect'] = $redirectLanguages;

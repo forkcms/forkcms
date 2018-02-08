@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Mailmotor\Domain\Subscription;
 
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use DateTime;
 use Frontend\Core\Engine\Navigation;
 use App\Component\Locale\FrontendLocale;
@@ -26,19 +26,19 @@ class SubscribeType extends AbstractType
     protected $interests;
 
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
-    protected $modulesSettings;
+    protected $moduleSettings;
 
     /**
      * @var Subscriber
      */
     protected $subscriber;
 
-    public function __construct(Subscriber $subscriber, ModulesSettings $modulesSettings)
+    public function __construct(Subscriber $subscriber, ModuleSettings $moduleSettings)
     {
         $this->subscriber = $subscriber;
-        $this->modulesSettings = $modulesSettings;
+        $this->moduleSettings = $moduleSettings;
         $this->interests = $this->getInterests();
     }
 
@@ -85,14 +85,14 @@ class SubscribeType extends AbstractType
         $interests = [];
 
         // should we be checking interests (CampaignMonitor for example has no interests)
-        $mailMotorInterestsCheckInterests = $this->modulesSettings->get('Mailmotor', 'check_interests', true);
+        $mailMotorInterestsCheckInterests = $this->moduleSettings->get('Mailmotor', 'check_interests', true);
         if (!$mailMotorInterestsCheckInterests) {
             return [];
         }
 
         try {
-            $mailMotorInterests = $this->modulesSettings->get('Mailmotor', 'interests');
-            $mailMotorInterestsLastChecked = $this->modulesSettings->get('Mailmotor', 'interests_last_checked');
+            $mailMotorInterests = $this->moduleSettings->get('Mailmotor', 'interests');
+            $mailMotorInterestsLastChecked = $this->moduleSettings->get('Mailmotor', 'interests_last_checked');
 
             // get cached interests
             if (is_array($mailMotorInterests)
@@ -103,7 +103,7 @@ class SubscribeType extends AbstractType
             }
 
             $mailMotorInterests = $this->subscriber->getInterests(
-                $this->modulesSettings->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
+                $this->moduleSettings->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
             );
 
             // Has interests
@@ -121,11 +121,11 @@ class SubscribeType extends AbstractType
                     $interests[$categoryChildTitle] = $categoryChildId;
                 }
             }
-            $this->modulesSettings->set('Mailmotor', 'interests', $interests);
-            $this->modulesSettings->set('Mailmotor', 'interests_last_checked', new DateTime());
+            $this->moduleSettings->set('Mailmotor', 'interests', $interests);
+            $this->moduleSettings->set('Mailmotor', 'interests_last_checked', new DateTime());
         } catch (NotImplementedException $e) {
             // Fallback for when no mail-engine is chosen in the Backend
-            $this->modulesSettings->set('Mailmotor', 'check_interests', false);
+            $this->moduleSettings->set('Mailmotor', 'check_interests', false);
 
             return [];
         }
@@ -139,7 +139,7 @@ class SubscribeType extends AbstractType
             'data_class' => Subscription::class,
             'validation_groups' => function (FormInterface $form) {
                 // Define overwrite interests
-                $overwriteInterests = $this->modulesSettings->get('Mailmotor', 'overwrite_interests', true);
+                $overwriteInterests = $this->moduleSettings->get('Mailmotor', 'overwrite_interests', true);
                 if (!empty($this->interests) && $overwriteInterests) {
                     return ['Default', 'has_interests'];
                 }

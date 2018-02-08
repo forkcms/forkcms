@@ -35,7 +35,7 @@ final class Ping extends ActionIndex
             return false;
         }
 
-        $settings = $this->getContainer()->get('fork.settings');
+        $settings = $this->getContainer()->get('forkcms.settings');
         foreach (BackendLanguage::getActiveLanguages() as $language) {
             $languageListId = $settings->get('Mailmotor', 'list_id_' . $language);
 
@@ -64,7 +64,7 @@ final class Ping extends ActionIndex
 
     private function resetMailEngine(): void
     {
-        $saveSettings = new SaveSettings($this->get('fork.settings'));
+        $saveSettings = new SaveSettings($this->get('forkcms.settings'));
         $saveSettings->mailEngine = 'not_implemented';
 
         $this->get('command_bus')->handle($saveSettings);

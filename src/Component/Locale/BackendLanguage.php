@@ -61,7 +61,7 @@ final class BackendLanguage
     {
         // validate the cache
         if (empty(self::$activeLanguages)) {
-            self::$activeLanguages = (array) Model::get('fork.settings')->get('Core', 'active_languages');
+            self::$activeLanguages = (array) Model::get('forkcms.settings')->get('Core', 'active_languages');
         }
 
         // return from cache
@@ -151,7 +151,7 @@ final class BackendLanguage
         $languages = [];
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('fork.settings')->get('Core', 'interface_languages', ['en']) as $key) {
+        foreach ((array) Model::get('forkcms.settings')->get('Core', 'interface_languages', ['en']) as $key) {
             // fetch language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
@@ -226,7 +226,7 @@ final class BackendLanguage
         $languages = [];
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) Model::get('fork.settings')->get('Core', 'languages', ['en']) as $key) {
+        foreach ((array) Model::get('forkcms.settings')->get('Core', 'languages', ['en']) as $key) {
             // fetch the language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }

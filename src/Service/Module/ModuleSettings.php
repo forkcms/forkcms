@@ -1,6 +1,6 @@
 <?php
 
-namespace Common;
+namespace App\Service\Module;
 
 use Psr\Cache\CacheItemPoolInterface;
 use SpoonDatabase;
@@ -8,7 +8,7 @@ use SpoonDatabase;
 /**
  * This is our module settings class
  */
-class ModulesSettings
+class ModuleSettings
 {
     /**
      * @var SpoonDatabase

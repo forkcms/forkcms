@@ -48,7 +48,7 @@ class Subscribe extends FrontendBaseBlock
         $subscription = $form->getData();
 
         /** @var bool $doubleOptIn */
-        $doubleOptIn = $this->get('fork.settings')->get('Mailmotor', 'double_opt_in', false);
+        $doubleOptIn = $this->get('forkcms.settings')->get('Mailmotor', 'double_opt_in', false);
 
         try {
             // The command bus will handle the subscription

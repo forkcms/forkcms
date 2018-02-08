@@ -117,8 +117,8 @@ class Register extends FrontendBaseBlock
     private function sendActivationEmail(array $profile, string $activationKey): void
     {
         $activationUrl = SITE_URL . FrontendNavigation::getUrlForBlock($this->getModule(), 'Activate');
-        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
-        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+        $from = $this->get('forkcms.settings')->get('Core', 'mailer_from');
+        $replyTo = $this->get('forkcms.settings')->get('Core', 'mailer_reply_to');
         $message = Message::newInstance(FrontendLanguage::getMessage('RegisterSubject'))
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$profile['email'] => $profile['display_name']])

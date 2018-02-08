@@ -46,7 +46,7 @@ class Autosuggest extends FrontendBaseAJAXAction
     {
         // set variables
         $this->requestedPage = 1;
-        $this->limit = (int) $this->get('fork.settings')->get('Search', 'autosuggest_num_items', 10);
+        $this->limit = (int) $this->get('forkcms.settings')->get('Search', 'autosuggest_num_items', 10);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cache = $this->get('cache.search');
         $this->cacheKey = implode(

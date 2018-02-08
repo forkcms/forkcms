@@ -61,7 +61,7 @@ class Edit extends BackendBaseActionEdit
         // get general info
         $this->profile = BackendProfilesModel::get($this->id);
 
-        $this->notifyProfile = $this->get('fork.settings')->get(
+        $this->notifyProfile = $this->get('forkcms.settings')->get(
             $this->url->getModule(),
             'send_new_profile_mail',
             false

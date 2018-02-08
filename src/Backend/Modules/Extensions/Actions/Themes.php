@@ -74,7 +74,7 @@ class Themes extends BackendBaseActionIndex
         // set selected theme
         $selected = $this->getRequest()->request->has('installedThemes')
             ? $this->getRequest()->request->get('installedThemes')
-            : $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+            : $this->get('forkcms.settings')->get('Core', 'theme', 'Fork');
 
         // no themes found
         if (empty($themes)) {
@@ -119,7 +119,7 @@ class Themes extends BackendBaseActionIndex
             if ($this->form->isCorrect()) {
                 // determine themes
                 $newTheme = $this->form->getField('installedThemes')->getValue();
-                $oldTheme = $this->get('fork.settings')->get('Core', 'theme', 'Fork');
+                $oldTheme = $this->get('forkcms.settings')->get('Core', 'theme', 'Fork');
 
                 // check if we actually switched themes
                 if ($newTheme != $oldTheme) {
@@ -136,7 +136,7 @@ class Themes extends BackendBaseActionIndex
                     }
 
                     // fetch current default template
-                    $oldDefaultTemplatePath = $oldTemplates[$this->get('fork.settings')->get('Pages', 'default_template')]['path'];
+                    $oldDefaultTemplatePath = $oldTemplates[$this->get('forkcms.settings')->get('Pages', 'default_template')]['path'];
 
                     // loop new templates
                     foreach ($newTemplates as $newTemplateId => $newTemplate) {
@@ -155,10 +155,10 @@ class Themes extends BackendBaseActionIndex
                     }
 
                     // update theme
-                    $this->get('fork.settings')->set('Core', 'theme', $newTheme);
+                    $this->get('forkcms.settings')->set('Core', 'theme', $newTheme);
 
                     // save new default template
-                    $this->get('fork.settings')->set('Pages', 'default_template', $newDefaultTemplateId);
+                    $this->get('forkcms.settings')->set('Pages', 'default_template', $newDefaultTemplateId);
 
                     // loop old templates
                     foreach ($oldTemplates as $oldTemplateId => $oldTemplate) {

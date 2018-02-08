@@ -80,7 +80,7 @@ class Edit extends BackendBaseActionEdit
     private function getData(): void
     {
         $this->record = (array) BackendBlogModel::get($this->id);
-        $this->imageIsAllowed = $this->get('fork.settings')->get($this->url->getModule(), 'show_image_form', true);
+        $this->imageIsAllowed = $this->get('forkcms.settings')->get($this->url->getModule(), 'show_image_form', true);
 
         // is there a revision specified?
         $revisionToLoad = $this->getRequest()->query->getInt('revision');

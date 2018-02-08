@@ -406,7 +406,7 @@ class Model
     public static function search($term, int $limit = 20, int $offset = 0): array
     {
         // revalidate searches
-        if (FrontendModel::get('fork.settings')->get('Search', 'validate_search', true) == true) {
+        if (FrontendModel::get('forkcms.settings')->get('Search', 'validate_search', true) == true) {
             self::validateSearch();
         }
         // @note: on heavy sites with a lot of inactive search indices better

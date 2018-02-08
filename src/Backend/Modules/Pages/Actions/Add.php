@@ -78,7 +78,7 @@ class Add extends BackendBaseActionAdd
         $this->isGod = BackendAuthentication::getUser()->isGod();
 
         // init var
-        $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', false);
+        $defaultTemplateId = $this->get('forkcms.settings')->get('Pages', 'default_template', false);
 
         // fallback
         if ($defaultTemplateId === false) {
@@ -104,7 +104,7 @@ class Add extends BackendBaseActionAdd
     private function loadForm(): void
     {
         // get default template id
-        $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
+        $defaultTemplateId = $this->get('forkcms.settings')->get('Pages', 'default_template', 1);
 
         // create form
         $this->form = new BackendForm('add');
@@ -347,7 +347,7 @@ class Add extends BackendBaseActionAdd
         $this->template->assign('hreflangFields', $this->hreflangFields);
 
         // get default template id
-        $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
+        $defaultTemplateId = $this->get('forkcms.settings')->get('Pages', 'default_template', 1);
 
         // assign template
         $this->template->assignArray($this->templates[$defaultTemplateId], 'template');

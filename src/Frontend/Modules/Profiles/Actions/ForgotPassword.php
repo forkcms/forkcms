@@ -93,8 +93,8 @@ class ForgotPassword extends FrontendBaseBlock
 
     private function sendForgotPasswordEmail(int $profileId, string $resetUrl): void
     {
-        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
-        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+        $from = $this->get('forkcms.settings')->get('Core', 'mailer_from');
+        $replyTo = $this->get('forkcms.settings')->get('Core', 'mailer_reply_to');
         $message = Message::newInstance(FrontendLanguage::getMessage('ForgotPasswordSubject'))
             ->setFrom([$from['email'] => $from['name']])
             ->setTo([$this->form->getField('email')->getValue() => ''])

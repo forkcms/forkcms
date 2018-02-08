@@ -207,8 +207,8 @@ class Index extends BackendBaseActionIndex
                 $user->setSetting('reset_password_timestamp', time());
 
                 // send e-mail to user
-                $from = $this->get('fork.settings')->get('Core', 'mailer_from');
-                $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+                $from = $this->get('forkcms.settings')->get('Core', 'mailer_from');
+                $replyTo = $this->get('forkcms.settings')->get('Core', 'mailer_reply_to');
                 $message = Message::newInstance(
                     \SpoonFilter::ucfirst(BackendLanguage::msg('ResetYourPasswordMailSubject'))
                 )

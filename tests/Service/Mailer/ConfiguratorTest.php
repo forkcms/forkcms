@@ -13,17 +13,17 @@ class ConfiguratorTest extends TestCase
 {
     public function testConfiguratorSetsMailTransportByDefault(): void
     {
-        $modulesSettingsMock = $this->getModulesSettingsMock();
+        $moduleSettingsMock = $this->getModuleSettingsMock();
         $containerMock =
             $this->getContainerMock();
 
         $configurator = new Configurator(
-            $modulesSettingsMock,
+            $moduleSettingsMock,
             $containerMock
         );
 
         // always return null: we have no modules settings set
-        $modulesSettingsMock
+        $moduleSettingsMock
             ->expects($this->exactly(6))
             ->method('get')
             ->will($this->returnValue(null))
@@ -44,17 +44,17 @@ class ConfiguratorTest extends TestCase
 
     public function testConfiguratorSetsSmtpTransport(): void
     {
-        $modulesSettingsMock = $this->getModulesSettingsMock();
+        $moduleSettingsMock = $this->getModuleSettingsMock();
         $containerMock =
             $this->getContainerMock();
 
         $configurator = new Configurator(
-            $modulesSettingsMock,
+            $moduleSettingsMock,
             $containerMock
         );
 
         // always return null: we have modules settings set for smtp
-        $modulesSettingsMock
+        $moduleSettingsMock
             ->expects($this->exactly(6))
             ->method('get')
             ->will($this->onConsecutiveCalls(
@@ -79,9 +79,9 @@ class ConfiguratorTest extends TestCase
         $configurator->onKernelRequest($this->getGetResponseEventMock());
     }
 
-    private function getModulesSettingsMock(): PHPUnit_Framework_MockObject_MockObject
+    private function getModuleSettingsMock(): PHPUnit_Framework_MockObject_MockObject
     {
-        return $this->getMockBuilder('Common\ModulesSettings')
+        return $this->getMockBuilder('App\Service\Module\ModuleSettings')
             ->disableOriginalConstructor()
             ->getMock()
         ;

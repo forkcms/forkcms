@@ -63,7 +63,7 @@ class Theme
     {
         // theme name has not yet been saved, fetch and save it
         if (!self::$theme) {
-            self::$theme = Model::get('fork.settings')->get('Core', 'theme', null);
+            self::$theme = Model::get('forkcms.settings')->get('Core', 'theme', null);
         }
 
         // return theme name

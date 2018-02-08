@@ -95,8 +95,8 @@ $config['authentication'] = function () {
 /*============================ License Key ============================================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_licenseKey
 
-$config['licenseName'] = BackendModel::get('fork.settings')->get('Core', 'ckfinder_license_name');
-$config['licenseKey']  = BackendModel::get('fork.settings')->get('Core', 'ckfinder_license_key');
+$config['licenseName'] = BackendModel::get('forkcms.settings')->get('Core', 'ckfinder_license_name');
+$config['licenseKey']  = BackendModel::get('forkcms.settings')->get('Core', 'ckfinder_license_key');
 
 /*============================ CKFinder Internal Directory ============================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_privateDir
@@ -113,8 +113,8 @@ $config['privateDir'] = array(
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_images
 
 $config['images'] = array(
-    'maxWidth'  => BackendModel::get('fork.settings')->get('Core', 'ckfinder_image_max_width'),
-    'maxHeight' => BackendModel::get('fork.settings')->get('Core', 'ckfinder_image_max_height'),
+    'maxWidth'  => BackendModel::get('forkcms.settings')->get('Core', 'ckfinder_image_max_width'),
+    'maxHeight' => BackendModel::get('forkcms.settings')->get('Core', 'ckfinder_image_max_height'),
     'quality'   => 100,
     'sizes' => array(
         'small'  => array('width' => 480, 'height' => 320, 'quality' => 80),

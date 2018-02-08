@@ -6,7 +6,7 @@ use App\Component\Locale\Language;
 use App\Service\Mailer\Message;
 use Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedSubscribedEvent;
 use Swift_Mailer;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 
 /**
  * New mailing list subscription
@@ -18,19 +18,19 @@ use Common\ModulesSettings;
 final class NewNotImplementedMailingListSubscription
 {
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
-    private $modulesSettings;
+    private $moduleSettings;
 
     /**
      * @var Swift_Mailer
      */
     private $mailer;
 
-    public function __construct(Swift_Mailer $mailer, ModulesSettings $modulesSettings)
+    public function __construct(Swift_Mailer $mailer, ModuleSettings $moduleSettings)
     {
         $this->mailer = $mailer;
-        $this->modulesSettings = $modulesSettings;
+        $this->moduleSettings = $moduleSettings;
     }
 
     public function onNotImplementedSubscribedEvent(NotImplementedSubscribedEvent $event): void
@@ -41,9 +41,9 @@ final class NewNotImplementedMailingListSubscription
             strtoupper((string) $event->getSubscription()->locale)
         );
 
-        $to = $this->modulesSettings->get('Core', 'mailer_to');
-        $from = $this->modulesSettings->get('Core', 'mailer_from');
-        $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
+        $to = $this->moduleSettings->get('Core', 'mailer_to');
+        $from = $this->moduleSettings->get('Core', 'mailer_from');
+        $replyTo = $this->moduleSettings->get('Core', 'mailer_reply_to');
 
         $message = Message::newInstance($title)
             ->setFrom([$from['email'] => $from['name']])

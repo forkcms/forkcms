@@ -3,43 +3,43 @@
 namespace Backend\Modules\Mailmotor\Domain\Settings\Command;
 
 use App\Component\Locale\BackendLanguage;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 
 final class SaveSettingsHandler
 {
     private const MODULE_NAME = 'Mailmotor';
 
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
-    private $modulesSettings;
+    private $moduleSettings;
 
     public function __construct(
-        ModulesSettings $modulesSettings
+        ModuleSettings $moduleSettings
     ) {
-        $this->modulesSettings = $modulesSettings;
+        $this->moduleSettings = $moduleSettings;
     }
 
     public function handle(SaveSettings $settings): void
     {
-        $this->modulesSettings->set(self::MODULE_NAME, 'mail_engine', $settings->mailEngine);
-        $this->modulesSettings->set(self::MODULE_NAME, 'double_opt_in', $settings->doubleOptIn);
-        $this->modulesSettings->set(self::MODULE_NAME, 'overwrite_interests', $settings->overwriteInterests);
+        $this->moduleSettings->set(self::MODULE_NAME, 'mail_engine', $settings->mailEngine);
+        $this->moduleSettings->set(self::MODULE_NAME, 'double_opt_in', $settings->doubleOptIn);
+        $this->moduleSettings->set(self::MODULE_NAME, 'overwrite_interests', $settings->overwriteInterests);
 
         // mail engine is empty
         if ($settings->mailEngine === 'not_implemented') {
-            $this->modulesSettings->delete(self::MODULE_NAME, 'api_key');
-            $this->modulesSettings->delete(self::MODULE_NAME, 'list_id');
+            $this->moduleSettings->delete(self::MODULE_NAME, 'api_key');
+            $this->moduleSettings->delete(self::MODULE_NAME, 'list_id');
 
             foreach (BackendLanguage::getActiveLanguages() as $language) {
-                $this->modulesSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
+                $this->moduleSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
             }
 
             return;
         }
 
-        $this->modulesSettings->set(self::MODULE_NAME, 'api_key', $settings->apiKey);
-        $this->modulesSettings->set(self::MODULE_NAME, 'list_id', $settings->listId);
+        $this->moduleSettings->set(self::MODULE_NAME, 'api_key', $settings->apiKey);
+        $this->moduleSettings->set(self::MODULE_NAME, 'list_id', $settings->listId);
         $this->saveLanguageListIds($settings->languageListIds);
     }
 
@@ -47,12 +47,12 @@ final class SaveSettingsHandler
     {
         foreach ($languageListIds as $language => $languageListId) {
             if (empty($languageListId) || !BackendLanguage::isActiveLanguage($language)) {
-                $this->modulesSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
+                $this->moduleSettings->delete(self::MODULE_NAME, 'list_id_' . $language);
 
                 continue;
             }
 
-            $this->modulesSettings->set(self::MODULE_NAME, 'list_id_' . $language, $languageListId);
+            $this->moduleSettings->set(self::MODULE_NAME, 'list_id_' . $language, $languageListId);
         }
     }
 }

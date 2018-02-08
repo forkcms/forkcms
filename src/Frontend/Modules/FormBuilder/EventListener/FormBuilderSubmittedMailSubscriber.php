@@ -4,7 +4,7 @@ namespace Frontend\Modules\FormBuilder\EventListener;
 
 use App\Service\Mailer\Message;
 use Swift_Mailer;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use App\Component\Locale\FrontendLanguage;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use Swift_Mime_SimpleMessage;
@@ -15,9 +15,9 @@ use Swift_Mime_SimpleMessage;
 final class FormBuilderSubmittedMailSubscriber
 {
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
-    protected $modulesSettings;
+    protected $moduleSettings;
 
     /**
      * @var Swift_Mailer
@@ -26,10 +26,10 @@ final class FormBuilderSubmittedMailSubscriber
 
     public function __construct(
         Swift_Mailer $mailer,
-        ModulesSettings $modulesSettings
+        ModuleSettings $moduleSettings
     ) {
         $this->mailer = $mailer;
-        $this->modulesSettings = $modulesSettings;
+        $this->moduleSettings = $moduleSettings;
     }
 
     public function onFormSubmitted(FormBuilderSubmittedEvent $event): void
@@ -75,7 +75,7 @@ final class FormBuilderSubmittedMailSubscriber
             $subject = FrontendLanguage::getMessage('FormBuilderSubject');
         }
 
-        $from = $this->modulesSettings->get('Core', 'mailer_from');
+        $from = $this->moduleSettings->get('Core', 'mailer_from');
 
         $message = Message::newInstance(sprintf($subject, $form['name']))
             ->parseHtml(
@@ -110,7 +110,7 @@ final class FormBuilderSubmittedMailSubscriber
             }
         }
         if ($message->getReplyTo() === null) {
-            $replyTo = $this->modulesSettings->get('Core', 'mailer_reply_to');
+            $replyTo = $this->moduleSettings->get('Core', 'mailer_reply_to');
             $message->setReplyTo([$replyTo['email'] => $replyTo['name']]);
         }
 

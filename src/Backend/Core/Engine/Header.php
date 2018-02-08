@@ -222,9 +222,9 @@ final class Header extends KernelLoader
         $this->jsData->add('site', 'domain', SITE_DOMAIN);
         $this->jsData->add('editor', 'language', $this->getCKEditorLanguage());
 
-        if (!empty($this->get('fork.settings')->get('Core', 'theme'))) {
-            $this->jsData->add('theme', 'theme', $this->get('fork.settings')->get('Core', 'theme'));
-            $themePath = FRONTEND_PATH . '/Themes/' . $this->get('fork.settings')->get('Core', 'theme');
+        if (!empty($this->get('forkcms.settings')->get('Core', 'theme'))) {
+            $this->jsData->add('theme', 'theme', $this->get('forkcms.settings')->get('Core', 'theme'));
+            $themePath = FRONTEND_PATH . '/Themes/' . $this->get('forkcms.settings')->get('Core', 'theme');
             $this->jsData->add('theme', 'path', $themePath);
             $this->jsData->add('theme', 'has_css', is_file($themePath . '/Core/Layout/Css/screen.css'));
             $this->jsData->add('theme', 'has_editor_css', is_file($themePath . '/Core/Layout/Css/editor_content.css'));

@@ -5,7 +5,7 @@ namespace Backend\Modules\Analytics\Form;
 use Backend\Core\Engine\Form;
 use App\Component\Locale\BackendLanguage;
 use Backend\Core\Engine\TwigTemplate;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 
 /**
  * A form to change the settings of the analytics module
@@ -15,10 +15,10 @@ final class SettingsStepAuthConfigFileTypeInterface implements SettingsStepTypeI
     /** @var Form */
     private $form;
 
-    /** @var ModulesSettings */
+    /** @var ModuleSettings */
     private $settings;
 
-    public function __construct(string $name, ModulesSettings $settings)
+    public function __construct(string $name, ModuleSettings $settings)
     {
         $this->form = new Form($name);
         $this->settings = $settings;

@@ -35,7 +35,7 @@ class Index extends BackendBaseActionIndex
         parent::execute();
 
         // define Google Maps API key
-        $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+        $apikey = $this->get('forkcms.settings')->get('Core', 'google_maps_key');
 
         // check Google Maps API key, otherwise redirect to settings
         if ($apikey === null) {
@@ -67,7 +67,7 @@ class Index extends BackendBaseActionIndex
 
         // load the settings from the general settings
         if (empty($this->settings)) {
-            $this->settings = $this->get('fork.settings')->getForModule('Location');
+            $this->settings = $this->get('forkcms.settings')->getForModule('Location');
 
             $this->settings['map_type'] = $this->settings['map_type_widget'];
             $this->settings['map_style'] = $this->settings['map_style_widget'] ?? 'standard';

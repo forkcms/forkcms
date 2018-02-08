@@ -3,7 +3,7 @@
 namespace Backend\Modules\Mailmotor\Domain\Settings\Command;
 
 use App\Component\Locale\BackendLanguage;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class SaveSettings
@@ -44,9 +44,9 @@ final class SaveSettings
      */
     public $languageListIds;
 
-    public function __construct(ModulesSettings $modulesSettings)
+    public function __construct(ModuleSettings $moduleSettings)
     {
-        $settings = $modulesSettings->getForModule('Mailmotor');
+        $settings = $moduleSettings->getForModule('Mailmotor');
         $this->mailEngine = $settings['mail_engine'] ?? null;
         $this->apiKey = $settings['api_key'] ?? null;
         $this->listId = $settings['list_id'] ?? null;

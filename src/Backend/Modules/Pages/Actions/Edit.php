@@ -220,7 +220,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm(): void
     {
         // get default template id
-        $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
+        $defaultTemplateId = $this->get('forkcms.settings')->get('Pages', 'default_template', 1);
 
         // create form
         $this->form = new BackendForm('edit');
@@ -258,7 +258,7 @@ class Edit extends BackendBaseActionEdit
             'footer' => BackendLanguage::lbl('Footer'),
             'root' => BackendLanguage::lbl('Root'),
         ];
-        if (!BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
+        if (!BackendModel::get('forkcms.settings')->get('Pages', 'meta_navigation', false)) {
             unset($movePageTreeOptions['meta']);
         }
         $this->form->addDropdown(

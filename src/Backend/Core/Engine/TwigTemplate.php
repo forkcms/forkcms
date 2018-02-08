@@ -44,7 +44,7 @@ class TwigTemplate extends BaseTwigTemplate
             $container->set('template', $this);
         }
 
-        $this->forkSettings = $container->get('fork.settings');
+        $this->forkSettings = $container->get('forkcms.settings');
         if ($this->debugMode) {
             $this->environment->enableAutoReload();
             $this->environment->setCache(false);
@@ -184,7 +184,7 @@ class TwigTemplate extends BaseTwigTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            Model::get('fork.settings')->get('Core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            Model::get('forkcms.settings')->get('Core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
     }
 

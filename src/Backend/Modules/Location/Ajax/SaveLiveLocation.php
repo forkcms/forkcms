@@ -16,7 +16,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        $generalSettings = $this->get('fork.settings')->getForModule('Location');
+        $generalSettings = $this->get('forkcms.settings')->getForModule('Location');
 
         // get parameters
         $itemId = $this->getRequest()->request->getInt('id');

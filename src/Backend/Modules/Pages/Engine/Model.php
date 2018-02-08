@@ -792,7 +792,7 @@ class Model
         );
 
         $treeBranches = [];
-        if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
+        if (BackendModel::get('forkcms.settings')->get('Pages', 'meta_navigation', false)) {
             $treeBranches['meta'] = BackendLanguage::lbl('Meta');
         }
         $treeBranches['footer'] = BackendLanguage::lbl('Footer');
@@ -947,7 +947,7 @@ class Model
         $html .= '</div>' . "\n";
 
         // only show meta if needed
-        if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
+        if (BackendModel::get('forkcms.settings')->get('Pages', 'meta_navigation', false)) {
             // meta pages
             $html .= '<h4>' . \SpoonFilter::ucfirst(BackendLanguage::lbl('Meta')) . '</h4>' . "\n";
             $html .= '<div class="clearfix" data-tree="meta">' . "\n";
@@ -1204,7 +1204,7 @@ class Model
     public static function loadUserTemplates(): array
     {
         $themePath = FRONTEND_PATH . '/Themes/';
-        $themePath .= BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork');
+        $themePath .= BackendModel::get('forkcms.settings')->get('Core', 'theme', 'Fork');
         $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.json';
 
         $userTemplates = [];
@@ -1216,7 +1216,7 @@ class Model
             foreach ($userTemplates as &$userTemplate) {
                 $userTemplate['file'] =
                     '/src/Frontend/Themes/' .
-                    BackendModel::get('fork.settings')->get('Core', 'theme', 'Fork') .
+                    BackendModel::get('forkcms.settings')->get('Core', 'theme', 'Fork') .
                     '/Core/Layout/Templates/UserTemplates/' .
                     $userTemplate['file'];
             }
@@ -1321,7 +1321,7 @@ class Model
         $page['revision_id'] = (int) $database->insert('pages', $page);
 
         // how many revisions should we keep
-        $rowsToKeep = (int) BackendModel::get('fork.settings')->get('Pages', 'max_num_revisions', 20);
+        $rowsToKeep = (int) BackendModel::get('forkcms.settings')->get('Pages', 'max_num_revisions', 20);
 
         // get revision-ids for items to keep
         $revisionIdsToKeep = (array) $database->getColumn(

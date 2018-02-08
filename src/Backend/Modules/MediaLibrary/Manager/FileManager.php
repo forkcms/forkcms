@@ -3,7 +3,7 @@
 namespace Backend\Modules\MediaLibrary\Manager;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use App\Component\Uri\Uri;
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -12,13 +12,13 @@ final class FileManager
     /** @var Filesystem */
     private $filesystem;
 
-    /** @var ModulesSettings|\stdClass */
+    /** @var ModuleSettings|\stdClass */
     private $settings;
 
     /**
      * FileManager constructor.
      *
-     * @param ModulesSettings|\stdClass $settings
+     * @param ModuleSettings|\stdClass $settings
      */
     public function __construct($settings)
     {
@@ -78,7 +78,7 @@ final class FileManager
 
     public function getNextShardingFolder(): string
     {
-        $numberOfShardingFolders = ($this->settings instanceof ModulesSettings)
+        $numberOfShardingFolders = ($this->settings instanceof ModuleSettings)
             ? $this->settings->get('MediaLibrary', 'upload_number_of_sharding_folders', 15) : 15;
 
         $id = random_int(0, $numberOfShardingFolders);

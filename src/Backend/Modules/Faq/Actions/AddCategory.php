@@ -17,7 +17,7 @@ class AddCategory extends BackendBaseActionAdd
     public function execute(): void
     {
         // only one category allowed, so we redirect
-        if (!$this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true)) {
+        if (!$this->get('forkcms.settings')->get('Faq', 'allow_multiple_categories', true)) {
             $this->redirect(BackendModel::createUrlForAction('Categories') . '&error=only-one-category-allowed');
         }
 

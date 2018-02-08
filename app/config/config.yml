@@ -145,7 +145,7 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
         arguments:
-            - "@fork.settings"
+            - "@forkcms.settings"
             - "@service_container"
 
     cache.filesystem.adapter:
@@ -176,8 +176,8 @@ services:
             - "@database"
             - "@cache.pool"
 
-    fork.settings:
-        class: Common\ModulesSettings
+    forkcms.settings:
+        class: App\Service\Module\ModuleSettings
         public: true
         arguments:
             - "@database"

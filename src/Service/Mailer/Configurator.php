@@ -6,23 +6,23 @@ use PDOException;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 
 class Configurator
 {
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
-    private $modulesSettings;
+    private $moduleSettings;
 
     /**
      * @var ContainerInterface
      */
     private $container;
 
-    public function __construct(ModulesSettings $modulesSettings, ContainerInterface $container)
+    public function __construct(ModuleSettings $moduleSettings, ContainerInterface $container)
     {
-        $this->modulesSettings = $modulesSettings;
+        $this->moduleSettings = $moduleSettings;
         $this->container = $container;
     }
 
@@ -40,12 +40,12 @@ class Configurator
     {
         try {
             $transport = TransportFactory::create(
-                (string) $this->modulesSettings->get('Core', 'mailer_type', 'sendmail'),
-                $this->modulesSettings->get('Core', 'smtp_server'),
-                (int) $this->modulesSettings->get('Core', 'smtp_port', 25),
-                $this->modulesSettings->get('Core', 'smtp_username'),
-                $this->modulesSettings->get('Core', 'smtp_password'),
-                $this->modulesSettings->get('Core', 'smtp_secure_layer')
+                (string) $this->moduleSettings->get('Core', 'mailer_type', 'sendmail'),
+                $this->moduleSettings->get('Core', 'smtp_server'),
+                (int) $this->moduleSettings->get('Core', 'smtp_port', 25),
+                $this->moduleSettings->get('Core', 'smtp_username'),
+                $this->moduleSettings->get('Core', 'smtp_password'),
+                $this->moduleSettings->get('Core', 'smtp_secure_layer')
             );
             $mailer = $this->container->get('mailer');
             if ($mailer !== null) {

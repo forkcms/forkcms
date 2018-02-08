@@ -332,7 +332,7 @@ class Model extends BaseModel
 
     protected static function getAkismet(): Akismet
     {
-        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
+        $akismetKey = self::get('forkcms.settings')->get('Core', 'akismet_key');
 
         // invalid key, so we can't detect spam
         if (empty($akismetKey)) {

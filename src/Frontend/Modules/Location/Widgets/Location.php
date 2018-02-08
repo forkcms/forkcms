@@ -28,7 +28,7 @@ class Location extends FrontendBaseWidget
     public function execute(): void
     {
         // define Google Maps API key
-        $apikey = $this->get('fork.settings')->get('Core', 'google_maps_key');
+        $apikey = $this->get('forkcms.settings')->get('Core', 'google_maps_key');
 
         // check Google Maps API key, otherwise show error
         if ($apikey == null) {
@@ -50,7 +50,7 @@ class Location extends FrontendBaseWidget
         $this->item = FrontendLocationModel::get($this->data['id']);
         $this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
         if (empty($this->settings)) {
-            $settings = $this->get('fork.settings')->getForModule('Location');
+            $settings = $this->get('forkcms.settings')->getForModule('Location');
 
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];

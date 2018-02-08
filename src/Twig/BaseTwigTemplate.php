@@ -4,7 +4,7 @@ namespace App\Twig;
 
 use App\Form\Spoon\Form;
 use Common\Core\Model;
-use Common\ModulesSettings;
+use App\Service\Module\ModuleSettings;
 use SpoonForm;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Twig_Environment;
@@ -49,7 +49,7 @@ abstract class BaseTwigTemplate extends TwigEngine
     protected $variables = [];
 
     /**
-     * @var ModulesSettings
+     * @var ModuleSettings
      */
     protected $forkSettings;
 

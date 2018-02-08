@@ -194,7 +194,7 @@ class Navigation extends KernelLoader
      */
     private static function hasMetaNavigation(array $navigation): bool
     {
-        return isset($navigation['meta']) && Model::get('fork.settings')->get('Pages', 'meta_navigation', true);
+        return isset($navigation['meta']) && Model::get('forkcms.settings')->get('Pages', 'meta_navigation', true);
     }
 
     /**

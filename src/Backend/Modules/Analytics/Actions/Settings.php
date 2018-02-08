@@ -18,7 +18,7 @@ final class Settings extends ActionIndex
 
         $settingsForm = new SettingsType(
             'settings',
-            $this->get('fork.settings'),
+            $this->get('forkcms.settings'),
             $this->get('analytics.google_analytics_service')
         );
 
@@ -27,16 +27,16 @@ final class Settings extends ActionIndex
         }
         $settingsForm->parse($this->template);
 
-        if ($this->get('fork.settings')->get($this->getModule(), 'web_property_id')) {
+        if ($this->get('forkcms.settings')->get($this->getModule(), 'web_property_id')) {
             $this->template->assign(
                 'web_property_id',
-                $this->get('fork.settings')->get($this->getModule(), 'web_property_id')
+                $this->get('forkcms.settings')->get($this->getModule(), 'web_property_id')
             );
         }
-        if ($this->get('fork.settings')->get($this->getModule(), 'profile')) {
+        if ($this->get('forkcms.settings')->get($this->getModule(), 'profile')) {
             $this->template->assign(
                 'profile',
-                $this->get('fork.settings')->get($this->getModule(), 'profile')
+                $this->get('forkcms.settings')->get($this->getModule(), 'profile')
             );
         }
 

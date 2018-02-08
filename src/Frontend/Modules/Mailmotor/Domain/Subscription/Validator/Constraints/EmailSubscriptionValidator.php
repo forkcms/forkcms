@@ -35,7 +35,7 @@ class EmailSubscriptionValidator extends ConstraintValidator
             // The email is already in our mailing list
             if ($this->subscriber->isSubscribed(
                 $value,
-                Model::get('fork.settings')->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
+                Model::get('forkcms.settings')->get('Mailmotor', 'list_id_' . FrontendLocale::frontendLanguage())
             )) {
                 $this->context->buildViolation($constraint->alreadySubscribedMessage)->addViolation();
             }
