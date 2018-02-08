@@ -26,7 +26,7 @@ twig:
 
 services:
     database_collector:
-        class: App\Service\Database\DatabaseDataCollector
+        class: App\Service\SpoonDatabase\DatabaseDataCollector
         arguments:
             - "@database"
         tags:
