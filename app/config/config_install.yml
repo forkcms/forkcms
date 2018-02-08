@@ -28,7 +28,6 @@ framework:
 assetic:
     debug: "%kernel.debug%"
     use_controller: false
-    bundles: [ 'ForkCMSInstallerBundle' ]
     filters:
         cssrewrite: ~
 
@@ -39,10 +38,14 @@ monolog:
             path: "%site.path_www%/var/logs/logs.log"
             level: debug
 
+twig:
+    paths:
+      '%kernel.project_dir%/templates/installer': installer
+
 parameters:
-    doctrine.dbal.connection_factory.class: ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory
+    doctrine.dbal.connection_factory.class: App\Service\Installer\InstallerConnectionFactory
     fork.is_installed: false
-    fork.form.theme: "ForkCMSInstallerBundle:Installer:form_theme.html.twig"
+    fork.form.theme: "installer:form_theme.html.twig"
 
 services:
     # dummy service during the installation
@@ -71,3 +74,22 @@ services:
             - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
+
+    forkcms.installer:
+        class: App\Service\Installer\ForkInstaller
+        arguments: ['@service_container']
+
+    forkcms.installer.requirements.checker:
+        class: App\Service\Installer\RequirementsChecker
+        arguments: ['%kernel.project_dir%/']
+
+    forkcms.console.installer.prepare_for_reinstall:
+        class: App\Console\Installer\PrepareForReinstallCommand
+        tags:
+            - { name: console.command }
+
+    forkcms.console.installer.check_requirements:
+        class: App\Console\Installer\CheckRequirementsCommand
+        tags:
+            - { name: console.command }
+        arguments: ['@forkcms.installer.requirements.checker']
