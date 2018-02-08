@@ -4,7 +4,7 @@ namespace Backend\Core\Engine\Base;
 
 use Backend\Core\Engine\Exception as BackendException;
 use App\Component\Model\BackendModel;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Config as CoreConfig;

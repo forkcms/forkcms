@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use App\Component\Locale\FrontendLanguage;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;

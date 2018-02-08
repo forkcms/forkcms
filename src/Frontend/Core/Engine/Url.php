@@ -4,7 +4,7 @@ namespace Frontend\Core\Engine;
 
 use App\Component\Model\FrontendModel;
 use App\Exception\RedirectException;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use App\Component\Locale\FrontendLanguage;
 use SpoonFilter;
 use Symfony\Component\HttpFoundation\RedirectResponse;

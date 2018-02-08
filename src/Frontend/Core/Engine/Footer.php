@@ -3,7 +3,7 @@
 namespace Frontend\Core\Engine;
 
 use App\Component\Model\FrontendModel;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 

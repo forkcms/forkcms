@@ -7,7 +7,7 @@ use App\Component\Asset\AssetCollection;
 use App\Component\Header\JsData;
 use App\Service\Asset\Minifier;
 use App\Component\Priority\Priority;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use App\Component\Locale\BackendLanguage;
 

@@ -14,7 +14,7 @@ use App\Component\Locale\FrontendLocale;
 use App\Component\Model\FrontendModel;
 use App\Component\Priority\Priority;
 use App\Service\Asset\Minifier;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;

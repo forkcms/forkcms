@@ -4,7 +4,7 @@ namespace Frontend\Core\Engine;
 
 use App\Component\Model\FrontendModel;
 use App\Exception\RedirectException;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Frontend\Core\Engine\Block\ModuleExtraInterface;
 use Frontend\Core\Header\Header;
 use App\Component\Locale\FrontendLanguage;

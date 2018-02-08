@@ -5,7 +5,7 @@ namespace Frontend\Core\Engine\Base;
 use App\Component\Priority\Priority;
 use App\Domain\Meta\Meta;
 use App\Exception\RedirectException;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
 use App\Component\Model\FrontendModel;
