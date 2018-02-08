@@ -36,8 +36,8 @@ doctrine:
                         type: annotation
                         is_bundle: false
                         dir: "%kernel.project_dir%/src/Domain"
-                        alias: Common
-                        prefix: Common\Doctrine\Entity
+                        alias: App
+                        prefix: App\Domain
 
 doctrine_orm_bridge:
     entity_manager: default
