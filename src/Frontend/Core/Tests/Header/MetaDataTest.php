@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Component\Header;
+namespace Frontend\Core\Tests\Header;
 
-use App\Component\Header\MetaData;
+use Frontend\Core\Header\MetaData;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
