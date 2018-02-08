@@ -212,3 +212,7 @@ services:
         public: true
         arguments:
             - "@translator.selector"
+
+    fork.validator.url:
+        class: App\Service\Validator\UrlValidator
+        public: true

@@ -1,8 +1,8 @@
 <?php
 
-namespace ForkCMS\Bundle\CoreBundle\Tests\Validator;
+namespace App\Tests\Service\Validator;
 
-use ForkCMS\Bundle\CoreBundle\Validator\UrlValidator;
+use App\Service\Validator\UrlValidator;
 use PHPUnit\Framework\TestCase;
 
 class UrlValidatorTest extends TestCase
