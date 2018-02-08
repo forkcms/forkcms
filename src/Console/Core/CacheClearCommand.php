@@ -23,11 +23,11 @@ class CacheClearCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->removeFilesInFolder('/src/Frontend/Cache/CompiledTemplates', $io, 'frontend compiled templates');
-        $this->removeFilesInFolder('/src/Frontend/Cache/Locale', $io, 'frontend cached locale');
-        $this->removeFilesInFolder('/src/Frontend/Cache/MinifiedCss', $io, 'frontend minified css');
-        $this->removeFilesInFolder('/src/Frontend/Cache/MinifiedJs', $io, 'frontend minified js');
-        $this->removeFilesInFolder('/src/Frontend/Cache/Navigation', $io, 'frontend cached navigation');
+        $this->removeFilesInFolder('/var/frontend/CompiledTemplates', $io, 'frontend compiled templates');
+        $this->removeFilesInFolder('/var/frontend/Locale', $io, 'frontend cached locale');
+        $this->removeFilesInFolder('/var/frontend/MinifiedCss', $io, 'frontend minified css');
+        $this->removeFilesInFolder('/var/frontend/MinifiedJs', $io, 'frontend minified js');
+        $this->removeFilesInFolder('/var/frontend/Navigation', $io, 'frontend cached navigation');
 
         $this->removeFilesInFolder('/var/backend/CompiledTemplates', $io, 'backend compiled templates');
         $this->removeFilesInFolder('/var/backend/Locale', $io, 'backend cached locale');

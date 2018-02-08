@@ -81,7 +81,7 @@
                 <directory>src/*/Bundle/*Bundle/Tests</directory>
                 <directory>var/backend</directory>
                 <directory>src/Backend/Core/Js</directory>
-                <directory>src/Frontend/Cache</directory>
+                <directory>var/frontend</directory>
             </exclude>
         </whitelist>
     </filter>

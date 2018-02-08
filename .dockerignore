@@ -31,4 +31,4 @@ var/cache/*
 var/logs/*
 app/config/parameters.yml
 var/backend/*/*
-src/Frontend/Cache/*/*
+var/frontend/*/*

@@ -115,7 +115,7 @@ abstract class Kernel extends BaseKernel
         defined('FRONTEND_FILES_PATH') || define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
         defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/Frontend/Files');
         defined('FRONTEND_CORE_URL') || define('FRONTEND_CORE_URL', '/src/Frontend/Core');
-        defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/src/Frontend/Cache');
+        defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/var/frontend');
     }
 
     /**

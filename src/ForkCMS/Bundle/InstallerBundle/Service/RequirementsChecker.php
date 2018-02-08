@@ -339,8 +339,8 @@ final class RequirementsChecker
                 RequirementStatus::warning()
             ),
             Requirement::check(
-                $this->rootDir . 'src/Frontend/Cache/*',
-                $this->isRecursivelyWritable($this->rootDir . 'src/Frontend/Cache/'),
+                $this->rootDir . 'var/frontend/*',
+                $this->isRecursivelyWritable($this->rootDir . 'var/frontend/'),
                 'In this location all files created by the frontend will be stored. This location and all subdirectories are be writable.',
                 'In this location all files created by the frontend will be stored. This location and all subdirectories must be writable.',
                 RequirementStatus::error()

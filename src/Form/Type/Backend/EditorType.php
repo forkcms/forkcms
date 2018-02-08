@@ -29,7 +29,7 @@ class EditorType extends TextareaType
                 FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js'
             );
             $header->addJS(
-                '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
+                '/var/frontend/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
                 ) . '.js?m=' . $timestamp,
                 null,
                 false,
