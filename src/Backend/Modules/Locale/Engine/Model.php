@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Locale\Engine;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use App\Component\Locale\BackendLanguage;
 use App\Component\Model\BackendModel;
@@ -571,7 +571,7 @@ class Model
     {
         // actions should be urlized
         if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
-            $item['value'] = CommonUri::getUrl(
+            $item['value'] = Uri::getUrl(
                 $item['value']
             );
         }
@@ -590,7 +590,7 @@ class Model
     {
         // actions should be urlized
         if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
-            $item['value'] = CommonUri::getUrl(
+            $item['value'] = Uri::getUrl(
                 $item['value']
             );
         }

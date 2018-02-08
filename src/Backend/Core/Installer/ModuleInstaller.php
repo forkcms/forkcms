@@ -2,7 +2,7 @@
 
 namespace Backend\Core\Installer;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use App\Domain\ModuleExtra\Type;
 use App\Service\Doctrine\EntitySchema;
 use App\Component\Model\BackendModel;
@@ -602,7 +602,7 @@ class ModuleInstaller
                 'description_overwrite' => $descriptionOverwrite,
                 'title' => $title,
                 'title_overwrite' => $titleOverwrite,
-                'url' => CommonUri::getUrl($url),
+                'url' => Uri::getUrl($url),
                 'url_overwrite' => $urlOverwrite,
                 'custom' => $custom,
                 'seo_follow' => $seoFollow,

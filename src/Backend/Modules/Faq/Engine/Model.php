@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Faq\Engine;
 
-use App\Component\Uri\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use App\Domain\ModuleExtra\Type;
 use App\Component\Model\BackendModel;
 use App\Component\Locale\BackendLanguage;
@@ -254,7 +254,7 @@ class Model
      */
     public static function getUrl(string $url, int $id = null): string
     {
-        $url = CommonUri::getUrl($url);
+        $url = Uri::getUrl($url);
 
         return BackendModel::get('faq.repository.question')->getUrl(
             $url,
@@ -273,7 +273,7 @@ class Model
      */
     public static function getUrlForCategory(string $url, int $id = null): string
     {
-        $url = CommonUri::getUrl($url);
+        $url = Uri::getUrl($url);
 
         return BackendModel::get('faq.repository.category')->getUrl(
             $url,

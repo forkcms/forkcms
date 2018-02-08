@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Tags\Engine;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use App\Component\Locale\BackendLanguage;
 use App\Component\Model\BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -146,7 +146,7 @@ class Model
      */
     public static function getUrl(string $url, int $id = null): string
     {
-        $url = CommonUri::getUrl($url);
+        $url = Uri::getUrl($url);
         $language = BackendLanguage::getWorkingLanguage();
 
         // get database

@@ -3,7 +3,7 @@
 namespace Backend\Modules\Profiles\Engine;
 
 use App\Service\Mailer\Message;
-use App\Component\Uri\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use App\Component\Locale\BackendLanguage;
 use App\Component\Model\BackendModel;
@@ -445,7 +445,7 @@ class Model
         $displayName = \SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
         // urlise
-        $url = CommonUri::getUrl($displayName);
+        $url = Uri::getUrl($displayName);
 
         // get database
         $database = BackendModel::getContainer()->get('database');

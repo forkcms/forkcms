@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Engine;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use App\Component\Model\FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -288,7 +288,7 @@ class Model
         $displayName = \SpoonFilter::htmlspecialcharsDecode($displayName);
 
         // urlise
-        $url = CommonUri::getUrl($displayName);
+        $url = Uri::getUrl($displayName);
 
         // get database
         $database = FrontendModel::getContainer()->get('database');

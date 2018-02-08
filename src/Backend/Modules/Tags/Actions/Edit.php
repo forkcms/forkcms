@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Tags\Actions;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
@@ -125,7 +125,7 @@ class Edit extends BackendBaseActionEdit
                 $item['id'] = $this->id;
                 $item['tag'] = $this->form->getField('name')->getValue();
                 $item['url'] = BackendTagsModel::getUrl(
-                    CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+                    Uri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
                     $this->id
                 );
 

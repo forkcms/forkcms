@@ -5,7 +5,7 @@ namespace Backend\Modules\Tags\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use App\Component\Locale\BackendLanguage;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -43,7 +43,7 @@ class Edit extends BackendBaseAJAXAction
         $item['id'] = $id;
         $item['tag'] = \SpoonFilter::htmlspecialchars($tag);
         $item['url'] = BackendTagsModel::getUrl(
-            CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+            Uri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
             $id
         );
 

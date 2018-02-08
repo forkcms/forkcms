@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\Locale\Actions;
 
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -134,7 +134,7 @@ class Add extends BackendBaseActionAdd
             if ($txtValue->isFilled(BackendLanguage::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if ($this->form->getField('type')->getValue() == 'act') {
-                    if (rawurlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) {
+                    if (rawurlencode($txtValue->getValue()) != Uri::getUrl($txtValue->getValue())) {
                         $txtValue->addError(BackendLanguage::err('InvalidValue'));
                     }
                 }

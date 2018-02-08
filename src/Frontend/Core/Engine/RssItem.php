@@ -3,7 +3,7 @@
 namespace Frontend\Core\Engine;
 
 use App\Component\Model\FrontendModel;
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 
 /**
  * FrontendRSSItem, this is our extended version of SpoonRSSItem
@@ -24,7 +24,7 @@ class RssItem extends \SpoonFeedRSSItem
         $content = \SpoonFilter::htmlspecialcharsDecode($content);
 
         // set UTM-campaign
-        $this->utm['utm_campaign'] = CommonUri::getUrl($title);
+        $this->utm['utm_campaign'] = Uri::getUrl($title);
 
         // call parent
         parent::__construct($title, FrontendModel::addUrlParameters($link, $this->utm, '&amp;'), $content);
@@ -80,7 +80,7 @@ class RssItem extends \SpoonFeedRSSItem
 
         // add fake emailaddress
         if (!filter_var($author, FILTER_VALIDATE_EMAIL)) {
-            $author = CommonUri::getUrl($author) . '@example.com (' . $author . ')';
+            $author = Uri::getUrl($author) . '@example.com (' . $author . ')';
         }
 
         // set author

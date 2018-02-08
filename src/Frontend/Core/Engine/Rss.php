@@ -3,7 +3,7 @@
 namespace Frontend\Core\Engine;
 
 use App\Component\Model\FrontendModel;
-use App\Component\Uri\Uri as CommonUri;
+use App\Component\Uri\Uri;
 
 /**
  * Frontend RSS class.
@@ -24,7 +24,7 @@ class Rss extends \SpoonFeedRSS
                 '&amp;',
                 FrontendModel::addUrlParameters(
                     $link,
-                    ['utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title)],
+                    ['utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => Uri::getUrl($title)],
                     '&amp;'
                 )
             ),
@@ -69,7 +69,7 @@ class Rss extends \SpoonFeedRSS
             [
                 'utm_source' => 'feed',
                 'utm_medium' => 'rss',
-                'utm_campaign' => CommonUri::getUrl($this->getTitle()),
+                'utm_campaign' => Uri::getUrl($this->getTitle()),
             ],
             '&amp;'
         );
