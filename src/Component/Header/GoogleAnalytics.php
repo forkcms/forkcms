@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Header;
+namespace App\Component\Header;
 
 use App\Component\Cookie\Cookie;
 use App\Service\Module\ModuleSettings;

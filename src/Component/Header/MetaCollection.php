@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Header;
+namespace App\Component\Header;
 
 final class MetaCollection
 {

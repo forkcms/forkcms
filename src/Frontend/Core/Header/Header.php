@@ -4,15 +4,20 @@ namespace Frontend\Core\Header;
 
 use App\Component\Asset\Asset;
 use App\Component\Asset\AssetCollection;
+use App\Component\Header\Facebook;
+use App\Component\Header\GoogleAnalytics;
 use App\Component\Header\JsData;
-use App\Service\Asset\Minifier;
-use App\Component\Priority\Priority;
-use ForkCMS\App\KernelLoader;
+use App\Component\Header\MetaCollection;
+use App\Component\Header\MetaData;
+use App\Component\Header\MetaLink;
+use App\Component\Locale\FrontendLocale;
 use App\Component\Model\FrontendModel;
+use App\Component\Priority\Priority;
+use App\Service\Asset\Minifier;
+use ForkCMS\App\KernelLoader;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
-use App\Component\Locale\FrontendLocale;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
