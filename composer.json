@@ -74,7 +74,6 @@
         "psr-4": {
             "Frontend\\": "src/Frontend",
             "Backend\\": "src/Backend",
-            "Common\\": "src/Common",
             "Console\\": "src/Console",
             "ForkCMS\\App\\": "app",
             "App\\": "src",

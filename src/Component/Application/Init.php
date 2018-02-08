@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core;
+namespace App\Component\Application;
 
 use App\Exception\InvalidInitTypeException;
 use ForkCMS\App\KernelLoader;

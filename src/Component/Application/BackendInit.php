@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend;
+namespace App\Component\Application;
 
 use SpoonFilter;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 /**
  * This class will initiate the backend-application
  */
-class Init extends \Common\Core\Init
+class BackendInit extends Init
 {
     public function __construct(KernelInterface $kernel)
     {
