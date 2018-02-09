@@ -33,14 +33,15 @@ class Model
 
     /**
      * Browse groups for datagrid.
+     * The hidden field is added to display the expired group links as greyed out
      *
      * @var string
      */
     const QUERY_DATAGRID_BROWSE_PROFILE_GROUPS =
-        'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on
+        'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on,
+          IF(gr.expires_on IS NOT NULL AND gr.expires_on <= NOW(), 1, 0) AS hidden
          FROM profiles_groups AS g
-         INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id AND
-            (gr.expires_on IS NULL OR gr.expires_on > NOW())
+         INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id
          WHERE gr.profile_id = ?';
 
     /**

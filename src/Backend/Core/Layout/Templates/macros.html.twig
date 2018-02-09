@@ -38,3 +38,11 @@
     </div>
   </div>
 {% endmacro %}
+
+{% macro cancelButton(url) %}
+  {% import _self as macro %}
+  <a href="{{ url }}" class="btn btn-cancel" title="{{ 'lbl.Cancel'|trans|ucfirst }}">
+    {{ macro.icon('times') }}
+    <span class="btn-text">{{ 'lbl.Cancel'|trans|ucfirst }}</span>
+  </a>
+{% endmacro %}
