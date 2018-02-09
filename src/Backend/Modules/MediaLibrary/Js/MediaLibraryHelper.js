@@ -1239,7 +1239,7 @@ jsBackend.mediaLibraryHelper.upload = {
           if ($('#tabUploadMedia').data('context') === 'selection') {
             var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
-            $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder.mediaHolderImage')
+            $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)
           }
         }
