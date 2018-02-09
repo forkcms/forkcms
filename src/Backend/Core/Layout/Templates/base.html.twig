@@ -12,13 +12,13 @@
   <div class="sidebar">
     {% include "Layout/Templates/navigation.html.twig" %}
     <div class="sub-navigation">
-      <nav id="content-subnavigation" class="fork-nav-sidebar">
+      <nav id="content-subnavigation" class="fork-nav-sidebar" aria-label="{{ 'lbl.Settings'|trans }}">
         {% include "Layout/Templates/subnavigation.html.twig" with { 'navigation': navigation } %}
       </nav>
     </div>
   </div>
   <div id="root">
-    <div id="content" class="content-wrapper">
+    <main id="content" class="content-wrapper">
       <div class="content-main">
         <div class="content-action-bar">
           <div class="container-fluid">
@@ -47,7 +47,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
     <div id="root-footer"></div>
   </div>
   {% include "Layout/Templates/footer.html.twig" %}

@@ -56,8 +56,8 @@
               <div class="col-md-8">
                 <div class="panel panel-default panel-editor">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.MainContent'|trans|ucfirst }}
-                      {{ macro.required }}</p>
+                    <h2>{{ 'lbl.MainContent'|trans|ucfirst }}
+                      {{ macro.required }}</h2>
                   </div>
                   <div class="panel-body">
                     {% form_field text %}
@@ -71,7 +71,7 @@
                 {% if imageIsAllowed %}
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <p>{{ 'lbl.Image'|trans|ucfirst }}</p>
+                      <h2>{{ 'lbl.Image'|trans|ucfirst }}</h2>
                     </div>
                     <div class="panel-body">
                       {% if item.image %}
@@ -91,10 +91,10 @@
                 {% endif %}
                 <div class="panel panel-default panel-editor last">
                   <div class="panel-heading">
-                    <p>
+                    <h2>
                       {{ 'lbl.Summary'|trans|ucfirst }}
                       {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
-                    </p>
+                    </h2>
                   </div>
                   <div class="panel-body">
                     {% form_field introduction %}
@@ -109,7 +109,7 @@
               <div class="col-md-4">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.Status'|trans|ucfirst }}</p>
+                    <h2>{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -131,7 +131,7 @@
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.MetaData'|trans|ucfirst }}</p>
+                    <h2>{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -146,6 +146,7 @@
                       <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                         {% form_field tags %} {% form_field_error tags %}
+                        <div class="help-block">{{ 'msg.HelpTextTags'|trans }}</div>
                       </div>
                     {% endif %}
                   </div>
@@ -159,19 +160,19 @@
                 {% if drafts %}
                   <div class="content-block">
                     <div class="content-title">
-                      <p>{{ 'lbl.Drafts'|trans|ucfirst }}
+                      <h2>{{ 'lbl.Drafts'|trans|ucfirst }}
                         {{ macro.infoTooltip('msg.HelpDrafts'|trans|ucfirst) }}
-                      </p>
+                      </h2>
                     </div>
                     {{ drafts|raw }}
                   </div>
                 {% endif %}
                 <div class="content-block">
                   <div class="content-title">
-                    <p>
+                    <h2>
                       {{ 'lbl.PreviousVersions'|trans|ucfirst }}
                       {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
-                    </p>
+                    </h2>
                   </div>
                   {% if revisions %}
                     {{ revisions|raw }}

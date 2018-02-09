@@ -382,6 +382,20 @@
         <translation language="nl"><![CDATA[Verzend mail naar het nieuwe profiel bij aanmaking of wanneer e-mail of wachtwoord gewijzigd wordt.]]></translation>
         <translation language="en"><![CDATA[Send mail to new profile on creation or when e-mail or password has been changed.]]></translation>
       </item>
+      <item type="label" name="Time">
+        <translation language="nl"><![CDATA[tijd]]></translation>
+        <translation language="en"><![CDATA[time]]></translation>
+        <translation language="it"><![CDATA[oro]]></translation>
+        <translation language="ru"><![CDATA[время]]></translation>
+        <translation language="zh"><![CDATA[时间]]></translation>
+        <translation language="fr"><![CDATA[l'heure]]></translation>
+        <translation language="hu"><![CDATA[idő]]></translation>
+        <translation language="de"><![CDATA[Uhrzeit]]></translation>
+        <translation language="es"><![CDATA[hora]]></translation>
+        <translation language="uk"><![CDATA[час]]></translation>
+        <translation language="sv"><![CDATA[tid]]></translation>
+        <translation language="el"><![CDATA[ώρα]]></translation>
+      </item>
       <item type="label" name="Unblock">
         <translation language="nl"><![CDATA[activeer]]></translation>
         <translation language="en"><![CDATA[unblock]]></translation>
@@ -583,6 +597,11 @@
         <translation language="hu"><![CDATA[Nincsen már csoport.]]></translation>
         <translation language="es"><![CDATA[No hay grupos aun.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη ομάδες.]]></translation>
+      </item>
+      <item type="message" name="NoGroupsForThisProfile">
+        <translation language="nl"><![CDATA[Dit profiel zit in geen enkele groep]]></translation>
+        <translation language="en"><![CDATA[This profile is not in any group]]></translation>
+        <translation language="fr"><![CDATA[Ce profil n'appartient à aucun groupe]]></translation>
       </item>
       <item type="message" name="NotificationNewProfileLoginCredentials">
         <translation language="nl"><![CDATA[<p>Beste,</p><p>vanaf heden kan u inloggen op onze website met volgende gegevens:</p><p>Email: %1$s<br/>Wachtwoord: %2$s</p><p>Log in op <a href="%3$s/nl">%3$s</a></p>]]></translation>

@@ -243,7 +243,7 @@
       padding: 15px 50px;
 
       &:before {
-        color: $brand-primary;
+        color: $white;
         position: absolute;
         font-family: FontAwesome;
         font-size: $font-size-btn;
@@ -298,12 +298,12 @@
 
           &:hover,
           &:focus {
-            color: $brand-primary;
+            color: $brand-primary-dark;
           }
         }
 
         &.active a {
-          color: $brand-primary;
+          color: $brand-primary-dark;
           font-weight: 600;
         }
 

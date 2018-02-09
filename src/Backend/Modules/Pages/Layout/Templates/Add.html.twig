@@ -7,12 +7,12 @@
       <div class="alert alert-warning visible-sm">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans }}</p>
       </div>
+      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
+      </button>
       <div id="tree">
         {{ tree|raw }}
       </div>
-    </div>
-    <div id="fullwidthSwitch">
-      <a href="#close">&nbsp;</a>
     </div>
   </div>
 {% endblock %}
@@ -92,9 +92,7 @@
                           colspan="1" class="box">
                           <div class="panel panel-default panel-pages-block">
                             <div class="panel-heading">
-                              <div class="heading linkedBlocksTitle">
-                                <p>{{ 'lbl.Fallback'|trans|ucfirst }}</p>
-                              </div>
+                              <h2 class="panel-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
                             </div>
                             <div class="panel-body">
                               <div class="linkedBlocks">
@@ -190,6 +188,7 @@
                 <div class="col-md-12">
                   <p class="tab-pane-title">{{ 'msg.AddTagsHere'|trans }}</p>
                   {% form_field tags %} {% form_field_error tags %}
+                  <div class="help-block">{{ 'msg.HelpTextTags'|trans }}</div>
                 </div>
               </div>
             </div>
@@ -201,7 +200,7 @@
                 <div class="col-md-12">
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <p class="tab-pane-title">{{ 'lbl.Languages'|trans|ucfirst }}</p>
+                      <h2 class="panel-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
                     </div>
                     <div class="panel-body">
                       {% for language, field in hreflangFields %}
