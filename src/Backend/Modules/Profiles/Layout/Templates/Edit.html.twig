@@ -27,7 +27,7 @@
               <div class="col-md-12">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">{{ 'lbl.Profile'|trans|ucfirst }}</h3>
+                    <h2 class="panel-title">{{ 'lbl.Profile'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -69,7 +69,7 @@
               <div class="col-md-12">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">{{ 'lbl.Settings'|trans|ucfirst }}</h3>
+                    <h2 class="panel-title">{{ 'lbl.Settings'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -112,14 +112,14 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="content-title">
-                  <p>{{ 'lbl.Groups'|trans|ucfirst }}</p>
+                  <h2>{{ 'lbl.Groups'|trans|ucfirst }}</h2>
                 </div>
               </div>
               <div class="col-md-6">
                 {% if showProfilesAddProfileGroup %}
                   <div class="btn-toolbar pull-right">
                     <div class="btn-group" role="group">
-                      {{ macro.buttonIcon(geturl('add_profile_group') ~ '&id=' ~  profile.id , 'plus-square', 'lbl.AddGroup'|trans|ucfirst, 'btn-primary') }}
+                      {{ macro.buttonIcon(geturl('add_profile_group') ~ '&id=' ~  profile.id , 'plus-square', 'lbl.AddToGroup'|trans|ucfirst, 'btn-primary') }}
                     </div>
                   </div>
                 {% endif %}
@@ -132,7 +132,7 @@
                     {{ dgGroups|raw }}
                   {% endif %}
                   {% if not dgGroups %}
-                    <p>{{ 'msg.NoGroups'|trans }}</p>
+                    <p>{{ 'msg.NoGroupsForThisProfile'|trans }}</p>
                   {% endif %}
                 </div>
               </div>

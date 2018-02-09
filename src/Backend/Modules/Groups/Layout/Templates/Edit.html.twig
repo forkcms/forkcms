@@ -43,7 +43,7 @@
               <div class="col-md-12">
                 <div class="content-block">
                   <div class="content-title">
-                    <label for="toggleChecksWidgets" class="control-label">{{ 'lbl.DisplayWidgets'|trans|ucfirst }}</label>
+                    <h2>{{ 'lbl.DisplayWidgets'|trans|ucfirst }}</h2>
                   </div>
                   <div class="jsGroupsWidgets">
                     {% if widgets %}
@@ -66,7 +66,7 @@
                       {% for permission in permissions %}
                         <div class="panel panel-transparent jsGroupsPermissionsModule">
                           <div class="panel-heading" role="tab" id="permission-heading-{{ permission.id }}">
-                            <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="permission-list-{{ permission.id }}">
+                            <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
                               <h4 class="panel-title">
                                 {{ permission.chk|raw }}
                                 {{ macro.icon('caret-right fa-fw') }} {{ permission.label }}

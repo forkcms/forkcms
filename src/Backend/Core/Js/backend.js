@@ -552,7 +552,6 @@ jsBackend.controls = {
     jsBackend.controls.bindRadioButtonFieldCombo()
     jsBackend.controls.bindConfirm()
     jsBackend.controls.bindFakeDropdown()
-    jsBackend.controls.bindFullWidthSwitch()
     jsBackend.controls.bindMassCheckbox()
     jsBackend.controls.bindMassAction()
     jsBackend.controls.bindPasswordGenerator()
@@ -772,36 +771,6 @@ jsBackend.controls = {
         $(id).show('blind', {}, 'fast')
       }
     })
-  },
-
-  // toggle between full width and sidebar-layout
-  bindFullWidthSwitch: function () {
-    // variables
-    var $fullwidthSwitchLink = $('#fullwidthSwitch a')
-    var $fullwidthSwitch = $fullwidthSwitchLink.parent()
-
-    $fullwidthSwitchLink.toggle(
-      function (e) {
-        // prevent default behaviour
-        e.preventDefault()
-
-        // add class
-        $fullwidthSwitch.addClass('collapsed')
-
-        // toggle
-        $('#subnavigation, #pagesTree').fadeOut(250)
-      },
-      function (e) {
-        // Stuff to do every *even* time the element is clicked
-        e.preventDefault()
-
-        // remove class
-        $fullwidthSwitch.removeClass('collapsed')
-
-        // toggle
-        $('#subnavigation, #pagesTree').fadeIn(500)
-      }
-    )
   },
 
   // bind confirm message
