@@ -342,6 +342,12 @@ jsBackend.pages.extras = {
     })
 
     $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
+      if (jsData.Core.preferred_editor !== 'ck-editor') {
+        $('#html').val(previousContent);
+
+        return;
+      }
+
       // set content in editor
       CKEDITOR.instances['html'].setData(previousContent)
     }).modal('show')
@@ -972,7 +978,7 @@ jsBackend.pages.extras = {
     }
 
     // replace editor
-    if ($element.is('[data-ft-type="editor"]')) {
+    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
       $placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.html(), $element.data('ft-label'), key))
 
       jsBackend.ckeditor.load()
@@ -1054,7 +1060,7 @@ jsBackend.pages.extras = {
       return
     }
 
-    if ($element.is('[data-ft-type="editor"]')) {
+    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
       $textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]')
 
       $element.html($textarea.val())
