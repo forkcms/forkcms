@@ -91,10 +91,7 @@ class Add extends BackendBaseActionAdd
         // is the form submitted?
         if ($this->form->isSubmitted()) {
             // get the status
-            $status = $this->getRequest()->request->get('status');
-            if (!in_array($status, ['active', 'draft'])) {
-                $status = 'active';
-            }
+            $status = $this->getRequest()->request->has('saveAsDraft') ? 'draft' : 'active';
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->form->cleanupFields();
