@@ -116,12 +116,8 @@
                 <p>{{ 'msg.ConfirmThemeInstall'|trans|format(name)|raw }}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                <a href="{{ geturl('install_theme') }}&amp;theme={{ name }}" class="btn btn-primary">
-                  {{ macro.icon('check') }}{{ 'lbl.OK'|trans|ucfirst }}
-                </a>
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+                {{ macro.buttonIcon(geturl('install_theme') ~ '&theme=' ~ name, 'times', 'lbl.OK'|trans|ucfirst, 'btn-primary') }}
               </div>
             </div>
           </div>

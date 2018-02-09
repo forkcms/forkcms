@@ -46,9 +46,7 @@
           {{ macro.cancelButton(geturl('Edit') ~ '&id=' ~ id ~ "#tabGroups") }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"addButton", "name":"add" }) }}
         </div>
       </div>
     </div>

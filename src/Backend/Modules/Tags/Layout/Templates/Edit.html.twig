@@ -35,12 +35,10 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group" role="group">
-          {{ macro.cancelButton(geturl('Index')) }}
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"editButton", "type":"submit", "name":"edit"}) }}
         </div>
       </div>
     </div>

@@ -79,12 +79,8 @@
                 <p>{{ 'msg.ConfirmDeleteData'|trans|ucfirst }}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                <a href="{{ geturl('mass_data_action') }}&amp;action=delete&amp;form_id={{ formId }}&amp;id={{ id }}" class="btn btn-succes">
-                  {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-                </a>
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+                {{ macro.buttonIcon(geturl('mass_data_action') ~ '&action=delete&form_id=' ~ formId ~ '&id=' ~ id, 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger' ) }}
               </div>
             </div>
           </div>
