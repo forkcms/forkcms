@@ -1,3 +1,10 @@
+5.2.1  (2018-02-09)
+------------------
+
+Bugfixes:
+* Pages: Add missing comma in buttonIcon macro call [#2448](https://github.com/forkcms/forkcms/pull/2448)
+
+
 5.2.0  (2018-02-09)
 ------------------
 
