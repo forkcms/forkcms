@@ -123,6 +123,10 @@
                     {% form_field interface_language %} {% form_field_error interface_language %}
                   </div>
                   <div class="form-group">
+                    <label for="preferredEditor" class="control-label">{{ 'lbl.PreferredEditor'|trans|ucfirst }}</label>
+                    {% form_field preferred_editor %} {% form_field_error preferred_editor %}
+                  </div>
+                  <div class="form-group">
                     <label for="dateFormat" class="control-label">{{ 'lbl.DateFormat'|trans|ucfirst }}</label>
                     {% form_field date_format %} {% form_field_error date_format %}
                   </div>
