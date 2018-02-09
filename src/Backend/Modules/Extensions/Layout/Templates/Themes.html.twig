@@ -19,9 +19,9 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">
+            <h2 class="panel-title">
               {{ 'lbl.InstallableThemes'|trans|ucfirst }}
-            </h3>
+            </h2>
           </div>
           <div class="panel-body">
             <p class="help-block">{{ 'msg.HelpInstallableThemes'|trans }}</p>
@@ -43,16 +43,10 @@
                           <div class="btn-toolbar">
                             <div class="btn-group pull-right" role="group">
                               {% if showExtensionsInstallTheme %}
-                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall{{ installableTheme.value|ucfirst }}">
-                                  {{ macro.icon('file-o') }}&nbsp;
-                                  {{ 'lbl.Install'|trans|ucfirst }}
-                                </button>
+                                {{ macro.buttonIcon('', 'file-o', 'lbl.Install'|trans|ucfirst, 'btn-primary', { "data-toggle":"modal", "type":"button", "data-target":"#confirmInstall" ~ installableTheme.value|ucfirst }) }}
                               {% endif %}
                               {% if showExtensionsDetailTheme %}
-                                <a href="{{ geturl('detail_theme') }}&theme={{ installableTheme.value }}" class="btn btn-default" role="button" title="{{ installableTheme.label|ucfirst }}">
-                                  {{ macro.icon('eye') }}&nbsp;
-                                  <span>{{ 'lbl.Details'|trans|ucfirst }}</span>
-                                </a>
+                                {{ macro.buttonIcon(geturl('detail_theme') ~ '&theme=' ~ installableTheme.value , 'eye', 'lbl.Details'|trans|ucfirst, 'btn-default', { "title": installableTheme.label|ucfirst }) }}
                               {% endif %}
                             </div>
                           </div>
@@ -67,12 +61,8 @@
                                     <p>{{ 'msg.ConfirmThemeInstall'|trans }}</p>
                                   </div>
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                      {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-                                    </button>
-                                    <a href="{{ geturl('install_theme') }}&theme={{ installableTheme.value }}" class="btn btn-primary">
-                                      {{ macro.icon('check') }}{{ 'lbl.OK'|trans|ucfirst }}
-                                    </a>
+                                    {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" }) }}
+                                    {{ macro.buttonIcon(geturl('install_theme') ~ '&theme=' ~ installableTheme.value, 'check', 'lbl.OK'|trans|ucfirst, 'btn-primary') }}
                                   </div>
                                 </div>
                               </div>
@@ -94,10 +84,10 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.InstalledThemes'|trans|ucfirst }}
             {{ macro.required }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <p class="help-block">{{ 'msg.HelpThemes'|trans }}</p>
@@ -115,7 +105,7 @@
                     </span>
 
                     <div class="panel-heading">
-                      <h3 class="panel-title">{{ installedTheme.label|ucfirst }}</h3>
+                      <h2 class="panel-title">{{ installedTheme.label|ucfirst }}</h2>
                     </div>
                     <div class="panel-body">
                       <img src="{{ installedTheme.thumbnail }}" class="img-thumbnail" alt="{{ installedTheme.label|ucfirst }}" />
@@ -154,9 +144,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            {{ macro.icon('check') }}&nbsp;{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'check', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" }) }}
         </div>
       </div>
     </div>

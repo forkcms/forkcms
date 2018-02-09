@@ -15,9 +15,9 @@
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.Address'|trans|ucfirst }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -65,7 +65,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-group pull-right" role="group">
-        <button id="editButton" type="submit" name="edit" class="btn btn-primary">{{ 'lbl.UpdateMap'|trans|ucfirst }}</button>
+        {{ macro.buttonIcon('', 'floppy-o', 'lbl.UpdateMap'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"editButton", "name":"edit"} ) }}
       </div>
     </div>
   </div>
@@ -75,9 +75,9 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.Map'|trans|ucfirst }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div id="map" style="width: 100%; height: {{ settings.height }}px;"></div>
@@ -87,9 +87,9 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.Settings'|trans|ucfirst }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -136,16 +136,12 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showLocationDelete %}
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              {{ macro.icon('trash-o') }}
-              {{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"} ) }}
           {% endif %}
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="saveLiveData" type="button" name="edit" class="btn btn-primary">
-            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"saveLiveData", "name":"edit"} ) }}
         </div>
       </div>
     </div>
@@ -166,12 +162,8 @@
             <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" } ) }}
           </div>
         </div>
       </div>

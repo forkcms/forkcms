@@ -81,7 +81,7 @@
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <p>{{ 'msg.MediaUploadThisType'|trans }}</p>
+        <h2 class="panel-title">{{ 'msg.MediaUploadThisType'|trans }}</h2>
       </div>
       <div class="panel-body">
         <div class="form-group last">
@@ -104,7 +104,7 @@
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <p>1) {{ 'msg.MediaUploadToThisFolder'|trans }}</p>
+        <h2 class="panel-title">1) {{ 'msg.MediaUploadToThisFolder'|trans }}</h2>
       </div>
       <div class="panel-body">
         <p>
@@ -126,20 +126,22 @@
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <p>2) {{ 'msg.MediaChoseToUpload'|trans }}</p>
+        <h2 class="panel-title">2) {{ 'msg.MediaChoseToUpload'|trans }}</h2>
       </div>
       <div id="fine-uploader-gallery"></div>
       <div class="panel-footer">
         <div class="form-group" data-role="cropper-is-mandatory-form-group">
           <div class="checkbox">
-            <label>
-              <input type="checkbox" data-role="enable-cropper-checkbox">
+            <label for="enableCropperCheckbox">
+              <input type="checkbox" data-role="enable-cropper-checkbox" aria-describedby="helpBlockEnableCropper" id="enableCropperCheckbox">
               {{ 'lbl.EnableCropper'|trans|ucfirst }}
-              <span class="help-block hidden" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</span>
             </label>
+            <span class="help-block" id="helpBlockEnableCropper">{{ 'msg.IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst'|trans }}</span>
+            <span class="help-block hidden" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</span>
           </div>
         </div>
       </div>
+      <div id="fine-uploader-gallery"></div>
     </div>
   </div>
 </div>
@@ -149,7 +151,7 @@
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <p>2) {{ 'msg.MediaWhichMovieToAdd'|trans|ucfirst }}</p>
+        <h2 class="panel-title">2) {{ 'msg.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
       </div>
       <div class="panel-body">
         <p>
@@ -185,7 +187,7 @@
   <div class="col-md-12">
     <div class="panel panel-default panel-editor">
       <div class="panel-heading">
-        <p>3) {{ 'msg.MediaUploaded'|trans }}</p>
+        <h2 class="panel-title">3) {{ 'msg.MediaUploaded'|trans }}</h2>
       </div>
       <div class="panel-body">
         <p id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</p>

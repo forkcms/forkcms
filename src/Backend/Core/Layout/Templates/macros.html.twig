@@ -1,12 +1,22 @@
 {% macro buttonIcon(url, icon, label, buttonType, extra) %}
-  <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {{ extra }}>
-    {{ _self.icon(icon) }}
-    <span class="btn-text">{{ label }}</span>
-  </a>
+  {# When url is an empty string, use a button, otherwise use a hyperlink/anchor #}
+  {% if url %}
+    <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}>
+      {% import _self as macro %}
+      {{ macro.icon(icon) }}
+      <span class="btn-text">{{ label }}</span>
+    </a>
+  {% else %}
+    <button class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}>
+      {% import _self as macro %}
+      {{ macro.icon(icon) }}
+      <span class="btn-text">{{ label }}</span>
+    </button>
+  {% endif %}
 {% endmacro %}
 
 {% macro required() %}
-  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
+  <abbr data-toggle="tooltip" aria-label="{{ 'lbl.RequiredField'|trans|ucfirst }}" title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>
 {% endmacro %}
 
 {% macro icon(icon) %}
@@ -14,7 +24,8 @@
 {% endmacro %}
 
 {% macro infoTooltip(title) %}
-  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ _self.icon('info-circle') }}</abbr>
+  {% import _self as macro %}
+  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ macro.icon('info-circle') }}</abbr>
 {% endmacro %}
 
 {% macro dataGrid(dataGrid, noItemsMessage) %}

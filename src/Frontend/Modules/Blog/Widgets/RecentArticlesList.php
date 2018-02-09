@@ -21,7 +21,7 @@ class RecentArticlesList extends FrontendBaseWidget
     private function parse(): void
     {
         // get RSS-link
-        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE);
+        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . LANGUAGE, SITE_DEFAULT_TITLE);
         $rssLink = FrontendNavigation::getUrlForBlock('Blog', 'Rss');
 
         // add RSS-feed into the metaCustom

@@ -144,6 +144,11 @@ class Edit extends BackendBaseActionEdit
             $this->record['settings']['interface_language']
         );
         $this->form->addDropdown(
+            'preferred_editor',
+            BackendModel::getContainer()->getParameter('fork.form.available_editors'),
+            $this->record['settings']['preferred_editor'] ?? BackendModel::getPreferredEditor()
+        );
+        $this->form->addDropdown(
             'date_format',
             BackendUsersModel::getDateFormats(),
             $this->user->getSetting('date_format')
@@ -265,6 +270,7 @@ class Edit extends BackendBaseActionEdit
             $fields['name']->isFilled(BL::err('NameIsRequired'));
             $fields['surname']->isFilled(BL::err('SurnameIsRequired'));
             $fields['interface_language']->isFilled(BL::err('FieldIsRequired'));
+            $fields['preferred_editor']->isFilled(BL::err('FieldIsRequired'));
             $fields['date_format']->isFilled(BL::err('FieldIsRequired'));
             $fields['time_format']->isFilled(BL::err('FieldIsRequired'));
             $fields['number_format']->isFilled(BL::err('FieldIsRequired'));
@@ -308,6 +314,7 @@ class Edit extends BackendBaseActionEdit
                 $settings['name'] = $fields['name']->getValue();
                 $settings['surname'] = $fields['surname']->getValue();
                 $settings['interface_language'] = $fields['interface_language']->getValue();
+                $settings['preferred_editor'] = $fields['preferred_editor']->getValue();
                 $settings['date_format'] = $fields['date_format']->getValue();
                 $settings['time_format'] = $fields['time_format']->getValue();
                 $settings['datetime_format'] = $settings['date_format'] . ' ' . $settings['time_format'];
