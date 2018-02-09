@@ -270,9 +270,9 @@ jsBackend.pages.extras = {
       '<span class="templateTitle" id="templateTitle' + index + '">' + title + '</span>' +
       '<span class="templateDescription">' + description + '</span>' +
       '<div class="btn-group buttonHolder">' +
-      '<button href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility" aria-labelledby="ViewBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only" id="ViewBlockText' + index + '">' + jsBackend.locale.lbl('View') + '</span></span></button>' +
-      '<button href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + ' aria-labelledby="EditBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only" id="EditBlockText' + index + '">' + jsBackend.locale.lbl('EditBlock') + '</span></button>' +
-      '<button href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs" aria-labelledby="DeleteBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only" id="DeleteBlockText' + index + '">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
+      '<button class="btn btn-default btn-icon-only btn-xs toggleVisibility" aria-labelledby="ViewBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only" id="ViewBlockText' + index + '">' + jsBackend.locale.lbl('View') + '</span></span></button>' +
+      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + ' aria-labelledby="EditBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only" id="EditBlockText' + index + '">' + jsBackend.locale.lbl('EditBlock') + '</span></a>' +
+      '<button class="deleteBlock btn btn-danger btn-icon-only btn-xs" aria-labelledby="DeleteBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only" id="DeleteBlockText' + index + '">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
       '</div>' +
       '</div>'
 
@@ -355,6 +355,12 @@ jsBackend.pages.extras = {
     })
 
     $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
+      if (jsData.Core.preferred_editor !== 'ck-editor') {
+        $('#html').val(previousContent);
+
+        return;
+      }
+
       // set content in editor
       CKEDITOR.instances['html'].setData(previousContent)
     }).modal('show')
@@ -801,7 +807,7 @@ jsBackend.pages.extras = {
   /**
    * Creates the html for an image field
    */
-  getImageFieldHtml: function (src, alt, label, isVisible, key) {
+  getImageFieldHtml: function (src, alt, label, isVisible, optionalHide, key) {
     var html = '<div class="panel panel-default" id="user-template-image-' + key + '">'
 
     html += '<div class="panel-heading">'
@@ -824,7 +830,7 @@ jsBackend.pages.extras = {
     html += '<input class="form-control" type="text" id="alt' + key + '" value="' + alt + '" />'
     html += '</div>'
 
-    html += '<div class="checkbox">'
+    html += '<div class="checkbox"' + (optionalHide ? '' : ' style="display: none;"') + '>';
     html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
     html += '</div>'
 
@@ -903,6 +909,7 @@ jsBackend.pages.extras = {
           $element.attr('alt'),
           $element.data('ft-label'),
           $element.attr('style') !== 'display: none;',
+          $element.data('ft-block-optional'),
           key
         )
       )
@@ -997,7 +1004,7 @@ jsBackend.pages.extras = {
     }
 
     // replace editor
-    if ($element.is('[data-ft-type="editor"]')) {
+    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
       $placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.html(), $element.data('ft-label'), key))
 
       jsBackend.ckeditor.load()
@@ -1079,7 +1086,7 @@ jsBackend.pages.extras = {
       return
     }
 
-    if ($element.is('[data-ft-type="editor"]')) {
+    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
       $textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]')
 
       $element.html($textarea.val())

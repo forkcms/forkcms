@@ -58,7 +58,7 @@ class Index extends BackendBaseActionIndex
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // add attributes, so the inline editing has all the needed data
-        $this->dataGrid->setColumnAttributes('tag', ['data-id' => '{id:[id]}']);
+        $this->dataGrid->setColumnAttributes('tag', ['data-id' => '{\'id\':[id]}']);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {

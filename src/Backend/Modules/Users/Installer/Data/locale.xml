@@ -16,6 +16,11 @@
         <translation language="lt"><![CDATA[naujas narys]]></translation>
         <translation language="el"><![CDATA[Προσθήκη χρήστη]]></translation>
       </item>
+      <item type="label" name="PreferredEditor">
+        <translation language="nl"><![CDATA[gewenste editor]]></translation>
+        <translation language="en"><![CDATA[preferred editor]]></translation>
+        <translation language="fr"><![CDATA[éditeur préféré]]></translation>
+      </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De gebruiker "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The user "%1$s" was added.]]></translation>

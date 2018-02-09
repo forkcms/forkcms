@@ -54,6 +54,7 @@
               {{ 'lbl.Delete'|trans|ucfirst }}
             </button>
           {% endif %}
+          {{ macro.cancelButton(geturl('Categories')) }}
         </div>
         <div class="btn-group pull-right" role="group">
           <button id="editButton" type="submit" name="edit" class="btn btn-primary">

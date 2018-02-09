@@ -382,6 +382,20 @@
         <translation language="nl"><![CDATA[Verzend mail naar het nieuwe profiel bij aanmaking of wanneer e-mail of wachtwoord gewijzigd wordt.]]></translation>
         <translation language="en"><![CDATA[Send mail to new profile on creation or when e-mail or password has been changed.]]></translation>
       </item>
+      <item type="label" name="Time">
+        <translation language="nl"><![CDATA[tijd]]></translation>
+        <translation language="en"><![CDATA[time]]></translation>
+        <translation language="it"><![CDATA[oro]]></translation>
+        <translation language="ru"><![CDATA[время]]></translation>
+        <translation language="zh"><![CDATA[时间]]></translation>
+        <translation language="fr"><![CDATA[l'heure]]></translation>
+        <translation language="hu"><![CDATA[idő]]></translation>
+        <translation language="de"><![CDATA[Uhrzeit]]></translation>
+        <translation language="es"><![CDATA[hora]]></translation>
+        <translation language="uk"><![CDATA[час]]></translation>
+        <translation language="sv"><![CDATA[tid]]></translation>
+        <translation language="el"><![CDATA[ώρα]]></translation>
+      </item>
       <item type="label" name="Unblock">
         <translation language="nl"><![CDATA[activeer]]></translation>
         <translation language="en"><![CDATA[unblock]]></translation>

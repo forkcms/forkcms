@@ -32,6 +32,14 @@
     font-size: $font-size-small;
     padding: 4px 15px 5px;
   }
+
+  &.btn-cancel {
+    @extend .btn-default;
+
+    .btn-text {
+      font-size: $font-size-base;
+    }
+  }
 }
 
 .btn-icon-only {
@@ -100,4 +108,14 @@
 
 a.btn {
   text-decoration: none;
+}
+
+.btn-toolbar .btn-group {
+  .btn {
+    margin-bottom: 6px;
+  }
+
+  & + .btn-group {
+    margin-left: 1em;
+  }
 }

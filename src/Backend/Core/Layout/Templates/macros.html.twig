@@ -1,6 +1,7 @@
 {% macro buttonIcon(url, icon, label, buttonType, extra) %}
   <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {{ extra }}>
-    {{ _self.icon(icon) }}
+    {% import _self as macro %}
+    {{ macro.icon(icon) }}
     <span class="btn-text">{{ label }}</span>
   </a>
 {% endmacro %}
@@ -14,7 +15,8 @@
 {% endmacro %}
 
 {% macro infoTooltip(title) %}
-  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ _self.icon('info-circle') }}</abbr>
+  {% import _self as macro %}
+  <abbr tabindex="0" data-toggle="tooltip" aria-label="{{ title }}" title="{{ title }}">{{ macro.icon('info-circle') }}</abbr>
 {% endmacro %}
 
 {% macro dataGrid(dataGrid, noItemsMessage) %}
@@ -35,4 +37,12 @@
       {% endif %}
     </div>
   </div>
+{% endmacro %}
+
+{% macro cancelButton(url) %}
+  {% import _self as macro %}
+  <a href="{{ url }}" class="btn btn-cancel" title="{{ 'lbl.Cancel'|trans|ucfirst }}">
+    {{ macro.icon('times') }}
+    <span class="btn-text">{{ 'lbl.Cancel'|trans|ucfirst }}</span>
+  </a>
 {% endmacro %}
