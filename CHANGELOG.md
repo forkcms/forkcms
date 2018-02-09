@@ -1,3 +1,33 @@
+5.2.0  (2018-02-09)
+------------------
+
+Bugfixes:
+* Pages: Fix data-ft-block-optional can also be false of removed [#2409](https://github.com/forkcms/forkcms/pull/2409)
+* Core: Fix button macro with icons [#2412](https://github.com/forkcms/forkcms/pull/2412)
+* Blog: Add the default fallback for the rss feedback on all the usecases not just a few [#2413](https://github.com/forkcms/forkcms/pull/2413)
+* Tags: Fix tag edit action [#2414](https://github.com/forkcms/forkcms/pull/2414)
+* Profiles: Show all groups linked to a profile but fade the ones that have expired [#2416](https://github.com/forkcms/forkcms/pull/2416)
+* Tags: Make sure the id data attribute of tags in the datagrid contains valid JSON [#2418](https://github.com/forkcms/forkcms/pull/2418)
+* Core: Remove annoying whitespace in the datagrid [#2419](https://github.com/forkcms/forkcms/pull/2419)
+* MediaLibrary: Media Library in CKEditor - uploaded video has no selection button [#2420](https://github.com/forkcms/forkcms/pull/2420)
+* Pages: The edit buttons of blocks in the page edit should be anchors, not buttons [#2427](https://github.com/forkcms/forkcms/pull/2427)
+* Blog: Don't publish blogposts created as draft [#2443](https://github.com/forkcms/forkcms/pull/2443)
+* Core: Catch Doctrine's DBALException if the database connection fails [#2447](https://github.com/forkcms/forkcms/pull/2447)
+
+Enhancements:
+* Core: A11y cancel buttons [#2415](https://github.com/forkcms/forkcms/pull/2415)
+* Profiles: Improve the layout of the form to add/edit profile groups [#2417](https://github.com/forkcms/forkcms/pull/2417)
+* MediaLibrary: CKEditor media library movies [#2421](https://github.com/forkcms/forkcms/pull/2421)
+* MediaLibrary: Make the cropper more accessible [#2425](https://github.com/forkcms/forkcms/pull/2425)
+* Core: WCAG audit feedback [#2428](https://github.com/forkcms/forkcms/pull/2428)
+* Pages: Make it possible to access all items in navigation tree with keyboard [#2429](https://github.com/forkcms/forkcms/pull/2429)
+* Pages: Better default values for the moving page via settings dropdowns [#2430](https://github.com/forkcms/forkcms/pull/2430)
+* Core: Use macro for button buttons [#2438](https://github.com/forkcms/forkcms/pull/2438)
+
+Features:
+* Core: Make it possible to disable ck editor [#2424](https://github.com/forkcms/forkcms/pull/2424)
+
+
 5.1.0  (2018-01-25)
 ------------------
 
