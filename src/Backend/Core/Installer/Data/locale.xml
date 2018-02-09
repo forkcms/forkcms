@@ -7245,6 +7245,14 @@
         <translation language="zh"><![CDATA[關閉導航]]></translation>
         <translation language="de"><![CDATA[schließe die Navigation]]></translation>
       </item>
+      <item type="label" name="OpenTreeNavigation">
+        <translation language="nl"><![CDATA[klap boomnavigatie open]]></translation>
+        <translation language="en"><![CDATA[open tree navigation]]></translation>
+      </item>
+      <item type="label" name="CloseTreeNavigation">
+        <translation language="nl"><![CDATA[boomnavigatie dichtklappen]]></translation>
+        <translation language="en"><![CDATA[close tree navigation]]></translation>
+      </item>
       <item type="label" name="NavigationTitle">
         <translation language="nl"><![CDATA[navigatietitel]]></translation>
         <translation language="en"><![CDATA[navigation title]]></translation>
