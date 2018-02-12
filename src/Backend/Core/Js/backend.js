@@ -1883,7 +1883,7 @@ jsBackend.tableSequenceByDragAndDrop = {
           placeholder: 'dragAndDropPlaceholder',
           forcePlaceholderSize: true,
           stop: function (e, ui) {
-            jsBackend.tableSequenceByDragAndDrop.saveNewSequence($(this))
+            jsBackend.tableSequenceByDragAndDrop.saveNewSequence($(this).closest('table.jsDataGrid'))
           }
         }
       )
@@ -1892,6 +1892,8 @@ jsBackend.tableSequenceByDragAndDrop = {
         var $this = $(this)
         var $row = $this.closest('tr')
         var direction = $this.data('direction')
+
+        e.preventDefault()
 
         if (direction === 'up') {
           $row.prev().insertAfter($row)
@@ -1905,15 +1907,15 @@ jsBackend.tableSequenceByDragAndDrop = {
   },
 
   saveNewSequence: function ($table) {
-    var action = (typeof $table.parents('table.jsDataGrid').data('action') === 'undefined') ? 'Sequence' : $table.parents('table.jsDataGrid').data('action').toString()
-    var module = (typeof $table.parents('table.jsDataGrid').data('module') === 'undefined') ? jsBackend.current.module : $table.parents('table.jsDataGrid').data('module').toString()
+    var action = (typeof $table.data('action') === 'undefined') ? 'Sequence' : $table.data('action').toString()
+    var module = (typeof $table.data('module') === 'undefined') ? jsBackend.current.module : $table.data('module').toString()
     var extraParams = {}
-    var $rows = $table.find('tr')
+    var $rows = $table.find('tr[id*=row-]')
     var newIdSequence = []
 
     // fetch extra params
-    if (typeof $table.parents('table.jsDataGrid').data('extra-params') !== 'undefined') {
-      extraParams = $table.parents('table.jsDataGrid').data('extra-params')
+    if (typeof $table.data('extra-params') !== 'undefined') {
+      extraParams = $table.data('extra-params')
 
       // we convert the unvalid {'key':'value'} to the valid {"key":"value"}
       extraParams = extraParams.replace(/'/g, '"')
@@ -1972,7 +1974,7 @@ window.requestAnimationFrame = (function () {
   var lastTime
   lastTime = 0
   return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback,
-                                                                                                                                                                                              element) {
+                                                                                                                                                                                               element) {
     var curTime, id, timeToCall
     curTime = new Date().getTime()
     timeToCall = Math.max(0, 16 - (curTime - lastTime))
