@@ -1,8 +1,8 @@
 {% macro buttonIcon(url, icon, label, buttonType, extra) %}
+  {% import _self as macro %}
   {# When url is an empty string, use a button, otherwise use a hyperlink/anchor #}
   {% if url %}
     <a href="{{ url }}" class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
-      {% import _self as macro %}
       {{ macro.icon(icon) }}
       <span class="btn-text">{{ label }}</span>
     </a>
@@ -11,7 +11,6 @@
       {% set extra = extra|merge({'type' : 'button'}) %}
     {% endif %}
     <button class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% if extra is iterable %}{% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}{% else %}{{ extra }}{% endif %}>
-      {% import _self as macro %}
       {{ macro.icon(icon) }}
       <span class="btn-text">{{ label }}</span>
     </button>
