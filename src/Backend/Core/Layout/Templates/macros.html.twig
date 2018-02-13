@@ -7,6 +7,9 @@
       <span class="btn-text">{{ label }}</span>
     </a>
   {% else %}
+    {% if extra['data-toggle'] is defined and extra['type'] is not defined %}
+      {% set extra = extra|merge({'type' : 'button'}) %}
+    {% endif %}
     <button class="btn {{ buttonType|default('btn-default') }}" title="{{ label }}" {% for attr, value in extra %} {{ attr }}="{{ value }}"{% endfor %}>
       {% import _self as macro %}
       {{ macro.icon(icon) }}
