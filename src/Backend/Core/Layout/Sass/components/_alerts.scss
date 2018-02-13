@@ -92,3 +92,11 @@
   text-align: left;
   width: 100%;
 }
+
+.alert-danger:hover {color: $white}
+
+.alert-warning a:hover,
+.alert-warning a:focus {
+  color: $brand-primary-dark;
+  border-color: $brand-primary-dark;
+}
