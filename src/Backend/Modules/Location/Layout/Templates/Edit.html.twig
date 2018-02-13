@@ -178,13 +178,12 @@
       type: '{{ settings.map_type }}',
       style: '{{ settings.map_style }}',
       center: {
-        lat: {{ settings.center.lat }},
-        lng: {{ settings.center.lng }}
+        lat: {% if item.lat is not null %}{{ settings.center.lat }}{% else %}0{% endif %},
+        lng: {% if item.lng is not null %}{{ settings.center.lng }}{% else %}0{% endif %}
       }
     };
     var markers = [];
-    {% if item.lat %}
-    {% if item.lng %}
+    {% if item.lat is not null and item.lng is not null %}
     markers.push(
       {
         lat: {{ item.lat }},
@@ -193,7 +192,6 @@
         text: '<p>{{ item.street }} {{ item.number }}</p><p>{{ item.zip }} {{ item.city }}</p>',
         dragable: true
       });
-    {% endif %}
     {% endif %}
   </script>
 {% endblock %}
