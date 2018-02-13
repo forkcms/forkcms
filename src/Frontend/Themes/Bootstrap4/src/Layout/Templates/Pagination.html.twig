@@ -1,0 +1,96 @@
+{% if pagination %}
+  {% if pagination.multiple_pages %}
+    <div class="d-none d-md-block">
+      <nav role="navigation">
+        <ul class="pagination">
+
+          {# Previous page arrow #}
+          <li class="page-item{% if not pagination.show_previous %} disabled{% endif %}">
+            {% if pagination.show_previous %}
+              <a class="page-link" href="{{ pagination.previous_url }}" rel="prev nofollow" title="{{ 'lbl.PreviousPage'|trans|ucfirst }}">
+                &larr;<span class="sr-only"> {{ 'lbl.PreviousPage'|trans|ucfirst }}</span>
+              </a>
+            {% else %}
+              <span class="page-link">&larr;<span class="sr-only"> {{ 'lbl.PreviousPage'|trans|ucfirst }}</span></span>
+            {% endif %}
+          </li>
+
+          {# First page #}
+          {% if pagination.first %}
+            {% for pagination in pagination.first %}
+              <li class="page-item">
+                <a class="page-link" href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">{{ pagination.label }}</a>
+              </li>
+            {% endfor %}
+            <li class="page-item disabled">
+              <span class="page-link">…</span>
+            </li>
+          {% endif %}
+
+          {# Middle pages #}
+          {% for pagination in pagination.pages %}
+            <li class="page-item {% if pagination.current %} active{% endif %}">
+              <a class="page-link" href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }}{{ pagination.label }}">
+                {{ pagination.label }}
+              </a>
+            </li>
+          {% endfor %}
+
+          {# Last page #}
+          {% if pagination.last %}
+            <li class="page-item disabled">
+              <span class="page-link">…</span>
+            </li>
+            {% for pagination in pagination.last %}
+              <li class="page-item">
+                <a class="page-link" href="{{ pagination.url }}" rel="nofollow" title="{{ 'lbl.GoToPage'|trans|ucfirst }} {{ pagination.label }}">
+                  {{ pagination.label }}
+                </a>
+              </li>
+            {% endfor %}
+          {% endif %}
+
+          {# Next page arrow #}
+          <li class="page-item{% if not pagination.show_next %} disabled{% endif %}">
+            {% if pagination.show_next %}
+              <a class="page-link" href="{{ pagination.next_url }}" rel="next nofollow" title="{{ 'lbl.NextPage'|trans|ucfirst }}">
+                <span class="sr-only">{{ 'lbl.NextPage'|trans }} </span>&rarr;
+              </a>
+            {% else %}
+              <span class="page-link"><span class="sr-only">{{ 'lbl.NextPage'|trans }} </span>&rarr;</span>
+            {% endif %}
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="d-md-none mb-4">
+      <label for="GoToPage">{{ 'lbl.GoToPage'|trans|ucfirst }}</label>
+      <div class="row align-items-center">
+        <div class="col-2">
+          {% if pagination.show_previous %}
+            <a class="btn btn-primary btn-block" href="{{ pagination.previous_url }}" rel="prev nofollow" title="{{ 'lbl.PreviousPage'|trans|ucfirst }}">
+              <span class="sr-only">{{ 'lbl.PreviousPage'|trans|ucfirst }}</span> <span class="fa fa-chevron-left" aria-hidden="true"></span>
+            </a>
+          {% endif %}
+        </div>
+        <div class="col-8">
+          {% set k = pagination.num_pages %}
+          <select class="form-control" id="GoToPage" data-role="mobile-pagination">
+            {% for i in range(1, k) %}
+              <option value="{{ i }}" {% if pagination.current_page == i %} selected="selected"{% endif %}>{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-2">
+          {% if pagination.show_next %}
+            <a class="btn btn-primary btn-block" href="{{ pagination.next_url }}" rel="prev nofollow" title="{{ 'lbl.NextPage'|trans|ucfirst }}"{% if not pagination.show_next %} disabled{% endif %}>
+              <span class="sr-only">{{ 'lbl.NextPage'|trans }}</span> <span class="fa fa-chevron-right" aria-hidden="true"></span>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+

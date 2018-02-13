@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col d-flex justify-content-start">
+    {% if widgetPagesNavigation.previous %}
+      <a class="btn btn-secondary" href="{{ widgetPagesNavigation.previous.url }}" rel="prev">
+        ← {{ widgetPagesNavigation.previous.title }}
+      </a>
+    {% endif %}
+  </div>
+  <div class="col d-flex justify-content-around">
+    {% if widgetPagesNavigation.parent %}
+      <a class="btn btn-secondary" href="{{ widgetPagesNavigation.parent.url }}">
+        ↑ {{ widgetPagesNavigation.parent.title }}
+      </a>
+    {% endif %}
+  </div>
+  <div class="col d-flex justify-content-end">
+    {% if widgetPagesNavigation.next %}
+      <a class="btn btn-secondary" href="{{ widgetPagesNavigation.next.url }}" rel="next">
+        {{ widgetPagesNavigation.next.title }} ➝
+      </a>
+    {% endif %}
+  </div>
+</div>

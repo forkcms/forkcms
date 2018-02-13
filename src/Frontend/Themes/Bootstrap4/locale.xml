@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+	<Backend>
+        <Core>
+            <item type="label" name="TwitterSiteName">
+                <translation language="en"><![CDATA[Twitter site name]]></translation>
+                <translation language="nl"><![CDATA[Twitter site naam]]></translation>
+                <translation language="fr"><![CDATA[Twitter nom du site]]></translation>
+            </item>
+        </Core>
+	</Backend>
+	<Frontend>
+		<Core>
+			<item type="label" name="For">
+				<translation language="en"><![CDATA[for]]></translation>
+				<translation language="nl"><![CDATA[voor]]></translation>
+			</item>
+			<item type="label" name="InThe">
+				<translation language="en"><![CDATA[in the]]></translation>
+				<translation language="nl"><![CDATA[in de]]></translation>
+			</item>
+			<item type="label" name="IAgree">
+				<translation language="en"><![CDATA[I agree]]></translation>
+				<translation language="nl"><![CDATA[ik ga akkoord]]></translation>
+			</item>
+			<item type="label" name="IDisagree">
+				<translation language="en"><![CDATA[I disagree]]></translation>
+				<translation language="nl"><![CDATA[ik ga niet akkoord]]></translation>
+			</item>
+			<item type="label" name="Loading">
+				<translation language="en"><![CDATA[loading]]></translation>
+				<translation language="nl"><![CDATA[laden]]></translation>
+			</item>
+			<item type="label" name="ReadMore">
+				<translation language="en"><![CDATA[read more]]></translation>
+				<translation language="en"><![CDATA[lees meer]]></translation>
+			</item>
+			<item type="label" name="RSSFeed">
+				<translation language="en"><![CDATA[RSS-feed]]></translation>
+				<translation language="nl"><![CDATA[RSS-feed]]></translation>
+			</item>
+			<item type="label" name="Warning">
+				<translation language="en"><![CDATA[Warning]]></translation>
+				<translation language="nl"><![CDATA[Let op]]></translation>
+			</item>
+			<item type="label" name="WithThe">
+				<translation language="en"><![CDATA[with the]]></translation>
+				<translation language="en"><![CDATA[met de]]></translation>
+			</item>
+			<item type="message" name="ArticlesFor">
+				<translation language="en"><![CDATA[articles for %1$s]]></translation>
+				<translation language="nl"><![CDATA[artikels voor %1$s]]></translation>
+			</item>
+			<item type="message" name="OldBrowser">
+				<translation language="en"><![CDATA[You are using an outdated browsers. If you want to see the website like it was intended, you should upgrade your browser or install a decent browser such as <a href="https://www.google.com/chrome">Google Chrome</a>.]]></translation>
+				<translation language="nl"><![CDATA[Je gebruikt een verouderde browser. Indien je de website wil zien zoals deze bedoeld is, kan je beter een nieuwe versie downloaden of een degelijke browser zoals <a href="https://www.google.com/chrome">Google Chrome</a> installeren.]]></translation>
+			</item>
+			<item type="message" name="Cookies">
+				<translation language="en"><![CDATA[To enhance the user experience on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
+				<translation language="nl"><![CDATA[Om de gebruikerservaring op deze site te verbeteren gebruiken we <a href="/disclaimer">cookies</a>.]]></translation>
+			</item>
+		</Core>
+	</Frontend>
+</locale>

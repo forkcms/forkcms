@@ -1,0 +1,23 @@
+{#
+  variables that are available:
+  - {{ widgetBlogRecentComments }}: contains an array with the recent comments. Each element contains data about the comment.
+#}
+
+{% if widgetBlogRecentComments %}
+  <section id="blogRecentCommentsWidget" class="blog blog-widget card mb-3">
+    <header class="card-header">
+      <h4 class="mb-0">{{ 'lbl.RecentComments'|trans|ucfirst }}</h4>
+    </header>
+    <ul class="list-group list-group-flush">
+      {% for comment in widgetBlogRecentComments %}
+        <li class="list-group-item d-block">
+          {% if comment.website %}<a href="{{ comment.website }}" rel="nofollow">{% endif %}
+            {{ comment.author }}
+          {% if comment.website %}</a>{% endif %}
+          {{ 'lbl.CommentedOn'|trans }} <a href="{{ comment.full_url }}">{{ comment.post_title }}</a>
+          <time class="muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH:i:s') }}">{{ comment.created_on|timeago|raw }}</time>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}

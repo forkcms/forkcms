@@ -1,0 +1,29 @@
+{#
+  Variables that are available:
+  - {{ tagsModules }}: contains all tags, grouped per module
+#}
+<section id="tagsDetail" class="tags">
+  <header role="banner">
+    <h1>{{ 'lbl.ItemsWithTag'|trans|format(tag.name|ucfirst)|ucfirst }}</h1>
+  </header>
+  {% if tagsModules %}
+    {% for module in tagsModules %}
+      <section class="card mb-3">
+        <header class="card-header" role="banner">
+          <h4 class="mb-0">{{ module.label|ucfirst }}</h4>
+        </header>
+        <div class="list-group list-group-flush">
+          {% for tag in module.items %}
+            <a class="list-group-item list-group-item-action" href="{{ tag.full_url }}">
+              {{ tag.title }}
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+  {% endif %}
+
+  <a href="{{ geturlforblock('Tags') }}" class="btn btn-secondary">
+    {{ 'lbl.ToTagsOverview'|trans|ucfirst }}
+  </a>
+</section>

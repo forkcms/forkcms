@@ -21,3 +21,5 @@ parameters:
 
     action.group_tag:       '<action-group-tag>'
     action.rights_level:    <action-rights-level>
+
+    sentry.dsn: ''
