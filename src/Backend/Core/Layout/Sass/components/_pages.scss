@@ -179,15 +179,9 @@
     }
 
     .buttonHolder {
-      background: $white;
-      bottom: 0;
-      padding: 0 4px 4px 0;
-      position: absolute;
-      right: 0;
-      -webkit-transition: opacity 0.3s ease-in-out;
-      -moz-transition: opacity 0.3s ease-in-out;
-      -o-transition: opacity 0.3s ease-in-out;
-      transition: opacity 0.3s ease-in-out;
+      padding: 10px 0 0;
+      text-align: center;
+      display: block;
       z-index: 80;
 
       .btn {
