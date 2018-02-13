@@ -132,8 +132,13 @@ jsFrontend.data = {
     // init if needed
     if (!jsFrontend.data.initialized) jsFrontend.data.init()
 
-    // return
-    return jsFrontend.data.data[key]
+    var keys = key.split('.')
+    var data = jsFrontend.data.data
+    for (var i = 0; i < keys.length; i++) {
+      data = data[keys[i]]
+    }
+
+    return data
   }
 }
 
