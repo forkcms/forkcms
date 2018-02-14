@@ -6,7 +6,7 @@
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {% if showMediaGalleriesMediaGalleryAdd %}
-            {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize, '', 'id=addMediaGroupType') }}
+            {{ macro.buttonIcon( geturl('MediaGalleryAdd'), 'plus-square', 'lbl.Add'|trans|capitalize, '', { "id":"addMediaGroupType" }) }}
           {% endif %}
         </div>
       </div>

@@ -1,3 +1,19 @@
+5.2.2  (2018-02-14)
+------------------
+
+Bugfixes:
+* Core: Drag and drop handler fix [#2455](https://github.com/forkcms/forkcms/pull/2455)
+* Core: Fix a11y css file not found [#2451](https://github.com/forkcms/forkcms/pull/2451)
+* Core: Fix alert colours [#2463](https://github.com/forkcms/forkcms/pull/2463)
+* Core: Fix delete buttons saving the form [#2462](https://github.com/forkcms/forkcms/pull/2462)
+* Core: Fix jsFrontend.data.get method [#2466](https://github.com/forkcms/forkcms/pull/2466)
+* Core: Fix nesting collectionType [#2449](https://github.com/forkcms/forkcms/pull/2449)
+* MediaGalleries: Fix add button [#2454](https://github.com/forkcms/forkcms/pull/2454)
+* MediaLibrary: Add missing ActionRights in MediaLibrary installer [#2456](https://github.com/forkcms/forkcms/pull/2456)
+* Pages: Fix action buttons floating over text [#2464](https://github.com/forkcms/forkcms/pull/2464)
+* Pages: Use correct labels for the add/edit blocks [#2450](https://github.com/forkcms/forkcms/pull/2450)
+
+
 5.2.1  (2018-02-09)
 ------------------
 
@@ -9,27 +25,27 @@ Bugfixes:
 ------------------
 
 Bugfixes:
-* Pages: Fix data-ft-block-optional can also be false of removed [#2409](https://github.com/forkcms/forkcms/pull/2409)
-* Core: Fix button macro with icons [#2412](https://github.com/forkcms/forkcms/pull/2412)
-* Blog: Add the default fallback for the rss feedback on all the usecases not just a few [#2413](https://github.com/forkcms/forkcms/pull/2413)
-* Tags: Fix tag edit action [#2414](https://github.com/forkcms/forkcms/pull/2414)
-* Profiles: Show all groups linked to a profile but fade the ones that have expired [#2416](https://github.com/forkcms/forkcms/pull/2416)
-* Tags: Make sure the id data attribute of tags in the datagrid contains valid JSON [#2418](https://github.com/forkcms/forkcms/pull/2418)
-* Core: Remove annoying whitespace in the datagrid [#2419](https://github.com/forkcms/forkcms/pull/2419)
-* MediaLibrary: Media Library in CKEditor - uploaded video has no selection button [#2420](https://github.com/forkcms/forkcms/pull/2420)
-* Pages: The edit buttons of blocks in the page edit should be anchors, not buttons [#2427](https://github.com/forkcms/forkcms/pull/2427)
-* Blog: Don't publish blogposts created as draft [#2443](https://github.com/forkcms/forkcms/pull/2443)
 * Core: Catch Doctrine's DBALException if the database connection fails [#2447](https://github.com/forkcms/forkcms/pull/2447)
+* Core: Fix button macro with icons [#2412](https://github.com/forkcms/forkcms/pull/2412)
+* Core: Remove annoying whitespace in the datagrid [#2419](https://github.com/forkcms/forkcms/pull/2419)
+* Blog: Add the default fallback for the rss feedback on all the usecases not just a few [#2413](https://github.com/forkcms/forkcms/pull/2413)
+* Blog: Don't publish blogposts created as draft [#2443](https://github.com/forkcms/forkcms/pull/2443)
+* MediaLibrary: Media Library in CKEditor - uploaded video has no selection button [#2420](https://github.com/forkcms/forkcms/pull/2420)
+* Pages: Fix data-ft-block-optional can also be false of removed [#2409](https://github.com/forkcms/forkcms/pull/2409)
+* Pages: The edit buttons of blocks in the page edit should be anchors, not buttons [#2427](https://github.com/forkcms/forkcms/pull/2427)
+* Profiles: Show all groups linked to a profile but fade the ones that have expired [#2416](https://github.com/forkcms/forkcms/pull/2416)
+* Tags: Fix tag edit action [#2414](https://github.com/forkcms/forkcms/pull/2414)
+* Tags: Make sure the id data attribute of tags in the datagrid contains valid JSON [#2418](https://github.com/forkcms/forkcms/pull/2418)
 
 Enhancements:
 * Core: A11y cancel buttons [#2415](https://github.com/forkcms/forkcms/pull/2415)
-* Profiles: Improve the layout of the form to add/edit profile groups [#2417](https://github.com/forkcms/forkcms/pull/2417)
+* Core: Use macro for button buttons [#2438](https://github.com/forkcms/forkcms/pull/2438)
+* Core: WCAG audit feedback [#2428](https://github.com/forkcms/forkcms/pull/2428)
 * MediaLibrary: CKEditor media library movies [#2421](https://github.com/forkcms/forkcms/pull/2421)
 * MediaLibrary: Make the cropper more accessible [#2425](https://github.com/forkcms/forkcms/pull/2425)
-* Core: WCAG audit feedback [#2428](https://github.com/forkcms/forkcms/pull/2428)
-* Pages: Make it possible to access all items in navigation tree with keyboard [#2429](https://github.com/forkcms/forkcms/pull/2429)
 * Pages: Better default values for the moving page via settings dropdowns [#2430](https://github.com/forkcms/forkcms/pull/2430)
-* Core: Use macro for button buttons [#2438](https://github.com/forkcms/forkcms/pull/2438)
+* Pages: Make it possible to access all items in navigation tree with keyboard [#2429](https://github.com/forkcms/forkcms/pull/2429)
+* Profiles: Improve the layout of the form to add/edit profile groups [#2417](https://github.com/forkcms/forkcms/pull/2417)
 
 Features:
 * Core: Make it possible to disable ck editor [#2424](https://github.com/forkcms/forkcms/pull/2424)
