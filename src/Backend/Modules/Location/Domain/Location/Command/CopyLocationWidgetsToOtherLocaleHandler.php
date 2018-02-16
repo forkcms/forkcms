@@ -62,7 +62,7 @@ final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleToOther
             $newId = $this->database->insert('modules_extras', $currentWidget);
 
             // Map the new ID
-            $command->setExtraId($oldId, $newId);
+            $command->setModuleExtraId($oldId, $newId);
         }
     }
 }

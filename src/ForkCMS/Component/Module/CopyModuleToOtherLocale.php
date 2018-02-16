@@ -22,11 +22,9 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     private $idMap;
 
     /** @var array - Will be used to convert old module-extra ids to new ones if used in other places */
-    private $extraIdMap;
+    private $moduleExtraIdMap;
 
-    /**
-     * @var CopyModulesToOtherLocaleResults
-     */
+    /** @var CopyModulesToOtherLocaleResults */
     private $previousResults;
 
     /** @var int */
@@ -41,31 +39,12 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
         $this->toLocale = $toLocale;
         $this->previousResults = $previousResults;
         $this->idMap = [];
-        $this->extraIdMap = [];
+        $this->moduleExtraIdMap = [];
     }
 
     public function comparePriority(CopyModuleToOtherLocaleInterface $command): int
     {
         return $this->priority <=> $command->getPriority();
-    }
-
-    public function getExtraId($oldExtraId)
-    /**
-     * @param mixed $oldExtraId
-     * @return mixed
-     * @throws \Exception
-     */
-    {
-        if (!array_key_exists($oldExtraId, $this->extraIdMap)) {
-            throw new Exception('No new extra id found for the given old extra id.');
-        }
-
-        return $this->extraIdMap[$oldExtraId];
-    }
-
-    public function getExtraIdMap(): array
-    {
-        return $this->extraIdMap;
     }
 
     public function getFromLocale(): Locale
@@ -84,12 +63,31 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
             throw new \Exception('No new id found for the given old id.');
         }
 
-        return $this->extraIdMap[$oldId];
+        return $this->moduleExtraIdMap[$oldId];
     }
 
     public function getIdMap(): array
     {
         return $this->idMap;
+    }
+
+    /**
+     * @param mixed $oldExtraId
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getModuleExtraId($oldExtraId)
+    {
+        if (!array_key_exists($oldExtraId, $this->moduleExtraIdMap)) {
+            throw new Exception('No new extra id found for the given old extra id.');
+        }
+
+        return $this->moduleExtraIdMap[$oldExtraId];
+    }
+
+    public function getModuleExtraIdMap(): array
+    {
+        return $this->moduleExtraIdMap;
     }
 
     abstract public function getModuleName(): string;
@@ -109,15 +107,6 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
         return $this->toLocale;
     }
 
-    public function setExtraId($oldId, $newId): void
-    /**
-     * @param mixed $oldId
-     * @param mixed $newId
-     */
-    {
-        $this->extraIdMap[$oldId] = $newId;
-    }
-
     /**
      * @param mixed $oldId
      * @param mixed $newId
@@ -125,6 +114,15 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     public function setId($oldId, $newId): void
     {
         $this->idMap[$oldId] = $newId;
+    }
+
+    /**
+     * @param mixed $oldId
+     * @param mixed $newId
+     */
+    public function setModuleExtraId($oldId, $newId): void
+    {
+        $this->moduleExtraIdMap[$oldId] = $newId;
     }
 
     public function setPriority(int $priority): void

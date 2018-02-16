@@ -6,12 +6,23 @@ use Common\Locale;
 
 interface CopyModuleToOtherLocaleInterface
 {
-    public function getExtraId($oldExtraId);
-    public function getExtraIdMap(): array;
     public function comparePriority(CopyModuleToOtherLocaleInterface $command);
     public function getFromLocale(): Locale;
+
+    /**
+     * @param mixed $oldId
+     * @return mixed
+     */
     public function getId($oldId);
     public function getIdMap(): array;
+
+    /**
+     * @param mixed $oldExtraId
+     * @return mixed
+     */
+    public function getModuleExtraId($oldExtraId);
+    public function getModuleExtraIdMap(): array;
+
     public function getModuleName(): string;
     public function getPreviousResults(): CopyModulesToOtherLocaleResults;
     public function getPriority(): int;
@@ -20,7 +31,17 @@ interface CopyModuleToOtherLocaleInterface
         Locale $fromLocale,
         Locale $toLocale,
         CopyModulesToOtherLocaleResults $previousResults
-    );
-    public function setExtraId($oldId, $newId): void;
+    ): void;
+
+    /**
+     * @param mixed $oldId
+     * @param $newId
+     */
+    public function setModuleExtraId($oldId, $newId): void;
+
+    /**
+     * @param $oldId
+     * @param $newId
+     */
     public function setId($oldId, $newId): void;
 }

@@ -9,14 +9,10 @@ use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 
 final class CopyModulesToOtherLocaleManager
 {
-    /**
-     * @var MessageBusSupportingMiddleware
-     */
+    /** @var MessageBusSupportingMiddleware */
     private $commandBus;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $moduleCommands = [];
 
     public function __construct(MessageBusSupportingMiddleware $commandBus)
@@ -34,9 +30,7 @@ final class CopyModulesToOtherLocaleManager
         $results = new CopyModulesToOtherLocaleResults();
         $moduleCommands = $this->getModuleCommandsOrderedByPriority();
 
-        /**
-         * @var CopyModuleToOtherLocaleInterface $moduleCommand
-         */
+        /** @var CopyModuleToOtherLocaleInterface $moduleCommand */
         foreach ($moduleCommands as $moduleCommand) {
             // We set the previous results, so they are accessible.
             $moduleCommand->prepareForCopy($fromLocale, $toLocale, $results);

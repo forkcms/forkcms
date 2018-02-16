@@ -32,13 +32,13 @@ final class CopyContentBlocksToOtherLocaleHandler implements CopyModuleToOtherLo
 
         array_map(
             function (ContentBlock $contentBlock) use ($command, &$id) {
-                $command->setExtraId($contentBlock->getExtraId(), $this->getNewExtraId());
+                $command->setModuleExtraId($contentBlock->getModuleExtraId(), $this->getNewExtraId());
                 $dataTransferObject = $contentBlock->getDataTransferObject();
 
                 // Overwrite some variables
                 $dataTransferObject->forOtherLocale(
                     $id++,
-                    $command->getExtraId($contentBlock->getExtraId()),
+                    $command->getModuleExtraId($contentBlock->getModuleExtraId()),
                     $command->getToLocale()
                 );
 

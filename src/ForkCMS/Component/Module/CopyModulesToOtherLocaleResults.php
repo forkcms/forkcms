@@ -4,30 +4,26 @@ namespace ForkCMS\Component\Module;
 
 final class CopyModulesToOtherLocaleResults
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $idMap;
 
-    /**
-     * @var array
-     */
-    private $extraIdMap;
+    /** @var array */
+    private $moduleExtraIdMap;
 
-    public function add(string $moduleName, array $idMap, array $extraIdMap): void
+    public function add(string $moduleName, array $idMap, array $moduleExtraIdMap): void
     {
         $this->idMap[$moduleName] = $idMap;
-        $this->extraIdMap[$moduleName] = $extraIdMap;
+        $this->moduleExtraIdMap[$moduleName] = $moduleExtraIdMap;
     }
 
-    public function getExtraId(string $moduleName, $id)
+    public function getModuleExtraId(string $moduleName, $id)
     {
-        return $this->getValue($this->extraIdMap, $moduleName, $id);
+        return $this->getValue($this->moduleExtraIdMap, $moduleName, $id);
     }
 
-    public function getExtraIds(string $moduleName)
+    public function getModuleExtraIds(string $moduleName)
     {
-        return $this->getValues($this->extraIdMap, $moduleName);
+        return $this->getValues($this->moduleExtraIdMap, $moduleName);
     }
 
     public function getId(string $moduleName, $id)
@@ -68,6 +64,6 @@ final class CopyModulesToOtherLocaleResults
 
     public function hasModule(string $moduleName): bool
     {
-        return array_key_exists($moduleName, $this->idMap) || array_key_exists($moduleName, $this->extraIdMap);
+        return array_key_exists($moduleName, $this->idMap) || array_key_exists($moduleName, $this->moduleExtraIdMap);
     }
 }

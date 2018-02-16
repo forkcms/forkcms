@@ -25,14 +25,14 @@ final class CopyPagesToOtherLocaleHandler implements CopyModuleToOtherLocaleHand
         // Get already copied ContentBlock ids
         $hasContentBlocks = $command->getPreviousResults()->hasModule('ContentBlocks');
         if ($hasContentBlocks) {
-            $contentBlockIds = $command->getPreviousResults()->getExtraIds('ContentBlocks');
+            $contentBlockIds = $command->getPreviousResults()->getModuleExtraIds('ContentBlocks');
             $contentBlockOldIds = array_keys($contentBlockIds);
         }
 
         // Get already copied Location ids
         $hasLocations = $command->getPreviousResults()->hasModule('Location');
         if ($hasLocations) {
-            $locationWidgetIds = $command->getPreviousResults()->getExtraIds('Location');
+            $locationWidgetIds = $command->getPreviousResults()->getModuleExtraIds('Location');
             $locationWidgetOldIds = array_keys($locationWidgetIds);
         }
 
