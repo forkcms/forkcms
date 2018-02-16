@@ -45,6 +45,8 @@ final class MediaWidget
             $actions[] = $file->getBasename('.' . $file->getExtension());
         }
 
+        sort($actions);
+
         return $actions;
     }
 
