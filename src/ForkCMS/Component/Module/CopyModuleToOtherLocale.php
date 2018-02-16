@@ -3,6 +3,7 @@
 namespace ForkCMS\Component\Module;
 
 use Common\Locale;
+use Exception;
 
 /**
  * The following things are mandatory when extending this class.
@@ -35,7 +36,7 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
         Locale $fromLocale,
         Locale $toLocale,
         CopyModulesToOtherLocaleResults $previousResults
-    ) {
+    ): void {
         $this->fromLocale = $fromLocale;
         $this->toLocale = $toLocale;
         $this->previousResults = $previousResults;
@@ -49,9 +50,14 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     }
 
     public function getExtraId($oldExtraId)
+    /**
+     * @param mixed $oldExtraId
+     * @return mixed
+     * @throws \Exception
+     */
     {
         if (!array_key_exists($oldExtraId, $this->extraIdMap)) {
-            throw new \Exception('No new extra id found for the given old extra id.');
+            throw new Exception('No new extra id found for the given old extra id.');
         }
 
         return $this->extraIdMap[$oldExtraId];
@@ -67,6 +73,11 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
         return $this->fromLocale;
     }
 
+    /**
+     * @param mixed $oldId
+     * @return mixed
+     * @throws Exception
+     */
     public function getId($oldId)
     {
         if (!array_key_exists($oldId, $this->idMap)) {
@@ -99,10 +110,18 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     }
 
     public function setExtraId($oldId, $newId): void
+    /**
+     * @param mixed $oldId
+     * @param mixed $newId
+     */
     {
         $this->extraIdMap[$oldId] = $newId;
     }
 
+    /**
+     * @param mixed $oldId
+     * @param mixed $newId
+     */
     public function setId($oldId, $newId): void
     {
         $this->idMap[$oldId] = $newId;
