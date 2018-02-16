@@ -6,9 +6,9 @@ use Common\Locale;
 
 interface CopyModuleToOtherLocaleInterface
 {
-    public function compare(CopyModuleToOtherLocaleInterface $command);
     public function getExtraId($oldExtraId);
     public function getExtraIdMap(): array;
+    public function comparePriority(CopyModuleToOtherLocaleInterface $command);
     public function getFromLocale(): Locale;
     public function getId($oldId);
     public function getIdMap(): array;

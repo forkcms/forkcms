@@ -44,7 +44,7 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
         $this->extraIdMap = [];
     }
 
-    public function compare(CopyModuleToOtherLocaleInterface $command)
+    public function comparePriority(CopyModuleToOtherLocaleInterface $command): int
     {
         return $this->priority <=> $command->getPriority();
     }
