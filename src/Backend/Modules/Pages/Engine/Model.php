@@ -89,7 +89,7 @@ class Model
 
     public static function copy(string $fromLanguage, string $toLanguage): void
     {
-        BackendModel::getContainer()->get('fork.manager.copy_modules_to_other_locale')->copy(
+        BackendModel::get('fork.manager.copy_modules_to_other_locale')->copy(
             Locale::fromString($fromLanguage),
             Locale::fromString($toLanguage)
         );
