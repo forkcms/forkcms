@@ -4,6 +4,11 @@ namespace ForkCMS\Component\Module;
 
 use Common\Locale;
 
+/**
+ * The following things are mandatory when extending this class.
+ *
+ * You need to implement the method getModuleName.
+ */
 abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterface
 {
     /** @var Locale */
@@ -12,10 +17,10 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     /** @var Locale */
     private $toLocale;
 
-    /** @var array this is used to be able to convert the old ids to the new ones if used in other places */
+    /** @var array - Will be used to convert old ids to new ones if used in other places */
     private $idMap;
 
-    /** @var array this is used to be able to convert the old ids to the new ones if used in other places */
+    /** @var array - Will be used to convert old module-extra ids to new ones if used in other places */
     private $extraIdMap;
 
     /**
