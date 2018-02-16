@@ -3,11 +3,11 @@
 namespace Backend\Modules\Location\Command;
 
 use Common\ModuleExtraType;
-use ForkCMS\Component\Module\CopyModuleToOtherLocaleCommandHandlerInterface;
-use ForkCMS\Component\Module\CopyModuleToOtherLocaleCommandInterface;
+use ForkCMS\Component\Module\CopyModuleToOtherLocaleHandlerInterface;
+use ForkCMS\Component\Module\CopyModuleToOtherLocaleInterface;
 use SpoonDatabase;
 
-final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleToOtherLocaleCommandHandlerInterface
+final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleToOtherLocaleHandlerInterface
 {
     /** @var SpoonDatabase */
     private $database;
@@ -17,7 +17,7 @@ final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleToOther
         $this->database = $database;
     }
 
-    public function handle(CopyModuleToOtherLocaleCommandInterface $command): void
+    public function handle(CopyModuleToOtherLocaleInterface $command): void
     {
         if (!$command instanceof CopyLocationWidgetsToOtherLocale) {
             throw new \Exception('The class should be ' . CopyLocationWidgetsToOtherLocale::class);

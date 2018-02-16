@@ -4,9 +4,9 @@ namespace ForkCMS\Component\Module;
 
 use Common\Locale;
 
-interface CopyModuleToOtherLocaleCommandInterface
+interface CopyModuleToOtherLocaleInterface
 {
-    public function compare(CopyModuleToOtherLocaleCommandInterface $command);
+    public function compare(CopyModuleToOtherLocaleInterface $command);
     public function getExtraId($oldExtraId);
     public function getExtraIdMap(): array;
     public function getFromLocale(): Locale;

@@ -4,7 +4,7 @@ namespace ForkCMS\Bundle\CoreBundle\Manager;
 
 use Common\Locale;
 use ForkCMS\Component\Module\CopyModulesToOtherLocaleResults;
-use ForkCMS\Component\Module\CopyModuleToOtherLocaleCommandInterface;
+use ForkCMS\Component\Module\CopyModuleToOtherLocaleInterface;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 
 final class CopyModulesToOtherLocaleManager
@@ -24,7 +24,7 @@ final class CopyModulesToOtherLocaleManager
         $this->commandBus = $commandBus;
     }
 
-    public function addModule(CopyModuleToOtherLocaleCommandInterface $moduleCommand): void
+    public function addModule(CopyModuleToOtherLocaleInterface $moduleCommand): void
     {
         $this->moduleCommands[] = $moduleCommand;
     }
@@ -35,7 +35,7 @@ final class CopyModulesToOtherLocaleManager
         $moduleCommands = $this->getModuleCommandsOrderedByPriority();
 
         /**
-         * @var CopyModuleToOtherLocaleCommandInterface $moduleCommand
+         * @var CopyModuleToOtherLocaleInterface $moduleCommand
          */
         foreach ($moduleCommands as $moduleCommand) {
             // We set the previous results, so they are accessible.
@@ -55,7 +55,7 @@ final class CopyModulesToOtherLocaleManager
 
         usort(
             $moduleCommands,
-            function (CopyModuleToOtherLocaleCommandInterface $moduleCommand1, CopyModuleToOtherLocaleCommandInterface $moduleCommand2) {
+            function (CopyModuleToOtherLocaleInterface $moduleCommand1, CopyModuleToOtherLocaleInterface $moduleCommand2) {
                 return $moduleCommand1->compare($moduleCommand2);
             }
         );

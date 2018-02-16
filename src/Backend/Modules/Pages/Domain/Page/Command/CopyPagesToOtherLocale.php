@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\Pages\Domain\Page\Command;
 
-use ForkCMS\Component\Module\CopyModuleToOtherLocaleCommand;
+use ForkCMS\Component\Module\CopyModuleToOtherLocale;
 
-class CopyPagesToOtherLocale extends CopyModuleToOtherLocaleCommand
+class CopyPagesToOtherLocale extends CopyModuleToOtherLocale
 {
     public function __construct()
     {

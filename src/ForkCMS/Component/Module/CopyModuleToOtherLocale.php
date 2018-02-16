@@ -4,7 +4,7 @@ namespace ForkCMS\Component\Module;
 
 use Common\Locale;
 
-abstract class CopyModuleToOtherLocaleCommand implements CopyModuleToOtherLocaleCommandInterface
+abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterface
 {
     /** @var Locale */
     private $fromLocale;
@@ -38,7 +38,7 @@ abstract class CopyModuleToOtherLocaleCommand implements CopyModuleToOtherLocale
         $this->extraIdMap = [];
     }
 
-    public function compare(CopyModuleToOtherLocaleCommandInterface $command)
+    public function compare(CopyModuleToOtherLocaleInterface $command)
     {
         return $this->priority <=> $command->getPriority();
     }
