@@ -31,7 +31,7 @@
             {% for mediaItem in mediaItems %}
               <div class="item{% if loop.first %} active{% endif %}">
                 <img src="{{ (mediaItem.getWebPath()) | imagine_filter(imagineFilter) }}" alt="{{ mediaItem.title }}" />
-                <div class="carousel-caption"></div>
+                <div class="carousel-caption"><!-- You can put content in here --></div>
               </div>
             {% endfor %}
           </div>
