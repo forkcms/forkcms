@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Location\Domain\Location\Command;
 
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\CopyLocationWidgetsToOtherLocaleException;
 use Common\ModuleExtraType;
 use ForkCMS\Component\Module\CopyModuleToOtherLocaleHandlerInterface;
 use ForkCMS\Component\Module\CopyModuleToOtherLocaleInterface;
@@ -20,7 +21,7 @@ final class CopyLocationWidgetsToOtherLocaleHandler implements CopyModuleToOther
     public function handle(CopyModuleToOtherLocaleInterface $command): void
     {
         if (!$command instanceof CopyLocationWidgetsToOtherLocale) {
-            throw new \Exception('The class should be ' . CopyLocationWidgetsToOtherLocale::class);
+            CopyLocationWidgetsToOtherLocaleException::forWrongCommand();
         }
 
         $currentWidgets = $this->database->getRecords(
