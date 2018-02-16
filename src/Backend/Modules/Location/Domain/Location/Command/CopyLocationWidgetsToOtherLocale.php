@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Location\Command;
+namespace Backend\Modules\Location\Domain\Location\Command;
 
 use ForkCMS\Component\Module\CopyModuleToOtherLocale;
 
