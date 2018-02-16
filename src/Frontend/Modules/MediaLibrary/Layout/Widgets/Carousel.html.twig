@@ -18,7 +18,7 @@
 
     {% block widget_body %}
       <div class="widget-body">
-        <div id="myCarousel{{ mediaGroupId }}" class="carousel slide" data-ride="carousel">
+        <div id="myCarousel{{ mediaGroupId }}" class="carousel slide" data-ride="carousel" data-interval="5000" data-pause="hover" data-wrap="true">
           <!-- Indicators -->
           <ol class="carousel-indicators">
             {% for banner in banners %}
