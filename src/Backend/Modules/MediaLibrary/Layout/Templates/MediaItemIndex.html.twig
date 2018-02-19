@@ -49,12 +49,12 @@
         <div class="tab-content">
           {% for dataGrid in dataGrids %}
           <div role="tabpanel" class="tab-pane" id="{{ dataGrid.tabName }}">
-            <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="get" class="forkForms">
+            <form id="formFor{{ dataGrid.mediaType|ucfirst }}" action="{{ geturl('MediaItemMassAction') }}" method="get" class="forkForms">
               <div class="row">
                 <div class="col-md-12">
                   <div class="table-responsive">
                     <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
-                    <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden" name="move_to_folder_id" value="" />
+                    <input id="moveToFolderIdForType{{ dataGrid.mediaType|ucfirst }}" type="hidden" name="move_to_folder_id" value="" />
                     {% if mediaFolder %}
                       <input type="hidden" name="current_folder_id" value="{{ mediaFolder.id }}" />
                     {% endif %}

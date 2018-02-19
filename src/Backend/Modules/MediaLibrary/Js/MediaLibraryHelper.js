@@ -64,20 +64,20 @@ jsBackend.mediaLibraryHelper.group = {
       cursor: 'move',
       start: function (e, ui) {
         // redefine previous and new sequence
-        prevSequence = newSequence = $('#group-' + currentMediaGroupId + ' .mediaIds').first().val()
+        prevSequence = newSequence = $('#group' + currentMediaGroupId + ' .mediaIds').first().val()
 
         // don't prevent the click
         ui.item.removeClass('preventClick')
       },
       update: function () {
         // set group i
-        currentMediaGroupId = $(this).parent().parent().attr('id').replace('group-', '')
+        currentMediaGroupId = $(this).parent().parent().attr('id').replace('group', '')
 
         // prepare correct new sequence value for hidden input
-        newSequence = $(this).sortable('serialize').replace(/media-/g, '').replace(/\[\]=/g, '-').replace(/&/g, ',')
+        newSequence = $(this).sortable('serialize').replace(/media/g, '').replace(/\[\]=/g, '').replace(/&/g, ',')
 
         // add value to hidden input
-        $('#group-' + currentMediaGroupId + ' .mediaIds').first().val(newSequence)
+        $('#group' + currentMediaGroupId + ' .mediaIds').first().val(newSequence)
       },
       stop: function (e, ui) {
         // prevent click
@@ -111,7 +111,7 @@ jsBackend.mediaLibraryHelper.group = {
         $(this).parent().toggleClass('selected')
 
         // define groupId (@todo: can this shorter?)
-        var groupId = $(this).parent().parent().parent().parent().attr('id').replace('group-', '')
+        var groupId = $(this).parent().parent().parent().parent().attr('id').replace('group', '')
 
         // update disconnect button
         jsBackend.mediaLibraryHelper.group.updateDisconnectButton(groupId)
@@ -183,8 +183,8 @@ jsBackend.mediaLibraryHelper.group = {
       }
 
       // get current media for group
-      currentMediaItemIds = ($('#group-' + currentMediaGroupId + ' .mediaIds').first().val() !== '')
-        ? $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
+      currentMediaItemIds = ($('#group' + currentMediaGroupId + ' .mediaIds').first().val() !== '')
+        ? $.trim($('#group' + currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
 
       // set the group media
       mediaGroups[currentMediaGroupId].media = currentMediaItemIds
@@ -232,7 +232,7 @@ jsBackend.mediaLibraryHelper.group = {
     currentMediaGroupId = groupId
 
     // current ids
-    var currentIds = $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',')
+    var currentIds = $.trim($('#group' + currentMediaGroupId + ' .mediaIds').first().val()).split(',')
 
     // get selected items
     var $items = jsBackend.mediaLibraryHelper.group.getSelectedItems(currentMediaGroupId)
@@ -240,7 +240,7 @@ jsBackend.mediaLibraryHelper.group = {
     // get ids from selected items
     $items.each(function () {
       // get id
-      var id = $(this).attr('id').replace('media-', '')
+      var id = $(this).attr('id').replace('media', '')
 
       // remove from array
       currentIds = jQuery.grep(currentIds, function (value) {
@@ -302,7 +302,7 @@ jsBackend.mediaLibraryHelper.group = {
    * @returns {*|jQuery|HTMLElement}
    */
   get: function (groupId) {
-    return $('#group-' + groupId)
+    return $('#group' + groupId)
   },
 
   /**
@@ -389,7 +389,7 @@ jsBackend.mediaLibraryHelper.group = {
         mediaGroupId = $(this).find('.mediaGroupId').val()
 
         // Redefine wrong id (mediaGroupId was missing)
-        $(this).attr('id', 'group-' + mediaGroupId)
+        $(this).attr('id', 'group' + mediaGroupId)
         $(this).data('id', mediaGroupId)
         $(this).find('.addMediaButton').first().data('i', mediaGroupId)
         $(this).find('.disconnectMediaItemsButton').first().data('i', mediaGroupId)
@@ -397,10 +397,10 @@ jsBackend.mediaLibraryHelper.group = {
         activateFallback = true
       }
 
-      var type = $('#group-' + mediaGroupId + ' .type').first().val()
+      var type = $('#group' + mediaGroupId + ' .type').first().val()
       // get current media for group
-      var mediaIds = ($('#group-' + mediaGroupId + ' .mediaIds').length > 0 && $('#group-' + mediaGroupId + ' .mediaIds').first().val() !== '')
-        ? $.trim($('#group-' + mediaGroupId + ' .mediaIds').first().val()).split(',') : []
+      var mediaIds = ($('#group' + mediaGroupId + ' .mediaIds').length > 0 && $('#group' + mediaGroupId + ' .mediaIds').first().val() !== '')
+        ? $.trim($('#group' + mediaGroupId + ' .mediaIds').first().val()).split(',') : []
 
       // Push ids to array
       mediaGroups[mediaGroupId] = {
@@ -427,7 +427,7 @@ jsBackend.mediaLibraryHelper.group = {
               }
             } else {
               // Define the variables
-              var $group = $('#group-' + mediaGroupId)
+              var $group = $('#group' + mediaGroupId)
               var $holder = $group.find('.mediaConnectedItems').first()
 
               // Remove paragraph which says that we don't have any media connected
@@ -451,7 +451,7 @@ jsBackend.mediaLibraryHelper.group = {
    */
   getItems: function (groupId) {
     var id = (groupId) || currentMediaGroupId
-    return $('#group-' + id).find('.mediaConnectedItems')
+    return $('#group' + id).find('.mediaConnectedItems')
   },
 
   /**
@@ -608,8 +608,8 @@ jsBackend.mediaLibraryHelper.group = {
     var $currentItems = jsBackend.mediaLibraryHelper.group.getItems()
 
     // current ids
-    var currentIds = ($('#group-' + currentMediaGroupId + ' .mediaIds').first().val() !== '')
-      ? $.trim($('#group-' + currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
+    var currentIds = ($('#group' + currentMediaGroupId + ' .mediaIds').first().val() !== '')
+      ? $.trim($('#group' + currentMediaGroupId + ' .mediaIds').first().val()).split(',') : []
 
     // define empty
     var empty = (currentMediaItemIds.length === 0)
@@ -640,7 +640,7 @@ jsBackend.mediaLibraryHelper.group = {
     // check which items to delete
     $(currentIds).each(function (i, id) {
       // remove item
-      $($currentItems).find('#media-' + id).remove()
+      $($currentItems).find('#media' + id).remove()
     })
 
     // update the group media
@@ -651,12 +651,12 @@ jsBackend.mediaLibraryHelper.group = {
       jsBackend.mediaLibraryHelper.group.getItems().after('<p class="mediaNoItems helpTxt">' + jsBackend.locale.msg('MediaNoItemsConnected') + '</p>')
       // delete empty media paragraph
     } else {
-      $('#group-' + currentMediaGroupId).find('.mediaNoItems').remove()
-      $('#group-' + currentMediaGroupId).find('.media-group-type-errors').remove()
+      $('#group' + currentMediaGroupId).find('.mediaNoItems').remove()
+      $('#group' + currentMediaGroupId).find('.media-group-type-errors').remove()
     }
 
     // update the hidden group field for media
-    $('#group-' + currentMediaGroupId).find('.mediaIds').first().val(currentMediaItemIds.join(','))
+    $('#group' + currentMediaGroupId).find('.mediaIds').first().val(currentMediaItemIds.join(','))
 
     // redefine
     currentMediaItemIds = []
@@ -743,7 +743,7 @@ jsBackend.mediaLibraryHelper.group = {
     // bind change when connecting/disconnecting media
     $tables.find('.toggleConnectedCheckbox').on('click', function () {
       // mediaId
-      var mediaId = $(this).parent().parent().attr('id').replace('media-', '')
+      var mediaId = $(this).parent().parent().attr('id').replace('media', '')
 
       // was already connected?
       var connected = utils.array.inArray(mediaId, currentMediaItemIds)
@@ -1112,9 +1112,9 @@ jsBackend.mediaLibraryHelper.upload = {
     // check if we need to cropper is mandatory
     jsBackend.mediaLibraryHelper.upload.toggleCropper()
 
-    var $fineUploaderGallery = $('#fine-uploader-gallery')
-    $fineUploaderGallery.fineUploader({
-      template: 'qq-template-gallery',
+    var $fineUploader = $('#fineUploader')
+    $fineUploader.fineUploader({
+      template: 'qqTemplateGallery',
       thumbnails: {
         placeholders: {
           waitingPath: '/css/vendors/fine-uploader/waiting-generic.png',
@@ -1143,7 +1143,7 @@ jsBackend.mediaLibraryHelper.upload = {
           // toggle upload box
           jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes()
 
-          $fineUploaderGallery.find('.qq-upload-success[qq-file-id=' + id + ']').hide()
+          $fineUploader.find('.qq-upload-success[qq-file-id=' + id + ']').hide()
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
@@ -1151,7 +1151,7 @@ jsBackend.mediaLibraryHelper.upload = {
               responseJSON.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
 
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
-            $('li[id="media-' + responseJSON.id + '"]').find('.mediaHolder.mediaHolderImage')
+            $('li[id="media' + responseJSON.id + '"]').find('.mediaHolder.mediaHolderImage')
               .append($link)
           }
         },
@@ -1203,7 +1203,7 @@ jsBackend.mediaLibraryHelper.upload = {
     // loop remaining items in uploaded media and push them to current group
     $('#uploadedMedia').find('li').each(function () {
       // get id
-      var id = $(this).attr('id').replace('media-', '')
+      var id = $(this).attr('id').replace('media', '')
 
       // add each id to array
       currentMediaItemIds.push(id)
@@ -1281,7 +1281,7 @@ jsBackend.mediaLibraryHelper.upload = {
           if ($('#tabUploadMedia').data('context') === 'selection') {
             var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
-            $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
+            $('li[id="media' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)
           }
         }
@@ -1422,7 +1422,7 @@ jsBackend.mediaLibraryHelper.templates = {
    * @returns {string}
    */
   getHTMLForMediaItemToConnect: function (mediaItem) {
-    var html = '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder_id + '" class="ui-state-default">'
+    var html = '<li id="media' + mediaItem.id + '" data-folder-id="' + mediaItem.folder_id + '" class="ui-state-default">'
     html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">'
 
     if (mediaItem.type === 'image') {
@@ -1446,7 +1446,7 @@ jsBackend.mediaLibraryHelper.templates = {
    * @returns {string}
    */
   getHTMLForMediaItemTableRow: function (mediaItem, connected) {
-    var html = '<tr id="media-' + mediaItem.id + '" class="row' + utils.string.ucfirst(mediaItem.type) + '">'
+    var html = '<tr id="media' + mediaItem.id + '" class="row' + utils.string.ucfirst(mediaItem.type) + '">'
     html += '<td class="check">'
     html += '<input type="checkbox" class="toggleConnectedCheckbox"'
 
@@ -1480,7 +1480,7 @@ jsBackend.mediaLibraryHelper.templates = {
     var html = ''
 
     // create element
-    html += '<li id="media-' + mediaItem.id + '" data-folder-id="' + mediaItem.folder.id + '" class="ui-state-default">'
+    html += '<li id="media' + mediaItem.id + '" data-folder-id="' + mediaItem.folder.id + '" class="ui-state-default">'
     html += '<div class="mediaHolder mediaHolder' + utils.string.ucfirst(mediaItem.type) + '">'
 
     // is image

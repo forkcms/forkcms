@@ -1,7 +1,7 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 <!-- Fine Uploader Gallery template
     ====================================================================== -->
-<script type="text/template" id="qq-template-gallery">
+<script type="text/template" id="qqTemplateGallery">
   <div class="qq-uploader-selector qq-uploader qq-gallery" qq-drop-area-text="{{ 'lbl.DropFilesHere'|trans|ucfirst }}">
     <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
       <span class="qq-upload-drop-area-text-selector"></span>
@@ -128,7 +128,7 @@
       <div class="panel-heading">
         <h2 class="panel-title">2) {{ 'msg.MediaChoseToUpload'|trans }}</h2>
       </div>
-      <div id="fine-uploader-gallery"></div>
+      <div id="fineUploader"></div>
       <div class="panel-footer">
         <div class="form-group" data-role="cropper-is-mandatory-form-group">
           <div class="checkbox">
@@ -141,7 +141,7 @@
           </div>
         </div>
       </div>
-      <div id="fine-uploader-gallery"></div>
+      <div id="fineUploader"></div>
     </div>
   </div>
 </div>
