@@ -10,7 +10,7 @@
           {% set url = (url ~ '?revision=' ~ item.revision_id) %}
         {% endif %}
 
-        {{ macro.buttonIcon( url, 'eye', 'lbl.View'|trans|ucfirst) }}
+        {{ macro.buttonIcon(url, 'eye', 'lbl.View'|trans|ucfirst) }}
       {% endif %}
     </div>
   </div>
@@ -56,8 +56,8 @@
               <div class="col-md-8">
                 <div class="panel panel-default panel-editor">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.MainContent'|trans|ucfirst }}
-                      {{ macro.required }}</p>
+                    <h2>{{ 'lbl.MainContent'|trans|ucfirst }}
+                      {{ macro.required }}</h2>
                   </div>
                   <div class="panel-body">
                     {% form_field text %}
@@ -71,7 +71,7 @@
                 {% if imageIsAllowed %}
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <p>{{ 'lbl.Image'|trans|ucfirst }}</p>
+                      <h2>{{ 'lbl.Image'|trans|ucfirst }}</h2>
                     </div>
                     <div class="panel-body">
                       {% if item.image %}
@@ -91,10 +91,10 @@
                 {% endif %}
                 <div class="panel panel-default panel-editor last">
                   <div class="panel-heading">
-                    <p>
+                    <h2>
                       {{ 'lbl.Summary'|trans|ucfirst }}
                       {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
-                    </p>
+                    </h2>
                   </div>
                   <div class="panel-body">
                     {% form_field introduction %}
@@ -109,7 +109,7 @@
               <div class="col-md-4">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.Status'|trans|ucfirst }}</p>
+                    <h2>{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -131,7 +131,7 @@
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.MetaData'|trans|ucfirst }}</p>
+                    <h2>{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -146,6 +146,7 @@
                       <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                         {% form_field tags %} {% form_field_error tags %}
+                        <div class="help-block">{{ 'msg.HelpTextTags'|trans }}</div>
                       </div>
                     {% endif %}
                   </div>
@@ -159,19 +160,19 @@
                 {% if drafts %}
                   <div class="content-block">
                     <div class="content-title">
-                      <p>{{ 'lbl.Drafts'|trans|ucfirst }}
+                      <h2>{{ 'lbl.Drafts'|trans|ucfirst }}
                         {{ macro.infoTooltip('msg.HelpDrafts'|trans|ucfirst) }}
-                      </p>
+                      </h2>
                     </div>
                     {{ drafts|raw }}
                   </div>
                 {% endif %}
                 <div class="content-block">
                   <div class="content-title">
-                    <p>
+                    <h2>
                       {{ 'lbl.PreviousVersions'|trans|ucfirst }}
                       {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
-                    </p>
+                    </h2>
                   </div>
                   {% if revisions %}
                     {{ revisions|raw }}
@@ -208,19 +209,13 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showBlogDelete %}
-            <button type="button" class="btn btn-danger" id="blog-delete" data-toggle="modal" data-target="#confirmDelete">
-              {{ macro.icon('trash-o') }}
-              {{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button"} ) }}
           {% endif %}
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <a href="#" id="saveAsDraft" class="btn btn-default">
-            {{ macro.icon('file-o') }}{{ 'lbl.SaveDraft'|trans|ucfirst }}
-          </a>
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            {{ macro.icon('check') }}{{ 'lbl.Publish'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"type":"submit", "name":"saveAsDraft"}) }}
+          {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"publish"}) }}
         </div>
       </div>
     </div>
@@ -242,12 +237,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
-            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-          </button>
-          <button id="addCategorySubmit" type="button" class="btn btn-primary">
-            {{ macro.icon('plus-square') }}{{ 'lbl.AddCategory'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal" }) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddCategory'|trans|ucfirst, 'btn-primary', {"id":"addCategorySubmit" }) }}
         </div>
       </div>
     </div>
@@ -269,12 +260,8 @@
             <p>{{ 'msg.ConfirmDelete'|trans|format(item.title)|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
           </div>
         </div>
       </div>

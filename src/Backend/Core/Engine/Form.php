@@ -61,6 +61,10 @@ class Form extends \Common\Core\Form
      */
     public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true): SpoonFormTextarea
     {
+        if (BackendModel::getPreferredEditor() !== 'ck-editor') {
+            return $this->addTextarea($name, $value, $class, $classError, $HTML);
+        }
+
         if (!$this->header instanceof Header) {
             throw new ServiceNotFoundException('header');
         }

@@ -1500,7 +1500,7 @@
     e && e.preventDefault()
 
     var collection = $('#' + selector)
-    var list = collection.find('ul.js-collection')
+    var list = collection.find('ul.js-collection').first()
     var count = list.find('> li').length
 
     var newWidget = collection.attr('data-prototype')

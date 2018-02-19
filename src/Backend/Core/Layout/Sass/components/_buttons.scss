@@ -15,7 +15,7 @@
   @media screen and (min-width: $screen-sm) {
     .btn-text {
       display: inline-block;
-      font-size: $font-size-small;
+      font-size: $font-size-base;
       margin: 0;
     }
   }
@@ -78,7 +78,7 @@
 }
 
 .btn-second {
-  color: $brand-primary;
+  color: $brand-primary-dark;
 
   &:hover,
   &:focus {
@@ -100,4 +100,14 @@
 
 a.btn {
   text-decoration: none;
+}
+
+.btn-toolbar .btn-group {
+  .btn {
+    margin-bottom: 6px;
+  }
+
+  & + .btn-group {
+    margin-left: 1em;
+  }
 }

@@ -198,6 +198,8 @@ jsBackend.mediaLibrary.tree = {
         $(this).removeClass('open').addClass('leaf')
       }
     })
+
+    jsBackend.mediaLibrary.tree.toggleJsTreeCollapse()
   },
 
   // before an item will be moved we have to do some checks
@@ -300,6 +302,25 @@ jsBackend.mediaLibrary.tree = {
     }
 
     return $(refNode).prop('id').replace('folder-', '')
+  },
+
+  toggleJsTreeCollapse: function () {
+    $('[data-role="toggle-js-tree-collapse"]').on('click', function () {
+      var $this = $(this)
+      $this.toggleClass('tree-collapsed')
+      var collapsed = $this.hasClass('tree-collapsed')
+      var $buttonText = $('[data-role="toggle-js-tree-collapse-text"]')
+
+      if (collapsed) {
+        $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
+        $.tree.reference('#tree div').close_all()
+
+        return
+      }
+
+      $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
+      $.tree.reference('#tree div').open_all()
+    })
   }
 }
 

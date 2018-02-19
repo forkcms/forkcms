@@ -689,6 +689,22 @@ class Model extends \Common\Core\Model
     }
 
     /**
+     * This returns the identifier for the editor the logged in user prefers to use in forms.
+     *
+     * @return string
+     */
+    public static function getPreferredEditor(): string
+    {
+        $defaultPreferredEditor = self::getContainer()->getParameter('fork.form.default_preferred_editor');
+
+        if (!Authentication::isLoggedIn()) {
+            return $defaultPreferredEditor;
+        }
+
+        return Authentication::getUser()->getSetting('preferred_editor', $defaultPreferredEditor);
+    }
+
+    /**
      * @param string $module
      *
      * @return int

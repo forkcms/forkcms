@@ -48,7 +48,7 @@ var jsBackend =
       jsBackend.messages.init()
       jsBackend.tooltip.init()
       jsBackend.tableSequenceByDragAndDrop.init()
-      jsBackend.ckeditor.init()
+      if (jsData.Core.preferred_editor === 'ck-editor') jsBackend.ckeditor.init()
       jsBackend.resizeFunctions.init()
       jsBackend.navigation.init()
 
@@ -437,13 +437,7 @@ jsBackend.ckeditor = {
     $('textarea.inputEditor, textarea.inputEditorError').ckeditor(jsBackend.ckeditor.callback, editorConfig)
   },
 
-  callback: function (element) {
-    // add the CKFinder
-    CKFinder.setupCKEditor(null,
-      {
-        basePath: '/src/Backend/Core/Js/ckfinder',
-        width: 800
-      })
+  callback: function () {
   },
 
   checkContent: function (evt) {
@@ -480,60 +474,6 @@ jsBackend.ckeditor = {
     var dialogDefinition = evt.data.definition
     var infoTab = ''
 
-    // specific stuff for the image-dialog
-    if (evt.data.name === 'image') {
-      // remove the advanced tab because it is confusing fo the end-user
-      dialogDefinition.removeContents('advanced')
-
-      // remove the upload tab because we like our users to think about the place of their images
-      dialogDefinition.removeContents('Upload')
-
-      // remove the Link tab because there is no point of using two interfaces for the same outcome
-      dialogDefinition.removeContents('Link')
-
-      // get the info tab
-      infoTab = dialogDefinition.getContents('info')
-
-      // remove fields we don't want to use, because they will mess up the layout
-      infoTab.remove('txtBorder')
-      infoTab.remove('txtHSpace')
-      infoTab.remove('txtVSpace')
-      infoTab.remove('txtBorder')
-      infoTab.remove('cmbAlign')
-    }
-
-    // specific stuff for the link-dialog
-    if (evt.data.name === 'link') {
-      // remove the advanced tab because it is confusing fo the end-user
-      dialogDefinition.removeContents('advanced')
-
-      // remove the upload tab because we like our users to think about the place of their images
-      dialogDefinition.removeContents('upload')
-
-      // get the info tab
-      infoTab = dialogDefinition.getContents('info')
-
-      // add a new element
-      infoTab.add({
-        type: 'vbox',
-        id: 'localPageOptions',
-        children: [
-          {
-            type: 'select',
-            label: jsBackend.locale.msg('EditorSelectInternalPage'),
-            id: 'localPage',
-            title: jsBackend.locale.msg('EditorSelectInternalPage'),
-            items: linkList,
-            onChange: function (evt) {
-              CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('')
-              CKEDITOR.dialog.getCurrent().getContentElement('info', 'linkType').setValue('url')
-              CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value)
-            }
-          }
-        ]
-      })
-    }
-
     // specific stuff for the table-dialog
     if (evt.data.name === 'table') {
       // remove the advanced tab because it is confusing fo the end-user
@@ -550,6 +490,30 @@ jsBackend.ckeditor = {
 
       // set a beter default for the width
       infoTab.get('txtWidth')['default'] = '100%'
+    }
+
+    if (evt.data.name === 'oembed') {
+      debugger
+
+      dialogDefinition.getContents('general').elements.splice(
+        2,
+        0,
+        {
+          type: 'button',
+          id: 'browseServer',
+          label: 'Browse Server',
+          onClick: function () {
+            var editor = this.getDialog().getParentEditor()
+            editor.popup(window.location.origin + jsData.MediaLibrary.browseActionVideos, 800, 800)
+
+            window.onmessage = function (event) {
+              if (event.data) {
+                this.setValueOf('general', 'embedCode', event.data)
+              }
+            }.bind(this.getDialog())
+          },
+          style: 'margin-top: 20px;'
+        })
     }
   },
 
@@ -588,7 +552,6 @@ jsBackend.controls = {
     jsBackend.controls.bindRadioButtonFieldCombo()
     jsBackend.controls.bindConfirm()
     jsBackend.controls.bindFakeDropdown()
-    jsBackend.controls.bindFullWidthSwitch()
     jsBackend.controls.bindMassCheckbox()
     jsBackend.controls.bindMassAction()
     jsBackend.controls.bindPasswordGenerator()
@@ -808,36 +771,6 @@ jsBackend.controls = {
         $(id).show('blind', {}, 'fast')
       }
     })
-  },
-
-  // toggle between full width and sidebar-layout
-  bindFullWidthSwitch: function () {
-    // variables
-    var $fullwidthSwitchLink = $('#fullwidthSwitch a')
-    var $fullwidthSwitch = $fullwidthSwitchLink.parent()
-
-    $fullwidthSwitchLink.toggle(
-      function (e) {
-        // prevent default behaviour
-        e.preventDefault()
-
-        // add class
-        $fullwidthSwitch.addClass('collapsed')
-
-        // toggle
-        $('#subnavigation, #pagesTree').fadeOut(250)
-      },
-      function (e) {
-        // Stuff to do every *even* time the element is clicked
-        e.preventDefault()
-
-        // remove class
-        $fullwidthSwitch.removeClass('collapsed')
-
-        // toggle
-        $('#subnavigation, #pagesTree').fadeIn(500)
-      }
-    )
   },
 
   // bind confirm message
@@ -1950,7 +1883,7 @@ jsBackend.tableSequenceByDragAndDrop = {
           placeholder: 'dragAndDropPlaceholder',
           forcePlaceholderSize: true,
           stop: function (e, ui) {
-            jsBackend.tableSequenceByDragAndDrop.saveNewSequence($(this))
+            jsBackend.tableSequenceByDragAndDrop.saveNewSequence($(this).closest('table.jsDataGrid'))
           }
         }
       )
@@ -1959,6 +1892,8 @@ jsBackend.tableSequenceByDragAndDrop = {
         var $this = $(this)
         var $row = $this.closest('tr')
         var direction = $this.data('direction')
+
+        e.preventDefault()
 
         if (direction === 'up') {
           $row.prev().insertAfter($row)
@@ -1972,15 +1907,15 @@ jsBackend.tableSequenceByDragAndDrop = {
   },
 
   saveNewSequence: function ($table) {
-    var action = (typeof $table.parents('table.jsDataGrid').data('action') === 'undefined') ? 'Sequence' : $table.parents('table.jsDataGrid').data('action').toString()
-    var module = (typeof $table.parents('table.jsDataGrid').data('module') === 'undefined') ? jsBackend.current.module : $table.parents('table.jsDataGrid').data('module').toString()
+    var action = (typeof $table.data('action') === 'undefined') ? 'Sequence' : $table.data('action').toString()
+    var module = (typeof $table.data('module') === 'undefined') ? jsBackend.current.module : $table.data('module').toString()
     var extraParams = {}
-    var $rows = $table.find('tr')
+    var $rows = $table.find('tr[id*=row-]')
     var newIdSequence = []
 
     // fetch extra params
-    if (typeof $table.parents('table.jsDataGrid').data('extra-params') !== 'undefined') {
-      extraParams = $table.parents('table.jsDataGrid').data('extra-params')
+    if (typeof $table.data('extra-params') !== 'undefined') {
+      extraParams = $table.data('extra-params')
 
       // we convert the unvalid {'key':'value'} to the valid {"key":"value"}
       extraParams = extraParams.replace(/'/g, '"')
@@ -2039,7 +1974,7 @@ window.requestAnimationFrame = (function () {
   var lastTime
   lastTime = 0
   return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback,
-                                                                                                                                                                                              element) {
+                                                                                                                                                                                               element) {
     var curTime, id, timeToCall
     curTime = new Date().getTime()
     timeToCall = Math.max(0, 16 - (curTime - lastTime))

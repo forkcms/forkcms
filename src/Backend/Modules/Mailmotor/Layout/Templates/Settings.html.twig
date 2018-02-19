@@ -6,9 +6,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
           {{ 'lbl.Settings'|trans|capitalize }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           {{ form_row(form.mailEngine) }}
@@ -42,7 +42,7 @@
       <div class="col-md-12">
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
-            <button id="save" type="submit" name="save" class="btn btn-primary">{{ 'lbl.Save'|trans|capitalize }}</button>
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"save", "name":"save"} ) }}
           </div>
         </div>
       </div>
