@@ -56,6 +56,13 @@ class Index extends FrontendBaseBlock
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
         }
+
+        // Add map url to every item
+        foreach ($this->items as &$item) {
+            $itemSettings = FrontendLocationModel::getMapSettings($item['id']);
+            $item['map_url'] = FrontendLocationModel::buildUrl($this->settings, [$item]);
+            $item['add_map_link_to_address'] = $itemSettings['add_map_link_to_address'];
+        }
     }
 
     private function parse(): void
