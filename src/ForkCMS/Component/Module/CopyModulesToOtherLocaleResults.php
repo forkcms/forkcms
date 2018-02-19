@@ -21,7 +21,7 @@ final class CopyModulesToOtherLocaleResults
         return $this->getNewId($this->moduleExtraIdMap, $moduleName, $id);
     }
 
-    public function getModuleExtraIds(string $moduleName)
+    public function getModuleExtraIds(string $moduleName): array
     {
         return $this->getNewIds($this->moduleExtraIdMap, $moduleName);
     }
@@ -31,7 +31,7 @@ final class CopyModulesToOtherLocaleResults
         return $this->getNewId($this->idMap, $moduleName, $id);
     }
 
-    public function getIds(string $moduleName)
+    public function getIds(string $moduleName): array
     {
         return $this->getNewIds($this->idMap, $moduleName);
     }
