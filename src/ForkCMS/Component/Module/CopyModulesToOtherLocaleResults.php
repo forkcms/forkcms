@@ -16,6 +16,12 @@ final class CopyModulesToOtherLocaleResults
         $this->moduleExtraIdMap[$moduleName] = $moduleExtraIdMap;
     }
 
+    /**
+     * @param string $moduleName
+     * @param mixed $id
+     * @return mixed - The new id
+     * @throws \Exception
+     */
     public function getModuleExtraId(string $moduleName, $id)
     {
         return $this->getNewId($this->moduleExtraIdMap, $moduleName, $id);
@@ -26,6 +32,12 @@ final class CopyModulesToOtherLocaleResults
         return $this->getNewIds($this->moduleExtraIdMap, $moduleName);
     }
 
+    /**
+     * @param string $moduleName
+     * @param mixed $id
+     * @return mixed - The new id
+     * @throws \Exception
+     */
     public function getId(string $moduleName, $id)
     {
         return $this->getNewId($this->idMap, $moduleName, $id);
@@ -36,6 +48,13 @@ final class CopyModulesToOtherLocaleResults
         return $this->getNewIds($this->idMap, $moduleName);
     }
 
+    /**
+     * @param array $map
+     * @param string $moduleName
+     * @param mixed $id
+     * @return mixed - The new id
+     * @throws \Exception
+     */
     private function getNewId(array $map, string $moduleName, $id)
     {
         if (!array_key_exists($moduleName, $map)) {

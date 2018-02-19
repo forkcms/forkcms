@@ -67,17 +67,17 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     }
 
     /**
-     * @param mixed $oldExtraId
-     * @return mixed
+     * @param mixed $oldModuleExtraId
+     * @return mixed - New ModuleExtra id
      * @throws \Exception
      */
-    public function getModuleExtraId($oldExtraId)
+    public function getModuleExtraId($oldModuleExtraId)
     {
-        if (!array_key_exists($oldExtraId, $this->moduleExtraIdMap)) {
+        if (!array_key_exists($oldModuleExtraId, $this->moduleExtraIdMap)) {
             throw new Exception('No new extra id found for the given old extra id.');
         }
 
-        return $this->moduleExtraIdMap[$oldExtraId];
+        return $this->moduleExtraIdMap[$oldModuleExtraId];
     }
 
     public function getModuleExtraIdMap(): array
@@ -112,12 +112,12 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     }
 
     /**
-     * @param mixed $oldId
-     * @param mixed $newId
+     * @param mixed $oldModuleExtraId
+     * @param mixed $newModuleExtraId
      */
-    public function setModuleExtraId($oldId, $newId): void
+    public function setModuleExtraId($oldModuleExtraId, $newModuleExtraId): void
     {
-        $this->moduleExtraIdMap[$oldId] = $newId;
+        $this->moduleExtraIdMap[$oldModuleExtraId] = $newModuleExtraId;
     }
 
     public function setPriority(int $priority): void
