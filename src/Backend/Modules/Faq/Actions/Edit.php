@@ -45,7 +45,7 @@ class Edit extends BackendBaseActionEdit
 
     private function getData(): void
     {
-        $this->record = (array) BackendFaqModel::get($this->id);
+        $this->record = BackendFaqModel::get($this->id);
         $this->feedback = BackendFaqModel::getAllFeedbackForQuestion($this->id);
     }
 

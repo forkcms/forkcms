@@ -21,11 +21,11 @@ class LoadBlogPosts
         $categoryId = $database->getVar(
             'SELECT id
              FROM blog_categories
-             WHERE title = :title AND language = :language
+             WHERE title = :title AND locale = :locale
              LIMIT 1',
             [
                 'title' => 'BlogCategory for tests',
-                'language' => 'en',
+                'locale' => 'en',
             ]
         );
 
