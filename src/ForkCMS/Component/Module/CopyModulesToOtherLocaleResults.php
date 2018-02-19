@@ -2,6 +2,8 @@
 
 namespace ForkCMS\Component\Module;
 
+use ForkCMS\Component\Module\Exception\CopyModuleToOtherLocaleNotFound;
+
 final class CopyModulesToOtherLocaleResults
 {
     /** @var array */
@@ -58,15 +60,11 @@ final class CopyModulesToOtherLocaleResults
     private function getNewId(array $map, string $moduleName, $id)
     {
         if (!array_key_exists($moduleName, $map)) {
-            throw new \Exception(
-                'The module "' . $moduleName . '" has not yet been copied or is not installed.
-                 You should increase the priority, if you want it to be executed before this handler.
-                 Then you can access eventual ids.'
-            );
+            throw CopyModuleToOtherLocaleNotFound::forModule($moduleName);
         }
 
         if (!array_key_exists($id, $map[$moduleName])) {
-            throw new \Exception('The id doesn\'t exist in the map.');
+            throw CopyModuleToOtherLocaleNotFound::forId($moduleName, $id);
         }
 
         return $map[$moduleName][$id];
