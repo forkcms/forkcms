@@ -18,25 +18,25 @@ final class CopyModulesToOtherLocaleResults
 
     public function getModuleExtraId(string $moduleName, $id)
     {
-        return $this->getValue($this->moduleExtraIdMap, $moduleName, $id);
+        return $this->getNewId($this->moduleExtraIdMap, $moduleName, $id);
     }
 
     public function getModuleExtraIds(string $moduleName)
     {
-        return $this->getValues($this->moduleExtraIdMap, $moduleName);
+        return $this->getNewIds($this->moduleExtraIdMap, $moduleName);
     }
 
     public function getId(string $moduleName, $id)
     {
-        return $this->getValue($this->idMap, $moduleName, $id);
+        return $this->getNewId($this->idMap, $moduleName, $id);
     }
 
     public function getIds(string $moduleName)
     {
-        return $this->getValues($this->idMap, $moduleName);
+        return $this->getNewIds($this->idMap, $moduleName);
     }
 
-    private function getValue(array $map, string $moduleName, $id)
+    private function getNewId(array $map, string $moduleName, $id)
     {
         if (!array_key_exists($moduleName, $map)) {
             throw new \Exception(
@@ -53,7 +53,7 @@ final class CopyModulesToOtherLocaleResults
         return $map[$moduleName][$id];
     }
 
-    private function getValues(array $map, string $moduleName): array
+    private function getNewIds(array $map, string $moduleName): array
     {
         if (!array_key_exists($moduleName, $map)) {
             return [];
