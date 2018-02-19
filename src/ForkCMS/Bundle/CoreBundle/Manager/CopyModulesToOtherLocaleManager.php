@@ -13,7 +13,7 @@ final class CopyModulesToOtherLocaleManager
     private $commandBus;
 
     /** @var array */
-    private $moduleCommands = [];
+    private $copyModuleToOtherLocaleCommands = [];
 
     public function __construct(MessageBusSupportingMiddleware $commandBus)
     {
@@ -22,16 +22,16 @@ final class CopyModulesToOtherLocaleManager
 
     public function addModule(CopyModuleToOtherLocaleInterface $moduleCommand): void
     {
-        $this->moduleCommands[] = $moduleCommand;
+        $this->copyModuleToOtherLocaleCommands[] = $moduleCommand;
     }
 
     public function copy(Locale $fromLocale, Locale $toLocale): void
     {
         $results = new CopyModulesToOtherLocaleResults();
-        $moduleCommands = $this->getModuleCommandsOrderedByPriority();
+        $copyModuleToOtherLocaleCommands = $this->getModuleCommandsOrderedByPriority();
 
         /** @var CopyModuleToOtherLocaleInterface $moduleCommand */
-        foreach ($moduleCommands as $moduleCommand) {
+        foreach ($copyModuleToOtherLocaleCommands as $moduleCommand) {
             // We set the previous results, so they are accessible.
             $moduleCommand->prepareForCopy($fromLocale, $toLocale, $results);
 
@@ -39,21 +39,21 @@ final class CopyModulesToOtherLocaleManager
             $this->commandBus->handle($moduleCommand);
 
             // Save results to be accessible in future commands
-            $results->add($moduleCommand->getModuleName(), $moduleCommand->getIdMap(), $moduleCommand->getExtraIdMap());
+            $results->add($moduleCommand->getModuleName(), $moduleCommand->getIdMap(), $moduleCommand->getModuleExtraIdMap());
         }
     }
 
     private function getModuleCommandsOrderedByPriority(): array
     {
-        $moduleCommands = $this->moduleCommands;
+        $copyModuleToOtherLocaleCommands = $this->copyModuleToOtherLocaleCommands;
 
         usort(
-            $moduleCommands,
+            $copyModuleToOtherLocaleCommands,
             function (CopyModuleToOtherLocaleInterface $moduleCommand1, CopyModuleToOtherLocaleInterface $moduleCommand2) {
                 return $moduleCommand1->getPriority() > $moduleCommand2->getPriority();
             }
         );
 
-        return $moduleCommands;
+        return $copyModuleToOtherLocaleCommands;
     }
 }
