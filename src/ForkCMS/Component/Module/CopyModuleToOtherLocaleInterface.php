@@ -6,7 +6,6 @@ use Common\Locale;
 
 interface CopyModuleToOtherLocaleInterface
 {
-    public function comparePriority(CopyModuleToOtherLocaleInterface $command);
     public function getFromLocale(): Locale;
 
     /**

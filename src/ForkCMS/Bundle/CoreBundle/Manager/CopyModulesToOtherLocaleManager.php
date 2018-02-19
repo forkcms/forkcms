@@ -50,7 +50,7 @@ final class CopyModulesToOtherLocaleManager
         usort(
             $moduleCommands,
             function (CopyModuleToOtherLocaleInterface $moduleCommand1, CopyModuleToOtherLocaleInterface $moduleCommand2) {
-                return $moduleCommand1->comparePriority($moduleCommand2);
+                return $moduleCommand1->getPriority() > $moduleCommand2->getPriority();
             }
         );
 
