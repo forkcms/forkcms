@@ -14,6 +14,14 @@
         <translation language="es"><![CDATA[La dirección no pudo ser convertida en coordenadas.]]></translation>
         <translation language="el"><![CDATA[Δεν έγινε δυνατό η διεύθυνση να μετατραπεί σε συντεταγμένες.]]></translation>
       </item>
+      <item type="message" name="AddMapLinkToAddress">
+        <translation language="nl"><![CDATA[Voeg een link naar Google Maps toe onder het adres]]></translation>
+        <translation language="en"><![CDATA[Add a link to Google Maps below the address]]></translation>
+        <translation language="ru"><![CDATA[Добавить ссылку на Google Карты ниже адреса]]></translation>
+        <translation language="el"><![CDATA[Προσθέστε έναν σύνδεσμο στους Χάρτες Google κάτω από τη διεύθυνση]]></translation>
+        <translation language="zh"><![CDATA[在地址下方添加一个链接到Google地图]]></translation>
+        <translation language="de"><![CDATA[Fügen Sie unter der Adresse einen Link zu Google Maps hinzu]]></translation>
+      </item>
       <item type="label" name="AddToMap">
         <translation language="nl"><![CDATA[aan kaart toevoegen]]></translation>
         <translation language="en"><![CDATA[add to map]]></translation>

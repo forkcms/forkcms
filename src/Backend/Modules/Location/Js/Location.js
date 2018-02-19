@@ -102,6 +102,7 @@ jsBackend.location = {
 
     jsBackend.location.showDirections = ($('#directions').attr('checked') === 'checked')
     jsBackend.location.showLink = ($('#fullUrl').attr('checked') === 'checked')
+    jsBackend.location.addMapLinkToAddress = ($('#addMapLinkToAddress').attr('checked') === 'checked')
     jsBackend.location.showOverview = ($('#markerOverview').attr('checked') === 'checked')
   },
 
@@ -157,6 +158,7 @@ jsBackend.location = {
         width: jsBackend.location.width,
         id: jsBackend.location.mapId,
         link: jsBackend.location.showLink,
+        addMapLinkToAddress: jsBackend.location.addMapLinkToAddress,
         directions: jsBackend.location.showDirections,
         showOverview: jsBackend.location.showOverview
       },
