@@ -18,10 +18,10 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     /** @var Locale */
     private $toLocale;
 
-    /** @var array - Will be used to convert old ids to new ones if used in other places */
+    /** @var array - Will be used to convert old ids to new ones. Can be used in other places */
     private $idMap;
 
-    /** @var array - Will be used to convert old module-extra ids to new ones if used in other places */
+    /** @var array - Will be used to convert old module-extra ids to new ones. Can be used in other places */
     private $moduleExtraIdMap;
 
     /** @var CopyModulesToOtherLocaleResults */
