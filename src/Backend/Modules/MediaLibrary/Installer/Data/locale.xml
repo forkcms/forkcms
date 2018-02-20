@@ -7,10 +7,38 @@
         <translation language="nl"><![CDATA[bestanden toevoegen]]></translation>
         <translation language="ru"><![CDATA[добавить медиа]]></translation>
       </item>
+      <item type="label" name="MoveLeft">
+        <translation language="en"><![CDATA[move left]]></translation>
+        <translation language="nl"><![CDATA[verplaats naar links]]></translation>
+      </item>
+      <item type="label" name="MoveRight">
+        <translation language="en"><![CDATA[move right]]></translation>
+        <translation language="nl"><![CDATA[verplaats naar rechts]]></translation>
+      </item>
+      <item type="label" name="MoveUp">
+        <translation language="en"><![CDATA[move up]]></translation>
+        <translation language="nl"><![CDATA[verplaats naar boven]]></translation>
+      </item>
+      <item type="label" name="MoveDown">
+        <translation language="en"><![CDATA[move down]]></translation>
+        <translation language="nl"><![CDATA[verplaats naar beneden]]></translation>
+      </item>
+      <item type="label" name="FlipHorizontal">
+        <translation language="en"><![CDATA[flip horizontal]]></translation>
+        <translation language="nl"><![CDATA[draai horizontaal om]]></translation>
+      </item>
+      <item type="label" name="FlipVertical">
+        <translation language="en"><![CDATA[flip vertical]]></translation>
+        <translation language="nl"><![CDATA[draai vertikaal om]]></translation>
+      </item>
       <item type="message" name="ChooseTypeForNewGroup">
         <translation language="en"><![CDATA[with the following type:]]></translation>
         <translation language="nl"><![CDATA[van het volgende type:]]></translation>
         <translation language="ru"><![CDATA[со следующим типом:]]></translation>
+      </item>
+      <item type="message" name="IfYouWantToCropAnImageYouShouldCheckThisCheckboxFirst">
+        <translation language="en"><![CDATA[If you want to crop an image you should check this checkbox first]]></translation>
+        <translation language="nl"><![CDATA[Als je een afbeelding wilt croppen moet je deze checkbox eerst aanvinken]]></translation>
       </item>
       <item type="label" name="DropFilesHere">
         <translation language="en"><![CDATA[drop files here]]></translation>

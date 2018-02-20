@@ -95,6 +95,9 @@ class Model
         );
     }
 
+    /**
+     * @deprecated We don't use this method anymore apparently
+     */
     public static function createHtml(
         string $navigationType = 'page',
         int $depth = 0,
@@ -864,6 +867,52 @@ class Model
         return $html;
     }
 
+    private static function pageIsChildOfParent(array $navigation, int $childId, int $parentId): bool
+    {
+        if (isset($navigation['page'][$parentId]) && !empty($navigation['page'][$parentId])) {
+            foreach ($navigation['page'][$parentId] as $page) {
+                if ($page['page_id'] === $childId) {
+                    return true;
+                }
+
+                if (self::pageIsChildOfParent($navigation, $childId, $page['page_id'])) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static function getTreeNameForPageId(int $pageId): ?string
+    {
+        $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
+
+        if ($pageId === BackendModel::HOME_PAGE_ID || self::pageIsChildOfParent($navigation, $pageId, BackendModel::HOME_PAGE_ID)) {
+            return 'main';
+        }
+
+        $treeNames = ['footer', 'root'];
+
+        // only show meta if needed
+        if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
+            $treeNames[] = 'meta';
+        }
+
+        foreach ($treeNames as $treeName) {
+            if (isset($navigation[$treeName][0]) && !empty($navigation[$treeName][0])) {
+                // loop the items
+                foreach ($navigation[$treeName][0] as $page) {
+                    if ($pageId === $page['page_id'] || self::pageIsChildOfParent($navigation, $pageId, $page['page_id'])) {
+                        return $treeName;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     public static function getTypes(): array
     {
         return [
@@ -1054,6 +1103,12 @@ class Model
         $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, self::POSSIBLE_TYPES_OF_DROP, self::TYPE_OF_DROP_INSIDE);
         $tree = \SpoonFilter::getValue($tree, ['main', 'meta', 'footer', 'root'], 'root');
         $language = $language ?? BL::getWorkingLanguage();
+
+        // When dropping on the main navigation it should be added as a child of the home page
+        if ($tree === 'main' && $droppedOnPageId === 0) {
+            $droppedOnPageId = BackendModel::HOME_PAGE_ID;
+            $typeOfDrop = self::TYPE_OF_DROP_INSIDE;
+        }
 
         // reset type of drop for special pages
         if ($droppedOnPageId === BackendModel::HOME_PAGE_ID || $droppedOnPageId === self::NO_PARENT_PAGE_ID) {

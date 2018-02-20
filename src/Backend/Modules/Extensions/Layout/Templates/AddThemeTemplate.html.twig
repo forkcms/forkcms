@@ -10,7 +10,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <p>{{ 'lbl.Template'|trans|ucfirst }}</p>
+          <h2>{{ 'lbl.Template'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-inline form-group">
@@ -41,7 +41,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h2>
         </div>
         <div id="positions" class="panel-body">
           {% for position in positions %}
@@ -120,9 +120,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             <label for="format" class="control-label">{{ 'lbl.Layout'|trans|ucfirst }}</label>
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="row">
@@ -146,7 +146,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -167,9 +167,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" name="add" class="btn btn-primary" type="submit">
-            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
         </div>
       </div>
     </div>

@@ -14,12 +14,26 @@
       </div>
       <div class="form-group">
         <label for="expirationDate" class="control-label">{{ 'lbl.ExpiresOn'|trans|ucfirst }}:</label>
-        <div class="form-inline">
-          <div class="form-group">
-            {% form_field expiration_date %} {% form_field_error expiration_date %}
+        <div class="row">
+          <div class="col-md-6 col-lg-3">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+                <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
+              </span>
+              {% form_field expiration_date %}
+            </div>
+            {% form_field_error expiration_date %}
           </div>
-          <div class="form-group">
-            {% form_field expiration_time %} {% form_field_error expiration_time %}
+          <div class="col-md-6 col-lg-3">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+                <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
+              </span>
+              {% form_field expiration_time %}
+            </div>
+            {% form_field_error expiration_time %}
           </div>
         </div>
       </div>
@@ -32,9 +46,7 @@
           {{ macro.cancelButton(geturl('Edit') ~ '&id=' ~ id ~ "#tabGroups") }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            {{ macro.icon('plus-square') }}{{ 'lbl.Add'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"addButton", "name":"add" }) }}
         </div>
       </div>
     </div>

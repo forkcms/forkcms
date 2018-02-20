@@ -1,5 +1,6 @@
 imports:
     - { resource: console.yml }
+    - { resource: form.yml }
     - { resource: parameters_install.yml }
     - { resource: doctrine.yml }
 
