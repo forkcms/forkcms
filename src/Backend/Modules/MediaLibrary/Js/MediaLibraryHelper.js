@@ -502,6 +502,22 @@ jsBackend.mediaLibraryHelper.group = {
     })
   },
 
+  getMediaItemForId: function(mediaId) {
+    var foundMediaItem = false
+
+    $.each(media, function(index, mediaFolder) {
+        $.each(mediaFolder, function(index, mediaItem) {
+            if (mediaItem.id === mediaId) {
+                foundMediaItem = mediaItem
+
+                return false;
+            }
+        })
+    })
+
+    return foundMediaItem
+  },
+
   /**
    * @param {int} groupId
    * @returns {*|jQuery|HTMLElement}
@@ -776,6 +792,13 @@ jsBackend.mediaLibraryHelper.group = {
       }
     })
 
+    // bind click to duplicate media item
+    $('[data-role=media-library-duplicate-and-crop]').on('click', function () {
+      var mediaItemToDuplicate = jsBackend.mediaLibraryHelper.group.getMediaItemForId($(this).data('media-id'));
+
+      jsBackend.mediaLibraryHelper.duplicator.init(mediaItemToDuplicate);
+    })
+
     // select the correct folder
     jsBackend.mediaLibraryHelper.group.updateFolderSelected()
   }
@@ -849,6 +872,10 @@ jsBackend.mediaLibraryHelper.cropper = {
     }
 
     jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, sourceCanvas, targetCanvas, readyCallback)
+  },
+
+  enableCropper: function () {
+    $('[data-role="enable-cropper-checkbox"]').attr('checked', true);
   },
 
   initSourceAndTargetCanvas: function ($dialog, sourceCanvas, targetCanvas) {
@@ -1063,6 +1090,46 @@ jsBackend.mediaLibraryHelper.cropper = {
       'click.media-library-cropper.move',
       jsBackend.mediaLibraryHelper.cropper.getMoveEventFunction()
     )
+  }
+}
+
+/**
+ * All methods related to duplicating an existing media item
+ * which also show the crop tool in the process
+ * global: jsBackend
+ */
+jsBackend.mediaLibraryHelper.duplicator = {
+  init: function(mediaItemToDuplicate) {
+    if (!mediaItemToDuplicate) {
+      return;
+    }
+
+    // create canvas
+    var canvas = document.createElement('canvas')
+    var context = canvas.getContext('2d')
+    canvas.height = mediaItemToDuplicate.height
+    canvas.width = mediaItemToDuplicate.width
+
+    // create image
+    var image = new Image();
+    image.onload = function () {
+      context.drawImage(this, 0, 0)
+
+      // enable cropper
+      jsBackend.mediaLibraryHelper.cropper.enableCropper();
+
+      // switch from "library"-tab to "upload"-tab
+      $('.nav-tabs a[href="#tabUploadMedia"]').tab('show')
+
+      // let FineUploader handle the file
+      var splittedUrl = mediaItemToDuplicate.url.split('.');
+      $('#fine-uploader-gallery').fineUploader('addFiles', [{
+        'canvas': canvas,
+        'name': splittedUrl[0] + '-2.' + splittedUrl[1],
+        'mime': mediaItemToDuplicate.mime
+      }])
+    }
+    image.src = mediaItemToDuplicate.source
   }
 }
 
@@ -1468,6 +1535,15 @@ jsBackend.mediaLibraryHelper.templates = {
 
     html += '<td class="url">' + mediaItem.url + '</td>'
     html += '<td class="title">' + mediaItem.title + '</td>'
+
+    if (mediaItem.type === 'image') {
+        html += '<td class="duplicate">'
+        html += '<button type="button" data-media-id="' + mediaItem.id + '" data-role="media-library-duplicate-and-crop" class="btn btn-primary" title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaItemDuplicate')) + '">'
+        html += '<span class="fa fa-copy" aria-hidden="true"></span>'
+        html += '</button>'
+        html += '</td>'
+    }
+
     html += '</tr>'
 
     return html
