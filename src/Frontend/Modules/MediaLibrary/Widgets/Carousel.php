@@ -9,9 +9,7 @@ use Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
  */
 class Carousel extends FrontendMediaWidget
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $imageImagineFilter = 'media_library_slider_pano';
 
     public function execute(): void
