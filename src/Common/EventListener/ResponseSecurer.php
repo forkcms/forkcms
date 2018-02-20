@@ -16,6 +16,7 @@ class ResponseSecurer
     {
         $headers = [
             'X-Frame-Options' => 'deny',
+            'referrer' => 'strict-origin-when-cross-origin',
             'X-XSS-Protection' => '1; mode=block',
             'X-Content-Type-Options' => 'nosniff',
         ];
