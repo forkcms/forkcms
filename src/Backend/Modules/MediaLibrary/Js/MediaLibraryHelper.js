@@ -506,13 +506,13 @@ jsBackend.mediaLibraryHelper.group = {
     var foundMediaItem = false
 
     $.each(media, function(index, mediaFolder) {
-        $.each(mediaFolder, function(index, mediaItem) {
-            if (mediaItem.id === mediaId) {
-                foundMediaItem = mediaItem
+      $.each(mediaFolder, function(index, mediaItem) {
+        if (mediaItem.id === mediaId) {
+          foundMediaItem = mediaItem
 
-                return false;
-            }
-        })
+          return false;
+        }
+      })
     })
 
     return foundMediaItem
