@@ -810,10 +810,9 @@ jsBackend.mediaLibraryHelper.cropper = {
   scaleY: 1,
   scaleX: 1,
 
-  passToCropper: function (sourceCanvas, targetCanvas, resolve, reject) {
+  passToCropper: function (resizeInfo, resolve, reject) {
     jsBackend.mediaLibraryHelper.cropper.cropperQueue.push({
-      'sourceCanvas': sourceCanvas,
-      'targetCanvas': targetCanvas,
+      'resizeInfo': resizeInfo,
       'resolve': resolve,
       'reject': reject
     })
@@ -843,8 +842,7 @@ jsBackend.mediaLibraryHelper.cropper = {
     var nextQueuedImage = jsBackend.mediaLibraryHelper.cropper.cropperQueue.shift()
     jsBackend.mediaLibraryHelper.cropper.crop(
       $dialog,
-      nextQueuedImage.sourceCanvas,
-      nextQueuedImage.targetCanvas,
+      nextQueuedImage.resizeInfo,
       nextQueuedImage.resolve,
       nextQueuedImage.reject
     )
@@ -855,12 +853,12 @@ jsBackend.mediaLibraryHelper.cropper = {
     jsBackend.mediaLibraryHelper.cropper.scaleY = 1;
   },
 
-  crop: function ($dialog, sourceCanvas, targetCanvas, resolve, reject) {
-    jsBackend.mediaLibraryHelper.cropper.attachEvents($dialog, resolve, reject, sourceCanvas, targetCanvas)
+  crop: function ($dialog, resizeInfo, resolve, reject) {
+    jsBackend.mediaLibraryHelper.cropper.attachEvents($dialog, resolve, reject, resizeInfo)
     jsBackend.mediaLibraryHelper.cropper.initSourceAndTargetCanvas(
       $dialog,
-      sourceCanvas,
-      targetCanvas
+      resizeInfo.sourceCanvas,
+      resizeInfo.targetCanvas
     )
 
     jsBackend.mediaLibraryHelper.cropper.resetScaleSettings()
@@ -868,10 +866,10 @@ jsBackend.mediaLibraryHelper.cropper = {
     var readyCallback
     // if we don't want to show the cropper we just crop without showing it
     if (!$('[data-role="enable-cropper-checkbox"]').is(':checked')) {
-      readyCallback = jsBackend.mediaLibraryHelper.cropper.getCropEventFunction($dialog, sourceCanvas, targetCanvas, resolve)
+      readyCallback = jsBackend.mediaLibraryHelper.cropper.getCropEventFunction($dialog, resizeInfo, resolve)
     }
 
-    jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, sourceCanvas, targetCanvas, readyCallback)
+    jsBackend.mediaLibraryHelper.cropper.initCropper($dialog, resizeInfo, readyCallback)
   },
 
   enableCropper: function () {
@@ -886,8 +884,8 @@ jsBackend.mediaLibraryHelper.cropper = {
     $dialog.find('[data-role=media-library-cropper-dialog-canvas-wrapper]').empty().append(sourceCanvas)
   },
 
-  initCropper: function ($dialog, sourceCanvas, targetCanvas, readyCallback) {
-    $(sourceCanvas)
+  initCropper: function ($dialog, resizeInfo, readyCallback) {
+    $(resizeInfo.sourceCanvas)
     .addClass('img-responsive')
     .cropper(jsBackend.mediaLibraryHelper.cropper.getCropperConfig(readyCallback))
   },
@@ -949,7 +947,7 @@ jsBackend.mediaLibraryHelper.cropper = {
     $dialog.find('[data-role=media-library-cropper-modal]').removeClass('hidden')
   },
 
-  getCloseEventFunction: function ($dialog, sourceCanvas, targetCanvas, reject) {
+  getCloseEventFunction: function ($dialog, resizeInfo, reject) {
     return function () {
       $dialog.off('hidden.bs.modal.media-library-cropper.close')
 
@@ -959,9 +957,9 @@ jsBackend.mediaLibraryHelper.cropper = {
     }
   },
 
-  getCropEventFunction: function ($dialog, sourceCanvas, targetCanvas, resolve) {
+  getCropEventFunction: function ($dialog, resizeInfo, resolve) {
     return function () {
-      var context = targetCanvas.getContext('2d')
+      var context = resizeInfo.targetCanvas.getContext('2d')
       var $cropper = $('[data-role=media-library-cropper-dialog-canvas-wrapper] > canvas')
       var cropBoxData = $cropper.cropper('getCroppedCanvas')
       var zoomTo = 1
@@ -972,14 +970,14 @@ jsBackend.mediaLibraryHelper.cropper = {
       }
 
       // set the correct height and width on the target canvas
-      targetCanvas.height = Math.round(cropBoxData.height * zoomTo)
-      targetCanvas.width = Math.round(cropBoxData.width * zoomTo)
+      resizeInfo.targetCanvas.height = Math.round(cropBoxData.height * zoomTo)
+      resizeInfo.targetCanvas.width = Math.round(cropBoxData.width * zoomTo)
 
       // make sure we start with a blank slate
-      context.clearRect(0, 0, targetCanvas.width, targetCanvas.height)
+      context.clearRect(0, 0, resizeInfo.targetCanvas.width, resizeInfo.targetCanvas.height)
 
       // add the new crop
-      context.drawImage($cropper.cropper('getCroppedCanvas'), 0, 0, targetCanvas.width, targetCanvas.height)
+      context.drawImage($cropper.cropper('getCroppedCanvas'), 0, 0, resizeInfo.targetCanvas.width, resizeInfo.targetCanvas.height)
 
       $dialog.off('hidden.bs.modal.media-library-cropper.close')
       resolve('Confirm')
@@ -1034,15 +1032,14 @@ jsBackend.mediaLibraryHelper.cropper = {
     }
   },
 
-  attachEvents: function ($dialog, resolve, reject, sourceCanvas, targetCanvas) {
+  attachEvents: function ($dialog, resolve, reject, resizeInfo) {
     $dialog
     .off('hidden.bs.modal.media-library-cropper.close')
     .on(
       'hidden.bs.modal.media-library-cropper.close',
       jsBackend.mediaLibraryHelper.cropper.getCloseEventFunction(
         $dialog,
-        sourceCanvas,
-        targetCanvas,
+        resizeInfo,
         reject
       )
     )
@@ -1053,8 +1050,7 @@ jsBackend.mediaLibraryHelper.cropper = {
       'click.media-library-cropper.crop',
       jsBackend.mediaLibraryHelper.cropper.getCropEventFunction(
         $dialog,
-        sourceCanvas,
-        targetCanvas,
+        resizeInfo,
         resolve
       )
     )
@@ -1261,7 +1257,7 @@ jsBackend.mediaLibraryHelper.upload = {
       ],
       customResizer: function (resizeInfo) {
         return new Promise(function (resolve, reject) {
-          jsBackend.mediaLibraryHelper.cropper.passToCropper(resizeInfo.sourceCanvas, resizeInfo.targetCanvas, resolve, reject)
+          jsBackend.mediaLibraryHelper.cropper.passToCropper(resizeInfo, resolve, reject)
         })
       }
     }
