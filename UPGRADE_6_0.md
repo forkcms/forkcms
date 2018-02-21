@@ -74,7 +74,7 @@ use App\Controller\ForkController as ...;
 
 ### No internal bundles anymore
 
-#### Refactor CoreBundle
+#### Refactor ForkCMSCoreBundle
 
 Before:
 
@@ -100,3 +100,40 @@ After:
 use App\Tests\Service\Validator\UrlValidatorTest as ...
 ```
 
+#### Refactor ForkCMSInstallerBundle
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller as ...
+```
+
+After:
+
+```
+use App\Service\Installer\ForkInstaller as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory as ...
+```
+
+After:
+
+```
+use App\Service\Installer\InstallerConnectionFactory as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Service\RequirementsChecker as ...
+```
+
+After:
+
+```
+use App\Service\Installer\RequirementsChecker as ...
+```

@@ -3,11 +3,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="forkcms.requirements.checker" class="ForkCMS\Bundle\InstallerBundle\Service\RequirementsChecker" public="true">
+        <service id="forkcms.requirements.checker" class="App\Service\Installer\RequirementsChecker" public="true">
             <argument>%kernel.project_dir%/</argument>
         </service>
 
-        <service id="forkcms.installer" class="ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller" public="true">
+        <service id="forkcms.installer" class="App\Service\Installer\ForkInstaller" public="true">
             <argument type="service" id="service_container"/>
         </service>
 

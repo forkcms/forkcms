@@ -41,7 +41,7 @@ monolog:
             level: debug
 
 parameters:
-    doctrine.dbal.connection_factory.class: ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory
+    doctrine.dbal.connection_factory.class: App\Service\Installer\InstallerConnectionFactory
     fork.is_installed: false
     fork.form.theme: "ForkCMSInstallerBundle:Installer:form_theme.html.twig"
 

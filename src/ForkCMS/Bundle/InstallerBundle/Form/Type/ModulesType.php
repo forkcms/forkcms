@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller;
+use App\Service\Installer\ForkInstaller;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Backend\Core\Engine\Model as BackendModel;
 
