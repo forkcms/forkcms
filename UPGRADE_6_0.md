@@ -137,3 +137,28 @@ After:
 ```
 use App\Service\Installer\RequirementsChecker as ...
 ```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Console\CheckRequirementsCommand as ...
+```
+
+After:
+
+```
+use App\Console\Installer\CheckRequirementsCommand as ...
+```
+
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Console\PrepareForReinstallCommand as ...
+```
+
+After:
+
+```
+use App\Console\Installer\PrepareForReinstallCommand as ...
+```

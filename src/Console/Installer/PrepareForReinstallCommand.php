@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Bundle\InstallerBundle\Console;
+namespace App\Console\Installer;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -60,7 +60,7 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
 
     private function removeConfiguration(SymfonyStyle $io): void
     {
-        $fullPath = realpath(__DIR__ . '/../../../../..' . '/app/config/parameters.yml');
+        $fullPath = realpath(__DIR__ . '/../../../../jeroendesloovere-symfony-4' . '/app/config/parameters.yml');
         if (file_exists($fullPath)) {
             unlink($fullPath);
             $io->success('Removed configuration file');

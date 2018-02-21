@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Bundle\InstallerBundle\Console;
+namespace App\Console\Installer;
 
 use ForkCMS\Bundle\InstallerBundle\Requirement\Requirement;
 use ForkCMS\Bundle\InstallerBundle\Requirement\RequirementCategory;
