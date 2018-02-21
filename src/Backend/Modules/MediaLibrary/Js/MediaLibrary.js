@@ -13,6 +13,8 @@ jsBackend.mediaLibrary = {
 
     // adds functionalities for library
     jsBackend.mediaLibrary.library.init()
+
+    jsBackend.mediaLibrary.mediaItemEdit.init();
   }
 }
 
@@ -121,6 +123,17 @@ jsBackend.mediaLibrary.library = {
       $('#move-to-folder-id-for-type-' + jsBackend.mediaLibrary.library.currentType).val($('#moveToFolderId').val())
       $('#form-for-' + jsBackend.mediaLibrary.library.currentType).submit()
     })
+  }
+}
+
+jsBackend.mediaLibrary.mediaItemEdit = {
+  init: function () {
+    $('[data-role=toggle-caption-link-box]').on('change', function () {
+      var locale = $(this).data('locale')
+      var checked = $(this).is(':checked')
+
+      $('#captionLinkBox' + utils.string.ucfirst(locale)).toggle(checked)
+    }).trigger('change');
   }
 }
 

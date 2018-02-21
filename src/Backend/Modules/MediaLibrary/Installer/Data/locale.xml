@@ -126,6 +126,31 @@
         <translation language="nl"><![CDATA[in de map]]></translation>
         <translation language="ru"><![CDATA[в папке]]></translation>
       </item>
+      <item type="label" name="MediaItemAlt">
+        <translation language="en"><![CDATA[alt text]]></translation>
+        <translation language="nl"><![CDATA[alt-tekst]]></translation>
+        <translation language="ru"><![CDATA[Alt текст]]></translation>
+      </item>
+      <item type="message" name="MediaItemAlt">
+        <translation language="en"><![CDATA[The alt text for the image, e.g. “The Mona Lisa” to describe the media. Used for accessibility.]]></translation>
+        <translation language="nl"><![CDATA[De alt-tekst voor de afbeelding, b.v.b. "Zonsondergang" om de media te beschrijven. Gebruikt voor toegankelijkheid.]]></translation>
+        <translation language="ru"><![CDATA[Alt-текст для изображения, например. «Закат № 1», чтобы описать СМИ. Используется для доступа.]]></translation>
+      </item>
+      <item type="label" name="MediaItemCaption">
+        <translation language="en"><![CDATA[caption]]></translation>
+        <translation language="nl"><![CDATA[caption]]></translation>
+        <translation language="ru"><![CDATA[подпись]]></translation>
+      </item>
+      <item type="message" name="MediaItemCaption">
+        <translation language="en"><![CDATA[A brief explanation of the media. F.e.: "Orange sea with sunset". A caption is often displayed if modules or themes are provided to display it.]]></translation>
+        <translation language="nl"><![CDATA[Een korte uitleg van de media, b.v.b.: "Oranje zee met zonsondergang". Een caption wordt vaak weergegeven als modules of thema's zijn voorzien om deze weer te geven.]]></translation>
+        <translation language="ru"><![CDATA[Краткое пояснение СМИ. Ф.Е .: «Оранжевое море с закатом». Заголовки часто отображаются, если для отображения представлены модули или темы.]]></translation>
+      </item>
+      <item type="message" name="MediaItemCaptionLink">
+        <translation language="en"><![CDATA[F.e.: "/en/contact" or "https://www.google.be"]]></translation>
+        <translation language="nl"><![CDATA[B.v.b.: "/nl/contact" of "https://www.google.be"]]></translation>
+        <translation language="ru"><![CDATA[Например: "/ru/contact" или "https://www.google.be"]]></translation>
+      </item>
       <item type="label" name="MediaItemDelete">
         <translation language="de"><![CDATA[Entfernen von Medien]]></translation>
         <translation language="en"><![CDATA[removing media]]></translation>
@@ -133,12 +158,37 @@
         <translation language="nl"><![CDATA[media verwijderen]]></translation>
         <translation language="ru"><![CDATA[удаление медиа]]></translation>
       </item>
+      <item type="label" name="MediaItemDescription">
+        <translation language="en"><![CDATA[description]]></translation>
+        <translation language="nl"><![CDATA[omschrijving]]></translation>
+        <translation language="ru"><![CDATA[определение]]></translation>
+      </item>
+      <item type="message" name="MediaItemDescription">
+        <translation language="en"><![CDATA[An explanation of this particular media. F.e.: "Place: Okinawa Beach"]]></translation>
+        <translation language="nl"><![CDATA[Een verklaring van deze specifieke media, b.v.b.: "Plaats: Okinawa Beach"]]></translation>
+        <translation language="ru"><![CDATA[Объяснение этих средств массовой информации. F.e .: «Место: Окинава-Бич»]]></translation>
+      </item>
+      <item type="message" name="MediaItemHasCaptionLink">
+        <translation language="en"><![CDATA[Caption must contain a "more info" button if possible.]]></translation>
+        <translation language="nl"><![CDATA[Caption moet een "meer info" button bevatten indien mogelijk.]]></translation>
+        <translation language="ru"><![CDATA[Если возможно, надпись должна содержать кнопку «больше информации».]]></translation>
+      </item>
       <item type="label" name="MediaItemIndex">
         <translation language="de"><![CDATA[Übersicht]]></translation>
         <translation language="en"><![CDATA[overview]]></translation>
         <translation language="fr"><![CDATA[vue d'ensemble]]></translation>
         <translation language="nl"><![CDATA[overzicht]]></translation>
         <translation language="ru"><![CDATA[обзор]]></translation>
+      </item>
+      <item type="label" name="MediaItemTitle">
+        <translation language="en"><![CDATA[title]]></translation>
+        <translation language="nl"><![CDATA[titel]]></translation>
+        <translation language="ru"><![CDATA[название]]></translation>
+      </item>
+      <item type="message" name="MediaItemTitle">
+        <translation language="en"><![CDATA[The name of the media, for example: "Sunset". A title is often displayed if modules or themes are provided to display it.]]></translation>
+        <translation language="nl"><![CDATA[De naam van de media, b.v.b.: "Zonsondergang". Een titel wordt vaak weergegeven als modules of thema's zijn voorzien om deze weer te geven.]]></translation>
+        <translation language="ru"><![CDATA[Название носителя, например: «Закат». Заголовок отображается часто, если для его отображения предусмотрены модули или темы.]]></translation>
       </item>
       <item type="label" name="MediaItemUpload">
         <translation language="de"><![CDATA[medien hochladen]]></translation>
@@ -578,6 +628,11 @@
         <translation language="en"><![CDATA[Media folder "%1$s" moved.]]></translation>
         <translation language="nl"><![CDATA[Map "%1$s" verplaatst.]]></translation>
         <translation language="ru"><![CDATA[Папка "%1$s" перемещена.]]></translation>
+      </item>
+      <item type="message" name="MediaItemCantBeDeleted">
+        <translation language="en"><![CDATA[Removal is not possible because this media is in use.]]></translation>
+        <translation language="nl"><![CDATA[Verwijderen is niet mogelijk omdat deze media in gebruik is.]]></translation>
+        <translation language="ru"><![CDATA[Удаление невозможно, поскольку этот носитель используется.]]></translation>
       </item>
       <item type="label" name="MediaItemCleanup">
         <translation language="en"><![CDATA[remove all obsolete media]]></translation>

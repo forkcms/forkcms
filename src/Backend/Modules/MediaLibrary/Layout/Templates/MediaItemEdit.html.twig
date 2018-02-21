@@ -17,43 +17,113 @@
   </div>
 {% endblock %}
 
-{% block actionbar %}
-  <div class="btn-toolbar pull-right">
-    <div class="btn-group" role="group">
-      {% if showMediaLibraryMediaItemIndex %}
-        {% if folderId %}
-          {{ macro.buttonIcon( geturl('MediaItemIndex', null, '&folder='~folderId), 'bars', 'lbl.Overview'|trans|capitalize) }}
-        {% endif %}
-        {% if not folderId %}
-          {{ macro.buttonIcon( geturl('MediaItemIndex'), 'bars', 'lbl.Overview'|trans|capitalize) }}
-        {% endif %}
-      {% endif %}
-    </div>
-  </div>
-{% endblock %}
-
 {% block content %}
   {{ form_start(form) }}
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% if form.url %}
         {{ form_row(form.url) }}
+      {% else %}
+        <p>{{ mediaItem.url }}</p>
       {% endif %}
-      {{ form_row(form.title, {'attr': {'class': 'form-control title'}}) }}
+
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          {# Translation tabs #}
+          {% for locale,translationField in form.translations %}
+            {% set tabName = 'tab' ~ locale|ucfirst %}
+            <li role="presentation"{% if activeTranslationTab == tabName %} class="active"{% endif %}>
+              <a href="#{{ tabName }}" aria-controls="{{ tabName }}" role="tab" data-toggle="tab">
+                {{ locale|upper|tolabel|ucfirst }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div class="tab-content">
+          {% for locale,translationField in form.translations %}
+            {% set tabName = 'tab' ~ locale|ucfirst %}
+            <div role="tabpanel" class="tab-pane{% if activeTranslationTab == tabName %} active{% endif %}" id="{{ tabName }}">
+              <div class="form-group">
+                {{ form_label(translationField.title) }}
+                {{ form_widget(translationField.title, {'attr': {'class': 'form-control title'}}) }}
+                <p class="help-block">{{ 'msg.MediaItemTitle'|trans|ucfirst }}</p>
+                {{ form_errors(translationField.title) }}
+              </div>
+
+              <div class="form-group">
+                {{ form_label(translationField.caption) }}
+                {{ form_widget(translationField.caption) }}
+                <p class="help-block">{{ 'msg.MediaItemCaption'|trans|ucfirst }}</p>
+                {{ form_errors(translationField.caption) }}
+              </div>
+
+              {% if translationField.captionLink %}
+                <div class="form-group">
+                  {{ form_widget(translationField.hasCaptionLink, { "attr": { "data-role":"toggle-caption-link-box", "data-locale":locale }}) }}
+                </div>
+                <div class="form-group form-inline" id="captionLinkBox{{ locale|ucfirst }}">
+                  <div class="row">
+                    <div class="col-xs-1">
+                      {{ 'lbl.URL'|trans|ucfirst }}:
+                    </div>
+                    <div class="col-xs-11">
+                      {{ form_widget(translationField.captionLink) }}
+                      <p class="help-block">{{ 'msg.MediaItemCaptionLink'|trans|ucfirst }}</p>
+                    </div>
+                  </div>
+                  {{ form_errors(translationField.captionLink) }}
+                </div>
+              {% endif %}
+
+              {% if translationField.alt %}
+                <div class="form-group">
+                  {{ form_label(translationField.alt) }}
+                  {{ form_widget(translationField.alt) }}
+                  <p class="help-block">{{ 'msg.MediaItemAlt'|trans|ucfirst }}</p>
+                  {{ form_errors(translationField.alt) }}
+                </div>
+              {% endif %}
+
+              <div class="form-group">
+                {{ form_label(translationField.description) }}
+                {{ form_widget(translationField.description) }}
+                <p class="help-block">{{ 'msg.MediaItemDescription'|trans|ucfirst }}</p>
+                {{ form_errors(translationField.description) }}
+              </div>
+
+              {{ form_rest(translationField) }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
     </div>
   </div>
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
-          {% if showMediaLibraryMediaItemDelete %}
-            {% if mediaItem.groups.count == 0 %}
-              {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete", "id":"blog-delete" } ) }}
+          {% if showMediaLibraryMediaItemDelete and mediaItem.groups.count == 0 %}
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "data-toggle":"modal", "type":"button", "data-target":"#confirmDelete", "id":"blog-delete" } ) }}
+          {% endif %}
+
+          {% if showMediaLibraryMediaItemIndex %}
+            {% if folderId %}
+              {{ macro.buttonIcon(geturl('MediaItemIndex', 'times', '&folder='~folderId), 'bars', 'lbl.Cancel'|trans|capitalize, 'btn-default') }}
+            {% endif %}
+            {% if not folderId %}
+              {{ macro.buttonIcon(geturl('MediaItemIndex'), 'times', 'lbl.Cancel'|trans|capitalize, 'btn-default') }}
             {% endif %}
           {% endif %}
         </div>
+        <div class="btn-group pull-left" role="group">
+          {% if showMediaLibraryMediaItemDelete and not mediaItem.groups.count == 0 %}
+            <p class="help-block">{{ 'msg.MediaItemCantBeDeleted'|trans }}</p>
+          {% endif %}
+        </div>
         <div class="btn-group pull-right" role="group">
-          {{ macro.buttonIcon('', 'check', 'lbl.Save'|trans|ucfirst, 'btn-default', { "id":"editButton", "type":"submit", "name":"edit" } ) }}
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"editButton", "type":"submit", "name":"edit" } ) }}
         </div>
       </div>
     </div>

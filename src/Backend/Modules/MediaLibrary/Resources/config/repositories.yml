@@ -26,3 +26,10 @@ services:
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
             - Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem
+
+    media_library.repository.item_translation:
+        class: Backend\Modules\MediaLibrary\Domain\MediaItemTranslation\MediaItemTranslationRepository
+        public: true
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Backend\Modules\MediaLibrary\Domain\MediaItemTranslation\MediaItemTranslation

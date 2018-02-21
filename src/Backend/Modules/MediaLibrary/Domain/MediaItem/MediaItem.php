@@ -2,17 +2,24 @@
 
 namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
 
+use Backend\Core\Engine\Model;
+use Backend\Core\Language\Language;
+use Backend\Core\Language\Locale as BackendLocale;
 use Backend\Modules\MediaLibrary\Component\StorageProvider\LiipImagineBundleStorageProviderInterface;
 use Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
+use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItemTranslation\Exception\MediaItemTranslationNotFound;
+use Backend\Modules\MediaLibrary\Domain\MediaItemTranslation\MediaItemTranslation;
+use BadFunctionCallException;
+use Common\Locale;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Exception;
 use JsonSerializable;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Core\Engine\Model;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * MediaItem
@@ -90,13 +97,6 @@ class MediaItem implements JsonSerializable
     protected $url;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $title;
-
-    /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=true)
@@ -139,7 +139,20 @@ class MediaItem implements JsonSerializable
     protected $editedOn;
 
     /**
-     * @var ArrayCollection
+     * @var ArrayCollection|MediaItemTranslation[]
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="\Backend\Modules\MediaLibrary\Domain\MediaItemTranslation\MediaItemTranslation",
+     *     mappedBy="mediaItem",
+     *     orphanRemoval=true,
+     *     cascade={"persist"},
+     *     fetch="EAGER"
+     * )
+     */
+    private $translations;
+
+    /**
+     * @var ArrayCollection|MediaGroupMediaItem[]
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem",
@@ -163,10 +176,20 @@ class MediaItem implements JsonSerializable
         $this->type = $type;
         $this->storageType = $storageType;
         $this->url = $url;
-        $this->title = $title;
         $this->createdOn = new \DateTime();
         $this->editedOn = new \DateTime();
+        $this->translations = new ArrayCollection();
         $this->groups = new ArrayCollection();
+
+        foreach (array_keys(Language::getWorkingLanguages()) as $workingLanguage) {
+            $this->addTranslation(
+                new MediaItemTranslation(
+                    BackendLocale::fromString($workingLanguage),
+                    $this,
+                    $title
+                )
+            );
+        }
     }
 
     public static function createFromLocalStorageType(
@@ -235,21 +258,28 @@ class MediaItem implements JsonSerializable
     public static function fromDataTransferObject(MediaItemDataTransferObject $mediaItemDataTransferObject): ?MediaItem
     {
         if (!$mediaItemDataTransferObject->hasExistingMediaItem()) {
-            throw new \BadFunctionCallException('This method can not be used to create a new media item');
+            throw new BadFunctionCallException('This method can not be used to create a new media item');
         }
 
         $mediaItem = $mediaItemDataTransferObject->getMediaItemEntity();
 
-        $mediaItem->title = $mediaItemDataTransferObject->title;
         $mediaItem->folder = $mediaItemDataTransferObject->folder;
         $mediaItem->userId = $mediaItemDataTransferObject->userId;
         $mediaItem->url = $mediaItemDataTransferObject->url;
+
+        foreach ($mediaItemDataTransferObject->translations as $mediaItemTranslationDataTransferObject) {
+            $mediaItemTranslationDataTransferObject->setMediaItem($mediaItem);
+
+            $mediaItem->addTranslation(MediaItemTranslation::fromDataTransferObject($mediaItemTranslationDataTransferObject));
+        }
 
         return $mediaItem;
     }
 
     public function jsonSerialize(): array
     {
+        $locale = BackendLocale::workingLocale();
+
         return [
             'id' => $this->id,
             'folder' => $this->folder,
@@ -260,7 +290,10 @@ class MediaItem implements JsonSerializable
             'shardingFolderName' => $this->shardingFolderName,
             'url' => $this->url,
             'fullUrl' => $this->getFullUrl(),
-            'title' => $this->title,
+            'title' => $this->getTranslation($locale)->getTitle(),
+            'caption' => $this->getTranslation($locale)->getCaption(),
+            'description' => $this->getTranslation($locale)->getDescription(),
+            'alt' => $this->getTranslation($locale)->getAlt(),
             'size' => $this->size,
             'width' => $this->width,
             'height' => $this->height,
@@ -354,16 +387,6 @@ class MediaItem implements JsonSerializable
     public function getUrl(): string
     {
         return $this->url;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title)
-    {
-        $this->title = $title;
     }
 
     public function getFullUrl(): string
@@ -470,6 +493,49 @@ class MediaItem implements JsonSerializable
         }
 
         $this->aspectRatio = AspectRatio::fromWidthAndHeight($this->width, $this->height);
+    }
+
+    /**
+     * @param Locale $locale
+     * @return MediaItemTranslation when the translation does not exist
+     * @throws \Exception
+     */
+    public function getTranslation(Locale $locale): MediaItemTranslation
+    {
+        if ($this->translations->isEmpty()) {
+            throw MediaItemTranslationNotFound::forLocale($locale);
+        }
+
+        $translations = $this->translations->filter(
+            function (MediaItemTranslation $translation) use ($locale) {
+                return $translation->getLocale()->equals($locale);
+            }
+        );
+
+        if ($translations->isEmpty()) {
+            throw MediaItemTranslationNotFound::forLocale($locale);
+        }
+
+        return $translations->first();
+    }
+
+    public function getTranslations(): Collection
+    {
+        return $this->translations;
+    }
+
+    public function addTranslation(MediaItemTranslation $translation)
+    {
+        if ($this->translations->contains($translation)) {
+            return;
+        }
+
+        $this->translations->add($translation);
+    }
+
+    public function removeTranslation(MediaItemTranslation $translation)
+    {
+        $this->translations->removeElement($translation);
     }
 
     /**
