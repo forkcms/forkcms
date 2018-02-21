@@ -74,4 +74,29 @@ use App\Controller\ForkController as ...;
 
 ### No internal bundles anymore
 
-@todo
+#### Refactor CoreBundle
+
+Before:
+
+```
+use ForkCMS\Bundle\CoreBundle\Validator\UrlValidator as ...
+```
+
+After:
+
+```
+use App\ServiceValidator\UrlValidator as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\CoreBundle\Tests\Validator\UrlValidatorTest as ...
+```
+
+After:
+
+```
+use App\Tests\Service\Validator\UrlValidatorTest as ...
+```
+
