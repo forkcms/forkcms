@@ -7,4 +7,6 @@ use Common\Core\Model;
 use Common\Locale;
 use Doctrine\ORM\EntityRepository;
 
-class MediaItemTranslationRepository extends EntityRepository {}
+class MediaItemTranslationRepository extends EntityRepository
+{
+}
