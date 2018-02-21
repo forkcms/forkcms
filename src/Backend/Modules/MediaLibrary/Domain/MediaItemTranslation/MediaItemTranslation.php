@@ -57,7 +57,7 @@ class MediaItemTranslation
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $alt;
+    private $altText;
 
     /**
      * @var null|string
@@ -73,7 +73,7 @@ class MediaItemTranslation
         string $caption = null,
         string $captionLink = null,
         string $description = null,
-        string $alt = null
+        string $altText = null
     ) {
         $this->locale = $locale;
         $this->mediaItem = $mediaItem;
@@ -81,7 +81,7 @@ class MediaItemTranslation
         $this->caption = $caption;
         $this->captionLink = $caption;
         $this->description = $description;
-        $this->alt = $alt;
+        $this->altText = $altText;
 
         $this->mediaItem->addTranslation($this);
     }
@@ -99,7 +99,7 @@ class MediaItemTranslation
             $mediaItemTranslation->captionLink = ($mediaItemTranslationDataTransferObject->hasCaptionLink)
                 ? self::stripLinkToUrl($mediaItemTranslationDataTransferObject->captionLink) : null;
             $mediaItemTranslation->description = $mediaItemTranslationDataTransferObject->description;
-            $mediaItemTranslation->alt = $mediaItemTranslationDataTransferObject->alt;
+            $mediaItemTranslation->altText = $mediaItemTranslationDataTransferObject->altText;
 
             return $mediaItemTranslation;
         }
@@ -112,7 +112,7 @@ class MediaItemTranslation
             $mediaItemTranslationDataTransferObject->caption,
             self::stripLinkToUrl($mediaItemTranslationDataTransferObject->captionLink),
             $mediaItemTranslationDataTransferObject->description,
-            $mediaItemTranslationDataTransferObject->alt
+            $mediaItemTranslationDataTransferObject->altText
         );
 
         return $mediaItemTranslation;
@@ -134,7 +134,7 @@ class MediaItemTranslation
         $dataTransferObject->title = $this->title;
         $dataTransferObject->caption = $this->caption;
         $dataTransferObject->description = $this->description;
-        $dataTransferObject->alt = $this->alt;
+        $dataTransferObject->altText = $this->altText;
 
         return $dataTransferObject;
     }
@@ -159,9 +159,9 @@ class MediaItemTranslation
         return $this->title;
     }
 
-    public function getAlt(): ?string
+    public function getAltText(): ?string
     {
-        return $this->alt;
+        return $this->altText;
     }
 
     public function hasCaptionLink(): bool

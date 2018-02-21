@@ -126,12 +126,12 @@
         <translation language="nl"><![CDATA[in de map]]></translation>
         <translation language="ru"><![CDATA[в папке]]></translation>
       </item>
-      <item type="label" name="MediaItemAlt">
+      <item type="label" name="MediaItemAltText">
         <translation language="en"><![CDATA[alt text]]></translation>
         <translation language="nl"><![CDATA[alt-tekst]]></translation>
         <translation language="ru"><![CDATA[Alt текст]]></translation>
       </item>
-      <item type="message" name="MediaItemAlt">
+      <item type="message" name="MediaItemAltText">
         <translation language="en"><![CDATA[The alt text for the image, e.g. “The Mona Lisa” to describe the media. Used for accessibility.]]></translation>
         <translation language="nl"><![CDATA[De alt-tekst voor de afbeelding, b.v.b. "Zonsondergang" om de media te beschrijven. Gebruikt voor toegankelijkheid.]]></translation>
         <translation language="ru"><![CDATA[Alt-текст для изображения, например. «Закат № 1», чтобы описать СМИ. Используется для доступа.]]></translation>

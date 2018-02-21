@@ -72,10 +72,10 @@ class MediaItemTranslationType extends AbstractType
                     );
 
                     $event->getForm()->add(
-                        'alt',
+                        'altText',
                         TextType::class,
                         [
-                            'label' => 'lbl.MediaItemAlt',
+                            'label' => 'lbl.MediaItemAltText',
                             'required' => false,
                         ]
                     );

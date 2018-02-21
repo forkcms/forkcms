@@ -41,7 +41,7 @@ final class MediaItemTranslationDataTransferObject
     public $description;
 
     /** @var string */
-    public $alt;
+    public $altText;
 
     public function __construct(MediaItemTranslation $mediaItemTranslation = null, Locale $locale = null)
     {
@@ -60,7 +60,7 @@ final class MediaItemTranslationDataTransferObject
         $this->hasCaptionLink = $this->mediaItemTranslationEntity->hasCaptionLink();
         $this->captionLink = $this->mediaItemTranslationEntity->getCaptionLink();
         $this->description = $this->mediaItemTranslationEntity->getDescription();
-        $this->alt = $this->mediaItemTranslationEntity->getAlt();
+        $this->altText = $this->mediaItemTranslationEntity->getAltText();
     }
 
     public function getMediaItem(): ?MediaItem

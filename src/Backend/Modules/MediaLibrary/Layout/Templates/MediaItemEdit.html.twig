@@ -76,12 +76,12 @@
                 </div>
               {% endif %}
 
-              {% if translationField.alt %}
+              {% if translationField.altText %}
                 <div class="form-group">
-                  {{ form_label(translationField.alt) }}
-                  {{ form_widget(translationField.alt) }}
-                  <p class="help-block">{{ 'msg.MediaItemAlt'|trans|ucfirst }}</p>
-                  {{ form_errors(translationField.alt) }}
+                  {{ form_label(translationField.altText) }}
+                  {{ form_widget(translationField.altText) }}
+                  <p class="help-block">{{ 'msg.MediaItemAltText'|trans|ucfirst }}</p>
+                  {{ form_errors(translationField.altText) }}
                 </div>
               {% endif %}
 
