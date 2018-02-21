@@ -48,15 +48,12 @@
         "squizlabs/php_codesniffer": "^2.7",
         "symfony/phpunit-bridge": "^3.2"
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "support": {
         "forum": "https://fork-cms.herokuapp.com",
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {
-        "test": "./bin/simple-phpunit",
+        "test": "./vendor/bin/simple-phpunit",
         "post-install-cmd": [
             "php bin/console assetic:dump .",
             "php bin/console forkcms:cache:clear",
