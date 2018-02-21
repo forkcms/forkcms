@@ -198,6 +198,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
+    fork.validator.url:
+        class: App\Service\Validator\UrlValidator
+        public: true
+
     templating:
         class: Frontend\Core\Engine\TwigTemplate
         public: true
