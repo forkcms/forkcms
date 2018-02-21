@@ -35,7 +35,7 @@ final class InstallerController extends Controller
         }
 
         return $this->render(
-            'ForkCMSInstallerBundle:Installer:step1.html.twig',
+            '@installer/step1.html.twig',
             [
                 'checker' => $requirementsChecker,
                 'rootDir' => realpath($this->container->getParameter('site.path_www')),
@@ -71,7 +71,7 @@ final class InstallerController extends Controller
         $status = $forkInstaller->install($this->getInstallationData($request));
 
         return $this->render(
-            'ForkCMSInstallerBundle:Installer:step6.html.twig',
+            '@installer/step6.html.twig',
             [
                 'installStatus' => $status,
                 'installer' => $forkInstaller,
@@ -139,7 +139,7 @@ final class InstallerController extends Controller
         }
 
         return $this->render(
-            'ForkCMSInstallerBundle:Installer:step' . $step . '.html.twig',
+            '@installer/step' . $step . '.html.twig',
             [
                 'form' => $form->createView(),
             ]

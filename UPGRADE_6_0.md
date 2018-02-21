@@ -102,6 +102,10 @@ use App\Tests\Service\Validator\UrlValidatorTest as ...
 
 #### Refactor ForkCMSInstallerBundle
 
+Moved `src/ForkCMS/Bundle/InstallerBundle/Resources/views` to `templates/installer`
+and `src/ForkCMS/Bundle/InstallerBundle/Resources/public` to `public/installer`.
+
+
 ##### Console
 
 Before:
