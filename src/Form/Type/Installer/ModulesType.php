@@ -1,19 +1,19 @@
 <?php
 
-namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
+namespace App\Form\Type\Installer;
 
+use App\Service\Installer\ForkInstaller;
+use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use App\Service\Installer\ForkInstaller;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * Builds the form to select modules to install
@@ -81,7 +81,7 @@ class ModulesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
+            'data_class' => 'App\Component\Installer\InstallationData',
         ]);
     }
 

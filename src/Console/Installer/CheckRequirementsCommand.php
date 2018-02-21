@@ -2,8 +2,8 @@
 
 namespace App\Console\Installer;
 
-use ForkCMS\Bundle\InstallerBundle\Requirement\Requirement;
-use ForkCMS\Bundle\InstallerBundle\Requirement\RequirementCategory;
+use App\Component\Installer\Requirement\Requirement;
+use App\Component\Installer\Requirement\RequirementCategory;
 use App\Service\Installer\RequirementsChecker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

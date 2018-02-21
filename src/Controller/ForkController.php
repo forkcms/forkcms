@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Backend\Core\Engine\Ajax as BackendAjax;
 use Backend\Core\Engine\Backend;
+use ForkCMS\App\ApplicationInterface;
 use Frontend\Core\Engine\Ajax as FrontendAjax;
 use Frontend\Core\Engine\Frontend;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

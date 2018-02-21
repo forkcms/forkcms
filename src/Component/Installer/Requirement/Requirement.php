@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Bundle\InstallerBundle\Requirement;
+namespace App\Component\Installer\Requirement;
 
 final class Requirement
 {

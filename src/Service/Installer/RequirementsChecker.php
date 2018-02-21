@@ -2,9 +2,9 @@
 
 namespace App\Service\Installer;
 
-use ForkCMS\Bundle\InstallerBundle\Requirement\Requirement;
-use ForkCMS\Bundle\InstallerBundle\Requirement\RequirementCategory;
-use ForkCMS\Bundle\InstallerBundle\Requirement\RequirementStatus;
+use App\Component\Installer\Requirement\Requirement;
+use App\Component\Installer\Requirement\RequirementCategory;
+use App\Component\Installer\Requirement\RequirementStatus;
 
 /**
  * Requirements checker

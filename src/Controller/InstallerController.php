@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
+use App\Component\Installer\Handler\DatabaseHandler;
+use App\Component\Installer\Handler\InstallerHandler;
+use App\Component\Installer\Handler\LanguagesHandler;
+use App\Component\Installer\Handler\LoginHandler;
+use App\Component\Installer\Handler\ModulesHandler;
+use App\Component\Installer\InstallationData;
 use Common\Exception\ExitException;
-use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
-use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
-use ForkCMS\Bundle\InstallerBundle\Form\Handler\InstallerHandler;
-use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
-use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
-use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
-use ForkCMS\Bundle\InstallerBundle\Form\Type\DatabaseType;
-use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
-use ForkCMS\Bundle\InstallerBundle\Form\Type\LoginType;
-use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
+use App\Form\Type\Installer\DatabaseType;
+use App\Form\Type\Installer\LanguagesType;
+use App\Form\Type\Installer\LoginType;
+use App\Form\Type\Installer\ModulesType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -123,7 +123,8 @@ final class InstallerController extends Controller
         string $formTypeClass,
         InstallerHandler $handler,
         Request $request
-    ): Response {
+    ): Response
+    {
         $this->checkInstall();
 
         // check if can start the next step

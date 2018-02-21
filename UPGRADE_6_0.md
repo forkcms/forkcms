@@ -142,6 +142,170 @@ After:
 use App\Controller\InstallerController as ...
 ```
 
+##### Entity
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Entity as ...
+```
+
+After:
+
+```
+use App\Controller\InstallerController as ...
+```
+
+##### Form Handler
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler as ...
+```
+
+After:
+
+```
+use App\Component\Installer\Handler\DatabaseHandler as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\InstallerHandler as ...
+```
+
+After:
+
+```
+use App\Component\Installer\Handler\InstallerHandler as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler as ...
+```
+
+After:
+
+```
+use App\Component\Installer\Handler\LanguagesHandler as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler as ...
+```
+
+After:
+
+```
+use App\Component\Installer\Handler\LoginHandler as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler as ...
+```
+
+After:
+
+```
+use App\Component\Installer\Handler\ModulesHandler as ...
+```
+
+##### Form Type
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Form\Type\DatabaseType ...
+```
+
+After:
+
+```
+use App\Form\Type\Installer\DatabaseType as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType ...
+```
+
+After:
+
+```
+use App\Form\Type\Installer\LanguagesType as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Form\Type\LoginType ...
+```
+
+After:
+
+```
+use App\Form\Type\Installer\LoginType as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesTypes ...
+```
+
+After:
+
+```
+use App\Form\Type\Installer\ModulesTypes as ...
+```
+
+##### Requirement
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Requirement\Requirement as ...
+```
+
+After:
+
+```
+use App\Component\Installer\Requirement\Requirement as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Requirement\RequirementCategory as ...
+```
+
+After:
+
+```
+use App\Component\Installer\Requirement\RequirementCategory as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Requirement\RequirementStatus as ...
+```
+
+After:
+
+```
+use App\Component\Installer\Requirement\RequirementStatus as ...
+```
+
 ##### Services
 
 Before:

@@ -9,7 +9,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
 use App\Controller\InstallerController;
-use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use App\Component\Installer\InstallationData;
 use Doctrine\DBAL\Exception\ConnectionException;
 
 class InstallerConnectionFactory extends ConnectionFactory

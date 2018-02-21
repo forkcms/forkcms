@@ -1,8 +1,8 @@
 <?php
 
-namespace ForkCMS\Bundle\InstallerBundle\Form\Handler;
+namespace App\Component\Installer\Handler;
 
-use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use App\Component\Installer\InstallationData;
 
 /**
  * Validates and saves the data from the modules form

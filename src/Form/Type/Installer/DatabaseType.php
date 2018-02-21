@@ -1,8 +1,8 @@
 <?php
 
-namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
+namespace App\Form\Type\Installer;
 
-use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use App\Component\Installer\InstallationData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -124,7 +124,7 @@ class DatabaseType extends AbstractType
                         ]
                     ),
                 ],
-                'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
+                'data_class' => 'App\Component\Installer\InstallationData',
             ]
         );
     }

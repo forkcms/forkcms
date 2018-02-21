@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Bundle\InstallerBundle\Entity;
+namespace App\Component\Installer;
 
 use Symfony\Component\Validator\Constraints as Assert;
 

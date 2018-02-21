@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
+namespace App\Form\Type\Installer;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -74,7 +74,7 @@ class LanguagesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
+            'data_class' => 'App\Component\Installer\InstallationData',
         ]);
     }
 

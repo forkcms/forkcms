@@ -10,7 +10,7 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
+use App\Component\Installer\InstallationData;
 
 /**
  * This service installs fork
