@@ -7,7 +7,7 @@ use Common\Core\Header\AssetCollection;
 use Common\Core\Header\JsData;
 use Common\Core\Header\Minifier;
 use Common\Core\Header\Priority;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Theme;
 use Frontend\Core\Engine\TwigTemplate;

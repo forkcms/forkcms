@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine\Block;
 
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Frontend\Core\Engine\TwigTemplate;
 use Frontend\Core\Engine\Url;
 use Symfony\Component\HttpKernel\KernelInterface;

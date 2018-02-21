@@ -2,8 +2,8 @@
 
 namespace Backend\Core\Engine;
 
-use ForkCMS\App\ApplicationInterface;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\ApplicationInterface;
+use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Language\Language as BackendLanguage;

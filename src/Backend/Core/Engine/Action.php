@@ -3,7 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Base\Config;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;

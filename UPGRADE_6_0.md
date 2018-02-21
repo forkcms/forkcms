@@ -58,7 +58,6 @@ After:
 \App\Controller\ForkController
 ```
 
-
 Before:
 
 ```php
@@ -69,6 +68,48 @@ After:
 
 ```php
 use App\Controller\ForkController as ...;
+```
+
+#### BaseModel
+
+Before:
+
+```
+use ForkCMS\App\BaseModel as ...
+```
+
+After:
+
+```
+use App\Component\Model\BaseModel as ...
+```
+
+#### ApplicationInterface
+
+Before:
+
+```
+use ForkCMS\App\ApplicationInterface as ...
+```
+
+After:
+
+```
+use App\Component\Application\ApplicationInterface as ...
+```
+
+#### KernelLoader
+
+Before:
+
+```
+use ForkCMS\App\KernelLoader as ...
+```
+
+After:
+
+```
+use App\Component\Application\KernelLoader as ...
 ```
 
 

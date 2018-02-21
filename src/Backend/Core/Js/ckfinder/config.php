@@ -3,7 +3,7 @@
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use ForkCMS\App\AppKernel;
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Request;
 
 $env = getenv('FORK_ENV') ? : 'prod';

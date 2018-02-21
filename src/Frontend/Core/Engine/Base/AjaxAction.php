@@ -2,7 +2,7 @@
 
 namespace Frontend\Core\Engine\Base;
 
-use ForkCMS\App\KernelLoader;
+use App\Component\Application\KernelLoader;
 use Frontend\Core\Engine\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
