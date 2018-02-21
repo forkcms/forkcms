@@ -388,3 +388,9 @@ After:
 ```
 use App\Service\Installer\RequirementsChecker as ...
 ```
+
+## Move + rename database_data_collector.html.twig
+
+Move and rename `app/Resources/views/database_data_collector.html.twig`
+to `templates/bundles/WebProfilerBundle/Profiler/spoon_database_data_collec
+tor.html.twig`
