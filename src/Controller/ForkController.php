@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\App;
+namespace App\Controller;
 
 use Backend\Core\Engine\Ajax as BackendAjax;
 use Backend\Core\Engine\Backend;
