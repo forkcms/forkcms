@@ -292,6 +292,8 @@ class MediaItem implements JsonSerializable
             'fullUrl' => $this->getFullUrl(),
             'title' => $this->getTranslation($locale)->getTitle(),
             'caption' => $this->getTranslation($locale)->getCaption(),
+            'hasCaptionLink' => $this->getTranslation($locale)->hasCaptionLink(),
+            'captionLink' => $this->getTranslation($locale)->getCaptionLink(),
             'description' => $this->getTranslation($locale)->getDescription(),
             'alt' => $this->getTranslation($locale)->getAlt(),
             'size' => $this->size,
