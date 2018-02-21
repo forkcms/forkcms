@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\MediaLibrary\Widgets;
 
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
 
 /**
@@ -21,6 +22,7 @@ class Lightbox extends FrontendMediaWidget
         $this->addLightboxJS();
         parent::execute();
         $this->loadTemplate();
+        $this->template->assign('locale', Locale::frontendLanguage());
         $this->parse();
     }
 
