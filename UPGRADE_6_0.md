@@ -102,6 +102,48 @@ use App\Tests\Service\Validator\UrlValidatorTest as ...
 
 #### Refactor ForkCMSInstallerBundle
 
+##### Console
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Console\CheckRequirementsCommand as ...
+```
+
+After:
+
+```
+use App\Console\Installer\CheckRequirementsCommand as ...
+```
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Console\PrepareForReinstallCommand as ...
+```
+
+After:
+
+```
+use App\Console\Installer\PrepareForReinstallCommand as ...
+```
+
+##### Controller
+
+Before:
+
+```
+use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController as ...
+```
+
+After:
+
+```
+use App\Controller\InstallerController as ...
+```
+
+##### Services
+
 Before:
 
 ```
@@ -136,29 +178,4 @@ After:
 
 ```
 use App\Service\Installer\RequirementsChecker as ...
-```
-
-Before:
-
-```
-use ForkCMS\Bundle\InstallerBundle\Console\CheckRequirementsCommand as ...
-```
-
-After:
-
-```
-use App\Console\Installer\CheckRequirementsCommand as ...
-```
-
-
-Before:
-
-```
-use ForkCMS\Bundle\InstallerBundle\Console\PrepareForReinstallCommand as ...
-```
-
-After:
-
-```
-use App\Console\Installer\PrepareForReinstallCommand as ...
 ```

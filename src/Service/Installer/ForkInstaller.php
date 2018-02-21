@@ -2,7 +2,7 @@
 
 namespace App\Service\Installer;
 
-use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
+use App\Controller\InstallerController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\DependencyInjection\Container;
