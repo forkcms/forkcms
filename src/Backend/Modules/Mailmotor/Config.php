@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Mailmotor;
+namespace App\Backend\Modules\Mailmotor;
 
-use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the Mailmotor module

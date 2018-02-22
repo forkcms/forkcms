@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Manager;
+namespace App\Backend\Modules\MediaLibrary\Manager;
 
-use Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
+use App\Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Exception;
 
 final class StorageManager

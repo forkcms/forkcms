@@ -1,17 +1,17 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Backend\Core\Config;
-use Backend\Core\Engine\Base\Config as BackendBaseConfig;
-use Backend\Core\Engine\Model as BackendModel;
-use Common\Exception\RedirectException;
+use App\Backend\Core\Config;
+use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Common\Exception\RedirectException;
 use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class will handle the incoming URL.

@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries;
+namespace App\Backend\Modules\MediaGalleries;
 
-use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the media galleries module

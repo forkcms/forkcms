@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Analytics\DateRange;
+namespace App\Backend\Modules\Analytics\DateRange;
 
 final class DateRange
 {

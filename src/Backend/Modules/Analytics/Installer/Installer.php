@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Analytics\Installer;
+namespace App\Backend\Modules\Analytics\Installer;
 
-use Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the analytics module

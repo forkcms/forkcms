@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Location\Actions;
+namespace App\Backend\Modules\Location\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**
  * This action will delete an item

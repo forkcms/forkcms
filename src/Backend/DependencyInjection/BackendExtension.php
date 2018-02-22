@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\DependencyInjection;
+namespace App\Backend\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;

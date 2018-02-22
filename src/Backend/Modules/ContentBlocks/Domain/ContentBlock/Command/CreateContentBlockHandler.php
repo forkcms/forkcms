@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
+namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use Backend\Core\Engine\Model;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
-use Common\ModuleExtraType;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use App\Common\ModuleExtraType;
 
 final class CreateContentBlockHandler
 {

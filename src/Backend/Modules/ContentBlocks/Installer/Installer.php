@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Installer;
+namespace App\Backend\Modules\ContentBlocks\Installer;
 
-use Backend\Core\Engine\Model;
-use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 
 /**
  * Installer for the content blocks module

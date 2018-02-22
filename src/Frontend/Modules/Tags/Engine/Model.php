@@ -1,13 +1,13 @@
 <?php
 
-namespace Frontend\Modules\Tags\Engine;
+namespace App\Frontend\Modules\Tags\Engine;
 
-use Common\Locale;
-use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Language\Language;
-use Frontend\Core\Language\Locale as FrontendLocale;
+use App\Common\Locale;
+use App\Frontend\Core\Engine\Exception as FrontendException;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Core\Language\Language;
+use App\Frontend\Core\Language\Locale as FrontendLocale;
 
 /**
  * In this file we store all generic functions that we will be using in the tags module

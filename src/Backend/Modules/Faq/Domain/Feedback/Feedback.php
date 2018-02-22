@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Faq\Domain\Feedback;
+namespace App\Backend\Modules\Faq\Domain\Feedback;
 
-use Backend\Modules\Faq\Domain\Question\Question;
+use App\Backend\Modules\Faq\Domain\Question\Question;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 

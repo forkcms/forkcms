@@ -1,15 +1,15 @@
 <?php
 
-namespace Frontend\Modules\Search\Actions;
+namespace App\Frontend\Modules\Search\Actions;
 
 use DateInterval;
 use Psr\Cache\CacheItemPoolInterface;
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use App\Frontend\Core\Engine\Form as FrontendForm;
+use App\Frontend\Core\Language\Language as FL;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Index extends FrontendBaseBlock

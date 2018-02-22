@@ -1,14 +1,14 @@
 <?php
 
-namespace Frontend\Modules\Profiles\Actions;
+namespace App\Frontend\Modules\Profiles\Actions;
 
-use Common\Mailer\Message;
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
-use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use App\Common\Mailer\Message;
+use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use App\Frontend\Core\Engine\Form as FrontendForm;
+use App\Frontend\Core\Language\Language as FL;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use App\Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 /**
  * Request a reset password email.

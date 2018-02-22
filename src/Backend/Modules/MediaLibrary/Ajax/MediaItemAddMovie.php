@@ -1,15 +1,15 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Ajax;
+namespace App\Backend\Modules\MediaLibrary\Ajax;
 
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
-use Common\Exception\AjaxExitException;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Language\Language;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
+use App\Common\Exception\AjaxExitException;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Form;
+namespace App\Common\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType as SymfonyCollectionType;

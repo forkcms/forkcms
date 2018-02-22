@@ -1,18 +1,18 @@
 <?php
 
-namespace Backend\Modules\Pages\Actions;
+namespace App\Backend\Modules\Pages\Actions;
 
-use Backend\Core\Engine\Authentication;
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Meta as BackendMeta;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use App\Backend\Core\Engine\Authentication;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Meta as BackendMeta;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use SpoonFormHidden;
 
 /**

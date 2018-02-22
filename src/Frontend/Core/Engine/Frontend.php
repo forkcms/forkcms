@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
 use App\Component\Application\ApplicationInterface;
 use App\Component\Application\KernelLoader;

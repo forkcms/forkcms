@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
-use Backend\Core\Engine\Header;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Type as MediaItemPossibleType;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupPossibleType;
+use App\Backend\Core\Engine\Header;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Type as MediaItemPossibleType;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupPossibleType;
 use Ramsey\Uuid\Uuid;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 use Symfony\Component\Form\AbstractType;
@@ -19,9 +19,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
-use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Language\Language;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
 
 class MediaGroupType extends AbstractType
 {

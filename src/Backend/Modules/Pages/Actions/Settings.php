@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Pages\Actions;
+namespace App\Backend\Modules\Pages\Actions;
 
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the settings-action, it will display a form to set general pages settings

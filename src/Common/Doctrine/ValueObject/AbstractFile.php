@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Doctrine\ValueObject;
+namespace App\Common\Doctrine\ValueObject;
 
-use Common\Uri;
+use App\Common\Uri;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

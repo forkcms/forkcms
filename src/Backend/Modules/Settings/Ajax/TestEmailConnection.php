@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Settings\Ajax;
+namespace App\Backend\Modules\Settings\Ajax;
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
-use Common\Mailer\TransportFactory;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Language\Language as BL;
+use App\Common\Mailer\TransportFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

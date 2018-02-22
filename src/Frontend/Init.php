@@ -1,11 +1,13 @@
 <?php
 
-namespace Frontend;
+namespace App\Frontend;
+
+use App\Common\Core\Init as BaseInit;
 
 /**
  * This class will initiate the frontend-application
  */
-class Init extends \Common\Core\Init
+class Init extends BaseInit
 {
     protected $allowedTypes = ['Frontend', 'FrontendAjax'];
 

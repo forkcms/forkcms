@@ -1,0 +1,71 @@
+parameters:
+    # Adds a fallback DATABASE_URL if the env var is not set.
+    # This allows you to run cache:warmup even if your
+    # environment variables are not available yet.
+    # You should not need to change this value.
+    env(DATABASE_URL): ''
+
+doctrine:
+    dbal:
+        # configure these for your database server
+        #driver: 'pdo_mysql'
+        #server_version: '5.7'
+        #charset: utf8mb4
+
+        # With Symfony 3.3, remove the `resolve:` prefix
+        #url: '%env(resolve:DATABASE_URL)%'
+
+        default_connection: default
+        connections:
+            default:
+                driver: "pdo_%database.driver%"
+                server_version: '5.7'
+                host: "%database.host%"
+                port: "%database.port%"
+                dbname: "%database.name%"
+                user: "%database.user%"
+                password: "%database.password%"
+                charset: utf8mb4
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
+                mapping_types:
+                    # Remove when we don't have legacy tables anymore
+                    enum: string
+        types:
+            seo_follow: App\Common\Doctrine\Type\SEOFollowType
+            seo_index: App\Common\Doctrine\Type\SEOIndexType
+            locale: App\Common\Doctrine\Type\LocaleType
+            datetime: App\Common\Doctrine\Type\UTCDateTimeType
+            datetimetz: App\Common\Doctrine\Type\UTCDateTimeType
+            time: App\Common\Doctrine\Type\UTCTimeType
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain'
+                prefix: 'App\Domain'
+                alias: App
+
+# @todo: In the refactoring for fork 6, did does not exist
+#doctrine_orm_bridge:
+#    entity_manager: default
+#    connection: default
+
+services:
+    fork.entity.create_schema:
+        class: App\Common\Doctrine\Entity\CreateSchema
+        public: true
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    fork.repository.meta:
+        class: App\Common\Doctrine\Repository\MetaRepository
+        public: true
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - App\Common\Doctrine\Entity\Meta

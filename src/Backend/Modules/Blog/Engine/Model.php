@@ -1,16 +1,16 @@
 <?php
 
-namespace Backend\Modules\Blog\Engine;
+namespace App\Backend\Modules\Blog\Engine;
 
-use Backend\Core\Engine\Exception;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Language\Locale;
-use Backend\Modules\Blog\Domain\Comment\Comment;
-use Backend\Modules\Blog\Domain\Category\Category;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use Common\Doctrine\Entity\Meta;
+use App\Backend\Core\Engine\Exception;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Language\Locale;
+use App\Backend\Modules\Blog\Domain\Comment\Comment;
+use App\Backend\Modules\Blog\Domain\Category\Category;
+use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use App\Common\Doctrine\Entity\Meta;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module

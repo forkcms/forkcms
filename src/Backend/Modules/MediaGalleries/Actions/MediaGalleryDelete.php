@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Actions;
+namespace App\Backend\Modules\MediaGalleries\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery;
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
 
 /**
  * This is the class to Delete a MediaGallery

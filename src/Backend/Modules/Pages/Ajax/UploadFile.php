@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Pages\Ajax;
+namespace App\Backend\Modules\Pages\Ajax;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
-use Common\Core\Model;
-use Common\Uri;
-use Backend\Core\Engine\Base\AjaxAction;
-use Backend\Core\Engine\Exception;
+use App\Common\Core\Model;
+use App\Common\Uri;
+use App\Backend\Core\Engine\Base\AjaxAction;
+use App\Backend\Core\Engine\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Pages\Engine;
+namespace App\Backend\Modules\Pages\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Model as BackendModel;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Filesystem\Filesystem;
 

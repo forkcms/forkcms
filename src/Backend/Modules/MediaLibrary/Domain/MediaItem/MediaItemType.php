@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

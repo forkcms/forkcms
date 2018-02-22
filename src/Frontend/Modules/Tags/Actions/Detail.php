@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Modules\Tags\Actions;
+namespace App\Frontend\Modules\Tags\Actions;
 
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Language\Language as FL;
-use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use App\Frontend\Core\Language\Language as FL;
+use App\Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Detail extends FrontendBaseBlock

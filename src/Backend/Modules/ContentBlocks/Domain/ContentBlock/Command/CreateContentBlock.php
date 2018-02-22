@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
+namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
+use App\Backend\Core\Language\Locale;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
 
 final class CreateContentBlock extends ContentBlockDataTransferObject
 {

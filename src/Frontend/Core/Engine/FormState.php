@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
 /**
  * Keeps the state of a form between opening and closing the tag.

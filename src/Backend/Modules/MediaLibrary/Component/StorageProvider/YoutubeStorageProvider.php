@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Component\StorageProvider;
+namespace App\Backend\Modules\MediaLibrary\Component\StorageProvider;
 
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
 class YoutubeStorageProvider extends MovieStorageProvider
 {

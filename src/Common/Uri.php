@@ -1,6 +1,6 @@
 <?php
 
-namespace Common;
+namespace App\Common;
 
 use Behat\Transliterator\Transliterator;
 

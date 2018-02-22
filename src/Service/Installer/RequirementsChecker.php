@@ -374,8 +374,8 @@ final class RequirementsChecker
                 RequirementStatus::error()
             ),
             Requirement::check(
-                $this->rootDir . 'var/logs/*',
-                $this->isWritable($this->rootDir . 'var/logs/'),
+                $this->rootDir . 'var/log/*',
+                $this->isWritable($this->rootDir . 'var/log/'),
                 'In this location the global logs will be stored. This location and all subdirectories are be writable.',
                 'In this location the global logs will be stored. This location and all subdirectories must be writable.',
                 RequirementStatus::error()

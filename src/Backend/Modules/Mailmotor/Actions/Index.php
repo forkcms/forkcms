@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\Mailmotor\Actions;
+namespace App\Backend\Modules\Mailmotor\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Model;
+use App\Backend\Core\Engine\Base\ActionIndex;
+use App\Backend\Core\Engine\Model;
 
 /**
  * This redirects to settings

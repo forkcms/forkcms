@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
+namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use Backend\Core\Engine\Model;
-use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
-use Common\ModuleExtraType;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Language\Locale;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
+use App\Common\ModuleExtraType;
 
 final class CopyContentBlocksToOtherLocaleHandler
 {

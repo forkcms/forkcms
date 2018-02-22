@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\Blog\Actions;
+namespace App\Backend\Modules\Blog\Actions;
 
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item

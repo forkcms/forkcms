@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Actions;
+namespace App\Backend\Modules\ContentBlocks\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Locale;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataGrid;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Language\Locale;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataGrid;
 
 /**
  * This is the index-action (default), it will display the overview

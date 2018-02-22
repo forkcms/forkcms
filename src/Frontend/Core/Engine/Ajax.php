@@ -1,11 +1,11 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
 use App\Component\Application\ApplicationInterface;
 use App\Component\Application\KernelLoader;
-use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use Frontend\Core\Language\Language;
+use App\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use App\Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -8,7 +8,7 @@ use App\Component\Installer\Handler\LanguagesHandler;
 use App\Component\Installer\Handler\LoginHandler;
 use App\Component\Installer\Handler\ModulesHandler;
 use App\Component\Installer\InstallationData;
-use Common\Exception\ExitException;
+use App\Common\Exception\ExitException;
 use App\Form\Type\Installer\DatabaseType;
 use App\Form\Type\Installer\LanguagesType;
 use App\Form\Type\Installer\LoginType;

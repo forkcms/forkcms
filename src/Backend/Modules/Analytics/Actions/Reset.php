@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\Analytics\Actions;
+namespace App\Backend\Modules\Analytics\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete;
-use Backend\Core\Engine\Model;
+use App\Backend\Core\Engine\Base\ActionDelete;
+use App\Backend\Core\Engine\Model;
 
 /**
  * This is the reset-action. It will remove your coupling with analytics

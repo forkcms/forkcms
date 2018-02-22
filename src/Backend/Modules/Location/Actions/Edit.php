@@ -1,16 +1,16 @@
 <?php
 
-namespace Backend\Modules\Location\Actions;
+namespace App\Backend\Modules\Location\Actions;
 
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\Intl\Intl as Intl;
-use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
+use App\Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the edit-action, it will display a form to create a new item

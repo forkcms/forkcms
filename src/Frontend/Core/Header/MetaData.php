@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Header;
+namespace App\Frontend\Core\Header;
 
 use InvalidArgumentException;
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Backend\Core\Engine\Base\Config;
+use App\Backend\Core\Engine\Base\Config;
 use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Backend\Core\Engine\Base\Action as BackendBaseAction;
+use App\Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...

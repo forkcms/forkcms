@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
 use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Backend\Core\Language\Language as BackendLanguage;
 
 final class Navigation extends KernelLoader
 {

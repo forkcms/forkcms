@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Manager;
+namespace App\Backend\Modules\MediaLibrary\Manager;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Common\ModulesSettings;
-use Common\Uri;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Common\ModulesSettings;
+use App\Common\Uri;
+use App\Backend\Core\Engine\Model as BackendModel;
 
 final class FileManager
 {

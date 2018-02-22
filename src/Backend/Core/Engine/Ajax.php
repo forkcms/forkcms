@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
 use App\Component\Application\ApplicationInterface;
 use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Language\Language as BackendLanguage;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 /**

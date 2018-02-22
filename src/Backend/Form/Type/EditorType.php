@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Form\Type;
+namespace App\Backend\Form\Type;
 
-use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Language\Language;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,7 +25,6 @@ class EditorType extends TextareaType
         // we add JS because we need CKEditor
         $header->addJS('ckeditor/ckeditor.js', 'Core', false);
         $header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
-        $header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
         // add the internal link lists-file
         if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {

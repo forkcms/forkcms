@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 
 class MediaItemDataTransferObject
 {

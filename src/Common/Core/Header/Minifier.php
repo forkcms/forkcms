@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Core\Header;
+namespace App\Common\Core\Header;
 
-use Common\Core\Model;
+use App\Common\Core\Model;
 use MatthiasMullie\Minify;
 
 final class Minifier

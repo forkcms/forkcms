@@ -1,15 +1,16 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
-use Common\Exception\RedirectException;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Common\Exception\RedirectException;
+use SpoonFileCSV;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This is our extended version of SpoonFileCSV
  */
-class Csv extends \SpoonFileCSV
+class Csv extends SpoonFileCSV
 {
     /**
      * Output a CSV-file as a download
@@ -28,7 +29,7 @@ class Csv extends \SpoonFileCSV
         array $excludeColumns = null
     ) {
         // convert into CSV
-        $csv = \SpoonFileCSV::arrayToString(
+        $csv = SpoonFileCSV::arrayToString(
             $array,
             $columns,
             $excludeColumns,

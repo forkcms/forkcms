@@ -1,14 +1,14 @@
 <?php
 
-namespace Frontend\Modules\MediaLibrary\Helper;
+namespace App\Frontend\Modules\MediaLibrary\Helper;
 
-use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Frontend\Core\Header\Header;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use App\Frontend\Core\Header\Header;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository;
 
 /**
  * Frontend Helper

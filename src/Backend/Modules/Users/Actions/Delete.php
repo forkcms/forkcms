@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Users\Actions;
+namespace App\Backend\Modules\Users\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\User as BackendUser;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\User as BackendUser;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the delete-action, it will deactivate and mark the user as deleted

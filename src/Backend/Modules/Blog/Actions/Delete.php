@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\Blog\Actions;
+namespace App\Backend\Modules\Blog\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
-use Backend\Modules\Blog\Form\BlogDeleteType;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use App\Backend\Modules\Blog\Form\BlogDeleteType;
+use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This action will delete a blogpost

@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Extensions\Actions;
+namespace App\Backend\Modules\Extensions\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the detail-action it will display the details of a theme.

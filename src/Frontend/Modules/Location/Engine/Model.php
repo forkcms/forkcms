@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Modules\Location\Engine;
+namespace App\Frontend\Modules\Location\Engine;
 
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Theme as FrontendTheme;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Core\Engine\Theme as FrontendTheme;
 
 /**
  * In this file we store all generic functions that we will be using in the location module

@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Analytics\Form;
+namespace App\Backend\Modules\Analytics\Form;
 
-use Backend\Core\Engine\TwigTemplate;
+use App\Backend\Core\Engine\TwigTemplate;
 
 /**
  * An interface so we can split the settings form up into multiple forms

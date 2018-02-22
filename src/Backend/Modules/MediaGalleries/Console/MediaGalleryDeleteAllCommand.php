@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Console;
+namespace App\Backend\Modules\MediaGalleries\Console;
 
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

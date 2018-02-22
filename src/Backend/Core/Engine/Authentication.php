@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * The class below will handle all authentication stuff. It will handle module-access, action-access, ...

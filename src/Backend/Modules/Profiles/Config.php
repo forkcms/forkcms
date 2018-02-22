@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Profiles;
+namespace App\Backend\Modules\Profiles;
 
-use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the profiles module.

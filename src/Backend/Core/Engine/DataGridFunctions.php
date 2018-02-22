@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Language\Language as BackendLanguage;
 use SpoonDate;
 use SpoonFilter;
 
@@ -257,7 +257,7 @@ class DataGridFunctions
         $imagePath = $path . '/' . $image;
 
         if ($filter !== null) {
-            $imagePath = BackendModel::get('liip_imagine.cache.manager.public')->getBrowserPath($imagePath, $filter);
+            $imagePath = BackendModel::get('liip_imagine.cache.manager')->getBrowserPath($imagePath, $filter);
         }
 
         $html = '<img src="' . $imagePath . '" alt="' . $title . '"';

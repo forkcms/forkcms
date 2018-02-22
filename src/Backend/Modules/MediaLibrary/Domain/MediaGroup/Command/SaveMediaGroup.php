@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
 
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupDataTransferObject;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupDataTransferObject;
 
 final class SaveMediaGroup extends MediaGroupDataTransferObject
 {

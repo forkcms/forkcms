@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Analytics\Widgets;
+namespace App\Backend\Modules\Analytics\Widgets;
 
-use Backend\Core\Engine\Base\Widget;
+use App\Backend\Core\Engine\Base\Widget;
 use Google_Auth_Exception;
 use Google_IO_Exception;
 

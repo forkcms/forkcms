@@ -6,10 +6,10 @@ use App\Controller\InstallerController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\DependencyInjection\Container;
-use Backend\Core\Engine\Model;
-use Backend\Core\Installer\CoreInstaller;
-use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Installer\CoreInstaller;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use App\Component\Installer\InstallationData;
 
 /**

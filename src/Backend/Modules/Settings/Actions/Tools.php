@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Settings\Actions;
+namespace App\Backend\Modules\Settings\Actions;
 
-use Backend\Core\Engine\Base\Action;
+use App\Backend\Core\Engine\Base\Action;
 
 class Tools extends Action
 {

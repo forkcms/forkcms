@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
+namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
 
 final class UpdateContentBlock extends ContentBlockDataTransferObject
 {

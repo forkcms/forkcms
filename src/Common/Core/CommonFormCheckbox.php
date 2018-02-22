@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core;
+namespace App\Common\Core;
 
 /**
  * This is our extended version of \SpoonFormCheckbox

@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Common\Doctrine\Entity\Meta as MetaEntity;
-use Common\Uri as CommonUri;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Common\Doctrine\Entity\Meta as MetaEntity;
+use App\Common\Uri as CommonUri;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class represents a META-object

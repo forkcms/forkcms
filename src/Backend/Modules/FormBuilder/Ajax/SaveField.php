@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\FormBuilder\Ajax;
+namespace App\Backend\Modules\FormBuilder\Ajax;
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
-use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
-use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
-use Common\Uri as CommonUri;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
+use App\Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+use App\Common\Uri as CommonUri;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

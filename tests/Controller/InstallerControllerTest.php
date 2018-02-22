@@ -2,7 +2,7 @@
 
 namespace App\Tests\Controller;
 
-use Common\WebTestCase;
+use App\Tests\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Filesystem\Filesystem;

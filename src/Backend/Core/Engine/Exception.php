@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
 /**
  * This exception is used to handle backend related exceptions.

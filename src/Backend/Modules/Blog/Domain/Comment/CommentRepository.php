@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Blog\Domain\Comment;
+namespace App\Backend\Modules\Blog\Domain\Comment;
 
-use Common\Locale;
+use App\Common\Locale;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityRepository;
 

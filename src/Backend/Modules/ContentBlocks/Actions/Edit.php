@@ -1,19 +1,19 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Actions;
+namespace App\Backend\Modules\ContentBlocks\Actions;
 
-use Backend\Core\Engine\Authentication;
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Locale;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRevisionDataGrid;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockUpdated;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotFound;
+use App\Backend\Core\Engine\Authentication;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Language\Locale;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRevisionDataGrid;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockUpdated;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotFound;
 use Symfony\Component\Form\Form;
 
 /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Actions;
+namespace App\Backend\Modules\MediaLibrary\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 
 class MediaFolderDelete extends BackendBaseActionDelete
 {

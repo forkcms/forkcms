@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Actions;
+namespace App\Backend\Modules\ContentBlocks\Actions;
 
-use Backend\Core\Engine\Authentication;
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlock;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockCreated;
+use App\Backend\Core\Engine\Authentication;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlock;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockCreated;
 use Symfony\Component\Form\Form;
 
 /**

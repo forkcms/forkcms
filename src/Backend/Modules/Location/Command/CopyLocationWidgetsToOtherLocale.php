@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Location\Command;
+namespace App\Backend\Modules\Location\Command;
 
-use Backend\Core\Language\Locale;
+use App\Backend\Core\Language\Locale;
 
 final class CopyLocationWidgetsToOtherLocale
 {

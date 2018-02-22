@@ -1,11 +1,11 @@
 <?php
 
-namespace Frontend\Core\Language;
+namespace App\Frontend\Core\Language;
 
-use Backend\Core\Engine\Model;
-use Frontend\Core\Engine\Exception;
+use App\Backend\Core\Engine\Model;
+use App\Frontend\Core\Engine\Exception;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Modules\Locale\Engine\CacheBuilder;
+use App\Backend\Modules\Locale\Engine\CacheBuilder;
 
 /**
  * This class will store the language-dependant content for the frontend.

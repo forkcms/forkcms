@@ -1,14 +1,14 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Actions;
+namespace App\Backend\Modules\MediaLibrary\Actions;
 
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Model;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemType;
 
 class MediaItemEdit extends BackendBaseActionEdit
 {

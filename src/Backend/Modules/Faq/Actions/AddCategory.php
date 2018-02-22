@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Faq\Actions;
+namespace App\Backend\Modules\Faq\Actions;
 
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Meta as BackendMeta;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Meta as BackendMeta;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the add-action, it will display a form to create a new category

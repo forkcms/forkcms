@@ -1,7 +1,8 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
+use App\Common\Core\Form as BaseForm;
 use SpoonFilter;
 use SpoonFormButton;
 use SpoonFormDropdown;
@@ -15,7 +16,7 @@ use SpoonFormTime;
 /**
  * This is our extended version of SpoonForm.
  */
-class Form extends \Common\Core\Form
+class Form extends BaseForm
 {
     /**
      * Adds a single file field.

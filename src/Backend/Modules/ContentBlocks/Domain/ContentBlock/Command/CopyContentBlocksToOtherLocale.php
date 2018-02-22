@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
+namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use Backend\Core\Language\Locale;
+use App\Backend\Core\Language\Locale;
 
 final class CopyContentBlocksToOtherLocale
 {

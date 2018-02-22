@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * The class below will handle all stuff relates to the current authenticated user

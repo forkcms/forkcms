@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Modules\Mailmotor\Domain\Subscription\Command;
+namespace App\Frontend\Modules\Mailmotor\Domain\Subscription\Command;
 
-use Frontend\Core\Language\Locale;
+use App\Frontend\Core\Language\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
-use Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints as MailingListAssert;
+use App\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints as MailingListAssert;
 
 final class Subscription
 {

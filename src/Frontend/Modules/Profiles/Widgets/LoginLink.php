@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Modules\Profiles\Widgets;
+namespace App\Frontend\Modules\Profiles\Widgets;
 
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 
 /**
  * This is a widget with a login form

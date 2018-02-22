@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
 /**
  * Twig node for writing out the compiled version of form field.

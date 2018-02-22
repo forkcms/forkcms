@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\Analytics\Form;
+namespace App\Backend\Modules\Analytics\Form;
 
-use Backend\Core\Engine\Form;
-use Backend\Core\Language\Language;
-use Backend\Core\Engine\TwigTemplate;
-use Backend\Core\Engine\Model;
-use Backend\Modules\Analytics\DateRange\DateRange;
+use App\Backend\Core\Engine\Form;
+use App\Backend\Core\Language\Language;
+use App\Backend\Core\Engine\TwigTemplate;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Modules\Analytics\DateRange\DateRange;
 
 /**
  * A form to change the date range of the analytics module

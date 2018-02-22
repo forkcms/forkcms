@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Modules\Location\Widgets;
+namespace App\Frontend\Modules\Location\Widgets;
 
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
+use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use App\Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the location-widget: 1 specific address

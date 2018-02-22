@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
+namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Core\Engine\Model;
-use Common\Locale;
+use App\Backend\Core\Engine\Model;
+use App\Common\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use Backend\Core\Engine\Model;
+use App\Backend\Core\Engine\Model;
 use Exception;
 use InvalidArgumentException;
 

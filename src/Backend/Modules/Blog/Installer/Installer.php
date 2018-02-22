@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Blog\Installer;
+namespace App\Backend\Modules\Blog\Installer;
 
-use Backend\Core\Engine\Model;
-use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\Blog\Domain\Category\Category;
-use Backend\Modules\Blog\Domain\Category\CategoryRepository;
-use Backend\Modules\Blog\Domain\Comment\Comment;
-use Common\ModuleExtraType;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Modules\Blog\Domain\Category\Category;
+use App\Backend\Modules\Blog\Domain\Category\CategoryRepository;
+use App\Backend\Modules\Blog\Domain\Comment\Comment;
+use App\Common\ModuleExtraType;
 
 /**
  * Installer for the blog module

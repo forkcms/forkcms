@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Modules\Blog\Widgets;
+namespace App\Frontend\Modules\Blog\Widgets;
 
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is a widget with recent blog-articles

@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Analytics\Form;
+namespace App\Backend\Modules\Analytics\Form;
 
-use Backend\Core\Engine\Form;
-use Backend\Core\Language\Language;
-use Backend\Core\Engine\TwigTemplate;
-use Common\ModulesSettings;
+use App\Backend\Core\Engine\Form;
+use App\Backend\Core\Language\Language;
+use App\Backend\Core\Engine\TwigTemplate;
+use App\Common\ModulesSettings;
 use Google_Service_Analytics;
 
 /**

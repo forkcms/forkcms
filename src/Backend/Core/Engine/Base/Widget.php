@@ -1,17 +1,17 @@
 <?php
 
-namespace Backend\Core\Engine\Base;
+namespace App\Backend\Core\Engine\Base;
 
-use Backend\Core\Engine\Model;
-use Common\Exception\RedirectException;
+use App\Backend\Core\Engine\Model;
+use App\Common\Exception\RedirectException;
 use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Header;
-use Backend\Core\Engine\TwigTemplate;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Header;
+use App\Backend\Core\Engine\TwigTemplate;
 
 /**
  * This is the base-object for widgets

@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Modules\MediaLibrary\Widgets;
+namespace App\Frontend\Modules\MediaLibrary\Widgets;
 
-use Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
+use App\Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
 
 /**
  * This will show a MediaGroup (Custom Module) or a MediaGallery (Media Module) in a lightbox using PhotoSwipe.

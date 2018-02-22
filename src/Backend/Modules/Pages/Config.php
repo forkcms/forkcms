@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Pages;
+namespace App\Backend\Modules\Pages;
 
-use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the pages module

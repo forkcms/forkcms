@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
-use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Countable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

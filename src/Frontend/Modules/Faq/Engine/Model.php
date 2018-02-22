@@ -1,17 +1,17 @@
 <?php
 
-namespace Frontend\Modules\Faq\Engine;
+namespace App\Frontend\Modules\Faq\Engine;
 
-use Backend\Modules\Faq\Domain\Category\Category;
-use Backend\Modules\Faq\Domain\Feedback\Feedback;
-use Backend\Modules\Faq\Domain\Question\Question;
+use App\Backend\Modules\Faq\Domain\Category\Category;
+use App\Backend\Modules\Faq\Domain\Feedback\Feedback;
+use App\Backend\Modules\Faq\Domain\Question\Question;
 use Doctrine\ORM\NoResultException;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url as FrontendUrl;
-use Frontend\Core\Language\Locale;
-use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
-use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Core\Engine\Url as FrontendUrl;
+use App\Frontend\Core\Language\Locale;
+use App\Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use App\Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module

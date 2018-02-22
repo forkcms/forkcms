@@ -1,13 +1,13 @@
 <?php
 
-namespace Frontend\Modules\Search\Ajax;
+namespace App\Frontend\Modules\Search\Ajax;
 
 use DateInterval;
 use Psr\Cache\CacheItemPoolInterface;
-use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use App\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use App\Frontend\Core\Language\Language as FL;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

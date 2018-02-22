@@ -1,17 +1,17 @@
 <?php
 
-namespace Frontend\Modules\Blog\Engine;
+namespace App\Frontend\Modules\Blog\Engine;
 
-use Common\Mailer\Message;
+use App\Common\Mailer\Message;
 use Doctrine\ORM\NoResultException;
-use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url as FrontendUrl;
-use Frontend\Core\Language\Locale;
-use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
-use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
-use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use App\Frontend\Core\Language\Language as FL;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Core\Engine\Url as FrontendUrl;
+use App\Frontend\Core\Language\Locale;
+use App\Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use App\Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module

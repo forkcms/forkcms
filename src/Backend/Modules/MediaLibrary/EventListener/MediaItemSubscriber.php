@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\EventListener;
+namespace App\Backend\Modules\MediaLibrary\EventListener;
 
-use Backend\Modules\MediaLibrary\Manager\FileManager;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Modules\MediaLibrary\Manager\FileManager;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;

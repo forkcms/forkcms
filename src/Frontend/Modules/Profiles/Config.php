@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Modules\Profiles;
+namespace App\Frontend\Modules\Profiles;
 
-use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use App\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception;
 
 class MediaFolderNotFound extends \Exception
 {

@@ -25,24 +25,38 @@ fork-cms/
 ```
 
 Which means:
+* One `App` namespace for `Backend`/`Frontend`/`Common` and Tests
+* Using `var/log` instead of `var/logs`
+* Removed CKFinder
 * Directory `app` is removed
 * Directory `config` is created
 * No internal bundles anymore
 * Moved root `index.php` to `public`
 
-### Vendor bin files are now in the default folder `vendor/bin`
+### One `App` namespace
 
-By removing the following in composer.json
+To make everything work for Symfony 4 we had to:
+* Replace `Backend` by `App\Backend`
+* Replace `Common` by `App\Common`
+* Replace `Frontend` by `App\Frontend`
+* Moved files from `ForkCMS\App` to `App` namespace
+* Moved all tests from backend/common/frontend to `App\Tests`
+
+We now have a clean composer.json autoload
 ```
-"config": {
-    "bin-dir": "bin"
-},
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
 ```
-Adding `"App\\": "src",`, and replacing `"./bin/simple-phpunit"` by `"./vendor/bin/simple-phpunit"`.
 
-Replace in `.travis.yml`: `bin/phpcs` by `vendor/bin/phpcs` and `bin/simple-phpunit` by `vendor/bin/simple-phpunit
-
-### Directory `app` is removed
+### Move files from `ForkCMS\App` to `App` namespace
 
 #### ForkController
 
@@ -112,6 +126,26 @@ After:
 use App\Component\Application\KernelLoader as ...
 ```
 
+
+### Using `var/log` instead of `var/logs`
+
+### Removed CKFinder
+
+Using it in combination with the new Kernel was impossible.
+And because it was already deprecated and not being used anymore in Fork CMS.
+We removed it.
+
+### Vendor bin files are now in the default folder `vendor/bin`
+
+By removing the following in composer.json
+```
+"config": {
+    "bin-dir": "bin"
+},
+```
+Adding `"App\\": "src",`, and replacing `"./bin/simple-phpunit"` by `"./vendor/bin/simple-phpunit"`.
+
+Replace in `.travis.yml`: `bin/phpcs` by `vendor/bin/phpcs` and `bin/simple-phpunit` by `vendor/bin/simple-phpunit
 
 ### No internal bundles anymore
 

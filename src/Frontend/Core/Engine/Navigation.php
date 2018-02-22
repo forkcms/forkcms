@@ -1,13 +1,13 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
 use App\Component\Application\KernelLoader;
-use Frontend\Core\Language\Language;
+use App\Frontend\Core\Language\Language;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
 
 /**
  * This class will be used to build the navigation

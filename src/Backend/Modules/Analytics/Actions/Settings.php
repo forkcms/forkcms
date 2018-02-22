@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Analytics\Actions;
+namespace App\Backend\Modules\Analytics\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Model;
-use Backend\Modules\Analytics\Form\SettingsType;
+use App\Backend\Core\Engine\Base\ActionIndex;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Modules\Analytics\Form\SettingsType;
 
 /**
  * This is the settings-action (default), it will be used to couple your analytics

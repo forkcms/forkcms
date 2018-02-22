@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\Search\Actions;
+namespace App\Backend\Modules\Search\Actions;
 
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the settings-action, it will display a form to set general search settings

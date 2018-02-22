@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Actions;
+namespace App\Backend\Modules\MediaLibrary\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
 class MediaItemDelete extends BackendBaseActionDelete
 {

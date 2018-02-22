@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Modules\MediaLibrary\Twig\Extensions;
+namespace App\Frontend\Modules\MediaLibrary\Twig\Extensions;
 
-use Frontend\Modules\MediaLibrary\Helper\FrontendHelper;
+use App\Frontend\Modules\MediaLibrary\Helper\FrontendHelper;
 use Twig_Markup;
 
 class FrontendHelperExtensions extends \Twig_Extension

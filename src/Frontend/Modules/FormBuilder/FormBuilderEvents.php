@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Modules\FormBuilder;
+namespace App\Frontend\Modules\FormBuilder;
 
 /**
  * A helper class that contains all possible formbuilder events
@@ -12,7 +12,7 @@ final class FormBuilderEvents
      * submitted.
      *
      * The event listener receives an
-     * Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent instance.
+     * App\Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent instance.
      *
      * @var string
      */

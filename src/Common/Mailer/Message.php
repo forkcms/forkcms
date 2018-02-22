@@ -1,10 +1,10 @@
 <?php
 
-namespace Common\Mailer;
+namespace App\Common\Mailer;
 
-use Backend\Core\Engine\TwigTemplate as BackendTemplate;
-use Common\Uri;
-use Frontend\Core\Engine\Model;
+use App\Backend\Core\Engine\TwigTemplate as BackendTemplate;
+use App\Common\Uri;
+use App\Frontend\Core\Engine\Model;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /**

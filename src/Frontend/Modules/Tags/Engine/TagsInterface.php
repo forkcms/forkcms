@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Modules\Tags\Engine;
+namespace App\Frontend\Modules\Tags\Engine;
 
-use Frontend\Core\Engine\Url as FrontendUrl;
+use App\Frontend\Core\Engine\Url as FrontendUrl;
 
 /**
  * In this file we specify the functions a class must implement to work with tags.

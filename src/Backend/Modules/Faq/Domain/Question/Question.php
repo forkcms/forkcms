@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Faq\Domain\Question;
+namespace App\Backend\Modules\Faq\Domain\Question;
 
-use Backend\Modules\Faq\Domain\Category\Category;
-use Common\Doctrine\Entity\Meta;
-use Common\Locale;
+use App\Backend\Modules\Faq\Domain\Category\Category;
+use App\Common\Doctrine\Entity\Meta;
+use App\Common\Locale;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

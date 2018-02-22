@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Modules\ContentBlocks;
+namespace App\Frontend\Modules\ContentBlocks;
 
-use Frontend\Core\Engine\Base\Config as BaseConfig;
+use App\Frontend\Core\Engine\Base\Config as BaseConfig;
 
 /**
  * This is the configuration-object

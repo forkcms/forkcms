@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
+namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use InvalidArgumentException;
 

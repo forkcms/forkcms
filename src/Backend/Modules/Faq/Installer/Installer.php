@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Faq\Installer;
+namespace App\Backend\Modules\Faq\Installer;
 
-use Backend\Core\Engine\Model;
-use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\Faq\Domain\Category\Category;
-use Backend\Modules\Faq\Domain\Feedback\Feedback;
-use Backend\Modules\Faq\Domain\Question\Question;
-use Common\ModuleExtraType;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Modules\Faq\Domain\Category\Category;
+use App\Backend\Modules\Faq\Domain\Feedback\Feedback;
+use App\Backend\Modules\Faq\Domain\Question\Question;
+use App\Common\ModuleExtraType;
 
 /**
  * Installer for the faq module

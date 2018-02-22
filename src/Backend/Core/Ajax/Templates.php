@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Core\Ajax;
+namespace App\Backend\Core\Ajax;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Engine\Base\AjaxAction;
+use App\Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

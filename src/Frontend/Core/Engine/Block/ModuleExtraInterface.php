@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Core\Engine\Block;
+namespace App\Frontend\Core\Engine\Block;
 
-use Frontend\Core\Engine\TwigTemplate;
+use App\Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 interface ModuleExtraInterface

@@ -1,23 +1,23 @@
 services:
   media_galleries.handler.create_media_gallery:
-    class: Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGalleryHandler
+    class: App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGalleryHandler
     public: true
     arguments:
       - "@media_galleries.repository.gallery"
     tags:
-      - { name: command_handler, handles: Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery }
+      - { name: command_handler, handles: App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery }
 
   media_galleries.handler.update_media_gallery:
-    class: Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGalleryHandler
+    class: App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGalleryHandler
     public: true
     tags:
-      - { name: command_handler, handles: Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery }
+      - { name: command_handler, handles: App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery }
 
   media_galleries.handler.delete_media_gallery:
-    class: Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGalleryHandler
+    class: App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGalleryHandler
     public: true
     arguments:
       - "@media_galleries.repository.gallery"
       - "@media_library.repository.item"
     tags:
-      - { name: command_handler, handles: Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery }
+      - { name: command_handler, handles: App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\DeleteMediaGallery }

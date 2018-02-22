@@ -1,14 +1,14 @@
 <?php
 
-namespace Frontend\Core\Engine\Base;
+namespace App\Frontend\Core\Engine\Base;
 
-use Common\Core\Header\Priority;
-use Common\Exception\RedirectException;
+use App\Common\Core\Header\Priority;
+use App\Common\Exception\RedirectException;
 use App\Component\Application\KernelLoader;
-use Frontend\Core\Engine\Model;
-use Frontend\Core\Engine\Url;
-use Frontend\Core\Header\Header;
-use Frontend\Core\Engine\TwigTemplate;
+use App\Frontend\Core\Engine\Model;
+use App\Frontend\Core\Engine\Url;
+use App\Frontend\Core\Header\Header;
+use App\Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;

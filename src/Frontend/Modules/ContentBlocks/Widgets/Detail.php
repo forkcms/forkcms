@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Modules\ContentBlocks\Widgets;
+namespace App\Frontend\Modules\ContentBlocks\Widgets;
 
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Language\Locale;
+use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use App\Frontend\Core\Language\Locale;
 
 /**
  * This is the detail widget.

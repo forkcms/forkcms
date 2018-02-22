@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Installer;
+namespace App\Backend\Core\Installer;
 
 /**
  * Installer for the core
@@ -194,10 +194,6 @@ class CoreInstaller extends ModuleInstaller
                 (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title')
             );
         }
-
-        // ckfinder
-        $this->setSetting('Core', 'ckfinder_license_name', 'Fork CMS');
-        $this->setSetting('Core', 'ckfinder_license_key', 'QFKH-MNCN-19A8-32XW-35GK-Q58G-UPMC');
 
         // Enable the cookie bar by default when the timezone is in europe
         $this->setSetting(

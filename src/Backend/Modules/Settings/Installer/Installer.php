@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Settings\Installer;
+namespace App\Backend\Modules\Settings\Installer;
 
-use Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the settings module

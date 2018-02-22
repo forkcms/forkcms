@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Backend\Core\Engine\Model as BackendModel;
-use Common\Core\Twig\Extensions\BaseTwigModifiers;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Common\Core\Twig\Extensions\BaseTwigModifiers;
+use App\Backend\Core\Language\Language as BackendLanguage;
 use SpoonDate;
 
 /**

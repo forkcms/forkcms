@@ -1,0 +1,23 @@
+parameters:
+    database.driver:        mysql
+    database.host:          localhost
+    database.port:          3306
+    database.name:          fork
+    database.user:          root
+    database.password:      ''
+
+    kernel.secret:          hJkHiixy9xOd2fc8ovoSjNHjPlSZl8E0
+
+    fork.debug_email:       ''
+    fork.debug_message:     'Internal error.'
+    fork.version:           '5.2.2'
+
+    site.protocol:          http
+    site.domain:            fork.local
+    site.default_title:     Fork CMS
+    site.multilanguage:     true
+    site.default_language:  en
+    site.path_www:          "%kernel.project_dir%"
+
+    action.group_tag:       '\@actiongroup'
+    action.rights_level:    7

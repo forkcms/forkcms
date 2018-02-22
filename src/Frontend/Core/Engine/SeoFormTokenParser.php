@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
 use Twig_Node;
 use Twig_Token;

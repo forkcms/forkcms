@@ -1,15 +1,15 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Common\Core\Header\Asset;
-use Common\Core\Header\AssetCollection;
-use Common\Core\Header\JsData;
-use Common\Core\Header\Minifier;
-use Common\Core\Header\Priority;
+use App\Common\Core\Header\Asset;
+use App\Common\Core\Header\AssetCollection;
+use App\Common\Core\Header\JsData;
+use App\Common\Core\Header\Minifier;
+use App\Common\Core\Header\Priority;
 use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Language\Language as BL;
+use App\Backend\Core\Language\Language as BL;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend

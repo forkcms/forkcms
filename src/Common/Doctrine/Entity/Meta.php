@@ -1,10 +1,10 @@
 <?php
 
-namespace Common\Doctrine\Entity;
+namespace App\Common\Doctrine\Entity;
 
-use Backend\Core\Engine\Meta as BackendMeta;
-use Common\Doctrine\ValueObject\SEOFollow;
-use Common\Doctrine\ValueObject\SEOIndex;
+use App\Backend\Core\Engine\Meta as BackendMeta;
+use App\Common\Doctrine\ValueObject\SEOFollow;
+use App\Common\Doctrine\ValueObject\SEOIndex;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

@@ -1,22 +1,22 @@
 <?php
 
-namespace Backend\Modules\Pages\Actions;
+namespace App\Backend\Modules\Pages\Actions;
 
-use Backend\Core\Engine\Authentication;
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Meta as BackendMeta;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use App\Backend\Core\Engine\Authentication;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use App\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Meta as BackendMeta;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use App\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use SpoonFormHidden;
 
 /**

@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Modules\Mailmotor\Domain\Subscription\Command;
+namespace App\Frontend\Modules\Mailmotor\Domain\Subscription\Command;
 
-use Common\ModulesSettings;
-use Frontend\Core\Language\Locale;
+use App\Common\ModulesSettings;
+use App\Frontend\Core\Language\Locale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 

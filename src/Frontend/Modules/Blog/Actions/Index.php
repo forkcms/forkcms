@@ -1,11 +1,11 @@
 <?php
 
-namespace Frontend\Modules\Blog\Actions;
+namespace App\Frontend\Modules\Blog\Actions;
 
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Language\Language;
-use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Core\Language\Language;
+use App\Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Index extends FrontendBaseBlock

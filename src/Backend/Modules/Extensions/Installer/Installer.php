@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\Extensions\Installer;
+namespace App\Backend\Modules\Extensions\Installer;
 
-use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Common\ModuleExtraType;
 
 /**
  * Installer for the extensions module.

@@ -1,15 +1,15 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Actions;
+namespace App\Backend\Modules\MediaLibrary\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\DataGridDatabase;
-use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDataGrid;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Engine\DataGridDatabase;
+use App\Backend\Core\Language\Language;
+use App\Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDataGrid;
 
 class MediaItemIndex extends BackendBaseActionIndex
 {

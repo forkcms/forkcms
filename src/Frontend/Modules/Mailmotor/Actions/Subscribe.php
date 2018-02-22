@@ -1,13 +1,13 @@
 <?php
 
-namespace Frontend\Modules\Mailmotor\Actions;
+namespace App\Frontend\Modules\Mailmotor\Actions;
 
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Language\Locale;
-use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
-use Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedSubscribedEvent;
-use Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType;
+use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Core\Language\Locale;
+use App\Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
+use App\Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedSubscribedEvent;
+use App\Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 
 /**

@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Profiles\Installer;
+namespace App\Backend\Modules\Profiles\Installer;
 
-use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Common\ModuleExtraType;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Language\Language;
+use App\Backend\Core\Language\Language;
 
 /**
  * Installer for the profiles module.

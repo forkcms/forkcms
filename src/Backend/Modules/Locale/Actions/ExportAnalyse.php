@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Locale\Actions;
+namespace App\Backend\Modules\Locale\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

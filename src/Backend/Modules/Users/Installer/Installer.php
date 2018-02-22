@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Users\Installer;
+namespace App\Backend\Modules\Users\Installer;
 
-use Common\Core\Model;
+use App\Common\Core\Model;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
-use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
-use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use App\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * Installer for the users module

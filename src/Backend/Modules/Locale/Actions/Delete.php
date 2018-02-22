@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Locale\Actions;
+namespace App\Backend\Modules\Locale\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This action will delete a translation

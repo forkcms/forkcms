@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Ajax;
+namespace App\Backend\Modules\MediaLibrary\Ajax;
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

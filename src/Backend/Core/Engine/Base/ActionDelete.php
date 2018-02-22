@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Engine\Base;
+namespace App\Backend\Core\Engine\Base;
 
 /**
  * This class implements a lot of functionality that can be extended by the real action.

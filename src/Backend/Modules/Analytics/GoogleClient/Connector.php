@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Analytics\GoogleClient;
+namespace App\Backend\Modules\Analytics\GoogleClient;
 
-use Common\ModulesSettings;
+use App\Common\ModulesSettings;
 use Google_Service_Analytics;
 use Google_Service_Analytics_GaData;
 use Psr\Cache\CacheItemPoolInterface;

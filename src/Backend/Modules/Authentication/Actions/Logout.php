@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Authentication\Actions;
+namespace App\Backend\Modules\Authentication\Actions;
 
-use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Base\Action as BackendBaseAction;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the logout-action, it will logout the current user

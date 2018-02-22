@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary;
+namespace App\Backend\Modules\MediaLibrary;
 
-use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the media library module

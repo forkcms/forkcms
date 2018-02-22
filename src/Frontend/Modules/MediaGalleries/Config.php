@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Modules\MediaGalleries;
+namespace App\Frontend\Modules\MediaGalleries;
 
-use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use App\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object

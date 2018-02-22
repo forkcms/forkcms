@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\Blog\Domain\Category;
+namespace App\Backend\Modules\Blog\Domain\Category;
 
-use Common\Doctrine\Entity\Meta;
-use Common\Locale;
+use App\Common\Doctrine\Entity\Meta;
+use App\Common\Locale;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

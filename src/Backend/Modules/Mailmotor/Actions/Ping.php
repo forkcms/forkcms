@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\Mailmotor\Actions;
+namespace App\Backend\Modules\Mailmotor\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
-use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
-use Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
+use App\Backend\Core\Engine\Base\ActionIndex;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Language\Language;
+use App\Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
+use App\Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
 
 /**
  * This tests the api
@@ -28,7 +28,7 @@ final class Ping extends ActionIndex
 
     private function ping(): bool
     {
-        $gateway = $this->getContainer()->get('mailmotor.factory.public')->getSubscriberGateway();
+        $gateway = $this->getContainer()->get('mailmotor.factory')->getSubscriberGateway();
 
         // don't try to ping if you aren't using a service like mailchimp or campaign monitor
         if (!$gateway->ping($this->getContainer()->getParameter('mailmotor.list_id'))) {

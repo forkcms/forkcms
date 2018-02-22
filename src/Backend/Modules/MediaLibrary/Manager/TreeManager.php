@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Manager;
+namespace App\Backend\Modules\MediaLibrary\Manager;
 
-use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
-use Backend\Core\Language\Language;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
+use App\Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
+use App\Backend\Core\Language\Language;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
 
 /**
  * In this file we store all generic functions that we will be using in the MediaLibrary module

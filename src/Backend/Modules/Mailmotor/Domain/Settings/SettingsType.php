@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\Mailmotor\Domain\Settings;
+namespace App\Backend\Modules\Mailmotor\Domain\Settings;
 
-use Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
-use Common\Language;
+use App\Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
+use App\Common\Language;
 use MailMotor\Bundle\MailMotorBundle\Manager\SubscriberGatewayManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

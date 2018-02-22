@@ -1,6 +1,50 @@
 #!/usr/bin/env php
 <?php
 
+use App\Kernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Debug\Debug;
+use Symfony\Component\Dotenv\Dotenv;
+
+set_time_limit(0);
+
+// @ForkCMS: we changed the default from '/../vendor/autoload.php` to
+require __DIR__.'/../autoload.php';
+
+if (!class_exists(Application::class)) {
+    throw new \RuntimeException('You need to add "symfony/framework-bundle" as a Composer dependency.');
+}
+
+if (!isset($_SERVER['APP_ENV'])) {
+    if (!class_exists(Dotenv::class)) {
+        throw new \RuntimeException('APP_ENV environment variable is not defined. You need to define environment variables for configuration or add "symfony/dotenv" as a Composer dependency to load variables from a .env file.');
+    }
+    (new Dotenv())->load(__DIR__.'/../.env');
+}
+
+$input = new ArgvInput();
+$env = $input->getParameterOption(['--env', '-e'], $_SERVER['APP_ENV'] ?? 'dev');
+$debug = ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env)) && !$input->hasParameterOption(['--no-debug', '']);
+
+if ($debug) {
+    umask(0000);
+
+    if (class_exists(Debug::class)) {
+        Debug::enable();
+    }
+}
+
+$kernel = new Kernel($env, $debug);
+$application = new Application($kernel);
+$application->run($input);
+
+
+
+/*
+#!/usr/bin/env php
+<?php
+
 // if you don't want to setup permissions the proper way, just uncomment the following PHP line
 // read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
 //umask(0000);
@@ -9,13 +53,13 @@ set_time_limit(0);
 
 require_once __DIR__ . '/../autoload.php';
 
-use Common\ModulesSettings;
+use App\Common\ModulesSettings;
 use ForkCMS\App\AppKernel;
-use ForkCMS\App\BaseModel;
+use App\Component\Model\BaseModel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
-use Backend\Init as BackendInit;
+use App\Backend\Init as BackendInit;
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
@@ -53,3 +97,4 @@ if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
     );
 }
 $application->run($input);
+*/

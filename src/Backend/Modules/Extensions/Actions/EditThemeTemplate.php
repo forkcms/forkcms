@@ -1,14 +1,14 @@
 <?php
 
-namespace Backend\Modules\Extensions\Actions;
+namespace App\Backend\Modules\Extensions\Actions;
 
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the edit-action, it will display a form to edit an item

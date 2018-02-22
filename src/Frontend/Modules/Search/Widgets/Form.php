@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Modules\Search\Widgets;
+namespace App\Frontend\Modules\Search\Widgets;
 
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use App\Frontend\Core\Engine\Form as FrontendForm;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This is a widget with the search form

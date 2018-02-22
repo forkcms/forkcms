@@ -1,8 +1,8 @@
 <?php
 
-namespace Console\Thumbnails;
+namespace App\Console\Thumbnails;
 
-use Common\Core\Model;
+use App\Common\Core\Model;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

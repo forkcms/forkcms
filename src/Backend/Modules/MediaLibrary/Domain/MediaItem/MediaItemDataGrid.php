@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaItem;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use Backend\Core\Engine\DataGridDatabase;
-use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
+use App\Backend\Core\Engine\DataGridDatabase;
+use App\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Language\Language;
 use SpoonFormDropdown;
 
 /**

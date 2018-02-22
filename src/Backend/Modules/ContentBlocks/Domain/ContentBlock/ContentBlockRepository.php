@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
+namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotFound;
-use Common\Locale;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception\ContentBlockNotFound;
+use App\Common\Locale;
 use Doctrine\ORM\EntityRepository;
 
 class ContentBlockRepository extends EntityRepository

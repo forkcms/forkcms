@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Component\StorageProvider;
+namespace App\Backend\Modules\MediaLibrary\Component\StorageProvider;
 
 interface LocalStorageProviderInterface extends StorageProviderInterface, LiipImagineBundleStorageProviderInterface
 {

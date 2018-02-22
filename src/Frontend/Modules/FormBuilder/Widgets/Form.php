@@ -1,16 +1,16 @@
 <?php
 
-namespace Frontend\Modules\FormBuilder\Widgets;
+namespace App\Frontend\Modules\FormBuilder\Widgets;
 
-use Common\Exception\RedirectException;
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Form as FrontendForm;
-use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Language\Locale;
-use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
-use Frontend\Modules\FormBuilder\FormBuilderEvents;
-use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use App\Common\Exception\RedirectException;
+use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use App\Frontend\Core\Engine\Form as FrontendForm;
+use App\Frontend\Core\Language\Language as FL;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Core\Language\Locale;
+use App\Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
+use App\Frontend\Modules\FormBuilder\FormBuilderEvents;
+use App\Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use ReCaptcha\ReCaptcha;
 use SpoonFormAttributes;
 use Symfony\Component\HttpFoundation\RedirectResponse;

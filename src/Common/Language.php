@@ -1,9 +1,9 @@
 <?php
 
-namespace Common;
+namespace App\Common;
 
-use Common\Core\Model;
-use Frontend\Core\Language\Language as FrontendLanguage;
+use App\Common\Core\Model;
+use App\Frontend\Core\Language\Language as FrontendLanguage;
 use InvalidArgumentException;
 use Symfony\Component\Translation\IdentityTranslator;
 

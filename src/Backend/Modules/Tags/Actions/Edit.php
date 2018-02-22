@@ -1,14 +1,14 @@
 <?php
 
-namespace Backend\Modules\Tags\Actions;
+namespace App\Backend\Modules\Tags\Actions;
 
-use Common\Uri as CommonUri;
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use App\Common\Uri as CommonUri;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the edit action, it will display a form to edit an existing tag.

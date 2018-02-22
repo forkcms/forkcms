@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\DependencyInjection;
+namespace App\Backend\Modules\ContentBlocks\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

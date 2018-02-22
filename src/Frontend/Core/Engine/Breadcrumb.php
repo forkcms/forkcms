@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
 use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;

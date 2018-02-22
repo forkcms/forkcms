@@ -1,6 +1,6 @@
 <?php
 
-namespace Console\Core;
+namespace App\Console\Core;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;

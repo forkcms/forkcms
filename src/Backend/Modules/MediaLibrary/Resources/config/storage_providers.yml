@@ -1,6 +1,6 @@
 services:
     media_library.storage.local:
-        class: Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider
+        class: App\Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider
         public: true
         arguments:
             - "src/Frontend/Files/MediaLibrary"
@@ -11,7 +11,7 @@ services:
             - { name: media_library.storage_provider, storageType: local }
 
     media_library.storage.youtube:
-        class: Backend\Modules\MediaLibrary\Component\StorageProvider\YoutubeStorageProvider
+        class: App\Backend\Modules\MediaLibrary\Component\StorageProvider\YoutubeStorageProvider
         public: true
         arguments:
             - "https://www.youtube.com/watch?v="
@@ -20,7 +20,7 @@ services:
             - { name: media_library.storage_provider, storageType: youtube }
 
     media_library.storage.vimeo:
-        class: Backend\Modules\MediaLibrary\Component\StorageProvider\VimeoStorageProvider
+        class: App\Backend\Modules\MediaLibrary\Component\StorageProvider\VimeoStorageProvider
         public: true
         arguments:
             - "https://www.vimeo.com/"

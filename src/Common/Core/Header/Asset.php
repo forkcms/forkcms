@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core\Header;
+namespace App\Common\Core\Header;
 
 use DateTimeImmutable;
 

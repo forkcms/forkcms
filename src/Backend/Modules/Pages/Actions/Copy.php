@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Pages\Actions;
+namespace App\Backend\Modules\Pages\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Exception as BackendException;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Engine\Exception as BackendException;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * BackendPagesCopy

@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Mailmotor;
+namespace App\Backend\Modules\Mailmotor;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Backend\Modules\Mailmotor\DependencyInjection\Compiler\MailmotorCompilerPass;
+use App\Backend\Modules\Mailmotor\DependencyInjection\Compiler\MailmotorCompilerPass;
 
 class Mailmotor extends Bundle
 {

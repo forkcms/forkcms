@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Modules\Profiles\Actions;
+namespace App\Frontend\Modules\Profiles\Actions;
 
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
-use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use App\Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Activate extends FrontendBaseBlock

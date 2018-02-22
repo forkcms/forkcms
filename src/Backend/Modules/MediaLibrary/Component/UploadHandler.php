@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Component;
+namespace App\Backend\Modules\MediaLibrary\Component;
 
-use Backend\Modules\MediaLibrary\Manager\FileManager;
+use App\Backend\Modules\MediaLibrary\Manager\FileManager;
 use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;

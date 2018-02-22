@@ -1,12 +1,12 @@
 <?php
 
-namespace Frontend\Modules\Profiles\Engine;
+namespace App\Frontend\Modules\Profiles\Engine;
 
-use Common\Uri as CommonUri;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
-use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
+use App\Common\Uri as CommonUri;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use App\Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
 
 /**
  * In this file we store all generic functions that we will be using with profiles.

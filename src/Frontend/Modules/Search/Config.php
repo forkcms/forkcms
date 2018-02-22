@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Modules\Search;
+namespace App\Frontend\Modules\Search;
 
-use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use App\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object

@@ -1,20 +1,20 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
-use Common\Exception\RedirectException;
+use App\Common\Exception\RedirectException;
 use App\Component\Application\KernelLoader;
-use Frontend\Core\Engine\Block\ModuleExtraInterface;
-use Frontend\Core\Header\Header;
-use Frontend\Core\Language\Language;
+use App\Frontend\Core\Engine\Block\ModuleExtraInterface;
+use App\Frontend\Core\Header\Header;
+use App\Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
-use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
-use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
+use App\Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
+use App\Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**

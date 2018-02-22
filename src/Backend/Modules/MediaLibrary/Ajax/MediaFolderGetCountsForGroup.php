@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Ajax;
+namespace App\Backend\Modules\MediaLibrary\Ajax;
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Common\Exception\AjaxExitException;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Language\Language;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use App\Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

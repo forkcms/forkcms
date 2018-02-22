@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Pages\Installer;
+namespace App\Backend\Modules\Pages\Installer;
 
-use Backend\Core\Installer\ModuleInstaller;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Common\ModuleExtraType;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Common\ModuleExtraType;
 
 /**
  * Installer for the pages module

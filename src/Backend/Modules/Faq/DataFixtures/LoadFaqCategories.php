@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Faq\DataFixtures;
+namespace App\Backend\Modules\Faq\DataFixtures;
 
 class LoadFaqCategories
 {

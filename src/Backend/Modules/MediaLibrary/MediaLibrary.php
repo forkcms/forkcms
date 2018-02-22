@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary;
+namespace App\Backend\Modules\MediaLibrary;
 
-use Backend\Modules\MediaLibrary\DependencyInjection\Compiler\StorageProviderPass;
+use App\Backend\Modules\MediaLibrary\DependencyInjection\Compiler\StorageProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

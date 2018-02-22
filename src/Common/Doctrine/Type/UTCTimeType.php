@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Doctrine\Type;
+namespace App\Common\Doctrine\Type;
 
 use DateTime;
 use DateTimeZone;

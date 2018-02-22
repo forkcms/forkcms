@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Modules\Location\Actions;
+namespace App\Frontend\Modules\Location\Actions;
 
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
+use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use App\Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the index-action, it has an overview of locations.

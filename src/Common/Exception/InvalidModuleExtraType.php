@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Exception;
+namespace App\Common\Exception;
 
-use Common\ModuleExtraType;
+use App\Common\ModuleExtraType;
 use Exception;
 
 final class InvalidModuleExtraType extends Exception

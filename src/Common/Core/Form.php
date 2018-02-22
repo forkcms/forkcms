@@ -1,12 +1,12 @@
 <?php
 
-namespace Common\Core;
+namespace App\Common\Core;
 
-use Backend\Core\Engine\Header as BackendHeader;
+use App\Backend\Core\Engine\Header as BackendHeader;
 use Exception;
-use Frontend\Core\Header\Header as FrontendHeader;
-use Backend\Core\Engine\Url as BackendUrl;
-use Frontend\Core\Engine\Url as FrontendUrl;
+use App\Frontend\Core\Header\Header as FrontendHeader;
+use App\Backend\Core\Engine\Url as BackendUrl;
+use App\Frontend\Core\Engine\Url as FrontendUrl;
 use SpoonFilter;
 use SpoonFormButton;
 use SpoonFormDropdown;

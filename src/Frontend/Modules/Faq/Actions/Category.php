@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Modules\Faq\Actions;
+namespace App\Frontend\Modules\Faq\Actions;
 
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
+use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Category extends FrontendBaseBlock

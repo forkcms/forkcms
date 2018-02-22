@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Actions;
+namespace App\Backend\Modules\MediaLibrary\Actions;
 
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
 
 class MediaItemUpload extends BackendBaseActionAdd
 {

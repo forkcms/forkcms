@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Locale\Engine;
+namespace App\Backend\Modules\Locale\Engine;
 
-use Common\Uri as CommonUri;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Common\Uri as CommonUri;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module

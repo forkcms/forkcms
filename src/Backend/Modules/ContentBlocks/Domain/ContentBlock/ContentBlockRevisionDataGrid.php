@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
+namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Core\Engine\Authentication;
-use Backend\Core\Engine\DataGridDatabase;
-use Backend\Core\Engine\DataGridFunctions;
-use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
-use Backend\Core\Language\Locale;
+use App\Backend\Core\Engine\Authentication;
+use App\Backend\Core\Engine\DataGridDatabase;
+use App\Backend\Core\Engine\DataGridFunctions;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Language\Language;
+use App\Backend\Core\Language\Locale;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid

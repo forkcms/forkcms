@@ -1,15 +1,15 @@
 <?php
 
-namespace Backend\Modules\Groups\Actions;
+namespace App\Backend\Modules\Groups\Actions;
 
 use Symfony\Component\Finder\Finder;
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the add-action, it will display a form to create a new group

@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Tags\Engine;
+namespace App\Backend\Modules\Tags\Engine;
 
-use Common\Uri as CommonUri;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use App\Common\Uri as CommonUri;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * In this file we store all generic functions that we will be using in the TagsModule

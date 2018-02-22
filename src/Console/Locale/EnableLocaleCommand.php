@@ -1,10 +1,10 @@
 <?php
 
-namespace Console\Locale;
+namespace App\Console\Locale;
 
-use Backend\Core\Engine\Authentication;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Common\ModulesSettings;
+use App\Backend\Core\Engine\Authentication;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Common\ModulesSettings;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;

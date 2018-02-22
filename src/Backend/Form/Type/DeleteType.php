@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Form\Type;
+namespace App\Backend\Form\Type;
 
-use Backend\Core\Engine\Model;
+use App\Backend\Core\Engine\Model;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -1,14 +1,14 @@
 <?php
 
-namespace Frontend\Core\Engine\Block;
+namespace App\Frontend\Core\Engine\Block;
 
 use App\Component\Application\KernelLoader;
-use Frontend\Core\Engine\TwigTemplate;
-use Frontend\Core\Engine\Url;
+use App\Frontend\Core\Engine\TwigTemplate;
+use App\Frontend\Core\Engine\Url;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Frontend\Core\Engine\Base\Config;
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Exception as FrontendException;
+use App\Frontend\Core\Engine\Base\Config;
+use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use App\Frontend\Core\Engine\Exception as FrontendException;
 
 /**
  * This class will handle all stuff related to widgets

@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Modules\Search\Ajax;
+namespace App\Frontend\Modules\Search\Ajax;
 
-use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+use App\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

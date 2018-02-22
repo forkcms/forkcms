@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Core\Header;
+namespace App\Common\Core\Header;
 
-use Common\Core\Twig\BaseTwigTemplate;
+use App\Common\Core\Twig\BaseTwigTemplate;
 
 final class AssetCollection
 {

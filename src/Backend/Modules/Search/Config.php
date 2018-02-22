@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Search;
+namespace App\Backend\Modules\Search;
 
-use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the search module

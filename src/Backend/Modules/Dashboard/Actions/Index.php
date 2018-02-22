@@ -1,16 +1,16 @@
 <?php
 
-namespace Backend\Modules\Dashboard\Actions;
+namespace App\Backend\Modules\Dashboard\Actions;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Exception as BackendException;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Exception as BackendException;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the index-action (default), it will display the login screen

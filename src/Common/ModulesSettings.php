@@ -1,6 +1,6 @@
 <?php
 
-namespace Common;
+namespace App\Common;
 
 use Psr\Cache\CacheItemPoolInterface;
 use SpoonDatabase;

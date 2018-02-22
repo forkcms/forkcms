@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Core;
+namespace App\Common\Core;
 
-use Common\Exception\InvalidInitTypeException;
+use App\Common\Exception\InvalidInitTypeException;
 use App\Component\Application\KernelLoader;
 
 /**

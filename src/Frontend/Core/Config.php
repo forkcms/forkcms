@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Core;
+namespace App\Frontend\Core;
 
-use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use App\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object

@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Extensions\Actions;
+namespace App\Backend\Modules\Extensions\Actions;
 
-use Backend\Core\Engine\Base\ActionEdit;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Extensions\Engine\Model;
+use App\Backend\Core\Engine\Base\ActionEdit;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Extensions\Engine\Model;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\Extensions\Actions;
+namespace App\Backend\Modules\Extensions\Actions;
 
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use ZipArchive;

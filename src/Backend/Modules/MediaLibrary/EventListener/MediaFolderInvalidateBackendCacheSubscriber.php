@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\EventListener;
+namespace App\Backend\Modules\MediaLibrary\EventListener;
 
-use Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;

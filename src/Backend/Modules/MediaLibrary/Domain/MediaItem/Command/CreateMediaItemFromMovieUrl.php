@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
 
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 
 final class CreateMediaItemFromMovieUrl
 {

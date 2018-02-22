@@ -1,15 +1,15 @@
 <?php
 
-namespace Frontend\Modules\Mailmotor\Domain\Subscription;
+namespace App\Frontend\Modules\Mailmotor\Domain\Subscription;
 
-use Common\ModulesSettings;
+use App\Common\ModulesSettings;
 use DateTime;
-use Frontend\Core\Engine\Navigation;
-use Frontend\Core\Language\Locale;
-use Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
+use App\Frontend\Core\Engine\Navigation;
+use App\Frontend\Core\Language\Locale;
+use App\Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
-use Common\Language;
+use App\Common\Language;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

@@ -1,14 +1,14 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Installer;
+namespace App\Backend\Modules\MediaLibrary\Installer;
 
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
-use Backend\Core\Engine\Model;
-use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
 /**
  * Installer for the MediaLibrary module

@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
+namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
 
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository;
 
 final class CreateMediaGalleryHandler
 {

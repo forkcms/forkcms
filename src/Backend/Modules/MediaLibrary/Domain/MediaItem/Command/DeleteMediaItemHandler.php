@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
 
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 
 final class DeleteMediaItemHandler
 {

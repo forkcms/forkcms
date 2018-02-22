@@ -1,14 +1,14 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Ajax;
+namespace App\Backend\Modules\MediaLibrary\Ajax;
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use Common\Exception\AjaxExitException;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Language\Language;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

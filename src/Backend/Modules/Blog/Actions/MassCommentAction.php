@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Blog\Actions;
+namespace App\Backend\Modules\Blog\Actions;
 
-use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use App\Backend\Core\Engine\Base\Action as BackendBaseAction;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This action is used to update one or more comments (status, delete, ...)

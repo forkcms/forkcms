@@ -1,11 +1,11 @@
 <?php
 
-namespace Frontend\Modules\Pages\Engine;
+namespace App\Frontend\Modules\Pages\Engine;
 
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url as FrontendUrl;
-use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Core\Engine\Url as FrontendUrl;
+use App\Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the pages module

@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Core\Language;
+namespace App\Backend\Core\Language;
 
-use Backend\Core\Engine\Model;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 

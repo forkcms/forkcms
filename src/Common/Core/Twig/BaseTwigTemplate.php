@@ -1,10 +1,10 @@
 <?php
 
-namespace Common\Core\Twig;
+namespace App\Common\Core\Twig;
 
-use Common\Core\Form;
-use Common\Core\Model;
-use Common\ModulesSettings;
+use App\Common\Core\Form;
+use App\Common\Core\Model;
+use App\Common\ModulesSettings;
 use SpoonForm;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Twig_Environment;

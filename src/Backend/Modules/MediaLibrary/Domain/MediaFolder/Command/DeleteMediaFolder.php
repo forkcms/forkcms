@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaFolder\Command;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command;
 
-use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 
 final class DeleteMediaFolder
 {

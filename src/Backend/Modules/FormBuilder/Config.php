@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\FormBuilder;
+namespace App\Backend\Modules\FormBuilder;
 
-use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the form builder module

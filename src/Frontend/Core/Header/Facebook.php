@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Core\Header;
+namespace App\Frontend\Core\Header;
 
-use Common\ModulesSettings;
-use Frontend\Core\Engine\Theme;
+use App\Common\ModulesSettings;
+use App\Frontend\Core\Engine\Theme;
 
 final class Facebook
 {

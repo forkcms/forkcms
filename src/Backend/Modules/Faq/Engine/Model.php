@@ -1,16 +1,16 @@
 <?php
 
-namespace Backend\Modules\Faq\Engine;
+namespace App\Backend\Modules\Faq\Engine;
 
-use Backend\Modules\Faq\Domain\Category\Category;
-use Backend\Core\Language\Locale;
-use Backend\Modules\Faq\Domain\Feedback\Feedback;
-use Backend\Modules\Faq\Domain\Question\Question;
-use Common\ModuleExtraType;
-use Common\Uri as CommonUri;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use App\Backend\Modules\Faq\Domain\Category\Category;
+use App\Backend\Core\Language\Locale;
+use App\Backend\Modules\Faq\Domain\Feedback\Feedback;
+use App\Backend\Modules\Faq\Domain\Question\Question;
+use App\Common\ModuleExtraType;
+use App\Common\Uri as CommonUri;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module

@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Core\Header;
+namespace App\Frontend\Core\Header;
 
-use Common\Core\Cookie;
-use Common\ModulesSettings;
+use App\Common\Core\Cookie;
+use App\Common\ModulesSettings;
 
 final class GoogleAnalytics
 {

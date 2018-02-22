@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Search\Actions;
+namespace App\Backend\Modules\Search\Actions;
 
-use Backend\Core\Engine\Base\Action;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use App\Backend\Core\Engine\Base\Action;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the synonyms-action, it will display the overview of search synonyms

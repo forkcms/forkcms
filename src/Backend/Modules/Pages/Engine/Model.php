@@ -1,21 +1,21 @@
 <?php
 
-namespace Backend\Modules\Pages\Engine;
+namespace App\Backend\Modules\Pages\Engine;
 
-use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
-use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
+use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
+use App\Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
 use SimpleBus\Message\Bus\MessageBus;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Locale;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Language\Locale;
+use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use ForkCMS\App\ForkController;
-use Frontend\Core\Language\Language as FrontendLanguage;
+use App\Frontend\Core\Language\Language as FrontendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the PagesModule

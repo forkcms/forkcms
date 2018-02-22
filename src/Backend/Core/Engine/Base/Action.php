@@ -1,18 +1,18 @@
 <?php
 
-namespace Backend\Core\Engine\Base;
+namespace App\Backend\Core\Engine\Base;
 
-use Backend\Core\Engine\TwigTemplate;
-use Common\Exception\RedirectException;
+use App\Backend\Core\Engine\TwigTemplate;
+use App\Common\Exception\RedirectException;
 use App\Component\Application\KernelLoader;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Engine\Header;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Url;
+use App\Backend\Core\Engine\Header;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Url;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific action

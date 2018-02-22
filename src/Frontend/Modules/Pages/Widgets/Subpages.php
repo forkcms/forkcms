@@ -1,11 +1,11 @@
 <?php
 
-namespace Frontend\Modules\Pages\Widgets;
+namespace App\Frontend\Modules\Pages\Widgets;
 
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Theme as FrontendTheme;
-use Frontend\Modules\Pages\Engine\Model as FrontendPagesModel;
+use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use App\Frontend\Core\Engine\Exception as FrontendException;
+use App\Frontend\Core\Engine\Theme as FrontendTheme;
+use App\Frontend\Modules\Pages\Engine\Model as FrontendPagesModel;
 
 /**
  * This is a widget which shows the subpages.

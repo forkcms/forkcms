@@ -1,28 +1,28 @@
 services:
     media_library.repository.folder:
-        class: Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository
+        class: App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder
+            - App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder
 
     media_library.repository.group:
-        class: Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository
+        class: App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup
+            - App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup
 
     media_library.repository.group_item:
-        class: Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository
+        class: App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem
+            - App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem
 
     media_library.repository.item:
-        class: Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository
+        class: App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem
+            - App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem

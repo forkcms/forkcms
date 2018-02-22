@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
+namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class MediaGalleryDataTransferObject

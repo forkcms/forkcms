@@ -1,14 +1,14 @@
 <?php
 
-namespace Backend\Modules\Locale\Actions;
+namespace App\Backend\Modules\Locale\Actions;
 
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the index-action, it will display an overview of all the translations with an inline edit option.

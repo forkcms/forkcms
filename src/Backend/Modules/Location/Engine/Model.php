@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Location\Engine;
+namespace App\Backend\Modules\Location\Engine;
 
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Common\ModuleExtraType;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Common\ModuleExtraType;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**

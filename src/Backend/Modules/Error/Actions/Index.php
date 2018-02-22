@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Error\Actions;
+namespace App\Backend\Modules\Error\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
-use Common\Exception\ExitException;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Language\Language as BL;
+use App\Common\Exception\ExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

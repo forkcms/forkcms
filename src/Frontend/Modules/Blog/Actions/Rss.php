@@ -1,14 +1,14 @@
 <?php
 
-namespace Frontend\Modules\Blog\Actions;
+namespace App\Frontend\Modules\Blog\Actions;
 
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Language\Language as FL;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Rss as FrontendRSS;
-use Frontend\Core\Engine\RssItem as FrontendRSSItem;
-use Frontend\Core\Engine\User as FrontendUser;
-use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use App\Frontend\Core\Language\Language as FL;
+use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use App\Frontend\Core\Engine\Rss as FrontendRSS;
+use App\Frontend\Core\Engine\RssItem as FrontendRSSItem;
+use App\Frontend\Core\Engine\User as FrontendUser;
+use App\Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use SpoonFilter;
 
 class Rss extends FrontendBaseBlock

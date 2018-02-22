@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Modules\MediaLibrary\Widgets;
+namespace App\Frontend\Modules\MediaLibrary\Widgets;
 
-use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use App\Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
 
 class OneImage extends FrontendMediaWidget
 {

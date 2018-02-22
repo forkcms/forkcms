@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Core\Engine\Base;
+namespace App\Backend\Core\Engine\Base;
 
-use Backend\Core\Engine\Model;
+use App\Backend\Core\Engine\Model;
 use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

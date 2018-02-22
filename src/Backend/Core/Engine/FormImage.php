@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
 use SpoonFilter;
 use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This is our extended version of \SpoonFormFile

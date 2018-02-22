@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaGroup;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
-use Backend\Core\Language\Language;
+use App\Backend\Core\Language\Language;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;

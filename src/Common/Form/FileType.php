@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Form;
+namespace App\Common\Form;
 
-use Common\Doctrine\ValueObject\AbstractFile;
+use App\Common\Doctrine\ValueObject\AbstractFile;
 use stdClass;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;

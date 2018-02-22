@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Analytics\GoogleClient;
+namespace App\Backend\Modules\Analytics\GoogleClient;
 
 use Google_Auth_AssertionCredentials;
 use Google_Cache_File;
 use Google_Client;
 use Google_Config;
 use Google_Service_Analytics;
-use Common\ModulesSettings;
+use App\Common\ModulesSettings;
 
 /**
  * Factory to easily create google client instances

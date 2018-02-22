@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Domain\MediaItem\Exception;
+namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem\Exception;
 
 class MediaItemNotFound extends \Exception
 {

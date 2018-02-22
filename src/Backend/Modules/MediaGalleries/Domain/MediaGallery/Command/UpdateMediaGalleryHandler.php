@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
+namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
 
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
 
 final class UpdateMediaGalleryHandler
 {

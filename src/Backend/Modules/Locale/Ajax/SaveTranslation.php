@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Locale\Ajax;
+namespace App\Backend\Modules\Locale\Ajax;
 
-use Common\Uri as CommonUri;
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use App\Common\Uri as CommonUri;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

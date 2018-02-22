@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Installer;
+namespace App\Backend\Modules\MediaGalleries\Installer;
 
-use Backend\Core\Engine\Model;
-use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
 
 /**
  * Installer for the media module

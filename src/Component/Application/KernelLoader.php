@@ -2,10 +2,10 @@
 
 namespace App\Component\Application;
 
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Frontend\Core\Engine\Model as FrontendModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This class is used in several Fork applications to bubble down the AppKernel/Kernel object.

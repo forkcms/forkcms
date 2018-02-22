@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Groups\Actions;
+namespace App\Backend\Modules\Groups\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the delete-action, it will delete an item.

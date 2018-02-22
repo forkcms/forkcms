@@ -1,14 +1,14 @@
 <?php
 
-namespace Backend\Modules\Faq\Actions;
+namespace App\Backend\Modules\Faq\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the index-action (default), it will display the overview

@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
-use Backend\Core\Engine\Ajax as BackendAjax;
-use Backend\Core\Engine\Backend;
+use App\Backend\Core\Engine\Ajax as BackendAjax;
+use App\Backend\Core\Engine\Backend;
 use App\Component\Application\ApplicationInterface;
-use Frontend\Core\Engine\Ajax as FrontendAjax;
-use Frontend\Core\Engine\Frontend;
+use App\Frontend\Core\Engine\Ajax as FrontendAjax;
+use App\Frontend\Core\Engine\Frontend;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Backend\Init as BackendInit;
-use Frontend\Init as FrontendInit;
-use Common\Exception\RedirectException;
+use App\Backend\Init as BackendInit;
+use App\Frontend\Init as FrontendInit;
+use App\Common\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\Response;
 use Twig_Error;
 

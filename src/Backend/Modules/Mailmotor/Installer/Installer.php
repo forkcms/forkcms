@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\Mailmotor\Installer;
+namespace App\Backend\Modules\Mailmotor\Installer;
 
-use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Common\ModuleExtraType;
 
 /**
  * Installer for the Mailmotor module

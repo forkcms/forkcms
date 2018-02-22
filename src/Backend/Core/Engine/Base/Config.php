@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Core\Engine\Base;
+namespace App\Backend\Core\Engine\Base;
 
-use Backend\Core\Engine\Exception as BackendException;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Exception as BackendException;
+use App\Backend\Core\Engine\Model as BackendModel;
 use App\Component\Application\KernelLoader;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Config as CoreConfig;
+use App\Backend\Core\Config as CoreConfig;
 
 /**
  * This is the base-object for config-files. The module-specific config-files

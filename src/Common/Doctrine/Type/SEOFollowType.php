@@ -1,8 +1,8 @@
 <?php
 
-namespace Common\Doctrine\Type;
+namespace App\Common\Doctrine\Type;
 
-use Common\Doctrine\ValueObject\SEOFollow;
+use App\Common\Doctrine\ValueObject\SEOFollow;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Mailer;
+namespace App\Common\Mailer;
 
 use Swift_SendmailTransport;
 use Swift_SmtpTransport;

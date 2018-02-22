@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\ValueObject;
+namespace App\Backend\Modules\MediaLibrary\ValueObject;
 
 use Symfony\Component\Finder\Finder;
 

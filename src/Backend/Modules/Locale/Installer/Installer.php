@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Locale\Installer;
+namespace App\Backend\Modules\Locale\Installer;
 
-use Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the locale module

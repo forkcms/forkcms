@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Backend\Core\Engine\Base\Config;
-use Backend\Core\Engine\Base\AjaxAction as BaseAjaxAction;
+use App\Backend\Core\Engine\Base\Config;
+use App\Backend\Core\Engine\Base\AjaxAction as BaseAjaxAction;
 use App\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;

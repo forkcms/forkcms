@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\Profiles\Actions;
+namespace App\Backend\Modules\Profiles\Actions;
 
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This is the add_profile_group-action, it will display a form to add a profile to a group.

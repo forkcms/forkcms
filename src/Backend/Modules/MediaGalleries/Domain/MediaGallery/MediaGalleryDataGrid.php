@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Domain\MediaGallery;
+namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
-use Backend\Core\Engine\Authentication;
-use Backend\Core\Engine\DataGridDatabase;
-use Backend\Core\Engine\DataGridFunctions;
-use Backend\Core\Engine\Model;
-use Backend\Core\Language\Language;
+use App\Backend\Core\Engine\Authentication;
+use App\Backend\Core\Engine\DataGridDatabase;
+use App\Backend\Core\Engine\DataGridFunctions;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Language\Language;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid

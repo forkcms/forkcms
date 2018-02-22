@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Extensions\Actions;
+namespace App\Backend\Modules\Extensions\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Engine\Exception;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Engine\Exception;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the theme install-action.

@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
-use Common\Uri as CommonUri;
+use App\Common\Uri as CommonUri;
 
 /**
  * FrontendRSSItem, this is our extended version of SpoonRSSItem

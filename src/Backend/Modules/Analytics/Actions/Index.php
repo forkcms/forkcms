@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\Analytics\Actions;
+namespace App\Backend\Modules\Analytics\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex;
-use Backend\Core\Engine\Model;
-use Backend\Core\Engine\DataGridArray;
-use Backend\Modules\Analytics\DateRange\DateRange;
-use Backend\Modules\Analytics\Form\DateRangeType;
+use App\Backend\Core\Engine\Base\ActionIndex;
+use App\Backend\Core\Engine\Model;
+use App\Backend\Core\Engine\DataGridArray;
+use App\Backend\Modules\Analytics\DateRange\DateRange;
+use App\Backend\Modules\Analytics\Form\DateRangeType;
 
 /**
  * This is the index-action (default), it will display the overview of analytics data

@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Manager\Base;
+namespace App\Backend\Modules\MediaLibrary\Manager\Base;
 
-use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 
 class MediaItemTypeManager
 {

@@ -1,7 +1,8 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
+use App\Common\Core\Model as BaseModel;
 use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -9,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * In this file we store all generic functions that we will be using in the frontend.
  */
-class Model extends \Common\Core\Model
+class Model extends BaseModel
 {
     /**
      * Visitor id from tracking cookie

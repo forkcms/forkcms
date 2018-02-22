@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Tags\Actions;
+namespace App\Backend\Modules\Tags\Actions;
 
-use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use App\Backend\Core\Engine\Base\Action as BackendBaseAction;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This action is used to perform mass actions on tags (delete, ...)

@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Modules\Faq\Widgets;
+namespace App\Frontend\Modules\Faq\Widgets;
 
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
+use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use App\Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
 /**
  * This is a widget with most read faq-questions

@@ -1,12 +1,12 @@
 <?php
 
-namespace Frontend\Modules\FormBuilder\EventListener;
+namespace App\Frontend\Modules\FormBuilder\EventListener;
 
-use Common\Mailer\Message;
+use App\Common\Mailer\Message;
 use Swift_Mailer;
-use Common\ModulesSettings;
-use Frontend\Core\Language\Language;
-use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use App\Common\ModulesSettings;
+use App\Frontend\Core\Language\Language;
+use App\Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use Swift_Mime_SimpleMessage;
 
 /**

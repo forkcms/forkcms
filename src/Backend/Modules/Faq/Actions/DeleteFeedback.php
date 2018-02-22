@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Modules\Faq\Actions;
+namespace App\Backend\Modules\Faq\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This is the DeleteFeedback action, it will display a form to create a new item

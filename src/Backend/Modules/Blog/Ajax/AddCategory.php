@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Blog\Ajax;
+namespace App\Backend\Modules\Blog\Ajax;
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
-use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

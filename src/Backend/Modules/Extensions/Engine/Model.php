@@ -1,16 +1,16 @@
 <?php
 
-namespace Backend\Modules\Extensions\Engine;
+namespace App\Backend\Modules\Extensions\Engine;
 
-use Common\ModulesSettings;
+use App\Common\ModulesSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Engine\Navigation;
-use Backend\Core\Engine\Exception;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use App\Backend\Core\Engine\Navigation;
+use App\Backend\Core\Engine\Exception;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the extensions module.

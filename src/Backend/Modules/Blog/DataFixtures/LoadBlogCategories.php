@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Blog\DataFixtures;
+namespace App\Backend\Modules\Blog\DataFixtures;
 
 use SpoonDatabase;
 

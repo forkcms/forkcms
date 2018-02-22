@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Core\Engine\Base;
+namespace App\Frontend\Core\Engine\Base;
 
 use App\Component\Application\KernelLoader;
-use Frontend\Core\Engine\Model;
+use App\Frontend\Core\Engine\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;

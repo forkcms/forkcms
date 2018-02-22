@@ -1,8 +1,9 @@
 <?php
 
-namespace Backend\Modules\Profiles\Actions;
+namespace App\Backend\Modules\Profiles\Actions;
 
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use SpoonFileCSV;
 
 /**
  * This is the add-action, it will display a form to add a new profile.
@@ -22,7 +23,7 @@ class ExportTemplate extends BackendBaseActionAdd
         ];
 
         // define file
-        $file = new \SpoonFileCSV();
+        $file = new SpoonFileCSV();
 
         // download the file
         $file->arrayToFile($path, [], $fields, null, ',', '"', true);

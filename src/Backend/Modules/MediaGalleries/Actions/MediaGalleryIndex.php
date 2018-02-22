@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Actions;
+namespace App\Backend\Modules\MediaGalleries\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataGrid;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\TypeType;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Language\Language;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataGrid;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\TypeType;
 
 /**
  * This is the class to Show all MediaGallery Entities

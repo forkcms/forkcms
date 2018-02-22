@@ -1,13 +1,13 @@
 <?php
 
-namespace Backend\Modules\Pages\Actions;
+namespace App\Backend\Modules\Pages\Actions;
 
-use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the delete-action, it will delete a page

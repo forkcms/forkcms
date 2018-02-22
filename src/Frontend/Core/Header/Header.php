@@ -1,18 +1,18 @@
 <?php
 
-namespace Frontend\Core\Header;
+namespace App\Frontend\Core\Header;
 
-use Common\Core\Header\Asset;
-use Common\Core\Header\AssetCollection;
-use Common\Core\Header\JsData;
-use Common\Core\Header\Minifier;
-use Common\Core\Header\Priority;
+use App\Common\Core\Header\Asset;
+use App\Common\Core\Header\AssetCollection;
+use App\Common\Core\Header\JsData;
+use App\Common\Core\Header\Minifier;
+use App\Common\Core\Header\Priority;
 use App\Component\Application\KernelLoader;
-use Frontend\Core\Engine\Model;
-use Frontend\Core\Engine\Theme;
-use Frontend\Core\Engine\TwigTemplate;
-use Frontend\Core\Engine\Url;
-use Frontend\Core\Language\Locale;
+use App\Frontend\Core\Engine\Model;
+use App\Frontend\Core\Engine\Theme;
+use App\Frontend\Core\Engine\TwigTemplate;
+use App\Frontend\Core\Engine\Url;
+use App\Frontend\Core\Language\Locale;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**

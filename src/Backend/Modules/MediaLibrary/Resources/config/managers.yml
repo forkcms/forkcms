@@ -1,6 +1,6 @@
 services:
     media_library.manager.extension:
-        class: Backend\Modules\MediaLibrary\Manager\ExtensionManager
+        class: App\Backend\Modules\MediaLibrary\Manager\ExtensionManager
         public: true
         calls:
             - [add, ["image", "%media_library.image_extensions%"]]
@@ -9,13 +9,13 @@ services:
             - [add, ["audio", "%media_library.audio_extensions%"]]
 
     media_library.manager.file:
-        class: Backend\Modules\MediaLibrary\Manager\FileManager
+        class: App\Backend\Modules\MediaLibrary\Manager\FileManager
         public: true
         arguments:
             - "@fork.settings"
 
     media_library.manager.item:
-        class: Backend\Modules\MediaLibrary\Manager\MediaItemManager
+        class: App\Backend\Modules\MediaLibrary\Manager\MediaItemManager
         public: true
         arguments:
             - "@media_library.repository.item"
@@ -23,7 +23,7 @@ services:
             - "@event_dispatcher"
 
     media_library.manager.mime_type:
-        class: Backend\Modules\MediaLibrary\Manager\MimeTypeManager
+        class: App\Backend\Modules\MediaLibrary\Manager\MimeTypeManager
         public: true
         calls:
             - [add, ["image", "%media_library.image_mime_types%"]]
@@ -32,32 +32,32 @@ services:
             - [add, ["audio", "%media_library.audio_mime_types%"]]
 
     media_library.manager.storage:
-        class: Backend\Modules\MediaLibrary\Manager\StorageManager
+        class: App\Backend\Modules\MediaLibrary\Manager\StorageManager
         public: true
 
     media_library.manager.tree:
-        class: Backend\Modules\MediaLibrary\Manager\TreeManager
+        class: App\Backend\Modules\MediaLibrary\Manager\TreeManager
         public: true
         arguments:
             - "@media_library.cache.media_folder"
             - 'MediaItemIndex'
 
     media_library.manager.tree_media_browser:
-        class: Backend\Modules\MediaLibrary\Manager\TreeManager
+        class: App\Backend\Modules\MediaLibrary\Manager\TreeManager
         public: true
         arguments:
             - "@media_library.cache.media_folder"
             - "MediaBrowser"
 
     media_library.manager.tree_media_browser_images:
-        class: Backend\Modules\MediaLibrary\Manager\TreeManager
+        class: App\Backend\Modules\MediaLibrary\Manager\TreeManager
         public: true
         arguments:
             - "@media_library.cache.media_folder"
             - "MediaBrowserImages"
 
     media_library.manager.tree_media_browser_videos:
-            class: Backend\Modules\MediaLibrary\Manager\TreeManager
+            class: App\Backend\Modules\MediaLibrary\Manager\TreeManager
             public: true
             arguments:
                 - "@media_library.cache.media_folder"

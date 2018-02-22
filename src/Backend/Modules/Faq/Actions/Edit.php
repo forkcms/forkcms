@@ -1,16 +1,16 @@
 <?php
 
-namespace Backend\Modules\Faq\Actions;
+namespace App\Backend\Modules\Faq\Actions;
 
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Meta as BackendMeta;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Form\Type\DeleteType;
-use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Meta as BackendMeta;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Form\Type\DeleteType;
+use App\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item

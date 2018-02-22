@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\Blog\Widgets;
+namespace App\Backend\Modules\Blog\Widgets;
 
-use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
-use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use App\Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This widget will show the latest comments

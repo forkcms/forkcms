@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Core\Ajax;
+namespace App\Backend\Core\Ajax;
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

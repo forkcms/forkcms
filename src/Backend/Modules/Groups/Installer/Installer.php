@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\Groups\Installer;
+namespace App\Backend\Modules\Groups\Installer;
 
-use Backend\Core\Installer\ModuleInstaller;
+use App\Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the groups module

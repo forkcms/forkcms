@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Blog\DependencyInjection;
+namespace App\Backend\Modules\Blog\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;

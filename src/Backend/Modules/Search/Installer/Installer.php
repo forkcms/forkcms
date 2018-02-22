@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\Search\Installer;
+namespace App\Backend\Modules\Search\Installer;
 
-use Common\ModuleExtraType;
-use Backend\Core\Installer\ModuleInstaller;
+use App\Common\ModuleExtraType;
+use App\Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the search module

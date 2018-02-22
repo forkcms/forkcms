@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Location\Ajax;
+namespace App\Backend\Modules\Location\Ajax;
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language as BL;
-use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

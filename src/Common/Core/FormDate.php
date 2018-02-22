@@ -1,6 +1,6 @@
 <?php
 
-namespace Common\Core;
+namespace App\Common\Core;
 
 use SpoonFormDate;
 

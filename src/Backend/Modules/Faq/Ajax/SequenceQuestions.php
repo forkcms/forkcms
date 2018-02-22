@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\Faq\Ajax;
+namespace App\Backend\Modules\Faq\Ajax;
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Language\Language;
-use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use App\Backend\Core\Language\Language;
+use App\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

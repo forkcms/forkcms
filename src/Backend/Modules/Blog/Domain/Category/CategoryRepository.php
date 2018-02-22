@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\Blog\Domain\Category;
+namespace App\Backend\Modules\Blog\Domain\Category;
 
-use Common\Core\Model;
-use Common\Locale;
+use App\Common\Core\Model;
+use App\Common\Locale;
 use Doctrine\ORM\EntityRepository;
 
 class CategoryRepository extends EntityRepository

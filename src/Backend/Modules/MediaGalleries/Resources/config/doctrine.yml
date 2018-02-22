@@ -1,7 +1,7 @@
 doctrine:
   dbal:
     types:
-      media_gallery_status: Backend\Modules\MediaGalleries\Domain\MediaGallery\StatusDBALType
+      media_gallery_status: App\Backend\Modules\MediaGalleries\Domain\MediaGallery\StatusDBALType
   orm:
     mappings:
       media_gallery:
@@ -9,4 +9,4 @@ doctrine:
         is_bundle: false
         dir: "%kernel.project_dir%/src/Backend/Modules/MediaGalleries/Domain/MediaGallery"
         alias: MediaGalleriesMediaGallery
-        prefix: Backend\Modules\MediaGalleries\Domain\MediaGallery
+        prefix: App\Backend\Modules\MediaGalleries\Domain\MediaGallery

@@ -1,9 +1,9 @@
 <?php
 
-namespace Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
+namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
 
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
-use Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataTransferObject;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataTransferObject;
 
 final class UpdateMediaGallery extends MediaGalleryDataTransferObject
 {

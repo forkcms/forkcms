@@ -1,10 +1,10 @@
 <?php
 
-namespace Backend\Modules\FormBuilder\Installer;
+namespace App\Backend\Modules\FormBuilder\Installer;
 
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Installer\ModuleInstaller;
-use Common\ModuleExtraType;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Installer\ModuleInstaller;
+use App\Common\ModuleExtraType;
 
 /**
  * Installer for the form_builder module

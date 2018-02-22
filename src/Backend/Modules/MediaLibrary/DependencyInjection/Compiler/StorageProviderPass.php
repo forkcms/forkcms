@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\DependencyInjection\Compiler;
+namespace App\Backend\Modules\MediaLibrary\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

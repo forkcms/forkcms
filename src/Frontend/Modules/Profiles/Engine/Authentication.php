@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Modules\Profiles\Engine;
+namespace App\Frontend\Modules\Profiles\Engine;
 
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
-use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
+use App\Frontend\Core\Engine\Model as FrontendModel;
+use App\Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use App\Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
 
 /**
  * Profile authentication functions.

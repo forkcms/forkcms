@@ -1,10 +1,10 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
-use Common\Exception\RedirectException;
+use App\Common\Exception\RedirectException;
 use App\Component\Application\KernelLoader;
-use Frontend\Core\Language\Language;
+use App\Frontend\Core\Language\Language;
 use SpoonFilter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;

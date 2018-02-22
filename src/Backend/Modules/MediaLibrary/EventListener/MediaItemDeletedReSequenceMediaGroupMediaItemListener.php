@@ -1,14 +1,14 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\EventListener;
+namespace App\Backend\Modules\MediaLibrary\EventListener;
 
-use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use SimpleBus\Message\Bus\MessageBus;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 
 /**
  * When MediaItem is deleted, re-sequence the MediaGroupMediaItem entities.

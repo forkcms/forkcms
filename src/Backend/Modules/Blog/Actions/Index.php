@@ -1,15 +1,15 @@
 <?php
 
-namespace Backend\Modules\Blog\Actions;
+namespace App\Backend\Modules\Blog\Actions;
 
-use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use App\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the index-action (default), it will display the overview of blog posts

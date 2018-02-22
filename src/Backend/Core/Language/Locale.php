@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Core\Language;
+namespace App\Backend\Core\Language;
 
-use Common\Locale as CommonLocale;
+use App\Common\Locale as CommonLocale;
 
 final class Locale extends CommonLocale
 {

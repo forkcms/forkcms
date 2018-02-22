@@ -1,22 +1,24 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace App\Backend\Core\Engine;
 
-use Common\ModuleExtraType;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Language\Language as BackendLanguage;
+use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use App\Common\Core\Model as BaseModel;
+use App\Common\ModuleExtraType;
+use App\Frontend\Core\Language\Language as FrontendLanguage;
 use Doctrine\ORM\EntityManager;
+use Exception;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Language\Language as FrontendLanguage;
-use Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
  */
-class Model extends \Common\Core\Model
+class Model extends BaseModel
 {
     /**
      * Checks the settings and optionally returns an array with warnings

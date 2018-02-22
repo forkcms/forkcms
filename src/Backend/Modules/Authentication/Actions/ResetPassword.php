@@ -1,14 +1,14 @@
 <?php
 
-namespace Backend\Modules\Authentication\Actions;
+namespace App\Backend\Modules\Authentication\Actions;
 
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\User as BackendUser;
-use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Core\Engine\Authentication as BackendAuthentication;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\User as BackendUser;
+use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the reset password action, it will display a form that allows the user to reset his/her password.

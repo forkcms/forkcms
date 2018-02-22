@@ -1,8 +1,8 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
-use Backend\Core\Language\Language as BackendLanguage;
+use App\Backend\Core\Language\Language as BackendLanguage;
 use Twig_Compiler;
 
 /**

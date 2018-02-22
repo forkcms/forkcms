@@ -3,7 +3,7 @@
 namespace App\Form\Type\Installer;
 
 use App\Service\Installer\ForkInstaller;
-use Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Modules\MediaLibrary\Manager;
+namespace App\Backend\Modules\MediaLibrary\Manager;
 
-use Backend\Modules\MediaLibrary\Manager\Base\MediaItemTypeManager;
+use App\Backend\Modules\MediaLibrary\Manager\Base\MediaItemTypeManager;
 
 final class ExtensionManager extends MediaItemTypeManager
 {

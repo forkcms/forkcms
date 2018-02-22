@@ -1,9 +1,9 @@
 <?php
 
-namespace Frontend\Core\Engine;
+namespace App\Frontend\Core\Engine;
 
-use Frontend\Core\Config;
-use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use App\Frontend\Core\Config;
+use App\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

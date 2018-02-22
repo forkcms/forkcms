@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Modules\Locale\Actions;
+namespace App\Backend\Modules\Locale\Actions;
 
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Language\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use App\Backend\Core\Engine\Form as BackendForm;
+use App\Backend\Core\Language\Language as BL;
+use App\Backend\Core\Engine\Model as BackendModel;
+use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the import action, it will display a form to import a XML locale file.
