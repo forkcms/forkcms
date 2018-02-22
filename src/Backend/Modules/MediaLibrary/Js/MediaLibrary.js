@@ -132,7 +132,7 @@ jsBackend.mediaLibrary.mediaItemEdit = {
       var locale = $(this).data('locale')
       var checked = $(this).is(':checked')
 
-      $('#captionLinkBox' + utils.string.ucfirst(locale)).toggle(checked)
+      $('#linkBox' + utils.string.ucfirst(locale)).toggle(checked)
     }).trigger('change');
   }
 }

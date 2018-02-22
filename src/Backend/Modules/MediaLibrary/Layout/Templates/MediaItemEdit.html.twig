@@ -58,21 +58,21 @@
                 {{ form_errors(translationField.caption) }}
               </div>
 
-              {% if translationField.captionLink %}
+              {% if translationField.link %}
                 <div class="form-group">
-                  {{ form_widget(translationField.hasCaptionLink, { "attr": { "data-role":"toggle-caption-link-box", "data-locale":locale }}) }}
+                  {{ form_widget(translationField.hasLink, { "attr": { "data-role":"toggle-caption-link-box", "data-locale":locale }}) }}
                 </div>
-                <div class="form-group form-inline" id="captionLinkBox{{ locale|ucfirst }}">
+                <div class="form-group form-inline" id="linkBox{{ locale|ucfirst }}">
                   <div class="row">
                     <div class="col-xs-1">
                       {{ 'lbl.URL'|trans|ucfirst }}:
                     </div>
                     <div class="col-xs-11">
-                      {{ form_widget(translationField.captionLink) }}
-                      <p class="help-block">{{ 'msg.MediaItemCaptionLink'|trans|ucfirst }}</p>
+                      {{ form_widget(translationField.link) }}
+                      <p class="help-block">{{ 'msg.MediaItemLink'|trans|ucfirst }}</p>
                     </div>
                   </div>
-                  {{ form_errors(translationField.captionLink) }}
+                  {{ form_errors(translationField.link) }}
                 </div>
               {% endif %}
 

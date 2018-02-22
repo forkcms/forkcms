@@ -146,11 +146,6 @@
         <translation language="nl"><![CDATA[Een korte uitleg van de media, b.v.b.: "Oranje zee met zonsondergang". Een caption wordt vaak weergegeven als modules of thema's zijn voorzien om deze weer te geven.]]></translation>
         <translation language="ru"><![CDATA[Краткое пояснение СМИ. Ф.Е .: «Оранжевое море с закатом». Заголовки часто отображаются, если для отображения представлены модули или темы.]]></translation>
       </item>
-      <item type="message" name="MediaItemCaptionLink">
-        <translation language="en"><![CDATA[F.e.: "/en/contact" or "https://www.google.be"]]></translation>
-        <translation language="nl"><![CDATA[B.v.b.: "/nl/contact" of "https://www.google.be"]]></translation>
-        <translation language="ru"><![CDATA[Например: "/ru/contact" или "https://www.google.be"]]></translation>
-      </item>
       <item type="label" name="MediaItemDelete">
         <translation language="de"><![CDATA[Entfernen von Medien]]></translation>
         <translation language="en"><![CDATA[removing media]]></translation>
@@ -168,10 +163,10 @@
         <translation language="nl"><![CDATA[Een verklaring van deze specifieke media, b.v.b.: "Plaats: Okinawa Beach"]]></translation>
         <translation language="ru"><![CDATA[Объяснение этих средств массовой информации. F.e .: «Место: Окинава-Бич»]]></translation>
       </item>
-      <item type="message" name="MediaItemHasCaptionLink">
-        <translation language="en"><![CDATA[Caption must contain a "more info" button if possible.]]></translation>
-        <translation language="nl"><![CDATA[Caption moet een "meer info" button bevatten indien mogelijk.]]></translation>
-        <translation language="ru"><![CDATA[Если возможно, надпись должна содержать кнопку «больше информации».]]></translation>
+      <item type="message" name="MediaItemHasLink">
+        <translation language="en"><![CDATA[Image must contain a "more info" button if possible.]]></translation>
+        <translation language="nl"><![CDATA[Afbeelding moet een "meer info" button bevatten indien mogelijk.]]></translation>
+        <translation language="ru"><![CDATA[Если возможно, изображение должно содержать кнопку «больше информации».]]></translation>
       </item>
       <item type="label" name="MediaItemIndex">
         <translation language="de"><![CDATA[Übersicht]]></translation>
@@ -179,6 +174,11 @@
         <translation language="fr"><![CDATA[vue d'ensemble]]></translation>
         <translation language="nl"><![CDATA[overzicht]]></translation>
         <translation language="ru"><![CDATA[обзор]]></translation>
+      </item>
+      <item type="message" name="MediaItemLink">
+        <translation language="en"><![CDATA[F.e.: "/en/contact" or "https://www.google.be"]]></translation>
+        <translation language="nl"><![CDATA[B.v.b.: "/nl/contact" of "https://www.google.be"]]></translation>
+        <translation language="ru"><![CDATA[Например: "/ru/contact" или "https://www.google.be"]]></translation>
       </item>
       <item type="label" name="MediaItemTitle">
         <translation language="en"><![CDATA[title]]></translation>

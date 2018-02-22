@@ -50,7 +50,7 @@ class MediaItemTranslation
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $captionLink;
+    private $link;
 
     /**
      * @var null|string
@@ -71,7 +71,7 @@ class MediaItemTranslation
         MediaItem $mediaItem,
         string $title,
         string $caption = null,
-        string $captionLink = null,
+        string $link = null,
         string $description = null,
         string $altText = null
     ) {
@@ -79,7 +79,7 @@ class MediaItemTranslation
         $this->mediaItem = $mediaItem;
         $this->title = $title;
         $this->caption = $caption;
-        $this->captionLink = $caption;
+        $this->link = $caption;
         $this->description = $description;
         $this->altText = $altText;
 
@@ -95,9 +95,9 @@ class MediaItemTranslation
 
             $mediaItemTranslation->title = $mediaItemTranslationDataTransferObject->title;
             $mediaItemTranslation->caption = $mediaItemTranslationDataTransferObject->caption;
-            $mediaItemTranslation->captionLink = $mediaItemTranslationDataTransferObject->captionLink;
-            $mediaItemTranslation->captionLink = ($mediaItemTranslationDataTransferObject->hasCaptionLink)
-                ? self::stripLinkToUrl($mediaItemTranslationDataTransferObject->captionLink) : null;
+            $mediaItemTranslation->link = $mediaItemTranslationDataTransferObject->link;
+            $mediaItemTranslation->link = ($mediaItemTranslationDataTransferObject->hasLink)
+                ? self::stripLinkToUrl($mediaItemTranslationDataTransferObject->link) : null;
             $mediaItemTranslation->description = $mediaItemTranslationDataTransferObject->description;
             $mediaItemTranslation->altText = $mediaItemTranslationDataTransferObject->altText;
 
@@ -110,7 +110,7 @@ class MediaItemTranslation
             $mediaItemTranslationDataTransferObject->getMediaItem(),
             $mediaItemTranslationDataTransferObject->title,
             $mediaItemTranslationDataTransferObject->caption,
-            self::stripLinkToUrl($mediaItemTranslationDataTransferObject->captionLink),
+            self::stripLinkToUrl($mediaItemTranslationDataTransferObject->link),
             $mediaItemTranslationDataTransferObject->description,
             $mediaItemTranslationDataTransferObject->altText
         );
@@ -123,9 +123,9 @@ class MediaItemTranslation
         return $this->caption;
     }
 
-    public function getCaptionLink(): ?string
+    public function getLink(): ?string
     {
-        return $this->captionLink;
+        return $this->link;
     }
 
     public function getDataTransferObject(): MediaItemTranslationDataTransferObject
@@ -164,9 +164,9 @@ class MediaItemTranslation
         return $this->altText;
     }
 
-    public function hasCaptionLink(): bool
+    public function hasLink(): bool
     {
-        return $this->captionLink !== null;
+        return $this->link !== null;
     }
 
     public static function stripLinkToUrl(?string $link): ?string

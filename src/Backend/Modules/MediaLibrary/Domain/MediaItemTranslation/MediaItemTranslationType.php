@@ -54,19 +54,19 @@ class MediaItemTranslationType extends AbstractType
                     }
 
                     $event->getForm()->add(
-                        'hasCaptionLink',
+                        'hasLink',
                         CheckboxType::class,
                         [
-                            'label' => 'msg.MediaItemHasCaptionLink',
+                            'label' => 'msg.MediaItemHasLink',
                             'required' => false,
                         ]
                     );
 
                     $event->getForm()->add(
-                        'captionLink',
+                        'link',
                         TextType::class,
                         [
-                            'label' => 'lbl.MediaItemCaptionLink',
+                            'label' => 'lbl.MediaItemLink',
                             'required' => false,
                         ]
                     );
@@ -97,7 +97,7 @@ class MediaItemTranslationType extends AbstractType
             'data_class' => MediaItemTranslationDataTransferObject::class,
             'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
-                if ($data->hasCaptionLink !== true) {
+                if ($data->hasLink !== true) {
                     return ['Default'];
                 }
 

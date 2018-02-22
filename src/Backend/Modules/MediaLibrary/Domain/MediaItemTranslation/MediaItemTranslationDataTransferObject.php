@@ -28,14 +28,14 @@ final class MediaItemTranslationDataTransferObject
     public $caption;
 
     /** @var bool */
-    public $hasCaptionLink;
+    public $hasLink;
 
     /**
      * @var string
      *
      * @Assert\NotBlank(groups={"caption_link_is_required"})
      */
-    public $captionLink;
+    public $link;
 
     /** @var string */
     public $description;
@@ -57,8 +57,8 @@ final class MediaItemTranslationDataTransferObject
         $this->locale = $this->mediaItemTranslationEntity->getLocale();
         $this->title = $this->mediaItemTranslationEntity->getTitle();
         $this->caption = $this->mediaItemTranslationEntity->getCaption();
-        $this->hasCaptionLink = $this->mediaItemTranslationEntity->hasCaptionLink();
-        $this->captionLink = $this->mediaItemTranslationEntity->getCaptionLink();
+        $this->hasLink = $this->mediaItemTranslationEntity->hasLink();
+        $this->link = $this->mediaItemTranslationEntity->getLink();
         $this->description = $this->mediaItemTranslationEntity->getDescription();
         $this->altText = $this->mediaItemTranslationEntity->getAltText();
     }
