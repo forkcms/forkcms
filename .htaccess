@@ -43,6 +43,9 @@ deny from env=stayout
     RewriteEngine On
     RewriteBase /
 
+    # allow the index.php which is a redirect to /public/
+    RewriteRule ^index\.php$ - [L]
+
     # allow the public/index.php
     RewriteRule ^public/index\.php$ - [L]
 
@@ -91,13 +94,13 @@ deny from env=stayout
 
     # src dir should pass via the front controller
     RewriteCond %{REQUEST_URI} ^/(src|src\/)$
-    RewriteRule . /index.php [NC,L]
+    RewriteRule . /public/index.php [NC,L]
 
     # handle urls
     RewriteCond %{REQUEST_URI} !^$
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . index.php [NC,L]
+    RewriteRule . public/index.php [NC,L]
 </IfModule>
 
 # file caching in browser

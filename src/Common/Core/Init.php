@@ -43,7 +43,7 @@ abstract class Init extends KernelLoader
         }
 
         // get last modified time for globals
-        $lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
+        $lastModifiedTime = @filemtime(PATH_WWW . '/config/parameters.yaml');
 
         // reset last modified time if needed when invalid or debug is active
         if ($lastModifiedTime === false || $this->getContainer()->getParameter('kernel.debug')) {

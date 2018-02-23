@@ -1,5 +1,5 @@
 # Configuration
-/app/config/parameters.yml
+/config/parameters.yaml
 
 # Libraries
 /vendor/*
@@ -14,7 +14,7 @@
 .*.swp
 .DS_Store
 /var/cache/*
-/var/logs/*
+/var/log/*
 /app/sessions/*
 /bin/*
 !bin/console
@@ -26,3 +26,28 @@
 var/docker/db/data/*
 docker-compose.override.yml
 .env
+
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+###< symfony/webpack-encore-pack ###
+
+###> symfony/web-server-bundle ###
+.web-server-pid
+###< symfony/web-server-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###

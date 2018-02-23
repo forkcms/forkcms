@@ -105,13 +105,13 @@ final class InstallerController extends Controller
     {
         $filesystem = new Filesystem();
         $kernelDir = $this->container->getParameter('kernel.project_dir') . '/app';
-        $parameterFile = $kernelDir . 'config/parameters.yml';
+        $parameterFile = $kernelDir . 'config/parameters.yaml';
         if ($filesystem->exists($parameterFile)) {
             throw new ExitException(
                 'This Fork has already been installed. To reinstall, delete
-                 parameters.yml from the ' . $kernelDir . 'config/ directory.',
+                 parameters.yaml from the ' . $kernelDir . 'config/ directory.',
                 'This Fork has already been installed. To reinstall, delete
-                 parameters.yml from the ' . $kernelDir . 'config/ directory. To log in,
+                 parameters.yaml from the ' . $kernelDir . 'config/ directory. To log in,
                  <a href="/private">click here</a>.',
                 Response::HTTP_FORBIDDEN
             );

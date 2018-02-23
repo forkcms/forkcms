@@ -91,7 +91,7 @@ class EnableLocaleCommand extends Command
         if (!$this->multiLanguageIsEnabled) {
             $this->formatter->error(
                 [
-                    'site.multilanguage should be set to true in parameters.yml.',
+                    'site.multilanguage should be set to true in parameters.yaml.',
                     'Warning: All your urls will change from example.com/page to example.com/[locale]/page',
                 ]
             );

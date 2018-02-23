@@ -82,17 +82,17 @@ abstract class WebTestCase extends BaseWebTestCase
     }
 
     /**
-     * Copies the parameters.yml file to a backup version
+     * Copies the parameters.yaml file to a backup version
      *
      * @param string $kernelDir
      * @param Filesystem $filesystem
      */
     protected function backupParametersFile(Filesystem $filesystem, string $kernelDir)
     {
-        if ($filesystem->exists($kernelDir . '/config/parameters.yml')) {
+        if ($filesystem->exists($kernelDir . '/config/parameters.yaml')) {
             $filesystem->copy(
-                $kernelDir . '/config/parameters.yml',
-                $kernelDir . '/config/parameters.yml~backup'
+                $kernelDir . '/config/parameters.yaml',
+                $kernelDir . '/config/parameters.yaml~backup'
             );
         }
         if ($filesystem->exists($kernelDir . '/cache/test')) {
@@ -101,20 +101,20 @@ abstract class WebTestCase extends BaseWebTestCase
     }
 
     /**
-     * Puts the backed up parameters.yml file back
+     * Puts the backed up parameters.yaml file back
      *
      * @param string $kernelDir
      * @param Filesystem $filesystem
      */
     protected function putParametersFileBack(Filesystem $filesystem, string $kernelDir)
     {
-        if ($filesystem->exists($kernelDir . '/config/parameters.yml~backup')) {
+        if ($filesystem->exists($kernelDir . '/config/parameters.yaml~backup')) {
             $filesystem->copy(
-                $kernelDir . '/config/parameters.yml~backup',
-                $kernelDir . '/config/parameters.yml',
+                $kernelDir . '/config/parameters.yaml~backup',
+                $kernelDir . '/config/parameters.yaml',
                 true
             );
-            $filesystem->remove($kernelDir . '/config/parameters.yml~backup');
+            $filesystem->remove($kernelDir . '/config/parameters.yaml~backup');
         }
         if ($filesystem->exists($kernelDir . '/cache/test')) {
             $filesystem->remove($kernelDir . '/cache/test');

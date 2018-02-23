@@ -1,0 +1,97 @@
+imports:
+    - { resource: console.yml }
+    - { resource: form.yml }
+    - { resource: parameters_install.yml }
+    - { resource: doctrine.yml }
+
+framework:
+    secret: "%kernel.secret%"
+    router:
+        resource: "%kernel.project_dir%/app/config/routing_install.yml"
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    templating:
+        engines: ['twig']
+    session:
+        handler_id: ~
+    validation:
+        enable_annotations: true
+    cache:
+        app: cache.adapter.filesystem
+        pools:
+            cache.search:
+                adapter: cache.app
+                public: true
+                default_lifetime: 3600
+
+# Assetic Configuration
+assetic:
+    debug: "%kernel.debug%"
+    use_controller: false
+    bundles: []
+    filters:
+        cssrewrite: ~
+
+monolog:
+    handlers:
+        main:
+            type: stream
+            path: "%site.path_www%/var/logs/logs.log"
+            level: debug
+
+twig:
+    paths:
+      '%kernel.project_dir%/templates/installer': installer
+
+parameters:
+    doctrine.dbal.connection_factory.class: App\Service\Installer\InstallerConnectionFactory
+    fork.is_installed: false
+    fork.form.theme: "installer:form_theme.html.twig"
+
+services:
+    # dummy service during the installation
+    mailer_configurator:
+        class: stdClass
+
+    # dummy service during the installation
+    fork.settings:
+        class: stdClass
+        public: true
+
+    # dummy service during the installation
+    cache.pool:
+        class: stdClass
+        public: true
+
+    database:
+        class: SpoonDatabase
+        public: true
+        arguments:
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%"
+            - "%database.port%"
+        calls:
+            - [ setDebug, [ "%kernel.debug%" ]]
+
+    forkcms.requirements.checker:
+        class: App\Service\Installer\RequirementsChecker
+        arguments: ['%kernel.project_dir%/']
+
+    forkcms.installer:
+        class: App\Service\Installer\ForkInstaller
+        arguments: ['@service_container']
+
+    forkcms.console.installer.prepare_for_reinstall:
+        class: App\Console\Installer\PrepareForReinstallCommand
+        tags:
+            - { name: console.command }
+
+    forkcms.console.installer.check_requirements:
+        class: App\Console\Installer\CheckRequirementsCommand
+        tags:
+            - { name: console.command }
+        arguments: ['@forkcms.requirements.checker']

@@ -1,11 +1,5 @@
 <?php
 
-use App\Kernel;
-use Symfony\Component\Debug\Debug;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Dotenv\Dotenv;
-use Symfony\Component\HttpFoundation\Request;
-
 // @ForkCMS: vendors not installed
 if (!is_dir(__DIR__ . '/../vendor')) {
     echo 'Your install is missing some dependencies. If you have composer
@@ -19,6 +13,12 @@ if (!is_dir(__DIR__ . '/../vendor')) {
 // @ForkCMS: we changed the default from '/../vendor/autoload.php` to
 require __DIR__.'/../autoload.php';
 
+use App\Kernel;
+use Symfony\Component\Debug\Debug;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\HttpFoundation\Request;
+
 // The check is to ensure we don't use .env in production
 if (!isset($_SERVER['APP_ENV'])) {
     if (!class_exists(Dotenv::class)) {
@@ -31,11 +31,11 @@ $env = $_SERVER['APP_ENV'] ?? 'dev';
 $debug = $_SERVER['APP_DEBUG'] ?? ('prod' !== $env);
 
 // @ForkCMS: Fork has not yet been installed
-$parametersFile = __DIR__ . '/../config/parameters.yml';
+$parametersFile = __DIR__ . '/../config/parameters.yaml';
 $request = Request::createFromGlobals();
 if (!file_exists($parametersFile)) {
     $env = 'install';
-    if (strpos($request->getRequestUri(), '/install') !== 0) {
+    if (strpos($request->getRequestUri(), '/public/install') !== 0) {
         // check .htaccess
         if (!$request->query->has('skiphtaccess') && !file_exists('../.htaccess')) {
             echo 'Your install is missing the .htaccess file. Make sure you show
@@ -47,7 +47,7 @@ if (!file_exists($parametersFile)) {
             return;
         }
 
-        header('Location: /install');
+        header('Location: /public/install');
 
         return;
     }
