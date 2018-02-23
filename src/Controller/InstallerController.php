@@ -104,7 +104,7 @@ final class InstallerController extends Controller
     protected function checkInstall()
     {
         $filesystem = new Filesystem();
-        $kernelDir = $this->container->getParameter('kernel.project_dir') . '/app';
+        $kernelDir = $this->container->getParameter('kernel.project_dir');
         $parameterFile = $kernelDir . 'config/parameters.yaml';
         if ($filesystem->exists($parameterFile)) {
             throw new ExitException(

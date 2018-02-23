@@ -128,6 +128,7 @@ services:
 
     forkcms.requirements.checker:
         class: App\Service\Installer\RequirementsChecker
+        public: true
         arguments: ['%kernel.project_dir%/']
 
     forkcms.installer:

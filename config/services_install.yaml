@@ -1,13 +1,11 @@
 imports:
-    - { resource: console.yml }
-    - { resource: form.yml }
-    - { resource: parameters_install.yml }
-    - { resource: doctrine.yml }
+    - { resource: console.yaml }
+    - { resource: form.yaml }
+    - { resource: parameters_install.yaml }
 
 framework:
     secret: "%kernel.secret%"
     router:
-        resource: "%kernel.project_dir%/app/config/routing_install.yml"
         strict_requirements: ~
     form: ~
     csrf_protection: ~
@@ -25,19 +23,11 @@ framework:
                 public: true
                 default_lifetime: 3600
 
-# Assetic Configuration
-assetic:
-    debug: "%kernel.debug%"
-    use_controller: false
-    bundles: []
-    filters:
-        cssrewrite: ~
-
 monolog:
     handlers:
         main:
             type: stream
-            path: "%site.path_www%/var/logs/logs.log"
+            path: "%kernel.project_dir%/var/log/logs.log"
             level: debug
 
 twig:
@@ -45,9 +35,10 @@ twig:
       '%kernel.project_dir%/templates/installer': installer
 
 parameters:
+    locale: en
     doctrine.dbal.connection_factory.class: App\Service\Installer\InstallerConnectionFactory
     fork.is_installed: false
-    fork.form.theme: "installer:form_theme.html.twig"
+    fork.form.theme: "installer/form_theme.html.twig"
 
 services:
     # dummy service during the installation
@@ -79,10 +70,12 @@ services:
 
     forkcms.requirements.checker:
         class: App\Service\Installer\RequirementsChecker
+        public: true
         arguments: ['%kernel.project_dir%/']
 
     forkcms.installer:
         class: App\Service\Installer\ForkInstaller
+        public: true
         arguments: ['@service_container']
 
     forkcms.console.installer.prepare_for_reinstall:

@@ -134,7 +134,7 @@ final class RequirementsChecker
                 'subfolder',
                 // If we don't know for sure but we shall assume that it isn't in a subfolder
                 array_key_exists('REQUEST_URI', $_SERVER)
-                    ? mb_substr($_SERVER['REQUEST_URI'], 0, 8) === '/install' : true,
+                    ? mb_substr($_SERVER['REQUEST_URI'], 0, 15) === '/public/install' : true,
                 'Fork CMS is as far as we can detect not running is a subfolder',
                 'Fork CMS can\'t be installed in subfolders',
                 RequirementStatus::error()
@@ -381,8 +381,8 @@ final class RequirementsChecker
                 RequirementStatus::error()
             ),
             Requirement::check(
-                $this->rootDir . 'app/config/*',
-                $this->isWritable($this->rootDir . 'app/config/'),
+                $this->rootDir . 'config/*',
+                $this->isWritable($this->rootDir . 'config/'),
                 'In this location the global configuration will be stored. This location and all subdirectories are be writable.',
                 'In this location the global configuration will be stored. This location and all subdirectories must be writable.',
                 RequirementStatus::error()

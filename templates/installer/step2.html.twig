@@ -1,7 +1,7 @@
 {% extends '@installer/base.html.twig' %}
 {% import '@installer/navigation.html.twig' as macro %}
 
-{% form_theme form '@installer/form_theme.html.twig' %}
+{% form_theme form _self %}
 
 {% block navigation %}
   {{ macro.navigation('step-2') }}

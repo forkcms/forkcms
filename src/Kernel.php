@@ -90,7 +90,7 @@ class Kernel extends BaseKernel
          * @deprecated SPOON_* constants are deprecated in favour of Spoon::set*().
          * Will be removed in the next major release.
          */
-        defined('PATH_WWW') || define('PATH_WWW', realpath($container->getParameter('site.path_www')));
+        defined('PATH_WWW') || define('PATH_WWW', realpath($container->getParameter('site.path_www')) . '/..');
 
         defined('SITE_DEFAULT_LANGUAGE') || define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
         defined('SITE_DEFAULT_TITLE') || define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
@@ -267,7 +267,12 @@ class Kernel extends BaseKernel
 
         $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
         $loader->load($confDir.'/{packages}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+
+        // @ForkCMS
+        if ($this->environment !== 'install') {
+            $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+        }
+
         $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
     }
 
@@ -277,6 +282,13 @@ class Kernel extends BaseKernel
 
         $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
-        $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+
+        // @ForkCMS
+        $routes->import($confDir.'/{routes}_'.$this->environment.self::CONFIG_EXTS, '/', 'glob');
+
+        // @ForkCMS
+        if ($this->environment !== 'install') {
+            $routes->import($confDir . '/{routes}' . self::CONFIG_EXTS, '/', 'glob');
+        }
     }
 }
