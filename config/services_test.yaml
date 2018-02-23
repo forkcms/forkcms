@@ -1,3 +1,28 @@
+imports:
+    - { resource: services_dev.yaml }
+
+parameters:
+    site.multilanguage: true
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+    router:
+        resource: "%kernel.project_dir%/config/routes_install.yaml"
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                dbname: "%database.name%_test"
+
 services:
     _defaults:
         public: true
@@ -7,3 +32,16 @@ services:
     # aliases are prefixed with test. For example:
     #
     # test.App\Service\MyService: '@App\Service\MyService'
+
+    database:
+        class: SpoonDatabase
+        public: true
+        arguments:
+            - "%database.driver%"
+            - "%database.host%"
+            - "%database.user%"
+            - "%database.password%"
+            - "%database.name%_test"
+            - "%database.port%"
+        calls:
+            - [ setDebug, [ "%kernel.debug%" ]]

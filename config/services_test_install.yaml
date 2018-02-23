@@ -1,0 +1,11 @@
+imports:
+    - { resource: services_install.yaml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+    router:
+        resource: "%kernel.project_dir%/config/routes_install.yaml"
