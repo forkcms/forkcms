@@ -37,7 +37,7 @@ class AjaxAction extends BaseAjaxAction
             throw new Exception('The action file ' . $actionClass . ' could not be found.');
         }
 
-        /** @var FrontendBaseAjaxAction $ajaxAction */
+        /** @var BaseAjaxAction $ajaxAction */
         $ajaxAction = new $actionClass($this->getKernel(), $this->getAction(), $this->getModule());
         $ajaxAction->execute();
 

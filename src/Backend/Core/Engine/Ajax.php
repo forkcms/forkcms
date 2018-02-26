@@ -34,7 +34,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
             // check if the user is logged in
             $this->validateLogin();
         } catch (UnauthorizedHttpException $e) {
-            $this->ajaxAction = new BackendBaseAjaxAction($this->getKernel());
+            $this->ajaxAction = new AjaxAction($this->getKernel());
             $this->ajaxAction->output(Response::HTTP_UNAUTHORIZED, null, $e->getMessage());
 
             return;
@@ -52,7 +52,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
             // create a new action
             $this->ajaxAction = new AjaxAction($this->getKernel(), $url->getModule(), $url->getAction());
         } catch (Exception $e) {
-            $this->ajaxAction = new BackendBaseAjaxAction($this->getKernel());
+            $this->ajaxAction = new AjaxAction($this->getKernel());
             $this->ajaxAction->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, $e->getMessage());
         }
     }
