@@ -53,6 +53,6 @@ class CategoryRepository extends EntityRepository
             return $url;
         }
 
-        return $this->getURL(Model::addNumber($url), $id);
+        return $this->getUrl(Model::addNumber($url), $id);
     }
 }
