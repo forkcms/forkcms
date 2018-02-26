@@ -74,7 +74,7 @@ class Settings extends BackendBaseActionEdit
         foreach (BackendModel::getModulesForDropDown() as $module => $label) {
             // check if module is searchable
             if (!in_array($module, $disallowedModules) &&
-                method_exists('Frontend\\Modules\\' . $module . '\\Engine\\Model', 'search')
+                method_exists('App\\Frontend\\Modules\\' . $module . '\\Engine\\Model', 'search')
             ) {
                 // add field to decide whether or not this module is searchable
                 $this->form->addCheckbox(

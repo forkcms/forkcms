@@ -96,7 +96,7 @@ class Meta
 
         // set default callback
         $this->setUrlCallback(
-            'Backend\\Modules\\' . $this->url->getModule() . '\\Engine\\Model',
+            'App\\Backend\\Modules\\' . $this->url->getModule() . '\\Engine\\Model',
             'getUrl'
         );
 

@@ -74,9 +74,9 @@ class Index extends BackendBaseActionIndex
                 foreach ($finder->files()->in($pathName . '/Widgets') as $file) {
                     /** @ver $file \SplFileInfo */
                     $widgetName = $file->getBasename('.php');
-                    $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
+                    $className = 'App\\Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
                     if ($module == 'Core') {
-                        $className = 'Backend\\Core\\Widgets\\' . $widgetName;
+                        $className = 'App\\Backend\\Core\\Widgets\\' . $widgetName;
                     }
 
                     // if the widget is hidden for all the users groups, don't render it

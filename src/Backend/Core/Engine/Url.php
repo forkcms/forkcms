@@ -111,7 +111,7 @@ class Url extends KernelLoader
     private function getDefaultActionForModule(string $module, string $language): string
     {
         // Check if we can load the config file
-        $configClass = 'Backend\\Modules\\' . $module . '\\Config';
+        $configClass = 'App\\Backend\\Modules\\' . $module . '\\Config';
         if ($module === 'Core') {
             $configClass = Config::class;
         }

@@ -176,7 +176,7 @@ class ForkInstaller
 
         // loop modules
         foreach ($data->getModules() as $module) {
-            $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
+            $class = 'App\\Backend\\Modules\\' . $module . '\\Installer\\Installer';
 
             // install exists
             if (class_exists($class)) {

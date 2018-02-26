@@ -137,7 +137,7 @@ class Kernel extends BaseKernel
         $container->setParameter('installed_modules', $installedModules);
 
         foreach ($installedModules as $module) {
-            $class = 'Backend\\Modules\\' . $module . '\\DependencyInjection\\' . $module . 'Extension';
+            $class = 'App\\Backend\\Modules\\' . $module . '\\DependencyInjection\\' . $module . 'Extension';
 
             if (class_exists($class)) {
                 $container->registerExtension(new $class());

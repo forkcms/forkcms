@@ -84,7 +84,7 @@ class Related extends FrontendBaseWidget
             }
 
             // set module class
-            $class = 'Frontend\\Modules\\' . $entry['module'] . '\\Engine\\Model';
+            $class = 'App\\Frontend\\Modules\\' . $entry['module'] . '\\Engine\\Model';
 
             // get module record
             $this->related[$id] = FrontendTagsModel::callFromInterface(
@@ -130,7 +130,7 @@ class Related extends FrontendBaseWidget
         // loop blocks
         foreach ((array) $record['extra_blocks'] as $block) {
             // set module class
-            $class = 'Frontend\\Modules\\' . $block['module'] . '\\Engine\\Model';
+            $class = 'App\\Frontend\\Modules\\' . $block['module'] . '\\Engine\\Model';
 
             if (is_callable([$class, 'getIdForTags'])) {
                 // get record for module

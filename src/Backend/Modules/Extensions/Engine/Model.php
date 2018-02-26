@@ -686,7 +686,7 @@ class Model
 
     public static function installModule(string $module): void
     {
-        $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
+        $class = 'App\\Backend\\Modules\\' . $module . '\\Installer\\Installer';
         $variables = [];
 
         // run installer

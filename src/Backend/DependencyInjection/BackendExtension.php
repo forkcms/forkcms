@@ -41,7 +41,7 @@ class BackendExtension extends Extension implements PrependExtensionInterface
                                 'type' => 'annotation',
                                 'is_bundle' => false,
                                 'dir' => $dir,
-                                'prefix' => 'Backend\\Modules\\' . $module . '\\Entity',
+                                'prefix' => 'App\\Backend\\Modules\\' . $module . '\\Entity',
                             ],
                         ],
                     ],

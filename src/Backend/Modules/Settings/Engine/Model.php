@@ -22,9 +22,9 @@ class Model
         // loop modules
         foreach ($installedModules as $module) {
             // model class
-            $class = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
+            $class = 'App\\Backend\\Modules\\' . $module . '\\Engine\\Model';
             if ($module === 'Core') {
-                $class = 'Backend\\Core\\Engine\\Model';
+                $class = 'App\\Backend\\Core\\Engine\\Model';
             }
 
             // method exists

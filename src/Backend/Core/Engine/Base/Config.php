@@ -166,9 +166,9 @@ class Config extends KernelLoader
     {
         $actionType = ucfirst($actionType);
 
-        $actionClass = 'Backend\\Modules\\' . $this->module . '\\' . $actionType . '\\' . $action;
+        $actionClass = 'App\\Backend\\Modules\\' . $this->module . '\\' . $actionType . '\\' . $action;
         if ($this->module === 'Core' && $actionType === 'Ajax') {
-            $actionClass = 'Backend\\Core\\Ajax\\' . $action;
+            $actionClass = 'App\\Backend\\Core\\Ajax\\' . $action;
         }
 
         return $actionClass;
@@ -187,7 +187,7 @@ class Config extends KernelLoader
      */
     public static function forModule(KernelInterface $kernel, string $module): self
     {
-        $configClass = 'Backend\\Modules\\' . $module . '\\Config';
+        $configClass = 'App\\Backend\\Modules\\' . $module . '\\Config';
         if ($module === 'Core') {
             $configClass = CoreConfig::class;
         }

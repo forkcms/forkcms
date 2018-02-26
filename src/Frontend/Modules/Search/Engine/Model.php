@@ -434,7 +434,7 @@ class Model
         // pass the results to the modules
         foreach ($moduleResults as $module => $otherIds) {
             // check if this module actually is prepared to handle searches
-            $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
+            $class = 'App\\Frontend\\Modules\\' . $module . '\\Engine\\Model';
             if (is_callable([$class, 'search'])) {
                 // get the required info from our module
                 $moduleResults[$module] = call_user_func(
@@ -535,7 +535,7 @@ class Model
             // pass the results to the modules
             foreach ($moduleResults as $module => $otherIds) {
                 // check if this module actually is prepared to handle searches
-                $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
+                $class = 'App\\Frontend\\Modules\\' . $module . '\\Engine\\Model';
                 if (is_callable([$class, 'search'])) {
                     $moduleResults[$module] = call_user_func(
                         [$class, 'search'],

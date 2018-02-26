@@ -29,7 +29,7 @@ class Model
     public static function callFromInterface(string $module, string $class, string $method, $parameter = null)
     {
         // check to see if the interface is implemented
-        if (in_array('Frontend\\Modules\\Tags\\Engine\\TagsInterface', class_implements($class))) {
+        if (in_array('App\\Frontend\\Modules\\Tags\\Engine\\TagsInterface', class_implements($class))) {
             // return result
             return call_user_func([$class, $method], $parameter);
         }
@@ -243,7 +243,7 @@ class Model
             [$module, $id]
         );
 
-        $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
+        $class = 'App\\Frontend\\Modules\\' . $module . '\\Engine\\Model';
 
         // get the items that are linked to the tags
         $items = (array) self::callFromInterface($module, $class, 'getForTags', $otherIds);

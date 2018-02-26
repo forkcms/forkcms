@@ -28,9 +28,9 @@ class AjaxAction extends FrontendBaseAJAXAction
     {
         $this->loadConfig();
 
-        $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
+        $actionClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
         if ($this->getModule() === 'Core') {
-            $actionClass = 'Frontend\\Core\\Ajax\\' . $this->getAction();
+            $actionClass = 'App\\Frontend\\Core\\Ajax\\' . $this->getAction();
         }
 
         if (!class_exists($actionClass)) {
@@ -52,7 +52,7 @@ class AjaxAction extends FrontendBaseAJAXAction
      */
     public function loadConfig(): void
     {
-        $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
+        $configClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Config';
         if ($this->getModule() === 'Core') {
             $configClass = Config::class;
         }

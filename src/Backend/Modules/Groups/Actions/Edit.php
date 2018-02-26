@@ -74,12 +74,12 @@ class Edit extends BackendBaseActionEdit
             // loop through actions and add all classnames
             foreach ($this->actions[$module['value']] as $key => $action) {
                 // ajax action?
-                if (class_exists('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
+                if (class_exists('App\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
                     // create reflection class
-                    $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
+                    $reflection = new \ReflectionClass('App\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
                 } else {
                     // no ajax action? create reflection class
-                    $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
+                    $reflection = new \ReflectionClass('App\\Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
                 }
 
                 // get the tag offset
@@ -150,9 +150,9 @@ class Edit extends BackendBaseActionEdit
 
                 // ajax-files should be required
                 if ($isAjax) {
-                    $class = 'Backend\\Modules\\' . $module . '\\Ajax\\' . $actionName;
+                    $class = 'App\\Backend\\Modules\\' . $module . '\\Ajax\\' . $actionName;
                 } else {
-                    $class = 'Backend\\Modules\\' . $module . '\\Actions\\' . $actionName;
+                    $class = 'App\\Backend\\Modules\\' . $module . '\\Actions\\' . $actionName;
                 }
 
                 $reflection = new \ReflectionClass($class);
@@ -215,7 +215,7 @@ class Edit extends BackendBaseActionEdit
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
             if (BackendAuthentication::isAllowedModule($module)) {
                 $widgetName = $file->getBasename('.php');
-                $class = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
+                $class = 'App\\Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
 
                 if (class_exists($class)) {
                     // add to array

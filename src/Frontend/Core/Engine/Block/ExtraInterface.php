@@ -104,9 +104,9 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
     public function execute(): void
     {
         // build action-class-name
-        $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
+        $actionClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
         if ($this->getModule() === 'Core') {
-            $actionClass = 'Frontend\\Core\\Actions\\' . $this->getAction();
+            $actionClass = 'App\\Frontend\\Core\\Actions\\' . $this->getAction();
         }
 
         // validate if class exists (aka has correct name)
@@ -258,9 +258,9 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
      */
     public function loadConfig(): void
     {
-        $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
+        $configClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Config';
         if ($this->getModule() === 'Core') {
-            $configClass = 'Frontend\\Core\\Config';
+            $configClass = 'App\\Frontend\\Core\\Config';
         }
 
         // validate if class exists (aka has correct name)

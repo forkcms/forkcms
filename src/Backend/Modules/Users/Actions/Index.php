@@ -51,7 +51,7 @@ class Index extends BackendBaseActionIndex
 
         // show the user's nickname
         $this->dataGrid->setColumnFunction(
-            ['Backend\\Modules\\Users\\Engine\\Model', 'getSetting'],
+            ['App\\Backend\\Modules\\Users\\Engine\\Model', 'getSetting'],
             ['[id]', 'nickname'],
             'nickname',
             false

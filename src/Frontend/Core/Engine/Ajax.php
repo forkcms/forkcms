@@ -112,7 +112,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
             throw new Exception('Module has not yet been set.');
         }
 
-        $ajaxActionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $action;
+        $ajaxActionClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $action;
         if (!class_exists($ajaxActionClass)) {
             throw new Exception('Action class ' . $ajaxActionClass . ' does not exist');
         }
