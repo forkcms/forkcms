@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Backend\Modules\Tags\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language as BL;
 use ForkCMS\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use ForkCMS\Common\Uri as CommonUri;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This edit-action will update tags using Ajax
  */
-class Edit extends BackendBaseAJAXAction
+class Edit extends AjaxAction
 {
     public function execute(): void
     {

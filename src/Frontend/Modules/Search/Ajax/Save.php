@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Frontend\Modules\Search\Ajax;
 
-use ForkCMS\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use ForkCMS\Frontend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
 use ForkCMS\Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This is the save-action, it will save the searched term in the statistics
  */
-class Save extends FrontendBaseAJAXAction
+class Save extends AjaxAction
 {
     public function execute(): void
     {

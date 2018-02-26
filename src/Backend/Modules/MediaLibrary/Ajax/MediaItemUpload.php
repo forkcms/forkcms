@@ -3,7 +3,7 @@
 namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
 use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageType;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This AJAX-action is being used to upload new MediaItem items and save them into to the database.
  */
-class MediaItemUpload extends BackendBaseAJAXAction
+class MediaItemUpload extends AjaxAction
 {
     // override existing media
     const OVERRIDE_EXISTING = false;

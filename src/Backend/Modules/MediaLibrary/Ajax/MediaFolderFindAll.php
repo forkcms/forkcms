@@ -2,13 +2,13 @@
 
 namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will get all media folders.
  */
-class MediaFolderFindAll extends BackendBaseAJAXAction
+class MediaFolderFindAll extends AjaxAction
 {
     public function execute(): void
     {

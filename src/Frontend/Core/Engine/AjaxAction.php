@@ -3,13 +3,13 @@
 namespace ForkCMS\Frontend\Core\Engine;
 
 use ForkCMS\Frontend\Core\Config;
-use ForkCMS\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use ForkCMS\Frontend\Core\Engine\Base\AjaxAction as BaseAjaxAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * FrontendAJAXAction
  */
-class AjaxAction extends FrontendBaseAJAXAction
+class AjaxAction extends BaseAjaxAction
 {
     /**
      * The config file
@@ -37,7 +37,7 @@ class AjaxAction extends FrontendBaseAJAXAction
             throw new Exception('The action file ' . $actionClass . ' could not be found.');
         }
 
-        /** @var FrontendBaseAJAXAction $ajaxAction */
+        /** @var FrontendBaseAjaxAction $ajaxAction */
         $ajaxAction = new $actionClass($this->getKernel(), $this->getAction(), $this->getModule());
         $ajaxAction->execute();
 

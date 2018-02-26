@@ -2,14 +2,14 @@
 
 namespace ForkCMS\Backend\Modules\Pages\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will get the page info using Ajax
  */
-class GetInfo extends BackendBaseAJAXAction
+class GetInfo extends AjaxAction
 {
     public function execute(): void
     {

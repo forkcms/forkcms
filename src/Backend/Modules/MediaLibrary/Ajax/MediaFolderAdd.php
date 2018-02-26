@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
 use ForkCMS\Backend\Core\Language\Language;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This AJAX-action will add a new MediaFolder.
  */
-class MediaFolderAdd extends BackendBaseAJAXAction
+class MediaFolderAdd extends AjaxAction
 {
     public function execute(): void
     {

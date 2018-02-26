@@ -4,7 +4,7 @@ namespace ForkCMS\Frontend\Modules\Search\Ajax;
 
 use DateInterval;
 use Psr\Cache\CacheItemPoolInterface;
-use ForkCMS\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use ForkCMS\Frontend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Frontend\Core\Language\Language as FL;
 use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
 use ForkCMS\Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This is the auto suggest-action, it will output a list of results for a certain search
  */
-class Autosuggest extends FrontendBaseAJAXAction
+class Autosuggest extends AjaxAction
 {
     /** @var array */
     private $searchResults;

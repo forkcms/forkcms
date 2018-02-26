@@ -4,7 +4,7 @@ namespace ForkCMS\Frontend\Modules\Search\Ajax;
 
 use DateInterval;
 use Psr\Cache\CacheItemPoolInterface;
-use ForkCMS\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use ForkCMS\Frontend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Frontend\Core\Engine\Exception as FrontendException;
 use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
 use ForkCMS\Frontend\Core\Engine\Theme;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This is the live suggest-action, it will output a list of results for a certain search
  */
-class Livesuggest extends FrontendBaseAJAXAction
+class Livesuggest extends AjaxAction
 {
     /** @var array */
     private $searchResults;

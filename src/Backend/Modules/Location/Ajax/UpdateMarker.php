@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Backend\Modules\Location\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language as BL;
 use ForkCMS\Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This is an ajax handler
  */
-class UpdateMarker extends BackendBaseAJAXAction
+class UpdateMarker extends AjaxAction
 {
     public function execute(): void
     {

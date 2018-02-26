@@ -2,13 +2,13 @@
 
 namespace ForkCMS\Backend\Core\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This action will generate a valid url based upon the submitted url.
  */
-class GenerateUrl extends BackendBaseAJAXAction
+class GenerateUrl extends AjaxAction
 {
     public function execute(): void
     {

@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Backend\Modules\Settings\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language as BL;
 use ForkCMS\Common\Mailer\TransportFactory;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This test-email-action will test the mail-connection
  */
-class TestEmailConnection extends BackendBaseAJAXAction
+class TestEmailConnection extends AjaxAction
 {
     public function execute(): void
     {

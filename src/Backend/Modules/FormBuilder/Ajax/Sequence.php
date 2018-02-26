@@ -2,14 +2,14 @@
 
 namespace ForkCMS\Backend\Modules\FormBuilder\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Re-sequence the fields via ajax.
  */
-class Sequence extends BackendBaseAJAXAction
+class Sequence extends AjaxAction
 {
     public function execute(): void
     {

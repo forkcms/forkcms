@@ -2,14 +2,14 @@
 
 namespace ForkCMS\Backend\Modules\Faq\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Reorder categories
  */
-class Sequence extends BackendBaseAJAXAction
+class Sequence extends AjaxAction
 {
     public function execute(): void
     {

@@ -2,14 +2,14 @@
 
 namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This AJAX-action will get all media items for a group,
  * which was trying to be saved, but another parent error appeared.
  */
-class MediaItemGetAllById extends BackendBaseAJAXAction
+class MediaItemGetAllById extends AjaxAction
 {
     public function execute(): void
     {

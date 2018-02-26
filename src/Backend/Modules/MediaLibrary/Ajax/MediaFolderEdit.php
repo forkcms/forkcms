@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This edit-action will update a folder using AJAX
  */
-class MediaFolderEdit extends BackendBaseAJAXAction
+class MediaFolderEdit extends AjaxAction
 {
     public function execute(): void
     {

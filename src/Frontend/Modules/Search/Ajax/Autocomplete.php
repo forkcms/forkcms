@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Frontend\Modules\Search\Ajax;
 
-use ForkCMS\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use ForkCMS\Frontend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
 use ForkCMS\Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This is the autocomplete-action, it will output a list of searches that start with a certain string.
  */
-class Autocomplete extends FrontendBaseAJAXAction
+class Autocomplete extends AjaxAction
 {
     public function execute(): void
     {

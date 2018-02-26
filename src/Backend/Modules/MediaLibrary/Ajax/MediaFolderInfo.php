@@ -2,14 +2,14 @@
 
 namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This edit-action will get the item info using Ajax
  */
-class MediaFolderInfo extends BackendBaseAJAXAction
+class MediaFolderInfo extends AjaxAction
 {
     public function execute(): void
     {

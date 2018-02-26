@@ -3,7 +3,7 @@
 namespace ForkCMS\Backend\Modules\Locale\Ajax;
 
 use ForkCMS\Common\Uri as CommonUri;
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
 use ForkCMS\Backend\Core\Language\Language as BL;
 use ForkCMS\Backend\Core\Engine\Model as BackendModel;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This action will update a translation using AJAX
  */
-class SaveTranslation extends BackendBaseAJAXAction
+class SaveTranslation extends AjaxAction
 {
     public function execute(): void
     {

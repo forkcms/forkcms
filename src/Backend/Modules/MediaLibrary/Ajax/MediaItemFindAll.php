@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This AJAX-action will get all media items in a certain folder and from a gallery.
  */
-class MediaItemFindAll extends BackendBaseAJAXAction
+class MediaItemFindAll extends AjaxAction
 {
     /** @var string */
     protected $selectedTab = 'image';

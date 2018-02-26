@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Backend\Modules\Faq\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language;
 use ForkCMS\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Reorder questions
  */
-class SequenceQuestions extends BackendBaseAJAXAction
+class SequenceQuestions extends AjaxAction
 {
     public function execute(): void
     {

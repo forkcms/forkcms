@@ -3,7 +3,7 @@
 namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
 use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This AJAX-action will add a new MediaItem movie.
  */
-class MediaItemAddMovie extends BackendBaseAJAXAction
+class MediaItemAddMovie extends AjaxAction
 {
     public function execute(): void
     {

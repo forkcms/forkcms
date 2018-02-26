@@ -4,7 +4,7 @@ namespace ForkCMS\Frontend\Core\Engine;
 
 use ForkCMS\Component\Application\ApplicationInterface;
 use ForkCMS\Component\Application\KernelLoader;
-use ForkCMS\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use ForkCMS\Frontend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +22,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
     private $action;
 
     /**
-     * @var AjaxAction|FrontendBaseAJAXAction
+     * @var AjaxAction
      */
     private $ajaxAction;
 
@@ -85,7 +85,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
             $this->ajaxAction = new AjaxAction($this->getKernel(), $this->getAction(), $this->getModule());
             $this->response = $this->ajaxAction->getContent();
         } catch (\Exception $exception) {
-            $this->ajaxAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
+            $this->ajaxAction = new FrontendBaseAjaxAction($this->getKernel(), '', '');
             $this->ajaxAction->output(
                 Response::HTTP_INTERNAL_SERVER_ERROR,
                 null,

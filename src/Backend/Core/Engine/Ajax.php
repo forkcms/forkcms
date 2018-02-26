@@ -5,7 +5,7 @@ namespace ForkCMS\Backend\Core\Engine;
 use ForkCMS\Component\Application\ApplicationInterface;
 use ForkCMS\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language as BackendLanguage;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 class Ajax extends KernelLoader implements ApplicationInterface
 {
     /**
-     * @var AjaxAction|BackendBaseAJAXAction
+     * @var AjaxAction
      */
     private $ajaxAction;
 
@@ -34,7 +34,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
             // check if the user is logged in
             $this->validateLogin();
         } catch (UnauthorizedHttpException $e) {
-            $this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
+            $this->ajaxAction = new BackendBaseAjaxAction($this->getKernel());
             $this->ajaxAction->output(Response::HTTP_UNAUTHORIZED, null, $e->getMessage());
 
             return;
@@ -52,7 +52,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
             // create a new action
             $this->ajaxAction = new AjaxAction($this->getKernel(), $url->getModule(), $url->getAction());
         } catch (Exception $e) {
-            $this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
+            $this->ajaxAction = new BackendBaseAjaxAction($this->getKernel());
             $this->ajaxAction->output(Response::HTTP_INTERNAL_SERVER_ERROR, null, $e->getMessage());
         }
     }

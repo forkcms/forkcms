@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * This AJAX-action will get the counts for every folder in a group.
  */
-class MediaFolderGetCountsForGroup extends BackendBaseAJAXAction
+class MediaFolderGetCountsForGroup extends AjaxAction
 {
     /**
      * Execute the action

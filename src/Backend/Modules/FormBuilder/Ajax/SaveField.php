@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Backend\Modules\FormBuilder\Ajax;
 
-use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use ForkCMS\Backend\Core\Language\Language as BL;
 use ForkCMS\Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 use ForkCMS\Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Save a field via ajax.
  */
-class SaveField extends BackendBaseAJAXAction
+class SaveField extends AjaxAction
 {
     public function execute(): void
     {
