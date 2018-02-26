@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Core\Engine\Base;
+namespace ForkCMS\Backend\Core\Engine\Base;
 
-use App\Backend\Core\Engine\Form;
-use App\Backend\Core\Engine\Meta;
+use ForkCMS\Backend\Core\Engine\Form;
+use ForkCMS\Backend\Core\Engine\Meta;
 
 /**
  * This class implements a lot of functionality that can be extended by the real action.

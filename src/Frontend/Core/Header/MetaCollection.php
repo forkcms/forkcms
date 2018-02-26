@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Core\Header;
+namespace ForkCMS\Frontend\Core\Header;
 
 final class MetaCollection
 {

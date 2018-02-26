@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Core\Language;
+namespace ForkCMS\Backend\Core\Language;
 
-use App\Backend\Core\Engine\Model;
-use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 

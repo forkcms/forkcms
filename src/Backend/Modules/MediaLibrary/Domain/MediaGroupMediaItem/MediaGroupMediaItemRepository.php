@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem;
 
 use Doctrine\ORM\EntityRepository;
 

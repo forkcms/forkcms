@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Component\Application;
+namespace ForkCMS\Component\Application;
 
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Frontend\Core\Engine\Model as FrontendModel;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Backend\Core\Engine\Base\Config;
-use App\Component\Application\KernelLoader;
+use ForkCMS\Backend\Core\Engine\Base\Config;
+use ForkCMS\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use App\Backend\Core\Engine\Base\Action as BackendBaseAction;
-use App\Backend\Core\Language\Language as BackendLanguage;
+use ForkCMS\Backend\Core\Engine\Base\Action as BackendBaseAction;
+use ForkCMS\Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...

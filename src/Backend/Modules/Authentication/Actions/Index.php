@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Backend\Modules\Authentication\Actions;
+namespace ForkCMS\Backend\Modules\Authentication\Actions;
 
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Engine\User;
-use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
-use App\Common\Mailer\Message;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\User;
+use ForkCMS\Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use ForkCMS\Common\Mailer\Message;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 

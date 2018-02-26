@@ -1,6 +1,6 @@
 services:
     media_library.form.type.media_group:
-        class: App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType
+        class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType
         arguments:
             - "@media_library.repository.group"
             - "@command_bus"

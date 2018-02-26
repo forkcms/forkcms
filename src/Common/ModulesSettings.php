@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common;
+namespace ForkCMS\Common;
 
 use Psr\Cache\CacheItemPoolInterface;
 use SpoonDatabase;

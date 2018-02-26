@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\FormBuilder\DependencyInjection;
+namespace ForkCMS\Backend\Modules\FormBuilder\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

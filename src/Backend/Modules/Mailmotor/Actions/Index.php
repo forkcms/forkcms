@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\Mailmotor\Actions;
+namespace ForkCMS\Backend\Modules\Mailmotor\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex;
-use App\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex;
+use ForkCMS\Backend\Core\Engine\Model;
 
 /**
  * This redirects to settings

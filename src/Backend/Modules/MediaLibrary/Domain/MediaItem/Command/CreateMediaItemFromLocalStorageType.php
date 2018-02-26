@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
 final class CreateMediaItemFromLocalStorageType
 {

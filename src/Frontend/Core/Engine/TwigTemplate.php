@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
-use App\Common\Core\Twig\BaseTwigTemplate;
-use App\Common\Core\Twig\Extensions\TwigFilters;
+use ForkCMS\Common\Core\Twig\BaseTwigTemplate;
+use ForkCMS\Common\Core\Twig\Extensions\TwigFilters;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Filesystem\Filesystem;

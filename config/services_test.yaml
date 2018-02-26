@@ -31,7 +31,7 @@ services:
     # and then fetch that alias from the container. As a convention,
     # aliases are prefixed with test. For example:
     #
-    # test.App\Service\MyService: '@App\Service\MyService'
+    # test.ForkCMS\Service\MyService: '@ForkCMS\Service\MyService'
 
     database:
         class: SpoonDatabase

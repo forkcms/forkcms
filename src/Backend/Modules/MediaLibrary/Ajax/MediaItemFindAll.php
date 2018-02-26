@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Ajax;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
-use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use App\Backend\Core\Language\Language;
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use App\Common\Exception\AjaxExitException;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Language\Language;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\AspectRatio;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use ForkCMS\Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

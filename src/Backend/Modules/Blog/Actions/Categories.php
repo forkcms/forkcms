@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Blog\Actions;
+namespace ForkCMS\Backend\Modules\Blog\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use ForkCMS\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the categories-action, it will display the overview of blog categories

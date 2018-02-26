@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Core\Header;
+namespace ForkCMS\Frontend\Core\Header;
 
-use App\Common\Core\Cookie;
-use App\Common\ModulesSettings;
+use ForkCMS\Common\Core\Cookie;
+use ForkCMS\Common\ModulesSettings;
 
 final class GoogleAnalytics
 {

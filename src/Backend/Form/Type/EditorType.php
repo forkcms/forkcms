@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Form\Type;
+namespace ForkCMS\Backend\Form\Type;
 
-use App\Backend\Core\Engine\Model;
-use App\Backend\Core\Language\Language;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Language\Language;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

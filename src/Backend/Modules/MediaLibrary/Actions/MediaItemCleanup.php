@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Actions;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Engine\Model;
 
 class MediaItemCleanup extends BackendBaseActionIndex
 {

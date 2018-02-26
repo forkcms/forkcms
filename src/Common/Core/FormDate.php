@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Core;
+namespace ForkCMS\Common\Core;
 
 use SpoonFormDate;
 

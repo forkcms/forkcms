@@ -1,7 +1,7 @@
 services:
     content_blocks.repository.content_block:
-        class: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository
+        class: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock
+            - ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock

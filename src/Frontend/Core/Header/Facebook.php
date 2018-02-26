@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Core\Header;
+namespace ForkCMS\Frontend\Core\Header;
 
-use App\Common\ModulesSettings;
-use App\Frontend\Core\Engine\Theme;
+use ForkCMS\Common\ModulesSettings;
+use ForkCMS\Frontend\Core\Engine\Theme;
 
 final class Facebook
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Profiles\Actions;
+namespace ForkCMS\Backend\Modules\Profiles\Actions;
 
-use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use ForkCMS\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use SpoonFileCSV;
 
 /**

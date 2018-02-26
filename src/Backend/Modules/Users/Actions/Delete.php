@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Users\Actions;
+namespace ForkCMS\Backend\Modules\Users\Actions;
 
-use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Engine\User as BackendUser;
-use App\Backend\Form\Type\DeleteType;
-use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\User as BackendUser;
+use ForkCMS\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the delete-action, it will deactivate and mark the user as deleted

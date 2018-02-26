@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Ajax;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Ajax;
 
-use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use App\Common\Exception\AjaxExitException;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Common\Exception\AjaxExitException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

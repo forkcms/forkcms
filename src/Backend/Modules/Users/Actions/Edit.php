@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Backend\Modules\Users\Actions;
+namespace ForkCMS\Backend\Modules\Users\Actions;
 
-use App\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Form\Type\DeleteType;
 use Symfony\Component\Filesystem\Filesystem;
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Engine\User as BackendUser;
-use App\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
-use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\User as BackendUser;
+use ForkCMS\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use ForkCMS\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the edit-action, it will display a form to alter the user-details and settings

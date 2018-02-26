@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Search\Actions;
+namespace ForkCMS\Backend\Modules\Search\Actions;
 
-use App\Backend\Core\Engine\Base\Action;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use ForkCMS\Backend\Core\Engine\Base\Action;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the synonyms-action, it will display the overview of search synonyms

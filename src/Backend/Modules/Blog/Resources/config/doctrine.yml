@@ -6,10 +6,10 @@ doctrine:
         is_bundle: false
         dir: "%kernel.project_dir%/src/Backend/Modules/Blog/Domain/Comment"
         alias: BlogComment
-        prefix: App\Backend\Modules\Blog\Domain\Comment
+        prefix: ForkCMS\Backend\Modules\Blog\Domain\Comment
       blog_category:
         type: annotation
         is_bundle: false
         dir: "%kernel.project_dir%/src/Backend/Modules/Blog/Domain/Category"
         alias: BlogCategory
-        prefix: App\Backend\Modules\Blog\Domain\Category
+        prefix: ForkCMS\Backend\Modules\Blog\Domain\Category

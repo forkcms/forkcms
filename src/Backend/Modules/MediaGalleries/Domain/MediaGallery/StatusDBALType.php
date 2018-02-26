@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery;
+namespace ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;

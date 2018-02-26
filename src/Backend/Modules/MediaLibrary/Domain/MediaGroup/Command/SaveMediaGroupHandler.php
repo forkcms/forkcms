@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use Ramsey\Uuid\Uuid;
 
 final class SaveMediaGroupHandler

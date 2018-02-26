@@ -5,26 +5,26 @@
 backend:
     path: /private/{_locale}/{module}/{action}
     defaults:
-        _controller: App\Controller\ForkController::backendController
+        _controller: ForkCMS\Controller\ForkController::backendController
         _locale: ~
         module: ~
         action: ~
 backend_ajax:
     path: /backend/ajax
     defaults:
-        _controller: App\Controller\ForkController::backendAjaxController
+        _controller: ForkCMS\Controller\ForkController::backendAjaxController
 frontend_ajax:
     path: /frontend/ajax
     defaults:
-        _controller: App\Controller\ForkController::frontendAjaxController
+        _controller: ForkCMS\Controller\ForkController::frontendAjaxController
 frontend:
     path: /{route}
     defaults:
-        _controller: App\Controller\ForkController::frontendController
+        _controller: ForkCMS\Controller\ForkController::frontendController
         route: ~
     requirements:
         route: (.*)
 
 #index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: ForkCMS\Controller\DefaultController::index

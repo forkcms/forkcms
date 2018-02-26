@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Faq\Actions;
+namespace ForkCMS\Backend\Modules\Faq\Actions;
 
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the settings-action, it will display a form to set general faq settings

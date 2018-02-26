@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\ValueObject;
+namespace ForkCMS\Backend\Modules\MediaLibrary\ValueObject;
 
 use Symfony\Component\Finder\Finder;
 

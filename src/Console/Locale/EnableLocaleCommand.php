@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Console\Locale;
+namespace ForkCMS\Console\Locale;
 
-use App\Backend\Core\Engine\Authentication;
-use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use App\Common\ModulesSettings;
+use ForkCMS\Backend\Core\Engine\Authentication;
+use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\Common\ModulesSettings;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\Profiles\Actions;
+namespace ForkCMS\Backend\Modules\Profiles\Actions;
 
-use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Form\Type\DeleteType;
-use App\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This action will delete a membership of a profile in a group.

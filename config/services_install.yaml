@@ -36,7 +36,7 @@ twig:
 
 parameters:
     locale: en
-    doctrine.dbal.connection_factory.class: App\Service\Installer\InstallerConnectionFactory
+    doctrine.dbal.connection_factory.class: ForkCMS\Service\Installer\InstallerConnectionFactory
     fork.is_installed: false
     fork.form.theme: "installer/form_theme.html.twig"
 
@@ -69,22 +69,22 @@ services:
             - [ setDebug, [ "%kernel.debug%" ]]
 
     forkcms.requirements.checker:
-        class: App\Service\Installer\RequirementsChecker
+        class: ForkCMS\Service\Installer\RequirementsChecker
         public: true
         arguments: ['%kernel.project_dir%/']
 
     forkcms.installer:
-        class: App\Service\Installer\ForkInstaller
+        class: ForkCMS\Service\Installer\ForkInstaller
         public: true
         arguments: ['@service_container']
 
     forkcms.console.installer.prepare_for_reinstall:
-        class: App\Console\Installer\PrepareForReinstallCommand
+        class: ForkCMS\Console\Installer\PrepareForReinstallCommand
         tags:
             - { name: console.command }
 
     forkcms.console.installer.check_requirements:
-        class: App\Console\Installer\CheckRequirementsCommand
+        class: ForkCMS\Console\Installer\CheckRequirementsCommand
         tags:
             - { name: console.command }
         arguments: ['@forkcms.requirements.checker']

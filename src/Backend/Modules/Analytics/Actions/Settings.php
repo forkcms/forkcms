@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Analytics\Actions;
+namespace ForkCMS\Backend\Modules\Analytics\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex;
-use App\Backend\Core\Engine\Model;
-use App\Backend\Modules\Analytics\Form\SettingsType;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Modules\Analytics\Form\SettingsType;
 
 /**
  * This is the settings-action (default), it will be used to couple your analytics

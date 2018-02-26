@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Backend\Modules\Analytics\GoogleClient;
+namespace ForkCMS\Tests\Backend\Modules\Analytics\GoogleClient;
 
-use App\Backend\Modules\Analytics\GoogleClient\Connector;
-use App\Common\ModulesSettings;
+use ForkCMS\Backend\Modules\Analytics\GoogleClient\Connector;
+use ForkCMS\Common\ModulesSettings;
 use Google_Client;
 use Google_Service_Analytics;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;

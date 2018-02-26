@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Core\Engine\Base;
+namespace ForkCMS\Backend\Core\Engine\Base;
 
-use App\Backend\Core\Engine\DataGridDatabase;
+use ForkCMS\Backend\Core\Engine\DataGridDatabase;
 
 /**
  * This class implements a lot of functionality that can be extended by the real action.

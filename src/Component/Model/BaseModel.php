@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Component\Model;
+namespace ForkCMS\Component\Model;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

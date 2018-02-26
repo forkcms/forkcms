@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Faq\Domain\Category;
+namespace ForkCMS\Backend\Modules\Faq\Domain\Category;
 
-use App\Common\Doctrine\Entity\Meta;
-use App\Common\Exception\CanNotSetExtraIdException;
-use App\Common\Locale;
+use ForkCMS\Common\Doctrine\Entity\Meta;
+use ForkCMS\Common\Exception\CanNotSetExtraIdException;
+use ForkCMS\Common\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

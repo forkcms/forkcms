@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\Search\Actions;
+namespace ForkCMS\Backend\Modules\Search\Actions;
 
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the settings-action, it will display a form to set general search settings
@@ -74,7 +74,7 @@ class Settings extends BackendBaseActionEdit
         foreach (BackendModel::getModulesForDropDown() as $module => $label) {
             // check if module is searchable
             if (!in_array($module, $disallowedModules) &&
-                method_exists('App\\Frontend\\Modules\\' . $module . '\\Engine\\Model', 'search')
+                method_exists('ForkCMS\\Frontend\\Modules\\' . $module . '\\Engine\\Model', 'search')
             ) {
                 // add field to decide whether or not this module is searchable
                 $this->form->addCheckbox(

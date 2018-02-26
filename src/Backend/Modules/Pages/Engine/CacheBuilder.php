@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Pages\Engine;
+namespace ForkCMS\Backend\Modules\Pages\Engine;
 
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Filesystem\Filesystem;
 

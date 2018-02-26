@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
-use App\Backend\Core\Language\Language as BackendLanguage;
+use ForkCMS\Backend\Core\Language\Language as BackendLanguage;
 use Twig_Compiler;
 
 /**

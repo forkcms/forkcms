@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Profiles\Engine;
+namespace ForkCMS\Backend\Modules\Profiles\Engine;
 
-use App\Common\Mailer\Message;
-use App\Common\Uri as CommonUri;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Engine\Exception as BackendException;
+use ForkCMS\Common\Mailer\Message;
+use ForkCMS\Common\Uri as CommonUri;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Exception as BackendException;
 
 /**
  * In this file we store all generic functions that we will be using in the profiles module.

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Backend\Modules\Dashboard\Actions;
+namespace ForkCMS\Backend\Modules\Dashboard\Actions;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Engine\Base\Widget as BackendBaseWidget;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Exception as BackendException;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Exception as BackendException;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the index-action (default), it will display the login screen
@@ -74,9 +74,9 @@ class Index extends BackendBaseActionIndex
                 foreach ($finder->files()->in($pathName . '/Widgets') as $file) {
                     /** @ver $file \SplFileInfo */
                     $widgetName = $file->getBasename('.php');
-                    $className = 'App\\Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
+                    $className = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
                     if ($module == 'Core') {
-                        $className = 'App\\Backend\\Core\\Widgets\\' . $widgetName;
+                        $className = 'ForkCMS\\Backend\\Core\\Widgets\\' . $widgetName;
                     }
 
                     // if the widget is hidden for all the users groups, don't render it

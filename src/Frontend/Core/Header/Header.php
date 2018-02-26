@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Frontend\Core\Header;
+namespace ForkCMS\Frontend\Core\Header;
 
-use App\Common\Core\Header\Asset;
-use App\Common\Core\Header\AssetCollection;
-use App\Common\Core\Header\JsData;
-use App\Common\Core\Header\Minifier;
-use App\Common\Core\Header\Priority;
-use App\Component\Application\KernelLoader;
-use App\Frontend\Core\Engine\Model;
-use App\Frontend\Core\Engine\Theme;
-use App\Frontend\Core\Engine\TwigTemplate;
-use App\Frontend\Core\Engine\Url;
-use App\Frontend\Core\Language\Locale;
+use ForkCMS\Common\Core\Header\Asset;
+use ForkCMS\Common\Core\Header\AssetCollection;
+use ForkCMS\Common\Core\Header\JsData;
+use ForkCMS\Common\Core\Header\Minifier;
+use ForkCMS\Common\Core\Header\Priority;
+use ForkCMS\Component\Application\KernelLoader;
+use ForkCMS\Frontend\Core\Engine\Model;
+use ForkCMS\Frontend\Core\Engine\Theme;
+use ForkCMS\Frontend\Core\Engine\TwigTemplate;
+use ForkCMS\Frontend\Core\Engine\Url;
+use ForkCMS\Frontend\Core\Language\Locale;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**

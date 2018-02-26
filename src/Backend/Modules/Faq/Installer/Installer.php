@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Faq\Installer;
+namespace ForkCMS\Backend\Modules\Faq\Installer;
 
-use App\Backend\Core\Engine\Model;
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Backend\Modules\Faq\Domain\Category\Category;
-use App\Backend\Modules\Faq\Domain\Feedback\Feedback;
-use App\Backend\Modules\Faq\Domain\Question\Question;
-use App\Common\ModuleExtraType;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Modules\Faq\Domain\Category\Category;
+use ForkCMS\Backend\Modules\Faq\Domain\Feedback\Feedback;
+use ForkCMS\Backend\Modules\Faq\Domain\Question\Question;
+use ForkCMS\Common\ModuleExtraType;
 
 /**
  * Installer for the faq module

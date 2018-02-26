@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Common\Core\Header;
+namespace ForkCMS\Tests\Common\Core\Header;
 
-use App\Common\Core\Header\JsData;
+use ForkCMS\Common\Core\Header\JsData;
 use PHPUnit\Framework\TestCase;
 
 class JsDataTest extends TestCase

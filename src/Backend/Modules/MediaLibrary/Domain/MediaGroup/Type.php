@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroup;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 final class Type
 {

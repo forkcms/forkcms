@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Common\Mailer;
+namespace ForkCMS\Tests\Common\Mailer;
 
 use PHPUnit\Framework\TestCase;
-use App\Common\Mailer\TransportFactory;
+use ForkCMS\Common\Mailer\TransportFactory;
 
 /**
  * Tests for our module settings

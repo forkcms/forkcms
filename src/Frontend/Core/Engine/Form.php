@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
-use App\Common\Core\Form as BaseForm;
+use ForkCMS\Common\Core\Form as BaseForm;
 use SpoonFilter;
 use SpoonFormButton;
 use SpoonFormDropdown;

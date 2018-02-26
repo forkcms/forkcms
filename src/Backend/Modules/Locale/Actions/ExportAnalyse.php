@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\Locale\Actions;
+namespace ForkCMS\Backend\Modules\Locale\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

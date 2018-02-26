@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Backend\Modules\Blog\Engine;
+namespace ForkCMS\Tests\Backend\Modules\Blog\Engine;
 
-use App\Backend\Modules\Blog\Engine\Model;
-use App\Common\Doctrine\Entity\Meta;
-use App\Tests\WebTestCase;
+use ForkCMS\Backend\Modules\Blog\Engine\Model;
+use ForkCMS\Common\Doctrine\Entity\Meta;
+use ForkCMS\Tests\WebTestCase;
 
 class ModelTest extends WebTestCase
 {

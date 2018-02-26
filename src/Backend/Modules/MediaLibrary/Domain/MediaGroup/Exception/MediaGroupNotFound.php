@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception;
 
 class MediaGroupNotFound extends \Exception
 {

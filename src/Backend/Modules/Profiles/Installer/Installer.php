@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\Profiles\Installer;
+namespace ForkCMS\Backend\Modules\Profiles\Installer;
 
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Common\ModuleExtraType;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Common\ModuleExtraType;
 use Symfony\Component\Filesystem\Filesystem;
-use App\Backend\Core\Language\Language;
+use ForkCMS\Backend\Core\Language\Language;
 
 /**
  * Installer for the profiles module.

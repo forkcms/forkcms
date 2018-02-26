@@ -1,6 +1,6 @@
 services:
     analytics.client_factory:
-        class: App\Backend\Modules\Analytics\GoogleClient\ClientFactory
+        class: ForkCMS\Backend\Modules\Analytics\GoogleClient\ClientFactory
         arguments:
             - "@fork.settings"
             - "%kernel.cache_dir%"
@@ -15,7 +15,7 @@ services:
         factory: ["@analytics.client_factory",createClient]
 
     analytics.connector:
-        class: App\Backend\Modules\Analytics\GoogleClient\Connector
+        class: ForkCMS\Backend\Modules\Analytics\GoogleClient\Connector
         public: true
         arguments:
             - "@analytics.google_analytics_service"

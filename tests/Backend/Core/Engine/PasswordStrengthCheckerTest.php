@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Backend\Core\Engine;
+namespace ForkCMS\Tests\Backend\Core\Engine;
 
-use App\Backend\Core\Engine\PasswordStrengthChecker;
+use ForkCMS\Backend\Core\Engine\PasswordStrengthChecker;
 use PHPUnit\Framework\TestCase;
 
 class PasswordStrengthCheckerTest extends TestCase

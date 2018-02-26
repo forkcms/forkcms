@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Backend\Modules\Extensions\Engine;
+namespace ForkCMS\Backend\Modules\Extensions\Engine;
 
-use App\Common\ModulesSettings;
+use ForkCMS\Common\ModulesSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use App\Backend\Core\Engine\Navigation;
-use App\Backend\Core\Engine\Exception;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use ForkCMS\Backend\Core\Engine\Navigation;
+use ForkCMS\Backend\Core\Engine\Exception;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
@@ -686,7 +686,7 @@ class Model
 
     public static function installModule(string $module): void
     {
-        $class = 'App\\Backend\\Modules\\' . $module . '\\Installer\\Installer';
+        $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Installer\\Installer';
         $variables = [];
 
         // run installer

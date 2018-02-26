@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Modules\Tags;
+namespace ForkCMS\Frontend\Modules\Tags;
 
-use App\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use ForkCMS\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object

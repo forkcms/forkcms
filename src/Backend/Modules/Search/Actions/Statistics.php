@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\Search\Actions;
+namespace ForkCMS\Backend\Modules\Search\Actions;
 
-use App\Backend\Core\Engine\Base\Action;
-use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use App\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use ForkCMS\Backend\Core\Engine\Base\Action;
+use ForkCMS\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use ForkCMS\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the statistics-action, it will display the overview of search statistics

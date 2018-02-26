@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Users\Installer;
+namespace ForkCMS\Backend\Modules\Users\Installer;
 
-use App\Common\Core\Model;
+use ForkCMS\Common\Core\Model;
 use Symfony\Component\Filesystem\Filesystem;
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
-use App\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
-use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use ForkCMS\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use ForkCMS\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * Installer for the users module

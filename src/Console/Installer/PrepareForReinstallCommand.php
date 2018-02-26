@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Installer;
+namespace ForkCMS\Console\Installer;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;

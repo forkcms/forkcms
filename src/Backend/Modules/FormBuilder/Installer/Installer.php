@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\FormBuilder\Installer;
+namespace ForkCMS\Backend\Modules\FormBuilder\Installer;
 
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Common\ModuleExtraType;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Common\ModuleExtraType;
 
 /**
  * Installer for the form_builder module

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Frontend\Modules\Profiles\Engine;
+namespace ForkCMS\Frontend\Modules\Profiles\Engine;
 
-use App\Frontend\Core\Engine\Model as FrontendModel;
-use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
-use App\Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
+use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use ForkCMS\Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 /**
  * In this file we store all generic functions that we will be using to get and set profile information.

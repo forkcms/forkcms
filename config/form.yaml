@@ -7,17 +7,17 @@ parameters:
 
 services:
     fork.datepicker.form:
-        class: App\Common\Form\DatePickerType
+        class: ForkCMS\Common\Form\DatePickerType
         arguments:
           - "@service_container"
         tags:
           - { name: form.type }
     form.type.editor:
-        class: App\Backend\Form\Type\EditorType
+        class: ForkCMS\Backend\Form\Type\EditorType
         tags:
             - { name: form.type, alias: editor}
     form.type.meta:
-        class: App\Backend\Form\Type\MetaType
+        class: ForkCMS\Backend\Form\Type\MetaType
         arguments:
             - "@fork.repository.meta"
             - "@translator"

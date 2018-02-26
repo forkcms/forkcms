@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Core;
+namespace ForkCMS\Common\Core;
 
 use Symfony\Component\HttpFoundation\Cookie as SymfonyCookie;
 use Symfony\Component\HttpFoundation\Response;

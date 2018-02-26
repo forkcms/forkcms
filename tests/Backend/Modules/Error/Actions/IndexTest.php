@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Backend\Modules\Error\Action;
+namespace ForkCMS\Tests\Backend\Modules\Error\Action;
 
-use App\Tests\WebTestCase;
+use ForkCMS\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexTest extends WebTestCase

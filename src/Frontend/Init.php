@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend;
+namespace ForkCMS\Frontend;
 
-use App\Common\Core\Init as BaseInit;
+use ForkCMS\Common\Core\Init as BaseInit;
 
 /**
  * This class will initiate the frontend-application

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Modules\FormBuilder\Event;
+namespace ForkCMS\Frontend\Modules\FormBuilder\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\Actions;
+namespace ForkCMS\Backend\Modules\MediaGalleries\Actions;
 
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\Model;
-use App\Backend\Form\Type\DeleteType;
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery;
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\UpdateMediaGallery;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryType;
 
 /**
  * This is the class to Edit a MediaGallery

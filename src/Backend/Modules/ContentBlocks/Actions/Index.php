@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Actions;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Language\Locale;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataGrid;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Language\Locale;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataGrid;
 
 /**
  * This is the index-action (default), it will display the overview

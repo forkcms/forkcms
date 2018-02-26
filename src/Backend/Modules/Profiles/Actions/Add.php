@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\Profiles\Actions;
+namespace ForkCMS\Backend\Modules\Profiles\Actions;
 
-use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Frontend\Modules\Mailmotor\EventListener;
+namespace ForkCMS\Frontend\Modules\Mailmotor\EventListener;
 
-use App\Common\Language;
-use App\Common\Mailer\Message;
-use App\Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedUnsubscribedEvent;
+use ForkCMS\Common\Language;
+use ForkCMS\Common\Mailer\Message;
+use ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Event\NotImplementedUnsubscribedEvent;
 use Swift_Mailer;
-use App\Common\ModulesSettings;
+use ForkCMS\Common\ModulesSettings;
 
 /**
  * New mailing list unsubscription

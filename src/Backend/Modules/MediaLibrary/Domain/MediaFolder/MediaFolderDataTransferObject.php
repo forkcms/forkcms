@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaFolder;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
 class MediaFolderDataTransferObject
 {

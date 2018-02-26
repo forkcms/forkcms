@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaFolder;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Doctrine\ORM\EntityRepository;
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
 
 final class MediaFolderRepository extends EntityRepository
 {

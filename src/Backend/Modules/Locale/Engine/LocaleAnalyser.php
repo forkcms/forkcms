@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\Locale\Engine;
+namespace ForkCMS\Backend\Modules\Locale\Engine;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;

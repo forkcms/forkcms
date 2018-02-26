@@ -1,6 +1,6 @@
 services:
     media_library.manager.extension:
-        class: App\Backend\Modules\MediaLibrary\Manager\ExtensionManager
+        class: ForkCMS\Backend\Modules\MediaLibrary\Manager\ExtensionManager
         public: true
         calls:
             - [add, ["image", "%media_library.image_extensions%"]]
@@ -9,13 +9,13 @@ services:
             - [add, ["audio", "%media_library.audio_extensions%"]]
 
     media_library.manager.file:
-        class: App\Backend\Modules\MediaLibrary\Manager\FileManager
+        class: ForkCMS\Backend\Modules\MediaLibrary\Manager\FileManager
         public: true
         arguments:
             - "@fork.settings"
 
     media_library.manager.item:
-        class: App\Backend\Modules\MediaLibrary\Manager\MediaItemManager
+        class: ForkCMS\Backend\Modules\MediaLibrary\Manager\MediaItemManager
         public: true
         arguments:
             - "@media_library.repository.item"
@@ -23,7 +23,7 @@ services:
             - "@event_dispatcher"
 
     media_library.manager.mime_type:
-        class: App\Backend\Modules\MediaLibrary\Manager\MimeTypeManager
+        class: ForkCMS\Backend\Modules\MediaLibrary\Manager\MimeTypeManager
         public: true
         calls:
             - [add, ["image", "%media_library.image_mime_types%"]]
@@ -32,32 +32,32 @@ services:
             - [add, ["audio", "%media_library.audio_mime_types%"]]
 
     media_library.manager.storage:
-        class: App\Backend\Modules\MediaLibrary\Manager\StorageManager
+        class: ForkCMS\Backend\Modules\MediaLibrary\Manager\StorageManager
         public: true
 
     media_library.manager.tree:
-        class: App\Backend\Modules\MediaLibrary\Manager\TreeManager
+        class: ForkCMS\Backend\Modules\MediaLibrary\Manager\TreeManager
         public: true
         arguments:
             - "@media_library.cache.media_folder"
             - 'MediaItemIndex'
 
     media_library.manager.tree_media_browser:
-        class: App\Backend\Modules\MediaLibrary\Manager\TreeManager
+        class: ForkCMS\Backend\Modules\MediaLibrary\Manager\TreeManager
         public: true
         arguments:
             - "@media_library.cache.media_folder"
             - "MediaBrowser"
 
     media_library.manager.tree_media_browser_images:
-        class: App\Backend\Modules\MediaLibrary\Manager\TreeManager
+        class: ForkCMS\Backend\Modules\MediaLibrary\Manager\TreeManager
         public: true
         arguments:
             - "@media_library.cache.media_folder"
             - "MediaBrowserImages"
 
     media_library.manager.tree_media_browser_videos:
-            class: App\Backend\Modules\MediaLibrary\Manager\TreeManager
+            class: ForkCMS\Backend\Modules\MediaLibrary\Manager\TreeManager
             public: true
             arguments:
                 - "@media_library.cache.media_folder"

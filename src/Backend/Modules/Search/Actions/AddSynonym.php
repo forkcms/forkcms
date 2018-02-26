@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\Search\Actions;
+namespace ForkCMS\Backend\Modules\Search\Actions;
 
-use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the add-action, it will display a form to create a new synonym

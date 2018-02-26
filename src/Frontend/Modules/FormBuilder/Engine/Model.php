@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Modules\FormBuilder\Engine;
+namespace ForkCMS\Frontend\Modules\FormBuilder\Engine;
 
-use App\Frontend\Core\Engine\Model as FrontendModel;
+use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the form_builder module

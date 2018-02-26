@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem;
 
 use InvalidArgumentException;
 

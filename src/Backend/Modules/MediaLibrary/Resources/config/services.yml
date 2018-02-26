@@ -24,7 +24,7 @@ imports:
 
 services:
     media_library.twig_extension:
-        class: App\Frontend\Modules\MediaLibrary\Twig\Extensions\FrontendHelperExtensions
+        class: ForkCMS\Frontend\Modules\MediaLibrary\Twig\Extensions\FrontendHelperExtensions
         public: false
         arguments:
             - "@media_library.helper.frontend"

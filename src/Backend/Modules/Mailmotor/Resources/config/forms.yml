@@ -1,18 +1,18 @@
 services:
   mailmotor.form.settings:
-    class: App\Backend\Modules\Mailmotor\Domain\Settings\SettingsType
+    class: ForkCMS\Backend\Modules\Mailmotor\Domain\Settings\SettingsType
     arguments:
       - "@mailmotor.manager.subscriber_gateway"
     tags:
         - {name: 'form.type'}
   mailmotor.form.subscription:
-    class: App\Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType
+    class: ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType
     arguments:
       - "@mailmotor.subscriber"
       - "@fork.settings"
     tags:
       - {name: 'form.type'}
   mailmotor.form.unsubscription:
-    class: App\Frontend\Modules\Mailmotor\Domain\Subscription\UnsubscribeType
+    class: ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\UnsubscribeType
     tags:
       - {name: 'form.type'}

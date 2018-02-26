@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Analytics\Installer;
+namespace ForkCMS\Backend\Modules\Analytics\Installer;
 
-use App\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the analytics module

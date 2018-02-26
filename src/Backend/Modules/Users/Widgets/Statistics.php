@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Users\Widgets;
+namespace ForkCMS\Backend\Modules\Users\Widgets;
 
-use App\Backend\Core\Engine\Base\Widget as BackendBaseWidget;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Language\Language as BL;
 
 /**
  * This widget will show the statistics of the authenticated user.

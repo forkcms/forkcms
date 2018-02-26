@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Frontend\Modules\Faq\Widgets;
+namespace ForkCMS\Frontend\Modules\Faq\Widgets;
 
-use App\Common\Mailer\Message;
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Core\Engine\Form as FrontendForm;
-use App\Frontend\Core\Language\Language as FL;
-use App\Frontend\Core\Engine\Model as FrontendModel;
-use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use ForkCMS\Common\Mailer\Message;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Core\Engine\Form as FrontendForm;
+use ForkCMS\Frontend\Core\Language\Language as FL;
+use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
+use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This is a widget with the form to ask a question

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Doctrine\ValueObject;
+namespace ForkCMS\Common\Doctrine\ValueObject;
 
 final class SEOFollow
 {

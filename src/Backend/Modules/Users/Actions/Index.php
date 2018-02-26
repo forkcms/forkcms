@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Users\Actions;
+namespace ForkCMS\Backend\Modules\Users\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the index-action (default), it will display the users-overview
@@ -51,7 +51,7 @@ class Index extends BackendBaseActionIndex
 
         // show the user's nickname
         $this->dataGrid->setColumnFunction(
-            ['App\\Backend\\Modules\\Users\\Engine\\Model', 'getSetting'],
+            ['ForkCMS\\Backend\\Modules\\Users\\Engine\\Model', 'getSetting'],
             ['[id]', 'nickname'],
             'nickname',
             false

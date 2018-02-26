@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Backend\Modules\Pages\Model;
+namespace ForkCMS\Tests\Backend\Modules\Pages\Model;
 
-use App\Backend\Modules\Pages\Engine\Model;
+use ForkCMS\Backend\Modules\Pages\Engine\Model;
 use PHPUnit\Framework\TestCase;
 
 class ModelTest extends TestCase

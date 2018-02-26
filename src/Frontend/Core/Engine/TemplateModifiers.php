@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
-use App\Common\Exception\RedirectException;
+use ForkCMS\Common\Exception\RedirectException;
 use DateTime;
-use App\Frontend\Core\Engine\Model as FrontendModel;
-use App\Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
-use App\Frontend\Core\Language\Language;
-use App\Frontend\Core\Language\Locale;
-use App\Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
-use App\Common\Core\Twig\Extensions\BaseTwigModifiers;
+use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
+use ForkCMS\Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
+use ForkCMS\Frontend\Core\Language\Language;
+use ForkCMS\Frontend\Core\Language\Locale;
+use ForkCMS\Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use ForkCMS\Common\Core\Twig\Extensions\BaseTwigModifiers;
 use SpoonDate;
 
 /**

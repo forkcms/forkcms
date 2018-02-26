@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\Mailmotor\Domain\Subscription;
+namespace ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription;
 
-use App\Frontend\Modules\Mailmotor\Domain\Subscription\Command\Unsubscription;
-use App\Common\Language;
+use ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Command\Unsubscription;
+use ForkCMS\Common\Language;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

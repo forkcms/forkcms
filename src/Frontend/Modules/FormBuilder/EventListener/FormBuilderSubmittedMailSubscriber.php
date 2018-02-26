@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Frontend\Modules\FormBuilder\EventListener;
+namespace ForkCMS\Frontend\Modules\FormBuilder\EventListener;
 
-use App\Common\Mailer\Message;
+use ForkCMS\Common\Mailer\Message;
 use Swift_Mailer;
-use App\Common\ModulesSettings;
-use App\Frontend\Core\Language\Language;
-use App\Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use ForkCMS\Common\ModulesSettings;
+use ForkCMS\Frontend\Core\Language\Language;
+use ForkCMS\Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use Swift_Mime_SimpleMessage;
 
 /**

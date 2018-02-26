@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Frontend\Modules\Profiles\Actions;
+namespace ForkCMS\Frontend\Modules\Profiles\Actions;
 
-use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use App\Frontend\Core\Engine\Form as FrontendForm;
-use App\Frontend\Core\Language\Language as FL;
-use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
-use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
-use App\Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use ForkCMS\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use ForkCMS\Frontend\Core\Engine\Form as FrontendForm;
+use ForkCMS\Frontend\Core\Language\Language as FL;
+use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use ForkCMS\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use ForkCMS\Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
 class Login extends FrontendBaseBlock
 {

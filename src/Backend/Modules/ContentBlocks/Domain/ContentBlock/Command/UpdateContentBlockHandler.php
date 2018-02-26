@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 
 final class UpdateContentBlockHandler
 {

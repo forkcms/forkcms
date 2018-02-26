@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Backend\Modules\Groups\Actions;
+namespace ForkCMS\Backend\Modules\Groups\Actions;
 
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Form\Type\DeleteType;
-use App\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
-use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use ForkCMS\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use ForkCMS\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -74,12 +74,12 @@ class Edit extends BackendBaseActionEdit
             // loop through actions and add all classnames
             foreach ($this->actions[$module['value']] as $key => $action) {
                 // ajax action?
-                if (class_exists('App\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
+                if (class_exists('ForkCMS\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
                     // create reflection class
-                    $reflection = new \ReflectionClass('App\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
+                    $reflection = new \ReflectionClass('ForkCMS\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
                 } else {
                     // no ajax action? create reflection class
-                    $reflection = new \ReflectionClass('App\\Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
+                    $reflection = new \ReflectionClass('ForkCMS\\Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
                 }
 
                 // get the tag offset
@@ -150,9 +150,9 @@ class Edit extends BackendBaseActionEdit
 
                 // ajax-files should be required
                 if ($isAjax) {
-                    $class = 'App\\Backend\\Modules\\' . $module . '\\Ajax\\' . $actionName;
+                    $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Ajax\\' . $actionName;
                 } else {
-                    $class = 'App\\Backend\\Modules\\' . $module . '\\Actions\\' . $actionName;
+                    $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Actions\\' . $actionName;
                 }
 
                 $reflection = new \ReflectionClass($class);
@@ -215,7 +215,7 @@ class Edit extends BackendBaseActionEdit
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
             if (BackendAuthentication::isAllowedModule($module)) {
                 $widgetName = $file->getBasename('.php');
-                $class = 'App\\Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
+                $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
 
                 if (class_exists($class)) {
                     // add to array

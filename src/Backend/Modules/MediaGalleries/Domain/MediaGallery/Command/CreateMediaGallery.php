@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
+namespace ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
 
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataTransferObject;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupType;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryDataTransferObject;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\Type as MediaGroupType;
 
 final class CreateMediaGallery extends MediaGalleryDataTransferObject
 {

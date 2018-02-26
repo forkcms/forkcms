@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\Location\Actions;
+namespace ForkCMS\Backend\Modules\Location\Actions;
 
-use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**

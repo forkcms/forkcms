@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery;
+namespace ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Doctrine\ORM\EntityRepository;
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception\MediaGalleryNotFound;
 
 /**
  * @method MediaGallery|null findOneByTitle(string $title)

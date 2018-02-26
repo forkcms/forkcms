@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupDataTransferObject;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupDataTransferObject;
 
 final class SaveMediaGroup extends MediaGroupDataTransferObject
 {

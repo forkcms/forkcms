@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
 /**
  * This exception is used to handle backend related exceptions.

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\Tags\Engine;
+namespace ForkCMS\Backend\Modules\Tags\Engine;
 
-use App\Common\Uri as CommonUri;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use ForkCMS\Common\Uri as CommonUri;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * In this file we store all generic functions that we will be using in the TagsModule

@@ -33,12 +33,12 @@ doctrine:
                     # Remove when we don't have legacy tables anymore
                     enum: string
         types:
-            seo_follow: App\Common\Doctrine\Type\SEOFollowType
-            seo_index: App\Common\Doctrine\Type\SEOIndexType
-            locale: App\Common\Doctrine\Type\LocaleType
-            datetime: App\Common\Doctrine\Type\UTCDateTimeType
-            datetimetz: App\Common\Doctrine\Type\UTCDateTimeType
-            time: App\Common\Doctrine\Type\UTCTimeType
+            seo_follow: ForkCMS\Common\Doctrine\Type\SEOFollowType
+            seo_index: ForkCMS\Common\Doctrine\Type\SEOIndexType
+            locale: ForkCMS\Common\Doctrine\Type\LocaleType
+            datetime: ForkCMS\Common\Doctrine\Type\UTCDateTimeType
+            datetimetz: ForkCMS\Common\Doctrine\Type\UTCDateTimeType
+            time: ForkCMS\Common\Doctrine\Type\UTCTimeType
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -48,7 +48,7 @@ doctrine:
                 is_bundle: false
                 type: annotation
                 dir: '%kernel.project_dir%/src/Domain'
-                prefix: 'App\Domain'
+                prefix: 'ForkCMS\Domain'
                 alias: App
 
 # @todo: In the refactoring for fork 6, did does not exist
@@ -58,14 +58,14 @@ doctrine:
 
 services:
     fork.entity.create_schema:
-        class: App\Common\Doctrine\Entity\CreateSchema
+        class: ForkCMS\Common\Doctrine\Entity\CreateSchema
         public: true
         arguments:
             - "@doctrine.orm.entity_manager"
 
     fork.repository.meta:
-        class: App\Common\Doctrine\Repository\MetaRepository
+        class: ForkCMS\Common\Doctrine\Repository\MetaRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - App\Common\Doctrine\Entity\Meta
+            - ForkCMS\Common\Doctrine\Entity\Meta

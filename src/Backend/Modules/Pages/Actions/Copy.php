@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\Pages\Actions;
+namespace ForkCMS\Backend\Modules\Pages\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Engine\Exception as BackendException;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Engine\Exception as BackendException;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * BackendPagesCopy

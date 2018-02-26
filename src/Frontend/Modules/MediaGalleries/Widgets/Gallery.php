@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\MediaGalleries\Widgets;
+namespace ForkCMS\Frontend\Modules\MediaGalleries\Widgets;
 
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
-use App\Frontend\Core\Engine\Base\Widget as BackendBaseWidget;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as BackendBaseWidget;
 
 /**
  * This will show a MediaGallery.

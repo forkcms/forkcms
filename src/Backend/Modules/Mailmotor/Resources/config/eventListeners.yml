@@ -1,19 +1,19 @@
 services:
   mailmotor.listener.settings_saved:
-    class: App\Backend\Modules\Mailmotor\EventListener\SettingsSavedListener
+    class: ForkCMS\Backend\Modules\Mailmotor\EventListener\SettingsSavedListener
     arguments:
       - "%kernel.cache_dir%"
     tags:
       - { name: kernel.event_listener, event: mailmotor.event.settings_saved, method: onSettingsSavedEvent }
   mailmotor.listener.subscribed:
-    class: App\Frontend\Modules\Mailmotor\EventListener\NewNotImplementedMailingListSubscription
+    class: ForkCMS\Frontend\Modules\Mailmotor\EventListener\NewNotImplementedMailingListSubscription
     arguments:
       - "@mailer"
       - "@fork.settings"
     tags:
       - { name: kernel.event_listener, event: mailmotor.event.not_implemented.subscribed, method: onNotImplementedSubscribedEvent }
   mailmotor.listener.unsubscribed:
-    class: App\Frontend\Modules\Mailmotor\EventListener\NewNotImplementedMailingListUnsubscription
+    class: ForkCMS\Frontend\Modules\Mailmotor\EventListener\NewNotImplementedMailingListUnsubscription
     arguments:
       - "@mailer"
       - "@fork.settings"

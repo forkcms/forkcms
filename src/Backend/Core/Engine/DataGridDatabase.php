@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * A datagrid with a database-connection as source

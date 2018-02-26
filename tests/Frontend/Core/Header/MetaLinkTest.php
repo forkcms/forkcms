@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Frontend\Core\Header;
+namespace ForkCMS\Tests\Frontend\Core\Header;
 
-use App\Frontend\Core\Header\MetaLink;
+use ForkCMS\Frontend\Core\Header\MetaLink;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

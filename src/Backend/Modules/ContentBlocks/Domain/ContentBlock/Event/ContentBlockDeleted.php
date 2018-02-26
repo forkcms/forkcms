@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Event;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Event;
 
 final class ContentBlockDeleted extends ContentBlockEvent
 {

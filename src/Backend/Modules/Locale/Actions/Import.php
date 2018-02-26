@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\Locale\Actions;
+namespace ForkCMS\Backend\Modules\Locale\Actions;
 
-use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the import action, it will display a form to import a XML locale file.

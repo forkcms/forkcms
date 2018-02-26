@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\Mailmotor\Domain\Subscription\Command;
+namespace ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Command;
 
-use App\Common\ModulesSettings;
-use App\Frontend\Core\Language\Locale;
+use ForkCMS\Common\ModulesSettings;
+use ForkCMS\Frontend\Core\Language\Locale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 
 final class UnsubscriptionHandler

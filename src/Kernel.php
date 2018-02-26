@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Backend\DependencyInjection\BackendExtension;
+use ForkCMS\Backend\DependencyInjection\BackendExtension;
 use Spoon;
 use SpoonDatabaseException;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -137,7 +137,7 @@ class Kernel extends BaseKernel
         $container->setParameter('installed_modules', $installedModules);
 
         foreach ($installedModules as $module) {
-            $class = 'App\\Backend\\Modules\\' . $module . '\\DependencyInjection\\' . $module . 'Extension';
+            $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\DependencyInjection\\' . $module . 'Extension';
 
             if (class_exists($class)) {
                 $container->registerExtension(new $class());

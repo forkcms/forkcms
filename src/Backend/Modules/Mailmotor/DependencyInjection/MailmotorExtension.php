@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Mailmotor\DependencyInjection;
+namespace ForkCMS\Backend\Modules\Mailmotor\DependencyInjection;
 
-use App\Backend\Modules\Mailmotor\DependencyInjection\Compiler\MailmotorCompilerPass;
+use ForkCMS\Backend\Modules\Mailmotor\DependencyInjection\Compiler\MailmotorCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;

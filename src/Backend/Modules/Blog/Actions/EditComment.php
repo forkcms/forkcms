@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\Blog\Actions;
+namespace ForkCMS\Backend\Modules\Blog\Actions;
 
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\Extensions\Installer;
+namespace ForkCMS\Backend\Modules\Extensions\Installer;
 
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Common\ModuleExtraType;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Common\ModuleExtraType;
 
 /**
  * Installer for the extensions module.

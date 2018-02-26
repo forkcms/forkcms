@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use App\Backend\Modules\MediaLibrary\Component\StorageProvider\LiipImagineBundleStorageProviderInterface;
-use App\Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
+use ForkCMS\Backend\Modules\MediaLibrary\Component\StorageProvider\LiipImagineBundleStorageProviderInterface;
+use ForkCMS\Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,8 +11,8 @@ use Exception;
 use JsonSerializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use App\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use ForkCMS\Backend\Core\Engine\Model;
 
 /**
  * MediaItem

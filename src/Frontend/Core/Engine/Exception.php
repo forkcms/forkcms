@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
 /**
  * This class is used to handle frontend related exceptions.

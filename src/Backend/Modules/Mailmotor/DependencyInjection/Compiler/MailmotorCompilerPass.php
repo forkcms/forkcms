@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\Mailmotor\DependencyInjection\Compiler;
+namespace ForkCMS\Backend\Modules\Mailmotor\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

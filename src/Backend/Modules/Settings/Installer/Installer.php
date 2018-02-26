@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Settings\Installer;
+namespace ForkCMS\Backend\Modules\Settings\Installer;
 
-use App\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the settings module

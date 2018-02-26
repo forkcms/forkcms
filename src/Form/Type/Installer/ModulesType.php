@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form\Type\Installer;
+namespace ForkCMS\Form\Type\Installer;
 
-use App\Service\Installer\ForkInstaller;
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Service\Installer\ForkInstaller;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -81,7 +81,7 @@ class ModulesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Component\Installer\InstallationData',
+            'data_class' => 'ForkCMS\Component\Installer\InstallationData',
         ]);
     }
 

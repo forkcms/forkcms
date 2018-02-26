@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Common\Doctrine\ValueObject;
+namespace ForkCMS\Common\Doctrine\ValueObject;
 
-use App\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Engine\Model;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**

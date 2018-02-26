@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use App\Backend\Core\Language\Locale;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
+use ForkCMS\Backend\Core\Language\Locale;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockDataTransferObject;
 
 final class CreateContentBlock extends ContentBlockDataTransferObject
 {

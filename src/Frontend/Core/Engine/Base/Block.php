@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Frontend\Core\Engine\Base;
+namespace ForkCMS\Frontend\Core\Engine\Base;
 
-use App\Common\Core\Header\Priority;
-use App\Common\Doctrine\Entity\Meta;
-use App\Common\Exception\RedirectException;
-use App\Component\Application\KernelLoader;
-use App\Frontend\Core\Engine\Breadcrumb;
-use App\Frontend\Core\Engine\Exception;
-use App\Frontend\Core\Engine\Model;
-use App\Frontend\Core\Engine\Url;
-use App\Frontend\Core\Header\Header;
-use App\Frontend\Core\Engine\TwigTemplate;
+use ForkCMS\Common\Core\Header\Priority;
+use ForkCMS\Common\Doctrine\Entity\Meta;
+use ForkCMS\Common\Exception\RedirectException;
+use ForkCMS\Component\Application\KernelLoader;
+use ForkCMS\Frontend\Core\Engine\Breadcrumb;
+use ForkCMS\Frontend\Core\Engine\Exception;
+use ForkCMS\Frontend\Core\Engine\Model;
+use ForkCMS\Frontend\Core\Engine\Url;
+use ForkCMS\Frontend\Core\Header\Header;
+use ForkCMS\Frontend\Core\Engine\TwigTemplate;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

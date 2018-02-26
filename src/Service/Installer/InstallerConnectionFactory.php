@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Installer;
+namespace ForkCMS\Service\Installer;
 
 use Doctrine\Bundle\DoctrineBundle\ConnectionFactory;
 use Doctrine\Common\EventManager;
@@ -8,8 +8,8 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
-use App\Controller\InstallerController;
-use App\Component\Installer\InstallationData;
+use ForkCMS\Controller\InstallerController;
+use ForkCMS\Component\Installer\InstallationData;
 use Doctrine\DBAL\Exception\ConnectionException;
 
 class InstallerConnectionFactory extends ConnectionFactory

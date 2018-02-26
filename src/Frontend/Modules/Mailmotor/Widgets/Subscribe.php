@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Frontend\Modules\Mailmotor\Widgets;
+namespace ForkCMS\Frontend\Modules\Mailmotor\Widgets;
 
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
-use App\Frontend\Core\Language\Locale;
-use App\Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Command\Subscription;
+use ForkCMS\Frontend\Core\Language\Locale;
+use ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\SubscribeType;
 
 /**
  * This is a widget with the Subscribe form

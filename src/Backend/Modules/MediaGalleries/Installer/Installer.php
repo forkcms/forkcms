@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\Installer;
+namespace ForkCMS\Backend\Modules\MediaGalleries\Installer;
 
-use App\Backend\Core\Engine\Model;
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery;
 
 /**
  * Installer for the media module

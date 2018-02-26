@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Faq\Domain\Category;
+namespace ForkCMS\Backend\Modules\Faq\Domain\Category;
 
-use App\Common\Core\Model;
+use ForkCMS\Common\Core\Model;
 use Doctrine\ORM\EntityRepository;
-use App\Common\Locale;
+use ForkCMS\Common\Locale;
 use Doctrine\ORM\NoResultException;
 
 final class CategoryRepository extends EntityRepository

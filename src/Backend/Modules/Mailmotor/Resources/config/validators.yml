@@ -1,12 +1,12 @@
 services:
   mailmotor.validator.subscription:
-    class: App\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints\EmailSubscriptionValidator
+    class: ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints\EmailSubscriptionValidator
     calls:
       - [setSubscriber, ["@mailmotor.subscriber"]]
     tags:
       - { name: validator.constraint_validator }
   mailmotor.validator.unsubscription:
-    class: App\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints\EmailUnsubscriptionValidator
+    class: ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints\EmailUnsubscriptionValidator
     calls:
       - [setSubscriber, ["@mailmotor.subscriber"]]
     tags:

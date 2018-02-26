@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Frontend\Core\Engine\Block;
+namespace ForkCMS\Frontend\Core\Engine\Block;
 
-use App\Component\Application\KernelLoader;
-use App\Frontend\Core\Engine\TwigTemplate;
-use App\Frontend\Core\Engine\Url;
+use ForkCMS\Component\Application\KernelLoader;
+use ForkCMS\Frontend\Core\Engine\TwigTemplate;
+use ForkCMS\Frontend\Core\Engine\Url;
 use Symfony\Component\HttpKernel\KernelInterface;
-use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use App\Frontend\Core\Engine\Base\Config;
-use App\Frontend\Core\Engine\Exception as FrontendException;
-use App\Frontend\Core\Language\Language as FL;
+use ForkCMS\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use ForkCMS\Frontend\Core\Engine\Base\Config;
+use ForkCMS\Frontend\Core\Engine\Exception as FrontendException;
+use ForkCMS\Frontend\Core\Language\Language as FL;
 
 /**
  * This class will handle all stuff related to blocks
@@ -104,9 +104,9 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
     public function execute(): void
     {
         // build action-class-name
-        $actionClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
+        $actionClass = 'ForkCMS\\Frontend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
         if ($this->getModule() === 'Core') {
-            $actionClass = 'App\\Frontend\\Core\\Actions\\' . $this->getAction();
+            $actionClass = 'ForkCMS\\Frontend\\Core\\Actions\\' . $this->getAction();
         }
 
         // validate if class exists (aka has correct name)
@@ -258,9 +258,9 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
      */
     public function loadConfig(): void
     {
-        $configClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Config';
+        $configClass = 'ForkCMS\\Frontend\\Modules\\' . $this->getModule() . '\\Config';
         if ($this->getModule() === 'Core') {
-            $configClass = 'App\\Frontend\\Core\\Config';
+            $configClass = 'ForkCMS\\Frontend\\Core\\Config';
         }
 
         // validate if class exists (aka has correct name)

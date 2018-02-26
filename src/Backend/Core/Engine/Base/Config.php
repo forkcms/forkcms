@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Core\Engine\Base;
+namespace ForkCMS\Backend\Core\Engine\Base;
 
-use App\Backend\Core\Engine\Exception as BackendException;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Component\Application\KernelLoader;
+use ForkCMS\Backend\Core\Engine\Exception as BackendException;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Component\Application\KernelLoader;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\KernelInterface;
-use App\Backend\Core\Config as CoreConfig;
+use ForkCMS\Backend\Core\Config as CoreConfig;
 
 /**
  * This is the base-object for config-files. The module-specific config-files
@@ -166,9 +166,9 @@ class Config extends KernelLoader
     {
         $actionType = ucfirst($actionType);
 
-        $actionClass = 'App\\Backend\\Modules\\' . $this->module . '\\' . $actionType . '\\' . $action;
+        $actionClass = 'ForkCMS\\Backend\\Modules\\' . $this->module . '\\' . $actionType . '\\' . $action;
         if ($this->module === 'Core' && $actionType === 'Ajax') {
-            $actionClass = 'App\\Backend\\Core\\Ajax\\' . $action;
+            $actionClass = 'ForkCMS\\Backend\\Core\\Ajax\\' . $action;
         }
 
         return $actionClass;
@@ -187,7 +187,7 @@ class Config extends KernelLoader
      */
     public static function forModule(KernelInterface $kernel, string $module): self
     {
-        $configClass = 'App\\Backend\\Modules\\' . $module . '\\Config';
+        $configClass = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Config';
         if ($module === 'Core') {
             $configClass = CoreConfig::class;
         }

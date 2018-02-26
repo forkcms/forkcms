@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\Analytics\Actions;
+namespace ForkCMS\Backend\Modules\Analytics\Actions;
 
-use App\Backend\Core\Engine\Base\ActionDelete;
-use App\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Engine\Base\ActionDelete;
+use ForkCMS\Backend\Core\Engine\Model;
 
 /**
  * This is the reset-action. It will remove your coupling with analytics

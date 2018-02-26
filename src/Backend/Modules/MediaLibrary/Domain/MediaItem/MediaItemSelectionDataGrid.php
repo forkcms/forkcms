@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use App\Backend\Core\Engine\DataGridDatabase;
-use App\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use App\Backend\Core\Engine\Model;
-use App\Backend\Core\Language\Language;
+use ForkCMS\Backend\Core\Engine\DataGridDatabase;
+use ForkCMS\Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Language\Language;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid

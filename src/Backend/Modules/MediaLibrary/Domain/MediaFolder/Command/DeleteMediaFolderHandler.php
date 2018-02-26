@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 
 final class DeleteMediaFolderHandler
 {

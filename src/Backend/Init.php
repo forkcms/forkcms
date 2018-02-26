@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend;
+namespace ForkCMS\Backend;
 
-use App\Common\Core\Init as BaseInit;
+use ForkCMS\Common\Core\Init as BaseInit;
 use SpoonFilter;
 use Symfony\Component\HttpKernel\KernelInterface;
 

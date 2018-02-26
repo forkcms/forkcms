@@ -25,7 +25,7 @@ fork-cms/
 ```
 
 Which means:
-* One `App` namespace for `Backend`/`Frontend`/`Common` and Tests
+* One `ForkCMS` namespace for `Backend`/`Frontend`/`Common` and Tests
 * Using `var/log` instead of `var/logs`
 * Removed CKFinder
 * Directory `app` is removed
@@ -36,40 +36,40 @@ Which means:
 ### One `App` namespace
 
 To make everything work for Symfony 4 we had to:
-* Replace `Backend` by `App\Backend`
-* Replace `Common` by `App\Common`
-* Replace `Frontend` by `App\Frontend`
+* Replace `Backend` by `ForkCMS\Backend`
+* Replace `Common` by `ForkCMS\Common`
+* Replace `Frontend` by `ForkCMS\Frontend`
 * Moved files from `ForkCMS\App` to `App` namespace
-* Moved all tests from backend/common/frontend to `App\Tests`
+* Moved all tests from backend/common/frontend to `ForkCMS\Tests`
 
 We now have a clean composer.json autoload
 ```
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "ForkCMS\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "ForkCMS\\Tests\\": "tests/"
         }
     },
 ```
 
-### Move files from `ForkCMS\App` to `App` namespace
+### Refactor files from `ForkCMS\App` into `ForkCMS` namespace
 
 #### ForkController
 
 Before in routing.xml
 
 ```
-\ForkCMS\App\ForkController
+ForkCMS\App\ForkController
 ```
 
 After:
 
 ```
-\App\Controller\ForkController
+ForkCMS\Controller\ForkController
 ```
 
 Before:
@@ -81,7 +81,7 @@ use ForkCMS\App\ForkController as ...;
 After:
 
 ```php
-use App\Controller\ForkController as ...;
+use ForkCMS\Controller\ForkController as ...;
 ```
 
 #### BaseModel
@@ -95,7 +95,7 @@ use ForkCMS\App\BaseModel as ...
 After:
 
 ```
-use App\Component\Model\BaseModel as ...
+use ForkCMS\Component\Model\BaseModel as ...
 ```
 
 #### ApplicationInterface
@@ -109,7 +109,7 @@ use ForkCMS\App\ApplicationInterface as ...
 After:
 
 ```
-use App\Component\Application\ApplicationInterface as ...
+use ForkCMS\Component\Application\ApplicationInterface as ...
 ```
 
 #### KernelLoader
@@ -123,7 +123,7 @@ use ForkCMS\App\KernelLoader as ...
 After:
 
 ```
-use App\Component\Application\KernelLoader as ...
+use ForkCMS\Component\Application\KernelLoader as ...
 ```
 
 
@@ -143,7 +143,7 @@ By removing the following in composer.json
     "bin-dir": "bin"
 },
 ```
-Adding `"App\\": "src",`, and replacing `"./bin/simple-phpunit"` by `"./vendor/bin/simple-phpunit"`.
+Adding `"ForkCMS\\": "src",`, and replacing `"./bin/simple-phpunit"` by `"./vendor/bin/simple-phpunit"`.
 
 Replace in `.travis.yml`: `bin/phpcs` by `vendor/bin/phpcs` and `bin/simple-phpunit` by `vendor/bin/simple-phpunit
 
@@ -160,7 +160,7 @@ use ForkCMS\Bundle\CoreBundle\Validator\UrlValidator as ...
 After:
 
 ```
-use App\ServiceValidator\UrlValidator as ...
+use ForkCMS\Service\Validator\UrlValidator as ...
 ```
 
 Before:
@@ -172,7 +172,7 @@ use ForkCMS\Bundle\CoreBundle\Tests\Validator\UrlValidatorTest as ...
 After:
 
 ```
-use App\Tests\Service\Validator\UrlValidatorTest as ...
+use ForkCMS\Tests\Service\Validator\UrlValidatorTest as ...
 ```
 
 #### Refactor ForkCMSInstallerBundle
@@ -192,7 +192,7 @@ use ForkCMS\Bundle\InstallerBundle\Console\CheckRequirementsCommand as ...
 After:
 
 ```
-use App\Console\Installer\CheckRequirementsCommand as ...
+use ForkCMS\Console\Installer\CheckRequirementsCommand as ...
 ```
 
 Before:
@@ -204,7 +204,7 @@ use ForkCMS\Bundle\InstallerBundle\Console\PrepareForReinstallCommand as ...
 After:
 
 ```
-use App\Console\Installer\PrepareForReinstallCommand as ...
+use ForkCMS\Console\Installer\PrepareForReinstallCommand as ...
 ```
 
 ##### Controller
@@ -218,7 +218,7 @@ use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController as ...
 After:
 
 ```
-use App\Controller\InstallerController as ...
+use ForkCMS\Controller\InstallerController as ...
 ```
 
 ##### Entity
@@ -232,7 +232,7 @@ use ForkCMS\Bundle\InstallerBundle\Entity as ...
 After:
 
 ```
-use App\Controller\InstallerController as ...
+use ForkCMS\Controller\InstallerController as ...
 ```
 
 ##### Form Handler
@@ -246,7 +246,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler as ...
 After:
 
 ```
-use App\Component\Installer\Handler\DatabaseHandler as ...
+use ForkCMS\Component\Installer\Handler\DatabaseHandler as ...
 ```
 
 Before:
@@ -258,7 +258,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Handler\InstallerHandler as ...
 After:
 
 ```
-use App\Component\Installer\Handler\InstallerHandler as ...
+use ForkCMS\Component\Installer\Handler\InstallerHandler as ...
 ```
 
 Before:
@@ -270,7 +270,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler as ...
 After:
 
 ```
-use App\Component\Installer\Handler\LanguagesHandler as ...
+use ForkCMS\Component\Installer\Handler\LanguagesHandler as ...
 ```
 
 Before:
@@ -282,7 +282,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler as ...
 After:
 
 ```
-use App\Component\Installer\Handler\LoginHandler as ...
+use ForkCMS\Component\Installer\Handler\LoginHandler as ...
 ```
 
 Before:
@@ -294,7 +294,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler as ...
 After:
 
 ```
-use App\Component\Installer\Handler\ModulesHandler as ...
+use ForkCMS\Component\Installer\Handler\ModulesHandler as ...
 ```
 
 ##### Form Type
@@ -308,7 +308,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Type\DatabaseType ...
 After:
 
 ```
-use App\Form\Type\Installer\DatabaseType as ...
+use ForkCMS\Form\Type\Installer\DatabaseType as ...
 ```
 
 Before:
@@ -320,7 +320,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType ...
 After:
 
 ```
-use App\Form\Type\Installer\LanguagesType as ...
+use ForkCMS\Form\Type\Installer\LanguagesType as ...
 ```
 
 Before:
@@ -332,7 +332,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Type\LoginType ...
 After:
 
 ```
-use App\Form\Type\Installer\LoginType as ...
+use ForkCMS\Form\Type\Installer\LoginType as ...
 ```
 
 Before:
@@ -344,7 +344,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesTypes ...
 After:
 
 ```
-use App\Form\Type\Installer\ModulesTypes as ...
+use ForkCMS\Form\Type\Installer\ModulesTypes as ...
 ```
 
 ##### Requirement
@@ -358,7 +358,7 @@ use ForkCMS\Bundle\InstallerBundle\Requirement\Requirement as ...
 After:
 
 ```
-use App\Component\Installer\Requirement\Requirement as ...
+use ForkCMS\Component\Installer\Requirement\Requirement as ...
 ```
 
 Before:
@@ -370,7 +370,7 @@ use ForkCMS\Bundle\InstallerBundle\Requirement\RequirementCategory as ...
 After:
 
 ```
-use App\Component\Installer\Requirement\RequirementCategory as ...
+use ForkCMS\Component\Installer\Requirement\RequirementCategory as ...
 ```
 
 Before:
@@ -382,7 +382,7 @@ use ForkCMS\Bundle\InstallerBundle\Requirement\RequirementStatus as ...
 After:
 
 ```
-use App\Component\Installer\Requirement\RequirementStatus as ...
+use ForkCMS\Component\Installer\Requirement\RequirementStatus as ...
 ```
 
 ##### Services
@@ -396,7 +396,7 @@ use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller as ...
 After:
 
 ```
-use App\Service\Installer\ForkInstaller as ...
+use ForkCMS\Service\Installer\ForkInstaller as ...
 ```
 
 Before:
@@ -408,7 +408,7 @@ use ForkCMS\Bundle\InstallerBundle\Service\InstallerConnectionFactory as ...
 After:
 
 ```
-use App\Service\Installer\InstallerConnectionFactory as ...
+use ForkCMS\Service\Installer\InstallerConnectionFactory as ...
 ```
 
 Before:
@@ -420,7 +420,7 @@ use ForkCMS\Bundle\InstallerBundle\Service\RequirementsChecker as ...
 After:
 
 ```
-use App\Service\Installer\RequirementsChecker as ...
+use ForkCMS\Service\Installer\RequirementsChecker as ...
 ```
 
 ## Move + rename database_data_collector.html.twig

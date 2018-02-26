@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
-use App\Component\Application\KernelLoader;
-use App\Frontend\Core\Language\Language;
+use ForkCMS\Component\Application\KernelLoader;
+use ForkCMS\Frontend\Core\Language\Language;
 use Symfony\Component\HttpKernel\KernelInterface;
-use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use App\Frontend\Core\Engine\Model as FrontendModel;
-use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
+use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
+use ForkCMS\Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthentication;
 
 /**
  * This class will be used to build the navigation

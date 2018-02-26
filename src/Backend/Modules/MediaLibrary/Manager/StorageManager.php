@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Manager;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Manager;
 
-use App\Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
+use ForkCMS\Backend\Modules\MediaLibrary\Component\StorageProvider\StorageProviderInterface;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
 use Exception;
 
 final class StorageManager

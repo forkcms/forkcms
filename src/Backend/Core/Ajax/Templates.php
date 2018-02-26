@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Core\Ajax;
+namespace ForkCMS\Backend\Core\Ajax;
 
 use Symfony\Component\Filesystem\Filesystem;
-use App\Backend\Core\Engine\Base\AjaxAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace ForkCMS\Tests\Controller;
 
-use App\Tests\WebTestCase;
+use ForkCMS\Tests\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Filesystem\Filesystem;

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Common\Core\Header\Asset;
-use App\Common\Core\Header\AssetCollection;
-use App\Common\Core\Header\JsData;
-use App\Common\Core\Header\Minifier;
-use App\Common\Core\Header\Priority;
-use App\Component\Application\KernelLoader;
+use ForkCMS\Common\Core\Header\Asset;
+use ForkCMS\Common\Core\Header\AssetCollection;
+use ForkCMS\Common\Core\Header\JsData;
+use ForkCMS\Common\Core\Header\Minifier;
+use ForkCMS\Common\Core\Header\Priority;
+use ForkCMS\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use App\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Language\Language as BL;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend

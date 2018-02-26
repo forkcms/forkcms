@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Modules\Pages;
+namespace ForkCMS\Frontend\Modules\Pages;
 
-use App\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use ForkCMS\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object

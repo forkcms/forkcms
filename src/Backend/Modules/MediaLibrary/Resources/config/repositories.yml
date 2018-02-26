@@ -1,28 +1,28 @@
 services:
     media_library.repository.folder:
-        class: App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository
+        class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder
+            - ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder
 
     media_library.repository.group:
-        class: App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository
+        class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup
+            - ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup
 
     media_library.repository.group_item:
-        class: App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository
+        class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem
+            - ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem
 
     media_library.repository.item:
-        class: App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository
+        class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem
+            - ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem

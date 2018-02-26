@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
-use App\Frontend\Core\Config;
-use App\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use ForkCMS\Frontend\Core\Config;
+use ForkCMS\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -28,9 +28,9 @@ class AjaxAction extends FrontendBaseAJAXAction
     {
         $this->loadConfig();
 
-        $actionClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
+        $actionClass = 'ForkCMS\\Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
         if ($this->getModule() === 'Core') {
-            $actionClass = 'App\\Frontend\\Core\\Ajax\\' . $this->getAction();
+            $actionClass = 'ForkCMS\\Frontend\\Core\\Ajax\\' . $this->getAction();
         }
 
         if (!class_exists($actionClass)) {
@@ -52,7 +52,7 @@ class AjaxAction extends FrontendBaseAJAXAction
      */
     public function loadConfig(): void
     {
-        $configClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Config';
+        $configClass = 'ForkCMS\\Frontend\\Modules\\' . $this->getModule() . '\\Config';
         if ($this->getModule() === 'Core') {
             $configClass = Config::class;
         }

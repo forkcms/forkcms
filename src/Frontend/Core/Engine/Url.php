@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
-use App\Common\Exception\RedirectException;
-use App\Component\Application\KernelLoader;
-use App\Frontend\Core\Language\Language;
+use ForkCMS\Common\Exception\RedirectException;
+use ForkCMS\Component\Application\KernelLoader;
+use ForkCMS\Frontend\Core\Language\Language;
 use SpoonFilter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;

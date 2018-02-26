@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests;
+namespace ForkCMS\Tests;
 
-use App\Backend\Core\Engine\Authentication;
-use App\Component\Model\BaseModel;
+use ForkCMS\Backend\Core\Engine\Authentication;
+use ForkCMS\Component\Model\BaseModel;
 use SpoonDatabase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;

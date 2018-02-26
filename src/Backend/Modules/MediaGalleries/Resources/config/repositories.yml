@@ -1,7 +1,7 @@
 services:
     media_galleries.repository.gallery:
-        class: App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository
+        class: ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository
         public: true
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery
+            - ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGallery

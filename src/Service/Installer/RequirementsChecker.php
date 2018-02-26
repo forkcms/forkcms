@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service\Installer;
+namespace ForkCMS\Service\Installer;
 
-use App\Component\Installer\Requirement\Requirement;
-use App\Component\Installer\Requirement\RequirementCategory;
-use App\Component\Installer\Requirement\RequirementStatus;
+use ForkCMS\Component\Installer\Requirement\Requirement;
+use ForkCMS\Component\Installer\Requirement\RequirementCategory;
+use ForkCMS\Component\Installer\Requirement\RequirementStatus;
 
 /**
  * Requirements checker

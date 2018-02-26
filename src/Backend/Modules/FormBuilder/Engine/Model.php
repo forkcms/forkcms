@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\FormBuilder\Engine;
+namespace ForkCMS\Backend\Modules\FormBuilder\Engine;
 
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Common\ModuleExtraType;
-use App\Frontend\Core\Language\Language as FL;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Common\ModuleExtraType;
+use ForkCMS\Frontend\Core\Language\Language as FL;
 use Symfony\Component\Finder\Finder;
 
 /**

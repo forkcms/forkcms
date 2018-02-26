@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Core\Installer;
+namespace ForkCMS\Backend\Core\Installer;
 
 /**
  * Installer for the core

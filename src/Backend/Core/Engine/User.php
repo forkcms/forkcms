@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * The class below will handle all stuff relates to the current authenticated user

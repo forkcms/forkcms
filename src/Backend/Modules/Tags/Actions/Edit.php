@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Backend\Modules\Tags\Actions;
+namespace ForkCMS\Backend\Modules\Tags\Actions;
 
-use App\Common\Uri as CommonUri;
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use ForkCMS\Common\Uri as CommonUri;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the edit action, it will display a form to edit an existing tag.
@@ -56,9 +56,9 @@ class Edit extends BackendBaseActionEdit
         // loop modules
         foreach ($modules as $module) {
             // build class name
-            $className = 'App\\Backend\\Modules\\' . $module . '\\Engine\\Model';
+            $className = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Engine\\Model';
             if ($module == 'Core') {
-                $className = 'App\\Backend\\Core\\Engine\\Model';
+                $className = 'ForkCMS\\Backend\\Core\\Engine\\Model';
             }
 
             // check if the getByTag-method is available

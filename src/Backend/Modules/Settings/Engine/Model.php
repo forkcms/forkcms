@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Settings\Engine;
+namespace ForkCMS\Backend\Modules\Settings\Engine;
 
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the settings module.
@@ -22,9 +22,9 @@ class Model
         // loop modules
         foreach ($installedModules as $module) {
             // model class
-            $class = 'App\\Backend\\Modules\\' . $module . '\\Engine\\Model';
+            $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Engine\\Model';
             if ($module === 'Core') {
-                $class = 'App\\Backend\\Core\\Engine\\Model';
+                $class = 'ForkCMS\\Backend\\Core\\Engine\\Model';
             }
 
             // method exists

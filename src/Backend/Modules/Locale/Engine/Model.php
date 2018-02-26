@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\Locale\Engine;
+namespace ForkCMS\Backend\Modules\Locale\Engine;
 
-use App\Common\Uri as CommonUri;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Common\Uri as CommonUri;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module

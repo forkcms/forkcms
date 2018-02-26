@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Common\Doctrine\Type;
+namespace ForkCMS\Common\Doctrine\Type;
 
-use App\Common\Doctrine\ValueObject\AbstractImage;
+use ForkCMS\Common\Doctrine\ValueObject\AbstractImage;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Exception;
+namespace ForkCMS\Common\Exception;
 
 use InvalidArgumentException;
 

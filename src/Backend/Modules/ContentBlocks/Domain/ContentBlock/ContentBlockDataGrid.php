@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use App\Backend\Core\Engine\DataGridDatabase;
-use App\Backend\Core\Engine\TemplateModifiers;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Model;
-use App\Backend\Core\Language\Language;
-use App\Backend\Core\Language\Locale;
+use ForkCMS\Backend\Core\Engine\DataGridDatabase;
+use ForkCMS\Backend\Core\Engine\TemplateModifiers;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Language\Language;
+use ForkCMS\Backend\Core\Language\Locale;
 
 /**
  * @TODO replace with a doctrine implementation of the data grid

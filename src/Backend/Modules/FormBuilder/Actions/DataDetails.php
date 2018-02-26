@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\FormBuilder\Actions;
+namespace ForkCMS\Backend\Modules\FormBuilder\Actions;
 
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 
 /**
  * This is the data-action it will display the details of a sent data item

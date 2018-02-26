@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\DependencyInjection;
+namespace ForkCMS\Backend\Modules\MediaGalleries\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

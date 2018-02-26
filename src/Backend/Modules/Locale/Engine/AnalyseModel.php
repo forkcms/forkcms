@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Locale\Engine;
+namespace ForkCMS\Backend\Modules\Locale\Engine;
 
-use App\Frontend\Core\Engine\Theme;
+use ForkCMS\Frontend\Core\Engine\Theme;
 use Symfony\Component\Finder\Finder;
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module

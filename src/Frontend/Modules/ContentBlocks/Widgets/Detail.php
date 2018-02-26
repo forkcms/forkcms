@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\ContentBlocks\Widgets;
+namespace ForkCMS\Frontend\Modules\ContentBlocks\Widgets;
 
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Core\Language\Locale;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Core\Language\Locale;
 
 /**
  * This is the detail widget.

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Mailmotor\Domain\Settings\Event;
+namespace ForkCMS\Backend\Modules\Mailmotor\Domain\Settings\Event;
 
-use App\Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
+use ForkCMS\Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

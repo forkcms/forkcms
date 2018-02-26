@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Common\Doctrine\Repository;
+namespace ForkCMS\Common\Doctrine\Repository;
 
-use App\Backend\Core\Engine\Exception;
-use App\Backend\Core\Engine\Model;
-use App\Common\Uri;
+use ForkCMS\Backend\Core\Engine\Exception;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Common\Uri;
 use Doctrine\ORM\EntityRepository;
 use SpoonFilter;
 

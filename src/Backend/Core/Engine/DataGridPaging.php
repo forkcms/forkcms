@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Backend\Core\Language\Language as BackendLanguage;
+use ForkCMS\Backend\Core\Language\Language as BackendLanguage;
 use iSpoonDatagridPaging;
 
 /**

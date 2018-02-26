@@ -1,10 +1,10 @@
 #!/usr/bin/env php
 <?php
 
-use App\Backend\Init as BackendInit;
-use App\Common\ModulesSettings;
-use App\Component\Model\BaseModel;
 use App\Kernel;
+use ForkCMS\Backend\Init as BackendInit;
+use ForkCMS\Common\ModulesSettings;
+use ForkCMS\Component\Model\BaseModel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;

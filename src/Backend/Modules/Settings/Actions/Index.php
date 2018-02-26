@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Backend\Modules\Settings\Actions;
+namespace ForkCMS\Backend\Modules\Settings\Actions;
 
 use TijsVerkoyen\Akismet\Akismet;
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use App\Backend\Modules\Settings\Engine\Model as BackendSettingsModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use ForkCMS\Backend\Modules\Settings\Engine\Model as BackendSettingsModel;
 
 /**
  * This is the index-action (default), it will display the setting-overview

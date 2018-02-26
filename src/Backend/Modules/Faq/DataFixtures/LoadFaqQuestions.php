@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\Faq\DataFixtures;
+namespace ForkCMS\Backend\Modules\Faq\DataFixtures;
 
 class LoadFaqQuestions
 {

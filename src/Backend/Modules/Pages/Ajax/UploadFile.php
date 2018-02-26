@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Pages\Ajax;
+namespace ForkCMS\Backend\Modules\Pages\Ajax;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
-use App\Common\Core\Model;
-use App\Common\Uri;
-use App\Backend\Core\Engine\Base\AjaxAction;
-use App\Backend\Core\Engine\Exception;
+use ForkCMS\Common\Core\Model;
+use ForkCMS\Common\Uri;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction;
+use ForkCMS\Backend\Core\Engine\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

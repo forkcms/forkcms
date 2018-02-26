@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Core\Twig\Extensions;
+namespace ForkCMS\Common\Core\Twig\Extensions;
 
 /**
  * Contains all Forkcms filters for Twig

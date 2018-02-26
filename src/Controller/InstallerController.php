@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Controller;
+namespace ForkCMS\Controller;
 
-use App\Component\Installer\Handler\DatabaseHandler;
-use App\Component\Installer\Handler\InstallerHandler;
-use App\Component\Installer\Handler\LanguagesHandler;
-use App\Component\Installer\Handler\LoginHandler;
-use App\Component\Installer\Handler\ModulesHandler;
-use App\Component\Installer\InstallationData;
-use App\Common\Exception\ExitException;
-use App\Form\Type\Installer\DatabaseType;
-use App\Form\Type\Installer\LanguagesType;
-use App\Form\Type\Installer\LoginType;
-use App\Form\Type\Installer\ModulesType;
+use ForkCMS\Component\Installer\Handler\DatabaseHandler;
+use ForkCMS\Component\Installer\Handler\InstallerHandler;
+use ForkCMS\Component\Installer\Handler\LanguagesHandler;
+use ForkCMS\Component\Installer\Handler\LoginHandler;
+use ForkCMS\Component\Installer\Handler\ModulesHandler;
+use ForkCMS\Component\Installer\InstallationData;
+use ForkCMS\Common\Exception\ExitException;
+use ForkCMS\Form\Type\Installer\DatabaseType;
+use ForkCMS\Form\Type\Installer\LanguagesType;
+use ForkCMS\Form\Type\Installer\LoginType;
+use ForkCMS\Form\Type\Installer\ModulesType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RedirectResponse;

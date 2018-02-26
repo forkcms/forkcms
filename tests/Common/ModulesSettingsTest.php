@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Common;
+namespace ForkCMS\Tests\Common;
 
-use App\Common\ModulesSettings;
+use ForkCMS\Common\ModulesSettings;
 use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
 use MatthiasMullie\Scrapbook\Psr6\Pool;
 use PHPUnit\Framework\TestCase;

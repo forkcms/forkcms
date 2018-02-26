@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Manager;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Manager;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 use SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware;
 
 class MediaItemManager

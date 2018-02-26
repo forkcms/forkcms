@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery;
+namespace ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
-use App\Backend\Core\Engine\Authentication;
+use ForkCMS\Backend\Core\Engine\Authentication;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use App\Backend\Core\Engine\TemplateModifiers;
-use App\Backend\Form\Type\EditorType;
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
-use App\Backend\Modules\MediaLibrary\ValueObject\MediaWidget;
+use ForkCMS\Backend\Core\Engine\TemplateModifiers;
+use ForkCMS\Backend\Form\Type\EditorType;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command\CreateMediaGallery;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupType;
+use ForkCMS\Backend\Modules\MediaLibrary\ValueObject\MediaWidget;
 use Symfony\Component\Validator\Constraints\Valid;
 
 class MediaGalleryType extends AbstractType

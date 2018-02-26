@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\Location\Widgets;
+namespace ForkCMS\Frontend\Modules\Location\Widgets;
 
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the location-widget: 1 specific address

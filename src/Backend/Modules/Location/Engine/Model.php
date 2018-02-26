@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Location\Engine;
+namespace ForkCMS\Backend\Modules\Location\Engine;
 
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Common\ModuleExtraType;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Common\ModuleExtraType;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**

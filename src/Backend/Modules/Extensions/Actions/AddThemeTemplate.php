@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\Extensions\Actions;
+namespace ForkCMS\Backend\Modules\Extensions\Actions;
 
-use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the add-action, it will display a form to create a new item

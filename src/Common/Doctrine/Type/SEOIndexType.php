@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Common\Doctrine\Type;
+namespace ForkCMS\Common\Doctrine\Type;
 
-use App\Common\Doctrine\ValueObject\SEOIndex;
+use ForkCMS\Common\Doctrine\ValueObject\SEOIndex;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 

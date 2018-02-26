@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Frontend\Core\Header;
+namespace ForkCMS\Tests\Frontend\Core\Header;
 
-use App\Frontend\Core\Header\MetaCollection;
-use App\Frontend\Core\Header\MetaData;
-use App\Frontend\Core\Header\MetaLink;
+use ForkCMS\Frontend\Core\Header\MetaCollection;
+use ForkCMS\Frontend\Core\Header\MetaData;
+use ForkCMS\Frontend\Core\Header\MetaLink;
 use PHPUnit\Framework\TestCase;
 
 class MetaCollectionTest extends TestCase

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery;
+namespace ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery;
 
 use Ramsey\Uuid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
-use App\Backend\Core\Engine\Model;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use App\Common\ModuleExtraType;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use ForkCMS\Common\ModuleExtraType;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository")

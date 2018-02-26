@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
 /**
  * Twig token parser for form field errors.

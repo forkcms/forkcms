@@ -1,18 +1,18 @@
 services:
   faq.repository.category:
-    class: App\Backend\Modules\Faq\Domain\Category\CategoryRepository
+    class: ForkCMS\Backend\Modules\Faq\Domain\Category\CategoryRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
-      - App\Backend\Modules\Faq\Domain\Category\Category
+      - ForkCMS\Backend\Modules\Faq\Domain\Category\Category
 
   faq.repository.question:
-    class: App\Backend\Modules\Faq\Domain\Question\QuestionRepository
+    class: ForkCMS\Backend\Modules\Faq\Domain\Question\QuestionRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
-      - App\Backend\Modules\Faq\Domain\Question\Question
+      - ForkCMS\Backend\Modules\Faq\Domain\Question\Question
 
   faq.repository.feedback:
-    class: App\Backend\Modules\Faq\Domain\Feedback\FeedbackRepository
+    class: ForkCMS\Backend\Modules\Faq\Domain\Feedback\FeedbackRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
-      - App\Backend\Modules\Faq\Domain\Feedback\Feedback
+      - ForkCMS\Backend\Modules\Faq\Domain\Feedback\Feedback

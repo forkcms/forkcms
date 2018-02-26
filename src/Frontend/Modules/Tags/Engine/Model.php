@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Frontend\Modules\Tags\Engine;
+namespace ForkCMS\Frontend\Modules\Tags\Engine;
 
-use App\Common\Locale;
-use App\Frontend\Core\Engine\Exception as FrontendException;
-use App\Frontend\Core\Engine\Model as FrontendModel;
-use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
-use App\Frontend\Core\Language\Language;
-use App\Frontend\Core\Language\Locale as FrontendLocale;
+use ForkCMS\Common\Locale;
+use ForkCMS\Frontend\Core\Engine\Exception as FrontendException;
+use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
+use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use ForkCMS\Frontend\Core\Language\Language;
+use ForkCMS\Frontend\Core\Language\Locale as FrontendLocale;
 
 /**
  * In this file we store all generic functions that we will be using in the tags module
@@ -29,7 +29,7 @@ class Model
     public static function callFromInterface(string $module, string $class, string $method, $parameter = null)
     {
         // check to see if the interface is implemented
-        if (in_array('App\\Frontend\\Modules\\Tags\\Engine\\TagsInterface', class_implements($class))) {
+        if (in_array('ForkCMS\\Frontend\\Modules\\Tags\\Engine\\TagsInterface', class_implements($class))) {
             // return result
             return call_user_func([$class, $method], $parameter);
         }
@@ -243,7 +243,7 @@ class Model
             [$module, $id]
         );
 
-        $class = 'App\\Frontend\\Modules\\' . $module . '\\Engine\\Model';
+        $class = 'ForkCMS\\Frontend\\Modules\\' . $module . '\\Engine\\Model';
 
         // get the items that are linked to the tags
         $items = (array) self::callFromInterface($module, $class, 'getForTags', $otherIds);

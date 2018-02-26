@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Pages\Actions;
+namespace ForkCMS\Backend\Modules\Pages\Actions;
 
-use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Form\Type\DeleteType;
-use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\Backend\Modules\Search\Engine\Model as BackendSearchModel;
 
 /**
  * This is the delete-action, it will delete a page

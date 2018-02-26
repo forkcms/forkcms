@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Backend\Core\Config;
-use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Common\Exception\RedirectException;
-use App\Component\Application\KernelLoader;
+use ForkCMS\Backend\Core\Config;
+use ForkCMS\Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Common\Exception\RedirectException;
+use ForkCMS\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use App\Backend\Core\Language\Language as BackendLanguage;
+use ForkCMS\Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class will handle the incoming URL.
@@ -111,7 +111,7 @@ class Url extends KernelLoader
     private function getDefaultActionForModule(string $module, string $language): string
     {
         // Check if we can load the config file
-        $configClass = 'App\\Backend\\Modules\\' . $module . '\\Config';
+        $configClass = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Config';
         if ($module === 'Core') {
             $configClass = Config::class;
         }

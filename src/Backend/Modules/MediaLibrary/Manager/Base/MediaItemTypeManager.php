@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Manager\Base;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Manager\Base;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 
 class MediaItemTypeManager
 {

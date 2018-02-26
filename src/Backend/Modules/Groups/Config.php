@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Groups;
+namespace ForkCMS\Backend\Modules\Groups;
 
-use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use ForkCMS\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the groups module

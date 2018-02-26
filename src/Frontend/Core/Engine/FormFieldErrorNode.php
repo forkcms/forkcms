@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
 /**
  * Twig note for writing out the compiled version of a form field error.

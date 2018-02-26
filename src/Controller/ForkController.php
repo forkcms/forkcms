@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Controller;
+namespace ForkCMS\Controller;
 
-use App\Backend\Core\Engine\Ajax as BackendAjax;
-use App\Backend\Core\Engine\Backend;
-use App\Component\Application\ApplicationInterface;
-use App\Frontend\Core\Engine\Ajax as FrontendAjax;
-use App\Frontend\Core\Engine\Frontend;
+use ForkCMS\Backend\Core\Engine\Ajax as BackendAjax;
+use ForkCMS\Backend\Core\Engine\Backend;
+use ForkCMS\Component\Application\ApplicationInterface;
+use ForkCMS\Frontend\Core\Engine\Ajax as FrontendAjax;
+use ForkCMS\Frontend\Core\Engine\Frontend;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use App\Backend\Init as BackendInit;
-use App\Frontend\Init as FrontendInit;
-use App\Common\Exception\RedirectException;
+use ForkCMS\Backend\Init as BackendInit;
+use ForkCMS\Frontend\Init as FrontendInit;
+use ForkCMS\Common\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\Response;
 use Twig_Error;
 

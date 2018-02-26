@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Core\Ajax;
+namespace ForkCMS\Backend\Core\Ajax;
 
-use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpdateSequence extends BackendBaseAJAXAction

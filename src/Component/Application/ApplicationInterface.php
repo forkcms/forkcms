@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Component\Application;
+namespace ForkCMS\Component\Application;
 
 use Symfony\Component\HttpFoundation\Response;
 

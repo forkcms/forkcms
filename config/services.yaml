@@ -20,13 +20,13 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    App\:
+    ForkCMS\:
         resource: '../src/*'
         exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
+    ForkCMS\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
@@ -64,7 +64,7 @@ services:
             - [ execute, [ 'SET sql_mode = REPLACE(@@SESSION.sql_mode, "ONLY_FULL_GROUP_BY", "")'] ]
             - [ setDebug, [ "%kernel.debug%" ]]
     mailer_configurator:
-        class: App\Common\Mailer\Configurator
+        class: ForkCMS\Common\Mailer\Configurator
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
             - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
@@ -94,51 +94,51 @@ services:
         arguments:
             - "@cache.buffer"
     cache.backend_navigation:
-        class: App\Backend\Core\Engine\NavigationCache
+        class: ForkCMS\Backend\Core\Engine\NavigationCache
         public: true
         arguments:
             - "@database"
             - "@cache.pool"
 
     fork.settings:
-        class: App\Common\ModulesSettings
+        class: ForkCMS\Common\ModulesSettings
         public: true
         arguments:
             - "@database"
             - "@cache.pool"
 
     fork.cookie:
-        class: App\Common\Core\Cookie
+        class: ForkCMS\Common\Core\Cookie
         public: true
 
     fork.cookie_setter:
-        class: App\Common\EventListener\ForkCookieSetter
+        class: ForkCMS\Common\EventListener\ForkCookieSetter
         arguments:
             - "@fork.cookie"
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     fork.response_securer:
-        class: App\Common\EventListener\ResponseSecurer
+        class: ForkCMS\Common\EventListener\ResponseSecurer
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     fork.validator.url:
-        class: App\Service\Validator\UrlValidator
+        class: ForkCMS\Service\Validator\UrlValidator
         public: true
 
     forkcms.requirements.checker:
-        class: App\Service\Installer\RequirementsChecker
+        class: ForkCMS\Service\Installer\RequirementsChecker
         public: true
         arguments: ['%kernel.project_dir%/']
 
     forkcms.installer:
-        class: App\Service\Installer\ForkInstaller
+        class: ForkCMS\Service\Installer\ForkInstaller
         arguments: ['@service_container']
 
     # Throws errors when enabling
     #templating:
-    #    class: App\Frontend\Core\Engine\TwigTemplate
+    #    class: ForkCMS\Frontend\Core\Engine\TwigTemplate
     #    public: true
     #    arguments:
     #        - "@twig"
@@ -147,7 +147,7 @@ services:
 
     # Throws errors when enabling
     #translator:
-    #    class: App\Common\Language
+    #    class: ForkCMS\Common\Language
     #    public: true
     #    arguments:
     #        - "@translator.selector"

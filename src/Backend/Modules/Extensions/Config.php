@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Extensions;
+namespace ForkCMS\Backend\Modules\Extensions;
 
-use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use ForkCMS\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the extensions module.

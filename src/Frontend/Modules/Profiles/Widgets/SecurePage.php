@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\Profiles\Widgets;
+namespace ForkCMS\Frontend\Modules\Profiles\Widgets;
 
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Common\Doctrine\Entity\Meta as MetaEntity;
-use App\Common\Uri as CommonUri;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Language\Language as BackendLanguage;
+use ForkCMS\Common\Doctrine\Entity\Meta as MetaEntity;
+use ForkCMS\Common\Uri as CommonUri;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Language\Language as BackendLanguage;
 
 /**
  * This class represents a META-object
@@ -96,7 +96,7 @@ class Meta
 
         // set default callback
         $this->setUrlCallback(
-            'App\\Backend\\Modules\\' . $this->url->getModule() . '\\Engine\\Model',
+            'ForkCMS\\Backend\\Modules\\' . $this->url->getModule() . '\\Engine\\Model',
             'getUrl'
         );
 

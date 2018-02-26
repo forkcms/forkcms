@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Common\Core\Header;
+namespace ForkCMS\Common\Core\Header;
 
-use App\Common\Core\Model;
+use ForkCMS\Common\Core\Model;
 use MatthiasMullie\Minify;
 
 final class Minifier

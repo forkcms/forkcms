@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\Mailmotor\Domain\Settings\Command;
+namespace ForkCMS\Backend\Modules\Mailmotor\Domain\Settings\Command;
 
-use App\Backend\Core\Language\Language;
-use App\Common\ModulesSettings;
+use ForkCMS\Backend\Core\Language\Language;
+use ForkCMS\Common\ModulesSettings;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class SaveSettings

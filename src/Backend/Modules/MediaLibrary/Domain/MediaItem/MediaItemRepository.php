@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Doctrine\ORM\EntityRepository;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
 
 /**
  * @method MediaItem|null findOneByUrl(string $url)

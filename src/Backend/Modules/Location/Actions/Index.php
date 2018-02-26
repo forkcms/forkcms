@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Backend\Modules\Location\Actions;
+namespace ForkCMS\Backend\Modules\Location\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Location\Engine\Model as BackendLocationModel;
-use App\Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\DataGridDatabase as BackendDataGridDatabase;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use ForkCMS\Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the index-action (default), it will display the overview of location items

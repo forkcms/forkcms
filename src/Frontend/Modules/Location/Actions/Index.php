@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\Location\Actions;
+namespace ForkCMS\Frontend\Modules\Location\Actions;
 
-use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use App\Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
+use ForkCMS\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use ForkCMS\Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
  * This is the index-action, it has an overview of locations.

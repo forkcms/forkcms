@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * The class below will handle all authentication stuff. It will handle module-access, action-access, ...

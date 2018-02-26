@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Users\Engine;
+namespace ForkCMS\Backend\Modules\Users\Engine;
 
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Engine\User as BackendUser;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\User as BackendUser;
 
 /**
  * In this file we store all generic functions that we will be using in the users module.

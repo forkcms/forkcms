@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception;
+namespace ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\Exception;
 
 use Exception;
 

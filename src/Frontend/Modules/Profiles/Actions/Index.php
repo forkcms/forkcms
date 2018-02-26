@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\Profiles\Actions;
+namespace ForkCMS\Frontend\Modules\Profiles\Actions;
 
-use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use ForkCMS\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use ForkCMS\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**

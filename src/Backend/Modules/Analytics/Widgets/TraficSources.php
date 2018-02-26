@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Analytics\Widgets;
+namespace ForkCMS\Backend\Modules\Analytics\Widgets;
 
-use App\Backend\Core\Engine\Base\Widget;
+use ForkCMS\Backend\Core\Engine\Base\Widget;
 use Google_Auth_Exception;
 use Google_IO_Exception;
 

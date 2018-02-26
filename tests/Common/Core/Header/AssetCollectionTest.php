@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests\Common\Core\Header;
+namespace ForkCMS\Tests\Common\Core\Header;
 
-use App\Common\Core\Header\Asset;
-use App\Common\Core\Header\AssetCollection;
-use App\Common\Core\Header\Minifier;
-use App\Common\Core\Header\Priority;
+use ForkCMS\Common\Core\Header\Asset;
+use ForkCMS\Common\Core\Header\AssetCollection;
+use ForkCMS\Common\Core\Header\Minifier;
+use ForkCMS\Common\Core\Header\Priority;
 
 class AssetCollectionTest extends \PHPUnit_Framework_TestCase
 {

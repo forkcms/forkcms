@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Form\Type\Installer;
+namespace ForkCMS\Form\Type\Installer;
 
-use App\Component\Installer\InstallationData;
+use ForkCMS\Component\Installer\InstallationData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

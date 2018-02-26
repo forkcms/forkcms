@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
-use App\Component\Application\ApplicationInterface;
-use App\Component\Application\KernelLoader;
-use App\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
-use App\Frontend\Core\Language\Language;
+use ForkCMS\Component\Application\ApplicationInterface;
+use ForkCMS\Component\Application\KernelLoader;
+use ForkCMS\Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use ForkCMS\Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -112,7 +112,7 @@ class Ajax extends KernelLoader implements ApplicationInterface
             throw new Exception('Module has not yet been set.');
         }
 
-        $ajaxActionClass = 'App\\Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $action;
+        $ajaxActionClass = 'ForkCMS\\Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $action;
         if (!class_exists($ajaxActionClass)) {
             throw new Exception('Action class ' . $ajaxActionClass . ' does not exist');
         }

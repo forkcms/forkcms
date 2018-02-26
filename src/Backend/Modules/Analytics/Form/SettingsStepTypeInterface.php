@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Analytics\Form;
+namespace ForkCMS\Backend\Modules\Analytics\Form;
 
-use App\Backend\Core\Engine\TwigTemplate;
+use ForkCMS\Backend\Core\Engine\TwigTemplate;
 
 /**
  * An interface so we can split the settings form up into multiple forms

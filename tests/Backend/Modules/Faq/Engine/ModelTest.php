@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Backend\Modules\Faq\Engine;
+namespace ForkCMS\Tests\Backend\Modules\Faq\Engine;
 
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Faq\Engine\Model;
-use App\Tests\WebTestCase;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Faq\Engine\Model;
+use ForkCMS\Tests\WebTestCase;
 
 final class ModelTest extends WebTestCase
 {

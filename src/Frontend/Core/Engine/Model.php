@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
-use App\Common\Core\Model as BaseModel;
+use ForkCMS\Common\Core\Model as BaseModel;
 use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

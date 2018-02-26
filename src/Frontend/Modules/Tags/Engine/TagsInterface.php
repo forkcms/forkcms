@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Modules\Tags\Engine;
+namespace ForkCMS\Frontend\Modules\Tags\Engine;
 
-use App\Frontend\Core\Engine\Url as FrontendUrl;
+use ForkCMS\Frontend\Core\Engine\Url as FrontendUrl;
 
 /**
  * In this file we specify the functions a class must implement to work with tags.

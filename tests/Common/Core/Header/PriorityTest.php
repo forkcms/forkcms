@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Common\Core\Header;
+namespace ForkCMS\Tests\Common\Core\Header;
 
-use App\Common\Core\Header\Priority;
+use ForkCMS\Common\Core\Header\Priority;
 use PHPUnit\Framework\TestCase;
 
 class PriorityTest extends TestCase

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Console\Thumbnails;
+namespace ForkCMS\Console\Thumbnails;
 
-use App\Common\Core\Model;
+use ForkCMS\Common\Core\Model;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

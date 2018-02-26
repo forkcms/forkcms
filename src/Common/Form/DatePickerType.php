@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Common\Form;
+namespace ForkCMS\Common\Form;
 
-use App\Backend\Core\Engine\Header as BackendHeader;
-use App\Common\Core\Header\Priority;
-use App\Frontend\Core\Header\Header as FrontendHeader;
+use ForkCMS\Backend\Core\Engine\Header as BackendHeader;
+use ForkCMS\Common\Core\Header\Priority;
+use ForkCMS\Frontend\Core\Header\Header as FrontendHeader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;

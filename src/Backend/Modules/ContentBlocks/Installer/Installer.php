@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Installer;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Installer;
 
-use App\Backend\Core\Engine\Model;
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 
 /**
  * Installer for the content blocks module

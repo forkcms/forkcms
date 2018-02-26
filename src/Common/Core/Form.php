@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Common\Core;
+namespace ForkCMS\Common\Core;
 
-use App\Backend\Core\Engine\Header as BackendHeader;
+use ForkCMS\Backend\Core\Engine\Header as BackendHeader;
 use Exception;
-use App\Frontend\Core\Header\Header as FrontendHeader;
-use App\Backend\Core\Engine\Url as BackendUrl;
-use App\Frontend\Core\Engine\Url as FrontendUrl;
+use ForkCMS\Frontend\Core\Header\Header as FrontendHeader;
+use ForkCMS\Backend\Core\Engine\Url as BackendUrl;
+use ForkCMS\Frontend\Core\Engine\Url as FrontendUrl;
 use SpoonFilter;
 use SpoonFormButton;
 use SpoonFormDropdown;

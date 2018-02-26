@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Backend\Core\Engine;
+namespace ForkCMS\Tests\Backend\Core\Engine;
 
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Engine\TemplateModifiers;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\TemplateModifiers;
 use PHPUnit\Framework\TestCase;
 
 class TemplateModifiersTest extends TestCase

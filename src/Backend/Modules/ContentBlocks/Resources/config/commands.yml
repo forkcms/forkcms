@@ -1,32 +1,32 @@
 services:
     content_blocks.handler.create_content_block:
-        class: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlockHandler
+        class: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlockHandler
         public: true
         arguments:
             - "@content_blocks.repository.content_block"
         tags:
-            - { name: command_handler, handles: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlock }
+            - { name: command_handler, handles: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlock }
 
     content_blocks.handler.update_content_block:
-        class: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlockHandler
+        class: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlockHandler
         public: true
         arguments:
             - "@content_blocks.repository.content_block"
         tags:
-            - { name: command_handler, handles: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock }
+            - { name: command_handler, handles: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlock }
 
     content_blocks.handler.delete_content_block:
-        class: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlockHandler
+        class: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlockHandler
         public: true
         arguments:
             - "@content_blocks.repository.content_block"
         tags:
-            - { name: command_handler, handles: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlock }
+            - { name: command_handler, handles: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlock }
 
     content_blocks.handler.copy_content_blocks_to_other_locale:
-        class: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocaleHandler
+        class: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocaleHandler
         public: true
         arguments:
             - "@content_blocks.repository.content_block"
         tags:
-            - { name: command_handler, handles: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale }
+            - { name: command_handler, handles: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale }

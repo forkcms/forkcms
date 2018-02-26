@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
 use Twig_Node;
 use Twig_Token;

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Frontend\Modules\FormBuilder\Widgets;
+namespace ForkCMS\Frontend\Modules\FormBuilder\Widgets;
 
-use App\Common\Exception\RedirectException;
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Core\Engine\Form as FrontendForm;
-use App\Frontend\Core\Language\Language as FL;
-use App\Frontend\Core\Engine\Model as FrontendModel;
-use App\Frontend\Core\Language\Locale;
-use App\Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
-use App\Frontend\Modules\FormBuilder\FormBuilderEvents;
-use App\Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use ForkCMS\Common\Exception\RedirectException;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Core\Engine\Form as FrontendForm;
+use ForkCMS\Frontend\Core\Language\Language as FL;
+use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
+use ForkCMS\Frontend\Core\Language\Locale;
+use ForkCMS\Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
+use ForkCMS\Frontend\Modules\FormBuilder\FormBuilderEvents;
+use ForkCMS\Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use ReCaptcha\ReCaptcha;
 use SpoonFormAttributes;
 use Symfony\Component\HttpFoundation\RedirectResponse;

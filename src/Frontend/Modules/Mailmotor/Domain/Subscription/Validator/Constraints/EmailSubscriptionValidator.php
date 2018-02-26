@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints;
+namespace ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints;
 
 use MailMotor\Bundle\MailMotorBundle\Exception\NotImplementedException;
-use App\Frontend\Core\Engine\Model;
-use App\Frontend\Core\Language\Locale;
+use ForkCMS\Frontend\Core\Engine\Model;
+use ForkCMS\Frontend\Core\Language\Locale;
 use MailMotor\Bundle\MailMotorBundle\Helper\Subscriber;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

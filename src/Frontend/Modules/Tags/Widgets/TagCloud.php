@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Frontend\Modules\Tags\Widgets;
+namespace ForkCMS\Frontend\Modules\Tags\Widgets;
 
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
-use App\Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use ForkCMS\Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
 class TagCloud extends FrontendBaseWidget
 {

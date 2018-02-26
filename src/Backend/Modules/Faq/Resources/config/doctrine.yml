@@ -6,16 +6,16 @@ doctrine:
         is_bundle: false
         dir: "%kernel.project_dir%/src/Backend/Modules/Faq/Domain/Category"
         alias: Category
-        prefix: App\Backend\Modules\Faq\Domain\Category
+        prefix: ForkCMS\Backend\Modules\Faq\Domain\Category
       faq_question:
         type: annotation
         is_bundle: false
         dir: "%kernel.project_dir%/src/Backend/Modules/Faq/Domain/Question"
         alias: Category
-        prefix: App\Backend\Modules\Faq\Domain\Question
+        prefix: ForkCMS\Backend\Modules\Faq\Domain\Question
       faq_feedback:
         type: annotation
         is_bundle: false
         dir: "%kernel.project_dir%/src/Backend/Modules/Faq/Domain/Feedback"
         alias: Category
-        prefix: App\Backend\Modules\Faq\Domain\Feedback
+        prefix: ForkCMS\Backend\Modules\Faq\Domain\Feedback

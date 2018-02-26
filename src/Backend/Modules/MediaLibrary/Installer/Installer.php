@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Installer;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Installer;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
-use App\Backend\Core\Engine\Model;
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
 /**
  * Installer for the MediaLibrary module

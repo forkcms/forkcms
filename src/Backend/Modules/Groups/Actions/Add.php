@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Backend\Modules\Groups\Actions;
+namespace ForkCMS\Backend\Modules\Groups\Actions;
 
 use Symfony\Component\Finder\Finder;
-use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * This is the add-action, it will display a form to create a new group
@@ -74,12 +74,12 @@ class Add extends BackendBaseActionAdd
             // loop through actions and add all classnames
             foreach ($this->actions[$module['value']] as $key => $action) {
                 // ajax action?
-                if (class_exists('App\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
+                if (class_exists('ForkCMS\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
                     // create reflection class
-                    $reflection = new \ReflectionClass('App\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
+                    $reflection = new \ReflectionClass('ForkCMS\\Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
                 } else {
                     // no ajax action? create reflection class
-                    $reflection = new \ReflectionClass('App\\Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
+                    $reflection = new \ReflectionClass('ForkCMS\\Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
                 }
 
                 // get the tag offset
@@ -148,9 +148,9 @@ class Add extends BackendBaseActionAdd
 
                 // ajax-files should be required
                 if ($isAjax) {
-                    $class = 'App\\Backend\\Modules\\' . $module . '\\Ajax\\' . $actionName;
+                    $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Ajax\\' . $actionName;
                 } else {
-                    $class = 'App\\Backend\\Modules\\' . $module . '\\Actions\\' . $actionName;
+                    $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Actions\\' . $actionName;
                 }
 
                 $reflection = new \ReflectionClass($class);
@@ -200,7 +200,7 @@ class Add extends BackendBaseActionAdd
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
             if (BackendAuthentication::isAllowedModule($module)) {
                 $widgetName = $file->getBasename('.php');
-                $class = 'App\\Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
+                $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
 
                 if (class_exists($class)) {
                     // add to array

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use JsonSerializable;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Common\Core;
+namespace ForkCMS\Common\Core;
 
-use App\Component\Model\BaseModel;
+use ForkCMS\Component\Model\BaseModel;
 use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;

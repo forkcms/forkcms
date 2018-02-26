@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Authentication\Actions;
+namespace ForkCMS\Backend\Modules\Authentication\Actions;
 
-use App\Backend\Core\Engine\Base\Action as BackendBaseAction;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Engine\Base\Action as BackendBaseAction;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the logout-action, it will logout the current user

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\Faq\Actions;
+namespace ForkCMS\Frontend\Modules\Faq\Actions;
 
-use App\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use App\Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
+use ForkCMS\Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use ForkCMS\Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
 
 /**
  * This is the index-action

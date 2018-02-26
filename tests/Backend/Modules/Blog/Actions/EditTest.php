@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Backend\Modules\Blog\Action;
+namespace ForkCMS\Tests\Backend\Modules\Blog\Action;
 
-use App\Tests\WebTestCase;
+use ForkCMS\Tests\WebTestCase;
 
 class EditTest extends WebTestCase
 {

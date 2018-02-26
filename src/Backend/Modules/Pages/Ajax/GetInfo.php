@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\Pages\Ajax;
+namespace ForkCMS\Backend\Modules\Pages\Ajax;
 
-use App\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

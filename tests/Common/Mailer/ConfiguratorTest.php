@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Common\Mailer;
+namespace ForkCMS\Tests\Common\Mailer;
 
-use App\Common\Mailer\Configurator;
+use ForkCMS\Common\Mailer\Configurator;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 

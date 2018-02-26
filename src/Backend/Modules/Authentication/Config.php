@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Authentication;
+namespace ForkCMS\Backend\Modules\Authentication;
 
-use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use ForkCMS\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the authentication module

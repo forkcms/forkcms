@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Common\Doctrine\ValueObject;
+namespace ForkCMS\Common\Doctrine\ValueObject;
 
-use App\Common\Uri;
+use ForkCMS\Common\Uri;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

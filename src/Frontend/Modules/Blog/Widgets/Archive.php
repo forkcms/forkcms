@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Frontend\Modules\Blog\Widgets;
+namespace ForkCMS\Frontend\Modules\Blog\Widgets;
 
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 
 /**
  * This is a widget with the link to the archive

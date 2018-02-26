@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Frontend\Modules\Profiles\Widgets;
+namespace ForkCMS\Frontend\Modules\Profiles\Widgets;
 
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Core\Engine\Form as FrontendForm;
-use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
-use App\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Core\Engine\Form as FrontendForm;
+use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use ForkCMS\Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 
 /**
  * This is a widget with a login form

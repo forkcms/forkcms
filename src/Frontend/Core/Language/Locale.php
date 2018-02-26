@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Core\Language;
+namespace ForkCMS\Frontend\Core\Language;
 
-use App\Common\Locale as CommonLocale;
+use ForkCMS\Common\Locale as CommonLocale;
 
 final class Locale extends CommonLocale
 {

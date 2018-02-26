@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Core\Engine\Base;
+namespace ForkCMS\Frontend\Core\Engine\Base;
 
-use App\Component\Application\KernelLoader;
+use ForkCMS\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;

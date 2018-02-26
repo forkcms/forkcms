@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\Search\Installer;
+namespace ForkCMS\Backend\Modules\Search\Installer;
 
-use App\Common\ModuleExtraType;
-use App\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Common\ModuleExtraType;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the search module

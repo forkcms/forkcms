@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Profiles\Actions;
+namespace ForkCMS\Backend\Modules\Profiles\Actions;
 
-use App\Backend\Core\Engine\Base\Action as BackendBaseAction;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use ForkCMS\Backend\Core\Engine\Base\Action as BackendBaseAction;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * Mass action handler to delete profiles or add them to a specific group.

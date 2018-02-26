@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Mailmotor\EventListener;
+namespace ForkCMS\Backend\Modules\Mailmotor\EventListener;
 
-use App\Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
+use ForkCMS\Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**

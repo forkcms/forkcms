@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Core\Engine\Base;
+namespace ForkCMS\Backend\Core\Engine\Base;
 
-use App\Backend\Core\Engine\Model;
-use App\Component\Application\KernelLoader;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Component\Application\KernelLoader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

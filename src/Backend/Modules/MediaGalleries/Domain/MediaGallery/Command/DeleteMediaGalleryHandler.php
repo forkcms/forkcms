@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
+namespace ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\Command;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use App\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
+use ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository;
 
 final class DeleteMediaGalleryHandler
 {

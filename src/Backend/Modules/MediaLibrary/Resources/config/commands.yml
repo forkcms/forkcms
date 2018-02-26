@@ -1,58 +1,58 @@
 services:
   # MediaFolder
   media_galleries.handler.create_media_folder:
-    class: App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolderHandler
+    class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolderHandler
     public: true
     arguments:
       - "@media_library.repository.folder"
     tags:
-      - { name: command_handler, handles: App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder }
+      - { name: command_handler, handles: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder }
   media_galleries.handler.delete_media_folder:
-    class: App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolderHandler
+    class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolderHandler
     public: true
     arguments:
       - "@media_library.repository.folder"
     tags:
-      - { name: command_handler, handles: App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder }
+      - { name: command_handler, handles: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\DeleteMediaFolder }
   media_galleries.handler.update_media_folder:
-    class: App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolderHandler
+    class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolderHandler
     public: true
     tags:
-      - { name: command_handler, handles: App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder }
+      - { name: command_handler, handles: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Command\UpdateMediaFolder }
 
   # MediaGroup
   media_galleries.handler.update_media_group:
-    class: App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroupHandler
+    class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroupHandler
     public: true
     arguments:
       - "@media_library.repository.item"
     tags:
-      - { name: command_handler, handles: App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup }
+      - { name: command_handler, handles: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\Command\SaveMediaGroup }
 
   # MediaItem
   media_galleries.handler.create_media_item_from_movie_url:
-    class: App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrlHandler
+    class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrlHandler
     public: true
     arguments:
       - "@media_library.repository.item"
     tags:
-      - { name: command_handler, handles: App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl }
+      - { name: command_handler, handles: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromMovieUrl }
   media_galleries.handler.create_media_item_from_local_source:
-    class: App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageTypeHandler
+    class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageTypeHandler
     public: true
     arguments:
       - "@media_library.repository.item"
     tags:
-      - { name: command_handler, handles: App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageType }
+      - { name: command_handler, handles: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\CreateMediaItemFromLocalStorageType }
   media_library.handler.delete_media_item:
-    class: App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItemHandler
+    class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItemHandler
     public: true
     arguments:
       - "@media_library.repository.item"
     tags:
-      - { name: command_handler, handles: App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem }
+      - { name: command_handler, handles: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem }
   media_galleries.handler.update_media_item:
-    class: App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItemHandler
+    class: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItemHandler
     public: true
     tags:
-      - { name: command_handler, handles: App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem }
+      - { name: command_handler, handles: ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem }

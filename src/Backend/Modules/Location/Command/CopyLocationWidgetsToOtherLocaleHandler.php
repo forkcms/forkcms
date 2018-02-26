@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Location\Command;
+namespace ForkCMS\Backend\Modules\Location\Command;
 
-use App\Common\ModuleExtraType;
+use ForkCMS\Common\ModuleExtraType;
 use SpoonDatabase;
 
 final class CopyLocationWidgetsToOtherLocaleHandler

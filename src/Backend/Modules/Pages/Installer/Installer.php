@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\Pages\Installer;
+namespace ForkCMS\Backend\Modules\Pages\Installer;
 
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use App\Common\ModuleExtraType;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\Common\ModuleExtraType;
 
 /**
  * Installer for the pages module

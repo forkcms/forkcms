@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception;
 
 class MediaFolderNotFound extends \Exception
 {

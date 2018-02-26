@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
 use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;

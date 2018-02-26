@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\MediaGalleries;
+namespace ForkCMS\Backend\Modules\MediaGalleries;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\Blog\Actions;
+namespace ForkCMS\Backend\Modules\Blog\Actions;
 
-use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Form\Type\DeleteType;
-use App\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This action will delete a category

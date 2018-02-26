@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Core\Header;
+namespace ForkCMS\Common\Core\Header;
 
 use InvalidArgumentException;
 

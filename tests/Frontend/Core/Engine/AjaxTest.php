@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Frontend\Core\Engine;
+namespace ForkCMS\Tests\Frontend\Core\Engine;
 
-use App\Tests\WebTestCase;
+use ForkCMS\Tests\WebTestCase;
 
 class AjaxTest extends WebTestCase
 {
@@ -61,7 +61,7 @@ class AjaxTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
-            'Action class App\Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\ does not exist',
+            'Action class ForkCMS\Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\ does not exist',
             $client->getResponse()->getContent()
         );
     }
@@ -76,7 +76,7 @@ class AjaxTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         self::assertContains(
-            'Action class App\Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\Test does not exist',
+            'Action class ForkCMS\Frontend\\\\Modules\\\\Blog\\\\Ajax\\\\Test does not exist',
             $client->getResponse()->getContent()
         );
     }

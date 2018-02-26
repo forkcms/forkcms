@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Backend\Core\Installer;
+namespace ForkCMS\Backend\Core\Installer;
 
-use App\Backend\Core\Engine\Model;
-use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
-use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use SpoonDatabase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use App\Common\Uri as CommonUri;
-use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use App\Common\ModuleExtraType;
+use ForkCMS\Common\Uri as CommonUri;
+use ForkCMS\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use ForkCMS\Common\ModuleExtraType;
 
 /**
  * The base-class for the installer

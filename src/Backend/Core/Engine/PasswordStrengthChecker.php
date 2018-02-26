@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
 final class PasswordStrengthChecker
 {

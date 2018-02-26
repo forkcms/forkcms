@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Frontend\Modules\Search\Actions;
+namespace ForkCMS\Tests\Frontend\Modules\Search\Actions;
 
-use App\Tests\WebTestCase;
+use ForkCMS\Tests\WebTestCase;
 
 class IndexTest extends WebTestCase
 {

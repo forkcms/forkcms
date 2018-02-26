@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Service\Installer;
+namespace ForkCMS\Service\Installer;
 
-use App\Controller\InstallerController;
+use ForkCMS\Controller\InstallerController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\DependencyInjection\Container;
-use App\Backend\Core\Engine\Model;
-use App\Backend\Core\Installer\CoreInstaller;
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use App\Component\Installer\InstallationData;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Installer\CoreInstaller;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use ForkCMS\Component\Installer\InstallationData;
 
 /**
  * This service installs fork
@@ -176,7 +176,7 @@ class ForkInstaller
 
         // loop modules
         foreach ($data->getModules() as $module) {
-            $class = 'App\\Backend\\Modules\\' . $module . '\\Installer\\Installer';
+            $class = 'ForkCMS\\Backend\\Modules\\' . $module . '\\Installer\\Installer';
 
             // install exists
             if (class_exists($class)) {

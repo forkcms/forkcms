@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Component\Application\KernelLoader;
+use ForkCMS\Component\Application\KernelLoader;
 use Symfony\Component\HttpKernel\KernelInterface;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use App\Backend\Core\Language\Language as BackendLanguage;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\Backend\Core\Language\Language as BackendLanguage;
 
 final class Navigation extends KernelLoader
 {

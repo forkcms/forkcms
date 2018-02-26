@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Backend\Modules\Authentication\Action;
+namespace ForkCMS\Tests\Backend\Modules\Authentication\Action;
 
-use App\Tests\WebTestCase;
-use App\Backend\Core\Engine\Authentication as Authentication;
+use ForkCMS\Tests\WebTestCase;
+use ForkCMS\Backend\Core\Engine\Authentication as Authentication;
 
 class IndexTest extends WebTestCase
 {

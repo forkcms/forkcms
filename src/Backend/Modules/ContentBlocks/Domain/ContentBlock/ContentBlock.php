@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use App\Backend\Core\Engine\Model;
-use App\Common\Locale;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Common\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 

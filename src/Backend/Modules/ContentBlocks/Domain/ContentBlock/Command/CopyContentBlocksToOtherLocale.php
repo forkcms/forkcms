@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use App\Backend\Core\Language\Locale;
+use ForkCMS\Backend\Core\Language\Locale;
 
 final class CopyContentBlocksToOtherLocale
 {

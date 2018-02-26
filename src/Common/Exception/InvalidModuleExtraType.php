@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Common\Exception;
+namespace ForkCMS\Common\Exception;
 
-use App\Common\ModuleExtraType;
+use ForkCMS\Common\ModuleExtraType;
 use Exception;
 
 final class InvalidModuleExtraType extends Exception

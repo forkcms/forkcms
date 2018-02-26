@@ -1,7 +1,7 @@
 doctrine:
   dbal:
     types:
-      content_blocks_status: App\Backend\Modules\ContentBlocks\Domain\ContentBlock\StatusDBALType
+      content_blocks_status: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\StatusDBALType
   orm:
     mappings:
       content_block:
@@ -9,4 +9,4 @@ doctrine:
         is_bundle: false
         dir: "%kernel.project_dir%/src/Backend/Modules/ContentBlocks/Domain/ContentBlock"
         alias: ContentBlocksContentBlock
-        prefix: App\Backend\Modules\ContentBlocks\Domain\ContentBlock
+        prefix: ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock

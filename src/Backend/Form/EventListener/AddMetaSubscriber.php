@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Form\EventListener;
+namespace ForkCMS\Backend\Form\EventListener;
 
-use App\Backend\Core\Engine\Model;
-use App\Backend\Form\Type\MetaType;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Form\Type\MetaType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

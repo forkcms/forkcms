@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Backend\Modules\Locale\Actions;
+namespace ForkCMS\Backend\Modules\Locale\Actions;
 
-use App\Backend\Form\Type\DeleteType;
-use App\Common\Uri as CommonUri;
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\Authentication as BackendAuthentication;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use ForkCMS\Backend\Form\Type\DeleteType;
+use ForkCMS\Common\Uri as CommonUri;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\Authentication as BackendAuthentication;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is the edit action, it will display a form to edit an existing locale item.

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaFolder;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use App\Common\Uri;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use ForkCMS\Common\Uri;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;

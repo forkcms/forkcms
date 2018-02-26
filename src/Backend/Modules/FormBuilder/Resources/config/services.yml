@@ -1,6 +1,6 @@
 services:
     formbuilder.submitted.mailer:
-        class: App\Frontend\Modules\FormBuilder\EventListener\FormBuilderSubmittedMailSubscriber
+        class: ForkCMS\Frontend\Modules\FormBuilder\EventListener\FormBuilderSubmittedMailSubscriber
         arguments:
             - "@mailer"
             - "@fork.settings"

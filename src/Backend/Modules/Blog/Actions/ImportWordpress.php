@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Backend\Modules\Blog\Actions;
+namespace ForkCMS\Backend\Modules\Blog\Actions;
 
 use SimpleXMLElement;
 use Symfony\Component\Filesystem\Filesystem;
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\Exception;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Form;
-use App\Backend\Modules\Blog\Engine\Model;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\Exception;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Form;
+use ForkCMS\Backend\Modules\Blog\Engine\Model;
 
 /**
  * This import-action will let you import a wordpress blog

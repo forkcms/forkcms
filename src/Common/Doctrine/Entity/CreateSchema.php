@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Doctrine\Entity;
+namespace ForkCMS\Common\Doctrine\Entity;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;

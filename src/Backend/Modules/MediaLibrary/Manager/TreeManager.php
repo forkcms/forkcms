@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Manager;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Manager;
 
-use App\Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
-use App\Backend\Core\Language\Language;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCache;
+use ForkCMS\Backend\Core\Language\Language;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\MediaLibrary\Builder\MediaFolder\MediaFolderCacheItem;
 
 /**
  * In this file we store all generic functions that we will be using in the MediaLibrary module

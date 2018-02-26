@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Builder\MediaFolder;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Builder\MediaFolder;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 
 class MediaFolderCacheItem
 {

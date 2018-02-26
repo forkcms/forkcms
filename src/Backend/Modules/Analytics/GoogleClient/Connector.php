@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Analytics\GoogleClient;
+namespace ForkCMS\Backend\Modules\Analytics\GoogleClient;
 
-use App\Common\ModulesSettings;
+use ForkCMS\Common\ModulesSettings;
 use Google_Service_Analytics;
 use Google_Service_Analytics_GaData;
 use Psr\Cache\CacheItemPoolInterface;

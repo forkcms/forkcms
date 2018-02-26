@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Actions;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Actions;
 
-use App\Backend\Core\Engine\Authentication;
-use App\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlock;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockCreated;
+use ForkCMS\Backend\Core\Engine\Authentication;
+use ForkCMS\Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlock;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockType;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Event\ContentBlockCreated;
 use Symfony\Component\Form\Form;
 
 /**

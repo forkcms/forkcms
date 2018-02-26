@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Exception;
 
 use Exception;
 

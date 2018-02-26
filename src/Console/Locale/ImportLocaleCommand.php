@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Console\Locale;
+namespace ForkCMS\Console\Locale;
 
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use ForkCMS\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This is a simple command to install a locale file

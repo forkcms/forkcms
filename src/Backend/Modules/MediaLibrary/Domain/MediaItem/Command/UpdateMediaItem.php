@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\Command;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDataTransferObject;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemDataTransferObject;
 
 final class UpdateMediaItem extends MediaItemDataTransferObject
 {

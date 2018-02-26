@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Modules\Mailmotor;
+namespace ForkCMS\Frontend\Modules\Mailmotor;
 
-use App\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use ForkCMS\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object

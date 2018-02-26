@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Backend\Modules\Blog\Installer;
+namespace ForkCMS\Backend\Modules\Blog\Installer;
 
-use App\Backend\Core\Engine\Model;
-use App\Backend\Core\Installer\ModuleInstaller;
-use App\Backend\Modules\Blog\Domain\Category\Category;
-use App\Backend\Modules\Blog\Domain\Category\CategoryRepository;
-use App\Backend\Modules\Blog\Domain\Comment\Comment;
-use App\Common\ModuleExtraType;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Modules\Blog\Domain\Category\Category;
+use ForkCMS\Backend\Modules\Blog\Domain\Category\CategoryRepository;
+use ForkCMS\Backend\Modules\Blog\Domain\Comment\Comment;
+use ForkCMS\Common\ModuleExtraType;
 
 /**
  * Installer for the blog module

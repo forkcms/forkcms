@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints;
+namespace ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 

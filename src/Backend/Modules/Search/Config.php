@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Search;
+namespace ForkCMS\Backend\Modules\Search;
 
-use App\Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use ForkCMS\Backend\Core\Engine\Base\Config as BackendBaseConfig;
 
 /**
  * This is the configuration-object for the search module

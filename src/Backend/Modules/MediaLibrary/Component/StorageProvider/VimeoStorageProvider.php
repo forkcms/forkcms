@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Component\StorageProvider;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Component\StorageProvider;
 
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 
 class VimeoStorageProvider extends MovieStorageProvider
 {

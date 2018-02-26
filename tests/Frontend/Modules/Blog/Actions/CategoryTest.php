@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Frontend\Modules\Blog\Actions;
+namespace ForkCMS\Tests\Frontend\Modules\Blog\Actions;
 
-use App\Tests\WebTestCase;
+use ForkCMS\Tests\WebTestCase;
 
 class CategoryTest extends WebTestCase
 {

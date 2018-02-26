@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\Extensions\Actions;
+namespace ForkCMS\Backend\Modules\Extensions\Actions;
 
-use App\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Form\Type\DeleteType;
-use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 
 /**
  * This is the delete-action, it will delete a template

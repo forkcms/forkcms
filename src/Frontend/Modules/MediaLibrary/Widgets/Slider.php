@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Modules\MediaLibrary\Widgets;
+namespace ForkCMS\Frontend\Modules\MediaLibrary\Widgets;
 
-use App\Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
+use ForkCMS\Frontend\Modules\MediaLibrary\Widgets\Base\FrontendMediaWidget;
 
 /**
  * This will show a MediaGroup (Custom Module) or a MediaGallery (Media Module) in a slider using BxSlider.

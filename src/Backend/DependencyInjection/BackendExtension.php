@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\DependencyInjection;
+namespace ForkCMS\Backend\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -41,7 +41,7 @@ class BackendExtension extends Extension implements PrependExtensionInterface
                                 'type' => 'annotation',
                                 'is_bundle' => false,
                                 'dir' => $dir,
-                                'prefix' => 'App\\Backend\\Modules\\' . $module . '\\Entity',
+                                'prefix' => 'ForkCMS\\Backend\\Modules\\' . $module . '\\Entity',
                             ],
                         ],
                     ],

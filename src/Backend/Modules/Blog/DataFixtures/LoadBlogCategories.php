@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\Blog\DataFixtures;
+namespace ForkCMS\Backend\Modules\Blog\DataFixtures;
 
 use SpoonDatabase;
 

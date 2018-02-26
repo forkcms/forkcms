@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Common\Form;
+namespace ForkCMS\Common\Form;
 
-use App\Common\Doctrine\ValueObject\AbstractFile;
+use ForkCMS\Common\Doctrine\ValueObject\AbstractFile;
 use stdClass;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;

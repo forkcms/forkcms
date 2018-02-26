@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Groups\Installer;
+namespace ForkCMS\Backend\Modules\Groups\Installer;
 
-use App\Backend\Core\Installer\ModuleInstaller;
+use ForkCMS\Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the groups module

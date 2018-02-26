@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Tests\Backend\Modules\MediaLibrary\Manager;
+namespace ForkCMS\Tests\Backend\Modules\MediaLibrary\Manager;
 
-use App\Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider;
-use App\Backend\Modules\MediaLibrary\Component\StorageProvider\VimeoStorageProvider;
-use App\Backend\Modules\MediaLibrary\Component\StorageProvider\YoutubeStorageProvider;
-use App\Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
-use App\Backend\Modules\MediaLibrary\Manager\StorageManager;
+use ForkCMS\Backend\Modules\MediaLibrary\Component\StorageProvider\LocalStorageProvider;
+use ForkCMS\Backend\Modules\MediaLibrary\Component\StorageProvider\VimeoStorageProvider;
+use ForkCMS\Backend\Modules\MediaLibrary\Component\StorageProvider\YoutubeStorageProvider;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\StorageType;
+use ForkCMS\Backend\Modules\MediaLibrary\Manager\StorageManager;
 use PHPUnit\Framework\TestCase;
 
 class StorageManagerTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Backend\Modules\Faq\Domain\Feedback;
+namespace ForkCMS\Backend\Modules\Faq\Domain\Feedback;
 
 use Doctrine\ORM\EntityRepository;
 

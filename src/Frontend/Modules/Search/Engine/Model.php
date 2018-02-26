@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Modules\Search\Engine;
+namespace ForkCMS\Frontend\Modules\Search\Engine;
 
-use App\Frontend\Core\Engine\Model as FrontendModel;
+use ForkCMS\Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the search module
@@ -434,7 +434,7 @@ class Model
         // pass the results to the modules
         foreach ($moduleResults as $module => $otherIds) {
             // check if this module actually is prepared to handle searches
-            $class = 'App\\Frontend\\Modules\\' . $module . '\\Engine\\Model';
+            $class = 'ForkCMS\\Frontend\\Modules\\' . $module . '\\Engine\\Model';
             if (is_callable([$class, 'search'])) {
                 // get the required info from our module
                 $moduleResults[$module] = call_user_func(
@@ -535,7 +535,7 @@ class Model
             // pass the results to the modules
             foreach ($moduleResults as $module => $otherIds) {
                 // check if this module actually is prepared to handle searches
-                $class = 'App\\Frontend\\Modules\\' . $module . '\\Engine\\Model';
+                $class = 'ForkCMS\\Frontend\\Modules\\' . $module . '\\Engine\\Model';
                 if (is_callable([$class, 'search'])) {
                     $moduleResults[$module] = call_user_func(
                         [$class, 'search'],

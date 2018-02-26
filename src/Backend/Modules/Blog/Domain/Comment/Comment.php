@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Blog\Domain\Comment;
+namespace ForkCMS\Backend\Modules\Blog\Domain\Comment;
 
-use App\Common\Locale;
+use ForkCMS\Common\Locale;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 

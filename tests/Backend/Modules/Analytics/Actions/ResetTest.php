@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Backend\Modules\Analytics\Action;
+namespace ForkCMS\Tests\Backend\Modules\Analytics\Action;
 
-use App\Tests\WebTestCase;
+use ForkCMS\Tests\WebTestCase;
 
 class ResetTest extends WebTestCase
 {

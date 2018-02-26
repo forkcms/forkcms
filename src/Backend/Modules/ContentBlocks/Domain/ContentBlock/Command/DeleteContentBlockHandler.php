@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
+namespace ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use App\Backend\Core\Engine\Model;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
-use App\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
+use ForkCMS\Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 
 final class DeleteContentBlockHandler
 {

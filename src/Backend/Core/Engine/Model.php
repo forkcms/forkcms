@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Backend\Core\Engine;
+namespace ForkCMS\Backend\Core\Engine;
 
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Core\Language\Language as BackendLanguage;
-use App\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use App\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
-use App\Common\Core\Model as BaseModel;
-use App\Common\ModuleExtraType;
-use App\Frontend\Core\Language\Language as FrontendLanguage;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Language\Language as BackendLanguage;
+use ForkCMS\Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use ForkCMS\Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use ForkCMS\Common\Core\Model as BaseModel;
+use ForkCMS\Common\ModuleExtraType;
+use ForkCMS\Frontend\Core\Language\Language as FrontendLanguage;
 use Doctrine\ORM\EntityManager;
 use Exception;
 use InvalidArgumentException;

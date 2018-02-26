@@ -1,8 +1,8 @@
 services:
     location.handler.copy_widgets_to_other_locale:
-        class: App\Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocaleHandler
+        class: ForkCMS\Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocaleHandler
         public: true
         arguments:
             - "@database"
         tags:
-            - { name: command_handler, handles: App\Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale }
+            - { name: command_handler, handles: ForkCMS\Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale }

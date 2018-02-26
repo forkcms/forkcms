@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Modules\FormBuilder;
+namespace ForkCMS\Frontend\Modules\FormBuilder;
 
 /**
  * A helper class that contains all possible formbuilder events
@@ -12,7 +12,7 @@ final class FormBuilderEvents
      * submitted.
      *
      * The event listener receives an
-     * App\Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent instance.
+     * ForkCMS\Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent instance.
      *
      * @var string
      */

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\Blog\Domain\Category;
+namespace ForkCMS\Backend\Modules\Blog\Domain\Category;
 
-use App\Common\Doctrine\Entity\Meta;
-use App\Common\Locale;
+use ForkCMS\Common\Doctrine\Entity\Meta;
+use ForkCMS\Common\Locale;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

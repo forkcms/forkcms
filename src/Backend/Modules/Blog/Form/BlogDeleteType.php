@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\Blog\Form;
+namespace ForkCMS\Backend\Modules\Blog\Form;
 
-use App\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Form\Type\DeleteType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 

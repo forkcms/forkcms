@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Common\Core;
+namespace ForkCMS\Common\Core;
 
-use App\Common\Exception\InvalidInitTypeException;
-use App\Component\Application\KernelLoader;
+use ForkCMS\Common\Exception\InvalidInitTypeException;
+use ForkCMS\Component\Application\KernelLoader;
 
 /**
  * This class will initiate the application

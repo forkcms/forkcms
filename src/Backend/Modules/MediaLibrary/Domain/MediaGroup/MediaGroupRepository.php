@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Domain\MediaGroup;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup;
 
 use Doctrine\ORM\EntityRepository;
-use App\Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
+use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\Exception\MediaGroupNotFound;
 
 final class MediaGroupRepository extends EntityRepository
 {

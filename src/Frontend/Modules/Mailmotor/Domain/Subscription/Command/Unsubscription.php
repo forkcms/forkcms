@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Frontend\Modules\Mailmotor\Domain\Subscription\Command;
+namespace ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Command;
 
-use App\Frontend\Core\Language\Locale;
+use ForkCMS\Frontend\Core\Language\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints as MailingListAssert;
+use ForkCMS\Frontend\Modules\Mailmotor\Domain\Subscription\Validator\Constraints as MailingListAssert;
 
 final class Unsubscription
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Backend\Modules\Mailmotor\Actions;
+namespace ForkCMS\Backend\Modules\Mailmotor\Actions;
 
-use App\Backend\Core\Engine\Base\ActionIndex;
-use App\Backend\Core\Engine\Model;
-use App\Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
-use App\Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
-use App\Backend\Modules\Mailmotor\Domain\Settings\SettingsType;
+use ForkCMS\Backend\Core\Engine\Base\ActionIndex;
+use ForkCMS\Backend\Core\Engine\Model;
+use ForkCMS\Backend\Modules\Mailmotor\Domain\Settings\Command\SaveSettings;
+use ForkCMS\Backend\Modules\Mailmotor\Domain\Settings\Event\SettingsSavedEvent;
+use ForkCMS\Backend\Modules\Mailmotor\Domain\Settings\SettingsType;
 
 /**
  * This is the settings-action (default),

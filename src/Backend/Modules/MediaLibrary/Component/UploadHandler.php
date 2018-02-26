@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Component;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Component;
 
-use App\Backend\Modules\MediaLibrary\Manager\FileManager;
+use ForkCMS\Backend\Modules\MediaLibrary\Manager\FileManager;
 use Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;

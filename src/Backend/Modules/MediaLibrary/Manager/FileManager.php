@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Backend\Modules\MediaLibrary\Manager;
+namespace ForkCMS\Backend\Modules\MediaLibrary\Manager;
 
 use Symfony\Component\Filesystem\Filesystem;
-use App\Common\ModulesSettings;
-use App\Common\Uri;
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Common\ModulesSettings;
+use ForkCMS\Common\Uri;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 
 final class FileManager
 {

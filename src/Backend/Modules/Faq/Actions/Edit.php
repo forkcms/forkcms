@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Backend\Modules\Faq\Actions;
+namespace ForkCMS\Backend\Modules\Faq\Actions;
 
-use App\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use App\Backend\Core\Engine\Form as BackendForm;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Meta as BackendMeta;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Form\Type\DeleteType;
-use App\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
-use App\Backend\Modules\Search\Engine\Model as BackendSearchModel;
-use App\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use ForkCMS\Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use ForkCMS\Backend\Core\Engine\Form as BackendForm;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Meta as BackendMeta;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Form\Type\DeleteType;
+use ForkCMS\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use ForkCMS\Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use ForkCMS\Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item

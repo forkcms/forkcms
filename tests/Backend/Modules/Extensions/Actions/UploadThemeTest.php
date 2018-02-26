@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Backend\Modules\Extensions\Actions;
+namespace ForkCMS\Tests\Backend\Modules\Extensions\Actions;
 
-use App\Tests\WebTestCase;
+use ForkCMS\Tests\WebTestCase;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\Filesystem\Filesystem;

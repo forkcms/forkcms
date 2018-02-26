@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Frontend\Modules\Tags\Widgets;
+namespace ForkCMS\Frontend\Modules\Tags\Widgets;
 
-use App\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use App\Frontend\Core\Engine\Navigation as FrontendNavigation;
-use App\Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use ForkCMS\Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use ForkCMS\Frontend\Core\Engine\Navigation as FrontendNavigation;
+use ForkCMS\Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
 /**
  * This is a widget with the related items based on tags
@@ -84,7 +84,7 @@ class Related extends FrontendBaseWidget
             }
 
             // set module class
-            $class = 'App\\Frontend\\Modules\\' . $entry['module'] . '\\Engine\\Model';
+            $class = 'ForkCMS\\Frontend\\Modules\\' . $entry['module'] . '\\Engine\\Model';
 
             // get module record
             $this->related[$id] = FrontendTagsModel::callFromInterface(
@@ -130,7 +130,7 @@ class Related extends FrontendBaseWidget
         // loop blocks
         foreach ((array) $record['extra_blocks'] as $block) {
             // set module class
-            $class = 'App\\Frontend\\Modules\\' . $block['module'] . '\\Engine\\Model';
+            $class = 'ForkCMS\\Frontend\\Modules\\' . $block['module'] . '\\Engine\\Model';
 
             if (is_callable([$class, 'getIdForTags'])) {
                 // get record for module

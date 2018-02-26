@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Exception;
+namespace ForkCMS\Common\Exception;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

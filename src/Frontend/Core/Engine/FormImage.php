@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Frontend\Core\Engine;
+namespace ForkCMS\Frontend\Core\Engine;
 
 use SpoonFormImage;
 use Symfony\Component\Filesystem\Filesystem;
-use App\Frontend\Core\Language\Language as FL;
+use ForkCMS\Frontend\Core\Language\Language as FL;
 
 /**
  * This is our extended version of \SpoonFormImage

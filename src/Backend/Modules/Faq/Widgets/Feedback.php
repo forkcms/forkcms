@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Faq\Widgets;
+namespace ForkCMS\Backend\Modules\Faq\Widgets;
 
-use App\Backend\Core\Engine\Base\Widget as BackendBaseWidget;
-use App\Backend\Core\Engine\Model as BackendModel;
-use App\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use ForkCMS\Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This widget will show the latest feedback

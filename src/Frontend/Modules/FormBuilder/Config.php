@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Frontend\Modules\FormBuilder;
+namespace ForkCMS\Frontend\Modules\FormBuilder;
 
-use App\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use ForkCMS\Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 
 /**
  * This is the configuration-object

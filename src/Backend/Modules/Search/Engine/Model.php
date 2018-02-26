@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Backend\Modules\Search\Engine;
+namespace ForkCMS\Backend\Modules\Search\Engine;
 
 use Psr\Cache\CacheItemPoolInterface;
-use App\Backend\Core\Language\Language as BL;
-use App\Backend\Core\Engine\Model as BackendModel;
+use ForkCMS\Backend\Core\Language\Language as BL;
+use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 /**

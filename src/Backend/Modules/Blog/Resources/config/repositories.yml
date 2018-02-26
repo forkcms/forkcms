@@ -1,11 +1,11 @@
 services:
     blog.repository.comment:
-        class: App\Backend\Modules\Blog\Domain\Comment\CommentRepository
+        class: ForkCMS\Backend\Modules\Blog\Domain\Comment\CommentRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - App\Backend\Modules\Blog\Domain\Comment\Comment
+            - ForkCMS\Backend\Modules\Blog\Domain\Comment\Comment
     blog.repository.category:
-        class: App\Backend\Modules\Blog\Domain\Category\CategoryRepository
+        class: ForkCMS\Backend\Modules\Blog\Domain\Category\CategoryRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - App\Backend\Modules\Blog\Domain\Category\Category
+            - ForkCMS\Backend\Modules\Blog\Domain\Category\Category
