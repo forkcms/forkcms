@@ -123,8 +123,7 @@ final class InstallerController extends Controller
         string $formTypeClass,
         InstallerHandler $handler,
         Request $request
-    ): Response
-    {
+    ): Response {
         $this->checkInstall();
 
         // check if can start the next step
