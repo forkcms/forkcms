@@ -5,6 +5,7 @@ namespace Common\Core;
 use ForkCMS\App\BaseModel;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -172,17 +173,31 @@ class Model extends BaseModel
 
             // if the width & height are specified we should ignore the aspect ratio
             if ($folder['width'] !== null && $folder['height'] !== null) {
-                // Redefine box because we need to calculate box size
-                $box = ($folder['width'] > $folder['height'])
-                    ? $box->widen($folder['width']) : $box->heighten($folder['height']);
+                // we scale on the smaller dimension
+                if ($box->getWidth() > $box->getHeight()) {
+                    $width  = $box->getWidth() * ($folder['height']/$box->getHeight());
+                    $height =  $folder['height'];
 
-                $image->resize($box);
-                $image->crop(new Point(0, 0), new Box($folder['width'], $folder['height']));
+                    // we center the crop in relation to the width
+                    $cropPoint = new Point(max($width - $folder['width'], 0)/2, 0);
+                } else {
+                    $width  = $folder['width'];
+                    $height =  $box->getHeight() * ($folder['width']/$box->getWidth());
+
+                    // we center the crop in relation to the height
+                    $cropPoint = new Point(0, max($height - $folder['height'],0)/2);
+                }
+
+                // we scale the image to make the smaller dimension fit our resize box
+                $image = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_OUTBOUND);
+
+                // and crop exactly to the box
+                $image->crop($cropPoint, new Box($folder['width'], $folder['height']));
             } else {
-                // Redefine box because we need to calculate box size
+                // redefine box because we need to calculate box size
                 $box = ($folder['width'] !== null) ? $box->widen($folder['width']) : $box->heighten($folder['height']);
 
-                // We use resize and not thumbnail, because thumbnail has memory leaks
+                // we use resize and not thumbnail, because thumbnail has memory leaks
                 $image->resize($box);
             }
 
