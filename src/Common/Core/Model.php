@@ -3,8 +3,9 @@
 namespace Common\Core;
 
 use ForkCMS\App\BaseModel;
-use InvalidArgumentException;
-use RuntimeException;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+use Imagine\Image\Point;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
@@ -163,15 +164,29 @@ class Model extends BaseModel
 
         // loop folders
         foreach ($folders as $folder) {
-            // generate the thumbnail
-            $thumbnail = new \SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
-            $thumbnail->setAllowEnlargement(true);
+            $imagine = new Imagine();
+            $image = $imagine->open($sourceFile);
+
+            /** @var Box */
+            $box = $image->getSize();
 
             // if the width & height are specified we should ignore the aspect ratio
             if ($folder['width'] !== null && $folder['height'] !== null) {
-                $thumbnail->setForceOriginalAspectRatio(false);
+                // Redefine box because we need to calculate box size
+                $box = ($folder['width'] > $folder['height'])
+                    ? $box->widen($folder['width']) : $box->heighten($folder['height']);
+
+                $image->resize($box);
+                $image->crop(new Point(0, 0), new Box($folder['width'], $folder['height']));
+            } else {
+                // Redefine box because we need to calculate box size
+                $box = ($folder['width'] !== null) ? $box->widen($folder['width']) : $box->heighten($folder['height']);
+
+                // We use resize and not thumbnail, because thumbnail has memory leaks
+                $image->resize($box);
             }
-            $thumbnail->parseToFile($folder['path'] . '/' . $filename);
+
+            $image->save($folder['path'] . '/' . $filename);
         }
     }
 
