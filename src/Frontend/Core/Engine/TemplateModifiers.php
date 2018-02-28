@@ -235,6 +235,53 @@ class TemplateModifiers extends BaseTwigModifiers
     }
 
     /**
+     * Get the siblings navigation html
+     *   syntax: {{ getsiblingsnavigation($pageId, $enddepth, $excludeIds-splitted-by-dash, $template) }}
+     *
+     * @param int $pageId The parent wherefore the navigation should be build.
+     * @param int $endDepth The maximum depth that has to be build.
+     * @param bool $startFromHighestParent Should we start from the highest parent? Or just the sibling on this level?
+     * @param string $excludeIds Which pageIds should be excluded (split them by -).
+     * @param string $template The template that will be used.
+     *
+     * @return string
+     */
+    public static function getSiblingsNavigation(
+        int $pageId = null,
+        bool $startFromHighestParent = false,
+        int $endDepth = null,
+        string $excludeIds = null,
+        string $template = 'Core/Layout/Templates/Navigation.html.twig'
+    ): string {
+        $highestParentId = Navigation::getHighestParentId();
+
+        if ($highestParentId === null) {
+            return '';
+        }
+
+        try {
+            $parentId = $highestParentId;
+
+            if (!$startFromHighestParent) {
+                // get info about the given page
+                $pageInfo = Navigation::getPageInfo($pageId);
+                $parentId = $pageInfo['parent_id'];
+            }
+
+            // get HTML
+            return (string) Navigation::getNavigationHTML(
+                'page',
+                $parentId,
+                $endDepth,
+                (array) $excludeIds,
+                (string) $template
+            );
+        } catch (Exception $e) {
+            return '';
+        }
+    }
+
+    /**
      * Get the subnavigation html
      *   syntax: {{ getsubnavigation($type, $parentId, $startdepth, $enddepth, $excludeIds-splitted-by-dash, $template) }}
      *
