@@ -152,7 +152,13 @@ class Model
         $location = Location::fromArray($item);
         $locationRepository = self::getLocationRepository();
 
-        $locationRepository->add($location);
+        /**
+         * @TODO: Make this obsolete by creating a ModuleExtra entity
+         *
+         * We use the entity manager to persist for now because we need it's ID to create an extra
+         * We can't flush it yet because the entity is invalid without an extra ID
+         */
+        BackendModel::get('doctrine.orm.entity_manager')->persist($location);
 
         // insert extra
         $extraId = BackendModel::insertExtra(
