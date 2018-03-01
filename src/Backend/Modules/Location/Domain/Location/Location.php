@@ -14,7 +14,7 @@ use Frontend\Core\Language\Locale as FrontendLocale;
 
 /**
  * @ORM\Table(name="location")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Location\Domain\Location\LocationRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Location

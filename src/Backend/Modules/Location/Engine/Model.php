@@ -5,6 +5,7 @@ namespace Backend\Modules\Location\Engine;
 use Backend\Core\Language\Language;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Domain\Location\Location;
+use Backend\Modules\Location\Domain\Location\LocationRepository;
 use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
 use Common\ModuleExtraType;
 use Doctrine\ORM\EntityManager;
@@ -22,15 +23,13 @@ class Model
 
     public static function delete(int $id): void
     {
-        $location = self::getLocationRepository()->find($id);
+        $locationRepository = self::getLocationRepository();
+        $location = $locationRepository->find($id);
 
         if ($location instanceof Location) {
             BackendModel::deleteExtraById($location->getExtraId());
 
-            $entityManager = self::getEntityManager();
-
-            $entityManager->remove($location);
-            $entityManager->flush($location);
+            $locationRepository->remove($location);
         }
     }
 
@@ -152,9 +151,9 @@ class Model
     public static function insert(array $item): int
     {
         $location = Location::fromArray($item);
+        $locationRepository = self::getLocationRepository();
 
-        $entityManager = self::getEntityManager();
-        $entityManager->persist($location);
+        $locationRepository->add($location);
 
         // insert extra
         $extraId = BackendModel::insertExtra(
@@ -165,8 +164,7 @@ class Model
 
         $location->setExtraId($extraId);
 
-        $entityManager->persist($location);
-        $entityManager->flush();
+        $locationRepository->save($location);
 
         // update extra (item id is now known)
         BackendModel::updateExtra(
@@ -189,8 +187,10 @@ class Model
 
     public static function setMapSetting(int $locationId, string $name, $value): void
     {
+        $locationRepository = self::getLocationRepository();
+
         /** @var Location|null $location */
-        $location = self::getLocationRepository()->find($locationId);
+        $location = $locationRepository->find($locationId);
 
         if (!$location instanceof Location) {
             throw new InvalidArgumentException('Location with id ' . $locationId . ' doesn\'t exist');
@@ -219,12 +219,13 @@ class Model
             )
         );
 
-        self::getEntityManager()->flush($location);
+        $locationRepository->save($location);
     }
 
     public static function update(array $item): int
     {
-        $currentLocation = self::getLocationRepository()->find($item['id']);
+        $locationRepository = self::getLocationRepository();
+        $currentLocation = $locationRepository->find($item['id']);
 
         if (!$currentLocation instanceof Location) {
             return 0;
@@ -244,7 +245,7 @@ class Model
             $updatedLocation->isShowInOverview()
         );
 
-        self::getEntityManager()->flush($currentLocation);
+        $locationRepository->save($currentLocation);
 
         // update extra
         BackendModel::updateExtra(
@@ -270,9 +271,9 @@ class Model
         return BackendModel::get('doctrine.orm.default_entity_manager');
     }
 
-    private static function getLocationRepository(): EntityRepository
+    private static function getLocationRepository(): LocationRepository
     {
-        return self::getEntityManager()->getRepository(Location::class);
+        return BackendModel::get('location.repository.location');
     }
 
     private static function getLocationSettingRepository(): EntityRepository
