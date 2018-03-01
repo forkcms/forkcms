@@ -7,9 +7,8 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Domain\Location\Location;
 use Backend\Modules\Location\Domain\Location\LocationRepository;
 use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
+use Backend\Modules\Location\Domain\LocationSetting\LocationSettingRepository;
 use Common\ModuleExtraType;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
 use SpoonFilter;
 use Symfony\Component\Intl\Intl;
@@ -188,6 +187,7 @@ class Model
     public static function setMapSetting(int $locationId, string $name, $value): void
     {
         $locationRepository = self::getLocationRepository();
+        $locationSettingRepository = self::getLocationSettingRepository();
 
         /** @var Location|null $location */
         $location = $locationRepository->find($locationId);
@@ -196,7 +196,7 @@ class Model
             throw new InvalidArgumentException('Location with id ' . $locationId . ' doesn\'t exist');
         }
 
-        $setting = self::getLocationSettingRepository()->findOneBy(
+        $setting = $locationSettingRepository->findOneBy(
             [
                 'location' => $location,
                 'name' => $name
@@ -206,7 +206,7 @@ class Model
         if ($setting instanceof LocationSetting) {
             $setting->update($value);
 
-            self::getEntityManager()->flush($setting);
+            $locationSettingRepository->save($setting);
 
             return;
         }
@@ -266,18 +266,13 @@ class Model
         return $currentLocation->getId();
     }
 
-    private static function getEntityManager(): EntityManager
-    {
-        return BackendModel::get('doctrine.orm.default_entity_manager');
-    }
-
     private static function getLocationRepository(): LocationRepository
     {
         return BackendModel::get('location.repository.location');
     }
 
-    private static function getLocationSettingRepository(): EntityRepository
+    private static function getLocationSettingRepository(): LocationSettingRepository
     {
-        return self::getEntityManager()->getRepository(LocationSetting::class);
+        return BackendModel::get('location.repository.location_setting');
     }
 }
