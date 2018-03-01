@@ -143,7 +143,7 @@ class Location
         float $latitude,
         float $longitude,
         bool $showInOverview = true,
-        ?int $extraId = null
+        int $extraId = null
     ) {
         $this->locale = $locale;
         $this->title = $title;
