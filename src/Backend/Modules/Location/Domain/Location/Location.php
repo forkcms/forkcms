@@ -3,13 +3,13 @@
 namespace Backend\Modules\Location\Domain\Location;
 
 use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
+use Common\Exception\CanNotSetExtraIdException;
 use Common\Locale;
 use Backend\Core\Language\Locale as BackendLocale;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Frontend\Core\Language\Locale as FrontendLocale;
 
 /**
@@ -260,7 +260,7 @@ class Location
     public function setExtraId(int $extraId): void
     {
         if ($this->extraId !== null) {
-            throw new Exception('You can only set the extra ID once');
+            throw new CanNotSetExtraIdException();
         }
 
         $this->extraId = $extraId;
