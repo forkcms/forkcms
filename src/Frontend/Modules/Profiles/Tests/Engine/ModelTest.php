@@ -68,6 +68,13 @@ final class ModelTest extends WebTestCase
         );
     }
 
+    public function testVerifyingPassword(): void
+    {
+        $this->addProfile();
+
+        $this->assertTrue(Model::verifyPassword('test@fork-cms.com', 'forkcms'));
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
