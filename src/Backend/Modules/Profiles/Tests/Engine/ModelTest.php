@@ -4,6 +4,7 @@ namespace Backend\Modules\Profiles\Tests\Engine;
 
 use Backend\Modules\Profiles\Engine\Model;
 use Common\WebTestCase;
+use DateTime;
 
 final class ModelTest extends WebTestCase
 {
@@ -134,6 +135,26 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($profileGroupData['expires_on'], $addedProfileGroup['expires_on']);
     }
 
+    public function testUpdatingProfileGroup(): void
+    {
+        $this->addGroup();
+        $this->addProfile();
+
+        $profileGroupId = $this->addProfileGroup();
+        $this->assertEquals(1, $this->updateProfileGroup());
+
+        $updatedProfileGroupData = $this->getUpdatedProfileGroupData();
+        $updatedProfileGroup = Model::getProfileGroup($profileGroupId);
+
+        $this->assertEquals($profileGroupId, $updatedProfileGroup['id']);
+        $this->assertEquals($updatedProfileGroupData['profile_id'], $updatedProfileGroup['profile_id']);
+        $this->assertEquals($updatedProfileGroupData['group_id'], $updatedProfileGroup['group_id']);
+        $this->assertEquals(
+            $updatedProfileGroupData['expires_on'],
+            DateTime::createFromFormat('U', $updatedProfileGroup['expires_on'])->format('Y-m-d H:i:s')
+        );
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
@@ -157,6 +178,11 @@ final class ModelTest extends WebTestCase
     public function updateGroup(): int
     {
         return Model::updateGroup(1, $this->getUpdatedGroupData());
+    }
+
+    public function updateProfileGroup(): int
+    {
+        return Model::updateProfileGroup(1, $this->getUpdatedProfileGroupData());
     }
 
     public function getPassword(): string
@@ -216,6 +242,16 @@ final class ModelTest extends WebTestCase
     {
         return [
             'name' => 'My updated Fork CMS group',
+        ];
+    }
+
+    public function getUpdatedProfileGroupData(): array
+    {
+        return [
+            'profile_id' => 1,
+            'group_id' => 1,
+            'starts_on' => '2018-03-05 11:07:21',
+            'expires_on' => '2033-05-18 03:33:20',
         ];
     }
 }
