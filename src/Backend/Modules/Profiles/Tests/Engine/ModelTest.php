@@ -83,6 +83,16 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($updatedProfileData['url'], $updatedProfile['url']);
     }
 
+    public function testDeletingProfile(): void
+    {
+        $profileId = $this->addProfile();
+        Model::delete($profileId);
+
+        $deletedProfile = Model::get($profileId);
+
+        $this->assertEquals('deleted', $deletedProfile['status']);
+    }
+
     public function testSettingSettings(): void
     {
         Model::setSetting(1, 'my_setting', 'My setting\'s value');
