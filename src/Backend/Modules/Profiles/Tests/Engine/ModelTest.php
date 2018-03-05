@@ -118,6 +118,22 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($updatedGroupData['name'], $updatedGroup['name']);
     }
 
+    public function testInsertingProfileGroup(): void
+    {
+        $this->addGroup();
+        $this->addProfile();
+
+        $profileGroupId = $this->addProfileGroup();
+
+        $profileGroupData = $this->getProfileGroupData();
+        $addedProfileGroup = Model::getProfileGroup($profileGroupId);
+
+        $this->assertEquals($profileGroupId, $addedProfileGroup['id']);
+        $this->assertEquals($profileGroupData['profile_id'], $addedProfileGroup['profile_id']);
+        $this->assertEquals($profileGroupData['group_id'], $addedProfileGroup['group_id']);
+        $this->assertEquals($profileGroupData['expires_on'], $addedProfileGroup['expires_on']);
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
@@ -126,6 +142,11 @@ final class ModelTest extends WebTestCase
     public function addGroup(): int
     {
         return Model::insertGroup($this->getGroupData());
+    }
+
+    public function addProfileGroup(): int
+    {
+        return Model::insertProfileGroup($this->getProfileGroupData());
     }
 
     public function updateProfile(): int
@@ -165,6 +186,16 @@ final class ModelTest extends WebTestCase
     {
         return [
             'name' => 'My Fork CMS group',
+        ];
+    }
+
+    public function getProfileGroupData(): array
+    {
+        return [
+            'profile_id' => 1,
+            'group_id' => 1,
+            'starts_on' => null,
+            'expires_on' => null,
         ];
     }
 
