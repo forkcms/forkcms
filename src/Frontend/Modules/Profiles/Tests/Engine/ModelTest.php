@@ -75,6 +75,13 @@ final class ModelTest extends WebTestCase
         $this->assertTrue(Model::verifyPassword('test@fork-cms.com', 'forkcms'));
     }
 
+    public function testGettingId(): void
+    {
+        $this->addProfile();
+
+        $this->assertEquals(1, Model::getIdByEmail('test@fork-cms.com'));
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
