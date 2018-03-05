@@ -133,6 +133,16 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($profileGroupData['profile_id'], $addedProfileGroup['profile_id']);
         $this->assertEquals($profileGroupData['group_id'], $addedProfileGroup['group_id']);
         $this->assertEquals($profileGroupData['expires_on'], $addedProfileGroup['expires_on']);
+
+        $this->assertContains(
+            [
+                'id' => 1,
+                'group_id' => 1,
+                'group_name' => 'My Fork CMS group',
+                'expires_on' => null,
+            ],
+            Model::getProfileGroups(1)
+        );
     }
 
     public function testUpdatingProfileGroup(): void
