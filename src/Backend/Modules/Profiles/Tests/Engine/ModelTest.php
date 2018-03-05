@@ -119,6 +119,13 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($updatedGroupData['name'], $updatedGroup['name']);
     }
 
+    public function testIfGroupExists(): void
+    {
+        $this->addGroup();
+        $this->assertTrue(Model::existsGroup(1));
+        $this->assertTrue(Model::existsGroupName('My Fork CMS group'));
+    }
+
     public function testInsertingProfileGroup(): void
     {
         $this->addGroup();
