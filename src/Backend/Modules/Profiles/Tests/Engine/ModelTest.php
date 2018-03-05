@@ -40,6 +40,17 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($profileData['url'], $addedProfile['url']);
     }
 
+    public function testGettingUrl(): void
+    {
+        $firstUrl = Model::getUrl($this->getDisplayName());
+        $this->assertEquals('fork-cms', $firstUrl);
+
+        $this->addProfile();
+
+        $secondUrl = Model::getUrl($this->getDisplayName());
+        $this->assertEquals('fork-cms-2', $secondUrl);
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
@@ -50,13 +61,18 @@ final class ModelTest extends WebTestCase
         return 'forkcms';
     }
 
+    public function getDisplayName(): string
+    {
+        return 'Fork CMS';
+    }
+
     public function getProfileData(): array
     {
         return [
             'email' => 'test@fork-cms.com',
             'password' => '$2y$10$1Ev9QQNYZBjdU1ELKjKNqelcV.j2l3CgtVkHl0aMvbNpg1g73S5lC',
             'status' => 'active',
-            'display_name' => 'Fork CMS',
+            'display_name' => $this->getDisplayName(),
             'url' => 'fork-cms',
             'registered_on' => '2018-03-05 09:45:12',
             'last_login' => '1970-01-01 00:00:00',
