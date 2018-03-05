@@ -75,6 +75,15 @@ final class ModelTest extends WebTestCase
         $this->assertTrue(Model::verifyPassword('test@fork-cms.com', 'forkcms'));
     }
 
+    public function testSettingSettings(): void
+    {
+        Model::setSetting(1, 'my_setting', 'My setting\'s value');
+        $this->assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
+
+        Model::setSetting(1, 'my_setting', 'My updated value');
+        $this->assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
+    }
+
     public function testGettingId(): void
     {
         $this->addProfile();
