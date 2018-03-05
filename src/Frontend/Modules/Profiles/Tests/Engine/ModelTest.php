@@ -58,6 +58,16 @@ final class ModelTest extends WebTestCase
         $this->assertTrue(password_verify('Fork CMS', $encryptedPassword));
     }
 
+    public function testGettingEncryptedPassword(): void
+    {
+        $this->addProfile();
+
+        $this->assertEquals(
+            '$2y$10$1Ev9QQNYZBjdU1ELKjKNqelcV.j2l3CgtVkHl0aMvbNpg1g73S5lC',
+            Model::getEncryptedPassword('test@fork-cms.com')
+        );
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
