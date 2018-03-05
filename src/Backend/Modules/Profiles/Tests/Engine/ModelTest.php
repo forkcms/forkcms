@@ -106,6 +106,18 @@ final class ModelTest extends WebTestCase
         $this->assertContains($groupData['name'], $groups);
     }
 
+    public function testUpdatingGroup(): void
+    {
+        $groupId = $this->addGroup();
+        $this->assertEquals(1, $this->updateGroup());
+
+        $updatedGroupData = $this->getUpdatedGroupData();
+        $updatedGroup = Model::getGroup($groupId);
+
+        $this->assertEquals($groupId, $updatedGroup['id']);
+        $this->assertEquals($updatedGroupData['name'], $updatedGroup['name']);
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
@@ -119,6 +131,11 @@ final class ModelTest extends WebTestCase
     public function updateProfile(): int
     {
         return Model::update(1, $this->getUpdatedProfileData());
+    }
+
+    public function updateGroup(): int
+    {
+        return Model::updateGroup(1, $this->getUpdatedGroupData());
     }
 
     public function getPassword(): string
@@ -161,6 +178,13 @@ final class ModelTest extends WebTestCase
             'url' => 'fork-cms-2',
             'registered_on' => '2018-03-05 10:22:34',
             'last_login' => '2018-03-05 10:16:19',
+        ];
+    }
+
+    public function getUpdatedGroupData(): array
+    {
+        return [
+            'name' => 'My updated Fork CMS group',
         ];
     }
 }
