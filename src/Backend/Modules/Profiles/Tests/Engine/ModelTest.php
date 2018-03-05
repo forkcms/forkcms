@@ -136,6 +136,20 @@ final class ModelTest extends WebTestCase
         $this->assertTrue(Model::existsGroupName('My Fork CMS group'));
     }
 
+    public function testDeletingGroup(): void
+    {
+        $groupId = $this->addGroup();
+        $profileGroupId = $this->addProfileGroup();
+
+        $this->assertNotEmpty(Model::getGroup($groupId));
+        $this->assertNotEmpty(Model::getProfileGroup($profileGroupId));
+
+        Model::deleteGroup($groupId);
+
+        $this->assertEmpty(Model::getGroup($groupId));
+        $this->assertEmpty(Model::getProfileGroup($profileGroupId));
+    }
+
     public function testInsertingProfileGroup(): void
     {
         $this->addGroup();
