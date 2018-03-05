@@ -51,6 +51,13 @@ final class ModelTest extends WebTestCase
         $this->assertTrue(Model::existsByEmail($profileData['email']));
     }
 
+    public function testPasswordGetsEncrypted(): void
+    {
+        $encryptedPassword = Model::encryptPassword('Fork CMS');
+
+        $this->assertTrue(password_verify('Fork CMS', $encryptedPassword));
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
