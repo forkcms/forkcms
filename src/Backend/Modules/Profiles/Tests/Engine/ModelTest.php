@@ -172,6 +172,12 @@ final class ModelTest extends WebTestCase
         );
     }
 
+    public function testIfProfileGroupExists(): void
+    {
+        $this->addProfileGroup();
+        $this->assertTrue(Model::existsProfileGroup(1));
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
