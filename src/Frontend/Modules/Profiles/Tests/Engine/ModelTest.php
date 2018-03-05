@@ -94,6 +94,83 @@ final class ModelTest extends WebTestCase
         $this->assertEquals(1, Model::getIdBySetting('get_my_id', 'with_a_setting'));
     }
 
+    public function testGettingRandomString()
+    {
+        $this->assertNotEmpty(Model::getRandomString());
+        $this->assertEquals(15, strlen(Model::getRandomString()));
+        $this->assertEquals(14, strlen(Model::getRandomString(14)));
+        $this->assertEquals(1, preg_match("#^[0-9]+$#", Model::getRandomString(15, true, false, false, false)));
+        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, false, false)));
+        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, true, false)));
+        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, true, true)));
+        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, false, true, false)));
+        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, false, true, true)));
+        $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, false, false, true)));
+        $this->assertEquals(1, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, true, false, false)));
+        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, true, false, false, false)));
+        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, true, false, true, false)));
+        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, true, false, true, true)));
+        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, false, true, false)));
+        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, false, true, true)));
+        $this->assertEquals(0, preg_match("#^[a-z]+$#", Model::getRandomString(15, false, false, false, true)));
+        $this->assertEquals(1, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, false, true, false)));
+        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, true, false, false, false)));
+        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, true, true, false, false)));
+        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, true, true, false, true)));
+        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, true, false, false)));
+        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, true, false, true)));
+        $this->assertEquals(0, preg_match("#^[A-Z]+$#", Model::getRandomString(15, false, false, false, true)));
+        $this->assertEquals(
+            1,
+            preg_match(
+                "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
+                Model::getRandomString(15, false, false, false, true)
+            )
+        );
+        $this->assertEquals(
+            0,
+            preg_match(
+                "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
+                Model::getRandomString(15, true, false, false, false)
+            )
+        );
+        $this->assertEquals(
+            0,
+            preg_match(
+                "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
+                Model::getRandomString(15, true, true, false, false)
+            )
+        );
+        $this->assertEquals(
+            0,
+            preg_match(
+                "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
+                Model::getRandomString(15, true, true, true, false)
+            )
+        );
+        $this->assertEquals(
+            0,
+            preg_match(
+                "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
+                Model::getRandomString(15, false, true, false, false)
+            )
+        );
+        $this->assertEquals(
+            0,
+            preg_match(
+                "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
+                Model::getRandomString(15, false, true, true, false)
+            )
+        );
+        $this->assertEquals(
+            0,
+            preg_match(
+                "#^[\-\_\.\:\;\,\?\!\@\#\&\=\)\(\[\]\{\}\*\+\%\$]+$#",
+                Model::getRandomString(15, false, false, true, false)
+            )
+        );
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
