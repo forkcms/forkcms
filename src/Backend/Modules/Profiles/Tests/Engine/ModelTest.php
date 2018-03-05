@@ -38,6 +38,14 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($profileData['status'], $addedProfile['status']);
         $this->assertEquals($profileData['display_name'], $addedProfile['display_name']);
         $this->assertEquals($profileData['url'], $addedProfile['url']);
+
+        $addedProfileByEmail = Model::getByEmail($profileData['email']);
+
+        $this->assertEquals($profileId, $addedProfileByEmail['id']);
+        $this->assertEquals($profileData['email'], $addedProfileByEmail['email']);
+        $this->assertEquals($profileData['status'], $addedProfileByEmail['status']);
+        $this->assertEquals($profileData['display_name'], $addedProfileByEmail['display_name']);
+        $this->assertEquals($profileData['url'], $addedProfileByEmail['url']);
     }
 
     public function testGettingUrl(): void
