@@ -82,6 +82,15 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($updatedProfileData['url'], $updatedProfile['url']);
     }
 
+    public function testSettingSettings(): void
+    {
+        Model::setSetting(1, 'my_setting', 'My setting\'s value');
+        $this->assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
+
+        Model::setSetting(1, 'my_setting', 'My updated value');
+        $this->assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
