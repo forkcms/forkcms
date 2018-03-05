@@ -89,6 +89,9 @@ final class ModelTest extends WebTestCase
         $this->addProfile();
 
         $this->assertEquals(1, Model::getIdByEmail('test@fork-cms.com'));
+
+        Model::setSetting(1, 'get_my_id', 'with_a_setting');
+        $this->assertEquals(1, Model::getIdBySetting('get_my_id', 'with_a_setting'));
     }
 
     public function addProfile(): int
