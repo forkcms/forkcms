@@ -51,6 +51,14 @@ final class ModelTest extends WebTestCase
         $this->assertEquals('fork-cms-2', $secondUrl);
     }
 
+    public function testIfProfileExists(): void
+    {
+        $this->addProfile();
+        $this->assertTrue(Model::exists(1));
+        $this->assertTrue(Model::existsByEmail('test@fork-cms.com'));
+        $this->assertTrue(Model::existsDisplayName($this->getDisplayName()));
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
