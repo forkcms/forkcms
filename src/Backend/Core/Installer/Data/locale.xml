@@ -12163,6 +12163,14 @@
         <translation language="nl"><![CDATA[Typ tekst gevolgd door komma of ⏎ om een nieuwe tag toe te voegen. Typ enkele letters en gebruik pijl omlaag om een bestaande tag te selecteren]]></translation>
         <translation language="en"><![CDATA[Type text followed by comma or ⏎ to add a new tag. Type a few letters and use the down arrow to select an existing tag]]></translation>
       </item>
+      <item type="label" name="show">
+        <translation language="nl"><![CDATA[tonen]]></translation>
+        <translation language="en"><![CDATA[show]]></translation>
+      </item>
+      <item type="label" name="hide">
+        <translation language="nl"><![CDATA[verbergen]]></translation>
+        <translation language="en"><![CDATA[hide]]></translation>
+      </item>
     </Core>
   </Backend>
 </locale>
