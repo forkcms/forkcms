@@ -27,6 +27,7 @@ final class Navigation extends KernelLoader
     public function parse(TwigTemplate $template): void
     {
         $template->assign('navigation', $this->navigation);
+        $template->assign('activeParent', $this->navigation[$this->getSelectedKey($this->navigation)]['label']);
     }
 
     private function addActiveStateToNavigation(array $navigation): array
