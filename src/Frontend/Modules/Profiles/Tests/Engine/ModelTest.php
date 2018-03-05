@@ -38,6 +38,19 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($profileId, Model::getIdByEmail($profileData['email']));
     }
 
+    public function testProfileExists(): void
+    {
+        $profileData = $this->getProfileData();
+
+        $this->assertFalse(Model::existsDisplayName($profileData['display_name']));
+        $this->assertFalse(Model::existsByEmail($profileData['email']));
+
+        $this->addProfile();
+
+        $this->assertTrue(Model::existsDisplayName($profileData['display_name']));
+        $this->assertTrue(Model::existsByEmail($profileData['email']));
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
