@@ -184,6 +184,17 @@ final class ModelTest extends WebTestCase
         );
     }
 
+    public function testGettingUrl(): void
+    {
+        $firstUrl = Model::getUrl('Fork CMS');
+        $this->assertEquals('fork-cms', $firstUrl);
+
+        $this->addProfile();
+
+        $secondUrl = Model::getUrl('Fork CMS');
+        $this->assertEquals('fork-cms-2', $secondUrl);
+    }
+
     public function addProfile(): int
     {
         return Model::insert($this->getProfileData());
