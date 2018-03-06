@@ -12160,8 +12160,8 @@
         <translation language="en"><![CDATA[move down one position]]></translation>
       </item>
       <item type="message" name="HelpTextTags">
-        <translation language="nl"><![CDATA[Typ tekst gevolgd door komma of ⏎ om een nieuwe tag toe te voegen. Typ enkele letters en gebruik pijl omlaag om een bestaande tag te selecteren]]></translation>
-        <translation language="en"><![CDATA[Type text followed by comma or ⏎ to add a new tag. Type a few letters and use the down arrow to select an existing tag]]></translation>
+        <translation language="nl"><![CDATA[Typ tekst gevolgd door komma of ENTER om een nieuwe tag toe te voegen. Typ enkele letters en gebruik pijl omlaag om een bestaande tag te selecteren]]></translation>
+        <translation language="en"><![CDATA[Type text followed by comma or ENTER to add a new tag. Type a few letters and use the down arrow to select an existing tag]]></translation>
       </item>
     </Core>
   </Backend>
