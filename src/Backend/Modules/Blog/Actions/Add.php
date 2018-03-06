@@ -64,11 +64,11 @@ class Add extends BackendBaseActionAdd
         $this->form->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
         $this->form->addText(
             'tags',
-             null,
-             null,
-             'form-control js-tags-input',
-             'form-control danger js-tags-input'
-         )->setAttribute('aria-describedby', 'tags-info');
+            null,
+            null,
+            'form-control js-tags-input',
+            'form-control danger js-tags-input'
+        )->setAttribute('aria-describedby', 'tags-info');
         $this->form->addDate('publish_on_date');
         $this->form->addTime('publish_on_time');
         if ($this->imageIsAllowed) {
