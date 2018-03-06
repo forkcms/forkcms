@@ -82,6 +82,17 @@ final class ModelTest extends WebTestCase
 
         Model::setSetting(1, 'my_setting', 'My updated value');
         $this->assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
+
+        Model::setSettings(
+            1,
+            [
+                'my_setting' => 'Another updated value',
+                'my_other_setting' => 'A new value',
+            ]
+        );
+
+        $this->assertEquals('Another updated value', Model::getSetting(1, 'my_setting'));
+        $this->assertEquals('A new value', Model::getSetting(1, 'my_other_setting'));
     }
 
     public function testGettingSettings(): void
