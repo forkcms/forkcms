@@ -84,6 +84,19 @@ final class ModelTest extends WebTestCase
         $this->assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
     }
 
+    public function testGettingSettings(): void
+    {
+        Model::setSetting(1, 'my_setting', 'My setting\'s value');
+        Model::setSetting(1, 'my_array', ['one', 'two', 'banana']);
+        Model::setSetting(2, 'someone_elses_setting', 'Someone else\'s setting\'s value');
+
+        $settings = Model::getSettings(1);
+
+        $this->assertContains('My setting\'s value', $settings);
+        $this->assertContains(['one', 'two', 'banana'], $settings);
+        $this->assertNotContains('Someone else\'s setting\'s value', $settings);
+    }
+
     public function testGettingId(): void
     {
         $this->addProfile();
