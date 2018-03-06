@@ -53,6 +53,9 @@ class Model
     public static function delete(int $groupId): void
     {
         BackendModel::getContainer()->get('database')->delete('groups', 'id = ?', [$groupId]);
+        BackendModel::getContainer()->get('database')->delete('groups_settings', 'group_id = ?', [$groupId]);
+        BackendModel::getContainer()->get('database')->delete('groups_rights_actions', 'group_id = ?', [$groupId]);
+        BackendModel::getContainer()->get('database')->delete('groups_rights_modules', 'group_id = ?', [$groupId]);
     }
 
     public static function deleteActionPermissions(array $actionPermissions): void
