@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Tests\Engine;
 
+use Frontend\Modules\Profiles\Engine\Model;
 use Common\WebTestCase;
 use Frontend\Modules\Profiles\Engine\Profile;
 
@@ -13,6 +14,10 @@ final class ProfileTest extends WebTestCase
 
         if (!defined('APPLICATION')) {
             define('APPLICATION', 'Frontend');
+        }
+
+        if (!defined('LANGUAGE')) {
+            define('LANGUAGE', 'en');
         }
 
         $client = self::createClient();
@@ -55,6 +60,12 @@ final class ProfileTest extends WebTestCase
         $this->assertEquals('My first value', $profile->getSetting('my_first_setting'));
 
         $profile->setSetting('my_second_setting', 'My updated value');
-        $this->assertEquals('My updated value', $profile->getSetting('my_second_setting'));*/
+        $this->assertEquals('My updated value', $profile->getSetting('my_second_setting'));
+
+        $profileArray = $profile->toArray();
+        $this->assertArrayHasKey('display_name', $profileArray);
+        $this->assertEquals('Fork CMS', $profileArray['display_name']);
+        $this->assertArrayHasKey('registered_on', $profileArray);
+        $this->assertEquals(1234567890, $profileArray['registered_on']);*/
     }
 }
