@@ -146,7 +146,7 @@
                       <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                         {% form_field tags %} {% form_field_error tags %}
-                        <div class="help-block">{{ 'msg.HelpTextTags'|trans }}</div>
+                        <div class="help-block" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</div>
                       </div>
                     {% endif %}
                   </div>
