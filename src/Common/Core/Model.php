@@ -3,6 +3,8 @@
 namespace Common\Core;
 
 use ForkCMS\App\BaseModel;
+use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
