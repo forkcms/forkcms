@@ -185,7 +185,7 @@ class Model extends BaseModel
      */
     public static function getThumbnailFolders(string $path, bool $includeSource = false): array
     {
-        self::get('forkcms.thumbnails')->getFolders($path, $includeSource);
+        return self::get('forkcms.thumbnails')->getFolders($path, $includeSource);
     }
 
     /**
