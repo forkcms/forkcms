@@ -10,6 +10,9 @@ use SpoonDatabase;
 
 final class AuthenticationTest extends WebTestCase
 {
+    /** @var SpoonDatabase */
+    private $database;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -20,6 +23,8 @@ final class AuthenticationTest extends WebTestCase
 
         $client = self::createClient();
         $this->loadFixtures($client);
+
+        $this->database = FrontendModel::get('database');
     }
 
     public function testOldSessionCleanUp()
@@ -27,10 +32,7 @@ final class AuthenticationTest extends WebTestCase
         $dateWithinAMonthAgo = new DateTime('-1 week');
         $dateOverAMonthAgo = new DateTime('-2 months');
 
-        /** @var SpoonDatabase $database */
-        $database = FrontendModel::get('database');
-
-        $database->insert(
+        $this->database->insert(
             'profiles_sessions',
             [
                 [
@@ -48,10 +50,10 @@ final class AuthenticationTest extends WebTestCase
             ]
         );
 
-        $this->assertEquals('2', $database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
+        $this->assertEquals('2', $this->database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
 
         Authentication::cleanupOldSessions();
 
-        $this->assertEquals('1', $database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
+        $this->assertEquals('1', $this->database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
     }
 }
