@@ -35,4 +35,34 @@ final class AuthenticationTest extends WebTestCase
 
         $this->assertEquals('1', $this->database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
     }
+
+    public function testGettingLoginStatusForNonExistingUser()
+    {
+        $this->assertEquals('invalid', Authentication::getLoginStatus('non@existe.nt', 'wrong'));
+    }
+
+    public function testGettingLoginStatusForUserWithWrongPassword()
+    {
+        $this->assertEquals('invalid', Authentication::getLoginStatus('test-active@fork-cms.com', 'wrong'));
+    }
+
+    public function testGettingLoginStatusForActiveUserWithCorrectPassword()
+    {
+        $this->assertEquals('active', Authentication::getLoginStatus('test-active@fork-cms.com', 'forkcms'));
+    }
+
+    public function testGettingLoginStatusForInactiveUserWithCorrectPassword()
+    {
+        $this->assertEquals('inactive', Authentication::getLoginStatus('test-inactive@fork-cms.com', 'forkcms'));
+    }
+
+    public function testGettingLoginStatusForDeletedUserWithCorrectPassword()
+    {
+        $this->assertEquals('deleted', Authentication::getLoginStatus('test-deleted@fork-cms.com', 'forkcms'));
+    }
+
+    public function testGettingLoginStatusForBlockedUserWithCorrectPassword()
+    {
+        $this->assertEquals('blocked', Authentication::getLoginStatus('test-blocked@fork-cms.com', 'forkcms'));
+    }
 }
