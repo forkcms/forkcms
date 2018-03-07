@@ -94,7 +94,7 @@ class Thumbnails
                 $height =  $box->getHeight() * ($folder['width']/$box->getWidth());
 
                 // we center the crop in relation to the height
-                $cropPoint = new Point(0, max($height - $folder['height'],0)/2);
+                $cropPoint = new Point(0, max($height - $folder['height'], 0)/2);
             }
 
             // we scale the image to make the smaller dimension fit our resize box
