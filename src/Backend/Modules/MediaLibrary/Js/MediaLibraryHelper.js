@@ -502,12 +502,12 @@ jsBackend.mediaLibraryHelper.group = {
     })
   },
 
-  getMediaItemForId: function(mediaId) {
+  getMediaItemForId: function(mediaItemId) {
     var foundMediaItem = false
 
     $.each(media, function(index, mediaFolder) {
       $.each(mediaFolder, function(index, mediaItem) {
-        if (mediaItem.id === mediaId) {
+        if (mediaItem.id === mediaItemId) {
           foundMediaItem = mediaItem
 
           return false;
@@ -794,7 +794,7 @@ jsBackend.mediaLibraryHelper.group = {
 
     // bind click to duplicate media item
     $('[data-role=media-library-duplicate-and-crop]').on('click', function () {
-      var mediaItemToDuplicate = jsBackend.mediaLibraryHelper.group.getMediaItemForId($(this).data('media-id'));
+      var mediaItemToDuplicate = jsBackend.mediaLibraryHelper.group.getMediaItemForId($(this).data('media-item-id'));
 
       jsBackend.mediaLibraryHelper.duplicator.init(mediaItemToDuplicate);
     })
@@ -1534,7 +1534,7 @@ jsBackend.mediaLibraryHelper.templates = {
 
     if (mediaItem.type === 'image') {
         html += '<td class="duplicate">'
-        html += '<button type="button" data-media-id="' + mediaItem.id + '" data-role="media-library-duplicate-and-crop" class="btn btn-primary" title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaItemDuplicate')) + '">'
+        html += '<button type="button" data-media-item-id="' + mediaItem.id + '" data-role="media-library-duplicate-and-crop" class="btn btn-primary" title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaItemDuplicate')) + '">'
         html += '<span class="fa fa-copy" aria-hidden="true"></span>'
         html += '</button>'
         html += '</td>'
