@@ -33,7 +33,7 @@ final class AuthenticationTest extends WebTestCase
 
         Authentication::cleanupOldSessions();
 
-        $this->assertEquals('1', $this->database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
+        $this->assertFalse((bool) $this->database->getVar('SELECT 1 FROM profiles_sessions WHERE session_id = "1234567890"'));
     }
 
     public function testGettingLoginStatusForNonExistingUser()
