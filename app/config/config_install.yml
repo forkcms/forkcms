@@ -72,3 +72,6 @@ services:
             - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
+
+    forkcms.thumbnails:
+        class: ForkCMS\Service\Thumbnails
