@@ -11,13 +11,13 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItemTranslation\Exception\MediaItemTranslationNotFound;
 use Backend\Modules\MediaLibrary\Domain\MediaItemTranslation\MediaItemTranslation;
-use BadFunctionCallException;
 use Common\Locale;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use JsonSerializable;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -258,7 +258,7 @@ class MediaItem implements JsonSerializable
     public static function fromDataTransferObject(MediaItemDataTransferObject $mediaItemDataTransferObject): ?MediaItem
     {
         if (!$mediaItemDataTransferObject->hasExistingMediaItem()) {
-            throw new BadFunctionCallException('This method can not be used to create a new media item');
+            throw new RuntimeException('This method can not be used to create a new media item');
         }
 
         $mediaItem = $mediaItemDataTransferObject->getMediaItemEntity();
