@@ -20,6 +20,11 @@ monolog:
             formatter: monolog.full_trace_formatter
             channels: ["!event"]
 
+# @siesqo
+bugsnag:
+    api_key: "%bugsnag.api_key%"
+    auto_notify: false
+
 services:
     database_collector:
         class: Common\DataCollector\DatabaseDataCollector

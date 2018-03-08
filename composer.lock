@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e61d3f75fbcb5b0412b6e5c72721db89",
+    "content-hash": "592b2951fe65e761c8fb814a0b817301",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -186,6 +186,127 @@
             "time": "2017-04-04T11:38:05+00:00"
         },
         {
+            "name": "bugsnag/bugsnag",
+            "version": "v3.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bugsnag/bugsnag-php.git",
+                "reference": "b1cd36a49a5a780824d9b3f369ad89275013b19f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-php/zipball/b1cd36a49a5a780824d9b3f369ad89275013b19f",
+                "reference": "b1cd36a49a5a780824d9b3f369ad89275013b19f",
+                "shasum": ""
+            },
+            "require": {
+                "composer/ca-bundle": "^1.0",
+                "guzzlehttp/guzzle": "^5.0|^6.0",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "graham-campbell/testbench-core": "^1.1",
+                "mockery/mockery": "^0.9.4|^1.0",
+                "mtdowling/burgomaster": "dev-master#72151eddf5f0cf101502b94bf5031f9c53501a04",
+                "php-mock/php-mock-phpunit": "^1.1",
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.13-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bugsnag\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Smith",
+                    "email": "notifiers@bugsnag.com",
+                    "homepage": "https://bugsnag.com"
+                }
+            ],
+            "description": "Official Bugsnag notifier for PHP applications.",
+            "homepage": "https://github.com/bugsnag/bugsnag-php",
+            "keywords": [
+                "bugsnag",
+                "errors",
+                "exceptions",
+                "logging",
+                "tracking"
+            ],
+            "time": "2018-02-28T12:14:17+00:00"
+        },
+        {
+            "name": "bugsnag/bugsnag-symfony",
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bugsnag/bugsnag-symfony.git",
+                "reference": "376194cc53e4655d7779c21c3c69d0b5780f9c37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-symfony/zipball/376194cc53e4655d7779c21c3c69d0b5780f9c37",
+                "reference": "376194cc53e4655d7779c21c3c69d0b5780f9c37",
+                "shasum": ""
+            },
+            "require": {
+                "bugsnag/bugsnag": "^3.9",
+                "php": ">=5.5",
+                "symfony/config": "^2.7|^3.0|^4.0",
+                "symfony/console": "^2.7|^3.0|^4.0",
+                "symfony/dependency-injection": "^2.7|^3.0|^4.0",
+                "symfony/http-foundation": "^2.7|^3.0|^4.0",
+                "symfony/http-kernel": "^2.7|^3.0|^4.0",
+                "symfony/security": "^2.7|^3.0|^4.0"
+            },
+            "require-dev": {
+                "graham-campbell/testbench-core": "^1.1",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bugsnag\\BugsnagBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Smith",
+                    "email": "notifiers@bugsnag.com"
+                }
+            ],
+            "description": "Official Bugsnag notifier for Symfony applications.",
+            "homepage": "https://github.com/bugsnag/bugsnag-symfony",
+            "keywords": [
+                "bugsnag",
+                "errors",
+                "exceptions",
+                "logging",
+                "symfony",
+                "tracking"
+            ],
+            "time": "2018-02-01T11:14:47+00:00"
+        },
+        {
             "name": "campaignmonitor/createsend-php",
             "version": "5.1.2",
             "source": {
@@ -242,6 +363,62 @@
                 "monitor"
             ],
             "time": "2017-05-15T05:59:55+00:00"
+        },
+        {
+            "name": "composer/ca-bundle",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/ca-bundle.git",
+                "reference": "943b2c4fcad1ef178d16a713c2468bf7e579c288"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/943b2c4fcad1ef178d16a713c2468bf7e579c288",
+                "reference": "943b2c4fcad1ef178d16a713c2468bf7e579c288",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "ext-pcre": "*",
+                "php": "^5.3.2 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35",
+                "psr/log": "^1.0",
+                "symfony/process": "^2.5 || ^3.0 || ^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\CaBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                }
+            ],
+            "description": "Lets you find a path to the system CA bundle, and includes a fallback to the Mozilla CA bundle.",
+            "keywords": [
+                "cabundle",
+                "cacert",
+                "certificate",
+                "ssl",
+                "tls"
+            ],
+            "time": "2017-11-29T09:37:33+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2309,6 +2486,55 @@
                 "value"
             ],
             "time": "2017-12-05T17:26:51+00:00"
+        },
+        {
+            "name": "mead-steve/mono-snag",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/meadsteve/MonoSnag.git",
+                "reference": "dd9fb7f264417c43e938c46418effb14522b4380"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/meadsteve/MonoSnag/zipball/dd9fb7f264417c43e938c46418effb14522b4380",
+                "reference": "dd9fb7f264417c43e938c46418effb14522b4380",
+                "shasum": ""
+            },
+            "require": {
+                "bugsnag/bugsnag": "^3.4",
+                "monolog/monolog": "^1.7.0",
+                "php": "^5.6 | ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.2",
+                "satooshi/php-coveralls": "~0.6",
+                "squizlabs/php_codesniffer": "^1.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MeadSteve\\MonoSnag\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steve B",
+                    "email": "meadsteve@gmail.com"
+                }
+            ],
+            "description": "Bugsnag integration for monolog. An abstract handler that sends messages to Bugsnag",
+            "keywords": [
+                "bugsnag",
+                "error",
+                "logging",
+                "monolog"
+            ],
+            "time": "2016-10-09T14:31:09+00:00"
         },
         {
             "name": "monolog/monolog",

@@ -60,6 +60,11 @@ monolog:
         #     formatter:  monolog.formatter.html
         #     content_type: text/html
 
+# @siesqo
+bugsnag:
+    api_key: "%bugsnag.api_key%"
+    auto_notify: true
+
 swiftmailer:
     transport: "sendmail"
 
