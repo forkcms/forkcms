@@ -21,3 +21,6 @@ parameters:
 
     action.group_tag:       '\@actiongroup'
     action.rights_level:    7
+
+    # @siesqo: Tracking errors
+    bugsnag.api_key:        your-api-key-here
