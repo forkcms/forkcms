@@ -47,6 +47,9 @@ deny from env=stayout
     RewriteRule ^index\.php$ - [L]
     RewriteRule src/Backend/Core/Js/ckfinder/core/connector/php/connector\.php - [L]
 
+    # allow capistrano to reset opcache, this is the file that will be auto-generated/deleted
+    RewriteRule ^php-opcache-reset\.php$ - [L]
+
     # forbidden folders
     RewriteRule .*\.php - [F]
     RewriteRule \.git - [F]
