@@ -41,6 +41,9 @@ services:
         public: true
     SimpleBus\Message\Bus\Middleware\MessageBusSupportingMiddleware:
         public: true
+    command_bus.public:
+        alias: command_bus
+        public: true
     # @todo: enable this again when liip/imagine-bundle:^2.0 is released (which supports symfony 4)
     #Liip\ImagineBundle\Imagine\Cache\CacheManager:
     #    public: true
