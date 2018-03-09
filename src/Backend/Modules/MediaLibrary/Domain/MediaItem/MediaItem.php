@@ -17,7 +17,7 @@ use ForkCMS\Backend\Core\Engine\Model;
 /**
  * MediaItem
  *
- * @ORM\Entity(repositoryClass="Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository")
+ * @ORM\Entity(repositoryClass="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItemRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class MediaItem implements JsonSerializable
@@ -35,7 +35,7 @@ class MediaItem implements JsonSerializable
      * @var MediaFolder
      *
      * @ORM\ManyToOne(
-     *      targetEntity="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
+     *      targetEntity="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
      *      inversedBy="items",
      *      cascade="persist"
      * )
@@ -142,7 +142,7 @@ class MediaItem implements JsonSerializable
      * @var ArrayCollection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem",
+     *     targetEntity="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem",
      *     mappedBy="item",
      *     cascade={"persist","merge"},
      *     orphanRemoval=true

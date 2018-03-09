@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Domain\Category\CategoryRepository")
+ * @ORM\Entity(repositoryClass="ForkCMS\Backend\Modules\Faq\Domain\Category\CategoryRepository")
  * @ORM\Table(name="FaqCategory")
  */
 class Category
@@ -63,7 +63,7 @@ class Category
      * @var Collection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\Faq\Domain\Question\Question",
+     *     targetEntity="ForkCMS\Backend\Modules\Faq\Domain\Question\Question",
      *     mappedBy="category",
      *     cascade={"remove"}
      * )

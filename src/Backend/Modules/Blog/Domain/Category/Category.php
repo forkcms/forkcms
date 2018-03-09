@@ -7,7 +7,7 @@ use ForkCMS\Common\Locale;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Backend\Modules\Blog\Domain\Category\CategoryRepository")
+ * @ORM\Entity(repositoryClass="ForkCMS\Backend\Modules\Blog\Domain\Category\CategoryRepository")
  * @ORM\Table(name="blog_categories")
  */
 class Category

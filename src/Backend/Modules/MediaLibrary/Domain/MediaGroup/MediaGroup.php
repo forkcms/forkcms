@@ -15,7 +15,7 @@ use Ramsey\Uuid\UuidInterface;
 /**
  * MediaGroup
  *
- * @ORM\Entity(repositoryClass="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository")
+ * @ORM\Entity(repositoryClass="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroupRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class MediaGroup implements JsonSerializable, Countable
@@ -46,7 +46,7 @@ class MediaGroup implements JsonSerializable, Countable
      * @var ArrayCollection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem",
+     *     targetEntity="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem",
      *     mappedBy="group",
      *     cascade={"persist", "merge", "remove", "detach"},
      *     orphanRemoval=true

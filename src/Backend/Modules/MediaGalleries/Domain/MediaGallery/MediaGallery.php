@@ -9,7 +9,7 @@ use ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use ForkCMS\Common\ModuleExtraType;
 
 /**
- * @ORM\Entity(repositoryClass="Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository")
+ * @ORM\Entity(repositoryClass="ForkCMS\Backend\Modules\MediaGalleries\Domain\MediaGallery\MediaGalleryRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class MediaGallery
@@ -85,7 +85,7 @@ class MediaGallery
      * @var MediaGroup
      *
      * @ORM\OneToOne(
-     *      targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup",
+     *      targetEntity="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup",
      *      cascade="persist",
      *      orphanRemoval=true
      * )

@@ -10,7 +10,7 @@ use JsonSerializable;
 /**
  * MediaGroup MediaItem
  *
- * @ORM\Entity(repositoryClass="Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository")
+ * @ORM\Entity(repositoryClass="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItemRepository")
  */
 class MediaGroupMediaItem implements JsonSerializable
 {
@@ -27,7 +27,7 @@ class MediaGroupMediaItem implements JsonSerializable
      * @var MediaGroup
      *
      * @ORM\ManyToOne(
-     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup",
+     *     targetEntity="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup",
      *     inversedBy="connectedItems",
      *     cascade="persist"
      * )
@@ -43,7 +43,7 @@ class MediaGroupMediaItem implements JsonSerializable
      * @var MediaItem
      *
      * @ORM\ManyToOne(
-     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem",
+     *     targetEntity="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem",
      *     inversedBy="groups",
      *     cascade="persist",
      *     fetch="EAGER"

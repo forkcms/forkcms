@@ -12,7 +12,7 @@ use JsonSerializable;
 /**
  * MediaFolder
  *
- * @ORM\Entity(repositoryClass="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository")
+ * @ORM\Entity(repositoryClass="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class MediaFolder implements JsonSerializable
@@ -30,7 +30,7 @@ class MediaFolder implements JsonSerializable
      * @var MediaFolder|null
      *
      * @ORM\ManyToOne(
-     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
+     *     targetEntity="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
      *     inversedBy="children",
      *     cascade="persist"
      * )
@@ -74,7 +74,7 @@ class MediaFolder implements JsonSerializable
      * @var ArrayCollection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem",
+     *     targetEntity="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem",
      *     mappedBy="folder",
      *     cascade={"persist","merge"},
      *     orphanRemoval=true
@@ -86,7 +86,7 @@ class MediaFolder implements JsonSerializable
      * @var ArrayCollection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
+     *     targetEntity="ForkCMS\Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder",
      *     mappedBy="parent",
      *     cascade={"persist","merge"},
      *     orphanRemoval=true

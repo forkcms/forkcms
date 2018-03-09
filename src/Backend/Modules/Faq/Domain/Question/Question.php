@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Domain\Question\QuestionRepository")
+ * @ORM\Entity(repositoryClass="ForkCMS\Backend\Modules\Faq\Domain\Question\QuestionRepository")
  * @ORM\Table(name="FaqQuestion")
  * @ORM\HasLifecycleCallbacks
  */
@@ -42,7 +42,7 @@ class Question
     /**
      * @var Category
      *
-     * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Category\Category", inversedBy="questions")
+     * @ORM\ManyToOne(targetEntity="ForkCMS\Backend\Modules\Faq\Domain\Category\Category", inversedBy="questions")
      */
     private $category;
 
@@ -113,7 +113,7 @@ class Question
      * @var Collection
      *
      * @ORM\OneToMany(
-     *     targetEntity="Backend\Modules\Faq\Domain\Feedback\Feedback",
+     *     targetEntity="ForkCMS\Backend\Modules\Faq\Domain\Feedback\Feedback",
      *     mappedBy="question",
      *     cascade={"remove"}
      * )

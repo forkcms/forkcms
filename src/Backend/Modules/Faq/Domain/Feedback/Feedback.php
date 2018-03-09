@@ -7,7 +7,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Domain\Feedback\FeedbackRepository")
+ * @ORM\Entity(repositoryClass="ForkCMS\Backend\Modules\Faq\Domain\Feedback\FeedbackRepository")
  * @ORM\Table(name="FaqFeedback")
  * @ORM\HasLifecycleCallbacks
  */
@@ -25,7 +25,7 @@ final class Feedback
     /**
      * @var Question
      *
-     * @ORM\ManyToOne(targetEntity="Backend\Modules\Faq\Domain\Question\Question", inversedBy="feedbackItems")
+     * @ORM\ManyToOne(targetEntity="ForkCMS\Backend\Modules\Faq\Domain\Question\Question", inversedBy="feedbackItems")
      */
     private $question;
 
