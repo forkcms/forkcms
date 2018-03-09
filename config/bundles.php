@@ -16,7 +16,6 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
-    Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true, 'install' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
     ForkCMS\Backend\Modules\Mailmotor\Mailmotor::class => ['all' => true],
     MailMotor\Bundle\MailMotorBundle\MailMotorMailMotorBundle::class => ['all' => true],
