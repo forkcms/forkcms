@@ -51,10 +51,6 @@ class Configurator
             if ($mailer !== null) {
                 $this->container->get('mailer')->__construct($transport);
             }
-            $this->container->set(
-                'swiftmailer.transport',
-                $transport
-            );
         } catch (PDOException $e) {
             // we'll just use the mail transport thats pre-configured
         }
