@@ -172,7 +172,7 @@ class Model
         $groupsByUser = static::getGroupsByUser($userId);
 
         foreach ($groupsByUser as $group) {
-            if ($group['id'] === $groupId) {
+            if ((int) $group['id'] === $groupId) {
                 return true;
             }
         }
