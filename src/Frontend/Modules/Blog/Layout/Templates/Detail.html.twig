@@ -109,9 +109,11 @@
       </header>
 
       {% if not comments %}
-        <div class="block-blog-article-comments-alerts">
-          {{ alerts.alert('info', 'msg.BlogNoComments'|trans) }}
-        </div>
+        {% if item.allow_comments %}
+          <div class="block-blog-article-comments-alerts">
+            {{ alerts.alert('info', 'msg.BlogNoComments'|trans) }}
+          </div>
+        {% endif %}
       {% else %}
         {% for comment in comments %}
           {# Do not alter the id! It is used as an anchor #}
