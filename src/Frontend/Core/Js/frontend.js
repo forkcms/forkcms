@@ -69,11 +69,25 @@ jsFrontend.controls = {
   // init, something like a constructor
   init: function () {
     jsFrontend.controls.bindTargetBlank()
+    jsFrontend.controls.toggleCollapse()
   },
 
   // bind target blank
   bindTargetBlank: function () {
     $('a.targetBlank').attr('target', '_blank')
+  },
+
+  toggleCollapse: function () {
+    var $navToggle = $('.navbar-toggle')
+
+    if ($navToggle.length === 0) {
+      return
+    }
+
+    $navToggle.on('click', function() {
+      var $button = $(this)
+      $button.find('[data-role=label]').text(jsFrontend.locale.lbl($button.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
+    }).find('[data-role=label]').text(jsFrontend.locale.lbl($navToggle.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
   }
 }
 
