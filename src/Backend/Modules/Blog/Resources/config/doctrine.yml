@@ -1,0 +1,15 @@
+doctrine:
+  orm:
+    mappings:
+      blog_comment:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/Blog/Domain/Comment"
+        alias: BlogComment
+        prefix: Backend\Modules\Blog\Domain\Comment
+      blog_category:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/Blog/Domain/Category"
+        alias: BlogCategory
+        prefix: Backend\Modules\Blog\Domain\Category

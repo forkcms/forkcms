@@ -3,12 +3,15 @@
 namespace Frontend\Modules\Blog\Engine;
 
 use Common\Mailer\Message;
+use Doctrine\ORM\NoResultException;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
@@ -124,9 +127,9 @@ class Model implements FrontendTagsInterface
             'SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data,
                  m.seo_follow AS meta_seo_follow, m.seo_index AS meta_seo_index
              FROM blog_categories AS c
-             INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
+             INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.locale = i.language
              INNER JOIN meta AS m ON c.meta_id = m.id
-             WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
+             WHERE c.locale = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY c.id',
             [LANGUAGE, 'active', false, FrontendModel::getUTCDate('Y-m-d H:i')],
             'id'
@@ -144,30 +147,30 @@ class Model implements FrontendTagsInterface
 
     public static function getCategory(string $slug): array
     {
-        $category = (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT c.id, c.title AS label, m.url, m.id AS meta_id, COUNT(c.id) AS total
-             FROM blog_categories AS c
-             INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
-             INNER JOIN meta AS m ON c.meta_id = m.id AND m.url = ?
-             WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
-             GROUP BY c.id',
-            [$slug, LANGUAGE, 'active', false, FrontendModel::getUTCDate('Y-m-d H:i')],
-            'id'
-        );
-
-        if (empty($category)) {
+        try {
+            $category = FrontendModel::get('blog.repository.category')
+                                     ->findOneByUrl(
+                                         $slug,
+                                         Locale::frontendLanguage()
+                                     );
+        } catch (NoResultException $e) {
             return [];
         }
 
-        $category['meta'] = FrontendModel::get('fork.repository.meta')->find($category['meta_id']);
+        $data = $category->toArray();
+        $data['label'] = $category->getTitle(); // @todo fix the usage of label, it should be title
+        $data['url'] = $category->getMeta()->getUrl();
+        $data['meta'] = $category->getMeta();
+        // @todo fix this when there is a POST entity
+        $data['total'] = self::getAllForCategoryCount($category->getMeta()->getUrl());
 
-        return $category;
+        return $data;
     }
 
     public static function getAllComments(int $limit = 10, int $offset = 0): array
     {
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
+            'SELECT i.id, UNIX_TIMESTAMP(i.createdOn) AS created_on, i.author, i.text,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, i.email
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
@@ -297,7 +300,6 @@ class Model implements FrontendTagsInterface
      * @param int $end The end date as a UNIX-timestamp.
      * @param int $limit The number of items to get.
      * @param int $offset The offset.
-     *
      * @return array
      */
     public static function getAllForDateRange(int $start, int $end, int $limit = 10, int $offset = 0): array
@@ -383,7 +385,6 @@ class Model implements FrontendTagsInterface
      *
      * @param int $start The start date as a UNIX-timestamp.
      * @param int $end The end date as a UNIX-timestamp.
-     *
      * @return int
      */
     public static function getAllForDateRangeCount(int $start, int $end): int
@@ -491,32 +492,39 @@ class Model implements FrontendTagsInterface
 
     public static function getComments(int $blogPostId): array
     {
-        // get the comments
-        $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
-             c.author, c.email, c.website
-             FROM blog_comments AS c
-             WHERE c.post_id = ? AND c.status = ? AND c.language = ?
-             ORDER BY c.id ASC',
-            [$blogPostId, 'published', LANGUAGE]
+        $comments = FrontendModel::get('blog.repository.comment')->findBy(
+            [
+                'postId' => $blogPostId,
+                'status' => 'published',
+                'locale' => LANGUAGE,
+            ],
+            [
+                'id' => 'ASC',
+            ]
         );
 
-        // loop comments and create gravatar id
-        foreach ($comments as &$row) {
-            $row['author'] = htmlspecialchars($row['author']);
-            $row['text'] = htmlspecialchars($row['text']);
-            $row['gravatar_id'] = md5($row['email']);
+        if (empty($comments)) {
+            return [];
         }
 
-        // return
-        return $comments;
+        return array_map(
+            function ($comment) {
+                $commentData = $comment->toArray();
+
+                $commentData['author'] = htmlspecialchars($comment->getAuthor());
+                $commentData['text'] = htmlspecialchars($comment->getText());
+                $commentData['gravatar_id'] = md5($comment->getEmail());
+
+                return $commentData;
+            },
+            $comments
+        );
     }
 
     /**
      * Fetch the list of tags for a list of items
      *
      * @param array $blogPostIds The ids of the items to grab.
-     *
      * @return array
      */
     public static function getForTags(array $blogPostIds): array
@@ -560,7 +568,6 @@ class Model implements FrontendTagsInterface
      * Selects the proper part of the full URL to get the item's id from the database.
      *
      * @param FrontendUrl $url The current URL.
-     *
      * @return int
      */
     public static function getIdForTags(FrontendUrl $url): int
@@ -576,7 +583,6 @@ class Model implements FrontendTagsInterface
      * Get an array with the previous and the next post
      *
      * @param int $blogPostId The id of the current item.
-     *
      * @return array
      */
     public static function getNavigation(int $blogPostId): array
@@ -654,11 +660,11 @@ class Model implements FrontendTagsInterface
 
         // get comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text,
+            'SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.createdOn) AS created_on, c.text,
              i.id AS post_id, i.title AS post_title,
              m.url AS post_url
              FROM blog_comments AS c
-             INNER JOIN blog_posts AS i ON c.post_id = i.id AND c.language = i.language
+             INNER JOIN blog_posts AS i ON c.postId = i.id AND c.locale = i.language
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
@@ -767,29 +773,7 @@ class Model implements FrontendTagsInterface
 
     public static function insertComment(array $comment): int
     {
-        // get database
-        $database = FrontendModel::getContainer()->get('database');
-
-        // insert comment
-        $comment['id'] = (int) $database->insert('blog_comments', $comment);
-
-        // recalculate if published
-        if ($comment['status'] == 'published') {
-            // num comments
-            $numComments = (int) FrontendModel::getContainer()->get('database')->getVar(
-                'SELECT COUNT(i.id) AS comment_count
-                 FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-                 WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
-                 GROUP BY i.post_id',
-                ['published', $comment['post_id'], LANGUAGE, 'active']
-            );
-
-            // update num comments
-            $database->update('blog_posts', ['num_comments' => $numComments], 'id = ?', $comment['post_id']);
-        }
-
-        return $comment['id'];
+        return BackendBlogModel::insertComment($comment);
     }
 
     /**
@@ -797,7 +781,6 @@ class Model implements FrontendTagsInterface
      *
      * @param string $author The name for the author.
      * @param string $email The email address for the author.
-     *
      * @return bool
      */
     public static function isModerated(string $author, string $email): bool
@@ -862,15 +845,14 @@ class Model implements FrontendTagsInterface
             $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
             $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
             $message = Message::newInstance(FL::msg('NotificationSubject'))
-                ->setFrom([$from['email'] => $from['name']])
-                ->setTo([$to['email'] => $to['name']])
-                ->setReplyTo([$replyTo['email'] => $replyTo['name']])
-                ->parseHtml(
-                    '/Core/Layout/Templates/Mails/Notification.html.twig',
-                    $variables,
-                    true
-                )
-            ;
+                              ->setFrom([$from['email'] => $from['name']])
+                              ->setTo([$to['email'] => $to['name']])
+                              ->setReplyTo([$replyTo['email'] => $replyTo['name']])
+                              ->parseHtml(
+                                  '/Core/Layout/Templates/Mails/Notification.html.twig',
+                                  $variables,
+                                  true
+                              );
             FrontendModel::get('mailer')->send($message);
         } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation') {
             // only notify on new comments to moderate and if the comment is one to moderate
@@ -885,15 +867,14 @@ class Model implements FrontendTagsInterface
             $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
             $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
             $message = Message::newInstance(FL::msg('NotificationSubject'))
-                ->setFrom([$from['email'] => $from['name']])
-                ->setTo([$to['email'] => $to['name']])
-                ->setReplyTo([$replyTo['email'] => $replyTo['name']])
-                ->parseHtml(
-                    '/Core/Layout/Templates/Mails/Notification.html.twig',
-                    $variables,
-                    true
-                )
-            ;
+                              ->setFrom([$from['email'] => $from['name']])
+                              ->setTo([$to['email'] => $to['name']])
+                              ->setReplyTo([$replyTo['email'] => $replyTo['name']])
+                              ->parseHtml(
+                                  '/Core/Layout/Templates/Mails/Notification.html.twig',
+                                  $variables,
+                                  true
+                              );
             FrontendModel::get('mailer')->send($message);
         }
     }
@@ -905,9 +886,7 @@ class Model implements FrontendTagsInterface
      *        - accept an array of entry id's
      *        - return only the entries that are allowed to be displayed, with their array's index being the entry's id
      *
-     *
      * @param array $ids The ids of the found results.
-     *
      * @return array
      */
     public static function search(array $ids): array

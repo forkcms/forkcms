@@ -41,7 +41,7 @@ class DeleteCategory extends BackendBaseActionDelete
             return;
         }
 
-        $this->record = (array) BackendFaqModel::getCategory($this->id);
+        $this->record = BackendFaqModel::getCategory($this->id);
 
         if (!BackendFaqModel::deleteCategoryAllowed($this->id)) {
             $this->redirect(BackendModel::createUrlForAction(

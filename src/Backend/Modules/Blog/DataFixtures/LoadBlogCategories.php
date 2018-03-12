@@ -22,7 +22,7 @@ class LoadBlogCategories
             'blog_categories',
             [
                 'meta_id' => $metaId,
-                'language' => 'en',
+                'locale' => 'en',
                 'title' => 'BlogCategory for tests',
             ]
         );
