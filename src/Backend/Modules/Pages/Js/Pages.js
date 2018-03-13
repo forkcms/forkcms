@@ -233,7 +233,7 @@ jsBackend.pages.extras = {
       if (typeof extrasById[extraId].data.edit_url !== 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url
 
       // title, description & visibility
-      title = extrasById[extraId].human_name
+      title = extrasById[extraId].path
       description = extrasById[extraId].path
     } else if (extraType === 'usertemplate') {
       // user template
@@ -244,7 +244,7 @@ jsBackend.pages.extras = {
       editLink = ''
       title = utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate'))
       if (extraData.title) {
-        title += ': ' + extraData.title
+        title += ' > ' + extraData.title
         title += ' (' + extraData.description + ')'
       }
       description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200)
@@ -267,9 +267,13 @@ jsBackend.pages.extras = {
 
     // create html to be appended in template-view
     var blockHTML = '<div class="templatePositionCurrentType' + (visible ? ' ' : ' templateDisabled') + '" data-block-id="' + index + '">' +
-      '<span class="templateTitle" id="templateTitle' + index + '">' + title + '</span>' +
-      '<span class="templateDescription">' + description + '</span>' +
-      '<div class="btn-group buttonHolder">' +
+      '<span class="templateTitle" id="templateTitle' + index + '">' + title + '</span>'
+
+    if (title !== description) {
+      blockHTML += '<span class="templateDescription">' + description + '</span>'
+    }
+
+    blockHTML += '<div class="btn-group buttonHolder">' +
       '<button class="btn btn-default btn-icon-only btn-xs toggleVisibility" aria-labelledby="ViewBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only" id="ViewBlockText' + index + '">' + jsBackend.locale.lbl('View') + '</span></span></button>' +
       '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + ' aria-labelledby="EditBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only" id="EditBlockText' + index + '">' + jsBackend.locale.lbl('EditBlock') + '</span></a>' +
       '<button class="deleteBlock btn btn-danger btn-icon-only btn-xs" aria-labelledby="DeleteBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only" id="DeleteBlockText' + index + '">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
