@@ -75,3 +75,4 @@ services:
 
     forkcms.thumbnails:
         class: ForkCMS\Utility\Thumbnails
+        public: true

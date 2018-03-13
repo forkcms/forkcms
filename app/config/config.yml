@@ -200,6 +200,7 @@ services:
 
     forkcms.thumbnails:
         class: ForkCMS\Utility\Thumbnails
+        public: true
 
     templating:
         class: Frontend\Core\Engine\TwigTemplate
