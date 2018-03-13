@@ -199,7 +199,7 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     forkcms.thumbnails:
-        class: ForkCMS\Service\Thumbnails
+        class: ForkCMS\Utility\Thumbnails
 
     templating:
         class: Frontend\Core\Engine\TwigTemplate

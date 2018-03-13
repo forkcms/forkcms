@@ -74,4 +74,4 @@ services:
             - [ setDebug, [ "%kernel.debug%" ]]
 
     forkcms.thumbnails:
-        class: ForkCMS\Service\Thumbnails
+        class: ForkCMS\Utility\Thumbnails

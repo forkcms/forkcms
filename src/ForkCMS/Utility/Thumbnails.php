@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Service;
+namespace ForkCMS\Utility;
 
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
