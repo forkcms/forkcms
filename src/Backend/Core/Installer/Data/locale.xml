@@ -1982,9 +1982,9 @@
         <translation language="tr"><![CDATA[buradasınız]]></translation>
       </item>
       <item type="label" name="YourAvatar">
-          <translation language="nl"><![CDATA[jouw avatar]]></translation>
-          <translation language="en"><![CDATA[your avatar]]></translation>
-          <translation language="ru"><![CDATA[Аватар]]></translation>
+        <translation language="nl"><![CDATA[jouw avatar]]></translation>
+        <translation language="en"><![CDATA[your avatar]]></translation>
+        <translation language="ru"><![CDATA[Аватар]]></translation>
         <translation language="pl"><![CDATA[Twój awatar]]></translation>
       </item>
       <item type="label" name="YourData">
