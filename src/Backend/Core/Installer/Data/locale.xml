@@ -905,7 +905,7 @@
         <translation language="el"><![CDATA[Πλέον ανεγνωσμένες ερωτήσεις]]></translation>
         <translation language="zh"><![CDATA[热门问题]]></translation>
         <translation language="tr"><![CDATA[En çok okunan sorular]]></translation>
-          <translation language="pl"><![CDATA[Najpopularniejsze pytania]]></translation>
+        <translation language="pl"><![CDATA[Najpopularniejsze pytania]]></translation>
       </item>
       <item type="label" name="Name">
         <translation language="nl"><![CDATA[naam]]></translation>
@@ -946,7 +946,7 @@
         <translation language="en"><![CDATA[verify new password]]></translation>
         <translation language="fr"><![CDATA[vérifier nouveau mot de passe]]></translation>
         <translation language="ru"><![CDATA[Подтвердить новый пароль]]></translation>
-          <translation language="pl"><![CDATA[potwierdż nowe hasło]]></translation>
+        <translation language="pl"><![CDATA[potwierdż nowe hasło]]></translation>
       </item>
       <item type="error" name="PasswordsDontMatch">
         <translation language="nl"><![CDATA[De wachtwoorden zijn verschillend]]></translation>
@@ -961,7 +961,7 @@
         <translation language="lt"><![CDATA[Slaptažodžiai nesutampa.]]></translation>
         <translation language="sv"><![CDATA[Lösenorden matchar inte]]></translation>
         <translation language="el"><![CDATA[Οι κωδικοί διαφέρουν.]]></translation>
-         <translation language="pl"><![CDATA[Hasła się różnią]]></translation>
+        <translation language="pl"><![CDATA[Hasła się różnią]]></translation>
       </item>
       <item type="label" name="Next">
         <translation language="nl"><![CDATA[volgende]]></translation>
@@ -1043,7 +1043,7 @@
         <translation language="sv"><![CDATA[Ukrianska]]></translation>
         <translation language="el"><![CDATA[Ουκρανικά]]></translation>
         <translation language="zh"><![CDATA[乌克兰语]]></translation>
-         <translation language="pl"><![CDATA[Ukraiński]]></translation>
+        <translation language="pl"><![CDATA[Ukraiński]]></translation>
       </item>
       <item type="label" name="SV">
         <translation language="nl"><![CDATA[Zweeds]]></translation>
@@ -1057,7 +1057,7 @@
         <translation language="sv"><![CDATA[Svenska]]></translation>
         <translation language="el"><![CDATA[Σουηδικά]]></translation>
         <translation language="zh"><![CDATA[瑞典语]]></translation>
-         <translation language="pl"><![CDATA[Szwedzki]]></translation>
+        <translation language="pl"><![CDATA[Szwedzki]]></translation>
       </item>
       <item type="label" name="RU">
         <translation language="hu"><![CDATA[orosz]]></translation>
@@ -1108,7 +1108,7 @@
         <translation language="el"><![CDATA[Ουγγρικά]]></translation>
         <translation language="zh"><![CDATA[匈牙利语]]></translation>
         <translation language="tr"><![CDATA[Macar]]></translation>
-         <translation language="pl"><![CDATA[Węgierski]]></translation>
+        <translation language="pl"><![CDATA[Węgierski]]></translation>
       </item>
       <item type="label" name="EL">
         <translation language="nl"><![CDATA[Grieks]]></translation>
@@ -2411,7 +2411,7 @@
         <translation language="hu"><![CDATA[Van visszajelzés a(z) "%1$s"-hoz/hez.]]></translation>
         <translation language="el"><![CDATA[Υπάρχουν γνώμες επάνω στο "%1$s"]]></translation>
         <translation language="zh"><![CDATA["%1$s"有一条回复]]></translation>
-         <translation language="pl"><![CDATA[Jest komentarz do "%1$s"]]></translation>
+        <translation language="pl"><![CDATA[Jest komentarz do "%1$s"]]></translation>
       </item>
       <item type="message" name="FaqNoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen vragen.]]></translation>
