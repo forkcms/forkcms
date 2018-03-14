@@ -73,6 +73,6 @@ services:
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
 
-    forkcms.thumbnails:
+    forkcms.utility.thumbnails:
         class: ForkCMS\Utility\Thumbnails
         public: true

@@ -153,11 +153,11 @@ class Model extends BaseModel
      * @param string $path The path wherein the thumbnail-folders will be stored.
      * @param string $sourceFile The location of the source file
      *
-     * @deprecated Please use the service `forkcms.thumbnails` instead.
+     * @deprecated Please use the service `forkcms.utility.thumbnails` instead.
      */
     public static function generateThumbnails(string $path, string $sourceFile): void
     {
-        self::get('forkcms.thumbnails')->generate($path, $sourceFile);
+        self::get('forkcms.utility.thumbnails')->generate($path, $sourceFile);
     }
 
     /**
@@ -166,11 +166,11 @@ class Model extends BaseModel
      * @param string $path The path wherein the thumbnail-folders exist.
      * @param string|null $thumbnail The filename to be deleted.
      *
-     * @deprecated Please use the service `forkcms.thumbnails` instead.
+     * @deprecated Please use the service `forkcms.utility.thumbnails` instead.
      */
     public static function deleteThumbnails(string $path, ?string $thumbnail): void
     {
-        self::get('forkcms.thumbnails')->delete($path, $thumbnail);
+        self::get('forkcms.utility.thumbnails')->delete($path, $thumbnail);
     }
 
     /**
@@ -181,11 +181,11 @@ class Model extends BaseModel
      *
      * @return array
      *
-     * @deprecated Please use the service `forkcms.thumbnails` instead.
+     * @deprecated Please use the service `forkcms.utility.thumbnails` instead.
      */
     public static function getThumbnailFolders(string $path, bool $includeSource = false): array
     {
-        return self::get('forkcms.thumbnails')->getFolders($path, $includeSource);
+        return self::get('forkcms.utility.thumbnails')->getFolders($path, $includeSource);
     }
 
     /**

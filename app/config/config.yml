@@ -198,7 +198,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    forkcms.thumbnails:
+    forkcms.utility.thumbnails:
         class: ForkCMS\Utility\Thumbnails
         public: true
 
