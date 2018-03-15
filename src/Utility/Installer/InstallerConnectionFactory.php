@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Service\Installer;
+namespace ForkCMS\Utility\Installer;
 
 use Doctrine\Bundle\DoctrineBundle\ConnectionFactory;
 use Doctrine\Common\EventManager;

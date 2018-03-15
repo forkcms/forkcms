@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Form\Type\Installer;
 
-use ForkCMS\Service\Installer\ForkInstaller;
+use ForkCMS\Utility\Installer\ForkInstaller;
 use ForkCMS\Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

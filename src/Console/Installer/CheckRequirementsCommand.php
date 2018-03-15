@@ -4,7 +4,7 @@ namespace ForkCMS\Console\Installer;
 
 use ForkCMS\Component\Installer\Requirement\Requirement;
 use ForkCMS\Component\Installer\Requirement\RequirementCategory;
-use ForkCMS\Service\Installer\RequirementsChecker;
+use ForkCMS\Utility\Installer\RequirementsChecker;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

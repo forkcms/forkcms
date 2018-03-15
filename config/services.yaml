@@ -127,16 +127,16 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     fork.validator.url:
-        class: ForkCMS\Service\Validator\UrlValidator
+        class: ForkCMS\Utility\Validator\UrlValidator
         public: true
 
     forkcms.requirements.checker:
-        class: ForkCMS\Service\Installer\RequirementsChecker
+        class: ForkCMS\Utility\Installer\RequirementsChecker
         public: true
         arguments: ['%kernel.project_dir%/']
 
     forkcms.installer:
-        class: ForkCMS\Service\Installer\ForkInstaller
+        class: ForkCMS\Utility\Installer\ForkInstaller
         arguments: ['@service_container']
 
     # Throws errors when enabling

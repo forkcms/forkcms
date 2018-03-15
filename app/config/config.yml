@@ -201,15 +201,15 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     fork.validator.url:
-        class: App\Service\Validator\UrlValidator
+        class: ForkCMS\Utility\Validator\UrlValidator
         public: true
 
     forkcms.requirements.checker:
-        class: App\Service\Installer\RequirementsChecker
+        class: ForkCMS\Utility\Installer\RequirementsChecker
         arguments: ['%kernel.project_dir%/']
 
     forkcms.installer:
-        class: App\Service\Installer\ForkInstaller
+        class: ForkCMS\Utility\Installer\ForkInstaller
         arguments: ['@service_container']
 
     forkcms.console.installer.prepare_for_reinstall:

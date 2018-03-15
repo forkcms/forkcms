@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Service\Validator;
+namespace ForkCMS\Utility\Validator;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;

@@ -2,7 +2,7 @@
 
 namespace ForkCMS\Tests\Service\Validator;
 
-use ForkCMS\Service\Validator\UrlValidator;
+use ForkCMS\Utility\Validator\UrlValidator;
 use PHPUnit\Framework\TestCase;
 
 class UrlValidatorTest extends TestCase

@@ -45,7 +45,7 @@ twig:
       '%kernel.project_dir%/templates/installer': installer
 
 parameters:
-    doctrine.dbal.connection_factory.class: App\Service\Installer\InstallerConnectionFactory
+    doctrine.dbal.connection_factory.class: ForkCMS\Utility\Installer\InstallerConnectionFactory
     fork.is_installed: false
     fork.form.theme: "installer:form_theme.html.twig"
 
@@ -78,11 +78,11 @@ services:
             - [ setDebug, [ "%kernel.debug%" ]]
 
     forkcms.requirements.checker:
-        class: App\Service\Installer\RequirementsChecker
+        class: ForkCMS\Utility\Installer\RequirementsChecker
         arguments: ['%kernel.project_dir%/']
 
     forkcms.installer:
-        class: App\Service\Installer\ForkInstaller
+        class: ForkCMS\Utility\Installer\ForkInstaller
         arguments: ['@service_container']
 
     forkcms.console.installer.prepare_for_reinstall:

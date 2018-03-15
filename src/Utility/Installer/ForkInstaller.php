@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Service\Installer;
+namespace ForkCMS\Utility\Installer;
 
 use ForkCMS\Controller\InstallerController;
 use Symfony\Component\Filesystem\Filesystem;

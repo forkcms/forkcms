@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Service\Installer;
+namespace ForkCMS\Utility\Installer;
 
 use ForkCMS\Component\Installer\Requirement\Requirement;
 use ForkCMS\Component\Installer\Requirement\RequirementCategory;
