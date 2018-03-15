@@ -11,7 +11,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <p>{{ 'lbl.Template'|trans|ucfirst }}</p>
+          <h2 class="panel-title">{{ 'lbl.Template'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-inline form-group">
@@ -43,7 +43,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h2>
         </div>
         <div id="positions" class="panel-body">
           {% for position in positions %}
@@ -121,9 +121,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             <label for="format" class="control-label">{{ 'lbl.Layout'|trans|ucfirst }}</label>
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="row">
@@ -147,7 +147,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -168,7 +168,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Overwrite'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Overwrite'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -188,15 +188,11 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              {{ macro.icon('trash-o') }}{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
         </div>
       </div>
     </div>
@@ -217,12 +213,8 @@
             <p>{{ 'msg.ConfirmDeleteTemplate'|trans|format(template.label)|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal", "type":"button"}) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
           </div>
         </div>
       </div>

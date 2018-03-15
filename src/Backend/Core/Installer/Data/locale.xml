@@ -7245,6 +7245,14 @@
         <translation language="zh"><![CDATA[關閉導航]]></translation>
         <translation language="de"><![CDATA[schließe die Navigation]]></translation>
       </item>
+      <item type="label" name="OpenTreeNavigation">
+        <translation language="nl"><![CDATA[klap boomnavigatie open]]></translation>
+        <translation language="en"><![CDATA[open tree navigation]]></translation>
+      </item>
+      <item type="label" name="CloseTreeNavigation">
+        <translation language="nl"><![CDATA[boomnavigatie dichtklappen]]></translation>
+        <translation language="en"><![CDATA[close tree navigation]]></translation>
+      </item>
       <item type="label" name="NavigationTitle">
         <translation language="nl"><![CDATA[navigatietitel]]></translation>
         <translation language="en"><![CDATA[navigation title]]></translation>
@@ -12150,6 +12158,10 @@
       <item type="label" name="MoveDownOnePosition">
         <translation language="nl"><![CDATA[verplaats één positie omlaag]]></translation>
         <translation language="en"><![CDATA[move down one position]]></translation>
+      </item>
+      <item type="message" name="HelpTextTags">
+        <translation language="nl"><![CDATA[Typ tekst gevolgd door komma of ⏎ om een nieuwe tag toe te voegen. Typ enkele letters en gebruik pijl omlaag om een bestaande tag te selecteren]]></translation>
+        <translation language="en"><![CDATA[Type text followed by comma or ⏎ to add a new tag. Type a few letters and use the down arrow to select an existing tag]]></translation>
       </item>
     </Core>
   </Backend>

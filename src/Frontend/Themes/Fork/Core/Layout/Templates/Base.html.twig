@@ -17,7 +17,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/{{ LANGUAGE }}">{{ siteTitle }}</a>
+            <a class="navbar-brand" href="/{% if SITE_MULTILANGUAGE %}{{ LANGUAGE }}{% endif %}">{{ siteTitle }}</a>
           </div>
           <div id="navbar-main" class="navbar-collapse collapse">
             {{ getnavigation('page', 0, 1) }}

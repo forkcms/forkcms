@@ -39,10 +39,7 @@
         <div class="panel-footer">
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
-              <button id="search" type="submit" class="btn btn-primary" name="search">
-                {{ macro.icon('refresh') }}&nbsp;
-                {{ 'lbl.UpdateFilter'|trans|ucfirst }}
-              </button>
+              {{ macro.buttonIcon('', 'refresh', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary', { "id":"search", "type":"submit", "name":"search" }) }}
             </div>
           </div>
         </div>
@@ -66,11 +63,8 @@
                   <p>{{ 'msg.ConfirmMassDelete'|trans|ucfirst }}</p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">
-                    {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-                  </button>
-                  <button type="submit" class="btn btn-primary">
-                    {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
+                  {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+                  {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" } ) }}
                   </button>
                 </div>
               </div>
