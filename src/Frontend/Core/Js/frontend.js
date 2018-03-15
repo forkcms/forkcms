@@ -532,7 +532,7 @@ jsFrontend.statistics = {
     if (typeof _gaq === 'object' || typeof ga === 'function') {
       // create a new selector
       $.expr[':'].external = function (obj) {
-        return (typeof obj.href !== 'undefined') && !obj.href.match(/^mailto:/) && (obj.hostname !== window.location.hostname)
+        return (typeof obj.href !== 'undefined') && (obj.hostname !== window.location.hostname)
       }
 
       // bind on all links that don't have the class noTracking
