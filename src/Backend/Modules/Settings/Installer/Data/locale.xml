@@ -143,14 +143,6 @@
         <translation language="es"><![CDATA[facebook]]></translation>
         <translation language="it"><![CDATA[facebook]]></translation>
       </item>
-      <item type="label" name="CkFinder">
-        <translation language="nl"><![CDATA[ckfinder]]></translation>
-        <translation language="en"><![CDATA[ckfinder]]></translation>
-        <translation language="de"><![CDATA[ckfinder]]></translation>
-        <translation language="fr"><![CDATA[ckfinder]]></translation>
-        <translation language="es"><![CDATA[ckfinder]]></translation>
-        <translation language="it"><![CDATA[ckfinder]]></translation>
-      </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
         <translation language="en"><![CDATA[Some settings are not yet configured.]]></translation>
@@ -174,26 +166,6 @@
         <translation language="de"><![CDATA[Zugangscode für Webdienste.]]></translation>
         <translation language="es"><![CDATA[Código de acceso para webservices.]]></translation>
         <translation language="el"><![CDATA[Κωδικοί πρόσβασης γιά υπηρεσίες web.]]></translation>
-      </item>
-      <item type="message" name="HelpCkfinderMaximumHeight">
-        <translation language="nl"><![CDATA[Instellen van de maximale hoogte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
-        <translation language="en"><![CDATA[Configure the maximum height (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
-        <translation language="ru"><![CDATA[Укажите максимальную высоту (в пикселях) загружаемых изображений. Если загружен изображение более, он получает уменьшена пропорционально. Установите 0, чтобы отключить эту функцию.]]></translation>
-        <translation language="de"><![CDATA[Konfigurieren Sie die maximale Höhe (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
-        <translation language="es"><![CDATA[Configure la altura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
-        <translation language="hu"><![CDATA[Adja meg a maximális magasság (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
-        <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο ύψος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
-        <translation language="zh"><![CDATA[配置上载的图像的最大高度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
-      </item>
-      <item type="message" name="HelpCkfinderMaximumWidth">
-        <translation language="nl"><![CDATA[Instellen van de maximale breedte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
-        <translation language="en"><![CDATA[Configure the maximum width (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
-        <translation language="ru"><![CDATA[Укажите максимальную ширину (в пикселях) загружаемых изображений. Если загружен изображение более, он получает уменьшена пропорционально. Установите 0, чтобы отключить эту функцию.]]></translation>
-        <translation language="de"><![CDATA[Konfigurieren Sie die maximale Breite (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
-        <translation language="es"><![CDATA[Configure la anchura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
-        <translation language="hu"><![CDATA[Adja meg a maximális szélesség (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
-        <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο πλάτος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
-        <translation language="zh"><![CDATA[配置上载的图像的最大宽度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
       </item>
       <item type="message" name="HelpCookies">
         <translation language="nl"><![CDATA[In Europa is een wetgeving rond cookies van kracht. Met deze cookie balk voldoet u aan de meest strenge wetgeving.]]></translation>
