@@ -305,8 +305,7 @@
         <translation language="el"><![CDATA[Υπάρχουν προειδοποιήσεις γιά τις παρακάτω ενότητες.]]></translation>
         <translation language="zh"><![CDATA[以下模块有警告信息]]></translation>
         <translation language="pl"><![CDATA[Istnieją ostrzeżenia dla nastepującego modułu (modułów)]]></translation>
-		
-      </item>
+		  </item>
       <item type="message" name="NoModulesInstalled">
         <translation language="nl"><![CDATA[Er zijn nog geen modules geïnstalleerd.]]></translation>
         <translation language="en"><![CDATA[No modules installed.]]></translation>
