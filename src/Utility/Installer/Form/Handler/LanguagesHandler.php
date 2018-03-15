@@ -1,8 +1,8 @@
 <?php
 
-namespace ForkCMS\Component\Installer\Handler;
+namespace ForkCMS\Utility\Installer\Form\Handler;
 
-use ForkCMS\Component\Installer\InstallationData;
+use ForkCMS\Utility\Installer\InstallationData;
 
 /**
  * Validates and saves the data from the languages form

@@ -8,9 +8,8 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
-use ForkCMS\Controller\InstallerController;
-use ForkCMS\Component\Installer\InstallationData;
 use Doctrine\DBAL\Exception\ConnectionException;
+use ForkCMS\Controller\InstallerController;
 
 class InstallerConnectionFactory extends ConnectionFactory
 {

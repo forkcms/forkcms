@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Component\Installer\Requirement;
+namespace ForkCMS\Utility\Installer\Requirement;
 
 final class RequirementCategory
 {

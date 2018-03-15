@@ -1,8 +1,8 @@
 <?php
 
-namespace ForkCMS\Component\Installer\Handler;
+namespace ForkCMS\Utility\Installer\Form\Handler;
 
-use ForkCMS\Component\Installer\InstallationData;
+use ForkCMS\Utility\Installer\InstallationData;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 

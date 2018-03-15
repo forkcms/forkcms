@@ -2,15 +2,14 @@
 
 namespace ForkCMS\Utility\Installer;
 
-use ForkCMS\Controller\InstallerController;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\DependencyInjection\Container;
 use ForkCMS\Backend\Core\Engine\Model;
 use ForkCMS\Backend\Core\Installer\CoreInstaller;
 use ForkCMS\Backend\Core\Installer\ModuleInstaller;
 use ForkCMS\Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use ForkCMS\Component\Installer\InstallationData;
+use ForkCMS\Controller\InstallerController;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This service installs fork
@@ -181,7 +180,7 @@ class ForkInstaller
             // install exists
             if (class_exists($class)) {
                 // create installer
-                /** @var $install ModuleInstaller */
+                /** @var ModuleInstaller $installer */
                 $installer = new $class(
                     $this->container->get('database'),
                     $data->getLanguages(),

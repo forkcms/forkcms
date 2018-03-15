@@ -2,9 +2,9 @@
 
 namespace ForkCMS\Utility\Installer;
 
-use ForkCMS\Component\Installer\Requirement\Requirement;
-use ForkCMS\Component\Installer\Requirement\RequirementCategory;
-use ForkCMS\Component\Installer\Requirement\RequirementStatus;
+use ForkCMS\Utility\Installer\Requirement\Requirement;
+use ForkCMS\Utility\Installer\Requirement\RequirementCategory;
+use ForkCMS\Utility\Installer\Requirement\RequirementStatus;
 
 /**
  * Requirements checker
