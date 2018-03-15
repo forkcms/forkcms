@@ -747,7 +747,7 @@
         <translation language="nl"><![CDATA[Het template bestand bestaat niet.]]></translation>
         <translation language="en"><![CDATA[The template file is missing.]]></translation>
         <translation language="pl"><![CDATA[Brakuje pliku szablonu.]]></translation>
-		  </item>
+      </item>
       <item type="error" name="InvalidTemplateSyntax">
         <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
         <translation language="en"><![CDATA[Invalid syntax.]]></translation>
