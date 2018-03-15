@@ -406,11 +406,7 @@
         <translation language="de"><![CDATA[Deinem Server felt die benötigte PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" Erweiterung. Fork CMS benötigt diese Erweiterung um hochgeladene Module zu entpacken.<br /><br />      <ul>        <li>Kontaktiere deinen Server-Administrator mit der obigen Nachricht.</li>        <li>Oder entpacke das ZIP Archiv auf deinem Computer und lade es manuell (per FTP-Programm) hoch.</li></ul>]]></translation>
         <translation language="hu"><![CDATA[Your server is missing the required PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extension. Fork CMS needs this extension to be able to unpack your uploaded module.<br /><br />      <ul>        <li>Contact your server administrator with the above message.</li>        <li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>      </ul>    ]]></translation>
         <translation language="zh"><![CDATA[你的服务器缺少必要的PHP "<a href="http://be2.php.net/manual/en/book.zlib..php">Zlib</a>" class. Fork CMS需要这个class来解压你上传的模块<br /><br />   <ul>   <li>请联系系统管理员解决上述问题。</li>   <li>或在你的电脑上解压这个ZIP压缩包，然后通过FTP等工具手动上传到你的网站的根目录。</li>   </ul>]]></translation>
-        <translation language="pl"><![CDATA[Na twoim serwerze brakuje wymaganego rozszerzenia PHP "<a href="http://www.php.net/manual/en/book.zlib.php"> Zlib </a>". Fork CMS potrzebuje tego rozszerzenia, aby wyodrębnić przesłany moduł. <br /> <br />
-       <ul>
-         <li> Skontaktuj się z administratorem serwera za pomocą powyższej wiadomości. </ li>
-         <li> Lub ręcznie wyodrębnij pliki z archiwum ZIP do komputera i prześlij je (prawdopodobnie przez FTP) do katalogu głównego swojej witryny. </ li>
-       </ ul>]]></translation>
+        <translation language="pl"><![CDATA[Na twoim serwerze brakuje wymaganego rozszerzenia PHP "<a href="http://www.php.net/manual/en/book.zlib.php"> Zlib </a>". Fork CMS potrzebuje tego rozszerzenia, aby wyodrębnić przesłany moduł. <br /> <br /> <ul> <li> Skontaktuj się z administratorem serwera za pomocą powyższej wiadomości. </li> <li> Lub ręcznie wyodrębnij pliki z archiwum ZIP do komputera i prześlij je (prawdopodobnie przez FTP) do katalogu głównego swojej witryny. </li></ul>]]></translation>
       </item>
       <item type="label" name="AddPosition">
         <translation language="nl"><![CDATA[positie toevoegen]]></translation>
