@@ -4,7 +4,7 @@ namespace Console\Thumbnails;
 
 use Common\Core\Model;
 use Exception;
-use ForkCMS\Service\Thumbnails;
+use ForkCMS\Utility\Thumbnails;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
