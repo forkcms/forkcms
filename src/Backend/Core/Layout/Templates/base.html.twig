@@ -13,7 +13,7 @@
     {% include "Layout/Templates/navigation.html.twig" %}
 
     <div class="sub-navigation">
-      <nav id="content-subnavigation" class="fork-nav-sidebar" aria-label="{{ activeParent }}">
+      <nav id="content-subnavigation" class="fork-nav-sidebar" {% if activeParent %}aria-label="{{ activeParent }}{% endif %}">
         {% include "Layout/Templates/subnavigation.html.twig" with { 'navigation': navigation } %}
       </nav>
     </div>
