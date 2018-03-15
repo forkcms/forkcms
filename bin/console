@@ -61,11 +61,11 @@ $backend->initialize('Console');
 $application = new Application($kernel);
 
 // @ForkCMS: add our core console commands
-$application->add(new \App\Console\Locale\ImportLocaleCommand());
-$application->add(new \App\Console\Thumbnails\GenerateThumbnailsCommand());
+$application->add(new \ForkCMS\Console\Locale\ImportLocaleCommand());
+$application->add(new \ForkCMS\Console\Thumbnails\GenerateThumbnailsCommand());
 if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
     $application->add(
-        new \App\Console\Locale\EnableLocaleCommand(
+        new \ForkCMS\Console\Locale\EnableLocaleCommand(
             $kernel->getContainer()->get('fork.settings'),
             $kernel->getContainer()->getParameter('installed_modules'),
             $kernel->getContainer()->getParameter('site.multilanguage')
