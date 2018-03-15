@@ -27,10 +27,10 @@
               <div class="col-md-12">
                 <div class="content-block">
                   <div class="content-title">
-                    <p>
+                    <h2>
                       {{ 'lbl.PreviousVersions'|trans|ucfirst }}
                       {{ macro.infoTooltip('msg.HelpRevisions'|trans|ucfirst) }}
-                    </p>
+                    </h2>
                   </div>
                   {% if revisions %}
                     <div class="table-responsive">
@@ -53,17 +53,12 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showContentBlocksDelete %}
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              {{ macro.icon('trash-o') }}
-              {{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'plus-square', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           {% endif %}
-          {{ macro.cancelButton(geturl('Index')) }}
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
         </div>
       </div>
     </div>
@@ -84,12 +79,8 @@
             <p>{{ 'msg.ConfirmDelete'|trans|format(contentBlock.title)|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"type":"button", "data-dismiss":"modal"}) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
           </div>
         </div>
       </div>

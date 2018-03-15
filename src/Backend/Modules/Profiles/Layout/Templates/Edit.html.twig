@@ -27,7 +27,7 @@
               <div class="col-md-12">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">{{ 'lbl.Profile'|trans|ucfirst }}</h3>
+                    <h2 class="panel-title">{{ 'lbl.Profile'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -69,7 +69,7 @@
               <div class="col-md-12">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">{{ 'lbl.Settings'|trans|ucfirst }}</h3>
+                    <h2 class="panel-title">{{ 'lbl.Settings'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -112,14 +112,14 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="content-title">
-                  <p>{{ 'lbl.Groups'|trans|ucfirst }}</p>
+                  <h2>{{ 'lbl.Groups'|trans|ucfirst }}</h2>
                 </div>
               </div>
               <div class="col-md-6">
                 {% if showProfilesAddProfileGroup %}
                   <div class="btn-toolbar pull-right">
                     <div class="btn-group" role="group">
-                      {{ macro.buttonIcon(geturl('add_profile_group') ~ '&id=' ~  profile.id , 'plus-square', 'lbl.AddGroup'|trans|ucfirst, 'btn-primary') }}
+                      {{ macro.buttonIcon(geturl('add_profile_group') ~ '&id=' ~  profile.id , 'plus-square', 'lbl.AddToGroup'|trans|ucfirst, 'btn-primary') }}
                     </div>
                   </div>
                 {% endif %}
@@ -132,7 +132,7 @@
                     {{ dgGroups|raw }}
                   {% endif %}
                   {% if not dgGroups %}
-                    <p>{{ 'msg.NoGroups'|trans }}</p>
+                    <p>{{ 'msg.NoGroupsForThisProfile'|trans }}</p>
                   {% endif %}
                 </div>
               </div>
@@ -148,34 +148,24 @@
         <div class="btn-group pull-left" role="group">
           {% if showProfilesDelete %}
             {% if deleted %}
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmUndelete">
-                {{ 'lbl.Undelete'|trans|ucfirst }}
-              </button>
+              {{ macro.buttonIcon('', 'plus-square', 'lbl.Undelete'|trans|ucfirst, 'btn-primary', { "type":"button", "data-toggle":"modal", "data-target":"#confirmUndelete" }) }}
             {% endif %}
             {% if not deleted %}
-              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-                {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-              </button>
+              {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" }) }}
             {% endif %}
           {% endif %}
           {% if showProfilesBlock %}
             {% if blocked %}
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmUnblock">
-                {{ macro.icon('check') }}{{ 'lbl.Unblock'|trans|ucfirst }}
-              </button>
+              {{ macro.buttonIcon('', 'check', 'lbl.Unblock'|trans|ucfirst, 'btn-primary', { "type":"button", "data-toggle":"modal", "data-target":"#confirmUnblock" }) }}
             {% endif %}
             {% if not blocked %}
-              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#confirmBlock">
-                {{ macro.icon('ban') }}{{ 'lbl.Block'|trans|ucfirst }}
-              </button>
+              {{ macro.buttonIcon('', 'ban', 'lbl.Block'|trans|ucfirst, 'btn-warning', { "type":"button", "data-toggle":"modal", "data-target":"#confirmBlock" }) }}
             {% endif %}
           {% endif %}
-          {{ macro.cancelButton(geturl('Index')) }}
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="saveButton" type="submit" name="edit" class="btn btn-primary">
-            {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"saveButton", "name":"edit" }) }}
         </div>
       </div>
       {% if showProfilesBlock %}
@@ -194,18 +184,12 @@
                 {% endif %}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
                 {% if not blocked %}
-                  <a href="{{ geturl('block') }}&amp;id={{ profile.id }}" class="btn btn-warning">
-                    {{ macro.icon('ban') }}{{ 'lbl.Block'|trans|ucfirst}}
-                  </a>
+                  {{ macro.buttonIcon(geturl('block') ~ '&id=' ~ profile.id, 'ban', 'lbl.Block'|trans|ucfirst, 'btn-warning') }}
                 {% endif %}
                 {% if blocked %}
-                  <a href="{{ geturl('block') }}&amp;id={{ profile.id }}" class="btn btn-primary">
-                    {{ macro.icon('check') }}{{ 'lbl.Unblock'|trans|ucfirst}}
-                  </a>
+                  {{ macro.buttonIcon(geturl('block') ~ '&id=' ~ profile.id, 'check', 'lbl.Unblock'|trans|ucfirst, 'btn-primary') }}
                 {% endif %}
               </div>
             </div>
@@ -235,16 +219,16 @@
             {% endif %}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              {% if deleted %}
-                {{ 'lbl.Undelete'|trans|ucfirst }}
-              {% else %}
-                {{ macro.icon('trash') }}{{ 'lbl.Delete'|trans|ucfirst }}
-              {% endif %}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "type":"button", "data-dismiss":"modal" }) }}
+
+            {% set macroText = 'lbl.Delete'|trans|ucfirst %}
+            {% set macroIcon = 'trash' %}
+            {% if deleted %}
+              {% set macroText = 'lbl.Undelete'|trans|ucfirst %}
+              {% set macroIcon = 'check' %}
+            {% endif %}
+
+            {{ macro.buttonIcon('', macroIcon, macroText, 'btn-danger', { "type":"submit" }) }}
           </div>
         </div>
       </div>

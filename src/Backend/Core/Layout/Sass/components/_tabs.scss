@@ -57,6 +57,7 @@
   .nav-tabs-flex {
     display: flex;
     justify-content: end;
+    flex-wrap: wrap;
 
     > li {
       float: none;

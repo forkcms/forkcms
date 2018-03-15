@@ -11,6 +11,10 @@ class EditorType extends TextareaType
 {
     public function configureOptions(OptionsResolver $optionsResolver): void
     {
+        if (Model::getPreferredEditor() !== 'ck-editor') {
+            return;
+        }
+
         $optionsResolver->setDefaults(['attr' => ['class' => 'inputEditor']]);
 
         if (!Model::has('header')) {

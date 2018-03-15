@@ -252,6 +252,7 @@ class Edit extends BackendBaseActionEdit
             $chkMovePage->setAttribute('disabled');
             $chkMovePage->setAttribute('class', 'fork-form-checkbox disabled');
         }
+
         $movePageTreeOptions = [
             'main' => BL::lbl('MainNavigation'),
             'meta' => BL::lbl('Meta'),
@@ -264,8 +265,9 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown(
             'move_page_tree',
             $movePageTreeOptions,
-            'root'
+            BackendPagesModel::getTreeNameForPageId($this->id)
         )->setAttribute('data-role', 'move-page-tree-changer');
+
         $this->form->addDropdown(
             'move_page_type',
             [
@@ -276,9 +278,11 @@ class Edit extends BackendBaseActionEdit
             BackendPagesModel::TYPE_OF_DROP_INSIDE
         )->setAttribute('data-role', 'move-page-type-changer');
         $dropdownPageTree = BackendPagesModel::getMoveTreeForDropdown($this->id);
+
         $ddmMovePageReferencePage = $this->form->addDropdown(
             'move_page_reference_page',
-            (array) $dropdownPageTree['pages']
+            (array) $dropdownPageTree['pages'],
+            $this->record['parent_id'] != 0 ? $this->record['parent_id'] : null
         )->setDefaultElement(BL::lbl('AppendToTree'), 0)->setAttribute('data-role', 'move-page-pages-select');
         foreach ((array) $dropdownPageTree['attributes'] as $value => $attributes) {
             $ddmMovePageReferencePage->setOptionAttributes($value, $attributes);

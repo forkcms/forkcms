@@ -7,7 +7,7 @@
 {% block content %}
   <div class="panel panel-default">
     <div class="panel-heading">
-      <p>{{ 'lbl.Statistics'|trans|ucfirst }} {{ 'lbl.From'|trans }} {{ startTimestamp|date('m/d/Y') }} {{ 'lbl.Till'|trans }} {{ endTimestamp|date('m/d/Y') }}</p>
+      <h2>{{ 'lbl.Statistics'|trans|ucfirst }} {{ 'lbl.From'|trans }} {{ startTimestamp|date('m/d/Y') }} {{ 'lbl.Till'|trans }} {{ endTimestamp|date('m/d/Y') }}</h2>
     </div>
     <div class="panel-body">
       <div class="change-periode content-block">
@@ -55,7 +55,7 @@
       <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <p>{{ 'lbl.RecentVisits'|trans|ucfirst }}</p>
+            <h2>{{ 'lbl.RecentVisits'|trans|ucfirst }}</h2>
           </div>
           <div class="panel-body">
             {% if visitors_graph_data %}
@@ -98,7 +98,7 @@
       <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <p>{{ 'lbl.PageviewsByTrafficSources'|trans|ucfirst }}</p>
+            <h2>{{ 'lbl.PageviewsByTrafficSources'|trans|ucfirst }}</h2>
           </div>
           <div class="panel-body">
             {% if source_graph_data %}
@@ -124,7 +124,7 @@
       <div class="col-xs-12">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <p>{{ 'lbl.MostViewedPages'|trans|ucfirst }}</p>
+            <h2>{{ 'lbl.MostViewedPages'|trans|ucfirst }}</h2>
           </div>
           <div class="panel-body">
             <div class="dataGridHolder">

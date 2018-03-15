@@ -1,12 +1,11 @@
 imports:
     - { resource: console.yml }
+    - { resource: form.yml }
     - { resource: parameters.yml }
     - { resource: doctrine.yml }
-    - { resource: form.yml }
 
 parameters:
     fork.is_installed: true
-    fork.form.theme: 'Core/Layout/Templates/FormLayout.html.twig'
 
 framework:
     secret: "%kernel.secret%"
