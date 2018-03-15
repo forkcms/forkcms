@@ -2,17 +2,17 @@
 
 namespace ForkCMS\Controller;
 
+use ForkCMS\Common\Exception\ExitException;
 use ForkCMS\Utility\Installer\Form\Handler\DatabaseHandler;
 use ForkCMS\Utility\Installer\Form\Handler\InstallerHandler;
 use ForkCMS\Utility\Installer\Form\Handler\LanguagesHandler;
 use ForkCMS\Utility\Installer\Form\Handler\LoginHandler;
 use ForkCMS\Utility\Installer\Form\Handler\ModulesHandler;
-use ForkCMS\Utility\Installer\InstallationData;
-use ForkCMS\Common\Exception\ExitException;
 use ForkCMS\Utility\Installer\Form\Type\DatabaseType;
 use ForkCMS\Utility\Installer\Form\Type\LanguagesType;
 use ForkCMS\Utility\Installer\Form\Type\LoginType;
 use ForkCMS\Utility\Installer\Form\Type\ModulesType;
+use ForkCMS\Utility\Installer\InstallationData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RedirectResponse;
