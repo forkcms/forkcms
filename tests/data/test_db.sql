@@ -147,37 +147,46 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `blog_categories`;
 
-CREATE TABLE `blog_categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `meta_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE blog_categories (
+  `id` INT AUTO_INCREMENT NOT NULL,
+  `meta_id` INT DEFAULT NULL,
+  `locale` VARCHAR(5) NOT NULL COMMENT '(DC2Type:locale)',
+  `title` VARCHAR(255) NOT NULL,
+  UNIQUE INDEX UNIQ_DC35648139FCA6F9 (meta_id),
+  PRIMARY KEY(id)
+) ENGINE = InnoDB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
+ALTER TABLE blog_categories ADD CONSTRAINT FK_DC35648139FCA6F9 FOREIGN KEY (meta_id) REFERENCES meta (id);
 
+LOCK TABLES `blog_categories` WRITE;
+/*!40000 ALTER TABLE `blog_categories` DISABLE KEYS */;
+
+INSERT INTO `blog_categories` (`id`, `meta_id`, `locale`, `title`)
+VALUES
+	(1,28,'en','Blog category for functional tests');
+
+/*!40000 ALTER TABLE `blog_categories` ENABLE KEYS */;
+UNLOCK TABLES;
 
 # Dump of table blog_comments
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `blog_comments`;
 
-CREATE TABLE `blog_comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `post_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_on` datetime NOT NULL,
-  `author` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `website` text COLLATE utf8mb4_unicode_ci,
-  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'comment',
-  `status` varchar(249) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'moderation',
-  `data` text COLLATE utf8mb4_unicode_ci COMMENT 'Serialized array with extra data',
-  PRIMARY KEY (`id`),
-  KEY `idx_post_id_status` (`post_id`,`status`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
+CREATE TABLE IF NOT EXISTS `blog_comments` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `postId` INT NOT NULL,
+  `locale` VARCHAR(5) NOT NULL COMMENT '(DC2Type:locale)',
+  `author` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `website` VARCHAR(255) DEFAULT NULL,
+  `text` LONGTEXT NOT NULL,
+  `type` VARCHAR(255) DEFAULT 'comment' NOT NULL,
+  `status` VARCHAR(255) DEFAULT 'moderation' NOT NULL,
+  `data` LONGTEXT DEFAULT NULL,
+  `createdOn` DATETIME NOT NULL COMMENT '(DC2Type:datetime)',
+  PRIMARY KEY(`id`),
+  KEY `idx_post_id_status` (`postId`,`status`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
 # Dump of table blog_posts
 # ------------------------------------------------------------
@@ -235,62 +244,62 @@ CREATE TABLE `content_blocks` (
 
 
 
-# Dump of table faq_categories
+# Dump of table FaqCategory
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faq_categories`;
+DROP TABLE IF EXISTS `FaqCategory`;
 
-CREATE TABLE `faq_categories` (
+CREATE TABLE `FaqCategory` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `meta_id` int(11) NOT NULL,
-  `extra_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `extraId` int(11) NOT NULL,
+  `locale` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sequence` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table faq_feedback
+# Dump of table FaqFeedback
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faq_feedback`;
+DROP TABLE IF EXISTS `FaqFeedback`;
 
-CREATE TABLE `faq_feedback` (
+CREATE TABLE `FaqFeedback` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `question_id` int(11) unsigned NOT NULL,
   `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `processed` tinyint(1) NOT NULL DEFAULT '0',
-  `created_on` datetime NOT NULL,
-  `edited_on` datetime NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table faq_questions
+# Dump of table FaqQuestion
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `faq_questions`;
+DROP TABLE IF EXISTS `FaqQuestion`;
 
-CREATE TABLE `faq_questions` (
+CREATE TABLE `FaqQuestion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
   `meta_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `locale` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
   `question` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `answer` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_on` datetime NOT NULL,
-  `num_views` int(11) NOT NULL DEFAULT '0',
-  `num_usefull_yes` int(11) NOT NULL DEFAULT '0',
-  `num_usefull_no` int(11) NOT NULL DEFAULT '0',
+  `createdOn` datetime NOT NULL,
+  `numberOfviews` int(11) NOT NULL DEFAULT '0',
+  `numberOfUsefulYes` int(11) NOT NULL DEFAULT '0',
+  `numberOfUsefulNo` int(11) NOT NULL DEFAULT '0',
   `hidden` tinyint(1) NOT NULL DEFAULT '0',
   `sequence` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_faq_questions_faq_categories` (`hidden`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `fk_faq_questions_faq_categories` (`hidden`,`locale`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
@@ -2302,7 +2311,8 @@ VALUES
 	(24,'Change email',0,'Change email',0,'Change email',0,'change-email',0,NULL,NULL,NULL,NULL),
 	(25,'Change password',0,'Change password',0,'Change password',0,'change-password',0,NULL,NULL,NULL,NULL),
 	(26,'BlogCategory for tests',0,'BlogCategory for tests',0,'BlogCategory for tests',0,'blogcategory-for-tests',0,NULL,NULL,NULL,NULL),
-	(27,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'blogpost-for-functional-tests',0,NULL,NULL,NULL,NULL);
+	(27,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'Blogpost for functional tests',0,'blogpost-for-functional-tests',0,NULL,NULL,NULL,NULL),
+	(28,'Blog category for functional tests',0,'Blog category for functional tests',0,'Blog category for functional tests',0,'blog-category-for-functional-tests',0,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;

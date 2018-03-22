@@ -10,6 +10,10 @@ set_time_limit(0);
 require_once __DIR__ . '/../autoload.php';
 
 use Common\ModulesSettings;
+use Console\Locale\CopyLocaleCommand;
+use Console\Locale\EnableLocaleCommand;
+use Console\Locale\ImportLocaleCommand;
+use Console\Thumbnails\GenerateThumbnailsCommand;
 use ForkCMS\App\AppKernel;
 use ForkCMS\App\BaseModel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -41,17 +45,17 @@ $backend = new BackendInit($kernel);
 $backend->initialize('Console');
 
 $application = new Application($kernel);
-$application->add(new \Console\Locale\ImportLocaleCommand());
-$application->add(new \Console\Thumbnails\GenerateThumbnailsCommand());
+$application->add(new ImportLocaleCommand());
+$application->add(new GenerateThumbnailsCommand());
 if ($kernel->getContainer()->get('fork.settings') instanceof ModulesSettings) {
     $application->add(
-        new \Console\Locale\CopyLocaleCommand(
+        new CopyLocaleCommand(
             $kernel->getContainer()->get('fork.settings'),
             $kernel->getContainer()->get('fork.manager.copy_modules_to_other_locale')
         )
     );
     $application->add(
-        new \Console\Locale\EnableLocaleCommand(
+        new EnableLocaleCommand(
             $kernel->getContainer()->get('fork.settings'),
             $kernel->getContainer()->getParameter('installed_modules'),
             $kernel->getContainer()->getParameter('site.multilanguage')

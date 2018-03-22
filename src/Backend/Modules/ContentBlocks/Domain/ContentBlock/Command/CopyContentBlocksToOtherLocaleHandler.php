@@ -3,13 +3,15 @@
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
 use Backend\Core\Engine\Model;
-use Backend\Core\Language\Locale;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlock;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
+use Common\Locale;
 use Common\ModuleExtraType;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
 
-final class CopyContentBlocksToOtherLocaleHandler
+final class CopyContentBlocksToOtherLocaleHandler implements CopyModuleContentToOtherLocaleHandlerInterface
 {
     /** @var ContentBlockRepository */
     private $contentBlockRepository;
@@ -19,21 +21,25 @@ final class CopyContentBlocksToOtherLocaleHandler
         $this->contentBlockRepository = $contentBlockRepository;
     }
 
-    public function handle(CopyContentBlocksToOtherLocale $copyContentBlocksToOtherLocale): void
+    public function handle(CopyModuleContentToOtherLocaleInterface $command): void
     {
-        $contentBlocksToCopy = $this->getContentBlocksToCopy($copyContentBlocksToOtherLocale->fromLocale);
-        $id = $this->contentBlockRepository->getNextIdForLanguage($copyContentBlocksToOtherLocale->toLocale);
+        if (!$command instanceof CopyContentBlocksToOtherLocale) {
+            throw new \Exception('The class should be ' . CopyContentBlocksToOtherLocale::class);
+        }
+
+        $contentBlocksToCopy = $this->getContentBlocksToCopy($command->getFromLocale());
+        $id = $this->contentBlockRepository->getNextIdForLanguage($command->getToLocale());
 
         array_map(
-            function (ContentBlock $contentBlock) use ($copyContentBlocksToOtherLocale, &$id) {
-                $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()] = $this->getNewExtraId();
+            function (ContentBlock $contentBlock) use ($command, &$id) {
+                $command->setModuleExtraId($contentBlock->getModuleExtraId(), $this->getNewExtraId());
                 $dataTransferObject = $contentBlock->getDataTransferObject();
 
                 // Overwrite some variables
                 $dataTransferObject->forOtherLocale(
                     $id++,
-                    $copyContentBlocksToOtherLocale->extraIdMap[$contentBlock->getExtraId()],
-                    $copyContentBlocksToOtherLocale->toLocale
+                    $command->getModuleExtraId($contentBlock->getModuleExtraId()),
+                    $command->getToLocale()
                 );
 
                 $this->contentBlockRepository->add(ContentBlock::fromDataTransferObject($dataTransferObject));

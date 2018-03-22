@@ -265,7 +265,7 @@ class Detail extends FrontendBaseBlock
         return FrontendFaqModel::getAllForCategory(
             $this->question['category_id'],
             $this->getSetting('related_num_items', 5),
-            $this->question['id']
+            [$this->question['id']]
         );
     }
 

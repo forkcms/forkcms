@@ -6,6 +6,7 @@ use Backend\Core\Language\Locale;
 use Common\Locale as CommonLocale;
 use Common\ModulesSettings;
 use ForkCMS\Bundle\CoreBundle\Manager\CopyModulesToOtherLocaleManager;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,19 +18,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CopyLocaleCommand extends Command
 {
     /**
-     * @var CopyModulesToOtherLocaleManager
+     * @var CopyContentFromModulesToOtherLocaleManager
      */
-    private $copyModulesToOtherLocaleManager;
+    private $copyContentFromModulesToOtherLocaleManager;
 
     /**
      * @var SymfonyStyle
      */
     private $formatter;
-
-    /**
-     * @var SymfonyStyle
-     */
-    private $io;
 
     /**
      * @var ModulesSettings
@@ -38,12 +34,12 @@ class CopyLocaleCommand extends Command
 
     public function __construct(
         ModulesSettings $settings,
-        CopyModulesToOtherLocaleManager $copyModulesToOtherLocaleManager
+        CopyContentFromModulesToOtherLocaleManager $copyContentFromModulesToOtherLocaleManager
     ) {
         parent::__construct();
 
         $this->settings = $settings;
-        $this->copyModulesToOtherLocaleManager = $copyModulesToOtherLocaleManager;
+        $this->copyContentFromModulesToOtherLocaleManager = $copyContentFromModulesToOtherLocaleManager;
     }
 
     protected function configure(): void
@@ -54,13 +50,13 @@ class CopyLocaleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $this->io = new SymfonyStyle($input, $output);
         $this->formatter = new SymfonyStyle($input, $output);
 
         $fromLocale = $this->askFromLocale();
         $toLocale = $this->askToLocale($fromLocale);
 
-        $this->copyModules($fromLocale, $toLocale);
+        $this->copyContentFromModulesToOtherLocaleManager->copy($fromLocale, $toLocale);
+        $this->formatter->success('All supported modules are copied from "' . $fromLocale . '" to "' . $toLocale . '".');
     }
 
     private function askFromLocale(): CommonLocale
@@ -77,13 +73,6 @@ class CopyLocaleCommand extends Command
             'To which locale would you like to copy it?',
             $this->getToLocale($fromLocale)
         ));
-    }
-
-    private function copyModules(CommonLocale $fromLocale, CommonLocale $toLocale)
-    {
-        $this->copyModulesToOtherLocaleManager->copy($fromLocale, $toLocale);
-
-        $this->io->success('All modules are copied from "' . $fromLocale . '" to "' . $toLocale . '".');
     }
 
     private function getActiveLocale(): array

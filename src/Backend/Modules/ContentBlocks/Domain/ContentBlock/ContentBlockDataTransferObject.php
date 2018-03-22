@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock;
 
-use Backend\Core\Language\Locale;
+use Common\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ContentBlockDataTransferObject
