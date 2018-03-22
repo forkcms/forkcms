@@ -76,10 +76,27 @@
   }
 }
 
+.alert-warning {
+  a,
+  .fa,
+  .close {
+    border-color: $gray-base;
+    color: $gray-base;
+  }
+}
+
 .alert-static {
   margin: -25px 0 25px;
   padding: 9px 0;
   position: static;
   text-align: left;
   width: 100%;
+}
+
+.alert-danger:hover {color: $white}
+
+.alert-warning a:hover,
+.alert-warning a:focus {
+  color: $brand-primary-dark;
+  border-color: $brand-primary-dark;
 }

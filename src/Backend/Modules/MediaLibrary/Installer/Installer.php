@@ -34,7 +34,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'MediaFolderFindAll'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderGetCountsForGroup'); // AJAX
         $this->setActionRights(1, $this->getModule(), 'MediaFolderInfo'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaFolderMovie'); // AJAX
+        $this->setActionRights(1, $this->getModule(), 'MediaFolderMove'); // AJAX
     }
 
     protected function configureBackendActionRightsForMediaItem(): void
@@ -54,6 +54,7 @@ class Installer extends ModuleInstaller
     {
         $this->setActionRights(1, $this->getModule(), 'MediaBrowser');
         $this->setActionRights(1, $this->getModule(), 'MediaBrowserImages');
+        $this->setActionRights(1, $this->getModule(), 'MediaBrowserVideos');
     }
 
     protected function configureBackendNavigation(): void

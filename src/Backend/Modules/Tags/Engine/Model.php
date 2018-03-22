@@ -235,8 +235,8 @@ class Model
             $tags = (array) explode(',', (string) $tags);
         }
 
-        // make sure the list of tags contains only unique and non-empty elements
-        $tags = array_filter(array_unique($tags));
+        // make sure the list of tags contains only unique and non-empty elements in a case insensitive way
+        $tags = array_filter(array_intersect_key($tags, array_unique(array_map('strtolower', $tags))));
 
         // get database
         $database = BackendModel::getContainer()->get('database');
