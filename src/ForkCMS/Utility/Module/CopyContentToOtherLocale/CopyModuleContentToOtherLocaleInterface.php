@@ -1,11 +1,11 @@
 <?php
 
-namespace ForkCMS\Component\Module;
+namespace ForkCMS\Utility\Module\CopyContentToOtherLocale;
 
 use Common\Locale;
 use Exception;
 
-interface CopyModuleToOtherLocaleInterface
+interface CopyModuleContentToOtherLocaleInterface
 {
     public function getFromLocale(): Locale;
 
@@ -29,7 +29,7 @@ interface CopyModuleToOtherLocaleInterface
 
     public function getModuleName(): string;
 
-    public function getPreviousResults(): CopyModulesToOtherLocaleResults;
+    public function getPreviousResults(): Results;
 
     public function getPriority(): int;
 
@@ -38,7 +38,7 @@ interface CopyModuleToOtherLocaleInterface
     public function prepareForCopy(
         Locale $fromLocale,
         Locale $toLocale,
-        CopyModulesToOtherLocaleResults $previousResults
+        Results $previousResults
     ): void;
 
     /**

@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\ContentBlocks\Domain\ContentBlock\Command;
 
-use ForkCMS\Component\Module\CopyModuleToOtherLocale;
+use ForkCMS\Utility\Module\CopyModuleContentToOtherLocale;
 
-final class CopyContentBlocksToOtherLocale extends CopyModuleToOtherLocale
+final class CopyContentBlocksToOtherLocale extends CopyModuleContentToOtherLocale
 {
     public function getModuleName(): string
     {

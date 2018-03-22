@@ -1,10 +1,10 @@
 <?php
 
-namespace ForkCMS\Component\Module;
+namespace ForkCMS\Utility\Module\CopyContentToOtherLocale;
 
-use ForkCMS\Component\Module\Exception\CopyModuleToOtherLocaleNotFound;
+use ForkCMS\Utility\Module\Exception\CopiedModuleContentToOtherLocaleNotFound;
 
-final class CopyModulesToOtherLocaleResults
+final class Results
 {
     /** @var array */
     private $idMap;
@@ -60,11 +60,11 @@ final class CopyModulesToOtherLocaleResults
     private function getNewId(array $map, string $moduleName, $id)
     {
         if (!array_key_exists($moduleName, $map)) {
-            throw CopyModuleToOtherLocaleNotFound::forModule($moduleName);
+            throw CopiedModuleContentToOtherLocaleNotFound::forModule($moduleName);
         }
 
         if (!array_key_exists($id, $map[$moduleName])) {
-            throw CopyModuleToOtherLocaleNotFound::forId($moduleName, $id);
+            throw CopiedModuleContentToOtherLocaleNotFound::forId($moduleName, $id);
         }
 
         return $map[$moduleName][$id];

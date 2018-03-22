@@ -2,9 +2,9 @@
 
 namespace Backend\Modules\Location\Domain\Location\Command;
 
-use ForkCMS\Component\Module\CopyModuleToOtherLocale;
+use ForkCMS\Utility\Module\CopyModuleContentToOtherLocale;
 
-final class CopyLocationWidgetsToOtherLocale extends CopyModuleToOtherLocale
+final class CopyLocationWidgetsToOtherLocale extends CopyModuleContentToOtherLocale
 {
     public function getModuleName(): string
     {

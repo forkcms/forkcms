@@ -1,6 +1,6 @@
 <?php
 
-namespace ForkCMS\Component\Module;
+namespace ForkCMS\Utility\Module\CopyContentToOtherLocale;
 
 use Common\Locale;
 use Exception;
@@ -10,7 +10,7 @@ use Exception;
  *
  * You need to implement the method getModuleName.
  */
-abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterface
+abstract class CopyModuleContentToOtherLocale implements CopyModuleContentToOtherLocaleInterface
 {
     /** @var Locale */
     private $fromLocale;
@@ -24,7 +24,7 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     /** @var array - Will be used to convert old module-extra ids to new ones. Can be used in other places */
     private $moduleExtraIdMap;
 
-    /** @var CopyModulesToOtherLocaleResults */
+    /** @var Results */
     private $previousResults;
 
     /** @var int */
@@ -33,7 +33,7 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
     public function prepareForCopy(
         Locale $fromLocale,
         Locale $toLocale,
-        CopyModulesToOtherLocaleResults $previousResults
+        Results $previousResults
     ): void {
         $this->fromLocale = $fromLocale;
         $this->toLocale = $toLocale;
@@ -87,7 +87,7 @@ abstract class CopyModuleToOtherLocale implements CopyModuleToOtherLocaleInterfa
 
     abstract public function getModuleName(): string;
 
-    public function getPreviousResults(): CopyModulesToOtherLocaleResults
+    public function getPreviousResults(): Results
     {
         return $this->previousResults;
     }

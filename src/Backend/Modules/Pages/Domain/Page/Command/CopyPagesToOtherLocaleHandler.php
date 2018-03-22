@@ -9,12 +9,12 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
-use ForkCMS\Component\Module\CopyModuleToOtherLocaleInterface;
-use ForkCMS\Component\Module\CopyModuleToOtherLocaleHandlerInterface;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
 
-final class CopyPagesToOtherLocaleHandler implements CopyModuleToOtherLocaleHandlerInterface
+final class CopyPagesToOtherLocaleHandler implements CopyModuleContentToOtherLocaleHandlerInterface
 {
-    public function handle(CopyModuleToOtherLocaleInterface $command): void
+    public function handle(CopyModuleContentToOtherLocaleInterface $command): void
     {
         // get database
         $database = BackendModel::getContainer()->get('database');

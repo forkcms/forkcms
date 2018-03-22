@@ -4,7 +4,7 @@ namespace Backend\Modules\Pages\Engine;
 
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocale;
 use Backend\Modules\Location\Command\CopyLocationWidgetsToOtherLocale;
-use ForkCMS\Component\Module\CopyModulesToOtherLocaleResults;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\Results;
 use SimpleBus\Message\Bus\MessageBus;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;

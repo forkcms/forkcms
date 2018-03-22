@@ -1,12 +1,12 @@
 <?php
 
-namespace ForkCMS\Component\Module\Exception;
+namespace ForkCMS\Utility\Module\Exception;
 
-class CopyModuleToOtherLocaleNotFound extends \Exception
+class CopiedModuleContentToOtherLocaleNotFound extends \Exception
 {
     public static function forId(string $moduleName, int $id): self
     {
-        return new self('The id "' . $id . '" doesn\'t exist in the map for the module "' . $moduleName. '".');
+        return new self('The id "' . $id . '" does not exist in the map for the module "' . $moduleName. '".');
     }
 
     public static function forModule(string $moduleName): self

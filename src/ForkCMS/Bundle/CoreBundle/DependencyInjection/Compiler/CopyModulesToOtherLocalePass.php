@@ -5,7 +5,7 @@ namespace ForkCMS\Bundle\CoreBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
-use ForkCMS\Component\Module\CopyModulesToOtherLocale;
+use ForkCMS\Utility\Module\CopyModulesToOtherLocale;
 
 class CopyModulesToOtherLocalePass implements CompilerPassInterface
 {
@@ -22,7 +22,7 @@ class CopyModulesToOtherLocalePass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds('fork.copy_module_to_other_locale');
 
         foreach ($taggedServices as $id => $tags) {
-            // add the module service to the CopyModuleToOtherLocale service
+            // add the module service to the CopyModuleContentToOtherLocale service
             $definition->addMethodCall('addModule', array(new Reference($id)));
         }
     }

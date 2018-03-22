@@ -8,10 +8,10 @@ use Backend\Modules\ContentBlocks\Domain\ContentBlock\ContentBlockRepository;
 use Backend\Modules\ContentBlocks\Domain\ContentBlock\Status;
 use Common\Locale;
 use Common\ModuleExtraType;
-use ForkCMS\Component\Module\CopyModuleToOtherLocaleHandlerInterface;
-use ForkCMS\Component\Module\CopyModuleToOtherLocaleInterface;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleHandlerInterface;
+use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyModuleContentToOtherLocaleInterface;
 
-final class CopyContentBlocksToOtherLocaleHandler implements CopyModuleToOtherLocaleHandlerInterface
+final class CopyContentBlocksToOtherLocaleHandler implements CopyModuleContentToOtherLocaleHandlerInterface
 {
     /** @var ContentBlockRepository */
     private $contentBlockRepository;
@@ -21,7 +21,7 @@ final class CopyContentBlocksToOtherLocaleHandler implements CopyModuleToOtherLo
         $this->contentBlockRepository = $contentBlockRepository;
     }
 
-    public function handle(CopyModuleToOtherLocaleInterface $command): void
+    public function handle(CopyModuleContentToOtherLocaleInterface $command): void
     {
         if (!$command instanceof CopyContentBlocksToOtherLocale) {
             throw new \Exception('The class should be ' . CopyContentBlocksToOtherLocale::class);

@@ -193,6 +193,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
+    fork.manager.copy_modules_to_other_locale:
+        class: ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager
+        public: true
+        arguments:
+          - "@command_bus"
+
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
         tags:
