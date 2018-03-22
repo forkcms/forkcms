@@ -5,7 +5,6 @@ namespace Console\Locale;
 use Backend\Core\Language\Locale;
 use Common\Locale as CommonLocale;
 use Common\ModulesSettings;
-use ForkCMS\Bundle\CoreBundle\Manager\CopyModulesToOtherLocaleManager;
 use ForkCMS\Utility\Module\CopyContentToOtherLocale\CopyContentFromModulesToOtherLocaleManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
