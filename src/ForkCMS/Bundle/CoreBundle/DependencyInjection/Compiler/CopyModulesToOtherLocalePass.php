@@ -18,8 +18,8 @@ class CopyModulesToOtherLocalePass implements CompilerPassInterface
 
         $definition = $container->findDefinition('fork.manager.copy_modules_to_other_locale');
 
-        // find all service IDs with the fork.copy_module_to_other_locale tag
-        $taggedServices = $container->findTaggedServiceIds('fork.copy_module_to_other_locale');
+        // find all service IDs with the fork.copy_module_content_to_other_locale tag
+        $taggedServices = $container->findTaggedServiceIds('fork.copy_module_content_to_other_locale');
 
         foreach ($taggedServices as $id => $tags) {
             // add the module service to the CopyModuleContentToOtherLocale service

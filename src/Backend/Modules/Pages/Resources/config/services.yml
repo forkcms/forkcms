@@ -5,4 +5,4 @@ services:
     pages.copy:
         class: Backend\Modules\Pages\Domain\Page\Command\CopyPagesToOtherLocale
         tags:
-            - { name: fork.copy_module_to_other_locale }
+            - { name: fork.copy_module_content_to_other_locale }
