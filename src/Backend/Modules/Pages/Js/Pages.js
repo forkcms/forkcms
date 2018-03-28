@@ -270,9 +270,9 @@ jsBackend.pages.extras = {
       '<span class="templateTitle" id="templateTitle' + index + '">' + title + '</span>' +
       '<span class="templateDescription">' + description + '</span>' +
       '<div class="btn-group buttonHolder">' +
-      '<button class="btn btn-default btn-icon-only btn-xs toggleVisibility" aria-labelledby="ViewBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only" id="ViewBlockText' + index + '">' + jsBackend.locale.lbl('View') + '</span></span></button>' +
-      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + ' aria-labelledby="EditBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only" id="EditBlockText' + index + '">' + jsBackend.locale.lbl('EditBlock') + '</span></a>' +
-      '<button class="deleteBlock btn btn-danger btn-icon-only btn-xs" aria-labelledby="DeleteBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only" id="DeleteBlockText' + index + '">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
+      '<button class="btn btn-default btn-icon-only btn-xs toggleVisibility"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only">' + (visible ? jsBackend.locale.lbl('Hide') : jsBackend.locale.lbl('Show')) + '</span></span></button>' +
+      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + '><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('EditContent') + '</span></a>' +
+      '<button class="deleteBlock btn btn-danger btn-icon-only btn-xs"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
       '</div>' +
       '</div>'
 
@@ -1208,8 +1208,10 @@ jsBackend.pages.extras = {
     // toggle visibility indicators
     if (visible) {
       $(this).find('.fa').addClass('fa-eye')
+      $(this).find('.sr-only').html(jsBackend.locale.lbl('Hide'))
     } else {
       $(this).find('.fa').addClass('fa-eye-slash')
+      $(this).find('.sr-only').html(jsBackend.locale.lbl('Show'))
       $(this).closest('*[data-block-id]').addClass('templateDisabled')
     }
   },

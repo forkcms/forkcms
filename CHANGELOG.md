@@ -1,3 +1,26 @@
+5.2.3  (2018-03-28)
+------------------
+
+Bugfixes:
+* Core: Add missing toggle navigation label in the frontend [#2493](https://github.com/forkcms/forkcms/pull/2493)
+* Core: Don't add the language to the home url if it is a single language site [#2516](https://github.com/forkcms/forkcms/pull/2516)
+* Core: Remove role tree that prevent screenreaders to use the page [#2504](https://github.com/forkcms/forkcms/pull/2504)
+* Analytics: Track mailto links as external links [#2513](https://github.com/forkcms/forkcms/pull/2513)
+* Blog: Dont ask to comment if commenting is not allowed [#2496](https://github.com/forkcms/forkcms/pull/2496)
+* Blog: Fix overview pages in blog module showing 404's when there are no blog posts [#2481](https://github.com/forkcms/forkcms/pull/2481)
+* Blog: Make it possible to add extra blog image sizes [#2467](https://github.com/forkcms/forkcms/pull/2467)
+* Blog: Update Category.html.twig if article with image too short [#2498](https://github.com/forkcms/forkcms/pull/2498)
+* Extensions: Fix button colour to save the theme template [#2487](https://github.com/forkcms/forkcms/pull/2487)
+* Groups: Delete entries linked to a deleted group [#2507](https://github.com/forkcms/forkcms/pull/2507)
+* Groups: Fix check if user belongs to a certain group [#2508](https://github.com/forkcms/forkcms/pull/2508)
+* Mailmotor: Use the symfony form in the template instead of plain html [#2468](https://github.com/forkcms/forkcms/pull/2468)
+* MediaLibrary: Fix sorting media widgets alphabetically [#2472](https://github.com/forkcms/forkcms/pull/2472)
+* Pages: Don't load images that don't exist [#2515](https://github.com/forkcms/forkcms/pull/2515)
+* Profiles: Ensure getRandomString() returns a string with the requested length [#2503](https://github.com/forkcms/forkcms/pull/2503)
+* Profiles: Use the correct macro for the buttons [#2502](https://github.com/forkcms/forkcms/pull/2502)
+* Tags: Tags should be case insensitive unique [#2479](https://github.com/forkcms/forkcms/pull/2479)
+
+
 5.2.2  (2018-02-14)
 ------------------
 

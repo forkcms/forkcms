@@ -10,7 +10,6 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
-use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Detail extends FrontendBaseBlock
@@ -87,7 +86,6 @@ class Detail extends FrontendBaseBlock
             throw new NotFoundHttpException();
         }
 
-        $blogPost['tags'] = FrontendTagsModel::getForItem($this->getModule(), $blogPost['id']);
         $baseCategoryUrl = FrontendNavigation::getUrlForBlock($this->getModule(), 'Category');
         $blogPost['category_full_url'] = $baseCategoryUrl . '/' . $blogPost['category_url'];
         $baseDetailUrl = FrontendNavigation::getUrlForBlock($this->getModule(), 'Detail');

@@ -2,6 +2,26 @@
 <locale>
   <Frontend>
     <Core>
+      <item type="label" name="OpenNavigation">
+        <translation language="nl"><![CDATA[klap navigatie open]]></translation>
+        <translation language="en"><![CDATA[open navigation]]></translation>
+        <translation language="fr"><![CDATA[ouvrir la navigation]]></translation>
+        <translation language="ru"><![CDATA[Открытая навигация]]></translation>
+        <translation language="el"><![CDATA[Άνοιγμα πλοήγησης]]></translation>
+        <translation language="hu"><![CDATA[Nyissa meg a navigációt]]></translation>
+        <translation language="zh"><![CDATA[打開導航]]></translation>
+        <translation language="de"><![CDATA[Öffnen Sie die Navigation]]></translation>
+      </item>
+      <item type="label" name="CloseNavigation">
+        <translation language="nl"><![CDATA[navigatie dichtklappen]]></translation>
+        <translation language="en"><![CDATA[close navigation]]></translation>
+        <translation language="fr"><![CDATA[fermer la navigation]]></translation>
+        <translation language="ru"><![CDATA[закрыть навигацию]]></translation>
+        <translation language="el"><![CDATA[κλείστε την πλοήγηση]]></translation>
+        <translation language="hu"><![CDATA[zárja be a navigációt]]></translation>
+        <translation language="zh"><![CDATA[關閉導航]]></translation>
+        <translation language="de"><![CDATA[schließe die Navigation]]></translation>
+      </item>
       <item type="error" name="NumberIsInvalid">
         <translation language="nl"><![CDATA[Ongeldig getal.]]></translation>
         <translation language="en"><![CDATA[Invalid number.]]></translation>
@@ -12601,9 +12621,21 @@
         <translation language="pl"><![CDATA[przesuń jedną pozycję w dół]]></translation>
       </item>
       <item type="message" name="HelpTextTags">
-        <translation language="nl"><![CDATA[Typ tekst gevolgd door komma of ⏎ om een nieuwe tag toe te voegen. Typ enkele letters en gebruik pijl omlaag om een bestaande tag te selecteren]]></translation>
-        <translation language="en"><![CDATA[Type text followed by comma or ⏎ to add a new tag. Type a few letters and use the down arrow to select an existing tag]]></translation>
-        <translation language="pl"><![CDATA[Wpisz tekst, a następnie przecinek lub ⏎, aby dodać nowy tag. Wpisz kilka liter i użyj strzałki w dół, aby wybrać istniejący tag]]></translation>
+        <translation language="pl"><![CDATA[Wpisz tekst, a następnie przecinek lub ENTER, aby dodać nowy tag. Wpisz kilka liter i użyj strzałki w dół, aby wybrać istniejący tag]]></translation>
+        <translation language="nl"><![CDATA[Typ tekst gevolgd door komma of ENTER om een nieuwe tag toe te voegen. Typ enkele letters en gebruik pijl omlaag om een bestaande tag te selecteren]]></translation>
+        <translation language="en"><![CDATA[Type text followed by comma or ENTER to add a new tag. Type a few letters and use the down arrow to select an existing tag]]></translation>
+      </item>
+      <item type="label" name="Show">
+        <translation language="nl"><![CDATA[tonen]]></translation>
+        <translation language="en"><![CDATA[show]]></translation>
+      </item>
+      <item type="label" name="Hide">
+        <translation language="nl"><![CDATA[verbergen]]></translation>
+        <translation language="en"><![CDATA[hide]]></translation>
+      </item>
+      <item type="label" name="EditContent">
+        <translation language="nl"><![CDATA[inhoud bewerekn]]></translation>
+        <translation language="en"><![CDATA[edit content]]></translation>
       </item>
     </Core>
   </Backend>
