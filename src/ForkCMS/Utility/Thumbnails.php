@@ -20,8 +20,12 @@ class Thumbnails
     /** @var Imagine */
     private $imagine;
 
-    public function __construct()
+    /** @var string */
+    private $sitePath;
+
+    public function __construct(string $sitePath)
     {
+        $this->sitePath = realpath($sitePath);
         $this->finder = new Finder();
         $this->filesystem = new Filesystem();
         $this->imagine = new Imagine();
@@ -141,8 +145,8 @@ class Thumbnails
             $item = [];
             $item['dirname'] = $directory->getBasename();
             $item['path'] = $directory->getRealPath();
-            if (mb_substr($inPath, 0, mb_strlen(PATH_WWW)) === PATH_WWW) {
-                $item['url'] = mb_substr($inPath, mb_strlen(PATH_WWW));
+            if (mb_substr($inPath, 0, mb_strlen($this->sitePath)) === $this->sitePath) {
+                $item['url'] = mb_substr($inPath, mb_strlen($this->sitePath));
             }
 
             if ($item['dirname'] === 'source') {

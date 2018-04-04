@@ -201,6 +201,8 @@ services:
     ForkCMS\Utility\Thumbnails:
         alias: forkcms.utility.thumbnails
         public: true
+        arguments:
+            - "%site.path_www%"
 
     templating:
         class: Frontend\Core\Engine\TwigTemplate
