@@ -85,5 +85,10 @@
             "**/tests/",
             "**/Test/"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ForkCMS\\Tests\\": "tests/"
+        }
     }
 }
