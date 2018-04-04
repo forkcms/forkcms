@@ -3,6 +3,7 @@
 namespace Common\Core;
 
 use ForkCMS\App\BaseModel;
+use ForkCMS\Utility\Thumbnails;
 use InvalidArgumentException;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
@@ -157,7 +158,7 @@ class Model extends BaseModel
      */
     public static function generateThumbnails(string $path, string $sourceFile): void
     {
-        self::get('forkcms.utility.thumbnails')->generate($path, $sourceFile);
+        self::get(Thumbnails::class)->generate($path, $sourceFile);
     }
 
     /**
@@ -170,7 +171,7 @@ class Model extends BaseModel
      */
     public static function deleteThumbnails(string $path, ?string $thumbnail): void
     {
-        self::get('forkcms.utility.thumbnails')->delete($path, $thumbnail);
+        self::get(Thumbnails::class)->delete($path, $thumbnail);
     }
 
     /**
@@ -185,7 +186,7 @@ class Model extends BaseModel
      */
     public static function getThumbnailFolders(string $path, bool $includeSource = false): array
     {
-        return self::get('forkcms.utility.thumbnails')->getFolders($path, $includeSource);
+        return self::get(Thumbnails::class)->getFolders($path, $includeSource);
     }
 
     /**
