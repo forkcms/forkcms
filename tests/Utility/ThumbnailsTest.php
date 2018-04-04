@@ -52,8 +52,8 @@ class ThumbnailsTest extends TestCase
     {
         // Init variables
         $sitePathWWW = dirname(__FILE__) . '/..';
-        $this->rootPath = realpath($sitePathWWW . '/assets');
-        $this->filename = 'test_image.jpg';
+        $this->rootPath = realpath($sitePathWWW);
+        $this->filename = '1.jpg';
         $this->thumbnails = new Thumbnails($sitePathWWW);
 
         $this->folders = [
@@ -67,7 +67,7 @@ class ThumbnailsTest extends TestCase
 
         // Copy our file to /source folder
         copy(
-            $this->rootPath . '/' . $this->filename,
+            $this->rootPath . '/../src/Backend/Core/Installer/Data/images/' . $this->filename,
             $this->rootPath . '/' . self::SOURCE . '/' . $this->filename
         );
     }
@@ -89,21 +89,21 @@ class ThumbnailsTest extends TestCase
                 [
                     'dirname' => self::LANDSCAPE,
                     'path' => $this->rootPath . '/' . self::LANDSCAPE,
-                    'url' => '/assets',
+                    'url' => '',
                     'width' => (int) explode('x', self::LANDSCAPE)[0],
                     'height' => (int) explode('x', self::LANDSCAPE)[1],
                 ],
                 [
                     'dirname' => self::PORTRAIT,
                     'path' => $this->rootPath . '/' . self::PORTRAIT,
-                    'url' => '/assets',
+                    'url' => '',
                     'width' => (int) explode('x', self::PORTRAIT)[0],
                     'height' => (int) explode('x', self::PORTRAIT)[1],
                 ],
                 [
                     'dirname' => self::SQUARE,
                     'path' => $this->rootPath . '/' . self::SQUARE,
-                    'url' => '/assets',
+                    'url' => '',
                     'width' => (int) explode('x', self::SQUARE)[0],
                     'height' => (int) explode('x', self::SQUARE)[0],
                 ]
