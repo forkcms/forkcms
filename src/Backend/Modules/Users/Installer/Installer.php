@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Users\Installer;
 
+use Common\Core\Model;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
@@ -144,6 +145,7 @@ class Installer extends ModuleInstaller
             $settings = [];
             $settings['nickname'] = 'Fork CMS';
             $settings['name'] = 'Fork';
+            $settings['preferred_editor'] = Model::getContainer()->getParameter('fork.form.default_preferred_editor');
             $settings['surname'] = 'CMS';
             $settings['interface_language'] = $this->getVariable('default_interface_language');
             $settings['date_format'] = 'j F Y';

@@ -132,8 +132,13 @@ jsFrontend.data = {
     // init if needed
     if (!jsFrontend.data.initialized) jsFrontend.data.init()
 
-    // return
-    return jsFrontend.data.data[key]
+    var keys = key.split('.')
+    var data = jsFrontend.data.data
+    for (var i = 0; i < keys.length; i++) {
+      data = data[keys[i]]
+    }
+
+    return data
   }
 }
 
@@ -527,7 +532,7 @@ jsFrontend.statistics = {
     if (typeof _gaq === 'object' || typeof ga === 'function') {
       // create a new selector
       $.expr[':'].external = function (obj) {
-        return (typeof obj.href !== 'undefined') && !obj.href.match(/^mailto:/) && (obj.hostname !== window.location.hostname)
+        return (typeof obj.href !== 'undefined') && (obj.hostname !== window.location.hostname)
       }
 
       // bind on all links that don't have the class noTracking

@@ -7,7 +7,10 @@
     font-size: $font-size-large;
     margin-bottom: 20px;
 
+    h2,
     p {
+      font-size: $font-size-large;
+      color: $text-color;
       margin: 0;
     }
 
