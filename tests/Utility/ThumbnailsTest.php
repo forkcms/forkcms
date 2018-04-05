@@ -31,14 +31,14 @@ class ThumbnailsTest extends TestCase
         }
     }
 
-    private function removeFolders()
+    private function deleteFolders()
     {
         foreach ($this->folders as $folder) {
             rmdir($folder);
         }
     }
 
-    private function removeFiles()
+    private function deleteFiles()
     {
         unlink($this->rootPath . '/' . self::SOURCE . '/' . $this->filename);
     }
@@ -55,7 +55,6 @@ class ThumbnailsTest extends TestCase
         $this->rootPath = realpath($sitePathWWW);
         $this->filename = '1.jpg';
         $this->thumbnails = new Thumbnails($sitePathWWW);
-
         $this->folders = [
             $this->rootPath . '/' . self::SOURCE,
             $this->rootPath . '/' . self::SQUARE,
@@ -74,8 +73,8 @@ class ThumbnailsTest extends TestCase
 
     protected function tearDown()
     {
-        $this->removeFiles();
-        $this->removeFolders();
+        $this->deleteFiles();
+        $this->deleteFolders();
     }
 
     /**
