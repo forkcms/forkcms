@@ -69,11 +69,25 @@ jsFrontend.controls = {
   // init, something like a constructor
   init: function () {
     jsFrontend.controls.bindTargetBlank()
+    jsFrontend.controls.toggleCollapse()
   },
 
   // bind target blank
   bindTargetBlank: function () {
     $('a.targetBlank').attr('target', '_blank')
+  },
+
+  toggleCollapse: function () {
+    var $navToggle = $('.navbar-toggle')
+
+    if ($navToggle.length === 0) {
+      return
+    }
+
+    $navToggle.on('click', function() {
+      var $button = $(this)
+      $button.find('[data-role=label]').text(jsFrontend.locale.lbl($button.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
+    }).find('[data-role=label]').text(jsFrontend.locale.lbl($navToggle.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
   }
 }
 
@@ -532,7 +546,7 @@ jsFrontend.statistics = {
     if (typeof _gaq === 'object' || typeof ga === 'function') {
       // create a new selector
       $.expr[':'].external = function (obj) {
-        return (typeof obj.href !== 'undefined') && !obj.href.match(/^mailto:/) && (obj.hostname !== window.location.hostname)
+        return (typeof obj.href !== 'undefined') && (obj.hostname !== window.location.hostname)
       }
 
       // bind on all links that don't have the class noTracking

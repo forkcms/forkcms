@@ -54,23 +54,21 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
-                  <div role="tree">
-                    {% for permission in permissions %}
-                      <div class="panel panel-transparent jsGroupsPermissionsModule">
-                        <div class="panel-heading" role="tab" id="permission-heading-{{ permission.id }}">
-                          <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="permission-list-{{ permission.id }}">
-                            <h4 class="panel-title">
-                              {{ permission.chk|raw }}
-                              {{ macro.icon('caret-right fa-fw') }} {{ permission.label }}
-                            </h4>
-                          </div>
-                        </div>
-                        <div id="permission-list-{{ permission.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
-                          {{ permission.actions.dataGrid|raw }}
+                  {% for permission in permissions %}
+                    <div class="panel panel-transparent jsGroupsPermissionsModule">
+                      <div class="panel-heading" role="tab" id="permission-heading-{{ permission.id }}">
+                        <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="permission-list-{{ permission.id }}">
+                          <h4 class="panel-title">
+                            {{ permission.chk|raw }}
+                            {{ macro.icon('caret-right fa-fw') }} {{ permission.label }}
+                          </h4>
                         </div>
                       </div>
-                    {% endfor %}
-                  </div>
+                      <div id="permission-list-{{ permission.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
+                        {{ permission.actions.dataGrid|raw }}
+                      </div>
+                    </div>
+                  {% endfor %}
                 </div>
               </div>
             </div>
