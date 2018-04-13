@@ -5,6 +5,8 @@ namespace Backend\Modules\Location\Engine;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\ModuleExtraType;
+use JeroenDesloovere\Geolocation\Geolocation;
+use JeroenDesloovere\Geolocation\Result\Coordinates;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**
@@ -90,6 +92,8 @@ class Model
     /**
      * Get coordinates latitude/longitude
      *
+     * @todo: in the next major version return the Coordinates object directly instead of the array
+     *
      * @param string $street
      * @param string $streetNumber
      * @param string $city
@@ -97,6 +101,7 @@ class Model
      * @param string $country
      *
      * @return array  Contains 'latitude' and 'longitude' as variables
+     * @throws \JeroenDesloovere\Geolocation\Exception
      */
     public static function getCoordinates(
         string $street = null,
@@ -105,47 +110,24 @@ class Model
         string $zip = null,
         string $country = null
     ): array {
-        // init item
-        $item = [];
-
-        // building item
-        if (!empty($street)) {
-            $item[] = $street;
-        }
-
-        if (!empty($streetNumber)) {
-            $item[] = $streetNumber;
-        }
-
-        if (!empty($city)) {
-            $item[] = $city;
-        }
-
-        if (!empty($zip)) {
-            $item[] = $zip;
-        }
-
         if (!empty($country)) {
-            $item[] = Intl::getRegionBundle()->getCountryName($country, BL::getInterfaceLanguage());
+            $country = Intl::getRegionBundle()->getCountryName($country, BL::getInterfaceLanguage());
         }
 
-        // define address
-        $address = implode(' ', $item);
+        $geolocation = new Geolocation(BackendModel::get('fork.settings')->get('Core', 'google_maps_key'));
 
-        // fetch the geo coordinates
-        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . rawurlencode($address);
-        $geocodes = json_decode(file_get_contents($url), true);
+        /** @var Coordinates $coordinates */
+        $coordinates = $geolocation->getCoordinates(
+            $street,
+            $streetNumber,
+            $city,
+            $zip,
+            $country
+        );
 
-        // return coordinates latitude/longitude
         return [
-            'latitude' => array_key_exists(
-                0,
-                $geocodes['results']
-            ) ? $geocodes['results'][0]['geometry']['location']['lat'] : null,
-            'longitude' => array_key_exists(
-                0,
-                $geocodes['results']
-            ) ? $geocodes['results'][0]['geometry']['location']['lng'] : null,
+            'latitude' => $coordinates->getLatitude(),
+            'longitude' => $coordinates->getLongitude(),
         ];
     }
 
