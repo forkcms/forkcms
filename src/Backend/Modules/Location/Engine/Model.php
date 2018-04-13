@@ -5,9 +5,7 @@ namespace Backend\Modules\Location\Engine;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\ModuleExtraType;
-use JeroenDesloovere\Geolocation\Geolocation;
-use JeroenDesloovere\Geolocation\Result\Coordinates;
-use Symfony\Component\Intl\Intl as Intl;
+use ForkCMS\Utility\Geolocation;
 
 /**
  * In this file we store all generic functions that we will be using in the location module
@@ -92,7 +90,7 @@ class Model
     /**
      * Get coordinates latitude/longitude
      *
-     * @todo: in the next major version return the Coordinates object directly instead of the array
+     * @deprecated
      *
      * @param string $street
      * @param string $streetNumber
@@ -101,7 +99,6 @@ class Model
      * @param string $country
      *
      * @return array  Contains 'latitude' and 'longitude' as variables
-     * @throws \JeroenDesloovere\Geolocation\Exception
      */
     public static function getCoordinates(
         string $street = null,
@@ -110,25 +107,13 @@ class Model
         string $zip = null,
         string $country = null
     ): array {
-        if (!empty($country)) {
-            $country = Intl::getRegionBundle()->getCountryName($country, BL::getInterfaceLanguage());
-        }
-
-        $geolocation = new Geolocation(BackendModel::get('fork.settings')->get('Core', 'google_maps_key'));
-
-        /** @var Coordinates $coordinates */
-        $coordinates = $geolocation->getCoordinates(
+        return BackendModel::get(Geolocation::class)->getCoordinates(
             $street,
             $streetNumber,
             $city,
             $zip,
             $country
         );
-
-        return [
-            'latitude' => $coordinates->getLatitude(),
-            'longitude' => $coordinates->getLongitude(),
-        ];
     }
 
     /**
