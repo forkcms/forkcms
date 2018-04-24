@@ -6,18 +6,18 @@
     {% include "Core/Layout/Templates/Cookies.html.twig" %}
   {% endblock %}
 
-  <div class="header header-blue" style="background-image: url('{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ page.data.image }}');">
+  <div class="header header-blue" {% if page.data.image is defined and page.data.image is not empty %}style="background-image: url('{{ FRONTEND_FILES_URL }}/Pages/images/source/{{ page.data.image }}');"{% endif %}>
     {% block navigation %}
       <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">{$lblToggleNavigation}</span>
+              <span class="sr-only" data-role="label">{{ 'lbl.OpenNavigation'|trans }}</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/{{ LANGUAGE }}">{{ siteTitle }}</a>
+            <a class="navbar-brand" href="/{% if SITE_MULTILANGUAGE %}{{ LANGUAGE }}{% endif %}">{{ siteTitle }}</a>
           </div>
           <div id="navbar-main" class="navbar-collapse collapse">
             {{ getnavigation('page', 0, 1) }}
