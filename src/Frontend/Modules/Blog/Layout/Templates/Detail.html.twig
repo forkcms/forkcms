@@ -103,57 +103,61 @@
   </article>
 
   {% block block_article_comments %}
-    <section id="{{ act.Comments }}" class="block-blog-article-comments">
-      <header role="banner" class="block-blog-article-comments-heading">
-        <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
-      </header>
+    {% if comments or item.allow_comments %}
+      <section id="{{ act.Comments }}" class="block-blog-article-comments">
+        <header role="banner" class="block-blog-article-comments-heading">
+          <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
+        </header>
 
-      {% if not comments %}
-        <div class="block-blog-article-comments-alerts">
-          {{ alerts.alert('info', 'msg.BlogNoComments'|trans) }}
-        </div>
-      {% else %}
-        {% for comment in comments %}
-          {# Do not alter the id! It is used as an anchor #}
-          <div
-            id="comment-{{ comment.id }}" class="block-blog-article-comments-comment row"
-            itemprop="comment"
-            itemscope
-            itemtype="http://schema.org/UserComments"
-          >
-            <div class="col-sm-1 block-blog-article-comments-comment-avatar">
-              <meta itemprop="discusses" content="{{ item.title }}" />
-              {% if comment.website %}
-              <a href="{{ comment.website }}">
-                {% endif %}
-                <img src="{{ FRONTEND_CORE_URL }}/Layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar img-circle" data-gravatar-id="{{ comment.gravatar_id }}" />
-                {% if comment.website %}
-              </a>
-              {% endif %}
+        {% if not comments %}
+          {% if item.allow_comments %}
+            <div class="block-blog-article-comments-alerts">
+              {{ alerts.alert('info', 'msg.BlogNoComments'|trans) }}
             </div>
-
-            <div class="col-sm-7">
-              <div class="block-blog-article-comments-comment-meta" itemscope itemtype="http://schema.org/Person">
+          {% endif %}
+        {% else %}
+          {% for comment in comments %}
+            {# Do not alter the id! It is used as an anchor #}
+            <div
+              id="comment-{{ comment.id }}" class="block-blog-article-comments-comment row"
+              itemprop="comment"
+              itemscope
+              itemtype="http://schema.org/UserComments"
+            >
+              <div class="col-sm-1 block-blog-article-comments-comment-avatar">
+                <meta itemprop="discusses" content="{{ item.title }}" />
                 {% if comment.website %}
-                <a href="{{ comment.website }}" itemprop="url">
+                <a href="{{ comment.website }}">
                   {% endif %}
-                  <span itemprop="creator name">{{ comment.author }}</span>
+                  <img src="{{ FRONTEND_CORE_URL }}/Layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comment.author }}" class="replaceWithGravatar img-circle" data-gravatar-id="{{ comment.gravatar_id }}" />
                   {% if comment.website %}
                 </a>
                 {% endif %}
-                {{ 'lbl.Wrote'|trans }}
-                <time itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s' ) }}">
-                  {{ comment.created_on|timeago|raw }}
-                </time>
               </div>
-              <div class="commentText block-blog-article-comments-comment-content" itemprop="commentText">
-                {{ comment.text|raw }}
+
+              <div class="col-sm-7">
+                <div class="block-blog-article-comments-comment-meta" itemscope itemtype="http://schema.org/Person">
+                  {% if comment.website %}
+                  <a href="{{ comment.website }}" itemprop="url">
+                    {% endif %}
+                    <span itemprop="creator name">{{ comment.author }}</span>
+                    {% if comment.website %}
+                  </a>
+                  {% endif %}
+                  {{ 'lbl.Wrote'|trans }}
+                  <time itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s' ) }}">
+                    {{ comment.created_on|timeago|raw }}
+                  </time>
+                </div>
+                <div class="commentText block-blog-article-comments-comment-content" itemprop="commentText">
+                  {{ comment.text|raw }}
+                </div>
               </div>
             </div>
-          </div>
-        {% endfor %}
-      {% endif %}
-    </section>
+          {% endfor %}
+        {% endif %}
+      </section>
+    {% endif %}
   {% endblock %}
 
   {% if item.allow_comments %}
