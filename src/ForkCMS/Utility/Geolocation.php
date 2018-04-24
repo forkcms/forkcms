@@ -39,18 +39,22 @@ class Geolocation
             $country = Intl::getRegionBundle()->getCountryName($country, Language::getInterfaceLanguage());
         }
 
-        /** @var Coordinates $coordinates */
-        $coordinates = $this->api->getCoordinates(
-            $street,
-            $streetNumber,
-            $city,
-            $zip,
-            $country
-        );
+        try {
+            /** @var Coordinates $coordinates */
+            $coordinates = $this->api->getCoordinates(
+                $street,
+                $streetNumber,
+                $city,
+                $zip,
+                $country
+            );
+        } catch (Exception $e) {
+            $coordinates = null;
+        }
 
         return [
-            'latitude' => $coordinates->getLatitude(),
-            'longitude' => $coordinates->getLongitude(),
+            'latitude' => ($coordinates instanceof Coordinates) ? $coordinates->getLatitude() : null,
+            'longitude' => ($coordinates instanceof Coordinates) ? $coordinates->getLongitude() : null,
         ];
     }
 }
