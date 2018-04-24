@@ -26,7 +26,6 @@ class Geolocation
      * @param string|null $zip
      * @param string|null $country
      * @return array - Example: ['latitude' => 50.8864, 'longitude' => 3.42928]
-     * @throws Exception
      */
     public function getCoordinates(
         string $street = null,
