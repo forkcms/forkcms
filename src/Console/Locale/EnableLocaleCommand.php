@@ -343,6 +343,7 @@ class EnableLocaleCommand extends Command
             'sv' => 'Swedish',
             'uk' => 'Ukrainian',
             'pt' => 'Portuguese',
+            'pl' => 'Polish',
         ];
     }
 }

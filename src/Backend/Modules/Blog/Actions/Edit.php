@@ -201,7 +201,7 @@ class Edit extends BackendBaseActionEdit
             null,
             'form-control js-tags-input',
             'form-control danger js-tags-input'
-        );
+        )->setAttribute('aria-describedby', 'tags-info');
         $this->form->addDate('publish_on_date', $this->record['publish_on']);
         $this->form->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
         if ($this->imageIsAllowed) {
