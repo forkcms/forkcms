@@ -184,7 +184,7 @@ class Model
             'SELECT ps.profile_id
              FROM profiles_settings AS ps
              WHERE ps.name = ? AND ps.value = ?',
-            [(string) $name, serialize($value)]
+            [$name, serialize($value)]
         );
     }
 
@@ -226,7 +226,7 @@ class Model
         // get random characters
         for ($i = 0; $i < $length; ++$i) {
             // random index
-            $index = mt_rand(0, mb_strlen($characters));
+            $index = mt_rand(0, mb_strlen($characters) - 1);
 
             // add character to salt
             $string .= mb_substr($characters, $index, 1, $charset);

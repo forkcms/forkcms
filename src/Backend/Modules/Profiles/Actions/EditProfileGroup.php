@@ -82,6 +82,7 @@ class EditProfileGroup extends BackendBaseActionEdit
 
         // assign the active record and additional variables
         $this->template->assign('profileGroup', $this->profileGroup);
+        $this->template->assign('profileId', $this->profileId);
     }
 
     private function validateForm(): void

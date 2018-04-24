@@ -50,6 +50,13 @@ class Add extends BackendBaseActionAdd
     private $extras = [];
 
     /**
+     * The hreflang fields
+     *
+     * @var array
+     */
+    private $hreflangFields = [];
+
+    /**
      * The template data
      *
      * @var array
@@ -121,6 +128,19 @@ class Add extends BackendBaseActionAdd
 
         // image related fields
         $this->form->addImage('image');
+
+        // just execute if the site is multi-language
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
+            // loop active languages
+            foreach (BL::getActiveLanguages() as $language) {
+                if ($language != BL::getWorkingLanguage()) {
+                    $pages = BackendPagesModel::getPagesForDropdown($language);
+                    // add field for each language
+                    $field = $this->form->addDropdown('hreflang_' . $language, $pages)->setDefaultElement('');
+                    $this->hreflangFields[$language]['field_hreflang'] = $field->parse();
+                }
+            }
+        }
 
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
@@ -318,10 +338,14 @@ class Add extends BackendBaseActionAdd
         $this->template->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
         $this->template->assign(
             'prefixURL',
-            rtrim(BackendPagesModel::getFullUrl($this->getRequest()->query->getInt('parent', 1)), '/')
+            rtrim(
+                BackendPagesModel::getFullUrl($this->getRequest()->query->getInt('parent', BackendModel::HOME_PAGE_ID)),
+                '/'
+            )
         );
         $this->template->assign('formErrors', (string) $this->form->getErrors());
         $this->template->assign('showTags', $this->showTags());
+        $this->template->assign('hreflangFields', $this->hreflangFields);
 
         // get default template id
         $defaultTemplateId = $this->get('fork.settings')->get('Pages', 'default_template', 1);
@@ -413,6 +437,16 @@ class Add extends BackendBaseActionAdd
                 $template = $this->templates[$templateId];
                 if (array_key_exists('image', $template['data'])) {
                     $data['image'] = $this->getImage($template['data']['image'], $template['default_image']);
+                }
+
+                // just execute if the site is multi-language
+                if ($this->getContainer()->getParameter('site.multilanguage')) {
+                    // loop active languages
+                    foreach (BL::getActiveLanguages() as $language) {
+                        if ($language != BL::getWorkingLanguage() && $this->form->getfield('hreflang_' . $language)->isFilled()) {
+                            $data['hreflang_' . $language] = $this->form->getfield('hreflang_' . $language)->getValue();
+                        }
+                    }
                 }
 
                 // build page record

@@ -61,6 +61,10 @@ class Form extends \Common\Core\Form
      */
     public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true): SpoonFormTextarea
     {
+        if (BackendModel::getPreferredEditor() !== 'ck-editor') {
+            return $this->addTextarea($name, $value, $class, $classError, $HTML);
+        }
+
         if (!$this->header instanceof Header) {
             throw new ServiceNotFoundException('header');
         }
@@ -68,7 +72,7 @@ class Form extends \Common\Core\Form
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $class = 'inputEditor ' . (string) $class;
-        $classError = 'inputEditorError ' . (string) $classError;
+        $classError = 'inputEditorError is-invalid ' . (string) $classError;
         $HTML = (bool) $HTML;
 
         // we add JS because we need CKEditor
@@ -107,8 +111,8 @@ class Form extends \Common\Core\Form
     public function addFile($name, $class = null, $classError = null): SpoonFormFile
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'fork-form-file';
-        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+        $class = (string) ($class ?? 'fork-form-file');
+        $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // add element
         $this->add(new FormFile($name, $class, $classError));
@@ -128,8 +132,8 @@ class Form extends \Common\Core\Form
     public function addImage($name, $class = null, $classError = null): FormImage
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'fork-form-image';
-        $classError = ($classError !== null) ? (string) $classError : 'error form-control-danger';
+        $class = (string) ($class ?? 'fork-form-image');
+        $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // add element
         $this->add(new FormImage($name, $class, $classError));

@@ -15,9 +15,10 @@
     {% endblock %}
   </div>
   <div id="root">
-    <div id="content" class="content-wrapper">
+    <main id="content" class="content-wrapper">
 
       <div class="content-main content-main-tree">
+        {% block contentActionBar %}
         <div class="content-action-bar">
           <div class="container-fluid">
             <div class="row fork-module-heading">
@@ -38,6 +39,7 @@
             </div>
           </div>
         </div>
+        {% endblock %}
         <div class="content">
           <div class="container-fluid container-fluid-large">
             {% block content %}
@@ -45,7 +47,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
     <div id="root-footer"></div>
   </div>
 
@@ -55,7 +57,7 @@
 </div>
 
 <div class="hidden">
-  <div class="modal fade jsConfirmation" role="dialog" aria-labelledby="jsConfirmationDeleteDialogTitle">
+  <div class="modal fade jsConfirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="jsConfirmationDeleteDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -75,6 +77,7 @@
   </div>
 
   {# Scripts should be placed here #}
+  <script src="/js/vendors/bootstrap-accessibility.min.js"></script>
 </div>
 </body>
 </html>

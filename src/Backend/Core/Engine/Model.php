@@ -3,6 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Common\ModuleExtraType;
+use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -214,29 +215,6 @@ class Model extends \Common\Core\Model
         if (!empty($ids)) {
             // delete extras
             self::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
-        }
-    }
-
-    /**
-     * Delete thumbnails based on the folders in the path
-     *
-     * @param string $path The path wherein the thumbnail-folders exist.
-     * @param string|null $thumbnail The filename to be deleted.
-     */
-    public static function deleteThumbnails(string $path, ?string $thumbnail): void
-    {
-        // if there is no image provided we can't do anything
-        if ($thumbnail === null || $thumbnail === '') {
-            return;
-        }
-
-        $finder = new Finder();
-        $filesystem = new Filesystem();
-        foreach ($finder->directories()->in($path) as $directory) {
-            $fileName = $directory->getRealPath() . '/' . $thumbnail;
-            if (is_file($fileName)) {
-                $filesystem->remove($fileName);
-            }
         }
     }
 
@@ -531,7 +509,7 @@ class Model extends \Common\Core\Model
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
-            return self::getUrl(404, $language);
+            return self::getUrl(BackendModel::ERROR_PAGE_ID, $language);
         }
 
         // return the unique URL!
@@ -619,7 +597,7 @@ class Model extends \Common\Core\Model
 
         // Page not found so return the 404 url
         if ($pageIdForUrl === null) {
-            return self::getUrl(404, $language);
+            return self::getUrl(self::ERROR_PAGE_ID, $language);
         }
 
         $url = self::getUrl($pageIdForUrl, $language);
@@ -708,6 +686,22 @@ class Model extends \Common\Core\Model
                 'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
             ]
         );
+    }
+
+    /**
+     * This returns the identifier for the editor the logged in user prefers to use in forms.
+     *
+     * @return string
+     */
+    public static function getPreferredEditor(): string
+    {
+        $defaultPreferredEditor = self::getContainer()->getParameter('fork.form.default_preferred_editor');
+
+        if (!Authentication::isLoggedIn()) {
+            return $defaultPreferredEditor;
+        }
+
+        return Authentication::getUser()->getSetting('preferred_editor', $defaultPreferredEditor);
     }
 
     /**

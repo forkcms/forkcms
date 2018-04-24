@@ -99,12 +99,6 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
 
         // load the config file for the required module
         $this->loadConfig();
-
-        // is the requested action possible? If not we throw an exception.
-        // We don't redirect because that could trigger a redirect loop
-        if (!in_array($this->getAction(), $this->config->getPossibleActions())) {
-            $this->setAction($this->config->getDefaultAction());
-        }
     }
 
     public function execute(): void
@@ -142,12 +136,17 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
      * Get the current action
      * REMARK: You should not use this method from your code, but it has to be
      * public so we can access it later on in the core-code
+     * When the action is null the default action of the module will be used
      *
-     * @return string
+     * @return string|null
      */
-    public function getAction(): string
+    public function getAction(): ?string
     {
         if ($this->action !== null) {
+            if (!\in_array($this->action, $this->config->getPossibleActions(), true)) {
+                $this->setAction($this->config->getDefaultAction());
+            }
+
             return $this->action;
         }
 
@@ -178,6 +177,11 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
                 // stop the loop
                 break;
             }
+        }
+
+        // we need this fallback when we add extra slugs but still need the default action
+        if (!\in_array($this->action, $this->config->getPossibleActions(), true)) {
+            $this->setAction($this->config->getDefaultAction());
         }
 
         return $this->action;

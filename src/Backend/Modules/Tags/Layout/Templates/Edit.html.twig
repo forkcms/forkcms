@@ -18,7 +18,7 @@
       </div>
       <div class="content-block content-block-pb">
         <div class="content-title">
-          <p>{{ 'lbl.UsedIn'|trans|ucfirst }}</p>
+          <h2>{{ 'lbl.UsedIn'|trans|ucfirst }}</h2>
         </div>
         {% if usage %}
           {{ usage|raw }}
@@ -34,10 +34,11 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
+        <div class="btn-group" role="group">
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+        </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"editButton", "type":"submit", "name":"edit"}) }}
         </div>
       </div>
     </div>

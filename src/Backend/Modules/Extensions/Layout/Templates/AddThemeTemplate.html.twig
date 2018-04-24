@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-
+{% import "Layout/Templates/macros.html.twig" as macro %}
 {% block actionbar %}
 
 {% endblock %}
@@ -10,7 +10,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <p>{{ 'lbl.Template'|trans|ucfirst }}</p>
+          <h2>{{ 'lbl.Template'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-inline form-group">
@@ -45,7 +45,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h2>
         </div>
         <div id="positions" class="panel-body">
           {% for position in positions %}
@@ -56,9 +56,10 @@
                   <div class="form-group">
                     <label for="position{{ position.i }}">
                       <span>{{ 'lbl.Position'|trans|ucfirst }}</span>
-                      <a href="#" class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|ucfirst }}">
-                        <span class="fa fa-trash-o"></span>
-                      </a>
+                      <button class="btn btn-danger btn-icon-only jsDeletePosition">
+                        {{ macro.icon('trash-o') }}
+                        <span class="sr-only">{{ 'lbl.DeletePosition'|trans|ucfirst }}</span>
+                      </button>
                     </label>
                   </div>
                 </div>
@@ -80,9 +81,10 @@
                           {{ block.formElements.ddmType.parse()|raw }}
                           {{ block.formElements.ddmTypeError }}
                           {# Button to remove block from this position #}
-                          <a href="#" class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|ucfirst }}">
-                            <span class="fa fa-trash-o"></span>
-                          </a>
+                          <button class="btn btn-danger btn-icon-only jsDeleteBlock">
+                            {{ macro.icon('trash-o') }}
+                            <span class="sr-only">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</span>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -93,7 +95,7 @@
                     <div class="btn-group" role="group">
                       {# Button to add new default block to this position #}
                       <a href="#" class="btn btn-default jsAddBlock">
-                        <span class="fa fa-plus-square"></span>&nbsp;
+                        {{ macro.icon('plus-square') }}&nbsp;
                         <span>{{ 'lbl.AddBlock'|trans|ucfirst }}</span>
                       </a>
                     </div>
@@ -106,7 +108,7 @@
           <div class="btn-toolbar">
             <div class="btn-group" role="group">
               <a href="#" class="btn btn-primary jsAddPosition">
-                <span class="fa fa-plus-square"></span>
+                {{ macro.icon('plus-square') }}
                 <span>{{ 'lbl.AddPosition'|trans|ucfirst }}</span>
               </a>
             </div>
@@ -122,9 +124,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             <label for="format" class="control-label">{{ 'lbl.Layout'|trans|ucfirst }}</label>
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="row">
@@ -148,7 +150,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -169,9 +171,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" name="add" class="btn btn-primary" type="submit">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
         </div>
       </div>
     </div>

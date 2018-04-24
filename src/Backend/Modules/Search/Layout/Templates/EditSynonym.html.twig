@@ -34,16 +34,12 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showSearchDeleteSynonym %}
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
-              {{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "type":"button", "data-target":"#confirmDelete"}) }}
           {% endif %}
+          {{ macro.buttonIcon(geturl('Synonyms'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.AddSynonym'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddSynonym'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
         </div>
       </div>
     </div>
@@ -54,7 +50,7 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -64,12 +60,8 @@
             <p>{{ 'msg.ConfirmDeleteSynonym'|trans|format(term)|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+            {{ macro.buttonIcon('', 'plus-trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger') }}
           </div>
         </div>
       </div>

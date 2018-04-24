@@ -9,7 +9,7 @@
   {% form add %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div role="tabpanel">
+      <div>
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
             <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
@@ -24,7 +24,7 @@
               <div class="col-lg-6">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h3>
+                    <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -90,7 +90,7 @@
               <div class="col-md-12">
                 <label for="identifier" class="control-label">
                   {{ 'lbl.Identifier'|trans|ucfirst }}
-                  <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpIdentifier'|trans }}"></abbr>
+                  {{ macro.infoTooltip('msg.HelpIdentifier'|trans|ucfirst) }}
                 </label>
                 {% form_field identifier %} {% form_field_error identifier %}
               </div>
@@ -103,10 +103,11 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
+        <div class="btn-group" role="group">
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+        </div>
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
         </div>
       </div>
     </div>

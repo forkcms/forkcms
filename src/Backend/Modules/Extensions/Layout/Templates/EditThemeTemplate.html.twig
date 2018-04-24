@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-
+{% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
 
@@ -11,7 +11,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <p>{{ 'lbl.Template'|trans|ucfirst }}</p>
+          <h2 class="panel-title">{{ 'lbl.Template'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-inline form-group">
@@ -55,7 +55,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h2>
         </div>
         <div id="positions" class="panel-body">
           {% for position in positions %}
@@ -66,9 +66,10 @@
                   <div class="form-group">
                     <label for="position{{ position.i }}">
                       <span>{{ 'lbl.Position'|trans|ucfirst }}</span>
-                      <a href="#" class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|ucfirst }}">
-                        <span class="fa fa-trash-o"></span>
-                      </a>
+                      <button class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|ucfirst }}">
+                        {{ macro.icon('trash-o') }}
+                        <span class="sr-only">{{ 'lbl.DeletePosition'|trans|ucfirst }}</span>
+                      </button>
                     </label>
                   </div>
                 </div>
@@ -89,9 +90,10 @@
                           {{ block.formElements.ddmType.parse()|raw }}
                           {{ block.formElements.ddmTypeError }}
                           {# Button to remove block from this position #}
-                          <a href="#" class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|ucfirst }}">
-                            <span class="fa fa-trash-o"></span>
-                          </a>
+                          <button class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|ucfirst }}">
+                            {{ macro.icon('trash-o') }}
+                            <span class="sr-only">{{ 'lbl.DeleteBlock'|trans|ucfirst }}</span>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -102,7 +104,7 @@
                     <div class="btn-group" role="group">
                       {# Button to add new default block to this position #}
                       <a href="#" class="btn btn-default jsAddBlock">
-                        <span class="fa fa-plus-square"></span>&nbsp;
+                        {{ macro.icon('plus-square') }}&nbsp;
                         <span>{{ 'lbl.AddBlock'|trans|ucfirst }}</span>
                       </a>
                     </div>
@@ -115,7 +117,7 @@
           <div class="btn-toolbar">
             <div class="btn-group" role="group">
               <a href="#" class="btn btn-primary jsAddPosition">
-                <span class="fa fa-plus-square"></span>&nbsp;
+                {{ macro.icon('plus-square') }}&nbsp;
                 <span>{{ 'lbl.AddPosition'|trans|ucfirst }}</span>
               </a>
             </div>
@@ -131,9 +133,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             <label for="format" class="control-label">{{ 'lbl.Layout'|trans|ucfirst }}</label>
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="row">
@@ -157,7 +159,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -178,7 +180,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Overwrite'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Overwrite'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -198,15 +200,11 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showExtensionsDeleteThemeTemplate and allowExtensionsDeleteThemeTemplate %}
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           {% endif %}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
         </div>
       </div>
     </div>
@@ -217,7 +215,7 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -227,12 +225,8 @@
             <p>{{ 'msg.ConfirmDeleteTemplate'|trans|format(template.label)|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal", "type":"button"}) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"submit"}) }}
           </div>
         </div>
       </div>

@@ -103,7 +103,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addCheckbox('new_password');
         $this->form->addPassword('password');
         $this->form->addPassword('password_repeat');
-        $this->form->addText('display_name', $this->profile['display_name']);
+        $this->form->addText('display_name', $this->profile['display_name'])->makeRequired();
         $this->form->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
         $this->form->addText('last_name', BackendProfilesModel::getSetting($this->id, 'last_name'));
         $this->form->addText('city', BackendProfilesModel::getSetting($this->id, 'city'));
@@ -305,8 +305,7 @@ class Edit extends BackendBaseActionEdit
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
 
-                $displayName = (isset($values['display_name'])) ?
-                    $values['display_name'] : $this->profile['display_name'];
+                $displayName = $values['display_name'] ?? $this->profile['display_name'];
 
                 $redirectUrl = BackendModel::createUrlForAction('Index') .
                                '&var=' . rawurlencode($values['email']) .

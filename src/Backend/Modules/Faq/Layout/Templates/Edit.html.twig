@@ -10,34 +10,34 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="title" class="control-label">{{ 'lbl.Question'|trans|ucfirst }}</label>
+        <label for="title" class="control-label">{{ 'lbl.Question'|trans|ucfirst }} {{ macro.required }}</label>
         {% form_field title %} {% form_field_error title %}
         {% if detailURL %}
           <a class="site-url" href="{{ detailURL }}/{{ item.url }}">{{ detailURL }}/<span id="generatedUrl">{{ item.url }}</span></a>
         {% endif %}
         {% if not detailURL %}
           <p class="alert alert-warning alert-xs">
-            <span class="fa fa-exclamation-triangle"></span>{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+            {{ macro.icon('exclamation-triangle') }}{{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
         {% endif %}
       </div>
     </div>
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
+      <div>
+        <ul class="nav nav-tabs nav-tabs-flex" role="tablist">
+          <li role="presentation" class="active mr-auto">
             <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right" role="presentation">
-            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
-          </li>
-          <li class="pull-right" role="presentation">
+          <li role="presentation">
             <a href="#tabFeedback" aria-controls="tabFeedback" role="tab" data-toggle="tab">
               {{ 'lbl.Feedback'|trans|ucfirst }}
               <span class="label label-success">{{ item.num_usefull_yes }}</span>
               <span class="label label-danger">{{ item.num_usefull_no }}</span>
             </a>
+          </li>
+          <li role="presentation">
+            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -63,7 +63,7 @@
               <div class="col-md-4">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h3>
+                    <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group last">
@@ -79,7 +79,7 @@
                 </div>
                 <div class="panel panel-default last">
                   <div class="panel-heading">
-                    <h3 class="panel-title">{{ 'lbl.MetaData'|trans|ucfirst }}</h3>
+                    <h2 class="panel-title">{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -89,6 +89,7 @@
                     <div class="form-group last">
                       <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                       {% form_field tags %} {% form_field_error tags %}
+                      <div class="help-block">{{ 'msg.HelpTextTags'|trans }}</div>
                     </div>
                   </div>
                 </div>
@@ -102,7 +103,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="content-title">
-                  <p>{{ 'lbl.Feedback'|trans|ucfirst }}</p>
+                  <h2>{{ 'lbl.Feedback'|trans|ucfirst }}</h2>
                   <p class="help-block">{{ 'msg.FeedbackInfo'|trans }}</p>
                 </div>
               </div>
@@ -116,7 +117,7 @@
                       <div class="panel-heading" role="tab" id="_itr_11-heading-{{ _itr_11.id }}">
                         <h4 class="panel-title">
                           <a data-toggle="collapse" data-parent="#_itr_11" href="#_itr_11-collapse-{{ _itr_11.id }}" aria-expanded="true" aria-controls="_itr_11-collapse-{{ _itr_11.id }}">
-                            <span class="fa fa-caret-right fa-fw"></span>{{ _itr_11.text|truncate(150) }}
+                            {{ macro.icon('caret-right fa-fw') }}{{ _itr_11.text|truncate(150) }}
                           </a>
                         </h4>
                       </div>
@@ -153,16 +154,12 @@
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showFaqDelete %}
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-              <span class="fa fa-trash-o"></span>
-              {{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" } ) }}
           {% endif %}
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default' ) }}
         </div>
         <div class="btn-group pull-right" role="group">
-          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
-            <span class="fa fa-check"></span>{{ 'lbl.Publish'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-danger', { "id":"editButton", "type":"submit", "name":"edit" } ) }}
         </div>
       </div>
     </div>
@@ -173,7 +170,7 @@
     {{ form_start(deleteForm) }}
     {{ form_row(deleteForm._token) }}
     {{ form_row(deleteForm.id) }}
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -183,12 +180,8 @@
             <p>{{ 'msg.ConfirmDelete'|trans|format(item.question)|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" } ) }}
           </div>
         </div>
       </div>
@@ -200,7 +193,7 @@
     {{ form_start(deleteFeedbackForm) }}
     {{ form_row(deleteFeedbackForm._token) }}
     {{ form_row(deleteFeedbackForm.id) }}
-    <div class="modal fade" id="confirmDeleteFeedback" role="dialog" aria-labelledby="confirmDeleteFeedbackTitle">
+    <div class="modal fade" id="confirmDeleteFeedback" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteFeedbackTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -210,12 +203,8 @@
             <p>{{ 'msg.ConfirmDeleteFeedback'|trans|raw }}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <button type="submit" class="btn btn-danger">
-              <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" } ) }}
           </div>
         </div>
       </div>

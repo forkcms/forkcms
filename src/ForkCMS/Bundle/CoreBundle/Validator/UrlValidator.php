@@ -12,11 +12,7 @@ final class UrlValidator
         $violations = Validation::createValidator()->validate(
             $url,
             [
-                new Assert\Url(
-                    [
-                        'checkDNS' => true, // Just a crappy name to say that it will check the url has a valid hostname
-                    ]
-                ),
+                new Assert\Url(),
             ]
         );
 

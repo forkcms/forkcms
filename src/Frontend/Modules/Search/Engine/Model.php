@@ -125,6 +125,12 @@ class Model
             // get all terms to search for (including synonyms)
             $terms = self::getSynonyms((string) $term);
 
+            // search on short terms
+            $shortSearchTerm = implode('%', $terms);
+            if (strlen($shortSearchTerm) < 4) {
+                return self::getForShortTerm($shortSearchTerm, $limit, $offset);
+            }
+
             // build search terms
             $terms = self::buildTerm($terms);
 
@@ -164,6 +170,28 @@ class Model
         return (array) FrontendModel::getContainer()->get(
             'database'
         )->getRecords($query, $params);
+    }
+
+    /**
+     * Execute actual search for a short search term
+     *
+     * @param string $term The search term (simple search)
+     * @param int $limit The number of articles to get.
+     * @param int $offset The offset.
+     * @return array
+     */
+    private static function getForShortTerm(string $term, int $limit = 20, int $offset = 0): array
+    {
+        return (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT i.module, i.other_id, COUNT(*) AS score
+             FROM search_index AS i
+             INNER JOIN search_modules AS m ON i.module = m.module
+             WHERE i.value LIKE ? AND i.language = ? AND i.active = ? AND m.searchable = ?
+             GROUP BY i.module, i.other_id
+             ORDER BY score DESC
+             LIMIT ?, ?',
+            ["%$term%", FRONTEND_LANGUAGE, true, true, $offset, $limit]
+        );
     }
 
     /**

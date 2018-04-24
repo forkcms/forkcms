@@ -185,8 +185,8 @@ class Edit extends BackendBaseActionEdit
         $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
         // create elements
-        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
-        $this->form->addEditor('text', $this->record['text']);
+        $this->form->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title')->makeRequired();
+        $this->form->addEditor('text', $this->record['text'])->makeRequired();
         $this->form->addEditor('introduction', $this->record['introduction']);
         $this->form->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
         $this->form->addCheckbox('allow_comments', $this->record['allow_comments']);
@@ -273,7 +273,7 @@ class Edit extends BackendBaseActionEdit
 
         // parse base url for preview
         $url = BackendModel::getUrlForBlock($this->url->getModule(), 'Detail');
-        $url404 = BackendModel::getUrl(404);
+        $url404 = BackendModel::getUrl(BackendModel::ERROR_PAGE_ID);
         if ($url404 !== $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }
@@ -302,10 +302,7 @@ class Edit extends BackendBaseActionEdit
         // is the form submitted?
         if ($this->form->isSubmitted()) {
             // get the status
-            $status = $this->getRequest()->request->get('status');
-            if (!in_array($status, ['active', 'draft'])) {
-                $status = 'active';
-            }
+            $status = $this->getRequest()->request->has('saveAsDraft') ? 'draft' : 'active';
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->form->cleanupFields();

@@ -11,9 +11,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.Pagination'|trans|ucfirst }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -36,9 +36,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.Comments'|trans|ucfirst }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="form-group last">
@@ -77,9 +77,9 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">
+            <h2 class="panel-title">
               {{ 'lbl.Image'|trans|ucfirst }}
-            </h3>
+            </h2>
           </div>
           <div class="panel-body">
             <div class="form-group last">
@@ -100,9 +100,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.Notifications'|trans|ucfirst }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="form-group last">
@@ -127,9 +127,9 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.RSSFeed'|trans|ucfirst }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -161,8 +161,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="save" type="submit" name="save" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}</button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"save", "id":"save"}) }}
         </div>
       </div>
     </div>

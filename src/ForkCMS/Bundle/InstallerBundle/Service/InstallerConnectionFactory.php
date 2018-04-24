@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\ConnectionFactory;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
 use ForkCMS\Bundle\InstallerBundle\Controller\InstallerController;
 use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
@@ -33,7 +34,7 @@ class InstallerConnectionFactory extends ConnectionFactory
 
             //continue with regular connection creation using new params
             return parent::createConnection($params, $config, $eventManager, $mappingTypes);
-        } catch (ConnectionException $e) {
+        } catch (ConnectionException | DBALException $e) {
             return $this->getInstallerConnection($params, $config, $eventManager);
         }
     }

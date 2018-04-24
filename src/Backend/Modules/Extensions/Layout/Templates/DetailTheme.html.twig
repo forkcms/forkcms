@@ -1,5 +1,5 @@
 {% extends 'Layout/Templates/base.html.twig' %}
-
+{% import "Layout/Templates/macros.html.twig" as macro %}
 {% block actionbar %}
 
 {% endblock %}
@@ -11,7 +11,7 @@
         {% for warning in warnings %}
           <div class="content-block content-block-pb">
             <div class="alert alert-warning" role="alert">
-              <span class="fa fa-exclamation-triangle"></span>{{ warning.message }}
+              {{ macro.icon('exclamation-triangle') }}{{ warning.message }}
             </div>
           </div>
         {% endfor %}
@@ -24,9 +24,9 @@
         {% if information.description %}
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">
+              <h2 class="panel-title">
                 {{ 'lbl.Description'|trans|ucfirst }}
-              </h3>
+              </h2>
             </div>
             <div class="panel-body">
               <p>{{ information.description|raw }}</p>
@@ -36,9 +36,9 @@
         {% if dataGridTemplates %}
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">
+              <h2 class="panel-title">
                 {{ 'lbl.Templates'|trans|ucfirst }}
-              </h3>
+              </h2>
             </div>
             {{ dataGridTemplates|raw }}
           </div>
@@ -48,9 +48,9 @@
         {% if information.thumbnail %}
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">
+              <h2 class="panel-title">
                 {{ 'lbl.Image'|trans|ucfirst }}
-              </h3>
+              </h2>
             </div>
             <div class="panel-body text-center">
               <img src="/src/Frontend/Themes/{{ name }}/{{ information.thumbnail }}" class="img-thumbnail" alt="{{ name }}" />
@@ -60,9 +60,9 @@
         {% if information.version %}
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">
+              <h2 class="panel-title">
                 {{ 'lbl.Version'|trans|ucfirst }}
-              </h3>
+              </h2>
             </div>
             <div class="panel-body">
               <p>{{ information.version }}</p>
@@ -72,9 +72,9 @@
         {% if information.authors %}
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">
+              <h2 class="panel-title">
                 {{ 'lbl.Authors'|trans|ucfirst }}
-              </h3>
+              </h2>
             </div>
             <div class="panel-body">
               <ul>
@@ -102,11 +102,11 @@
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
             <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmInstall">
-              <span class="fa fa-file-o"></span>{{ 'lbl.Install'|trans|ucfirst }}
+              {{ macro.icon('file-o') }}{{ 'lbl.Install'|trans|ucfirst }}
             </button>
           </div>
         </div>
-        <div class="modal fade" id="confirmInstall" role="dialog" aria-labelledby="confirmInstallTitle">
+        <div class="modal fade" id="confirmInstall" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmInstallTitle">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -116,12 +116,8 @@
                 <p>{{ 'msg.ConfirmThemeInstall'|trans|format(name)|raw }}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                <a href="{{ geturl('install_theme') }}&amp;theme={{ name }}" class="btn btn-primary">
-                  <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
-                </a>
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+                {{ macro.buttonIcon(geturl('install_theme') ~ '&theme=' ~ name, 'times', 'lbl.OK'|trans|ucfirst, 'btn-primary') }}
               </div>
             </div>
           </div>

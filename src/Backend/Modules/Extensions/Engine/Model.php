@@ -849,11 +849,11 @@ class Model
 
             // build cronjob information
             $item = [];
-            $item['minute'] = (isset($attributes['minute'])) ? $attributes['minute'] : '*';
-            $item['hour'] = (isset($attributes['hour'])) ? $attributes['hour'] : '*';
-            $item['day-of-month'] = (isset($attributes['day-of-month'])) ? $attributes['day-of-month'] : '*';
-            $item['month'] = (isset($attributes['month'])) ? $attributes['month'] : '*';
-            $item['day-of-week'] = (isset($attributes['day-of-week'])) ? $attributes['day-of-week'] : '*';
+            $item['minute'] = $attributes['minute'] ?? '*';
+            $item['hour'] = $attributes['hour'] ?? '*';
+            $item['day-of-month'] = $attributes['day-of-month'] ?? '*';
+            $item['month'] = $attributes['month'] ?? '*';
+            $item['day-of-week'] = $attributes['day-of-week'] ?? '*';
             $item['action'] = $attributes['action'];
             $item['description'] = $cronjob[0];
 
@@ -870,8 +870,8 @@ class Model
 
             // build event information and add it to the list
             $information['events'][] = [
-                'application' => (isset($attributes['application'])) ? $attributes['application'] : '',
-                'name' => (isset($attributes['name'])) ? $attributes['name'] : '',
+                'application' => $attributes['application'] ?? '',
+                'name' => $attributes['name'] ?? '',
                 'description' => $event[0],
             ];
         }

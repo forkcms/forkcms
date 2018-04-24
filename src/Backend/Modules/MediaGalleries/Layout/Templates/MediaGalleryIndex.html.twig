@@ -6,7 +6,7 @@
       <div class="btn-toolbar pull-right">
         <div class="btn-group" role="group">
           {% if showMediaGalleriesMediaGalleryAdd %}
-            {{ macro.buttonIcon( geturl('add'), 'plus-square', 'lbl.Add'|trans|capitalize, '', 'id=addMediaGroupType') }}
+            {{ macro.buttonIcon( geturl('MediaGalleryAdd'), 'plus-square', 'lbl.Add'|trans|capitalize, '', { "id":"addMediaGroupType" }) }}
           {% endif %}
         </div>
       </div>
@@ -32,7 +32,7 @@
         {% if dataGrid %}
         <div class="content-block content-block-pb">
           <div class="content-title">
-            <p>{{ 'lbl.Galleries'|trans|capitalize }}</p>
+            <h2>{{ 'lbl.Galleries'|trans|capitalize }}</h2>
           </div>
           <div class="table-responsive">
             {{ dataGrid|raw }}
@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="modal fade" id="addMediaGroupTypeDialog" role="dialog" aria-labelledby="addMediaGroupTypeDialogTitle">
+    <div class="modal fade" id="addMediaGroupTypeDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addMediaGroupTypeDialogTitle">
       {{ form_start(form) }}
       <div class="modal-dialog">
         <div class="modal-content">
@@ -58,12 +58,8 @@
             {{ form_errors(form.type) }}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|capitalize }}
-            </button>
-            <button id="addMediaGroupTypeSubmit" type="button" class="btn btn-primary">
-              <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|capitalize }}
-            </button>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"addMediaGroupTypeSubmit" } ) }}
           </div>
         </div>
       </div>

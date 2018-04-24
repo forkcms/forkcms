@@ -44,10 +44,7 @@
         <div class="panel-footer">
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
-              <button id="search" type="submit" class="btn btn-primary" name="search">
-                <span class="fa fa-refresh"></span>&nbsp;
-                {{ 'lbl.UpdateFilter'|trans|ucfirst }}
-              </button>
+              {{ macro.buttonIcon('', 'refresh', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"search", "name":"search" }) }}
             </div>
           </div>
         </div>
@@ -70,7 +67,7 @@
         <div class="table-responsive">
           {{ dgProfiles|raw }}
         </div>
-        <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteTitle">
+        <div class="modal fade" id="confirmDelete" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -80,17 +77,13 @@
                 <p>{{ 'msg.ConfirmMassDelete'|trans }}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                <button type="submit" class="btn btn-danger">
-                  <span class="fa fa-trash"></span>{{ 'lbl.Delete'|trans|ucfirst }}
-                </button>
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal" }) }}
+                {{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" }) }}
               </div>
             </div>
           </div>
         </div>
-        <div class="modal fade" id="confirmAddToGroup" role="dialog" aria-labelledby="confirmAddToGroupTitle">
+        <div class="modal fade" id="confirmAddToGroup" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmAddToGroupTitle">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -103,12 +96,8 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                  <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-                </button>
-                <button type="submit" class="btn btn-primary">
-                  <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
-                </button>
+                {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal" }) }}
+                {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"submit" }) }}
               </div>
             </div>
           </div>

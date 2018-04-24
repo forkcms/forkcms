@@ -104,6 +104,7 @@ final class Header extends KernelLoader
     {
         $this->addCSS('/css/vendors/bootstrap-tagsinput.css', 'Core', true, true, true, Priority::core());
         $this->addCSS('/css/vendors/bootstrap-tagsinput-typeahead.css', 'Core', true, true, true, Priority::core());
+        $this->addCSS('/css/vendors/bootstrap-accessibility.css', 'Core', true, true, true, Priority::core());
         $this->addCSS('screen.css', 'Core', false, true, true, Priority::core());
         $this->addCSS('debug.css', 'Core', false, true, true, Priority::debug());
     }
@@ -201,7 +202,7 @@ final class Header extends KernelLoader
      * Add data into the jsData
      *
      * @param string $module The name of the module.
-     * @param string $key The key whereunder the value will be stored.
+     * @param string $key The key under which the value will be stored.
      * @param mixed $value The value
      */
     public function addJsData(string $module, string $key, $value): void

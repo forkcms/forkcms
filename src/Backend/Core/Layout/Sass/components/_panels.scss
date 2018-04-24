@@ -24,6 +24,7 @@
   .panel-heading {
 
     p,
+    h2,
     h3,
     .control-label,
     .panel-title {
@@ -31,6 +32,7 @@
       font-size: $font-size-base;
       font-weight: 600;
       margin-bottom: 0;
+      margin-top: 0;
     }
   }
 

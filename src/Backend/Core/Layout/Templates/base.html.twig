@@ -12,13 +12,13 @@
   <div class="sidebar">
     {% include "Layout/Templates/navigation.html.twig" %}
     <div class="sub-navigation">
-      <nav id="content-subnavigation" class="fork-nav-sidebar">
+      <nav id="content-subnavigation" class="fork-nav-sidebar" aria-label="{{ 'lbl.Settings'|trans }}">
         {% include "Layout/Templates/subnavigation.html.twig" with { 'navigation': navigation } %}
       </nav>
     </div>
   </div>
   <div id="root">
-    <div id="content" class="content-wrapper">
+    <main id="content" class="content-wrapper">
       <div class="content-main">
         <div class="content-action-bar">
           <div class="container-fluid">
@@ -47,14 +47,14 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
     <div id="root-footer"></div>
   </div>
   {% include "Layout/Templates/footer.html.twig" %}
 </div>
 
 <div class="hidden">
-  <div class="modal fade jsConfirmation" role="dialog" aria-labelledby="jsConfirmationDeleteDialogTitle">
+  <div class="modal fade jsConfirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="jsConfirmationDeleteDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -65,16 +65,17 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
+            {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
           </button>
           <a href="#" class="btn btn-primary jsConfirmationSubmit">
-            <span class="fa fa-check"></span>{{ 'lbl.OK'|trans|ucfirst }}
+            {{ macro.icon('check') }}{{ 'lbl.OK'|trans|ucfirst }}
           </a>
         </div>
       </div>
     </div>
   </div>
   {# Scripts should be placed here #}
+  <script src="/js/vendors/bootstrap-accessibility.min.js"></script>
 </div>
 </body>
 </html>

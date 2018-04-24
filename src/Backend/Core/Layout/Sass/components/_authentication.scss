@@ -19,6 +19,7 @@
     float: none;
 
     .site-title {
+      color: $text-color;
       font-size: $font-size-btn;
     }
   }
@@ -43,13 +44,8 @@
   }
 
   .forgot-password {
-    color: $gray-light;
+    color: $gray;
     font-size: $font-size-base;
-
-    &:hover {
-      color: $gray-base;
-      text-decoration: none;
-    }
 
     &:active,
     &:focus {
@@ -57,6 +53,12 @@
       -moz-box-shadow: none;
       box-shadow: none;
       outline: none;
+    }
+
+    &:focus,
+    &:hover {
+      color: $brand-primary;
+      text-decoration: underline;
     }
   }
 }

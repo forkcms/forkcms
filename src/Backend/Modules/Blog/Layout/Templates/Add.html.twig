@@ -11,29 +11,29 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}</label>
+        <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }} {{ macro.required }}</label>
         {% form_field title %} {% form_field_error title %}
         {% if detailURL %}
           <a class="site-url" href="{{ detailURL }}">{{ detailURL }}/<span id="generatedUrl"></span></a>
         {% endif %}
         {% if not detailURL %}
-          <p class="text-warning"><span class="fa fa-warning"></span> {{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
+          <p class="text-warning">{{ macro.icon('warning') }} {{ 'err.NoModuleLinked'|trans|ucfirst }}</p>
         {% endif %}
       </div>
     </div>
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div role="tabpanel">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
+      <div>
+        <ul class="nav nav-tabs nav-tabs-flex" role="tablist">
+          <li role="presentation" class="active mr-auto">
             <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
-          <li class="pull-right" role="presentation">
-            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
-          </li>
-          <li class="pull-right" role="presentation">
+          <li role="presentation">
             <a href="#tabComments" aria-controls="tabComments" role="tab" data-toggle="tab">{{ 'lbl.Comments'|trans|ucfirst }}</a>
+          </li>
+          <li role="presentation">
+            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
@@ -42,8 +42,8 @@
               <div class="col-md-8">
                 <div class="panel panel-default panel-editor">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.MainContent'|trans|ucfirst }}
-                      {{ macro.required }}</p>
+                    <h2>{{ 'lbl.MainContent'|trans|ucfirst }}
+                      {{ macro.required }}</h2>
                   </div>
                   <div class="panel-body">
                     {% form_field text %}
@@ -57,7 +57,7 @@
                 {% if imageIsAllowed %}
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <p>{{ 'lbl.Image'|trans|ucfirst }}</p>
+                      <h2>{{ 'lbl.Image'|trans|ucfirst }}</h2>
                     </div>
                     <div class="panel-body">
                       {% form_field image %} {% form_field_error image %}
@@ -66,10 +66,10 @@
                 {% endif %}
                 <div class="panel panel-default panel-editor last">
                   <div class="panel-heading">
-                    <p>
+                    <h2>
                       {{ 'lbl.Summary'|trans|ucfirst }}
-                      <abbr class="fa fa-info-circle" data-toggle="tooltip" title="{{ 'msg.HelpSummary'|trans|ucfirst }}"></abbr><br>
-                    </p>
+                      {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
+                    </h2>
                   </div>
                   <div class="panel-body">
                     {% form_field introduction %}
@@ -84,7 +84,7 @@
               <div class="col-md-4">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.Status'|trans|ucfirst }}</p>
+                    <h2>{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -106,7 +106,7 @@
                 </div>
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <p>{{ 'lbl.MetaData'|trans|ucfirst }}</p>
+                    <h2>{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
                   </div>
                   <div class="panel-body">
                     <div class="form-group">
@@ -121,6 +121,7 @@
                       <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                         {% form_field tags %} {% form_field_error tags %}
+                        <div class="help-block">{{ 'msg.HelpTextTags'|trans }}</div>
                       </div>
                     {% endif %}
                   </div>
@@ -151,18 +152,17 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
+        <div class="btn-group" role="group">
+          {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
+        </div>
         <div class="btn-group pull-right" role="group">
-          <a href="#" id="saveAsDraft" class="btn btn-default">
-            <span class="fa fa-file-o"></span>{{ 'lbl.SaveDraft'|trans|ucfirst }}
-          </a>
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"type":"submit", "name":"saveAsDraft"}) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.Publish'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"publish"}) }}
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade" id="addCategoryDialog" role="dialog" aria-labelledby="addCategoryDialogTitle">
+  <div class="modal fade" id="addCategoryDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="addCategoryDialogTitle">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -179,11 +179,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
-            <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-          </button>
-          <button id="addCategorySubmit" type="button" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.AddCategory'|trans|ucfirst }}</button>
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.AddCategory'|trans|ucfirst, 'btn-primary', {"id":"addCategorySubmit"}) }}
         </div>
       </div>
     </div>

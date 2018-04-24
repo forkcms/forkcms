@@ -18,7 +18,7 @@
       <div class="col-md-12">
         <div class="content-block content-block-pb">
           <div class="content-title">
-            <p>{{ 'msg.ModulesWarnings'|trans|ucfirst }}</p>
+            <h2>{{ 'msg.ModulesWarnings'|trans|ucfirst }}</h2>
           </div>
           <div class="panel-body">
             <ul>
@@ -40,7 +40,7 @@
     <div class="col-md-12">
       <div class="content-block content-block-pb">
         <div class="content-title">
-          <p>{{ 'lbl.InstalledModules'|trans|ucfirst }}</p>
+          <h2>{{ 'lbl.InstalledModules'|trans|ucfirst }}</h2>
         </div>
         {% if dataGridInstalledModules %}
           <div class="table-responsive">
@@ -58,7 +58,7 @@
       <div class="col-md-12">
         <div class="content-block">
           <div class="content-title">
-            <p>{{ 'lbl.InstallableModules'|trans|ucfirst }}</p>
+            <h2>{{ 'lbl.InstallableModules'|trans|ucfirst }}</h2>
           </div>
           <div class="table-responsive">
             {{ dataGridInstallableModules|raw }}
@@ -68,7 +68,7 @@
     </div>
   {% endif %}
   <div class="hidden">
-    <div class="modal fade jsConfirmation" role="dialog" aria-labelledby="confirmDeleteTitle">
+    <div class="modal fade jsConfirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -78,12 +78,8 @@
             <p class="jsConfirmationMessage"></p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              <span class="fa fa-times"></span>{{ 'lbl.Cancel'|trans|ucfirst }}
-            </button>
-            <a href="#" class="btn btn-primary jsConfirmationSubmit">
-              <span class="fa fa-check"></span>{{ 'lbl.Install'|trans|ucfirst }}
-            </a>
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" }) }}
+            {{ macro.buttonIcon('#', 'check', 'lbl.Install'|trans|ucfirst, 'btn-primary jsConfirmationSubmit') }}
           </div>
         </div>
       </div>

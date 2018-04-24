@@ -13,5 +13,99 @@
   .list-group-item-warning {
     color: $white;
   }
+
+  .header {
+    background: $white;
+
+    h2 {
+      color: $text-color;
+      font-size: 25px;
+    }
+  }
+
+  .installer-navigation-wrapper {
+    background: $brand-primary-dark;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+
+      li {
+        color: $white;
+        -webkit-font-smoothing: antialiased;
+        float: left;
+        padding: 13px 0;
+        position: relative;
+        text-align: center;
+        width: 16.667%;
+
+        &.active {
+          background: $brand-primary;
+
+          &:before {
+            border-left: 23px solid $brand-primary-dark;
+            border-right: 23px solid transparent;
+            border-top: 23px solid transparent;
+            border-bottom: 23px solid transparent;
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 0;
+          }
+
+          + li:before {
+            border-left: 23px solid $brand-primary;
+            border-right: 23px solid transparent;
+            border-top: 23px solid transparent;
+            border-bottom: 23px solid transparent;
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 0;
+          }
+        }
+
+        &:first-of-type.active:before {
+          display: none;
+        }
+      }
+    }
+
+    p {
+      color: $white;
+      -webkit-font-smoothing: antialiased;
+      text-align: center;
+      margin: 13px 0;
+    }
+  }
 }
 
+@mixin sticky-footer($footer-height, $root-selector: unquote("#root-installer"), $root-footer-selector: unquote("#root-footer-installer"), $footer-selector: unquote("#footer-installer")) {
+
+  html, body {
+    height: 100%;
+  }
+
+  #{$root-selector} {
+    clear: both;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin-bottom: -$footer-height;
+    #{$root-footer-selector} {
+      height: $footer-height;
+    }
+  }
+
+  #{$footer-selector} {
+    clear: both;
+    position: relative;
+    height: $footer-height;
+  }
+}
+
+@media screen and (min-width: $screen-md) {
+  @include sticky-footer(100px);
+}

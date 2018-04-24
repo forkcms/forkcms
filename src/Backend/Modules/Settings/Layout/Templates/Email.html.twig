@@ -11,37 +11,38 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.Email'|trans|ucfirst }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
         {% if isGod %}
-          <div class="content-block">
-            <div class="content-title">
-              <p>{{ 'lbl.SendingEmails'|trans|ucfirst }}</p>
+          <fieldset>
+            <legend>
+              {{ 'lbl.SendingEmails'|trans|ucfirst }}
               <p class="help-block">{{ 'msg.HelpSendingEmails'|trans }}</p>
-            </div>
+            </legend>
             <div class="form-inline">
               <small>
                 <div class="form-group">
                   {% form_field mailer_type %} {% form_field_error mailer_type %}
                   <a id="testEmailConnection" href="#">{{ 'msg.SendTestMail'|trans|ucfirst }}</a>
                   <span id="testEmailConnectionSpinner" style="display: none; padding-top: 3px;">
-                    <i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i>
+                    {{ macro.icon('spinner fa-pulse fa-lg fa-fw') }}
+                    <span class="sr-only">{{ 'lbl.Loading' }}</span>
                   </span>
                 </div>
                 <span id="testEmailConnectionError" style="display: none;" class="alert alert-danger">{{ 'err.ErrorWhileSendingEmail'|trans }}</span>
                 <span id="testEmailConnectionSuccess" style="display: none;" class="alert alert-success">{{ 'msg.TestWasSent'|trans }}</span>
               </small>
             </div>
-          </div>
+          </fieldset>
           {% endif %}
-          <div class="content-block">
-            <div class="content-title">
-              <p>{{ 'lbl.From'|trans|ucfirst }}</p>
+          <fieldset>
+            <legend>
+              {{ 'lbl.From'|trans|ucfirst }}
               <p class="help-block">{{ 'msg.HelpEmailFrom'|trans }}</p>
-            </div>
+            </legend>
             <div class="form-group">
               <label for="mailerFromName" class="control-label">
                 {{ 'lbl.Name'|trans|ucfirst }}
@@ -56,12 +57,12 @@
               </label>
               {% form_field mailer_from_email %} {% form_field_error mailer_from_email %}
             </div>
-          </div>
-          <div class="content-block">
-            <div class="content-title">
-              <p>{{ 'lbl.To'|trans|ucfirst }}</p>
+          </fieldset>
+          <fieldset>
+            <legend>
+              {{ 'lbl.To'|trans|ucfirst }}
               <p class="help-block">{{ 'msg.HelpEmailTo'|trans }}</p>
-            </div>
+            </legend>
             <div class="form-group">
               <label for="mailerToName" class="control-label">
                 {{ 'lbl.Name'|trans|ucfirst }}
@@ -76,11 +77,11 @@
               </label>
               {% form_field mailer_to_email %} {% form_field_error mailer_to_email %}
             </div>
-          </div>
-          <div class="content-block">
-            <div class="content-title">
-              <p>{{ 'lbl.ReplyTo'|trans|ucfirst }}</p>
-            </div>
+          </fieldset>
+          <fieldset class="last">
+            <legend>
+              {{ 'lbl.ReplyTo'|trans|ucfirst }}
+            </legend>
             <div class="form-group">
               <label for="mailerReplyToName" class="control-label">
                 {{ 'lbl.Name'|trans|ucfirst }}
@@ -95,7 +96,7 @@
               </label>
               {% form_field mailer_reply_to_email %} {% form_field_error mailer_reply_to_email %}
             </div>
-          </div>
+          </fieldset>
         </div>
       </div>
     </div>
@@ -141,9 +142,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="save" type="submit" name="save" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
         </div>
       </div>
     </div>

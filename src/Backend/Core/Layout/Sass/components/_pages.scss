@@ -139,7 +139,6 @@
     background: $white;
     border: 1px solid $gray-border;
     cursor: move;
-    height: 61px;
     overflow: ellipsis;
     padding: 12px 15px;
     position: relative;
@@ -170,7 +169,6 @@
       -moz-transition: opacity 0.3s ease-in-out;
       -o-transition: opacity 0.3s ease-in-out;
       transition: opacity 0.3s ease-in-out;
-      white-space: nowrap;
     }
 
     &:hover {
@@ -181,22 +179,10 @@
     }
 
     .buttonHolder {
-      position: absolute;
-      right: 5px;
-      top: 14px;
-      -webkit-transition: opacity 0.3s ease-in-out;
-      -moz-transition: opacity 0.3s ease-in-out;
-      -o-transition: opacity 0.3s ease-in-out;
-      transition: opacity 0.3s ease-in-out;
+      padding: 10px 0 0;
+      text-align: center;
+      display: block;
       z-index: 80;
-
-      a {
-        opacity: 0;
-
-        &:focus {
-          opacity: 1;
-        }
-      }
 
       .btn {
         padding: 3px 6px;
@@ -207,12 +193,13 @@
       }
     }
 
-    @media screen and (min-width: $screen-sm) {
+    @media screen and (min-width: $screen-md) {
 
       .buttonHolder {
-        right: 15px;
 
         .btn {
+          margin-bottom: 0;
+          margin-top: 0;
           padding: 6px 10px;
 
           .fa {
@@ -221,32 +208,6 @@
         }
       }
 
-    }
-
-    &:after {
-      background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 20%, rgba(255,255,255,1) 100%);
-      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(20%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,1)));
-      background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
-      background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
-      background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
-      background: linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 20%,rgba(255,255,255,1) 100%);
-      content: '.';
-      display: block;
-      height: 54px;
-      position: absolute;
-      top: 0;
-      right: 0;
-      text-indent: -9999px;
-      -webkit-transition: width 0.3s ease-in-out;
-      -moz-transition: width 0.3s ease-in-out;
-      -o-transition: width 0.3s ease-in-out;
-      transition: width 0.3s ease-in-out;
-      width: 0;
-    }
-
-    &:hover:after,
-    &:focus:after {
-      width: 110px;
     }
   }
 
@@ -297,14 +258,6 @@
     padding: 0 20px;
   }
 }
-
-body.touch-enabled #templateVisualLarge .templatePositionCurrentType .buttonHolder a,
-body.touch-enabled #templateVisualFallback .templatePositionCurrentType .buttonHolder a,
-#templateVisualLarge .templatePositionCurrentType:hover .buttonHolder a,
-#templateVisualFallback .templatePositionCurrentType:hover .buttonHolder a {
-  opacity: 1;
-}
-
 
 .current-template {
   font-size: $font-size-btn;

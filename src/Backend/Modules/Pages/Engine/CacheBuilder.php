@@ -123,10 +123,10 @@ class CacheBuilder
         // init URLs
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
         $languageUrl = ($hasMultiLanguages) ? '/' . $language . '/' : '/';
-        $url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+        $url = $keys[$parentID] ?? '';
 
         // home is special
-        if ($page['id'] == 1) {
+        if ($page['id'] == BackendModel::HOME_PAGE_ID) {
             $page['url'] = '';
             if ($hasMultiLanguages) {
                 $languageUrl = rtrim($languageUrl, '/');
@@ -148,7 +148,8 @@ class CacheBuilder
             'hidden' => (bool) $page['hidden'],
             'extra_blocks' => null,
             'has_children' => (bool) $page['has_children'],
-            'data' => $page['data']
+            'allow_children' => (bool) $page['allow_children'],
+            'data' => $page['data'],
         ];
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page);
@@ -166,12 +167,12 @@ class CacheBuilder
         }
 
         // homepage should have a special icon
-        if ($page['id'] == 1) {
+        if ($page['id'] == BackendModel::HOME_PAGE_ID) {
             $treeType = 'home';
-        } elseif ($page['id'] == 404) {
+        } elseif ($page['id'] == BackendModel::ERROR_PAGE_ID) {
             $treeType = 'error';
-        } elseif ($page['id'] < 404 && mb_substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
-            // get extras
+        } elseif ($page['id'] < BackendModel::ERROR_PAGE_ID
+                  && mb_substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
             $extraIDs = explode(',', $page['extra_ids']);
 
             // loop extras
@@ -292,7 +293,7 @@ class CacheBuilder
     protected function getOrder(
         array $navigation,
         string $type = 'page',
-        int $parentId = 0,
+        int $parentId = Model::NO_PARENT_PAGE_ID,
         array $order = []
     ): array {
         // loop alle items for the type and parent
@@ -319,7 +320,7 @@ class CacheBuilder
         $order = [];
         // get the order
         foreach (array_keys($navigation) as $type) {
-            $order[$type] = $this->getOrder($navigation, $type, 0);
+            $order[$type] = $this->getOrder($navigation, $type);
         }
 
         // start building the cache file
@@ -375,9 +376,9 @@ class CacheBuilder
 
                             // prepend the title
                             if (!isset($cachedTitles[$tempPageId])) {
-                                $title = ' > ' . $title;
+                                $title = ' → ' . $title;
                             } else {
-                                $title = $cachedTitles[$tempPageId] . ' > ' . $title;
+                                $title = $cachedTitles[$tempPageId] . ' → ' . $title;
                             }
                         }
                     }

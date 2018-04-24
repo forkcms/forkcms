@@ -26,6 +26,12 @@ body {
   }
 }
 
+.hiddenInModalMode {
+  & > .header, & > .main-wrapper > .sidebar {
+    display: none;
+  }
+}
+
 @media screen and (min-width: $screen-sm) {
 
   .main-wrapper {
@@ -148,5 +154,9 @@ body {
 
   .content-main {
     width: 100%;
+  }
+
+  .hiddenInModalMode > .main-wrapper {
+    padding-left: 0;
   }
 }

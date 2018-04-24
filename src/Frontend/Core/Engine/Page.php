@@ -9,11 +9,13 @@ use Frontend\Core\Header\Header;
 use Frontend\Core\Language\Language;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Frontend\Core\Engine\Block\ExtraInterface as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Backend\Core\Engine\Model as BackendModel;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendAuthenticationModel;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 /**
  * Frontend page class, this class will handle everything on a page
@@ -110,11 +112,22 @@ class Page extends KernelLoader
         // create header instance
         $this->header = new Header($this->getKernel());
 
+        try {
+            $this->handlePage(Navigation::getPageId(implode('/', $this->url->getPages())));
+        } catch (NotFoundHttpException $notFoundHttpException) {
+            $this->handlePage(Response::HTTP_NOT_FOUND);
+        } catch (InsufficientAuthenticationException $insufficientAuthenticationException) {
+            $this->redirectToLogin();
+        }
+    }
+
+    private function handlePage(int $pageId)
+    {
         // get page content from pageId of the requested URL
-        $this->record = $this->getPageContent(Navigation::getPageId(implode('/', $this->url->getPages())));
+        $this->record = $this->getPageContent($pageId);
 
         if (empty($this->record)) {
-            $this->record = Model::getPage(Response::HTTP_NOT_FOUND);
+            throw new NotFoundHttpException('No page was found for the page id:' . $pageId);
         }
 
         $this->checkAuthentication();
@@ -150,9 +163,7 @@ class Page extends KernelLoader
         }
 
         if (!FrontendAuthenticationModel::isLoggedIn()) {
-            $this->redirect(
-                Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . $this->url->getQueryString()
-            );
+            throw new InsufficientAuthenticationException('You must log in to see this page');
         }
 
         // specific groups for auth?
@@ -168,39 +179,60 @@ class Page extends KernelLoader
             }
         }
 
-        // turns out the logged in profile isn't in a group that is allowed to see the page
-        $this->record = Model::getPage(Response::HTTP_NOT_FOUND);
+        throw new NotFoundHttpException('The current page is not available to the logged in profile');
     }
 
     public function display(): Response
     {
-        // assign the id so we can use it as an option
-        $this->template->assignGlobal('isPage' . $this->pageId, true);
-        $this->template->assignGlobal('isChildOfPage' . $this->record['parent_id'], true);
+        try {
+            // assign the id so we can use it as an option
+            $this->template->assignGlobal('isPage' . $this->pageId, true);
+            $this->template->assignGlobal('isChildOfPage' . $this->record['parent_id'], true);
 
-        // hide the cookiebar from within the code to prevent flickering
-        $this->template->assignGlobal(
-            'cookieBarHide',
-            !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false)
-            || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
-        );
+            // hide the cookiebar from within the code to prevent flickering
+            $this->template->assignGlobal(
+                'cookieBarHide',
+                !$this->get('fork.settings')->get('Core', 'show_cookie_bar', false)
+                || $this->getContainer()->get('fork.cookie')->hasHiddenCookieBar()
+            );
 
-        $this->parsePositions();
+            $this->parsePositions();
 
-        // assign empty positions
-        $unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
-        foreach ($unusedPositions as $position) {
-            $this->template->assign('position' . \SpoonFilter::ucfirst($position), []);
+            // assign empty positions
+            $unusedPositions = array_diff(
+                $this->record['template_data']['names'],
+                array_keys($this->record['positions'])
+            );
+            foreach ($unusedPositions as $position) {
+                $this->template->assign('position' . \SpoonFilter::ucfirst($position), []);
+            }
+
+            $this->header->parse();
+            $this->breadcrumb->parse();
+            $this->parseLanguages();
+            $this->footer->parse();
+
+            return new Response(
+                $this->template->getContent($this->templatePath),
+                $this->statusCode
+            );
+        } catch (NotFoundHttpException $notFoundHttpException) {
+            $this->handlePage(Response::HTTP_NOT_FOUND);
+
+            return $this->display();
+        } catch (InsufficientAuthenticationException $insufficientAuthenticationException) {
+            $this->redirectToLogin();
         }
+    }
 
-        $this->header->parse();
-        $this->breadcrumb->parse();
-        $this->parseLanguages();
-        $this->footer->parse();
-
-        return new Response(
-            $this->template->getContent($this->templatePath),
-            $this->statusCode
+    /**
+     * Redirects to the login page in a way that the login page will redirect back to the current page after logging in
+     */
+    private function redirectToLogin()
+    {
+        $this->redirect(
+            Navigation::getUrlForBlock('Profiles', 'Login') . '?queryString=' . Model::getRequest()->getRequestUri(),
+            Response::HTTP_TEMPORARY_REDIRECT
         );
     }
 
@@ -346,7 +378,7 @@ class Page extends KernelLoader
 
     protected function processExtra(ModuleExtraInterface $extra): void
     {
-        $this->getContainer()->get('logger')->info(
+        $this->getContainer()->get('logger.public')->info(
             'Executing ' . get_class($extra) . " '{$extra->getAction()}' for module '{$extra->getModule()}'."
         );
 
@@ -372,7 +404,15 @@ class Page extends KernelLoader
             return;
         }
 
-        $url = Navigation::getUrl($this->pageId, $language);
+        // Get page data
+        $pageInfo = Model::getPage($this->pageId);
+
+        // Check if hreflang is set for language
+        if (isset($pageInfo['data']['hreflang_' . $language])) {
+            $url = Navigation::getUrl($pageInfo['data']['hreflang_' . $language], $language);
+        } else {
+            $url = Navigation::getUrl($this->pageId, $language);
+        }
 
         // Ignore 404 links
         if ($this->pageId !== Response::HTTP_NOT_FOUND

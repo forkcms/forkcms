@@ -11,7 +11,7 @@
     <div class="row fork-module-messages">
       <div class="col-md-12">
         <div class="alert alert-warning" role="alert">
-          <p><strong><span class="fa fa-exclamation-triangle"></span>{{ 'msg.ConfigurationError'|trans|ucfirst }}
+          <p><strong>{{ macro.icon('exclamation-triangle') }}{{ 'msg.ConfigurationError'|trans|ucfirst }}
             </strong></p>
           <ul>
             {% for warning in warnings %}
@@ -26,10 +26,10 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">
+          <h2 class="panel-title">
             {{ 'lbl.WebsiteTitle'|trans|ucfirst }}
             {{ macro.required }}
-          </h3>
+          </h2>
         </div>
         <div class="panel-body">
           <div class="form-group last">
@@ -43,7 +43,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Scripts'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Scripts'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -64,7 +64,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Languages'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -99,7 +99,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.DateAndTime'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.DateAndTime'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -125,7 +125,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Numbers'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Numbers'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group last">
@@ -141,7 +141,7 @@
     <div class="col-md-12">
       <div id="settingsApiKeys" class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.APIKeys'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.APIKeys'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <p>{{ msg.HelpAPIKeys }}</p>
@@ -209,7 +209,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.CkFinder'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.CkFinder'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -238,7 +238,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Facebook'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Facebook'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group">
@@ -264,7 +264,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Twitter'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Twitter'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group last">
@@ -283,7 +283,7 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">{{ 'lbl.Cookies'|trans|ucfirst }}</h3>
+          <h2 class="panel-title">{{ 'lbl.Cookies'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
           <div class="form-group last">
@@ -303,9 +303,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="save" type="submit" name="save" class="btn btn-primary">
-            <span class="fa fa-floppy-o"></span>{{ 'lbl.Save'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
         </div>
       </div>
     </div>

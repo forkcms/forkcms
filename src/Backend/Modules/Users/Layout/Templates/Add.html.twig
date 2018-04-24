@@ -9,7 +9,7 @@
   {% form add %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div role="tabpanel">
+      <div>
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
             <a href="#tabProfile" aria-controls="tabProfile" role="tab" data-toggle="tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
@@ -66,7 +66,7 @@
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      <div class="form-group last">
+                      <div class="form-group">
                         <label for="confirmPassword" class="control-label">
                           {{ 'lbl.ConfirmPassword'|trans|ucfirst }}
                           {{ macro.required }}
@@ -80,10 +80,10 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="content-block content-block-pt">
-                  <div class="content-title">
-                    <p>{{ 'lbl.PersonalInformation'|trans|ucfirst }}</p>
-                  </div>
+                <fieldset>
+                  <legend>
+                    {{ 'lbl.PersonalInformation'|trans|ucfirst }}
+                  </legend>
                   <div class="form-group">
                     <label for="name" class="control-label">
                       {{ 'lbl.Name'|trans|ucfirst }}
@@ -106,23 +106,25 @@
                     <p class="help-block">{{ 'msg.HelpNickname'|trans }}</p>
                     {% form_field nickname %} {% form_field_error nickname %}
                   </div>
-                  <div class="form-group last">
+                  <div class="form-group">
                     <label for="avatar" class="control-label">{{ 'lbl.Avatar'|trans|ucfirst }}</label>
                     <p class="help-block">{{ 'msg.HelpAvatar'|trans }}</p>
                     {% form_field avatar %} {% form_field_error avatar %}
                   </div>
-                </div>
+                </fieldset>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="content-block content-block-pt">
-                  <div class="content-title">
-                    <p>{{ 'lbl.InterfacePreferences'|trans|ucfirst }}</p>
-                  </div>
+                <fieldset>
+                  <legend>{{ 'lbl.InterfacePreferences'|trans|ucfirst }}</legend>
                   <div class="form-group">
                     <label for="interfaceLanguage" class="control-label">{{ 'lbl.Language'|trans|ucfirst }}</label>
                     {% form_field interface_language %} {% form_field_error interface_language %}
+                  </div>
+                  <div class="form-group">
+                    <label for="preferredEditor" class="control-label">{{ 'lbl.PreferredEditor'|trans|ucfirst }}</label>
+                    {% form_field preferred_editor %} {% form_field_error preferred_editor %}
                   </div>
                   <div class="form-group">
                     <label for="dateFormat" class="control-label">{{ 'lbl.DateFormat'|trans|ucfirst }}</label>
@@ -136,15 +138,13 @@
                     <label for="numberFormat" class="control-label">{{ 'lbl.NumberFormat'|trans|ucfirst }}</label>
                     {% form_field number_format %} {% form_field_error number_format %}
                   </div>
-                </div>
+                </fieldset>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="content-block content-block-pt">
-                  <div class="content-title">
-                    <p>{{ 'lbl.CSV'|trans|ucfirst }}</p>
-                  </div>
+                <fieldset class="last">
+                  <legend>{{ 'lbl.CSV'|trans|ucfirst }}</legend>
                   <div class="form-group">
                     <label for="csvSplitChar'act.r">{{ 'lbl.SplitCharacter'|trans|ucfirst }}</label>
                     {% form_field csv_split_character %} {% form_field_error csv_split_character %}
@@ -153,7 +153,7 @@
                     <label for="csvLineEnding" class="control-label">{{ 'lbl.LineEnding'|trans|ucfirst }}</label>
                     {% form_field csv_line_ending %} {% form_field_error csv_line_ending %}
                   </div>
-                </div>
+                </fieldset>
               </div>
             </div>
           </div>
@@ -189,9 +189,7 @@
     <div class="col-md-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-right" role="group">
-          <button id="addButton" type="submit" name="add" class="btn btn-primary">
-            <span class="fa fa-plus-square"></span>{{ 'lbl.Add'|trans|ucfirst }}
-          </button>
+          {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
         </div>
       </div>
     </div>
