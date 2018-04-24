@@ -14,6 +14,7 @@
         <translation language="es"><![CDATA[El sinonimo para el término de búsqueda "%1$s" fue agregado.]]></translation>
         <translation language="uk"><![CDATA[Синонім для "%1$s" додано. ]]></translation>
         <translation language="el"><![CDATA[Προστέθηκε το συνώνυμο γιά τον όρο αναζήτησης "%1$s".]]></translation>
+        <translation language="pl"><![CDATA[Synonim dla wyszukiwanego określenia "%1$s" został dodany.]]></translation>
       </item>
       <item type="message" name="ConfirmDeleteSynonym">
         <translation language="nl"><![CDATA[Ben je zeker dat je de synoniemen voor zoekterm "%1$s" wil verwijderen?]]></translation>
@@ -26,6 +27,7 @@
         <translation language="de"><![CDATA[Willst du die Synonyme für den Suchbegriff "%1$s" wirklich löschen?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de eliminar el sinonimo para el términ de búsqueda "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε τα συνώνυμα γιά τον όρο αναζήτησης "%1$s";]]></translation>
+        <translation language="pl"><![CDATA[Czy jesteś pewnien że chcesz usunąć synonimy dla określenia "%1$s"?]]></translation>
       </item>
       <item type="message" name="DeletedSynonym">
         <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd verwijderd.]]></translation>
@@ -38,6 +40,7 @@
         <translation language="de"><![CDATA[Das Synonym für den Suchbegriff "%1$s" wurde gelöscht.]]></translation>
         <translation language="es"><![CDATA[El sinonimo para el término de búsqueda "%1$s" fue eliminado.]]></translation>
         <translation language="el"><![CDATA[Διεγράφη το συνώνυμο γιά τον όρο αναζήτησης "%1$s".]]></translation>
+        <translation language="pl"><![CDATA[Synonim dla wyszukiwanego określenia "%1$s" został usunięty.]]></translation>
       </item>
       <item type="message" name="EditedSynonym">
         <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd opgeslagen.]]></translation>
@@ -50,6 +53,7 @@
         <translation language="de"><![CDATA[Das Synonym für den Suchbegriff "%1$s" wurde gespeichert.]]></translation>
         <translation language="es"><![CDATA[El sinonimo para el término de búsqueda "%1$s" fue guardado.]]></translation>
         <translation language="el"><![CDATA[Αποθηκεύτηκε το συνώνυμο γιά τον όρο αναζήτησης "%1$s".]]></translation>
+        <translation language="pl"><![CDATA[Synonim dla wyszukiwanego określenia "%1$s" został zapisany.]]></translation>
       </item>
       <item type="message" name="HelpWeight">
         <translation language="nl"><![CDATA[Het standaard gewicht is 1. Verhoog deze waarde om de belangrijkheid van de resultaten van een bepaalde module te verhogen.]]></translation>
@@ -62,6 +66,7 @@
         <translation language="de"><![CDATA[Das Standard-Gewicht ist 1. Erhöhe den Wert wenn du Suchresultate von bestimmten Modulen mehr Wichtigkeit verleihen willst.]]></translation>
         <translation language="es"><![CDATA[El peso por defecto es 1. Aumenta el valor para aumentar la importancia de un módulo especifico.]]></translation>
         <translation language="el"><![CDATA[Το εξορισμού βάρος είναι 1. Αυξήστε την τιμή γιά μεγαλύτερη σπουδαιότητα αποτελεσμάτων από μία ενότητα.]]></translation>
+        <translation language="pl"><![CDATA[Domyślna waga to 1. Zwiększ wartość, aby zwiększyć znaczenie wyników z określonego modułu.]]></translation>
       </item>
       <item type="message" name="HelpWeightGeneral">
         <translation language="nl"><![CDATA[Definieer de belangrijkheid van iedere module in de zoekresultaten.]]></translation>
@@ -74,10 +79,12 @@
         <translation language="de"><![CDATA[Hier kannst du die Wichtigkeit der einzelnen Module für die Suchresultate bestimmen.]]></translation>
         <translation language="es"><![CDATA[Define la importancia de cada módulo en los resultados de búsqueda aquí.]]></translation>
         <translation language="el"><![CDATA[Ορίσατε τη σπουδαιότητα κάθε ενότητας στα αποτελέσματα αναζήτησης εδώ.]]></translation>
+        <translation language="pl"><![CDATA[Określ tutaj znaczenie każdego modułu w wynikach wyszukiwania.]]></translation>
       </item>
       <item type="message" name="HelpSitelinksSearchBox">
         <translation language="nl"><![CDATA[Je kan meer informatie vinden in <a href="https://developers.google.com/webmasters/richsnippets/sitelinkssearch">Googles officiële documentatie</a>.]]></translation>
         <translation language="en"><![CDATA[You can find more info in <a href="https://developers.google.com/webmasters/richsnippets/sitelinkssearch">Googles official documentation</a>.]]></translation>
+        <translation language="pl"><![CDATA[Więcej informacji znajdziesz w <a href="https://developers.google.com/webmasters/richsnippets/sitelinkssearch">oficjalnej dokumentacji Google</a>.]]></translation>
       </item>
       <item type="message" name="IncludeInSearch">
         <translation language="nl"><![CDATA[Opnemen in de zoekresultaten?]]></translation>
@@ -90,6 +97,7 @@
         <translation language="fr"><![CDATA[Inclure dans les résultats de recherche ?]]></translation>
         <translation language="es"><![CDATA[¿Incluir en resultados de búsqueda?]]></translation>
         <translation language="el"><![CDATA[Να περιληφθεί στα αποτελέσματα αναζήτησης;]]></translation>
+        <translation language="pl"><![CDATA[Uwzględnij w wynikach wyszukiwania?]]></translation>
       </item>
       <item type="message" name="NoStatistics">
         <translation language="nl"><![CDATA[Er zijn nog geen statistieken.]]></translation>
@@ -102,6 +110,7 @@
         <translation language="fr"><![CDATA[Il n'y a pas encore de statistiques.]]></translation>
         <translation language="es"><![CDATA[Aún no hay estadísticas.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη στατιστικά στοιχεία.]]></translation>
+        <translation language="pl"><![CDATA[Brak statystyk do wyświetlenia.]]></translation>
       </item>
       <item type="message" name="NoSynonyms">
         <translation language="nl"><![CDATA[Er zijn nog geen synoniemen. <a href="%1$s">Voeg het eerste synoniem toe</a>.]]></translation>
@@ -114,6 +123,7 @@
         <translation language="fr"><![CDATA[Il n'y a pas encore de synonymes. <a href="%1$s">Ajoutez le premier synonyme</a>.]]></translation>
         <translation language="es"><![CDATA[Aún no hay sinónimos <a href="%1$s">Agregar el primer sinónimo</a>.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη συνώνυμα. <a href="%1$s">Προσθέστε το πρώτο συνώνυμο</a>.]]></translation>
+        <translation language="pl"><![CDATA[Brak synonimów. <a href="%1$s">Dodaj pierwszy synonim</a>.]]></translation>
       </item>
       <item type="message" name="NoSynonymsBox">
         <translation language="nl"><![CDATA[Er zijn nog geen synoniemen.]]></translation>
@@ -126,6 +136,7 @@
         <translation language="fr"><![CDATA[Il n'y a pas encore de synonymes.]]></translation>
         <translation language="es"><![CDATA[Aún no hay sinonimos.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη συνώνυμα.]]></translation>
+        <translation language="pl"><![CDATA[Brak synonimów do wyświetlenia.]]></translation>
       </item>
       <item type="label" name="AddSynonym">
         <translation language="nl"><![CDATA[synoniem toevoegen]]></translation>
@@ -140,6 +151,7 @@
         <translation language="uk"><![CDATA[Додати синонім]]></translation>
         <translation language="lt"><![CDATA[naujas sinonimas]]></translation>
         <translation language="el"><![CDATA[προσθήκη συνώνυμου]]></translation>
+        <translation language="pl"><![CDATA[Dodaj synonim.]]></translation>
       </item>
       <item type="label" name="DeleteSynonym">
         <translation language="nl"><![CDATA[synoniem verwijderen]]></translation>
@@ -154,6 +166,7 @@
         <translation language="uk"><![CDATA[Видалити синонім]]></translation>
         <translation language="lt"><![CDATA[trinti sinonimą]]></translation>
         <translation language="el"><![CDATA[διαγραφή συνώνυμου]]></translation>
+        <translation language="pl"><![CDATA[Usuń synonim]]></translation>
       </item>
       <item type="label" name="EditSynonym">
         <translation language="nl"><![CDATA[synoniem bewerken]]></translation>
@@ -167,6 +180,7 @@
         <translation language="es"><![CDATA[editar sinónimo]]></translation>
         <translation language="uk"><![CDATA[Змінити синонім]]></translation>
         <translation language="el"><![CDATA[μεταβολή συνώνυμου]]></translation>
+        <translation language="pl"><![CDATA[Edytuj synonim]]></translation>
       </item>
       <item type="label" name="ItemsForAutocomplete">
         <translation language="nl"><![CDATA[Items in autocomplete (zoekresultaten: suggesties zoekwoorden)]]></translation>
@@ -180,6 +194,7 @@
         <translation language="es"><![CDATA[Objetos con autocompletado (resultados de búsqueda: sugerencia de términos de búsqueda)]]></translation>
         <translation language="uk"><![CDATA[Значення для автозаповнення (результати: приклади запитів)]]></translation>
         <translation language="el"><![CDATA[Πλήθος επιλογών γιά την αυτόματη συμπλήρωση (μικροεφαρμογή αναζήτησης: προτάσεις γιά τον όρο αναζήτησης)]]></translation>
+        <translation language="pl"><![CDATA[Elementy w autouzupełnianiu (wyniki wyszukiwania: sugestie dotyczące wyszukiwanych haseł)]]></translation>
       </item>
       <item type="label" name="ItemsForAutosuggest">
         <translation language="nl"><![CDATA[Items in autosuggest (zoek widget: resultaten)]]></translation>
@@ -193,6 +208,7 @@
         <translation language="es"><![CDATA[Objetos en sugerencia automática (widget de búsqueda: resultados)]]></translation>
         <translation language="uk"><![CDATA[Значення для автозаповнення (пошук віджета: результати)]]></translation>
         <translation language="el"><![CDATA[Πλήθος επιλογών γιά την αυτόματη πρόταση (μικροεφαρμογή αναζήτησης : αποτελέσματα)]]></translation>
+        <translation language="pl"><![CDATA[Elementy w autouzupełnianiu (widget wyszukiwania: wyniki)]]></translation>
       </item>
       <item type="label" name="ModuleWeight">
         <translation language="nl"><![CDATA[module gewicht]]></translation>
@@ -206,6 +222,7 @@
         <translation language="es"><![CDATA[peso del modulo]]></translation>
         <translation language="uk"><![CDATA[Важливість модуля]]></translation>
         <translation language="el"><![CDATA[βάρος ενότητας]]></translation>
+        <translation language="pl"><![CDATA[Waga modułu]]></translation>
       </item>
       <item type="label" name="SearchedOn">
         <translation language="nl"><![CDATA[gezocht op]]></translation>
@@ -219,10 +236,12 @@
         <translation language="es"><![CDATA[búsqueda en]]></translation>
         <translation language="uk"><![CDATA[Пошук по]]></translation>
         <translation language="el"><![CDATA[αναζητήθηκε στις]]></translation>
+        <translation language="pl"><![CDATA[Wyszukane dnia]]></translation>
       </item>
       <item type="label" name="UseSitelinksSearchBox">
         <translation language="nl"><![CDATA[Schakel Googles Sitelinks Search Box in.]]></translation>
         <translation language="en"><![CDATA[Enable Googles Sitelinks Search Box.]]></translation>
+        <translation language="pl"><![CDATA[Włącz Google Sitelinks Search Box.]]></translation>
       </item>
       <item type="error" name="SynonymIsRequired">
         <translation language="nl"><![CDATA[Synoniemen zijn verplicht.]]></translation>
@@ -235,6 +254,7 @@
         <translation language="de"><![CDATA[Synonyme werden benötigt.]]></translation>
         <translation language="es"><![CDATA[Se requieren sinónimos.]]></translation>
         <translation language="el"><![CDATA[Τα συνώνυμα είναι υποχρεωτικά.]]></translation>
+        <translation language="pl"><![CDATA[Wymagane są synonimy.]]></translation>
       </item>
       <item type="error" name="TermExists">
         <translation language="nl"><![CDATA[Synoniemen voor deze zoekterm bestaan reeds.]]></translation>
@@ -247,6 +267,7 @@
         <translation language="de"><![CDATA[Synonyme für diesen Suchbegriff existieren bereits.]]></translation>
         <translation language="es"><![CDATA[Ya existen sinónimos para este término de búsqueda.]]></translation>
         <translation language="el"><![CDATA[Υπάρχουν ήδη συνώνυμα γιά αυτόν τον όρο αναζήτησης]]></translation>
+        <translation language="pl"><![CDATA[Synonimy dla tego wyszuki już istnieją.]]></translation>
       </item>
       <item type="error" name="TermIsRequired">
         <translation language="nl"><![CDATA[De zoekterm is verplicht.]]></translation>
@@ -259,10 +280,11 @@
         <translation language="de"><![CDATA[Der Suchbegriff wird benötigt.]]></translation>
         <translation language="es"><![CDATA[Se requiere el término de búsqueda.]]></translation>
         <translation language="el"><![CDATA[Ο όρος αναζήτησης είναι υποχρεωτικός]]></translation>
+        <translation language="pl"><![CDATA[Fraza wyszukiwania jest wymagana.]]></translation>
       </item>
       <item type="error" name="WeightNotNumeric">
         <translation language="nl"><![CDATA[Het gewicht moet numeriek zijn.]]></translation>
-        <translation language="en"><![CDATA[Het gewicht moet numeriek zijn]]></translation>
+        <translation language="en"><![CDATA[The weight must be numeric.]]></translation>
         <translation language="it"><![CDATA[Il peso deve essere numerico.]]></translation>
         <translation language="ru"><![CDATA[Значение - числовое значение.]]></translation>
         <translation language="zh"><![CDATA[优先级必须为数字。]]></translation>
@@ -271,6 +293,7 @@
         <translation language="de"><![CDATA[Das Gewicht muss numerisch sein.]]></translation>
         <translation language="es"><![CDATA[El peso debe de ser numérico]]></translation>
         <translation language="el"><![CDATA[Το βάρος δεν είναι αριθμός]]></translation>
+        <translation language="pl"><![CDATA[Waga musi być liczbowa.]]></translation>
       </item>
     </Search>
   </Backend>

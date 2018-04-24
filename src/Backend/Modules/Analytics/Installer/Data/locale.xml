@@ -16,6 +16,7 @@
         <translation language="lt"><![CDATA[vidutinis laikas tinklapyje]]></translation>
         <translation language="sv"><![CDATA[genomsnitts tid på sajt]]></translation>
         <translation language="el"><![CDATA[Μέσος χρόνος στον ιστοχώρο]]></translation>
+        <translation language="pl"><![CDATA[średni czas spędzony w witrynie]]></translation>
       </item>
       <item type="label" name="BounceRate">
         <translation language="nl"><![CDATA[weigeringspercentage]]></translation>
@@ -31,6 +32,7 @@
         <translation language="sv"><![CDATA[studs nivå]]></translation>
         <translation language="lt"><![CDATA[atsisakymo lygis]]></translation>
         <translation language="el"><![CDATA[Ρυθμός αναπηδήσεων]]></translation>
+        <translation language="pl"><![CDATA[Procent odbić]]></translation>
       </item>
       <item type="label" name="ChangePeriod">
         <translation language="nl"><![CDATA[periode aanpassen]]></translation>
@@ -46,6 +48,7 @@
         <translation language="sv"><![CDATA[ändra period]]></translation>
         <translation language="lt"><![CDATA[keisti periodą]]></translation>
         <translation language="el"><![CDATA[Αλλαγή περιόδου]]></translation>
+        <translation language="pl"><![CDATA[dostosuj okres]]></translation>
       </item>
       <item type="label" name="ChooseThisAccount">
         <translation language="nl"><![CDATA[kies deze account]]></translation>
@@ -61,6 +64,7 @@
         <translation language="sv"><![CDATA[välj detta konto]]></translation>
         <translation language="lt"><![CDATA[pasirinkite šįą sąskaitą]]></translation>
         <translation language="el"><![CDATA[Επιλογή αυτού του λογαριασμού]]></translation>
+        <translation language="pl"><![CDATA[wybierz te konto]]></translation>
       </item>
       <item type="label" name="ChooseWebsiteProfile">
         <translation language="nl"><![CDATA[Kies een Analytics website profiel...]]></translation>
@@ -75,6 +79,7 @@
         <translation language="uk"><![CDATA[Виберіть профіль G.Analitycs]]></translation>
         <translation language="sv"><![CDATA[Välj en Analytics webbplats profil...]]></translation>
         <translation language="el"><![CDATA[Επιλογή ενός προφίλ Analytics...]]></translation>
+        <translation language="pl"><![CDATA[Wybierz profil witryny Analytics ...]]></translation>
       </item>
       <item type="label" name="GaPagePath">
         <translation language="nl"><![CDATA[pagina]]></translation>
@@ -83,6 +88,7 @@
         <translation language="ru"><![CDATA[страниц]]></translation>
         <translation language="fr"><![CDATA[page]]></translation>
         <translation language="es"><![CDATA[páginas]]></translation>
+        <translation language="pl"><![CDATA[strona]]></translation>
       </item>
       <item type="label" name="GaPageviews">
         <translation language="nl"><![CDATA[paginaweergaves]]></translation>
@@ -97,6 +103,7 @@
         <translation language="uk"><![CDATA[Пекреглядів сторінок]]></translation>
         <translation language="sv"><![CDATA[sidvisningar]]></translation>
         <translation language="el"><![CDATA[Εμφανίσεις σελίδας]]></translation>
+        <translation language="pl"><![CDATA[odsłony strony]]></translation>
       </item>
       <item type="label" name="LinkedProfile">
         <translation language="nl"><![CDATA[gekoppeld profiel]]></translation>
@@ -111,6 +118,7 @@
         <translation language="uk"><![CDATA[Зв'язані профілі]]></translation>
         <translation language="sv"><![CDATA[länkad profil]]></translation>
         <translation language="el"><![CDATA[Συνδεδεμένο προφίλ]]></translation>
+        <translation language="pl"><![CDATA[połączony profil]]></translation>
       </item>
       <item type="label" name="NewVisitsPercentage">
         <translation language="nl"><![CDATA[nieuw bezoekpercentage]]></translation>
@@ -125,6 +133,7 @@
         <translation language="uk"><![CDATA[Нові відвідування %]]></translation>
         <translation language="sv"><![CDATA[ny besökare procent]]></translation>
         <translation language="el"><![CDATA[Ποσοστό νέων επισκέψεων]]></translation>
+        <translation language="pl"><![CDATA[nowy procent odwiedzin]]></translation>
       </item>
       <item type="label" name="PagesPerVisit">
         <translation language="nl"><![CDATA[pagina's per bezoek]]></translation>
@@ -139,6 +148,7 @@
         <translation language="uk"><![CDATA[Сторінок за візит]]></translation>
         <translation language="sv"><![CDATA[sidor per besök]]></translation>
         <translation language="el"><![CDATA[Σελίδες ανά επίσκεψη]]></translation>
+        <translation language="pl"><![CDATA[strony na wizytę]]></translation>
       </item>
       <item type="label" name="Pageviews">
         <translation language="nl"><![CDATA[paginaweergaves]]></translation>
@@ -153,19 +163,23 @@
         <translation language="uk"><![CDATA[Пекреглядів сторінок]]></translation>
         <translation language="sv"><![CDATA[sidvisningar]]></translation>
         <translation language="el"><![CDATA[Εμφανίσεις σελίδας]]></translation>
+        <translation language="pl"><![CDATA[odsłony strony]]></translation>
       </item>
       <item type="label" name="Certificate">
         <translation language="nl"><![CDATA[certificaat (.p12 bestand)]]></translation>
         <translation language="en"><![CDATA[certificate (.p12 file)]]></translation>
+        <translation language="pl"><![CDATA[certyfikat (.p12 plik)]]></translation>
       </item>
       <item type="label" name="MostViewedPages">
         <translation language="nl"><![CDATA[meest bekeken pagina's]]></translation>
         <translation language="en"><![CDATA[most viewed pages]]></translation>
         <translation language="fr"><![CDATA[pages les plus vus]]></translation>
+        <translation language="pl"><![CDATA[najczęściej oglądane strony]]></translation>
       </item>
       <item type="label" name="Visitors">
         <translation language="nl"><![CDATA[bezoekers]]></translation>
         <translation language="en"><![CDATA[visitors]]></translation>
+        <translation language="pl"><![CDATA[odwiedzający]]></translation>
       </item>
       <item type="error" name="P12Only">
         <translation language="nl"><![CDATA[Enkel p12 bestanden zijn toegelaten.]]></translation>
@@ -182,6 +196,7 @@
         <translation language="sv"><![CDATA[Endast p12 filer är tillåtna.]]></translation>
         <translation language="el"><![CDATA[Επιτρέπονται μόνον αρχεία τύπου p12.]]></translation>
         <translation language="tr"><![CDATA[Sadece p12 dosyalarına izin verilir.]]></translation>
+        <translation language="pl"><![CDATA[Dozwolone są tylko pliki p12.]]></translation>
       </item>
       <item type="message" name="CertificateHelp">
         <translation language="nl"><![CDATA[
@@ -243,6 +258,7 @@
       <item type="message" name="NoAccounts">
         <translation language="nl"><![CDATA[Er zijn geen analytics accounts gekoppeld aan het opgegeven emailadres. Zorg dat het emailaddres %1$s zeker toegevoegd is aan de gewenste account. Het kan even duren voor de koppeling voltooid is.]]></translation>
         <translation language="en"><![CDATA[There are no analytics accounts coupled to the given email address. Make sure you added the email address %1$s to the wanted account. It can take a while before the coupling is completed.]]></translation>
+        <translation language="pl"><![CDATA[Nie ma żadnych kont analitycznych powiązanych z podanym adresem e-mail. Upewnij się, że adres e-mail %1$s jest zdecydowanie dodany do wybranego konta. Może minąć trochę czasu, zanim połączenie się zakończy.]]></translation>
       </item>
       <item type="message" name="RemoveAccountLink">
         <translation language="nl"><![CDATA[Verwijder de koppeling met uw Google account]]></translation>
@@ -256,6 +272,7 @@
         <translation language="es"><![CDATA[Eliminar el vinculo con tu cuenta Google]]></translation>
         <translation language="sv"><![CDATA[Ta bort länken med ditt Google konto]]></translation>
         <translation language="el"><![CDATA[Αφαιρέσατε το σύνδεσμο προς το λογαριασμό σας στο Google]]></translation>
+        <translation language="pl"><![CDATA[Usuń link do swojego konta Google]]></translation>
       </item>
     </Analytics>
     <Core>
@@ -272,6 +289,7 @@
         <translation language="uk"><![CDATA[Переглядів за один візит]]></translation>
         <translation language="sv"><![CDATA[sidvisningar per trafikkälla]]></translation>
         <translation language="el"><![CDATA[Εμφανίσεις σελίδας ανά πηγή κυκλοφορίας]]></translation>
+        <translation language="pl"><![CDATA[odsłony strony według źródła odwiedzin]]></translation>
       </item>
     </Core>
   </Backend>
