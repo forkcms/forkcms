@@ -73,6 +73,8 @@ services:
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
 
-    forkcms.utility.thumbnails:
-        class: ForkCMS\Utility\Thumbnails
+    ForkCMS\Utility\Thumbnails:
+        alias: forkcms.utility.thumbnails
         public: true
+        arguments:
+            - "%site.path_www%"
