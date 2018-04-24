@@ -37,6 +37,10 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         if (!in_array($showLink, ['true', 'false'])) {
             $showLink = 'false';
         }
+        $addMapLinkToAddress = $this->getRequest()->request->get('addMapLinkToAddress');
+        if (!in_array($addMapLinkToAddress, ['true', 'false'])) {
+            $addMapLinkToAddress = 'false';
+        }
         $showDirections = $this->getRequest()->request->get('directions');
         if (!in_array($showDirections, ['true', 'false'])) {
             $showDirections = 'false';
@@ -49,6 +53,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         // reformat
         $center = ['lat' => $centerLat, 'lng' => $centerLng];
         $showLink = ($showLink == 'true');
+        $addMapLinkToAddress = ($addMapLinkToAddress == 'true');
         $showDirections = ($showDirections == 'true');
         $showOverview = ($showOverview == 'true');
 
@@ -72,6 +77,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         BackendLocationModel::setMapSetting($itemId, 'width', (int) $width);
         BackendLocationModel::setMapSetting($itemId, 'directions', $showDirections);
         BackendLocationModel::setMapSetting($itemId, 'full_url', $showLink);
+        BackendLocationModel::setMapSetting($itemId, 'add_map_link_to_address', $addMapLinkToAddress);
 
         $item = [
             'id' => $itemId,

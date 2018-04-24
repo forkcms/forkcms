@@ -24,12 +24,18 @@
             </div>
 
             <div itemprop="name" class="hidden"><strong>{{ locationItem.title }}</strong></div>
+            {% if locationItem.add_map_link_to_address %}
+              <a href="{{ locationItem.maps_url }}" target="_blank" data-role="fork-map-url" data-map-id="{{ locationItem.id }}">
+            {% endif %}
             <address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
               <span itemprop="streetAddress">{{ locationItem.street }} {{ locationItem.number }}</span><br>
               <span itemprop="postalCode">{{ locationItem.zip }}</span>
               <span itemprop="addressLocality">{{ locationItem.city }}</span><br>
               <span itemprop="addressCountry">{{ locationItem.country }}</span>
             </address>
+            {% if widgetLocationSettings.add_map_link_to_address %}
+              </a>
+            {% endif %}
           </div>
         {% endfor %}
       </div>

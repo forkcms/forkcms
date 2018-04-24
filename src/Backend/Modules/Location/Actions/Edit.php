@@ -95,6 +95,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         $this->settings['full_url'] = (isset($this->settings['full_url'])) ? ($this->settings['full_url']) : false;
+        $this->settings['add_map_link_to_address'] = (isset($this->settings['add_map_link_to_address'])) ? ($this->settings['add_map_link_to_address']) : false;
         $this->settings['directions'] = (isset($this->settings['directions'])) ? ($this->settings['directions']) : false;
     }
 
@@ -145,6 +146,7 @@ class Edit extends BackendBaseActionEdit
             $this->settings['map_style'] ?? null
         );
         $this->settingsForm->addCheckbox('full_url', $this->settings['full_url']);
+        $this->settingsForm->addCheckbox('add_map_link_to_address', $this->settings['add_map_link_to_address']);
         $this->settingsForm->addCheckbox('directions', $this->settings['directions']);
         $this->settingsForm->addCheckbox('marker_overview', $this->record['show_overview']);
     }
