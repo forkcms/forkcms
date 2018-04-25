@@ -3,32 +3,6 @@
 
 {% block content %}
 <body id="login">
-<!--[if lte IE 6]>
-<style type="text/css" media="screen">
-  #debugnotify, #loginBox {
-    display: none
-  }
-
-  #browserSupport {
-    padding: 20px;
-    border: 1px solid #DDD;
-    width: 400px;
-    margin: 40px auto
-  }
-
-  #browserSupport h2 {
-    padding: 0 0 12px;
-  }
-
-  body {
-    background: #FFF !important;
-  }
-</style>
-<div id="browserSupport" class="content">
-  <h2>{{ 'lbl.BrowserNotSupported'|trans|ucfirst }}</h2>
-  {{ 'err.BrowserNotSupported'|trans|raw }}
-</div>
-<![endif]-->
 
 <div class="login-block">
   <div class="container">
@@ -93,9 +67,7 @@
                 <a href="#" id="forgotPasswordLink" class="btn forgot-password" data-toggle="modal" data-target="#forgotPasswordHolder">{{ 'msg.ForgotPassword'|trans }}</a>
               </div>
               <div class="btn-group">
-                <button name="login" type="submit" class="btn btn-primary">
-                  {{ 'lbl.SignIn'|trans|ucfirst }}
-                </button>
+                {{ macro.buttonIcon('', 'sign-in', 'lbl.SignIn'|trans|ucfirst, 'btn-primary', {"name":"login", "type":"submit"}) }}
               </div>
             </div>
           </div>
@@ -123,12 +95,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
-          {{ macro.icon('times') }}{{ 'lbl.Cancel'|trans|ucfirst }}
-        </button>
-        <button id="send" name="send" type="submit" class="btn btn-primary">
-          {{ macro.icon('envelope') }}{{ 'lbl.Send'|trans|ucfirst }}
-        </button>
+        {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', {"data-dismiss":"modal"}) }}
+        {{ macro.buttonIcon('', 'envelope', 'lbl.Send'|trans|ucfirst, 'btn-primary', {"id":"send", "name":"send", "type":"submit"}) }}
       </div>
       {% endform %}
     </div>

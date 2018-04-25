@@ -1,6 +1,7 @@
 services:
     content_blocks.handler.create_content_block:
         class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CreateContentBlockHandler
+        public: true
         arguments:
             - "@content_blocks.repository.content_block"
         tags:
@@ -8,6 +9,7 @@ services:
 
     content_blocks.handler.update_content_block:
         class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\UpdateContentBlockHandler
+        public: true
         arguments:
             - "@content_blocks.repository.content_block"
         tags:
@@ -15,6 +17,7 @@ services:
 
     content_blocks.handler.delete_content_block:
         class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\DeleteContentBlockHandler
+        public: true
         arguments:
             - "@content_blocks.repository.content_block"
         tags:
@@ -22,6 +25,7 @@ services:
 
     content_blocks.handler.copy_content_blocks_to_other_locale:
         class: Backend\Modules\ContentBlocks\Domain\ContentBlock\Command\CopyContentBlocksToOtherLocaleHandler
+        public: true
         arguments:
             - "@content_blocks.repository.content_block"
         tags:

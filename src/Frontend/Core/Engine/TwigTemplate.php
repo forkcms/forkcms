@@ -4,11 +4,11 @@ namespace Frontend\Core\Engine;
 
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
+use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Twig_Environment;
 use Twig_FactoryRuntimeLoader;
@@ -69,8 +69,8 @@ class TwigTemplate extends BaseTwigTemplate
         $this->environment->addRuntimeLoader(
             new Twig_FactoryRuntimeLoader(
                 [
-                    TwigRenderer::class => function () use ($rendererEngine, $csrfTokenManager): TwigRenderer {
-                        return new TwigRenderer($rendererEngine, $csrfTokenManager);
+                    FormRenderer::class => function () use ($rendererEngine, $csrfTokenManager): FormRenderer {
+                        return new FormRenderer($rendererEngine, $csrfTokenManager);
                     },
                 ]
             )

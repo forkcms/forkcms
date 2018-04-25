@@ -270,9 +270,9 @@ jsBackend.pages.extras = {
       '<span class="templateTitle" id="templateTitle' + index + '">' + title + '</span>' +
       '<span class="templateDescription">' + description + '</span>' +
       '<div class="btn-group buttonHolder">' +
-      '<button href="#" class="btn btn-default btn-icon-only btn-xs toggleVisibility" aria-labelledby="ViewBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only" id="ViewBlockText' + index + '">' + jsBackend.locale.lbl('View') + '</span></span></button>' +
-      '<button href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + ' aria-labelledby="EditBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only" id="EditBlockText' + index + '">' + jsBackend.locale.lbl('EditBlock') + '</span></button>' +
-      '<button href="#" class="deleteBlock btn btn-danger btn-icon-only btn-xs" aria-labelledby="DeleteBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only" id="DeleteBlockText' + index + '">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
+      '<button class="btn btn-default btn-icon-only btn-xs toggleVisibility" aria-labelledby="ViewBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-' + (visible ? 'eye' : 'eye-slash') + '" aria-hidden="true"></span><span class="sr-only" id="ViewBlockText' + index + '">' + jsBackend.locale.lbl('View') + '</span></span></button>' +
+      '<a href="' + (editLink || '#') + '" class="' + linkClass + 'btn btn-primary btn-icon-only btn-xs' + '"' + (showEditLink ? ' target="_blank"' : '') + (showEditLink ? '' : ' onclick="return false;"') + ((showEditLink) || extraId === 0 ? '' : 'style="display: none;" ') + ' aria-labelledby="EditBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-pencil" aria-hidden="true"></span><span class="sr-only" id="EditBlockText' + index + '">' + jsBackend.locale.lbl('EditBlock') + '</span></a>' +
+      '<button class="deleteBlock btn btn-danger btn-icon-only btn-xs" aria-labelledby="DeleteBlockText' + index + ' templateTitle' + index + '"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="sr-only" id="DeleteBlockText' + index + '">' + jsBackend.locale.lbl('DeleteBlock') + '</span></button>' +
       '</div>' +
       '</div>'
 
@@ -308,6 +308,9 @@ jsBackend.pages.extras = {
     // fetch block index
     var index = $(this).closest('*[data-block-id]').data('block-id')
 
+    // fetch block position
+    var $templatePosition = $(this).closest('.templatePosition')
+
     // save unaltered content
     var previousContent = $('#blockHtml' + index).val()
 
@@ -329,6 +332,11 @@ jsBackend.pages.extras = {
 
       // close dialog
       $('#blockHtml').modal('hide')
+
+      // set focus on position add block button after the modal is closed
+      $('#blockHtml').on('hidden.bs.modal', function (e) {
+        $templatePosition.find('.addBlock').focus()
+      })
     })
 
     $('#blockHtmlCancel').unbind('click').on('click', function (e) {
@@ -339,9 +347,20 @@ jsBackend.pages.extras = {
 
       // close the dialog
       $('#blockHtml').modal('hide')
+
+      // set focus on position add block button after the modal is closed
+      $('#blockHtml').on('hidden.bs.modal', function (e) {
+        $templatePosition.find('.addBlock').focus()
+      })
     })
 
     $('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
+      if (jsData.Core.preferred_editor !== 'ck-editor') {
+        $('#html').val(previousContent);
+
+        return;
+      }
+
       // set content in editor
       CKEDITOR.instances['html'].setData(previousContent)
     }).modal('show')
@@ -562,6 +581,11 @@ jsBackend.pages.extras = {
           }
         }).modal('hide')
 
+        // set focus on position add block button after the modal is closed
+        $('#addBlock').on('hidden.bs.modal', function (e) {
+          $('[data-position="' + position + '"]').find('.addBlock').focus()
+        })
+
         // if the added block was an editor, show the editor immediately
         if (!isUserTemplate && index && !(typeof extrasById !== 'undefined' && typeof extrasById[selectedExtraId] !== 'undefined')) {
           $('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click()
@@ -577,6 +601,9 @@ jsBackend.pages.extras = {
 
     // fetch block index
     var index = $(this).parent().parent().attr('data-block-id')
+
+    // fetch block position
+    var $templatePosition = $(this).closest('.templatePosition')
 
     // fetch user template id
     var userTemplateId = $('#blockExtraId' + index).val()
@@ -630,6 +657,11 @@ jsBackend.pages.extras = {
       jsBackend.pages.template.original = false
 
       $('#addUserTemplate').modal('hide')
+
+      // set focus on position add block button after the modal is closed
+      $('#addUserTemplate').on('hidden.bs.modal', function (e) {
+        $templatePosition.find('.addBlock').focus()
+      })
     })
     $modal.off('hidden.bs.modal').on('hidden.bs.modal', function () {
       // the ajax file uploader inserts an input field in the body, remove it
@@ -658,7 +690,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default" id="user-template-link-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -687,7 +719,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -710,7 +742,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default" id="user-template-text-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -733,7 +765,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -756,7 +788,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body">'
@@ -775,11 +807,11 @@ jsBackend.pages.extras = {
   /**
    * Creates the html for an image field
    */
-  getImageFieldHtml: function (src, alt, label, isVisible, key) {
+  getImageFieldHtml: function (src, alt, label, isVisible, optionalHide, key) {
     var html = '<div class="panel panel-default" id="user-template-image-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body clearfix">'
@@ -798,7 +830,7 @@ jsBackend.pages.extras = {
     html += '<input class="form-control" type="text" id="alt' + key + '" value="' + alt + '" />'
     html += '</div>'
 
-    html += '<div class="checkbox">'
+    html += '<div class="checkbox"' + (optionalHide ? '' : ' style="display: none;"') + '>';
     html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
     html += '</div>'
 
@@ -816,7 +848,7 @@ jsBackend.pages.extras = {
     var html = '<div class="panel panel-default" id="user-template-image-background-' + key + '">'
 
     html += '<div class="panel-heading">'
-    html += '<h3 class="panel-title">' + label + '</h3>'
+    html += '<h2 class="panel-title">' + label + '</h2>'
     html += '</div>'
 
     html += '<div class="panel-body clearfix">'
@@ -877,6 +909,7 @@ jsBackend.pages.extras = {
           $element.attr('alt'),
           $element.data('ft-label'),
           $element.attr('style') !== 'display: none;',
+          $element.data('ft-block-optional'),
           key
         )
       )
@@ -971,7 +1004,7 @@ jsBackend.pages.extras = {
     }
 
     // replace editor
-    if ($element.is('[data-ft-type="editor"]')) {
+    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
       $placeholder.append(jsBackend.pages.extras.getEditorFieldHtml($element.html(), $element.data('ft-label'), key))
 
       jsBackend.ckeditor.load()
@@ -1053,7 +1086,7 @@ jsBackend.pages.extras = {
       return
     }
 
-    if ($element.is('[data-ft-type="editor"]')) {
+    if ($element.is('[data-ft-type="editor"]') && jsData.Core.preferred_editor === 'ck-editor') {
       $textarea = $placeholder.find('#user-template-editor-' + key + ' textarea[data-ft-label]')
 
       $element.html($textarea.val())
@@ -1074,6 +1107,9 @@ jsBackend.pages.extras = {
     // save element to variable
     var element = $(this)
 
+    // save add block button from the position of the element
+    var $templateAddBlock = element.closest('.templatePosition').find('.addBlock')
+
     // initialize the modal for deleting a block
     if ($('#confirmDeleteBlock').length > 0) {
       $('#confirmDeleteBlockSubmit').unbind('click').on('click', function (e) {
@@ -1085,6 +1121,11 @@ jsBackend.pages.extras = {
 
         // close dialog
         $('#confirmDeleteBlock').modal('hide')
+
+        // set focus to add block button after modal is closed
+        $('#confirmDeleteBlock').on('hidden.bs.modal', function (e) {
+          $templateAddBlock.focus()
+        })
       })
 
       $('#confirmDeleteBlock').modal('show')
@@ -1400,6 +1441,8 @@ jsBackend.pages.tree = {
 
     // set the item selected
     if (typeof selectedId !== 'undefined') $('#' + selectedId).addClass('selected')
+
+    jsBackend.pages.tree.toggleJsTreeCollapse()
   },
 
   // before an item will be moved we have to do some checks
@@ -1496,6 +1539,25 @@ jsBackend.pages.tree = {
           jsBackend.messages.add('success', jsBackend.locale.msg('PageIsMoved').replace('%1$s', json.data.title))
         }
       }
+    })
+  },
+
+  toggleJsTreeCollapse: function () {
+    $('[data-role="toggle-js-tree-collapse"]').on('click', function () {
+      var $this = $(this)
+      $this.toggleClass('tree-collapsed')
+      var collapsed = $this.hasClass('tree-collapsed')
+      var $buttonText = $('[data-role="toggle-js-tree-collapse-text"]')
+
+      if (collapsed) {
+        $buttonText.html(jsBackend.locale.lbl('OpenTreeNavigation'))
+        $.tree.reference('#tree div').close_all()
+
+        return
+      }
+
+      $buttonText.html(jsBackend.locale.lbl('CloseTreeNavigation'))
+      $.tree.reference('#tree div').open_all()
     })
   }
 }

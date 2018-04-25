@@ -33,7 +33,7 @@ class Index extends BackendBaseActionIndex
         // check if the user is really logged on
         if (BackendAuthentication::getUser()->isAuthenticated()) {
             $userEmail = BackendAuthentication::getUser()->getEmail();
-            $this->getContainer()->get('logger')->info(
+            $this->getContainer()->get('logger.public')->info(
                 "User '{$userEmail}' is already authenticated."
             );
             $this->redirectToAllowedModuleAndAction();
@@ -89,7 +89,7 @@ class Index extends BackendBaseActionIndex
                 $this->template->assign('hasError', true);
             }
 
-            $this->getContainer()->get('logger')->info(
+            $this->getContainer()->get('logger.public')->info(
                 "Trying to authenticate user '{$txtEmail->getValue()}'."
             );
 
@@ -106,7 +106,7 @@ class Index extends BackendBaseActionIndex
             if ($txtEmail->isFilled() && $txtPassword->isFilled() && $this->form->getToken() == $this->form->getField('form_token')->getValue()) {
                 // try to login the user
                 if (!BackendAuthentication::loginUser($txtEmail->getValue(), $txtPassword->getValue())) {
-                    $this->getContainer()->get('logger')->info(
+                    $this->getContainer()->get('logger.public')->info(
                         "Failed authenticating user '{$txtEmail->getValue()}'."
                     );
 
@@ -151,7 +151,7 @@ class Index extends BackendBaseActionIndex
                 // too many attempts
                 $this->form->addEditor('too many attempts');
 
-                $this->getContainer()->get('logger')->info(
+                $this->getContainer()->get('logger.public')->info(
                     "Too many login attempts for user '{$txtEmail->getValue()}'."
                 );
 
@@ -173,7 +173,7 @@ class Index extends BackendBaseActionIndex
                     BackendUsersModel::setSetting($userId, 'last_login', $lastLogin);
                 }
 
-                $this->getContainer()->get('logger')->info(
+                $this->getContainer()->get('logger.public')->info(
                     "Successfully authenticated user '{$txtEmail->getValue()}'."
                 );
 
@@ -252,7 +252,7 @@ class Index extends BackendBaseActionIndex
             BackendModel::createUrlForAction('Index', 'Authentication');
 
         $userEmail = BackendAuthentication::getUser()->getEmail();
-        $this->getContainer()->get('logger')->info(
+        $this->getContainer()->get('logger.public')->info(
             "Redirecting user '{$userEmail}' to {$allowedModuleActionUrl}."
         );
 

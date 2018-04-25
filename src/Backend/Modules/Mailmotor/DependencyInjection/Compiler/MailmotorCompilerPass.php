@@ -25,9 +25,9 @@ class MailmotorCompilerPass implements CompilerPassInterface
                     'mailmotor.list_id',
                     $container->get('fork.settings')->get('Mailmotor', 'list_id')
                 );
+            } else {
                 // When in fork cms installer, we don't have the service fork.settings
                 // but we must set the parameters
-            } else {
                 // we must set these parameters to be usable
                 $container->setParameter('mailmotor.mail_engine', 'not_implemented');
                 $container->setParameter('mailmotor.api_key', null);

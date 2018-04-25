@@ -20,15 +20,10 @@ jsBackend.Blog.controls = {
   // init, something like a constructor
   init: function () {
     // variables
-    var $saveAsDraft = $('#saveAsDraft')
     var $addCategorySubmit = $('#addCategorySubmit')
     var $addCategoryDialog = $('#addCategoryDialog')
     var $categoryTitleError = $('#categoryTitleError')
     var $categoryId = $('#categoryId')
-
-    $saveAsDraft.on('click', function (e) {
-      $('form').append('<input type="hidden" name="status" value="draft" />').submit()
-    })
 
     if ($addCategorySubmit.length > 0 && $addCategoryDialog.length > 0) {
       $addCategorySubmit.click(function () {

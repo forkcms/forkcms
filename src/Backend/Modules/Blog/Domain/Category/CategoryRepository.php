@@ -28,7 +28,7 @@ class CategoryRepository extends EntityRepository
         $this->getEntityManager()->flush($category);
     }
 
-    public function getUrl(string $url, ?int $id): string
+    public function getUrl(string $url, int $id = null): string
     {
         $query = $this
             ->createQueryBuilder('i')

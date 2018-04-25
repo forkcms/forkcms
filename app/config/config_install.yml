@@ -1,5 +1,6 @@
 imports:
     - { resource: console.yml }
+    - { resource: form.yml }
     - { resource: parameters_install.yml }
     - { resource: doctrine.yml }
 
@@ -16,6 +17,13 @@ framework:
         handler_id: ~
     validation:
         enable_annotations: true
+    cache:
+        app: cache.adapter.filesystem
+        pools:
+            cache.search:
+                adapter: cache.app
+                public: true
+                default_lifetime: 3600
 
 # Assetic Configuration
 assetic:
@@ -45,13 +53,16 @@ services:
     # dummy service during the installation
     fork.settings:
         class: stdClass
+        public: true
 
     # dummy service during the installation
     cache.pool:
         class: stdClass
+        public: true
 
     database:
         class: SpoonDatabase
+        public: true
         arguments:
             - "%database.driver%"
             - "%database.host%"

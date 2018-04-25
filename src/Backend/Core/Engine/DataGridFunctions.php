@@ -257,7 +257,7 @@ class DataGridFunctions
         $imagePath = $path . '/' . $image;
 
         if ($filter !== null) {
-            $imagePath = BackendModel::get('liip_imagine.cache.manager')->getBrowserPath($imagePath, $filter);
+            $imagePath = BackendModel::get('liip_imagine.cache.manager.public')->getBrowserPath($imagePath, $filter);
         }
 
         $html = '<img src="' . $imagePath . '" alt="' . $title . '"';

@@ -99,12 +99,6 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
 
         // load the config file for the required module
         $this->loadConfig();
-
-        // is the requested action possible? If not we throw an exception.
-        // We don't redirect because that could trigger a redirect loop
-        if (!in_array($this->getAction(), $this->config->getPossibleActions(), true)) {
-            $this->setAction($this->config->getDefaultAction());
-        }
     }
 
     public function execute(): void
@@ -149,6 +143,10 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
     public function getAction(): ?string
     {
         if ($this->action !== null) {
+            if (!\in_array($this->action, $this->config->getPossibleActions(), true)) {
+                $this->setAction($this->config->getDefaultAction());
+            }
+
             return $this->action;
         }
 
@@ -179,6 +177,11 @@ class ExtraInterface extends KernelLoader implements ModuleExtraInterface
                 // stop the loop
                 break;
             }
+        }
+
+        // we need this fallback when we add extra slugs but still need the default action
+        if (!\in_array($this->action, $this->config->getPossibleActions(), true)) {
+            $this->setAction($this->config->getDefaultAction());
         }
 
         return $this->action;

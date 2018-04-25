@@ -14,7 +14,7 @@
   }
 
   .working-language {
-    color: $gray-light;
+    color: $gray;
     font-size: $font-size-small;
     font-weight: normal;
   }
@@ -33,14 +33,14 @@
 }
 
 .site-url {
-  border-bottom: 1px solid $gray-light;
-  color: $gray-light;
+  border-bottom: 1px solid $gray;
+  color: $gray;
   font-size: $font-size-small;
 
   &:hover,
   &:focus {
-    border-color: $gray-base;
-    color: $gray-base;
+    border-color: $brand-primary;
+    color: $brand-primary;
     text-decoration: none;
   }
 }

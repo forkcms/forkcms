@@ -3,6 +3,7 @@
 namespace Backend\Core\Engine;
 
 use Common\ModuleExtraType;
+use Doctrine\ORM\EntityManager;
 use InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -685,6 +686,22 @@ class Model extends \Common\Core\Model
                 'sequence' => $sequence ?? self::getNextModuleExtraSequenceForModule($module),
             ]
         );
+    }
+
+    /**
+     * This returns the identifier for the editor the logged in user prefers to use in forms.
+     *
+     * @return string
+     */
+    public static function getPreferredEditor(): string
+    {
+        $defaultPreferredEditor = self::getContainer()->getParameter('fork.form.default_preferred_editor');
+
+        if (!Authentication::isLoggedIn()) {
+            return $defaultPreferredEditor;
+        }
+
+        return Authentication::getUser()->getSetting('preferred_editor', $defaultPreferredEditor);
     }
 
     /**

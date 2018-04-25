@@ -1,12 +1,11 @@
 imports:
     - { resource: console.yml }
+    - { resource: form.yml }
     - { resource: parameters.yml }
     - { resource: doctrine.yml }
-    - { resource: form.yml }
 
 parameters:
     fork.is_installed: true
-    fork.form.theme: 'Core/Layout/Templates/FormLayout.html.twig'
 
 framework:
     secret: "%kernel.secret%"
@@ -105,19 +104,27 @@ liip_imagine:
                 thumbnail: { size : [1600, 500], mode : inbound }
 
 services:
-    form.type.editor:
-        class: Backend\Form\Type\EditorType
-        tags:
-          - { name: form.type, alias: editor}
-    form.type.meta:
-        class: Backend\Form\Type\MetaType
-        arguments:
-          - "@fork.repository.meta"
-          - "@translator"
-        tags:
-          - { name: form.type, alias: meta}
+    templating.name_parser.public:
+        alias: templating.name_parser
+        public: true
+    file_locator.public:
+        alias: file_locator
+        public: true
+    logger.public:
+        alias: logger
+        public: true
+    command_bus.public:
+        alias: command_bus
+        public: true
+    liip_imagine.cache.manager.public:
+        alias: liip_imagine.cache.manager
+        public: true
+    mailmotor.factory.public:
+        alias: mailmotor.factory
+        public: true
     database:
         class: SpoonDatabase
+        public: true
         arguments:
             - "%database.driver%"
             - "%database.host%"
@@ -158,22 +165,26 @@ services:
             - "@cache.adapter"
     cache.pool:
         class: MatthiasMullie\Scrapbook\Psr6\Pool
+        public: true
         arguments:
             - "@cache.buffer"
     cache.backend_navigation:
         class: Backend\Core\Engine\NavigationCache
+        public: true
         arguments:
             - "@database"
             - "@cache.pool"
 
     fork.settings:
         class: Common\ModulesSettings
+        public: true
         arguments:
             - "@database"
             - "@cache.pool"
 
     fork.cookie:
         class: Common\Core\Cookie
+        public: true
 
     fork.cookie_setter:
         class: Common\EventListener\ForkCookieSetter
@@ -189,6 +200,7 @@ services:
 
     templating:
         class: Frontend\Core\Engine\TwigTemplate
+        public: true
         arguments:
             - "@twig"
             - "@templating.name_parser"
@@ -196,5 +208,6 @@ services:
 
     translator:
         class: Common\Language
+        public: true
         arguments:
             - "@translator.selector"
