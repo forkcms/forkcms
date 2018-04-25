@@ -794,9 +794,8 @@ jsBackend.mediaLibraryHelper.group = {
 
     // bind click to duplicate media item
     $('[data-role=media-library-duplicate-and-crop]').on('click', function () {
-      var mediaItemToDuplicate = jsBackend.mediaLibraryHelper.group.getMediaItemForId($(this).data('media-item-id'));
-
-      jsBackend.mediaLibraryHelper.duplicator.init(mediaItemToDuplicate);
+      var mediaItemToDuplicate = jsBackend.mediaLibraryHelper.group.getMediaItemForId($(this).data('media-item-id'))
+      jsBackend.mediaLibraryHelper.duplicator.init(mediaItemToDuplicate)
     })
 
     // select the correct folder
@@ -873,7 +872,7 @@ jsBackend.mediaLibraryHelper.cropper = {
   },
 
   enableCropper: function () {
-    $('[data-role="enable-cropper-checkbox"]').attr('checked', true);
+    $('[data-role="enable-cropper-checkbox"]').attr('checked', true)
   },
 
   initSourceAndTargetCanvas: function ($dialog, sourceCanvas, targetCanvas) {
@@ -1097,7 +1096,7 @@ jsBackend.mediaLibraryHelper.cropper = {
 jsBackend.mediaLibraryHelper.duplicator = {
   init: function(mediaItemToDuplicate) {
     if (!mediaItemToDuplicate) {
-      return;
+      return
     }
 
     // create canvas
@@ -1107,18 +1106,18 @@ jsBackend.mediaLibraryHelper.duplicator = {
     canvas.width = mediaItemToDuplicate.width
 
     // create image
-    var image = new Image();
+    var image = new Image()
     image.onload = function () {
       context.drawImage(this, 0, 0)
 
       // enable cropper
-      jsBackend.mediaLibraryHelper.cropper.enableCropper();
+      jsBackend.mediaLibraryHelper.cropper.enableCropper()
 
       // switch from "library"-tab to "upload"-tab
       $('.nav-tabs a[href="#tabUploadMedia"]').tab('show')
 
       // let FineUploader handle the file
-      var splittedUrl = mediaItemToDuplicate.url.split('.');
+      var splittedUrl = mediaItemToDuplicate.url.split('.')
       $('#fine-uploader-gallery').fineUploader('addFiles', [{
         'canvas': canvas,
         'name': splittedUrl[0] + '-2.' + splittedUrl[1],
