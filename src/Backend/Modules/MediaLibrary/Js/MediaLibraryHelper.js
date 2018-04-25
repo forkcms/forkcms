@@ -510,7 +510,7 @@ jsBackend.mediaLibraryHelper.group = {
         if (mediaItem.id === mediaItemId) {
           foundMediaItem = mediaItem
 
-          return false;
+          return false
         }
       })
     })
