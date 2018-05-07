@@ -67,11 +67,7 @@ class Thumbnails
      */
     public function generate(string $inPath, string $forSourceFile): void
     {
-        // get folder listing
-        $folders = $this->getFolders($inPath);
-
-        // loop folders
-        foreach ($folders as $folder) {
+        foreach ($this->getFolders($inPath) as $folder) {
             $this->generateThumbnail($folder, $forSourceFile);
         }
     }
