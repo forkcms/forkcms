@@ -74,7 +74,6 @@ services:
             - [ setDebug, [ "%kernel.debug%" ]]
 
     ForkCMS\Utility\Thumbnails:
-        alias: forkcms.utility.thumbnails
         public: true
         arguments:
             - "%site.path_www%"

@@ -204,7 +204,6 @@ services:
             - "@fork.settings"
 
     ForkCMS\Utility\Thumbnails:
-        alias: forkcms.utility.thumbnails
         public: true
         arguments:
             - "%site.path_www%"
