@@ -131,12 +131,10 @@ class Thumbnails
         if (!$this->filesystem->exists($inPath)) {
             return $return;
         }
-        $this->finder->name('/^([0-9]*)x([0-9]*)$/');
-        if ($includeSourceFolder) {
-            $this->finder->name('source');
-        }
 
-        foreach ($this->finder->directories()->in($inPath)->depth('== 0') as $directory) {
+        $nameFilter = ($includeSourceFolder) ? 'source' : '/^([0-9]*)x([0-9]*)$/';
+
+        foreach ($this->finder->directories()->in($inPath)->name($nameFilter)->depth('== 0') as $directory) {
             $chunks = explode('x', $directory->getBasename(), 2);
             if (!$includeSourceFolder && count($chunks) !== 2) {
                 continue;
