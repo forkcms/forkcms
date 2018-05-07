@@ -45,7 +45,7 @@ class GenerateThumbnailsCommand extends Command
         $folderOption = $input->getOption('folder');
 
         if (!isset($folderOption)) {
-            throw new Exception('Please specify a foldername "--folder=XXX"');
+            throw new Exception('Please specify a foldername "--folder=XXX" from /src/Frontend/Files where you want to generate thumbnails for.');
         }
 
         // Get path to locale file
