@@ -16,6 +16,9 @@ use Symfony\Component\Finder\Finder;
  */
 class GenerateThumbnailsCommand extends Command
 {
+    /** @var Finder */
+    private $finder;
+
     /** @var Thumbnails */
     private $thumbnails;
 
@@ -34,6 +37,7 @@ class GenerateThumbnailsCommand extends Command
 
     public function __construct(Thumbnails $thumbnails)
     {
+        $this->finder = new Finder();
         $this->thumbnails = $thumbnails;
 
         parent::__construct();
@@ -56,10 +60,9 @@ class GenerateThumbnailsCommand extends Command
 
     private function generateThumbnails(string $folderPath, OutputInterface $output): void
     {
-        $finder = new Finder();
-        $finder->files()->in($folderPath)->name('/^.*\.(jpg|jpeg|png|gif)$/i');
+        $this->finder->files()->in($folderPath)->name('/^.*\.(jpg|jpeg|png|gif)$/i');
 
-        foreach ($finder as $file) {
+        foreach ($this->finder as $file) {
             $this->thumbnails->generate($folderPath, $file->getRealPath());
             $output->writeln('<info>Creating thumbnail for ' . $file->getBasename() . '...</info>');
         }
