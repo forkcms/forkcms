@@ -1,0 +1,12 @@
+services:
+  location.repository.location:
+    class: Backend\Modules\Location\Domain\Location\LocationRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Location\Domain\Location\Location
+
+  location.repository.location_setting:
+    class: Backend\Modules\Location\Domain\LocationSetting\LocationSettingRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Location\Domain\LocationSetting\LocationSetting

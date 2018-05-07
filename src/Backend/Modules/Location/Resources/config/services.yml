@@ -1,5 +1,6 @@
 imports:
   - { resource: commands.yml }
+  - { resource: repositories.yml }
 
 services:
     location.copy:
