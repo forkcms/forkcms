@@ -198,6 +198,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
+    ForkCMS\Utility\Geolocation:
+        public: true
+        arguments:
+            - "@fork.settings"
+
     ForkCMS\Utility\Thumbnails:
         alias: forkcms.utility.thumbnails
         public: true

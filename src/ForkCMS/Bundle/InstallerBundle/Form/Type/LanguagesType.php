@@ -99,6 +99,7 @@ class LanguagesType extends AbstractType
             'Spanish' => 'es',
             'Swedish' => 'sv',
             'Ukrainian' => 'uk',
+            'Polish' => 'pl',
         ];
     }
 }

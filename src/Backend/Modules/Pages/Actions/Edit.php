@@ -539,7 +539,7 @@ class Edit extends BackendBaseActionEdit
                 null,
                 'form-control js-tags-input',
                 'error js-tags-input'
-            );
+            )->setAttribute('aria-describedby', 'tags-info');
         }
 
         // a specific action
