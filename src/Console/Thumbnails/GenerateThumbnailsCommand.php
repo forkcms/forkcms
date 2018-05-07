@@ -66,6 +66,6 @@ class GenerateThumbnailsCommand extends Command
             throw new Exception('Please specify a foldername "--folder=XXX" from /src/Frontend/Files where you want to generate thumbnails for.');
         }
 
-        return realpath(__DIR__ . '/../../..' . '/src/Frontend/Files/' . $folderOption);
+        return realpath(__DIR__ . '/../../../src/Frontend/Files/' . $folderOption);
     }
 }
