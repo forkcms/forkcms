@@ -74,6 +74,6 @@ class GenerateThumbnailsCommand extends Command
      */
     private function getFolderPath(string $folderOption): string
     {
-        return __DIR__ . '/../../..' . '/src/Frontend/Files/' . $folderOption;
+        return realpath(__DIR__ . '/../../..' . '/src/Frontend/Files/' . $folderOption);
     }
 }
