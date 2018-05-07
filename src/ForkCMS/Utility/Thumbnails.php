@@ -127,37 +127,34 @@ class Thumbnails
      */
     public function getFolders(string $inPath, bool $includeSourceFolder = false): array
     {
-        $return = [];
         if (!$this->filesystem->exists($inPath)) {
-            return $return;
+            return [];
         }
 
+        $folders = [];
         $nameFilter = ($includeSourceFolder) ? 'source' : '/^([0-9]*)x([0-9]*)$/';
 
         foreach ($this->finder->directories()->in($inPath)->name($nameFilter)->depth('== 0') as $directory) {
-            $chunks = explode('x', $directory->getBasename(), 2);
+            $dirname = $directory->getBasename();
+            $chunks = explode('x', $dirname, 2);
+
             if (!$includeSourceFolder && count($chunks) !== 2) {
                 continue;
             }
 
-            $item = [];
-            $item['dirname'] = $directory->getBasename();
-            $item['path'] = $directory->getRealPath();
-            if (mb_substr($inPath, 0, mb_strlen($this->sitePath)) === $this->sitePath) {
-                $item['url'] = mb_substr($inPath, mb_strlen($this->sitePath));
-            }
+            $width = (($dirname !== 'source') && ($chunks[0] !== '')) ? (int) $chunks[0] : null;
+            $height = (($dirname !== 'source') && ($chunks[1] !== '')) ? (int) $chunks[1] : null;
 
-            if ($item['dirname'] === 'source') {
-                $item['width'] = null;
-                $item['height'] = null;
-            } else {
-                $item['width'] = ($chunks[0] !== '') ? (int)$chunks[0] : null;
-                $item['height'] = ($chunks[1] !== '') ? (int)$chunks[1] : null;
-            }
-
-            $return[] = $item;
+            $folders[] = [
+                'dirname' => $dirname,
+                'path' => $directory->getRealPath(),
+                'width' => $width,
+                'height' => $height,
+                'url' => (mb_substr($inPath, 0, mb_strlen($this->sitePath)) === $this->sitePath)
+                    ? mb_substr($inPath, mb_strlen($this->sitePath)) : ''
+            ];
         }
 
-        return $return;
+        return $folders;
     }
 }
