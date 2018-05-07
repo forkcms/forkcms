@@ -116,9 +116,9 @@ class ThumbnailsTest extends TestCase
 
         // Test thumbnail deleting
         $this->thumbnails->delete($this->rootPath, $this->filename);
-        $this->assertFalse(file_exists($this->rootPath . '/' . self::LANDSCAPE . '/' . $this->filename));
-        $this->assertFalse(file_exists($this->rootPath . '/' . self::PORTRAIT . '/' . $this->filename));
-        $this->assertFalse(file_exists($this->rootPath . '/' . self::SQUARE . '/' . $this->filename));
-        $this->assertTrue(file_exists($this->rootPath . '/' . self::SOURCE . '/' . $this->filename));
+        $this->assertFalse(is_file($this->rootPath . '/' . self::LANDSCAPE . '/' . $this->filename));
+        $this->assertFalse(is_file($this->rootPath . '/' . self::PORTRAIT . '/' . $this->filename));
+        $this->assertFalse(is_file($this->rootPath . '/' . self::SQUARE . '/' . $this->filename));
+        $this->assertTrue(is_file($this->rootPath . '/' . self::SOURCE . '/' . $this->filename));
     }
 }
