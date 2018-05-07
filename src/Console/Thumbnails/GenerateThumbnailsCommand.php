@@ -45,17 +45,7 @@ class GenerateThumbnailsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        // Get input values
-        $folderOption = $input->getOption('folder');
-
-        if (!isset($folderOption)) {
-            throw new Exception('Please specify a foldername "--folder=XXX" from /src/Frontend/Files where you want to generate thumbnails for.');
-        }
-
-        // Get path to locale file
-        $folderPath = $this->getFolderPath($folderOption);
-
-        $this->generateThumbnails($folderPath, $output);
+        $this->generateThumbnails($this->getFolderPath($input), $output);
     }
 
     private function generateThumbnails(string $folderPath, OutputInterface $output): void
@@ -68,15 +58,14 @@ class GenerateThumbnailsCommand extends Command
         }
     }
 
-    /**
-     * Get the folder path according to the input options
-     *
-     * @param string $folderOption
-     *
-     * @return string
-     */
-    private function getFolderPath(string $folderOption): string
+    private function getFolderPath(InputInterface $input): string
     {
+        $folderOption = $input->getOption('folder');
+
+        if (!isset($folderOption)) {
+            throw new Exception('Please specify a foldername "--folder=XXX" from /src/Frontend/Files where you want to generate thumbnails for.');
+        }
+
         return realpath(__DIR__ . '/../../..' . '/src/Frontend/Files/' . $folderOption);
     }
 }
