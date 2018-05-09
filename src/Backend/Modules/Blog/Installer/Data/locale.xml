@@ -16,10 +16,12 @@
         <translation language="lt"><![CDATA[naujas įrašas]]></translation>
         <translation language="sv"><![CDATA[lägg till artikel]]></translation>
         <translation language="el"><![CDATA[Προσθήκη άρθρου]]></translation>
+		<translation language="pl"><![CDATA[dodaj artykuł]]></translation>
       </item>
       <item type="label" name="WordpressFilter">
         <translation language="nl"><![CDATA[filter]]></translation>
         <translation language="en"><![CDATA[filter]]></translation>
+		<translation language="pl"><![CDATA[filtr]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het artikel "%1$s" werd toegevoegd.]]></translation>
@@ -34,6 +36,7 @@
         <translation language="uk"><![CDATA[Статтю "%1$s" додано.]]></translation>
         <translation language="sv"><![CDATA[Artikeln "%1$s" har lagts till.]]></translation>
         <translation language="el"><![CDATA[Το άρθρο "%1$s" έχει προστεθεί.]]></translation>
+		<translation language="pl"><![CDATA[Dodano artykuł "%1$s".]]></translation>
       </item>
       <item type="message" name="ArticlesFor">
         <translation language="nl"><![CDATA[Artikels in "%1$s"]]></translation>
@@ -48,6 +51,7 @@
         <translation language="uk"><![CDATA[Статтю "%1$s" додано.]]></translation>
         <translation language="sv"><![CDATA[Artiklar för "%1$s"]]></translation>
         <translation language="el"><![CDATA[Άρθρα γιά "%1$s"]]></translation>
+		<translation language="pl"><![CDATA[Artykuły w "%1$s"]]></translation>
       </item>
       <item type="message" name="CommentOnWithURL">
         <translation language="nl"><![CDATA[Reactie op: <a href="%1$s">%2$s</a>]]></translation>
@@ -61,6 +65,8 @@
         <translation language="es"><![CDATA[Comentario en: <a href="%1$s">%2$s</a>]]></translation>
         <translation language="sv"><![CDATA[Kommentar på: <en href="%1$s">%2$s</en>]]></translation>
         <translation language="el"><![CDATA[Σχολιασμός του: <a href="%1$s">%2$s</a>]]></translation>
+		<translation language="pl"><![CDATA[Skomentuj: <a href="%1$s">%2$s</a>
+]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je het artikel "%1$s" wil verwijderen?]]></translation>
@@ -74,6 +80,7 @@
         <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el artículo "%1$s"?]]></translation>
         <translation language="sv"><![CDATA[Är du säker du vill till ta bort artikeln "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε αυτό το άρθρο "%1$s";]]></translation>
+		<translation language="pl"><![CDATA[Czy na pewno chcesz usunąć artykuł "%1$s"?]]></translation>
       </item>
       <item type="message" name="DeleteAllSpam">
         <translation language="nl"><![CDATA[Alle spam verwijderen:]]></translation>
@@ -87,6 +94,7 @@
         <translation language="es"><![CDATA[Eliminar todo el Spam:]]></translation>
         <translation language="sv"><![CDATA[Ta bort allt skräp:]]></translation>
         <translation language="el"><![CDATA[Διαγραφή όλης της ανεπιθύμητης αλληλογραφίας:]]></translation>
+		<translation language="pl"><![CDATA[Usuń cały spam:]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De geselecteerde artikels werden verwijderd.]]></translation>
@@ -100,6 +108,7 @@
         <translation language="es"><![CDATA[Los artículos seleccionados fueron eliminados.]]></translation>
         <translation language="sv"><![CDATA[Valda artiklar borttagna.]]></translation>
         <translation language="el"><![CDATA[Τα επιλεγμένα άρθρα διεγράφησαν.]]></translation>
+		<translation language="pl"><![CDATA[Wybrane artykuły zostały usunięte.]]></translation>
       </item>
       <item type="message" name="DeletedSpam">
         <translation language="nl"><![CDATA[Alle spamberichten werden verwijderd.]]></translation>
@@ -113,6 +122,7 @@
         <translation language="es"><![CDATA[Todos los comentarios spam fueron eliminados.]]></translation>
         <translation language="sv"><![CDATA[Alla skräpkommentarer borttagna.]]></translation>
         <translation language="el"><![CDATA[Όλα τα ανεπιθύμητα σχόλια διεγράφησαν.]]></translation>
+		<translation language="pl"><![CDATA[Wszystkie wiadomości spamowe zostały usunięte.]]></translation>
       </item>
       <item type="message" name="EditArticle">
         <translation language="nl"><![CDATA[bewerk artikel "%1$s"]]></translation>
@@ -126,6 +136,7 @@
         <translation language="es"><![CDATA[editar artículo "%1$s"]]></translation>
         <translation language="sv"><![CDATA[ändra artikel "%1$s"]]></translation>
         <translation language="el"><![CDATA[μεταβολή άρθρου "%1$s"]]></translation>
+		<translation language="pl"><![CDATA[edytuj artykuł "%1$s"]]></translation>
       </item>
       <item type="message" name="EditCommentOn">
         <translation language="nl"><![CDATA[bewerk reactie op "%1$s"]]></translation>
@@ -139,6 +150,7 @@
         <translation language="es"><![CDATA[editar comentario en "%1$s"]]></translation>
         <translation language="sv"><![CDATA[ändra kommentar på "%1$s"]]></translation>
         <translation language="el"><![CDATA[μεταβολή του σχολίου στο "%1$s"]]></translation>
+		<translation language="pl"><![CDATA[edytuj odpowiedź na "%1$s"]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[Het artikel "%1$s" werd opgeslagen.]]></translation>
@@ -152,6 +164,7 @@
         <translation language="es"><![CDATA[El atículo "%1$s" fue guardado.]]></translation>
         <translation language="sv"><![CDATA[Artikeln "%1$s" sparades.]]></translation>
         <translation language="el"><![CDATA[Το άρθρο "%1$s" αποθηκεύτηκε.]]></translation>
+		<translation language="pl"><![CDATA[Element "%1$s" został zapisany.]]></translation>
       </item>
       <item type="message" name="EditedComment">
         <translation language="nl"><![CDATA[De reactie werd opgeslagen.]]></translation>
@@ -165,6 +178,7 @@
         <translation language="es"><![CDATA[El comentario fue guardado.]]></translation>
         <translation language="sv"><![CDATA[Kommentar sparades.]]></translation>
         <translation language="el"><![CDATA[Το σχόλιο αποθηκεύτηκε.]]></translation>
+		<translation language="pl"><![CDATA[Odpowiedź została zapisana.]]></translation>
       </item>
       <item type="message" name="FollowAllCommentsInRSS">
         <translation language="nl"><![CDATA[Volg alle reacties in een RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
@@ -178,6 +192,7 @@
         <translation language="es"><![CDATA[Sigue todos los comentarios en el RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
         <translation language="sv"><![CDATA[Följ alla kommentarer i ett RSS-flöde: <en href="%1$s">%1$s</en>.]]></translation>
         <translation language="el"><![CDATA[Ακολούθησε όλα τα σχόλια σε μιά ροή RSS: <a href="%1$s">%1$s</a>.]]></translation>
+		<translation language="pl"><![CDATA[Śledź wszystkie komentarze w kanale RSS: <a href="%1$s">%1$s</a>.]]></translation>
       </item>
       <item type="message" name="HelpMeta">
         <translation language="nl"><![CDATA[Toon de meta informatie van deze blogpost in de RSS feed (categorie)]]></translation>
@@ -191,6 +206,7 @@
         <translation language="es"><![CDATA[muestra la información meta de este post en el RSS feed (category)]]></translation>
         <translation language="sv"><![CDATA[Visa meta information för denna bloggpost i RSS-flöde (kategori)]]></translation>
         <translation language="el"><![CDATA[Εμφάνισε τις μετα-πληροφορίες γιά αυτή την ανάρτηση στη ροή RSS (κατηγορία)]]></translation>
+		<translation language="pl"><![CDATA[Pokaż metainformacje tego posta na blogu w kanale RSS (kategoria)]]></translation>
       </item>
       <item type="message" name="HelpPingServices">
         <translation language="nl"><![CDATA[Laat verschillende blogservices weten wanneer je een nieuw bericht plaatst.]]></translation>
@@ -204,6 +220,7 @@
         <translation language="es"><![CDATA[avisa a varios servicios de blog cuando publicas un nuevo artículo.]]></translation>
         <translation language="sv"><![CDATA[Låt olika bloggtjänster veta när du har postat en ny artikel.]]></translation>
         <translation language="el"><![CDATA[Ενημέρωσε τις διάφορες υπηρεσίες ιστολογίων όταν έχετε αναρτήσει ένα νέο άρθρο.]]></translation>
+		<translation language="pl"><![CDATA[Poinformuj o tym kilka serwisów blogów podczas publikowania nowej wiadomości.]]></translation>
       </item>
       <item type="message" name="HelpSpamFilter">
         <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.]]></translation>
@@ -217,6 +234,7 @@
         <translation language="es"><![CDATA[Activar el filtro spam incorporado (Akismet) para ayudar a evitar los comentarios spam.]]></translation>
         <translation language="sv"><![CDATA[Aktivera det inbyggda skräpfiltret (Akismet) för att undvika skräpkommentarer.]]></translation>
         <translation language="el"><![CDATA[Ενεργοποίηση του ενσωματωμένου φίλτρου (Akismet) γιά την παρεμπόδιση ανεπιθύμητων σχολίων.]]></translation>
+		<translation language="pl"><![CDATA[Włącz wbudowany filtr antyspamowy (Akismet), aby uniknąć spamu w komentarzach.]]></translation>
       </item>
       <item type="message" name="HelpSummary">
         <translation language="nl"><![CDATA[Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het artikeloverzicht.]]></translation>
@@ -230,14 +248,17 @@
         <translation language="es"><![CDATA[Escribe una introducción o resumen para artículos largos. Esto se mostrará en la página principal o en el resumen del artículo.]]></translation>
         <translation language="sv"><![CDATA[Skriv en introduktion eller summering för långa artiklar. Det kommer visas på hemsidan eller artikelöversikten.]]></translation>
         <translation language="el"><![CDATA[Γράψτε μιά εισαγωγή ή περίληψη γιά μακροσκελή άρθρα. Θα εμφανίζεται στην αρχική σελίδα ή την προεπισκόπηση του άρθρου.]]></translation>
+		<translation language="pl"><![CDATA[Utwórz wstęp lub podsumowanie długich artykułów. Można to wyświetlić na stronie głównej lub w przeglądzie artykułu.]]></translation>
       </item>
       <item type="message" name="HelpWordpress">
         <translation language="nl"><![CDATA[You can upload an export file from a wordpress site here.]]></translation>
         <translation language="en"><![CDATA[Hier kan je een export bestand vanuit een wordpress site uploaden.]]></translation>
+		<translation language="pl"><![CDATA[]]></translation>
       </item>
       <item type="message" name="HelpWordpressFilter">
         <translation language="nl"><![CDATA[The searchterm that identifies links in an existing blogpost so that we can transfer them to active links on the fork blog module.]]></translation>
         <translation language="en"><![CDATA[De zoekterm die in bestaande blogposts in een link voor moet komen, alvorens wij de link kunnen omzetten naar een actieve link op de fork blog module.]]></translation>
+		<translation language="pl"><![CDATA[Wyszukiwane hasło identyfikuje linki w istniejącym wpisie na blogu, abyśmy mogli przenieść je do aktywnych linków w module blogu widłowego.]]></translation>
       </item>
       <item type="message" name="NoCategoryItems">
         <translation language="nl"><![CDATA[Er zijn nog geen categorieën. <a href="%1$s">Maak een eerste categorie</a>.]]></translation>
@@ -251,10 +272,12 @@
         <translation language="es"><![CDATA[Aún no hay categorias. <a href="%1$s">Crea la primera categoría</a>.]]></translation>
         <translation language="sv"><![CDATA[Det finns inga kategorier än. <en href="%1$s">Skapa en första kategori</en>.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη κατηγορίες. <a href="%1$s">Δημιουργήστε την πρώτη κατηγορία</a>.]]></translation>
+		<translation language="pl"><![CDATA[Nie ma jeszcze kategorii. <a href="%1$s"> Utwórz pierwszą kategorię </a>.]]></translation>
       </item>
       <item type="error" name="NoFromSelected">
         <translation language="nl"><![CDATA[Geen oorsprong geselecteerd.]]></translation>
         <translation language="en"><![CDATA[No origin selected.]]></translation>
+		<translation language="pl"><![CDATA[Nie wybrano początku.]]></translation>
       </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.]]></translation>
@@ -268,6 +291,7 @@
         <translation language="es"><![CDATA[Aún no hay artículos. <a href="%1$s">Escribe el primer artículo</a>.]]></translation>
         <translation language="sv"><![CDATA[Det finns inga artiklar än. <en href="%1$s">Skriv den första artikeln</en>.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη άρθρα. <a href="%1$s">Γράψε το πρώτο άρθρο</a>.]]></translation>
+		<translation language="pl"><![CDATA[Nie ma jeszcze żadnych artykułów. <a href="%1$s"> Napisz pierwszy artykuł </a>.]]></translation>
       </item>
       <item type="message" name="NotifyByEmailOnNewComment">
         <translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie is.]]></translation>
@@ -281,6 +305,7 @@
         <translation language="es"><![CDATA[Notificar por email cuando haya un nuevo comentario.]]></translation>
         <translation language="sv"><![CDATA[Notifiera via e-post när det finns en ny kommentar.]]></translation>
         <translation language="el"><![CDATA[Ειδοποίηση με email όταν υπάρχει νέο σχόλιο.]]></translation>
+		<translation language="pl"><![CDATA[Powiadomienie e-mailem, jeśli pojawi się nowy komentarz.]]></translation>
       </item>
       <item type="message" name="NotifyByEmailOnNewCommentToModerate">
         <translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie te modereren is.]]></translation>
@@ -294,6 +319,7 @@
         <translation language="es"><![CDATA[Notificar por email cuando haya un nuevo comentario que moderar.]]></translation>
         <translation language="sv"><![CDATA[Notifiera via e-post när det finns en ny kommentar till moderera.]]></translation>
         <translation language="el"><![CDATA[Ειδοποίηση με email όταν υπάρχει ένα νέο σχόλιο προς έγκριση.]]></translation>
+		<translation language="pl"><![CDATA[Powiadom przez e-mail, gdy pojawi się nowy komentarz do moderacji.]]></translation>
       </item>
       <item type="message" name="NumItemsInRecentArticlesFull">
         <translation language="nl"><![CDATA[Aantal items in recente artikels (volledig) widget]]></translation>
@@ -307,6 +333,7 @@
         <translation language="es"><![CDATA[Número de artículos en los artículos recientes (completo) widget]]></translation>
         <translation language="sv"><![CDATA[Antal artiklar bland de senaste artiklarna (fullständig) widget]]></translation>
         <translation language="el"><![CDATA[Πλήθος άρθρων στη μικροεφαρμογή Πρόσφατων Άρθρων (πλήρης)]]></translation>
+		<translation language="pl"><![CDATA[Liczba elementów w najnowszym widżetach artykułów (kompletnych)]]></translation>
       </item>
       <item type="message" name="NumItemsInRecentArticlesList">
         <translation language="nl"><![CDATA[Aantal items in recente artikels (lijst) widget]]></translation>
@@ -320,6 +347,7 @@
         <translation language="es"><![CDATA[Número de artículos en los artículos recientes (lista) widget]]></translation>
         <translation language="sv"><![CDATA[Antal artiklar bland de senaste artiklarna (lista) widget]]></translation>
         <translation language="el"><![CDATA[Πλήθος άρθρων στη μικροεφαρμογή Πρόσφατων Άρθρων (λίστα).]]></translation>
+		<translation language="pl"><![CDATA[Liczba elementów w najnowszym widżetach artykułów (listy)]]></translation>
       </item>
       <item type="message" name="ShowImageForm">
         <translation language="nl"><![CDATA[De gebruiker mag een afbeelding toevoegen.]]></translation>
@@ -331,6 +359,7 @@
         <translation language="sv"><![CDATA[Användaren kan ladda upp en fil.]]></translation>
         <translation language="el"><![CDATA[Ο χρήστης μπορεί να ανεβάσει ένα αρχείο.]]></translation>
         <translation language="zh"><![CDATA[用户可以上传一个文件。]]></translation>
+		<translation language="pl"><![CDATA[Użytkownik może przesłać plik.]]></translation>
       </item>
       <item type="message" name="ShowOnlyItemsInCategory">
         <translation language="nl"><![CDATA[Toon enkel berichten in de categorie:]]></translation>
@@ -344,6 +373,7 @@
         <translation language="es"><![CDATA[Mostrar solamente artículos para:]]></translation>
         <translation language="sv"><![CDATA[Visa endast artiklar för:]]></translation>
         <translation language="el"><![CDATA[Εμφάνισε άρθρα μόνον γιά:]]></translation>
+		<translation language="pl"><![CDATA[Pokaż tylko wiadomości w kategorii:]]></translation>
       </item>
       <item type="message" name="NoSpam">
         <translation language="nl"><![CDATA[Er is nog een spam.]]></translation>
@@ -351,6 +381,7 @@
         <translation language="it"><![CDATA[Non vi è ancora lo spam.]]></translation>
         <translation language="de"><![CDATA[Es gibt keine Spam noch.]]></translation>
         <translation language="fr"><![CDATA[Il n'y a pas de spam encore.]]></translation>
+		<translation language="pl"><![CDATA[Nie ma jeszcze spamu.]]></translation>
       </item>
       <item type="error" name="DeleteCategoryNotAllowed">
         <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
@@ -364,6 +395,7 @@
         <translation language="es"><![CDATA[No está permitido eliminar la categoría "%1$s".]]></translation>
         <translation language="sv"><![CDATA[Det inte tillåtet att ta bort kategorin "%1$s".]]></translation>
         <translation language="el"><![CDATA[Δεν επιτρέπεται να διαγράψετε την κατηγορία "%1$s".]]></translation>
+		<translation language="pl"><![CDATA[Nie można usunąć kategorii "%1$s".]]></translation>
       </item>
       <item type="error" name="RSSDescription">
         <translation language="nl"><![CDATA[Blog RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>
@@ -378,10 +410,12 @@
         <translation language="lt"><![CDATA[Tinklaraščio RSS nenustatytas, <a href="%1$s">nustatyti</a>]]></translation>
         <translation language="sv"><![CDATA[Blogg RSS beskrivning är ännu inte tillagd. <en href="%1$s">Konfigurera</en>]]></translation>
         <translation language="el"><![CDATA[Δεν έχει δοθεί ακόμη η περιγραφή γιά τη ροή RSS του ιστολογίου. <a href="%1$s">Ρυθμίστε την</a>]]></translation>
+		<translation language="pl"><![CDATA[Opis Blog RSS nie jest jeszcze skonfigurowany. <a href="%1$s"> Konfiguruj </a>]]></translation>
       </item>
       <item type="error" name="XMLFilesOnly">
         <translation language="nl"><![CDATA[Enkel XML bestanden kunnen worden geupload.]]></translation>
         <translation language="en"><![CDATA[Only XML files can be uploaded.]]></translation>
+		<translation language="pl"><![CDATA[Można przesyłać tylko pliki XML.]]></translation>
       </item>
     </Blog>
   </Backend>

@@ -304,7 +304,13 @@ class Add extends BackendBaseActionAdd
 
         if ($this->showTags()) {
             // tags
-            $this->form->addText('tags', null, null, 'form-control js-tags-input', 'form-control danger js-tags-input');
+            $this->form->addText(
+                'tags',
+                null,
+                null,
+                'form-control js-tags-input',
+                'form-control danger js-tags-input'
+            )->setAttribute('aria-describedby', 'tags-info');
         }
 
         // a specific action
