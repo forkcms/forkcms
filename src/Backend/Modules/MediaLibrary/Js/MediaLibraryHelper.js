@@ -1113,6 +1113,7 @@ jsBackend.mediaLibraryHelper.upload = {
     jsBackend.mediaLibraryHelper.upload.toggleCropper()
 
     var $fineUploader = $('#fineUploader')
+    $('#fineUploaderGallery').html('')
     $fineUploader.fineUploader({
       template: 'qqTemplateGallery',
       thumbnails: {
