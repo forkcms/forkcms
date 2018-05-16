@@ -12,5 +12,6 @@ CKEDITOR.plugins.setLang('medialibrary', 'nl', {
   type: 'URL type',
   email: 'E-mailadres',
   subject: 'Onderwerp bericht',
-  content: 'Inhoud bericht'
+  content: 'Inhoud bericht',
+  openInNewWindow: 'Open in nieuw venster'
 });

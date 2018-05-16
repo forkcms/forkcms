@@ -12,5 +12,6 @@ CKEDITOR.plugins.setLang('medialibrary', 'en', {
   type: 'URL type',
   email: 'E-mailaddress',
   subject: 'Subject message',
-  content: 'Content message'
+  content: 'Content message',
+  openInNewWindow: 'Open in new window'
 });

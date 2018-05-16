@@ -32,6 +32,7 @@ CKEDITOR.dialog.add(
                             onChange: function (element) {
                                 var $urlFields = this.getDialog().getContentElement('tab', 'url').getElement().getParent().getParent().getParent().getParent().getParent().getParent();
                                 var $localPageField = this.getDialog().getContentElement('tab', 'localPage').getElement().getParent().getParent();
+                                var $openInNewWindowField = this.getDialog().getContentElement('tab', 'openInNewWindow').getElement().getParent().getParent();
                                 var $emailAddressField = this.getDialog().getContentElement('tab', 'email').getElement().getParent().getParent();
                                 var $subjectField = this.getDialog().getContentElement('tab', 'subject').getElement().getParent().getParent();
                                 var $contentField = this.getDialog().getContentElement('tab', 'content').getElement().getParent().getParent();
@@ -42,6 +43,7 @@ CKEDITOR.dialog.add(
                                 if (value === 'email') {
                                     $urlFields.hide();
                                     $localPageField.hide();
+                                    $openInNewWindowField.hide();
                                     $emailAddressField.show();
                                     $subjectField.show();
                                     $contentField.show();
@@ -52,6 +54,7 @@ CKEDITOR.dialog.add(
                                 // normal url
                                 $urlFields.show();
                                 $localPageField.show();
+                                $openInNewWindowField.show();
                                 $emailAddressField.hide();
                                 $subjectField.hide();
                                 $contentField.hide();
@@ -67,12 +70,14 @@ CKEDITOR.dialog.add(
                             onLoad: function (element) {
                                 var $urlFields = this.getDialog().getContentElement('tab', 'url').getElement().getParent().getParent().getParent().getParent().getParent().getParent();
                                 var $localPageField = this.getDialog().getContentElement('tab', 'localPage').getElement().getParent().getParent();
+                                var $openInNewWindowField = this.getDialog().getContentElement('tab', 'openInNewWindow').getElement().getParent().getParent();
                                 var $emailAddressField = this.getDialog().getContentElement('tab', 'email').getElement().getParent().getParent();
                                 var $subjectField = this.getDialog().getContentElement('tab', 'subject').getElement().getParent().getParent();
                                 var $contentField = this.getDialog().getContentElement('tab', 'content').getElement().getParent().getParent();
 
                                 $urlFields.show();
                                 $localPageField.show();
+                                $openInNewWindowField.show();
                                 $emailAddressField.hide();
                                 $subjectField.hide();
                                 $contentField.hide();
@@ -80,12 +85,14 @@ CKEDITOR.dialog.add(
                             onHide: function (element) {
                                 var $urlFields = this.getDialog().getContentElement('tab', 'url').getElement().getParent().getParent().getParent().getParent().getParent().getParent();
                                 var $localPageField = this.getDialog().getContentElement('tab', 'localPage').getElement().getParent().getParent();
+                                var $openInNewWindowField = this.getDialog().getContentElement('tab', 'openInNewWindow').getElement().getParent().getParent();
                                 var $emailAddressField = this.getDialog().getContentElement('tab', 'email').getElement().getParent().getParent();
                                 var $subjectField = this.getDialog().getContentElement('tab', 'subject').getElement().getParent().getParent();
                                 var $contentField = this.getDialog().getContentElement('tab', 'content').getElement().getParent().getParent();
 
                                 $urlFields.show();
                                 $localPageField.show();
+                                $openInNewWindowField.show();
                                 $emailAddressField.hide();
                                 $subjectField.hide();
                                 $contentField.hide();
@@ -117,6 +124,7 @@ CKEDITOR.dialog.add(
                                         }
 
                                         this.setValue(element.getAttribute('href'));
+                                        this.getDialog().setValueOf('tab', 'openInNewWindow', element.getAttribute('target') === '_blank');
                                     },
                                     commit: function (element) {
                                         if (this.getDialog().getValueOf('tab', 'type') === 'email') {
@@ -125,6 +133,10 @@ CKEDITOR.dialog.add(
 
                                         element.setAttribute('href', this.getValue());
                                         element.setAttribute('data-cke-saved-href', this.getValue());
+                                        element.removeAttribute('target');
+                                        if (this.getDialog().getValueOf('tab', 'openInNewWindow')) {
+                                            element.setAttribute('target', '_blank');
+                                        }
                                     }
                                 },
                                 {
@@ -158,6 +170,11 @@ CKEDITOR.dialog.add(
                             onChange: function (event) {
                                 this.getDialog().getContentElement('tab', 'url').setValue(event.data.value);
                             }
+                        },
+                        {
+                            type: 'checkbox',
+                            id: 'openInNewWindow',
+                            label: editor.lang.medialibrary.openInNewWindow
                         },
                         {
                             type: 'text',
