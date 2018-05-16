@@ -8,5 +8,9 @@ CKEDITOR.plugins.setLang('medialibrary', 'nl', {
   insertImage: 'Voeg afbeelding in',
   insertLink: 'Voeg link in',
   url: 'URL',
-  urlNotValid: 'URL is niet geldig.'
+  urlNotValid: 'URL is niet geldig.',
+  type: 'URL type',
+  email: 'E-mailadres',
+  subject: 'Onderwerp bericht',
+  content: 'Inhoud bericht'
 });
