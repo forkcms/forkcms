@@ -209,6 +209,7 @@ CKEDITOR.dialog.add(
                                 }
 
                                 element.setAttribute('href', url.toString());
+                                element.setAttribute('data-cke-saved-href', url.toString());
                             }
                         },
                         {
