@@ -10,7 +10,7 @@ CKEDITOR.plugins.setLang('medialibrary', 'en', {
   url: 'URL',
   urlNotValid: 'URL is not valid.',
   type: 'URL type',
-  email: 'E-mailaddress',
+  email: 'E-mail address',
   subject: 'Subject message',
   content: 'Content message',
   openInNewWindow: 'Open in new window'
