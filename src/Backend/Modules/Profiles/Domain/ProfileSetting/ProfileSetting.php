@@ -38,14 +38,14 @@ class ProfileSetting
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="created_on")
+     * @ORM\Column(type="datetime")
      */
     private $createdOn;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="edited_on")
+     * @ORM\Column(type="datetime")
      */
     private $editedOn;
 

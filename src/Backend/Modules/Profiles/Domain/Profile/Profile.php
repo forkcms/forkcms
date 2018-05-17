@@ -46,14 +46,14 @@ class Profile
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", name="display_name", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $displayName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", name="url", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $url;
 
@@ -80,21 +80,21 @@ class Profile
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="registered_on")
+     * @ORM\Column(type="datetime")
      */
     private $registeredOn;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="edited_on")
+     * @ORM\Column(type="datetime")
      */
     private $editedOn;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="last_login")
+     * @ORM\Column(type="datetime")
      */
     private $lastLogin;
 

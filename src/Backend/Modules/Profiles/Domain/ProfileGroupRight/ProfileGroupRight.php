@@ -44,28 +44,28 @@ class ProfileGroupRight
     /**
      * @var DateTime|null
      *
-     * @ORM\Column(type="datetime", name="starts_on")
+     * @ORM\Column(type="datetime")
      */
     private $startsOn;
 
     /**
      * @var DateTime|null
      *
-     * @ORM\Column(type="datetime", name="expires_on")
+     * @ORM\Column(type="datetime")
      */
     private $expiresOn;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="created_on")
+     * @ORM\Column(type="datetime")
      */
     private $createdOn;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", name="edited_on")
+     * @ORM\Column(type="datetime")
      */
     private $editedOn;
 
