@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(
+ *      name="ProfilesProfileGroupRight",
  *      uniqueConstraints={
  *          @ORM\UniqueConstraint(columns={"profile_id", "group_id"})
  *      }

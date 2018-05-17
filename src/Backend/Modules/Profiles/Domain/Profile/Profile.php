@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="ProfilesProfile")
  * @ORM\Entity(repositoryClass="ProfileRepository")
  * @ORM\HasLifecycleCallbacks
  */

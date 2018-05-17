@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="ProfilesProfileSession")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
