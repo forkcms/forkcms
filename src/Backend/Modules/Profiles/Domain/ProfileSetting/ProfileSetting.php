@@ -24,13 +24,13 @@ class ProfileSetting
      * @var string
      *
      * @ORM\Id
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=100)
      */
     private $name;
 
     /**
      * @var string
-     * 
+     *
      * @ORM\Column(type="object")
      */
     private $value;
