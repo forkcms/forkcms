@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="profiles_groups")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
