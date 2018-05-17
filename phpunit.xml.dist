@@ -63,6 +63,12 @@
         </testsuite>
     </testsuites>
 
+    <testsuites>
+        <testsuite name="profiles">
+            <!--<directory>src/Backend/Modules/Profiles/Tests</directory>-->
+            <directory>src/Frontend/Modules/Profiles/Tests</directory>
+        </testsuite>
+    </testsuites>
 
     <php>
         <server name="KERNEL_DIR" value="app/" />

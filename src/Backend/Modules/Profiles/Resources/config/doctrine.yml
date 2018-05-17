@@ -1,0 +1,30 @@
+doctrine:
+  dbal:
+    types:
+      profiles_status: Backend\Modules\Profiles\Domain\Profile\StatusDBALType
+  orm:
+    mappings:
+      profile:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/Profile"
+        alias: ProfilesProfile
+        prefix: Backend\Modules\Profiles\Domain\Profile
+      profile_group:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/ProfileGroup"
+        alias: ProfilesProfileGroup
+        prefix: Backend\Modules\Profiles\Domain\ProfileGroup
+      profile_group_right:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/ProfileGroupRight"
+        alias: ProfilesProfileGroupRight
+        prefix: Backend\Modules\Profiles\Domain\ProfileGroupRight
+      profile_setting:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/Profiles/Domain/ProfileSetting"
+        alias: ProfilesProfileSetting
+        prefix: Backend\Modules\Profiles\Domain\ProfileSetting
