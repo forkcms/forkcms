@@ -30,7 +30,7 @@ class ProfileSetting
     private $name;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="object")
      */
@@ -50,10 +50,15 @@ class ProfileSetting
      */
     private $editedOn;
 
-    public function __construct(Profile $profile, string $name, string $value)
+    public function __construct(Profile $profile, string $name, ?string $value)
     {
         $this->profile = $profile;
         $this->name = $name;
+        $this->value = $value;
+    }
+
+    public function update(?string $value): void
+    {
         $this->value = $value;
     }
 
@@ -67,7 +72,7 @@ class ProfileSetting
         return $this->name;
     }
 
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }

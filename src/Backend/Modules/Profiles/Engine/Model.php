@@ -3,6 +3,7 @@
 namespace Backend\Modules\Profiles\Engine;
 
 use Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup;
+use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
 use Common\Mailer\Message;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -392,14 +393,19 @@ class Model
 
     public static function getSetting(int $profileId, string $name): ?string
     {
-        return unserialize(
-            (string) BackendModel::getContainer()->get('database')->getVar(
-                'SELECT ps.value
-                 FROM profiles_settings AS ps
-                 WHERE ps.profile_id = ? AND ps.name = ?',
-                [$profileId, $name]
-            )
+        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+        $setting = BackendModel::get('profile.repository.profile_setting')->findOneBy(
+            [
+                'profile' => $profile,
+                'name' => $name,
+            ]
         );
+
+        if (!$setting instanceof ProfileSetting) {
+            return null;
+        }
+
+        return $setting->getValue();
     }
 
     public static function getStatusForDropDown(): array
@@ -770,12 +776,27 @@ class Model
      */
     public static function setSetting(int $profileId, string $name, $value): void
     {
-        BackendModel::getContainer()->get('database')->execute(
-            'INSERT INTO profiles_settings(profile_id, name, value)
-             VALUES(?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            [$profileId, $name, serialize($value), serialize($value)]
+        $profileSettingRepository = BackendModel::get('profile.repository.profile_setting');
+
+        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+
+        $existingSetting = $profileSettingRepository->findOneBy(
+            [
+                'profile' => $profile,
+                'name' => $name,
+            ]
         );
+
+        if ($existingSetting instanceof ProfileSetting) {
+            $existingSetting->update($value);
+
+            BackendModel::get('doctrine.orm.default_entity_manager')->flush();
+
+            return;
+        }
+
+        $setting = new ProfileSetting($profile, $name, $value);
+        $profileSettingRepository->add($setting);
     }
 
     /**
