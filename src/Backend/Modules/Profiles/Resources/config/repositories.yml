@@ -16,3 +16,9 @@ services:
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
       - Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup
+
+  profile.repository.profile_group_right:
+    class: Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRightRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight

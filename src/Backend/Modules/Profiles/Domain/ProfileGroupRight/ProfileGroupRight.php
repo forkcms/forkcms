@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  *          @ORM\UniqueConstraint(columns={"profile_id", "group_id"})
  *      }
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRightRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class ProfileGroupRight
