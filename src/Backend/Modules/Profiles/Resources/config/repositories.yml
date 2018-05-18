@@ -5,6 +5,12 @@ services:
     arguments:
       - Backend\Modules\Profiles\Domain\Profile\Profile
 
+  profile.repository.profile_setting:
+    class: Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSettingRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting
+
   profile.repository.profile_group:
     class: Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroupRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
