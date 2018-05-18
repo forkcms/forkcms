@@ -95,7 +95,7 @@ class Profile
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastLogin;
 
@@ -114,6 +114,20 @@ class Profile
 
         $this->rights = new ArrayCollection();
         $this->settings = new ArrayCollection();
+    }
+
+    public function update(
+        string $email,
+        string $password,
+        string $status,
+        ?string $displayName,
+        ?string $url
+    ) {
+        $this->email = $email;
+        $this->password = $password;
+        $this->status = $status;
+        $this->displayName = $displayName;
+        $this->url = $url;
     }
 
     public static function fromDataTransferObject(ProfileDataTransferObject $dataTransferObject): self
@@ -231,5 +245,17 @@ class Profile
     public function getDataTransferObject(): ProfileDataTransferObject
     {
         return new ProfileDataTransferObject($this);
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'email' => $this->getEmail(),
+            'password' => $this->getPassword(),
+            'status' => (string) $this->getStatus(),
+            'display_name' => $this->getDisplayName(),
+            'url' => $this->getUrl(),
+        ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Profiles\Engine;
 
+use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup;
 use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
 use Common\Mailer\Message;
@@ -53,23 +54,21 @@ class Model
      */
     public static function delete($ids): void
     {
-        // init database
-        $database = BackendModel::getContainer()->get('database');
-
         // redefine
         $ids = (array) $ids;
 
+        $profileRepository = BackendModel::get('profile.repository.profile');
+
         // delete profiles
         foreach ($ids as $id) {
-            // redefine
-            $id = (int) $id;
+            $profile = $profileRepository->find($id);
 
-            // delete sessions
-            $database->delete('profiles_sessions', 'profile_id = ?', $id);
+            self::deleteSession($id);
 
-            // set profile status to deleted
-            self::update($id, ['status' => 'deleted']);
+            $profile->delete();
         }
+
+        BackendModel::get('doctrine.orm.entity_manager')->flush();
     }
 
     public static function deleteGroup(int $groupId): void
@@ -91,40 +90,29 @@ class Model
 
     public static function deleteSession(int $id): void
     {
-        BackendModel::getContainer()->get('database')->delete('profiles_sessions', 'profile_id = ?', $id);
+        $profile = BackendModel::get('profile.repository.profile')->find($id);
+
+        $profileSessionRepository = BackendModel::get('profile.repository.profile_session');
+
+        $sessions = $profileSessionRepository->findByProfile($profile);
+        foreach ($sessions as $session) {
+            $profileSessionRepository->remove($session);
+        }
     }
 
     public static function exists(int $profileId): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles AS p
-             WHERE p.id = ?
-             LIMIT 1',
-            $profileId
-        );
+        return BackendModel::get('profile.repository.profile')->find($profileId) instanceof Profile;
     }
 
     public static function existsByEmail(string $email, int $excludedProfileId = 0): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles AS p
-             WHERE p.email = ? AND p.id != ?
-             LIMIT 1',
-            [$email, $excludedProfileId]
-        );
+        return BackendModel::get('profile.repository.profile')->existsByEmail($email, $excludedProfileId);
     }
 
     public static function existsDisplayName(string $displayName, int $excludedProfileId = 0): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles AS p
-             WHERE p.display_name = ? AND p.id != ?
-             LIMIT 1',
-            [$displayName, $excludedProfileId]
-        );
+        return BackendModel::get('profile.repository.profile')->existsByDisplayName($displayName, $excludedProfileId);
     }
 
     public static function existsGroup(int $groupId): bool
@@ -150,12 +138,9 @@ class Model
 
     public static function get(int $profileId): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT p.id, p.email, p.status, p.display_name, p.url
-             FROM profiles AS p
-             WHERE p.id = ?',
-            $profileId
-        );
+        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+
+        return $profile->toArray();
     }
 
     /**
@@ -215,12 +200,9 @@ class Model
 
     public static function getByEmail(string $email): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT p.id, p.email, p.status, p.display_name, p.url
-             FROM profiles AS p
-             WHERE p.email = ?',
-            $email
-        );
+        $profile = BackendModel::get('profile.repository.profile')->findByEmail($email);
+
+        return $profile->toArray();
     }
 
     /**
@@ -437,50 +419,10 @@ class Model
         // urlise
         $url = CommonUri::getUrl($displayName);
 
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
-        // new item
-        if ($excludedProfileId === null) {
-            // get number of profiles with this URL
-            $number = (int) $database->getVar(
-                'SELECT 1
-                 FROM profiles AS p
-                 WHERE p.url = ?
-                 LIMIT 1',
-                $url
-            );
-
-            // already exists
-            if ($number != 0) {
-                // add number
-                $url = BackendModel::addNumber($url);
-
-                // try again
-                return self::getUrl($url);
-            }
-        } else {
-            // get number of profiles with this URL
-            $number = (int) $database->getVar(
-                'SELECT 1
-                 FROM profiles AS p
-                 WHERE p.url = ? AND p.id != ?
-                 LIMIT 1',
-                [$url, $excludedProfileId]
-            );
-
-            // already exists
-            if ($number != 0) {
-                // add number
-                $url = BackendModel::addNumber($url);
-
-                // try again
-                return self::getUrl($url, $excludedProfileId);
-            }
-        }
-
-        // cough up new url
-        return $url;
+        return BackendModel::get('profile.repository.profile')->getUrl(
+            $url,
+            $excludedProfileId
+        );
     }
 
     /**
@@ -624,7 +566,17 @@ class Model
 
     public static function insert(array $profile): int
     {
-        return (int) BackendModel::getContainer()->get('database')->insert('profiles', $profile);
+        $profile = new Profile(
+            $profile['email'],
+            $profile['password'],
+            $profile['status'],
+            $profile['display_name'],
+            $profile['url']
+        );
+
+        BackendModel::get('profile.repository.profile')->add($profile);
+
+        return $profile->getId();
     }
 
     public static function insertGroup(array $group): int
@@ -809,7 +761,44 @@ class Model
      */
     public static function update(int $profileId, array $profile): int
     {
-        return (int) BackendModel::getContainer()->get('database')->update('profiles', $profile, 'id = ?', $profileId);
+        $profileEntity = BackendModel::get('profile.repository.profile')->find($profileId);
+
+        if (!$profileEntity instanceof Profile) {
+            return $profileId;
+        }
+
+        $email = $profileEntity->getEmail();
+        if (array_key_exists('email', $profile)) {
+            $email = $profile['email'];
+        }
+        $password = $profileEntity->getPassword();
+        if (array_key_exists('password', $profile)) {
+            $password = $profile['password'];
+        }
+        $status = $profileEntity->getStatus();
+        if (array_key_exists('status', $profile)) {
+            $status = $profile['status'];
+        }
+        $displayName = $profileEntity->getDisplayName();
+        if (array_key_exists('display_name', $profile)) {
+            $displayName = $profile['display_name'];
+        }
+        $url = $profileEntity->getUrl();
+        if (array_key_exists('url', $profile)) {
+            $url = $profile['url'];
+        }
+
+        $profileEntity->update(
+            $email,
+            $password,
+            $status,
+            $displayName,
+            $url
+        );
+
+        BackendModel::get('doctrine.orm.entity_manager')->flush();
+
+        return $profileId;
     }
 
     public static function updateGroup(int $groupId, array $group): int

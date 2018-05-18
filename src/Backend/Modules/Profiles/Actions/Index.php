@@ -46,8 +46,8 @@ class Index extends BackendBaseActionIndex
         $parameters = [];
 
         // construct the query in the controller instead of the model as an allowed exception for data grid usage
-        $query = 'SELECT p.id, p.email, p.display_name, p.status,
-                  UNIX_TIMESTAMP(p.registered_on) AS registered_on FROM profiles AS p';
+        $query = 'SELECT p.id, p.email, p.displayName, p.status,
+                  UNIX_TIMESTAMP(p.registeredOn) AS registeredOn FROM ProfilesProfile AS p';
         $where = [];
 
         // add status
@@ -119,13 +119,13 @@ class Index extends BackendBaseActionIndex
         );
 
         // sorting columns
-        $this->dgProfiles->setSortingColumns(['email', 'display_name', 'status', 'registered_on'], 'email');
+        $this->dgProfiles->setSortingColumns(['email', 'displayName', 'status', 'registeredOn'], 'email');
 
         // set column function
         $this->dgProfiles->setColumnFunction(
             [new BackendDataGridFunctions(), 'getLongDate'],
-            ['[registered_on]'],
-            'registered_on',
+            ['[registeredOn]'],
+            'registeredOn',
             true
         );
 
