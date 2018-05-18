@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Profiles\Engine;
 
+use Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup;
 use Common\Mailer\Message;
 use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -72,11 +73,9 @@ class Model
 
     public static function deleteGroup(int $groupId): void
     {
-        // delete rights
-        BackendModel::getContainer()->get('database')->delete('profiles_groups_rights', 'group_id = ?', $groupId);
+        $group = BackendModel::get('profile.repository.profile_group')->find($groupId);
 
-        // delete group
-        BackendModel::getContainer()->get('database')->delete('profiles_groups', 'id = ?', $groupId);
+        BackendModel::get('profile.repository.profile_group')->remove($group);
     }
 
     /**
@@ -129,24 +128,12 @@ class Model
 
     public static function existsGroup(int $groupId): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles_groups AS pg
-             WHERE pg.id = ?
-             LIMIT 1',
-            $groupId
-        );
+        return BackendModel::get('profile.repository.profile_group')->find($groupId) instanceof ProfileGroup;
     }
 
     public static function existsGroupName(string $groupName, int $excludedGroupId = 0): bool
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM profiles_groups AS pg
-             WHERE pg.name = ? AND pg.id != ?
-             LIMIT 1',
-            [$groupName, $excludedGroupId]
-        );
+        return BackendModel::get('profile.repository.profile_group')->existsByName($groupName, $excludedGroupId);
     }
 
     public static function existsProfileGroup(int $membershipId): bool
@@ -262,12 +249,9 @@ class Model
 
     public static function getGroup(int $groupId): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT pg.id, pg.name
-             FROM profiles_groups AS pg
-             WHERE pg.id = ?',
-            $groupId
-        );
+        $group = BackendModel::get('profile.repository.profile_group')->find($groupId);
+
+        return $group->toArray();
     }
 
     /**
@@ -639,7 +623,11 @@ class Model
 
     public static function insertGroup(array $group): int
     {
-        return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups', $group);
+        $group = new ProfileGroup($group['name']);
+
+        BackendModel::get('profile.repository.profile_group')->add($group);
+
+        return $group->getId();
     }
 
     /**
@@ -803,14 +791,19 @@ class Model
         return (int) BackendModel::getContainer()->get('database')->update('profiles', $profile, 'id = ?', $profileId);
     }
 
-    public static function updateGroup(int $profileId, array $group): int
+    public static function updateGroup(int $groupId, array $group): int
     {
-        return (int) BackendModel::getContainer()->get('database')->update(
-            'profiles_groups',
-            $group,
-            'id = ?',
-            $profileId
-        );
+        $groupEntity = BackendModel::get('profile.repository.profile_group')->find($groupId);
+
+        if (!$groupEntity instanceof ProfileGroup) {
+            return $groupId;
+        }
+
+        $groupEntity->update($group['name']);
+
+        BackendModel::get('doctrine.orm.entity_manager')->flush();
+
+        return $groupId;
     }
 
     /**

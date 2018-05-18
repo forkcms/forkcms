@@ -35,7 +35,8 @@ class ProfileGroup
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight",
-     *     mappedBy="profile"
+     *     mappedBy="profile",
+     *     cascade={"persist", "remove"}
      * )
      */
     private $rights;
@@ -58,6 +59,11 @@ class ProfileGroup
     {
         $this->name = $name;
         $this->rights = new ArrayCollection();
+    }
+
+    public function update(string $name): void
+    {
+        $this->name = $name;
     }
 
     public static function fromDataTransferObject(ProfileGroupDataTransferObject $dataTransferObject): self
@@ -111,5 +117,13 @@ class ProfileGroup
     public function preUpdate(): void
     {
         $this->editedOn = new DateTime();
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+        ];
     }
 }
