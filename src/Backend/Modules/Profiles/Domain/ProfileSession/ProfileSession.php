@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="ProfilesProfileSession")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Profiles\Domain\ProfileSession\ProfileSessionRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class ProfileSession
