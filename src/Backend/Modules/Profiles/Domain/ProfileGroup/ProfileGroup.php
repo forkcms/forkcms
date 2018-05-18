@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="ProfilesProfileGroup")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroupRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class ProfileGroup
