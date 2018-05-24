@@ -555,7 +555,7 @@ class Model
                 // build item
                 $values['profile_id'] = $id;
                 $values['group_id'] = $groupId;
-                $values['starts_on'] = BackendModel::getUTCDate();
+                $values['starts_on'] = time();
 
                 // insert values
                 self::insertProfileGroup($values);
@@ -612,7 +612,7 @@ class Model
 
         $expiresOn = null;
         if (array_key_exists('expires_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['expires_on']);
+            $expiresOn = DateTime::createFromFormat('U', $membership['expires_on']);
         }
 
         $existingGroupRight = $profile->getRights()->filter(
@@ -624,7 +624,7 @@ class Model
         if ($existingGroupRight instanceof ProfileGroupRight) {
             $existingGroupRight->update(
                 $group,
-                DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
+                DateTime::createFromFormat('U', $membership['starts_on']),
                 null
             );
 
@@ -636,7 +636,7 @@ class Model
         $groupRight = new ProfileGroupRight(
             $profile,
             $group,
-            DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
+            DateTime::createFromFormat('U', $membership['starts_on']),
             $expiresOn
         );
 
@@ -883,11 +883,11 @@ class Model
         }
         $expiresOn = $groupRight->getExpiryDate();
         if (array_key_exists('expires_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['expires_on']);
+            $expiresOn = DateTime::createFromFormat('U', $membership['expires_on']);
         }
         $startsOn = $groupRight->getStartDate();
         if (array_key_exists('starts_on', $membership)) {
-            $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']);
+            $expiresOn = DateTime::createFromFormat('U', $membership['starts_on']);
         }
 
         $groupRight->update($group, $startsOn, $expiresOn);
