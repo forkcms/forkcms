@@ -86,7 +86,7 @@ class Model
      *
      * @param int $membershipId Id of the membership.
      */
-    public static function deleteProfileGroup(int $membershipId)
+    public static function deleteProfileGroup(int $membershipId): void
     {
         $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
 
