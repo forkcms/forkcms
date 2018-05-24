@@ -245,9 +245,13 @@ class Model
      */
     public static function getGroups(): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getPairs(
-            'SELECT id, name FROM profiles_groups ORDER BY name'
-        );
+        $groupsArray = [];
+        $groups = BackendModel::get('profile.repository.profile_group')->findBy([], ['name' => 'ASC']);
+        foreach ($groups as $group) {
+            $groupsArray[$group->getId()] = $group->getName();
+        }
+
+        return $groupsArray;
     }
 
     /**
@@ -304,12 +308,19 @@ class Model
      */
     public static function getProfileGroups(int $profileId): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT gr.id, gr.group_id, g.name AS group_name, gr.expiresOn AS expires_on
-             FROM ProfilesProfileGroup AS g
-             INNER JOIN ProfilesProfileGroupRight AS gr ON gr.group_id = g.id
-             WHERE gr.profile_id = ?',
-            $profileId
+        $profile = BackendModel::get('profile.repository.profile')->find($profileId);
+        $groupRights = BackendModel::get('profile.repository.profile_group_right')->findByProfile($profile);
+
+        return array_map(
+            function (ProfileGroupRight $groupRight) {
+                return [
+                    'id' => $groupRight->getId(),
+                    'group_id' => $groupRight->getGroup()->getId(),
+                    'group_name' => $groupRight->getGroup()->getName(),
+                    'expires_on' => $groupRight->getExpiryDate(),
+                ];
+            },
+            $groupRights
         );
     }
 
