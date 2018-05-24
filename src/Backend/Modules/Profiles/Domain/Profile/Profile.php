@@ -102,7 +102,7 @@ class Profile
     public function __construct(
         string $email,
         string $password,
-        string $status,
+        Status $status,
         ?string $displayName,
         ?string $url
     ) {

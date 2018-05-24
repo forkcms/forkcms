@@ -3,6 +3,7 @@
 namespace Backend\Modules\Profiles\Engine;
 
 use Backend\Modules\Profiles\Domain\Profile\Profile;
+use Backend\Modules\Profiles\Domain\Profile\Status;
 use Backend\Modules\Profiles\Domain\ProfileGroup\ProfileGroup;
 use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
 use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
@@ -783,7 +784,7 @@ class Model
         }
         $status = $profileEntity->getStatus();
         if (array_key_exists('status', $profile)) {
-            $status = $profile['status'];
+            $status = Status::fromString($profile['status']);
         }
         $displayName = $profileEntity->getDisplayName();
         if (array_key_exists('display_name', $profile)) {
