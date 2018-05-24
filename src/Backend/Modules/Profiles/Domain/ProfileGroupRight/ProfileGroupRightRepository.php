@@ -21,7 +21,7 @@ final class ProfileGroupRightRepository extends EntityRepository
 
     public function findLinkedToProfile(?Profile $profile, int $includeId = null) : array
     {
-        if ($profile !== null) {
+        if ($profile === null) {
             return $this->findAll();
         }
 
