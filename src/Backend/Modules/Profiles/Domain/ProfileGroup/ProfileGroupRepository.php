@@ -32,4 +32,18 @@ final class ProfileGroupRepository extends EntityRepository
 
         return $query->getQuery()->getOneOrNullResult() instanceof ProfileGroup;
     }
+
+    public function findWithExcludedIds(array $excludeIds): array
+    {
+        $queryBuilder = $this->createQueryBuilder('g');
+
+        if (empty($excludeIds)) {
+            return $this->findAll();
+        }
+
+        return $queryBuilder
+            ->where($queryBuilder->expr()->notIn('g.id', $excludeIds))
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Profiles\Domain\ProfileGroupRight;
 
+use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Doctrine\ORM\EntityRepository;
 
 final class ProfileGroupRightRepository extends EntityRepository
@@ -16,5 +17,20 @@ final class ProfileGroupRightRepository extends EntityRepository
     {
         $this->getEntityManager()->remove($groupRight);
         $this->getEntityManager()->flush();
+    }
+
+    public function findLinkedToProfile(Profile $profile, int $includeId = null) : array
+    {
+        $query = $this->createQueryBuilder('r')
+            ->where('r.profile = :profile')
+            ->setParameter(':profile', $profile);
+
+        if ($includeId !== null) {
+            $query
+                ->andWhere('r.id != :id')
+                ->setParameter(':id', $includeId);
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

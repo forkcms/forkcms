@@ -45,14 +45,14 @@ class ProfileGroupRight
     /**
      * @var DateTime|null
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $startsOn;
 
     /**
      * @var DateTime|null
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $expiresOn;
 
@@ -82,19 +82,10 @@ class ProfileGroupRight
         $this->expiresOn = $expiresOn;
     }
 
-    public static function fromDataTransferObject(ProfileGroupRightDataTransferObject $dataTransferObject): self
+    public function update(ProfileGroup $group, ?DateTime $expiresOn): void
     {
-        return self::create($dataTransferObject);
-    }
-
-    private static function create(ProfileGroupRightDataTransferObject $dataTransferObject): self
-    {
-        return new self(
-            $dataTransferObject->profile,
-            $dataTransferObject->group,
-            $dataTransferObject->startsOn,
-            $dataTransferObject->expiresOn
-        );
+        $this->group = $group;
+        $this->expiresOn = $expiresOn;
     }
 
     public function getId(): int
@@ -146,5 +137,21 @@ class ProfileGroupRight
     public function preUpdate(): void
     {
         $this->editedOn = new DateTime();
+    }
+
+    public function toArray(): array
+    {
+        $expiresOnTimestamp = null;
+        if ($this->getExpiryDate() instanceof DateTime) {
+            $expiresOnTimestamp = $this->getExpiryDate()->getTimestamp();
+        }
+
+        return [
+            'id' => $this->getId(),
+            'profile_id' => $this->getProfile()->getId(),
+            'group_id' => $this->getGroup()->getId(),
+            'name' => $this->getGroup()->getName(),
+            'expires_on' => $expiresOnTimestamp,
+        ];
     }
 }
