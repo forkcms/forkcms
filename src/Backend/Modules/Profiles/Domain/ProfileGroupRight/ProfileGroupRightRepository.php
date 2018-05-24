@@ -19,8 +19,12 @@ final class ProfileGroupRightRepository extends EntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function findLinkedToProfile(Profile $profile, int $includeId = null) : array
+    public function findLinkedToProfile(?Profile $profile, int $includeId = null) : array
     {
+        if ($profile !== null) {
+            return $this->findAll();
+        }
+
         $query = $this->createQueryBuilder('r')
             ->where('r.profile = :profile')
             ->setParameter(':profile', $profile);

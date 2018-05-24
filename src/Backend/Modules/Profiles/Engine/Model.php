@@ -201,7 +201,7 @@ class Model
 
     public static function getByEmail(string $email): array
     {
-        $profile = BackendModel::get('profile.repository.profile')->findByEmail($email);
+        $profile = BackendModel::get('profile.repository.profile')->findOneByEmail($email);
 
         return $profile->toArray();
     }
@@ -556,10 +556,19 @@ class Model
 
     public static function insert(array $profile): int
     {
+        $password = '';
+        if (array_key_exists('password', $profile)) {
+            $password = $profile['password'];
+        }
+        $status = Status::active();
+        if (array_key_exists('status', $profile)) {
+            $status = Status::fromString($profile['status']);
+        }
+
         $profile = new Profile(
             $profile['email'],
-            $profile['password'],
-            $profile['status'],
+            $password,
+            $status,
             $profile['display_name'],
             $profile['url']
         );
@@ -593,6 +602,24 @@ class Model
         $expiresOn = null;
         if (array_key_exists('expires_on', $membership)) {
             $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['expires_on']);
+        }
+
+        $existingGroupRight = $profile->getRights()->filter(
+            function (ProfileGroupRight $groupRight) use ($group) {
+                return $groupRight->getGroup()->getId() === $group->getId();
+            }
+        )->first();
+
+        if ($existingGroupRight instanceof ProfileGroupRight) {
+            $existingGroupRight->update(
+                $group,
+                DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']),
+                null
+            );
+
+            BackendModel::get('doctrine.orm.entity_manager')->flush();
+
+            return $existingGroupRight->getId();
         }
 
         $groupRight = new ProfileGroupRight(
@@ -847,8 +874,12 @@ class Model
         if (array_key_exists('expires_on', $membership)) {
             $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['expires_on']);
         }
+        $startsOn = $groupRight->getStartDate();
+        if (array_key_exists('starts_on', $membership)) {
+            $expiresOn = DateTime::createFromFormat('Y-m-d H:i:s', $membership['starts_on']);
+        }
 
-        $groupRight->update($group, $expiresOn);
+        $groupRight->update($group, $startsOn, $expiresOn);
 
         BackendModel::get('doctrine.orm.entity_manager')->flush();
 

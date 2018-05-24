@@ -82,9 +82,10 @@ class ProfileGroupRight
         $this->expiresOn = $expiresOn;
     }
 
-    public function update(ProfileGroup $group, ?DateTime $expiresOn): void
+    public function update(ProfileGroup $group, DateTime $startsOn, ?DateTime $expiresOn): void
     {
         $this->group = $group;
+        $this->startsOn = $startsOn;
         $this->expiresOn = $expiresOn;
     }
 
