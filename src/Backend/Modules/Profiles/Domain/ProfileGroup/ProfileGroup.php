@@ -66,18 +66,6 @@ class ProfileGroup
         $this->name = $name;
     }
 
-    public static function fromDataTransferObject(ProfileGroupDataTransferObject $dataTransferObject): self
-    {
-        return self::create($dataTransferObject);
-    }
-
-    private static function create(ProfileGroupDataTransferObject $dataTransferObject): self
-    {
-        return new self(
-            $dataTransferObject->name
-        );
-    }
-
     public function getId(): int
     {
         return $this->id;

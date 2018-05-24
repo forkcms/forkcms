@@ -130,22 +130,6 @@ class Profile
         $this->url = $url;
     }
 
-    public static function fromDataTransferObject(ProfileDataTransferObject $dataTransferObject): self
-    {
-        return self::create($dataTransferObject);
-    }
-
-    private static function create(ProfileDataTransferObject $dataTransferObject): self
-    {
-        return new self(
-            $dataTransferObject->email,
-            $dataTransferObject->password,
-            $dataTransferObject->status,
-            $dataTransferObject->displayName,
-            $dataTransferObject->url
-        );
-    }
-
     public function getId(): int
     {
         return $this->id;
@@ -240,11 +224,6 @@ class Profile
     public function registerLogin(): void
     {
         $this->lastLogin = new DateTime();
-    }
-
-    public function getDataTransferObject(): ProfileDataTransferObject
-    {
-        return new ProfileDataTransferObject($this);
     }
 
     public function toArray(): array
