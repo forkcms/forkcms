@@ -42,8 +42,12 @@
               <div class="col-md-8">
                 <div class="panel panel-default panel-editor">
                   <div class="panel-heading">
-                    <h2>{{ 'lbl.MainContent'|trans|ucfirst }}
-                      {{ macro.required }}</h2>
+                    <h2>
+                      <label for="text">
+                        {{ 'lbl.MainContent'|trans|ucfirst }}
+                        {{ macro.required }}
+                      </label>
+                    </h2>
                   </div>
                   <div class="panel-body">
                     {% form_field text %}
@@ -57,7 +61,7 @@
                 {% if imageIsAllowed %}
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <h2>{{ 'lbl.Image'|trans|ucfirst }}</h2>
+                      <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
                     </div>
                     <div class="panel-body">
                       {% form_field image %} {% form_field_error image %}
@@ -67,8 +71,10 @@
                 <div class="panel panel-default panel-editor last">
                   <div class="panel-heading">
                     <h2>
-                      {{ 'lbl.Summary'|trans|ucfirst }}
-                      {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
+                      <label for="introduction">
+                        {{ 'lbl.Summary'|trans|ucfirst }}
+                        {{ macro.infoTooltip('msg.HelpSummary'|trans|ucfirst) }}
+                      </label>
                     </h2>
                   </div>
                   <div class="panel-body">
@@ -121,7 +127,7 @@
                       <div class="form-group last">
                         <label for="tags" class="control-label">{{ 'lbl.Tags'|trans|ucfirst }}</label>
                         {% form_field tags %} {% form_field_error tags %}
-                        <div class="help-block">{{ 'msg.HelpTextTags'|trans }}</div>
+                        <div class="help-block" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</div>
                       </div>
                     {% endif %}
                   </div>

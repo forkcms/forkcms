@@ -1,3 +1,45 @@
+5.3.0  (2018-05-29)
+------------------
+
+Added:
+* Core: Re-add some lost functionality of the ckeditor link plugin [#2539](https://github.com/forkcms/forkcms/pull/2539)
+* Core: Re-add internal pages to the ckeditor link plugin [#2499](https://github.com/forkcms/forkcms/pull/2499) 
+* Blog: Set a label and for attribute for each form field in blog add/edit action [#2505](https://github.com/forkcms/forkcms/pull/2505)
+* Core: Set aria label on subnavigation based on the active page [#2501](https://github.com/forkcms/forkcms/pull/2501)
+* Locale: Polish language [#2520](https://github.com/forkcms/forkcms/pull/2520)
+* Location: Service for geolocation [#2525](https://github.com/forkcms/forkcms/pull/2525)
+
+Changed:
+* Core: Add screen readers only guiding text for the breadcrumbs [#2542](https://github.com/forkcms/forkcms/pull/2542)
+* Core: Increase log level for the dockerstdout since the logs are showing up in the console commands [#2548](https://github.com/forkcms/forkcms/pull/2548)
+* Core: updated the included composer packages [#2547](https://github.com/forkcms/forkcms/pull/2547)
+* Core: updated the included javascript packages [#2549](https://github.com/forkcms/forkcms/pull/2549)
+* Core: Use type button on buttons that trigger modals [#2523](https://github.com/forkcms/forkcms/pull/2523)
+* Blog: Add the tags to the blogpost in the frontend in the model instead of the action [#2486](https://github.com/forkcms/forkcms/pull/2486)
+* Dashboard: Make the links bolder for accessibility reasons [#2536](https://github.com/forkcms/forkcms/pull/2536)
+* FormBuilder: Use CurlPost for Google Recaptcha [#2532](https://github.com/forkcms/forkcms/pull/2532)
+* Pages: Improve accessibility of the block buttons [#2500](https://github.com/forkcms/forkcms/pull/2500)
+* Pages: Simplify PageBlock title and description [#2518](https://github.com/forkcms/forkcms/pull/2518)
+* Tags: Improve accessibility of the tags input field [#2506](https://github.com/forkcms/forkcms/pull/2506)
+
+Removed:
+* Tests: Disable console debug logging when running tests [#2511](https://github.com/forkcms/forkcms/pull/2511)
+
+Fixed:
+* Core: Increase z-index of the alerts [#2550](https://github.com/forkcms/forkcms/pull/2550)
+* Analytics: Fix for Backend Analytics Charts [#2526](https://github.com/forkcms/forkcms/pull/2526)
+* Docker: Fix docker image not building because libpng12-dev changed its name to libpng-dev  [#2543](https://github.com/forkcms/forkcms/pull/2543)
+* Docs: Update 06. blocks_and_widgets.md [#2531](https://github.com/forkcms/forkcms/pull/2531)
+* FormBuilder: Fix error when we don't store the responses in the database [#2535](https://github.com/forkcms/forkcms/pull/2535)
+* Groups: Fix tabbing to the permissions pannels [#2537](https://github.com/forkcms/forkcms/pull/2537)
+* Location: Only copy the location widgets to an other locale if the Location module is installed [#2522](https://github.com/forkcms/forkcms/pull/2522)
+* Mailmotor: Add missing import for the macro's on the settings page [#2538](https://github.com/forkcms/forkcms/pull/2538)
+* Mailmotor: Fix errors showing up in the logs after installing [#2545](https://github.com/forkcms/forkcms/pull/2545)
+
+Security:
+* Core: Add referrer security header [#2483](https://github.com/forkcms/forkcms/pull/2483)
+
+
 5.2.3  (2018-03-28)
 ------------------
 

@@ -7,6 +7,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use ForkCMS\Utility\Geolocation;
 use Symfony\Component\Intl\Intl as Intl;
 
 /**
@@ -58,7 +59,7 @@ class Add extends BackendBaseActionAdd
                 $item['country'] = $this->form->getField('country')->getValue();
 
                 // define coordinates
-                $coordinates = BackendLocationModel::getCoordinates(
+                $coordinates = BackendModel::get(Geolocation::class)->getCoordinates(
                     $item['street'],
                     $item['number'],
                     $item['city'],

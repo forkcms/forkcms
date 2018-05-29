@@ -16,6 +16,7 @@
         <translation language="lt"><![CDATA[naujas turinio blokas]]></translation>
         <translation language="sv"><![CDATA[lägg till innehålls block]]></translation>
         <translation language="el"><![CDATA[Προσθήκη Μπλοκ Περιεχομένου]]></translation>
+        <translation language="pl"><![CDATA[dodaj blok treści]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd toegevoegd.]]></translation>
@@ -30,6 +31,7 @@
         <translation language="uk"><![CDATA[Блок "%1$s" додано.]]></translation>
         <translation language="sv"><![CDATA[Innehålls block "%1$s" har lagts till.]]></translation>
         <translation language="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" προστέθηκε.]]></translation>
+        <translation language="pl"><![CDATA[blok treści "%1$s" został dodany.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je de inhoudsblok "%1$s" wil verwijderen?]]></translation>
@@ -43,6 +45,7 @@
         <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el bloque de contenido "%1$s"?]]></translation>
         <translation language="sv"><![CDATA[Är du säker på att du vill till ta bort innehållsblocket "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε το μπλοκ περιεχομένου "%1$s";]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewny że chcesz usunąć blok treści "%1$s"?]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd verwijderd.]]></translation>
@@ -56,6 +59,7 @@
         <translation language="es"><![CDATA[El bloque de contenido "%1$s" fue eliminado.]]></translation>
         <translation language="sv"><![CDATA[Innehållsblocket "%1$s" är borttaget.]]></translation>
         <translation language="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" διεγράφη.]]></translation>
+        <translation language="pl"><![CDATA[blok treści "%1$s" został usunięty.]]></translation>
       </item>
       <item type="label" name="Edit">
         <translation language="nl"><![CDATA[bewerk inhoudsblok]]></translation>
@@ -69,6 +73,7 @@
         <translation language="es"><![CDATA[editar bloque de contenido]]></translation>
         <translation language="sv"><![CDATA[ändra innehållsblock]]></translation>
         <translation language="el"><![CDATA[Μεταβολή του μπλοκ περιεχομένου]]></translation>
+        <translation language="pl"><![CDATA[edytuj blok treści]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd opgeslagen.]]></translation>
@@ -82,6 +87,7 @@
         <translation language="es"><![CDATA[El bloque de contenido "%1$s" fue guardado.]]></translation>
         <translation language="sv"><![CDATA[Innehållsblocket "%1$s" sparades.]]></translation>
         <translation language="el"><![CDATA[Το μπλοκ περιεχομένου "%1$s" αποθηκεύτηκε.]]></translation>
+        <translation language="pl"><![CDATA[blok treści "%1$s" został zapisany.]]></translation>
       </item>
       <item type="message" name="NoTemplate">
         <translation language="nl"><![CDATA[Geen template]]></translation>
@@ -95,6 +101,7 @@
         <translation language="es"><![CDATA[Sin plantilla.]]></translation>
         <translation language="sv"><![CDATA[Ingen mall]]></translation>
         <translation language="el"><![CDATA[Κανένα πρότυπο]]></translation>
+        <translation language="pl"><![CDATA[Brak szablonu]]></translation>
       </item>
     </ContentBlocks>
   </Backend>
