@@ -2670,80 +2670,87 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table profiles
+# Dump of table ProfilesProfile
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles`;
+DROP TABLE IF EXISTS `ProfilesProfile`;
 
-CREATE TABLE `profiles` (
+CREATE TABLE `ProfilesProfile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `displayName` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `registered_on` datetime NOT NULL,
-  `last_login` datetime NOT NULL,
+  `registeredOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
+  `lastLogin` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_groups
+# Dump of table ProfilesProfileGroup
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_groups`;
+DROP TABLE IF EXISTS `ProfilesProfileGroup`;
 
-CREATE TABLE `profiles_groups` (
+CREATE TABLE `ProfilesProfileGroup` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_groups_rights
+# Dump of table ProfilesProfileGroupRight
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_groups_rights`;
+DROP TABLE IF EXISTS `ProfilesProfileGroupRight`;
 
-CREATE TABLE `profiles_groups_rights` (
+CREATE TABLE `ProfilesProfileGroupRight` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `profile_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
-  `starts_on` datetime DEFAULT NULL,
-  `expires_on` datetime DEFAULT NULL,
+  `startsOn` datetime DEFAULT NULL,
+  `expiresOn` datetime DEFAULT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `profile_id__group__id__expires_on` (`profile_id`,`group_id`,`expires_on`)
+  UNIQUE KEY `profile_id__group__id__expires_on` (`profile_id`,`group_id`,`expiresOn`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_sessions
+# Dump of table ProfilesProfileSession
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_sessions`;
+DROP TABLE IF EXISTS `ProfilesProfileSession`;
 
-CREATE TABLE `profiles_sessions` (
-  `session_id` varchar(255) CHARACTER SET utf8 NOT NULL,
+CREATE TABLE `ProfilesProfileSession` (
   `profile_id` int(11) NOT NULL,
-  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sessionId` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `secretKey` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` datetime NOT NULL,
-  PRIMARY KEY (`session_id`,`profile_id`),
+  PRIMARY KEY (`sessionId`,`profile_id`),
   KEY `fk_profiles_sessions_profiles1` (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table profiles_settings
+# Dump of table ProfilesProfileSetting
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `profiles_settings`;
+DROP TABLE IF EXISTS `ProfilesProfileSetting`;
 
-CREATE TABLE `profiles_settings` (
+CREATE TABLE `ProfilesProfileSetting` (
+  `name` varchar(100) CHARACTER SET utf8 NOT NULL,
   `profile_id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `editedOn` datetime NOT NULL,
   PRIMARY KEY (`name`,`profile_id`),
   KEY `fk_profiles_settings_profiles1` (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
