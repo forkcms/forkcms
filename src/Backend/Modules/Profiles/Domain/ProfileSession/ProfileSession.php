@@ -30,7 +30,7 @@ class ProfileSession
     private $profile;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", nullable=true)
      */
@@ -43,11 +43,23 @@ class ProfileSession
      */
     private $date;
 
-    public function __construct(string $sessionId, Profile $profile, string $secretKey)
+    public function __construct(string $sessionId, Profile $profile, ?string $secretKey)
     {
         $this->sessionId = $sessionId;
         $this->profile = $profile;
         $this->secretKey = $secretKey;
+    }
+
+    public function updateDate(): void
+    {
+        $this->date = new DateTime();
+    }
+
+    public function updateSecretKey(string $sessionId, string $secretKey): void
+    {
+        $this->sessionId = $sessionId;
+        $this->secretKey = $secretKey;
+        $this->updateDate();
     }
 
     public function getSessionId(): string
@@ -60,7 +72,7 @@ class ProfileSession
         return $this->profile;
     }
 
-    public function getSecretKey(): string
+    public function getSecretKey(): ?string
     {
         return $this->secretKey;
     }

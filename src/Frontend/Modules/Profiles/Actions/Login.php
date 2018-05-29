@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Actions;
 
+use Backend\Modules\Profiles\Domain\Profile\Status;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Language\Language as FL;
@@ -58,7 +59,7 @@ class Login extends FrontendBaseBlock
 
         $loginStatus = FrontendProfilesAuthentication::getLoginStatus($txtEmail->getValue(), $txtPassword->getValue());
 
-        if ($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
+        if ($loginStatus !== (string) Status::active()) {
             $errorString = sprintf(
                 FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
                 FrontendNavigation::getUrlForBlock('Profiles', 'ResendActivation')

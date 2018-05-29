@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Actions;
 
+use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
@@ -9,7 +10,6 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
-use Frontend\Modules\Profiles\Engine\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -71,7 +71,7 @@ class ResendActivation extends FrontendBaseBlock
 
         $this->profile = FrontendProfilesModel::get(FrontendProfilesModel::getIdByEmail($txtEmail->getValue()));
 
-        if ($this->profile->getStatus() !== FrontendProfilesAuthentication::LOGIN_INACTIVE) {
+        if (!$this->profile->getStatus()->isInactive()) {
             $txtEmail->addError(FL::getError('ProfileIsActive'));
         }
 

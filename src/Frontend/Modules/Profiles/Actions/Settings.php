@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Profiles\Actions;
 
+use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Model;
@@ -9,7 +10,6 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
-use Frontend\Modules\Profiles\Engine\Profile;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
@@ -164,9 +164,6 @@ class Settings extends FrontendBaseBlock
             return false;
         }
 
-        $this->profile->setDisplayName($txtDisplayName->getValue());
-        $this->profile->setUrl(FrontendProfilesModel::getUrl($txtDisplayName->getValue(), $this->profile->getId()));
-
         FrontendProfilesModel::update(
             $this->profile->getId(),
             [
@@ -207,6 +204,7 @@ class Settings extends FrontendBaseBlock
                 'avatar' => $this->getAvatar(),
             ]
         );
+        Model::get('doctrine.orm.entity_manager')->flush();
 
         $this->redirect(
             FrontendNavigation::getUrlForBlock($this->getModule(), $this->getAction()) . '?settingsUpdated=true'

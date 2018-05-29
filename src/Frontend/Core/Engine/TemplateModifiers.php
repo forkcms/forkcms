@@ -416,18 +416,12 @@ class TemplateModifiers extends BaseTwigModifiers
     {
         $profile = FrontendProfilesModel::get($profileId);
 
-        // convert into array
-        $profile = $profile->toArray();
-
         // @remark I know this is dirty, but I couldn't find a better way.
-        if (in_array($name, ['display_name', 'registered_on', 'full_url']) && isset($profile[$name])) {
-            return $profile[$name];
-        }
-        if (isset($profile['settings'][$name])) {
-            return $profile['settings'][$name];
+        if (in_array($name, ['display_name', 'registered_on', 'full_url']) && $profile->getDisplayName()) {
+            return $profile->getDisplayName();
         }
 
-        return '';
+        return $profile->getSetting($name);
     }
 
     /**

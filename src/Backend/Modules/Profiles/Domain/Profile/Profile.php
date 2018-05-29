@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Profiles\Domain\Profile;
 
+use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -73,7 +74,8 @@ class Profile
      *
      * @ORM\OneToMany(
      *     targetEntity="Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting",
-     *     mappedBy="profile"
+     *     mappedBy="profile",
+     *     cascade={"persist","remove"}
      * )
      */
     private $settings;
@@ -168,6 +170,45 @@ class Profile
     public function getSettings(): Collection
     {
         return $this->settings;
+    }
+
+    public function getSetting(string $name): ?string
+    {
+        $foundSetting = $this->settings->filter(
+            function (ProfileSetting $setting) use ($name) {
+                return $setting->getName() === $name;
+            }
+        );
+
+        if ($foundSetting->isEmpty()) {
+            return null;
+        }
+
+        return $foundSetting->first()->getValue();
+    }
+
+    public function setSettings(array $settings): void
+    {
+        foreach ($settings as $key => $value) {
+            $this->setSetting($key, $value);
+        }
+    }
+
+    public function setSetting(string $name, ?string $value): void
+    {
+        $foundSetting = $this->settings->filter(
+            function (ProfileSetting $setting) use ($name) {
+                return $setting->getName() === $name;
+            }
+        );
+
+        if ($foundSetting->isEmpty()) {
+            $this->settings->add(new ProfileSetting($this, $name, $value));
+
+            return;
+        }
+
+        $foundSetting->first()->update($value);
     }
 
     public function getRegisteredOn(): DateTime
