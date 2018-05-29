@@ -80,6 +80,9 @@ class ProfileGroupRight
         $this->group = $group;
         $this->startsOn = $startsOn;
         $this->expiresOn = $expiresOn;
+
+        $profile->addRight($this);
+        $group->addRight($this);
     }
 
     public function update(ProfileGroup $group, DateTime $startsOn, ?DateTime $expiresOn): void

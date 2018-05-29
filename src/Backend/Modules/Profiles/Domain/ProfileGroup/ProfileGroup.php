@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Profiles\Domain\ProfileGroup;
 
+use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -113,5 +114,10 @@ class ProfileGroup
             'id' => $this->getId(),
             'name' => $this->getName(),
         ];
+    }
+
+    public function addRight(ProfileGroupRight $groupRight): void
+    {
+        $this->rights->add($groupRight);
     }
 }

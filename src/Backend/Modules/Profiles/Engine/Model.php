@@ -141,6 +141,10 @@ class Model
     {
         $profile = BackendModel::get('profile.repository.profile')->find($profileId);
 
+        if (!$profile instanceof Profile) {
+            return [];
+        }
+
         return $profile->toArray();
     }
 
@@ -203,6 +207,10 @@ class Model
     {
         $profile = BackendModel::get('profile.repository.profile')->findOneByEmail($email);
 
+        if (!$profile instanceof Profile) {
+            return [];
+        }
+
         return $profile->toArray();
     }
 
@@ -234,6 +242,10 @@ class Model
     public static function getGroup(int $groupId): array
     {
         $group = BackendModel::get('profile.repository.profile_group')->find($groupId);
+
+        if (!$group instanceof ProfileGroup) {
+            return [];
+        }
 
         return $group->toArray();
     }
@@ -295,6 +307,10 @@ class Model
     public static function getProfileGroup(int $membershipId): array
     {
         $groupRight = BackendModel::get('profile.repository.profile_group_right')->find($membershipId);
+
+        if (!$groupRight instanceof ProfileGroupRight) {
+            return [];
+        }
 
         return $groupRight->toArray();
     }

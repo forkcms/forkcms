@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Profiles\Domain\Profile;
 
+use Backend\Modules\Profiles\Domain\ProfileGroupRight\ProfileGroupRight;
 use Backend\Modules\Profiles\Domain\ProfileSetting\ProfileSetting;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -165,6 +166,11 @@ class Profile
     public function getRights(): Collection
     {
         return $this->rights;
+    }
+
+    public function addRight(ProfileGroupRight $groupRight): void
+    {
+        $this->rights->add($groupRight);
     }
 
     public function getSettings(): Collection
