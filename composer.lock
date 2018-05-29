@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e61d3f75fbcb5b0412b6e5c72721db89",
+    "content-hash": "282b59e3e5c2dbbfdfeeb896935d1d00",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1616,6 +1616,56 @@
                 "sql"
             ],
             "time": "2014-01-12T16:20:24+00:00"
+        },
+        {
+            "name": "jeroendesloovere/geolocation-php-api",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeroendesloovere/geolocation-php-api.git",
+                "reference": "3712172ee434bad4f14abd64a10444a775fd7086"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeroendesloovere/geolocation-php-api/zipball/3712172ee434bad4f14abd64a10444a775fd7086",
+                "reference": "3712172ee434bad4f14abd64a10444a775fd7086",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0",
+                "squizlabs/php_codesniffer": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JeroenDesloovere\\Geolocation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen Desloovere",
+                    "email": "info@jeroendesloovere.be",
+                    "homepage": "http://jeroendesloovere.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This Geolocation PHP class connects to Google Maps API to find latitude/longitude or address.",
+            "homepage": "https://github.com/jeroendesloovere/geolocation-php-api",
+            "keywords": [
+                "api",
+                "geolocation",
+                "google",
+                "maps",
+                "php"
+            ],
+            "time": "2018-04-13T08:50:24+00:00"
         },
         {
             "name": "kriswallsmith/assetic",
