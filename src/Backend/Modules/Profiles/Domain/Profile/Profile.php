@@ -121,7 +121,7 @@ class Profile
     public function update(
         string $email,
         string $password,
-        string $status,
+        Status $status,
         ?string $displayName,
         ?string $url
     ) {
