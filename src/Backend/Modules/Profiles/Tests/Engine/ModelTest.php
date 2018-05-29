@@ -289,7 +289,7 @@ final class ModelTest extends WebTestCase
         return [
             'email' => 'test2@fork-cms.com',
             'password' => '$2y$10$1Ev9QQNYZBjdU1ELKjKNqelcV.j2l3CgtVkHl0aMvbNpg1g73S5lC',
-            'status' => 'archived',
+            'status' => 'blocked',
             'display_name' => 'Fork CMS 2',
             'url' => 'fork-cms-2',
             'registered_on' => '2018-03-05 10:22:34',
