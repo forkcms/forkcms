@@ -95,10 +95,12 @@ final class ModelTest extends WebTestCase
 
     public function testSettingSettings(): void
     {
-        Model::setSetting(1, 'my_setting', 'My setting\'s value');
+        $profileId = $this->addProfile();
+
+        Model::setSetting($profileId, 'my_setting', 'My setting\'s value');
         $this->assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
 
-        Model::setSetting(1, 'my_setting', 'My updated value');
+        Model::setSetting($profileId, 'my_setting', 'My updated value');
         $this->assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
     }
 
