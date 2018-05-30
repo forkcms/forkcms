@@ -25,7 +25,7 @@ class FormBuilderSubmittedEvent extends Event
      */
     protected $dataId;
 
-    public function __construct(array $form, array $data, int $dataId)
+    public function __construct(array $form, array $data, ?int $dataId)
     {
         $this->form = $form;
         $this->data = $data;
