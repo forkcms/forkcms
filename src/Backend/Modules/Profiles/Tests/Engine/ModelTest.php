@@ -181,10 +181,10 @@ final class ModelTest extends WebTestCase
 
     public function testUpdatingProfileGroup(): void
     {
-        $this->addGroup();
-        $this->addProfile();
+        $groupId = $this->addGroup();
+        $profileId = $this->addProfile();
 
-        $profileGroupId = $this->addProfileGroup();
+        $profileGroupId = $this->addProfileGroup($profileId, $groupId);
         $this->assertEquals(1, $this->updateProfileGroup());
 
         $updatedProfileGroupData = $this->getUpdatedProfileGroupData();
@@ -193,10 +193,7 @@ final class ModelTest extends WebTestCase
         $this->assertEquals($profileGroupId, $updatedProfileGroup['id']);
         $this->assertEquals($updatedProfileGroupData['profile_id'], $updatedProfileGroup['profile_id']);
         $this->assertEquals($updatedProfileGroupData['group_id'], $updatedProfileGroup['group_id']);
-        $this->assertEquals(
-            $updatedProfileGroupData['expires_on'],
-            DateTime::createFromFormat('U', $updatedProfileGroup['expires_on'])->format('Y-m-d H:i:s')
-        );
+        $this->assertEquals($updatedProfileGroupData['expires_on'], $updatedProfileGroup['expires_on']);
     }
 
     public function testIfProfileGroupExists(): void
@@ -312,8 +309,7 @@ final class ModelTest extends WebTestCase
         return [
             'profile_id' => 1,
             'group_id' => 1,
-            'starts_on' => '2018-03-05 11:07:21',
-            'expires_on' => '2033-05-18 03:33:20',
+            'expires_on' => time() + 60 * 60,
         ];
     }
 }
