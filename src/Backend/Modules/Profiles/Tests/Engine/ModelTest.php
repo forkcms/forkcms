@@ -207,8 +207,10 @@ final class ModelTest extends WebTestCase
 
     public function testDeletingProfileGroup(): void
     {
-        $this->addGroup();
-        $profileGroupId = $this->addProfileGroup();
+        $profileId = $this->addProfile();
+        $groupId = $this->addGroup();
+
+        $profileGroupId = $this->addProfileGroup($profileId, $groupId);
 
         $this->assertNotEmpty(Model::getProfileGroup($profileGroupId));
 
