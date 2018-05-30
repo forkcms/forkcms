@@ -333,7 +333,7 @@ class Model
                     'id' => $groupRight->getId(),
                     'group_id' => $groupRight->getGroup()->getId(),
                     'group_name' => $groupRight->getGroup()->getName(),
-                    'expires_on' => $groupRight->getExpiryDate(),
+                    'expires_on' => $groupRight->getExpiryDate()->getTimestamp(),
                 ];
             },
             $groupRights

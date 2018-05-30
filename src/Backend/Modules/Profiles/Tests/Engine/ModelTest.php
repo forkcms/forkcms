@@ -155,9 +155,6 @@ final class ModelTest extends WebTestCase
 
     public function testInsertingProfileGroup(): void
     {
-        $this->addGroup();
-        $this->addProfile();
-
         $profileId = $this->addProfile();
         $groupId = $this->addGroup();
 
@@ -173,10 +170,10 @@ final class ModelTest extends WebTestCase
 
         $this->assertContains(
             [
-                'id' => 1,
-                'group_id' => 1,
+                'id' => $profileId,
+                'group_id' => $groupId,
                 'group_name' => 'My Fork CMS group',
-                'expires_on' => null,
+                'expires_on' => $profileGroupData['expires_on'],
             ],
             Model::getProfileGroups(1)
         );
@@ -286,6 +283,7 @@ final class ModelTest extends WebTestCase
             'profile_id' => $profileId,
             'group_id' => $groupId,
             'starts_on' => time(),
+            'expires_on' => time() + 60 * 60,
         ];
     }
 
