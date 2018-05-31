@@ -167,8 +167,8 @@ class Settings extends FrontendBaseBlock
         FrontendProfilesModel::update(
             $this->profile->getId(),
             [
-                'display_name' => $this->profile->getDisplayName(),
-                'url' => $this->profile->getUrl(),
+                'display_name' => $txtDisplayName->getValue(),
+                'url' => FrontendProfilesModel::getUrl($txtDisplayName->getValue(), $this->profile->getId()),
             ]
         );
 
