@@ -44,7 +44,7 @@ class Model
         return FrontendModel::get('profile.repository.profile')->existsByEmail($email, $excludedId);
     }
 
-    public static function existsDisplayName(string $displayName, int $excludedId = null): bool
+    public static function existsDisplayName(string $displayName, int $excludedId = 0): bool
     {
         return FrontendModel::get('profile.repository.profile')->existsByDisplayName($displayName, $excludedId);
     }
@@ -373,6 +373,7 @@ class Model
         }
 
         $setting = new ProfileSetting($profile, $name, $value);
+        $profile->addSetting($setting);
         $profileSettingRepository->add($setting);
     }
 

@@ -30,7 +30,7 @@ class ProfileSetting
     private $name;
 
     /**
-     * @var string|null
+     * @var mixed|null
      *
      * @ORM\Column(type="object")
      */
@@ -50,7 +50,12 @@ class ProfileSetting
      */
     private $editedOn;
 
-    public function __construct(Profile $profile, string $name, ?string $value)
+    /**
+     * @param Profile $profile
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __construct(Profile $profile, string $name, $value)
     {
         $this->profile = $profile;
         $this->name = $name;
@@ -72,7 +77,10 @@ class ProfileSetting
         return $this->name;
     }
 
-    public function getValue(): ?string
+    /**
+     * @return mixed|null
+     */
+    public function getValue()
     {
         return $this->value;
     }

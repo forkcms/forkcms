@@ -2,9 +2,9 @@
 
 namespace Frontend\Modules\Profiles\Tests\Engine;
 
+use Backend\Modules\Profiles\Domain\Profile\Profile;
 use Frontend\Modules\Profiles\Engine\Model;
 use Common\WebTestCase;
-use Frontend\Modules\Profiles\Engine\Profile;
 
 final class ModelTest extends WebTestCase
 {
@@ -96,61 +96,70 @@ final class ModelTest extends WebTestCase
 
     public function testSettingSettings(): void
     {
-        Model::setSetting(1, 'my_setting', 'My setting\'s value');
-        $this->assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
+        $profileId = $this->addProfile();
 
-        Model::setSetting(1, 'my_setting', 'My updated value');
-        $this->assertEquals('My updated value', Model::getSetting(1, 'my_setting'));
+        Model::setSetting($profileId, 'my_setting', 'My setting\'s value');
+        $this->assertEquals('My setting\'s value', Model::getSetting($profileId, 'my_setting'));
+
+        Model::setSetting($profileId, 'my_setting', 'My updated value');
+        $this->assertEquals('My updated value', Model::getSetting($profileId, 'my_setting'));
 
         Model::setSettings(
-            1,
+            $profileId,
             [
                 'my_setting' => 'Another updated value',
                 'my_other_setting' => 'A new value',
             ]
         );
 
-        $this->assertEquals('Another updated value', Model::getSetting(1, 'my_setting'));
-        $this->assertEquals('A new value', Model::getSetting(1, 'my_other_setting'));
+        $this->assertEquals('Another updated value', Model::getSetting($profileId, 'my_setting'));
+        $this->assertEquals('A new value', Model::getSetting($profileId, 'my_other_setting'));
     }
 
     public function testGettingSettings(): void
     {
-        Model::setSetting(1, 'my_setting', 'My setting\'s value');
-        Model::setSetting(1, 'my_array', ['one', 'two', 'banana']);
-        Model::setSetting(2, 'someone_elses_setting', 'Someone else\'s setting\'s value');
+        $profileId = $this->addProfile();
+        $secondProfileId = $this->addProfile();
 
-        $settings = Model::getSettings(1);
+        Model::setSetting($profileId, 'my_setting', 'My setting\'s value');
+        Model::setSetting($profileId, 'my_array', ['one', 'two', 'banana']);
+        Model::setSetting($secondProfileId, 'someone_elses_setting', 'Someone else\'s setting\'s value');
+
+        $settings = Model::getSettings($profileId);
 
         $this->assertContains('My setting\'s value', $settings);
         $this->assertContains(['one', 'two', 'banana'], $settings);
         $this->assertNotContains('Someone else\'s setting\'s value', $settings);
     }
 
-    public  function testDeletingSetting(): void
+    public function testDeletingSetting(): void
     {
-        Model::setSetting(1, 'my_setting', 'My setting\'s value');
-        $this->assertEquals('My setting\'s value', Model::getSetting(1, 'my_setting'));
+        $profileId = $this->addProfile();
 
-        Model::deleteSetting(1, 'my_setting');
-        $this->assertEquals('', Model::getSetting(1, 'my_setting'));
+        Model::setSetting($profileId, 'my_setting', 'My setting\'s value');
+        $this->assertEquals('My setting\'s value', Model::getSetting($profileId, 'my_setting'));
+
+        Model::deleteSetting($profileId, 'my_setting');
+        $this->assertEquals('', Model::getSetting($profileId, 'my_setting'));
     }
 
     public function testGettingId(): void
     {
-        $this->addProfile();
+        $profileId = $this->addProfile();
 
-        $this->assertEquals(1, Model::getIdByEmail('test@fork-cms.com'));
+        $this->assertEquals($profileId, Model::getIdByEmail('test@fork-cms.com'));
 
-        Model::setSetting(1, 'get_my_id', 'with_a_setting');
-        $this->assertEquals(1, Model::getIdBySetting('get_my_id', 'with_a_setting'));
+        Model::setSetting($profileId, 'get_my_id', 'with_a_setting');
+        $this->assertEquals($profileId, Model::getIdBySetting('get_my_id', 'with_a_setting'));
     }
 
-    public function testGettingRandomString()
+    public function testGettingRandomString(): void
     {
         $this->assertNotEmpty(Model::getRandomString());
-        $this->assertEquals(15, strlen(Model::getRandomString()));
-        $this->assertEquals(14, strlen(Model::getRandomString(14)));
+        $string = Model::getRandomString();
+        $this->assertEquals(15, strlen($string));
+        $string2 = Model::getRandomString(14);
+        $this->assertEquals(14, strlen($string2));
         $this->assertEquals(1, preg_match("#^[0-9]+$#", Model::getRandomString(15, true, false, false, false)));
         $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, false, false)));
         $this->assertEquals(0, preg_match("#^[0-9]+$#", Model::getRandomString(15, false, true, true, false)));
@@ -262,7 +271,7 @@ final class ModelTest extends WebTestCase
         return [
             'email' => 'test2@fork-cms.com',
             'password' => '$2y$10$1Ev9QQNYZBjdU1ELKjKNqelcV.j2l3CgtVkHl0aMvbNpg1g73S5lC',
-            'status' => 'archived',
+            'status' => 'blocked',
             'display_name' => 'Fork CMS 2',
             'url' => 'fork-cms-2',
             'registered_on' => '2018-03-05 10:22:34',

@@ -193,6 +193,11 @@ class Profile
         return $foundSetting->first()->getValue();
     }
 
+    public function addSetting(ProfileSetting $setting): void
+    {
+        $this->settings->add($setting);
+    }
+
     public function setSettings(array $settings): void
     {
         foreach ($settings as $key => $value) {
