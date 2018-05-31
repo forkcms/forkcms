@@ -278,6 +278,17 @@ class Profile
         $this->lastLogin = new DateTime();
     }
 
+    public function isInGroup(int $groupId): bool
+    {
+        $foundGroups = $this->getRights()->filter(
+            function (ProfileGroupRight $groupRight) use ($groupId) {
+                return $groupRight->getGroup()->getId() === $groupId;
+            }
+        );
+
+        return !$foundGroups->isEmpty();
+    }
+
     public function toArray(): array
     {
         return [
