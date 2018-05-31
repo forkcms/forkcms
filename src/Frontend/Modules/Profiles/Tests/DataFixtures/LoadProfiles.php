@@ -13,13 +13,13 @@ class LoadProfiles
         $dateOverAMonthAgo = new DateTime('-2 months');
 
         $database->insert(
-            'profiles_sessions',
+            'ProfilesProfileSession',
             [
                 [
-                    'session_id' => '0123456789',
+                    'sessionId' => '0123456789',
                     'profile_id' => 1,
-                    'secret_key' => 'NotSoSecretNowIsIt',
-                    'date' => $dateWithinAMonthAgo->format('Y-m-d H:i:s'),
+                    'secretKey' => 'NotSoSecretNowIsIt',
+                    'date' => $dateWithinAMonthAgo,
                 ],
                 [
                     'session_id' => '1234567890',
@@ -31,43 +31,43 @@ class LoadProfiles
         );
 
         $database->insert(
-            'profiles',
+            'ProfilesProfile',
             [
                 [
                     'email' => 'test-active@fork-cms.com',
                     'password' => '$2y$10$vvFSouMBY97xF2e2axFryu8vd738pkjKtNnpJCbduWI5qqI/f4lYK', // forkcms
                     'status' => 'active',
-                    'display_name' => 'active Fork CMS profile',
+                    'displayName' => 'active Fork CMS profile',
                     'url' => 'active-fork-cms-profile',
-                    'registered_on' => $dateOverAMonthAgo->format('Y-m-d H:i:s'),
-                    'last_login' => $dateWithinAMonthAgo->format('Y-m-d H:i:s'),
+                    'registeredOn' => $dateOverAMonthAgo,
+                    'lastLogin' => $dateWithinAMonthAgo,
                 ],
                 [
                     'email' => 'test-inactive@fork-cms.com',
                     'password' => '$2y$10$vvFSouMBY97xF2e2axFryu8vd738pkjKtNnpJCbduWI5qqI/f4lYK', // forkcms
                     'status' => 'inactive',
-                    'display_name' => 'inactive Fork CMS profile',
+                    'displayName' => 'inactive Fork CMS profile',
                     'url' => 'inactive-fork-cms-profile',
-                    'registered_on' => $dateOverAMonthAgo->format('Y-m-d H:i:s'),
-                    'last_login' => $dateWithinAMonthAgo->format('Y-m-d H:i:s'),
+                    'registeredOn' => $dateOverAMonthAgo,
+                    'lastLogin' => $dateWithinAMonthAgo,
                 ],
                 [
                     'email' => 'test-deleted@fork-cms.com',
                     'password' => '$2y$10$vvFSouMBY97xF2e2axFryu8vd738pkjKtNnpJCbduWI5qqI/f4lYK', // forkcms
                     'status' => 'deleted',
-                    'display_name' => 'deleted Fork CMS profile',
+                    'displayName' => 'deleted Fork CMS profile',
                     'url' => 'deleted-fork-cms-profile',
-                    'registered_on' => $dateOverAMonthAgo->format('Y-m-d H:i:s'),
-                    'last_login' => $dateWithinAMonthAgo->format('Y-m-d H:i:s'),
+                    'registeredOn' => $dateOverAMonthAgo,
+                    'lastLogin' => $dateWithinAMonthAgo,
                 ],
                 [
                     'email' => 'test-blocked@fork-cms.com',
                     'password' => '$2y$10$vvFSouMBY97xF2e2axFryu8vd738pkjKtNnpJCbduWI5qqI/f4lYK', // forkcms
                     'status' => 'blocked',
-                    'display_name' => 'blocked Fork CMS profile',
+                    'displayName' => 'blocked Fork CMS profile',
                     'url' => 'blocked-fork-cms-profile',
-                    'registered_on' => $dateOverAMonthAgo->format('Y-m-d H:i:s'),
-                    'last_login' => $dateWithinAMonthAgo->format('Y-m-d H:i:s'),
+                    'registeredOn' => $dateOverAMonthAgo,
+                    'lastLogin' => $dateWithinAMonthAgo,
                 ],
             ]
         );
