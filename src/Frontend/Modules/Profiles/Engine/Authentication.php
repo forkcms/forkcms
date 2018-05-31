@@ -14,6 +14,13 @@ use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 class Authentication
 {
     /**
+     * The login credentials are incorrect or the profile does not exist.
+     *
+     * @var string
+     */
+    public const LOGIN_INVALID = 'invalid';
+
+    /**
      * The current logged in profile.
      *
      * @var Profile|null
@@ -40,7 +47,7 @@ class Authentication
     {
         // check password
         if (!FrontendProfilesModel::verifyPassword($email, $password)) {
-            return (string) Status::inactive();
+            return self::LOGIN_INVALID;
         }
 
         // get the status

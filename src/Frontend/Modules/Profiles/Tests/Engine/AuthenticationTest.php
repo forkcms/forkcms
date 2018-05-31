@@ -44,16 +44,16 @@ final class AuthenticationTest extends WebTestCase
 
     public function testOldSessionCleanUp()
     {
-        $this->assertEquals('2', $this->database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
+        $this->assertEquals('2', $this->database->getVar('SELECT COUNT(sessionId) FROM ProfilesProfileSession'));
 
         Authentication::cleanupOldSessions();
 
-        $this->assertFalse((bool) $this->database->getVar('SELECT 1 FROM profiles_sessions WHERE session_id = "1234567890"'));
+        $this->assertFalse((bool) $this->database->getVar('SELECT 1 FROM ProfilesProfileSession WHERE sessionId = "1234567890"'));
     }
 
     public function testGettingLoginStatusForNonExistingUser()
     {
-        $this->assertEquals('invalid', Authentication::getLoginStatus('non@existe.nt', 'wrong'));
+        $this->assertEquals(Authentication::LOGIN_INVALID, Authentication::getLoginStatus('non@existe.nt', 'wrong'));
     }
 
     public function testGettingLoginStatusForUserWithWrongPassword()
@@ -89,11 +89,11 @@ final class AuthenticationTest extends WebTestCase
 
     public function testLoggingInCleansUpOldSessions()
     {
-        $this->assertEquals('2', $this->database->getVar('SELECT COUNT(session_id) FROM profiles_sessions'));
+        $this->assertEquals('2', $this->database->getVar('SELECT COUNT(sessionId) FROM ProfilesProfileSession'));
 
         Authentication::login(1);
 
-        $this->assertFalse((bool) $this->database->getVar('SELECT 1 FROM profiles_sessions WHERE session_id = "1234567890"'));
+        $this->assertFalse((bool) $this->database->getVar('SELECT 1 FROM ProfilesProfileSession WHERE sessionId = "1234567890"'));
     }
 
     public function testLoggingInSetsASessionVariable()
@@ -110,8 +110,8 @@ final class AuthenticationTest extends WebTestCase
         $this->assertEquals(
             '0',
             $this->database->getVar(
-                'SELECT COUNT(session_id) 
-                 FROM profiles_sessions
+                'SELECT COUNT(sessionId)
+                 FROM ProfilesProfileSession
                  WHERE profile_id = 2'
             )
         );
@@ -121,8 +121,8 @@ final class AuthenticationTest extends WebTestCase
         $this->assertEquals(
             '1',
             $this->database->getVar(
-                'SELECT COUNT(session_id) 
-                 FROM profiles_sessions
+                'SELECT COUNT(sessionId)
+                 FROM ProfilesProfileSession
                  WHERE profile_id = 2'
             )
         );
@@ -130,11 +130,11 @@ final class AuthenticationTest extends WebTestCase
 
     public function testProfileLastLoginGetsUpdatedWhenLoggingIn()
     {
-        $initalLastLogin = $this->database->getVar('SELECT last_login FROM profiles WHERE id = 1');
+        $initalLastLogin = $this->database->getVar('SELECT lastLogin FROM ProfilesProfile WHERE id = 1');
 
         Authentication::login(1);
 
-        $newLastLogin = $this->database->getVar('SELECT last_login FROM profiles WHERE id = 1');
+        $newLastLogin = $this->database->getVar('SELECT lastLogin FROM ProfilesProfile WHERE id = 1');
 
         $this->assertLessThan($newLastLogin, $initalLastLogin);
     }
@@ -142,18 +142,18 @@ final class AuthenticationTest extends WebTestCase
     public function testLogoutDeletesSessionFromDatabase(): void
     {
         $this->database->insert(
-            'profiles_sessions',
+            'ProfilesProfileSession',
             [
-                'session_id' => $this->session->getId(),
+                'sessionId' => $this->session->getId(),
                 'profile_id' => 1,
-                'secret_key' => 'Fork is da bomb',
+                'secretKey' => 'Fork is da bomb',
                 'date' => '1970-01-01 00:00:00',
             ]
         );
 
         $this->assertTrue(
             (bool) $this->database->getVar(
-                'SELECT 1 FROM profiles_sessions WHERE session_id = ?',
+                'SELECT 1 FROM ProfilesProfileSession WHERE sessionId = ?',
                 $this->session->getId()
             )
         );
@@ -162,7 +162,7 @@ final class AuthenticationTest extends WebTestCase
 
         $this->assertFalse(
             (bool) $this->database->getVar(
-                'SELECT 1 FROM profiles_sessions WHERE session_id = ?',
+                'SELECT 1 FROM ProfilesProfileSession WHERE sessionId = ?',
                 $this->session->getId()
             )
         );

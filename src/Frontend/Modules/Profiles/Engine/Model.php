@@ -448,6 +448,10 @@ class Model
     {
         $profile = FrontendModel::get('profile.repository.profile')->findOneByEmail($email);
 
+        if (!$profile instanceof Profile) {
+            return null;
+        }
+
         return $profile->getPassword();
     }
 }
