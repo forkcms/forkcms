@@ -49,6 +49,10 @@ class Category extends FrontendBaseBlock
         $limit = $this->get('fork.settings')->get($this->getModule(), 'overview_num_items', 10);
         $numberOfPages = (int) ceil($numberOfItems / $limit);
 
+        if ($numberOfPages === 0) {
+            $numberOfPages = 1;
+        }
+
         // Check if the page exists
         if ($requestedPage > $numberOfPages || $requestedPage < 1) {
             throw new NotFoundHttpException();

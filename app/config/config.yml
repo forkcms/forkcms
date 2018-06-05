@@ -198,6 +198,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
+    ForkCMS\Utility\Geolocation:
+        public: true
+        arguments:
+            - "@fork.settings"
+
     templating:
         class: Frontend\Core\Engine\TwigTemplate
         public: true
