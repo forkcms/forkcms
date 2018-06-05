@@ -2,6 +2,7 @@
 
 namespace Frontend\Core\Engine;
 
+use Frontend\Core\Language\Locale;
 use Common\Core\Twig\BaseTwigTemplate;
 use Common\Core\Twig\Extensions\TwigFilters;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
@@ -31,6 +32,7 @@ class TwigTemplate extends BaseTwigTemplate
     ) {
         $container = Model::getContainer();
         $this->forkSettings = $container->get('fork.settings');
+        $this->language = Locale::frontendLanguage();
 
         parent::__construct($environment, $parser, $locator);
 
