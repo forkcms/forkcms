@@ -123,7 +123,7 @@ final class ModelTest extends WebTestCase
     private function getUpdatedCategoryMetaData()
     {
         return [
-            'id' => 28,
+            'id' => 29,
             'keywords' => 'Test edit category',
             'description' => 'Test edit category',
             'title' => 'Test edit category',

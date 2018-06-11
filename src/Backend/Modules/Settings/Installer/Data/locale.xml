@@ -15,6 +15,7 @@
         <translation language="uk"><![CDATA[ID Адміністратора]]></translation>
         <translation language="lt"><![CDATA[admino id]]></translation>
         <translation language="el"><![CDATA[ID του Διαχειριστή]]></translation>
+        <translation language="pl"><![CDATA[ID administratora]]></translation>
       </item>
       <item type="label" name="ApplicationId">
         <translation language="nl"><![CDATA[toepassings-id]]></translation>
@@ -29,6 +30,7 @@
         <translation language="uk"><![CDATA[ID Додатка]]></translation>
         <translation language="lt"><![CDATA[aplikacijos id]]></translation>
         <translation language="el"><![CDATA[ID της εφαρμογής]]></translation>
+        <translation language="pl"><![CDATA[ID aplikacji]]></translation>
       </item>
       <item type="label" name="ApplicationSecret">
         <translation language="nl"><![CDATA[app secret]]></translation>
@@ -43,6 +45,7 @@
         <translation language="uk"><![CDATA[Таємний код додатка]]></translation>
         <translation language="lt"><![CDATA[app slaptas žodis]]></translation>
         <translation language="el"><![CDATA[Το μυστικό της εφαρμογής]]></translation>
+        <translation language="pl"><![CDATA[app secret]]></translation>
       </item>
       <item type="label" name="Cookies">
         <translation language="nl"><![CDATA[cookies]]></translation>
@@ -50,10 +53,12 @@
         <translation language="fr"><![CDATA[cookies]]></translation>
         <translation language="de"><![CDATA[Cookies]]></translation>
         <translation language="es"><![CDATA[cookies]]></translation>
+        <translation language="pl"><![CDATA[Ciasteczka]]></translation>
       </item>
       <item type="label" name="ClearCache">
         <translation language="nl"><![CDATA[verwijder cache]]></translation>
         <translation language="en"><![CDATA[clear cache]]></translation>
+        <translation language="pl"><![CDATA[Wyczyść pamięc podręczną]]></translation>
       </item>
       <item type="label" name="LicenseKey">
         <translation language="nl"><![CDATA[Licentie key]]></translation>
@@ -65,6 +70,7 @@
         <translation language="hu"><![CDATA[Licenc kulcs]]></translation>
         <translation language="el"><![CDATA[Κλειδί Άδειας Χρήσης]]></translation>
         <translation language="zh"><![CDATA[许可密钥]]></translation>
+        <translation language="pl"><![CDATA[Klucz licencji]]></translation>
       </item>
       <item type="label" name="LicenseName">
         <translation language="nl"><![CDATA[Licentie naam]]></translation>
@@ -76,6 +82,7 @@
         <translation language="hu"><![CDATA[Licenc név]]></translation>
         <translation language="el"><![CDATA[Όνομα στην Άδεια Χρήσης]]></translation>
         <translation language="zh"><![CDATA[许可证名]]></translation>
+        <translation language="pl"><![CDATA[Nazwa licencji]]></translation>
       </item>
       <item type="label" name="MaximumHeight">
         <translation language="nl"><![CDATA[maximale hoogte]]></translation>
@@ -87,6 +94,7 @@
         <translation language="hu"><![CDATA[maximum magasság]]></translation>
         <translation language="el"><![CDATA[μέγιστο ύψος]]></translation>
         <translation language="zh"><![CDATA[最大高度]]></translation>
+        <translation language="pl"><![CDATA[Maksymalna wysokość]]></translation>
       </item>
       <item type="label" name="MaximumWidth">
         <translation language="nl"><![CDATA[maximale breedte]]></translation>
@@ -98,6 +106,7 @@
         <translation language="hu"><![CDATA[maximum szélesség]]></translation>
         <translation language="el"><![CDATA[μέγιστο πλάτος]]></translation>
         <translation language="zh"><![CDATA[最大宽度]]></translation>
+        <translation language="pl"><![CDATA[Maksymalna szerokość]]></translation>
       </item>
       <item type="label" name="SEOSettings">
         <translation language="nl"><![CDATA[SEO instellingen]]></translation>
@@ -111,6 +120,7 @@
         <translation language="es"><![CDATA[configuracion SEO]]></translation>
         <translation language="uk"><![CDATA[Налаштування SEO]]></translation>
         <translation language="el"><![CDATA[Ρυθμίσεις SEO]]></translation>
+        <translation language="pl"><![CDATA[Ustawienia SEO]]></translation>
       </item>
       <item type="label" name="SmtpSecureLayer">
         <translation language="nl"><![CDATA[beveiliging]]></translation>
@@ -118,6 +128,7 @@
         <translation language="el"><![CDATA[ασφάλεια]]></translation>
         <translation language="zh"><![CDATA[安全]]></translation>
         <translation language="de"><![CDATA[Sicherheit]]></translation>
+        <translation language="pl"><![CDATA[bezpieczeństwo]]></translation>
       </item>
       <item type="label" name="Twitter">
         <translation language="nl"><![CDATA[twitter]]></translation>
@@ -126,6 +137,7 @@
         <translation language="fr"><![CDATA[twitter]]></translation>
         <translation language="es"><![CDATA[twitter]]></translation>
         <translation language="it"><![CDATA[twitter]]></translation>
+        <translation language="pl"><![CDATA[twitter]]></translation>
       </item>
       <item type="label" name="Tools">
         <translation language="nl"><![CDATA[tools]]></translation>
@@ -134,6 +146,7 @@
         <translation language="fr"><![CDATA[tools]]></translation>
         <translation language="es"><![CDATA[tools]]></translation>
         <translation language="it"><![CDATA[tools]]></translation>
+        <translation language="pl"><![CDATA[narzędzia]]></translation>
       </item>
       <item type="label" name="Facebook">
         <translation language="nl"><![CDATA[facebook]]></translation>
@@ -142,6 +155,7 @@
         <translation language="fr"><![CDATA[facebook]]></translation>
         <translation language="es"><![CDATA[facebook]]></translation>
         <translation language="it"><![CDATA[facebook]]></translation>
+        <translation language="pl"><![CDATA[facebook]]></translation>
       </item>
       <item type="label" name="CkFinder">
         <translation language="nl"><![CDATA[ckfinder]]></translation>
@@ -150,6 +164,7 @@
         <translation language="fr"><![CDATA[ckfinder]]></translation>
         <translation language="es"><![CDATA[ckfinder]]></translation>
         <translation language="it"><![CDATA[ckfinder]]></translation>
+        <translation language="pl"><![CDATA[ckfinder]]></translation>
       </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
@@ -162,6 +177,7 @@
         <translation language="de"><![CDATA[Einige Einstellungen sind noch nicht konfiguriert.]]></translation>
         <translation language="es"><![CDATA[Algunas configuraciones aún no estan configuradas.]]></translation>
         <translation language="el"><![CDATA[Μερικές ρυθμίσεις δεν έχουν διαμορφωθεί ακόμη.]]></translation>
+        <translation language="pl"><![CDATA[Niektóre ustawienia nie zostały jeszcze skonfigurowane.]]></translation>
       </item>
       <item type="message" name="HelpAPIKeys">
         <translation language="nl"><![CDATA[Toegangscodes voor gebruikte webservices:]]></translation>
@@ -174,6 +190,7 @@
         <translation language="de"><![CDATA[Zugangscode für Webdienste.]]></translation>
         <translation language="es"><![CDATA[Código de acceso para webservices.]]></translation>
         <translation language="el"><![CDATA[Κωδικοί πρόσβασης γιά υπηρεσίες web.]]></translation>
+        <translation language="pl"><![CDATA[Kody dostępu do usług sieciowych.]]></translation>
       </item>
       <item type="message" name="HelpCkfinderMaximumHeight">
         <translation language="nl"><![CDATA[Instellen van de maximale hoogte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
@@ -184,6 +201,7 @@
         <translation language="hu"><![CDATA[Adja meg a maximális magasság (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
         <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο ύψος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
         <translation language="zh"><![CDATA[配置上载的图像的最大高度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
+        <translation language="pl"><![CDATA[Skonfiguruj maksymalną wysokość (w pikselach) przesłanych obrazów. Jeśli przesłany obraz jest większy, zostanie proporcjonalnie zmniejszony. Ustaw na 0, aby wyłączyć tę funkcję.]]></translation>
       </item>
       <item type="message" name="HelpCkfinderMaximumWidth">
         <translation language="nl"><![CDATA[Instellen van de maximale breedte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
@@ -194,6 +212,7 @@
         <translation language="hu"><![CDATA[Adja meg a maximális szélesség (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
         <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο πλάτος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
         <translation language="zh"><![CDATA[配置上载的图像的最大宽度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
+        <translation language="pl"><![CDATA[Skonfiguruj maksymalną szerokość (w pikselach) przesłanych obrazów. Jeśli przesłany obraz jest większy, zostanie proporcjonalnie zmniejszony. Ustaw na 0, aby wyłączyć tę funkcję.]]></translation>
       </item>
       <item type="message" name="HelpCookies">
         <translation language="nl"><![CDATA[In Europa is een wetgeving rond cookies van kracht. Met deze cookie balk voldoet u aan de meest strenge wetgeving.]]></translation>
@@ -201,6 +220,7 @@
         <translation language="fr"><![CDATA[En Europe, il existe plusieurs lois pour l'utilisation des cookies. Avec ce barre de cookie vous accomplissez la loi la plus stricte.]]></translation>
         <translation language="de"><![CDATA[In Europa gibt es mehrere Gesetze für die Verwendung von Cookies. Mit diesem Cookie-Bar erfüllen Sie das strengsten Recht.]]></translation>
         <translation language="es"><![CDATA[En Europa hay varias leyes para el uso de cookies. Con este barra de cookie cumple con la legislación más estricta.]]></translation>
+        <translation language="pl"><![CDATA[W Europie obowiązuje kilka przepisów dotyczących używania plików cookie. Za pomocą tego paska Cookie spełniasz najbardziej surowe prawo.]]></translation>
       </item>
       <item type="message" name="HelpDateFormatLong">
         <translation language="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
@@ -213,6 +233,7 @@
         <translation language="de"><![CDATA[Format welches für Übersichts- und Detail-Seiten verwendet wird.]]></translation>
         <translation language="es"><![CDATA[Formato que se utiliza en las páginas de resumen y detalle.]]></translation>
         <translation language="el"><![CDATA[Η μορφή που χρησιμοποιείται στις συνοπτικές και αναλυτικές σελίδες.]]></translation>
+        <translation language="pl"><![CDATA[Format wykorzystywany na stronach podglądowych i szczegółowych.]]></translation>
       </item>
       <item type="message" name="HelpDateFormatShort">
         <translation language="nl"><![CDATA[Dit formaat wordt voornamelijk gebruikt bij tabelweergaves.]]></translation>
@@ -225,6 +246,7 @@
         <translation language="de"><![CDATA[Dieses Format wird meist in tabellarischen Übersichten verwendet.]]></translation>
         <translation language="es"><![CDATA[Este formato se utiliza principalmente en resúmenes.]]></translation>
         <translation language="el"><![CDATA[Αυτή η μορφή χρησιμοποιείται κυρίως στην επισκόπηση πινάκων.]]></translation>
+        <translation language="pl"><![CDATA[Format wykorzystywany głównie w podglądach tabeli.]]></translation>
       </item>
       <item type="message" name="HelpDomains">
         <translation language="nl"><![CDATA[Vul de domeinen in waarop de website te bereiken is (1 domein per regel)]]></translation>
@@ -237,6 +259,7 @@
         <translation language="de"><![CDATA[Gib die Domains an, unter denen diese Website erreicht werden kann.(Trenne Domains mit Zeilenumbrüchen.)]]></translation>
         <translation language="es"><![CDATA[Insertar los dominios donde este sitio web puede ser accesible. (Separar dominios con saltos de linea.)]]></translation>
         <translation language="el"><![CDATA[Γράψτε τους τομείς (domains) στους οποίους είναι προσβάσιμος ο ιστοχώρος. (Γράψτε κάθε τομέα σε νέα γραμμή).]]></translation>
+        <translation language="pl"><![CDATA[Wprowadź domeny na których ta witryna jest dostępna. (Jedna domena na wiersz).]]></translation>
       </item>
       <item type="message" name="HelpEmailWebmaster">
         <translation language="nl"><![CDATA[Stuur notificaties van het CMS naar dit e-mailadres.]]></translation>
@@ -249,6 +272,7 @@
         <translation language="de"><![CDATA[Sende CMS-Benachrichtigungen an diese E-Mail-Adresse.]]></translation>
         <translation language="es"><![CDATA[Enviar las notificaciones del CMS a esta dirección e-mail.]]></translation>
         <translation language="el"><![CDATA[Στείλε ειδοποιήσεις CMS σε αυτή τη διεύθυνση email.]]></translation>
+        <translation language="pl"><![CDATA[Wysyłaj powiadomienia na ten adres mailowy.]]></translation>
       </item>
       <item type="message" name="HelpFacebookAdminIds">
         <translation language="nl"><![CDATA[Een lijst met de Facebook-gebruikers hun ID en/of het id van de Facebook-applicatie die de paginas mogen beheren.]]></translation>
@@ -261,6 +285,7 @@
         <translation language="de"><![CDATA[Entweder die Facebookbenutzer-IDs oder die Facebook Plattformanwendungs-ID die diese Website administriert.]]></translation>
         <translation language="es"><![CDATA[Ya sea IDs de usuario Facebook o ID de una aplicación Facebook Platform la que administra este sitio web.]]></translation>
         <translation language="el"><![CDATA[Είτε το ID χρήστη στο Facebook είτε ένα ID εφαρμογής Facebook Platform γιά τη διαχείριση αυτού του ιστοχώρου.]]></translation>
+        <translation language="pl"><![CDATA[Facebook user ID lub Facebook Platform application ID które administrują tą witryną.]]></translation>
       </item>
       <item type="message" name="HelpFacebookApiKey">
         <translation language="nl"><![CDATA[De API-sleutel van je Facebook-toepassing]]></translation>
@@ -273,6 +298,7 @@
         <translation language="de"><![CDATA[Der API-Key deiner Facebookanwendung.]]></translation>
         <translation language="es"><![CDATA[La API key de tu aplicación Facebook.]]></translation>
         <translation language="el"><![CDATA[Το κλειδί API της εφαρμογής σας στο Facebook.]]></translation>
+        <translation language="pl"><![CDATA[Klucz API dla twojej aplikacji Facebook.]]></translation>
       </item>
       <item type="message" name="HelpFacebookApplicationId">
         <translation language="nl"><![CDATA[Het toepassings-id van je Facebook-toepassing.]]></translation>
@@ -285,6 +311,7 @@
         <translation language="de"><![CDATA[Die ID deiner Facebookanwendung.]]></translation>
         <translation language="es"><![CDATA[La id de tu aplicación Facebook]]></translation>
         <translation language="el"><![CDATA[Το id της εφαρμογής σας στο Facebook.]]></translation>
+        <translation language="pl"><![CDATA[ID twojej aplikacji Facebook.]]></translation>
       </item>
       <item type="message" name="HelpFacebookApplicationSecret">
         <translation language="nl"><![CDATA[De App Secret van je Facebook-toepassing.]]></translation>
@@ -297,11 +324,13 @@
         <translation language="de"><![CDATA[Secret-Key deiner Facebook-Anwendung.]]></translation>
         <translation language="es"><![CDATA[La App secret de tu aplicación Facebook.]]></translation>
         <translation language="el"><![CDATA[Το μυστικό κωδικού της εφαρμογής σας στο Facebook.]]></translation>
+        <translation language="pl"><![CDATA[Sekret twojej aplikacji Facebook.]]></translation>
       </item>
       <item type="label" name="TwitterSiteName">
           <translation language="nl"><![CDATA[twitter gebruikersnaam]]></translation>
           <translation language="en"><![CDATA[twitter username]]></translation>
           <translation language="fr"><![CDATA[twitter nom d'utilisateur]]></translation>
+          <translation language="pl"><![CDATA[nazwa użytkownika tweeter]]></translation>
       </item>
       <item type="message" name="HelpLanguages">
         <translation language="nl"><![CDATA[Duid aan welke talen toegankelijk zijn voor bezoekers]]></translation>
@@ -314,6 +343,7 @@
         <translation language="fr"><![CDATA[Choisissez les languages accessibles à vos visiteurs.]]></translation>
         <translation language="es"><![CDATA[Selecciona las lenguas accesibles para tus visitantes.]]></translation>
         <translation language="el"><![CDATA[Επιλέξτε τις γλώσσες στις οποίες έχει πρόσβαση ο επισκέπτης.]]></translation>
+        <translation language="pl"><![CDATA[Wybierz języki dostępne dla odwiedzających.]]></translation>
       </item>
       <item type="message" name="HelpNumberFormat">
         <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van getallen in de frontend.]]></translation>
@@ -326,6 +356,7 @@
         <translation language="de"><![CDATA[Dieses Format wird verwendet um Zahlen auf der Website darzustellen.]]></translation>
         <translation language="es"><![CDATA[Este formato es usado para mostrar numeros en el sitio web.]]></translation>
         <translation language="el"><![CDATA[Αυτή η μορφή χρησιμοποείται γιά την εμφάνιση των αριθμών στον ιστοχώρο.]]></translation>
+        <translation language="pl"><![CDATA[Ten format służy do wyświetlania liczb na stronie internetowej.]]></translation>
       </item>
       <item type="message" name="HelpRedirectLanguages">
         <translation language="nl"><![CDATA[Duid aan op welke talen mensen op basis van hun browsertaal automatisch mogen terechtkomen.]]></translation>
@@ -338,6 +369,7 @@
         <translation language="de"><![CDATA[Wähle die Sprachen, zu denen Besucher automatisch durch deren Browser weitergeleitet werden dürfen.]]></translation>
         <translation language="es"><![CDATA[Selecciona el idioma al que la gente será redireccionada automáticamente basado en el idioma de su navegador.]]></translation>
         <translation language="el"><![CDATA[Επιλέξτε τις γλώσσες στις οποίες οι χρήστες θα κατευθύνονται αυτόματα ανάλογα με τη γλώσσα του φυλλομετρητή τους.]]></translation>
+        <translation language="pl"><![CDATA[Wybierz języki, do których ludzie mogą automatycznie być przekierowywani na podstawie języka ich przeglądarki.]]></translation>
       </item>
       <item type="message" name="HelpScriptsFoot">
         <translation language="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden.]]></translation>
@@ -350,6 +382,7 @@
         <translation language="de"><![CDATA[Füge den Code der am Ende des <code>&lt;body&gt;</code> Tag geladen werden soll hier ein.]]></translation>
         <translation language="es"><![CDATA[Pega el código que necesites para ser cargado al final de la etiqueta <code>&lt;body&gt;</code> aquí.]]></translation>
         <translation language="el"><![CDATA[Επικολλήστε εδώ τον κώδικα που πρέπει να φορτώνεται στο τέλος της ετικέτας <code><body></code>.]]></translation>
+        <translation language="pl"><![CDATA[Wklej tutaj kod który musi się znajdować na końcu tagu <code><body></code>.]]></translation>
       </item>
       <item type="message" name="HelpScriptsFootLabel">
         <translation language="nl"><![CDATA[Einde van <code>&lt;body&gt;</code> script(s)]]></translation>
@@ -362,6 +395,7 @@
         <translation language="de"><![CDATA[<code>&lt;body&gt;</code> - Ende Script(s)]]></translation>
         <translation language="es"><![CDATA[fin de <code>&lt;body&gt;</code> script(s)]]></translation>
         <translation language="el"><![CDATA[Τέλος των <code>&lt;body&gt;</code> σκριπτ.]]></translation>
+        <translation language="pl"><![CDATA[Koniec skryptu <code>&lt;body&gt;</code>]]></translation>
       </item>
       <item type="message" name="HelpScriptsHead">
         <translation language="nl"><![CDATA[Plaats hier code die op elke pagina geladen moet worden in de <code>&lt;head&gt;</code>-tag.]]></translation>
@@ -374,6 +408,7 @@
         <translation language="de"><![CDATA[Füge den Code der im <code>&lt;head&gt;</code> Tag geladen werden soll hier ein.]]></translation>
         <translation language="es"><![CDATA[Pega el código que necesita ser cargado en la sección <code>&lt;head&gt;</code> aquí.]]></translation>
         <translation language="el"><![CDATA[Επικολλήστε εδώ τον κώδικα που πρέπει να φορτώνεται στο τμήμα <code><head></code>.]]></translation>
+        <translation language="pl"><![CDATA[Wklej tutaj kod który musi się wczytywać w sekcji <code>&lt;head&gt;</code>.]]></translation>
       </item>
       <item type="message" name="HelpScriptsHeadLabel">
         <translation language="nl"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
@@ -386,6 +421,7 @@
         <translation language="fr"><![CDATA[<code>&lt;body&gt;</code> script(s)]]></translation>
         <translation language="es"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
         <translation language="el"><![CDATA[<code>&lt;head&gt;</code> σκριπτ.]]></translation>
+        <translation language="pl"><![CDATA[Skrypt <code>&lt;head&gt;</code>]]></translation>
       </item>
       <item type="message" name="HelpScriptsStartOfBody">
         <translation language="nl"><![CDATA[Plaats hier code die op elke pagina geladen moet worden na het openen van de <code>&lt;body&gt;</code>-tag.]]></translation>
@@ -394,6 +430,7 @@
       <item type="message" name="HelpScriptsStartOfBodyLabel">
         <translation language="nl"><![CDATA[<code>Start van &lt;body&gt;</code> script(s)]]></translation>
         <translation language="en"><![CDATA[<code>Start of &lt;body&gt;</code> script(s)]]></translation>
+        <translation language="pl"><![CDATA[<code>Rozpoczęcie skryptu &lt;body&gt;</code>]]></translation>
       </item>
       <item type="message" name="HelpSendingEmails">
         <translation language="nl"><![CDATA[Je kan e-mails versturen op 2 manieren. Door de ingebouwd mail functie van PHP of via SMTP. We raden je aan om SMTP te gebruiken]]></translation>
@@ -406,6 +443,7 @@
         <translation language="fr"><![CDATA[Vous pouvez envoer des e-mails de deux façons. En utilisant PHP ou via SMTP. Nous vous recommandons d'utiliser le SMTP]]></translation>
         <translation language="es"><![CDATA[Tienes dos 2 opciones para enviar e-mails. Usando el método incorporado mail de PHP o via SMTP. Te aconsejamos utilizar SMTP]]></translation>
         <translation language="el"><![CDATA[Μπορείτε να στείλετε email με 2 τρόπους. Με χρήση της ενσωματωμένης μεθόδου email της PHP ή μέσω SMTP. Σας συνιστούμε να χρησιμοποιήσετε το SMTP.]]></translation>
+        <translation language="pl"><![CDATA[Możesz wysyłać e-maile na 2 sposoby. Za pomocą wbudowanej w PHP metody mailowej lub poprzez SMTP. Radzimy skorzystać z SMTP.]]></translation>
       </item>
       <item type="message" name="HelpSEONoodp">
         <translation language="nl"><![CDATA[Gebruik geen titel en omschrijving van het <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>.]]></translation>
@@ -418,6 +456,7 @@
         <translation language="de"><![CDATA[Verhindere, dass deine Seite zum <a href="http://www.dmoz.org/" class="targetBlank"> Open-Directory-Project</a> hinzugefügt wird.]]></translation>
         <translation language="es"><![CDATA[Optar por ignorar el servicio <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>.]]></translation>
         <translation language="el"><![CDATA[Μηνύματα εξόδου από το <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>.]]></translation>
+        <translation language="pl"><![CDATA[Zrezygnuj z zapisania się w <a href="http://www.dmoz.org/" class="targetBlank">, projektu otwartego katalogu</a>.]]></translation>
       </item>
       <item type="message" name="HelpSEONoydir">
         <translation language="nl"><![CDATA[Gebruik geen titel en omschrijving van de Yahoo! Directory.]]></translation>
@@ -430,6 +469,7 @@
         <translation language="de"><![CDATA[Verhindere, dass deine Seite zu Yahoo!-Directory hinzugefügt wird.]]></translation>
         <translation language="es"><![CDATA[Optar por ignorar el servicio Yahoo! Directory.]]></translation>
         <translation language="el"><![CDATA[Μηνύματα εξόδου από το Yahoo! Directory.]]></translation>
+        <translation language="pl"><![CDATA[Zrezygnuj z zapisania się w serwisie Yahoo!.]]></translation>
       </item>
       <item type="message" name="HelpTimeFormat">
         <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.]]></translation>
@@ -442,18 +482,22 @@
         <translation language="fr"><![CDATA[Le format est utilisé pour afficher des dates sur le site.]]></translation>
         <translation language="es"><![CDATA[Este formato es usado para mostrar fechas en el sitio web.]]></translation>
         <translation language="el"><![CDATA[Αυτή η μορφή χρησιμοποείται γιά την εμφάνιση των ημερομηνιών στον ιστοχώρο.]]></translation>
+        <translation language="pl"><![CDATA[Ten format służy do wyświetlania dat na stronie internetowej.]]></translation>
       </item>
       <item type="message" name="ClearCache">
         <translation language="nl"><![CDATA[Verwijder alle gecachete bestanden. Handig wanneer er problemen optreden die hier mogelijks mee te maken hebben. Hou er rekening mee dat er errors kunnen optreden wanneer er voor het eerst terug een pagina ingeladen word.]]></translation>
         <translation language="en"><![CDATA[Remove all cached files. Useful for when problems arise which possibly have something to do with the cache. Remember clearing the cache might cause some errors when a page is reloaded for the first time.]]></translation>
+        <translation language="pl"><![CDATA[Usuń wszystkie buforowane pliki. Przydatne, gdy pojawiają się problemy, które mogą mieć coś wspólnego z pamięcią podręczną. Pamiętaj, że wyczyszczenie pamięci podręcznej może spowodować błędy podczas ponownego ładowania strony po raz pierwszy.]]></translation>
       </item>
       <item type="message" name="ClearingCache">
         <translation language="nl"><![CDATA[De cache wordt verwijderd, even geduld]]></translation>
         <translation language="en"><![CDATA[The cache is being cleared, hang on]]></translation>
+        <translation language="pl"><![CDATA[Pamieć podręczna jest czyszczona, proszę czekać]]></translation>
       </item>
       <item type="message" name="CacheCleared">
         <translation language="nl"><![CDATA[De cache is succesvol verwijderd.]]></translation>
         <translation language="en"><![CDATA[The cache has been successfully cleared.]]></translation>
+        <translation language="pl"><![CDATA[Pamięć podręczna została pomyślnie wyczyszczona.]]></translation>
       </item>
       <item type="message" name="NoAdminIds">
         <translation language="nl"><![CDATA[Nog geen admin-ids]]></translation>
@@ -466,6 +510,7 @@
         <translation language="fr"><![CDATA[Pas encore d'identifiants admin]]></translation>
         <translation language="es"><![CDATA[Aún no hay ids de admin.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη id γιά το διαχειριστή.]]></translation>
+        <translation language="pl"><![CDATA[Brak ID administratora.]]></translation>
       </item>
       <item type="message" name="SendTestMail">
         <translation language="nl"><![CDATA[verstuur testmail]]></translation>
@@ -478,6 +523,7 @@
         <translation language="fr"><![CDATA[envoyer un mail test]]></translation>
         <translation language="es"><![CDATA[enviar email de prueba]]></translation>
         <translation language="el"><![CDATA[Αποστολή δοκιμαστικού email.]]></translation>
+        <translation language="pl"><![CDATA[Wyślij email testowy]]></translation>
       </item>
       <item type="message" name="SEONoFollowInComments">
         <translation language="nl"><![CDATA[<code>rel="nofollow"</code> voor links in reacties]]></translation>
@@ -490,6 +536,7 @@
         <translation language="de"><![CDATA[füge <code>rel="nofollow"</code> bei Links in Kommentaren ein]]></translation>
         <translation language="es"><![CDATA[agregar <code>rel="nofollow"</code> en los enlaces dentro de un comentario]]></translation>
         <translation language="el"><![CDATA[Προσθέσατε <code>rel="nofollow"</code> σε συνδέσμους που βρίσκονται μέσα σε σχόλιο.]]></translation>
+        <translation language="pl"><![CDATA[dodaj <code>rel="nofollow"</code> do linków wewnątrz komentarza]]></translation>
       </item>
       <item type="message" name="ShowCookieBar">
         <translation language="nl"><![CDATA[toon de cookie balk]]></translation>
@@ -497,6 +544,7 @@
         <translation language="fr"><![CDATA[montrer la barre de cookie]]></translation>
         <translation language="de"><![CDATA[zeigen Sie die Cookie-Bar]]></translation>
         <translation language="es"><![CDATA[monstrar la barra de cookie]]></translation>
+        <translation language="pl"><![CDATA[pokaż pasek cookie]]></translation>
       </item>
       <item type="message" name="TestMessage">
         <translation language="nl"><![CDATA[dit is een test]]></translation>
@@ -509,6 +557,7 @@
         <translation language="fr"><![CDATA[il s'eagit juste d'un test]]></translation>
         <translation language="es"><![CDATA[esto sólo es una prueba]]></translation>
         <translation language="el"><![CDATA[Αυτό είναι απλώς μία δοκιμή.]]></translation>
+        <translation language="pl"><![CDATA[To jest tylko test]]></translation>
       </item>
       <item type="message" name="TestWasSent">
         <translation language="nl"><![CDATA[De testmail is verzonden.]]></translation>
@@ -521,6 +570,7 @@
         <translation language="fr"><![CDATA[L'e-mail tests a été envoyé.]]></translation>
         <translation language="es"><![CDATA[El email de prueba ha sido enviado.]]></translation>
         <translation language="el"><![CDATA[Το δοκιμαστικό email απεστάλη.]]></translation>
+        <translation language="pl"><![CDATA[Email testowy został wysłany.]]></translation>
       </item>
       <item type="error" name="PortIsRequired">
         <translation language="nl"><![CDATA[Poort is verplicht.]]></translation>
@@ -533,6 +583,7 @@
         <translation language="de"><![CDATA[Port ist eine Pflichtangabe.]]></translation>
         <translation language="es"><![CDATA[El Puerto es requerido.]]></translation>
         <translation language="el"><![CDATA[Ο αριθμός της θύρας (port) είναι υποχρεωτικός.]]></translation>
+        <translation language="pl"><![CDATA[Port jest wymagany.]]></translation>
       </item>
       <item type="error" name="ServerIsRequired">
         <translation language="nl"><![CDATA[Server is verplicht.]]></translation>
@@ -545,6 +596,7 @@
         <translation language="de"><![CDATA[Der Server muss angegeben werden.]]></translation>
         <translation language="es"><![CDATA[El servidor es requerido.]]></translation>
         <translation language="el"><![CDATA[Το όνομα ή IP του διακομιστή (server) είναι υποχρεωτικό.]]></translation>
+        <translation language="pl"><![CDATA[Serwer jest wymagany.]]></translation>
       </item>
     </Settings>
   </Backend>
@@ -553,6 +605,7 @@
       <item type="error" name="RecaptchaInvalid">
         <translation language="nl"><![CDATA[Captcha code is ongeldig.]]></translation>
         <translation language="en"><![CDATA[Captcha code is invalid.]]></translation>
+        <translation language="pl"><![CDATA[Błędny kod Captcha.]]></translation>
       </item>
     </Core>
   </Frontend>

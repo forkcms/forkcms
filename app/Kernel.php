@@ -184,7 +184,7 @@ abstract class Kernel extends BaseKernel
         return $moduleNames;
     }
 
-    private function isInstallingModule(): bool
+    public function isInstallingModule(): bool
     {
         return preg_match('/\/private(\/\w\w)?\/extensions\/install_module\?/', $this->request->getRequestUri())
                && $this->request->query->has('module')

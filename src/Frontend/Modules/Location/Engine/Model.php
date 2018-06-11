@@ -2,7 +2,7 @@
 
 namespace Frontend\Modules\Location\Engine;
 
-use Frontend\Core\Engine\Model as FrontendModel;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use Frontend\Core\Engine\Theme as FrontendTheme;
 
 /**
@@ -59,20 +59,12 @@ class Model
 
     public static function get(int $id): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT *
-             FROM location
-             WHERE id = ? AND language = ?',
-            [$id, LANGUAGE]
-        );
+        return BackendLocationModel::get($id);
     }
 
     public static function getAll(): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT * FROM location WHERE language = ? AND show_overview = ?',
-            [LANGUAGE, true]
-        );
+        return BackendLocationModel::getAll();
     }
 
     /**
@@ -85,34 +77,12 @@ class Model
      */
     public static function getMapSetting(int $mapId, string $name)
     {
-        $serializedData = (string) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ? AND s.name = ?',
-            [$mapId, $name]
-        );
-
-        if ($serializedData != null) {
-            return unserialize($serializedData);
-        }
-
-        return false;
+        return BackendLocationModel::getMapSetting($mapId, $name);
     }
 
     public static function getMapSettings(int $mapId): array
     {
-        $mapSettings = (array) FrontendModel::getContainer()->get('database')->getPairs(
-            'SELECT s.name, s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ?',
-            [$mapId]
-        );
-
-        foreach ($mapSettings as $key => $value) {
-            $mapSettings[$key] = unserialize($value);
-        }
-
-        return $mapSettings;
+        return BackendLocationModel::getMapSettings($mapId);
     }
 
     public static function getPathToMapStyles(bool $backend = true): string

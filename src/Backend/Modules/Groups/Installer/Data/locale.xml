@@ -15,6 +15,7 @@
         <translation language="uk"><![CDATA[Дії]]></translation>
         <translation language="lt"><![CDATA[veiksmas]]></translation>
         <translation language="el"><![CDATA[Ενέργεια]]></translation>
+        <translation language="pl"><![CDATA[Działanie]]></translation>
       </item>
       <item type="label" name="AddGroup">
         <translation language="nl"><![CDATA[groep toevoegen]]></translation>
@@ -29,6 +30,7 @@
         <translation language="es"><![CDATA[agregar grupo]]></translation>
         <translation language="lt"><![CDATA[nauja grupė]]></translation>
         <translation language="el"><![CDATA[Προσθήκη ομάδας]]></translation>
+        <translation language="pl"><![CDATA[Dodaj grupę]]></translation>
       </item>
       <item type="label" name="Checkbox">
         <translation language="nl"><![CDATA[&nbsp;]]></translation>
@@ -43,6 +45,7 @@
         <translation language="uk"><![CDATA[Чекбокс]]></translation>
         <translation language="lt"><![CDATA[&nbsp;]]></translation>
         <translation language="el"><![CDATA[Πλήκτρο επιλογής]]></translation>
+        <translation language="pl"><![CDATA[Pole wyboru]]></translation>
       </item>
       <item type="label" name="DisplayWidgets">
         <translation language="nl"><![CDATA[te tonen widgets]]></translation>
@@ -57,6 +60,7 @@
         <translation language="uk"><![CDATA[Відображувані віджети]]></translation>
         <translation language="lt"><![CDATA[programėlės rodymui]]></translation>
         <translation language="el"><![CDATA[Μικροεφαρμογές προς εμφάνιση]]></translation>
+        <translation language="pl"><![CDATA[Widgety do wyświetlenia]]></translation>
       </item>
       <item type="label" name="NumUsers">
         <translation language="nl"><![CDATA[aantal gebruikers]]></translation>
@@ -70,6 +74,7 @@
         <translation language="es"><![CDATA[número de usuarios]]></translation>
         <translation language="uk"><![CDATA[К-ть користувачів]]></translation>
         <translation language="el"><![CDATA[Πλήθος χρηστών]]></translation>
+        <translation language="pl"><![CDATA[ilość użytkowników]]></translation>
       </item>
       <item type="label" name="Presets">
         <translation language="it"><![CDATA[prestabiliti]]></translation>
@@ -83,6 +88,7 @@
         <translation language="es"><![CDATA[requisitos]]></translation>
         <translation language="uk"><![CDATA[Установки]]></translation>
         <translation language="el"><![CDATA[Αρχικές ρυθμίσεις]]></translation>
+        <translation language="pl"><![CDATA[Ustawienia wstępne]]></translation>
       </item>
       <item type="label" name="SetPermissions">
         <translation language="nl"><![CDATA[stel rechten in]]></translation>
@@ -96,6 +102,7 @@
         <translation language="es"><![CDATA[configurar permisos]]></translation>
         <translation language="uk"><![CDATA[Налаштувати права]]></translation>
         <translation language="el"><![CDATA[Ορισμός δικαιωμάτων]]></translation>
+        <translation language="pl"><![CDATA[Ustaw uprawnienia]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA["%1$s" is toegevoegd.]]></translation>
@@ -109,6 +116,7 @@
         <translation language="es"><![CDATA["%1$s" ha sido agregado.]]></translation>
         <translation language="uk"><![CDATA["%1$s" - додано.]]></translation>
         <translation language="el"><![CDATA[Το "%1$s" προστέθηκε.]]></translation>
+        <translation language="pl"><![CDATA["%1$s" został dodany.]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA["%1$s" is verwijderd.]]></translation>
@@ -121,6 +129,7 @@
         <translation language="fr"><![CDATA["%1$s" a été effacé.]]></translation>
         <translation language="es"><![CDATA["%1$s" ha sido eliminado.]]></translation>
         <translation language="el"><![CDATA[Το "%1$s" διεγράφη.]]></translation>
+        <translation language="pl"><![CDATA["%1$s" został usunięty.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[wijzigingen aan "%1$s" werden opgeslaan.]]></translation>
@@ -133,6 +142,7 @@
         <translation language="fr"><![CDATA[Les changements pour "%1$s" ont été enregistrés.]]></translation>
         <translation language="es"><![CDATA[los cambios para "%1$s" han sido guardados.]]></translation>
         <translation language="el"><![CDATA[Οι αλλαγές στο "%1$s" έχουν αποθηκευτεί.]]></translation>
+        <translation language="pl"><![CDATA[zmiany dla "%1$s" zostały zapisane.]]></translation>
       </item>
       <item type="message" name="NoUsers">
         <translation language="nl"><![CDATA[Deze groep bevat geen gebruikers.]]></translation>
@@ -145,6 +155,7 @@
         <translation language="fr"><![CDATA[Ce groupe ne contient pas de nouveaux utilisateurs.]]></translation>
         <translation language="es"><![CDATA[Este grupo no contiene ningún usuario.]]></translation>
         <translation language="el"><![CDATA[Αυτή η ομάδα δεν έχει καθόλου χρήστες.]]></translation>
+        <translation language="pl"><![CDATA[Ta grupa nie zawiera żadnych użytkowników.]]></translation>
       </item>
       <item type="message" name="NoWidgets">
         <translation language="nl"><![CDATA[Er zijn geen widgets beschikbaar.]]></translation>
@@ -157,6 +168,7 @@
         <translation language="fr"><![CDATA[Il n'y a pas de widget disponible.]]></translation>
         <translation language="es"><![CDATA[No hay widgets disponibles.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν διαθέσιμες μικροεφαρμογές.]]></translation>
+        <translation language="pl"><![CDATA[Brak dostepnych widgetów.]]></translation>
       </item>
       <item type="error" name="GroupAlreadyExists">
         <translation language="nl"><![CDATA[Deze groep bestaat reeds.]]></translation>
@@ -169,6 +181,7 @@
         <translation language="fr"><![CDATA[Ce groupe existe déjà.]]></translation>
         <translation language="es"><![CDATA[Este grupo ya existe.]]></translation>
         <translation language="el"><![CDATA[Αυτή η ομάδα υπάρχει ήδη.]]></translation>
+        <translation language="pl"><![CDATA[Ta grupa już istnieje.]]></translation>
       </item>
     </Groups>
   </Backend>
