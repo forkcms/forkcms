@@ -342,6 +342,7 @@ class EnableLocaleCommand extends Command
             'es' => 'Spanish',
             'sv' => 'Swedish',
             'uk' => 'Ukrainian',
+            'pl' => 'Polish',
         ];
     }
 }

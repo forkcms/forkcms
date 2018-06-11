@@ -16,7 +16,7 @@ monolog:
         dockerstdout:
             type: stream
             path: php://stdout
-            level: debug
+            level: error
             formatter: monolog.full_trace_formatter
             channels: ["!event"]
 
