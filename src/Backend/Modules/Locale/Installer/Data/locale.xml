@@ -15,6 +15,7 @@
         <translation language="uk"><![CDATA[Дії]]></translation>
         <translation language="lt"><![CDATA[veiksmai]]></translation>
         <translation language="el"><![CDATA[Ενέργειες]]></translation>
+        <translation language="pl"><![CDATA[Działania]]></translation>
       </item>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[vertaling toevoegen]]></translation>
@@ -29,6 +30,7 @@
         <translation language="uk"><![CDATA[Додати переклад]]></translation>
         <translation language="lt"><![CDATA[naujas vertimas]]></translation>
         <translation language="el"><![CDATA[Προσθήκη μετάφρασης]]></translation>
+        <translation language="pl"><![CDATA[Dodaj tłumaczenie]]></translation>
       </item>
       <item type="label" name="Copy">
         <translation language="nl"><![CDATA[kopieer]]></translation>
@@ -43,10 +45,12 @@
         <translation language="uk"><![CDATA[Копіювати]]></translation>
         <translation language="lt"><![CDATA[kopijuoti]]></translation>
         <translation language="el"><![CDATA[Αντιγραφή]]></translation>
+        <translation language="pl"><![CDATA[kopiuj]]></translation>
       </item>
       <item type="label" name="Edited">
         <translation language="nl"><![CDATA[bewerkt]]></translation>
         <translation language="en"><![CDATA[edited]]></translation>
+        <translation language="pl"><![CDATA[edytowany]]></translation>
       </item>
       <item type="label" name="EN">
         <translation language="nl"><![CDATA[engels]]></translation>
@@ -61,6 +65,7 @@
         <translation language="uk"><![CDATA[англійська]]></translation>
         <translation language="lt"><![CDATA[anglų]]></translation>
         <translation language="el"><![CDATA[Αγγλικά]]></translation>
+        <translation language="pl"><![CDATA[Angielski]]></translation>
       </item>
       <item type="label" name="Errors">
         <translation language="nl"><![CDATA[foutberichten]]></translation>
@@ -74,6 +79,7 @@
         <translation language="es"><![CDATA[errores]]></translation>
         <translation language="uk"><![CDATA[Помилки]]></translation>
         <translation language="el"><![CDATA[Σφάλματα]]></translation>
+        <translation language="pl"><![CDATA[błędy]]></translation>
       </item>
       <item type="label" name="FR">
         <translation language="nl"><![CDATA[frans]]></translation>
@@ -88,6 +94,7 @@
         <translation language="uk"><![CDATA[французька]]></translation>
         <translation language="lt"><![CDATA[prancūzų]]></translation>
         <translation language="el"><![CDATA[Γαλλικά]]></translation>
+        <translation language="pl"><![CDATA[Francuski]]></translation>
       </item>
       <item type="label" name="Labels">
         <translation language="nl"><![CDATA[labels]]></translation>
@@ -101,6 +108,7 @@
         <translation language="es"><![CDATA[etiquetas]]></translation>
         <translation language="uk"><![CDATA[Заголовки]]></translation>
         <translation language="el"><![CDATA[Ετικέτες]]></translation>
+        <translation language="pl"><![CDATA[etykiety]]></translation>
       </item>
       <item type="label" name="Messages">
         <translation language="nl"><![CDATA[berichten]]></translation>
@@ -114,6 +122,7 @@
         <translation language="es"><![CDATA[mensajes]]></translation>
         <translation language="uk"><![CDATA[Повідомлення]]></translation>
         <translation language="el"><![CDATA[Μηνύματα]]></translation>
+        <translation language="pl"><![CDATA[wiadomości]]></translation>
       </item>
       <item type="label" name="NL">
         <translation language="nl"><![CDATA[Nederlands]]></translation>
@@ -129,8 +138,8 @@
         <translation language="uk"><![CDATA[голандська]]></translation>
         <translation language="sv"><![CDATA[Holländska]]></translation>
         <translation language="el"><![CDATA[Ολλανδικά]]></translation>
-        <translation language="pl"><![CDATA[Niemiecki]]></translation>
         <translation language="tr"><![CDATA[Flemenkçe]]></translation>
+        <translation language="pl"><![CDATA[Niderlandzki]]></translation>
       </item>
       <item type="label" name="UK">
         <translation language="nl"><![CDATA[Oekraïens]]></translation>
@@ -144,6 +153,7 @@
         <translation language="sv"><![CDATA[Ukrianska]]></translation>
         <translation language="el"><![CDATA[Ουκρανικά]]></translation>
         <translation language="zh"><![CDATA[乌克兰语]]></translation>
+        <translation language="pl"><![CDATA[Ukraiński]]></translation>
       </item>
       <item type="label" name="SV">
         <translation language="nl"><![CDATA[Zweeds]]></translation>
@@ -157,6 +167,7 @@
         <translation language="sv"><![CDATA[Svenska]]></translation>
         <translation language="el"><![CDATA[Σουηδικά]]></translation>
         <translation language="zh"><![CDATA[瑞典语]]></translation>
+        <translation language="pl"><![CDATA[Szwedzki]]></translation>
       </item>
       <item type="label" name="ES">
         <translation language="nl"><![CDATA[Spaans]]></translation>
@@ -204,6 +215,7 @@
         <translation language="sv"><![CDATA[Litauiska]]></translation>
         <translation language="el"><![CDATA[Λιθουανικά]]></translation>
         <translation language="zh"><![CDATA[立陶宛语]]></translation>
+        <translation language="pl"><![CDATA[Litewski]]></translation>
       </item>
       <item type="label" name="IT">
         <translation language="hu"><![CDATA[olasz]]></translation>
@@ -237,6 +249,7 @@
         <translation language="el"><![CDATA[Ουγγρικά]]></translation>
         <translation language="zh"><![CDATA[匈牙利语]]></translation>
         <translation language="tr"><![CDATA[Macar]]></translation>
+        <translation language="pl"><![CDATA[Węgierski]]></translation>
       </item>
       <item type="label" name="EL">
         <translation language="nl"><![CDATA[Grieks]]></translation>
@@ -250,6 +263,7 @@
         <translation language="sv"><![CDATA[Grekiska]]></translation>
         <translation language="el"><![CDATA[Ελληνικά]]></translation>
         <translation language="zh"><![CDATA[希腊语]]></translation>
+        <translation language="pl"><![CDATA[Grecki]]></translation>
       </item>
       <item type="label" name="DE">
         <translation language="nl"><![CDATA[Duits]]></translation>
@@ -283,6 +297,7 @@
         <translation language="sv"><![CDATA[Kinesiska]]></translation>
         <translation language="el"><![CDATA[Κινέζικα]]></translation>
         <translation language="tr"><![CDATA[Çince]]></translation>
+        <translation language="pl"><![CDATA[Chiński]]></translation>
       </item>
       <item type="label" name="Types">
         <translation language="nl"><![CDATA[types]]></translation>
@@ -297,6 +312,7 @@
         <translation language="uk"><![CDATA[Типи]]></translation>
         <translation language="lt"><![CDATA[Tipai]]></translation>
         <translation language="el"><![CDATA[Τύποι]]></translation>
+        <translation language="pl"><![CDATA[typy]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De vertaling "%1$s" werd toegevoegd.]]></translation>
@@ -310,6 +326,7 @@
         <translation language="es"><![CDATA[La traducción "%1$s" fue agregada.]]></translation>
         <translation language="uk"><![CDATA["%1$s" - додано]]></translation>
         <translation language="el"><![CDATA[Προστέθηκε η μετάφραση "%1$s".]]></translation>
+        <translation language="pl"><![CDATA[Tłumaczenie "%1$s" zostało dodane.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je deze vertaling wil verwijderen?]]></translation>
@@ -323,6 +340,7 @@
         <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar esta traducción?]]></translation>
         <translation language="uk"><![CDATA[Ви дійсно бажаєте видалити цей переклад?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε αυτή τη μετάφραση;]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąć te tłumaczenie?]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De vertaling "%1$s" werd verwijderd.]]></translation>
@@ -336,6 +354,7 @@
         <translation language="es"><![CDATA[La traducción "%1$s" fue eliminada.]]></translation>
         <translation language="uk"><![CDATA["%1$s" - видалено]]></translation>
         <translation language="el"><![CDATA[Διεγράφη η μετάφραση "%1$s".]]></translation>
+        <translation language="pl"><![CDATA[Tłumaczenie "%1$s" zostało usunięte.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[De vertaling "%1$s" werd opgeslagen.]]></translation>
@@ -349,6 +368,7 @@
         <translation language="es"><![CDATA[La traducción "%1$s" fue guardada.]]></translation>
         <translation language="uk"><![CDATA["%1$s" - змінено]]></translation>
         <translation language="el"><![CDATA[Η μετάφραση  "%1$s" αποθηκεύτηκε.]]></translation>
+        <translation language="pl"><![CDATA[Tłumaczenie "%1$s" zostało zapisane.]]></translation>
       </item>
       <item type="message" name="EditTranslation">
         <translation language="nl"><![CDATA[bewerk vertaling "%1$s"]]></translation>
@@ -362,6 +382,7 @@
         <translation language="es"><![CDATA[editar traducción "%1$s"]]></translation>
         <translation language="uk"><![CDATA[Редагувати "%1$s"]]></translation>
         <translation language="el"><![CDATA[Διόρθωση της μετάφρασης "%1$s".]]></translation>
+        <translation language="pl"><![CDATA[Edytuj tłumaczenie "%1$s"]]></translation>
       </item>
       <item type="message" name="HelpActionValue">
         <translation language="nl"><![CDATA[Gebruik enkel alfanumerieke karakters (geen hoofdletters), - en _ bij deze vertalingen, ze zullen namelijk gebruikt worden in URL's.]]></translation>
@@ -375,6 +396,7 @@
         <translation language="es"><![CDATA[Usa solo carácteres alfanumericos (no mayusculas), - y _ para estas traducciones, porque serán usadas en URLs.]]></translation>
         <translation language="uk"><![CDATA[Використовуйте лише символи (без заглавних),- та _ для переладів. Це має значення для URL]]></translation>
         <translation language="el"><![CDATA[Χρησιμοποιείτε μόνον γράμματα και αριθμούς (όχι κεφαλαία) και τα σύμβολα - και _ γιά τις μεταφράσεις, διότι θα εμφανίζονται στις διευθύνσεις URL.]]></translation>
+        <translation language="pl"><![CDATA[Używaj tylko znaków alfanumerycznych (bez wielkich liter), - i _ dla tych tłumaczeń, ponieważ będą one używane w adresach URL.]]></translation>
       </item>
       <item type="message" name="HelpAddName">
         <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
@@ -388,6 +410,7 @@
         <translation language="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
         <translation language="uk"><![CDATA[Англ.]]></translation>
         <translation language="el"><![CDATA[Τα Αγγλικά ως αναφορά γιά τη μετάφραση]]></translation>
+        <translation language="pl"><![CDATA[Angielski odnośnik dla tłumaczenia]]></translation>
       </item>
       <item type="message" name="HelpAddValue">
         <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
@@ -401,6 +424,7 @@
         <translation language="es"><![CDATA[La traducción]]></translation>
         <translation language="uk"><![CDATA[Переклад]]></translation>
         <translation language="el"><![CDATA[Η μετάφραση]]></translation>
+        <translation language="pl"><![CDATA[Tłumaczenie]]></translation>
       </item>
       <item type="message" name="HelpDateField">
         <translation language="nl"><![CDATA[vb. 20/06/2011]]></translation>
@@ -414,6 +438,7 @@
         <translation language="es"><![CDATA[ej. 20/06/2011]]></translation>
         <translation language="uk"><![CDATA[прибл. 20/06/2011]]></translation>
         <translation language="el"><![CDATA[πχ. 20/06/2011]]></translation>
+        <translation language="pl"><![CDATA[np. 20/06/2011]]></translation>
       </item>
       <item type="message" name="HelpEditName">
         <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
@@ -427,6 +452,7 @@
         <translation language="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
         <translation language="uk"><![CDATA[Англ.]]></translation>
         <translation language="el"><![CDATA[Τα Αγγλικά ως αναφορά γιά τη μετάφραση]]></translation>
+        <translation language="pl"><![CDATA[Angielski odnośnik dla tłumaczenia]]></translation>
       </item>
       <item type="message" name="HelpEditValue">
         <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
@@ -440,6 +466,7 @@
         <translation language="es"><![CDATA[La traducción]]></translation>
         <translation language="uk"><![CDATA[Переклад]]></translation>
         <translation language="el"><![CDATA[Η μετάφραση]]></translation>
+        <translation language="pl"><![CDATA[Tłumaczenie]]></translation>
       </item>
       <item type="message" name="HelpImageField">
         <translation language="nl"><![CDATA[Enkel bestanden met extensie jp(e)g, gif of png zijn toegelaten.]]></translation>
@@ -453,6 +480,7 @@
         <translation language="es"><![CDATA[Solo jp(e)g, gif o png son aceptados.]]></translation>
         <translation language="uk"><![CDATA[Дозволені лише - jp(e)g, gif та png.]]></translation>
         <translation language="el"><![CDATA[Επιτρέπονται αρχεία εικόνας τύπων jp(e)g, gif και png.]]></translation>
+        <translation language="pl"><![CDATA[Dozwolone są tylko pliki jp(e)g, gif lub png.]]></translation>
       </item>
       <item type="message" name="HelpName">
         <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
@@ -466,6 +494,7 @@
         <translation language="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
         <translation language="uk"><![CDATA[Англ]]></translation>
         <translation language="el"><![CDATA[Η αναφορά στα Αγγλικά γιά τη μετάφραση αυτή]]></translation>
+        <translation language="pl"><![CDATA[Angielski odnośnik dla tłumaczenia]]></translation>
       </item>
       <item type="message" name="HelpTimeField">
         <translation language="nl"><![CDATA[vb. 14:35]]></translation>
@@ -479,6 +508,7 @@
         <translation language="es"><![CDATA[ej. 14:35]]></translation>
         <translation language="uk"><![CDATA[прибл. 14:35]]></translation>
         <translation language="el"><![CDATA[πχ. 14:35]]></translation>
+        <translation language="pl"><![CDATA[np. 14:35]]></translation>
       </item>
       <item type="message" name="HelpValue">
         <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
@@ -492,6 +522,7 @@
         <translation language="es"><![CDATA[La traducción]]></translation>
         <translation language="uk"><![CDATA[Переклад]]></translation>
         <translation language="el"><![CDATA[Η μετάφραση]]></translation>
+        <translation language="pl"><![CDATA[Tłumaczenie]]></translation>
       </item>
       <item type="message" name="Imported">
         <translation language="nl"><![CDATA[%1$s vertalingen werden geimporteerd.]]></translation>
@@ -505,6 +536,7 @@
         <translation language="es"><![CDATA[%1$s traducciones fueron importadas.]]></translation>
         <translation language="uk"><![CDATA[%1$s - вдало імпортовано]]></translation>
         <translation language="el"><![CDATA[Εισήχθησαν %1$s μεταφράσεις.]]></translation>
+        <translation language="pl"><![CDATA[%1$s tłumaczeń zostało zaimportowanych.]]></translation>
       </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen vertalingen. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
@@ -518,6 +550,7 @@
         <translation language="es"><![CDATA[Aún no hay traducciones. <a href="%1$s">Agrega la primera traducción</a>.]]></translation>
         <translation language="uk"><![CDATA[Нема перекладів. ]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη μεταφράσεις. <a href="%1$s">Προσθέστε την πρώτη μετάφραση</a>.]]></translation>
+        <translation language="pl"><![CDATA[Nie ma jeszcze tłumaczenia. <a href="%1$s"> Dodaj pierwsze tłumaczenie </a>.]]></translation>
       </item>
       <item type="message" name="NoItemsAnalyse">
         <translation language="nl"><![CDATA[Er werden geen ontbrekende vertalingen gevonden.]]></translation>
@@ -531,6 +564,7 @@
         <translation language="es"><![CDATA[No se encontraron traducciones]]></translation>
         <translation language="uk"><![CDATA[Немає перекладених значень]]></translation>
         <translation language="el"><![CDATA[Δεν βρέθηκαν να λείπουν μεταφράσεις.]]></translation>
+        <translation language="pl"><![CDATA[Nie znaleziono brakujących tłu,aczeń.]]></translation>
       </item>
       <item type="message" name="NoItemsFilter">
         <translation language="nl"><![CDATA[Er zijn geen vertalingen voor deze filter. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
@@ -544,10 +578,12 @@
         <translation language="es"><![CDATA[No hay traducción apra este filtro aun. <a href="%1$s">Agrega la primera traducción</a>.]]></translation>
         <translation language="uk"><![CDATA[Немає значень для цього фільтра. <a href="%1$s">Додати</a>.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη μεταφράσεις γιά αυτό το φίλτρο. <a href="%1$s">Προσθέστε την πρώτη μετάφραση</a>.]]></translation>
+        <translation language="pl"><![CDATA[Nie ma jeszcze tłumaczenia dla tego filtra. <a href="%1$s"> Dodaj pierwsze tłumaczenie </a>.]]></translation>
       </item>
       <item type="message" name="StartSearch">
         <translation language="nl"><![CDATA[Start uw zoekopdracht.]]></translation>
         <translation language="en"><![CDATA[Make a search result.]]></translation>
+        <translation language="pl"><![CDATA[Rozpocznij wyszukiwanie.]]></translation>
       </item>
       <item type="message" name="OverwriteConflicts">
         <translation language="nl"><![CDATA[Overschrijf indien de vertaling bestaat.]]></translation>
@@ -561,6 +597,7 @@
         <translation language="es"><![CDATA[Sobreescribir si la traducción existe.]]></translation>
         <translation language="uk"><![CDATA[Перезаписати, якщо переклад існує.]]></translation>
         <translation language="el"><![CDATA[Αν η μετάφραση υπάρχει, επικάλυψέ την.]]></translation>
+        <translation language="pl"><![CDATA[Nadpisz jeśli tłumaczenie już istnieje.]]></translation>
       </item>
       <item type="error" name="AlreadyExists">
         <translation language="nl"><![CDATA[Deze vertaling bestaat reeds.]]></translation>
@@ -574,6 +611,7 @@
         <translation language="es"><![CDATA[Esta traducción ya existe.]]></translation>
         <translation language="uk"><![CDATA[Переклад вже існує]]></translation>
         <translation language="el"><![CDATA[Αυτή η μετάφραση υπάρχει ήδη.]]></translation>
+        <translation language="pl"><![CDATA[Te tłumaczenie już istnieje.]]></translation>
       </item>
       <item type="error" name="InvalidActionValue">
         <translation language="nl"><![CDATA[De actienaam bevat ongeldige karakters.]]></translation>
@@ -587,6 +625,7 @@
         <translation language="es"><![CDATA[El nombre de la acción contiene caracteres invalidos.]]></translation>
         <translation language="uk"><![CDATA[Дія містить неправильні знаки/символи]]></translation>
         <translation language="el"><![CDATA[Το όνομα της ενέργειας περιέχει μη έγκυρους χαρακτήρες.]]></translation>
+        <translation language="pl"><![CDATA[Nazwa działania zawiera niewłaściwe znaki.]]></translation>
       </item>
       <item type="error" name="InvalidXML">
         <translation language="nl"><![CDATA[Het opgegeven XML-bestand bevat foute XML-data.]]></translation>
@@ -600,6 +639,7 @@
         <translation language="es"><![CDATA[Este es un archivo XML no válido.]]></translation>
         <translation language="uk"><![CDATA[Неприпустимий XML-файл]]></translation>
         <translation language="el"><![CDATA[Αυτό το αρχείο XML δεν είναι έγκυρο.]]></translation>
+        <translation language="pl"><![CDATA[Nieprawidłowy plik XML.]]></translation>
       </item>
       <item type="error" name="ModuleHasToBeCore">
         <translation language="nl"><![CDATA[De module moet core zijn voor vertalingen in de frontend.]]></translation>
@@ -613,6 +653,7 @@
         <translation language="es"><![CDATA[Este módulo requiere una  traducción del frontend.]]></translation>
         <translation language="uk"><![CDATA[Модуль повинен бути ядром. - для перекладу інтерфейса сайта.]]></translation>
         <translation language="el"><![CDATA[Η ενότητα πρέπει να είναι στον πυρήνα γιά ]]></translation>
+        <translation language="pl"><![CDATA[Moduł musi być rdzeniem dla tłumaczeń frontendu.]]></translation>
       </item>
       <item type="error" name="NoSelection">
         <translation language="nl"><![CDATA[Er waren geen vertalingen geselecteerd.]]></translation>
@@ -626,6 +667,7 @@
         <translation language="es"><![CDATA[Ninguna traducción han sido seleccionada.]]></translation>
         <translation language="uk"><![CDATA[Не обрано перекладів]]></translation>
         <translation language="el"><![CDATA[Δεν επελέγη καμμία μετάφραση.]]></translation>
+        <translation language="pl"><![CDATA[Nie wybrano żadnych tłumaczeń.]]></translation>
       </item>
     </Locale>
     <Core>
@@ -641,6 +683,7 @@
         <translation language="es"><![CDATA[Este es un archivo CSV no válido.]]></translation>
         <translation language="uk"><![CDATA[Неприпустимий CSV-файл]]></translation>
         <translation language="el"><![CDATA[Αυτό το αρχείο CSV δεν είναι έγκυρο.]]></translation>
+        <translation language="pl"><![CDATA[Nieprawidłowy plik CSV.]]></translation>
       </item></Core>
   </Backend>
 </locale>

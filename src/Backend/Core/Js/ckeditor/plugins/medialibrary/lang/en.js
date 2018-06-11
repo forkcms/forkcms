@@ -8,5 +8,10 @@ CKEDITOR.plugins.setLang('medialibrary', 'en', {
   insertImage: 'Insert image',
   insertLink: 'Insert link',
   url: 'URL',
-  urlNotValid: 'URL is not valid.'
+  urlNotValid: 'URL is not valid.',
+  type: 'URL type',
+  email: 'E-mail address',
+  subject: 'Subject message',
+  content: 'Content message',
+  openInNewWindow: 'Open in new window'
 });

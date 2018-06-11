@@ -36,3 +36,8 @@ services:
             - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
+
+monolog:
+    handlers:
+        main:
+            type: 'null'

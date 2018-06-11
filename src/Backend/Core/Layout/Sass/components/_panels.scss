@@ -96,18 +96,30 @@
 .panel-group {
   margin-bottom: 0;
 
-  .panel-heading a {
-    .panel-title {
+  .panel-heading {
+
+    a {
+
+      .panel-title {
+        color: $text-color;
+      }
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+
+        .panel-title {
+          color: $gray-base;
+        }
+      }
+    }
+
+    .panel-title a {
       color: $text-color;
     }
 
-    &:hover,
-    &:focus {
-      text-decoration: none;
-
-      .panel-title {
-        color: $gray-base;
-      }
+    .inputCheckbox  + .panel-title {
+      display: inline-block;
     }
   }
 }
