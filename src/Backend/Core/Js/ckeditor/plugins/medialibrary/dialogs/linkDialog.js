@@ -15,6 +15,90 @@ CKEDITOR.dialog.add(
                     label: '',
                     elements: [
                         {
+                            type: 'select',
+                            id: 'type',
+                            label: editor.lang.medialibrary.type,
+                            items: [
+                                [
+                                    editor.lang.medialibrary.url,
+                                    'url'
+                                ],
+                                [
+                                    editor.lang.medialibrary.email,
+                                    'email'
+                                ]
+                            ],
+                            default: 'url',
+                            onChange: function (element) {
+                                var $urlFields = this.getDialog().getContentElement('tab', 'url').getElement().getParent().getParent().getParent().getParent().getParent().getParent();
+                                var $localPageField = this.getDialog().getContentElement('tab', 'localPage').getElement().getParent().getParent();
+                                var $openInNewWindowField = this.getDialog().getContentElement('tab', 'openInNewWindow').getElement().getParent().getParent();
+                                var $emailAddressField = this.getDialog().getContentElement('tab', 'email').getElement().getParent().getParent();
+                                var $subjectField = this.getDialog().getContentElement('tab', 'subject').getElement().getParent().getParent();
+                                var $contentField = this.getDialog().getContentElement('tab', 'content').getElement().getParent().getParent();
+
+                                var value = this.getValue();
+
+                                // email url
+                                if (value === 'email') {
+                                    $urlFields.hide();
+                                    $localPageField.hide();
+                                    $openInNewWindowField.hide();
+                                    $emailAddressField.show();
+                                    $subjectField.show();
+                                    $contentField.show();
+
+                                    return;
+                                }
+
+                                // normal url
+                                $urlFields.show();
+                                $localPageField.show();
+                                $openInNewWindowField.show();
+                                $emailAddressField.hide();
+                                $subjectField.hide();
+                                $contentField.hide();
+                            },
+                            setup: function (element) {
+                                var type = 'url';
+                                if (element.getAttribute('href').startsWith('mailto:')) {
+                                    type = 'email';
+                                }
+
+                                this.getDialog().setValueOf('tab', 'type', type);
+                            },
+                            onLoad: function (element) {
+                                var $urlFields = this.getDialog().getContentElement('tab', 'url').getElement().getParent().getParent().getParent().getParent().getParent().getParent();
+                                var $localPageField = this.getDialog().getContentElement('tab', 'localPage').getElement().getParent().getParent();
+                                var $openInNewWindowField = this.getDialog().getContentElement('tab', 'openInNewWindow').getElement().getParent().getParent();
+                                var $emailAddressField = this.getDialog().getContentElement('tab', 'email').getElement().getParent().getParent();
+                                var $subjectField = this.getDialog().getContentElement('tab', 'subject').getElement().getParent().getParent();
+                                var $contentField = this.getDialog().getContentElement('tab', 'content').getElement().getParent().getParent();
+
+                                $urlFields.show();
+                                $localPageField.show();
+                                $openInNewWindowField.show();
+                                $emailAddressField.hide();
+                                $subjectField.hide();
+                                $contentField.hide();
+                            },
+                            onHide: function (element) {
+                                var $urlFields = this.getDialog().getContentElement('tab', 'url').getElement().getParent().getParent().getParent().getParent().getParent().getParent();
+                                var $localPageField = this.getDialog().getContentElement('tab', 'localPage').getElement().getParent().getParent();
+                                var $openInNewWindowField = this.getDialog().getContentElement('tab', 'openInNewWindow').getElement().getParent().getParent();
+                                var $emailAddressField = this.getDialog().getContentElement('tab', 'email').getElement().getParent().getParent();
+                                var $subjectField = this.getDialog().getContentElement('tab', 'subject').getElement().getParent().getParent();
+                                var $contentField = this.getDialog().getContentElement('tab', 'content').getElement().getParent().getParent();
+
+                                $urlFields.show();
+                                $localPageField.show();
+                                $openInNewWindowField.show();
+                                $emailAddressField.hide();
+                                $subjectField.hide();
+                                $contentField.hide();
+                            }
+                        },
+                        {
                             type: 'text',
                             id: 'displayText',
                             label: editor.lang.medialibrary.displayText,
@@ -35,11 +119,24 @@ CKEDITOR.dialog.add(
                                     id: 'url',
                                     label: 'URL',
                                     setup: function (element) {
+                                        if (element.getAttribute('href').startsWith('mailto:')) {
+                                            return;
+                                        }
+
                                         this.setValue(element.getAttribute('href'));
+                                        this.getDialog().setValueOf('tab', 'openInNewWindow', element.getAttribute('target') === '_blank');
                                     },
                                     commit: function (element) {
+                                        if (this.getDialog().getValueOf('tab', 'type') === 'email') {
+                                            return;
+                                        }
+
                                         element.setAttribute('href', this.getValue());
                                         element.setAttribute('data-cke-saved-href', this.getValue());
+                                        element.removeAttribute('target');
+                                        if (this.getDialog().getValueOf('tab', 'openInNewWindow')) {
+                                            element.setAttribute('target', '_blank');
+                                        }
                                     }
                                 },
                                 {
@@ -63,6 +160,67 @@ CKEDITOR.dialog.add(
                                     style: 'margin-top: 20px;'
                                 }
                             ]
+                        },
+                        {
+                            type: 'select',
+                            label: jsBackend.locale.msg('EditorSelectInternalPage'),
+                            id: 'localPage',
+                            title: jsBackend.locale.msg('EditorSelectInternalPage'),
+                            items: linkList,
+                            onChange: function (event) {
+                                this.getDialog().getContentElement('tab', 'url').setValue(event.data.value);
+                            }
+                        },
+                        {
+                            type: 'checkbox',
+                            id: 'openInNewWindow',
+                            label: editor.lang.medialibrary.openInNewWindow
+                        },
+                        {
+                            type: 'text',
+                            id: 'email',
+                            label: editor.lang.medialibrary.email,
+                            setup: function (element) {
+                                if (this.getDialog().getValueOf('tab', 'type') === 'url') {
+                                    return;
+                                }
+
+                                var url = new URL(element.getAttribute('href'));
+
+                                this.setValue(url.pathname);
+                                if (url.searchParams.has('subject')) {
+                                    this.getDialog().setValueOf('tab', 'subject', url.searchParams.get('subject'));
+                                }
+                                if (url.searchParams.has('body')) {
+                                    this.getDialog().setValueOf('tab', 'content', url.searchParams.get('body'));
+                                }
+                            },
+                            commit: function (element) {
+                                if (this.getDialog().getValueOf('tab', 'type') === 'url') {
+                                    return;
+                                }
+
+                                var url = new URL('mailto:' + this.getValue());
+                                if (this.getDialog().getValueOf('tab', 'subject') !== '') {
+                                    url.searchParams.append('subject', this.getDialog().getValueOf('tab', 'subject'));
+                                }
+                                if (this.getDialog().getValueOf('tab', 'content') !== '') {
+                                    url.searchParams.append('body', this.getDialog().getValueOf('tab', 'content'));
+                                }
+
+                                element.setAttribute('href', url.toString());
+                                element.setAttribute('data-cke-saved-href', url.toString());
+                            }
+                        },
+                        {
+                            type: 'text',
+                            id: 'subject',
+                            label: editor.lang.medialibrary.subject
+                        },
+                        {
+                            type: 'textarea',
+                            id: 'content',
+                            label: editor.lang.medialibrary.content
                         }
                     ]
                 }
