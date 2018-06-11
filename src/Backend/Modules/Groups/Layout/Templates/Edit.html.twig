@@ -65,12 +65,12 @@
                     {% for permission in permissions %}
                       <div class="panel panel-transparent jsGroupsPermissionsModule">
                         <div class="panel-heading" role="tab" id="permission-heading-{{ permission.id }}">
-                          <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
-                            <h4 class="panel-title">
-                              {{ permission.chk|raw }}
-                              {{ macro.icon('caret-right fa-fw') }} {{ permission.label }}
-                            </h4>
-                          </div>
+                          {{ permission.chk|raw }}
+                          <h4 class="panel-title">
+                            <a href="#" data-toggle="collapse" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
+                                {{ macro.icon('caret-right fa-fw') }} {{ permission.label }}
+                            </a>
+                          </h4>
                         </div>
                         <div id="permission-list-{{ permission.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
                           {{ permission.actions.dataGrid|raw }}
