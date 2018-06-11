@@ -768,6 +768,14 @@ class Model implements FrontendTagsInterface
             }
         }
 
+        if (isset($blogPost['id'])) {
+            $blogPost['tags'] = FrontendTagsModel::getForItem(
+                'Blog',
+                $blogPost['id'],
+                isset($blogPost['language']) ? Locale::fromString($blogPost['language']) : null
+            );
+        }
+
         return $blogPost;
     }
 

@@ -63,4 +63,6 @@ if ($response->getCharset() === null && $kernel->getContainer() instanceof Conta
     );
 }
 $response->send();
-$kernel->terminate($request, $response);
+if (!$kernel->isInstallingModule()) {
+    $kernel->terminate($request, $response);
+}
