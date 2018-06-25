@@ -2,7 +2,7 @@
 import 'bootstrap/dist/js/bootstrap'
 
 /* Utilities imports */
-import SweetScroll from 'sweet-scroll'
+import { ScrollTo } from './Utilities/ScrollTo'
 import { Resize } from './Utilities/Resize'
 /* import {Fancybox} from './Utilities/Fancybox' */
 
@@ -11,7 +11,7 @@ import { Resize } from './Utilities/Resize'
 import { Pagination } from './Theme/Pagination'
 
 /* Renders */
-window.sweetscroll = new SweetScroll()
+window.scrollto = new ScrollTo()
 window.resizeFunction = new Resize()
 window.pagination = new Pagination()
 
