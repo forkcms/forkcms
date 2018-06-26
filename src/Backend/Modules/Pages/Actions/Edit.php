@@ -635,7 +635,7 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('templates', $this->templates);
         $this->template->assign('positions', $this->positions);
         $this->template->assign('extrasData', json_encode(BackendExtensionsModel::getExtrasData()));
-        $this->template->assign('extrasById', json_encode(BackendExtensionsModel::getExtras()));
+        $this->template->assign('extrasById', json_encode($this->extras));
         $this->template->assign('prefixURL', rtrim(BackendPagesModel::getFullUrl($this->record['parent_id']), '/'));
         $this->template->assign('formErrors', (string) $this->form->getErrors());
         $this->template->assign('showTags', $this->userCanSeeAndEditTags());
