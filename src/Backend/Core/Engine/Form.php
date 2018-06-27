@@ -173,7 +173,6 @@ class Form extends \Common\Core\Form
     public function parse($tpl): void
     {
         parent::parse($tpl);
-        $this->validate();
 
         // if the form is submitted but there was an error, assign a general error
         if ($this->useGlobalError && $this->isSubmitted() && !$this->isCorrect()) {
