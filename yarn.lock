@@ -6140,10 +6140,6 @@ svgpath@^2.1.5:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/svgpath/-/svgpath-2.2.1.tgz#0834bb67c89a76472b2bd06cc101fa7b517b222c"
 
-sweet-scroll@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/sweet-scroll/-/sweet-scroll-2.2.1.tgz#d844100c45926c2db0598ffd124c1064fea0023a"
-
 table@^3.7.8:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/table/-/table-3.8.3.tgz#2bbc542f0fda9861a755d3947fefd8b3f513855f"
