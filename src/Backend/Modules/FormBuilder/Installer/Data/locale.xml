@@ -1014,7 +1014,6 @@
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη τιμές.]]></translation>
         <translation language="pl"><![CDATA[Brak jeszcze wartości.]]></translation>
       </item>
-      </item>
       <item type="message" name="OneSentForm">
         <translation language="nl"><![CDATA[1 inzending]]></translation>
         <translation language="en"><![CDATA[1 submission]]></translation>
