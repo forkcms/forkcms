@@ -1246,7 +1246,7 @@
         '</div>' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '<span class="input-group-btn"><button id="addButton-' + id + '" class="btn btn-success">' +
+        '<span class="input-group-btn"><button id="addButton-' + id + '" class="btn">' +
         '<span class="fa fa-plus-square" aria-hidden="true"></span>' +
         '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
         '</button></span>' +
