@@ -3,12 +3,15 @@
  */
 /* global Highcharts */
 jsBackend.analytics = {
-  $chartPieChart: $('#chartPieChart'),
-  $chartDoubleMetricPerDay: $('#chartDoubleMetricPerDay')
+  $chartPieChart: null,
+  $chartDoubleMetricPerDay: null
 }
 
 jsBackend.analytics.charts = {
   init: function () {
+    jsBackend.analytics.$chartPieChart = $('#chartPieChart')
+    jsBackend.analytics.$chartDoubleMetricPerDay = $('#chartDoubleMetricPerDay')
+
     if (jsBackend.analytics.$chartPieChart.length > 0 || jsBackend.analytics.$chartDoubleMetricPerDay.length > 0) {
       Highcharts.setOptions({
         colors: ['#2f77d1', '#021b45', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
@@ -24,6 +27,9 @@ jsBackend.analytics.charts = {
         }
       })
     }
+
+    jsBackend.analytics.chartPieChart.init()
+    jsBackend.analytics.chartDoubleMetricPerDay.init()
   }
 }
 
@@ -180,3 +186,5 @@ jsBackend.analytics.chartDoubleMetricPerDay = {
     jsBackend.analytics.chartDoubleMetricPerDay.chart.destroy()
   }
 }
+
+$(jsBackend.analytics.charts.init)

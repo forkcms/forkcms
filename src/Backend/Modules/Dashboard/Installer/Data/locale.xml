@@ -16,6 +16,7 @@
         <translation language="lt"><![CDATA[visos statistikos]]></translation>
         <translation language="sv"><![CDATA[all statistik]]></translation>
         <translation language="el"><![CDATA[Όλα τα στατιστικά]]></translation>
+        <translation language="pl"><![CDATA[wszystkie statystyki]]></translation>
       </item>
     </Core>
     <Dashboard>
@@ -32,6 +33,7 @@
         <translation language="uk"><![CDATA[Топ ключових слів]]></translation>
         <translation language="sv"><![CDATA[topp nyckelord]]></translation>
         <translation language="el"><![CDATA[Κορυφαίες λέξεις-κλειδιά]]></translation>
+        <translation language="pl"><![CDATA[najlepsze słowa kluczowe]]></translation>
       </item>
       <item type="label" name="TopReferrers">
         <translation language="nl"><![CDATA[top verwijzende sites]]></translation>
@@ -46,10 +48,11 @@
         <translation language="uk"><![CDATA[Топ реферерів]]></translation>
         <translation language="sv"><![CDATA[topp referrers]]></translation>
         <translation language="el"><![CDATA[Κορυφαίοι αναφορείς]]></translation>
+        <translation language="pl"><![CDATA[najlepsze strony kierujące]]></translation>
       </item>
       <item type="message" name="WillBeEnabledOnSave">
         <translation language="nl"><![CDATA[Deze widget zal geactiveerd worden bij het opslaan.]]></translation>
-        <translation language="en"><![CDATA[This widget wil be reenabled on save.]]></translation>
+        <translation language="en"><![CDATA[This widget will be reenabled on save.]]></translation>
         <translation language="hu"><![CDATA[Ez a widget engedélyezve lesz a mentéskor.]]></translation>
         <translation language="it"><![CDATA[Questo widget verrà riabilitato salvando.]]></translation>
         <translation language="ru"><![CDATA[Виджет заработает после сохранения.]]></translation>
@@ -59,6 +62,7 @@
         <translation language="es"><![CDATA[Este widget será reactivado al guardar.]]></translation>
         <translation language="sv"><![CDATA[Denna widget kommer att återaktiveras vid sparande.]]></translation>
         <translation language="el"><![CDATA[Η μικροεφαρμογή θα ενεργοποιηθεί πάλι κατά την αποθήκευση.]]></translation>
+        <translation language="pl"><![CDATA[Ten widget zostanie aktywowany podczas zapisywania.]]></translation>
       </item>
     </Dashboard>
   </Backend>
