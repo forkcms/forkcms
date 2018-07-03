@@ -58,6 +58,17 @@ class Login extends FrontendBaseBlock
 
         $loginStatus = FrontendProfilesAuthentication::getLoginStatus($txtEmail->getValue(), $txtPassword->getValue());
 
+        $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
+        if ($loginStatus === FrontendProfilesAuthentication::LOGIN_INVALID && $profileId !== 0) {
+            $loginAttempts = (int) FrontendProfilesModel::getSetting($profileId, 'login_attempts');
+
+            FrontendProfilesModel::setSetting($profileId, 'login_attempts', ++$loginAttempts);
+            if ($loginAttempts >= 10) {
+                FrontendProfilesModel::update($profileId, ['status' => FrontendProfilesAuthentication::LOGIN_BLOCKED]);
+                $loginStatus = FrontendProfilesAuthentication::LOGIN_BLOCKED;
+            }
+        }
+
         if ($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
             $errorString = sprintf(
                 FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
@@ -77,8 +88,11 @@ class Login extends FrontendBaseBlock
             return;
         }
 
+        $profileId = FrontendProfilesModel::getIdByEmail($this->form->getField('email')->getValue());
+        FrontendProfilesModel::setSetting($profileId, 'login_attempts', 0);
+
         FrontendProfilesAuthentication::login(
-            FrontendProfilesModel::getIdByEmail($this->form->getField('email')->getValue()),
+            $profileId,
             $this->form->getField('remember')->getChecked()
         );
 
