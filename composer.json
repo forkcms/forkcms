@@ -78,7 +78,7 @@
             "Common\\": "src/Common",
             "Console\\": "src/Console",
             "ForkCMS\\": "src/ForkCMS",
-            "ForkCMS\\App\\": "app",
+            "ForkCMS\\App\\": "app"
         },
         "exclude-from-classmap": [
             "**/Tests/",
