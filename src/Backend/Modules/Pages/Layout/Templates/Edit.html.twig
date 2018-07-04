@@ -7,8 +7,8 @@
       <div class="alert alert-warning visible-sm">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans|ucfirst }}</p>
       </div>
-      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
-        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
+      <button class="btn btn-default btn-sm btn-link tree-collapsed" data-role="toggle-js-tree-collapse">
+        <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans|ucfirst }}</span>
       </button>
       <div id="tree">
         {{ tree|raw }}
