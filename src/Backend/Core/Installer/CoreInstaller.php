@@ -195,10 +195,6 @@ class CoreInstaller extends ModuleInstaller
             );
         }
 
-        // ckfinder
-        $this->setSetting('Core', 'ckfinder_license_name', 'Fork CMS');
-        $this->setSetting('Core', 'ckfinder_license_key', 'QFKH-MNCN-19A8-32XW-35GK-Q58G-UPMC');
-
         // Enable the cookie bar by default when the timezone is in europe
         $this->setSetting(
             'Core',
