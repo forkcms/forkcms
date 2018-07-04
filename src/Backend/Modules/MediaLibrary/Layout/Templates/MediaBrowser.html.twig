@@ -32,9 +32,9 @@
                     <div class="row">
                       <div class="col-sm-3">
                         <div id="mediaTree">
-                          <a class="tree-collapsed" data-role="toggle-js-tree-collapse">
-                            <small data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans|ucfirst }}</small>
-                          </a>
+                          <button class="btn btn-default btn-sm btn-link tree-collapsed" data-role="toggle-js-tree-collapse">
+                            <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans|ucfirst }}</span>
+                          </button>
                           <div id="tree">
                             {{ tree|raw }}
                           </div>
