@@ -1,4 +1,4 @@
-Readme CKEditor & CKFinder
+Readme CKEditor
 ===========================
 
 # CKEditor
