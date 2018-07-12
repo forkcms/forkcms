@@ -64,8 +64,8 @@ class Login extends FrontendBaseBlock
 
             FrontendProfilesModel::setSetting($profileId, 'login_attempts', ++$loginAttempts);
             if ($loginAttempts >= 10) {
-                FrontendProfilesModel::update($profileId, ['status' => FrontendProfilesAuthentication::LOGIN_BLOCKED]);
                 $loginStatus = FrontendProfilesAuthentication::LOGIN_BLOCKED;
+                FrontendProfilesModel::update($profileId, ['status' => $loginStatus]);
             }
         }
 
