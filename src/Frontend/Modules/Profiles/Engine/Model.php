@@ -276,7 +276,7 @@ class Model
 
     public static function insert(array $profile): int
     {
-        $profile = new Profile(
+        $profileEntity = new Profile(
             $profile['email'],
             $profile['password'],
             Status::fromString($profile['status']),
@@ -284,9 +284,9 @@ class Model
             $profile['url']
         );
 
-        FrontendModel::get('profile.repository.profile')->add($profile);
+        FrontendModel::get('profile.repository.profile')->add($profileEntity);
 
-        return $profile->getId();
+        return $profileEntity->getId();
     }
 
     /**
