@@ -125,7 +125,7 @@ class Profile
         Status $status,
         ?string $displayName,
         ?string $url
-    ) {
+    ): void {
         $this->email = $email;
         $this->password = $password;
         $this->status = $status;
