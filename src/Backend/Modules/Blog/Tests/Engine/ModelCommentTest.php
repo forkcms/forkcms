@@ -76,7 +76,7 @@ class ModelCommentTest extends WebTestCase
             'type' => 'comment',
             'status' => 'published',
             'data' => serialize(['server' => ['foo' => 'bar edit']]),
-        ];;
+        ];
         Model::updateComment($commentData);
         $editedComment = Model::getComment(1);
 
