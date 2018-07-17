@@ -3,6 +3,7 @@
 namespace Backend\Modules\Tags\Tests\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Language\Language;
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
 use Backend\Modules\Tags\Engine\Model as TagsModel;
@@ -33,6 +34,14 @@ final class ModelTest extends WebTestCase
         $tags = TagsModel::getStartsWith('te');
         $this->assertSame('test', $tags[0]['name']);
         $this->assertSame('test', $tags[0]['value']);
+    }
+
+    public function testGetStartsWithForLanguage(): void
+    {
+        $tags = TagsModel::getStartsWith('te', Language::getWorkingLanguage());
+        $this->assertSame('test', $tags[0]['name']);
+        $this->assertSame('test', $tags[0]['value']);
+        $this->assertEmpty(TagsModel::getStartsWith('te', 'nl'));
     }
 
     public function testExistsTag(): void
