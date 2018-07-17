@@ -1,9 +1,15 @@
-.cke_button__forkimage_icon {
-  background: url(../../Js/ckeditor/skins/moono-lisa/icons_hidpi.png?t=H8DC) no-repeat 0 -1032px !important;
-  background-size: 16px !important;
-}
+.cke_button_icon {
+  &.cke_button__forkimage_icon {
+    @extend .fa;
+    @extend .fa-image;
+    font-size: 17px;
+    color: #464646;
+  }
 
-.cke_button__forklink_icon {
-  background: url(../../Js/ckeditor/skins/moono-lisa/icons_hidpi.png?t=H8DC) no-repeat 0 -1320px !important;
-  background-size: 16px !important;
+  &.cke_button__forklink_icon {
+    @extend .fa;
+    @extend .fa-link;
+    font-size: 17px;
+    color: #464646;
+  }
 }

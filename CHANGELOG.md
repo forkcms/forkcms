@@ -1,3 +1,17 @@
+5.3.1  (2018-06-27)
+------------------
+Fixed:
+* Core: Fix building the css directory from scratch [#2551](https://github.com/forkcms/forkcms/pull/2551)
+* Core: Fix language not set in frontend templates [#2530](https://github.com/forkcms/forkcms/pull/2530)
+* Core: Fix the ck editor custom icons [#2557](https://github.com/forkcms/forkcms/pull/2557)
+* Extensions: Fix upload module [#2571](https://github.com/forkcms/forkcms/pull/2571)
+* Mailmotor: Update composer version to get mailchimp fixes [#2568](https://github.com/forkcms/forkcms/pull/2568)
+* MediaLibrary: Fix media browse images and videos js errors [#2572](https://github.com/forkcms/forkcms/pull/2572)
+
+Changed:
+* Core: Optimize fetching the page extras [#2555](https://github.com/forkcms/forkcms/pull/2555)
+
+
 5.3.0  (2018-05-29)
 ------------------
 
