@@ -120,6 +120,12 @@ final class ModelTest extends WebTestCase
         $this->assertSame(2, TagsModel::getIdByUrl('most-used'));
     }
 
+    public function testGetModulesForTag(): void
+    {
+        $modules = TagsModel::getModulesForTag(1);
+        $this->assertSame($modules[0], 'Pages');
+    }
+
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
