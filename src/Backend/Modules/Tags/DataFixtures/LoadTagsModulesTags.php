@@ -19,6 +19,11 @@ class LoadTagsModulesTags
                 [
                     'module' => 'Pages',
                     'tag_id' => 2,
+                    'other_id' => 1,
+                ],
+                [
+                    'module' => 'Pages',
+                    'tag_id' => 2,
                     'other_id' => 2,
                 ],
                 [

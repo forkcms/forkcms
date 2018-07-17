@@ -128,7 +128,7 @@ class Model
         );
 
         // return as an imploded string
-        if ($type == 'string') {
+        if ($type === 'string') {
             return implode(',', $tags);
         }
 
