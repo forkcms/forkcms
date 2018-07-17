@@ -155,6 +155,18 @@ final class ModelTest extends WebTestCase
         $this->assertSame('1', $ids[0]);
     }
 
+    public function testGetItemsForTag(): void
+    {
+        $items = TagsModel::getItemsForTag(1);
+        $this->assertCount(2, $items);
+        $this->assertArrayHasKey('name', $items[1]);
+        $this->assertArrayHasKey('label', $items[1]);
+        $this->assertArrayHasKey('items', $items[1]);
+        $this->assertTag($items[1]['items'][0], ['id', 'title', 'full_url']);
+        $this->assertSame('Pages', $items[1]['name']);
+        $this->assertSame('Home', $items[1]['items'][0]['title']);
+    }
+
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
