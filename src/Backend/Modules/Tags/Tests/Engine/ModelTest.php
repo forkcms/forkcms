@@ -129,7 +129,8 @@ final class ModelTest extends WebTestCase
 
     public function testGetUrl(): void
     {
-
+        $this->assertSame('test-2', TagsModel::getUrl('test'));
+        $this->assertSame('test', TagsModel::getUrl('test', 1));
     }
 
     public function testGetTagNames(): void
