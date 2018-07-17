@@ -106,7 +106,8 @@ final class ModelTest extends WebTestCase
 
     public function testGet(): void
     {
-
+        $this->assertSame('test', TagsModel::get(1)['name']);
+        $this->assertSame('most used', TagsModel::get(2)['name']);
     }
 
     public function testUpdate(): void
