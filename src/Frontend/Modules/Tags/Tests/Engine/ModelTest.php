@@ -90,6 +90,12 @@ final class ModelTest extends WebTestCase
         $this->assertTag($tags[0], ['name', 'full_url', 'url']);
     }
 
+    public function testGetForItemWithSpecificLocale(): void
+    {
+        $tags = TagsModel::getForItem('Pages', 1, Locale::fromString('en'));
+        $this->assertTag($tags[0], ['name', 'full_url', 'url']);
+    }
+
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
