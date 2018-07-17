@@ -64,6 +64,21 @@ final class ModelTest extends WebTestCase
         );
     }
 
+    public function testInsertWithSpecificLanguage(): void
+    {
+        $name = 'inserted';
+        $language = 'nl';
+        $tagId = TagsModel::insert($name, $language);
+        $database = self::createClient()->getContainer()->get('database');
+        $this->assertSame(
+            $tagId,
+            (int) $database->getVar(
+                'SELECT id FROM tags WHERE tag = ? AND language = ?',
+                [$name, $language]
+            )
+        );
+    }
+
     public function testDelete(): void
     {
 
