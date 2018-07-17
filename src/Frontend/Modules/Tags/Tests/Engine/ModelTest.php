@@ -74,6 +74,15 @@ final class ModelTest extends WebTestCase
         $this->assertTag(TagsModel::getAll()[0], ['url', 'name', 'number']);
     }
 
+    public function testGetMostUsed(): void
+    {
+        $this->assertEmpty(TagsModel::getMostUsed(0), 'Most used limit isn\'t respected');
+        $mostUsedTags = TagsModel::getMostUsed(2);
+        $this->assertTag($mostUsedTags[0], ['url', 'name', 'number']);
+        $this->assertTag($mostUsedTags[1], ['url', 'name', 'number']);
+        $this->assertTrue($mostUsedTags[0]['number'] >= $mostUsedTags[1]['number'], 'Tags not sorted by usage');
+    }
+
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
