@@ -112,7 +112,9 @@ final class ModelTest extends WebTestCase
 
     public function testUpdate(): void
     {
-
+        $this->assertSame('test', TagsModel::get(1)['name']);
+        TagsModel::update(['id' => 1, 'tag' => 'changed']);
+        $this->assertSame('changed', TagsModel::get(1)['name']);
     }
 
     public function testSaveTags(): void
