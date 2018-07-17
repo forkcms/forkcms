@@ -61,6 +61,14 @@ final class ModelTest extends WebTestCase
         $this->assertSame($tag['url'], $url);
     }
 
+    public function testGettingATagWithASpecificLocale(): void
+    {
+        $url = 'test';
+        $tag = TagsModel::get($url, Locale::fromString('en'));
+        $this->assertTag($tag);
+        $this->assertSame($tag['url'], $url);
+    }
+
     private function assertTag(array $tag): void
     {
         $this->assertArrayHasKey('id', $tag);
