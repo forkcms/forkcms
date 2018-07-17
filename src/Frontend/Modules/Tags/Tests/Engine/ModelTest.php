@@ -149,6 +149,12 @@ final class ModelTest extends WebTestCase
         $this->assertSame('test', TagsModel::getName(1));
     }
 
+    public function testGetRelatedItemsByTags(): void
+    {
+        $ids = TagsModel::getRelatedItemsByTags(1, 'Pages', 'Faq');
+        $this->assertSame('1', $ids[0]);
+    }
+
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
