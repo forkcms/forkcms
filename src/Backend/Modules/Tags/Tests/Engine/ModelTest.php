@@ -82,18 +82,18 @@ final class ModelTest extends WebTestCase
     public function testDeleteSingle(): void
     {
         // check single
-        $this->assertTrue($this->checkIfTagExists(1));
+        $this->assertTrue(TagsModel::exists(1));
         TagsModel::delete(1);
-        $this->assertFalse($this->checkIfTagExists(1));
+        $this->assertFalse(TagsModel::exists(1));
     }
 
     public function testDeleteMultiple(): void
     {
-        $this->assertTrue($this->checkIfTagExists(2));
-        $this->assertTrue($this->checkIfTagExists(1));
+        $this->assertTrue(TagsModel::exists(2));
+        $this->assertTrue(TagsModel::exists(1));
         TagsModel::delete([2, 1]);
-        $this->assertFalse($this->checkIfTagExists(2));
-        $this->assertFalse($this->checkIfTagExists(1));
+        $this->assertFalse(TagsModel::exists(2));
+        $this->assertFalse(TagsModel::exists(1));
     }
 
     public function testGetTags(): void
@@ -150,12 +150,5 @@ final class ModelTest extends WebTestCase
         $this->assertTrue(TagsModel::exists(2));
         $this->assertFalse(TagsModel::exists(99));
         $this->assertFalse(TagsModel::exists(9));
-    }
-
-    private function checkIfTagExists(int $id): bool
-    {
-        $database = self::createClient()->getContainer()->get('database');
-
-        return (bool) $database->getVar('SELECT 1 FROM tags WHERE id = ?', $id);
     }
 }
