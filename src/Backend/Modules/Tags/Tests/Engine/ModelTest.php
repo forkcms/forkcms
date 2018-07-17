@@ -3,6 +3,8 @@
 namespace Backend\Modules\Tags\Tests\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
+use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
 use Backend\Modules\Tags\Engine\Model as TagsModel;
 use Common\WebTestCase;
 
@@ -17,25 +19,12 @@ final class ModelTest extends WebTestCase
         }
 
         $client = self::createClient();
-        $this->loadFixtures($client);
-
-
-        BackendModel::get('database')->execute(
-            'INSERT INTO `modules_tags` (`module`, `tag_id`, `other_id`)
-            VALUES
-                (\'Pages\', 1, 1),
-                (\'Pages\', 2, 2),
-                (\'Pages\', 2, 3),
-                (\'Pages\', 2, 404),
-                (\'Pages\', 2, 405),
-                (\'Pages\', 2, 406),
-                (\'Faq\', 1, 1)'
-        );
-        BackendModel::get('database')->execute(
-            'INSERT INTO `tags` (`id`, `language`, `tag`, `number`, `url`)
-            VALUES
-                (1, \'en\', \'test\', 1, \'test\'),
-                (2, \'en\', \'most used\', 5, \'most-used\')'
+        $this->loadFixtures(
+            $client,
+            [
+                LoadTagsTags::class,
+                LoadTagsModulesTags::class,
+            ]
         );
     }
 
