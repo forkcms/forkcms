@@ -139,7 +139,10 @@ final class ModelTest extends WebTestCase
 
     public function testExists(): void
     {
-
+        $this->assertTrue(TagsModel::exists(1));
+        $this->assertTrue(TagsModel::exists(2));
+        $this->assertFalse(TagsModel::exists(99));
+        $this->assertFalse(TagsModel::exists(9));
     }
 
     private function checkIfTagExists(int $id): bool
