@@ -9,9 +9,9 @@ use Backend\Modules\Location\Domain\Location\LocationRepository;
 use Backend\Modules\Location\Domain\LocationSetting\LocationSetting;
 use Backend\Modules\Location\Domain\LocationSetting\LocationSettingRepository;
 use Common\ModuleExtraType;
+use ForkCMS\Utility\Geolocation;
 use InvalidArgumentException;
 use SpoonFilter;
-use Symfony\Component\Intl\Intl;
 
 class Model
 {
@@ -63,6 +63,8 @@ class Model
     /**
      * Get coordinates latitude/longitude
      *
+     * @deprecated
+     *
      * @param string $street
      * @param string $streetNumber
      * @param string $city
@@ -78,48 +80,13 @@ class Model
         string $zip = null,
         string $country = null
     ): array {
-        // init item
-        $item = [];
-
-        // building item
-        if (!empty($street)) {
-            $item[] = $street;
-        }
-
-        if (!empty($streetNumber)) {
-            $item[] = $streetNumber;
-        }
-
-        if (!empty($city)) {
-            $item[] = $city;
-        }
-
-        if (!empty($zip)) {
-            $item[] = $zip;
-        }
-
-        if (!empty($country)) {
-            $item[] = Intl::getRegionBundle()->getCountryName($country, Language::getInterfaceLanguage());
-        }
-
-        // define address
-        $address = implode(' ', $item);
-
-        // fetch the geo coordinates
-        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . rawurlencode($address);
-        $geocodes = json_decode(file_get_contents($url), true);
-
-        // return coordinates latitude/longitude
-        return [
-            'latitude' => array_key_exists(
-                0,
-                $geocodes['results']
-            ) ? $geocodes['results'][0]['geometry']['location']['lat'] : null,
-            'longitude' => array_key_exists(
-                0,
-                $geocodes['results']
-            ) ? $geocodes['results'][0]['geometry']['location']['lng'] : null,
-        ];
+        return BackendModel::get(Geolocation::class)->getCoordinates(
+            $street,
+            $streetNumber,
+            $city,
+            $zip,
+            $country
+        );
     }
 
     public static function getMapSetting(int $locationId, string $name)

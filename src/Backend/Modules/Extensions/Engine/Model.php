@@ -523,9 +523,7 @@ class Model
         return array_filter(
             BackendModel::getModules(),
             function (string $module) use ($moduleSettings, $setting): bool {
-                $requiresGoogleRecaptcha = $moduleSettings->get($module, 'requires_' . $setting, false);
-
-                return $requiresGoogleRecaptcha;
+                return $moduleSettings->get($module, 'requires_' . $setting, false);
             }
         );
     }
