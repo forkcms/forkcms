@@ -69,12 +69,15 @@ final class ModelTest extends WebTestCase
         $this->assertSame($tag['url'], $url);
     }
 
-    private function assertTag(array $tag): void
+    public function testGetAllTags(): void
     {
-        $this->assertArrayHasKey('id', $tag);
-        $this->assertArrayHasKey('language', $tag);
-        $this->assertArrayHasKey('name', $tag);
-        $this->assertArrayHasKey('number', $tag);
-        $this->assertArrayHasKey('url', $tag);
+        $this->assertTag(TagsModel::getAll()[0], ['url', 'name', 'number']);
+    }
+
+    private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
+    {
+        foreach ($keys as $key) {
+            $this->assertArrayHasKey($key, $tag);
+        }
     }
 }
