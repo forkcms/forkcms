@@ -3,7 +3,7 @@
 namespace Backend\Modules\Tags\Tests\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Tags\Engine\Model;
+use Backend\Modules\Tags\Engine\Model as TagsModel;
 use Common\WebTestCase;
 
 final class ModelTest extends WebTestCase
@@ -18,5 +18,65 @@ final class ModelTest extends WebTestCase
 
         $client = self::createClient();
         $this->loadFixtures($client);
+    }
+
+    public function testGetStartsWith(): void
+    {
+
+    }
+
+    public function testExistsTag(): void
+    {
+
+    }
+
+    public function testInsert(): void
+    {
+
+    }
+
+    public function testDelete(): void
+    {
+
+    }
+
+    public function testGetTags(): void
+    {
+
+    }
+
+    public function testGet(): void
+    {
+
+    }
+
+    public function testUpdate(): void
+    {
+
+    }
+
+    public function testSaveTags(): void
+    {
+
+    }
+
+    public function testGetAll(): void
+    {
+
+    }
+
+    public function testGetUrl(): void
+    {
+
+    }
+
+    public function testGetTagNames(): void
+    {
+
+    }
+
+    public function testExists(): void
+    {
+
     }
 }
