@@ -114,6 +114,12 @@ final class ModelTest extends WebTestCase
         $this->assertTag($tags[2][0], ['name', 'other_id', 'url', 'full_url']);
     }
 
+    public function testGetIdByUrl(): void
+    {
+        $this->assertSame(1, TagsModel::getIdByUrl('test'));
+        $this->assertSame(2, TagsModel::getIdByUrl('most-used'));
+    }
+
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
