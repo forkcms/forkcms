@@ -134,7 +134,10 @@ final class ModelTest extends WebTestCase
 
     public function testGetTagNames(): void
     {
-
+        $tags = ['test', 'most used'];
+        $this->assertSame($tags, TagsModel::getTagNames());
+        $this->assertSame($tags, TagsModel::getTagNames('en'));
+        $this->assertEmpty(TagsModel::getTagNames('nl'));
     }
 
     public function testExists(): void
