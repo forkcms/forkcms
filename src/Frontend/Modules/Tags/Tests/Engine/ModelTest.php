@@ -105,6 +105,15 @@ final class ModelTest extends WebTestCase
         $this->assertTag($tags[2][0], ['name', 'other_id', 'url', 'full_url']);
     }
 
+    public function testGetForMultipleItemsSpecificLocale(): void
+    {
+        $tags = TagsModel::getForMultipleItems('Pages', [1, 2], Locale::fromString('en'));
+        $this->assertArrayHasKey(1, $tags);
+        $this->assertArrayHasKey(2, $tags);
+        $this->assertTag($tags[1][0], ['name', 'other_id', 'url', 'full_url']);
+        $this->assertTag($tags[2][0], ['name', 'other_id', 'url', 'full_url']);
+    }
+
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
