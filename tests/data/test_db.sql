@@ -2529,6 +2529,9 @@ CREATE TABLE `modules_tags` (
   PRIMARY KEY (`module`,`tag_id`,`other_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `modules_tags` (`module`, `tag_id`, `other_id`)
+VALUES
+	('Pages', 1, 1);
 
 
 # Dump of table pages
@@ -2860,6 +2863,9 @@ CREATE TABLE `tags` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `tags` (`id`, `language`, `tag`, `number`, `url`)
+VALUES
+	(1, 'en', 'test', 1, 'test');
 
 
 # Dump of table themes_templates
