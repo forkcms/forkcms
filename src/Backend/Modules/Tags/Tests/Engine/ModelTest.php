@@ -28,9 +28,11 @@ final class ModelTest extends WebTestCase
         );
     }
 
-    public function testGetStartsWith(): void
+    public function testGetStartsWithForDefaultLanguage(): void
     {
-
+        $tags = TagsModel::getStartsWith('te');
+        $this->assertSame('test', $tags[0]['name']);
+        $this->assertSame('test', $tags[0]['value']);
     }
 
     public function testExistsTag(): void
