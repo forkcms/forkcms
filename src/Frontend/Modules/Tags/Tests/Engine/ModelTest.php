@@ -67,6 +67,7 @@ final class ModelTest extends WebTestCase
         $tag = TagsModel::get($url, Locale::fromString('en'));
         $this->assertTag($tag);
         $this->assertSame($tag['url'], $url);
+        $this->assertSame($tag['language'], 'en');
     }
 
     public function testGetAllTags(): void
@@ -81,6 +82,12 @@ final class ModelTest extends WebTestCase
         $this->assertTag($mostUsedTags[0], ['url', 'name', 'number']);
         $this->assertTag($mostUsedTags[1], ['url', 'name', 'number']);
         $this->assertTrue($mostUsedTags[0]['number'] >= $mostUsedTags[1]['number'], 'Tags not sorted by usage');
+    }
+
+    public function testGetForItemWithDefaultLocale(): void
+    {
+        $tags = TagsModel::getForItem('Pages', 1);
+        $this->assertTag($tags[0], ['name', 'full_url', 'url']);
     }
 
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
