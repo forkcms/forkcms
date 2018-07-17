@@ -46,7 +46,8 @@ final class ModelTest extends WebTestCase
 
     public function testExistsTag(): void
     {
-
+        $this->assertTrue(TagsModel::existsTag('test'));
+        $this->assertFalse(TagsModel::existsTag('non-existing'));
     }
 
     public function testInsert(): void
