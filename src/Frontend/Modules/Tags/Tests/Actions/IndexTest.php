@@ -33,7 +33,7 @@ class IndexTest extends WebTestCase
             $client->getResponse()->getContent()
         );
         $this->assertContains(
-            '<span class="badge hidden-phone">5</span>',
+            '<span class="badge hidden-phone">6</span>',
             $client->getResponse()->getContent()
         );
     }
