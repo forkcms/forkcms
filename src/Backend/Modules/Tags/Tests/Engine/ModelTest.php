@@ -79,9 +79,12 @@ final class ModelTest extends WebTestCase
         );
     }
 
-    public function testDelete(): void
+    public function testDeleteSingle(): void
     {
-
+        // check single
+        $this->assertTrue($this->checkIfTagExists(1));
+        TagsModel::delete(1);
+        $this->assertFalse($this->checkIfTagExists(1));
     }
 
     public function testGetTags(): void
@@ -125,5 +128,12 @@ final class ModelTest extends WebTestCase
     public function testExists(): void
     {
 
+    }
+
+    private function checkIfTagExists(int $id): bool
+    {
+        $database = self::createClient()->getContainer()->get('database');
+
+        return (bool) $database->getVar('SELECT 1 FROM tags WHERE id = ?', $id);
     }
 }
