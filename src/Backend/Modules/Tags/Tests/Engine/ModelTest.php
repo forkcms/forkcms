@@ -87,6 +87,15 @@ final class ModelTest extends WebTestCase
         $this->assertFalse($this->checkIfTagExists(1));
     }
 
+    public function testDeleteMultiple(): void
+    {
+        $this->assertTrue($this->checkIfTagExists(2));
+        $this->assertTrue($this->checkIfTagExists(1));
+        TagsModel::delete([2, 1]);
+        $this->assertFalse($this->checkIfTagExists(2));
+        $this->assertFalse($this->checkIfTagExists(1));
+    }
+
     public function testGetTags(): void
     {
         $this->assertSame('most used,test', TagsModel::getTags('Pages', 1));
