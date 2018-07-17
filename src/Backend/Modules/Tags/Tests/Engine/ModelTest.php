@@ -50,9 +50,18 @@ final class ModelTest extends WebTestCase
         $this->assertFalse(TagsModel::existsTag('non-existing'));
     }
 
-    public function testInsert(): void
+    public function testInsertWithDefaultLanguage(): void
     {
-
+        $name = 'inserted';
+        $tagId = TagsModel::insert($name);
+        $database = self::createClient()->getContainer()->get('database');
+        $this->assertSame(
+            $tagId,
+            (int) $database->getVar(
+                'SELECT id FROM tags WHERE tag = ? AND language = ?',
+                [$name, Language::getWorkingLanguage()]
+            )
+        );
     }
 
     public function testDelete(): void
