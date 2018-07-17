@@ -126,6 +126,11 @@ final class ModelTest extends WebTestCase
         $this->assertSame($modules[0], 'Pages');
     }
 
+    public function testGetName(): void
+    {
+        $this->assertSame('test', TagsModel::getName(1));
+    }
+
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
