@@ -99,7 +99,7 @@ final class ModelTest extends WebTestCase
     public function testGetTags(): void
     {
         $this->assertSame('most used,test', TagsModel::getTags('Pages', 1));
-        $this->assertSame(['most used','test'], TagsModel::getTags('Pages', 1, 'array'));
+        $this->assertSame(['most used', 'test'], TagsModel::getTags('Pages', 1, 'array'));
         $this->assertSame('', TagsModel::getTags('Pages', 1, 'string', 'nl'));
         $this->assertSame([], TagsModel::getTags('Pages', 1, 'array', 'nl'));
     }
@@ -124,7 +124,10 @@ final class ModelTest extends WebTestCase
 
     public function testGetAll(): void
     {
-
+        $tags = [['name' => 'test'], ['name' => 'most used']];
+        $this->assertSame($tags, TagsModel::getAll());
+        $this->assertSame($tags, TagsModel::getAll('en'));
+        $this->assertEmpty(TagsModel::getAll('nl'));
     }
 
     public function testGetUrl(): void
