@@ -159,12 +159,18 @@ final class ModelTest extends WebTestCase
     {
         $items = TagsModel::getItemsForTag(1);
         $this->assertCount(2, $items);
-        $this->assertArrayHasKey('name', $items[1]);
-        $this->assertArrayHasKey('label', $items[1]);
-        $this->assertArrayHasKey('items', $items[1]);
-        $this->assertTag($items[1]['items'][0], ['id', 'title', 'full_url']);
+        $this->assertModuleTags($items[1]);
         $this->assertSame('Pages', $items[1]['name']);
         $this->assertSame('Home', $items[1]['items'][0]['title']);
+    }
+
+    public function testGetItemsForTagAndModule(): void
+    {
+        $items = TagsModel::getItemsForTagAndModule(1, 'Pages');
+
+        $this->assertModuleTags($items);
+        $this->assertSame('Pages', $items['name']);
+        $this->assertSame('Home', $items['items'][0]['title']);
     }
 
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
@@ -172,5 +178,13 @@ final class ModelTest extends WebTestCase
         foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $tag);
         }
+    }
+
+    private function assertModuleTags($items): void
+    {
+        $this->assertArrayHasKey('name', $items);
+        $this->assertArrayHasKey('label', $items);
+        $this->assertArrayHasKey('items', $items);
+        $this->assertTag($items['items'][0], ['id', 'title', 'full_url']);
     }
 }
