@@ -22,7 +22,7 @@ class LoadTagsTags
                     'id' => 2,
                     'language' => 'en',
                     'tag' => 'most used',
-                    'number' => 5,
+                    'number' => 6,
                     'url' => 'most-used',
                 ],
             ]

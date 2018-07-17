@@ -50,7 +50,10 @@ final class ModelTest extends WebTestCase
 
     public function testGetTags(): void
     {
-
+        $this->assertSame('most used,test', TagsModel::getTags('Pages', 1));
+        $this->assertSame(['most used','test'], TagsModel::getTags('Pages', 1, 'array'));
+        $this->assertSame('', TagsModel::getTags('Pages', 1, 'string', 'nl'));
+        $this->assertSame([], TagsModel::getTags('Pages', 1, 'array', 'nl'));
     }
 
     public function testGet(): void
