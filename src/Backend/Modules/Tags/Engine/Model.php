@@ -30,11 +30,10 @@ class Model
      */
     public static function delete($ids): void
     {
-        $tags = self::getTagRepository()->matching(
-            Criteria::create()->where(Criteria::expr()->in('id', array_filter((array) $ids), 'is_integer'))
-        )->toArray();
+        $tagRepository = self::getTagRepository();
+        $ids = array_filter((array) $ids, '\is_integer');
 
-        self::getTagRepository()->remove(...$tags);
+        $tagRepository->remove(...$tagRepository->findByIds(...$ids));
     }
 
     public static function exists(int $id): bool

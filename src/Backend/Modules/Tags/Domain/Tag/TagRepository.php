@@ -30,4 +30,14 @@ final class TagRepository extends EntityRepository
 
         $this->getEntityManager()->flush();
     }
+
+    public function findByIds(int ...$id): array
+    {
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        return $queryBuilder
+            ->where($queryBuilder->expr()->in('t.id', $id))
+            ->getQuery()
+            ->getResult();
+    }
 }
