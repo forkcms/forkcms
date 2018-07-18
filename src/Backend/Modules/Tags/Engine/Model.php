@@ -137,53 +137,7 @@ class Model
      */
     public static function getUrl(string $url, int $id = null): string
     {
-        $url = CommonUri::getUrl($url);
-        $language = BL::getWorkingLanguage();
-
-        // get database
-        $database = BackendModel::getContainer()->get('database');
-
-        // no specific id
-        if ($id === null) {
-            // get number of tags with the specified url
-            $number = (int) $database->getVar(
-                'SELECT 1
-                 FROM tags AS i
-                 WHERE i.url = ? AND i.language = ?
-                 LIMIT 1',
-                [$url, $language]
-            );
-
-            // there are items so, call this method again.
-            if ($number != 0) {
-                // add a number
-                $url = BackendModel::addNumber($url);
-
-                // recall this method, but with a new url
-                $url = self::getUrl($url, $id);
-            }
-        } else {
-            // specific id given
-            // get number of tags with the specified url
-            $number = (int) $database->getVar(
-                'SELECT 1
-                 FROM tags AS i
-                 WHERE i.url = ? AND i.language = ? AND i.id != ?
-                 LIMIT 1',
-                [$url, $language, $id]
-            );
-
-            // there are items so, call this method again.
-            if ($number != 0) {
-                // add a number
-                $url = BackendModel::addNumber($url);
-
-                // recall this method, but with a new url
-                $url = self::getUrl($url, $id);
-            }
-        }
-
-        return $url;
+        return self::getTagRepository()->getUrl($url, self::getLocale(), $id);
     }
 
     /**

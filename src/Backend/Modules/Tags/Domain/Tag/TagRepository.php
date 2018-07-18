@@ -2,7 +2,9 @@
 
 namespace Backend\Modules\Tags\Domain\Tag;
 
+use Backend\Core\Engine\Model;
 use Common\Locale;
+use Common\Uri;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
@@ -54,5 +56,29 @@ final class TagRepository extends EntityRepository
             ->setParameter('locale', $locale)
             ->getQuery()
             ->getResult();
+    }
+
+    public function getUrl(string $url, Locale $locale, int $id = null): string
+    {
+        $url = Uri::getUrl($url);
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        $queryBuilder
+            ->select('1')
+            ->where('t.url = :url AND t.locale = :locale')
+            ->setParameter('url', $url)
+            ->setParameter('locale', $locale);
+
+        if ($id !== null) {
+            $queryBuilder
+                ->andWhere('t.id != :id')
+                ->setParameter('id', $id);
+        }
+
+        if (empty($queryBuilder->getQuery()->getScalarResult())) {
+            return $url;
+        }
+
+        return $this->getUrl(Model::addNumber($url), $locale, $id);
     }
 }
