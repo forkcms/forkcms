@@ -122,6 +122,14 @@ final class ModelTest extends WebTestCase
 
     }
 
+    public function testSaveTagsCreatesNewTagsIfNeeded(): void
+    {
+        $tag = 'New kid in town';
+        $this->assertFalse(TagsModel::existsTag($tag));
+        TagsModel::saveTags(1, [$tag], 'Pages');
+        $this->assertTrue(TagsModel::existsTag($tag));
+    }
+
     public function testSaveTagsReplacesOldLinks(): void
     {
         $this->assertSame('most used,test', TagsModel::getTags('Pages', 1));
