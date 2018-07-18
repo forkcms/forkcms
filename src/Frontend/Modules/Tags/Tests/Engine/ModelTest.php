@@ -163,6 +163,14 @@ final class ModelTest extends WebTestCase
         $this->assertSame('Home', $items['items'][0]['title']);
     }
 
+    public function testGetAllForTag(): void
+    {
+        $this->assertEmpty(TagsModel::getAllForTag('tests', Locale::frontendLanguage()));
+        $items = TagsModel::getAllForTag('test');
+        $this->assertSame('Faq', $items[0]['module']);
+        $this->assertSame('1', $items[0]['other_id']);
+    }
+
     private function assertTag(array $tag, array $keys = ['id', 'language', 'name', 'number', 'url']): void
     {
         foreach ($keys as $key) {
