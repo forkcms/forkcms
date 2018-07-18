@@ -57,7 +57,7 @@ class Model
     public static function getAll(string $language = null): array
     {
         return array_map(
-            function (Tag $tag) {
+            function (Tag $tag): array {
                 return ['name' => $tag->getTag()];
             },
             self::getTagRepository()->findByLocale(
@@ -69,7 +69,7 @@ class Model
     public static function getTagNames(string $language = null): array
     {
         return array_map(
-            function (Tag $tag) {
+            function (Tag $tag): string {
                 return $tag->getTag();
             },
             self::getTagRepository()->findByLocale(
@@ -88,13 +88,21 @@ class Model
      */
     public static function getStartsWith(string $term, string $language = null): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.tag AS name, i.tag AS value
-             FROM tags AS i
-             WHERE i.language = ? AND i.tag LIKE ?
-             ORDER BY i.tag ASC',
-            [$language ?? BL::getWorkingLanguage(), $term . '%']
-        );
+        $locale = Locale::fromString($language ?? BL::getWorkingLanguage());
+
+        return self::getTagRepository()->matching(
+            Criteria::create()
+                ->orderBy(['tag' => Criteria::ASC])
+                ->where(Criteria::expr()->startsWith('tag', $term))
+                ->andWhere(Criteria::expr()->eq('locale', $locale))
+        )->map(
+            function (Tag $tag): array {
+                return [
+                    'name' => $tag->getTag(),
+                    'value' => $tag->getTag(),
+                ];
+            }
+        )->toArray();
     }
 
     /**
