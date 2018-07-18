@@ -1,3 +1,9 @@
 doctrine:
   orm:
     mappings:
+      tags_tag:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/Tags/Domain/Tag"
+        alias: Tag
+        prefix: Backend\Modules\Tags\Domain\Tag

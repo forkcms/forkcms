@@ -1,1 +1,5 @@
 services:
+  Backend\Modules\Tags\Domain\Tag\TagRepository:
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Tags\Domain\Tag\Tag
