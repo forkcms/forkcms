@@ -122,6 +122,14 @@ final class ModelTest extends WebTestCase
 
     }
 
+    public function testSaveTagsRemovesUnusedTags(): void
+    {
+        $id = TagsModel::insert('unused');
+        $this->assertTrue(TagsModel::exists($id));
+        TagsModel::saveTags(420, ['test','most used'], 'Pages');
+        $this->assertFalse(TagsModel::exists($id));
+    }
+
     public function testGetAll(): void
     {
         $tags = [['name' => 'test'], ['name' => 'most used']];
