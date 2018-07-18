@@ -3,12 +3,13 @@
 namespace Backend\Modules\Tags\Domain\Tag;
 
 use Common\Locale;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Tags\Domain\Tag\TagRepository")
  * @ORM\Table(name="TagsTag")
- * @ORM\HasLifecycleCallbacks
  */
 class Tag
 {
@@ -49,12 +50,24 @@ class Tag
      */
     private $url;
 
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Backend\Modules\Tags\Domain\ModuleTag\ModuleTag",
+     *     mappedBy="tag",
+     *     cascade={"persist","remove"}
+     * )
+     */
+    private $moduleTags;
+
     public function __construct(Locale $locale, string $tag, string $url)
     {
         $this->locale = $locale;
         $this->tag = $tag;
         $this->numberOfTimesLinked = 0;
         $this->url = $url;
+        $this->moduleTags = new ArrayCollection();
     }
 
     public function update(string $tag, string $url): void
@@ -97,5 +110,10 @@ class Tag
             'number' => $this->numberOfTimesLinked,
             'url' => $this->url,
         ];
+    }
+
+    public function getModuleTags(): Collection
+    {
+        return $this->moduleTags;
     }
 }

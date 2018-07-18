@@ -3,3 +3,8 @@ services:
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments:
       - Backend\Modules\Tags\Domain\Tag\Tag
+
+  Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository:
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments:
+      - Backend\Modules\Tags\Domain\ModuleTag\ModuleTag
