@@ -29,15 +29,11 @@ class Model
      */
     public static function delete($ids): void
     {
-        // get database
-        $database = BackendModel::getContainer()->get('database');
+        $tags = self::getTagRepository()->matching(
+            Criteria::create()->where(Criteria::expr()->in('id', array_filter((array) $ids), 'is_integer'))
+        )->toArray();
 
-        // make sure $ids is an array
-        $ids = (array) $ids;
-
-        // delete tags
-        $database->delete('tags', 'id IN (' . implode(',', $ids) . ')');
-        $database->delete('modules_tags', 'tag_id IN (' . implode(',', $ids) . ')');
+        self::getTagRepository()->remove(...$tags);
     }
 
     public static function exists(int $id): bool

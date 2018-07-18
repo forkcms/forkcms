@@ -17,9 +17,17 @@ final class TagRepository extends EntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function remove(Tag $tag): void
+    public function remove(Tag ...$tag): void
     {
-        $this->getEntityManager()->remove($tag);
+        $entityManager = $this->getEntityManager();
+
+        array_map(
+            function (Tag $tag) use ($entityManager) {
+                $entityManager->remove($tag);
+            },
+            $tag
+        );
+
         $this->getEntityManager()->flush();
     }
 }
