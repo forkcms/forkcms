@@ -49,12 +49,9 @@ class Model
 
     public static function get(int $id): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.tag AS name
-             FROM tags AS i
-             WHERE i.id = ?',
-            [$id]
-        );
+        $tag = self::getTagRepository()->find($id);
+
+        return ['name' => $tag->getTag()];
     }
 
     public static function getAll(string $language = null): array
