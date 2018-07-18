@@ -2442,11 +2442,11 @@ LOCK TABLES `modules_settings` WRITE;
 
 INSERT INTO `modules_settings` (`module`, `name`, `value`)
 VALUES
-  ('Core','languages','a:1:{i:0;s:2:\"en\";}'),
-  ('Core','active_languages','a:1:{i:0;s:2:\"en\";}'),
-  ('Core','redirect_languages','a:1:{i:0;s:2:\"en\";}'),
+  ('Core','languages','a:2:{i:0;s:2:\"en\";i:1;s:2:\"nl\";}'),
+  ('Core','active_languages','a:2:{i:0;s:2:\"en\";i:1;s:2:\"nl\";}'),
+  ('Core','redirect_languages','a:2:{i:0;s:2:\"en\";i:1;s:2:\"nl\";}'),
   ('Core','default_language','s:2:\"en\";'),
-  ('Core','interface_languages','a:1:{i:0;s:2:\"en\";}'),
+  ('Core','interface_languages','a:2:{i:0;s:2:\"en\";i:1;s:2:\"nl\";}'),
   ('Core','default_interface_language','s:2:\"en\";'),
   ('Core','theme','s:4:\"Fork\";'),
   ('Core','akismet_key','s:0:\"\";'),
