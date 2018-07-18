@@ -2516,21 +2516,6 @@ VALUES
 /*!40000 ALTER TABLE `modules_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-# Dump of table TagsModuleTag
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `TagsModuleTag`;
-
-CREATE TABLE `TagsModuleTag` (
-  `tag_id` int(11) NOT NULL,
-  `moduleName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `moduleId` int(11) NOT NULL,
-  PRIMARY KEY (`moduleName`,`moduleId`,`tag_id`),
-  KEY `IDX_879E91EDBAD26311` (`tag_id`),
-  CONSTRAINT `FK_879E91EDBAD26311` FOREIGN KEY (`tag_id`) REFERENCES `TagsTag` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 # Dump of table pages
 # ------------------------------------------------------------
 
@@ -2849,15 +2834,25 @@ CREATE TABLE `search_synonyms` (
 # Dump of table TagsTag
 # ------------------------------------------------------------
 
+DROP TABLE IF EXISTS `TagsModuleTag`;
 DROP TABLE IF EXISTS `TagsTag`;
 
 CREATE TABLE `TagsTag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `locale` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT ''(DC2Type:locale)'',
+  `locale` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:locale)',
   `tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `numberOfTimesLinked` int(11) NOT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `TagsModuleTag` (
+  `tag_id` int(11) NOT NULL,
+  `moduleName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `moduleId` int(11) NOT NULL,
+  PRIMARY KEY (`moduleName`,`moduleId`,`tag_id`),
+  KEY `IDX_879E91EDBAD26311` (`tag_id`),
+  CONSTRAINT `FK_879E91EDBAD26311` FOREIGN KEY (`tag_id`) REFERENCES `TagsTag` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 # Dump of table themes_templates
