@@ -68,11 +68,13 @@ class Model
 
     public static function getTagNames(string $language = null): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getColumn(
-            'SELECT tag
-             FROM tags
-             WHERE language = ?',
-            [$language ?? BL::getWorkingLanguage()]
+        return array_map(
+            function (Tag $tag) {
+                return $tag->getTag();
+            },
+            self::getTagRepository()->findByLocale(
+                Locale::fromString($language ?? BL::getWorkingLanguage())
+            )
         );
     }
 
