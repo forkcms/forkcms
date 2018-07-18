@@ -59,9 +59,7 @@ class Model
             function (Tag $tag): array {
                 return ['name' => $tag->getTag()];
             },
-            self::getTagRepository()->findByLocale(
-                Locale::fromString($language ?? BL::getWorkingLanguage())
-            )
+            self::getTagRepository()->findByLocale(self::getLocale($language))
         );
     }
 
@@ -71,9 +69,7 @@ class Model
             function (Tag $tag): string {
                 return $tag->getTag();
             },
-            self::getTagRepository()->findByLocale(
-                Locale::fromString($language ?? BL::getWorkingLanguage())
-            )
+            self::getTagRepository()->findByLocale(self::getLocale($language))
         );
     }
 
@@ -87,8 +83,6 @@ class Model
      */
     public static function getStartsWith(string $term, string $language = null): array
     {
-        $locale = Locale::fromString($language ?? BL::getWorkingLanguage());
-
         return array_map(
             function (Tag $tag): array {
                 return [
@@ -96,7 +90,7 @@ class Model
                     'value' => $tag->getTag(),
                 ];
             },
-            self::getTagRepository()->findByTagStartingWith($term, $locale)
+            self::getTagRepository()->findByTagStartingWith($term, self::getLocale($language))
         );
     }
 
@@ -354,5 +348,10 @@ class Model
     private static function getModuleTagRepository(): ModuleTagRepository
     {
         return BackendModel::get(ModuleTagRepository::class);
+    }
+
+    private static function getLocale(string $language = null): Locale
+    {
+        return Locale::fromString($language ?? BL::getWorkingLanguage());
     }
 }
