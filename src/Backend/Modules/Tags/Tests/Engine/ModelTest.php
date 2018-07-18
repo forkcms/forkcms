@@ -122,6 +122,13 @@ final class ModelTest extends WebTestCase
 
     }
 
+    public function testSaveTagsReplacesOldLinks(): void
+    {
+        $this->assertSame('most used,test', TagsModel::getTags('Pages', 1));
+        TagsModel::saveTags(1, ['test'], 'Pages');
+        $this->assertSame('test', TagsModel::getTags('Pages', 1));
+    }
+
     public function testSaveTagsRemovesUnusedTags(): void
     {
         $id = TagsModel::insert('unused');
