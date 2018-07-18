@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Tags\Engine;
 
+use Backend\Core\Language\Locale;
 use Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository;
 use Backend\Modules\Tags\Domain\Tag\Tag;
 use Backend\Modules\Tags\Domain\Tag\TagRepository;
@@ -44,7 +45,6 @@ class Model
     public static function existsTag(string $tag): bool
     {
         return self::getTagRepository()->findOneByTag($tag) instanceof Tag;
-
     }
 
     public static function get(int $id): array
@@ -56,11 +56,13 @@ class Model
 
     public static function getAll(string $language = null): array
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.tag AS name
-             FROM tags AS i
-             WHERE i.language = ?',
-            [$language ?? BL::getWorkingLanguage()]
+        return array_map(
+            function (Tag $tag) {
+                return ['name' => $tag->getTag()];
+            },
+            self::getTagRepository()->findByLocale(
+                Locale::fromString($language ?? BL::getWorkingLanguage())
+            )
         );
     }
 
