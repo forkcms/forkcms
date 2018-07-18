@@ -2517,17 +2517,19 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table modules_tags
+# Dump of table TagsModuleTag
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `modules_tags`;
+DROP TABLE IF EXISTS `TagsModuleTag`;
 
-CREATE TABLE `modules_tags` (
-  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
+CREATE TABLE `TagsModuleTag` (
   `tag_id` int(11) NOT NULL,
-  `other_id` int(11) NOT NULL,
-  PRIMARY KEY (`module`,`tag_id`,`other_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `moduleName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `moduleId` int(11) NOT NULL,
+  PRIMARY KEY (`moduleName`,`moduleId`,`tag_id`),
+  KEY `IDX_879E91EDBAD26311` (`tag_id`),
+  CONSTRAINT `FK_879E91EDBAD26311` FOREIGN KEY (`tag_id`) REFERENCES `TagsTag` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 # Dump of table pages
 # ------------------------------------------------------------
@@ -2844,19 +2846,19 @@ CREATE TABLE `search_synonyms` (
 
 
 
-# Dump of table tags
+# Dump of table TagsTag
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `tags`;
+DROP TABLE IF EXISTS `TagsTag`;
 
-CREATE TABLE `tags` (
+CREATE TABLE `TagsTag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `locale` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT ''(DC2Type:locale)'',
   `tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `number` int(11) NOT NULL,
+  `numberOfTimesLinked` int(11) NOT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 # Dump of table themes_templates
 # ------------------------------------------------------------

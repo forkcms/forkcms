@@ -3,6 +3,9 @@
 namespace Backend\Modules\Tags\Installer;
 
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Tags\Domain\ModuleTag\ModuleTag;
+use Backend\Modules\Tags\Domain\Tag\Tag;
+use Common\Core\Model;
 use Common\ModuleExtraType;
 
 /**
@@ -16,7 +19,7 @@ class Installer extends ModuleInstaller
     public function install(): void
     {
         $this->addModule('Tags');
-        $this->importSQL(__DIR__ . '/Data/install.sql');
+        $this->configureEntities();
         $this->importLocale(__DIR__ . '/Data/locale.xml');
         $this->configureBackendNavigation();
         $this->configureBackendRights();
@@ -91,6 +94,16 @@ class Installer extends ModuleInstaller
              WHERE b.extra_id = ? AND p.language = ?
              LIMIT 1',
             [$this->tagsBlockId, $language]
+        );
+    }
+
+    private function configureEntities(): void
+    {
+        Model::get('fork.entity.create_schema')->forEntityClasses(
+            [
+                Tag::class,
+                ModuleTag::class,
+            ]
         );
     }
 }
