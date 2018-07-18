@@ -158,6 +158,14 @@ final class ModelTest extends WebTestCase
         $this->assertSame('test', TagsModel::getTags('Pages', 1));
     }
 
+    public function testSaveTagsForOtherLanguage(): void
+    {
+        $this->assertSame('most used,test', TagsModel::getTags('Pages', 1));
+        TagsModel::saveTags(1, ['test'], 'Pages', 'nl');
+        $this->assertSame('most used,test', TagsModel::getTags('Pages', 1));
+        $this->assertSame('test', TagsModel::getTags('Pages', 1, 'string', 'nl'));
+    }
+
     public function testSaveTagsRemovesUnusedTags(): void
     {
         $id = TagsModel::insert('unused');
