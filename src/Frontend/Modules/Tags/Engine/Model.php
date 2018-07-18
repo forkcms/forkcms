@@ -2,6 +2,8 @@
 
 namespace Frontend\Modules\Tags\Engine;
 
+use Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository;
+use Backend\Modules\Tags\Domain\Tag\TagRepository;
 use Common\Locale;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -268,5 +270,15 @@ class Model
             'label' => Language::lbl(\SpoonFilter::ucfirst($module)),
             'items' => $items,
         ];
+    }
+
+    private static function getTagRepository(): TagRepository
+    {
+        return FrontendModel::get(TagRepository::class);
+    }
+
+    private static function getModuleTagRepository(): ModuleTagRepository
+    {
+        return FrontendModel::get(ModuleTagRepository::class);
     }
 }
