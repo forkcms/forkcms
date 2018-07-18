@@ -122,6 +122,12 @@ final class ModelTest extends WebTestCase
 
     }
 
+    public function testSaveTagsFiltersOutDuplicates(): void
+    {
+        TagsModel::saveTags(1, ['page', 'Page', 'pAgE', 'page '], 'Pages');
+        $this->assertSame('page', TagsModel::getTags('Pages', 1));
+    }
+
     public function testSaveTagsCreatesNewTagsIfNeeded(): void
     {
         $tag = 'New kid in town';
