@@ -151,15 +151,12 @@ class Model
      */
     public static function insert(string $tag, string $language = null): int
     {
-        return (int) BackendModel::getContainer()->get('database')->insert(
-            'tags',
-            [
-                'language' => $language ?? BL::getWorkingLanguage(),
-                'tag' => $tag,
-                'number' => 0,
-                'url' => self::getUrl($tag),
-            ]
-        );
+        $locale = self::getLocale($language);
+        $tagEntity = new Tag($locale, $tag, self::getTagRepository()->getUrl($tag, $locale));
+
+        self::getTagRepository()->add($tagEntity);
+
+        return $tagEntity->getId();
     }
 
     /**

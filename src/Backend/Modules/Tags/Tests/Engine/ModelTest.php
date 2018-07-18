@@ -58,7 +58,7 @@ final class ModelTest extends WebTestCase
         $this->assertSame(
             $tagId,
             (int) $database->getVar(
-                'SELECT id FROM tags WHERE tag = ? AND language = ?',
+                'SELECT id FROM TagsTag WHERE tag = ? AND locale = ?',
                 [$name, Language::getWorkingLanguage()]
             )
         );
@@ -73,7 +73,7 @@ final class ModelTest extends WebTestCase
         $this->assertSame(
             $tagId,
             (int) $database->getVar(
-                'SELECT id FROM tags WHERE tag = ? AND language = ?',
+                'SELECT id FROM TagsTag WHERE tag = ? AND locale = ?',
                 [$name, $language]
             )
         );
