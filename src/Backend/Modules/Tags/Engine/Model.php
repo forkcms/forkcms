@@ -43,10 +43,8 @@ class Model
 
     public static function existsTag(string $tag): bool
     {
-        return (BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
-            [$tag]
-        ) != '');
+        return self::getTagRepository()->findOneByTag($tag) instanceof Tag;
+
     }
 
     public static function get(int $id): array
