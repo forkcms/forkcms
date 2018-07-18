@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\Tags\Domain\Tag;
 
+use Common\Locale;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
 final class TagRepository extends EntityRepository
@@ -37,6 +39,19 @@ final class TagRepository extends EntityRepository
 
         return $queryBuilder
             ->where($queryBuilder->expr()->in('t.id', $id))
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByTagStartingWith(string $term, Locale $locale): array
+    {
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        return $queryBuilder
+            ->orderBy('t.tag', Criteria::ASC)
+            ->where('t.tag LIKE :term AND t.locale = :locale')
+            ->setParameter('term', $term . '%')
+            ->setParameter('locale', $locale)
             ->getQuery()
             ->getResult();
     }

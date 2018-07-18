@@ -89,19 +89,15 @@ class Model
     {
         $locale = Locale::fromString($language ?? BL::getWorkingLanguage());
 
-        return self::getTagRepository()->matching(
-            Criteria::create()
-                ->orderBy(['tag' => Criteria::ASC])
-                ->where(Criteria::expr()->startsWith('tag', $term))
-                ->andWhere(Criteria::expr()->eq('locale', $locale))
-        )->map(
+        return array_map(
             function (Tag $tag): array {
                 return [
                     'name' => $tag->getTag(),
                     'value' => $tag->getTag(),
                 ];
-            }
-        )->toArray();
+            },
+            self::getTagRepository()->findByTagStartingWith($term, $locale)
+        );
     }
 
     /**
