@@ -122,6 +122,19 @@ final class ModelTest extends WebTestCase
 
     }
 
+    public function testSaveTagsUpdatesTheUsedCount(): void
+    {
+        $database = self::createClient()->getContainer()->get('database');
+        $tagCount = function (int $id) use ($database): int {
+            return $database->getVar('SELECT number FROM tags WHERE id = ?', $id);
+        };
+        $originalCountTag1 = $tagCount(1);
+        $originalCountTag2 = $tagCount(2);
+        TagsModel::saveTags(2, ['test'], 'Pages');
+        $this->assertSame($originalCountTag1 + 1, $tagCount(1));
+        $this->assertSame($originalCountTag2 - 1, $tagCount(2));
+    }
+
     public function testSaveTagsFiltersOutDuplicates(): void
     {
         TagsModel::saveTags(1, ['page', 'Page', 'pAgE', 'page '], 'Pages');
