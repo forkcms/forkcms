@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\Tags\Engine;
 
+use Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository;
+use Backend\Modules\Tags\Domain\Tag\TagRepository;
 use Common\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -347,5 +349,15 @@ class Model
     public static function update(array $tag): int
     {
         return BackendModel::getContainer()->get('database')->update('tags', $tag, 'id = ?', $tag['id']);
+    }
+
+    private static function getTagRepository(): TagRepository
+    {
+        return BackendModel::get(TagRepository::class);
+    }
+
+    private static function getModuleTagRepository(): ModuleTagRepository
+    {
+        return BackendModel::get(ModuleTagRepository::class);
     }
 }
