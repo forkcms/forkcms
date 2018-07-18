@@ -117,9 +117,11 @@ final class ModelTest extends WebTestCase
         $this->assertSame('changed', TagsModel::get(1)['name']);
     }
 
-    public function testSaveTags(): void
+    public function testSaveTagsAlsoAcceptsAString(): void
     {
-
+        $this->assertSame('most used,test', TagsModel::getTags('Pages', 1));
+        TagsModel::saveTags(1, 'test,concat', 'Pages');
+        $this->assertSame('concat,test', TagsModel::getTags('Pages', 1));
     }
 
     public function testSaveTagsUpdatesTheUsedCount(): void
