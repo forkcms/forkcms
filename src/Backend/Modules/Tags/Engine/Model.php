@@ -10,6 +10,7 @@ use Common\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Common\Uri;
 use Doctrine\Common\Collections\Criteria;
 
 /**
@@ -283,12 +284,20 @@ class Model
      * Remark: $tag['id'] should be available.
      *
      * @param array $tag The new data for the tag.
-     *
-     * @return int
      */
-    public static function update(array $tag): int
+    public static function update(array $tag): void
     {
-        return BackendModel::getContainer()->get('database')->update('tags', $tag, 'id = ?', $tag['id']);
+        $tagRepository = self::getTagRepository();
+        /** @var Tag $tagEntity */
+        $tagEntity = $tagRepository->find($tag['id']);
+        $locale = $tagEntity->getLocale();
+
+        $tag['tag'] = $tag['tag'] ?? $tagEntity->getTag();
+        $tag['url'] = $tag['url'] ?? $tagRepository->getUrl(Uri::getUrl($tag['tag']), $locale, $tag['id']);
+
+        $tagEntity->update($tag['tag'], $tag['url']);
+
+        $tagRepository->flush();
     }
 
     private static function getTagRepository(): TagRepository
