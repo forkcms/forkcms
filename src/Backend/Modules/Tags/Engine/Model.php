@@ -235,6 +235,18 @@ class Model
             $tags = (array) explode(',', (string) $tags);
         }
 
+        foreach ($tags as $key => $tag) {
+            // cleanup
+            $tag = mb_strtolower(trim($tag));
+
+            // unset if the tag is empty
+            if ($tag == '') {
+                unset($tags[$key]);
+            } else {
+                $tags[$key] = $tag;
+            }
+        }
+
         // make sure the list of tags contains only unique and non-empty elements in a case insensitive way
         $tags = array_filter(array_intersect_key($tags, array_unique(array_map('strtolower', $tags))));
 
@@ -260,19 +272,6 @@ class Model
         }
 
         if (!empty($tags)) {
-            // loop tags
-            foreach ($tags as $key => $tag) {
-                // cleanup
-                $tag = mb_strtolower(trim($tag));
-
-                // unset if the tag is empty
-                if ($tag == '') {
-                    unset($tags[$key]);
-                } else {
-                    $tags[$key] = $tag;
-                }
-            }
-
             // don't do a regular implode, mysql injection might be possible
             $placeholders = array_fill(0, count($tags), '?');
 
