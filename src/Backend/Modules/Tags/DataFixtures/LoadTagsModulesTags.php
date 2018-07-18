@@ -9,47 +9,47 @@ class LoadTagsModulesTags
     public function load(SpoonDatabase $database): void
     {
         $database->insert(
-            'modules_tags',
+            'TagsModuleTag',
             [
                 [
-                    'module' => 'Pages',
+                    'moduleName' => 'Pages',
                     'tag_id' => 1,
-                    'other_id' => 1,
+                    'moduleId' => 1,
                 ],
                 [
-                    'module' => 'Pages',
+                    'moduleName' => 'Pages',
                     'tag_id' => 2,
-                    'other_id' => 1,
+                    'moduleId' => 1,
                 ],
                 [
-                    'module' => 'Pages',
+                    'moduleName' => 'Pages',
                     'tag_id' => 2,
-                    'other_id' => 2,
+                    'moduleId' => 2,
                 ],
                 [
-                    'module' => 'Pages',
+                    'moduleName' => 'Pages',
                     'tag_id' => 2,
-                    'other_id' => 3,
+                    'moduleId' => 3,
                 ],
                 [
-                    'module' => 'Pages',
+                    'moduleName' => 'Pages',
                     'tag_id' => 2,
-                    'other_id' => 404,
+                    'moduleId' => 404,
                 ],
                 [
-                    'module' => 'Pages',
+                    'moduleName' => 'Pages',
                     'tag_id' => 2,
-                    'other_id' => 405,
+                    'moduleId' => 405,
                 ],
                 [
-                    'module' => 'Pages',
+                    'moduleName' => 'Pages',
                     'tag_id' => 2,
-                    'other_id' => 406,
+                    'moduleId' => 406,
                 ],
                 [
-                    'module' => 'Faq',
+                    'moduleName' => 'Faq',
                     'tag_id' => 1,
-                    'other_id' => 1,
+                    'moduleId' => 1,
                 ],
             ]
         );

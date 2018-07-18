@@ -9,18 +9,18 @@ class LoadTagsTags
     public function load(SpoonDatabase $database): void
     {
         $database->insert(
-            'tags',
+            'TagsTag',
             [
                 [
                     'id' => 1,
-                    'language' => 'en',
+                    'locale' => 'en',
                     'tag' => 'test',
-                    'number' => 2,
+                    'numberOfTimesLinked' => 2,
                     'url' => 'test',
                 ],
                 [
                     'id' => 2,
-                    'language' => 'en',
+                    'locale' => 'en',
                     'tag' => 'most used',
                     'number' => 6,
                     'url' => 'most-used',
