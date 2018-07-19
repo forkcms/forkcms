@@ -6,12 +6,10 @@ use Backend\Core\Language\Locale;
 use Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository;
 use Backend\Modules\Tags\Domain\Tag\Tag;
 use Backend\Modules\Tags\Domain\Tag\TagRepository;
-use Common\Uri as CommonUri;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Common\Uri;
-use Doctrine\Common\Collections\Criteria;
 
 /**
  * In this file we store all generic functions that we will be using in the TagsModule
