@@ -48,6 +48,7 @@ class TwigTemplate extends BaseTwigTemplate
         if ($this->debugMode) {
             $this->environment->enableAutoReload();
             $this->environment->setCache(false);
+            $this->environment->addExtension(new Twig_Extension_Debug());
         }
         $this->language = BL::getWorkingLanguage();
         $this->connectSymfonyForms();
