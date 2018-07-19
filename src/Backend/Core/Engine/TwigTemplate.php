@@ -12,6 +12,8 @@ use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Form\FormRenderer;
 use Twig_Environment;
 use Twig_Extension_Debug;
@@ -54,6 +56,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->connectSymfonyTranslator();
         $this->connectSpoonForm();
         TwigFilters::addFilters($this->environment, 'Backend');
+        $this->autoloadMissingTaggedExtensions($container);
     }
 
     /**
@@ -339,5 +342,14 @@ class TwigTemplate extends BaseTwigTemplate
             $bodyClass = $url->getModule() . 'AddEdit';
         }
         $this->assign('bodyClass', $bodyClass);
+    }
+
+    private function autoloadMissingTaggedExtensions(ContainerInterface $container): void
+    {
+        foreach ($container->get('twig')->getExtensions() as $id => $extension) {
+            if (!$this->environment->hasExtension($id)) {
+                $this->environment->addExtension($extension);
+            }
+        }
     }
 }
