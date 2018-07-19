@@ -180,6 +180,10 @@ class Edit extends BackendBaseActionEdit
                 'label' => \SpoonFilter::toCamelCase($module),
                 'value' => $module,
             ];
+
+            usort($this->actions[$module], function($a, $b) {
+                return strcmp($a["label"], $b["label"]);
+            });
         }
     }
 
