@@ -5,11 +5,17 @@ namespace Backend\Modules\Tags\Domain\Tag;
 use Backend\Core\Engine\Model;
 use Common\Locale;
 use Common\Uri;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-final class TagRepository extends EntityRepository
+final class TagRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Tag::class);
+    }
+
     public function add(Tag $tag): void
     {
         $this->getEntityManager()->persist($tag);

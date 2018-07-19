@@ -1,12 +1,9 @@
 services:
-  Backend\Modules\Tags\Domain\Tag\TagRepository:
-    factory: ["@doctrine.orm.entity_manager", getRepository]
+  _defaults:
+    autowire: true
+    autoconfigure: true
     public: true
-    arguments:
-      - Backend\Modules\Tags\Domain\Tag\Tag
+
+  Backend\Modules\Tags\Domain\Tag\TagRepository:
 
   Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository:
-    factory: ["@doctrine.orm.entity_manager", getRepository]
-    public: true
-    arguments:
-      - Backend\Modules\Tags\Domain\ModuleTag\ModuleTag

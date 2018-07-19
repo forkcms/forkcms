@@ -2,10 +2,16 @@
 
 namespace Backend\Modules\Tags\Domain\ModuleTag;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-final class ModuleTagRepository extends EntityRepository
+final class ModuleTagRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, ModuleTag::class);
+    }
+
     public function add(ModuleTag $moduleTag): void
     {
         $this->getEntityManager()->persist($moduleTag);
