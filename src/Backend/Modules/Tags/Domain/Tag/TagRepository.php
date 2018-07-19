@@ -21,7 +21,7 @@ final class TagRepository extends EntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function remove(Tag ...$tag): void
+    public function remove(Tag ...$tags): void
     {
         $entityManager = $this->getEntityManager();
 
@@ -29,18 +29,18 @@ final class TagRepository extends EntityRepository
             function (Tag $tag) use ($entityManager) {
                 $entityManager->remove($tag);
             },
-            $tag
+            $tags
         );
 
         $this->getEntityManager()->flush();
     }
 
-    public function findByIds(int ...$id): array
+    public function findByIds(int ...$ids): array
     {
         $queryBuilder = $this->createQueryBuilder('t');
 
         return $queryBuilder
-            ->where($queryBuilder->expr()->in('t.id', $id))
+            ->where($queryBuilder->expr()->in('t.id', $ids))
             ->getQuery()
             ->getResult();
     }
