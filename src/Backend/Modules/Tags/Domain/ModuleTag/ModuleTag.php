@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Backend\Modules\Tags\Domain\Tag\TagRepository")
- * @ORM\Table(name="TagsModuleTag")
+ * @ORM\Table(name="TagsModuleTag", options={"collate"="utf8_general_ci", "charset"="utf8"})
  */
 class ModuleTag
 {

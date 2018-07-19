@@ -2848,12 +2848,12 @@ CREATE TABLE `TagsTag` (
 
 CREATE TABLE `TagsModuleTag` (
   `tag_id` int(11) NOT NULL,
-  `moduleName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `moduleName` varchar(255) NOT NULL,
   `moduleId` int(11) NOT NULL,
   PRIMARY KEY (`moduleName`,`moduleId`,`tag_id`),
   KEY `IDX_879E91EDBAD26311` (`tag_id`),
   CONSTRAINT `FK_879E91EDBAD26311` FOREIGN KEY (`tag_id`) REFERENCES `TagsTag` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 # Dump of table themes_templates
 # ------------------------------------------------------------
