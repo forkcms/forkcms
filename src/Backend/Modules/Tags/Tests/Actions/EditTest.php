@@ -61,4 +61,40 @@ class EditTest extends WebTestCase
             $client->getHistory()->current()->getUri()
         );
     }
+
+    public function testEditingOurTag(): void
+    {
+        $client = static::createClient();
+        $this->login($client);
+
+        $crawler = $client->request('GET', '/private/en/tags/edit?id=1');
+        $this->assertContains(
+            'form method="post" action="/private/en/tags/edit?id=1" id="edit"',
+            $client->getResponse()->getContent()
+        );
+
+        $form = $crawler->selectButton('Save')->form();
+
+        $client->setMaxRedirects(1);
+        $this->submitEditForm($client, $form, [
+            'name' => 'Edited tag for functional tests',
+        ]);
+
+        // we should get a 200 and be redirected to the index page
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains(
+            '/private/en/tags/index',
+            $client->getHistory()->current()->getUri()
+        );
+
+        // our url and our page should contain the new title of our blogpost
+        $this->assertContains(
+            '&report=edited&var=Edited%20tag%20for%20functional%20tests&highlight=row-1',
+            $client->getHistory()->current()->getUri()
+        );
+        $this->assertContains(
+            'Edited tag for functional tests',
+            $client->getResponse()->getContent()
+        );
+    }
 }
