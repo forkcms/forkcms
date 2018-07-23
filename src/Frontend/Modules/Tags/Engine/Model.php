@@ -144,17 +144,7 @@ class Model
      */
     public static function getRelatedItemsByTags(int $id, string $module, string $otherModule, int $limit = 5): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT t2.other_id
-             FROM modules_tags AS t
-             INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
-             WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND
-                (t2.module != t.module OR t2.other_id != t.other_id)
-             GROUP BY t2.other_id
-             ORDER BY COUNT(t2.tag_id) DESC
-             LIMIT ?',
-            [$id, $module, $otherModule, $limit]
-        );
+        return self::getModuleTagRepository()->findRelatedModuleIdsByTags($id, $module, $otherModule, $limit);
     }
 
     public static function getAllForTag(string $tag, Locale $locale = null): array

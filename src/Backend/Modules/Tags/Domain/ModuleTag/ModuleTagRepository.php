@@ -3,6 +3,7 @@
 namespace Backend\Modules\Tags\Domain\ModuleTag;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 
@@ -47,6 +48,30 @@ final class ModuleTagRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getScalarResult(),
             'moduleName'
+        );
+    }
+
+    public function findRelatedModuleIdsByTags($moduleId, $moduleName, $otherModuleName, $limit): array
+    {
+        return array_column(
+            $this->createQueryBuilder('mt')
+                ->select('mt2.moduleId')
+                ->innerJoin('mt.tag', 't', Join::WITH, 'mt.moduleId = :moduleId AND mt.moduleName = :moduleName')
+                ->setParameter('moduleId', $moduleId)
+                ->setParameter('moduleName', $moduleName)
+                ->innerJoin(
+                    't.moduleTags',
+                    'mt2',
+                    Join::WITH,
+                    'mt2.moduleName = :otherModuleName AND (mt2.moduleName != mt.moduleName OR mt2.moduleId != mt.moduleId)'
+                )
+                ->groupBy('mt2.moduleId')
+                ->orderBy('COUNT(mt2.tag)', Criteria::DESC)
+                ->setParameter('otherModuleName', $otherModuleName)
+                ->setMaxResults($limit)
+                ->getQuery()
+                ->getScalarResult(),
+            'moduleId'
         );
     }
 }
