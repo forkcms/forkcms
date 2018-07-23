@@ -65,12 +65,11 @@ class Model
      */
     public static function getAll(): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT t.tag AS name, t.url, t.number
-             FROM tags AS t
-             WHERE t.language = ? AND t.number > 0
-             ORDER BY t.tag',
-            [FrontendLocale::frontendLanguage()]
+        return array_map(
+            function (Tag $tag): array {
+                return $tag->toArray();
+            },
+            self::getTagRepository()->findAllLinkedTags(FrontendLocale::frontendLanguage())
         );
     }
 

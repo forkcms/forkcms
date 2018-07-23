@@ -110,4 +110,16 @@ final class TagRepository extends ServiceEntityRepository
     {
         $this->remove(...$this->findByNumberOfTimesLinked(0));
     }
+
+    public function findAllLinkedTags(Locale $locale): array
+    {
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        return $queryBuilder
+            ->where('t.locale = :locale AND t.numberOfTimesLinked > 0')
+            ->setParameter('locale', $locale)
+            ->orderBy('t.tag')
+            ->getQuery()
+            ->getResult();
+    }
 }
