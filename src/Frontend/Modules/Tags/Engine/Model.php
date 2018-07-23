@@ -171,17 +171,12 @@ class Model
     public static function getItemsForTagAndModule(int $id, string $module): array
     {
         // get the ids of the items linked to the tag
-        $otherIds = (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT other_id
-                 FROM modules_tags
-                 WHERE module = ? AND tag_id = ?',
-            [$module, $id]
-        );
+        $moduleTags = self::getModuleTagRepository()->findByModuleAndTag($module, $id);
 
         $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
 
         // get the items that are linked to the tags
-        $items = (array) self::callFromInterface($module, $class, 'getForTags', $otherIds);
+        $items = (array) self::callFromInterface($module, $class, 'getForTags', \array_keys($moduleTags));
 
         if (empty($items)) {
             return $items;

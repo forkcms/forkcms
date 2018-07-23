@@ -85,4 +85,15 @@ final class ModuleTagRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByModuleAndTag(string $module, int $tagId): array
+    {
+        return $this->createQueryBuilder('mt')
+            ->innerJoin('mt.tag', 't', Join::WITH, 't.id = :tagId AND mt.moduleName = :moduleName')
+            ->setParameter('tagId', $tagId)
+            ->setParameter('moduleName', $module)
+            ->indexBy('mt', 'mt.moduleId')
+            ->getQuery()
+            ->getResult();
+    }
 }
