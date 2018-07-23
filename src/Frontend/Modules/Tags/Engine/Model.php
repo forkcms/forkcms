@@ -31,9 +31,9 @@ class Model
     public static function callFromInterface(string $module, string $class, string $method, $parameter = null)
     {
         // check to see if the interface is implemented
-        if (in_array('Frontend\\Modules\\Tags\\Engine\\TagsInterface', class_implements($class))) {
+        if (\in_array(TagsInterface::class, class_implements($class), true)) {
             // return result
-            return call_user_func([$class, $method], $parameter);
+            return \call_user_func([$class, $method], $parameter);
         }
 
         throw new FrontendException(
