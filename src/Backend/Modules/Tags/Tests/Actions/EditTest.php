@@ -40,4 +40,25 @@ class EditTest extends WebTestCase
             $client->getHistory()->current()->getUri()
         );
     }
+
+    public function testWeCanGoToEditFromTheIndexPage(): void
+    {
+        $client = static::createClient();
+        $this->login($client);
+
+        $crawler = $client->request('GET', '/private/en/tags/index');
+        $this->assertContains(
+            'most used',
+            $client->getResponse()->getContent()
+        );
+
+        $link = $crawler->selectLink('most used')->link();
+        $client->click($link);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains(
+            '&id=2',
+            $client->getHistory()->current()->getUri()
+        );
+    }
 }
