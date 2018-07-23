@@ -40,6 +40,7 @@ class ModuleTag
         $this->moduleName = $moduleName;
         $this->moduleId = $moduleId;
         $this->tag = $tag;
+        $this->tag->increaseNumberOfTimesLinked();
     }
 
     public function toArray(): array
@@ -49,5 +50,10 @@ class ModuleTag
             'other_id' => $this->moduleId,
             'tag_id' => $this->tag->getId(),
         ];
+    }
+
+    public function getTag(): Tag
+    {
+        return $this->tag;
     }
 }

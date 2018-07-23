@@ -26,6 +26,7 @@ final class ModuleTagRepository extends ServiceEntityRepository
     public function remove(ModuleTag $moduleTag): void
     {
         $this->getEntityManager()->remove($moduleTag);
+        $moduleTag->getTag()->decreaseNumberOfTimesLinked();
         $this->getEntityManager()->flush();
     }
 }

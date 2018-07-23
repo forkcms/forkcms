@@ -2,8 +2,8 @@
 
 namespace Backend\Modules\Tags\Engine;
 
-use Assert\Assert;
 use Backend\Core\Language\Locale;
+use Backend\Modules\Tags\Domain\ModuleTag\ModuleTag;
 use Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository;
 use Backend\Modules\Tags\Domain\Tag\Tag;
 use Backend\Modules\Tags\Domain\Tag\TagRepository;
@@ -121,7 +121,7 @@ class Model
         }
 
         // return as array
-        return $tags;
+        return array_values($tags);
     }
 
     /**
@@ -167,7 +167,7 @@ class Model
      */
     public static function saveTags(int $otherId, $tags, string $module, string $language = null): void
     {
-        $language = $language ?? BL::getWorkingLanguage();
+        $locale = self::getLocale($language);
 
         // redefine the tags as an array
         if (!\is_array($tags)) {
@@ -176,100 +176,48 @@ class Model
 
         foreach ($tags as $key => $tag) {
             // cleanup
-            $tag = mb_strtolower(trim($tag));
+            $tags[$key] = mb_strtolower(trim($tag));
 
             // unset if the tag is empty
-            if ($tag == '') {
+            if ($tags[$key] === '') {
                 unset($tags[$key]);
-            } else {
-                $tags[$key] = $tag;
             }
         }
 
         // make sure the list of tags contains only unique and non-empty elements in a case insensitive way
         $tags = array_filter(array_intersect_key($tags, array_unique(array_map('strtolower', $tags))));
 
-        // get database
-        $database = BackendModel::getContainer()->get('database');
+        $currentTags = self::getTagRepository()->findTags($module, $otherId, $locale);
 
-        // get current tags for item
-        $currentTags = (array) $database->getPairs(
-            'SELECT i.tag, i.id
-             FROM tags AS i
-             INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
-             WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?',
-            [$module, $otherId, $language]
-        );
+        /** @var Tag[] $removedTags */
+        $removedTags = array_diff_key($currentTags, array_flip($tags));
 
-        // remove old links
-        if (!empty($currentTags)) {
-            $database->delete(
-                'modules_tags',
-                'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ? AND module = ?',
-                [$otherId, $module]
+        foreach ($removedTags as $removedTag) {
+            self::getModuleTagRepository()->remove(
+                self::getModuleTagRepository()->findOneBy(
+                    [
+                        'tag' => $removedTag,
+                        'moduleName' => $module,
+                        'moduleId' => $otherId,
+                    ]
+                )
             );
         }
 
-        if (!empty($tags)) {
-            // don't do a regular implode, mysql injection might be possible
-            $placeholders = array_fill(0, count($tags), '?');
+        $newTags = array_diff($tags, array_keys($currentTags));
 
-            // get tag ids
-            $tagsAndIds = (array) $database->getPairs(
-                'SELECT i.tag, i.id
-                 FROM tags AS i
-                 WHERE i.tag IN (' . implode(',', $placeholders) . ') AND i.language = ?',
-                array_merge($tags, [$language])
-            );
-
-            // loop again and create tags that don't already exist
-            foreach ($tags as $tag) {
-                // doesn' exist yet
-                if (!isset($tagsAndIds[$tag])) {
-                    // insert tag
-                    $tagsAndIds[$tag] = self::insert($tag, $language);
-                }
-            }
-
-            // init items to insert
-            $rowsToInsert = [];
-
-            // loop again
-            foreach ($tags as $tag) {
-                // get tagId
-                $tagId = (int) $tagsAndIds[$tag];
-
-                // not linked before so increment the counter
-                if (!isset($currentTags[$tag])) {
-                    $database->execute(
-                        'UPDATE tags SET number = number + 1 WHERE id = ?',
-                        $tagId
-                    );
-                }
-
-                // add to insert array
-                $rowsToInsert[] = ['module' => $module, 'tag_id' => $tagId, 'other_id' => $otherId];
-            }
-
-            // insert the rows at once if there are items to insert
-            if (!empty($rowsToInsert)) {
-                $database->insert('modules_tags', $rowsToInsert);
+        if (!empty($newTags)) {
+            foreach ($newTags as $tagName) {
+                self::getModuleTagRepository()->add(
+                    new ModuleTag($module, $otherId, self::getTagForTagName($tagName, $locale))
+                );
             }
         }
 
         // add to search index
         BackendSearchModel::saveIndex($module, $otherId, ['tags' => implode(' ', (array) $tags)], $language);
 
-        // decrement number
-        foreach ($currentTags as $tag => $tagId) {
-            // if the tag can't be found in the new tags we lower the number of tags by one
-            if (array_search($tag, $tags) === false) {
-                $database->execute(
-                    'UPDATE tags SET number = number - 1 WHERE id = ?',
-                    $tagId
-                );
-            }
-        }
+        self::getTagRepository()->flush();
 
         // remove all tags that don't have anything linked
         self::getTagRepository()->removeUnused();

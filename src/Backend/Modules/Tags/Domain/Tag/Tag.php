@@ -96,6 +96,16 @@ class Tag
         return $this->numberOfTimesLinked;
     }
 
+    public function increaseNumberOfTimesLinked(): void
+    {
+        ++$this->numberOfTimesLinked;
+    }
+
+    public function decreaseNumberOfTimesLinked(): void
+    {
+        --$this->numberOfTimesLinked;
+    }
+
     public function getUrl(): string
     {
         return $this->url;
