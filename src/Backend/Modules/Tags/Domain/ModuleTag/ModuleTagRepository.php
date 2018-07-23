@@ -46,6 +46,7 @@ final class ModuleTagRepository extends ServiceEntityRepository
                 ->select('mt.moduleName')
                 ->innerJoin('mt.tag', 't', Join::WITH, 't.id = :id')
                 ->setParameter('id', $id)
+                ->groupBy('mt.moduleName')
                 ->getQuery()
                 ->getScalarResult(),
             'moduleName'
