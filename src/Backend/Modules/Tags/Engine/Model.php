@@ -112,7 +112,7 @@ class Model
             function (Tag $tag): string {
                 return $tag->getTag();
             },
-            self::getTagRepository()->findTags($module, $otherId, self::getLocale($language))
+            self::getTagRepository()->findTags(self::getLocale($language), $module, $otherId)
         );
 
         // return as an imploded string
@@ -191,7 +191,7 @@ class Model
         // make sure the list of tags contains only unique and non-empty elements in a case insensitive way
         $tags = array_filter(array_intersect_key($tags, array_unique(array_map('strtolower', $tags))));
 
-        $currentTags = $tagRepository->findTags($module, $otherId, $locale);
+        $currentTags = $tagRepository->findTags($locale, $module, $otherId);
 
         $moduleTagRepository->remove(
             ...array_map(

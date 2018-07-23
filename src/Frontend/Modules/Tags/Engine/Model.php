@@ -70,14 +70,7 @@ class Model
 
     public static function getMostUsed(int $limit): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT t.tag AS name, t.url, t.number
-             FROM tags AS t
-             WHERE t.language = ? AND t.number > 0
-             ORDER BY t.number DESC
-             LIMIT ?',
-            [FrontendLocale::frontendLanguage(), $limit]
-        );
+        return self::tagsToArrays(self::getTagRepository()->findMostUsed(FrontendLocale::frontendLanguage(), $limit));
     }
 
     /**
@@ -89,36 +82,9 @@ class Model
      */
     public static function getForItem(string $module, int $otherId, Locale $locale = null): array
     {
-        $return = [];
-
-        // get tags
-        $linkedTags = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT t.tag AS name, t.url
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?',
-            [$module, $otherId, $locale ?? FrontendLocale::frontendLanguage()]
+        return self::tagsToArrays(
+            self::getTagRepository()->findTags($locale ?? FrontendLocale::frontendLanguage(), $module, $otherId)
         );
-
-        // return
-        if (empty($linkedTags)) {
-            return $return;
-        }
-
-        // create link
-        $tagLink = FrontendNavigation::getUrlForBlock('Tags', 'Detail');
-
-        // loop tags
-        foreach ($linkedTags as $row) {
-            // add full URL
-            $row['full_url'] = $tagLink . '/' . $row['url'];
-
-            // add
-            $return[] = $row;
-        }
-
-        // return
-        return $return;
     }
 
     /**
@@ -282,11 +248,18 @@ class Model
 
     private static function tagsToArrays(array $tags): array
     {
-        return array_map(
-            function (Tag $tag): array {
-                return $tag->toArray();
-            },
-            $tags
+        $tagLink = FrontendNavigation::getUrlForBlock('Tags', 'Detail');
+
+        return array_values(
+            array_map(
+                function (Tag $tagEntity) use ($tagLink): array {
+                    $tag = $tagEntity->toArray();
+                    $tag['full_url'] = $tagLink . '/' . $tag['url'];
+
+                    return $tag;
+                },
+                $tags
+            )
         );
     }
 }

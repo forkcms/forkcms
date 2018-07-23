@@ -86,7 +86,7 @@ final class TagRepository extends ServiceEntityRepository
         return $this->getUrl(Model::addNumber($url), $locale, $id);
     }
 
-    public function findTags(string $moduleName, int $moduleId, Locale $locale): array
+    public function findTags(Locale $locale, string $moduleName, int $moduleId): array
     {
         $queryBuilder = $this->createQueryBuilder('t');
 
@@ -119,6 +119,19 @@ final class TagRepository extends ServiceEntityRepository
             ->where('t.locale = :locale AND t.numberOfTimesLinked > 0')
             ->setParameter('locale', $locale)
             ->orderBy('t.tag')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findMostUsed(Locale $locale, int $limit): array
+    {
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        return $queryBuilder
+            ->where('t.locale = :locale AND t.numberOfTimesLinked > 0')
+            ->setParameter('locale', $locale)
+            ->orderBy('t.numberOfTimesLinked', Criteria::DESC)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }
