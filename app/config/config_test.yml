@@ -3,6 +3,7 @@ imports:
 
 parameters:
     site.multilanguage: true
+    site.default_language: en
 
 framework:
     test: ~
