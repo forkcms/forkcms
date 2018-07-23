@@ -20,19 +20,19 @@ class IndexTest extends WebTestCase
         );
 
         $client->request('GET', '/en/tags');
-        self::assertEquals(
+        $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        self::assertContains(
+        $this->assertContains(
             '<a href="/en/tags/detail/most-used" rel="tag">',
             $client->getResponse()->getContent()
         );
-        self::assertContains(
+        $this->assertContains(
             'most used',
             $client->getResponse()->getContent()
         );
-        self::assertContains(
+        $this->assertContains(
             '<span class="badge hidden-phone">6</span>',
             $client->getResponse()->getContent()
         );
