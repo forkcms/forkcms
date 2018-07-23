@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Tags\Engine;
 
+use Assert\Assert;
 use Backend\Core\Language\Locale;
 use Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository;
 use Backend\Modules\Tags\Domain\Tag\Tag;
@@ -107,14 +108,11 @@ class Model
     {
         $type = (string) \SpoonFilter::getValue($type, ['string', 'array'], 'string');
 
-        // fetch tags
-        $tags = (array) BackendModel::getContainer()->get('database')->getColumn(
-            'SELECT i.tag
-             FROM tags AS i
-             INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
-             WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?
-             ORDER BY i.tag ASC',
-            [$module, $otherId, $language ?? BL::getWorkingLanguage()]
+        $tags = array_map(
+            function (Tag $tag): string {
+                return $tag->getTag();
+            },
+            self::getTagRepository()->findTags($module, $otherId, self::getLocale($language))
         );
 
         // return as an imploded string

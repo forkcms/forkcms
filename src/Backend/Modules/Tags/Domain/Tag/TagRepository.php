@@ -8,6 +8,7 @@ use Common\Uri;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 final class TagRepository extends ServiceEntityRepository
 {
@@ -86,5 +87,24 @@ final class TagRepository extends ServiceEntityRepository
         }
 
         return $this->getUrl(Model::addNumber($url), $locale, $id);
+    }
+
+    public function findTags(string $moduleName, int $moduleId, Locale $locale): array
+    {
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        return $queryBuilder
+            ->orderBy('t.tag', Criteria::ASC)
+            ->innerJoin(
+                't.moduleTags',
+                'mt',
+                Join::WITH,
+                'mt.moduleName = :moduleName AND mt.moduleId = :moduleId AND t.locale = :locale'
+            )
+            ->setParameter('moduleName', $moduleName)
+            ->setParameter('moduleId', $moduleId)
+            ->setParameter('locale', $locale)
+            ->getQuery()
+            ->getResult();
     }
 }
