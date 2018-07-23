@@ -129,12 +129,7 @@ class Model
 
     public static function getName(int $tagId): string
     {
-        return FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT tag
-             FROM tags
-             WHERE id = ?',
-            [$tagId]
-        );
+        return self::getTagRepository()->find($tagId)->getTag();
     }
 
     /**
