@@ -127,4 +127,23 @@ class EditTest extends WebTestCase
             $client->getResponse()->getContent()
         );
     }
+
+    public function testInvalidIdShouldShowAnError(): void
+    {
+        $client = static::createClient();
+        $this->login($client);
+
+        $client->request('GET', '/private/en/tags/edit?id=12345678');
+        $client->followRedirect();
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains(
+            '/private/en/tags/index',
+            $client->getHistory()->current()->getUri()
+        );
+        $this->assertContains(
+            'error=non-existing',
+            $client->getHistory()->current()->getUri()
+        );
+    }
 }
