@@ -20,7 +20,7 @@ class DetailTest extends WebTestCase
         );
 
         $crawler = $client->request('GET', '/en/tags');
-        self::assertEquals(
+        $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
@@ -28,21 +28,21 @@ class DetailTest extends WebTestCase
         $link = $crawler->selectLink('most used')->link();
         $crawler = $client->click($link);
 
-        self::assertEquals(
+        $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        self::assertStringEndsWith(
+        $this->assertStringEndsWith(
             '/en/tags/detail/most-used',
             $client->getHistory()->current()->getUri()
         );
-        self::assertStringStartsWith(
+        $this->assertStringStartsWith(
             'Tags',
             $crawler->filter('title')->text()
         );
-        self::assertContains('<a href="/en/tags" title="To tags overview">', $crawler->html());
-        self::assertContains('<h2>Pages</h2>', $crawler->html());
-        self::assertContains('<a href="/en/sitemap" rel="tag">', $crawler->html());
+        $this->assertContains('<a href="/en/tags" title="To tags overview">', $crawler->html());
+        $this->assertContains('<h2>Pages</h2>', $crawler->html());
+        $this->assertContains('<a href="/en/sitemap" rel="tag">', $crawler->html());
     }
 
     public function testNonExistingFaqGives404(): void
