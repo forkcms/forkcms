@@ -40,4 +40,18 @@ class MassActionTest extends WebTestCase
             $client->getHistory()->current()->getUri()
         );
     }
+
+    public function testActionIsRequired(): void
+    {
+        $client = static::createClient();
+        $this->login($client);
+
+        $client->setMaxRedirects(1);
+        $client->request('GET', '/private/en/tags/mass_action');
+
+        $this->assertStringEndsWith(
+            '&error=no-action-selected',
+            $client->getHistory()->current()->getUri()
+        );
+    }
 }
