@@ -97,4 +97,34 @@ class EditTest extends WebTestCase
             $client->getResponse()->getContent()
         );
     }
+
+    public function testSubmittingInvalidData(): void
+    {
+        $client = static::createClient();
+        $this->login($client);
+
+        $crawler = $client->request('GET', '/private/en/tags/edit?id=1');
+
+        $form = $crawler->selectButton('Save')->form();
+        $this->submitEditForm($client, $form, [
+            'name' => '',
+        ]);
+
+        // we should get a 200 and be redirected to the index page
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains(
+            '/private/en/tags/edit',
+            $client->getHistory()->current()->getUri()
+        );
+
+        // our page shows an overal error message and a specific one
+        $this->assertContains(
+            'Something went wrong',
+            $client->getResponse()->getContent()
+        );
+        $this->assertContains(
+            'Please provide a name.',
+            $client->getResponse()->getContent()
+        );
+    }
 }
