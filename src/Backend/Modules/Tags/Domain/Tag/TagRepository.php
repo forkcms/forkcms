@@ -101,10 +101,16 @@ final class TagRepository extends ServiceEntityRepository
                 Join::WITH,
                 'mt.moduleName = :moduleName AND mt.moduleId = :moduleId AND t.locale = :locale'
             )
+            ->indexBy('t', 't.tag')
             ->setParameter('moduleName', $moduleName)
             ->setParameter('moduleId', $moduleId)
             ->setParameter('locale', $locale)
             ->getQuery()
             ->getResult();
+    }
+
+    public function removeUnused(): void
+    {
+        $this->remove(...$this->findByNumberOfTimesLinked(0));
     }
 }

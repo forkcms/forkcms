@@ -165,12 +165,12 @@ class Model
      * @param string|null $language The language wherein the tags will be inserted,
      *                         if not provided the workinglanguage will be used.
      */
-    public static function saveTags(int $otherId, $tags, string $module, string $language = null)
+    public static function saveTags(int $otherId, $tags, string $module, string $language = null): void
     {
         $language = $language ?? BL::getWorkingLanguage();
 
         // redefine the tags as an array
-        if (!is_array($tags)) {
+        if (!\is_array($tags)) {
             $tags = (array) explode(',', (string) $tags);
         }
 
@@ -272,7 +272,7 @@ class Model
         }
 
         // remove all tags that don't have anything linked
-        $database->delete('tags', 'number = ?', 0);
+        self::getTagRepository()->removeUnused();
     }
 
     /**
