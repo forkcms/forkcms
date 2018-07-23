@@ -84,4 +84,21 @@ class MassActionTest extends WebTestCase
         $this->assertNotContains('id=2" title="">most used</a>', $client->getResponse()->getContent());
         $this->assertContains('id=1" title="">test</a>', $client->getResponse()->getContent());
     }
+
+    public function testDeletingAllTags(): void
+    {
+        $client = static::createClient();
+        $this->login($client);
+
+        $client->setMaxRedirects(1);
+        $client->request('GET', '/private/en/tags/mass_action?action=delete&id[]=2&id[]=1');
+
+        $this->assertStringEndsWith(
+            '&report=deleted',
+            $client->getHistory()->current()->getUri()
+        );
+        $this->assertNotContains('id=2" title="">most used</a>', $client->getResponse()->getContent());
+        $this->assertNotContains('id=1" title="">test</a>', $client->getResponse()->getContent());
+        $this->assertContains('<p>There are no tags yet.</p>', $client->getResponse()->getContent());
+    }
 }
