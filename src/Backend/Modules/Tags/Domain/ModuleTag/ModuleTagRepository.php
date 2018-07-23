@@ -12,9 +12,12 @@ final class ModuleTagRepository extends ServiceEntityRepository
         parent::__construct($registry, ModuleTag::class);
     }
 
-    public function add(ModuleTag $moduleTag): void
+    public function add(ModuleTag ...$moduleTags): void
     {
-        $this->getEntityManager()->persist($moduleTag);
+        foreach ($moduleTags as $moduleTag) {
+            $this->getEntityManager()->persist($moduleTag);
+        }
+
         $this->getEntityManager()->flush();
     }
 
@@ -23,10 +26,13 @@ final class ModuleTagRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    public function remove(ModuleTag $moduleTag): void
+    public function remove(ModuleTag ...$moduleTags): void
     {
-        $this->getEntityManager()->remove($moduleTag);
-        $moduleTag->getTag()->decreaseNumberOfTimesLinked();
+        foreach ($moduleTags as $moduleTag) {
+            $this->getEntityManager()->remove($moduleTag);
+            $moduleTag->getTag()->decreaseNumberOfTimesLinked();
+        }
+
         $this->getEntityManager()->flush();
     }
 }

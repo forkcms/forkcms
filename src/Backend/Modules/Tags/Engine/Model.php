@@ -189,35 +189,36 @@ class Model
 
         $currentTags = self::getTagRepository()->findTags($module, $otherId, $locale);
 
-        /** @var Tag[] $removedTags */
-        $removedTags = array_diff_key($currentTags, array_flip($tags));
-
-        foreach ($removedTags as $removedTag) {
-            self::getModuleTagRepository()->remove(
-                self::getModuleTagRepository()->findOneBy(
-                    [
-                        'tag' => $removedTag,
-                        'moduleName' => $module,
-                        'moduleId' => $otherId,
-                    ]
-                )
-            );
-        }
+        self::getModuleTagRepository()->remove(
+            ...array_map(
+                function (Tag $tag) use ($module, $otherId): ModuleTag {
+                    return self::getModuleTagRepository()->findOneBy(
+                        [
+                            'tag' => $tag,
+                            'moduleName' => $module,
+                            'moduleId' => $otherId,
+                        ]
+                    );
+                },
+                array_values(array_diff_key($currentTags, array_flip($tags)))
+            )
+        );
 
         $newTags = array_diff($tags, array_keys($currentTags));
 
         if (!empty($newTags)) {
-            foreach ($newTags as $tagName) {
-                self::getModuleTagRepository()->add(
-                    new ModuleTag($module, $otherId, self::getTagForTagName($tagName, $locale))
-                );
-            }
+            self::getModuleTagRepository()->add(
+                ...array_map(
+                    function (string $tagName) use ($module, $otherId, $locale): ModuleTag {
+                        return new ModuleTag($module, $otherId, self::getTagForTagName($tagName, $locale));
+                    },
+                    $newTags
+                )
+            );
         }
 
         // add to search index
         BackendSearchModel::saveIndex($module, $otherId, ['tags' => implode(' ', (array) $tags)], $language);
-
-        self::getTagRepository()->flush();
 
         // remove all tags that don't have anything linked
         self::getTagRepository()->removeUnused();

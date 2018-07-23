@@ -32,12 +32,9 @@ final class TagRepository extends ServiceEntityRepository
     {
         $entityManager = $this->getEntityManager();
 
-        array_map(
-            function (Tag $tag) use ($entityManager) {
-                $entityManager->remove($tag);
-            },
-            $tags
-        );
+        foreach ($tags as $tag) {
+            $entityManager->remove($tag);
+        }
 
         $this->getEntityManager()->flush();
     }
