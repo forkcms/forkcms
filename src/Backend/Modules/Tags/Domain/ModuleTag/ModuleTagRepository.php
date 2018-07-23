@@ -4,6 +4,7 @@ namespace Backend\Modules\Tags\Domain\ModuleTag;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 final class ModuleTagRepository extends ServiceEntityRepository
 {
@@ -34,5 +35,18 @@ final class ModuleTagRepository extends ServiceEntityRepository
         }
 
         $this->getEntityManager()->flush();
+    }
+
+    public function findModulesByTagId(int $id): array
+    {
+        return array_column(
+            $this->createQueryBuilder('mt')
+                ->select('mt.moduleName')
+                ->innerJoin('mt.tag', 't', Join::WITH, 't.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getScalarResult(),
+            'moduleName'
+        );
     }
 }

@@ -124,14 +124,7 @@ class Model
 
     public static function getModulesForTag(int $tagId): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT module
-             FROM modules_tags
-             WHERE tag_id = ?
-             GROUP BY module
-             ORDER BY module ASC',
-            [$tagId]
-        );
+        return self::getModuleTagRepository()->findModulesByTagId($tagId);
     }
 
     public static function getName(int $tagId): string
