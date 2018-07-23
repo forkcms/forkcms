@@ -54,4 +54,18 @@ class MassActionTest extends WebTestCase
             $client->getHistory()->current()->getUri()
         );
     }
+
+    public function testIdsAreRequired(): void
+    {
+        $client = static::createClient();
+        $this->login($client);
+
+        $client->setMaxRedirects(1);
+        $client->request('GET', '/private/en/tags/mass_action?action=delete');
+
+        $this->assertStringEndsWith(
+            '&error=no-selection',
+            $client->getHistory()->current()->getUri()
+        );
+    }
 }
