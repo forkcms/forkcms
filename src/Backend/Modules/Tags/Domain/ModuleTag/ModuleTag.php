@@ -35,6 +35,13 @@ class ModuleTag
      */
     private $tag;
 
+    public function __construct(string $moduleName, int $moduleId, Tag $tag)
+    {
+        $this->moduleName = $moduleName;
+        $this->moduleId = $moduleId;
+        $this->tag = $tag;
+    }
+
     public function toArray(): array
     {
         return [
