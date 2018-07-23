@@ -155,4 +155,14 @@ final class TagRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findIdByUrl(string $url): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->where('t.url = :url')
+            ->setParameter('url', $url)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

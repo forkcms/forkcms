@@ -119,12 +119,7 @@ class Model
 
     public static function getIdByUrl(string $url): int
     {
-        return (int) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT id
-             FROM tags
-             WHERE url = ?',
-            [$url]
-        );
+        return self::getTagRepository()->findIdByUrl($url);
     }
 
     public static function getModulesForTag(int $tagId): array
