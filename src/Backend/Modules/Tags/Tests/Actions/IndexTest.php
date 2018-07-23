@@ -40,4 +40,26 @@ class IndexTest extends WebTestCase
             $client->getHistory()->current()->getUri()
         );
     }
+
+    public function testIndexContainsTags(): void
+    {
+        $client = static::createClient();
+        $this->login($client);
+
+        $client->request('GET', '/private/en/tags/index');
+        $this->assertContains(
+            'test',
+            $client->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            'most used',
+            $client->getResponse()->getContent()
+        );
+
+        $this->assertContains(
+            '<a href="/private/en/tags/index?offset=0&order=num_tags',
+            $client->getResponse()->getContent()
+        );
+    }
 }
