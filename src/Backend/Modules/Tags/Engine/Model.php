@@ -31,7 +31,7 @@ class Model
     public static function delete($ids): void
     {
         $tagRepository = self::getTagRepository();
-        $ids = array_filter((array) $ids, '\is_integer');
+        $ids = array_filter((array) $ids, '\is_numeric');
 
         $tagRepository->remove(...$tagRepository->findByIds(...$ids));
     }
