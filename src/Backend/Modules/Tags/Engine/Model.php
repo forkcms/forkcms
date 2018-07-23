@@ -310,4 +310,18 @@ class Model
     {
         return Locale::fromString($language ?? BL::getWorkingLanguage());
     }
+
+    private static function getTagForTagName(string $tagName, Locale $locale): Tag
+    {
+        $tag = self::getTagRepository()->findOneBy(['tag' => $tagName, 'locale' => $locale]);
+        if ($tag instanceof Tag) {
+            return $tag;
+        }
+
+        $tag = new Tag($locale, $tagName, self::getTagRepository()->getUrl($tagName, $locale));
+
+        self::getTagRepository()->add($tag);
+
+        return $tag;
+    }
 }
