@@ -116,7 +116,7 @@ class Tag
         return [
             'id' => $this->getId(),
             'language' => $this->getLocale()->getLocale(),
-            'tag' => $this->tag,
+            'name' => $this->tag,
             'number' => $this->numberOfTimesLinked,
             'url' => $this->url,
         ];

@@ -3,6 +3,7 @@
 namespace Frontend\Modules\Tags\Engine;
 
 use Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository;
+use Backend\Modules\Tags\Domain\Tag\Tag;
 use Backend\Modules\Tags\Domain\Tag\TagRepository;
 use Common\Locale;
 use Frontend\Core\Engine\Exception as FrontendException;
@@ -26,7 +27,7 @@ class Model
      *
      * @throws FrontendException When FrontendTagsInterface is not correctly implemented to the module model
      *
-     * @return mixed
+     * @return array|int
      */
     public static function callFromInterface(string $module, string $class, string $method, $parameter = null)
     {
@@ -46,12 +47,15 @@ class Model
 
     public static function get(string $url, Locale $locale = null): array
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT id, language, tag AS name, number, url
-             FROM tags
-             WHERE url = ? AND language = ?',
-            [$url, $locale ?? FrontendLocale::frontendLanguage()]
+        $tag = self::getTagRepository()->findOneBy(
+            ['url' => $url, 'locale' => $locale ?? FrontendLocale::frontendLanguage()]
         );
+
+        if($tag instanceof Tag) {
+            return $tag->toArray();
+        }
+
+        return [];
     }
 
     /**
