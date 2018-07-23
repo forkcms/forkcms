@@ -18,9 +18,9 @@ use Common\Uri;
 class Model
 {
     const QUERY_DATAGRID_BROWSE =
-        'SELECT i.id, i.tag, i.number AS num_tags
-         FROM tags AS i
-         WHERE i.language = ?
+        'SELECT i.id, i.tag, i.numberOfTimesLinked AS num_tags
+         FROM TagsTag AS i
+         WHERE i.locale = ?
          GROUP BY i.id';
 
     /**
