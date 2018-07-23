@@ -51,7 +51,7 @@ class Model
             ['url' => $url, 'locale' => $locale ?? FrontendLocale::frontendLanguage()]
         );
 
-        if($tag instanceof Tag) {
+        if ($tag instanceof Tag) {
             return $tag->toArray();
         }
 
@@ -65,12 +65,7 @@ class Model
      */
     public static function getAll(): array
     {
-        return array_map(
-            function (Tag $tag): array {
-                return $tag->toArray();
-            },
-            self::getTagRepository()->findAllLinkedTags(FrontendLocale::frontendLanguage())
-        );
+        return self::tagsToArrays(self::getTagRepository()->findAllLinkedTags(FrontendLocale::frontendLanguage()));
     }
 
     public static function getMostUsed(int $limit): array
@@ -283,5 +278,15 @@ class Model
     private static function getModuleTagRepository(): ModuleTagRepository
     {
         return FrontendModel::get(ModuleTagRepository::class);
+    }
+
+    private static function tagsToArrays(array $tags): array
+    {
+        return array_map(
+            function (Tag $tag): array {
+                return $tag->toArray();
+            },
+            $tags
+        );
     }
 }
