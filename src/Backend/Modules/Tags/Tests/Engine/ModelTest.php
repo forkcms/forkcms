@@ -128,7 +128,7 @@ final class ModelTest extends WebTestCase
     {
         $database = self::createClient()->getContainer()->get('database');
         $tagCount = function (int $id) use ($database): int {
-            return $database->getVar('SELECT number FROM tags WHERE id = ?', $id);
+            return $database->getVar('SELECT numberOfTimesLinked FROM TagsTag WHERE id = ?', $id);
         };
         $originalCountTag1 = $tagCount(1);
         $originalCountTag2 = $tagCount(2);
