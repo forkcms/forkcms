@@ -2,6 +2,7 @@
 
 namespace Backend\Modules\Tags\Domain\ModuleTag;
 
+use Common\Locale;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -73,5 +74,15 @@ final class ModuleTagRepository extends ServiceEntityRepository
                 ->getScalarResult(),
             'moduleId'
         );
+    }
+
+    public function findByTagAndLocale(string $tag, Locale $locale): array
+    {
+        return $this->createQueryBuilder('mt')
+            ->innerJoin('mt.tag', 't', Join::WITH, 't.tag = :tag AND t.locale = :locale')
+            ->setParameter('tag', $tag)
+            ->setParameter('locale', $locale)
+            ->getQuery()
+            ->getResult();
     }
 }

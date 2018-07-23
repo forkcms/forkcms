@@ -47,8 +47,8 @@ class ModuleTag
     {
         return [
             'module' => $this->moduleName,
-            'other_id' => $this->moduleId,
-            'tag_id' => $this->tag->getId(),
+            'other_id' => (string) $this->moduleId,
+            'tag_id' => (string) $this->tag->getId(),
         ];
     }
 
