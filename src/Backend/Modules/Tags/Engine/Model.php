@@ -149,9 +149,11 @@ class Model
     public static function insert(string $tag, string $language = null): int
     {
         $locale = self::getLocale($language);
-        $tagEntity = new Tag($locale, $tag, self::getTagRepository()->getUrl($tag, $locale));
+        $tagRepository = self::getTagRepository();
 
-        self::getTagRepository()->add($tagEntity);
+        $tagEntity = new Tag($locale, $tag, $tagRepository->getUrl($tag, $locale));
+
+        $tagRepository->add($tagEntity);
 
         return $tagEntity->getId();
     }
@@ -168,6 +170,8 @@ class Model
     public static function saveTags(int $otherId, $tags, string $module, string $language = null): void
     {
         $locale = self::getLocale($language);
+        $tagRepository = self::getTagRepository();
+        $moduleTagRepository = self::getModuleTagRepository();
 
         // redefine the tags as an array
         if (!\is_array($tags)) {
@@ -187,12 +191,12 @@ class Model
         // make sure the list of tags contains only unique and non-empty elements in a case insensitive way
         $tags = array_filter(array_intersect_key($tags, array_unique(array_map('strtolower', $tags))));
 
-        $currentTags = self::getTagRepository()->findTags($module, $otherId, $locale);
+        $currentTags = $tagRepository->findTags($module, $otherId, $locale);
 
-        self::getModuleTagRepository()->remove(
+        $moduleTagRepository->remove(
             ...array_map(
-                function (Tag $tag) use ($module, $otherId): ModuleTag {
-                    return self::getModuleTagRepository()->findOneBy(
+                function (Tag $tag) use ($module, $otherId, $moduleTagRepository): ModuleTag {
+                    return $moduleTagRepository->findOneBy(
                         [
                             'tag' => $tag,
                             'moduleName' => $module,
@@ -207,7 +211,7 @@ class Model
         $newTags = array_diff($tags, array_keys($currentTags));
 
         if (!empty($newTags)) {
-            self::getModuleTagRepository()->add(
+            $moduleTagRepository->add(
                 ...array_map(
                     function (string $tagName) use ($module, $otherId, $locale): ModuleTag {
                         return new ModuleTag($module, $otherId, self::getTagForTagName($tagName, $locale));
@@ -221,7 +225,7 @@ class Model
         BackendSearchModel::saveIndex($module, $otherId, ['tags' => implode(' ', (array) $tags)], $language);
 
         // remove all tags that don't have anything linked
-        self::getTagRepository()->removeUnused();
+        $tagRepository->removeUnused();
     }
 
     /**
@@ -262,14 +266,17 @@ class Model
 
     private static function getTagForTagName(string $tagName, Locale $locale): Tag
     {
-        $tag = self::getTagRepository()->findOneBy(['tag' => $tagName, 'locale' => $locale]);
+        $tagRepository = self::getTagRepository();
+
+        $tag = $tagRepository->findOneBy(['tag' => $tagName, 'locale' => $locale]);
+
         if ($tag instanceof Tag) {
             return $tag;
         }
 
-        $tag = new Tag($locale, $tagName, self::getTagRepository()->getUrl($tagName, $locale));
+        $tag = new Tag($locale, $tagName, $tagRepository->getUrl($tagName, $locale));
 
-        self::getTagRepository()->add($tag);
+        $tagRepository->add($tag);
 
         return $tag;
     }
