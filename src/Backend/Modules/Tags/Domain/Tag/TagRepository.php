@@ -106,6 +106,26 @@ final class TagRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findTagsForMultipleItems(Locale $locale, string $moduleName, int ...$moduleId): array
+    {
+        $queryBuilder = $this->createQueryBuilder('t');
+
+        return $queryBuilder
+            ->select('t AS tag, mt.moduleId')
+            ->orderBy('t.tag', Criteria::ASC)
+            ->innerJoin(
+                't.moduleTags',
+                'mt',
+                Join::WITH,
+                'mt.moduleName = :moduleName AND mt.moduleId IN (:moduleId) AND t.locale = :locale'
+            )
+            ->setParameter('moduleName', $moduleName)
+            ->setParameter('moduleId', $moduleId)
+            ->setParameter('locale', $locale)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function removeUnused(): void
     {
         $this->remove(...$this->findByNumberOfTimesLinked(0));

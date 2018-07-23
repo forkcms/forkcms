@@ -98,38 +98,23 @@ class Model
      */
     public static function getForMultipleItems(string $module, array $otherIds, Locale $locale = null): array
     {
-        $database = FrontendModel::getContainer()->get('database');
-
-        // init var
-        $return = [];
-
-        // get tags
-        $linkedTags = (array) $database->getRecords(
-            'SELECT mt.other_id, t.tag AS name, t.url
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             WHERE mt.module = ? AND t.language = ? AND mt.other_id IN (' . implode(', ', $otherIds) . ')',
-            [$module, $locale ?? FrontendLocale::frontendLanguage()]
+        $tags = self::getTagRepository()->findTagsForMultipleItems(
+            $locale ?? FrontendLocale::frontendLanguage(),
+            $module,
+            ...$otherIds
         );
-
-        // return
-        if (empty($linkedTags)) {
-            return $return;
-        }
-
-        // create link
+        $groupedTags = [];
         $tagLink = FrontendNavigation::getUrlForBlock('Tags', 'Detail');
 
-        // loop tags
-        foreach ($linkedTags as $row) {
-            // add full URL
-            $row['full_url'] = $tagLink . '/' . $row['url'];
+        foreach ($tags as $tagRecord) {
+            $tag = $tagRecord['tag']->toArray();
+            $tag['other_id'] = $tagRecord['moduleId'];
+            $tag['full_url'] = $tagLink . '/' . $tag['url'];
 
-            // add
-            $return[$row['other_id']][] = $row;
+            $groupedTags[$tagRecord['moduleId']][] = $tag;
         }
 
-        return $return;
+        return $groupedTags;
     }
 
     public static function getIdByUrl(string $url): int
