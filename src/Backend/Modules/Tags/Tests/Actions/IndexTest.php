@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Blog\Tests\Action;
+namespace Backend\Modules\Tags\Tests\Action;
 
 use Backend\Modules\Tags\DataFixtures\LoadTagsModulesTags;
 use Backend\Modules\Tags\DataFixtures\LoadTagsTags;
