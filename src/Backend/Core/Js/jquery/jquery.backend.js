@@ -1516,7 +1516,7 @@
     newWidget = newWidget.replace(/__id__/g, newName[1].replace(re, count))
     var newLi = $('<li class="list-group-item"></li>').html(newWidget)
     newLi.appendTo(list)
-    $this.trigger('collection-field-added')
+    $this.trigger('collection-field-added', newLi)
   }
 
   CollectionRemove.prototype.removeField = function (e) {
