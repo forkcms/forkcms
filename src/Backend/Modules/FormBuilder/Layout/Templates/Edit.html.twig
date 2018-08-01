@@ -539,8 +539,8 @@
                       {% form_field datetime_type %}
                     </div>
                   </div>
-                  <div class="jsValidation" style="display: none;">
-                    <div class="form-group">
+                  <div class="jsValidation">
+                    <div class="form-group" style="display: none;">
                       <label for="datetimeValidation" class="control-label">{{ 'lbl.Validation'|trans|ucfirst }}</label>
                       {% form_field datetime_validation %}
                     </div>
@@ -550,7 +550,7 @@
                         {{ macro.required }}
                       </label>
                       <p id="datetimeErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
-                      {% form_field_error datetime_error_message %}
+                      {% form_field datetime_error_message %}
                     </div>
                   </div>
                 </div>
@@ -928,7 +928,7 @@
               </div>
               <div class="modal-footer">
 				{{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-				{{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" } ) }} 
+				{{ macro.buttonIcon('', 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"submit" } ) }}
               </div>
             </div>
           </div>
