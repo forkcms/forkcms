@@ -252,7 +252,7 @@ jsBackend.FormBuilder.Fields = {
                 $('.jsValidationErrorMessage').hide()
                 $('#datetimeValidation').val('')
               }
-            })
+            }).trigger('change')
 
             $('#datetimeValueType').change(function () {
               if ($(this).val() === 'today') {
@@ -260,7 +260,7 @@ jsBackend.FormBuilder.Fields = {
               } else {
                 $('#datetimeValueAmount').prop('disabled', false)
               }
-            })
+            }).trigger('change')
           }
 
           // focus on first input element
