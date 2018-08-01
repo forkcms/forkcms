@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  Backend\Modules\Tags\Domain\Tag\TagRepository:
+
+  Backend\Modules\Tags\Domain\ModuleTag\ModuleTagRepository:

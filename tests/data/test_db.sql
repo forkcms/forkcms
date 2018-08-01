@@ -2442,11 +2442,11 @@ LOCK TABLES `modules_settings` WRITE;
 
 INSERT INTO `modules_settings` (`module`, `name`, `value`)
 VALUES
-  ('Core','languages','a:1:{i:0;s:2:\"en\";}'),
-  ('Core','active_languages','a:1:{i:0;s:2:\"en\";}'),
-  ('Core','redirect_languages','a:1:{i:0;s:2:\"en\";}'),
+  ('Core','languages','a:2:{i:0;s:2:\"en\";i:1;s:2:\"nl\";}'),
+  ('Core','active_languages','a:2:{i:0;s:2:\"en\";i:1;s:2:\"nl\";}'),
+  ('Core','redirect_languages','a:2:{i:0;s:2:\"en\";i:1;s:2:\"nl\";}'),
   ('Core','default_language','s:2:\"en\";'),
-  ('Core','interface_languages','a:1:{i:0;s:2:\"en\";}'),
+  ('Core','interface_languages','a:2:{i:0;s:2:\"en\";i:1;s:2:\"nl\";}'),
   ('Core','default_interface_language','s:2:\"en\";'),
   ('Core','theme','s:4:\"Fork\";'),
   ('Core','akismet_key','s:0:\"\";'),
@@ -2515,21 +2515,6 @@ VALUES
 
 /*!40000 ALTER TABLE `modules_settings` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-# Dump of table modules_tags
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `modules_tags`;
-
-CREATE TABLE `modules_tags` (
-  `module` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `tag_id` int(11) NOT NULL,
-  `other_id` int(11) NOT NULL,
-  PRIMARY KEY (`module`,`tag_id`,`other_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
 
 # Dump of table pages
 # ------------------------------------------------------------
@@ -2846,21 +2831,29 @@ CREATE TABLE `search_synonyms` (
 
 
 
-# Dump of table tags
+# Dump of table TagsTag
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `tags`;
+DROP TABLE IF EXISTS `TagsModuleTag`;
+DROP TABLE IF EXISTS `TagsTag`;
 
-CREATE TABLE `tags` (
+CREATE TABLE `TagsTag` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `locale` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:locale)',
   `tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `number` int(11) NOT NULL,
+  `numberOfTimesLinked` int(11) NOT NULL,
   `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
+CREATE TABLE `TagsModuleTag` (
+  `tag_id` int(11) NOT NULL,
+  `moduleName` varchar(255) NOT NULL,
+  `moduleId` int(11) NOT NULL,
+  PRIMARY KEY (`moduleName`,`moduleId`,`tag_id`),
+  KEY `IDX_879E91EDBAD26311` (`tag_id`),
+  CONSTRAINT `FK_879E91EDBAD26311` FOREIGN KEY (`tag_id`) REFERENCES `TagsTag` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 # Dump of table themes_templates
 # ------------------------------------------------------------
