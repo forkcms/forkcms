@@ -247,9 +247,11 @@ jsBackend.FormBuilder.Fields = {
                 $('#datetimeDialog').find('.jsDefaultValue').hide()
                 $('#datetimeValidation').val('time')
                 $('.jsValidationErrorMessage').show()
+                $('#datetimeErrorMessage').val(jsBackend.locale.err('TimeIsInvalid'))
               } else {
                 $('#datetimeDialog').find('.jsDefaultValue').show()
                 $('.jsValidationErrorMessage').hide()
+                $('#datetimeErrorMessage').val('')
                 $('#datetimeValidation').val('')
               }
             }).trigger('change')
