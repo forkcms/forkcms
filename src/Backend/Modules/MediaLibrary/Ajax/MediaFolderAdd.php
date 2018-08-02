@@ -63,7 +63,7 @@ class MediaFolderAdd extends BackendBaseAJAXAction
         $name = $this->getRequest()->request->get('name');
 
         // We don't have a name
-        if ($name === null) {
+        if (empty($name)) {
             throw new AjaxExitException(Language::err('NameIsRequired'));
         }
 
