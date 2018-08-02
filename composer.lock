@@ -1879,16 +1879,16 @@
         },
         {
             "name": "league/flysystem-cached-adapter",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-cached-adapter.git",
-                "reference": "93eec679c57f8510816577f361988b10b5b57351"
+                "reference": "60d73d9157b86643551209351c4b8a8fcf5f6da0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-cached-adapter/zipball/93eec679c57f8510816577f361988b10b5b57351",
-                "reference": "93eec679c57f8510816577f361988b10b5b57351",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-cached-adapter/zipball/60d73d9157b86643551209351c4b8a8fcf5f6da0",
+                "reference": "60d73d9157b86643551209351c4b8a8fcf5f6da0",
                 "shasum": ""
             },
             "require": {
@@ -1896,10 +1896,9 @@
                 "psr/cache": "^1.0.0"
             },
             "require-dev": {
-                "henrikbjorn/phpspec-code-coverage": "~1.0@dev",
                 "mockery/mockery": "~0.9",
-                "phpspec/phpspec": "~2.1",
-                "phpunit/phpunit": "~4.1",
+                "phpspec/phpspec": "^3.4",
+                "phpunit/phpunit": "^5.7",
                 "predis/predis": "~1.0",
                 "tedivm/stash": "~0.12"
             },
@@ -1923,7 +1922,7 @@
                 }
             ],
             "description": "An adapter decorator to enable meta-data caching.",
-            "time": "2017-03-20T09:59:34+00:00"
+            "time": "2018-06-05T18:59:20+00:00"
         },
         {
             "name": "liip/imagine-bundle",
@@ -2075,16 +2074,16 @@
         },
         {
             "name": "mailmotor/mailchimp-bundle",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/mailchimp-bundle.git",
-                "reference": "4b5c4acde74955249d8671cc2d2d11cd633e7cdd"
+                "reference": "d07887a09ec58cc446119afcceee185f97a20cd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/mailchimp-bundle/zipball/4b5c4acde74955249d8671cc2d2d11cd633e7cdd",
-                "reference": "4b5c4acde74955249d8671cc2d2d11cd633e7cdd",
+                "url": "https://api.github.com/repos/mailmotor/mailchimp-bundle/zipball/d07887a09ec58cc446119afcceee185f97a20cd9",
+                "reference": "d07887a09ec58cc446119afcceee185f97a20cd9",
                 "shasum": ""
             },
             "require": {
@@ -2117,28 +2116,28 @@
                 "bundle",
                 "php"
             ],
-            "time": "2017-09-28T07:55:04+00:00"
+            "time": "2018-06-12T14:41:50+00:00"
         },
         {
             "name": "mailmotor/mailmotor-bundle",
-            "version": "3.0.3",
+            "version": "3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mailmotor/mailmotor-bundle.git",
-                "reference": "61336f1862a93a3169148b3face3e6fcd3efe9cf"
+                "reference": "0ead6946e73a39c2a1a9033e02b2de97221c22ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/61336f1862a93a3169148b3face3e6fcd3efe9cf",
-                "reference": "61336f1862a93a3169148b3face3e6fcd3efe9cf",
+                "url": "https://api.github.com/repos/mailmotor/mailmotor-bundle/zipball/0ead6946e73a39c2a1a9033e02b2de97221c22ac",
+                "reference": "0ead6946e73a39c2a1a9033e02b2de97221c22ac",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1",
-                "symfony/http-kernel": "^2.3|^3.0"
+                "symfony/http-kernel": "^2.3|^3.0|^4.0"
             },
             "require-dev": {
-                "symfony/framework-bundle": "^2.3|^3.0"
+                "symfony/framework-bundle": "^2.3|^3.0|^4.0"
             },
             "type": "library",
             "autoload": {
@@ -2165,7 +2164,7 @@
                 "php",
                 "symfony"
             ],
-            "time": "2017-07-26T16:46:42+00:00"
+            "time": "2018-06-11T09:33:45+00:00"
         },
         {
             "name": "matthiasmullie/minify",
@@ -3294,16 +3293,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "3.0.3",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "30dd35e0ba99f1b4bad4672f376154fc4436019d"
+                "reference": "3e2e53d5e8dcadf5ea5dd671304bb68519de9e16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/30dd35e0ba99f1b4bad4672f376154fc4436019d",
-                "reference": "30dd35e0ba99f1b4bad4672f376154fc4436019d",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/3e2e53d5e8dcadf5ea5dd671304bb68519de9e16",
+                "reference": "3e2e53d5e8dcadf5ea5dd671304bb68519de9e16",
                 "shasum": ""
             },
             "require": {
@@ -3315,7 +3314,7 @@
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-1-Clause"
+                "BSD-2-Clause"
             ],
             "authors": [
                 {
@@ -3325,7 +3324,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2018-05-16T11:46:44+00:00"
+            "time": "2018-06-27T13:27:48+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

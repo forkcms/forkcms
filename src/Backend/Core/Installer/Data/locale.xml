@@ -7415,7 +7415,7 @@
         <translation language="pl"><![CDATA[zamknij nawigację]]></translation>
       </item>
       <item type="label" name="OpenTreeNavigation">
-        <translation language="nl"><![CDATA[klap boomnavigatie open]]></translation>
+        <translation language="nl"><![CDATA[boomnavigatie openklappen]]></translation>
         <translation language="en"><![CDATA[open tree navigation]]></translation>
         <translation language="pl"><![CDATA[otwórz drzewo nawigacji]]></translation>
       </item>

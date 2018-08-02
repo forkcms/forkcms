@@ -382,12 +382,12 @@ class Model
     public static function getByTag(int $tagId): array
     {
         $items = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id AS url, i.title AS name, mt.module
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             INNER JOIN blog_posts AS i ON mt.other_id = i.id
-             WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?',
-            ['Blog', (int) $tagId, 'active', BL::getWorkingLanguage()]
+            'SELECT i.id AS url, i.title AS name, mt.moduleName AS module
+             FROM TagsModuleTag AS mt
+             INNER JOIN TagsTag AS t ON mt.tag_id = t.id
+             INNER JOIN blog_posts AS i ON mt.moduleId = i.id
+             WHERE mt.moduleName = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?',
+            ['Blog', $tagId, 'active', BL::getWorkingLanguage()]
         );
 
         // overwrite the url

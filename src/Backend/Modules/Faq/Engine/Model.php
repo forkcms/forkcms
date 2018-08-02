@@ -153,10 +153,10 @@ class Model
     public static function getByTag(int $tagId): array
     {
         $questionIds = (array) BackendModel::get('database')->getColumn(
-            'SELECT other_id
-             FROM modules_tags AS t
+            'SELECT moduleId
+             FROM TagsModuleTag AS t
              WHERE t.tag_id = :tagId
-             AND t.module = :module',
+             AND t.moduleName = :module',
             [
                 'tagId' => $tagId,
                 'module' => 'Faq',
