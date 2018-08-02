@@ -118,8 +118,8 @@ jsBackend.mediaLibrary.library = {
 
     // Submit form
     $('#confirmMassActionMediaItemMove').find('button[type=submit]').on('click', function () {
-      $('#move-to-folder-id-for-type-' + jsBackend.mediaLibrary.library.currentType).val($('#moveToFolderId').val())
-      $('#form-for-' + jsBackend.mediaLibrary.library.currentType).submit()
+      $('#moveToFolderIdForType' + utils.string.ucfirst(jsBackend.mediaLibrary.library.currentType)).val($('#moveToFolderId').val())
+      $('#formFor' + utils.string.ucfirst(jsBackend.mediaLibrary.library.currentType)).submit()
     })
   }
 }
@@ -146,17 +146,17 @@ jsBackend.mediaLibrary.tree = {
 
     // set the item selected
     if (jsBackend.data.get('MediaLibrary.openedFolderId')) {
-      $('#folder-' + jsBackend.data.get('MediaLibrary.openedFolderId')).addClass('selected')
+      $('#folder' + jsBackend.data.get('MediaLibrary.openedFolderId')).addClass('selected')
       jsBackend.mediaLibrary.tree.pageID = jsBackend.data.get('MediaLibrary.openedFolderId')
     }
 
     var openedIds = []
     if (typeof jsBackend.mediaLibrary.tree.pageID !== 'undefined') {
       // get parents
-      var parents = $('#folder-' + jsBackend.mediaLibrary.tree.pageID).parents('li')
+      var parents = $('#folder' + jsBackend.mediaLibrary.tree.pageID).parents('li')
 
       // init var
-      openedIds = ['folder-' + jsBackend.mediaLibrary.tree.pageID]
+      openedIds = ['folder' + jsBackend.mediaLibrary.tree.pageID]
 
       // add parents
       for (var i = 0; i < parents.length; i++) {
@@ -165,8 +165,8 @@ jsBackend.mediaLibrary.tree = {
     }
 
     // add home if needed
-    if (!utils.array.inArray('folder-1', openedIds)) {
-      openedIds.push('folder-1')
+    if (!utils.array.inArray('folder1', openedIds)) {
+      openedIds.push('folder1')
     }
 
     var options = {
@@ -205,7 +205,7 @@ jsBackend.mediaLibrary.tree = {
   // before an item will be moved we have to do some checks
   beforeMove: function (node, refNode, type, tree) {
     // get pageID that has to be moved
-    var currentPageID = $(node).prop('id').replace('folder-', '')
+    var currentPageID = $(node).prop('id').replace('folder', '')
 
     // init var
     var result = false
@@ -261,7 +261,7 @@ jsBackend.mediaLibrary.tree = {
     tree = tree.container.data('tree')
 
     // get pageID that has to be moved
-    var currentPageID = $(node).prop('id').replace('folder-', '')
+    var currentPageID = $(node).prop('id').replace('folder', '')
 
     // get pageID wheron the page has been dropped
     var droppedOnPageID = jsBackend.mediaLibrary.tree.getDroppedOnPageID(refNode)
@@ -301,7 +301,7 @@ jsBackend.mediaLibrary.tree = {
       return 0
     }
 
-    return $(refNode).prop('id').replace('folder-', '')
+    return $(refNode).prop('id').replace('folder', '')
   },
 
   toggleJsTreeCollapse: function () {

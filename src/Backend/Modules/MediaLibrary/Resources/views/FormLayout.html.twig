@@ -13,11 +13,11 @@
         </div>
         <div class="panel-body">
           {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'panel panel-default mediaGroup' }) %}
-          <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+          <div id="group{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
             <div class="panel-body mediaConnectedBox">
               <ul class="mediaConnectedItems ui-sortable">
                 {% for connectedItem in mediaGroup.connectedItems %}
-                  <li id="media-{{ connectedItem.item.id }}" data-folder-id="{{ connectedItem.item.folder.id }}" class="ui-state-default">
+                  <li id="media{{ connectedItem.item.id }}" data-folder-id="{{ connectedItem.item.folder.id }}" class="ui-state-default">
                     <div class="mediaHolder mediaHolder{{ connectedItem.item.type|ucfirst }}">
 
                       {# Audio #}

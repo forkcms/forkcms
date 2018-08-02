@@ -58,7 +58,7 @@ final class TreeManager
         $url = $this->getLink(['folder' => $cacheItem->id]);
 
         // start
-        $html = '<li id="folder-' . $cacheItem->id . '" rel="folder">' . "\n";
+        $html = '<li id="folder' . $cacheItem->id . '" rel="folder">' . "\n";
 
         // insert link
         $html .= '<a href="' . $url . '"><ins>&#160;</ins>' . $cacheItem->name . ' (' . $cacheItem->numberOfMediaItems . ')</a>' . "\n";
