@@ -28,11 +28,6 @@ services:
         tags:
             - { name: data_collector, template: "database_data_collector.html.twig", id: "database" }
 
-    ForkCMS\Utility\Thumbnails:
-        public: true
-        arguments:
-            - "%site.path_www%"
-
     monolog.full_trace_formatter:
         class: Monolog\Formatter\LineFormatter
         calls:
