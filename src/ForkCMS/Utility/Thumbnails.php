@@ -142,7 +142,7 @@ class Thumbnails
                 'dirname' => $dirname,
                 'path' => $directory->getRealPath(),
                 'width' => is_numeric($chunks[0]) ? (int) $chunks[0] : null,
-                'height' => is_numeric($chunks[1]) ? (int) $chunks[1] : null,
+                'height' => (array_key_exists(1, $chunks) && is_numeric($chunks[1])) ? (int) $chunks[1] : null,
                 'url' => (0 === mb_strpos($inPath, $this->sitePath))
                     ? mb_substr($inPath, mb_strlen($this->sitePath)) : ''
             ];
