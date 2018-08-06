@@ -110,10 +110,10 @@ class Add extends BackendBaseActionAdd
             // name checks
             if ($txtName->isFilled(BL::err('FieldIsRequired'))) {
                 // allowed regex (a-z and 0-9)
-                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
+                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('AlphaNumericCharactersOnly'))) {
                     // first letter does not seem to be a capital one
                     if (!in_array(mb_substr($txtName->getValue(), 0, 1), range('A', 'Z'))) {
-                        $txtName->setError(BL::err('InvalidName'));
+                        $txtName->setError(BL::err('FirstLetterMustBeACapitalLetter'));
                     } else {
                         // this name already exists in this language
                         if (BackendLocaleModel::existsByName(
