@@ -77,3 +77,11 @@
     background-color: $white;
   }
 }
+
+.tab-pane-collection {
+  margin: -31px -26px -56px;
+
+  & > .panel > .panel-heading {
+    display: none;
+  }
+}
