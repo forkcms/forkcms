@@ -72,3 +72,8 @@ services:
             - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
+
+    ForkCMS\Utility\Thumbnails:
+        public: true
+        arguments:
+            - "%site.path_www%"

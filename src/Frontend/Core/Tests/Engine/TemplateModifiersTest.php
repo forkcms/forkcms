@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Core\Tests;
+namespace Frontend\Core\Tests\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\TemplateModifiers;
