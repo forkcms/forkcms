@@ -55,6 +55,16 @@ class MediaFolderDelete extends BackendBaseActionDelete
                 )
             );
         }
+
+        if ($mediaFolder->hasChildren()) {
+            $this->redirect(
+                $this->getBackLink(
+                    [
+                        'error' => 'media-folder-delete-not-possible',
+                    ]
+                )
+            );
+        }
     }
 
     private function deleteMediaFolder(): DeleteMediaFolder
