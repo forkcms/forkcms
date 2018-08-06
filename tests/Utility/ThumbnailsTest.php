@@ -11,6 +11,8 @@ class ThumbnailsTest extends TestCase
     private const PORTRAIT = '500x1000';
     private const SOURCE = 'source';
     private const SQUARE = '500x500';
+    private const ONLY_WIDTH = '500x';
+    private const ONLY_HEIGHT = 'x500';
 
     /** @var array  */
     private $folders = [];
@@ -51,7 +53,7 @@ class ThumbnailsTest extends TestCase
     protected function setUp()
     {
         // Init variables
-        $sitePathWWW = dirname(__FILE__) . '/..';
+        $sitePathWWW = __DIR__ . '/../../var/cache/test';
         $this->rootPath = realpath($sitePathWWW);
         $this->filename = '1.jpg';
         $this->thumbnails = new Thumbnails($sitePathWWW);
@@ -60,13 +62,15 @@ class ThumbnailsTest extends TestCase
             $this->rootPath . '/' . self::SQUARE,
             $this->rootPath . '/' . self::PORTRAIT,
             $this->rootPath . '/' . self::LANDSCAPE,
+            $this->rootPath . '/' . self::ONLY_HEIGHT,
+            $this->rootPath . '/' . self::ONLY_WIDTH,
         ];
 
         $this->createFolders();
 
         // Copy our file to /source folder
         copy(
-            $this->rootPath . '/../src/Backend/Core/Installer/Data/images/' . $this->filename,
+            $this->rootPath . '/../../../src/Backend/Core/Installer/Data/images/' . $this->filename,
             $this->rootPath . '/' . self::SOURCE . '/' . $this->filename
         );
     }
@@ -86,11 +90,25 @@ class ThumbnailsTest extends TestCase
         $this->assertEquals(
             [
                 [
+                    'dirname' => self::ONLY_WIDTH,
+                    'path' => $this->rootPath . '/' . self::ONLY_WIDTH,
+                    'url' => '',
+                    'width' => (int) explode('x', self::ONLY_WIDTH)[0],
+                    'height' => null,
+                ],
+                [
                     'dirname' => self::LANDSCAPE,
                     'path' => $this->rootPath . '/' . self::LANDSCAPE,
                     'url' => '',
                     'width' => (int) explode('x', self::LANDSCAPE)[0],
                     'height' => (int) explode('x', self::LANDSCAPE)[1],
+                ],
+                [
+                    'dirname' => self::ONLY_HEIGHT,
+                    'path' => $this->rootPath . '/' . self::ONLY_HEIGHT,
+                    'url' => '',
+                    'width' => null,
+                    'height' => (int) explode('x', self::ONLY_HEIGHT)[1],
                 ],
                 [
                     'dirname' => self::PORTRAIT,

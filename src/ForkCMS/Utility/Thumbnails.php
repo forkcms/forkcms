@@ -141,9 +141,9 @@ class Thumbnails
             $folders[] = [
                 'dirname' => $dirname,
                 'path' => $directory->getRealPath(),
-                'width' => is_int($chunks[0]) ? (int) $chunks[0] : null,
-                'height' => is_int($chunks[1]) ? (int) $chunks[1] : null,
-                'url' => (mb_substr($inPath, 0, mb_strlen($this->sitePath)) === $this->sitePath)
+                'width' => is_numeric($chunks[0]) ? (int) $chunks[0] : null,
+                'height' => is_numeric($chunks[1]) ? (int) $chunks[1] : null,
+                'url' => (0 === mb_strpos($inPath, $this->sitePath))
                     ? mb_substr($inPath, mb_strlen($this->sitePath)) : ''
             ];
         }
