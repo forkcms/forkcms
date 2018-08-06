@@ -246,10 +246,15 @@ jsBackend.FormBuilder.Fields = {
               if ($(this).val() === 'time') {
                 $('#datetimeDialog').find('.jsDefaultValue').hide()
                 $('#datetimeValidation').val('time')
+                $('.jsValidationErrorMessage').show()
+                $('#datetimeErrorMessage').val(jsBackend.locale.err('TimeIsInvalid'))
               } else {
                 $('#datetimeDialog').find('.jsDefaultValue').show()
+                $('.jsValidationErrorMessage').hide()
+                $('#datetimeErrorMessage').val('')
+                $('#datetimeValidation').val('')
               }
-            })
+            }).trigger('change')
 
             $('#datetimeValueType').change(function () {
               if ($(this).val() === 'today') {
@@ -257,7 +262,7 @@ jsBackend.FormBuilder.Fields = {
               } else {
                 $('#datetimeValueAmount').prop('disabled', false)
               }
-            })
+            }).trigger('change')
           }
 
           // focus on first input element
