@@ -8,6 +8,18 @@
         <translation language="ru"><![CDATA[добавить медиа]]></translation>
         <translation language="pl"><![CDATA[dodaj media]]></translation>
       </item>
+      <item type="error" name="MinimumConnectedItems">
+        <translation language="en"><![CDATA[You need to connect {{ limit }} media items or more.]]></translation>
+        <translation language="nl"><![CDATA[U moet {{ limit }} media-items of meer koppelen.]]></translation>
+        <translation language="fr"><![CDATA[Vous devez connecter {{ limit }} éléments multimédias ou plus.]]></translation>
+        <translation language="de"><![CDATA[Sie müssen {{ limit }} Medienelemente oder mehr verbinden.]]></translation>
+      </item>
+      <item type="error" name="MaximumConnectedItems">
+        <translation language="en"><![CDATA[You need to connect {{ limit }} media items or less.]]></translation>
+        <translation language="nl"><![CDATA[U moet {{ limit }} media-items of minder koppelen.]]></translation>
+        <translation language="fr"><![CDATA[Vous devez connecter {{ limit }} éléments multimédias ou moins.]]></translation>
+        <translation language="de"><![CDATA[Sie müssen {{ limit }} Medienelemente oder weniger verbinden.]]></translation>
+      </item>
       <item type="label" name="MoveLeft">
         <translation language="en"><![CDATA[move left]]></translation>
         <translation language="nl"><![CDATA[verplaats naar links]]></translation>
@@ -128,7 +140,7 @@
       <item type="label" name="MediaFolder">
         <translation language="en"><![CDATA[folder]]></translation>
         <translation language="nl"><![CDATA[map]]></translation>
-        <translation language="ru"><![CDATA[папка]]></translation> 
+        <translation language="ru"><![CDATA[папка]]></translation>
         <translation language="pl"><![CDATA[katalog]]></translation>
       </item>
       <item type="message" name="MediaGroupEdited">
