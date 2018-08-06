@@ -203,6 +203,11 @@ services:
         arguments:
             - "@fork.settings"
 
+    ForkCMS\Utility\Thumbnails:
+        public: true
+        arguments:
+            - "%site.path_www%"
+
     templating:
         class: Frontend\Core\Engine\TwigTemplate
         public: true

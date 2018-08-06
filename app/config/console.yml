@@ -3,3 +3,9 @@ services:
     class: Console\Core\CacheClearCommand
     tags:
       - { name: console.command }
+  forkcms.console.thumbnails.generate:
+    class: Console\Thumbnails\GenerateThumbnailsCommand
+    arguments:
+      - "@ForkCMS\\Utility\\Thumbnails"
+    tags:
+      - { name: console.command }
