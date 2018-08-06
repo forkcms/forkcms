@@ -2,12 +2,12 @@
 
 namespace Backend\Modules\Extensions\Engine;
 
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Common\ModulesSettings;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
-use Backend\Core\Engine\Navigation;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Language\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -704,12 +704,21 @@ class Model
 
     public static function installTheme(string $theme): void
     {
-        $pathInfoXml = FRONTEND_PATH . '/Themes/' . $theme . '/info.xml';
+        $basePath = FRONTEND_PATH . '/Themes/' . $theme;
+        $pathInfoXml = $basePath . '/info.xml';
+        $pathTranslations = $basePath . '/locale.xml';
         $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
         $information = self::processThemeXml($infoXml);
         if (empty($information)) {
             throw new Exception('Invalid info.xml');
+        }
+
+        if (is_file($pathTranslations)) {
+            $translations = @simplexml_load_file($pathTranslations);
+            if ($translations !== false) {
+                BackendLocaleModel::importXML($translations);
+            }
         }
 
         foreach ($information['templates'] as $template) {
