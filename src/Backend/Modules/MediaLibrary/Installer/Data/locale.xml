@@ -13,6 +13,12 @@
         <translation language="nl"><![CDATA[verplaats naar links]]></translation>
         <translation language="pl"><![CDATA[przesuń w lewo]]></translation>
       </item>
+      <item type="label" name="MediaFolderRoot">
+        <translation language="en"><![CDATA[root (no parent folder)]]></translation>
+        <translation language="nl"><![CDATA[root (geen bovenliggende map)]]></translation>
+        <translation language="de"><![CDATA[root (kein übergeordneter Ordner)]]></translation>
+        <translation language="fr"><![CDATA[root (pas de dossier parent)]]></translation>
+      </item>
       <item type="label" name="MoveRight">
         <translation language="en"><![CDATA[move right]]></translation>
         <translation language="nl"><![CDATA[verplaats naar rechts]]></translation>
@@ -128,7 +134,7 @@
       <item type="label" name="MediaFolder">
         <translation language="en"><![CDATA[folder]]></translation>
         <translation language="nl"><![CDATA[map]]></translation>
-        <translation language="ru"><![CDATA[папка]]></translation> 
+        <translation language="ru"><![CDATA[папка]]></translation>
         <translation language="pl"><![CDATA[katalog]]></translation>
       </item>
       <item type="message" name="MediaGroupEdited">
