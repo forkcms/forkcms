@@ -104,6 +104,11 @@ class MediaItemIndex extends BackendBaseActionIndex
         /** @var MediaFolder|null $mediaFolder */
         $mediaFolder = $this->getMediaFolder();
 
+        $this->template->assign(
+            'folderHasNoChildren',
+            $mediaFolder instanceof MediaFolder && !$mediaFolder->hasChildren()
+        );
+
         // Assign variables
         $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
 

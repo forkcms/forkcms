@@ -76,7 +76,7 @@
           <div class="btn-toolbar">
             {% if mediaFolder %}
               <div class="btn-group pull-left" role="group">
-                {% if showMediaLibraryMediaFolderDelete %}
+                {% if showMediaLibraryMediaFolderDelete and folderHasNoChildren %}
                   {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
                     {{ macro.buttonIcon('', 'trash-o', 'lbl.MediaFolderDelete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "data-target":"#confirmMediaFolderDelete", "type":"button" } ) }}
                   {% endif %}
