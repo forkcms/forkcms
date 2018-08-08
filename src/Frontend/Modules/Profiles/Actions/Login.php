@@ -101,6 +101,24 @@ class Login extends FrontendBaseBlock
 
     private function redirectToPreviousPage(): void
     {
-        $this->redirect(urldecode($this->getRequest()->query->get('queryString', SITE_URL)));
+        $this->redirect(
+            $this->sanitizeQueryString(
+                urldecode(
+                    $this->getRequest()->query->get(
+                        'queryString',
+                        SITE_URL
+                    )
+                )
+            )
+        );
+    }
+
+    private function sanitizeQueryString(string $queryString): string
+    {
+        if (!preg_match('/^\/[^\/]/', $queryString)) {
+            return SITE_URL;
+        }
+
+        return $queryString;
     }
 }
