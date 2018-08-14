@@ -124,6 +124,6 @@ class Login extends FrontendBaseBlock
             return SITE_URL;
         }
 
-        return $queryString;
+        return filter_var($queryString, FILTER_SANITIZE_URL);
     }
 }
