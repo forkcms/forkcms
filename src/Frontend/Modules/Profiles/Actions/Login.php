@@ -4,6 +4,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Navigation;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -34,7 +35,11 @@ class Login extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->form = new FrontendForm('login', null, 'post', 'loginForm');
+        $action = Navigation::getUrlForBlock('Profiles', 'Login');
+        if ($this->getRequest()->query->has('queryString')) {
+            $action .= '?queryString=' . $this->getRequest()->query->get('queryString');
+        }
+        $this->form = new FrontendForm('login', $action, 'post', 'loginForm');
         $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
         $this->form->addPassword('password')->makeRequired();
         $this->form->addCheckbox('remember', true);
