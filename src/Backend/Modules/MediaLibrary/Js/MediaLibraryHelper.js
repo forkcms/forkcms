@@ -1346,6 +1346,19 @@ jsBackend.mediaLibraryHelper.upload = {
     // toggle uploaded box
     $('#uploadedMediaBox').toggle(showUploadedBox)
     $('#mediaWillBeConnectedToMediaGroup').toggle((currentMediaGroupId !== 0))
+
+    if (jsBackend.mediaLibraryHelper.upload.uploadedCount === 0) {
+      $('[data-role=uploadMediaStep1]').show()
+      $('[data-role=uploadMediaStep2]').hide()
+    } else {
+      $('[data-role=uploadMediaStep1]').hide()
+      $('[data-role=uploadMediaStep2]').show()
+    }
+
+    $('[data-role=uploadMediaGoToStep2]').on('click', function () {
+      $('[data-role=uploadMediaStep1]').hide()
+      $('[data-role=uploadMediaStep2]').show()
+    })
   },
 
   /**
