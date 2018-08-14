@@ -78,31 +78,31 @@
 
 <div data-role="uploadMediaStep1">
   {# Choose type #}
-  <div id="uploadMediaTypeBox" class="row fork-module-content">
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'msg.MediaUploadThisType'|trans }}</h2>
-        </div>
-        <div class="panel-body">
-          <div class="form-group last">
-            <ul class="list-unstyled">
-              <li class="radiobutton">
-                <label><input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" checked="checked" /> {{ 'msg.MediaUploadTypeFiles'|trans }}</label>
-              </li>
-              <li class="radiobutton">
-                <label><input type="radio" name="uploading_type" value="movie" /> {{ 'msg.MediaUploadTypeMovies'|trans }}</label>
-              </li>
-            </ul>
+  <div class="row fork-module-content">
+    <div id="uploadMediaTypeBox">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">{{ 'msg.MediaUploadThisType'|trans }}</h2>
+          </div>
+          <div class="panel-body">
+            <div class="form-group last">
+              <ul class="list-unstyled">
+                <li class="radiobutton">
+                  <label><input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" checked="checked" /> {{ 'msg.MediaUploadTypeFiles'|trans }}</label>
+                </li>
+                <li class="radiobutton">
+                  <label><input type="radio" name="uploading_type" value="movie" /> {{ 'msg.MediaUploadTypeMovies'|trans }}</label>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  {# Choose folder #}
-  <div class="row fork-module-content">
-    <div class="col-md-12">
+    {# Choose folder #}
+    <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2 class="panel-title">{{ 'msg.MediaUploadToThisFolder'|trans }}</h2>
