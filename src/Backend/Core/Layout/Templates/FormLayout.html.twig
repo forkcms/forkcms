@@ -264,6 +264,7 @@
 
 {% block bootstrap_collection_row %}
   {% spaceless %}
+    {% import "Layout/Templates/macros.html.twig" as macro %}
     {% if prototype is defined %}
       {% set prototype_vars = {} %}
       {% if style is defined %}
@@ -271,7 +272,11 @@
       {% endif %}
       {% set prototype_html = form_widget(prototype, prototype_vars) %}
       {% if form.vars.allow_delete %}
-        {% set prototype_html = prototype_html ~ '<div class="btn-toolbar"><div class="btn-group pull-right"><a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|raw ~ '</a></div></div>' %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-toolbar">' %}
+        {% if form.vars.allow_sequence %}
+          {% set prototype_html = prototype_html ~ '<div class="btn-group pull-left"><span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">' ~ macro.icon('reorder') ~ '</span>' ~ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) ~ '' ~ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) ~ '</div>' %}
+        {% endif %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-group pull-right"><a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|raw ~ '</a></div></div>' %}
       {% endif %}
 
       {% set attr = attr|merge({'data-prototype': prototype_html }) %}
@@ -282,16 +287,25 @@
         <div class="panel-heading">
           {{ form_label(form) }}
         </div>
-        <ul class="list-group js-collection">
+        <ul class="list-group js-collection" {% if form.vars.allow_sequence %}data-role="collection-sequence"{% endif %}>
           {% for field in form %}
             <li class="list-group-item">
               {{ form_widget(field) }}
               {{ form_errors(field) }}
-              {% if form.vars.allow_delete %}
+              {% if form.vars.allow_delete or form.vars.allow_sequence %}
                 <div class="btn-toolbar">
-                  <div class="btn-group pull-right">
-                    <a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|raw }}</a>
-                  </div>
+                  {% if form.vars.allow_sequence %}
+                    <div class="btn-group pull-left">
+                      <span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">{{ macro.icon('reorder') }}</span>
+                      {{ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) }}
+                      {{ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) }}
+                    </div>
+                  {% endif %}
+                  {% if form.vars.allow_delete %}
+                    <div class="btn-group pull-right">
+                      <a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|raw }}</a>
+                    </div>
+                  {% endif %}
                 </div>
               {% endif %}
             </li>
