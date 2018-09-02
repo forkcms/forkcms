@@ -63,7 +63,17 @@ CKEDITOR.dialog.add(
                                     style: 'margin-top: 20px;'
                                 }
                             ]
-                        }
+                        },
+                        {
+                            type: 'select',
+                            label: jsBackend.locale.msg('EditorSelectInternalPage'),
+                            id: 'localPage',
+                            title: jsBackend.locale.msg('EditorSelectInternalPage'),
+                            items: linkList,
+                            onChange: function (event) {
+                                this.getDialog().getContentElement('tab', 'url').setValue(event.data.value);
+                            }
+                        },
                     ]
                 }
             ],
