@@ -37,7 +37,7 @@ monolog:
     handlers:
         main:
             type: stream
-            path: "%site.path_www%/var/logs/logs.log"
+            path: "%site.path_www%/var/logs/%kernel.environment%/debug.log"
             level: debug
 
 parameters:
@@ -72,3 +72,8 @@ services:
             - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
+
+    ForkCMS\Utility\Thumbnails:
+        public: true
+        arguments:
+            - "%site.path_www%"

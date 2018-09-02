@@ -4,6 +4,7 @@ namespace Frontend\Modules\Profiles\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Navigation;
 use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -34,7 +35,11 @@ class Login extends FrontendBaseBlock
 
     private function buildForm(): void
     {
-        $this->form = new FrontendForm('login', null, 'post', 'loginForm');
+        $action = Navigation::getUrlForBlock('Profiles', 'Login');
+        if ($this->getRequest()->query->has('queryString')) {
+            $action .= '?queryString=' . $this->getRequest()->query->get('queryString');
+        }
+        $this->form = new FrontendForm('login', $action, 'post', 'loginForm');
         $this->form->addText('email')->makeRequired()->setAttribute('type', 'email');
         $this->form->addPassword('password')->makeRequired();
         $this->form->addCheckbox('remember', true);
@@ -58,6 +63,17 @@ class Login extends FrontendBaseBlock
 
         $loginStatus = FrontendProfilesAuthentication::getLoginStatus($txtEmail->getValue(), $txtPassword->getValue());
 
+        $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
+        if ($loginStatus === FrontendProfilesAuthentication::LOGIN_INVALID && $profileId !== 0) {
+            $loginAttempts = (int) FrontendProfilesModel::getSetting($profileId, 'login_attempts');
+
+            FrontendProfilesModel::setSetting($profileId, 'login_attempts', ++$loginAttempts);
+            if ($loginAttempts >= 10) {
+                $loginStatus = FrontendProfilesAuthentication::LOGIN_BLOCKED;
+                FrontendProfilesModel::update($profileId, ['status' => $loginStatus]);
+            }
+        }
+
         if ($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
             $errorString = sprintf(
                 FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
@@ -77,8 +93,11 @@ class Login extends FrontendBaseBlock
             return;
         }
 
+        $profileId = FrontendProfilesModel::getIdByEmail($this->form->getField('email')->getValue());
+        FrontendProfilesModel::setSetting($profileId, 'login_attempts', 0);
+
         FrontendProfilesAuthentication::login(
-            FrontendProfilesModel::getIdByEmail($this->form->getField('email')->getValue()),
+            $profileId,
             $this->form->getField('remember')->getChecked()
         );
 
@@ -87,6 +106,24 @@ class Login extends FrontendBaseBlock
 
     private function redirectToPreviousPage(): void
     {
-        $this->redirect(urldecode($this->getRequest()->query->get('queryString', SITE_URL)));
+        $this->redirect(
+            $this->sanitizeQueryString(
+                urldecode(
+                    $this->getRequest()->query->get(
+                        'queryString',
+                        SITE_URL
+                    )
+                )
+            )
+        );
+    }
+
+    private function sanitizeQueryString(string $queryString): string
+    {
+        if (!preg_match('/^\/[^\/]/', $queryString)) {
+            return SITE_URL;
+        }
+
+        return filter_var($queryString, FILTER_SANITIZE_URL);
     }
 }

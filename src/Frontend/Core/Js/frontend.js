@@ -282,6 +282,13 @@ jsFrontend.forms = {
           // Rename the original field, used to contain the display value
           $(this).attr('id', $(this).attr('id') + '-display')
           $(this).attr('name', $(this).attr('name') + '-display')
+
+          // make sure we can make the value empty
+          $(this).on('change', function (event) {
+            if ($(this).val() === '') {
+              clone.val('')
+            }
+          })
         })
 
         $inputDatefields.datepicker({
