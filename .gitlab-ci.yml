@@ -6,7 +6,10 @@ before_script:
   - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
   - cp app/config/parameters.yml.dist app/config/parameters.yml
 
-run_tests:
+###########################
+# Test stage related jobs #
+###########################
+run phpunit tests:
   stage: test
   image: sumocoders/fork-php71:latest
   services:
@@ -27,7 +30,7 @@ run_tests:
     MYSQL_DATABASE: ci
     MYSQL_ROOT_PASSWORD: root
 
-code_styles:
+check code styles:
   stage: test
   image: sumocoders/fork-php71:latest
   script:
