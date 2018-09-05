@@ -1,5 +1,28 @@
 stages:
+  - vulnerabilities
   - test
+
+######################################
+# Vulnerabilities stage related jobs #
+######################################
+check php vendors:
+  stage: vulnerabilities
+  image: sumocoders/framework-php72
+  before_script:
+    - touch .env
+    - composer install --no-scripts
+  script:
+    - bin/security-checker security:check
+  tags:
+    - docker
+
+check npm dependencies:
+  stage: vulnerabilities
+  image: node:10.6
+  script:
+    - npm audit --json
+  tags:
+    - docker
 
 
 ###########################
