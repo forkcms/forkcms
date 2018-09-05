@@ -30,7 +30,6 @@ class LoginType extends AbstractType
                 [
                     'type' => PasswordType::class,
                     'invalid_message' => 'The passwords do not match.',
-                    'required' => true,
                     'first_options' => ['label' => 'Password'],
                     'second_options' => ['label' => 'Confirm'],
                 ]
