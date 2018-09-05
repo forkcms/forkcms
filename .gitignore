@@ -18,11 +18,11 @@
 /app/sessions/*
 /bin/*
 !bin/console
+!bin/generate-parameters-gitlab
 /bundles/*
 /css/*.css
 /js/*.js
 
 # Docker
 var/docker/db/data/*
-docker-compose.override.yml
 .env

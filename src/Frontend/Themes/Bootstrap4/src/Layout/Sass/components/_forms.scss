@@ -1,0 +1,15 @@
+.has-danger {
+
+  .form-control-feedback,
+  .form-control-label {
+    color: theme-color("danger");
+  }
+
+  .form-control {
+    border-color: theme-color("danger");
+  }
+}
+
+.invalid-feedback {
+  display: block;
+}

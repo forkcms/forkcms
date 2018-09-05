@@ -1,0 +1,57 @@
+{#
+  variables that are available:
+  - {{ archive }}: contains an array with some dates
+  - {{ items }}: contains an array with all items, each element contains data about the items
+#}
+
+{% if not items %}
+  <section id="blogArchive" class="blog">
+    <p>{{ 'msg.BlogNoItems'|trans }}</p>
+  </section>
+{% else %}
+  <section id="blogArchive" class="blog blog-archive">
+    <header class="module-header">
+      <h3>
+      {% if archive.month %}
+        {{ 'msg.ArticlesFor'|trans|ucfirst|format(archive.start_date|spoondate('F Y',LANGUAGE) ) }}
+      {% else %}
+        {{ 'msg.ArticlesFor'|trans|ucfirst|format(archive.start_date|date('Y') ) }}
+      {% endif %}
+      </h3>
+    </header>
+    <div class="module-body">
+      <table class="table table-hover" itemscope itemtype="http://schema.org/Blog">
+        <thead class="sr-only">
+          <tr>
+            <th class="date">{{ 'lbl.Date'|trans|ucfirst }}</th>
+            <th class="title">{{ 'lbl.Title'|trans|ucfirst }}</th>
+            {% if allowComments %}<th class="comments">{{ 'lbl.Comments'|trans|ucfirst }}</th>{% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+            <tr>
+              <td>
+                <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH:i:s' ) }}">{{ item.publish_on|spoondate('d/m/Y',LANGUAGE ) }}</time>
+              </td>
+              <td><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></td>
+              {% if allowComments %}
+                <td>
+                  <i class="fa fa-comments" aria-hidden="true"></i>
+                  <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">
+                    {% if item.comments_multiple or not item.comments %}
+                      {{ 'msg.BlogNumberOfComments'|trans|format(item.comments_count) }}
+                    {% else %}
+                      {{ 'msg.BlogOneComment'|trans }}
+                    {% endif %}
+                  </a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% include "Core/Layout/Templates/Pagination.html.twig" %}
+{% endif %}

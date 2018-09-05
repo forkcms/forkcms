@@ -1,0 +1,64 @@
+{#
+  variables that are available:
+  - {{ widgetLocationItem }}: contains data about this location
+  - {{ widgetLocationSettings }}: contains this module's settings
+#}
+
+{% if widgetLocationItem %}
+  <div class="location location-widget mb-4">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="widget-map">
+          <div data-role="fork-map-container" data-map-id="{{ widgetLocationItem.id }}" style="height: {{ widgetLocationSettings.height }}px;">
+            <span class="sr-only">{{ 'lbl.Loading'|trans|ucfirst }}</span>
+          </div>
+        </div>
+        {% if widgetLocationSettings.full_url %}
+          <a href="{{ widgetLocationSettings.maps_url }}" class="btn pull-right" target="_blank">
+            <small>{{ 'lbl.ViewLargeMap'|trans|ucfirst }}<span class="sr-only"> {{ 'lbl.For'|trans }} {{ widgetLocationItem.title }}</span></small>
+          </a>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <div data-role="fork-marker-data-container" data-map-id="{{ widgetLocationItem.id }}" itemscope itemtype="http://schema.org/Place">
+          <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+            <meta itemprop="latitude" content="{{ widgetLocationItem.lat }}" />
+            <meta itemprop="longitude" content="{{ widgetLocationItem.lng }}" />
+          </div>
+
+          <div itemprop="name"><strong>{{ widgetLocationItem.title }}</strong></div>
+          <address itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+            <span itemprop="streetAddress">{{ widgetLocationItem.street }} {{ widgetLocationItem.number }}</span><br>
+            <span itemprop="postalCode">{{ widgetLocationItem.zip }}</span> <span itemprop="addressLocality">{{ widgetLocationItem.city }}</span><br>
+            <span itemprop="addressCountry">{{ widgetLocationItem.country }}</span>
+          </address>
+        </div>
+
+        {% if widgetLocationSettings.directions %}
+          <div id="locationSearch{{ widgetLocationItem.id }}">
+            <form method="get" action="#">
+              <h4>{{ 'lbl.GetDirections'|trans }}</h4>
+              <div class="form-group">
+                <label class="form-control-label" for="locationSearchAddress{{ widgetLocationItem.id }}">
+                  {{ 'lbl.Start'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr>&nbsp;
+                </label>
+                <div class="input-group">
+                  {# @remark: do not remove the id #}
+                  <input type="text" id="locationSearchAddress{{ widgetLocationItem.id }}" name="locationSearchAddress" class="form-control" />
+                  {# @remark: do not remove the id #}
+                  <span class="input-group-btn">
+                    <input type="submit" id="locationSearchRequest{{ widgetLocationItem.id }}" name="locationSearchRequest" class="btn btn-primary" value="{{ 'lbl.ShowDirections'|trans|ucfirst }}" />
+                  </span>
+                </div>
+                {# @remark: do not remove the id #}
+                <span id="locationSearchError{{ widgetLocationItem.id }}" class="has-danger" style="display: none;">
+                  <span class="form-control-feedback">{{ 'err.FieldIsRequired'|trans|ucfirst }}</span>
+                </span>
+              </div>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,6 @@
+imports:
+    - { resource: config.yml }
+
+# Sentry configuration
+sentry:
+  dsn: '%sentry.dsn%'

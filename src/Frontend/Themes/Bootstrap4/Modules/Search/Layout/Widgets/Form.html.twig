@@ -1,0 +1,7 @@
+<section id="searchFormWidget" class="form-inline search" role="search">
+  {% form search %}
+    <label for="qWidget" class="sr-only">{{ 'lbl.SearchTerm'|trans|ucfirst }}<abbr title="{{ 'lbl.RequiredField'|trans|ucfirst }}">*</abbr></label>
+    {% form_field q_widget %}
+    <input id="submit" class="btn btn-outline-success" type="submit" name="submit" value="{{ 'lbl.Search'|trans|ucfirst }}" />
+  {% endform %}
+</section>

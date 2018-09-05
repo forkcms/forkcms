@@ -1,0 +1,26 @@
+@mixin sticky-footer($footer-height, $root-selector: unquote("#root"), $root-footer-selector: unquote("#root-footer"), $footer-selector: unquote("#footer")) {
+
+  html, body {
+    height: 100%;
+  }
+
+  #{$root-selector} {
+    clear: both;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin-bottom: -$footer-height;
+    #{$root-footer-selector} {
+      height: $footer-height;
+    }
+  }
+
+  #{$footer-selector} {
+    clear: both;
+    position: relative;
+    height: $footer-height;
+  }
+}
+
+// set the footer height to use a sticky footer
+@include sticky-footer(40px);

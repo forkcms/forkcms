@@ -1,0 +1,31 @@
+.cookiebar {
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+@include media-breakpoint-down(sm) {
+  .cookiebar {
+    text-align: center;
+  }
+  
+  .cookiebar-content,
+  .cookiebar-buttons {
+    float: none;
+  }
+
+  .cookiebar-content {
+    margin-bottom: 8px;
+  }
+
+  .cookiebar-buttons .btn {
+    margin-bottom: 8px;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .cookiebar {
+    padding: 25px 15px;
+  }
+}
+

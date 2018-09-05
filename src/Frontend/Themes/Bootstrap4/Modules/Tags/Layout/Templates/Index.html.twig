@@ -1,0 +1,19 @@
+{#
+  variables that are available:
+  - {{ tags }}: contains an array with all tags that are used on the site, each element contains data about the tag
+#}
+{% import 'Core/Layout/Templates/Alerts.html.twig' as alerts %}
+<section id="tagsIndex" class="tags">
+  {% if not tags %}
+    {{ alerts.alert('info', 'msg.TagsNoItems'|trans) }}
+  {% else %}
+    <div class="list-group">
+      {% for tag in tags %}
+        <a class="list-group-item list-group-item-action d-flex justify-content-between" href="{{ geturlforblock('Tags','Detail') }}/{{ tag.url }}" rel="tag">
+          {{ tag.name }}
+          <span class="badge badge-pill badge-default">{{ tag.number }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>

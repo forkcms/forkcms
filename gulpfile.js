@@ -17,14 +17,14 @@ gulp.task('build:backend:assets:copy-css-vendors', function () {
     'node_modules/cropper/dist/cropper.css',
     'node_modules/bootstrap-accessibility-plugin/plugins/css/bootstrap-accessibility.css'
   ])
-  .pipe(gulp.dest('./css/vendors'))
+    .pipe(gulp.dest('./css/vendors'))
 })
 
 gulp.task('build:backend:assets:copy-fonts-vendors', function () {
   return gulp.src([
     'node_modules/font-awesome/fonts/**'
   ])
-  .pipe(gulp.dest('fonts/vendors'))
+    .pipe(gulp.dest('fonts/vendors'))
 })
 
 gulp.task('build:backend:assets:copy-ckeditor', function () {
@@ -81,7 +81,7 @@ gulp.task('build:backend:assets:copy-fine-uploader-css-and-images', function () 
     'node_modules/fine-uploader/jquery.fine-uploader/placeholders/waiting-generic.png',
     'node_modules/fine-uploader/jquery.fine-uploader/placeholders/not_available-generic.png'
   ])
-  .pipe(gulp.dest('./css/vendors/fine-uploader'))
+    .pipe(gulp.dest('./css/vendors/fine-uploader'))
 })
 
 gulp.task('build:backend:assets:copy-js-vendors', function () {
@@ -97,7 +97,7 @@ gulp.task('build:backend:assets:copy-js-vendors', function () {
     'node_modules/cropper/dist/cropper.js',
     'node_modules/bootstrap-accessibility-plugin/plugins/js/bootstrap-accessibility.min.js'
   ])
-  .pipe(gulp.dest('js/vendors'))
+    .pipe(gulp.dest('js/vendors'))
 })
 
 gulp.task('build:backend:sass:generate-css', function () {
@@ -105,21 +105,21 @@ gulp.task('build:backend:sass:generate-css', function () {
     'src/Backend/Core/Layout/Sass/screen.scss',
     'src/Backend/Core/Layout/Sass/debug.scss'
   ])
-  .pipe(sourcemaps.init())
-  .pipe(sass({
-    includePaths: [
-      'node_modules/'
-    ],
-    outputStyle: 'compressed',
-    precision: 10
-  }))
-  .pipe(autoprefixer({}))
-  .pipe(sourcemaps.write('./', {
-    includeContent: false,
-    sourceRoot: 'src/Backend/Core/Layout/Sass'
-  }))
-  .pipe(gulp.dest('src/Backend/Core/Layout/Css'))
-  .pipe(livereload())
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+      includePaths: [
+        'node_modules/'
+      ],
+      outputStyle: 'compressed',
+      precision: 10
+    }))
+    .pipe(autoprefixer({}))
+    .pipe(sourcemaps.write('./', {
+      includeContent: false,
+      sourceRoot: 'src/Backend/Core/Layout/Sass'
+    }))
+    .pipe(gulp.dest('src/Backend/Core/Layout/Css'))
+    .pipe(livereload())
 })
 
 gulp.task('build:backend', function () {
@@ -159,7 +159,7 @@ gulp.task('build:frontend:assets:copy-js-vendors', function () {
     'node_modules/photoswipe/dist/photoswipe-ui-default.min.js',
     'node_modules/slick-carousel/slick/slick.min.js'
   ])
-  .pipe(gulp.dest('js/vendors'))
+    .pipe(gulp.dest('js/vendors'))
 })
 
 gulp.task('build:frontend:assets:copy-photoswipe-css-and-images', function () {
@@ -176,40 +176,40 @@ gulp.task('build:frontend:sass:generate-css', function () {
     'src/Frontend/Core/Layout/Sass/editor_content.scss',
     'src/Frontend/Core/Layout/Sass/screen.scss'
   ])
-  .pipe(sourcemaps.init())
-  .pipe(sass({
-    includePaths: [
-      'node_modules/'
-    ],
-    outputStyle: 'compressed',
-    precision: 10
-  }))
-  .pipe(autoprefixer({}))
-  .pipe(sourcemaps.write('./', {
-    includeContent: false,
-    sourceRoot: 'src/Frontend/Core/Layout/Sass'
-  }))
-  .pipe(gulp.dest('src/Frontend/Core/Layout/Css'))
-  .pipe(livereload())
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+      includePaths: [
+        'node_modules/'
+      ],
+      outputStyle: 'compressed',
+      precision: 10
+    }))
+    .pipe(autoprefixer({}))
+    .pipe(sourcemaps.write('./', {
+      includeContent: false,
+      sourceRoot: 'src/Frontend/Core/Layout/Sass'
+    }))
+    .pipe(gulp.dest('src/Frontend/Core/Layout/Css'))
+    .pipe(livereload())
 })
 
 gulp.task('build:frontend:sass:generate-module-css', function () {
   return gulp.src([
     'src/Frontend/Modules/**/Layout/Sass/*.scss'
   ])
-  .pipe(sass({
-    includePaths: [
-      'node_modules/'
-    ],
-    outputStyle: 'compressed',
-    precision: 10
-  }))
-  .pipe(autoprefixer({}))
-  .pipe(rename(function (path) {
-    path.dirname = path.dirname.replace('/Sass', '/Css')
-  }))
-  .pipe(gulp.dest('src/Frontend/Modules/'))
-  .pipe(livereload())
+    .pipe(sass({
+      includePaths: [
+        'node_modules/'
+      ],
+      outputStyle: 'compressed',
+      precision: 10
+    }))
+    .pipe(autoprefixer({}))
+    .pipe(rename(function (path) {
+      path.dirname = path.dirname.replace('/Sass', '/Css')
+    }))
+    .pipe(gulp.dest('src/Frontend/Modules/'))
+    .pipe(livereload())
 })
 
 gulp.task('build:frontend', function () {
@@ -245,21 +245,21 @@ gulp.task('build:theme-fork:sass:generate-css', function () {
   return gulp.src([
     'src/Frontend/Themes/Fork/Core/Layout/Sass/screen.scss'
   ])
-  .pipe(sourcemaps.init())
-  .pipe(sass({
-    includePaths: [
-      'node_modules/'
-    ],
-    outputStyle: 'compressed',
-    precision: 10
-  }))
-  .pipe(autoprefixer({}))
-  .pipe(sourcemaps.write('./', {
-    includeContent: false,
-    sourceRoot: 'src/Frontend/Themes/Fork/Core/Layout/Sass'
-  }))
-  .pipe(gulp.dest('src/Frontend/Themes/Fork/Core/Layout/Css'))
-  .pipe(livereload())
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+      includePaths: [
+        'node_modules/'
+      ],
+      outputStyle: 'compressed',
+      precision: 10
+    }))
+    .pipe(autoprefixer({}))
+    .pipe(sourcemaps.write('./', {
+      includeContent: false,
+      sourceRoot: 'src/Frontend/Themes/Fork/Core/Layout/Sass'
+    }))
+    .pipe(gulp.dest('src/Frontend/Themes/Fork/Core/Layout/Css'))
+    .pipe(livereload())
 })
 
 gulp.task('build:theme-fork', function () {
@@ -278,6 +278,160 @@ gulp.task('serve:theme-fork', function () {
   )
 })
 
+// @remark: custom for SumoCoders
+const fs = require('fs')
+const del = require('del')
+const plumber = require('gulp-plumber')
+const iconfont = require('gulp-iconfont')
+const consolidate = require('gulp-consolidate')
+const fontgen = require('gulp-fontgen')
+const webpackStream = require('webpack-stream')
+const webpack = require('webpack')
+const imagemin = require('gulp-imagemin')
+
+const theme = JSON.parse(fs.readFileSync('./package.json')).theme
+const paths = {
+  src: `src/Frontend/Themes/${theme}/src`,
+  core: `src/Frontend/Themes/${theme}/Core`
+}
+
+gulp.plumbedSrc = function () {
+  return gulp.src.apply(gulp, arguments)
+    .pipe(plumber())
+}
+
+gulp.task('build:assets:copy-images-vendors', function () {
+  return gulp.src([
+    './node_modules/fancybox/dist/img/*'
+  ])
+    .pipe(gulp.dest('./images/vendors/fancybox'))
+})
+
+gulp.task('build:theme:empty-destination-folders', function () {
+  return del([
+    `${paths.core}/Layout/Fonts/**/*`,
+    `${paths.core}/Layout/Images/**/*`,
+    `${paths.core}/Layout/Templates/**/*`
+  ])
+})
+
+gulp.task('build:theme:fonts:generate-iconfont', function () {
+  return gulp.plumbedSrc(`${paths.src}/Layout/icon-sources/*.svg`)
+    .pipe(iconfont({fontName: 'icons'}))
+    .on('glyphs', function (glyphs) {
+      var options = {
+        glyphs: glyphs,
+        fontName: 'icons',
+        fontPath: '../Fonts/',
+        className: 'icon'
+      }
+
+      gulp.src(`${paths.src}/Layout/Sass/_icons-template.scss`)
+        .pipe(consolidate('lodash', options))
+        .pipe(rename({basename: '_icons'}))
+        .pipe(gulp.dest(`${paths.src}/Layout/Sass`))
+    })
+    .pipe(gulp.dest(`${paths.core}/Layout/Fonts`))
+    .pipe(livereload())
+})
+
+gulp.task('build:theme:fonts:generate-webfonts', function () {
+  return gulp.plumbedSrc(`${paths.src}/Layout/Fonts/**/*.{ttf,otf}`)
+    .pipe(fontgen({
+      options: {
+        stylesheet: false
+      },
+      dest: `${paths.core}/Layout/Fonts/`
+    }))
+    .pipe(livereload())
+})
+
+gulp.task('build:theme:sass:generate-development-css', function () {
+  return gulp.plumbedSrc(`${paths.src}/Layout/Sass/*.scss`)
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+      includePaths: [
+        './node_modules'
+      ]
+    }).on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(sourcemaps.write('./', {
+      includeContent: false,
+      sourceRoot: `/src/Frontend/Themes/${theme}/src/Layout/Sass`
+    }))
+    .pipe(gulp.dest(`${paths.core}/Layout/Css`))
+    .pipe(livereload())
+})
+
+gulp.task('build:theme:sass:generate-production-css', function () {
+  return gulp.src(`${paths.src}/Layout/Sass/*.scss`)
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+      outputStyle: 'compressed',
+      includePaths: [
+        './node_modules'
+      ]
+    }).on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(sourcemaps.write('./', {
+      includeContent: false,
+      sourceRoot: `/src/Frontend/Themes/${theme}/src/Layout/Sass`
+    }))
+    .pipe(gulp.dest(`${paths.core}/Layout/Css`))
+})
+
+var commonWebpackConfig = require('./webpack.config')
+
+gulp.task('build:theme:webpack:generate-development-js', function () {
+  return gulp.plumbedSrc(`${paths.src}/Js/Index.js`)
+    .pipe(webpackStream(Object.assign({}, commonWebpackConfig, {
+      watch: true
+    })))
+    .pipe(gulp.dest(`${paths.core}/Js`))
+    .pipe(livereload())
+})
+
+gulp.task('build:theme:webpack:generate-production-js', function () {
+  return gulp.src(`${paths.src}/Js/Index.js`)
+    .pipe(webpackStream(commonWebpackConfig, webpack))
+    .pipe(gulp.dest(`${paths.core}/Js`))
+})
+
+gulp.task('build:theme:assets:copy-templates', function () {
+  return gulp.plumbedSrc(`${paths.src}/Layout/Templates/**/*`)
+    .pipe(gulp.dest(`${paths.core}/Layout/Templates`))
+    .pipe(livereload())
+})
+
+gulp.task('build:theme:images:minify-images', function () {
+  return gulp.plumbedSrc(`${paths.src}/Layout/Images/**/*`)
+    .pipe(imagemin())
+    .pipe(gulp.dest(`${paths.core}/Layout/Images`))
+    .pipe(livereload())
+})
+
+gulp.task('build:theme', ['build:theme:empty-destination-folders'], function () {
+  gulp.start(
+    'build:assets:copy-images-vendors',
+    'build:theme:fonts:generate-iconfont',
+    'build:theme:fonts:generate-webfonts',
+    'build:theme:sass:generate-production-css',
+    'build:theme:webpack:generate-production-js',
+    'build:theme:assets:copy-templates',
+    'build:theme:images:minify-images'
+  )
+})
+
+gulp.task('serve:theme', function () {
+  livereload.listen()
+  gulp.watch(`${paths.src}/Js/**/*.js`, ['build:theme:webpack:generate-development-js'])
+  gulp.watch(`${paths.src}/Layout/Sass/**/*.scss`, ['build:theme:sass:generate-development-css'])
+  gulp.watch(`${paths.src}/Layout/Templates/**/*`, ['build:theme:assets:copy-templates'])
+  gulp.watch(`${paths.src}/Layout/Images/**/*`, ['build:theme:images:minify-images'])
+  gulp.watch(`${paths.src}/Layout/icon-sources/*`, ['build:theme:fonts:generate-iconfont'])
+  gulp.watch(`${paths.src}/Layout/Fonts/**/*`, ['build:theme:fonts:generate-webfonts'])
+})
+
 // public tasks
 gulp.task('default', function () {
   gulp.start('build')
@@ -287,7 +441,8 @@ gulp.task('serve', function () {
   gulp.start(
     'serve:backend',
     'serve:frontend',
-    'serve:theme-fork'
+    'serve:theme-fork',
+    'serve:theme' // @remark custom for SumoCoders
   )
 })
 
@@ -295,6 +450,7 @@ gulp.task('build', function () {
   gulp.start(
     'build:backend',
     'build:frontend',
-    'build:theme-fork'
+    'build:theme-fork',
+    'build:theme' // @remark custom for SumoCoders
   )
 })
