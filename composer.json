@@ -48,7 +48,8 @@
         "jdorn/sql-formatter": "1.2.17",
         "symfony/var-dumper": "^3.3",
         "squizlabs/php_codesniffer": "^2.7",
-        "symfony/phpunit-bridge": "^3.2"
+        "symfony/phpunit-bridge": "^3.2",
+        "sensiolabs/security-checker": "^4.1"
     },
     "config": {
         "bin-dir": "bin"
