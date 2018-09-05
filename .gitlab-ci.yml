@@ -16,13 +16,13 @@ check php vendors:
   tags:
     - docker
 
-#check npm dependencies:
-#  stage: vulnerabilities
-#  image: node:10.6
-#  script:
-#    - npm audit --json
-#  tags:
-#    - docker
+check npm dependencies:
+  stage: vulnerabilities
+  image: node:10.6
+  script:
+    - npm audit --json
+  tags:
+    - docker
 
 
 ###########################
