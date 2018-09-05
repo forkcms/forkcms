@@ -1,10 +1,6 @@
 stages:
   - test
 
-before_script:
-  - curl -sS https://getcomposer.org/installer | php
-  - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
-  - cp app/config/parameters.yml.dist app/config/parameters.yml
 
 ###########################
 # Test stage related jobs #
@@ -33,6 +29,10 @@ run phpunit tests:
 check code styles:
   stage: test
   image: sumocoders/fork-php71:latest
+  before_script:
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install --no-scripts --quiet --ignore-platform-reqs
+    - cp app/config/parameters.yml.dist app/config/parameters.yml
   script:
     - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor src/
   stage: test
