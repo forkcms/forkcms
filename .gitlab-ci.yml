@@ -7,6 +7,7 @@ before_script:
   - cp app/config/parameters.yml.dist app/config/parameters.yml
 
 run_tests:
+  stage: test
   image: sumocoders/fork-php71:latest
   services:
     - mysql:5.5
@@ -28,6 +29,7 @@ run_tests:
     MYSQL_ROOT_PASSWORD: root
 
 code_styles:
+  stage: test
   image: sumocoders/fork-php71:latest
   script:
     - bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor src/
