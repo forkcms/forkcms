@@ -6,9 +6,6 @@ matrix:
 
 sudo: false
 
-script:
-  - travis_wait 30 bin/simple-phpunit --coverage-clover=coverage.clover
-
 before_script:
   - composer install
   - mysql -e 'create database fork_test'
@@ -28,6 +25,9 @@ after_failure:
 
 jobs:
   include:
+    -
+      php: 7.1
+      script: travis_wait 30 bin/simple-phpunit --coverage-clover=coverage.clover
     - stage: code_quality
       php: 7.1
       script: bin/phpstan analyze src
