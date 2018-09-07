@@ -33,7 +33,11 @@ jobs:
       script: travis_wait 30 bin/simple-phpunit --testsuite=unit --coverage-clover=coverage.clover
     - stage: code quality
       php: 7.1
+      before_script: composer install
       script: bin/phpstan analyze src
+      after_success: skip
     - stage: code quality
       php: 7.1
+      before_script: composer install
       script: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
+      after_success: skip
