@@ -29,6 +29,8 @@ after_failure:
 jobs:
   include:
     - stage: code_quality
+      php: 7.1
       script: bin/phpstan analyze src
     -
+      php: 7.1
       script: bin/phpcs --standard=psr2 --extensions=php --warning-severity=0 --ignore=src/Backend/Core/Js/ckfinder,src/Backend/Cache,src/Frontend/Cache,src/Backend/Core/Js/ckeditor --report=full "src"
