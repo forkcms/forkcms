@@ -5,6 +5,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\Exception\MediaFolderNotFound;
+use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
@@ -42,6 +43,9 @@ class MediaItemMassAction extends BackendBaseAction
                 switch ($action) {
                     case self::MOVE:
                         $this->move($mediaItem, $selectedType);
+                        break;
+                    case self::DELETE:
+                        $this->delete($mediaItem);
                         break;
                 }
             } catch (MediaItemNotFound $mediaItemNotFound) {
@@ -181,5 +185,14 @@ class MediaItemMassAction extends BackendBaseAction
 
         // Handle the MediaItem update
         $this->get('command_bus')->handle($updateMediaItem);
+    }
+
+    private function delete(MediaItem $mediaItem): void
+    {
+        /** @var DeleteMediaItem $deleteMediaItem */
+        $deleteMediaItem = new DeleteMediaItem($mediaItem);
+
+        // Handle the MediaItem delete
+        $this->get('command_bus')->handle($deleteMediaItem);
     }
 }
