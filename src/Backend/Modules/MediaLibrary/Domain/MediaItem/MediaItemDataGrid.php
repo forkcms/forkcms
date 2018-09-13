@@ -93,7 +93,8 @@ class MediaItemDataGrid extends DataGridDatabase
             'form-control danger'
         );
         $ddmMediaItemMassAction->setAttribute('id', 'mass-action-' . (string) $type);
-        $ddmMediaItemMassAction->setOptionAttributes('move', ['data-target' => '#confirmMassActionMediaItemMove']);
+        $ddmMediaItemMassAction->setOptionAttributes(MediaItemMassAction::MOVE, ['data-target' => '#confirmMassActionMediaItemMove']);
+        $ddmMediaItemMassAction->setOptionAttributes(MediaItemMassAction::DELETE, ['data-target' => '#confirmMassActionMediaItemDelete']);
 
         return $ddmMediaItemMassAction;
     }
