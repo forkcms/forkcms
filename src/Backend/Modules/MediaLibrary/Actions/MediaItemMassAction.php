@@ -18,6 +18,7 @@ use Exception;
 class MediaItemMassAction extends BackendBaseAction
 {
     const MOVE = 'move';
+    const DELETE = 'delete';
 
     /** @var MediaFolder */
     protected $moveToMediaFolder;
