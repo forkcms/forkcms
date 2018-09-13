@@ -21,6 +21,11 @@ class MediaItemMassAction extends BackendBaseAction
     const MOVE = 'move';
     const DELETE = 'delete';
 
+    private static $actions = [
+        self::MOVE,
+        self::DELETE,
+    ];
+
     /** @var MediaFolder */
     protected $moveToMediaFolder;
 
@@ -142,7 +147,7 @@ class MediaItemMassAction extends BackendBaseAction
     {
         $action = $this->getRequest()->query->get('action', self::MOVE);
 
-        if (self::MOVE !== $action) {
+        if (!in_array($action, self::$actions)) {
             throw new Exception('Action not exists');
         }
 
