@@ -5,7 +5,7 @@
 jsFrontend.location = {
   map: {},
   mapFullUrl: null,
-  directionService: null,
+  directionsService: null,
   directionsDisplay: null,
   panorama: {},
 
