@@ -162,7 +162,7 @@ class Settings extends BackendBaseActionEdit
 
                 // module search
                 foreach ((array) $this->modules as $module) {
-                    $searchable = $this->form->getField('search_' . $module['module'])->getChecked();
+                    $searchable = (int) $this->form->getField('search_' . $module['module'])->getChecked();
                     $weight = $this->form->getField('search_' . $module['module'] . '_weight')->getValue();
 
                     BackendSearchModel::insertModuleSettings($module['module'], $searchable, $weight);
