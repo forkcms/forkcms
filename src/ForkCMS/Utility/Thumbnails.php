@@ -84,21 +84,28 @@ class Thumbnails
         if ($folder['width'] !== null && $folder['height'] !== null) {
             // we scale on the smaller dimension
             if ($box->getWidth() > $box->getHeight()) {
-                $width  = $box->getWidth() * ($folder['height']/$box->getHeight());
-                $height =  $folder['height'];
+                $width  = $folder['width'];
+                $height = $folder['height'];
+
+                if ($box->getWidth() < $width) {
+                    $height = ($box->getHeight() / $box->getWidth()) * $width;
+                    $image = $image->resize(new Box($width, $height));
+                } else {
+                    $image = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_OUTBOUND);
+                }
 
                 // we center the crop in relation to the width
-                $cropPoint = new Point(max($width - $folder['width'], 0)/2, 0);
+                $cropPoint = new Point(0, 0);
             } else {
                 $width  = $folder['width'];
                 $height =  $box->getHeight() * ($folder['width']/$box->getWidth());
 
+                // we scale the image to make the smaller dimension fit our resize box
+                $image = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_OUTBOUND);
+
                 // we center the crop in relation to the height
                 $cropPoint = new Point(0, max($height - $folder['height'], 0)/2);
             }
-
-            // we scale the image to make the smaller dimension fit our resize box
-            $image = $image->thumbnail(new Box($width, $height), ImageInterface::THUMBNAIL_OUTBOUND);
 
             // and crop exactly to the box
             $image->crop($cropPoint, new Box($folder['width'], $folder['height']));
