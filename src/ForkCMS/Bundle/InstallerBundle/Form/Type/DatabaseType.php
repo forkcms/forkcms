@@ -23,35 +23,26 @@ class DatabaseType extends AbstractType
         $builder
             ->add(
                 'databaseHostname',
-                TextType::class,
-                [
-                    'required' => true,
-                ]
+                TextType::class
             )
             ->add(
                 'databasePort',
-                TextType::class,
-                [
-                    'required' => true,
-                ]
+                TextType::class
             )
             ->add(
                 'databaseName',
-                TextType::class,
-                [
-                    'required' => true,
-                ]
+                TextType::class
             )
             ->add(
                 'databaseUsername',
-                TextType::class,
-                [
-                    'required' => true,
-                ]
+                TextType::class
             )
             ->add(
                 'databasePassword',
-                PasswordType::class
+                PasswordType::class,
+                [
+                    'required' => false,
+                ]
             );
 
         // make sure the default data is set
