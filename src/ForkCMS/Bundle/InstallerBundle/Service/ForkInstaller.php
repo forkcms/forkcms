@@ -307,9 +307,7 @@ class ForkInstaller
             '<database-user>' => addslashes($data->getDatabaseUsername()),
             '<database-password>' => addslashes($data->getDatabasePassword()),
             '<database-port>' => $data->getDatabasePort(),
-            '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
-                (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
-                'http',
+            '<site-protocol>' => isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http',
             '<site-domain>' => $_SERVER['HTTP_HOST'] ?? 'fork.local',
             '<site-default-title>' => 'Fork CMS',
             '<site-multilanguage>' => $data->getLanguageType() === 'multiple' ? 'true' : 'false',
