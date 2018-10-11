@@ -6,6 +6,7 @@ use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This is the theme install-action.
@@ -59,6 +60,14 @@ class InstallTheme extends BackendBaseActionIndex
         // no information file present
         if (!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml')) {
             $this->redirect(BackendModel::createUrlForAction('Themes') . '&error=no-information-file&var=' . $this->currentTheme);
+        }
+
+        $finder = new Finder();
+
+        $finder->in(FRONTEND_PATH . '/Themes/' . $this->currentTheme)->files()->name('*.tpl');
+
+        if ($finder->count() > 0) {
+            $this->redirect(BackendModel::createUrlForAction('Themes') . '&error=incompatible-theme&var=' . $this->currentTheme);
         }
     }
 }
