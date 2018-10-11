@@ -518,6 +518,14 @@
   }
 
   .main-navigation {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+
+    .navbar {
+      padding-bottom: 54px;
+    }
+
     .js-nav-prev,
     .js-nav-next {
       display: none !important;
