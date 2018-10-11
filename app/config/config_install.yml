@@ -46,6 +46,13 @@ parameters:
     fork.form.theme: "ForkCMSInstallerBundle:Installer:form_theme.html.twig"
 
 services:
+    fork.settings:
+        class: Common\ModulesSettings
+        public: true
+        arguments:
+            - "@database"
+            - "@cache.pool"
+
     # dummy service during the installation
     mailer_configurator:
         class: stdClass
