@@ -70,7 +70,7 @@ jsFrontend.search =
       source: searchEngine,
       templates: {
         suggestion: function (data) {
-          return '<a><strong>' + data.value + '</strong><p>' + data.description + '</p></a>'
+          return '<a><strong>' + data.value + '</strong><p>'
         }
       }
     }).bind('typeahead:select', function (ev, suggestion) {
