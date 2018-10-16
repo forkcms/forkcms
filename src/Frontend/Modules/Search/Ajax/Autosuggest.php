@@ -155,7 +155,7 @@ class Autosuggest extends FrontendBaseAJAXAction
                         return $searchResult;
                     }
 
-                    $searchResult['test'] = mb_substr(
+                    $searchResult['text'] = mb_substr(
                         strip_tags($searchResult['text']),
                         0,
                         $this->autoSuggestItemLength,
