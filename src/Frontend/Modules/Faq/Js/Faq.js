@@ -13,17 +13,18 @@ jsFrontend.faq.feedback = {
     $('input[data-role=fork-feedback-useful]').on('change', function () {
       var $wrapperForm = $(this.form)
 
-      // init useful status
-      var useful = $('input[data-role=fork-feedback-useful]:checked').val()
+      var useful = parseInt($('input[data-role=fork-feedback-useful]:checked').val())
 
-      // show or hide the form
-      if (useful) {
+      // submit when it is useful, ask for feedback otherwise
+      if (useful === 1) {
         $wrapperForm.find('textarea[data-role=fork-feedback-improve-message]').prop('required', false)
         $wrapperForm.submit()
-      } else {
-        $wrapperForm.find('textarea[data-role=fork-feedback-improve-message]').prop('required', true)
-        $wrapperForm.find('*[data-role=fork-feedback-container]').show()
+
+        return
       }
+
+      $wrapperForm.find('textarea[data-role=fork-feedback-improve-message]').prop('required', true)
+      $wrapperForm.find('[data-role=fork-feedback-container]').show()
     })
   }
 }

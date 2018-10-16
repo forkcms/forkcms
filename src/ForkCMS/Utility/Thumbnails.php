@@ -11,9 +11,6 @@ use Symfony\Component\Finder\Finder;
 
 class Thumbnails
 {
-    /** @var Finder */
-    private $finder;
-
     /** @var Filesystem */
     private $filesystem;
 
@@ -26,7 +23,6 @@ class Thumbnails
     public function __construct(string $sitePath)
     {
         $this->sitePath = realpath($sitePath);
-        $this->finder = new Finder();
         $this->filesystem = new Filesystem();
         $this->imagine = new Imagine();
     }
@@ -43,8 +39,8 @@ class Thumbnails
         if ($filename === null || $filename === '') {
             return;
         }
-
-        foreach ($this->finder->directories()->in($inPath) as $directory) {
+        $finder = new Finder();
+        foreach ($finder->directories()->in($inPath) as $directory) {
             $fileName = $directory->getRealPath() . '/' . $filename;
             if (is_file($fileName)) {
                 $this->filesystem->remove($fileName);
@@ -83,7 +79,7 @@ class Thumbnails
         // if the width & height are specified we should ignore the aspect ratio
         if ($folder['width'] !== null && $folder['height'] !== null) {
             // we scale on the smaller dimension
-            if ($box->getWidth() > $box->getHeight()) {
+            if ($box->getWidth() >= $box->getHeight()) {
                 $width  = $folder['width'];
                 $height = $folder['height'];
 
@@ -134,10 +130,11 @@ class Thumbnails
             return [];
         }
 
-        $folders = [];
+        $folders = $includeSourceFolder ? $this->getFolders($inPath) : [];
         $nameFilter = ($includeSourceFolder) ? 'source' : '/^([0-9]*)x([0-9]*)$/';
+        $finder = new Finder();
 
-        foreach ($this->finder->directories()->in($inPath)->name($nameFilter)->depth('== 0') as $directory) {
+        foreach ($finder->directories()->in($inPath)->name($nameFilter)->depth('== 0') as $directory) {
             $dirname = $directory->getBasename();
             $chunks = explode('x', $dirname, 2);
 
@@ -145,7 +142,7 @@ class Thumbnails
                 continue;
             }
 
-            $folders[] = [
+            $folders[$dirname] = [
                 'dirname' => $dirname,
                 'path' => $directory->getRealPath(),
                 'width' => is_numeric($chunks[0]) ? (int) $chunks[0] : null,
@@ -155,6 +152,6 @@ class Thumbnails
             ];
         }
 
-        return $folders;
+        return array_values($folders);
     }
 }

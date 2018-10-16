@@ -171,6 +171,9 @@ gulp.task('build:frontend:assets:copy-photoswipe-css-and-images', function () {
 })
 
 gulp.task('build:frontend:sass:generate-css', function () {
+  gulp.src([
+    'node_modules/bootstrap-accessibility-plugin/plugins/css/bootstrap-accessibility.css'
+  ]).pipe(gulp.dest('./css/vendors'))
   return gulp.src([
     'src/Frontend/Core/Layout/Sass/debug.scss',
     'src/Frontend/Core/Layout/Sass/editor_content.scss',
