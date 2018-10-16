@@ -83,7 +83,7 @@ class Thumbnails
         // if the width & height are specified we should ignore the aspect ratio
         if ($folder['width'] !== null && $folder['height'] !== null) {
             // we scale on the smaller dimension
-            if ($box->getWidth() > $box->getHeight()) {
+            if ($box->getWidth() >= $box->getHeight()) {
                 $width  = $folder['width'];
                 $height = $folder['height'];
 
