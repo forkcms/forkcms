@@ -640,6 +640,7 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('formErrors', (string) $this->form->getErrors());
         $this->template->assign('showTags', $this->userCanSeeAndEditTags());
         $this->template->assign('hreflangFields', $this->hreflangFields);
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
 
         // init var
         $showDelete = true;

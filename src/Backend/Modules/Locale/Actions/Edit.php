@@ -77,6 +77,8 @@ class Edit extends BackendBaseActionEdit
         // assign id, name
         $this->template->assign('name', $this->record['name']);
         $this->template->assign('id', $this->record['id']);
+
+        $this->header->appendDetailToBreadcrumbs($this->record['name']);
     }
 
     /**

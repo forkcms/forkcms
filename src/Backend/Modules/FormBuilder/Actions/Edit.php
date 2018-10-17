@@ -210,6 +210,8 @@ class Edit extends BackendBaseActionEdit
 
         // parse error messages
         $this->parseErrorMessages();
+
+        $this->header->appendDetailToBreadcrumbs($this->record['name']);
     }
 
     /**
