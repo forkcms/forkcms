@@ -2,7 +2,7 @@
   {% set nickname = item.user_id|usersetting('nickname' ) %}
   <article class="article" itemcope itemtype="http://schema.org/Blog" role="main">
     <meta itemprop="userInteractionCount" content="{{ item.comments_count }}">
-    <meta itemprop="author" itemprop="creator" content="{{ nickname }}">
+    <meta itemprop="author" content="{{ nickname }}">
 
     <header class="module-header">
       <h2 itemprop="name"><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></h2>
