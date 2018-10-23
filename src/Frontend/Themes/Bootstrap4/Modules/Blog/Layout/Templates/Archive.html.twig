@@ -32,7 +32,7 @@
           {% for item in items %}
             <tr>
               <td>
-                <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH:i:s' ) }}">{{ item.publish_on|spoondate('d/m/Y',LANGUAGE ) }}</time>
+                <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s.vP' ) }}">{{ item.publish_on|spoondate('d/m/Y',LANGUAGE ) }}</time>
               </td>
               <td><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></td>
               {% if allowComments %}
