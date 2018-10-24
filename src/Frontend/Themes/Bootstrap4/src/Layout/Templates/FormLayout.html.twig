@@ -22,7 +22,7 @@
     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
     {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain)|ucfirst }}
     {%- if required -%}
-      <abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr></label>
+      <abbr title="{{ 'lbl.RequiredField'|trans|capitalize }}">*</abbr>
     {%- endif -%}
     </label>
   {%- endif -%}
