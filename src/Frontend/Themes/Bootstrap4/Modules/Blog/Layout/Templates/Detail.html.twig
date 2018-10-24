@@ -16,7 +16,7 @@ variables that are available:
       <h1 itemprop="name">{{ item.title }}</h1>
       {{ 'msg.WrittenBy'|trans|ucfirst|format(nickname) }}
       {{ 'lbl.On'|trans }}
-      <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH:i:s' ) }}">{{ item.publish_on|spoondate(dateFormatLong,LANGUAGE ) }}</time>
+      <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s.vP' ) }}">{{ item.publish_on|spoondate(dateFormatLong,LANGUAGE ) }}</time>
 
       <p class="mb-0">
         <span class="sr-only">{{ 'lbl.InThe'|trans }} </span>{{ 'lbl.Category'|trans|ucfirst }}:
@@ -82,7 +82,7 @@ variables that are available:
             <meta itemprop="discusses" content="{{ item.title }}" />
             <img src="{{ FRONTEND_CORE_URL }}/Layout/images/default_author_avatar.gif" alt="{{ comment.author }}" class="d-flex mr-3 img-circle" data-gravatar-id="{{ comment.gravatar_id }}">
             <div class="media-body">
-              <time class="text-muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH:i:s' ) }}">
+              <time class="text-muted" itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\\TH:i:s.vP' ) }}">
                 <small>{{ comment.created_on|timeago|raw }}</small>
               </time>
               <h5 itemprop="creator name" class="my-0">

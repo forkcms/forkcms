@@ -10,7 +10,7 @@
       <div class="article-info">
         {{ 'msg.WrittenBy'|trans|ucfirst|format(nickname) }}
         <span class="sr-only">{{ 'lbl.On'|trans }}</span>
-        <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH:i:s' ) }}">{{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}</time>
+        <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s.vP' ) }}">{{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}</time>
       </div>
 
       <div class="row">
