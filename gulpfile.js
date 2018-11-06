@@ -122,37 +122,24 @@ gulp.task('build:backend:sass:generate-css', function () {
     .pipe(livereload())
 })
 
-gulp.task('build:backend', function () {
-  gulp.start(
-    'build:backend:assets:copy-css-vendors',
-    'build:backend:assets:copy-fonts-vendors',
-    'build:backend:assets:copy-js-vendors',
-    'build:backend:assets:copy-fine-uploader-css-and-images',
-    'build:backend:sass:generate-css',
-    'build:backend:assets:copy-ckeditor'
-  )
-})
+const buildBackend = gulp.parallel(
+  'build:backend:assets:copy-css-vendors',
+  'build:backend:assets:copy-fonts-vendors',
+  'build:backend:assets:copy-js-vendors',
+  'build:backend:assets:copy-fine-uploader-css-and-images',
+  'build:backend:sass:generate-css',
+  'build:backend:assets:copy-ckeditor'
+)
 
 gulp.task('serve:backend', function () {
   livereload.listen()
   gulp.watch(
-    [
-      'src/Backend/Core/Layout/Sass/**/*.scss'
-    ],
-    ['build:backend:sass:generate-css']
+    'src/Backend/Core/Layout/Sass/**/*.scss',
+    gulp.parallel('build:backend:sass:generate-css')
   )
 })
 
 // frontend tasks
-gulp.task('build:frontend:assets:copy-images-vendors', function () {
-  var components = {
-  }
-
-  for (var key in components) {
-    return gulp.src(components[key]).pipe(gulp.dest('./images/vendors/' + key))
-  }
-})
-
 gulp.task('build:frontend:assets:copy-js-vendors', function () {
   return gulp.src([
     'node_modules/photoswipe/dist/photoswipe.min.js',
@@ -215,15 +202,12 @@ gulp.task('build:frontend:sass:generate-module-css', function () {
     .pipe(livereload())
 })
 
-gulp.task('build:frontend', function () {
-  gulp.start(
-    'build:frontend:assets:copy-images-vendors',
-    'build:frontend:assets:copy-js-vendors',
-    'build:frontend:assets:copy-photoswipe-css-and-images',
-    'build:frontend:sass:generate-css',
-    'build:frontend:sass:generate-module-css'
-  )
-})
+const buildFrontend = gulp.parallel(
+  'build:frontend:assets:copy-js-vendors',
+  'build:frontend:assets:copy-photoswipe-css-and-images',
+  'build:frontend:sass:generate-css',
+  'build:frontend:sass:generate-module-css'
+)
 
 gulp.task('serve:frontend', function () {
   livereload.listen()
@@ -231,7 +215,7 @@ gulp.task('serve:frontend', function () {
     [
       'src/Frontend/Modules/**/Layout/Sass/*.scss'
     ],
-    ['build:frontend:sass:generate-module-css']
+    gulp.parallel('build:frontend:sass:generate-module-css')
   )
   gulp.watch(
     [
@@ -239,7 +223,7 @@ gulp.task('serve:frontend', function () {
       'src/Frontend/Core/Layout/Sass/editor_content.scss',
       'src/Frontend/Core/Layout/Sass/screen.scss'
     ],
-    ['build:frontend:sass:generate-css']
+    gulp.parallel('build:frontend:sass:generate-css')
   )
 })
 
@@ -265,11 +249,9 @@ gulp.task('build:theme-fork:sass:generate-css', function () {
     .pipe(livereload())
 })
 
-gulp.task('build:theme-fork', function () {
-  gulp.start(
-    'build:theme-fork:sass:generate-css'
-  )
-})
+const buildThemeFork = gulp.parallel(
+  'build:theme-fork:sass:generate-css'
+)
 
 gulp.task('serve:theme-fork', function () {
   livereload.listen()
@@ -277,7 +259,7 @@ gulp.task('serve:theme-fork', function () {
     [
       'src/Frontend/Themes/Fork/Core/Layout/Sass/**/*.scss'
     ],
-    ['build:theme-fork:sass:generate-css']
+    gulp.parallel('build:theme-fork:sass:generate-css')
   )
 })
 
@@ -313,8 +295,8 @@ gulp.task('build:assets:copy-images-vendors', function () {
 gulp.task('build:theme:empty-destination-folders', function () {
   return del([
     `${paths.core}/Layout/Fonts/**/*`,
-    `${paths.core}/Layout/Images/**/*`,
-    `${paths.core}/Layout/Templates/**/*`
+    `${paths.core}/Layout/Images/!**!/!*`,
+    `${paths.core}/Layout/Templates/!**/!*`
   ])
 })
 
@@ -413,8 +395,9 @@ gulp.task('build:theme:images:minify-images', function () {
     .pipe(livereload())
 })
 
-gulp.task('build:theme', ['build:theme:empty-destination-folders'], function () {
-  gulp.start(
+const buildTheme = gulp.series(
+  'build:theme:empty-destination-folders',
+  gulp.parallel(
     'build:assets:copy-images-vendors',
     'build:theme:fonts:generate-iconfont',
     'build:theme:fonts:generate-webfonts',
@@ -423,37 +406,31 @@ gulp.task('build:theme', ['build:theme:empty-destination-folders'], function () 
     'build:theme:assets:copy-templates',
     'build:theme:images:minify-images'
   )
-})
+)
 
 gulp.task('serve:theme', function () {
   livereload.listen()
-  gulp.watch(`${paths.src}/Js/**/*.js`, ['build:theme:webpack:generate-development-js'])
-  gulp.watch(`${paths.src}/Layout/Sass/**/*.scss`, ['build:theme:sass:generate-development-css'])
-  gulp.watch(`${paths.src}/Layout/Templates/**/*`, ['build:theme:assets:copy-templates'])
-  gulp.watch(`${paths.src}/Layout/Images/**/*`, ['build:theme:images:minify-images'])
-  gulp.watch(`${paths.src}/Layout/icon-sources/*`, ['build:theme:fonts:generate-iconfont'])
-  gulp.watch(`${paths.src}/Layout/Fonts/**/*`, ['build:theme:fonts:generate-webfonts'])
+  gulp.watch(`${paths.src}/Js/**/*.js`, gulp.parallel('build:theme:webpack:generate-development-js'))
+  gulp.watch(`${paths.src}/Layout/Sass/**/*.scss`, gulp.parallel('build:theme:sass:generate-development-css'))
+  gulp.watch(`${paths.src}/Layout/Templates/**/*`, gulp.parallel('build:theme:assets:copy-templates'))
+  gulp.watch(`${paths.src}/Layout/Images/**/*`, gulp.parallel('build:theme:images:minify-images'))
+  gulp.watch(`${paths.src}/Layout/icon-sources/*`, gulp.parallel('build:theme:fonts:generate-iconfont'))
+  gulp.watch(`${paths.src}/Layout/Fonts/**/*`, gulp.parallel('build:theme:fonts:generate-webfonts'))
 })
 
 // public tasks
-gulp.task('default', function () {
-  gulp.start('build')
-})
+gulp.task('serve', gulp.parallel(
+  'serve:backend',
+  'serve:frontend',
+  'serve:theme-fork',
+  'serve:theme' // @remark custom for SumoCoders
+))
 
-gulp.task('serve', function () {
-  gulp.start(
-    'serve:backend',
-    'serve:frontend',
-    'serve:theme-fork',
-    'serve:theme' // @remark custom for SumoCoders
-  )
-})
+gulp.task('build', gulp.series(
+  buildBackend,
+  buildFrontend,
+  buildThemeFork,
+  buildTheme
+))
 
-gulp.task('build', function () {
-  gulp.start(
-    'build:backend',
-    'build:frontend',
-    'build:theme-fork',
-    'build:theme' // @remark custom for SumoCoders
-  )
-})
+gulp.task('default', gulp.series('build'))
