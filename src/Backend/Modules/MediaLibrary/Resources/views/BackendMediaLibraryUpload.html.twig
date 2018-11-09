@@ -139,10 +139,6 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h2 class="panel-title">{{ 'msg.MediaChoseToUpload'|trans }}</h2>
-        </div>
-        <div id="fine-uploader-gallery"></div>
-        <div class="panel-footer">
           <div class="form-group" data-role="cropper-is-mandatory-form-group">
             <div class="checkbox">
               <label for="enableCropperCheckbox">
@@ -153,7 +149,11 @@
               <span class="help-block hidden" data-role="cropper-is-mandatory-message">{{ 'msg.TheCropperIsMandatoryBecauseTheImagesNeedToHaveACertainFormat'|trans }}</span>
             </div>
           </div>
+        </div>      
+        <div class="panel-body">
+          <h2 class="panel-title">{{ 'msg.MediaChoseToUpload'|trans }}</h2>
         </div>
+        <div id="fine-uploader-gallery"></div>
       </div>
     </div>
   </div>
