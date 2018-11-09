@@ -20,7 +20,7 @@ final class MediaGroupRepository extends EntityRepository
         }
 
         /** @var MediaGroup $mediaGroup */
-        $mediaGroup = parent::findOneById($id);
+        $mediaGroup = $this->find($id);
 
         if ($mediaGroup === null) {
             throw MediaGroupNotFound::forId($id);
