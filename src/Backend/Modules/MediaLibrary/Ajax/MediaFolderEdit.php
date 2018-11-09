@@ -55,11 +55,11 @@ class MediaFolderEdit extends BackendBaseAJAXAction
     {
         $name = $this->getRequest()->request->get('name');
 
-        if ($name === null) {
+        if (empty($name)) {
             throw new AjaxExitException(Language::err('TitleIsRequired'));
         }
 
-        return Uri::getUrl($name);
+        return $name;
     }
 
     private function updateMediaFolder(): UpdateMediaFolder

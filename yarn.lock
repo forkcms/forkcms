@@ -250,8 +250,8 @@ boom@2.x.x:
     hoek "2.x.x"
 
 bootstrap-accessibility-plugin@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/bootstrap-accessibility-plugin/-/bootstrap-accessibility-plugin-1.0.5.tgz#5487ae5e07b3d870fbba6982e6339e163459b6bd"
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/bootstrap-accessibility-plugin/-/bootstrap-accessibility-plugin-1.0.6.tgz#9e7c37b789fc4179218068b06d9227af1458f7bd"
 
 bootstrap-datepicker@^1.7.0:
   version "1.8.0"
@@ -265,7 +265,7 @@ bootstrap-sass@~3.3:
 
 "bootstrap-tagsinput@https://github.com/mathiashelin/bootstrap-tagsinput.git":
   version "0.8.0"
-  resolved "https://github.com/mathiashelin/bootstrap-tagsinput.git#a3671e453c996d397aad312d0a0526984231a422"
+  resolved "https://github.com/mathiashelin/bootstrap-tagsinput.git#652eaeb6858bf35c8871430bef2ff2327ed29bfe"
 
 brace-expansion@^1.0.0:
   version "1.1.11"
@@ -369,8 +369,8 @@ circular-json@^0.3.1:
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
 
 ckeditor@^4.7.3:
-  version "4.9.2"
-  resolved "https://registry.yarnpkg.com/ckeditor/-/ckeditor-4.9.2.tgz#385600cb4028e0055c92720e22435bb97f413cdc"
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/ckeditor/-/ckeditor-4.10.0.tgz#c0c6d5d059d6c60a669083d8307fe55ec8cd7587"
 
 cli-cursor@^1.0.1:
   version "1.0.2"
@@ -1360,8 +1360,8 @@ gulp-livereload@^3.8.1:
     mini-lr "^0.1.8"
 
 gulp-rename@^1.2.2:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.3.tgz#37b75298e9d3e6c0fe9ac4eac13ce3be5434646b"
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.4.0.tgz#de1c718e7c4095ae861f7296ef4f3248648240bd"
 
 gulp-sass@^3.0.0:
   version "3.2.1"

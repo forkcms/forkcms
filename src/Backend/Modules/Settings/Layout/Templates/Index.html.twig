@@ -49,12 +49,12 @@
           <div class="form-group">
             <label for="siteHtmlHeader" class="control-label"><code>&lt;head&gt;</code> script(s)</label>
             {% form_field site_html_header %} {% form_field_error site_html_header %}
-            <span class="help-block">{{ msg.HelpScriptsHead }}</span>
+            <span class="help-block">{{ 'msg.HelpScriptsHead'|trans }}</span>
           </div>
           <div class="form-group last">
             <label for="siteHtmlFooter" class="control-label">End of <code>&lt;body&gt;</code> script(s)</label>
             {% form_field site_html_footer %} {% form_field_error site_html_footer %}
-            <span class="help-block">{{ msg.HelpScriptsFoot }}</span>
+            <span class="help-block">{{ 'msg.HelpScriptsFoot'|trans }}</span>
           </div>
         </div>
       </div>
@@ -144,7 +144,7 @@
           <h2 class="panel-title">{{ 'lbl.APIKeys'|trans|ucfirst }}</h2>
         </div>
         <div class="panel-body">
-          <p>{{ msg.HelpAPIKeys }}</p>
+          <p>{{ 'msg.HelpAPIKeys'|trans }}</p>
           <table class="table table-striped">
             <thead>
               <tr>
