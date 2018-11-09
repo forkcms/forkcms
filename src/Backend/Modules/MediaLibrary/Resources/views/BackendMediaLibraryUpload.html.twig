@@ -169,16 +169,16 @@
           <p>
             <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
             {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
-            <select id="mediaMovieStorageType" name="media_movie_source"></select>
+            <select id="mediaMovieStorageType" name="media_movie_source" class="form-control fork-form-select" size="1"></select>
           </p>
           <p>
             <label>{{ 'lbl.MediaMovieId'|trans|capitalize }}{{ macro.required }}</label>
-            <input id="mediaMovieId" name="media_movie_id" type="text" class="inputText" />
-            <span class="helpTxt">{{ 'msg.MediaMovieIdHelp'|trans }}</span>
+            <input id="mediaMovieId" name="media_movie_id" type="text" class="form-control fork-form-text" />
+            <span class="help-block">{{ 'msg.MediaMovieIdHelp'|trans }}</span>
           </p>
           <p>
             <label>{{ 'lbl.MediaMovieTitle'|trans|capitalize }}{{ macro.required }}</label>
-            <input id="mediaMovieTitle" name="media_movie_title" type="text" class="inputText" />
+            <input id="mediaMovieTitle" name="media_movie_title" type="text" class="form-control fork-form-text" />
           </p>
         </div>
         <div class="panel-footer">
