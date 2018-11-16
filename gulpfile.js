@@ -408,6 +408,10 @@ const buildTheme = gulp.series(
   )
 )
 
+gulp.task('build:theme', gulp.series(
+  buildTheme
+))
+
 gulp.task('serve:theme', function () {
   livereload.listen()
   gulp.watch(`${paths.src}/Js/**/*.js`, gulp.parallel('build:theme:webpack:generate-development-js'))
