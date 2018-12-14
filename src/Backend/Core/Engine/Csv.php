@@ -5,11 +5,11 @@ namespace Backend\Core\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Common\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-/**
- * This is our extended version of SpoonFileCSV
- */
-class Csv extends \SpoonFileCSV
+class Csv
 {
     /**
      * Output a CSV-file as a download
@@ -27,14 +27,20 @@ class Csv extends \SpoonFileCSV
         array $columns = null,
         array $excludeColumns = null
     ) {
-        // convert into CSV
-        $csv = \SpoonFileCSV::arrayToString(
+        $serializer = new Serializer(
+            [
+                new ObjectNormalizer()
+            ],
+            [
+                new CsvEncoder(
+                    Authentication::getUser()->getSetting('csv_split_character')
+                )
+            ]
+        );
+
+        $csv = $serializer->encode(
             $array,
-            $columns,
-            $excludeColumns,
-            Authentication::getUser()->getSetting('csv_split_character'),
-            '"',
-            self::getLineEnding()
+            'csv'
         );
 
         // set headers for download
