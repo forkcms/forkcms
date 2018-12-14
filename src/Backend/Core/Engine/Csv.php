@@ -39,7 +39,7 @@ class Csv
         );
 
         $csv = $serializer->encode(
-            $array,
+            self::addHeadersToData($columns, $array),
             'csv'
         );
 
@@ -73,5 +73,23 @@ class Csv
         }
 
         return $lineEnding;
+    }
+
+    private static function addHeadersToData(array $headers, array $data): array
+    {
+        $processedArray = [];
+
+        foreach ($data as $row) {
+            $processedRow = [];
+
+            // link the header names to the data keys
+            foreach ($row as $key => $value) {
+                $processedRow[$headers[$key]] = $value;
+            }
+
+            $processedArray[] = $processedRow;
+        }
+
+        return $processedArray;
     }
 }
