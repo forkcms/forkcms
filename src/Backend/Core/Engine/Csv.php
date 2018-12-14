@@ -39,7 +39,7 @@ class Csv
         );
 
         $csv = $serializer->encode(
-            self::addHeadersToData($columns, $array),
+            self::addHeadersToData($columns, $array, $excludeColumns),
             'csv'
         );
 
@@ -75,7 +75,7 @@ class Csv
         return $lineEnding;
     }
 
-    private static function addHeadersToData(array $headers, array $data): array
+    private static function addHeadersToData(array $headers, array $data, array $excludeColumns = null): array
     {
         $processedArray = [];
 
@@ -85,6 +85,13 @@ class Csv
             // link the header names to the data keys
             foreach ($row as $key => $value) {
                 $processedRow[$headers[$key]] = $value;
+            }
+
+            if (!empty($excludeColumns)) {
+                // because we have linked the header and data we can unset the column data
+                foreach ($excludeColumns as $column) {
+                    unset($processedRow[$column]);
+                }
             }
 
             $processedArray[] = $processedRow;
