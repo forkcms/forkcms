@@ -271,7 +271,7 @@ class Detail extends FrontendBaseBlock
 
     private function isModerationFilterEnabled(): bool
     {
-        return isset($this->settings['spamfilter']) && $this->settings['spamfilter'];
+        return isset($this->settings['moderation']) && $this->settings['moderation'];
     }
 
     private function getSubmittedComment(): array
