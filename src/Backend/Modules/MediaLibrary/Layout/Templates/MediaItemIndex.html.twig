@@ -29,6 +29,9 @@
         {% endif %}
         {% if not mediaFolder %}
           {{ macro.buttonIcon( geturl('MediaItemUpload'), 'upload', 'lbl.AddMediaItems'|trans|capitalize) }}
+          <a href="#" id="addFolder" class="btn btn-default" title="{{ 'lbl.MediaAddFolder'|trans|capitalize }}">
+            <span>{{ macro.icon('folder') }}{{ 'lbl.MediaAddFolder'|trans|capitalize }}</span>
+          </a>
         {% endif %}
       {% endif %}
     </div>
