@@ -9,6 +9,9 @@ use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Twig\Environment;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
 
 /**
  * This is a twig template wrapper
@@ -31,21 +34,19 @@ class TwigTemplate extends BaseTwigTemplate
         parent::__construct(clone $environment, $parser, clone $locator, 'Frontend');
 
         TwigFilters::addFilters($this->environment, 'Frontend');
-
-        $this->addFrontendPathsToTheTemplateLoader($this->forkSettings->get('Core', 'theme', 'Fork'));
     }
 
-    private function addFrontendPathsToTheTemplateLoader(string $theme): void
+    protected function getTemplateLoader(): LoaderInterface
     {
-        $this->themePath = FRONTEND_PATH . '/Themes/' . $theme;
-        $this->environment->setLoader(
-            new \Twig_Loader_Chain(
-                [$this->environment->getLoader(), new \Twig_Loader_Filesystem($this->getLoadingFolders())]
-            )
+        $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'Fork');
+
+        return new ChainLoader(
+            [$this->environment->getLoader(), new FilesystemLoader($this->getLoadingFolders())]
         );
     }
 
-    protected function getDefaultThemes(): array {
+    protected function getDefaultThemes(): array
+    {
         return $this->getFormTemplates('FormLayout.html.twig');
     }
 

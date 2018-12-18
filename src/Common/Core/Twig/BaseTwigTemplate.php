@@ -14,6 +14,7 @@ use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 use Symfony\Component\Form\FormRenderer;
+use Twig\Loader\LoaderInterface;
 use Twig_Extension_Debug;
 use Twig_FactoryRuntimeLoader;
 
@@ -50,6 +51,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         }
 
         $this->connectSymfonyForms();
+        $this->environment->setLoader($this->getTemplateLoader());
         TwigFilters::addFilters($this->environment, $application);
     }
 
@@ -255,6 +257,8 @@ abstract class BaseTwigTemplate extends TwigEngine
     }
 
     abstract protected function getDefaultThemes(): array;
+
+    abstract protected function getTemplateLoader(): LoaderInterface;
 
     private function connectSymfonyForms(): void
     {
