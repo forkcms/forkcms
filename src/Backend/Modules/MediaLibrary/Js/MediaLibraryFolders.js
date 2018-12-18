@@ -128,7 +128,9 @@ jsBackend.mediaLibraryFolders = {
           }
 
           // update boxes
-          jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes()
+          if (typeof jsBackend.mediaLibraryHelper !== 'undefined') {
+            jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes()
+          }
         }
 
         // add folders to dropdown
