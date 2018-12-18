@@ -4,20 +4,12 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Language\Language as BL;
 use Common\Core\Twig\BaseTwigTemplate;
-use Common\Core\Twig\Extensions\TwigFilters;
-use Frontend\Core\Engine\FormExtension;
 use ReflectionClass;
 use Symfony\Bridge\Twig\AppVariable;
-use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
-use Symfony\Bridge\Twig\Extension\TranslationExtension;
-use Symfony\Bridge\Twig\Form\TwigRendererEngine;
-use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\Form\FormRenderer;
+use Twig\Loader\FilesystemLoader;
+use Twig\Loader\LoaderInterface;
 use Twig_Environment;
 use Twig_Extension_Debug;
-use Twig_FactoryRuntimeLoader;
 use Twig_Loader_Filesystem;
 
 /**
@@ -34,30 +26,18 @@ class TwigTemplate extends BaseTwigTemplate
     public function __construct(bool $addToReference = true)
     {
         $container = Model::getContainer();
-        $this->debugMode = $container->getParameter('kernel.debug');
+        $this->language = BL::getWorkingLanguage();
 
         parent::__construct(
-            $this->buildTwigEnvironmentForTheBackend(),
+            clone $container->get('twig'),
             $container->get('templating.name_parser.public'),
-            new TemplateLocator($container->get('file_locator.public'), $container->getParameter('kernel.cache_dir'))
+            clone $container->get('templating.locator'),
+            'Backend'
         );
 
         if ($addToReference) {
             $container->set('template', $this);
         }
-
-        $this->forkSettings = $container->get('fork.settings');
-        if ($this->debugMode) {
-            $this->environment->enableAutoReload();
-            $this->environment->setCache(false);
-            $this->environment->addExtension(new Twig_Extension_Debug());
-        }
-        $this->language = BL::getWorkingLanguage();
-        $this->connectSymfonyForms();
-        $this->connectSymfonyTranslator();
-        $this->connectSpoonForm();
-        TwigFilters::addFilters($this->environment, 'Backend');
-        $this->autoloadMissingTaggedExtensions($container);
     }
 
     /**
@@ -80,60 +60,23 @@ class TwigTemplate extends BaseTwigTemplate
         return $this->render(str_replace(BACKEND_MODULES_PATH, '', $template), $this->variables);
     }
 
-    /**
-     * @return Twig_Environment
-     */
-    private function buildTwigEnvironmentForTheBackend(): Twig_Environment
+    protected function getTemplateLoader(): LoaderInterface
     {
-        // path to TwigBridge library so we can locate the form theme files.
         $appVariableReflection = new ReflectionClass(AppVariable::class);
         $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
 
-        // render the compiled File
-        $loader = new Twig_Loader_Filesystem(
+        return new FilesystemLoader(
             [
                 BACKEND_MODULES_PATH,
                 BACKEND_CORE_PATH,
                 $vendorTwigBridgeDir . '/Resources/views/Form',
             ]
         );
-
-        return new Twig_Environment(
-            $loader,
-            [
-                'cache' => Model::getContainer()->getParameter('kernel.cache_dir') . '/twig',
-                'debug' => $this->debugMode,
-            ]
-        );
     }
 
-    private function connectSymfonyForms(): void
+    protected function getDefaultThemes(): array
     {
-        $rendererEngine = new TwigRendererEngine(['Layout/Templates/FormLayout.html.twig'], $this->environment);
-        $csrfTokenManager = Model::get('security.csrf.token_manager');
-        $this->environment->addRuntimeLoader(
-            new Twig_FactoryRuntimeLoader(
-                [
-                    FormRenderer::class => function () use ($rendererEngine, $csrfTokenManager): FormRenderer {
-                        return new FormRenderer($rendererEngine, $csrfTokenManager);
-                    },
-                ]
-            )
-        );
-
-        if (!$this->environment->hasExtension(SymfonyFormExtension::class)) {
-            $this->environment->addExtension(new SymfonyFormExtension());
-        }
-    }
-
-    private function connectSymfonyTranslator(): void
-    {
-        $this->environment->addExtension(new TranslationExtension(Model::get('translator')));
-    }
-
-    private function connectSpoonForm(): void
-    {
-        new FormExtension($this->environment);
+        return ['Layout/Templates/FormLayout.html.twig'];
     }
 
     private function parseUserDefinedConstants(): void
@@ -245,10 +188,6 @@ class TwigTemplate extends BaseTwigTemplate
     private function parseDebug(): void
     {
         $this->assign('debug', Model::getContainer()->getParameter('kernel.debug'));
-
-        if ($this->debugMode === true && !$this->environment->hasExtension(Twig_Extension_Debug::class)) {
-            $this->environment->addExtension(new Twig_Extension_Debug());
-        }
     }
 
     private function parseLabels(array $labels, string $module, string $key): void
@@ -343,14 +282,5 @@ class TwigTemplate extends BaseTwigTemplate
             $bodyClass = $url->getModule() . 'AddEdit';
         }
         $this->assign('bodyClass', $bodyClass);
-    }
-
-    private function autoloadMissingTaggedExtensions(ContainerInterface $container): void
-    {
-        foreach ($container->get('twig')->getExtensions() as $id => $extension) {
-            if (!$this->environment->hasExtension($id)) {
-                $this->environment->addExtension($extension);
-            }
-        }
     }
 }
