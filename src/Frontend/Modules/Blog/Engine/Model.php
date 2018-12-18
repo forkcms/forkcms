@@ -492,7 +492,6 @@ class Model implements FrontendTagsInterface
 
     public static function getComments(int $blogPostId): array
     {
-        // get the comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
              c.author, c.email, c.website
@@ -502,14 +501,10 @@ class Model implements FrontendTagsInterface
             [$blogPostId, 'published', LANGUAGE]
         );
 
-        // loop comments and create gravatar id
         foreach ($comments as &$row) {
-            $row['author'] = htmlspecialchars($row['author']);
-            $row['text'] = htmlspecialchars($row['text']);
             $row['gravatar_id'] = md5($row['email']);
         }
 
-        // return
         return $comments;
     }
 

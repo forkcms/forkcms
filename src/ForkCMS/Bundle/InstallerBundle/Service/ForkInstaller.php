@@ -307,9 +307,7 @@ class ForkInstaller
             '<database-user>' => addslashes($data->getDatabaseUsername()),
             '<database-password>' => addslashes($data->getDatabasePassword()),
             '<database-port>' => $data->getDatabasePort(),
-            '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
-                (mb_strpos(mb_strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
-                'http',
+            '<site-protocol>' => $this->isHttpRequest() ? 'https' : 'http',
             '<site-domain>' => $_SERVER['HTTP_HOST'] ?? 'fork.local',
             '<site-default-title>' => 'Fork CMS',
             '<site-multilanguage>' => $data->getLanguageType() === 'multiple' ? 'true' : 'false',
@@ -319,6 +317,19 @@ class ForkInstaller
             '<action-rights-level>' => 7,
             '<secret>' => Model::generateRandomString(32, true, true, true, false),
         ];
+    }
+
+    private function isHttpRequest(): bool
+    {
+        if (!isset($_SERVER['HTTPS'])) {
+            return false;
+        }
+
+        if (empty($_SERVER['HTTPS'])) {
+            return false;
+        }
+
+        return strtolower($_SERVER['HTTPS']) !== 'off';
     }
 
     /**
