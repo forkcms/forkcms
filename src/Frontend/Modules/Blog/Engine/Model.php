@@ -511,8 +511,6 @@ class Model implements FrontendTagsInterface
             function ($comment) {
                 $commentData = $comment->toArray();
 
-                $commentData['author'] = htmlspecialchars($comment->getAuthor());
-                $commentData['text'] = htmlspecialchars($comment->getText());
                 $commentData['gravatar_id'] = md5($comment->getEmail());
 
                 return $commentData;

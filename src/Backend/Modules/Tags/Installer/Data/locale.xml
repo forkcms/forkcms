@@ -13,7 +13,7 @@
         <translation language="fr"><![CDATA[Les tags choisis ont été effacés.]]></translation>
         <translation language="es"><![CDATA[La etiqueta(s) seleccionadas fue/fueron eliminadas.]]></translation>
         <translation language="el"><![CDATA[Η επιλεγμένη ετικέτα (ες) διεγράφη (σαν).]]></translation>
-        <translation language="pl"><![CDATA[Wybrany tag/tagi zostały usunięte.]></translation>
+        <translation language="pl"><![CDATA[Wybrany tag/tagi zostały usunięte.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[De tag "%1$s" werd opgeslagen.]]></translation>

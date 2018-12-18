@@ -132,7 +132,7 @@ jsBackend.mediaLibraryFolders = {
         }
 
         // add folders to dropdown
-        $('#addFolderParentId').html('<option value="0" />' + html)
+        $('#addFolderParentId').html('<option value="0">' + jsBackend.locale.lbl('MediaFolderRoot') + '</option>' + html)
 
         // select the new folder
         if (selectFolderId) {

@@ -257,7 +257,10 @@ class Index extends BackendBaseActionIndex
         );
 
         $this->redirect(
-            $this->getRequest()->query->get('querystring', $allowedModuleActionUrl)
+            $this->sanitizeQueryString(
+                $this->getRequest()->query->get('querystring', $allowedModuleActionUrl),
+                $allowedModuleActionUrl
+            )
         );
     }
 
@@ -319,5 +322,15 @@ class Index extends BackendBaseActionIndex
         }
 
         return $allowedModule;
+    }
+
+    private function sanitizeQueryString(string $queryString, string $default): string
+    {
+        // only allow internal urls starting with "\"
+        if (!preg_match('/^\//', $queryString)) {
+            return $default;
+        }
+
+        return $queryString;
     }
 }

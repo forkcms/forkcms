@@ -324,6 +324,8 @@ jsBackend.balloons = {
  * CK Editor related objects
  */
 jsBackend.ckeditor = {
+  prepared: false,
+
   defaultConfig: {
     customConfig: '',
 
@@ -395,25 +397,48 @@ jsBackend.ckeditor = {
 
     // load the editor
     if ($('textarea.inputEditor, textarea.inputEditorError').length > 0) {
-      // language options
-      jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language
-      jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language')
-
-      // content Css
-      jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/screen.css')
-      if (jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/screen.css')
-      jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/editor_content.css')
-      if (jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/editor_content.css')
-
-      // bind on some global events
-      CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition)
-      CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady)
+      jsBackend.ckeditor.prepare()
 
       // load the editors
       jsBackend.ckeditor.load()
     }
 
     jsBackend.ckeditor.fallBackBootstrapModals()
+    if (jsData.Core.preferred_editor === 'ck-editor') {
+      jsBackend.ckeditor.loadEditorsInCollections()
+    }
+  },
+
+  loadEditorsInCollections: function () {
+    $('[data-addfield=collection]').on('collection-field-added', function (event, formCollectionItem) {
+      jsBackend.ckeditor.prepare()
+      $(formCollectionItem).find('textarea.inputEditor, textarea.inputEditorError').ckeditor(
+        jsBackend.ckeditor.callback,
+        $.extend({}, jsBackend.ckeditor.defaultConfig)
+      )
+    })
+  },
+
+  prepare: function () {
+    if (jsBackend.ckeditor.prepared) {
+      return
+    }
+
+    // language options
+    jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language
+    jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language')
+
+    // content Css
+    jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/screen.css')
+    if (jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/screen.css')
+    jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/editor_content.css')
+    if (jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/editor_content.css')
+
+    // bind on some global events
+    CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition)
+    CKEDITOR.on('instanceReady', jsBackend.ckeditor.onReady)
+
+    jsBackend.ckeditor.prepared = true
   },
 
   destroy: function () {

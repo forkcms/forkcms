@@ -613,6 +613,12 @@
         <translation language="el"><![CDATA[Αυτή η μετάφραση υπάρχει ήδη.]]></translation>
         <translation language="pl"><![CDATA[Te tłumaczenie już istnieje.]]></translation>
       </item>
+      <item type="error" name="FirstLetterMustBeACapitalLetter">
+        <translation language="nl"><![CDATA[De eerste letter moet een hoofdletter zijn.]]></translation>
+        <translation language="en"><![CDATA[The first letter must be a capital letter.]]></translation>
+        <translation language="de"><![CDATA[Der erste Buchstabe muss ein Großbuchstabe sein.]]></translation>
+        <translation language="fr"><![CDATA[La première lettre doit être une majuscule.]]></translation>
+      </item>
       <item type="error" name="InvalidActionValue">
         <translation language="nl"><![CDATA[De actienaam bevat ongeldige karakters.]]></translation>
         <translation language="en"><![CDATA[The action name contains invalid characters.]]></translation>

@@ -4,6 +4,7 @@ namespace Console\Thumbnails;
 
 use Common\Core\Model;
 use Exception;
+use ForkCMS\Utility\Thumbnails;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -15,6 +16,9 @@ use Symfony\Component\Finder\Finder;
  */
 class GenerateThumbnailsCommand extends Command
 {
+    /** @var Thumbnails */
+    private $thumbnails;
+
     protected function configure(): void
     {
         $this->setName('forkcms:thumbnails:generate')
@@ -28,19 +32,16 @@ class GenerateThumbnailsCommand extends Command
             );
     }
 
+    public function __construct(Thumbnails $thumbnails)
+    {
+        $this->thumbnails = $thumbnails;
+
+        parent::__construct();
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        // Get input values
-        $folderOption = $input->getOption('folder');
-
-        if (!isset($folderOption)) {
-            throw new Exception('Please specify a foldername "--folder=XXX"');
-        }
-
-        // Get path to locale file
-        $folderPath = $this->getFolderPath($folderOption);
-
-        $this->generateThumbnails($folderPath, $output);
+        $this->generateThumbnails($this->getFolderPath($input), $output);
     }
 
     private function generateThumbnails(string $folderPath, OutputInterface $output): void
@@ -49,20 +50,19 @@ class GenerateThumbnailsCommand extends Command
         $finder->files()->in($folderPath)->name('/^.*\.(jpg|jpeg|png|gif)$/i');
 
         foreach ($finder as $file) {
-            Model::generateThumbnails($folderPath, $file->getRealPath());
+            $this->thumbnails->generate($folderPath, $file->getRealPath());
             $output->writeln('<info>Creating thumbnail for ' . $file->getBasename() . '...</info>');
         }
     }
 
-    /**
-     * Get the folder path according to the input options
-     *
-     * @param string $folderOption
-     *
-     * @return string
-     */
-    private function getFolderPath(string $folderOption): string
+    private function getFolderPath(InputInterface $input): string
     {
-        return __DIR__ . '/../../..' . '/src/Frontend/Files/' . $folderOption;
+        $folderOption = $input->getOption('folder');
+
+        if (!isset($folderOption)) {
+            throw new Exception('Please specify a foldername "--folder=XXX" from /src/Frontend/Files where you want to generate thumbnails for.');
+        }
+
+        return realpath(__DIR__ . '/../../../src/Frontend/Files/' . $folderOption);
     }
 }
