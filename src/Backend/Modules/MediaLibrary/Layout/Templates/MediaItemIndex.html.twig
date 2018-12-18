@@ -20,9 +20,6 @@
 {% block actionbar %}
   <div class="btn-toolbar pull-right">
     <div class="btn-group" role="group">
-      {% if showMediaLibraryMediaItemCleanup %}
-        {{ macro.buttonIcon( geturl('MediaItemCleanup'), 'trash-o', 'lbl.MediaItemCleanup'|trans|capitalize, null, 'data-role=media-item-cleanup data-target=#confirmMediaItemCleanup') }}
-      {% endif %}
       {% if showMediaLibraryMediaItemUpload %}
         {% if mediaFolder %}
           {{ macro.buttonIcon( geturl('MediaItemUpload', null, '&folder='~mediaFolder.id), 'upload', 'lbl.AddMediaItems'|trans|capitalize) }}
@@ -87,26 +84,6 @@
               </div>
             {% endif %}
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# Mass action: Dialog to delete selected media items #}
-  <div class="modal fade" id="confirmMediaItemCleanup" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmMediaItemCleanupTitle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="confirmMediaItemCleanupTitle">{{ 'lbl.MediaItemCleanup'|trans|ucfirst }}</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            {{ 'msg.ConfirmMediaItemCleanup'|trans }}
-          </div>
-        </div>
-        <div class="modal-footer">
-          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
-          {{ macro.buttonIcon(geturl('MediaItemCleanup'), 'trash', 'lbl.Delete'|trans|ucfirst, 'btn-danger') }}
         </div>
       </div>
     </div>
