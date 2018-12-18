@@ -34,7 +34,7 @@ class TwigTemplate extends BaseTwigTemplate
         $this->forkSettings = $container->get('fork.settings');
         $this->language = Locale::frontendLanguage();
 
-        parent::__construct($environment, $parser, $locator);
+        parent::__construct(clone $environment, $parser, clone $locator);
 
         $this->debugMode = $container->getParameter('kernel.debug');
         if ($this->debugMode) {
