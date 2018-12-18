@@ -4,10 +4,17 @@ namespace Common\Core\Twig;
 
 use Common\Core\Form;
 use Common\Core\Model;
+use Common\Core\Twig\Extensions\TwigFilters;
 use Common\ModulesSettings;
 use SpoonForm;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bundle\TwigBundle\TwigEngine;
-use Twig_Environment;
+use Twig\Environment;
+use Symfony\Component\Templating\TemplateNameParserInterface;
+use Symfony\Component\Config\FileLocatorInterface;
+use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
+use Symfony\Component\Form\FormRenderer;
+use Twig_FactoryRuntimeLoader;
 
 /**
  * This is a twig template wrapper
@@ -15,6 +22,33 @@ use Twig_Environment;
  */
 abstract class BaseTwigTemplate extends TwigEngine
 {
+    public function __construct(
+        Environment $environment,
+        TemplateNameParserInterface $parser,
+        FileLocatorInterface $locator,
+        string $application
+    ) {
+        parent::__construct($environment, $parser, $locator);
+
+        $container = Model::getContainer();
+        $this->forkSettings = $container->get('fork.settings');
+
+        $this->debugMode = $container->getParameter('kernel.debug');
+        if ($this->debugMode) {
+            $this->environment->enableAutoReload();
+            $this->environment->setCache(false);
+        }
+
+        $this->environment->disableStrictVariables();
+
+        if (!$container->getParameter('fork.is_installed')) {
+            return;
+        }
+
+        $this->connectSymfonyForms();
+        TwigFilters::addFilters($this->environment, $application);
+    }
+
     /**
      * @var string
      */
@@ -109,9 +143,9 @@ abstract class BaseTwigTemplate extends TwigEngine
     /** @todo Refactor out constants #1106
      * We need to deprecate this asap
      *
-     * @param Twig_Environment $twig
+     * @param Environment $twig
      */
-    protected function startGlobals(Twig_Environment $twig)
+    protected function startGlobals(Environment $twig): void
     {
         // some old globals
         $twig->addGlobal('var', '');
@@ -214,5 +248,26 @@ abstract class BaseTwigTemplate extends TwigEngine
         }
 
         return $this->environment->render($template, array_merge($this->runtimeGlobals, $variables));
+    }
+
+    abstract protected function getDefaultThemes(): array;
+
+    private function connectSymfonyForms(): void
+    {
+        $rendererEngine = new TwigRendererEngine($this->getDefaultThemes(), $this->environment);
+        $csrfTokenManager = Model::get('security.csrf.token_manager');
+        $this->environment->addRuntimeLoader(
+            new Twig_FactoryRuntimeLoader(
+                [
+                    FormRenderer::class => function () use ($rendererEngine, $csrfTokenManager): FormRenderer {
+                        return new FormRenderer($rendererEngine, $csrfTokenManager);
+                    },
+                ]
+            )
+        );
+
+        if (!$this->environment->hasExtension(SymfonyFormExtension::class)) {
+            $this->environment->addExtension(new SymfonyFormExtension());
+        }
     }
 }
