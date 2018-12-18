@@ -112,40 +112,28 @@ class Related extends FrontendBaseWidget
      */
     private function getTags(): void
     {
-        // get page id
         $pageId = $this->getContainer()->get('page')->getId();
-
-        // array of excluded records
         $this->exclude[] = ['module' => 'Pages', 'other_id' => $pageId];
 
-        // get tags for page
         $tags = (array) FrontendTagsModel::getForItem('pages', $pageId);
         foreach ($tags as $tag) {
             $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
         }
 
-        // get page record
         $record = (array) FrontendNavigation::getPageInfo($pageId);
-
-        // loop blocks
         foreach ((array) $record['extra_blocks'] as $block) {
-            // set module class
             $class = 'Frontend\\Modules\\' . $block['module'] . '\\Engine\\Model';
 
             if (is_callable([$class, 'getIdForTags'])) {
-                // get record for module
-                $record = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->url);
+                $itemId = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->url);
 
-                // check if record exists
-                if (!$record) {
+                if (!$itemId) {
                     continue;
                 }
 
-                // add to excluded records
-                $this->exclude[] = ['module' => $block['module'], 'other_id' => $record['id']];
+                $this->exclude[] = ['module' => $block['module'], 'other_id' => $itemId];
 
-                // get record's tags
-                $tags = (array) FrontendTagsModel::getForItem($block['module'], $record['id']);
+                $tags = (array) FrontendTagsModel::getForItem($block['module'], $itemId);
                 foreach ($tags as $tag) {
                     $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
                 }
