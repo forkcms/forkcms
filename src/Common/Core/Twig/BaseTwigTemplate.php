@@ -14,6 +14,7 @@ use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 use Symfony\Component\Form\FormRenderer;
+use Twig_Extension_Debug;
 use Twig_FactoryRuntimeLoader;
 
 /**
@@ -37,6 +38,9 @@ abstract class BaseTwigTemplate extends TwigEngine
         if ($this->debugMode) {
             $this->environment->enableAutoReload();
             $this->environment->setCache(false);
+            if (!$this->environment->hasExtension(Twig_Extension_Debug::class)) {
+                $this->environment->addExtension(new Twig_Extension_Debug());
+            }
         }
 
         $this->environment->disableStrictVariables();
@@ -153,7 +157,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         $twig->addGlobal('TAB', "\t");
         $twig->addGlobal('now', time());
         $twig->addGlobal('LANGUAGE', $this->language);
-        $twig->addGlobal('is'.strtoupper($this->language), true);
+        $twig->addGlobal('is' . strtoupper($this->language), true);
         $twig->addGlobal('debug', $this->debugMode);
 
         $twig->addGlobal('timestamp', time());
@@ -180,14 +184,14 @@ abstract class BaseTwigTemplate extends TwigEngine
             $twig->addGlobal('THEME', $this->forkSettings->get('Core', 'theme', 'Fork'));
             $twig->addGlobal(
                 'THEME_URL',
-                '/src/Frontend/Themes/'.$this->forkSettings->get('Core', 'theme', 'Fork')
+                '/src/Frontend/Themes/' . $this->forkSettings->get('Core', 'theme', 'Fork')
             );
         }
 
         // settings
         $twig->addGlobal(
             'SITE_TITLE',
-            $this->forkSettings->get('Core', 'site_title_'.$this->language, SITE_DEFAULT_TITLE)
+            $this->forkSettings->get('Core', 'site_title_' . $this->language, SITE_DEFAULT_TITLE)
         );
         $twig->addGlobal(
             'SITE_URL',
