@@ -42,7 +42,6 @@ class TwigTemplate extends BaseTwigTemplate
             $this->environment->setCache(false);
         }
         $this->environment->disableStrictVariables();
-        new FormExtension($this->environment);
         TwigFilters::addFilters($this->environment, 'Frontend');
         $this->startGlobals($this->environment);
 

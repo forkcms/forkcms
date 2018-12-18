@@ -23,3 +23,8 @@ services:
             - "@translator"
         tags:
             - { name: form.type, alias: meta}
+
+    Frontend\Core\Engine\FormExtension:
+        public: false
+        tags:
+            - { name: twig.extension }
