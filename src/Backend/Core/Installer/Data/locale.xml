@@ -3023,22 +3023,6 @@
         <translation language="el"><![CDATA[Με τιμή,<br/><br/>η ομάδα του Fork CMS]]></translation>
         <translation language="pl"><![CDATA[Z poważaniem,<br /><br />Zespół Fork CMS]]></translation>
       </item>
-      <item type="message" name="RegisterIsSuccess">
-        <translation language="nl"><![CDATA[Welkom! Je ontvangt binnen de tien minuten een e-mail waarmee je je profiel kan activeren. Ondertussen kan je de website al gebruiken, zij het iets gelimiteerder.]]></translation>
-        <translation language="en"><![CDATA[Welcome! In less than ten minutes you will receive an activation mail. In the mean while you can use the website in a limited form.]]></translation>
-        <translation language="fr"><![CDATA[Bienvenue! Vous allez recevoir, dans moins de dix minutes, vous recevrez un e-mail vous permettant d'activer votre profile.]]></translation>
-        <translation language="it"><![CDATA[Benvenuto! Entro dieci minuti riceverai una mail di attivazione. Nel frattempo puoi usare il sito in forma limitata.]]></translation>
-        <translation language="hu"><![CDATA[Üdvözlünk! Kevesebb mint tíz percen belül kapni fogsz egy akcivációs levelet. Ez azt jelenti, hogy addig korlátozottan tudod használni a honlapot.]]></translation>
-        <translation language="ru"><![CDATA[Добро пожаловать! В ближайшие 10 минут вы получите сообщение с ссылкой на активацию профиля. В то же время, вы можете пользоваться сайтом без активации, но с ограничениями.]]></translation>
-        <translation language="zh"><![CDATA[欢迎！你将会在十分钟内受到一封激活邮件。与此同时，网站已经可以使用了，只是在正式激活前，部分功能会受到限制。]]></translation>
-        <translation language="de"><![CDATA[Willkommen! In weniger als zehn Minuten wirst du eine Aktivierungs-Mail erhalten. Bis dahin kannst du die Website in eingeschränkter Weise benutzen.]]></translation>
-        <translation language="es"><![CDATA[¡Bienvenido! En menos de 10 minutos recibiras un mail para activar tu cuenta. Mientras puedes acceder a la web de manera limitada.]]></translation>
-        <translation language="lt"><![CDATA[Sveiki! Per artimiausias 10 min. jus gausite pranešimą su nuorodą profilio aktyvacijai. Iki tol jus galėsite naršyti tinklpayję, bet su tam tikrais apribojimais.]]></translation>
-        <translation language="uk"><![CDATA[Ласкаво просимо! В найближчі 10 хвилин на Ваш e-mail Ви отримаєте повідомлення із посиланням на активацію профілю]]></translation>
-        <translation language="sv"><![CDATA[Välkommen! Om mindre än 10 minuter kommer du få ett aktiveringsmeddelande. Under tiden kan du besöka en begränsad version av webbplatsen.]]></translation>
-        <translation language="el"><![CDATA[Καλωσήλθατε! Σε λίγη ώρα θα λάβετε ένα email ενεργοποίησης. Στο μεταξύ μπορείτε να χρησιμοποιήσετε τον ιστοχώρο, αλλά με κάποιους περιορισμούς.]]></translation>
-        <translation language="pl"><![CDATA[Witamy! W mniej niż dziesięć minut otrzymasz mail aktywacyjny. W międzyczasie możesz korzystac z witryny w formie ograniczonej.]]></translation>
-      </item>
       <item type="message" name="RegisterSalutation">
         <translation language="nl"><![CDATA[Beste,]]></translation>
         <translation language="en"><![CDATA[Dear,]]></translation>
