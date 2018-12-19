@@ -285,7 +285,7 @@ class MediaFolder implements JsonSerializable
      */
     public function onPrePersist()
     {
-        $this->createdOn = $this->editedOn = new \Datetime();
+        $this->createdOn = $this->editedOn = new \DateTime();
     }
 
     /**
@@ -293,6 +293,6 @@ class MediaFolder implements JsonSerializable
      */
     public function onPreUpdate()
     {
-        $this->editedOn = new \Datetime();
+        $this->editedOn = new \DateTime();
     }
 }

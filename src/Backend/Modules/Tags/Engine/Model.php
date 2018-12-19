@@ -278,7 +278,7 @@ class Model
 
             // get tag ids
             $tagsAndIds = (array) $database->getPairs(
-                'SELECT i.tag, i.id
+                'SELECT LOWER(i.tag), i.id
                  FROM tags AS i
                  WHERE i.tag IN (' . implode(',', $placeholders) . ') AND i.language = ?',
                 array_merge($tags, [$language])
