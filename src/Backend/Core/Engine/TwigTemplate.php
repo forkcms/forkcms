@@ -8,9 +8,6 @@ use ReflectionClass;
 use Symfony\Bridge\Twig\AppVariable;
 use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
-use Twig_Environment;
-use Twig_Extension_Debug;
-use Twig_Loader_Filesystem;
 
 /**
  * This is a twig template wrapper
@@ -25,18 +22,18 @@ class TwigTemplate extends BaseTwigTemplate
      */
     public function __construct(bool $addToReference = true)
     {
-        $container = Model::getContainer();
+        $this->container = Model::getContainer();
         $this->language = BL::getWorkingLanguage();
 
         parent::__construct(
-            clone $container->get('twig'),
-            $container->get('templating.name_parser.public'),
-            clone $container->get('templating.locator'),
+            clone $this->container->get('twig'),
+            $this->container->get('templating.name_parser.public'),
+            clone $this->container->get('templating.locator'),
             'Backend'
         );
 
         if ($addToReference) {
-            $container->set('template', $this);
+            $this->container->set('template', $this);
         }
     }
 
@@ -93,8 +90,8 @@ class TwigTemplate extends BaseTwigTemplate
         $this->assign('LANGUAGE', BL::getWorkingLanguage());
 
         // check on url object
-        if (Model::getContainer()->has('url')) {
-            $url = Model::get('url');
+        if ($this->container->has('url')) {
+            $url = $this->container->get('url');
 
             if ($url instanceof Url) {
                 // assign the current module
@@ -131,7 +128,7 @@ class TwigTemplate extends BaseTwigTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            Model::get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            $this->forkSettings->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
     }
 
@@ -187,7 +184,7 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function parseDebug(): void
     {
-        $this->assign('debug', Model::getContainer()->getParameter('kernel.debug'));
+        $this->assign('debug', $this->container->getParameter('kernel.debug'));
     }
 
     private function parseLabels(array $labels, string $module, string $key): void
@@ -258,7 +255,7 @@ class TwigTemplate extends BaseTwigTemplate
             return;
         }
 
-        $navigation = Model::get('navigation');
+        $navigation = $this->container->get('navigation');
         if ($navigation instanceof Navigation) {
             $navigation->parse($this);
         }
@@ -266,11 +263,11 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function addBodyClassAndId(): void
     {
-        if (!Model::getContainer()->has('url')) {
+        if (!$this->container->has('url')) {
             return;
         }
 
-        $url = Model::get('url');
+        $url = $this->container->get('url');
 
         if (!$url instanceof Url) {
             return;

@@ -9,7 +9,7 @@ use Common\ModulesSettings;
 use SpoonForm;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bundle\TwigBundle\TwigEngine;
-use Symfony\Component\Stopwatch\Stopwatch;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Environment;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Config\FileLocatorInterface;
@@ -24,6 +24,9 @@ use Twig_FactoryRuntimeLoader;
  */
 abstract class BaseTwigTemplate extends TwigEngine
 {
+    /** @var ContainerInterface */
+    protected $container;
+
     public function __construct(
         Environment $environment,
         TemplateNameParserInterface $parser,
@@ -32,10 +35,13 @@ abstract class BaseTwigTemplate extends TwigEngine
     ) {
         parent::__construct($environment, $parser, $locator);
 
-        $container = Model::getContainer();
-        $this->forkSettings = $container->get('fork.settings');
+        if (!$this->container instanceof ContainerInterface) {
+            $this->container = Model::getContainer();
+        }
 
-        $this->debugMode = $container->getParameter('kernel.debug');
+        $this->forkSettings = $this->container->get('fork.settings');
+
+        $this->debugMode = $this->container->getParameter('kernel.debug');
         if ($this->debugMode) {
             $this->environment->enableAutoReload();
             $this->environment->setCache(false);
@@ -46,7 +52,7 @@ abstract class BaseTwigTemplate extends TwigEngine
 
         $this->environment->disableStrictVariables();
 
-        if (!$container->getParameter('fork.is_installed')) {
+        if (!$this->container->getParameter('fork.is_installed')) {
             return;
         }
 
@@ -173,7 +179,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         }
 
         /* Setup Backend for the Twig environment. */
-        if (!$this->forkSettings || !Model::getContainer()->getParameter('fork.is_installed')) {
+        if (!$this->forkSettings || !$this->container->getParameter('fork.is_installed')) {
             return;
         }
 
@@ -263,7 +269,7 @@ abstract class BaseTwigTemplate extends TwigEngine
     private function connectSymfonyForms(): void
     {
         $rendererEngine = new TwigRendererEngine($this->getDefaultThemes(), $this->environment);
-        $csrfTokenManager = Model::get('security.csrf.token_manager');
+        $csrfTokenManager = $this->container->get('security.csrf.token_manager');
         $this->environment->addRuntimeLoader(
             new Twig_FactoryRuntimeLoader(
                 [
