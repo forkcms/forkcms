@@ -27,40 +27,6 @@ abstract class BaseTwigTemplate extends TwigEngine
     /** @var ContainerInterface */
     protected $container;
 
-    public function __construct(
-        Environment $environment,
-        TemplateNameParserInterface $parser,
-        FileLocatorInterface $locator,
-        string $application
-    ) {
-        parent::__construct($environment, $parser, $locator);
-
-        if (!$this->container instanceof ContainerInterface) {
-            $this->container = Model::getContainer();
-        }
-
-        $this->forkSettings = $this->container->get('fork.settings');
-
-        $this->debugMode = $this->container->getParameter('kernel.debug');
-        if ($this->debugMode) {
-            $this->environment->enableAutoReload();
-            $this->environment->setCache(false);
-            if (!$this->environment->hasExtension(Twig_Extension_Debug::class)) {
-                $this->environment->addExtension(new Twig_Extension_Debug());
-            }
-        }
-
-        $this->environment->disableStrictVariables();
-
-        if (!$this->container->getParameter('fork.is_installed')) {
-            return;
-        }
-
-        $this->connectSymfonyForms();
-        $this->environment->setLoader($this->getTemplateLoader());
-        TwigFilters::addFilters($this->environment, $application);
-    }
-
     /**
      * @var string
      */
@@ -105,6 +71,40 @@ abstract class BaseTwigTemplate extends TwigEngine
      * @var array
      */
     protected $runtimeGlobals = [];
+
+    public function __construct(
+        Environment $environment,
+        TemplateNameParserInterface $parser,
+        FileLocatorInterface $locator,
+        string $application
+    ) {
+        parent::__construct($environment, $parser, $locator);
+
+        if (!$this->container instanceof ContainerInterface) {
+            $this->container = Model::getContainer();
+        }
+
+        $this->forkSettings = $this->container->get('fork.settings');
+
+        $this->debugMode = $this->container->getParameter('kernel.debug');
+        if ($this->debugMode) {
+            $this->environment->enableAutoReload();
+            $this->environment->setCache(false);
+            if (!$this->environment->hasExtension(Twig_Extension_Debug::class)) {
+                $this->environment->addExtension(new Twig_Extension_Debug());
+            }
+        }
+
+        $this->environment->disableStrictVariables();
+
+        if (!$this->container->getParameter('fork.is_installed')) {
+            return;
+        }
+
+        $this->connectSymfonyForms();
+        $this->environment->setLoader($this->getTemplateLoader());
+        TwigFilters::addFilters($this->environment, $application);
+    }
 
     public function assign(string $key, $values): void
     {
