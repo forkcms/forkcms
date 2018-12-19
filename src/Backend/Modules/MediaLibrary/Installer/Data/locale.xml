@@ -795,6 +795,18 @@
         <translation language="nl"><![CDATA[selecteer]]></translation>
         <translation language="pl"><![CDATA[wybierz]]></translation>
       </item>
+      <item type="label" name="DeleteMedia">
+        <translation language="en"><![CDATA[delete media]]></translation>
+        <translation language="nl"><![CDATA[media verwijderen]]></translation>
+        <translation language="ru"><![CDATA[Удалить медиа]]></translation>
+        <translation language="pl"><![CDATA[usuń media]]></translation>
+      </item>
+      <item type="label" name="ConfirmDeleteMedia">
+        <translation language="en"><![CDATA[Are you sure you want to delete the media?]]></translation>
+        <translation language="nl"><![CDATA[Bent u zeker dat u de media wilt verwijderen?]]></translation>
+        <translation language="ru"><![CDATA[Вы уверены, что хотите удалить носитель?]]></translation>
+        <translation language="pl"><![CDATA[Czy na pewno chcesz usunąć nośnik?]]></translation>
+      </item>
     </MediaLibrary>
   </Backend>
 </locale>

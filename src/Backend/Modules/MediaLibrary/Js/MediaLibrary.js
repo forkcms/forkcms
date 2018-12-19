@@ -114,6 +114,10 @@ jsBackend.mediaLibrary.library = {
       $('#move-to-folder-id-for-type-' + jsBackend.mediaLibrary.library.currentType).val($('#moveToFolderId').val())
       $('#form-for-' + jsBackend.mediaLibrary.library.currentType).submit()
     })
+
+    $('#confirmMassActionMediaItemDelete').find('button[type=submit]').on('click', function () {
+      $('#form-for-' + jsBackend.mediaLibrary.library.currentType).submit()
+    })
   }
 }
 
