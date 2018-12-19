@@ -1197,6 +1197,25 @@ jsBackend.forms = {
     jsBackend.forms.meta()
     jsBackend.forms.datePicker()
     jsBackend.forms.bootstrapTabFormValidation()
+    jsBackend.forms.imagePreview()
+  },
+
+  imagePreview: function () {
+    $('input[type=file]').on('change', function () {
+      // make sure we are uploading an image by checking the name attribute
+      if ($(this).get(0).getAttribute('data-fork-cms-role') === 'image-field' && $(this).get(0).files && $(this).get(0).files[0]) {
+        // get the image closest to the upload button
+        let imagePreview = $(this).closest('.panel-body').find('.img-thumbnail')
+        // use FileReader to get the url
+        let reader = new FileReader()
+
+        reader.onload = function (event) {
+          imagePreview.attr('src', event.target.result)
+        }
+
+        reader.readAsDataURL($(this).get(0).files[0])
+      }
+    })
   },
 
   bootstrapTabFormValidation: function () {
