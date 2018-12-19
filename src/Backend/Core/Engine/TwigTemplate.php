@@ -90,37 +90,34 @@ class TwigTemplate extends BaseTwigTemplate
         // we use some abbreviations and common terms, these should also be assigned
         $this->assign('LANGUAGE', $this->language);
 
-        // check on url object
-        if ($this->container->has('url')) {
-            $url = $this->container->get('url');
-
-            if ($url instanceof Url) {
-                // assign the current module
-                $this->assign('MODULE', $url->getModule());
-
-                // assign the current action
-                if ($url->getAction() !== '') {
-                    $this->assign('ACTION', $url->getAction());
-                }
-
-                if ($url->getModule() === 'Core') {
-                    $this->assign(
-                        'BACKEND_MODULE_PATH',
-                        BACKEND_PATH . '/' . $url->getModule()
-                    );
-                } else {
-                    $this->assign(
-                        'BACKEND_MODULE_PATH',
-                        BACKEND_MODULES_PATH . '/' . $url->getModule()
-                    );
-                }
-            }
-        }
-
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
             $this->forkSettings->get('Core', 'site_title_' . $this->language, SITE_DEFAULT_TITLE)
+        );
+
+        // check on url object
+        if (!$this->container->has('url')) {
+            return;
+        }
+
+        $url = $this->container->get('url');
+
+        if (!$url instanceof Url) {
+            return;
+        }
+
+        // assign the current module
+        $this->assign('MODULE', $url->getModule());
+
+        // assign the current action
+        if ($url->getAction() !== '') {
+            $this->assign('ACTION', $url->getAction());
+        }
+
+        $this->assign(
+            'BACKEND_MODULE_PATH',
+            ($url->getModule() === 'Core' ? BACKEND_PATH : BACKEND_MODULES_PATH) . '/' . $url->getModule()
         );
     }
 
