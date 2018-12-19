@@ -1205,7 +1205,7 @@ jsBackend.forms = {
       // make sure we are uploading an image by checking the name attribute
       if ($(this).get(0).getAttribute('data-fork-cms-role') === 'image-field' && $(this).get(0).files && $(this).get(0).files[0]) {
         // get the image closest to the upload button
-        let imagePreview = $(this).closest('.panel-body').find('.img-thumbnail')
+        let imagePreview = $(this).closest('.panel-body, .tab-pane').find('.img-thumbnail, .img-responsive')
         // use FileReader to get the url
         let reader = new FileReader()
 
