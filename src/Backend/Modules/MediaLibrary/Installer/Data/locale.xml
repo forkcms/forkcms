@@ -538,12 +538,6 @@
         <translation language="ru"><![CDATA[Удалено %1$s медиа файл(ов).]]></translation>
         <translation language="pl"><![CDATA[Usuń %1$s pozycje mediów.]]></translation>
       </item>
-      <item type="message" name="ConfirmMediaItemCleanup">
-        <translation language="en"><![CDATA[Are you sure you want to delete non-connected media?]]></translation>
-        <translation language="nl"><![CDATA[Bent u zeker dat u niet-gekoppelde media wil verwijderen?]]></translation>
-        <translation language="ru"><![CDATA[Bent u zeker dat u niet-gekoppelde media wil verwijderen?]]></translation>
-        <translation language="pl"><![CDATA[Czy na pewno chcesz usunąć niepołączone media?]]></translation>
-      </item>
       <item type="message" name="ConfirmMediaFolderDelete">
         <translation language="en"><![CDATA[Are you sure you want to delete the folder "%1$s"?]]></translation>
         <translation language="nl"><![CDATA[Bent u zeker dat u de map "%1$s" wil verwijderen?]]></translation>
@@ -711,12 +705,6 @@
         <translation language="nl"><![CDATA[Map "%1$s" verplaatst.]]></translation>
         <translation language="ru"><![CDATA[Папка "%1$s" перемещена.]]></translation>
         <translation language="pl"><![CDATA[Katalog media "%1$s" został przeniesiony.]]></translation>
-      </item>
-      <item type="label" name="MediaItemCleanup">
-        <translation language="en"><![CDATA[remove all obsolete media]]></translation>
-        <translation language="nl"><![CDATA[verwijder alle ongebruikte media]]></translation>
-        <translation language="ru"><![CDATA[удалить все устаревшие медиа]]></translation>
-        <translation language="pl"><![CDATA[usuń wszystkie przestarzałe media]]></translation>
       </item>
       <item type="message" name="MediaItemDeleted">
         <translation language="en"><![CDATA[Media item "%1$s" deleted.]]></translation>

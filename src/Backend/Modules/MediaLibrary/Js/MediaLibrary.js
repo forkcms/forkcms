@@ -26,13 +26,6 @@ jsBackend.mediaLibrary.controls = {
     $('#saveAndEdit').on('click', function () {
       $('form').append('<input type="hidden" name="after_save" value="MediaItemEdit" />').submit()
     })
-
-    // Bind dialog to "mediaItemCleanup" button
-    $('a[data-role=media-item-cleanup]').on('click', function (e) {
-      e.preventDefault()
-
-      $($(this).data('target')).modal('show')
-    })
   }
 }
 
