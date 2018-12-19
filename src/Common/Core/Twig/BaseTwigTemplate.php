@@ -9,10 +9,10 @@ use Common\ModulesSettings;
 use SpoonForm;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\Stopwatch\Stopwatch;
 use Twig\Environment;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Config\FileLocatorInterface;
-use Symfony\Bridge\Twig\Extension\FormExtension as SymfonyFormExtension;
 use Symfony\Component\Form\FormRenderer;
 use Twig\Loader\LoaderInterface;
 use Twig_Extension_Debug;
@@ -273,9 +273,5 @@ abstract class BaseTwigTemplate extends TwigEngine
                 ]
             )
         );
-
-        if (!$this->environment->hasExtension(SymfonyFormExtension::class)) {
-            $this->environment->addExtension(new SymfonyFormExtension());
-        }
     }
 }
