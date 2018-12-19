@@ -106,6 +106,8 @@ class Edit extends BackendBaseActionEdit
 
         // assign usage-datagrid
         $this->template->assign('usage', $this->dgUsage->getContent());
+
+        $this->header->appendDetailToBreadcrumbs($this->record['name']);
     }
 
     private function validateForm(): void

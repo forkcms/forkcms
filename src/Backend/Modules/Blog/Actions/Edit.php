@@ -295,6 +295,8 @@ class Edit extends BackendBaseActionEdit
         if ($this->categoryId !== null) {
             $this->template->assign('categoryId', $this->categoryId);
         }
+
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
     }
 
     private function validateForm(): void

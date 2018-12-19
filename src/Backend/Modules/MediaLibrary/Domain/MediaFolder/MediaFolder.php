@@ -295,4 +295,9 @@ class MediaFolder implements JsonSerializable
     {
         $this->editedOn = new \DateTime();
     }
+
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }

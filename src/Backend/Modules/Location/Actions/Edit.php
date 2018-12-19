@@ -165,6 +165,8 @@ class Edit extends BackendBaseActionEdit
         if ($this->record['lat'] == null || $this->record['lng'] == null) {
             $this->template->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
         }
+
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
     }
 
     private function validateForm(): void
