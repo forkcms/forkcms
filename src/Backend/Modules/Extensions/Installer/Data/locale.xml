@@ -751,15 +751,6 @@
       <item type="error" name="IncompatibleTheme">
         <translation language="nl"><![CDATA[Het thema "%1$s" bevat bestanden die niet compatibel zijn met deze versie van Fork CMS.]]></translation>
         <translation language="en"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
-        <translation language="fr"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
-        <translation language="ru"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
-        <translation language="es"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
-        <translation language="de"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
-        <translation language="hu"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
-        <translation language="sv"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
-        <translation language="zh"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
-        <translation language="el"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
-        <translation language="pl"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
       </item>
       <item type="error" name="InvalidTemplateSyntax">
         <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
