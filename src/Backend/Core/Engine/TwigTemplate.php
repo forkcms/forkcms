@@ -117,15 +117,6 @@ class TwigTemplate extends BaseTwigTemplate
             }
         }
 
-        // is the user object filled?
-        if (Authentication::getUser()->isAuthenticated()) {
-            // assign the authenticated users secret key
-            $this->assign('SECRET_KEY', Authentication::getUser()->getSecretKey());
-
-            // assign the authenticated users preferred interface language
-            $this->assign('INTERFACE_LANGUAGE', (string) Authentication::getUser()->getSetting('interface_language'));
-        }
-
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
@@ -135,31 +126,39 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function parseAuthenticatedUser(): void
     {
+        $user = Authentication::getUser();
+
         // check if the current user is authenticated
-        if (Authentication::getUser()->isAuthenticated()) {
-            // show stuff that only should be visible if authenticated
-            $this->assign('isAuthenticated', true);
+        if (!$user->isAuthenticated()) {
+            return;
+        }
 
-            // get authenticated user-settings
-            $settings = (array) Authentication::getUser()->getSettings();
+        // assign the authenticated users secret key
+        $this->assign('SECRET_KEY', $user->getSecretKey());
 
-            foreach ($settings as $key => $setting) {
-                $this->assign('authenticatedUser' . SpoonFilter::toCamelCase($key), $setting ?? '');
-            }
+        // assign the authenticated users preferred interface language
+        $this->assign('INTERFACE_LANGUAGE', (string) $user->getSetting('interface_language'));
 
-            // check if this action is allowed
-            if (Authentication::isAllowedAction('Edit', 'Users')) {
-                // assign special vars
-                $this->assign(
-                    'authenticatedUserEditUrl',
-                    Model::createUrlForAction(
-                        'Edit',
-                        'Users',
-                        null,
-                        ['id' => Authentication::getUser()->getUserId()]
-                    )
-                );
-            }
+        // show stuff that only should be visible if authenticated
+        $this->assign('isAuthenticated', true);
+
+        // get authenticated user-settings
+        foreach ($user->getSettings() as $key => $setting) {
+            $this->assign('authenticatedUser' . SpoonFilter::toCamelCase($key), $setting ?? '');
+        }
+
+        // check if this action is allowed
+        if (Authentication::isAllowedAction('Edit', 'Users')) {
+            // assign special vars
+            $this->assign(
+                'authenticatedUserEditUrl',
+                Model::createUrlForAction(
+                    'Edit',
+                    'Users',
+                    null,
+                    ['id' => $user->getUserId()]
+                )
+            );
         }
     }
 
@@ -252,7 +251,7 @@ class TwigTemplate extends BaseTwigTemplate
 
     private function parseNavigation(): void
     {
-        if (!Model::has('navigation')) {
+        if (!$this->container->has('navigation')) {
             return;
         }
 
