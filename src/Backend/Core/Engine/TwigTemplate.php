@@ -87,7 +87,7 @@ class TwigTemplate extends BaseTwigTemplate
         }
 
         // we use some abbreviations and common terms, these should also be assigned
-        $this->assign('LANGUAGE', BL::getWorkingLanguage());
+        $this->assign('LANGUAGE', $this->language);
 
         // check on url object
         if ($this->container->has('url')) {
@@ -128,7 +128,7 @@ class TwigTemplate extends BaseTwigTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            $this->forkSettings->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            $this->forkSettings->get('Core', 'site_title_' . $this->language, SITE_DEFAULT_TITLE)
         );
     }
 
