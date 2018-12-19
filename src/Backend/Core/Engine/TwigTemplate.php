@@ -5,6 +5,7 @@ namespace Backend\Core\Engine;
 use Backend\Core\Language\Language as BL;
 use Common\Core\Twig\BaseTwigTemplate;
 use ReflectionClass;
+use SpoonFilter;
 use Symfony\Bridge\Twig\AppVariable;
 use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
@@ -143,7 +144,7 @@ class TwigTemplate extends BaseTwigTemplate
             $settings = (array) Authentication::getUser()->getSettings();
 
             foreach ($settings as $key => $setting) {
-                $this->assign('authenticatedUser' . \SpoonFilter::toCamelCase($key), $setting ?? '');
+                $this->assign('authenticatedUser' . SpoonFilter::toCamelCase($key), $setting ?? '');
             }
 
             // check if this action is allowed
@@ -172,7 +173,7 @@ class TwigTemplate extends BaseTwigTemplate
                 }
 
                 $this->assign(
-                    'show' . \SpoonFilter::toCamelCase($module, '_') . \SpoonFilter::toCamelCase(
+                    'show' . SpoonFilter::toCamelCase($module, '_') . SpoonFilter::toCamelCase(
                         $action,
                         '_'
                     ),
@@ -210,7 +211,7 @@ class TwigTemplate extends BaseTwigTemplate
         return array_combine(
             array_map(
                 function ($key) use ($prefix) {
-                    return $prefix . \SpoonFilter::ucfirst($key);
+                    return $prefix . SpoonFilter::ucfirst($key);
                 },
                 array_keys($array)
             ),
@@ -273,8 +274,8 @@ class TwigTemplate extends BaseTwigTemplate
             return;
         }
 
-        $this->assign('bodyID', \SpoonFilter::toCamelCase($url->getModule(), '_', true));
-        $bodyClass = \SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true);
+        $this->assign('bodyID', SpoonFilter::toCamelCase($url->getModule(), '_', true));
+        $bodyClass = SpoonFilter::toCamelCase($url->getModule() . '_' . $url->getAction(), '_', true);
         if (in_array(mb_strtolower($url->getAction()), ['add', 'edit'], true)) {
             $bodyClass = $url->getModule() . 'AddEdit';
         }
