@@ -242,7 +242,7 @@ class Edit extends BackendBaseActionEdit
         );
 
         // image related fields
-        $this->form->addImage('image');
+        $this->form->addImage('image')->setAttribute('data-fork-cms-role', 'image-field');
         $this->form->addCheckbox('remove_image');
 
         // move page fields
