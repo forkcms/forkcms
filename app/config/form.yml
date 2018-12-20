@@ -9,9 +9,9 @@ services:
     fork.datepicker.form:
         class: Common\Form\DatePickerType
         arguments:
-          - "@service_container"
+            - "@service_container"
         tags:
-          - { name: form.type }
+            - { name: form.type }
     form.type.editor:
         class: Backend\Form\Type\EditorType
         tags:
@@ -28,3 +28,9 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+    twig.form.engine:
+        class: Common\Core\Twig\TwigRendererEngine
+        arguments:
+            - "%twig.form.resources%"
+            - "@twig"
