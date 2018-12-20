@@ -32,21 +32,4 @@ class MediaItemManager
 
         return $deleteMediaItem;
     }
-
-    public function deleteAll(bool $deleteAll = false): int
-    {
-        $counter = 0;
-
-        // Loop all media items
-        foreach ($this->mediaItemRepository->findAll() as $mediaItem) {
-            if (!$deleteAll && $mediaItem->getGroups()->count() > 0) {
-                continue;
-            }
-
-            $this->delete($mediaItem);
-            ++$counter;
-        }
-
-        return $counter;
-    }
 }

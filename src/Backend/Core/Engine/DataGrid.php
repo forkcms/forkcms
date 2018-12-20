@@ -276,6 +276,8 @@ class DataGrid extends \SpoonDataGrid
 
         // hide the sequence column if present
         if ($this->hasColumn('sequence')) {
+            $this->setSortingColumns(['sequence']);
+            $this->setSortParameter('asc');
             $this->setColumnHidden('sequence');
         }
 

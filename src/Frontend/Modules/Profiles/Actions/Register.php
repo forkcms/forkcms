@@ -107,8 +107,6 @@ class Register extends FrontendBaseBlock
         );
         $profile = $this->createProfile($activationKey);
 
-        FrontendProfilesAuthentication::login($profile['id']);
-
         $this->sendActivationEmail($profile, $activationKey);
 
         $this->redirect($this->url->getQueryString() . '?registered=true');

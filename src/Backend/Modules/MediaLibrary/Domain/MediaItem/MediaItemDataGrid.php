@@ -6,6 +6,7 @@ use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
+use Backend\Modules\MediaLibrary\Actions\MediaItemMassAction;
 use SpoonFormDropdown;
 
 /**
@@ -82,14 +83,18 @@ class MediaItemDataGrid extends DataGridDatabase
     {
         $ddmMediaItemMassAction = new SpoonFormDropdown(
             'action',
-            ['move' => Language::lbl('Move')],
-            'move',
+            [
+                MediaItemMassAction::MOVE => Language::lbl('Move'),
+                MediaItemMassAction::DELETE => Language::lbl('Delete')
+            ],
+            MediaItemMassAction::MOVE,
             false,
             'form-control',
             'form-control danger'
         );
         $ddmMediaItemMassAction->setAttribute('id', 'mass-action-' . (string) $type);
-        $ddmMediaItemMassAction->setOptionAttributes('move', ['data-target' => '#confirmMassActionMediaItemMove']);
+        $ddmMediaItemMassAction->setOptionAttributes(MediaItemMassAction::MOVE, ['data-target' => '#confirmMassActionMediaItemMove']);
+        $ddmMediaItemMassAction->setOptionAttributes(MediaItemMassAction::DELETE, ['data-target' => '#confirmMassActionMediaItemDelete']);
 
         return $ddmMediaItemMassAction;
     }

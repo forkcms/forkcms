@@ -57,7 +57,7 @@ class Detail extends FrontendBaseBlock
         parent::setMeta($meta);
 
         // Add no-index, so the draft won't get accidentally indexed
-        if ($this->url->getParameter('revision', 'int') !== 0) {
+        if ($this->url->getParameter('revision', 'int') !== null) {
             $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
         }
     }
@@ -271,7 +271,7 @@ class Detail extends FrontendBaseBlock
 
     private function isModerationFilterEnabled(): bool
     {
-        return isset($this->settings['spamfilter']) && $this->settings['spamfilter'];
+        return isset($this->settings['moderation']) && $this->settings['moderation'];
     }
 
     private function getSubmittedComment(): array
