@@ -60,22 +60,6 @@ class Csv
         );
     }
 
-    // we are not using the line ending for now.
-    private static function getLineEnding(): string
-    {
-        $lineEnding = Authentication::getUser()->getSetting('csv_line_ending');
-
-        // reformat
-        if ($lineEnding === '\n') {
-            return "\n";
-        }
-        if ($lineEnding === '\r\n') {
-            return "\r\n";
-        }
-
-        return $lineEnding;
-    }
-
     private static function addHeadersToData(array $headers, array $data, array $excludeColumns = null): array
     {
         $processedArray = [];
