@@ -58,7 +58,7 @@ final class MediaFolderRepository extends EntityRepository
             throw MediaFolderNotFound::forEmptyId();
         }
 
-        $mediaFolder = parent::findOneById($id);
+        $mediaFolder = $this->find($id);
 
         if ($mediaFolder === null) {
             throw MediaFolderNotFound::forId($id);

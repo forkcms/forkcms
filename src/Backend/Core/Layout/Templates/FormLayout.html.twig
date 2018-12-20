@@ -319,17 +319,11 @@
 {% endblock media_group_widget %}
 
 {% block form_row %}
-  <div class="panel form-group panel-default{% if (not compound or force_error|default(false)) and not valid %} panel-danger{% endif %}">
-    <div class="panel-heading">
-      {{- form_label(form) -}}
-    </div>
-    <div class="panel-body">
-      {{- form_widget(form) -}}
-    </div>
+  <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    {{- form_label(form) -}}
+    {{- form_widget(form) -}}
     {% if (not compound or force_error|default(false)) and not valid %}
-      <div class="panel-footer">
-        {{- form_errors(form) -}}
-      </div>
+      {{- form_errors(form) -}}
     {% endif %}
   </div>
 {% endblock %}
@@ -355,3 +349,14 @@
     {% if attributeName == 'help' %}<span class="help-block">{{ attributeValue|trans }}</span>{% endif %}
   {% endfor %}
 {% endblock %}
+
+{%- block collection_row -%}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      {{- form_label(form) -}}
+    </div>
+    <div class="panel-body">
+      {{- block('form_widget') -}}
+    </div>
+  </div>
+{%- endblock collection_row -%}

@@ -640,6 +640,7 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('formErrors', (string) $this->form->getErrors());
         $this->template->assign('showTags', $this->userCanSeeAndEditTags());
         $this->template->assign('hreflangFields', $this->hreflangFields);
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
 
         // init var
         $showDelete = true;
@@ -765,7 +766,17 @@ class Edit extends BackendBaseActionEdit
 
         $this->saveTags($page['id']);
 
-        BackendPagesModel::buildCache(BL::getWorkingLanguage());
+        $cacheShouldBeUpdated = !(
+            $this->record['title'] === $page['title']
+            && $this->record['navigation_title'] === $page['navigation_title']
+            && $this->record['navigation_title_overwrite'] === $page['navigation_title_overwrite']
+            && $this->record['hidden'] === $page['hidden']
+        );
+
+        // build cache
+        if ($cacheShouldBeUpdated) {
+            BackendPagesModel::buildCache(BL::getWorkingLanguage());
+        }
 
         if ($page['status'] === 'draft') {
             $this->redirect(

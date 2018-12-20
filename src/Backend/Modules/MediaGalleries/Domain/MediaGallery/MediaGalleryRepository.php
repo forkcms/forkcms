@@ -32,7 +32,7 @@ final class MediaGalleryRepository extends EntityRepository
         }
 
         /** @var MediaGallery|null $mediaGallery */
-        $mediaGallery = parent::findOneById($id);
+        $mediaGallery = $this->find($id);
 
         if ($mediaGallery === null) {
             throw MediaGalleryNotFound::forId($id);

@@ -221,6 +221,8 @@ class Edit extends BackendBaseActionEdit
         // check if we need to show the password strength and parse the label
         $this->template->assign('showPasswordStrength', ($this->record['settings']['password_strength'] !== 'strong'));
         $this->template->assign('passwordStrengthLabel', BL::lbl($this->record['settings']['password_strength']));
+
+        $this->header->appendDetailToBreadcrumbs($this->user->getEmail());
     }
 
     private function validateForm(): void

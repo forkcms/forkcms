@@ -1,4 +1,4 @@
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <locale>
   <Backend>
     <Profiles>
@@ -932,6 +932,22 @@
         <translation language="en"><![CDATA[You are logged on as <a href="%2$s">%1$s</a>.]]></translation>
         <translation language="ru"><![CDATA[Вы вошли как <a href="%2$s">%1$s</a>.]]></translation>
 		<translation language="pl"><![CDATA[Jesteś zalogowany jako <a href="%2$s">%1$s</a>.]]></translation>
+      </item>
+      <item type="message" name="RegisterIsSuccess">
+        <translation language="nl"><![CDATA[Welkom! Je ontvangt binnen de tien minuten een e-mail waarmee je je profiel kan activeren. Na het activatieproces kan u zich inloggen.]]></translation>
+        <translation language="en"><![CDATA[Welcome! In less than ten minutes you will receive an activation mail. You can log in after the activation process.]]></translation>
+        <translation language="fr"><![CDATA[Bienvenue! Vous allez recevoir, dans moins de dix minutes, vous recevrez un e-mail vous permettant d'activer votre profile.]]></translation>
+        <translation language="it"><![CDATA[Benvenuto! Entro dieci minuti riceverai una mail di attivazione.]]></translation>
+        <translation language="hu"><![CDATA[Üdvözlünk! Kevesebb mint tíz percen belül kapni fogsz egy akcivációs levelet.]]></translation>
+        <translation language="ru"><![CDATA[Добро пожаловать! В ближайшие 10 минут вы получите сообщение с ссылкой на активацию профиля.]]></translation>
+        <translation language="zh"><![CDATA[欢迎！ 您将在十分钟内收到激活电子邮件。]]></translation>
+        <translation language="de"><![CDATA[Willkommen! In weniger als zehn Minuten wirst du eine Aktivierungs-Mail erhalten.]]></translation>
+        <translation language="es"><![CDATA[¡Bienvenido! En menos de 10 minutos recibiras un mail para activar tu cuenta.]]></translation>
+        <translation language="lt"><![CDATA[Sveiki! Per artimiausias 10 min. jus gausite pranešimą su nuorodą profilio aktyvacijai.]]></translation>
+        <translation language="uk"><![CDATA[Ласкаво просимо! В найближчі 10 хвилин на Ваш e-mail Ви отримаєте повідомлення із посиланням на активацію профілю]]></translation>
+        <translation language="sv"><![CDATA[Välkommen! Om mindre än 10 minuter kommer du få ett aktiveringsmeddelande.]]></translation>
+        <translation language="el"><![CDATA[Καλωσήλθατε! Σε λίγη ώρα θα λάβετε ένα email ενεργοποίησης.]]></translation>
+        <translation language="pl"><![CDATA[Witamy! W mniej niż dziesięć minut otrzymasz mail aktywacyjny.]]></translation>
       </item>
     </Core>
   </Frontend>
