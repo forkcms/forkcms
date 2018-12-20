@@ -1569,7 +1569,7 @@
     newWidget = newWidget.replace(/__id__/g, newName[1].replace(re, count))
     var newLi = $('<li class="list-group-item"></li>').html(newWidget)
     newLi.appendTo(list)
-    CollectionSequence.saveNewSequence(newLi.closest(sequenceField))
+    CollectionSequence.saveNewSequence(newLi.closest(list))
     $this.trigger('collection-field-added', newLi)
   }
 
