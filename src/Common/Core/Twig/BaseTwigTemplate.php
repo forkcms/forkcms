@@ -100,9 +100,9 @@ abstract class BaseTwigTemplate extends TwigEngine
         if (!$this->container->getParameter('fork.is_installed')) {
             return;
         }
+        $this->environment->setLoader($this->getTemplateLoader());
 
         $this->connectSymfonyForms();
-        $this->environment->setLoader($this->getTemplateLoader());
         TwigFilters::addFilters($this->environment, $application);
     }
 
