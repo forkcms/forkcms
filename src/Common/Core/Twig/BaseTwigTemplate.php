@@ -7,7 +7,6 @@ use Common\Core\Model;
 use Common\Core\Twig\Extensions\TwigFilters;
 use Common\ModulesSettings;
 use SpoonForm;
-use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Environment;
@@ -16,7 +15,6 @@ use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Form\FormRenderer;
 use Twig\Loader\LoaderInterface;
 use Twig_Extension_Debug;
-use Twig_FactoryRuntimeLoader;
 
 /**
  * This is a twig template wrapper
@@ -102,7 +100,7 @@ abstract class BaseTwigTemplate extends TwigEngine
         }
         $this->environment->setLoader($this->getTemplateLoader());
 
-        $this->connectSymfonyForms();
+        $this->setSymfonyFormThemes();
         TwigFilters::addFilters($this->environment, $application);
     }
 
@@ -266,18 +264,20 @@ abstract class BaseTwigTemplate extends TwigEngine
 
     abstract protected function getTemplateLoader(): LoaderInterface;
 
-    private function connectSymfonyForms(): void
+    private function setSymfonyFormThemes(): void
     {
-        $rendererEngine = new TwigRendererEngine($this->getDefaultThemes(), $this->environment);
-        $csrfTokenManager = $this->container->get('security.csrf.token_manager');
-        $this->environment->addRuntimeLoader(
-            new Twig_FactoryRuntimeLoader(
-                [
-                    FormRenderer::class => function () use ($rendererEngine, $csrfTokenManager): FormRenderer {
-                        return new FormRenderer($rendererEngine, $csrfTokenManager);
-                    },
-                ]
-            )
+        $formEngine = $this->environment->getRuntime(FormRenderer::class)->getEngine();
+
+        if (!$formEngine instanceof TwigRendererEngine) {
+            return;
+        }
+
+        // remove the configured one since it is only for the frontend
+        $defaultThemes = array_diff(
+            $formEngine->getDefaultThemes(),
+            [$this->container->getParameter('fork.form.theme')]
         );
+
+        $formEngine->overwriteDefaultThemes(array_merge($defaultThemes, $this->getDefaultThemes()));
     }
 }
