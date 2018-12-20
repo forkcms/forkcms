@@ -4,7 +4,6 @@ namespace Frontend\Core\Engine;
 
 use Frontend\Core\Language\Locale;
 use Common\Core\Twig\BaseTwigTemplate;
-use Common\Core\Twig\Extensions\TwigFilters;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Templating\TemplateNameParserInterface;
@@ -45,7 +44,10 @@ class TwigTemplate extends BaseTwigTemplate
 
     protected function getDefaultThemes(): array
     {
-        return $this->getFormTemplates('FormLayout.html.twig');
+        return array_merge(
+            [$this->container->getParameter('fork.form.theme')],
+            $this->getFormTemplates('FormLayout.html.twig')
+        );
     }
 
     /**
