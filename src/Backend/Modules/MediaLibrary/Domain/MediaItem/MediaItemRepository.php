@@ -31,7 +31,7 @@ final class MediaItemRepository extends EntityRepository
             throw MediaItemNotFound::forEmptyId();
         }
 
-        $mediaItem = parent::findOneById($id);
+        $mediaItem = parent::find($id);
 
         if ($mediaItem === null) {
             throw MediaItemNotFound::forId($id);
