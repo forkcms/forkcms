@@ -32,8 +32,6 @@ class TwigTemplate extends BaseTwigTemplate
         $this->language = Locale::frontendLanguage();
 
         parent::__construct(clone $environment, $parser, clone $locator, 'Frontend');
-
-        TwigFilters::addFilters($this->environment, 'Frontend');
     }
 
     protected function getTemplateLoader(): LoaderInterface
