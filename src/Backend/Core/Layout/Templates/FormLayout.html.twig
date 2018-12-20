@@ -225,7 +225,7 @@
     {% if show_preview or show_remove_image %}
       <div class="form-group">
         {% if show_preview and preview_url %}
-          <img class="{% if preview_class is defined and preview_class is not empty %}{{ preview_class }}{% endif %}" src="{{ preview_url }}">
+          <img data-fork-cms-role="image-preview" data-id="{{ form.file.vars.id }}" class="{% if preview_class is defined and preview_class is not empty %}{{ preview_class }}{% endif %}" src="{{ preview_url }}">
         {% endif %}
         {% if show_remove_image %}
           {{ form_widget(form.remove) }}
