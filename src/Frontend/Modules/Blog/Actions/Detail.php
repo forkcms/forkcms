@@ -173,7 +173,7 @@ class Detail extends FrontendBaseBlock
         $this->header->setTwitterCard(
             $this->blogPost['title'],
             $this->blogPost['meta_description'],
-            FRONTEND_FILES_URL . '/Blog/images/source/' . $this->blogPost['image']
+            SITE_URL . '/src/Frontend/Files/Blog/images/source/' . $this->blogPost['image']
         );
     }
 
