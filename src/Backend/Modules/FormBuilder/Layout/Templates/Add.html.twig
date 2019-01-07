@@ -64,11 +64,11 @@
                 </div>
               </div>
               <div class="col-lg-6">
+                <p>{{ 'msg.SuccessMessageOrRedirectUrlRequired'|trans }}</p>
                 <div class="panel panel-default panel-editor">
                   <div class="panel-heading">
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
-                      {{ macro.required }}<br>
                     </label>
                   </div>
                   <div class="panel-body">
@@ -81,6 +81,19 @@
                       {% form_field_error success_message %}
                     </div>
                   {% endif %}
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <label for="successMessage" class="control-label">
+                      {{ 'lbl.RedirectUrl'|trans|ucfirst }}
+                    </label>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group last">
+                      {% form_field redirect_url %}
+                      {% form_field_error redirect_url %}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

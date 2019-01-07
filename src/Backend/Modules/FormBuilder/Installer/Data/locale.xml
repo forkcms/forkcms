@@ -1178,6 +1178,18 @@
         <translation language="en"><![CDATA[subject confirmation mail]]></translation>
         <translation language="pl"><![CDATA[temat emaila z potwierdzeniem]]></translation>
       </item>
+      <item type="message" name="SuccessMessageOrRedirectUrlRequired">
+        <translation language="nl"><![CDATA[Succes boodschap of redirect URL is verplicht, gelieve Ã©Ã©n van deze velden in te vullen.]]></translation>
+        <translation language="en"><![CDATA[Success message or redirect URL is required, fill one of those fields in.]]></translation>
+      </item>
+      <item type="label" name="RedirectUrl">
+        <translation language="nl"><![CDATA[Redirect URL]]></translation>
+        <translation language="en"><![CDATA[Redirect URL]]></translation>
+      </item>
+      <item type="error" name="SuccessMessageOrRedirectUrlIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een succes boodschap of redirect URL in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please fill in success message or redirect URL.]]></translation>
+      </item>
     </FormBuilder>
   </Backend>
   <Frontend>

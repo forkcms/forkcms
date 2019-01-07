@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `forms` (
   `identifier` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_template` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'Form.html.twig',
   `email_subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `redirect_url` VARCHAR(255) DEFAULT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)

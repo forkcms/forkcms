@@ -545,10 +545,14 @@ class Form extends FrontendBaseWidget
                 FrontendModel::getSession()->set('formbuilder_' . $this->item['id'], time());
 
                 // redirect
-                $redirect = SITE_URL . $this->url->getQueryString();
-                $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
-                $redirect .= 'identifier=' . $this->item['identifier'];
-                $redirect .= '#' . $this->formName;
+                if ($this->item['redirect_url'] !== null && $this->item['redirect_url'] !== '') {
+                    $redirect = $this->item['redirect_url'];
+                } else {
+                    $redirect = SITE_URL . $this->url->getQueryString();
+                    $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
+                    $redirect .= 'identifier=' . $this->item['identifier'];
+                    $redirect .= '#' . $this->formName;
+                }
 
                 throw new RedirectException(
                     'Redirect',

@@ -73,7 +73,8 @@ class Edit extends BackendBaseActionEdit
             );
         }
         $this->form->addText('identifier', $this->record['identifier']);
-        $this->form->addEditor('success_message', $this->record['success_message'])->makeRequired();
+        $this->form->addEditor('success_message', $this->record['success_message']);
+        $this->form->addText('redirect_url', $this->record['redirect_url']);
 
         // textfield dialog
         $this->form->addText('textbox_label');
@@ -272,13 +273,20 @@ class Edit extends BackendBaseActionEdit
             $txtEmailSubject = $this->form->getField('email_subject');
             $ddmMethod = $this->form->getField('method');
             $txtSuccessMessage = $this->form->getField('success_message');
+            $txtRedirectUrl = $this->form->getField('redirect_url');
             $txtIdentifier = $this->form->getField('identifier');
 
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
             // validate fields
             $txtName->isFilled(BL::getError('NameIsRequired'));
-            $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
+            if (!$txtSuccessMessage->isFilled() && !$txtRedirectUrl->isFilled()) {
+                $txtSuccessMessage->addError(BL::getError('SuccessMessageOrRedirectUrlIsRequired'));
+                $txtRedirectUrl->addError(BL::getError('SuccessMessageOrRedirectUrlIsRequired'));
+            }
+            if ($txtRedirectUrl->isFilled()) {
+                $txtRedirectUrl->isUrl(BL::getError('InvalidURL'));
+            }
             if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
                 $error = false;
 
@@ -319,6 +327,7 @@ class Edit extends BackendBaseActionEdit
                     ? $this->form->getField('template')->getValue() : $this->templates[0];
                 $values['email_subject'] = empty($txtEmailSubject->getValue()) ? null : $txtEmailSubject->getValue();
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
+                $values['redirect_url'] = $txtRedirectUrl->getValue();
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
