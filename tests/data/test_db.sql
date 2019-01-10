@@ -136,7 +136,10 @@ VALUES
 	(49,2,'Profiles','',NULL,8),
 	(50,49,'Overview','profiles/index','a:5:{i:0;s:12:\"profiles/add\";i:1;s:13:\"profiles/edit\";i:2;s:26:\"profiles/add_profile_group\";i:3;s:27:\"profiles/edit_profile_group\";i:4;s:15:\"profiles/import\";}',1),
 	(51,49,'Groups','profiles/groups','a:2:{i:0;s:18:\"profiles/add_group\";i:1;s:19:\"profiles/edit_group\";}',2),
-	(52, 6, 'Tools', 'settings/tools', NULL, 3);
+	(52, 6, 'Tools', 'settings/tools', NULL, 3),
+	(53, 0, 'MediaLibrary', 'media_library/media_item_index', 'a:2:{i:0;s:31:\"media_library/media_item_upload\";i:1;s:29:\"media_library/media_item_edit\";}', 3),
+	(54, 2, 'MediaGalleries', 'media_galleries/media_gallery_index', 'a:2:{i:0;s:33:\"media_galleries/media_gallery_add\";i:1;s:34:\"media_galleries/media_gallery_edit\";}', 6);
+
 
 /*!40000 ALTER TABLE `backend_navigation` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -581,7 +584,28 @@ VALUES
 	(188,1,'Profiles','Settings',7),
 	(189,1,'Settings','Tools',7),
 	(190,1,'Settings','ClearCache',7),
-	(191,1,'Tags','GetAllTags',7);
+	(191,1,'Tags','GetAllTags',7),
+	(192, 1, 'MediaGalleries', 'MediaGalleryAdd', 7),
+	(193, 1, 'MediaGalleries', 'MediaGalleryDelete', 7),
+	(194, 1, 'MediaGalleries', 'MediaGalleryEdit', 7),
+	(195, 1, 'MediaGalleries', 'MediaGalleryEditWidgetAction', 7),
+	(196, 1, 'MediaGalleries', 'MediaGalleryIndex', 7),
+	(197, 1, 'MediaLibrary', 'MediaFolderAdd', 7),
+	(198, 1, 'MediaLibrary', 'MediaFolderDelete', 7),
+	(199, 1, 'MediaLibrary', 'MediaFolderEdit', 7),
+	(200, 1, 'MediaLibrary', 'MediaFolderFindAll', 7),
+	(201, 1, 'MediaLibrary', 'MediaFolderGetCountsForGroup', 7),
+	(202, 1, 'MediaLibrary', 'MediaFolderInfo', 7),
+	(203, 1, 'MediaLibrary', 'MediaFolderMovie', 7),
+	(204, 1, 'MediaLibrary', 'MediaItemAddMovie', 7),
+	(205, 1, 'MediaLibrary', 'MediaItemCleanup', 7),
+	(206, 1, 'MediaLibrary', 'MediaItemDelete', 7),
+	(207, 1, 'MediaLibrary', 'MediaItemEdit', 7),
+	(208, 1, 'MediaLibrary', 'MediaItemFindAll', 7),
+	(209, 1, 'MediaLibrary', 'MediaItemGetAllById', 7),
+	(210, 1, 'MediaLibrary', 'MediaItemIndex', 7),
+	(211, 1, 'MediaLibrary', 'MediaItemMassAction', 7),
+	(212, 1, 'MediaLibrary', 'MediaItemUpload', 7);
 
 /*!40000 ALTER TABLE `groups_rights_actions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -623,7 +647,9 @@ VALUES
 	(16,1,'Mailmotor'),
 	(17,1,'Profiles'),
 	(18,2,'Pages'),
-	(19,3,'Users');
+	(19,3,'Users'),
+	(20,1,'MediaLibrary'),
+	(21,1,'MediaGalleries');
 
 /*!40000 ALTER TABLE `groups_rights_modules` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -2068,7 +2094,6 @@ VALUES
 	(1391, 1, 'en', 'Backend', 'MediaLibrary', 'lbl', 'AllMedia', 'all media', '2017-08-31 14:28:25'),
 	(1392, 1, 'en', 'Backend', 'MediaLibrary', 'lbl', 'BackToOverview', 'back to overview', '2017-08-31 14:28:25'),
 	(1393, 1, 'en', 'Backend', 'MediaLibrary', 'msg', 'CleanedUpMediaItems', 'Removed %1$s media items.', '2017-08-31 14:28:25'),
-	(1394, 1, 'en', 'Backend', 'MediaLibrary', 'msg', 'ConfirmMediaItemCleanup', 'Are you sure you want to delete non-connected media?', '2017-08-31 14:28:25'),
 	(1395, 1, 'en', 'Backend', 'MediaLibrary', 'msg', 'ConfirmMediaFolderDelete', 'Are you sure you want to delete the folder \"%1$s\"?', '2017-08-31 14:28:25'),
 	(1396, 1, 'en', 'Backend', 'MediaLibrary', 'msg', 'ConfirmMediaFolderDeleteAndFiles', 'Are you sure you want to delete the folder \"%1$s\" and all its files? This files will be completely removed and you can\'t use them anymore.', '2017-08-31 14:28:25'),
 	(1397, 1, 'en', 'Backend', 'MediaLibrary', 'msg', 'ConfirmMediaItemDelete', 'Are you sure you want to delete this media item \"%1$s\" and all it connections?', '2017-08-31 14:28:25'),
@@ -2097,7 +2122,6 @@ VALUES
 	(1420, 1, 'en', 'Backend', 'MediaLibrary', 'err', 'MediaFolderExists', 'This folder already exists.', '2017-08-31 14:28:25'),
 	(1421, 1, 'en', 'Backend', 'MediaLibrary', 'msg', 'MediaFolderIsEdited', 'Folder \"%1$s\" edited.', '2017-08-31 14:28:25'),
 	(1422, 1, 'en', 'Backend', 'MediaLibrary', 'msg', 'MediaFolderMoved', 'Media folder \"%1$s\" moved.', '2017-08-31 14:28:25'),
-	(1423, 1, 'en', 'Backend', 'MediaLibrary', 'lbl', 'MediaItemCleanup', 'remove all obsolete media', '2017-08-31 14:28:25'),
 	(1424, 1, 'en', 'Backend', 'MediaLibrary', 'msg', 'MediaItemDeleted', 'Media item \"%1$s\" deleted.', '2017-08-31 14:28:25'),
 	(1425, 1, 'en', 'Backend', 'MediaLibrary', 'lbl', 'MediaItemEdit', 'edit item', '2017-08-31 14:28:25'),
 	(1426, 1, 'en', 'Backend', 'MediaLibrary', 'msg', 'MediaItemEdited', 'The item \"%1$s\" has been saved.', '2017-08-31 14:28:25'),
@@ -2344,6 +2368,8 @@ VALUES
 	('FormBuilder','2015-02-23 19:48:53'),
 	('Location','2015-02-23 19:48:53'),
 	('Mailmotor','2015-02-23 19:48:53'),
+	('MediaLibrary','2015-02-23 19:48:53'),
+	('MediaGalleries','2015-02-23 19:48:53'),
 	('Profiles','2015-02-23 19:48:54');
 
 /*!40000 ALTER TABLE `modules` ENABLE KEYS */;
@@ -3005,9 +3031,82 @@ VALUES
 	(3,'dashboard_sequence','a:3:{s:4:\"Blog\";a:1:{s:8:\"Comments\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:0;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:8:\"Settings\";a:1:{s:7:\"Analyse\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:5:\"Users\";a:1:{s:10:\"Statistics\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}}'),
 	(1,'current_login','s:10:\"1501830186\";'),
 	(1,'last_login','s:10:\"1501830130\";');
-
 /*!40000 ALTER TABLE `users_settings` ENABLE KEYS */;
 UNLOCK TABLES;
+
+-- Create syntax for TABLE 'MediaFolder'
+CREATE TABLE `MediaFolder` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`userId` int(11) NOT NULL,
+`name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+`createdOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+`editedOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+`parentMediaFolderId` int(11) DEFAULT NULL,
+PRIMARY KEY (`id`),
+KEY `IDX_F8B3AB017897CFE7` (`parentMediaFolderId`),
+CONSTRAINT `FK_F8B3AB017897CFE7` FOREIGN KEY (`parentMediaFolderId`) REFERENCES `MediaFolder` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Create syntax for TABLE 'MediaGallery'
+CREATE TABLE `MediaGallery` (
+`id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:guid)',
+`userId` int(11) NOT NULL,
+`moduleExtraId` int(11) NOT NULL,
+`action` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+`title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+`text` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+`createdOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+`editedOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+`status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:media_gallery_status)',
+`mediaGroupId` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '(DC2Type:uuid)',
+PRIMARY KEY (`id`),
+UNIQUE KEY `UNIQ_D5EDE7036776CC71` (`mediaGroupId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Create syntax for TABLE 'MediaGroup'
+CREATE TABLE `MediaGroup` (
+`id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:uuid)',
+`type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:media_group_type)',
+`editedOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+`numberOfConnectedItems` int(11) NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Create syntax for TABLE 'MediaGroupMediaItem'
+CREATE TABLE `MediaGroupMediaItem` (
+`id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:guid)',
+`createdOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+`sequence` int(11) NOT NULL,
+`mediaGroupId` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '(DC2Type:uuid)',
+`mediaItemId` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '(DC2Type:guid)',
+PRIMARY KEY (`id`),
+KEY `IDX_BCC51AD86776CC71` (`mediaGroupId`),
+KEY `IDX_BCC51AD827759A6A` (`mediaItemId`),
+CONSTRAINT `FK_BCC51AD827759A6A` FOREIGN KEY (`mediaItemId`) REFERENCES `MediaItem` (`id`) ON DELETE CASCADE,
+CONSTRAINT `FK_BCC51AD86776CC71` FOREIGN KEY (`mediaGroupId`) REFERENCES `MediaGroup` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Create syntax for TABLE 'MediaItem'
+CREATE TABLE `MediaItem` (
+`id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:guid)',
+`userId` int(11) NOT NULL,
+`storageType` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'local' COMMENT '(DC2Type:media_item_storage_type)',
+`type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:media_item_type)',
+`mime` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+`shardingFolderName` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+`url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+`title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+`size` int(11) DEFAULT NULL,
+`width` int(11) DEFAULT NULL,
+`height` int(11) DEFAULT NULL,
+`aspectRatio` decimal(13,2) DEFAULT NULL COMMENT '(DC2Type:media_item_aspect_ratio)',
+`createdOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+`editedOn` datetime NOT NULL COMMENT '(DC2Type:datetime)',
+`mediaFolderId` int(11) DEFAULT NULL,
+PRIMARY KEY (`id`),
+KEY `IDX_3BE26384C1DCBB95` (`mediaFolderId`),
+CONSTRAINT `FK_3BE26384C1DCBB95` FOREIGN KEY (`mediaFolderId`) REFERENCES `MediaFolder` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 

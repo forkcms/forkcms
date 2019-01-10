@@ -10,7 +10,6 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
-use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Detail extends FrontendBaseBlock
@@ -58,7 +57,7 @@ class Detail extends FrontendBaseBlock
         parent::setMeta($meta);
 
         // Add no-index, so the draft won't get accidentally indexed
-        if ($this->url->getParameter('revision', 'int') !== 0) {
+        if ($this->url->getParameter('revision', 'int') !== null) {
             $this->header->addMetaData(['name' => 'robots', 'content' => 'noindex, nofollow'], true);
         }
     }
@@ -87,7 +86,6 @@ class Detail extends FrontendBaseBlock
             throw new NotFoundHttpException();
         }
 
-        $blogPost['tags'] = FrontendTagsModel::getForItem($this->getModule(), $blogPost['id']);
         $baseCategoryUrl = FrontendNavigation::getUrlForBlock($this->getModule(), 'Category');
         $blogPost['category_full_url'] = $baseCategoryUrl . '/' . $blogPost['category_url'];
         $baseDetailUrl = FrontendNavigation::getUrlForBlock($this->getModule(), 'Detail');
@@ -273,7 +271,7 @@ class Detail extends FrontendBaseBlock
 
     private function isModerationFilterEnabled(): bool
     {
-        return isset($this->settings['spamfilter']) && $this->settings['spamfilter'];
+        return isset($this->settings['moderation']) && $this->settings['moderation'];
     }
 
     private function getSubmittedComment(): array

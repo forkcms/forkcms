@@ -19,6 +19,7 @@ class Lightbox extends FrontendMediaWidget
         }
 
         $this->addLightboxJS();
+        $this->addLightboxCSS();
         parent::execute();
         $this->loadTemplate();
         $this->parse();
@@ -28,5 +29,11 @@ class Lightbox extends FrontendMediaWidget
     {
         $this->addJS('/js/vendors/photoswipe.min.js', true);
         $this->addJS('/js/vendors/photoswipe-ui-default.min.js', true);
+    }
+
+    private function addLightboxCSS(): void
+    {
+        $this->addCSS('/css/vendors/photoswipe/photoswipe.css', true, false);
+        $this->addCSS('/css/vendors/photoswipe/default-skin.css', true, false);
     }
 }

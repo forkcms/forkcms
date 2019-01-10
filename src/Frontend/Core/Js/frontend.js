@@ -69,11 +69,25 @@ jsFrontend.controls = {
   // init, something like a constructor
   init: function () {
     jsFrontend.controls.bindTargetBlank()
+    jsFrontend.controls.toggleCollapse()
   },
 
   // bind target blank
   bindTargetBlank: function () {
     $('a.targetBlank').attr('target', '_blank')
+  },
+
+  toggleCollapse: function () {
+    var $navToggle = $('.navbar-toggle')
+
+    if ($navToggle.length === 0) {
+      return
+    }
+
+    $navToggle.on('click', function() {
+      var $button = $(this)
+      $button.find('[data-role=label]').text(jsFrontend.locale.lbl($button.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
+    }).find('[data-role=label]').text(jsFrontend.locale.lbl($navToggle.hasClass('collapsed') ? 'CloseNavigation' : 'OpenNavigation'))
   }
 }
 
@@ -194,6 +208,26 @@ jsFrontend.forms = {
     jsFrontend.forms.validation()
     jsFrontend.forms.filled()
     jsFrontend.forms.datePicker()
+    jsFrontend.forms.imagePreview()
+  },
+
+  imagePreview: function () {
+    $('input[type=file]').on('change', function () {
+      let imageField = $(this).get(0)
+      // make sure we are uploading an image by checking the data attribute
+      if (imageField.getAttribute('data-fork-cms-role') === 'image-field' && imageField.files && imageField.files[0]) {
+        // get the image preview by matching the image-preview data-id to the ImageField id
+        let $imagePreview = $('[data-fork-cms-role="image-preview"][data-id="' + imageField.id + '"]')
+        // use FileReader to get the url
+        let reader = new FileReader()
+
+        reader.onload = function (event) {
+          $imagePreview.attr('src', event.target.result)
+        }
+
+        reader.readAsDataURL(imageField.files[0])
+      }
+    })
   },
 
   // once text has been filled add another class to it (so it's possible to style it differently)
@@ -268,6 +302,13 @@ jsFrontend.forms = {
           // Rename the original field, used to contain the display value
           $(this).attr('id', $(this).attr('id') + '-display')
           $(this).attr('name', $(this).attr('name') + '-display')
+
+          // make sure we can make the value empty
+          $(this).on('change', function (event) {
+            if ($(this).val() === '') {
+              clone.val('')
+            }
+          })
         })
 
         $inputDatefields.datepicker({
@@ -532,7 +573,7 @@ jsFrontend.statistics = {
     if (typeof _gaq === 'object' || typeof ga === 'function') {
       // create a new selector
       $.expr[':'].external = function (obj) {
-        return (typeof obj.href !== 'undefined') && !obj.href.match(/^mailto:/) && (obj.hostname !== window.location.hostname)
+        return (typeof obj.href !== 'undefined') && (obj.hostname !== window.location.hostname)
       }
 
       // bind on all links that don't have the class noTracking

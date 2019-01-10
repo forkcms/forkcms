@@ -201,11 +201,11 @@ class Edit extends BackendBaseActionEdit
             null,
             'form-control js-tags-input',
             'form-control danger js-tags-input'
-        );
+        )->setAttribute('aria-describedby', 'tags-info');
         $this->form->addDate('publish_on_date', $this->record['publish_on']);
         $this->form->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
         if ($this->imageIsAllowed) {
-            $this->form->addImage('image');
+            $this->form->addImage('image')->setAttribute('data-fork-cms-role', 'image-field');
             $this->form->addCheckbox('delete_image');
         }
 
@@ -295,6 +295,8 @@ class Edit extends BackendBaseActionEdit
         if ($this->categoryId !== null) {
             $this->template->assign('categoryId', $this->categoryId);
         }
+
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
     }
 
     private function validateForm(): void

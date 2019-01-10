@@ -16,6 +16,7 @@
                 <translation language="sv"><![CDATA[mailmotor]]></translation>
                 <translation language="uk"><![CDATA[MailMotor]]></translation>
                 <translation language="zh"><![CDATA[邮件]]></translation>
+                <translation language="pl"><![CDATA[mailmotor]]></translation>
             </item>
             <item type="label" name="SubscribeForm">
                 <translation language="de"><![CDATA[abonnieren Form]]></translation>
@@ -31,6 +32,7 @@
                 <translation language="sv"><![CDATA[prenumerera formen]]></translation>
                 <translation language="uk"><![CDATA[підписатися форму]]></translation>
                 <translation language="zh"><![CDATA[订阅表单]]></translation>
+                <translation language="pl"><![CDATA[formularz zapisu]]></translation>
             </item>
             <item type="label" name="UnsubscribeForm">
                 <translation language="de"><![CDATA[Abmeldeformular]]></translation>
@@ -46,6 +48,7 @@
                 <translation language="sv"><![CDATA[unsubscribe formen]]></translation>
                 <translation language="uk"><![CDATA[відмовитися від форми]]></translation>
                 <translation language="zh"><![CDATA[取消订阅表单]]></translation>
+                <translation language="pl"><![CDATA[formularz rezygnacji]]></translation>
             </item>
         </Core>
         <Mailmotor>
@@ -63,6 +66,7 @@
                 <translation language="sv"><![CDATA[API-nyckel]]></translation>
                 <translation language="uk"><![CDATA[ключ API]]></translation>
                 <translation language="zh"><![CDATA[API密钥]]></translation>
+                <translation language="pl"><![CDATA[klucz API]]></translation>
             </item>
             <item type="message" name="DoubleOptIn">
                 <translation language="de"><![CDATA[Doppelte Opt-In aktivieren. Wenn überprüft Leute, die einschreiben, erhalten eine Mail, wo sie auf den Bestätigungslink klicken müssen. Dies hilft zu verhindern, dass Ihre Liste mit fictional E-Mail-Adressen gesperrt wird.]]></translation>
@@ -78,6 +82,7 @@
                 <translation language="sv"><![CDATA[Aktivera dubbel opt-in. Om markerad människor som registrerar får ett mail där de måste klicka på länken bekräftelse. Detta bidrar till att förhindra listan från att spammad med fiktiva e-postadresser.]]></translation>
                 <translation language="uk"><![CDATA[Включити подвійний неавтоматичного. Якщо перевіряються людей, зарахованих отримає пошту, де вони повинні натиснути на посилання для підтвердження. Це допомагає запобігти ваш список від спаму з того фіктивними адресами електронної пошти.]]></translation>
                 <translation language="zh"><![CDATA[启用双重选择启用。 如果选中，注册的人将收到邮件，他们必须单击确认链接。 这有助于防止您的列表被虚构的电子邮件地址垃圾邮件。]]></translation>
+                <translation language="pl"><![CDATA[Aktywuj podwójne opt-in. Jeśli zaznaczone, osoby, które zarejestrują się pierwszy raz, otrzymają wiadomość e-mail, w której muszą kliknąć link potwierdzający. Pomaga to zapobiegać wysyłaniu spamu na listę z fikcyjnymi adresami e-mail.]]></translation>
             </item>
             <item type="label" name="ListId">
                 <translation language="de"><![CDATA[list id]]></translation>
@@ -93,6 +98,7 @@
                 <translation language="sv"><![CDATA[lista id]]></translation>
                 <translation language="uk"><![CDATA[список ідентифікаторів]]></translation>
                 <translation language="zh"><![CDATA[列表ID]]></translation>
+                <translation language="pl"><![CDATA[ID listy]]></translation>
             </item>
             <item type="label" name="MailEngine">
                 <translation language="de"><![CDATA[mail engine]]></translation>
@@ -108,6 +114,7 @@
                 <translation language="sv"><![CDATA[postmotorn]]></translation>
                 <translation language="uk"><![CDATA[пошта двигун]]></translation>
                 <translation language="zh"><![CDATA[邮件引擎]]></translation>
+                <translation language="pl"><![CDATA[silnik mailowy]]></translation>
             </item>
             <item type="label" name="None">
                 <translation language="de"><![CDATA[Keine]]></translation>
@@ -123,6 +130,7 @@
                 <translation language="sv"><![CDATA[ingen]]></translation>
                 <translation language="uk"><![CDATA[ніхто]]></translation>
                 <translation language="zh"><![CDATA[没有]]></translation>
+                <translation language="pl"><![CDATA[żaden]]></translation>
             </item>
             <item type="message" name="OverwriteInterests">
                 <translation language="de"><![CDATA[Wenn jemand abonniert sind, ihre aktuellen Interessen überschreiben .]]></translation>
@@ -138,18 +146,21 @@
                 <translation language="sv"><![CDATA[När någon re-prenumererar, skriva sina nuvarande intressen.]]></translation>
                 <translation language="uk"><![CDATA[Коли хтось повторно підписується, перезаписати їх поточні інтереси.]]></translation>
                 <translation language="zh"><![CDATA[当有人重新订阅时，覆盖其当前的兴趣。]]></translation>
+                <translation language="pl"><![CDATA[Jeśli ktoś zarejestruje się ponownie, skorzystaj z jego nowych zainteresowań (i usuń stare).]]></translation>
             </item>
             <item type="message" name="SuccessfulMailEngineApiConnection">
               <translation language="de"><![CDATA[Erfolgreiche API Verbindung]]></translation>
               <translation language="en"><![CDATA[Successful API Connection]]></translation>
               <translation language="fr"><![CDATA[Connexion api réussie]]></translation>
               <translation language="nl"><![CDATA[Successvolle API verbinding]]></translation>
+              <translation language="pl"><![CDATA[Udane połączenie API]]></translation>
             </item>
             <item type="error" name="WrongMailEngineCredentials">
               <translation language="de"><![CDATA[Falsche Mail-Engine API Key und / oder List-ID.]]></translation>
               <translation language="en"><![CDATA[Wrong mail engine API-key and/or List-ID.]]></translation>
               <translation language="fr"><![CDATA[La clé de l'API du moteur de messagerie incorrect et / ou l'ID de la liste.]]></translation>
               <translation language="nl"><![CDATA[Verkeerde mail engine API-key en/of List-ID.]]></translation>
+              <translation language="pl"><![CDATA[Błędny klucz API silnika mailowego i/lub ID listy.]]></translation>
             </item>
         </Mailmotor>
     </Backend>
@@ -169,6 +180,7 @@
                 <translation language="sv"><![CDATA[Den här e-postadressen är redan prenumererar på nyhetsbrevet.]]></translation>
                 <translation language="uk"><![CDATA[Ця електронна адреса вже підписалися на розсилку.]]></translation>
                 <translation language="zh"><![CDATA[此电子邮件地址已订阅通讯。]]></translation>
+                <translation language="pl"><![CDATA[Ten adres mailowy jest już zapisany do newslettera.]]></translation>
             </item>
             <item type="error" name="EmailIsAlreadyUnsubscribedInMailingList">
                 <translation language="de"><![CDATA[Diese E-Mail-Adresse bereits abbestellt Newsletter.]]></translation>
@@ -184,6 +196,7 @@
                 <translation language="sv"><![CDATA[Den här e-postadressen är redan prenumererar på nyhetsbrevet]]></translation>
                 <translation language="uk"><![CDATA[Ця електронна адреса вже відписалися від розсилки]]></translation>
                 <translation language="zh"><![CDATA[此电子邮件地址已取消订阅通讯]]></translation>
+                <translation language="pl"><![CDATA[Ten adres mailowy jest już wypisany z newslettera.]]></translation>
             </item>
             <item type="error" name="EmailNotExistsInMailingList">
                 <translation language="de"><![CDATA[Diese E-Mail-Adresse nicht in der Datenbank vorhanden.]]></translation>
@@ -199,6 +212,7 @@
                 <translation language="sv"><![CDATA[Den här e-postadressen inte finns i sändlistan .]]></translation>
                 <translation language="uk"><![CDATA[Ця електронна адреса не існує в списку розсилки.]]></translation>
                 <translation language="zh"><![CDATA[此电子邮件地址不存在于邮件列表中。]]></translation>
+                <translation language="pl"><![CDATA[Ten adres mailowy nie istnieje na liście mailowej.]]></translation>
             </item>
             <item type="label" name="Interests">
                 <translation language="de"><![CDATA[Interessen]]></translation>
@@ -214,6 +228,7 @@
                 <translation language="sv"><![CDATA[intressen]]></translation>
                 <translation language="uk"><![CDATA[інтереси]]></translation>
                 <translation language="zh"><![CDATA[利益]]></translation>
+                <translation language="pl"><![CDATA[zainteresowania]]></translation>
             </item>
             <item type="error" name="MailingListInterestsIsRequired">
                 <translation language="de"><![CDATA[Bitte wählen Sie einen oder mehrere Interessen.]]></translation>
@@ -229,6 +244,7 @@
                 <translation language="sv"><![CDATA[Välj ett eller flera intressen.]]></translation>
                 <translation language="uk"><![CDATA[Будь ласка, виберіть один або кілька інтересів.]]></translation>
                 <translation language="zh"><![CDATA[请选择一个或多个兴趣。]]></translation>
+                <translation language="pl"><![CDATA[Proszę wybrać jedno lub kilka zainteresowań.]]></translation>
             </item>
             <item type="label" name="MailTitleSubscribeSubscriber">
                 <translation language="de"><![CDATA[Bitte melden Sie sich "%1$s" (%2$s) aus der Mailing-Liste.]]></translation>
@@ -244,6 +260,7 @@
                 <translation language="sv"><![CDATA[Vänligen prenumerera "%1$s" (%2$s) på sändlistan.]]></translation>
                 <translation language="uk"><![CDATA[Будь ласка, підпишіться "%1$S" (%2$S) в список розсилки.]]></translation>
                 <translation language="zh"><![CDATA[请订阅“％1$s”（％2$s）到邮件列表。]]></translation>
+                <translation language="pl"><![CDATA[Proszę zapisać "%1$s" (%2$s) do listy mailingowej.]]></translation>
             </item>
             <item type="label" name="MailTitleUnsubscribeSubscriber">
                 <translation language="de"><![CDATA[Bitte abmelden "%1$s" (%2$s) aus der Mailing-Liste.]]></translation>
@@ -259,6 +276,7 @@
                 <translation language="sv"><![CDATA[Пожалуйста, отменить подписку "%1$S" (%2$S) из списка рассылки.]]></translation>
                 <translation language="uk"><![CDATA[Будь ласка, підпишіться "%1$S" (%2$S) в список розсилки.]]></translation>
                 <translation language="zh"><![CDATA[请从邮寄名单中取消订阅“％1$s”（％2$s）。]]></translation>
+                <translation language="pl"><![CDATA[Proszę wypisać "%1$s" (%2$s) z listy mailingowej.]]></translation>
             </item>
             <item type="label" name="Newsletter">
                 <translation language="de"><![CDATA[Rundschreiben]]></translation>
@@ -274,6 +292,7 @@
                 <translation language="sv"><![CDATA[nyhetsbrev]]></translation>
                 <translation language="uk"><![CDATA[бюлетень]]></translation>
                 <translation language="zh"><![CDATA[通讯]]></translation>
+                <translation language="pl"><![CDATA[newsletter]]></translation>
             </item>
             <item type="action" name="Subscribe">
                 <translation language="de"><![CDATA[Abonnieren]]></translation>
@@ -289,6 +308,7 @@
                 <translation language="sv"><![CDATA[prenumerera]]></translation>
                 <translation language="uk"><![CDATA[підписуватися]]></translation>
                 <translation language="zh"><![CDATA[订阅]]></translation>
+                <translation language="pl"><![CDATA[Zapisz się]]></translation>
             </item>
             <item type="label" name="Subscribe">
                 <translation language="de"><![CDATA[Abonnieren]]></translation>
@@ -304,6 +324,7 @@
                 <translation language="sv"><![CDATA[prenumerera]]></translation>
                 <translation language="uk"><![CDATA[підписуватися]]></translation>
                 <translation language="zh"><![CDATA[订阅]]></translation>
+                <translation language="pl"><![CDATA[Zapisz się]]></translation>
             </item>
             <item type="label" name="SubscribeToNewsletter">
                 <translation language="de"><![CDATA[Newsletter abonnieren]]></translation>
@@ -319,6 +340,7 @@
                 <translation language="sv"><![CDATA[Prenumerera på nyhetsbrev]]></translation>
                 <translation language="uk"><![CDATA[Підписатися на Розсилку]]></translation>
                 <translation language="zh"><![CDATA[订阅通讯]]></translation>
+                <translation language="pl"><![CDATA[Zapisz się do newslettera]]></translation>
             </item>
             <item type="error" name="SubscribeFailed">
                 <translation language="de"><![CDATA[Anmeldung fehlgeschlagen]]></translation>
@@ -334,6 +356,7 @@
                 <translation language="sv"><![CDATA[abonnerande misslyckades]]></translation>
                 <translation language="uk"><![CDATA[підписавшись не вдалося]]></translation>
                 <translation language="zh"><![CDATA[订阅失败]]></translation>
+                <translation language="pl"><![CDATA[Zapis nie powiódł się.]]></translation>
             </item>
             <item type="message" name="SubscribeSuccess">
                 <translation language="de"><![CDATA[Vielen Dank für Ihre Anmeldung, werden wir Sie in unsere Mailingliste hinzuzufügen.]]></translation>
@@ -349,6 +372,7 @@
                 <translation language="sv"><![CDATA[Tack för att registrera dig, kommer vi att lägga dig till vår sändlista.]]></translation>
                 <translation language="uk"><![CDATA[Дякуємо за реєстрацію, ми додамо вас до нашого списку розсилки.]]></translation>
                 <translation language="zh"><![CDATA[感谢您的注册，我们将把您添加到我们的邮件列表。]]></translation>
+                <translation language="pl"><![CDATA[Dziękujemy za zapisanie się do naszej listy mailingowej.]]></translation>
             </item>
             <item type="message" name="SubscribeSuccessForDoubleOptIn">
                 <translation language="de"><![CDATA[<strong>PRÜFEN per Mail Ihre E-Mail-Adresse</strong><br/>Innerhalb von 10 Minuten CONFIRM erhalten Sie eine E-Mail von uns erhalten.<br/>Sie müssen den Bestätigungslink um Ihr Abonnement zu bestätigen.<br/>Ansonsten Ihre E-Mail-Adresse wird nicht auf unserer Mailingliste hinzugefügt werden.<br/>Vergessen Sie nicht, Ihre SPAM-Box zu überprüfen.]]></translation>
@@ -364,6 +388,7 @@
                 <translation language="sv"><![CDATA[<strong>kolla din mejl för att bekräfta din POSTADRESS </strong><br/> Inom 10 minuter kommer du att få ett mail från oss.<br/> Du måste klicka på länken bekräftelse för att bekräfta din prenumeration.<br/> annars din e-postadress inte kommer att läggas till vår sändlista.<br/> glöm inte att kolla din SPAM-box.]]></translation>
                 <translation language="uk"><![CDATA[<Сильний> ПОШТУ, щоб підтвердити свій MAIL АДРЕСА </strong><br/> Протягом 10 хвилин ви отримаєте лист від нас.<br/> Вам необхідно натиснути на посилання для підтвердження, щоб підтвердити підписку.<br/> в іншому випадку ваш поштову адресу не буде доданий в наш список розсилки.<br/> не забудьте перевірити спам-бокс.]]></translation>
                 <translation language="zh"><![CDATA[<strong>请检查您的邮箱以确认您的邮件地址</strong><br/>在10分钟内，您会收到我们发送的邮件。<br/>您需要点击确认链接以确认订阅。 否则，您的邮件地址将不会添加到我们的邮件列表中。<br/>不要忘记检查您的垃圾邮件箱。]]></translation>
+                <translation language="pl"><![CDATA[<strong> SPRAWDŹ SWOJĄ SKRZYNKĘ, ABY POTWIERDZIĆ ADRES E-MAIL </strong> <br/> W ciągu 10 minut otrzymasz od nas wiadomość e-mail. <br/> Kliknij link potwierdzający, aby potwierdzić rejestrację, <br/> w przeciwnym razie Twój adres e-mail nie zostanie dodany do naszej listy mailingowej. <br/> Czasami ten e-mail może trafić do twojego SPAM-u.]]></translation>
             </item>
             <item type="action" name="Unsubscribe">
                 <translation language="de"><![CDATA[abmelden]]></translation>
@@ -379,6 +404,7 @@
                 <translation language="sv"><![CDATA[Avsluta prenumeration]]></translation>
                 <translation language="uk"><![CDATA[відмовитися від підписки]]></translation>
                 <translation language="zh"><![CDATA[取消订阅]]></translation>
+                <translation language="pl"><![CDATA[wypisz się]]></translation>
             </item>
             <item type="label" name="Unsubscribe">
                 <translation language="de"><![CDATA[abmelden]]></translation>
@@ -394,6 +420,7 @@
                 <translation language="sv"><![CDATA[Avsluta prenumeration]]></translation>
                 <translation language="uk"><![CDATA[відмовитися від підписки]]></translation>
                 <translation language="zh"><![CDATA[取消订阅]]></translation>
+                <translation language="pl"><![CDATA[wypisz się]]></translation>
             </item>
             <item type="label" name="UnsubscribeFromNewsletter">
                 <translation language="de"><![CDATA[Newsletter abbestellen]]></translation>
@@ -409,6 +436,7 @@
                 <translation language="sv"><![CDATA[mailmotor]]></translation>
                 <translation language="uk"><![CDATA[mailmotor]]></translation>
                 <translation language="zh"><![CDATA[mailmotor]]></translation>
+                <translation language="pl"><![CDATA[wypisz się z newslettera]]></translation>
             </item>
             <item type="error" name="UnsubscribeFailed">
                 <translation language="de"><![CDATA[Abmeldung fehlgeschlagen]]></translation>
@@ -424,6 +452,7 @@
                 <translation language="sv"><![CDATA[Gå ur misslyckades]]></translation>
                 <translation language="uk"><![CDATA[відмова від підписки не вдалося]]></translation>
                 <translation language="zh"><![CDATA[取消订阅失败]]></translation>
+                <translation language="pl"><![CDATA[Wypisanie nie powiodło się]]></translation>
             </item>
             <item type="message" name="UnsubscribeSuccess">
                 <translation language="de"><![CDATA[Sie haben sich erfolgreich vom Newsletter abgemeldet.]]></translation>
@@ -439,6 +468,7 @@
                 <translation language="sv"><![CDATA[Du har avslutat prenumerationen på nyhetsbrevet.]]></translation>
                 <translation language="uk"><![CDATA[Ви успішно відписалися від розсилки.]]></translation>
                 <translation language="zh"><![CDATA[您已成功取消订阅简报。]]></translation>
+                <translation language="pl"><![CDATA[Wypisałeś się z naszego newslettera.]]></translation>
             </item>
         </Core>
     </Frontend>

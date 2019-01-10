@@ -7,6 +7,7 @@ use Frontend\Core\Language\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendUrl;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -491,7 +492,6 @@ class Model implements FrontendTagsInterface
 
     public static function getComments(int $blogPostId): array
     {
-        // get the comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
              c.author, c.email, c.website
@@ -501,14 +501,10 @@ class Model implements FrontendTagsInterface
             [$blogPostId, 'published', LANGUAGE]
         );
 
-        // loop comments and create gravatar id
         foreach ($comments as &$row) {
-            $row['author'] = htmlspecialchars($row['author']);
-            $row['text'] = htmlspecialchars($row['text']);
             $row['gravatar_id'] = md5($row['email']);
         }
 
-        // return
         return $comments;
     }
 
@@ -760,6 +756,14 @@ class Model implements FrontendTagsInterface
             foreach ($folders as $folder) {
                 $blogPost['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $blogPost['image'];
             }
+        }
+
+        if (isset($blogPost['id'])) {
+            $blogPost['tags'] = FrontendTagsModel::getForItem(
+                'Blog',
+                $blogPost['id'],
+                isset($blogPost['language']) ? Locale::fromString($blogPost['language']) : null
+            );
         }
 
         return $blogPost;

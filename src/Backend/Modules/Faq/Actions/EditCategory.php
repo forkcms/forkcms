@@ -69,6 +69,8 @@ class EditCategory extends BackendBaseActionEdit
         if ($url404 != $url) {
             $this->template->assign('detailURL', SITE_URL . $url);
         }
+
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
     }
 
     private function validateForm(): void

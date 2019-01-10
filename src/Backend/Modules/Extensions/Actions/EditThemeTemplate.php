@@ -239,6 +239,8 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
         // assign form errors
         $this->template->assign('formErrors', (string) $this->form->getErrors());
+
+        $this->header->appendDetailToBreadcrumbs($this->record['label']);
     }
 
     private function validateForm(): void

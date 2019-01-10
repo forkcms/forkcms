@@ -3,6 +3,7 @@ imports:
 
 parameters:
     site.multilanguage: true
+    site.default_language: en
 
 framework:
     test: ~
@@ -36,3 +37,8 @@ services:
             - "%database.port%"
         calls:
             - [ setDebug, [ "%kernel.debug%" ]]
+
+monolog:
+    handlers:
+        main:
+            type: 'null'

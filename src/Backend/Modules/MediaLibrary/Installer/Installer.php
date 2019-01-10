@@ -40,7 +40,6 @@ class Installer extends ModuleInstaller
     protected function configureBackendActionRightsForMediaItem(): void
     {
         $this->setActionRights(1, $this->getModule(), 'MediaItemAddMovie'); // AJAX
-        $this->setActionRights(1, $this->getModule(), 'MediaItemCleanup');
         $this->setActionRights(1, $this->getModule(), 'MediaItemDelete');
         $this->setActionRights(1, $this->getModule(), 'MediaItemEdit');
         $this->setActionRights(1, $this->getModule(), 'MediaItemFindAll'); // AJAX

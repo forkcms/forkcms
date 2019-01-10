@@ -11,12 +11,12 @@ monolog:
     handlers:
         main:
             type:  stream
-            path:  "%site.path_www%/var/logs/%kernel.environment%.log"
+            path:  "%site.path_www%/var/logs/%kernel.environment%/debug.log"
             level: debug
         dockerstdout:
             type: stream
             path: php://stdout
-            level: debug
+            level: error
             formatter: monolog.full_trace_formatter
             channels: ["!event"]
 

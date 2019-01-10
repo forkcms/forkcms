@@ -15,11 +15,13 @@
         <translation language="uk"><![CDATA[Додати кокистувача]]></translation>
         <translation language="lt"><![CDATA[naujas narys]]></translation>
         <translation language="el"><![CDATA[Προσθήκη χρήστη]]></translation>
+        <translation language="pl"><![CDATA[dodaj użytkownika]]></translation>
       </item>
       <item type="label" name="PreferredEditor">
         <translation language="nl"><![CDATA[gewenste editor]]></translation>
         <translation language="en"><![CDATA[preferred editor]]></translation>
         <translation language="fr"><![CDATA[éditeur préféré]]></translation>
+        <translation language="pl"><![CDATA[preferowany edytor]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[De gebruiker "%1$s" werd toegevoegd.]]></translation>
@@ -33,6 +35,7 @@
         <translation language="es"><![CDATA[El usuario "%1$s" ha sido agregado.]]></translation>
         <translation language="uk"><![CDATA[Користувача "%1$s" додано.]]></translation>
         <translation language="el"><![CDATA[Προστέθηκε ο χρήστης "%1$s".]]></translation>
+        <translation language="pl"><![CDATA[Użytkownik "%1$s" został dodany.]]></translation>
       </item>
       <item type="message" name="ConfirmDelete">
         <translation language="nl"><![CDATA[Ben je zeker dat je de gebruiker "%1$s" wil verwijderen?]]></translation>
@@ -45,6 +48,7 @@
         <translation language="de"><![CDATA[Bist du dir sicher, dass du den Benutzer "%1$s" löschen möchtest?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el usuario "%1$s"?]]></translation>
         <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε το χρήστη "%1$s";]]></translation>
+        <translation language="pl"><![CDATA[Jesteś pewien że chcesz usunąć użytkownika "%1$s"?]]></translation>
       </item>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De gebruiker "%1$s" werd verwijderd.]]></translation>
@@ -57,6 +61,7 @@
         <translation language="fr"><![CDATA[L'utilisateur "%1$s" a été effacé.]]></translation>
         <translation language="es"><![CDATA[El usuario "%1$s" fue eliminado.]]></translation>
         <translation language="el"><![CDATA[Ο χρήστης "%1$s" διεγράφη.]]></translation>
+        <translation language="pl"><![CDATA[Użytkownik "%1$s" został usunięty.]]></translation>
       </item>
       <item type="message" name="Edited">
         <translation language="nl"><![CDATA[De instellingen voor "%1$s" werden opgeslagen.]]></translation>
@@ -69,6 +74,7 @@
         <translation language="fr"><![CDATA[Les réglages pour "%1$s" ont été enregistrés.]]></translation>
         <translation language="es"><![CDATA[Las configuraciones para "%1$s" han sido guardadas.]]></translation>
         <translation language="el"><![CDATA[Οι ρυθμίσεις γιά "%1$s" αποθηκεύτηκαν.]]></translation>
+        <translation language="pl"><![CDATA[Ustawienia dla "%1$s" zostały zapisane.]]></translation>
       </item>
       <item type="message" name="EditUser">
         <translation language="nl"><![CDATA[bewerk gebruiker "%1$s"]]></translation>
@@ -81,6 +87,7 @@
         <translation language="fr"><![CDATA[éditer l'utilisateur "%1$s"]]></translation>
         <translation language="es"><![CDATA[editar usuario "%1$s"]]></translation>
         <translation language="el"><![CDATA[μεταβολή στοιχείων του χρήστη "%1$s"]]></translation>
+        <translation language="pl"><![CDATA[Edytuj Użytkownika "%1$s".]]></translation>
       </item>
       <item type="message" name="HelpActive">
         <translation language="nl"><![CDATA[Geef deze account toegang tot het CMS.]]></translation>
@@ -93,6 +100,7 @@
         <translation language="fr"><![CDATA[Activer l'accès CMS pour ce compte.]]></translation>
         <translation language="es"><![CDATA[Activa el acceso CMS para esta cuenta.]]></translation>
         <translation language="el"><![CDATA[Δώσε άδεια πρόσβασης στο CMS γιά αυτόν το λογαριασμό.]]></translation>
+        <translation language="pl"><![CDATA[Włącz dostęp do CMS dla tego konta.]]></translation>
       </item>
       <item type="message" name="HelpStrongPassword">
         <translation language="nl"><![CDATA[Sterke wachtwoorden bestaan uit een combinatie van hoofdletters]]></translation>
@@ -105,6 +113,7 @@
         <translation language="fr"><![CDATA[Les mots de passe évolués sont constitués d'une combinaison de majuscules.]]></translation>
         <translation language="es"><![CDATA[Las contraseñas seguras consisten en una combinación de letras mayúsculas]]></translation>
         <translation language="el"><![CDATA[Οι ισχυροί κωδικοί αποτελούνται από συνδυασμό κεφαλαίων]]></translation>
+        <translation language="pl"><![CDATA[Mocne hasła zawierają ciągi wielkich liter.]]></translation>
       </item>
       <item type="message" name="Restored">
         <translation language="nl"><![CDATA[De gebruiker "%1$s" werd terug geactiveerd.]]></translation>
@@ -117,6 +126,7 @@
         <translation language="fr"><![CDATA[L'utilisateur "%1$s" a été restauré.]]></translation>
         <translation language="es"><![CDATA[El usuario "%1$s" ha sido restaurado.]]></translation>
         <translation language="el"><![CDATA[Έγινε επαναφορά του χρήστη "%1$s".]]></translation>
+        <translation language="pl"><![CDATA[Użytkownik "%1$s" został przywrócony.]]></translation>
       </item>
       <item type="error" name="CantChangeGodsEmail">
         <translation language="nl"><![CDATA[Je kan het emailadres van deze gebruiker niet aanpassen.]]></translation>
@@ -129,6 +139,7 @@
         <translation language="hu"><![CDATA[Nem tudod megváltoztatni a GOD-felhasználó e-mail címét.]]></translation>
         <translation language="es"><![CDATA[No puedes cambiar la dirección email del usuario-DIOS..]]></translation>
         <translation language="el"><![CDATA[Δεν μπορείτε να αλλάξετε το email του χρήστη GOD.]]></translation>
+        <translation language="pl"><![CDATA[Nie możesz zmienić adresu mailowego użytkownika GOD.]]></translation>
       </item>
       <item type="error" name="CantDeleteGod">
         <translation language="nl"><![CDATA[Je kan deze gebruiker niet verwijderen.]]></translation>
@@ -141,6 +152,7 @@
         <translation language="hu"><![CDATA[Nem törölheted a GOD-felhasználót.]]></translation>
         <translation language="es"><![CDATA[No puedes eliminar el usuario-DIOS.]]></translation>
         <translation language="el"><![CDATA[Δεν επιπτρέπεται να διαγράψετε το χρήστη GOD.]]></translation>
+        <translation language="pl"><![CDATA[Nie możesz usunąć użytkownika GOD.]]></translation>
       </item>
       <item type="error" name="EmailWasDeletedBefore">
         <translation language="nl"><![CDATA[Een gebruiker met dit emailadres werd vroeger verwijderd. <a href="%1$s">Activeer deze gebruiker terug</a>.]]></translation>
@@ -153,6 +165,7 @@
         <translation language="hu"><![CDATA[A felhasználó ezzel az e-mail címmel törölve lett. <a href="%1$s">Felhasználó visszaállítása</a>.]]></translation>
         <translation language="es"><![CDATA[Un usuario con esta dirección de email ha sido eliminado. <a href="%1$s">Restaurar este usuario</a>.]]></translation>
         <translation language="el"><![CDATA[Ο χρήστης με αυτό το email διεγράφη. <a href="%1$s">Επαναφορά του χρήστη</a>.]]></translation>
+        <translation language="pl"><![CDATA[Użytkownik z tym adresem mailowym został usunięty. <a href="%1$s">Przywróć go</a>]]></translation>
       </item>
       <item type="error" name="NonExisting">
         <translation language="nl"><![CDATA[Deze gebruiker bestaat niet.]]></translation>
@@ -165,6 +178,7 @@
         <translation language="hu"><![CDATA[Ez a felhasználó nem létezik.]]></translation>
         <translation language="es"><![CDATA[Este usuario no existe.]]></translation>
         <translation language="el"><![CDATA[Ο χρήστης δεν υπάρχει.]]></translation>
+        <translation language="pl"><![CDATA[Ten użytkownik nie istnieje.]]></translation>
       </item>
     </Users>
   </Backend>

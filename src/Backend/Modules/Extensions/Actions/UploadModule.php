@@ -87,7 +87,7 @@ class UploadModule extends BackendBaseActionAdd
             $fileName = $file['name'];
 
             if ($i === 0) {
-                $prefix = $this->extractPrefix($file);
+                $prefix = $this->extractPrefix($file['name']);
             }
 
             // check if the file is in one of the valid directories
@@ -184,7 +184,7 @@ class UploadModule extends BackendBaseActionAdd
      */
     private function extractPrefix(string $file): string
     {
-        $name = explode(PATH_SEPARATOR, $file['name']);
+        $name = explode(PATH_SEPARATOR, $file);
         $prefix = [];
 
         foreach ($name as $element) {
@@ -197,7 +197,7 @@ class UploadModule extends BackendBaseActionAdd
 
         // If the zip has a top-level single directory, eg
         // /myModuleName/, then we should just assume that is the prefix.
-        return $file['name'];
+        return $file;
     }
 
     /**
