@@ -33,7 +33,12 @@ jobs:
       script: travis_wait 30 bin/simple-phpunit --testsuite=unit --coverage-clover=coverage.clover
     - stage: code quality
       php: 7.1
-      before_script: composer install
+      before_script:
+        - mysql -e 'create database fork'
+        - mysql -u root fork < tests/data/test_db.sql
+        - cp app/config/parameters.yml.travis app/config/parameters.yml
+        - mysql -e "SET GLOBAL wait_timeout = 3600" # try to avoid mysql has gone away errors
+        - composer install
       script: bin/phpstan analyze src
       after_success: skip
     - stage: code quality
