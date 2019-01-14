@@ -10,7 +10,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 use ForkCMS\Utility\Geolocation;
-use Symfony\Component\Intl\Intl as Intl;
+use Symfony\Component\Intl\Intl;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
@@ -47,8 +47,11 @@ class Edit extends BackendBaseActionEdit
                 $this->redirect(BackendModel::createUrlForAction('Index', 'Settings'));
             }
 
-            // add js
-            $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey);
+            $interfaceLanguage = BL::getInterfaceLanguage();
+            $googleLanguage = $interfaceLanguage . '_' . strtoupper($interfaceLanguage);
+            $this->header->addJS(
+                'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&language=' . $googleLanguage
+            );
 
             $this->loadData();
 
