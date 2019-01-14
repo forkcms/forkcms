@@ -32,9 +32,9 @@ class Index extends FrontendBaseBlock
             trigger_error('Please provide a Google Maps API key.');
         }
 
-        $frontendLanguage = Locale::frontendLanguage();
-        $googleLanguage = $frontendLanguage . '_' . strtoupper($frontendLanguage);
-        $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&language=' . $googleLanguage);
+        $this->addJS(
+            'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&language=' . Locale::frontendLanguage()
+        );
         $this->addJS(FrontendLocationModel::getPathToMapStyles(false), true);
 
         parent::execute();

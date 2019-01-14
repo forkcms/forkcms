@@ -42,10 +42,8 @@ class Index extends BackendBaseActionIndex
             $this->redirect(BackendModel::createUrlForAction('Index', 'Settings'));
         }
 
-        $interfaceLanguage = BL::getInterfaceLanguage();
-        $googleLanguage = $interfaceLanguage . '_' . strtoupper($interfaceLanguage);
         $this->header->addJS(
-            'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&language=' . $googleLanguage
+            'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&language=' . BL::getInterfaceLanguage()
         );
 
         $this->loadData();
