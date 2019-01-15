@@ -360,8 +360,8 @@ class Model extends \Common\Core\Model
         return array_keys(
             array_filter(
                 $moduleExtras,
-                function (array $data) use ($key, $value) {
-                    $data = $data === null ? [] : unserialize($data);
+                function (?string $serializedData) use ($key, $value) {
+                    $data = $serializedData === null ? [] : unserialize($serializedData);
 
                     return isset($data[$key]) && $data[$key] === $value;
                 }
