@@ -47,6 +47,7 @@ class MediaItemUpload extends BackendBaseActionAdd
         $this->template->assign('folderId', $mediaFolderId);
         $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
         $this->header->addJsData('MediaLibrary', 'openedFolderId', $mediaFolderId);
+        $this->header->appendDetailToBreadcrumbs((string) $this->mediaFolder);
     }
 
     private function parseJsFiles(): void

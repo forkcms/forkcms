@@ -1524,12 +1524,12 @@ jsBackend.mediaLibraryHelper.modalSelection = {
   selectItemAndSendToParent: function () {
     var directUrl = $(this).data('directUrl')
 
-    window.opener.postMessage(directUrl, '*')
+    window.opener.postMessage({'media-url': directUrl}, '*')
     window.close();
   },
 
   sendToParent: function () {
-    window.opener.postMessage($(this).data('directUrl'), '*')
+    window.opener.postMessage({'media-url': $(this).data('directUrl')}, '*')
     window.close()
   }
 };

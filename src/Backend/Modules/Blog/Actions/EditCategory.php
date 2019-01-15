@@ -74,6 +74,8 @@ class EditCategory extends BackendBaseActionEdit
             $this->template->assign('detailURL', SITE_URL . $url);
             $this->template->assign('categorySlug', $this->meta->getUrl());
         }
+
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
     }
 
     private function validateForm(): void

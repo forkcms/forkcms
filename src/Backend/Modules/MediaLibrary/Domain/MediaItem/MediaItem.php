@@ -477,7 +477,7 @@ class MediaItem implements JsonSerializable
      */
     public function onPrePersist()
     {
-        $this->createdOn = $this->editedOn = new \Datetime();
+        $this->createdOn = $this->editedOn = new \DateTime();
 
         $this->refreshAspectRatio();
     }
@@ -487,7 +487,7 @@ class MediaItem implements JsonSerializable
      */
     public function onPreUpdate()
     {
-        $this->editedOn = new \Datetime();
+        $this->editedOn = new \DateTime();
 
         $this->refreshAspectRatio();
     }

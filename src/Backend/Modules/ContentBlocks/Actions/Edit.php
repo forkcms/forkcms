@@ -40,6 +40,7 @@ class Edit extends BackendBaseActionEdit
             $this->template->assign('form', $form->createView());
             $this->template->assign('contentBlock', $contentBlock);
             $this->template->assign('revisions', ContentBlockRevisionDataGrid::getHtml($contentBlock, Locale::workingLocale()));
+            $this->header->appendDetailToBreadcrumbs($contentBlock->getTitle());
 
             $this->parse();
             $this->display();

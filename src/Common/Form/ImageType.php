@@ -44,7 +44,10 @@ class ImageType extends AbstractType
                     $fileFieldOptions = [
                         'label' => false,
                         'required' => $required,
-                        'attr' => ['accept' => $options['accept']],
+                        'attr' => [
+                            'accept' => $options['accept'],
+                            'data-fork-cms-role' => 'image-field',
+                        ],
                     ];
                     if ($required) {
                         $fileFieldOptions['constraints'] = [

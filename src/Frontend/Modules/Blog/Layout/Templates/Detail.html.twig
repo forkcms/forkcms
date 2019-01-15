@@ -23,7 +23,7 @@
           <div class="col-xs-12">
             {{ 'msg.WrittenBy'|trans|ucfirst|format(item.user_id|usersetting('nickname')) }}
             {{ 'lbl.On'|trans }}
-            <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\TH,i,s' ) }}">
+            <time itemprop="datePublished" datetime="{{ item.publish_on|date('Y-m-d\\TH:i:s.vP' ) }}">
               {{ item.publish_on|spoondate(dateFormatLong, LANGUAGE) }}
             </time>
           </div>
@@ -104,7 +104,7 @@
 
   {% block block_article_comments %}
     {% if comments or item.allow_comments %}
-      <section id="{{ act.Comments }}" class="block-blog-article-comments">
+      <section id="{{ 'act.Comments'|trans }}" class="block-blog-article-comments">
         <header role="banner" class="block-blog-article-comments-heading">
           <h3>{{ 'lbl.Comments'|trans|ucfirst }}</h3>
         </header>
@@ -145,7 +145,7 @@
                   </a>
                   {% endif %}
                   {{ 'lbl.Wrote'|trans }}
-                  <time itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\TH,i,s' ) }}">
+                  <time itemprop="commentTime" datetime="{{ comment.created_on|date('Y-m-d\\TH:i:s.vP' ) }}">
                     {{ comment.created_on|timeago|raw }}
                   </time>
                 </div>
@@ -162,7 +162,7 @@
 
   {% if item.allow_comments %}
     {% block block_article_comment_form %}
-      <section id="{{ act.Comment }}" class="block-blog-article-comment-form">
+      <section id="{{ 'act.Comment'|trans }}" class="block-blog-article-comment-form">
         <header class="block-blog-article-comment-form-heading" role="banner">
           <h3>{{ 'msg.Comment'|trans|ucfirst }}</h3>
         </header>

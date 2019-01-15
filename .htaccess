@@ -76,6 +76,7 @@ deny from env=stayout
     RewriteRule docker-compose\.override\.yml - [F]
     RewriteRule \.env - [F]
     RewriteRule \.env.dist - [F]
+    RewriteRule phpstan\.neon - [F]
 
     # @remark: custom for Sumocoders
     RewriteRule .*\.rb - [F]

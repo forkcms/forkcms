@@ -748,6 +748,10 @@
         <translation language="en"><![CDATA[The template file is missing.]]></translation>
         <translation language="pl"><![CDATA[Brakuje pliku szablonu.]]></translation>
       </item>
+      <item type="error" name="IncompatibleTheme">
+        <translation language="nl"><![CDATA[Het thema "%1$s" bevat bestanden die niet compatibel zijn met deze versie van Fork CMS.]]></translation>
+        <translation language="en"><![CDATA[Theme "%1$s" contains files that are incompatible with this version of Fork CMS.]]></translation>
+      </item>
       <item type="error" name="InvalidTemplateSyntax">
         <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
         <translation language="en"><![CDATA[Invalid syntax.]]></translation>

@@ -1,3 +1,56 @@
+5.5.0  (2019-01-14)
+------------------
+
+Added:
+* Core: Added option to change the sequence of a collection type [#2624](https://github.com/forkcms/forkcms/pull/2624)
+* Core: Added Phpstan integration [#2639](https://github.com/forkcms/forkcms/pull/2639)
+* Core: Added schema.org to the breadcrumbs [#2702](https://github.com/forkcms/forkcms/pull/2702)
+* Core: Added validator for unique data transfer objects [#2634](https://github.com/forkcms/forkcms/pull/2634)
+* Core: Automatically sequence when enabling drag and drop [#2662](https://github.com/forkcms/forkcms/pull/2662)
+* Core: Better breadcrumb support [#2663](https://github.com/forkcms/forkcms/pull/2663)
+* Core: The image preview is now updated when an image is selected [#2695](https://github.com/forkcms/forkcms/pull/2695)
+* Core: TitleType for easy titles with SymfonyForm [#2625](https://github.com/forkcms/forkcms/pull/2625)
+* Blog: Make the blog image clickable on the overview [#2706](https://github.com/forkcms/forkcms/pull/2706)
+* Location: Translate google maps to the interface and site language instead of the browser language [#2727](https://github.com/forkcms/forkcms/pull/2727)
+* MediaLibrary: Create directories on the overview page [#2692](https://github.com/forkcms/forkcms/pull/2692)
+* MediaLibrary: Mass action delete [#2644](https://github.com/forkcms/forkcms/pull/2644)
+
+Changed:
+* Core: Update the form layout [#2626](https://github.com/forkcms/forkcms/pull/2626)
+* Core: Use the jquery version defined in package.json [#2628](https://github.com/forkcms/forkcms/pull/2628)
+* Console: Improve the thumbnail generation console command [#2703](https://github.com/forkcms/forkcms/pull/2703)
+* Docs: Fixed typos [#2667](https://github.com/forkcms/forkcms/pull/2667)
+* Extensions: Prevent installation of a theme if it contains .tpl files [#2653](https://github.com/forkcms/forkcms/pull/2653)
+* MediaLibrary: Use find method instead of magic method [#2674](https://github.com/forkcms/forkcms/pull/2674)
+* Pages: Only build the navigation cache if vital information has changed [#2649](https://github.com/forkcms/forkcms/pull/2649)
+* Profiles: New profiles won't be automatically logged in anymore [#2690](https://github.com/forkcms/forkcms/pull/2690)
+
+Fixed:
+* Core: Fix DateTime class casing [#2673](https://github.com/forkcms/forkcms/pull/2673)
+* Core: Fix method to check if cookies are allowed [#2720](https://github.com/forkcms/forkcms/pull/2720)
+* Core: Fix phpunit [#2688](https://github.com/forkcms/forkcms/pull/2688)
+* Core: Fix track cookie [#2719](https://github.com/forkcms/forkcms/pull/2719)
+* Core: Remove role on nav list [#2665](https://github.com/forkcms/forkcms/pull/2665)
+* Authentication: Prevent logging out 40 times on backend login [#2705](https://github.com/forkcms/forkcms/pull/2705)
+* Blog: Correctly translate comment and comments as ids in the theme [#2726](https://github.com/forkcms/forkcms/pull/2726)
+* Blog: Fix blog posts not getting indexed by search engines [#2696](https://github.com/forkcms/forkcms/pull/2696)
+* Blog: Fix twitter card url [#2706](https://github.com/forkcms/forkcms/pull/2706)
+* Blog: Use a valid date format for the item props [#2666](https://github.com/forkcms/forkcms/pull/2666)
+* FAQ: Fix sequencing categories [#2689](https://github.com/forkcms/forkcms/pull/2689)
+* FormBuilder: Fix showing the wrong errors [#2700](https://github.com/forkcms/forkcms/pull/2700)
+* FormBuilder: Fix unreadable errors [#2699](https://github.com/forkcms/forkcms/pull/2699)
+* Locale: Fix export [#2672](https://github.com/forkcms/forkcms/pull/2672)
+* Mailmotor: Catch spam errors [#2670](https://github.com/forkcms/forkcms/pull/2670)
+* MediaGallery: Fix delete button [#2694](https://github.com/forkcms/forkcms/pull/2694)
+* MediaLibrary: Fix image urls in editors [#2701](https://github.com/forkcms/forkcms/pull/2701)
+* Pages: Toggle all submenus when clicking the button [#2698](https://github.com/forkcms/forkcms/pull/2698)
+* Tags: Fix casing errors [#2669](https://github.com/forkcms/forkcms/pull/2669)
+* Tags: Fix related tags widget [#2664](https://github.com/forkcms/forkcms/pull/2664)
+
+Removed:
+* MediaLibrary: Remove buggy cleanup functionality [#2693](https://github.com/forkcms/forkcms/pull/2693)
+
+
 5.4.1  (2018-10-16)
 ------------------
 

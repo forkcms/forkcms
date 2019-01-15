@@ -18,7 +18,7 @@ jsBackend.mediaLibraryFolders = {
     var selectedFolderId = (utils.url.getGetValue('folder')) ? utils.url.getGetValue('folder') : ''
 
     // add folders on startup
-    if ($('#uploadMediaFolderId').length > 0) {
+    if ($('#uploadMediaFolderId').length > 0 || $('#addFolderParentId').length > 0) {
       jsBackend.mediaLibraryFolders.updateFolders(selectedFolderId)
     }
 
@@ -118,7 +118,7 @@ jsBackend.mediaLibraryFolders = {
         // update folders in media module
         if (!dialog) {
           // add folders to dropdowns
-          $('#mediaFolders, #uploadMediaFolderId').html(html)
+          $('#mediaFolders, #uploadMediaFolderId, #addFolderParentId').html(html)
 
           // select the new folder
           if (selectFolderId) {
@@ -128,7 +128,9 @@ jsBackend.mediaLibraryFolders = {
           }
 
           // update boxes
-          jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes()
+          if (typeof jsBackend.mediaLibraryHelper !== 'undefined') {
+            jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes()
+          }
         }
 
         // add folders to dropdown

@@ -32,6 +32,13 @@ class Authentication
     private static $user;
 
     /**
+     * This is used to prevent logging out multiple times (less queries)
+     *
+     * @var bool
+     */
+    private static $alreadyLoggedOut = false;
+
+    /**
      * Check the strength of the password
      *
      * @param string $password The password.
@@ -307,6 +314,8 @@ class Authentication
      */
     public static function loginUser(string $login, string $password): bool
     {
+        self::$alreadyLoggedOut = false;
+
         $database = BackendModel::get('database');
 
         // check password
@@ -362,6 +371,10 @@ class Authentication
      */
     public static function logout(): void
     {
+        if (self::$alreadyLoggedOut) {
+            return;
+        }
+
         // remove all rows owned by the current user
         BackendModel::get('database')->delete('users_sessions', 'session_id = ?', BackendModel::getSession()->getId());
 
@@ -369,6 +382,8 @@ class Authentication
         BackendModel::getSession()->set('backend_logged_in', false);
         BackendModel::getSession()->set('backend_secret_key', '');
         BackendModel::getSession()->set('csrf_token', '');
+
+        self::$alreadyLoggedOut = true;
     }
 
     /**

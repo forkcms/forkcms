@@ -3,6 +3,7 @@
 namespace Frontend\Modules\Location\Widgets;
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Language\Locale;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**
@@ -34,7 +35,10 @@ class Location extends FrontendBaseWidget
         if ($apikey == null) {
             trigger_error('Please provide a Google Maps API key.');
         }
-        $this->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey);
+
+        $this->addJS(
+            'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&language=' . Locale::frontendLanguage()
+        );
         $this->addJS(FrontendLocationModel::getPathToMapStyles(false), true);
 
         parent::execute();
