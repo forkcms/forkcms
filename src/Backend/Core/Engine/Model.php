@@ -865,7 +865,7 @@ class Model extends \Common\Core\Model
      *
      * @param int $id The id for the extra.
      * @param string $key The key you want to update.
-     * @param string|array|null $value The new value.
+     * @param mixed $value The new value.
      *
      * @throws Exception If key parameter is not allowed
      */
