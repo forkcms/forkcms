@@ -354,8 +354,8 @@ class Model
      * Get the comments
      *
      * @param string $status The type of comments to get.
-     * @param int    $limit  The maximum number of items to retrieve.
-     * @param int    $offset The offset.
+     * @param int $limit The maximum number of items to retrieve.
+     * @param int $offset The offset.
      *
      * @return array
      */
@@ -471,7 +471,7 @@ class Model
     /**
      * Get a category id by title
      *
-     * @param string $title    The title of the category.
+     * @param string $title The title of the category.
      * @param string $language The language to use, if not provided we will use the working language.
      *
      * @return int
@@ -547,7 +547,7 @@ class Model
      * Get the latest comments for a given type
      *
      * @param string $status The status for the comments to retrieve.
-     * @param int    $limit  The maximum number of items to retrieve.
+     * @param int $limit The maximum number of items to retrieve.
      *
      * @return array
      */
@@ -589,7 +589,7 @@ class Model
     /**
      * Get all data for a given revision
      *
-     * @param int $id         The id of the item.
+     * @param int $id The id of the item.
      * @param int $revisionId The revision to get.
      *
      * @return array
@@ -609,7 +609,7 @@ class Model
      * Retrieve the unique URL for an item
      *
      * @param string $url The URL to base on.
-     * @param int    $id  The id of the item to ignore.
+     * @param int $id The id of the item to ignore.
      *
      * @return string
      */
@@ -660,7 +660,7 @@ class Model
      * Retrieve the unique URL for a category
      *
      * @param string $url The string whereon the URL will be based.
-     * @param int    $id  The id of the category to ignore.
+     * @param int $id The id of the category to ignore.
      *
      * @return string
      */
@@ -737,9 +737,9 @@ class Model
      * The comments array is an array of arrays with comment properties. A comment should have
      * at least 'author', 'email', and 'text' properties.
      *
-     * @param array $item     The data to insert.
-     * @param array $meta     The metadata to insert.
-     * @param array $tags     The tags to connect to this post.
+     * @param array $item The data to insert.
+     * @param array $meta The metadata to insert.
+     * @param array $tags The tags to connect to this post.
      * @param array $comments The comments attached to this post.
      *
      * @throws Exception
@@ -1092,7 +1092,7 @@ class Model
     /**
      * Update an existing category
      *
-     * @param array       $item The new data.
+     * @param array $item The new data.
      * @param array $meta The new meta-data.
      *
      * @return int
@@ -1138,7 +1138,7 @@ class Model
     /**
      * Updates one or more comments' status
      *
-     * @param array  $ids    The id(s) of the comment(s) to change the status for.
+     * @param array $ids The id(s) of the comment(s) to change the status for.
      * @param string $status The new status.
      */
     public static function updateCommentStatuses(array $ids, string $status): void
