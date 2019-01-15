@@ -361,27 +361,6 @@ class Model
      */
     public static function getAllCommentsForStatus(string $status, int $limit = 30, int $offset = 0): array
     {
-        if ($status !== null) {
-            $status = (string) $status;
-        }
-        $limit = (int) $limit;
-        $offset = (int) $offset;
-
-        // no status passed
-        if ($status === null) {
-            return (array) BackendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
-                 p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
-                 FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-                 INNER JOIN meta AS m ON p.meta_id = m.id
-                 WHERE i.language = ?
-                 GROUP BY i.id
-                 LIMIT ?, ?',
-                [BL::getWorkingLanguage(), $offset, $limit]
-            );
-        }
-
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
