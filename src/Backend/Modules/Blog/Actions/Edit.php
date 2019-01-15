@@ -415,36 +415,47 @@ class Edit extends BackendBaseActionEdit
                     $this->url->getModule()
                 );
 
-                // active
-                if ($item['status'] == 'active') {
+                if ($item['status'] === 'active') {
                     // edit search index
                     BackendSearchModel::saveIndex(
                         $this->getModule(),
                         $item['id'],
                         ['title' => $item['title'], 'text' => $item['text']]
                     );
-
-                    // build URL
-                    $redirectUrl = BackendModel::createUrlForAction('Index') .
-                                   '&report=edited&var=' . rawurlencode($item['title']) .
-                                   '&id=' . $this->id . '&highlight=row-' . $item['revision_id'];
-                } elseif ($item['status'] == 'draft') {
-                    // draft: everything is saved, so redirect to the edit action
-                    $redirectUrl = BackendModel::createUrlForAction('Edit') .
-                                   '&report=saved-as-draft&var=' . rawurlencode($item['title']) .
-                                   '&id=' . $item['id'] . '&draft=' . $item['revision_id'] .
-                                   '&highlight=row-' . $item['revision_id'];
                 }
 
-                // append to redirect URL
-                if ($this->categoryId != null) {
-                    $redirectUrl .= '&category=' . $this->categoryId;
-                }
-
-                // everything is saved, so redirect to the overview
-                $this->redirect($redirectUrl);
+                $this->redirect($this->getRedirectUrl($item));
             }
         }
+    }
+
+    private function getRedirectUrl(array $blogPost): string
+    {
+        $redirectAction = 'Index';
+
+        $parameters = [
+            'id' => $blogPost['id'],
+            'highlight=row' => $blogPost['revision_id'],
+            'var' => $blogPost['title'],
+            'report' => 'edited',
+        ];
+
+        if ($this->categoryId !== null) {
+            $parameters['category'] = $this->categoryId;
+        }
+
+        if ($blogPost['status'] === 'draft') {
+            $redirectAction = 'Edit';
+            $parameters['report'] = 'saved-as-draft';
+            $parameters['draft'] = $blogPost['revision_id'];
+        }
+
+        return BackendModel::createUrlForAction($redirectAction) . '&' . http_build_query(
+            $parameters,
+            null,
+            '&',
+            PHP_QUERY_RFC3986
+        );
     }
 
     private function loadDeleteForm(): void
