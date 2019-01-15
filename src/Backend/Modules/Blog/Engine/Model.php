@@ -7,6 +7,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use ForkCMS\Utility\Thumbnails;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
@@ -168,7 +169,7 @@ class Model
         $images = $database->getColumn('SELECT image FROM blog_posts WHERE id IN (' . $idPlaceHolders . ')', $ids);
 
         foreach ($images as $image) {
-            BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/Blog/images', $image);
+            BackendModel::get(Thumbnails::class)->delete(FRONTEND_FILES_PATH . '/Blog/images', $image);
         }
 
         // delete records
@@ -1059,8 +1060,11 @@ class Model
 
             // make sure that an image that will be deleted, is not used by a revision that is not to be deleted
             foreach ($imagesOfDeletedRevisions as $imageOfDeletedRevision) {
-                if (!in_array($imageOfDeletedRevision, $imagesToKeep)) {
-                    BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/Blog/images', $imageOfDeletedRevision);
+                if (!in_array($imageOfDeletedRevision, $imagesToKeep, true)) {
+                    BackendModel::get(Thumbnails::class)->delete(
+                        FRONTEND_FILES_PATH . '/Blog/images',
+                        $imageOfDeletedRevision
+                    );
                 }
             }
 
