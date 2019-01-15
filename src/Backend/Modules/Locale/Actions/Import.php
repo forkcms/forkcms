@@ -77,7 +77,6 @@ class Import extends BackendBaseActionAdd
 
         if ($fileFile->isFilled(BL::err('FieldIsRequired'))
             && $fileFile->isAllowedExtension(['xml'], sprintf(BL::getError('ExtensionNotAllowed'), 'xml'))) {
-
             $xml = @simplexml_load_file($fileFile->getTempFileName());
 
             // invalid xml
