@@ -772,9 +772,6 @@ class Model
         }
 
         // Build meta
-        if (!is_array($meta)) {
-            $meta = [];
-        }
         if (!isset($meta['keywords'])) {
             $meta['keywords'] = $item['title'];
         }
