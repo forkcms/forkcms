@@ -3,6 +3,7 @@
 namespace Backend\Modules\Blog\Actions;
 
 use Backend\Modules\Blog\Form\BlogDeleteType;
+use ForkCMS\Utility\Thumbnails;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
@@ -389,7 +390,7 @@ class Edit extends BackendBaseActionEdit
                         // only copy if the new name differs from the old filename
                         if (preg_replace($regex, '$1', $newName) != preg_replace($regex, '$1', $item['image'])) {
                             // loop folders
-                            foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
+                            foreach ($this->get(Thumbnails::class)->getFolders($imagePath, true) as $folder) {
                                 $filesystem->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
                             }
 
