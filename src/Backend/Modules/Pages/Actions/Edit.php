@@ -17,6 +17,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
 
 /**
@@ -962,7 +963,7 @@ class Edit extends BackendBaseActionEdit
         $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
 
         // delete the current image
-        BackendModel::deleteThumbnails($imagePath, (string) $imageFilename);
+        $this->get(Thumbnails::class)->delete($imagePath, (string) $imageFilename);
 
         if (!$allowImage
             || ($this->form->getField('remove_image')->isChecked() && !$this->form->getField('image')->isFilled())
