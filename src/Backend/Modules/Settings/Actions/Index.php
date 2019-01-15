@@ -148,6 +148,9 @@ class Index extends BackendBaseActionIndex
             $this->get('fork.settings')->get('Core', 'number_format')
         );
 
+        $activeLanguages = [];
+        $redirectLanguages = [];
+
         // create a list of the languages
         foreach ($this->get('fork.settings')->get('Core', 'languages', ['en']) as $abbreviation) {
             // is this the default language
