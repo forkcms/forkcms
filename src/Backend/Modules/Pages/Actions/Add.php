@@ -13,6 +13,7 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use SpoonFormHidden;
 
 /**
@@ -109,30 +110,31 @@ class Add extends BackendBaseActionAdd
         // create form
         $this->form = new BackendForm('add');
 
+        $originalPage = $this->getOriginalPage();
+
         // assign in template
         $this->template->assign('defaultTemplateId', $defaultTemplateId);
 
-        // create elements
-        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
+        $this->form->addText('title', $originalPage['title'] ?? null, null, 'form-control title', 'form-control danger title');
         $this->form->addEditor('html');
-        $this->form->addHidden('template_id', $defaultTemplateId);
+        $this->form->addHidden('template_id', $originalPage['template_id'] ?? $defaultTemplateId);
         $this->form->addRadiobutton(
             'hidden',
             [
                 ['label' => BL::lbl('Hidden'), 'value' => 1],
                 ['label' => BL::lbl('Published'), 'value' => 0],
             ],
-            0
+            $originalPage['hidden'] ?? 0
         );
 
         // image related fields
-        $this->form->addImage('image');
+        $this->form->addImage('image')->setAttribute('data-fork-cms-role', 'image-field');
 
         // just execute if the site is multi-language
         if ($this->getContainer()->getParameter('site.multilanguage')) {
             // loop active languages
             foreach (BL::getActiveLanguages() as $language) {
-                if ($language != BL::getWorkingLanguage()) {
+                if ($language !== BL::getWorkingLanguage()) {
                     $pages = BackendPagesModel::getPagesForDropdown($language);
                     // add field for each language
                     $field = $this->form->addDropdown('hreflang_' . $language, $pages)->setDefaultElement('');
@@ -143,21 +145,25 @@ class Add extends BackendBaseActionAdd
 
         // a god user should be able to adjust the detailed settings for a page easily
         if ($this->isGod) {
-            // init some vars
-            $items = [
-                'move' => true,
-                'children' => true,
-                'edit' => true,
-                'delete' => true,
+            $permissions = [
+                'move' => ['data-role' => 'allow-move-toggle'],
+                'children' => ['data-role' => 'allow-children-toggle'],
+                'edit' => ['data-role' => 'allow-edit-toggle'],
+                'delete' => ['data-role' => 'allow-delete-toggle'],
             ];
             $checked = [];
             $values = [];
 
-            foreach ($items as $value => $itemIsChecked) {
-                $values[] = ['label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value];
+            foreach ($permissions as $permission => $attributes) {
+                $allowPermission = 'allow_' . $permission;
+                $values[] = [
+                    'label' => BL::msg(\SpoonFilter::toCamelCase($allowPermission)),
+                    'value' => $permission,
+                    'attributes' => $attributes,
+                ];
 
-                if ($itemIsChecked) {
-                    $checked[] = $value;
+                if ($originalPage === null || (isset($originalPage[$allowPermission]) && $originalPage[$allowPermission])) {
+                    $checked[] = $permission;
                 }
             }
 
@@ -210,7 +216,7 @@ class Add extends BackendBaseActionAdd
                 $html = $this->getRequest()->request->get('block_html_' . $i);
 
                 // extra-type is HTML
-                if ($block['extra_id'] === null || $block['extra_type'] == 'usertemplate') {
+                if ($block['extra_id'] === null || $block['extra_type'] === 'usertemplate') {
                     if ($this->getRequest()->request->get('block_extra_type_' . $i) === 'usertemplate') {
                         $block['extra_id'] = $this->getRequest()->request->get('block_extra_id_' . $i);
                         $_POST['block_extra_data_' . $i] = htmlspecialchars($_POST['block_extra_data_' . $i]);
@@ -219,17 +225,14 @@ class Add extends BackendBaseActionAdd
                         $block['extra_id'] = null;
                     }
                     $block['html'] = $html;
-                } else {
-                    // type of block
-                    if (isset($this->extras[$block['extra_id']]['type']) && $this->extras[$block['extra_id']]['type'] == 'block') {
-                        // set error
-                        if ($hasBlock) {
-                            $this->form->addError(BL::err('CantAdd2Blocks'));
-                        }
-
-                        // reset var
-                        $hasBlock = true;
+                } elseif (isset($this->extras[$block['extra_id']]['type']) && $this->extras[$block['extra_id']]['type'] === 'block') {
+                    // set error
+                    if ($hasBlock) {
+                        $this->form->addError(BL::err('CantAdd2Blocks'));
                     }
+
+                    // reset var
+                    $hasBlock = true;
                 }
 
                 // set data
@@ -281,6 +284,13 @@ class Add extends BackendBaseActionAdd
         }
 
         // redirect
+        $redirectValue = 'none';
+        if ($originalPage !== null && isset($originalPage['data']['internal_redirect']['page_id'])) {
+            $redirectValue = 'internal';
+        }
+        if ($originalPage !== null && isset($originalPage['data']['external_redirect']['url'])) {
+            $redirectValue = 'external';
+        }
         $redirectValues = [
             ['value' => 'none', 'label' => \SpoonFilter::ucfirst(BL::lbl('None'))],
             [
@@ -294,19 +304,30 @@ class Add extends BackendBaseActionAdd
                 'variables' => ['isExternal' => true],
             ],
         ];
-        $this->form->addRadiobutton('redirect', $redirectValues, 'none');
-        $this->form->addDropdown('internal_redirect', BackendPagesModel::getPagesForDropdown());
-        $this->form->addText('external_redirect', null, null, null, null, true);
+        $this->form->addRadiobutton('redirect', $redirectValues, $redirectValue);
+        $this->form->addDropdown(
+            'internal_redirect',
+            BackendPagesModel::getPagesForDropdown(),
+            ($redirectValue === 'internal') ? $originalPage['data']['internal_redirect']['page_id'] : null
+        );
+        $this->form->addText(
+            'external_redirect',
+            ($redirectValue === 'external') ? urldecode($originalPage['data']['external_redirect']['url']) : null,
+            null,
+            null,
+            null,
+            true
+        );
 
         // page info
-        $this->form->addCheckbox('navigation_title_overwrite');
-        $this->form->addText('navigation_title');
+        $this->form->addCheckbox('navigation_title_overwrite', $originalPage['navigation_title_overwrite'] ?? null);
+        $this->form->addText('navigation_title', $originalPage['navigation_title'] ?? null);
 
         if ($this->showTags()) {
             // tags
             $this->form->addText(
                 'tags',
-                null,
+                $originalPage === null ? null : BackendTagsModel::getTags($this->url->getModule(), $originalPage['id']),
                 null,
                 'form-control js-tags-input',
                 'form-control danger js-tags-input'
@@ -314,7 +335,8 @@ class Add extends BackendBaseActionAdd
         }
 
         // a specific action
-        $this->form->addCheckbox('is_action', false);
+        $isAction = $originalPage !== null && isset($originalPage['data']['is_action']) && $originalPage['data']['is_action'];
+        $this->form->addCheckbox('is_action', $isAction);
 
         // extra
         $blockTypes = BackendPagesModel::getTypes();
@@ -325,7 +347,7 @@ class Add extends BackendBaseActionAdd
 
         // set callback for generating an unique URL
         $this->meta->setUrlCallback(
-            'Backend\Modules\Pages\Engine\Model',
+            BackendPagesModel::class,
             'getUrl',
             [0, $this->getRequest()->query->getInt('parent'), false]
         );
@@ -383,18 +405,18 @@ class Add extends BackendBaseActionAdd
 
             // validate redirect
             $redirectValue = $this->form->getField('redirect')->getValue();
-            if ($redirectValue == 'internal') {
+            if ($redirectValue === 'internal') {
                 $this->form->getField('internal_redirect')->isFilled(
                     BL::err('FieldIsRequired')
                 );
             }
-            if ($redirectValue == 'external') {
+            if ($redirectValue === 'external') {
                 $this->form->getField('external_redirect')->isURL(BL::err('InvalidURL'));
             }
 
             // set callback for generating an unique URL
             $this->meta->setUrlCallback(
-                'Backend\Modules\Pages\Engine\Model',
+                BackendPagesModel::class,
                 'getUrl',
                 [0, $this->getRequest()->query->getInt('parent'), $this->form->getField('is_action')->getChecked()]
             );
@@ -544,7 +566,7 @@ class Add extends BackendBaseActionAdd
                 BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
                 // active
-                if ($page['status'] == 'active') {
+                if ($page['status'] === 'active') {
                     // init var
                     $text = '';
 
@@ -576,7 +598,7 @@ class Add extends BackendBaseActionAdd
                             $page['title']
                         ) . '&highlight=row-' . $page['id']
                     );
-                } elseif ($page['status'] == 'draft') {
+                } elseif ($page['status'] === 'draft') {
                     // everything is saved, so redirect to the edit action
                     $this->redirect(
                         BackendModel::createUrlForAction(
@@ -621,5 +643,20 @@ class Add extends BackendBaseActionAdd
                 return parent::getValue(true);
             }
         };
+    }
+
+    private function getOriginalPage(): ?array
+    {
+        $id = $this->getRequest()->query->getInt('copy');
+
+        // check if the page exists
+        if ($id === 0 || !BackendPagesModel::exists($id)) {
+            return null;
+        }
+
+        $originalPage = BackendPagesModel::get($id);
+        $this->blocksContent = BackendPagesModel::getBlocks($id, $originalPage['revision_id']);
+
+        return $originalPage;
     }
 }
