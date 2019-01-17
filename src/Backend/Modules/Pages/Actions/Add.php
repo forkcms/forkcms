@@ -115,6 +115,9 @@ class Add extends BackendBaseActionAdd
         // assign in template
         $this->template->assign('defaultTemplateId', $defaultTemplateId);
 
+        // assign if profiles module is installed
+        $this->template->assign('showAuthenticationTab', BackendModel::isModuleInstalled('Profiles'));
+
         $this->form->addText('title', $originalPage['title'] ?? null, null, 'form-control title', 'form-control danger title');
         $this->form->addEditor('html');
         $this->form->addHidden('template_id', $originalPage['template_id'] ?? $defaultTemplateId);
@@ -140,6 +143,41 @@ class Add extends BackendBaseActionAdd
                     $field = $this->form->addDropdown('hreflang_' . $language, $pages)->setDefaultElement('');
                     $this->hreflangFields[$language]['field_hreflang'] = $field->parse();
                 }
+            }
+        }
+
+        // page auth related fields
+        // check if profiles module is installed
+        if (BackendModel::isModuleInstalled('Profiles')) {
+            // add checkbox for auth_required
+            $this->form->addCheckbox(
+                'auth_required',
+                $originalPage !== null && isset($originalPage['data']['auth_required']) && $originalPage['data']['auth_required']
+            );
+
+            // add checkbox for index page to search
+            $this->form->addCheckbox(
+                'remove_from_search_index',
+                $originalPage !== null && isset($originalPage['data']['remove_from_search_index']) && $originalPage['data']['remove_from_search_index']
+            );
+
+            // get all groups and parse them in key value pair
+            $groupItems = BackendProfilesModel::getGroups();
+            if (!empty($groupItems)) {
+                $groups = [];
+                foreach ($groupItems as $key => $item) {
+                    $groups[] = ['label' => $item, 'value' => $key];
+                }
+                // set checked values
+                $checkedGroups = [];
+                if ($originalPage !== null && isset($originalPage['data']['auth_groups'])
+                    && is_array($originalPage['data']['auth_groups'])) {
+                    foreach ($originalPage['data']['auth_groups'] as $group) {
+                        $checkedGroups[] = $group;
+                    }
+                }
+                // add multi checkbox
+                $this->form->addMultiCheckbox('auth_groups', $groups, $checkedGroups);
             }
         }
 
