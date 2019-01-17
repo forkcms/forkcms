@@ -14,7 +14,10 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -34,6 +37,13 @@ class Add extends BackendBaseActionAdd
      * @var bool
      */
     private $isGod = false;
+
+    /**
+     * Original image from the page we are copying
+     *
+     * @var string|null
+     */
+    private $originalImage;
 
     /**
      * The positions
@@ -132,6 +142,11 @@ class Add extends BackendBaseActionAdd
 
         // image related fields
         $this->form->addImage('image')->setAttribute('data-fork-cms-role', 'image-field');
+        if ($originalPage !== null) {
+            $this->form->addCheckbox('remove_image');
+            $this->originalImage = $originalPage['data']['image'] ?? null;
+            $this->template->assign('originalImage', $this->originalImage);
+        }
 
         // just execute if the site is multi-language
         if ($this->getContainer()->getParameter('site.multilanguage')) {
@@ -652,15 +667,35 @@ class Add extends BackendBaseActionAdd
 
     private function getImage(bool $allowImage): ?string
     {
-        if (!$allowImage || !$this->form->getField('image')->isFilled()) {
+        if (!$allowImage
+            || (!$this->form->getField('image')->isFilled() && $this->originalImage === null)
+            || ($this->originalImage !== null && $this->form->getField('remove_image')->isChecked())) {
             return null;
         }
 
         $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
-        $imageFilename = $this->meta->getUrl() . '_' . time() . '.' . $this->form->getField('image')->getExtension();
+
+        if ($this->originalImage !== null && !$this->form->getField('image')->isFilled()) {
+            $originalImagePath = $imagePath . '/source/' . $this->originalImage;
+            $imageFilename = $this->getImageFilenameForExtension(pathinfo($originalImagePath, PATHINFO_EXTENSION));
+            $newImagePath = $imagePath . '/source/' . $imageFilename;
+
+            // make sure we have a separate image for the copy in case the original image gets removed
+            (new Filesystem())->copy($originalImagePath, $newImagePath);
+            $this->get(Thumbnails::class)->generate($imagePath, $newImagePath);
+
+            return $imageFilename;
+        }
+
+        $imageFilename = $this->getImageFilenameForExtension($this->form->getField('image')->getExtension());
         $this->form->getField('image')->generateThumbnails($imagePath, $imageFilename);
 
         return $imageFilename;
+    }
+
+    private function getImageFilenameForExtension(string $extension): string
+    {
+        return $this->meta->getUrl() . '_' . time() . '.' . $extension;
     }
 
     /**
