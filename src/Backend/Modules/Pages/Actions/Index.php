@@ -86,7 +86,7 @@ class Index extends BackendBaseActionIndex
             );
 
             // add edit column
-            $this->dgDrafts->addColumn(
+            $this->dgDrafts->addColumnAction(
                 'edit',
                 null,
                 BL::lbl('Edit'),
@@ -140,7 +140,7 @@ class Index extends BackendBaseActionIndex
             );
 
             // add column
-            $this->dgRecentlyEdited->addColumn(
+            $this->dgRecentlyEdited->addColumnAction(
                 'edit',
                 null,
                 BL::lbl('Edit'),
