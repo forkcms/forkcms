@@ -130,6 +130,16 @@ class Index extends BackendBaseActionIndex
             ]
         );
 
+        if (BackendAuthentication::isAllowedAction('Add', $this->getModule())) {
+            $this->dgRecentlyEdited->addColumnAction(
+                'clone',
+                null,
+                BL::lbl('Clone'),
+                BackendModel::createUrlForAction('Add') . '&amp;clone=[id]',
+                BL::lbl('Clone')
+            );
+        }
+
         // check if allowed to edit
         if (BackendAuthentication::isAllowedAction('Edit', $this->getModule())) {
             // set column URL
