@@ -127,7 +127,7 @@ class Add extends BackendBaseActionAdd
         // assign if profiles module is installed
         $this->template->assign('showAuthenticationTab', BackendModel::isModuleInstalled('Profiles'));
 
-        $this->form->addText('title', $originalPage['title'] ?? null, null, 'form-control title', 'form-control danger title');
+        $this->form->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->form->addEditor('html');
         $this->form->addHidden('template_id', $originalPage['template_id'] ?? $defaultTemplateId);
         $this->form->addRadiobutton(
