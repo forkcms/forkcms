@@ -1,4 +1,4 @@
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <locale>
   <Backend>
     <Pages>
@@ -747,6 +747,16 @@
         <translation language="es"><![CDATA[Los usuarios tienen que iniciar sesión para ver esta página.]]></translation>
         <translation language="el"><![CDATA[Οι χρήστες πρέπει να είστε συνδεδεμένοι για να δείτε αυτή τη σελίδα.]]></translation>
         <translation language="pl"><![CDATA[Użytkownicy muszą być zalogowani, aby wyświetlić tę stronę.]]></translation>
+      </item>
+      <item type="label" name="CloneThisPage">
+        <translation language="nl"><![CDATA[kloon deze pagina]]></translation>
+        <translation language="en"><![CDATA[clone this page]]></translation>
+        <translation language="fr"><![CDATA[cloner cette page]]></translation>
+        <translation language="de"><![CDATA[diese Seite klonen]]></translation>
+        <translation language="pl"><![CDATA[sklonować tę stronę]]></translation>
+        <translation language="es"><![CDATA[clonar esta página]]></translation>
+        <translation language="ru"><![CDATA[клонировать эту страницу]]></translation>
+        <translation language="it"><![CDATA[clonare questa pagina]]></translation>
       </item>
     </Pages>
     <Core>

@@ -17,7 +17,6 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -39,7 +38,7 @@ class Add extends BackendBaseActionAdd
     private $isGod = false;
 
     /**
-     * Original image from the page we are copying
+     * Original image from the page we are cloning
      *
      * @var string|null
      */
@@ -680,7 +679,7 @@ class Add extends BackendBaseActionAdd
             $imageFilename = $this->getImageFilenameForExtension(pathinfo($originalImagePath, PATHINFO_EXTENSION));
             $newImagePath = $imagePath . '/source/' . $imageFilename;
 
-            // make sure we have a separate image for the copy in case the original image gets removed
+            // make sure we have a separate image for the clone in case the original image gets removed
             (new Filesystem())->copy($originalImagePath, $newImagePath);
             $this->get(Thumbnails::class)->generate($imagePath, $newImagePath);
 
@@ -720,7 +719,7 @@ class Add extends BackendBaseActionAdd
 
     private function getOriginalPage(): ?array
     {
-        $id = $this->getRequest()->query->getInt('copy');
+        $id = $this->getRequest()->query->getInt('clone');
 
         // check if the page exists
         if ($id === 0 || !BackendPagesModel::exists($id)) {
