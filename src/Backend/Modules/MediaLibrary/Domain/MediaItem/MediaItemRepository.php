@@ -56,7 +56,7 @@ final class MediaItemRepository extends EntityRepository
 
         return $this->findBy(
             $condition,
-            ['title' => 'ASC']
+            ['url' => 'ASC']
         );
     }
 }

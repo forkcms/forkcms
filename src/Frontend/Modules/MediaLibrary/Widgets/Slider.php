@@ -22,6 +22,7 @@ class Slider extends FrontendMediaWidget
 
         parent::execute();
         $this->loadTemplate();
+        $this->template->assign('locale', Locale::frontendLanguage());
         $this->parse();
     }
 }

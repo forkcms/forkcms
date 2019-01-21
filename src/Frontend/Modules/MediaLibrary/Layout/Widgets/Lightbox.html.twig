@@ -34,9 +34,9 @@
         <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
           {% set img = mediaItem.webpath() %}
           <a href="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_lightbox_large') }}" itemprop="contentUrl" data-size="{{ mediaItem.width }}x{{ mediaItem.height }}">
-            <img itemprop="thumbnail" src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_lightbox_small') }}" alt="{{ mediaItem.title }}" />
+            <img itemprop="thumbnail" src="{{ (mediaItem.getWebPath()) | imagine_filter('media_library_lightbox_small') }}" alt="{{ mediaItem.getTranslation(locale).altText }}" />
           </a>
-          <figcaption itemprop="caption description">{% if title %}{{ title }}{% endif %}{% if not title %}{{ mediaItem.title }}{% endif %}</figcaption>
+          <figcaption itemprop="caption description">{% if title %}{{ title }}{% endif %}{% if not title %}{% if mediaItem.getTranslation(locale).caption %}{{ mediaItem.getTranslation(locale).caption|striptags }}{% else %}{{ mediaItem.getTranslation(locale).title }}{% endif %}{% endif %}</figcaption>
         </figure>
       {% endfor %}
     </div>

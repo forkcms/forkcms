@@ -9,6 +9,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use Backend\Modules\MediaLibrary\Domain\MediaGroup\MediaGroup;
 use Backend\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
+use Backend\Modules\MediaLibrary\Domain\MediaItemTranslation\MediaItemTranslation;
 
 /**
  * Installer for the MediaLibrary module
@@ -90,6 +91,7 @@ class Installer extends ModuleInstaller
                 MediaGroup::class,
                 MediaGroupMediaItem::class,
                 MediaItem::class,
+                MediaItemTranslation::class,
             ]
         );
     }

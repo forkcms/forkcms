@@ -32,3 +32,9 @@ doctrine:
         dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaItem"
         alias: MediaLibraryMediaItem
         prefix: Backend\Modules\MediaLibrary\Domain\MediaItem
+      media_item_translation:
+        type: annotation
+        is_bundle: false
+        dir: "%kernel.project_dir%/src/Backend/Modules/MediaLibrary/Domain/MediaItemTranslation"
+        alias: MediaLibraryMediaItemTranslation
+        prefix: Backend\Modules\MediaLibrary\Domain\MediaItemTranslation

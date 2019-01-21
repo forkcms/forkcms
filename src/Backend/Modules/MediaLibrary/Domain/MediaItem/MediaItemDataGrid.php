@@ -6,6 +6,7 @@ use Backend\Core\Engine\DataGridDatabase;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Model;
 use Backend\Core\Language\Language;
+use Backend\Core\Language\Locale;
 use SpoonFormDropdown;
 
 /**
@@ -16,9 +17,10 @@ class MediaItemDataGrid extends DataGridDatabase
     public function __construct(Type $type, int $folderId = null)
     {
         parent::__construct(
-            'SELECT i.id, i.storageType, i.type, i.url, i.title, i.shardingFolderName,
+            'SELECT i.id, i.storageType, i.type, i.url, s.title, i.shardingFolderName,
                 COUNT(gi.mediaItemId) as num_connected, i.mime, UNIX_TIMESTAMP(i.createdOn) AS createdOn
              FROM MediaItem AS i
+             LEFT OUTER JOIN MediaItemTranslation AS s ON s.mediaItemId = i.id AND s.locale = ?
              LEFT OUTER JOIN MediaGroupMediaItem as gi ON gi.mediaItemId = i.id
              WHERE i.type = ?' . $this->getWhere($folderId) . ' GROUP BY i.id',
             $this->getParameters($type, $folderId)
@@ -96,7 +98,7 @@ class MediaItemDataGrid extends DataGridDatabase
 
     private function getParameters(Type $type, int $folderId = null): array
     {
-        $parameters = [(string) $type];
+        $parameters = [Locale::workingLocale(), (string) $type];
 
         if ($folderId !== null) {
             $parameters[] = $folderId;

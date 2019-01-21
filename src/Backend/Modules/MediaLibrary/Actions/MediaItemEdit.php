@@ -4,6 +4,7 @@ namespace Backend\Modules\MediaLibrary\Actions;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model;
+use Backend\Core\Language\Locale;
 use Backend\Form\Type\DeleteType;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Backend\Modules\MediaLibrary\Domain\MediaItem\Exception\MediaItemNotFound;
@@ -47,6 +48,7 @@ class MediaItemEdit extends BackendBaseActionEdit
         $this->template->assign('deleteForm', $deleteForm->createView());
 
         if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->template->assign('activeTranslationTab', 'tab' . ucfirst(Locale::workingLocale()));
             $this->template->assign('folderId', $this->folderId);
             $this->template->assign('tree', $this->get('media_library.manager.tree')->getHTML());
             $this->header->addJsData(
@@ -75,12 +77,12 @@ class MediaItemEdit extends BackendBaseActionEdit
             $this->getBackLink(
                 [
                     'report' => 'media-item-edited',
-                    'var' => $updateMediaItem->title,
+                    'var' => $updateMediaItem->url,
                     'highlight' => 'row-' . $updateMediaItem->getMediaItemEntity()->getId(),
                     'id' => $updateMediaItem->getMediaItemEntity()->getId(),
                     'folder' => $this->folderId,
                 ]
-            )
+            ) . '#tab' . ucfirst($updateMediaItem->getMediaItemEntity()->getType())
         );
     }
 
