@@ -18,5 +18,9 @@ parameters:
     - '#Service "page" is not registered in the container.#'
     - '#Service "template" is not registered in the container.#'
     - '#Service "url" is not registered in the container.#'
+    - '#Function sem_get not found.#'
+    - '#Function sem_acquire not found.#'
+    - '#Function sem_release not found.#'
+    - '#Function opcache_reset not found.#'
   symfony:
     container_xml_path: %rootDir%/../../../var/cache/dev/appDevDebugProjectContainer.xml
