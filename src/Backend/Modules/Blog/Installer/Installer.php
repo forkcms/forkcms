@@ -105,6 +105,7 @@ class Installer extends ModuleInstaller
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesFull', 'RecentArticlesFull');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentArticlesList', 'RecentArticlesList');
         $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RecentComments', 'RecentComments');
+        $this->insertExtra($this->getModule(), ModuleExtraType::widget(), 'RelatedArticles', 'RelatedArticles');
     }
 
     private function configureFrontendPages(): void
