@@ -758,6 +758,16 @@
         <translation language="ru"><![CDATA[скопировать эту страницу]]></translation>
         <translation language="it"><![CDATA[copiare questa pagina]]></translation>
       </item>
+      <item type="message" name="CopiedTitle">
+        <translation language="nl"><![CDATA[%1$s kopie]]></translation>
+        <translation language="en"><![CDATA[%1$s copy]]></translation>
+        <translation language="fr"><![CDATA[%1$s copie]]></translation>
+        <translation language="de"><![CDATA[%1$s Kopie]]></translation>
+        <translation language="pl"><![CDATA[%1$s kopia]]></translation>
+        <translation language="es"><![CDATA[copia de 1$s]]></translation>
+        <translation language="ru"><![CDATA[%1$s копия]]></translation>
+        <translation language="it"><![CDATA[%1$s copia]]></translation>
+      </item>
     </Pages>
     <Core>
       <item type="error" name="CantBeMoved">
