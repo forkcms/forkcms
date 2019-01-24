@@ -2229,9 +2229,8 @@ VALUES
     (1528, 1, 'en', 'Backend', 'Pages', 'lbl', 'AppendToTree', 'append to navigation tree', '2017-08-31 14:28:26'),
     (1529, 1, 'en', 'Backend', 'Pages', 'lbl', 'BeforePage', 'add before reference page', '2017-08-31 14:28:26'),
     (1530, 1, 'en', 'Backend', 'Pages', 'lbl', 'InsidePage', 'add as subpage of the reference page', '2017-08-31 14:28:26'),
-    (1531, 1, 'en', 'Backend', 'Pages', 'lbl', 'CloneThisPage', 'clone this page', '2017-08-31 14:28:26'),
-    (1532, 1, 'en', 'Backend', 'Pages', 'lbl', 'Clone', 'clone', '2017-08-31 14:28:26'),
-    (1533, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26');
+    (1531, 1, 'en', 'Backend', 'Pages', 'lbl', 'CopyThisPage', 'copy this page', '2017-08-31 14:28:26'),
+    (1532, 1, 'en', 'Backend', 'Pages', 'lbl', 'AfterPage', 'add after reference page', '2017-08-31 14:28:26');
 
 /*!40000 ALTER TABLE `locale` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -748,25 +748,15 @@
         <translation language="el"><![CDATA[Οι χρήστες πρέπει να είστε συνδεδεμένοι για να δείτε αυτή τη σελίδα.]]></translation>
         <translation language="pl"><![CDATA[Użytkownicy muszą być zalogowani, aby wyświetlić tę stronę.]]></translation>
       </item>
-      <item type="label" name="CloneThisPage">
-        <translation language="nl"><![CDATA[kloon deze pagina]]></translation>
-        <translation language="en"><![CDATA[clone this page]]></translation>
-        <translation language="fr"><![CDATA[cloner cette page]]></translation>
-        <translation language="de"><![CDATA[diese Seite klonen]]></translation>
-        <translation language="pl"><![CDATA[sklonować tę stronę]]></translation>
-        <translation language="es"><![CDATA[clonar esta página]]></translation>
-        <translation language="ru"><![CDATA[клонировать эту страницу]]></translation>
-        <translation language="it"><![CDATA[clonare questa pagina]]></translation>
-      </item>
-      <item type="label" name="Clone">
-        <translation language="nl"><![CDATA[kloon]]></translation>
-        <translation language="en"><![CDATA[clone]]></translation>
-        <translation language="fr"><![CDATA[clone]]></translation>
-        <translation language="de"><![CDATA[Klon]]></translation>
-        <translation language="pl"><![CDATA[klon]]></translation>
-        <translation language="es"><![CDATA[clon]]></translation>
-        <translation language="ru"><![CDATA[клон]]></translation>
-        <translation language="it"><![CDATA[clone]]></translation>
+      <item type="label" name="CopyThisPage">
+        <translation language="nl"><![CDATA[kopieer deze pagina]]></translation>
+        <translation language="en"><![CDATA[copy this page]]></translation>
+        <translation language="fr"><![CDATA[copier cette page]]></translation>
+        <translation language="de"><![CDATA[diese Seite kopieren]]></translation>
+        <translation language="pl"><![CDATA[skopiować tę stronę]]></translation>
+        <translation language="es"><![CDATA[copiar esta página]]></translation>
+        <translation language="ru"><![CDATA[скопировать эту страницу]]></translation>
+        <translation language="it"><![CDATA[copiare questa pagina]]></translation>
       </item>
     </Pages>
     <Core>

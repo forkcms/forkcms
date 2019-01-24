@@ -132,11 +132,11 @@ class Index extends BackendBaseActionIndex
 
         if (BackendAuthentication::isAllowedAction('Add', $this->getModule())) {
             $this->dgRecentlyEdited->addColumnAction(
-                'clone',
+                'copy',
                 null,
-                BL::lbl('Clone'),
-                BackendModel::createUrlForAction('Add') . '&amp;clone=[id]',
-                BL::lbl('Clone')
+                BL::lbl('Copy'),
+                BackendModel::createUrlForAction('Add') . '&amp;copy=[id]',
+                BL::lbl('Copy')
             );
         }
 
