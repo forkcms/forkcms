@@ -732,6 +732,8 @@ class Add extends BackendBaseActionAdd
             return null;
         }
 
+        $this->template->assign('showCopyWarning', true);
+
         $originalPage = BackendPagesModel::get($id);
         $this->blocksContent = BackendPagesModel::getBlocks($id, $originalPage['revision_id']);
 

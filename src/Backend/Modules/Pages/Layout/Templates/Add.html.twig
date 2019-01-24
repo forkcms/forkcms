@@ -28,6 +28,11 @@
 {% endblock %}
 
 {% block content %}
+  {% if showCopyWarning %}
+    <div id="copyPageWarning" class="alert alert-warning alert-xs">
+      {{ macro.icon('exclamation-triangle') }}{{ 'msg.CopySaveWarning'|trans|raw }}
+    </div>
+  {% endif %}
   {% form add %}
   {{ hidTemplateId|raw }}
   <div class="row fork-module-content">

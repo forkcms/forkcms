@@ -768,6 +768,16 @@
         <translation language="ru"><![CDATA[%1$s копия]]></translation>
         <translation language="it"><![CDATA[%1$s copia]]></translation>
       </item>
+      <item type="message" name="CopySaveWarning">
+        <translation language="nl"><![CDATA[<p><strong>Belangrijk:</strong> De kopie is nog niet opgeslagen.</p>]]></translation>
+        <translation language="en"><![CDATA[<p><strong>Important:</strong> The copy hasn't been saved yet.</p>]]></translation>
+        <translation language="fr"><![CDATA[<p><strong>Important:</strong> La copie n'a pas encore été sauvegardée.</p>]]></translation>
+        <translation language="de"><![CDATA[<p><strong> Wichtig:</strong> Die Kopie wurde noch nicht gespeichert.</p>]]></translation>
+        <translation language="pl"><![CDATA[<p><strong>Uwaga:</strong> Kopia nie została jeszcze zapisana.</p>]]></translation>
+        <translation language="es"><![CDATA[<p><strong>Importante:</strong> La copia aún no se ha guardado.</p>]]></translation>
+        <translation language="ru"><![CDATA[<p><strong>Важно:</strong> Копия еще не сохранена.</p>]]></translation>
+        <translation language="it"><![CDATA[<p><strong>Importante:</strong> La copia non è stata ancora salvata.</p>]]></translation>
+      </item>
     </Pages>
     <Core>
       <item type="error" name="CantBeMoved">
