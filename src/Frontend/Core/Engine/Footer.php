@@ -44,12 +44,10 @@ class Footer extends KernelLoader
         $this->template->assignGlobal('footerLinks', $footerLinks);
 
         $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
-
-        $facebookAdminIds = $this->get('fork.settings')->get('Core', 'facebook_admin_ids', null);
         $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
 
         // facebook admins given?
-        if ($facebookAdminIds !== null || $facebookAppId !== null) {
+        if ($facebookAppId !== null) {
             // add Facebook container
             $siteHTMLFooter .= $this->getFacebookHtml($facebookAppId);
         }
