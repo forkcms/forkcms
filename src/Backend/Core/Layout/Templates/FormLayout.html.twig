@@ -303,7 +303,7 @@
                   {% endif %}
                   {% if form.vars.allow_delete %}
                     <div class="btn-group pull-right">
-                      <a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|raw }}</a>
+                      <a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="{{ field.vars.id }}">{{ form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw }}</a>
                     </div>
                   {% endif %}
                 </div>
@@ -314,7 +314,7 @@
         <div class="panel-footer clearfix">
           {% if form.vars.allow_add %}
             <div class="btn-group pull-right">
-              <a href="#" class="btn btn-success btn-sm" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|trans({}, translation_domain)|raw }}</a>
+              <a href="#" class="btn btn-success btn-sm" data-addfield="collection" data-collection="{{ form.vars.id }}" data-prototype-name="{{ prototype_name }}">{{ form.vars.add_button_text|trans({}, translation_domain)|ucfirst|raw }}</a>
             </div>
           {% endif %}
           {{ form_errors(form) }}
