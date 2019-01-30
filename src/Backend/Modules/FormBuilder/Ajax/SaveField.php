@@ -58,9 +58,6 @@ class SaveField extends BackendBaseAJAXAction
         $validationParameter = trim($this->getRequest()->request->get('validation_parameter', ''));
         $errorMessage = trim($this->getRequest()->request->get('error_message', ''));
         $autocomplete = $this->getRequest()->request->get('autocomplete', '');
-        if (!in_array($autocomplete, Autocomplete::POSSIBLE_VALUES)) {
-            $autocomplete = '';
-        }
 
         // special field for textbox
         $replyTo = $this->getRequest()->request->getBoolean('reply_to');
@@ -252,9 +249,7 @@ class SaveField extends BackendBaseAJAXAction
             $settings['classname'] = \SpoonFilter::htmlspecialchars($classname);
         }
 
-        if ($autocomplete != '') {
-            $settings['autocomplete'] = $autocomplete;
-        }
+        $settings['autocomplete'] = in_array($autocomplete, Autocomplete::POSSIBLE_VALUES) ? $autocomplete : '';
 
         // reply-to, only for textboxes
         if ($type === 'textbox') {
