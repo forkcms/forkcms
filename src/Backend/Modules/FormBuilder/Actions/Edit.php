@@ -174,6 +174,21 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('datetime_classname');
         $this->form->addText('datetime_error_message');
 
+        // map the values to replace them with the backend translations
+        // use array combine to set the keys as the autocomplete values instead of key values
+        $this->form->addDropdown(
+            'datetime_autocomplete',
+            array_map(
+                function ($value) {
+                    return $value . ' (' . BL::getLabel('Autocomplete_' . str_replace('-', '_', $value)) . ')';
+                },
+                array_combine(
+                    Autocomplete::POSSIBLE_VALUES,
+                    Autocomplete::POSSIBLE_VALUES
+                )
+            )
+        );
+
         // dropdown dialog
         $this->form->addText('dropdown_label');
         $this->form->addText('dropdown_values');
