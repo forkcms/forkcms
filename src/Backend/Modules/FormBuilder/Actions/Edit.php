@@ -7,6 +7,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Language\Language as BL;
 use Backend\Form\Type\DeleteType;
+use Backend\Modules\FormBuilder\Engine\Autocomplete;
 use Frontend\Core\Language\Language as FL;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
@@ -95,6 +96,21 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('textbox_confirmation_mail_subject');
         $this->form->addText('textbox_validation_parameter');
         $this->form->addText('textbox_error_message');
+
+        // map the values to replace them with the backend translations
+        // use array combine to set the keys as the autocomplete values instead of key values
+        $this->form->addDropdown(
+            'textbox_autocomplete',
+            array_map(
+                function ($value) {
+                    return $value . ' (' . BL::getLabel('Autocomplete_' . str_replace('-', '_', $value)) . ')';
+                },
+                array_combine(
+                    Autocomplete::POSSIBLE_VALUES,
+                    Autocomplete::POSSIBLE_VALUES
+                )
+            )
+        );
 
         // textarea dialog
         $this->form->addText('textarea_label');
