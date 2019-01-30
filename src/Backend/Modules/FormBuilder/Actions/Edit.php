@@ -102,7 +102,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown(
             'textbox_autocomplete',
             array_map(
-                function ($value) {
+                function (string $value): string {
                     return $value . ' (' . BL::getLabel('Autocomplete_' . str_replace('-', '_', $value)) . ')';
                 },
                 array_combine(
@@ -179,7 +179,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addDropdown(
             'datetime_autocomplete',
             array_map(
-                function ($value) {
+                function (string $value): string {
                     return $value . ' (' . BL::getLabel('Autocomplete_' . str_replace('-', '_', $value)) . ')';
                 },
                 array_combine(
