@@ -276,7 +276,7 @@
         {% if form.vars.allow_sequence %}
           {% set prototype_html = prototype_html ~ '<div class="btn-group pull-left"><span class="btn btn-default fork-data-grid-sortable" data-role="sequence-handle" aria-hidden="true">' ~ macro.icon('reorder') ~ '</span>' ~ macro.buttonIcon('', 'arrow-up', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'up', 'aria-label': 'lbl.MoveUpOnePosition'|trans|ucfirst}) ~ '' ~ macro.buttonIcon('', 'arrow-down', '', 'btn-default', {'type': 'button', 'data-role': 'order-move', 'data-direction': 'down', 'aria-label': 'lbl.MoveDownOnePosition'|trans|ucfirst}) ~ '</div>' %}
         {% endif %}
-        {% set prototype_html = prototype_html ~ '<div class="btn-group pull-right"><a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|raw ~ '</a></div></div>' %}
+        {% set prototype_html = prototype_html ~ '<div class="btn-group pull-right"><a href="#" class="btn btn-danger btn-sm" data-removefield="collection" data-field="__id__">' ~ form.vars.delete_button_text|trans({}, translation_domain)|ucfirst|raw ~ '</a></div></div>' %}
       {% endif %}
 
       {% set attr = attr|merge({'data-prototype': prototype_html }) %}
