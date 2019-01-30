@@ -413,6 +413,7 @@ jsBackend.FormBuilder.Fields = {
                 $('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values))
                 $('#textboxPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder))
                 $('#textboxClassname').val(utils.string.htmlDecode(data.data.field.settings.classname))
+                $('#textboxAutocomplete').val(utils.string.htmlDecode(data.data.field.settings.autocomplete))
                 if (data.data.field.settings.reply_to &&
                   data.data.field.settings.reply_to === true
                 ) {
@@ -479,6 +480,7 @@ jsBackend.FormBuilder.Fields = {
                 $('#datetimeValueType').val(utils.string.htmlDecode(data.data.field.settings.value_type))
                 $('#datetimeType').val(utils.string.htmlDecode(data.data.field.settings.input_type))
                 $('#datetimeClassname').val(utils.string.htmlDecode(data.data.field.settings.classname))
+                $('#datetimeAutocomplete').val(utils.string.htmlDecode(data.data.field.settings.autocomplete));
                 $.each(
                   data.data.field.validations,
                   function (k, v) {
@@ -841,6 +843,7 @@ jsBackend.FormBuilder.Fields = {
     var validation = $('#datetimeValidation').val()
     var errorMessage = $('#datetimeErrorMessage').val()
     var classname = $('#datetimeClassname').val()
+    var autocomplete = $('#datetimeAutocomplete').val()
 
     // make the call
     $.ajax(
@@ -857,7 +860,8 @@ jsBackend.FormBuilder.Fields = {
           input_type: inputType,
           validation: validation,
           error_message: errorMessage,
-          classname: classname
+          classname: classname,
+          autocomplete: autocomplete
         }),
         success: function (data, textStatus) {
           // success
@@ -1336,6 +1340,7 @@ jsBackend.FormBuilder.Fields = {
     var validationParameter = $('#textboxValidationParameter').val()
     var errorMessage = $('#textboxErrorMessage').val()
     var classname = $('#textboxClassname').val()
+    var autocomplete = $('#textboxAutocomplete').val()
 
     // make the call
     $.ajax({
@@ -1354,7 +1359,8 @@ jsBackend.FormBuilder.Fields = {
         validation_parameter: validationParameter,
         error_message: errorMessage,
         placeholder: placeholder,
-        classname: classname
+        classname: classname,
+        autocomplete: autocomplete
       }),
       success: function (data, textStatus) {
         // success
