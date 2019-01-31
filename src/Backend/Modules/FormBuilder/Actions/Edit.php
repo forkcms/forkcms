@@ -97,20 +97,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('textbox_validation_parameter');
         $this->form->addText('textbox_error_message');
 
-        // map the values to replace them with the backend translations
-        // use array combine to set the keys as the autocomplete values instead of key values
-        $this->form->addDropdown(
-            'textbox_autocomplete',
-            array_map(
-                function (string $value): string {
-                    return $value . ' (' . BL::getLabel('Autocomplete_' . str_replace('-', '_', $value)) . ')';
-                },
-                array_combine(
-                    Autocomplete::POSSIBLE_VALUES,
-                    Autocomplete::POSSIBLE_VALUES
-                )
-            )
-        );
+        $this->form->addDropdown('textbox_autocomplete', Autocomplete::getAutocompleteValues());
 
         // textarea dialog
         $this->form->addText('textarea_label');
@@ -174,20 +161,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('datetime_classname');
         $this->form->addText('datetime_error_message');
 
-        // map the values to replace them with the backend translations
-        // use array combine to set the keys as the autocomplete values instead of key values
-        $this->form->addDropdown(
-            'datetime_autocomplete',
-            array_map(
-                function (string $value): string {
-                    return $value . ' (' . BL::getLabel('Autocomplete_' . str_replace('-', '_', $value)) . ')';
-                },
-                array_combine(
-                    Autocomplete::POSSIBLE_VALUES,
-                    Autocomplete::POSSIBLE_VALUES
-                )
-            )
-        );
+        $this->form->addDropdown('datetime_autocomplete', Autocomplete::getAutocompleteValues());
 
         // dropdown dialog
         $this->form->addText('dropdown_label');
