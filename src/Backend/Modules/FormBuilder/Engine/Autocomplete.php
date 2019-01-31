@@ -2,6 +2,9 @@
 
 namespace Backend\Modules\FormBuilder\Engine;
 
+/**
+ * Autocomplete attribute values for the form_builder module.
+ */
 final class Autocomplete
 {
     const NAME = 'name';
