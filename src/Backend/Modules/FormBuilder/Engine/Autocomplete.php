@@ -2,7 +2,7 @@
 
 namespace Backend\Modules\FormBuilder\Engine;
 
-use Backend\Core\Language\Language as BL;
+use Backend\Core\Language\Language;
 
 /**
  * Autocomplete attribute values for the form_builder module.
@@ -93,7 +93,7 @@ final class Autocomplete
         // use array combine to set the keys as the autocomplete values instead of key values
         return array_map(
             function (string $value): string {
-                return $value . ' (' . BL::getLabel('Autocomplete_' . str_replace('-', '_', $value)) . ')';
+                return $value . ' (' . Language::getLabel('Autocomplete_' . str_replace('-', '_', $value)) . ')';
             },
             array_combine(
                 Autocomplete::POSSIBLE_VALUES,
