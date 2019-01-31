@@ -865,7 +865,7 @@ class Model extends \Common\Core\Model
      *
      * @param int $id The id for the extra.
      * @param string $key The key you want to update.
-     * @param string|array $value The new value.
+     * @param mixed $value The new value.
      *
      * @throws Exception If key parameter is not allowed
      */
@@ -899,14 +899,14 @@ class Model extends \Common\Core\Model
     {
         $database = self::getContainer()->get('database');
 
-        $data = (string) $database->getVar(
+        $serializedData = (string) $database->getVar(
             'SELECT i.data
              FROM modules_extras AS i
              WHERE i.id = ?',
             [$id]
         );
 
-        $data = $data === null ? [] : unserialize($data);
+        $data = empty($serializedData) ? [] : unserialize($serializedData);
         $data[$key] = $value;
         $database->update('modules_extras', ['data' => serialize($data)], 'id = ?', [$id]);
     }

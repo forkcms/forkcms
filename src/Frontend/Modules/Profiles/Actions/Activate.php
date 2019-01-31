@@ -30,7 +30,7 @@ class Activate extends FrontendBaseBlock
     {
         $profileId = FrontendProfilesModel::getIdBySetting('activation_key', $this->getActivationKey());
 
-        if ($profileId === null) {
+        if ($profileId === 0) {
             throw new NotFoundHttpException();
         }
 

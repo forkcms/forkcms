@@ -79,7 +79,7 @@ class Footer extends KernelLoader
 
         // add facebook JavaScript
         $facebookHtml .= '<script>' . "\n";
-        if ($facebookAppId !== null) {
+        if (!empty($facebookAppId)) {
             $facebookHtml .= '    window.fbAsyncInit = function() {' . "\n";
             $facebookHtml .= '        FB.init({' . "\n";
             $facebookHtml .= '            appId: "' . $facebookAppId . '",' . "\n";

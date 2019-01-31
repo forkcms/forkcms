@@ -99,32 +99,35 @@ class Installer extends ModuleInstaller
     private function configureFrontendForkTheme(): void
     {
         // build templates
-        $templates['fork']['default'] = [
-            'theme' => 'Fork',
-            'label' => 'Default',
-            'path' => 'Core/Layout/Templates/Default.html.twig',
-            'active' => true,
-            'data' => serialize(
-                [
-                    'format' => '[/,/,top],[main,main,main]',
-                    'image' => true,
-                    'names' => ['main', 'top'],
-                ]
-            ),
-        ];
-
-        $templates['fork']['home'] = [
-            'theme' => 'Fork',
-            'label' => 'Home',
-            'path' => 'Core/Layout/Templates/Home.html.twig',
-            'active' => true,
-            'data' => serialize(
-                [
-                    'format' => '[/,/,top],[main,main,main]',
-                    'image' => true,
-                    'names' => ['main', 'top'],
-                ]
-            ),
+        $templates = [
+            'fork' => [
+                'default' => [
+                    'theme' => 'Fork',
+                    'label' => 'Default',
+                    'path' => 'Core/Layout/Templates/Default.html.twig',
+                    'active' => true,
+                    'data' => serialize(
+                        [
+                            'format' => '[/,/,top],[main,main,main]',
+                            'image' => true,
+                            'names' => ['main', 'top'],
+                        ]
+                    ),
+                ],
+                'home' => [
+                    'theme' => 'Fork',
+                    'label' => 'Home',
+                    'path' => 'Core/Layout/Templates/Home.html.twig',
+                    'active' => true,
+                    'data' => serialize(
+                        [
+                            'format' => '[/,/,top],[main,main,main]',
+                            'image' => true,
+                            'names' => ['main', 'top'],
+                        ]
+                    ),
+                ],
+            ]
         ];
 
         // insert templates
