@@ -2,6 +2,8 @@
 
 namespace Backend\Modules\FormBuilder\Engine;
 
+use Backend\Core\Language\Language as BL;
+
 /**
  * Autocomplete attribute values for the form_builder module.
  */
@@ -84,4 +86,19 @@ final class Autocomplete
         self::URL,
         self::PHOTO
     ];
+
+    public static function getAutocompleteValues(): array
+    {
+        // map the values to replace them with the backend translations
+        // use array combine to set the keys as the autocomplete values instead of key values
+        return array_map(
+            function (string $value): string {
+                return $value . ' (' . BL::getLabel('Autocomplete_' . str_replace('-', '_', $value)) . ')';
+            },
+            array_combine(
+                Autocomplete::POSSIBLE_VALUES,
+                Autocomplete::POSSIBLE_VALUES
+            )
+        );
+    }
 }
