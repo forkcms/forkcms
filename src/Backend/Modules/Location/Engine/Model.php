@@ -133,7 +133,7 @@ class Model
             [$mapId, $name]
         );
 
-        if ($serializedData !== null) {
+        if (!empty($serializedData)) {
             return unserialize($serializedData);
         }
 

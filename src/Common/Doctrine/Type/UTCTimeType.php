@@ -17,7 +17,7 @@ class UTCTimeType extends TimeType
     private static $defaultTimeZone;
 
     /**
-     * @param DateTime $time
+     * @param DateTime|null $time
      * @param AbstractPlatform $platform
      *
      * @return string|null
@@ -32,7 +32,7 @@ class UTCTimeType extends TimeType
     }
 
     /**
-     * @param string $timeString
+     * @param string|null|DateTime $timeString
      * @param AbstractPlatform $platform
      *
      * @throws ConversionException

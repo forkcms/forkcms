@@ -292,7 +292,7 @@ class Model
     }
 
     /**
-     * @deprecated We don't use this method anymore apparently
+     * @deprecated Will become private since it is only used in this class
      */
     public static function createHtml(
         string $navigationType = 'page',
