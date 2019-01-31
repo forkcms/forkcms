@@ -97,7 +97,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('textbox_validation_parameter');
         $this->form->addText('textbox_error_message');
 
-        $this->form->addDropdown('textbox_autocomplete', Autocomplete::getAutocompleteValues());
+        $this->form->addDropdown('textbox_autocomplete', Autocomplete::getValuesForDropdown());
 
         // textarea dialog
         $this->form->addText('textarea_label');
@@ -161,7 +161,7 @@ class Edit extends BackendBaseActionEdit
         $this->form->addText('datetime_classname');
         $this->form->addText('datetime_error_message');
 
-        $this->form->addDropdown('datetime_autocomplete', Autocomplete::getAutocompleteValues());
+        $this->form->addDropdown('datetime_autocomplete', Autocomplete::getValuesForDropdown());
 
         // dropdown dialog
         $this->form->addText('dropdown_label');

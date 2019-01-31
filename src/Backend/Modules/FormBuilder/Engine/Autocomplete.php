@@ -87,7 +87,7 @@ final class Autocomplete
         self::PHOTO
     ];
 
-    public static function getAutocompleteValues(): array
+    public static function getValuesForDropdown(): array
     {
         // map the values to replace them with the backend translations
         // use array combine to set the keys as the autocomplete values instead of key values
