@@ -153,7 +153,7 @@ CKEDITOR.dialog.add(
 
                                         window.onmessage = function (event) {
                                             if (event.data) {
-                                                this.setValueOf('tab', 'url', event.data);
+                                                this.setValueOf('tab', 'url', event.data['media-url']);
                                             }
                                         }.bind(this.getDialog());
                                     },
