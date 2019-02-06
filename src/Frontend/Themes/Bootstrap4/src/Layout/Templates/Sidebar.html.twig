@@ -9,16 +9,16 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-        {% for content in positions.main %}
-          {% if content.html %}
-            {{ content.html|raw }}
+        {% for block in positions.main %}
+          {% if block.html %}
+            {{ block.html|raw }}
           {% endif %}
         {% endfor %}
       </div>
       <div class="col-md-4">
-        {% for content in positions.right %}
-          {% if content.html %}
-            {{ content.html|raw }}
+        {% for block in positions.right %}
+          {% if block.html %}
+            {{ block.html|raw }}
           {% endif %}
         {% endfor %}
       </div>

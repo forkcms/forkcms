@@ -7,9 +7,9 @@
   </div>
 
   <div class="container">
-    {% for main in positions.main %}
-      {% if main.html %}
-        {{ main.html|raw }}
+    {% for block in positions.main %}
+      {% if block.html %}
+        {{ block.html|raw }}
       {% endif %}
     {% endfor %}
   </div>
