@@ -12,9 +12,9 @@
         <img src="{{ THEME_URL }}/apple-touch-icon.png" class="img-circle">
       </div>
     </div>
-    {% for main in positions.main %}
-      {% if main.html %}
-        {{ main.html|raw }}
+    {% for block in positions.main %}
+      {% if block.html %}
+        {{ block.html|raw }}
       {% endif %}
     {% endfor %}
   </div>
