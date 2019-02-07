@@ -34,18 +34,35 @@
 
   {% block icons %}
     {# Apple touch icon #}
-    <link rel="apple-touch-icon" href="{{ THEME_URL }}/apple-touch-icon.png" /> {# @todo create a 180x180 png file #}
+    {# @todo create the below apple touch icon files #}
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ THEME_URL }}/apple-touch-icon-120.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ THEME_URL }}/apple-touch-icon-152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ THEME_URL }}/apple-touch-icon-180.png" />
 
     {# Favicon #}
-    <link rel="icon" href="{{ THEME_URL }}/favicon.png"> {# @todo create a 96x96 png file #}
+    {# @todo create the below favicon files #}
+    <link rel="icon" sizes="16x16" href="{{ THEME_URL }}/favicon-16.png">
+    <link rel="icon" sizes="32x32" href="{{ THEME_URL }}/favicon-32.png">
+    <link rel="icon" sizes="57x57" href="{{ THEME_URL }}/favicon-57.png">
+    <link rel="icon" sizes="76x76" href="{{ THEME_URL }}/favicon-76.png">
+    <link rel="icon" sizes="96x96" href="{{ THEME_URL }}/favicon-96.png">
+    <link rel="icon" sizes="128x128" href="{{ THEME_URL }}/favicon-128.png">
+    <link rel="icon" sizes="192x192" href="{{ THEME_URL }}/favicon-192.png">
+    <link rel="icon" sizes="228x228" href="{{ THEME_URL }}/favicon-228.png">
+
+    {# @todo create a 64x64 ico file and store it in the root of the website. #}
     <!--[if IE]>
-      <link rel="shortcut icon" href="{{ THEME_URL }}/favicon.ico">
-    <![endif]--> {# @todo	create a 32x32 ico file and store it in the root of the website.  #}
+      <link rel="shortcut icon" sizes="64x64" href="{{ THEME_URL }}/favicon.ico">
+    <![endif]-->
 
     {# Windows 8 tile #}
     <meta name="application-name" content="{{ siteTitle }}" />
     <meta name="msapplication-TileColor" content="#3380aa" /> {# @todo choose a decent color #}
     <meta name="msapplication-TileImage" content="{{ THEME_URL }}/metro-tile.png" /> {# @todo create a white monochrome version (144x144) of the logo of the site #}
+
+    {# Android #}
+    {# @todo create the below android icon file #}
+    <link rel="shortcut icon" sizes="196x196" href="{{ THEME_URL }}/android-icon-196.png">
 
     {# Facebook #}
     <meta property="og:image" content="{{ SITE_URL }}{{ THEME_URL }}/image_src.png" /> {# @todo create a 200x200 png file #}
