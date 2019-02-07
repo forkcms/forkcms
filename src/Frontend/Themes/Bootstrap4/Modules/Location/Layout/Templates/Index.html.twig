@@ -5,7 +5,6 @@
 #}
 {% if locationItems %}
   <div id="locationIndex" class="location">
-    {# @remark: do not remove the parseMap-class, it is used by JS #}
     <div id="map" data-role="fork-map-container" data-map-id="general" class="parseMap" style="height: {{ locationSettings.height }}px;">
       <span class="sr-only">{{ 'lbl.Loading'|trans|ucfirst }}</span>
     </div>
