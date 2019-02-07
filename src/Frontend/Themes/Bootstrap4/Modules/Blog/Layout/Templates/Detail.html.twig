@@ -36,7 +36,7 @@ variables that are available:
       {% if item.allow_comments %}
       <div class="commentCount">
         {% if comments %}
-          <i class="fa fa-comment"></i>
+          <i class="fas fa-comment"></i>
           {% if blogCommentsMultiple %}
             <a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}" itemprop="discussionUrl">{{ 'msg.BlogNumberOfComments'|trans|format(commentsCount) }}</a>
           {% else %}

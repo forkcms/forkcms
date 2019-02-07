@@ -1,5 +1,6 @@
 /* Bootstrap imports */
 import 'bootstrap/dist/js/bootstrap'
+import '@fortawesome/fontawesome-free/js/all'
 
 /* Utilities imports */
 import { ScrollTo } from './Utilities/ScrollTo'
