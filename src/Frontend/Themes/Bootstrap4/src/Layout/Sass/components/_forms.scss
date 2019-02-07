@@ -18,3 +18,7 @@ abbr[title] {
   border: 0;
   text-decoration: none;
 }
+
+select.form-control[size] {
+  height: $input-height;
+}
