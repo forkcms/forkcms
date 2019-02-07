@@ -14,11 +14,11 @@
 
 {% if not cookieBarHide %}
   <div id="cookie-bar" class="cookiebar alert alert-primary alert-fullwidth">
-    <button type="button" class="close" data-dismiss="alert" aria-label="{{ 'lbl.Close'|trans }}">×</button>
-    <div class="container">
-      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center">
+    <div class="container d-flex flex-column justify-content-between align-items-start flex-lg-row align-items-lg-center">
+      <button type="button" class="close ml-auto order-lg-2" data-dismiss="alert" aria-label="{{ 'lbl.Close'|trans }}"><i class="fa fa-close"></i></button>
+      <div class="d-lg-flex align-items-center">
         <p class="mb-0"><strong>{{ 'lbl.Warning'|trans|ucfirst }}:</strong> {{ 'msg.Cookies'|trans|raw }}</p>
-        <div class="buttons">
+        <div class="buttons mt-2 ml-lg-2 mt-lg-0">
           <a href="#" id="cookieBarAgree" data-role="cookie-bar-button" data-action="agree" class="btn btn-primary btn-sm">{{ 'lbl.IAgree'|trans|ucfirst }}</a>
           <a href="#" id="cookieBarDisagree" data-role="cookie-bar-button" data-action="disagree" class="btn btn-primary btn-sm">{{ 'lbl.IDisagree'|trans|ucfirst }}</a>
         </div>
