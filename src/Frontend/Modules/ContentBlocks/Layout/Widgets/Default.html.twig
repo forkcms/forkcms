@@ -2,7 +2,7 @@
   variables that are available:
   - {{ widgetContentBlocks }}:
 #}
-{% if widgetContentBlocks.text %}
+{% if not widgetContentBlocks.isHidden and widgetContentBlocks.text %}
   <div class="module-content-blocks widget-content-blocks-default contentBlock{{ widgetContentBlocks.id }}">
     {{ widgetContentBlocks.text|raw }}
   </div>
