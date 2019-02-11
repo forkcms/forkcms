@@ -3,7 +3,10 @@
 }
 
 .img-thumbnail {
+  border: none;
+  border-radius: 0;
   display: block;
   margin: 0 auto;
   max-width: 100%;
+  padding: 0;
 }
