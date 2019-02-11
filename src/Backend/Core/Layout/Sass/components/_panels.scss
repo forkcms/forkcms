@@ -28,7 +28,7 @@
     h3,
     .control-label,
     .panel-title {
-      color: $gray-base;
+      color: $black;
       font-size: $font-size-base;
       font-weight: 600;
       margin-bottom: 0;
@@ -37,12 +37,12 @@
   }
 
   &.panel-pages-block {
-    background-color: $gray-lightest;
+    background-color: $gray-200;
     border: 0;
     margin-bottom: 0;
 
     .panel-heading {
-      border-color: $gray-border;
+      border-color: $border-color;
       padding: 8px 20px 10px;
     }
 
@@ -101,7 +101,7 @@
     a {
 
       .panel-title {
-        color: $text-color;
+        color: $body-color;
       }
 
       &:hover,
@@ -109,13 +109,13 @@
         text-decoration: none;
 
         .panel-title {
-          color: $gray-base;
+          color: $black;
         }
       }
     }
 
     .panel-title a {
-      color: $text-color;
+      color: $body-color;
     }
 
     .inputCheckbox  + .panel-title {
@@ -142,7 +142,7 @@
   background-color: $white;
 
   .panel-heading {
-    background-color: $brand-primary;
+    background-color: $primary;
 
     .panel-title {
       color: $white;
@@ -151,7 +151,7 @@
 }
 
 .panel-default label .panel-heading {
-  border-bottom: 1px solid $gray-lighter;
+  border-bottom: 1px solid $gray-200;
 }
 
 

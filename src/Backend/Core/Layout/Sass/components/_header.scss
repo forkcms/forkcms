@@ -1,6 +1,6 @@
 .header {
   background-color: $white;
-  border-bottom: 3px solid $gray-lighter;
+  border-bottom: 3px solid $gray-200;
   padding: 12px 25px 12px 13px;
   position: relative;
   z-index: 11;
@@ -14,14 +14,14 @@
   }
 
   .working-language {
-    color: $gray;
-    font-size: $font-size-small;
+    color: $gray-700;
+    font-size: $font-size-sm;
     font-weight: normal;
   }
 
   .site-url {
-    border-color: $brand-primary;
-    color: $brand-primary;
+    border-color: $primary;
+    color: $primary;
     margin-left: 5px;
   }
 }
@@ -33,21 +33,21 @@
 }
 
 .site-url {
-  border-bottom: 1px solid $gray;
-  color: $gray;
-  font-size: $font-size-small;
+  border-bottom: 1px solid $gray-700;
+  color: $gray-700;
+  font-size: $font-size-sm;
 
   &:hover,
   &:focus {
-    border-color: $brand-primary;
-    color: $brand-primary;
+    border-color: $primary;
+    color: $primary;
     text-decoration: none;
   }
 }
 
 .site-icon {
-  border: 1px solid $gray-lighter;
-  border-radius: $border-radius-small;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-sm;
   float: left;
   margin-right: 10px;
   width: 54px;
@@ -65,12 +65,12 @@
   width: 53px;
 
   .debug-mode {
-    background-color: $brand-danger;
+    background-color: $danger;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     bottom: 0;
     color: $white;
-    font-size: $font-size-extra-small;
+    font-size: $font-size-xs;
     left: 1px;
     padding: 1px 0;
     position: absolute;
@@ -79,7 +79,7 @@
   }
 }
 
-@media screen and (min-width: $screen-sm){
+@include media-breakpoint-down(sm) {
   .site-info {
     float: left;
   }

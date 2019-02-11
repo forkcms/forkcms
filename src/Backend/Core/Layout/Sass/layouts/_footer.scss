@@ -9,7 +9,7 @@
   margin-top: 20px;
 }
 
-@media screen and (min-width: $screen-sm) {
+@include media-breakpoint-up(sm) {
   html,
   body {
     height: 100%;

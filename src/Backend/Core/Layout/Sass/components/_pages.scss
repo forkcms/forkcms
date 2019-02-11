@@ -6,7 +6,7 @@
 
   td {
     background-color: $white;
-    border: 1px solid $gray-border;
+    border: 1px solid $border-color;
     text-align: center;
     vertical-align: middle;
 
@@ -14,7 +14,7 @@
     &.empty {
       background: $white url('/src/Backend/Core/Layout/images/na.png') repeat;
       background-size: 20px;
-      border: 1px solid $gray-border;
+      border: 1px solid $border-color;
     }
   }
 
@@ -32,7 +32,7 @@
     padding: 4px 2px;
 
     a {
-      color: $gray-base;
+      color: $black;
     }
   }
 
@@ -43,11 +43,11 @@
 
 
 .disabled .templateVisual td {
-  background-color: $gray-lightest;
+  background-color: $gray-200;
   border-color: #CCC;
 
   a {
-    color: $gray-light;
+    color: $gray-550;
     cursor: default;
   }
 }
@@ -79,9 +79,9 @@
   }
 
   td {
-    background: $gray-lightest;
-    border-radius: $border-radius-small;
-    border: 1px solid $gray-border;
+    background: $gray-200;
+    border-radius: $border-radius-sm;
+    border: 1px solid $border-color;
     vertical-align: top;
 
     &.empty {
@@ -89,7 +89,7 @@
       background-size: 20px;
       padding: 10px;
       border-radius: 3px;
-      border: 1px solid $gray-border;
+      border: 1px solid $border-color;
     }
   }
 
@@ -101,7 +101,7 @@
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     box-shadow: 0 -1px 0 1px #FFF;
-    color: $gray-base;
+    color: $black;
     font-size: 11px;
     padding: 6px 12px;
   }
@@ -123,7 +123,7 @@
     padding: 2px 6px 3px;
   }
 
-  @media screen and (min-width: $screen-sm) {
+  @include media-breakpoint-up(sm) {
 
     .btn-group .btn {
       padding: 4px 15px 5px;
@@ -137,7 +137,7 @@
 
   .templatePositionCurrentType {
     background: $white;
-    border: 1px solid $gray-border;
+    border: 1px solid $border-color;
     cursor: move;
     overflow: ellipsis;
     padding: 12px 15px;
@@ -148,9 +148,9 @@
     }
 
     .templateTitle {
-      color: $gray-base;
+      color: $black;
       display: block;
-      font-size: $font-size-small;
+      font-size: $font-size-sm;
       font-weight: 600;
       overflow: hidden;
       -webkit-transition: opacity 0.3s ease-in-out;
@@ -161,9 +161,9 @@
     }
 
     .templateDescription {
-      color: $text-color;
+      color: $body-color;
       display: block;
-      font-size: $font-size-small;
+      font-size: $font-size-sm;
       overflow: hidden;
       -webkit-transition: opacity 0.3s ease-in-out;
       -moz-transition: opacity 0.3s ease-in-out;
@@ -188,12 +188,12 @@
         padding: 3px 6px;
 
         .fa {
-          font-size: $font-size-small;
+          font-size: $font-size-sm;
         }
       }
     }
 
-    @media screen and (min-width: $screen-md) {
+    @include media-breakpoint-up(md) {
 
       .buttonHolder {
 
@@ -213,7 +213,7 @@
 
   &:hover .templateTitle,
   &:focus .templateTitle {
-    color: $gray-base;
+    color: $black;
   }
 
   .templateDisabled {
@@ -265,14 +265,14 @@
   padding-left: 15px;
 
   a {
-    border-bottom: 1px solid $brand-primary;
+    border-bottom: 1px solid $primary;
     cursor: pointer;
-    font-size: $font-size-small;
+    font-size: $font-size-sm;
     margin-left: 5px;
 
     &:hover {
-      border-color: $brand-primary-dark;
-      color: $brand-primary-dark;
+      border-color: $blue-dark;
+      color: $blue-dark;
       text-decoration: none;
     }
   }
@@ -283,13 +283,13 @@
 }
 
 .dragAndDropPlaceholder {
-  background: $gray-lighter;
+  background: $gray-200;
   border: 0;
   height: 61px;
   margin: 5px 0;
 }
 
-@media screen and (min-width: $screen-md) {
+@include media-breakpoint-up(md) {
   #templateVisualLarge table {
     border-spacing: 15px;
   }

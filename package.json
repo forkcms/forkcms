@@ -7,6 +7,7 @@
   "author": "Tijs Verkoyen <tijs@verkoyen.eu>",
   "license": "MIT",
   "devDependencies": {
+    "bootstrap": "^4.2.1",
     "bootstrap-accessibility-plugin": "^1.0.5",
     "bootstrap-datepicker": "^1.7.0",
     "bootstrap-sass": ">=3.4.1",

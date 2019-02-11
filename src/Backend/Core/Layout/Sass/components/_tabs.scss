@@ -4,7 +4,7 @@
 
 .tab-content {
   background-color: $white;
-  border: 1px solid $gray-lighter;
+  border: 1px solid $gray-200;
   border-radius: 3px;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
@@ -29,17 +29,17 @@ div.active.tab-pane:focus {
     a:focus {
       -webkit-font-smoothing: antialiased;
       color: $white;
-      background-color: $alert-danger-bg;
+      background-color: $danger;
     }
   }
 
   li {
     a {
-      background-color: $gray-lightest;
-      border: 1px solid $gray-lighter;
+      background-color: $gray-200;
+      border: 1px solid $gray-200;
       border-radius: 3px 3px 0 0;
-      color: $gray;
-      font-size: $font-size-small;
+      color: $gray-700;
+      font-size: $font-size-sm;
       font-weight: 600;
       padding: 8px 12px 7px;
     }
@@ -50,7 +50,7 @@ div.active.tab-pane:focus {
     }
 
     &.danger a {
-       background-color: $brand-danger;
+       background-color: $danger;
        color: $white;
     }
   }
@@ -74,7 +74,7 @@ div.active.tab-pane:focus {
 
 .fork-dashboard-column .nav-tabs li {
    a {
-     background-color: $gray-lighter;
+     background-color: $gray-200;
    }
 
   &.active a {

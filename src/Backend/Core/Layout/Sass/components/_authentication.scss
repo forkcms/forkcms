@@ -2,7 +2,7 @@
   min-height: 100%;
 
   .forgot-password {
-    font-size: $font-size-small;
+    font-size: $font-size-sm;
     padding: 10px 9px 11px;
   }
 }
@@ -19,7 +19,7 @@
     float: none;
 
     .site-title {
-      color: $text-color;
+      color: $body-color;
       font-size: $font-size-btn;
     }
   }
@@ -39,12 +39,12 @@
     background: $white;
 
     .fa {
-      color: $gray-light;
+      color: $gray-550;
     }
   }
 
   .forgot-password {
-    color: $gray;
+    color: $gray-700;
     font-size: $font-size-base;
 
     &:active,
@@ -57,13 +57,13 @@
 
     &:focus,
     &:hover {
-      color: $brand-primary;
+      color: $primary;
       text-decoration: underline;
     }
   }
 }
 
-@media screen and (min-width: $screen-sm) {
+@include media-breakpoint-up(sm) {
 
   .login-block {
     margin-top: -270px;

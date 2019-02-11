@@ -6,18 +6,18 @@
     &:before {
       content: '\f105';
       font-family: FontAwesome;
-      font-size: $font-size-small;
+      font-size: $font-size-sm;
       padding: 0 5px 0 2px;
     }
   }
 
   li a {
-    color: $gray;
+    color: $gray-700;
     font-size: $font-size-base;
 
     &:hover,
     &:focus {
-      border-bottom: 1px solid $gray-light;
+      border-bottom: 1px solid $gray-550;
       text-decoration: none;
     }
   }

@@ -1,16 +1,16 @@
 .content {
   background-color: $body-bg;
-  border-top: 1px solid $gray-lighter;
+  border-top: 1px solid $gray-200;
   padding: 25px 0;
 
   .content-title {
-    font-size: $font-size-large;
+    font-size: $font-size-lg;
     margin-bottom: 20px;
 
     h2,
     p {
-      font-size: $font-size-large;
-      color: $text-color;
+      font-size: $font-size-lg;
+      color: $body-color;
       margin: 0;
     }
 

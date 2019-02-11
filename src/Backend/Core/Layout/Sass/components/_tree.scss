@@ -65,7 +65,7 @@
       line-height: 17px;
       height: 20px;
       padding: 2px 4px 2px 2px;
-      color: $gray-base;
+      color: $black;
       white-space: nowrap;
       text-decoration: none;
       margin: 0;
@@ -148,15 +148,15 @@
 
   li {
     display: block !important;
-    font-size: $font-size-small;
+    font-size: $font-size-sm;
     position: relative;
     background: url('/src/Backend/Core/Layout/images/separate/leaf.gif') no-repeat 11px 0;
 
     &:before {
       background: $white;
-      color: $brand-primary-darker;
+      color: $blue-darker;
       font-family: FontAwesome;
-      font-size: $font-size-small;
+      font-size: $font-size-sm;
       left: 6px;
       position: absolute;
       top: 5px;
@@ -196,9 +196,9 @@
         position: relative;
 
         &:before {
-          color: $gray-light;
+          color: $gray-550;
           font-family: FontAwesome;
-          font-size: $font-size-small;
+          font-size: $font-size-sm;
           position: absolute;
           left: 4px;
         }
@@ -253,7 +253,7 @@
     a:hover,
     a.active,
     a.focus {
-      background: $brand-primary;
+      background: $primary;
       color: $white;
       /* @inc .rc */
       -webkit-border-radius: 4px;
@@ -269,7 +269,7 @@
     span,
     &.selected > a {
       /* @inc .selectedBlue */
-      background: $brand-primary;
+      background: $primary;
       /* @inc .rc */
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
@@ -285,7 +285,7 @@
     a.clicked,
     a.clicked:hover,
     span.clicked {
-      background: $brand-primary;
+      background: $primary;
       /* @inc .rc */
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
@@ -318,8 +318,8 @@
 }
 
 #jstree-dragged {
-  border: 1px dotted $gray;
-  background-color: $gray-lighter;
+  border: 1px dotted $gray-700;
+  background-color: $gray-200;
   z-index: 20;
 
   &.tree-fork {

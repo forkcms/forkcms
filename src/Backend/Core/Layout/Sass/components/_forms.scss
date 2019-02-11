@@ -4,25 +4,25 @@
 }
 
 .form-control {
-  border-radius: $border-radius-small;
-  -webkit-box-shadow: inset 0 1px 3px rgba($gray-base, .075);
-  -moz-box-shadow: inset 0 1px 3px rgba($gray-base, .075);
-  box-shadow: inset 0 1px 3px rgba($gray-base, .075);
+  border-radius: $border-radius-sm;
+  -webkit-box-shadow: inset 0 1px 3px rgba($black, .075);
+  -moz-box-shadow: inset 0 1px 3px rgba($black, .075);
+  box-shadow: inset 0 1px 3px rgba($black, .075);
 
   &.title {
-    font-size: $font-size-h4;
+    font-size: $h4-font-size;
     height: 46px;
   }
 
   &:focus {
-    -webkit-box-shadow: inset 0 1px 3px rgba($gray-base, .075);
-    -moz-box-shadow: inset 0 1px 3px rgba($gray-base, .075);
-    box-shadow: inset 0 1px 3px rgba($gray-base, .075);
+    -webkit-box-shadow: inset 0 1px 3px rgba($black, .075);
+    -moz-box-shadow: inset 0 1px 3px rgba($black, .075);
+    box-shadow: inset 0 1px 3px rgba($black, .075);
     outline: 0;
   }
 
   &.error {
-    border-color: $brand-danger;
+    border-color: $danger;
   }
 
   &.code {
@@ -30,12 +30,12 @@
   }
 
   &.disabled {
-    color: $gray-light;
+    color: $gray-550;
   }
 }
 
 .control-label {
-  color: $gray-base;
+  color: $black;
   font-size: $font-size-base;
   font-weight: 600;
   width: 100%;
@@ -46,7 +46,7 @@
 }
 
 .help-block {
-  font-size: $font-size-small;
+  font-size: $font-size-sm;
 }
 
 .form-inline {
@@ -96,7 +96,7 @@ select[size="1"] {
   background-size: 10px;
   display: inline-block;
   font-size: $font-size-base;
-  height: $input-height-base;
+  height: $input-height;
   padding: 5px;
   width: 100%;
 }
@@ -107,7 +107,7 @@ select[size="1"] {
 
 .formError,
 .text-danger {
-  color: $brand-danger;
+  color: $danger;
   font-weight: normal;
 }
 
@@ -121,7 +121,7 @@ select[size="1"] {
 }
 
 .editorWarning {
-  color: $alert-warning-bg;
+  color: $warning;
 }
 
 .input-group {
@@ -147,12 +147,12 @@ select[size="1"] {
 }
 
 fieldset {
-  border-bottom: 1px solid $gray-lighter;
+  border-bottom: 1px solid $gray-200;
   margin-bottom: 15px;
 
   legend {
     border: 0;
-    font-size: $font-size-large;
+    font-size: $font-size-lg;
     margin-bottom: 15px;
 
     .help-block {

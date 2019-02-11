@@ -8,8 +8,8 @@
 
     &:hover,
     &:focus {
-      border-color: $gray-lighter;
-      color: $gray-lighter;
+      border-color: $gray-200;
+      color: $gray-200;
       text-decoration: none;
     }
   }
@@ -80,8 +80,8 @@
   a,
   .fa,
   .close {
-    border-color: $gray-base;
-    color: $gray-base;
+    border-color: $black;
+    color: $black;
   }
 }
 
@@ -97,6 +97,6 @@
 
 .alert-warning a:hover,
 .alert-warning a:focus {
-  color: $brand-primary-dark;
-  border-color: $brand-primary-dark;
+  color: $blue-dark;
+  border-color: $blue-dark;
 }

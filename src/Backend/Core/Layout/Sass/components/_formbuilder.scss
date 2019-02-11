@@ -4,8 +4,8 @@
   }
 
   .field {
-    border-bottom: 1px solid $gray-lighter;
-    border-radius: $border-radius-small;
+    border-bottom: 1px solid $gray-200;
+    border-radius: $border-radius-sm;
     background-color: $white;
     padding: 25px;
     margin: 0;
@@ -28,7 +28,7 @@
 #formElements {
 
   h5 {
-    color: $gray;
+    color: $gray-700;
     margin-top: 0;
   }
 
@@ -42,7 +42,7 @@
 
     .list-group-item {
       border: 0;
-      border-top: 1px solid $gray-lightest;
+      border-top: 1px solid $gray-200;
       padding: 11px 0 12px;
       color: $formbuilder-blue;
 
@@ -54,7 +54,7 @@
       }
 
       .fa {
-        color: $gray-light;
+        color: $gray-550;
         margin-right: 5px;
       }
 
@@ -65,7 +65,7 @@
     }
 
     &.first {
-      border-bottom: 1px solid $gray-lighter;
+      border-bottom: 1px solid $gray-200;
     }
   }
 }

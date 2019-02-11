@@ -8,11 +8,11 @@
 
   .btn-text {
     display: block;
-    font-size: $font-size-extra-small;
+    font-size: $font-size-xs;
     margin: 0 3px;
   }
 
-  @media screen and (min-width: $screen-sm) {
+  @include media-breakpoint-up(sm) {
     .btn-text {
       display: inline-block;
       font-size: $font-size-base;
@@ -29,7 +29,7 @@
   }
 
   &.btn-md {
-    font-size: $font-size-small;
+    font-size: $font-size-sm;
     padding: 4px 15px 5px;
   }
 }
@@ -57,7 +57,7 @@
     }
   }
 
-  @media screen and (min-width: $screen-lg) {
+  @include media-breakpoint-up(lg) {
 
     .btn {
       float: none;
@@ -78,19 +78,19 @@
 }
 
 .btn-second {
-  color: $brand-primary-dark;
+  color: $blue-dark;
 
   &:hover,
   &:focus {
-    color: $brand-primary;
+    color: $primary;
   }
 }
 
 .input-group-addon {
-  color: $text-color;
+  color: $body-color;
 
   &.btn {
-    color: $brand-primary;
+    color: $primary;
 
     &:hover {
       color: $white;

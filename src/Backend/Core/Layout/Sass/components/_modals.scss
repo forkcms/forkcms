@@ -2,7 +2,7 @@
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  border-radius: $border-radius-small;
+  border-radius: $border-radius-sm;
 
   .modal-title {
     font-size: $font-size-btn;
@@ -15,8 +15,8 @@
 
 .modal-body {
   background: $white;
-  border: 1px solid $gray-lighter;
-  border-radius: $border-radius-small;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-sm;
   margin: 0 30px;
   padding: 20px;
 }
@@ -31,7 +31,7 @@
   transition: transform 200ms ease-out;
 }
 
-@media screen and (min-width: $screen-sm) {
+@include media-breakpoint-up(sm) {
 
   .modal-dialog {
     margin: 80px auto;
