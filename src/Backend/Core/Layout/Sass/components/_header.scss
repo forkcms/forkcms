@@ -1,6 +1,10 @@
 .header {
+  align-items: center;
   background-color: $white;
   border-bottom: 3px solid $gray-200;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   padding: 12px 25px 12px 13px;
   position: relative;
   z-index: 11;

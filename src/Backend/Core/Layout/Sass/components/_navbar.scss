@@ -347,7 +347,6 @@
 }
 
 .navbar-user {
-  float: right;
   margin-right: 0;
   width: auto;
 
@@ -355,7 +354,12 @@
     float: left;
 
     .dropdown-toggle {
-      padding: 3px 13px;
+      display: block;
+      padding: 0;
+
+      &:after {
+        display: none;
+      }
 
       img {
         height: 45px;
@@ -375,8 +379,8 @@
       height: 20px;
       margin: -3px 0;
       position: absolute;
-      right: 5px;
-      top: 17px;
+      right: -3px;
+      top: 26px;
       transform: rotate(90deg);
       transition: all 250ms;
       width: 20px;
@@ -402,14 +406,10 @@
 }
 
 .navbar-languages {
-  float: none;
-  margin-left: 0;
-  margin-right: 0;
-  width: auto;
+  align-items: center;
+  flex-direction: row;
 
   .dropdown {
-    display: inline-block;
-    float: none;
 
     a {
       position: relative;
@@ -423,6 +423,10 @@
       color: $gray-700;
       font-size: $font-size-sm;
       padding: 0;
+
+      &:after {
+        display: none;
+      }
 
       .dropdown-text {
         border-right: 1px solid $gray-200;

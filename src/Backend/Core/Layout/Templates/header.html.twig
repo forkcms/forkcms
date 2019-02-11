@@ -1,7 +1,7 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 {% include "Layout/Templates/messaging.html.twig" %}
 
-<div class="header clearfix">
+<div class="header">
   <div class="site-info">
     <div class="site-icon-block">
       <img class="site-icon" src="/apple-touch-icon.png" alt="Fork CMS logo">
@@ -16,7 +16,7 @@
       {% if SITE_MULTILANGUAGE %}
         <div class="nav navbar-nav navbar-languages">
           {% if workingLanguages %}
-            <span class="working-language hidden-xs">{{ 'msg.NowEditing'|trans|ucfirst }}</span>
+            <span class="working-language d-none d-sm-block mr-sm-1">{{ 'msg.NowEditing'|trans|ucfirst }}</span>
             <div class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ LANGUAGE|uppercase }}">
                 <span class="dropdown-text">{{ ('lbl.'~LANGUAGE|uppercase)|trans|ucfirst }}</span>
@@ -39,7 +39,7 @@
   <ul class="nav navbar-nav navbar-right navbar-user">
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" title="{{ authenticatedUserNickname }}">
-        <img src="{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ authenticatedUserAvatar }}" class="img-circle" alt="{{ authenticatedUserNickname }}" />
+        <img src="{{ FRONTEND_FILES_URL }}/Users/avatars/128x128/{{ authenticatedUserAvatar }}" class="rounded-circle" alt="{{ authenticatedUserNickname }}" />
         {{ macro.icon('angle-right') }}
       </a>
       <ul class="dropdown-menu pull-right">
