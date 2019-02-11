@@ -206,10 +206,11 @@
 
     .dropdown-menu {
       background-color: $white;
+      box-shadow: 0 6px 12px rgba($black, 0.175);
       float: right;
       min-width: auto;
+      padding: 0;
       position: absolute;
-      box-shadow: 0 6px 12px rgba($black, 0.175);
 
       li {
         width: 100%;
