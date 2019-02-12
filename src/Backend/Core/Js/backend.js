@@ -137,9 +137,9 @@ jsBackend.navigation = {
 
   mobile: function () {
     var navbarWidth = this.calculateNavbarWidth()
-    var $navbarNav = $('.navbar-default .navbar-nav')
+    var $navbarNav = $('.navbar-dark .navbar-nav')
 
-    $('.navbar-default .navbar-nav').css('width', navbarWidth)
+    $('.navbar-dark .navbar-nav').css('width', navbarWidth)
 
     $('.js-nav-prev').on('click', function (e) {
       e.preventDefault()
@@ -155,7 +155,7 @@ jsBackend.navigation = {
   },
 
   resize: function () {
-    var $navbarNav = $('.navbar-default .navbar-nav')
+    var $navbarNav = $('.navbar-dark .navbar-nav')
     var navbarWidth = this.calculateNavbarWidth()
     var windowWidth = this.calculateWindowWidth()
 
@@ -199,7 +199,9 @@ jsBackend.navigation = {
 
     if ($tooltip.length > 0) {
       $tooltip.tooltip({
-        trigger: 'manual'
+        boundary: 'window',
+        trigger: 'manual',
+        placement: 'right'
       })
 
       $tooltip.on('mouseover', function (e) {
@@ -215,7 +217,7 @@ jsBackend.navigation = {
   },
 
   setControls: function (offset) {
-    var $navbarNav = $('.navbar-default .navbar-nav')
+    var $navbarNav = $('.navbar-dark .navbar-nav')
     var rightOffset = this.calculateOffset(offset)
 
     if ((parseInt($navbarNav.css('left')) + offset) >= 0) {
@@ -236,12 +238,12 @@ jsBackend.navigation = {
   },
 
   calculateNavbarWidth: function () {
-    var $navItem = $('.navbar-default .nav-item')
+    var $navItem = $('.navbar-dark .nav-item')
     return $navItem.width() * $navItem.length
   },
 
   calculateOffset: function (offset) {
-    var $navbarNav = $('.navbar-default .navbar-nav')
+    var $navbarNav = $('.navbar-dark .navbar-nav')
     return this.calculateWindowWidth() - this.calculateNavbarWidth() - parseInt($navbarNav.css('left')) - offset
   }
 }

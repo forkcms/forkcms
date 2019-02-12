@@ -1,11 +1,13 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 <div class="main-navigation">
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-dark">
     <ul class="nav navbar-nav">
       {% for item in navigation %}
         <li class="nav-item nav-item-{{ item.label|lower }}{% if item.active %} active{% endif %}">
-          <a href="/private/{{ LANGUAGE }}/{{ item.url }}" data-toggle="tooltip-nav" title="{{ ('lbl.'~item.label)|trans|ucfirst }}" data-container="body" data-placement="right">
-            <span class="nav-item-text">{{ ('lbl.'~item.label)|trans|ucfirst }}</span></a>
+          <a class="nav-link" href="/private/{{ LANGUAGE }}/{{ item.url }}" data-toggle="tooltip-nav" title="{{ ('lbl.'~item.label)|trans|ucfirst }}" data-container="body" data-placement="right">
+            <span class="nav-item-text">{{ ('lbl.'~item.label)|trans|ucfirst }}</span>
+            {% if item.active %}<span class="sr-only">({{ 'lbl.Current'|trans }})</span>{% endif %}
+          </a>
         </li>
       {% endfor %}
     </ul>
