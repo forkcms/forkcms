@@ -304,8 +304,10 @@
       padding: 0;
 
       .nav-item {
+        width: 100%;
+
         .nav-link {
-          background-color: $gray-200;
+          background-color: $gray-100;
           border-bottom: 1px solid $gray-200;
           color: $gray-700;
           font-size: $font-size-sm;
