@@ -4,10 +4,11 @@
 
   li + li {
     &:before {
+      color: $gray-550;
       content: '\f105';
       font-family: FontAwesome;
       font-size: $font-size-sm;
-      padding: 0 5px 0 2px;
+      padding: 0 1px 0 6px;
     }
   }
 

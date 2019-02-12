@@ -858,11 +858,11 @@ $breadcrumb-padding-y:              .75rem;
 $breadcrumb-padding-x:              1rem;
 $breadcrumb-item-padding:           .5rem;
 
-$breadcrumb-margin-bottom:          1rem;
+$breadcrumb-margin-bottom:          0;
 
-$breadcrumb-bg:                     $gray-200;
-$breadcrumb-divider-color:          $gray-600;
-$breadcrumb-active-color:           $gray-600;
+$breadcrumb-bg:                     transparent;
+$breadcrumb-divider-color:          $gray-550;
+$breadcrumb-active-color:           $gray-550;
 $breadcrumb-divider:                "/";
 
 
