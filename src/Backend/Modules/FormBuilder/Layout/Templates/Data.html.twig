@@ -18,8 +18,8 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       {% form filter %}
-      <div class="panel panel-default">
-        <div class="panel-body">
+      <div class="card card-default">
+        <div class="card-body">
           {% form_field id %}
           <div class="row">
             <div class="col-md-4">
@@ -36,7 +36,7 @@
             </div>
           </div>
         </div>
-        <div class="panel-footer">
+        <div class="card-footer">
           <div class="btn-toolbar">
             <div class="btn-group pull-right">
               {{ macro.buttonIcon('', 'refresh', 'lbl.UpdateFilter'|trans|ucfirst, 'btn-primary', { "id":"search", "type":"submit", "name":"search" }) }}

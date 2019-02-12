@@ -3,13 +3,13 @@
 {% block content %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.ClearCache'|trans|ucfirst }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <p class="help-block">{{ 'msg.ClearCache'|trans }}</p>
           <a href="#" data-role="fork-clear-cache" class="btn btn-primary">{{ 'lbl.ClearCache'|trans|ucfirst }}</a>
           <div class="alert alert-warning hidden" role="alert" data-role="fork-clear-cache-status">

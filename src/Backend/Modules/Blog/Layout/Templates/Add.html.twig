@@ -40,8 +40,8 @@
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
               <div class="col-md-8">
-                <div class="panel panel-default panel-editor">
-                  <div class="panel-heading">
+                <div class="card card-default card-editor">
+                  <div class="card-heading">
                     <h2>
                       <label for="introduction">
                         {{ 'lbl.Summary'|trans|ucfirst }}
@@ -49,27 +49,27 @@
                       </label>
                     </h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     {% form_field introduction %}
                   </div>
                   {% if txtIntroductionError %}
-                    <div class="panel-footer">
+                    <div class="card-footer">
                       {% form_field_error introduction %}
                     </div>
                   {% endif %}
                 </div>
                 {% if imageIsAllowed %}
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
+                  <div class="card card-default">
+                    <div class="card-heading">
                       <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                       {% form_field image %} {% form_field_error image %}
                     </div>
                   </div>
                 {% endif %}
-                <div class="panel panel-default panel-editor last">
-                  <div class="panel-heading">
+                <div class="card card-default card-editor last">
+                  <div class="card-heading">
                     <h2>
                       <label for="text">
                         {{ 'lbl.MainContent'|trans|ucfirst }}
@@ -77,22 +77,22 @@
                       </label>
                     </h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     {% form_field text %}
                   </div>
                   {% if txtTextError %}
-                    <div class="panel-footer">
+                    <div class="card-footer">
                       {% form_field_error text %}
                     </div>
                   {% endif %}
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
+                <div class="card card-default">
+                  <div class="card-heading">
                     <h2>{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group">
                       <ul class="list-unstyled">
                         {% for _itr_4 in hidden %}
@@ -110,11 +110,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading">
+                <div class="card card-default">
+                  <div class="card-heading">
                     <h2>{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group">
                       <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
                       {% form_field category_id %} {% form_field_error category_id %}

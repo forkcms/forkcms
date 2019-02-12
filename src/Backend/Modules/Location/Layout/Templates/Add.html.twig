@@ -13,13 +13,13 @@
         <label for="title" class="control-label">{{ 'lbl.Title'|trans|ucfirst }}{{ macro.required }}</label>
         {% form_field title %} {% form_field_error title %}
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.Address'|trans|ucfirst }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group">
             <label for="street" class="control-label">
               {{ 'lbl.Street'|trans|ucfirst }}

@@ -29,11 +29,11 @@
   .media-library-media-library-media-group-helper-helper .mediaGroup {
     margin-bottom: 0;
   }
-    .mediaGroup .panel-body {
+    .mediaGroup .card-body {
       padding: 0;
       border: none;
     }
-    .mediaGroup .panel-body .helpTxt {
+    .mediaGroup .card-body .helpTxt {
       padding: 20px 25px 25px;
       margin-bottom: 0;
     }
@@ -43,7 +43,7 @@
     .mediaGroup .media-group-type-errors {
       padding: 0px 25px 5px;
     }
-    .panel-danger .mediaConnectedBox .mediaNoItems {
+    .card-danger .mediaConnectedBox .mediaNoItems {
       padding-bottom: 0;
     }
   #addGalleriesBox a {
@@ -76,16 +76,16 @@
       right: 10px;
     }
 
-  .media-library-media-group-helper .panel-body,
+  .media-library-media-group-helper .card-body,
   .media-library-media-group-helper .mediaGroup {
     padding: 0!important;
     margin: 0!important;
   }
-    .media-library-media-group-helper .panel-body .panel {
+    .media-library-media-group-helper .card-body .panel {
       border: none;
       width: 100%;
     }
-    .media-library-media-group-helper .panel-body .mediaSettingsGroup {
+    .media-library-media-group-helper .card-body .mediaSettingsGroup {
       right: 0;
     }
 
@@ -212,7 +212,7 @@
 /**
  * Uploaded media box
  */
-#uploadedMediaBox .panel-body {
+#uploadedMediaBox .card-body {
   padding: 20px;
 }
 

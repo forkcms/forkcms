@@ -9,13 +9,13 @@
   {% form settings %}
   <div class="row">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.Pagination'|trans|ucfirst }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group">
             <label for="overviewNumItems" class="control-label">{{ 'lbl.ItemsPerPage'|trans|ucfirst }}</label>
             {% form_field overview_num_items %} {% form_field_error overview_num_items %}
@@ -34,13 +34,13 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.UseSitelinksSearchBox'|trans|ucfirst }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group last">
             <ul class="list-unstyled">
               <li class="checkbox">
@@ -60,13 +60,13 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.ModuleWeight'|trans|ucfirst }}
           </h2>
         </div>
-        <div id="searchModules" class="panel-body">
+        <div id="searchModules" class="card-body">
           <p class="help-block">{{ 'msg.HelpWeightGeneral'|trans }}</p>
           <table class="table table-hover table-striped jsDataGrid">
             <tr>

@@ -15,13 +15,13 @@
   {% if dataGrid %}
     <div class="row fork-module-content">
       <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.Map'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             {% if items %}
               <div id="map" style="width: 100%; height: {{ settings.height }}px;"></div>
             {% endif %}
@@ -29,14 +29,14 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.Settings'|trans|ucfirst }}
             </h2>
           </div>
           {% form settings %}
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group">
               <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|ucfirst }}</label>
               {% form_field zoom_level %} {% form_field_error zoom_level %}

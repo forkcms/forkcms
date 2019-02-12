@@ -44,28 +44,28 @@
           <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div class="row">
               <div class="col-md-8">
-                <div class="panel panel-default panel-editor optionsRTE">
-                  <div class="panel-heading">
+                <div class="card card-default card-editor optionsRTE">
+                  <div class="card-heading">
                     <label for="answer" class="control-label">{{ 'lbl.Answer'|trans|ucfirst }}
                       {{ macro.required }}<br>
                     </label>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     {% form_field answer %}
                   </div>
                   {% if txtAnswerError %}
-                    <div class="panel-footer">
+                    <div class="card-footer">
                       {% form_field_error answer %}
                     </div>
                   {% endif %}
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
+                <div class="card card-default">
+                  <div class="card-heading">
+                    <h2 class="card-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group last">
                       <ul class="list-unstyled">
                         {% for _itr_10 in hidden %}
@@ -77,11 +77,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="panel panel-default last">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
+                <div class="card card-default last">
+                  <div class="card-heading">
+                    <h2 class="card-title">{{ 'lbl.MetaData'|trans|ucfirst }}</h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group">
                       <label for="categoryId" class="control-label">{{ 'lbl.Category'|trans|ucfirst }}</label>
                       {% form_field category_id %} {% form_field_error category_id %}
@@ -111,22 +111,22 @@
             <div class="row">
               <div class="col-md-12">
                 {% if feedback %}
-                <div class="panel-group" id="feedback" role="tablist" aria-multiselectable="false">
+                <div class="card-group" id="feedback" role="tablist" aria-multiselectable="false">
                   {% for _itr_11 in feedback %}
-                    <div class="panel panel-default">
-                      <div class="panel-heading" role="tab" id="_itr_11-heading-{{ _itr_11.id }}">
-                        <h4 class="panel-title">
+                    <div class="card card-default">
+                      <div class="card-heading" role="tab" id="_itr_11-heading-{{ _itr_11.id }}">
+                        <h4 class="card-title">
                           <a data-toggle="collapse" data-parent="#_itr_11" href="#_itr_11-collapse-{{ _itr_11.id }}" aria-expanded="true" aria-controls="_itr_11-collapse-{{ _itr_11.id }}">
                             {{ macro.icon('caret-right fa-fw') }}{{ _itr_11.text|truncate(150) }}
                           </a>
                         </h4>
                       </div>
-                      <div id="_itr_11-collapse-{{ _itr_11.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="_itr_11-heading-{{ _itr_11.id }}">
-                        <div class="panel-body">
+                      <div id="_itr_11-collapse-{{ _itr_11.id }}" class="card-collapse collapse" role="tabpanel" aria-labelledby="_itr_11-heading-{{ _itr_11.id }}">
+                        <div class="card-body">
                           {{ _itr_11.text }}
                         </div>
                         {% if showFaqDeleteFeedback %}
-                          <div class="panel-footer">
+                          <div class="card-footer">
                             <div class="btn-toolbar">
                               <div class="btn-group pull-left" role="group">
                                 {{ macro.buttonIcon('#', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', 'data-id=' ~ _itr_11.id ~ ' data-role=delete-feedback') }}

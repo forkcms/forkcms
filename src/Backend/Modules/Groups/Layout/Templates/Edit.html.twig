@@ -61,18 +61,18 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="content-block">
-                  <div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
+                  <div class="card-group" id="permissions" role="tablist" aria-multiselectable="true">
                     {% for permission in permissions %}
-                      <div class="panel panel-transparent jsGroupsPermissionsModule">
-                        <div class="panel-heading" role="tab" id="permission-heading-{{ permission.id }}">
+                      <div class="card card-transparent jsGroupsPermissionsModule">
+                        <div class="card-heading" role="tab" id="permission-heading-{{ permission.id }}">
                           {{ permission.chk|raw }}
-                          <h4 class="panel-title">
+                          <h4 class="card-title">
                             <a href="#" data-toggle="collapse" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
                                 {{ macro.icon('caret-right fa-fw') }} {{ permission.label }}
                             </a>
                           </h4>
                         </div>
-                        <div id="permission-list-{{ permission.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
+                        <div id="permission-list-{{ permission.id }}" class="card-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
                           {{ permission.actions.dataGrid|raw }}
                         </div>
                       </div>

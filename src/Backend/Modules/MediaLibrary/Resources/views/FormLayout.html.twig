@@ -7,14 +7,14 @@
   {% import "Layout/Templates/macros.html.twig" as macro %}
   <div class="row fork-module-content media-library-media-group-helper">
     <div class="col-md-12">
-      <div class="panel form-group panel-default{% if not form.vars.valid %} panel-danger{% endif %}">
-        <div class="panel-heading">
+      <div class="card form-group card-default{% if not form.vars.valid %} card-danger{% endif %}">
+        <div class="card-heading">
           {{ form_label(form) }}
         </div>
-        <div class="panel-body">
-          {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'panel panel-default mediaGroup' }) %}
+        <div class="card-body">
+          {% set attr = attr|merge({'class': attr.class|default('') ~ " " ~ 'panel card-default mediaGroup' }) %}
           <div id="group-{{ mediaGroup.id }}" data-media-group-id="{{ mediaGroup.id }}" {% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-            <div class="panel-body mediaConnectedBox">
+            <div class="card-body mediaConnectedBox">
               <ul class="mediaConnectedItems ui-sortable">
                 {% for connectedItem in mediaGroup.connectedItems %}
                   <li id="media-{{ connectedItem.item.id }}" data-folder-id="{{ connectedItem.item.folder.id }}" class="ui-state-default">
@@ -57,7 +57,7 @@
                 </div>
               {% endif %}
             </div>
-            <div class="panel-footer mediaEditBox">
+            <div class="card-footer mediaEditBox">
               <div class="btn-toolbar">
                 <div class="btn-group pull-left" role="group">
                   <button type="button" {% if aspectRatio is defined %} data-aspect-ratio={{ aspectRatio }}{% endif %} data-i="{{ mediaGroup.id }}" class="addMediaButton btn btn-default" title="{{ 'lbl.MediaConnectNow'|trans|ucfirst }}">
@@ -79,7 +79,7 @@
           </div>
         </div>
         {% if not form.vars.valid %}
-          <div class="panel-footer">
+          <div class="card-footer">
             {{- form_errors(form) -}}
           </div>
         {% endif %}

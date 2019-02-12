@@ -1,10 +1,10 @@
-.panel {
+.card {
   margin-bottom: 0;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 
-  .panel-body {
+  .card-body {
     border-spacing: 0;
   }
 
@@ -17,36 +17,43 @@
   }
 }
 
-.panel-default {
+.card-default {
   background-color: $white;
   margin-bottom: 20px;
 
-  .panel-heading {
+  .card-heading {
+    background: $gray-100;
+    border-bottom: 1px solid $gray-200;
+    padding: 8px 15px 10px;
 
     p,
     h2,
     h3,
     .control-label,
-    .panel-title {
+    .card-title {
       color: $black;
       font-size: $font-size-base;
       font-weight: 600;
       margin-bottom: 0;
       margin-top: 0;
+
+      a {
+        color: $black;
+      }
     }
   }
 
-  &.panel-pages-block {
-    background-color: $gray-200;
+  &.card-pages-block {
+    background-color: $gray-100;
     border: 0;
     margin-bottom: 0;
 
-    .panel-heading {
+    .card-heading {
       border-color: $border-color;
       padding: 8px 20px 10px;
     }
 
-    .panel-body {
+    .card-body {
       padding: 0 20px 20px;
     }
   }
@@ -55,21 +62,21 @@
     text-decoration: underline;
   }
 
-  .panel-footer {
+  .card-footer {
     .btn {
       text-decoration: none;
     }
   }
 }
 
-.panel-editor {
+.card-editor {
 
-  .panel-body {
+  .card-body {
     padding: 0;
   }
 }
 
-.panel-title a {
+.card-title a {
   border: 0;
   text-decoration: none;
 
@@ -79,28 +86,28 @@
   }
 }
 
-.panel-transparent {
+.card-transparent {
   border-color: #ddd;
 
-  .panel-heading {
+  .card-heading {
     border-bottom: 1px solid #ddd;
     margin-bottom: -1px;
   }
 }
 
 // Panel caret behavior
-.panel.open .fa-caret-right {
+.card.open .fa-caret-right {
   @extend .fa-caret-down;
 }
 
-.panel-group {
+.card-group {
   margin-bottom: 0;
 
-  .panel-heading {
+  .card-heading {
 
     a {
 
-      .panel-title {
+      .card-title {
         color: $body-color;
       }
 
@@ -108,54 +115,54 @@
       &:focus {
         text-decoration: none;
 
-        .panel-title {
+        .card-title {
           color: $black;
         }
       }
     }
 
-    .panel-title a {
+    .card-title a {
       color: $body-color;
     }
 
-    .inputCheckbox  + .panel-title {
+    .inputCheckbox  + .card-title {
       display: inline-block;
     }
   }
 }
 
-.panel-primary label,
-.panel-default label {
+.card-primary label,
+.card-default label {
   width: 100%;
 
-  .panel-body {
+  .card-body {
     padding: 20px 15px 13px;
   }
 
-  .panel-footer {
+  .card-footer {
     background-color: $white;
     border-top: 0;
   }
 }
 
-.panel-primary {
+.card-primary {
   background-color: $white;
 
-  .panel-heading {
+  .card-heading {
     background-color: $primary;
 
-    .panel-title {
+    .card-title {
       color: $white;
     }
   }
 }
 
-.panel-default label .panel-heading {
+.card-default label .card-heading {
   border-bottom: 1px solid $gray-200;
 }
 
 
 
-.fork-dashboard-column .panel-default .panel-body {
+.fork-dashboard-column .card-default .card-body {
   padding: 20px 15px 13px;
 }

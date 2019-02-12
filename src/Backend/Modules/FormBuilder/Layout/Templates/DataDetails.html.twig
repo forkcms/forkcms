@@ -22,11 +22,11 @@
 {% block content %}
   <div class="row fork-module-content">
     <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Content'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.Content'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           {% if data %}
             <table class="table">
               {% for _itr_13 in data %}
@@ -41,11 +41,11 @@
       </div>
     </div>
     <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.SenderInformation'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.SenderInformation'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <table class="table">
             <tr>
               <th>{{ 'lbl.SentOn'|trans|ucfirst }}:</th>

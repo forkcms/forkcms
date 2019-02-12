@@ -19,13 +19,13 @@
   {% if fileCertificate %}
     <div class="row fork-module-content">
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.Certificate'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group last">
               <p class="help-block">
                 {{ 'msg.CertificateHelp'|trans|raw }}
@@ -42,13 +42,13 @@
   {% if ddmAccount %}
     <div class="row fork-module-content">
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.ChooseThisAccount'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group last">
               {% form_field account %}
             </div>
@@ -60,13 +60,13 @@
   {% if ddmWebPropertyId %}
     <div class="row fork-module-content">
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.ChooseWebsiteProfile'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group last">
               {% form_field web_property_id %}
             </div>
@@ -78,13 +78,13 @@
   {% if web_property_id %}
     <div class="row fork-module-content">
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.LinkedProfile'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group last">
               <strong>{{ web_property_id }}</strong>{% if profile %}: ga:profile{% endif %}
             </div>
@@ -96,13 +96,13 @@
   {% if ddmProfile %}
     <div class="row fork-module-content">
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.ChooseWebsiteProfile'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group last">
               {% form_field profile %}
             </div>

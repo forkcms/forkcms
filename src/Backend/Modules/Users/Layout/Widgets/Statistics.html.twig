@@ -1,10 +1,10 @@
-<div id="widgetUsersStatistics" class="panel panel-default">
-  <div class="panel-heading">
-    <h2 class="panel-title">
+<div id="widgetUsersStatistics" class="card card-default">
+  <div class="card-heading">
+    <h2 class="card-title">
       <a href="{{ authenticatedUserEditUrl }}">{{ 'lbl.Users'|trans|ucfirst }}: {{ 'lbl.Statistics'|trans|ucfirst }}</a>
     </h2>
   </div>
-  <div class="panel-body">
+  <div class="card-body">
     <table class="table table-striped">
       <tr>
         <th>{{ 'lbl.LastLogin'|trans|ucfirst }}:</th>
@@ -34,7 +34,7 @@
       {% endif %}
     </table>
   </div>
-  <div class="panel-footer">
+  <div class="card-footer">
     <a href="{{ authenticatedUserEditUrl }}">
       <span>{{ 'lbl.EditProfile'|trans|ucfirst }}</span>
     </a>

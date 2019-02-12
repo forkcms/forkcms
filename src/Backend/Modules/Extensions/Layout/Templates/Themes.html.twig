@@ -17,28 +17,28 @@
   {% if installableThemes %}
     <div class="row fork-module-content">
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">
               {{ 'lbl.InstallableThemes'|trans|ucfirst }}
             </h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <p class="help-block">{{ 'msg.HelpInstallableThemes'|trans }}</p>
             <div id="installedThemes" class="selectThumbList row">
               {% for installableTheme in installableThemes %}
                 <div class="col-md-4">
-                  <div class="panel panel-default">
+                  <div class="card card-default">
                     <label for="{{ installedTheme.id }}">
-                      <div class="panel-heading">
-                        <label for="{{ installedThemes.id }}" class="panel-title">
+                      <div class="card-heading">
+                        <label for="{{ installedThemes.id }}" class="card-title">
                           {{ installableTheme.label|ucfirst }}
                         </label>
                       </div>
-                      <div class="panel-body">
+                      <div class="card-body">
                         <img src="{{ installableTheme.thumbnail }}" class="img-thumbnail" alt="{{ installableTheme.label|ucfirst }}" />
                       </div>
-                      <div class="panel-footer">
+                      <div class="card-footer">
                         {% if showExtensionsDetailTheme %}
                           <div class="btn-toolbar">
                             <div class="btn-group pull-right" role="group">
@@ -82,14 +82,14 @@
   {% endif %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.InstalledThemes'|trans|ucfirst }}
             {{ macro.required }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <p class="help-block">{{ 'msg.HelpThemes'|trans }}</p>
           {% if rbtInstalledThemesError %}
             <p class="text-danger">{{ rbtThemesError }}</p>
@@ -98,19 +98,19 @@
             <div class="row">
               {% for installedTheme in installedThemes %}
                 <div class="col-md-4">
-                  <div class="panel panel-select {% if installedTheme.selected %}panel-primary{% else %}panel-default{% endif %}">
+                  <div class="card card-select {% if installedTheme.selected %}card-primary{% else %}card-default{% endif %}">
                     <span class="hidden">
                       {{ installedTheme.rbtInstalledThemes|raw }}
                       <label for="{{ installedTheme.id }}"></label>
                     </span>
 
-                    <div class="panel-heading">
-                      <h2 class="panel-title">{{ installedTheme.label|ucfirst }}</h2>
+                    <div class="card-heading">
+                      <h2 class="card-title">{{ installedTheme.label|ucfirst }}</h2>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                       <img src="{{ installedTheme.thumbnail }}" class="img-thumbnail" alt="{{ installedTheme.label|ucfirst }}" />
                     </div>
-                    <div class="panel-footer">
+                    <div class="card-footer">
                       {% if showExtensionsDetailTheme %}
                         <div class="btn-toolbar">
                           <div class="btn-group pull-right" role="group">

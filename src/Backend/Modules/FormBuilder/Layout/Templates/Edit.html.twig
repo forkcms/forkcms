@@ -37,13 +37,13 @@
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
             <div class="row">
               <div class="col-lg-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">
+                <div class="card card-default">
+                  <div class="card-heading">
+                    <h2 class="card-title">
                       {{ 'lbl.Status'|trans|ucfirst }}
                     </h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group">
                       <label for="name" class="control-label">
                         {{ 'lbl.Name'|trans|ucfirst }}
@@ -81,18 +81,18 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="panel panel-default panel-editor">
-                  <div class="panel-heading">
+                <div class="card card-default card-editor">
+                  <div class="card-heading">
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
                       {{ macro.required }}<br>
                     </label>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     {% form_field success_message %}
                   </div>
                   {% if txtSuccessMessageError %}
-                    <div class="panel-footer">
+                    <div class="card-footer">
                       {% form_field_error success_message %}
                     </div>
                   {% endif %}
@@ -112,13 +112,13 @@
             </div>
             <div class="row">
               <div class="col-md-8">
-                <div class="panel panel-default panel-editor">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">
+                <div class="card card-default card-editor">
+                  <div class="card-heading">
+                    <h2 class="card-title">
                       {{ 'lbl.Preview'|trans|ucfirst }}
                     </h2>
                   </div>
-                  <div id="fieldsHolder" class="panel-body sequenceByDragAndDrop">
+                  <div id="fieldsHolder" class="card-body sequenceByDragAndDrop">
                     {% if fields %}
                       {% for field in fields %}
                         {{ field.field|raw }}
@@ -154,13 +154,13 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <div id="formElements" class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">
+                <div id="formElements" class="card card-default">
+                  <div class="card-heading">
+                    <h2 class="card-title">
                       {{ 'lbl.AddFields'|trans|ucfirst }}
                     </h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="list-group first">
                       <h5>{{ 'lbl.FormElements'|trans|ucfirst }}</h5>
                       <button id="textboxSelector" data-field-id="textboxDialog" class="list-group-item jsFieldDialogTrigger">

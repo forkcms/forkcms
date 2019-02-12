@@ -8,11 +8,11 @@
   {% form add %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
+      <div class="card card-default">
+        <div class="card-heading">
           <h2>{{ 'lbl.Template'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-inline form-group">
             <p class="help-block">{{ 'msg.HelpTemplateLocation'|trans|raw }}</p>
             <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|ucfirst }}</label>
@@ -39,11 +39,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Positions'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.Positions'|trans|ucfirst }}</h2>
         </div>
-        <div id="positions" class="panel-body">
+        <div id="positions" class="card-body">
           {% for position in positions %}
             <div class="form-group position jsPosition"{% if not position.i %} style="display: none"{% endif %}>
               <div class="row">
@@ -118,13 +118,13 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             <label for="format" class="control-label">{{ 'lbl.Layout'|trans|ucfirst }}</label>
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -144,11 +144,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group">
             <ul class="list-unstyled">
               <li class="checkbox">

@@ -9,13 +9,13 @@
   {% form settings %}
   <div class="row">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.IndividualMap'|trans|ucfirst }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group">
             <label for="zoomLevelWidget" class="control-label">{{ 'lbl.ZoomLevel'|trans|ucfirst }}</label>
             {% form_field zoom_level_widget %} {% form_field_error zoom_level_widget %}

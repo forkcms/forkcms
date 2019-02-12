@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block content %}
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="card card-default">
+    <div class="card-heading">
       <h2>{{ 'lbl.Statistics'|trans|ucfirst }} {{ 'lbl.From'|trans }} {{ startTimestamp|date('m/d/Y') }} {{ 'lbl.Till'|trans }} {{ endTimestamp|date('m/d/Y') }}</h2>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
       <div class="change-periode content-block">
         {% form date_range %}
         <div class="form-inline">
@@ -53,11 +53,11 @@
   <div class="analytics-charts content-block">
     <div class="row">
       <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="card card-default">
+          <div class="card-heading">
             <h2>{{ 'lbl.RecentVisits'|trans|ucfirst }}</h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             {% if visitors_graph_data %}
               <div id="dataChartDoubleMetricPerDay" class="hidden">
                 <span id="maxYAxis">{{ maxYAxis }}</span>
@@ -96,11 +96,11 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="card card-default">
+          <div class="card-heading">
             <h2>{{ 'lbl.PageviewsByTrafficSources'|trans|ucfirst }}</h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             {% if source_graph_data %}
               <div id="dataChartPieChart" class="hidden">
                 <ul class="data">
@@ -122,11 +122,11 @@
   <div class="analytics-grid content-block">
     <div class="row">
       <div class="col-xs-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="card card-default">
+          <div class="card-heading">
             <h2>{{ 'lbl.MostViewedPages'|trans|ucfirst }}</h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="dataGridHolder">
               {{ dataGridMostViewedPages|raw }}
             </div>

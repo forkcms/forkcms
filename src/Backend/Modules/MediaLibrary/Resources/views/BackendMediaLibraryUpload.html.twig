@@ -81,11 +81,11 @@
   <div class="row fork-module-content">
     <div id="uploadMediaTypeBox">
       <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">{{ 'msg.MediaUploadThisType'|trans }}</h2>
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2 class="card-title">{{ 'msg.MediaUploadThisType'|trans }}</h2>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group last">
               <ul class="list-unstyled">
                 <li class="radiobutton">
@@ -103,11 +103,11 @@
 
     {# Choose folder #}
     <div class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'msg.MediaUploadToThisFolder'|trans }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'msg.MediaUploadToThisFolder'|trans }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <p>
             <label for="folder">{{ 'lbl.MediaFolder'|trans|capitalize }}{{ macro.required }}</label>
             <select id="uploadMediaFolderId" name="uploadMediaFolderId">
@@ -137,12 +137,12 @@
   {# Choose media to upload #}
   <div id="uploadMediaBox" class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'msg.MediaChoseToUpload'|trans }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'msg.MediaChoseToUpload'|trans }}</h2>
         </div>
         <div id="fine-uploader-gallery"></div>
-        <div class="panel-footer">
+        <div class="card-footer">
           <div class="form-group" data-role="cropper-is-mandatory-form-group">
             <div class="checkbox">
               <label for="enableCropperCheckbox">
@@ -161,11 +161,11 @@
   {# Adding a movie #}
   <div id="addMovieBox" class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'msg.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'msg.MediaWhichMovieToAdd'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <p>
             <label>{{ 'lbl.MediaMovieSource'|trans|capitalize }}{{ macro.required }}</label>
             {# The following dropdown is filled by javascript from the MediaLibraryHelper.js file #}
@@ -181,7 +181,7 @@
             <input id="mediaMovieTitle" name="media_movie_title" type="text" class="inputText" />
           </p>
         </div>
-        <div class="panel-footer">
+        <div class="card-footer">
           <div class="btn-toolbar">
             <div class="btn-group pull-right" role="group">
               <a href="#" id="addMediaMovie" class="btn btn-default" title="{{ 'lbl.MediaAddMovie'|trans|capitalize }}">
@@ -197,11 +197,11 @@
   {# Uploaded media #}
   <div id="uploadedMediaBox" class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default panel-editor">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'msg.MediaUploaded'|trans }}</h2>
+      <div class="card card-default card-editor">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'msg.MediaUploaded'|trans }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <p id="mediaWillBeConnectedToMediaGroup">{{ 'msg.MediaWillBeConnected'|trans }}</p>
           <div class="mediaConnectedBox">
             <ul id="uploadedMedia" class="mediaConnectedItems ui-sortable"></ul>

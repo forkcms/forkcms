@@ -689,13 +689,13 @@ jsBackend.pages.extras = {
    * Creates the html for a normal link
    */
   getLinkFieldHtml: function (text, url, label, key) {
-    var html = '<div class="panel panel-default" id="user-template-link-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-link-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group">'
     html += '<label>' + label + '</label>'
@@ -718,13 +718,13 @@ jsBackend.pages.extras = {
    * Creates the html for a link without content
    */
   getLinkWithoutContentFieldHtml: function (url, label, key) {
-    var html = '<div class="panel panel-default" id="user-template-link-without-content-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-link-without-content-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group last">'
     html += '<input data-ft-url="' + label + '" type="url" class="form-control" value="' + url + '"/>'
@@ -741,13 +741,13 @@ jsBackend.pages.extras = {
    * Creates the html for a text field
    */
   getTextFieldHtml: function (text, label, key) {
-    var html = '<div class="panel panel-default" id="user-template-text-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-text-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group last">'
     html += '<input data-ft-label="' + label + '" type="text" class="form-control" value="' + text + '" />'
@@ -764,13 +764,13 @@ jsBackend.pages.extras = {
    * Creates the html for an editor
    */
   getTextAreaFieldHtml: function (text, label, key) {
-    var html = '<div class="panel panel-default panel-editor" id="user-template-textarea-' + key + '">'
+    var html = '<div class="card card-default card-editor" id="user-template-textarea-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group last">'
     html += '<textarea class="form-control" data-ft-label="' + label + '" cols="83" rows="15">' + text + '</textarea>'
@@ -787,13 +787,13 @@ jsBackend.pages.extras = {
    * Creates the html for an editor
    */
   getEditorFieldHtml: function (text, label, key) {
-    var html = '<div class="panel panel-default panel-editor" id="user-template-editor-' + key + '">'
+    var html = '<div class="card card-default card-editor" id="user-template-editor-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body">'
+    html += '<div class="card-body">'
 
     html += '<div class="form-group last">'
     html += '<textarea id="user-template-cke-' + key + '" data-ft-label="' + label + '" cols="83" rows="15" class="inputEditor">' + text + '</textarea>'
@@ -810,13 +810,13 @@ jsBackend.pages.extras = {
    * Creates the html for an image field
    */
   getImageFieldHtml: function (src, alt, label, isVisible, optionalHide, key) {
-    var html = '<div class="panel panel-default" id="user-template-image-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-image-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body clearfix">'
+    html += '<div class="card-body clearfix">'
 
     html += '<div class="form-group thumbnail">'
     html += '<img class="img-responsive"' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" />'
@@ -847,13 +847,13 @@ jsBackend.pages.extras = {
    * Creates the html for an image background field
    */
   getImageBackgroundFieldHtml: function (src, label, key) {
-    var html = '<div class="panel panel-default" id="user-template-image-background-' + key + '">'
+    var html = '<div class="card card-default" id="user-template-image-background-' + key + '">'
 
-    html += '<div class="panel-heading">'
-    html += '<h2 class="panel-title">' + label + '</h2>'
+    html += '<div class="card-heading">'
+    html += '<h2 class="card-title">' + label + '</h2>'
     html += '</div>'
 
-    html += '<div class="panel-body clearfix">'
+    html += '<div class="card-body clearfix">'
 
     html += '<div class="form-group thumbnail">'
     html += '<img class="img-responsive"' + ' src="' + src + '" />'

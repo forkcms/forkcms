@@ -22,11 +22,11 @@
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
             <div class="row">
               <div class="col-lg-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
+                <div class="card card-default">
+                  <div class="card-heading">
+                    <h2 class="card-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group">
                       <label for="name" class="control-label">
                         {{ 'lbl.Name'|trans|ucfirst }}
@@ -64,20 +64,20 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="panel panel-default panel-editor">
-                  <div class="panel-heading">
+                <div class="card card-default card-editor">
+                  <div class="card-heading">
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
                       {{ macro.required }}<br>
                     </label>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group last">
                       {% form_field success_message %}
                     </div>
                   </div>
                   {% if txtSuccessMessageError %}
-                    <div class="panel-footer">
+                    <div class="card-footer">
                       {% form_field_error success_message %}
                     </div>
                   {% endif %}

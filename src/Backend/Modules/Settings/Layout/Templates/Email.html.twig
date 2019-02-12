@@ -9,13 +9,13 @@
   {% form settingsEmail %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.Email'|trans|ucfirst }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
         {% if isGod %}
           <fieldset>
             <legend>
@@ -104,13 +104,13 @@
   {% if isGod %}
     <div class="row fork-module-content">
       <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h3 class="card-title">
               {{ 'lbl.SMTP'|trans|ucfirst }}
             </h3>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group">
               <label for="smtpPort" class="control-label">{{ 'lbl.Server'|trans|ucfirst }}&#160;&amp; {{ 'lbl.Port'|trans }}</label>
               <p class="help-block">{{ 'msg.HelpSMTPServer'|trans }}</p>

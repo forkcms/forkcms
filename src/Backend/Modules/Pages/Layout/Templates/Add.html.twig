@@ -100,11 +100,11 @@
                       <tr>
                         <td data-position="fallback" id="templatePosition-fallback"
                           colspan="1" class="box">
-                          <div class="panel panel-default panel-pages-block">
-                            <div class="panel-heading">
-                              <h2 class="panel-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
+                          <div class="card card-default card-pages-block">
+                            <div class="card-heading">
+                              <h2 class="card-title">{{ 'lbl.Fallback'|trans|ucfirst }}</h2>
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                               <div class="linkedBlocks">
                                 <!-- linked blocks will be added here -->
                               </div>
@@ -254,11 +254,11 @@
             {% if hreflangFields %}
               <div class="row">
                 <div class="col-md-12">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h2 class="panel-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
+                  <div class="card card-default">
+                    <div class="card-heading">
+                      <h2 class="card-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                       {% for language, field in hreflangFields %}
                         <div class="form-group{% if loop.last %} last{% endif %}">
                           <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>

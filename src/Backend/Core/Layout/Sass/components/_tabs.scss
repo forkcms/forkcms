@@ -85,7 +85,7 @@ div.active.tab-pane:focus {
 .tab-pane-collection {
   margin: -31px -26px -56px;
 
-  & > .panel > .panel-heading {
+  & > .card > .card-heading {
     display: none;
   }
 }

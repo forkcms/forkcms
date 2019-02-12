@@ -20,21 +20,21 @@
     <div class="row fork-module-content">
       <div class="col-md-8">
         {% if information.description %}
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h2 class="panel-title">
+          <div class="card card-default">
+            <div class="card-heading">
+              <h2 class="card-title">
                 {{ 'lbl.Description'|trans|ucfirst }}
               </h2>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
               <p>{{ information.description|raw }}</p>
             </div>
           </div>
         {% endif %}
         {% if dataGridEvents %}
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h2 class="panel-title">
+          <div class="card card-default">
+            <div class="card-heading">
+              <h2 class="card-title">
                 {{ 'lbl.Events'|trans|ucfirst }}
               </h2>
             </div>
@@ -44,25 +44,25 @@
       </div>
       <div class="col-md-4">
         {% if information.version %}
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h2 class="panel-title">
+          <div class="card card-default">
+            <div class="card-heading">
+              <h2 class="card-title">
                 {{ 'lbl.Version'|trans|ucfirst }}
               </h2>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
               <p>{{ information.version }}</p>
             </div>
           </div>
         {% endif %}
         {% if information.authors %}
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h2 class="panel-title">
+          <div class="card card-default">
+            <div class="card-heading">
+              <h2 class="card-title">
                 {{ 'lbl.Authors'|trans|ucfirst }}
               </h2>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
               <ul>
                 {% for author in information.authors %}
                   <li>

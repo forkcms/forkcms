@@ -24,14 +24,14 @@
   {% endif %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
             {{ 'lbl.WebsiteTitle'|trans|ucfirst }}
             {{ macro.required }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group last">
             {% form_field site_title %} {% form_field_error site_title %}
           </div>
@@ -41,11 +41,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Scripts'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.Scripts'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group">
             <label for="siteHtmlHeader" class="control-label"><code>&lt;head&gt;</code> script(s)</label>
             {% form_field site_html_header %} {% form_field_error site_html_header %}
@@ -62,11 +62,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group">
             <p>{{ 'msg.HelpLanguages'|trans|ucfirst }}</p>
             <ul id="activeLanguages" class="list-unstyled">
@@ -97,11 +97,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.DateAndTime'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.DateAndTime'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group">
             <label for="timeFormat" class="control-label">{{ 'lbl.TimeFormat'|trans|ucfirst }}</label>
             {% form_field time_format %} {% form_field_error time_format %}
@@ -123,11 +123,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Numbers'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.Numbers'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group last">
             <label for="numberFormat" class="control-label">{{ 'lbl.NumberFormat'|trans|ucfirst }}</label>
             {% form_field number_format %} {% form_field_error number_format %}
@@ -139,11 +139,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div id="settingsApiKeys" class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.APIKeys'|trans|ucfirst }}</h2>
+      <div id="settingsApiKeys" class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.APIKeys'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <p>{{ 'msg.HelpAPIKeys'|trans }}</p>
           <table class="table table-striped">
             <thead>
@@ -207,11 +207,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.CkFinder'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.CkFinder'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group">
             <label for="ckfinderLicenseName" class="control-label">{{ 'lbl.LicenseName'|trans|ucfirst }}</label>
             {% form_field ckfinder_license_name %} {% form_field_error ckfinder_license_name %}
@@ -236,11 +236,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Facebook'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.Facebook'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group">
             <label for="facebookAdminIds" class="control-label">{{ 'lbl.AdminIds'|trans|ucfirst }}</label>
             {% form_field facebook_admin_ids %} {% form_field_error facebook_admin_ids %}
@@ -262,11 +262,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Twitter'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.Twitter'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group last">
             <label for="twitterSiteName" class="control-label">{{ 'lbl.TwitterSiteName'|trans|ucfirst }}</label>
             <div class="input-group">
@@ -281,11 +281,11 @@
   </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">{{ 'lbl.Cookies'|trans|ucfirst }}</h2>
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">{{ 'lbl.Cookies'|trans|ucfirst }}</h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           <div class="form-group last">
             <p>{{ 'msg.HelpCookies'|trans }}</p>
             <ul class="list-unstyled">

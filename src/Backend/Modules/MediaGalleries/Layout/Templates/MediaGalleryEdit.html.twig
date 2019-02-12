@@ -24,14 +24,14 @@
             <div class="row">
               <div class="col-md-8">
                 {% if form.action %}
-                <div id="publishOptions" class="panel form-group panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">
+                <div id="publishOptions" class="card form-group card-default">
+                  <div class="card-heading">
+                    <h2 class="card-title">
                       {{ 'lbl.WidgetView'|trans|ucfirst }}{{ macro.required }}
                       {{ macro.infoTooltip('msg.WidgetViewsHelp'|trans|ucfirst) }}
                     </h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group last">
                       {{ form_widget(form.action) }}
                       {{ form_errors(form.action) }}
@@ -47,11 +47,11 @@
                 {{ form_row(form.text) }}
               </div>
               <div class="col-md-4">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class="panel-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
+                <div class="card card-default">
+                  <div class="card-heading">
+                    <h2 class="card-title">{{ 'lbl.Status'|trans|ucfirst }}</h2>
                   </div>
-                  <div class="panel-body">
+                  <div class="card-body">
                     <div class="form-group">
                       {{ form_widget(form.status) }}
                       {{ form_errors(form.status) }}

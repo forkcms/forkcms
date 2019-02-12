@@ -5,20 +5,20 @@
   {{ form_start(form) }}
     <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2 class="card-title">
           {{ 'lbl.Settings'|trans|capitalize }}
           </h2>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
           {{ form_row(form.mailEngine) }}
           <div class="mail-engine-selected">
             {{ form_row(form.apiKey) }}
 
-            <div class="panel form-group panel-default">
-              <div class="panel-heading"><label>{{ 'lbl.ListId'|trans|ucfirst }}</label></div>
-              <div class="panel-body">
+            <div class="card form-group card-default">
+              <div class="card-heading"><label>{{ 'lbl.ListId'|trans|ucfirst }}</label></div>
+              <div class="card-body">
                 <div class="form-group">
                   {{ form_row(form.listId) }}
                 </div>
