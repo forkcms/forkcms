@@ -2,12 +2,12 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block pagesTree %}
-  <div class="sub-navigation hidden-xs">
+  <div class="sub-navigation d-none d-sm-block">
     <div class="pages-tree">
-      <div class="alert alert-warning visible-sm">
+      <div class="alert alert-warning d-md-none">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MovePagesNotPossible'|trans }}</p>
       </div>
-      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
       <div id="tree">
@@ -289,7 +289,7 @@
     </div>
   </div>
   {# This is the HTML content, hidden #}
-  <div class="fade hidden" id="editContent">
+  <div class="fade d-none" id="editContent">
     {% for position in positions %}
       {% for block in position.blocks %}
         <div class="alert alert-warning">
