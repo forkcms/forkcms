@@ -1,4 +1,5 @@
 .btn {
+  -webkit-appearance: none;
   border-radius: 3px;
   padding: 9px 9px 10px;
 
@@ -74,6 +75,17 @@
   .btn:last-child:not(:first-child),
   .btn:not(:first-child):not(:last-child):not(.dropdown-toggle){
     border-radius: 3px;
+  }
+}
+
+.btn-default {
+  background: $gray-200;
+  border-color: $gray-200;
+  color: $gray-700;
+
+  @include hover-focus {
+    background: darken($gray-200, 15%);
+    border-color: darken($gray-200, 15%);
   }
 }
 
