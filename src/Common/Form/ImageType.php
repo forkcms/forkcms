@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -151,7 +152,9 @@ class ImageType extends AbstractType
                 'constraints' => [new Valid()],
                 'error_bubbling' => false,
                 'help_text_message' => 'msg.HelpImageFieldWithMaxFileSize',
-                'help_text_argument' => $this->getUploadMaxFileSize(),
+                'help_text_argument' => function (Options $options) {
+                    return $this->getUploadMaxFileSize($options['image_class']);
+                },
             ]
         );
     }
