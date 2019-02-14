@@ -186,34 +186,35 @@ class FileType extends AbstractType
         );
     }
 
-    private function getUploadMaxFileSize(): ?string
+    private function getMaxFileSizeServerValue(): ?int
     {
         $uploadMaxFileSize = ini_get('upload_max_filesize');
+
         if ($uploadMaxFileSize === false) {
             return null;
         }
 
         // reformat if defined as an integer
         if (is_numeric($uploadMaxFileSize)) {
-            return $uploadMaxFileSize / 1024 . 'MB';
+            return $uploadMaxFileSize;
         }
 
         // reformat if specified in kB
         if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1)) === 'K') {
-            return mb_substr($uploadMaxFileSize, 0, -1) . 'kB';
+            return mb_substr($uploadMaxFileSize, 0, -1) * 1000;
         }
 
         // reformat if specified in MB
         if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1)) === 'M') {
-            return $uploadMaxFileSize . 'B';
+            return mb_substr($uploadMaxFileSize, 0, -1) * 1000 * 1000;
         }
 
         // reformat if specified in GB
         if (mb_strtoupper(mb_substr($uploadMaxFileSize, -1)) === 'G') {
-            return $uploadMaxFileSize . 'B';
+            return mb_substr($uploadMaxFileSize, 0, -1) * 1000 * 1000 * 1000;
         }
 
-        return $uploadMaxFileSize;
+        return null;
     }
 
     private function getMaxFileSizeConstraintValue(string $fileClass): ?int
