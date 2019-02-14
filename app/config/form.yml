@@ -23,3 +23,9 @@ services:
             - "@translator"
         tags:
             - { name: form.type, alias: meta}
+    form.type.image:
+        class: Common\Form\ImageType
+        arguments:
+            - "@validator"
+        tags:
+            - { name: form.type, alias: image}
