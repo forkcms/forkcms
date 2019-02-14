@@ -246,4 +246,47 @@ class ImageType extends AbstractType
 
         return null;
     }
+
+    private function getUploadMaxFileSize(string $imageClass): ?string
+    {
+        $constraintValue = $this->getMaxFileSizeConstraintValue($imageClass);
+        $serverValue = $this->getMaxFileSizeServerValue();
+
+        if (!is_numeric($constraintValue) && !is_numeric($serverValue)) {
+            return null;
+        }
+
+        // return the server value if the constraint value is to high
+        if (is_numeric($constraintValue) && is_numeric($serverValue)) {
+            if ($constraintValue < $serverValue) {
+                return $this->prettyPrintFileSize($constraintValue);
+            }
+
+            return $this->prettyPrintFileSize($serverValue);
+        }
+
+        if (is_numeric($constraintValue)) {
+            return $this->prettyPrintFileSize($constraintValue);
+        }
+
+        return $this->prettyPrintFileSize($serverValue);
+    }
+
+    private function prettyPrintFileSize(int $fileSize): string
+    {
+        // return the filesize in a human readable format according to the value
+        if ($fileSize > 999999999) {
+            return number_format($fileSize / 1000000000, 2, ',', ' ') . ' GB';
+        }
+
+        if ($fileSize > 999999) {
+            return number_format($fileSize / 1000000, 2, ',', ' ') . ' MB';
+        }
+
+        if ($fileSize > 999) {
+            return number_format($fileSize / 1000, 2, ',', ' ') . ' KB';
+        }
+
+        return $fileSize . ' bytes';
+    }
 }
