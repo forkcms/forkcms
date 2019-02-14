@@ -16,11 +16,24 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class FileType extends AbstractType
 {
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    public function __construct(ValidatorInterface $validator)
+    {
+        $this->validator = $validator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['show_remove_file']) {
@@ -201,5 +214,29 @@ class FileType extends AbstractType
         }
 
         return $uploadMaxFileSize;
+    }
+
+    private function getMaxFileSizeConstraintValue(string $fileClass): ?int
+    {
+        // use the metaData to find the file data
+        /** @var ClassMetadata $metaData */
+        $metaData = $this->validator->getMetadataFor($fileClass);
+        $members = $metaData->getPropertyMetadata('file');
+
+        // the constraints can be found in the property meta data members
+        foreach ($members as $member) {
+            $constraints = $member->getConstraints();
+
+            if (count($constraints) === 1) {
+                /** @var File $fileConstraint */
+                $fileConstraint = $constraints[0];
+
+                if ($fileConstraint instanceof File) {
+                    return $fileConstraint->maxSize;
+                }
+            }
+        }
+
+        return null;
     }
 }

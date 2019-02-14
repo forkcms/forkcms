@@ -29,3 +29,9 @@ services:
             - "@validator"
         tags:
             - { name: form.type, alias: image}
+    form.type.file:
+        class: Common\Form\FileType
+        arguments:
+            - "@validator"
+        tags:
+            - { name: form.type, alias: file}
