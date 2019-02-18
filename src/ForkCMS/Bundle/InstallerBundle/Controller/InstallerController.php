@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class InstallerController extends Controller
 {
-    /** @var InstallationData */
+    /** @var InstallationData|null */
     public static $installationData;
 
     public function step1Action(): Response

@@ -13,7 +13,7 @@ class Model extends \Common\Core\Model
     /**
      * Visitor id from tracking cookie
      *
-     * @var string
+     * @var string|null
      */
     private static $visitorId;
 
