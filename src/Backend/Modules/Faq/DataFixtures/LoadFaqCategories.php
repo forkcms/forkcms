@@ -17,11 +17,11 @@ class LoadFaqCategories
         );
 
         $database->insert(
-            'faq_categories',
+            'FaqCategory',
             [
                 'meta_id' => $metaId,
-                'extra_id' => 0,
-                'language' => 'en',
+                'extraId' => 0,
+                'locale' => 'en',
                 'title' => 'Faq for tests',
                 'sequence' => 1,
             ]
