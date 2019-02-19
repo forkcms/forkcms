@@ -258,4 +258,9 @@ final class Header extends KernelLoader
 
         return $language;
     }
+
+    public function appendDetailToBreadcrumbs(string $stringToAppend): void
+    {
+        $this->template->assignGlobal('breadcrumbDetail', $stringToAppend);
+    }
 }

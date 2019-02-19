@@ -39,7 +39,7 @@ class MediaFolderEdit extends BackendBaseAJAXAction
         $id = $this->getRequest()->request->getInt('folder_id');
 
         // validate values
-        if ($id === null) {
+        if ($id === 0) {
             throw new AjaxExitException(Language::err('FolderIdIsRequired'));
         }
 

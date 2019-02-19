@@ -17,6 +17,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use ForkCMS\Utility\Thumbnails;
 use SpoonFormHidden;
 
 /**
@@ -242,7 +243,7 @@ class Edit extends BackendBaseActionEdit
         );
 
         // image related fields
-        $this->form->addImage('image');
+        $this->form->addImage('image')->setAttribute('data-fork-cms-role', 'image-field');
         $this->form->addCheckbox('remove_image');
 
         // move page fields
@@ -640,6 +641,7 @@ class Edit extends BackendBaseActionEdit
         $this->template->assign('formErrors', (string) $this->form->getErrors());
         $this->template->assign('showTags', $this->userCanSeeAndEditTags());
         $this->template->assign('hreflangFields', $this->hreflangFields);
+        $this->header->appendDetailToBreadcrumbs($this->record['title']);
 
         // init var
         $showDelete = true;
@@ -765,7 +767,17 @@ class Edit extends BackendBaseActionEdit
 
         $this->saveTags($page['id']);
 
-        BackendPagesModel::buildCache(BL::getWorkingLanguage());
+        $cacheShouldBeUpdated = !(
+            $this->record['title'] === $page['title']
+            && $this->record['navigation_title'] === $page['navigation_title']
+            && $this->record['navigation_title_overwrite'] === $page['navigation_title_overwrite']
+            && $this->record['hidden'] === $page['hidden']
+        );
+
+        // build cache
+        if ($cacheShouldBeUpdated) {
+            BackendPagesModel::buildCache(BL::getWorkingLanguage());
+        }
 
         if ($page['status'] === 'draft') {
             $this->redirect(
@@ -951,7 +963,7 @@ class Edit extends BackendBaseActionEdit
         $imagePath = FRONTEND_FILES_PATH . '/Pages/images';
 
         // delete the current image
-        BackendModel::deleteThumbnails($imagePath, (string) $imageFilename);
+        $this->get(Thumbnails::class)->delete($imagePath, (string) $imageFilename);
 
         if (!$allowImage
             || ($this->form->getField('remove_image')->isChecked() && !$this->form->getField('image')->isFilled())

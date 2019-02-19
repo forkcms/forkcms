@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
+use Exception;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Language\Locale;
@@ -61,6 +62,22 @@ class Subscribe extends FrontendBaseBlock
             );
 
             $doubleOptIn = false;
+        } catch (Exception $exception) {
+            $reason = json_decode($exception->getMessage());
+            // check if the error is one from mailchimp
+            if ($reason === false) {
+                throw $exception;
+            }
+
+            $this->getContainer()->get('logger')->error('Mailmotor Subcribe Mailchimp error: ' . $reason);
+
+            $this->template->assign('mailmotorSubscribeHasFormError', true);
+            $this->template->assign('form', $form->createView());
+
+            $this->loadTemplate();
+            $this->parse();
+
+            return;
         }
 
         $redirectLink .= '&double-opt-in=';

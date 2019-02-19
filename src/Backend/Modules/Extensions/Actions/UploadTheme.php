@@ -210,7 +210,7 @@ class UploadTheme extends BackendBaseActionAdd
                 }
 
                 $this->infoFilePath = $infoFile['name'];
-                $this->info = $zip->getFromName($infoFile['name']);
+                $this->info = $zip->getFromName($this->infoFilePath);
                 break;
             }
         }

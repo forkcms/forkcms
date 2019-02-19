@@ -556,13 +556,7 @@ class Form extends FrontendBaseWidget
                 );
             } else {
                 // not correct, show errors
-                // global form errors set
-                if ($this->form->getErrors() != '') {
-                    $this->template->assign('formBuilderError', $this->form->getErrors());
-                } else {
-                    // general error
-                    $this->template->assign('formBuilderError', FL::err('FormError'));
-                }
+                $this->template->assign('formBuilderError', FL::err('FormError'));
             }
         }
     }

@@ -403,6 +403,8 @@ class Edit extends BackendBaseActionEdit
 
         // only allow deletion of empty groups
         $this->template->assign('allowGroupsDelete', $this->dataGridUsers->getNumResults() == 0);
+
+        $this->header->appendDetailToBreadcrumbs($this->record['name']);
     }
 
     /**

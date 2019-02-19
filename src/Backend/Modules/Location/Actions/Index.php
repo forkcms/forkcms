@@ -42,8 +42,9 @@ class Index extends BackendBaseActionIndex
             $this->redirect(BackendModel::createUrlForAction('Index', 'Settings'));
         }
 
-        // add js
-        $this->header->addJS('https://maps.googleapis.com/maps/api/js?key=' . $apikey);
+        $this->header->addJS(
+            'https://maps.googleapis.com/maps/api/js?key=' . $apikey . '&language=' . BL::getInterfaceLanguage()
+        );
 
         $this->loadData();
 

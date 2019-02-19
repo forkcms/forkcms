@@ -23,7 +23,7 @@ class FormFieldTokenParser extends \Twig_TokenParser
             throw new \Twig_Error_Syntax(
                 sprintf('Cannot render form field [%s] outside a form element', $field),
                 $token->getLine(),
-                $this->parser->getFilename()
+                $this->parser->getStream()->getSourceContext()->getPath()
             );
         }
 

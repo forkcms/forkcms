@@ -208,6 +208,26 @@ jsFrontend.forms = {
     jsFrontend.forms.validation()
     jsFrontend.forms.filled()
     jsFrontend.forms.datePicker()
+    jsFrontend.forms.imagePreview()
+  },
+
+  imagePreview: function () {
+    $('input[type=file]').on('change', function () {
+      let imageField = $(this).get(0)
+      // make sure we are uploading an image by checking the data attribute
+      if (imageField.getAttribute('data-fork-cms-role') === 'image-field' && imageField.files && imageField.files[0]) {
+        // get the image preview by matching the image-preview data-id to the ImageField id
+        let $imagePreview = $('[data-fork-cms-role="image-preview"][data-id="' + imageField.id + '"]')
+        // use FileReader to get the url
+        let reader = new FileReader()
+
+        reader.onload = function (event) {
+          $imagePreview.attr('src', event.target.result)
+        }
+
+        reader.readAsDataURL(imageField.files[0])
+      }
+    })
   },
 
   // once text has been filled add another class to it (so it's possible to style it differently)
