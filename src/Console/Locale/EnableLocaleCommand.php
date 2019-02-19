@@ -106,7 +106,7 @@ class EnableLocaleCommand extends Command
         $this->defaultEnabledLocale = $this->settings->get('Core', 'default_language');
         $this->defaultInterfaceLocale = $this->settings->get('Core', 'default_interface_language');
 
-        $this->output->writeln($this->formatter->title('Fork CMS locale enable'));
+        $this->formatter->title('Fork CMS locale enable');
 
         $this->showLocaleOverview();
         $this->selectWorkingLocale();

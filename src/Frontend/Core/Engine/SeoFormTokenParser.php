@@ -15,7 +15,11 @@ class SeoFormTokenParser extends \Twig_TokenParser
         $stream = $this->parser->getStream();
         if ($stream->getCurrent()->getType() !== Twig_Token::BLOCK_END_TYPE) {
             $error = sprintf("'%s' does not require any arguments.", $this->getTag());
-            throw new \Twig_Error_Syntax($error, $token->getLine(), $this->parser->getFilename());
+            throw new \Twig_Error_Syntax(
+                $error,
+                $token->getLine(),
+                $this->parser->getStream()->getSourceContext()->getPath()
+            );
         }
         $stream->expect(Twig_Token::BLOCK_END_TYPE);
 
@@ -23,7 +27,7 @@ class SeoFormTokenParser extends \Twig_TokenParser
             throw new \Twig_Error_Syntax(
                 sprintf('Cannot render seo outside a form element'),
                 $token->getLine(),
-                $this->parser->getFilename()
+                $this->parser->getStream()->getSourceContext()->getPath()
             );
         }
 

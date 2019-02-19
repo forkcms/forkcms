@@ -7,6 +7,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Language\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use ForkCMS\Utility\Thumbnails;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
@@ -168,7 +169,7 @@ class Model
         $images = $database->getColumn('SELECT image FROM blog_posts WHERE id IN (' . $idPlaceHolders . ')', $ids);
 
         foreach ($images as $image) {
-            BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/Blog/images', $image);
+            BackendModel::get(Thumbnails::class)->delete(FRONTEND_FILES_PATH . '/Blog/images', $image);
         }
 
         // delete records
@@ -353,34 +354,13 @@ class Model
      * Get the comments
      *
      * @param string $status The type of comments to get.
-     * @param int    $limit  The maximum number of items to retrieve.
-     * @param int    $offset The offset.
+     * @param int $limit The maximum number of items to retrieve.
+     * @param int $offset The offset.
      *
      * @return array
      */
     public static function getAllCommentsForStatus(string $status, int $limit = 30, int $offset = 0): array
     {
-        if ($status !== null) {
-            $status = (string) $status;
-        }
-        $limit = (int) $limit;
-        $offset = (int) $offset;
-
-        // no status passed
-        if ($status === null) {
-            return (array) BackendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
-                 p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
-                 FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-                 INNER JOIN meta AS m ON p.meta_id = m.id
-                 WHERE i.language = ?
-                 GROUP BY i.id
-                 LIMIT ?, ?',
-                [BL::getWorkingLanguage(), $offset, $limit]
-            );
-        }
-
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
              p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
@@ -470,7 +450,7 @@ class Model
     /**
      * Get a category id by title
      *
-     * @param string $title    The title of the category.
+     * @param string $title The title of the category.
      * @param string $language The language to use, if not provided we will use the working language.
      *
      * @return int
@@ -546,7 +526,7 @@ class Model
      * Get the latest comments for a given type
      *
      * @param string $status The status for the comments to retrieve.
-     * @param int    $limit  The maximum number of items to retrieve.
+     * @param int $limit The maximum number of items to retrieve.
      *
      * @return array
      */
@@ -588,7 +568,7 @@ class Model
     /**
      * Get all data for a given revision
      *
-     * @param int $id         The id of the item.
+     * @param int $id The id of the item.
      * @param int $revisionId The revision to get.
      *
      * @return array
@@ -608,7 +588,7 @@ class Model
      * Retrieve the unique URL for an item
      *
      * @param string $url The URL to base on.
-     * @param int    $id  The id of the item to ignore.
+     * @param int $id The id of the item to ignore.
      *
      * @return string
      */
@@ -659,7 +639,7 @@ class Model
      * Retrieve the unique URL for a category
      *
      * @param string $url The string whereon the URL will be based.
-     * @param int    $id  The id of the category to ignore.
+     * @param int $id The id of the category to ignore.
      *
      * @return string
      */
@@ -736,9 +716,9 @@ class Model
      * The comments array is an array of arrays with comment properties. A comment should have
      * at least 'author', 'email', and 'text' properties.
      *
-     * @param array $item     The data to insert.
-     * @param array $meta     The metadata to insert.
-     * @param array $tags     The tags to connect to this post.
+     * @param array $item The data to insert.
+     * @param array $meta The metadata to insert.
+     * @param array $tags The tags to connect to this post.
      * @param array $comments The comments attached to this post.
      *
      * @throws Exception
@@ -792,9 +772,6 @@ class Model
         }
 
         // Build meta
-        if (!is_array($meta)) {
-            $meta = [];
-        }
         if (!isset($meta['keywords'])) {
             $meta['keywords'] = $item['title'];
         }
@@ -1060,8 +1037,11 @@ class Model
 
             // make sure that an image that will be deleted, is not used by a revision that is not to be deleted
             foreach ($imagesOfDeletedRevisions as $imageOfDeletedRevision) {
-                if (!in_array($imageOfDeletedRevision, $imagesToKeep)) {
-                    BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/Blog/images', $imageOfDeletedRevision);
+                if (!in_array($imageOfDeletedRevision, $imagesToKeep, true)) {
+                    BackendModel::get(Thumbnails::class)->delete(
+                        FRONTEND_FILES_PATH . '/Blog/images',
+                        $imageOfDeletedRevision
+                    );
                 }
             }
 
@@ -1089,7 +1069,7 @@ class Model
     /**
      * Update an existing category
      *
-     * @param array       $item The new data.
+     * @param array $item The new data.
      * @param array $meta The new meta-data.
      *
      * @return int
@@ -1135,7 +1115,7 @@ class Model
     /**
      * Updates one or more comments' status
      *
-     * @param array  $ids    The id(s) of the comment(s) to change the status for.
+     * @param array $ids The id(s) of the comment(s) to change the status for.
      * @param string $status The new status.
      */
     public static function updateCommentStatuses(array $ids, string $status): void

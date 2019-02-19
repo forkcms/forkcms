@@ -12,7 +12,7 @@ use Backend\Modules\MediaLibrary\Domain\MediaItem\Type;
 
 class MediaBrowser extends BackendBaseAction
 {
-    /** @var MediaFolder */
+    /** @var MediaFolder|null */
     protected $mediaFolder;
 
     public function execute(): void

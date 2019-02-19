@@ -188,7 +188,7 @@ class Edit extends BackendBaseActionEdit
             $this->template->assign('blocked', true);
         }
 
-        $this->header->appendDetailToBreadcrumbs($this->record['display_name']);
+        $this->header->appendDetailToBreadcrumbs($this->profile['display_name']);
     }
 
     private function validateForm(): void
