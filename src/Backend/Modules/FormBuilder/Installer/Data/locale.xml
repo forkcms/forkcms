@@ -386,6 +386,11 @@
         <translation language="el"><![CDATA[Πριν 1 δευτερόλεπτο]]></translation>
         <translation language="pl"><![CDATA[1 sekundę temu]]></translation>
       </item>
+      <item type="label" name="OtherPage">
+        <translation language="nl"><![CDATA[andere pagina]]></translation>
+        <translation language="fr"><![CDATA[autre page]]></translation>
+        <translation language="en"><![CDATA[other page]]></translation>
+      </item>
       <item type="label" name="Paragraph">
         <translation language="nl"><![CDATA[paragraaf]]></translation>
         <translation language="en"><![CDATA[paragraph]]></translation>
@@ -534,6 +539,11 @@
         <translation language="el"><![CDATA[Απαιτείται]]></translation>
         <translation language="pl"><![CDATA[wymagane]]></translation>
       </item>
+      <item type="label" name="SamePageWithConfirmBox">
+        <translation language="nl"><![CDATA[Huidige pagina met bevestigingsboodschap]]></translation>
+        <translation language="fr"><![CDATA[Page actuelle avec message de confirmation]]></translation>
+        <translation language="en"><![CDATA[Current page with confirmation message]]></translation>
+      </item>
       <item type="label" name="SecondsAgo">
         <translation language="nl"><![CDATA[%1$s seconden geleden]]></translation>
         <translation language="en"><![CDATA[%1$s seconds ago]]></translation>
@@ -548,6 +558,11 @@
         <translation language="sv"><![CDATA[%1$s sekunder sen]]></translation>
         <translation language="el"><![CDATA[Πριν από %1$s δευτερόλεπτα]]></translation>
         <translation language="pl"><![CDATA[%1$s sekund temu]]></translation>
+      </item>
+      <item type="label" name="SelectConfirmationPage">
+        <translation language="nl"><![CDATA[selecteer bevestigingspagina]]></translation>
+        <translation language="fr"><![CDATA[sélectionner la page de confirmation]]></translation>
+        <translation language="en"><![CDATA[select confirmation page]]></translation>
       </item>
       <item type="label" name="SenderInformation">
         <translation language="nl"><![CDATA[afzender informatie]]></translation>
@@ -623,6 +638,11 @@
         <translation language="sv"><![CDATA[lyckat meddelande]]></translation>
         <translation language="el"><![CDATA[Μήνυμα επιτυχίας]]></translation>
         <translation language="pl"><![CDATA[wiadomość powodzenia]]></translation>
+      </item>
+      <item type="label" name="SuccessPage">
+        <translation language="nl"><![CDATA[succes pagina]]></translation>
+        <translation language="en"><![CDATA[success page]]></translation>
+        <translation language="fr"><![CDATA[page de réussite]]></translation>
       </item>
       <item type="label" name="Textarea">
         <translation language="nl"><![CDATA[tekstgebied]]></translation>

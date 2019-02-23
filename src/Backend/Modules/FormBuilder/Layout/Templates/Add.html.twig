@@ -64,7 +64,25 @@
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="panel panel-default panel-editor">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <label for="successPage" class="control-label">
+                      {{ 'lbl.SuccessPage'|trans|ucfirst }}
+                    </label>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group last">
+                      <ul class="list-unstyled">
+                        {% for option in success_type %}
+                          <li class="radio">
+                            <label for="{{ option.id }}">{{ option.rbtSuccessType|raw }} {{ option.label }}</label>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-default panel-editor js-success-message">
                   <div class="panel-heading">
                     <label for="successMessage" class="control-label">
                       {{ 'lbl.SuccessMessage'|trans|ucfirst }}
@@ -81,6 +99,19 @@
                       {% form_field_error success_message %}
                     </div>
                   {% endif %}
+                </div>
+                <div class="panel panel-default hide js-success-page">
+                  <div class="panel-heading">
+                    <label for="successPage" class="control-label">
+                      {{ 'lbl.SuccessPage'|trans|ucfirst }}
+                    </label>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group last">
+                      <label for="successPage" class="control-label">{{ 'lbl.SelectConfirmationPage'|trans|ucfirst }}</label>
+                      {% form_field success_page %}{% form_field_error success_page %}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
