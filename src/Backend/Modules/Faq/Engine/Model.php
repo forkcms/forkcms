@@ -16,16 +16,14 @@ class Model
     const QUERY_DATAGRID_BROWSE =
         'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
          FROM faq_questions AS i
-         WHERE i.language = ? AND i.category_id = ?
-         ORDER BY i.sequence ASC';
+         WHERE i.language = ? AND i.category_id = ?';
 
     const QUERY_DATAGRID_BROWSE_CATEGORIES =
         'SELECT i.id, i.title, COUNT(p.id) AS num_items, i.sequence
          FROM faq_categories AS i
          LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND p.language = i.language
          WHERE i.language = ?
-         GROUP BY i.id
-         ORDER BY i.sequence ASC';
+         GROUP BY i.id';
 
     /**
      * Delete a question
