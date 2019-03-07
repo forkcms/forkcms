@@ -8,7 +8,7 @@
 {% block content %}
   {% if noAccounts %}
     <div class="row fork-module-messages">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="alert alert-info" role="alert">
           {{ 'msg.NoAccounts'|trans|format(email)|raw }}
         </div>
@@ -18,7 +18,7 @@
   {% form settings %}
   {% if fileCertificate %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="card card-default">
           <div class="card-heading">
             <h2 class="card-title">
@@ -41,7 +41,7 @@
   {% endif %}
   {% if ddmAccount %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="card card-default">
           <div class="card-heading">
             <h2 class="card-title">
@@ -59,7 +59,7 @@
   {% endif %}
   {% if ddmWebPropertyId %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="card card-default">
           <div class="card-heading">
             <h2 class="card-title">
@@ -77,7 +77,7 @@
   {% endif %}
   {% if web_property_id %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="card card-default">
           <div class="card-heading">
             <h2 class="card-title">
@@ -95,7 +95,7 @@
   {% endif %}
   {% if ddmProfile %}
     <div class="row fork-module-content">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="card card-default">
           <div class="card-heading">
             <h2 class="card-title">
@@ -113,7 +113,7 @@
   {% endif %}
 
   <div class="row fork-module-actions">
-    <div class="col-md-12">
+    <div class="col-12">
       <div class="btn-toolbar">
         {% if showAnalyticsReset and fileCertificate is not defined %}
           <div class="btn-group" role="group">

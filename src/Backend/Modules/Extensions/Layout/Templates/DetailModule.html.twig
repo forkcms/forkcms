@@ -7,7 +7,7 @@
 {% block content %}
   {% if warnings %}
     <div class="row fork-module-messages">
-      <div class="col-md-12">
+      <div class="col-12">
         {% for warning in warnings %}
           <div class="alert alert-warning" role="alert">
             {{ macro.icon('exclamation-triangle') }}{{ warning.message|raw }}
@@ -84,7 +84,7 @@
   {% endif %}
   {% if showInstallButton %}
     <div class="row fork-module-actions">
-      <div class="col-md-12">
+      <div class="col-12">
         <div class="btn-toolbar">
           <div class="btn-group pull-right" role="group">
             {{ macro.buttonIcon('', 'file-o', 'lbl.Install'|trans|ucfirst, 'btn-primary', {"data-toggle":"modal", "type":"button", "data-target":"#confirmInstall"}) }}

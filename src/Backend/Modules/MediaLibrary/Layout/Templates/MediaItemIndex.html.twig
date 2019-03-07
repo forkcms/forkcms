@@ -37,7 +37,7 @@
 
 {% block content %}
   <div class="row fork-module-content">
-    <div id="library" class="col-md-12">
+    <div id="library" class="col-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
           {% for dataGrid in dataGrids %}
@@ -51,7 +51,7 @@
           <div role="tabpanel" class="tab-pane" id="{{ dataGrid.tabName }}" aria-labelledby="{{ dataGrid.tabName }}-tab">
             <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="get" class="forkForms">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="table-responsive">
                     <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
                     <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden" name="move_to_folder_id" value="" />
@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="row fork-module-actions">
-        <div class="col-md-12">
+        <div class="col-12">
           <div class="btn-toolbar">
             {% if mediaFolder %}
               <div class="btn-group pull-left" role="group">

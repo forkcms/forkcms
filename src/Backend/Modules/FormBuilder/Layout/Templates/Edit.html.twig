@@ -20,7 +20,7 @@
   </script>
   <input type="hidden" name="id" id="formId" value="{{ id }}" />
   <div class="row fork-module-content">
-    <div class="col-md-12">
+    <div class="col-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item">
@@ -102,7 +102,7 @@
           </div>
           <div role="tabpanel" class="tab-pane" id="tabFields" aria-labelledby="field-tab">
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-12">
                 <p class="alert alert-warning alert-xs">
                   {{ macro.icon('exclamation-triangle') }}{{ 'msg.ImportantImmediateUpdate'|trans|raw }}
                   {% if recaptchaMissing %}<br>{{ macro.icon('exclamation-triangle') }}{{ 'msg.RecaptchaKeysMissing'|trans|format(geturl('Index','Settings'))|raw }}{% endif %}
@@ -206,7 +206,7 @@
           </div>
           <div role="tabpanel" class="tab-pane" id="tabExtra" aria-labelledby="extra-tab">
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-12">
                 <label for="identifier" class="control-label">
                   {{ 'lbl.Identifier'|trans|ucfirst }}
                   {{ macro.infoTooltip('msg.HelpIdentifier'|trans|ucfirst) }}
@@ -220,7 +220,7 @@
     </div>
   </div>
   <div class="row fork-page-actions">
-    <div class="col-md-12">
+    <div class="col-12">
       <div class="btn-toolbar">
         <div class="btn-group pull-left" role="group">
           {% if showFormBuilderDelete %}
@@ -258,7 +258,7 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextboxBasic" aria-labelledby="textbox-basic-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="textboxLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
@@ -272,7 +272,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="tabTextboxProperties" aria-labelledby="textbox-prop-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="textboxValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
                     {% form_field textbox_value %}
@@ -365,7 +365,7 @@
             </div>
             <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextboxAdvanced" aria-labelledby="textbox-advanced-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="textboxPlaceholder" class="control-label">{{ 'lbl.Placeholder'|trans|ucfirst }}</label>
                     {% form_field textbox_placeholder %}
@@ -410,7 +410,7 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic" aria-labelledby="textarea-basic-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="textareaLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
@@ -424,7 +424,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="tabTextareaProperties" aria-labelledby="textarea-prop-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="textareaValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
                     {% form_field textarea_value %}
@@ -472,7 +472,7 @@
             </div>
             <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextareaAdvanced" aria-labelledby="textarea-advanced-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="textareaPlaceholder" class="control-label">{{ 'lbl.Placeholder'|trans|ucfirst }}</label>
                     {% form_field textarea_placeholder %}
@@ -517,7 +517,7 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDatetimeBasic" aria-labelledby="datetime-basic-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="datetimeLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
@@ -531,7 +531,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="tabDatetimeProperties" aria-labelledby="datetime-prop-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group jsDefaultValue">
                     <label for="datetimeValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
                     <div class="form-inline">
@@ -584,7 +584,7 @@
             </div>
             <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDatetimeAdvanced" aria-labelledby="datetime-adv-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="datetimeClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
                     {% form_field datetime_classname %}
@@ -625,7 +625,7 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDropdownBasic" aria-labelledby="dropdown-basic-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="dropdownLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
@@ -644,7 +644,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="tabDropdownProperties" aria-labelledby="dropdown-prop-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="dropdownDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
                     {% form_field dropdown_default_value %}
@@ -671,7 +671,7 @@
             </div>
             <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDropdownAdvanced" aria-labelledby="dropdown-adv-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="dropdownClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
                     {% form_field dropdown_classname %}
@@ -712,7 +712,7 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabRadiobuttonBasic" aria-labelledby="radio-basic-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="radiobuttonLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
@@ -730,7 +730,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="tabRadiobuttonProperties" aria-labelledby="radio-prop-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="checkboxDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
                     {% form_field radiobutton_default_value %}
@@ -757,7 +757,7 @@
             </div>
             <div role="tabpanel" class="tab-pane jsFieldTab" id="tabRadiobuttonAdvanced" aria-labelledby="radio-adv-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="radiobuttonClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
                     {% form_field radiobutton_classname %}
@@ -798,7 +798,7 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabCheckboxBasic" aria-labelledby="checkbox-basic-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="checkboxLabel" class="control-label">
                       {{ 'lbl.Label'|trans|ucfirst }}
@@ -816,7 +816,7 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="tabCheckboxProperties" aria-labelledby="checkbox-prop-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="checkboxDefaultValue" class="control-label">{{ 'lbl.DefaultValue'|trans|ucfirst }}</label>
                     {% form_field checkbox_default_value %}
@@ -843,7 +843,7 @@
             </div>
             <div role="tabpanel" class="tab-pane jsFieldTab" id="tabCheckboxAdvanced" aria-labelledby="checkbox-adv-tab">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="checkboxClassname" class="control-label">{{ 'lbl.Classname'|trans|ucfirst }}</label>
                     {% form_field checkbox_classname %}

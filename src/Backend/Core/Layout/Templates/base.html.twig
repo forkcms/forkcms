@@ -26,15 +26,15 @@
             <div class="row fork-module-heading">
               {% set _block = block('actionbar')|trim %}
               {% if _block is not empty %}
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-12 col-sm-6">
                   {% include "Layout/Templates/breadcrumb.html.twig" with { 'navigation': navigation } %}
                 </div>
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-12 col-sm-6">
                   {% block actionbar %}{% endblock %}
                 </div>
               {% endif %}
               {% if _block is empty %}
-                <div class="col-xs-12">
+                <div class="col-12">
                   {% include "Layout/Templates/breadcrumb.html.twig" with { 'navigation': navigation } %}
                 </div>
               {% endif %}

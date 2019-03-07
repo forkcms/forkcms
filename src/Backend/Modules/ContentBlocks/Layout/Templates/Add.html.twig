@@ -3,12 +3,12 @@
 {% block content %}
   {{ form_start(form) }}
   <div class="row fork-module-content">
-    <div class="col-md-12">
+    <div class="col-12">
       {{ form_rest(form) }}
     </div>
   </div>
   <div class="row fork-module-actions">
-    <div class="col-md-12">
+    <div class="col-12">
       <div class="btn-toolbar">
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
