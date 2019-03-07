@@ -99,7 +99,7 @@
               {% for installedTheme in installedThemes %}
                 <div class="col-md-4">
                   <div class="card card-select {% if installedTheme.selected %}card-primary{% else %}card-default{% endif %}">
-                    <span class="hidden">
+                    <span class="d-none">
                       {{ installedTheme.rbtInstalledThemes|raw }}
                       <label for="{{ installedTheme.id }}"></label>
                     </span>

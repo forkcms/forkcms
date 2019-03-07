@@ -903,8 +903,8 @@ jsBackend.mediaLibraryHelper.cropper = {
       return
     }
 
-    $dialog.find('[data-role=media-library-select-modal]').removeClass('hidden')
-    $dialog.find('[data-role=media-library-cropper-modal]').addClass('hidden')
+    $dialog.find('[data-role=media-library-select-modal]').removeClass('d-none')
+    $dialog.find('[data-role=media-library-cropper-modal]').addClass('d-none')
   },
 
   switchToCropperModal: function ($dialog) {
@@ -916,8 +916,8 @@ jsBackend.mediaLibraryHelper.cropper = {
       $dialog.modal('show')
     }
 
-    $dialog.find('[data-role=media-library-select-modal]').addClass('hidden')
-    $dialog.find('[data-role=media-library-cropper-modal]').removeClass('hidden')
+    $dialog.find('[data-role=media-library-select-modal]').addClass('d-none')
+    $dialog.find('[data-role=media-library-cropper-modal]').removeClass('d-none')
   },
 
   getCloseEventFunction: function ($dialog, resizeInfo, reject) {
@@ -1094,14 +1094,14 @@ jsBackend.mediaLibraryHelper.upload = {
 
     if (currentAspectRatio === false) {
       $formGroup.removeClass('has-warning')
-      $warning.addClass('hidden')
+      $warning.addClass('d-none')
       $checkbox.removeClass('disabled').attr('disabled', false).attr('checked', false)
 
       return
     }
 
     $formGroup.addClass('has-warning')
-    $warning.removeClass('hidden')
+    $warning.removeClass('d-none')
     $checkbox.addClass('disabled').attr('disabled', true).attr('checked', true)
   },
 

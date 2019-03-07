@@ -67,20 +67,18 @@
       </div>
     </div>
   {% endif %}
-  <div class="hidden">
-    <div class="modal fade jsConfirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Install'|trans|ucfirst }}</h4>
-          </div>
-          <div class="modal-body">
-            <p class="jsConfirmationMessage"></p>
-          </div>
-          <div class="modal-footer">
-            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" }) }}
-            {{ macro.buttonIcon('#', 'check', 'lbl.Install'|trans|ucfirst, 'btn-primary jsConfirmationSubmit') }}
-          </div>
+  <div class="modal fade jsConfirmation" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="confirmDeleteTitle">{{ 'lbl.Install'|trans|ucfirst }}</h4>
+        </div>
+        <div class="modal-body">
+          <p class="jsConfirmationMessage"></p>
+        </div>
+        <div class="modal-footer">
+          {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" }) }}
+          {{ macro.buttonIcon('#', 'check', 'lbl.Install'|trans|ucfirst, 'btn-primary jsConfirmationSubmit') }}
         </div>
       </div>
     </div>

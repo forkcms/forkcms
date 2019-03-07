@@ -25,9 +25,9 @@ jsBackend.pages = {
     // show / hide the remove from search index checkbox on change
     $('#authRequired').on('change', function (e) {
       if ($(this).is(':checked')) {
-        $('[data-role="remove-from-search-index"]').removeClass('hidden')
+        $('[data-role="remove-from-search-index"]').removeClass('d-none')
       } else {
-        $('[data-role="remove-from-search-index"]').addClass('hidden')
+        $('[data-role="remove-from-search-index"]').addClass('d-none')
       }
     }).trigger('change')
 
