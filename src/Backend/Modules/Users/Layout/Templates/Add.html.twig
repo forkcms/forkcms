@@ -11,15 +11,15 @@
     <div class="col-md-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabProfile" aria-controls="tabProfile" role="tab" data-toggle="tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabProfile" aria-controls="tabProfile" role="tab" data-toggle="tab" aria-selected="true" id="profile-tab">{{ 'lbl.Profile'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab" aria-selected="false" id="permissions-tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabProfile">
+          <div role="tabpanel" class="tab-pane show active" id="tabProfile">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">

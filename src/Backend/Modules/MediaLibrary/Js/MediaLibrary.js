@@ -100,7 +100,7 @@ jsBackend.mediaLibrary.library = {
   dataGrids: function () {
     if (window.location.hash === '') {
       // select first tab
-      $('#library .nav-tabs a:first').tab('show')
+      $('#library .nav-tabs .nav-item:first .nav-link').tab('show')
     }
 
     // When mass action button is clicked

@@ -11,18 +11,18 @@
     <div class="col-md-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabName" aria-controls="tabName" role="tab" data-toggle="tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabName" aria-controls="tabName" role="tab" data-toggle="tab" aria-selected="true" id="name-tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabDashboard" aria-controls="tabDashboard" role="tab" data-toggle="tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabDashboard" aria-controls="tabDashboard" role="tab" data-toggle="tab" aria-selected="false" id="dashboard-tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabPermissions" aria-controls="tabPermissions" role="tab" data-toggle="tab" aria-selected="false" id="permissions-tab">{{ 'lbl.Permissions'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabName">
+          <div role="tabpanel" class="tab-pane show active" id="tabName" aria-labelledby="name-tab">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group last">
@@ -33,7 +33,7 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabDashboard">
+          <div role="tabpanel" class="tab-pane" id="tabDashboard" aria-labelledby="dashboard-tab">
             <div class="row">
               <div class="col-md-12">
                 <div class="content-block">
@@ -50,7 +50,7 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabPermissions">
+          <div role="tabpanel" class="tab-pane" id="tabPermissions" aria-labelledby="permissions-tab">
             <div class="row">
               <div class="col-md-12">
                 <div class="card-group" id="permissions" role="tablist" aria-multiselectable="true">

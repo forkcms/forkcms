@@ -11,15 +11,15 @@
     <div class="col-md-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link active" href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab" aria-selected="true" id="general-tab">{{ 'lbl.General'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab" aria-selected="false" id="extra-tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabGeneral">
+          <div role="tabpanel" class="tab-pane active show" id="tabGeneral" aria-labelledby="general-tab">
             <div class="row">
               <div class="col-lg-6">
                 <div class="card card-default">
@@ -85,7 +85,7 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabExtra">
+          <div role="tabpanel" class="tab-pane" id="tabExtra" aria-labelledby="extra-tab">
             <div class="row">
               <div class="col-md-12">
                 <label for="identifier" class="control-label">

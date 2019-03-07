@@ -22,34 +22,42 @@ div.active.tab-pane:focus {
 }
 
 .nav-tabs {
+
   .has-error,
   .active.has-error {
-    a,
-    a:hover,
-    a:focus {
+    .nav-link,
+    .nav-link:hover,
+    .nav-link:focus {
       -webkit-font-smoothing: antialiased;
       color: $white;
       background-color: $danger;
     }
   }
 
-  li {
-    a {
-      background-color: $gray-200;
-      border: 1px solid $gray-200;
+  .nav-item {
+    margin-right: 1px;
+
+    .nav-link {
+      background-color: $gray-100;
+      border-color: $nav-tabs-border-color;
+      border-width: $nav-tabs-border-width;
       border-radius: 3px 3px 0 0;
       color: $gray-700;
       font-size: $font-size-sm;
       font-weight: 600;
       padding: 8px 12px 7px;
+
+      &.active {
+        background: $nav-tabs-link-active-bg;
+        border-color: $nav-tabs-link-active-border-color;
+      }
     }
 
-    &.pull-right a {
-       margin-left: 5px;
-       margin-right: 0;
+    &:last-of-type {
+      margin-right: 0;
     }
 
-    &.danger a {
+    &.danger .nav-link {
        background-color: $danger;
        color: $white;
     }
@@ -63,21 +71,23 @@ div.active.tab-pane:focus {
     justify-content: end;
     flex-wrap: wrap;
 
-    > li {
+    > .nav-item {
       float: none;
     }
+
     .mr-auto {
       margin-right: auto;
     }
   }
 }
 
-.fork-dashboard-column .nav-tabs li {
-   a {
+.fork-dashboard-column .nav-tabs .nav-item {
+
+  .nav-link {
      background-color: $gray-200;
    }
 
-  &.active a {
+  &.active .nav-link {
     background-color: $white;
   }
 }

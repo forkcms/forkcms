@@ -13,14 +13,14 @@
     <div class="col-md-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
-          <li class="active" role="presentation">
-            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
         </ul>
 
         <div class="tab-content">
 
-          <div role="tabpanel" class="tab-pane active" id="tabContent">
+          <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
             <div class="row">
               <div class="col-md-8">
                 {% if form.action %}

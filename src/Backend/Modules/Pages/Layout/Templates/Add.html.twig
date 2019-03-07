@@ -49,35 +49,35 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div>
-        <ul class="nav nav-tabs nav-tabs-flex" role="tablist">
-          <li role="presentation" class="active mr-auto">
-            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+        <ul class="nav nav-tabs justify-content-end" role="tablist">
+          <li class="nav-item mr-auto">
+            <a class="active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
-          <li class="js-page-image-tab" role="presentation">
-            <a href="#tabImage" aria-controls="image" role="tab" data-toggle="tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
+          <li class="nav-item js-page-image-tab">
+            <a class="nav-link" href="#tabImage" aria-controls="image" role="tab" data-toggle="tab" aria-selected="false" id="image-tab">{{ 'lbl.Image'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
           {% if showTags %}
-            <li role="presentation">
-              <a href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabTags" aria-controls="tabTags" role="tab" data-toggle="tab" aria-selected="false" id="tags-tab">{{ 'lbl.Tags'|trans|ucfirst }}</a>
             </li>
           {% endif %}
-          <li role="presentation">
-            <a href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabRedirect" aria-controls="tabRedirect" role="tab" data-toggle="tab" aria-selected="false" id="redirect-tab">{{ 'lbl.Redirect'|trans|ucfirst }}</a>
           </li>
           {% if showAuthenticationTab %}
             <li role="presentation">
               <a href="#tabAuthentication" aria-controls="tabAuthentication" role="tab" data-toggle="tab">{{ 'lbl.Authentication'|trans|ucfirst }}</a>
             </li>
           {% endif %}
-          <li role="presentation">
-            <a href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabSettings" aria-controls="tabSettings" role="tab" data-toggle="tab" aria-selected="false" id="settings-tab">{{ 'lbl.Settings'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabContent">
+          <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
             <div id="editTemplate">
 
               {# Do not change the ID! #}
@@ -122,7 +122,7 @@
 
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabSettings">
+          <div role="tabpanel" class="tab-pane" id="tabSettings" aria-labelledby="settings-tab">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -155,7 +155,7 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabRedirect">
+          <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
             <div class="row">
               <div class="col-md-12">
                 {% if rbtRedirectError %}
@@ -210,7 +210,7 @@
               </div>
             </div>
           {% endif %}
-          <div role="tabpanel" class="tab-pane" id="tabImage">
+          <div role="tabpanel" class="tab-pane" id="tabImage" aria-labelledby="image-tab">
             <div class="row js-page-image-tab">
               <div class="col-md-12">
                 <div class="form-group">
@@ -239,7 +239,7 @@
             </div>
           </div>
           {% if showTags %}
-            <div role="tabpanel" class="tab-pane" id="tabTags">
+            <div role="tabpanel" class="tab-pane" id="tabTags" aria-labelledby="tags-tab">
               <div class="row">
                 <div class="col-md-12">
                   <p class="tab-pane-title">{{ 'msg.AddTagsHere'|trans }}</p>
@@ -249,7 +249,7 @@
               </div>
             </div>
           {% endif %}
-          <div role="tabpanel" class="tab-pane" id="tabSEO">
+          <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
             {% seo %}
             {% if hreflangFields %}
               <div class="row">

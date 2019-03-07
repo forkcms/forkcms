@@ -14,15 +14,15 @@
     <div class="col-md-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab" aria-selected="true" id="general-tab">{{ 'lbl.General'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabGroups" aria-controls="tabGroups" role="tab" data-toggle="tab">{{ 'lbl.Groups'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabGroups" aria-controls="tabGroups" role="tab" data-toggle="tab" aria-selected="false" id="groups-tab">{{ 'lbl.Groups'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabGeneral">
+          <div role="tabpanel" class="tab-pane show active" id="tabGeneral" aria-labelledby="general-tab">
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-default">
@@ -108,7 +108,7 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabGroups">
+          <div role="tabpanel" class="tab-pane" id="tabGroups" aria-labelledby="groups-tab">
             <div class="row">
               <div class="col-md-6">
                 <div class="content-title">

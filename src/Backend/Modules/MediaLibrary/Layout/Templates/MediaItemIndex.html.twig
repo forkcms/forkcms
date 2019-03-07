@@ -41,14 +41,14 @@
       <div>
         <ul class="nav nav-tabs" role="tablist">
           {% for dataGrid in dataGrids %}
-          <li role="presentation">
-            <a href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-toggle="tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-toggle="tab" id="{{ dataGrid.tabName }}-tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
           </li>
           {% endfor %}
         </ul>
         <div class="tab-content">
           {% for dataGrid in dataGrids %}
-          <div role="tabpanel" class="tab-pane" id="{{ dataGrid.tabName }}">
+          <div role="tabpanel" class="tab-pane" id="{{ dataGrid.tabName }}" aria-labelledby="{{ dataGrid.tabName }}-tab">
             <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="get" class="forkForms">
               <div class="row">
                 <div class="col-md-12">

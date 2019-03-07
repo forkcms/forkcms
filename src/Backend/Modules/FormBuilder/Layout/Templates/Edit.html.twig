@@ -23,18 +23,18 @@
     <div class="col-md-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab">{{ 'lbl.General'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link active" href="#tabGeneral" aria-controls="tabGeneral" role="tab" data-toggle="tab" aria-selected="true" id="general-tab">{{ 'lbl.General'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabFields" aria-controls="tabFields" role="tab" data-toggle="tab">{{ 'lbl.Fields'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabFields" aria-controls="tabFields" role="tab" data-toggle="tab" aria-selected="false" id="field-tab">{{ 'lbl.Fields'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabExtra" aria-controls="tabExtra" role="tab" data-toggle="tab" aria-selected="false" id="extra-tab">{{ 'lbl.Extra'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabGeneral">
+          <div role="tabpanel" class="tab-pane show active" id="tabGeneral" aria-labelledby="general-tab">
             <div class="row">
               <div class="col-lg-6">
                 <div class="card card-default">
@@ -100,7 +100,7 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabFields">
+          <div role="tabpanel" class="tab-pane" id="tabFields" aria-labelledby="field-tab">
             <div class="row">
               <div class="col-md-12">
                 <p class="alert alert-warning alert-xs">
@@ -204,7 +204,7 @@
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabExtra">
+          <div role="tabpanel" class="tab-pane" id="tabExtra" aria-labelledby="extra-tab">
             <div class="row">
               <div class="col-md-12">
                 <label for="identifier" class="control-label">
@@ -245,18 +245,18 @@
         <div class="modal-body">
           <input type="hidden" name="textbox_id" id="textboxId" value="" />
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabTextboxBasic" aria-controls="tabTextboxBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link active" href="#tabTextboxBasic" aria-controls="tabTextboxBasic" role="tab" data-toggle="tab" aria-selected="true" id="textbox-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabTextboxProperties" aria-controls="tabTextboxProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabTextboxProperties" aria-controls="tabTextboxProperties" role="tab" data-toggle="tab" aria-selected="false" id="textbox-prop-tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabTextboxAdvanced" aria-controls="tabTextboxAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabTextboxAdvanced" aria-controls="tabTextboxAdvanced" role="tab" data-toggle="tab" aria-selected="false" id="textbox-advanced-tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextboxBasic">
+            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextboxBasic" aria-labelledby="textbox-basic-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -270,7 +270,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabTextboxProperties">
+            <div role="tabpanel" class="tab-pane" id="tabTextboxProperties" aria-labelledby="textbox-prop-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -363,7 +363,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextboxAdvanced">
+            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextboxAdvanced" aria-labelledby="textbox-advanced-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -397,18 +397,18 @@
         <div class="modal-body">
           <input type="hidden" name="textarea_id" id="textareaId" value="" />
           <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabTextareaBasic" aria-controls="tabTextareaBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link active" href="#tabTextareaBasic" aria-controls="tabTextareaBasic" role="tab" data-toggle="tab" aria-selected="true" id="textarea-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabTextareaProperties" aria-controls="tabTextareaProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabTextareaProperties" aria-controls="tabTextareaProperties" role="tab" data-toggle="tab" aria-selected="false" id="textarea-prop-tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabTextareaAdvanced" aria-controls="tabTextareaAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabTextareaAdvanced" aria-controls="tabTextareaAdvanced" role="tab" data-toggle="tab" aria-selected="false" id="textarea-advanced-tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic">
+            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic" aria-labelledby="textarea-basic-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -422,7 +422,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabTextareaProperties">
+            <div role="tabpanel" class="tab-pane" id="tabTextareaProperties" aria-labelledby="textarea-prop-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -470,7 +470,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextareaAdvanced">
+            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextareaAdvanced" aria-labelledby="textarea-advanced-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -504,18 +504,18 @@
         <div class="modal-body">
           <input type="hidden" name="datetime_id" id="datetimeId" value="" />
           <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabDatetimeBasic" aria-controls="tabDatetimeBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabDatetimeBasic" aria-controls="tabDatetimeBasic" role="tab" data-toggle="tab" aria-selected="true" id="datetime-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabDatetimeProperties" aria-controls="tabDatetimeProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabDatetimeProperties" aria-controls="tabDatetimeProperties" role="tab" data-toggle="tab" aria-selected="false" id="datetime-prop-tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabDatetimeAdvanced" aria-controls="tabDatetimeAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabDatetimeAdvanced" aria-controls="tabDatetimeAdvanced" role="tab" data-toggle="tab" aria-selected="false" id="datetime-adv-tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDatetimeBasic">
+            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDatetimeBasic" aria-labelledby="datetime-basic-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -529,7 +529,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabDatetimeProperties">
+            <div role="tabpanel" class="tab-pane" id="tabDatetimeProperties" aria-labelledby="datetime-prop-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group jsDefaultValue">
@@ -582,7 +582,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDatetimeAdvanced">
+            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDatetimeAdvanced" aria-labelledby="datetime-adv-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -612,18 +612,18 @@
         <div class="modal-body">
           <input type="hidden" name="dropdown_id" id="dropdownId" value="" />
           <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabDropdownBasic" aria-controls="tabDropdownBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabDropdownBasic" aria-controls="tabDropdownBasic" role="tab" data-toggle="tab" aria-selected="true" id="dropdown-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabDropdownProperties" aria-controls="tabDropdownProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabDropdownProperties" aria-controls="tabDropdownProperties" role="tab" data-toggle="tab" aria-selected="false" id="dropdown-prop-tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabDropdownAdvanced" aria-controls="tabDropdownAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabDropdownAdvanced" aria-controls="tabDropdownAdvanced" role="tab" data-toggle="tab" aria-selected="false" id="dropdown-adv-tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDropdownBasic">
+            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDropdownBasic" aria-labelledby="dropdown-basic-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -642,7 +642,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabDropdownProperties">
+            <div role="tabpanel" class="tab-pane" id="tabDropdownProperties" aria-labelledby="dropdown-prop-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -669,7 +669,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDropdownAdvanced">
+            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDropdownAdvanced" aria-labelledby="dropdown-adv-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -699,18 +699,18 @@
         <div class="modal-body">
           <input type="hidden" name="radiobutton_id" id="radiobuttonId" value="" />
           <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabRadiobuttonBasic" aria-controls="tabRadiobuttonBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabRadiobuttonBasic" aria-controls="tabRadiobuttonBasic" role="tab" data-toggle="tab" aria-selected="true" id="radio-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabRadiobuttonProperties" aria-controls="tabRadiobuttonProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabRadiobuttonProperties" aria-controls="tabRadiobuttonProperties" role="tab" data-toggle="tab" aria-selected="false" id="radio-prop-tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabRadiobuttonAdvanced" aria-controls="tabRadiobuttonAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabRadiobuttonAdvanced" aria-controls="tabRadiobuttonAdvanced" role="tab" data-toggle="tab" aria-selected="false" id="radio-adv-tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabRadiobuttonBasic">
+            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabRadiobuttonBasic" aria-labelledby="radio-basic-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -728,7 +728,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabRadiobuttonProperties">
+            <div role="tabpanel" class="tab-pane" id="tabRadiobuttonProperties" aria-labelledby="radio-prop-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -755,7 +755,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabRadiobuttonAdvanced">
+            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabRadiobuttonAdvanced" aria-labelledby="radio-adv-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -785,18 +785,18 @@
         <div class="modal-body">
           <input type="hidden" name="checkbox_id" id="checkboxId" value="" />
           <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#tabCheckboxBasic" aria-controls="tabCheckboxBasic" role="tab" data-toggle="tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabCheckboxBasic" aria-controls="tabCheckboxBasic" role="tab" data-toggle="tab" aria-selected="true" id="checkbox-basic-tab">{{ 'lbl.Basic'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabCheckboxProperties" aria-controls="tabCheckboxProperties" role="tab" data-toggle="tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabCheckboxProperties" aria-controls="tabCheckboxProperties" role="tab" data-toggle="tab" aria-selected="false" id="checkbox-prop-tab">{{ 'lbl.Properties'|trans|ucfirst }}</a>
             </li>
-            <li role="presentation">
-              <a href="#tabCheckboxAdvanced" aria-controls="tabCheckboxAdvanced" role="tab" data-toggle="tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#tabCheckboxAdvanced" aria-controls="tabCheckboxAdvanced" role="tab" data-toggle="tab" aria-selected="false" id="checkbox-adv-tab">{{ 'lbl.Advanced'|trans|ucfirst }}</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabCheckboxBasic">
+            <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabCheckboxBasic" aria-labelledby="checkbox-basic-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -814,7 +814,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="tabCheckboxProperties">
+            <div role="tabpanel" class="tab-pane" id="tabCheckboxProperties" aria-labelledby="checkbox-prop-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -841,7 +841,7 @@
                 </div>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabCheckboxAdvanced">
+            <div role="tabpanel" class="tab-pane jsFieldTab" id="tabCheckboxAdvanced" aria-labelledby="checkbox-adv-tab">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">

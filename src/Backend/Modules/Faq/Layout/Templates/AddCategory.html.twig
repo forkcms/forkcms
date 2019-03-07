@@ -10,16 +10,16 @@
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div>
-        <ul class="nav nav-tabs nav-tabs-flex" role="tablist">
-          <li role="presentation" class="active mr-auto">
-            <a href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
+        <ul class="nav nav-tabs justify-content-end" role="tablist">
+          <li class="nav-item mr-auto">
+            <a class="nav-link active" href="#tabContent" aria-controls="tabContent" role="tab" data-toggle="tab" aria-selected="true" id="content-tab">{{ 'lbl.Content'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabSEO" aria-controls="tabSEO" role="tab" data-toggle="tab" aria-selected="false" id="seo-tab">{{ 'lbl.SEO'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabContent">
+          <div role="tabpanel" class="tab-pane show active" id="tabContent" aria-labelledby="content-tab">
             <div class="form-group last">
               <label for="title" class="control-label">
                 {{ 'lbl.Title'|trans|ucfirst }}
@@ -37,7 +37,7 @@
               {% endif %}
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabSEO">
+          <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
             {% seo %}
           </div>
         </div>

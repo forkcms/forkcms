@@ -7,54 +7,54 @@
         <h4 class="modal-title" id="addMediaDialogTitle">{{ 'lbl.MediaConnect'|trans|ucfirst }}</h4>
       </div>
       <div class="modal-body">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab" data-toggle="tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
+        <ul class="nav nav-tabs justify-content-end" role="tablist">
+          <li class="nav-item mr-auto">
+            <a class="nav-link" href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab" data-toggle="tab" aria-selected="false" id="upload-media-tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabLibrary" aria-controls="tabLibrary" role="tab" data-toggle="tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link active" href="#tabLibrary" aria-controls="tabLibrary" role="tab" data-toggle="tab" aria-selected="true" id="library-tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabUploadMedia">
+          <div role="tabpanel" class="tab-pane" id="tabUploadMedia" aria-labelledby="upload-media-tab">
             {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabLibrary">
+          <div role="tabpanel" class="tab-pane show active" id="tabLibrary" aria-labelledby="library-tab">
             <div class="options">
               <label for="folders">{{ 'msg.MediaYouAreHere'|trans }}</label>
               <select id="mediaFolders"></select>
             </div>
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active">
-                <a href="#tabImage" aria-controls="tabImage" role="tab" data-toggle="tab">{{ 'lbl.MediaImages'|trans|ucfirst }} <span id="mediaCountImage">(0)</span></a>
+              <li class="nav-item">
+                <a class="nav-link active" href="#tabImage" aria-controls="tabImage" role="tab" data-toggle="tab" aria-selected="true" id="image-tab">{{ 'lbl.MediaImages'|trans|ucfirst }} <span id="mediaCountImage">(0)</span></a>
               </li>
-              <li role="presentation">
-                <a href="#tabFile" aria-controls="tabFile" role="tab" data-toggle="tab">{{ 'lbl.MediaFiles'|trans|ucfirst }} <span id="mediaCountFile">(0)</span></a>
+              <li class="nav-item">
+                <a class="nav-link" href="#tabFile" aria-controls="tabFile" role="tab" data-toggle="tab" aria-selected="false" id="file-tab">{{ 'lbl.MediaFiles'|trans|ucfirst }} <span id="mediaCountFile">(0)</span></a>
               </li>
-              <li role="presentation">
-                <a href="#tabMovie" aria-controls="tabMovie" role="tab" data-toggle="tab">{{ 'lbl.MediaMovies'|trans|ucfirst }} <span id="mediaCountMovie">(0)</span></a>
+              <li class="nav-item">
+                <a class="nav-link" href="#tabMovie" aria-controls="tabMovie" role="tab" data-toggle="tab" aria-selected="false" id="movie-tab">{{ 'lbl.MediaMovies'|trans|ucfirst }} <span id="mediaCountMovie">(0)</span></a>
               </li>
-              <li role="presentation">
-                <a href="#tabAudio" aria-controls="tabAudio" role="tab" data-toggle="tab">{{ 'lbl.MediaAudio'|trans|ucfirst }} <span id="mediaCountAudio">(0)</span></a>
+              <li class="nav-item">
+                <a class="nav-link" href="#tabAudio" aria-controls="tabAudio" role="tab" data-toggle="tab" aria-selected="false" id="audio-tab">{{ 'lbl.MediaAudio'|trans|ucfirst }} <span id="mediaCountAudio">(0)</span></a>
               </li>
             </ul>
             <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="tabImage">
+              <div role="tabpanel" class="tab-pane show active" id="tabImage" aria-labelledby="image-tab">
                 <div class="table-responsive">
                   <table id="mediaTableImage" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
                 </div>
               </div>
-              <div role="tabpanel" class="tab-pane" id="tabFile">
+              <div role="tabpanel" class="tab-pane" id="tabFile" aria-labelledby="file-tab">
                 <div class="table-responsive">
                   <table id="mediaTableFile" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
                 </div>
               </div>
-              <div role="tabpanel" class="tab-pane" id="tabMovie">
+              <div role="tabpanel" class="tab-pane" id="tabMovie" aria-labelledby="movie-tab">
                 <div class="table-responsive">
                   <table id="mediaTableMovie" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
                 </div>
               </div>
-              <div role="tabpanel" class="tab-pane" id="tabAudio">
+              <div role="tabpanel" class="tab-pane" id="tabAudio" aria-labelledby="audio-tab">
                 <div class="table-responsive">
                   <table id="mediaTableAudio" class="table table-hover table-striped fork-data-grid jsDataGrid mediaTable"></table>
                 </div>

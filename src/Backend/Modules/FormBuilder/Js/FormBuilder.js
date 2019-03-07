@@ -769,7 +769,7 @@ jsBackend.FormBuilder.Fields = {
     $('#datetimeDialog').find('.defaultValue').show()
 
     // select first tab
-    $('#' + id + ' .nav-tabs a:first').tab('show')
+    $('#' + id + ' .nav-tabs .nav-link:first').tab('show')
   },
 
   /**

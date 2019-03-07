@@ -10,18 +10,18 @@
     <div class="col-md-12">
       <div>
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#tabPublished" aria-controls="tabPublished" role="tab" data-toggle="tab">{{ 'lbl.Published'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link active" href="#tabPublished" aria-controls="tabPublished" role="tab" data-toggle="tab" aria-selected="true" id="published-tab">{{ 'lbl.Published'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabModeration" aria-controls="tabModeration" role="tab" data-toggle="tab">{{ 'lbl.WaitingForModeration'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabModeration" aria-controls="tabModeration" role="tab" data-toggle="tab" aria-selected="false" id="moderation-tab">{{ 'lbl.WaitingForModeration'|trans|ucfirst }}</a>
           </li>
-          <li role="presentation">
-            <a href="#tabSpam" aria-controls="tabSpam" role="tab" data-toggle="tab">{{ 'lbl.Spam'|trans|ucfirst }}</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#tabSpam" aria-controls="tabSpam" role="tab" data-toggle="tab" aria-selected="false" id="spam-tab">{{ 'lbl.Spam'|trans|ucfirst }}</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabPublished">
+          <div role="tabpanel" class="tab-pane show active" id="tabPublished" aria-labelledby="published-tab">
             {% if dgPublished %}
               <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsPublished">
                 <input type="hidden" name="from" value="published" />
@@ -66,7 +66,7 @@
               <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
             {% endif %}
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabModeration">
+          <div role="tabpanel" class="tab-pane" id="tabModeration" aria-labelledby="moderation-tab">
             {% if dgModeration %}
               <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsModeration">
                 <input type="hidden" name="from" value="moderation" />
@@ -111,7 +111,7 @@
               <p>{{ 'msg.NoComments'|trans|ucfirst }}</p>
             {% endif %}
           </div>
-          <div role="tabpanel" class="tab-pane" id="tabSpam">
+          <div role="tabpanel" class="tab-pane" id="tabSpam" aria-labelledby="spam-tab">
             {% if dgSpam %}
               <form action="{{ geturl('mass_comment_action') }}" method="get" class="forkForms" id="commentsSpam">
                 <input type="hidden" name="from" value="spam" />

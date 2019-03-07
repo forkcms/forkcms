@@ -14,21 +14,21 @@
           <div class="container-fluid container-fluid-large">
             <div class="row">
               <div class="col-sm-12">
-                <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="pull-right">
-                    <a href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab"
-                       data-toggle="tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
+                <ul class="nav nav-tabs justify-content-end" role="tablist">
+                  <li class="nav-item mr-auto">
+                    <a class="nav-link" href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab"
+                       data-toggle="tab" aria-selected="false" id="upload-media-tab">{{ 'lbl.MediaNew'|trans|ucfirst }}</a>
                   </li>
-                  <li role="presentation" class="active">
-                    <a href="#tabLibrary" aria-controls="tabLibrary" role="tab"
-                       data-toggle="tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#tabLibrary" aria-controls="tabLibrary" role="tab"
+                       data-toggle="tab" aria-selected="true" id="library-tab">{{ 'lbl.MediaLibraryTab'|trans|ucfirst }}</a>
                   </li>
                 </ul>
                 <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane" id="tabUploadMedia" data-context="selection">
+                  <div role="tabpanel" class="tab-pane" id="tabUploadMedia" data-context="selection" aria-labelledby="upload-media-tab">
                     {% include "MediaLibrary/Resources/views/BackendMediaLibraryUpload.html.twig" %}
                   </div>
-                  <div role="tabpanel" class="tab-pane active" id="tabLibrary">
+                  <div role="tabpanel" class="tab-pane show active" id="tabLibrary" aria-labelledby="library-tab">
                     <div class="row">
                       <div class="col-sm-3">
                         <div id="mediaTree">
@@ -44,19 +44,18 @@
                         {% set alreadyOneActive = false %}
                         <ul class="nav nav-tabs" role="tablist">
                           {% for dataGrid in dataGrids %}
-                            <li role="presentation"
-                                class="{% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}active{% set alreadyOneActive = true %}{% endif %}">
-                              <a href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab"
-                                 data-toggle="tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
-                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link{% if dataGrid.numberOfResults > 0 and not alreadyOneActive %} active{% set alreadyOneActive = true %}{% endif %}" href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab"
+                                 data-toggle="tab"{% if dataGrid.numberOfResults > 0 and not alreadyOneActive %} aria-selected="true"{% endif %} id="{{ dataGrid.tabName }}-tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
+                            </li >
                           {% endfor %}
                         </ul>
                         <div class="tab-content">
                           {% set alreadyOneActive = false %}
                           {% for dataGrid in dataGrids %}
                             <div role="tabpanel"
-                                 class="tab-pane {% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}active{% set alreadyOneActive = true %}{% endif %}"
-                                 id="{{ dataGrid.tabName }}">
+                                 class="tab-pane {% if dataGrid.numberOfResults > 0 and not alreadyOneActive %}show active{% set alreadyOneActive = true %}{% endif %}"
+                                 id="{{ dataGrid.tabName }}" aria-labelledby="{{ dataGrid.tabName }}-tab">
                               <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}"
                                     method="get" class="forkForms">
                                 <div class="row">
