@@ -1147,7 +1147,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' +
+            var $link = $('<a href="#" class="btn btn-success btn-sm btn-block" data-direct-url="' +
               responseJSON.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
 
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
@@ -1279,7 +1279,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
           // Add select button if tab in selection context
           if ($('#tabUploadMedia').data('context') === 'selection') {
-            var $link = $('<a href="#" class="btn btn-success btn-xs btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
+            var $link = $('<a href="#" class="btn btn-success btn-sm btn-block" data-direct-url="' + json.data.direct_url + '">&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Select')) + '</a>')
             $link.on('click', jsBackend.mediaLibraryHelper.modalSelection.sendToParent)
             $('li[id="media-' + json.data.id + '"]').find('.mediaHolder.mediaHolderMovie')
               .append($link)

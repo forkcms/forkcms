@@ -1,10 +1,11 @@
 .btn {
+  font-size: $font-size-base * 0.875;
   -webkit-appearance: none;
   border-radius: 3px;
   padding: 9px 9px 10px;
 
   .fa {
-    margin: 0 3px;
+    margin: 0 3px 0 0;
   }
 
   .btn-text {
@@ -13,19 +14,12 @@
     margin: 0 3px;
   }
 
-  @include media-breakpoint-up(sm) {
-    .btn-text {
-      display: inline-block;
-      font-size: $font-size-base;
-      margin: 0;
-    }
-  }
-
   &.ui-sortable-handle {
     cursor: move;
   }
 
-  &.btn-xs {
+  &.btn-sm {
+    font-size: $font-size-sm;
     padding: 2px 8px;
   }
 
@@ -33,14 +27,21 @@
     font-size: $font-size-sm;
     padding: 4px 15px 5px;
   }
+
+  @include media-breakpoint-up(sm) {
+
+    .btn-text {
+      display: inline-block;
+      font-size: $font-size-base;
+      margin: 0;
+    }
+  }
 }
 
-.btn-icon-only {
-  .fa {
-    padding-right: 0;
-    margin-left: 0;
-    margin-right: 0;
-  }
+.btn-icon-only .fa {
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .btn-group {

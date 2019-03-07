@@ -942,7 +942,7 @@
             var value = utils.string.stripForTag(elements[i])
 
             html += '    <li class="list-group-item">' +
-              '        <button type="button" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash" aria-hidden="true"></span></button></span>' +
+              '        <button type="button" class="btn btn-danger btn-sm deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="fa fa-trash" aria-hidden="true"></span></button></span>' +
               '       <span><strong>' + value + '</strong>' +
               '    </li>'
           }
@@ -1130,7 +1130,7 @@
           // loop elements
           for (var i in elements) {
             html += '    <li class="list-group-item">' +
-              '        <button class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+              '        <button class="btn btn-danger btn-sm deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
               '            <span class="fa fa-trash" aria-hidden="true"></span><span class="sr-only">' + options.removeLabel + '</span>' +
               '        </button>' +
               '        <span><strong>' + $('#' + id + ' option[value="' + elements[i] + '"]').html() + '</strong></span>' +
@@ -1246,7 +1246,7 @@
         '</div>' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '<span class="input-group-btn"><button id="addButton-' + id + '" class="btn btn-success">' +
+        '<span class="input-group-btn"><button id="addButton-' + id + '" class="btn btn-primary">' +
         '<span class="fa fa-plus-square" aria-hidden="true"></span>' +
         '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
         '</button></span>' +

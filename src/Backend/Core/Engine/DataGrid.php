@@ -117,7 +117,7 @@ class DataGrid extends \SpoonDataGrid
         )) {
             // rebuild value, it should have special markup
             $value =
-                '<a href="' . $url . '" class="btn btn-default btn-xs pull-right">' .
+                '<a href="' . $url . '" class="btn btn-default btn-sm pull-right">' .
                 ($icon ? '<span class="fa ' . $icon . '" aria-hidden="true"></span>&nbsp;' : '') .
                 ucfirst($value) .
                 '</a>';
@@ -129,7 +129,7 @@ class DataGrid extends \SpoonDataGrid
         if (in_array($lowercasedName, ['use_revision', 'use_draft'], true)) {
             // rebuild value, it should have special markup
             $value =
-                '<a href="' . $url . '" class="btn btn-default btn-xs">' .
+                '<a href="' . $url . '" class="btn btn-default btn-sm">' .
                 ($icon ? '<span class="fa ' . $icon . '"></span>&nbsp;' : '') .
                 ucfirst($value) .
                 '</a>';
@@ -198,7 +198,7 @@ class DataGrid extends \SpoonDataGrid
 
         // no anchorAttributes set means we set the default class attribute for the anchor
         if (empty($anchorAttributes)) {
-            $anchorAttributes['class'] = 'btn btn-default btn-xs';
+            $anchorAttributes['class'] = 'btn btn-default btn-sm';
         }
 
         // loop the attributes, build our attributes string
@@ -288,10 +288,10 @@ class DataGrid extends \SpoonDataGrid
         $this->addColumn(
             'sortHandle',
             null,
-            '<button data-role="order-move" data-direction="up" class="btn btn-default btn-xs" aria-label="' . BackendLanguage::lbl('MoveUpOnePosition') . '">
+            '<button data-role="order-move" data-direction="up" class="btn btn-default btn-sm" aria-label="' . BackendLanguage::lbl('MoveUpOnePosition') . '">
                      <span class="fa fa-arrow-up" aria-hidden="true"></span>
                    </button>
-                   <button data-role="order-move" data-direction="down" class="btn btn-default btn-xs" aria-label="' . BackendLanguage::lbl('MoveDownOnePosition') . '">
+                   <button data-role="order-move" data-direction="down" class="btn btn-default btn-sm" aria-label="' . BackendLanguage::lbl('MoveDownOnePosition') . '">
                      <span class="fa fa-arrow-down" aria-hidden="true"></span>
                    </button>'
         );

@@ -119,11 +119,11 @@
                               <span>{{ 'lbl.Details'|trans|ucfirst }}</span>
                             </a>
                             <button class="btn js-theme-selector {% if installedTheme.selected %}btn-primary{% else %}btn-default{% endif %}">
-                              <div class="selected-theme{% if not installedTheme.selected %} hidden{% endif %}">
+                              <div class="selected-theme{% if not installedTheme.selected %} d-none{% endif %}">
                                 {{ macro.icon('check') }}
                                 <span>{{ 'lbl.SelectedTheme'|trans|ucfirst }}</span>
                               </div>
-                              <div class="available-theme{% if installedTheme.selected %} hidden{% endif %}">
+                              <div class="available-theme{% if installedTheme.selected %} d-none{% endif %}">
                                 <span>{{ 'lbl.UseThisTheme'|trans|ucfirst }}</span>
                               </div>
                             </button>
