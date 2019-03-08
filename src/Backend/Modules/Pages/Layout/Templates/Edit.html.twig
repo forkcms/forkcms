@@ -191,91 +191,77 @@
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabSettings" aria-labelledby="setting-tab">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <ul class="list-unstyled">
-                    {% for _itr_22 in hidden %}
-                      <li class="radio">
-                        <label for="{{ _itr_22.id }}">{{ _itr_22.rbtHidden|raw }} {{ _itr_22.label|ucfirst }}</label>
-                      </li>
-                    {% endfor %}
-                  </ul>
+            <div class="form-group">
+              {% for _itr_22 in hidden %}
+                <div class="form-check">
+                  {{ _itr_22.rbtHidden|raw }}
+                  <label class="form-check-label" for="{{ _itr_22.id }}">{{ _itr_22.label|ucfirst }}</label>
                 </div>
-                <div class="form-group">
-                  <ul class="list-unstyled">
-                    <li class="checkbox">
-                      <label for="isAction" class="control-label">{% form_field is_action %} {{ 'msg.IsAction'|trans|ucfirst }}</label>
-                    </li>
-                  </ul>
-                </div>
-                {% if isGod %}
-                  <div class="form-group">
-                    <ul class="list-unstyled">
-                      {% for _itr_23 in allow %}
-                        <li class="checkbox">
-                          <label for="{{ _itr_23.id }}">{{ _itr_23.chkAllow|raw }} {{ _itr_23.label }}</label>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  </div>
-                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <div class="form-check">
+                {% form_field is_action %}
+                <label for="isAction" class="form-check-label">{{ 'msg.IsAction'|trans|ucfirst }}</label>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card card-default jsCheckboxDropdownCombo last" data-multiple="true">
-                  <div class="card-heading">
-                    <label for="movePage">{% form_field move_page %} {{ 'lbl.MoveThisPage'|trans|ucfirst }}</label>
+            {% if isGod %}
+              <div class="form-group">
+                {% for _itr_23 in allow %}
+                  <div class="form-check">
+                    {{ _itr_23.chkAllow|raw }}
+                    <label class="form-check-label" for="{{ _itr_23.id }}">{{ _itr_23.label }}</label>
                   </div>
-                  <div class="card-body">
-                    <div class="form-group">
-                      <label for="movePageTree" class="control-label">{{ 'lbl.MovePageTree'|trans|ucfirst }}</label>
-                      {% form_field move_page_tree %}
-                      {% form_field_error move_page_tree %}
-                    </div>
-                    <div class="form-group">
-                      <label for="movePageReferencePage" class="control-label">{{ 'lbl.MovePageReferencePage'|trans|ucfirst }}</label>
-                      {% form_field move_page_reference_page %}
-                      {% form_field_error move_page_reference_page %}
-                    </div>
-                    <div class="form-group last">
-                      <label for="movePageType" class="control-label">{{ 'lbl.MovePageType'|trans|ucfirst }}</label>
-                      {% form_field move_page_type %}
-                      {% form_field_error move_page_type %}
-                    </div>
-                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="card card-default jsCheckboxDropdownCombo last" data-multiple="true">
+              <div class="card-heading">
+                <label for="movePage">{% form_field move_page %} {{ 'lbl.MoveThisPage'|trans|ucfirst }}</label>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="movePageTree" class="control-label">{{ 'lbl.MovePageTree'|trans|ucfirst }}</label>
+                  {% form_field move_page_tree %}
+                  {% form_field_error move_page_tree %}
+                </div>
+                <div class="form-group">
+                  <label for="movePageReferencePage" class="control-label">{{ 'lbl.MovePageReferencePage'|trans|ucfirst }}</label>
+                  {% form_field move_page_reference_page %}
+                  {% form_field_error move_page_reference_page %}
+                </div>
+                <div class="form-group last">
+                  <label for="movePageType" class="control-label">{{ 'lbl.MovePageType'|trans|ucfirst }}</label>
+                  {% form_field move_page_type %}
+                  {% form_field_error move_page_type %}
                 </div>
               </div>
             </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="tabRedirect" aria-labelledby="redirect-tab">
-            <div class="row">
-              <div class="col-md-12">
-                {% if rbtRedirectError %}
-                  <div class="alert alert-danger">{{ rbtRedirectError }}</div>
-                {% endif %}
+            {% if rbtRedirectError %}
+              <div class="alert alert-danger">{{ rbtRedirectError }}</div>
+            {% endif %}
 
-                <ul class="list-unstyled radiobuttonFieldCombo">
-                  {% for _itr_24 in redirect %}
-                    <li class="radio">
-                      <div class="form-group">
-                        <label for="{{ _itr_24.id }}">{{ _itr_24.rbtRedirect|raw }} {{ _itr_24.label }}</label>
-                        {% if _itr_24.isInternal %}
-                          <p class="help-block">{{ 'msg.HelpInternalRedirect'|trans|ucfirst }}</p>
-                          {% form_field internal_redirect %} {% form_field_error internal_redirect %}
-                        {% endif %}
-                        {% if _itr_24.isExternal %}
+            <div class="radiobuttonFieldCombo">
+              {% for _itr_24 in redirect %}
+                <div class="form-group">
+                  <div class="form-check">
+                    {{ _itr_24.rbtRedirect|raw }}
+                    <label class="form-check-label" for="{{ _itr_24.id }}">{{ _itr_24.label }}</label>
+                  </div>
+                  {% if _itr_24.isInternal %}
+                    <small class="form-text text-muted">{{ 'msg.HelpInternalRedirect'|trans|ucfirst }}</small>
+                    {% form_field internal_redirect %} {% form_field_error internal_redirect %}
+                  {% endif %}
 
-                          <p class="help-block">{{ 'msg.HelpExternalRedirect'|trans|ucfirst }}</p>
-                          {% form_field external_redirect %} {% form_field_error external_redirect %}
-                        {% endif %}
-                      </div>
-                    </li>
-                  {% endfor %}
-                </ul>
-
-              </div>
+                  {% if _itr_24.isExternal %}
+                    <small class="form-text text-muted">{{ 'msg.HelpExternalRedirect'|trans|ucfirst }}</small>
+                    {% form_field external_redirect %} {% form_field_error external_redirect %}
+                  {% endif %}
+                </div>
+              {% endfor %}
             </div>
           </div>
           {% if showAuthenticationTab %}
@@ -283,24 +269,25 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group last">
-                  <li class="checkbox">
-                    <label for="authRequired" class="control-label">{% form_field auth_required %} {{ 'msg.AuthRequired'|trans|ucfirst }}</label>
-                  </li>
+                  <div class="form-check">
+                    {% form_field auth_required %}
+                    <label for="authRequired" class="form-check-label">{{ 'msg.AuthRequired'|trans|ucfirst }}</label>
+                  </div>
                   {% if authGroups %}
                   <div class="js-authentication-groups" {% if item.data.auth_required %} style="display: none;"{% endif %}>
                     <h4>{{ 'lbl.Groups'|trans|ucfirst }}</h4>
-                    <ul class="list-unstyled">
-                      {% for item in authGroups %}
-                        <li class="checkbox">
-                          <label for="{{ item.id }}">{{ item.chkAuthGroups|raw }} {{ item.label }}</label>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  </div>
+                    {% for item in authGroups %}
+                      <div class="form-check">
+                        {{ item.chkAuthGroups|raw }}
+                        <label class="form-check-label" for="{{ item.id }}">{{ item.label }}</label>
+                      </div>
+                    {% endfor %}
+                    </div>
                   {% endif %}
-                  <li class="checkbox d-none" data-role="remove-from-search-index">
-                    <label for="removeFromSearchIndex" class="control-label">{% form_field remove_from_search_index %} {{ 'msg.RemoveFromSearchIndex'|trans|ucfirst }}</label>
-                  </li>
+                  <div class="form-check d-none" data-role="remove-from-search-index">
+                    {% form_field remove_from_search_index %}
+                    <label for="removeFromSearchIndex" class="form-check-label">{{ 'msg.RemoveFromSearchIndex'|trans|ucfirst }}</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -331,35 +318,29 @@
           </div>
           {% if showTags %}
             <div role="tabpanel" class="tab-pane" id="tabTags" aria-labelledby="tags-tab">
-              <div class="row">
-                <div class="col-md-12">
-                  <label for="tags">{{ 'msg.AddTagsHere'|trans }}</label>
-                  {% form_field tags %} {% form_field_error tags %}
-                  <div class="help-block" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</div>
-                </div>
+              <div class="form-group last">
+                <label for="tags">{{ 'msg.AddTagsHere'|trans }}</label>
+                {% form_field tags %} {% form_field_error tags %}
+                <small class="form-text text-muted" id="tags-info">{{ 'msg.HelpTextTags'|trans }}</small>
               </div>
             </div>
           {% endif %}
           <div role="tabpanel" class="tab-pane" id="tabSEO" aria-labelledby="seo-tab">
             {% seo %}
             {% if hreflangFields %}
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card card-default">
-                    <div class="card-heading">
-                      <h2 class="card-title">{{ 'lbl.Languages'|trans|ucfirst }}</h2>
+              <fieldset class="last">
+                <legend>{{ 'lbl.Languages'|trans|ucfirst }}</legend>
+                <div class="row">
+                  {% for language, field in hreflangFields %}
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>
+                        {{ field.field_hreflang|raw }}
+                      </div>
                     </div>
-                    <div class="card-body">
-                      {% for language, field in hreflangFields %}
-                        <div class="form-group{% if loop.last %} last{% endif %}">
-                          <label for="hreflang{{ language|ucfirst }}">{{ language|upper }}</label>
-                          {{ field.field_hreflang|raw }}
-                        </div>
-                      {% endfor %}
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
-              </div>
+              </fieldset>
             {% endif %}
           </div>
         </div>

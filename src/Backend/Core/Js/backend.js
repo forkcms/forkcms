@@ -676,6 +676,7 @@ jsBackend.controls = {
         var $selectedRadiobutton = $this.find('input:radio:checked')
 
         $radiobutton.on('click', function (e) {
+
           // redefine
           var $this = $(this)
 
@@ -683,7 +684,7 @@ jsBackend.controls = {
           $this.parents('.radiobuttonFieldCombo:first').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea').addClass('disabled').prop('disabled', true)
 
           // get fields that should be enabled
-          var $fields = $('input[name=' + $radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea')
+          var $fields = $('input[name=' + $radiobutton.attr('name') + ']:checked').parents('.form-group').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea')
 
           // enable
           $fields.removeClass('disabled').prop('disabled', false)

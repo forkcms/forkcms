@@ -211,7 +211,7 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $checked = (bool) $checked;
-        $class = (string) ($class ?? 'fork-form-checkbox');
+        $class = (string) ($class ?? 'fork-form-checkbox form-check-input');
         $classError = (string) ($classError ?? 'error form-control-danger is-invalid');
 
         // create and return a checkbox
@@ -269,7 +269,7 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $checked = ($checked !== null) ? (array) $checked : null;
-        $class = (string) ($class ?? 'fork-form-multi-checkbox');
+        $class = (string) ($class ?? 'fork-form-multi-checkbox form-check-input');
 
         // create and return a multi checkbox
         return parent::addMultiCheckbox($name, $values, $checked, $class);
@@ -320,7 +320,7 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $checked = ($checked !== null) ? (string) $checked : null;
-        $class = (string) ($class ?? 'fork-form-radio');
+        $class = (string) ($class ?? 'fork-form-radio form-check-input');
 
         // create and return a radio button
         return parent::addRadiobutton($name, $values, $checked, $class);
