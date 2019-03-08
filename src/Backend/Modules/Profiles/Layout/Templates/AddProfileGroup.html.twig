@@ -41,11 +41,11 @@
   </div>
   <div class="row fork-page-actions">
     <div class="col-md-12">
-      <div class="btn-toolbar">
+      <div class="btn-toolbar d-flex">
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Edit') ~ '&id=' ~ id ~ "#tabGroups", 'times', 'lbl.Cancel'|trans|ucfirst) }}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"addButton", "name":"add" }) }}
         </div>
       </div>

@@ -151,14 +151,14 @@
   </div>
   <div class="row fork-page-actions">
     <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-left" role="group">
+      <div class="btn-toolbar d-flex">
+        <div class="btn-group" role="group">
           {% if showFaqDelete %}
             {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "type":"button", "data-toggle":"modal", "data-target":"#confirmDelete" } ) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default' ) }}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-danger', { "id":"editButton", "type":"submit", "name":"edit" } ) }}
         </div>
       </div>

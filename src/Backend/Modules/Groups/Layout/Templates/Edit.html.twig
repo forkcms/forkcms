@@ -102,13 +102,13 @@
   </div>
   <div class="row fork-page-actions">
     <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-left" role="group">
+      <div class="btn-toolbar d-flex">
+        <div class="btn-group" role="group">
           {% if showGroupsDelete and allowGroupsDelete %}
             {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"type":"button", "data-toggle":"modal", "data-target":"#confirmDelete"}) }}
           {% endif %}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"type":"submit", "id":"editButton", "name":"edit"}) }}
         </div>
       </div>

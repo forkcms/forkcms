@@ -144,8 +144,8 @@
   </div>
   <div class="row fork-page-actions">
     <div class="col-md-12">
-      <div class="btn-toolbar">
-        <div class="btn-group pull-left" role="group">
+      <div class="btn-toolbar d-flex">
+        <div class="btn-group" role="group">
           {% if showProfilesDelete %}
             {% if deleted %}
               {{ macro.buttonIcon('', 'plus-square', 'lbl.Undelete'|trans|ucfirst, 'btn-primary', { "type":"button", "data-toggle":"modal", "data-target":"#confirmUndelete" }) }}
@@ -164,7 +164,7 @@
           {% endif %}
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"saveButton", "name":"edit" }) }}
         </div>
       </div>
