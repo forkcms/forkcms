@@ -1,25 +1,38 @@
 .breadcrumb {
   margin-bottom: 0;
-  padding: 12px 0 8px;
+  padding: 9px 0;
 
   li + li {
+    padding-left: 13px;
+    position: relative;
+
     &:before {
       color: $gray-550;
       content: '\f105';
       font-family: FontAwesome;
       font-size: $font-size-sm;
-      padding: 0 1px 0 6px;
+      position: absolute;
+      left: 0;
+      padding: 0 3px 0 5px;
     }
   }
 
-  li a {
-    color: $gray-700;
-    font-size: $font-size-base;
+  li {
+    font-size: $font-size-sm;
 
-    &:hover,
-    &:focus {
-      border-bottom: 1px solid $gray-550;
-      text-decoration: none;
+    span {
+      display: inline-block;
+    }
+
+    a {
+      display: inline-block;
+      color: $gray-700;
+
+      &:hover,
+      &:focus {
+        border-bottom: 1px solid $gray-550;
+        text-decoration: none;
+      }
     }
   }
 }

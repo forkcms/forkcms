@@ -32,7 +32,7 @@
 
     .btn-text {
       display: inline-block;
-      font-size: $font-size-base;
+      font-size: $font-size-base * 0.875;
       margin: 0;
     }
   }
@@ -51,6 +51,7 @@
     float: none;
     margin: 1px 0;
 
+    + .btn-group,
     + .btn {
       margin-left: 2px;
     }
@@ -66,6 +67,7 @@
       float: none;
       margin: 6px 0;
 
+      + .btn-group,
       + .btn {
         margin-left: 6px;
       }
@@ -114,14 +116,4 @@
 
 a.btn {
   text-decoration: none;
-}
-
-.btn-toolbar .btn-group {
-  .btn {
-    margin-bottom: 6px;
-  }
-
-  & + .btn-group {
-    margin-left: 1em;
-  }
 }

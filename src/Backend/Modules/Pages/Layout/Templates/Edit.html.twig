@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block actionbar %}
-  <div class="btn-toolbar pull-right">
+  <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
       {% if not item.is_hidden %}
 
@@ -34,7 +34,6 @@
         {{ macro.buttonIcon(geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}
       {% endif %}
 
-    </div>
       {% if showPagesAdd %}
         <div class="btn-group">
           <a type="button" href="{{ geturl('add') }}" class="btn btn-default pull-left">
@@ -52,6 +51,7 @@
           </ul>
         </div>
       {% endif %}
+    </div>
   </div>
 {% endblock %}
 

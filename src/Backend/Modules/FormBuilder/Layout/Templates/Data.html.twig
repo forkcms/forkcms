@@ -2,7 +2,7 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
-  <div class="btn-toolbar pull-right">
+  <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
       {% if showFormBuilderIndex %}
         {{ macro.buttonIcon( geturl('index'), 'list', 'lbl.Overview'|trans|ucfirst) }}

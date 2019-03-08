@@ -3,7 +3,7 @@
 
 {% block actionbar %}
     {% if not warnings %}
-      <div class="btn-toolbar pull-right">
+      <div class="btn-toolbar justify-content-end">
         <div class="btn-group" role="group">
           {% if showMediaGalleriesMediaGalleryAdd %}
             {{ macro.buttonIcon( geturl('MediaGalleryAdd'), 'plus-square', 'lbl.Add'|trans|capitalize, '', { "id":"addMediaGroupType" }) }}

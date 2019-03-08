@@ -8,7 +8,7 @@
     </div>
     <div class="col-md-6">
 
-      <div class="btn-toolbar pull-right">
+      <div class="btn-toolbar justify-content-end">
         <div class="btn-group" role="group">
           {% if showFormBuilderData %}
             {{ macro.buttonIcon( geturl('data') ~ '&id=' ~ formId ~ '&start_date=' ~ filter.start_date ~ '&end_date=' ~ filter.end_date, 'list', 'lbl.BackToData'|trans|ucfirst) }}

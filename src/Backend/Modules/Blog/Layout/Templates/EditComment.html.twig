@@ -2,7 +2,7 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 
 {% block actionbar %}
-  <div class="btn-toolbar pull-right">
+  <div class="btn-toolbar justify-content-end">
     <div class="btn-group" role="group">
       {{ macro.buttonIcon(SITE_URL ~ itemURL, 'eye', 'lbl.View'|trans|ucfirst, '', {"target":"_blank"}) }}
     </div>
