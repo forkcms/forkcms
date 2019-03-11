@@ -218,7 +218,10 @@
 
             <div class="card card-default jsCheckboxDropdownCombo last" data-multiple="true">
               <div class="card-heading">
-                <label for="movePage">{% form_field move_page %} {{ 'lbl.MoveThisPage'|trans|ucfirst }}</label>
+                <div class="form-check">
+                  {% form_field move_page %}
+                  <label class="form-check-label" for="movePage">{{ 'lbl.MoveThisPage'|trans|ucfirst }}</label>
+                </div>
               </div>
               <div class="card-body">
                 <div class="form-group">
