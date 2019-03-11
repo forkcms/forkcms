@@ -111,12 +111,6 @@
         <translation language="ru"><![CDATA[аудио]]></translation>
         <translation language="pl"><![CDATA[dzwięk]]></translation>
       </item>
-      <item type="message" name="MediaChoseToUpload">
-        <translation language="en"><![CDATA[Choose the media to upload.]]></translation>
-        <translation language="nl"><![CDATA[Kies de bestand(en) die je wil opladen.]]></translation>
-        <translation language="ru"><![CDATA[Выберите файл(ы), который вы хотите загрузить.]]></translation>
-        <translation language="pl"><![CDATA[Wybierz media do przesłania.]]></translation>
-      </item>
       <item type="label" name="MediaConnect">
         <translation language="en"><![CDATA[connect media]]></translation>
         <translation language="nl"><![CDATA[media koppelen]]></translation>
@@ -404,17 +398,35 @@
         <translation language="ru"><![CDATA[В папке нет медиа файлов.]]></translation>
         <translation language="pl"><![CDATA[Nie ma żadnych mediów w tym katalogu.]]></translation>
       </item>
-      <item type="message" name="MediaOrAddMediaFolder">
-        <translation language="en"><![CDATA[or add new folder]]></translation>
-        <translation language="nl"><![CDATA[of nieuwe map toevoegen]]></translation>
-        <translation language="ru"><![CDATA[или добавить новую папку]]></translation>
-        <translation language="pl"><![CDATA[lub dodaj nowy katalog]]></translation>
+      <item type="label" name="MediaAddNewMediaFolder">
+        <translation language="en"><![CDATA[add new folder]]></translation>
+        <translation language="nl"><![CDATA[nieuwe map toevoegen]]></translation>
+        <translation language="ru"><![CDATA[добавить новую папку]]></translation>
+        <translation language="pl"><![CDATA[dodaj nowy katalog]]></translation>
       </item>
       <item type="label" name="MediaStorageType">
         <translation language="en"><![CDATA[source]]></translation>
         <translation language="nl"><![CDATA[bron]]></translation>
         <translation language="ru"><![CDATA[источник]]></translation>
         <translation language="pl"><![CDATA[źródło]]></translation>
+      </item>
+      <item type="label" name="MediaUploadThisType">
+        <translation language="en"><![CDATA[type]]></translation>
+        <translation language="nl"><![CDATA[type]]></translation>
+        <translation language="ru"><![CDATA[тип]]></translation>
+        <translation language="pl"><![CDATA[rodzaj]]></translation>
+      </item>
+      <item type="label" name="MediaUploadToThisFolder">
+        <translation language="en"><![CDATA[location]]></translation>
+        <translation language="nl"><![CDATA[plaats]]></translation>
+        <translation language="ru"><![CDATA[место нахождения]]></translation>
+        <translation language="pl"><![CDATA[Lokalizacja]]></translation>
+      </item>
+      <item type="label" name="MediaWhichMovieToAdd">
+        <translation language="en"><![CDATA[video]]></translation>
+        <translation language="nl"><![CDATA[video]]></translation>
+        <translation language="ru"><![CDATA[видео]]></translation>
+        <translation language="pl"><![CDATA[wideo]]></translation>
       </item>
       <item type="message" name="MediaUploaded">
         <translation language="en"><![CDATA[Uploaded media.]]></translation>
@@ -434,18 +446,6 @@
         <translation language="ru"><![CDATA[Медиа файл "%1$s" успешно загружен.]]></translation>
         <translation language="pl"><![CDATA[Media "%1$s" przesłane pomyślnie.]]></translation>
       </item>
-      <item type="message" name="MediaUploadThisType">
-        <translation language="en"><![CDATA[What do you want to add?]]></translation>
-        <translation language="nl"><![CDATA[Wat wil je toevoegen?]]></translation>
-        <translation language="ru"><![CDATA[Что вы хотите добавить?]]></translation>
-        <translation language="pl"><![CDATA[Co chcesz dodać?]]></translation>
-      </item>
-      <item type="message" name="MediaUploadToThisFolder">
-        <translation language="en"><![CDATA[Upload to this folder:]]></translation>
-        <translation language="nl"><![CDATA[Toevoegen in de map:]]></translation>
-        <translation language="ru"><![CDATA[Загрузить в папку:]]></translation>
-        <translation language="pl"><![CDATA[NOrześlij do tego katalogu:]]></translation>
-      </item>
       <item type="message" name="MediaUploadTypeFiles">
         <translation language="en"><![CDATA[Images, files]]></translation>
         <translation language="nl"><![CDATA[Afbeeldingen, bestanden]]></translation>
@@ -463,12 +463,6 @@
         <translation language="nl"><![CDATA[U bevindt zich hier:]]></translation>
         <translation language="ru"><![CDATA[Вы здесь:]]></translation>
         <translation language="pl"><![CDATA[Jesteś tu:]]></translation>
-      </item>
-      <item type="message" name="MediaWhichMovieToAdd">
-        <translation language="en"><![CDATA[Which movie do you want to add?]]></translation>
-        <translation language="nl"><![CDATA[Welke video wil je toevoegen?]]></translation>
-        <translation language="ru"><![CDATA[Какое видео вы хотите добавить?]]></translation>
-        <translation language="pl"><![CDATA[Który film chcesz dodać?]]></translation>
       </item>
       <item type="message" name="MediaWillBeConnected">
         <translation language="en"><![CDATA[The following media will be connected when pressing "OK":]]></translation>

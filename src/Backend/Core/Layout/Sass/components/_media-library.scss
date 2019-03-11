@@ -1,0 +1,376 @@
+/**
+ * Media tree
+ */
+
+#mediaTree .tree-fork li[rel="folder"] a {
+  width: auto !important;
+  position: relative;
+
+  &:before {
+    content: "\f114";
+    color: #999;
+    font-family: FontAwesome;
+    font-size: 12px;
+    position: absolute;
+    left: 4px
+  }
+}
+
+/**
+ * Media library Helper
+ *
+ * Structure:
+ *   #mediaConnectedItems
+ *    .mediaConnectedBox
+ *    .mediaConnectedItems
+ */
+
+.media-library-media-library-media-group-helper-helper .mediaGroup {
+  margin-bottom: 0;
+}
+
+.mediaGroup {
+
+  .panel-body {
+    padding: 0;
+    border: none;
+
+    .helpTxt {
+      padding: 20px 25px 25px;
+      margin-bottom: 0;
+    }
+  }
+
+  .mediaConnectedBox {
+    background-color: #fff;
+  }
+
+  .media-group-type-errors {
+    padding: 0 25px 5px;
+  }
+}
+
+.panel-danger .mediaConnectedBox .mediaNoItems {
+  padding-bottom: 0;
+}
+
+#addGalleriesBox a {
+  float: right;
+}
+
+.mediaConnectedItems {
+  float: left;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.mediaConnectedItems {
+  padding: 5px 2px 2px 5px;
+}
+
+.mediaEditBox {
+  background: #eee;
+}
+
+.mediaEditBox {
+
+  ul {
+    padding: 10px;
+  }
+
+  li {
+    display: inline;
+    float: left;
+    padding-right: 10px;
+  }
+}
+
+.mediaSettingsGroup {
+  position: absolute;
+  right: 10px;
+}
+
+.media-library-media-group-helper {
+
+  .panel-body,
+  .mediaGroup {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .panel-body {
+
+    .panel {
+      border: none;
+      width: 100%;
+    }
+
+    .mediaSettingsGroup {
+      right: 0;
+    }
+  }
+}
+
+.mediaConnectedItems .ui-state-default {
+  border-width: 2px;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0 5px 5px 0;
+  background: $gray-200;
+  width: 140px;
+  vertical-align: top;
+}
+
+.mediaHolder {
+  float: left;
+  cursor: pointer;
+  width: 140px;
+  display: block;
+}
+
+.mediaHolderFile,
+.mediaHolderMovie,
+.mediaHolderAudio {
+  position: relative;
+
+  .icon {
+    @extend .fa-play-circle-o;
+    color: $black;
+    font-family: FontAwesome;
+    margin-left: -9px;
+    margin-top: -15px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    &:before {
+      font-size: 22px;
+    }
+  }
+
+  .url {
+    bottom: 5px;
+    font-size: 0.8em;
+    color: $black;
+    text-align: center;
+    word-wrap: break-word;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.mediaHolderAudio .icon {
+  background-position: 0 -468px;
+}
+
+.mediaHolderFile .icon {
+  background-position: 0 -443px;
+}
+
+.mediaHolderMovie {
+  min-height: 90px;
+
+  .icon {
+    background-position: 0 -468px;
+  }
+}
+
+.mediaHolderImage img {
+  width: 140px;
+  height: 90px;
+}
+
+.mediaConnectedItems li.selected {
+  border: 1px solid #000;
+}
+
+.mediaConnectedItems li.selected .mediaHolder {
+  opacity: 0.4;
+}
+
+.editMediaItem,
+.deleteMediaItem {
+  margin-top: 2px;
+  margin-left: -26px;
+  display: none;
+}
+
+.mediaConnectedItems .ui-state-default.hover .editMediaItem,
+.mediaConnectedItems .ui-state-default.hover .deleteMediaItem {
+  display: block;
+}
+
+/**
+ * Media Dialog
+ */
+
+#addMediaDialog,
+#cropperMediaDialog {
+
+  .modal-body {
+    padding: 0;
+    background: none;
+    border: none;
+  }
+}
+
+#addMediaDialog #tabLibrary {
+
+  .options {
+    margin-bottom: 1em;
+  }
+
+  .tab-content {
+    padding: 0;
+    border: none;
+
+    .table-striped {
+      border-top: 0;
+      padding: .5em 0 0;
+    }
+  }
+
+  .table-responsive {
+    max-height: 400px;
+    overflow: auto;
+  }
+}
+
+.mediaTable {
+
+  .check {
+    width: 30px;
+  }
+
+  .fullUrl {
+    width: 90px;
+    cursor: pointer;
+  }
+
+  .url {
+    max-width: 156px;
+  }
+
+  title {
+    max-width: 140px;
+    color: #000;
+  }
+
+  .actions {
+    max-width: 100px;
+
+    a {
+      float: right;
+    }
+  }
+}
+
+.inputList.noPadding,
+.inputList.noPadding li {
+  padding: 0;
+}
+
+#uploadMediaTypeBox label {
+  vertical-align: bottom;
+}
+
+/**
+ * Uploaded media box
+ */
+#uploadedMediaBox {
+
+  .panel-body {
+    padding: 20px;
+  }
+
+  .mediaConnectedItems {
+    float: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+/**
+ * Fine uploader
+ */
+.qq-uploader {
+  border-radius: 0 !important;
+  max-height: 560px;
+}
+
+.qq-upload-button-selector {
+  margin-bottom: 1.5em;
+}
+
+.qq-upload-list {
+  margin-top: 1.5em;
+}
+
+.qq-progress-bar {
+  background: $blue;
+  border-radius: 0;
+}
+
+#fine-uploader-gallery .qq-upload-list li {
+  background: $gray-100;
+  border-color: $gray-200;
+  border-bottom-width: 2px;
+  border-top-width: 2px;
+  padding: 20px;
+  position: relative;
+
+  .qq-thumbnail-wrapper {
+    margin: 20px 0;
+  }
+
+  .qq-upload-cancel {
+    background: $danger;
+    color: $white;
+    border: 0;
+    margin: 0;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+  }
+
+  .qq-upload-retry-selector {
+    background: $success;
+    border: 0;
+    border: none;
+    color: $white;
+    margin: 0;
+    padding: 5px 10px;
+    position: absolute;
+    right: 40px;
+    top: 20px;
+
+    .qq-btn {
+      display: none;
+    }
+  }
+
+  .qq-file-info {
+    margin-top: 20px;
+
+    .qq-file-name {
+      float: left;
+    }
+  }
+
+  &.qq-upload-fail {
+    background: $gray-100;
+    border-color: $danger;
+
+    .qq-upload-status-text {
+      color: $danger;
+    }
+  }
+
+  .qq-upload-spinner {
+    background: none;
+    font-size: 5px;
+    height: auto;
+    margin: 0 0 0 5px;
+    width: auto;
+  }
+}
