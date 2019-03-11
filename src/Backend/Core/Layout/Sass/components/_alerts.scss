@@ -1,18 +1,25 @@
+@each $color, $value in $theme-colors {
+  .alert-#{$color} {
+    background: theme-color($color);
+    color: $white;
+    -webkit-font-smoothing: antialiased;
+
+    a {
+      border-bottom: 1px solid $white;
+      color: $white;
+
+      @include hover-focus {
+        border-color: $gray-200;
+        color: $gray-200;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 .alert {
   border: 0;
   margin: 10px 0 0;
-
-  a {
-    border-bottom: 1px solid $white;
-    color: $white;
-
-    &:hover,
-    &:focus {
-      border-color: $gray-200;
-      color: $gray-200;
-      text-decoration: none;
-    }
-  }
 
   &.alert-xs {
     padding: 7px;
@@ -32,7 +39,7 @@
   font-weight: normal;
   margin: 0;
   opacity: 0;
-  padding: 27px 15px;
+  padding: 28px 15px;
   position: fixed;
   text-align: center;
   top: 0;
@@ -77,6 +84,8 @@
 }
 
 .alert-warning {
+  color: $black;
+
   a,
   .fa,
   .close {
