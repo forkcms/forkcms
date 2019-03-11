@@ -490,11 +490,11 @@ class DataGrid extends \SpoonDataGrid
     {
         // build HTML
         $HTML =
-            '<label for="' . $actionDropDown->getAttribute('id') . '">' .
+            '<label class="mr-2" for="' . $actionDropDown->getAttribute('id') . '">' .
             \SpoonFilter::ucfirst(BackendLanguage::lbl('WithSelected')) .
             '</label>' .
             $actionDropDown->parse() .
-            '<button type="button" class="btn btn-default jsMassActionSubmit">' .
+            '<button type="button" class="btn btn-default ml-2 jsMassActionSubmit">' .
             '   <span>' . \SpoonFilter::ucfirst(BackendLanguage::lbl('Execute')) . '</span>' .
             '</button>';
 

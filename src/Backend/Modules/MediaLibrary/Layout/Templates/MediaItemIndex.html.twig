@@ -7,7 +7,7 @@
       <div class="alert alert-warning d-lg-none">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
       </div>
-      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+      <button class="btn btn-default btn-sm tree-collapsed mb-2" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
       <div id="tree">
@@ -36,60 +36,50 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row fork-module-content">
-    <div id="library" class="col-12">
-      <div>
-        <ul class="nav nav-tabs" role="tablist">
-          {% for dataGrid in dataGrids %}
-          <li class="nav-item">
-            <a class="nav-link" href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-toggle="tab" id="{{ dataGrid.tabName }}-tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
-          </li>
-          {% endfor %}
-        </ul>
-        <div class="tab-content">
-          {% for dataGrid in dataGrids %}
-          <div role="tabpanel" class="tab-pane" id="{{ dataGrid.tabName }}" aria-labelledby="{{ dataGrid.tabName }}-tab">
-            <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="get" class="forkForms">
-              <div class="row">
-                <div class="col-12">
-                  <div class="table-responsive">
-                    <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
-                    <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden" name="move_to_folder_id" value="" />
-                    {% if mediaFolder %}
-                      <input type="hidden" name="current_folder_id" value="{{ mediaFolder.id }}" />
-                    {% endif %}
-                    {{ dataGrid.html|raw }}
-                  </div>
-                </div>
-              </div>
-            </form>
-            {% if not dataGrid.numberOfResults %}
-              {% if mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&folder=#{mediaFolder.id}')) }}</p>{% endif %}
-              {% if not mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add') ) }}</p>{% endif %}
-            {% endif %}
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="row fork-module-actions">
-        <div class="col-12">
-          <div class="btn-toolbar">
+  <div class="fork-module-content" id="library">
+    <ul class="nav nav-tabs" role="tablist">
+      {% for dataGrid in dataGrids %}
+      <li class="nav-item">
+        <a class="nav-link" href="#{{ dataGrid.tabName }}" aria-controls="tabImage" role="tab" data-toggle="tab" id="{{ dataGrid.tabName }}-tab">{{ dataGrid.label|capitalize }} ({{ dataGrid.numberOfResults }})</a>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="tab-content">
+      {% for dataGrid in dataGrids %}
+      <div role="tabpanel" class="tab-pane" id="{{ dataGrid.tabName }}" aria-labelledby="{{ dataGrid.tabName }}-tab">
+        <form id="form-for-{{ dataGrid.mediaType }}" action="{{ geturl('MediaItemMassAction') }}" method="get">
+          <div class="table-responsive">
+            <input type="hidden" name="from" value="{{ dataGrid.mediaType }}" />
+            <input id="move-to-folder-id-for-type-{{ dataGrid.mediaType }}" type="hidden" name="move_to_folder_id" value="" />
             {% if mediaFolder %}
-              <div class="btn-group pull-left" role="group">
-                {% if showMediaLibraryMediaFolderDelete and folderHasNoChildren %}
-                  {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
-                    {{ macro.buttonIcon('', 'trash-o', 'lbl.MediaFolderDelete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "data-target":"#confirmMediaFolderDelete", "type":"button" } ) }}
-                  {% endif %}
-                {% endif %}
-                {% if showMediaLibraryMediaFolderEdit %}
-                  {{ macro.buttonIcon('', 'pencil', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-default', {"data-toggle":"modal", "data-target":"#editMediaFolderDialog", "type":"button" } ) }}
-                {% endif %}
-              </div>
+              <input type="hidden" name="current_folder_id" value="{{ mediaFolder.id }}" />
+            {% endif %}
+            {{ dataGrid.html|raw }}
+          </div>
+        </form>
+        {% if not dataGrid.numberOfResults %}
+          {% if mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add', null, '&folder=#{mediaFolder.id}')) }}</p>{% endif %}
+          {% if not mediaFolder %}<p>{{ 'msg.NoItems'|trans|format(geturl('add') ) }}</p>{% endif %}
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% if mediaFolder %}
+      <div class="fork-module-actions">
+        <div class="btn-toolbar">
+          <div class="btn-group" role="group">
+            {% if showMediaLibraryMediaFolderDelete and folderHasNoChildren %}
+              {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
+                {{ macro.buttonIcon('', 'trash-o', 'lbl.MediaFolderDelete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "data-target":"#confirmMediaFolderDelete", "type":"button" } ) }}
+              {% endif %}
+            {% endif %}
+            {% if showMediaLibraryMediaFolderEdit %}
+              {{ macro.buttonIcon('', 'pencil', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-default', {"data-toggle":"modal", "data-target":"#editMediaFolderDialog", "type":"button" } ) }}
             {% endif %}
           </div>
         </div>
       </div>
-    </div>
+    {% endif %}
   </div>
 
   {# Mass action: Dialog to move media items #}

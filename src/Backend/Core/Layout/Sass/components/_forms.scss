@@ -64,13 +64,13 @@
 
   .form-group {
     margin-bottom: 20px;
+  }
 
-    .btn {
-      padding: 6px 12px 7px;
+  .btn {
+    padding: 6px 12px 7px;
 
-      &.btn-sm {
-        padding: 2px 8px;
-      }
+    &.btn-sm {
+      padding: 2px 8px;
     }
   }
 }
@@ -92,12 +92,12 @@ select[size="1"] {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
-  background: url('/src/Backend/Core/Layout/images/arrow.svg') no-repeat center right 10px;
+  background: url('/src/Backend/Core/Layout/images/arrow.svg') no-repeat center right 5px;
   background-size: 10px;
   display: inline-block;
   font-size: $font-size-base;
   height: $input-height;
-  padding: 5px;
+  padding: 5px 20px 5px 5px;
   width: 100%;
 }
 
