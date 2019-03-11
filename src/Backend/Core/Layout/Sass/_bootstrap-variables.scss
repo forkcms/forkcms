@@ -762,18 +762,18 @@ $modal-dialog-margin-y-sm-up: 1.75rem;
 
 $modal-title-line-height:           $line-height-base;
 
-$modal-content-bg:               $white;
-$modal-content-border-color:     rgba($black, .2);
+$modal-content-bg:               $content-background;
+$modal-content-border-color:     $content-background;
 $modal-content-border-width:     $border-width;
 $modal-content-box-shadow-xs:    0 .25rem .5rem rgba($black, .5);
 $modal-content-box-shadow-sm-up: 0 .5rem 1rem rgba($black, .5);
 
 $modal-backdrop-bg:           $black;
-$modal-backdrop-opacity:      .5;
+$modal-backdrop-opacity:      .7;
 $modal-header-border-color:   $gray-200;
 $modal-footer-border-color:   $modal-header-border-color;
-$modal-header-border-width:   $modal-content-border-width;
-$modal-footer-border-width:   $modal-header-border-width;
+$modal-header-border-width:   0;
+$modal-footer-border-width:   0;
 $modal-header-padding:        1rem;
 
 $modal-lg:                          800px;
