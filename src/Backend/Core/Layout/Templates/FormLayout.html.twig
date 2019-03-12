@@ -5,7 +5,7 @@
   {{ block('help') }}
 {% endblock %}
 
-{% block form_label %}
+{%- block form_label -%}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
     {% if label is not same as(false) %}
       {% if label is empty %}
@@ -22,12 +22,12 @@
       {% endif %}
       {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
       <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-      {{ label }}{% if required %}{{- block('label_asterisk') }}{% endif %}
+      {{ label }}{% if required %}{{- block('label_asterisk') -}}{% endif %}
       </label>
 
     {% endif %}
   {% endif %}
-{% endblock form_label %}
+{%- endblock form_label -%}
 
 {% block checkbox_radio_label %}
   {% if widget is defined %}
@@ -54,8 +54,10 @@
 {% endblock checkbox_radio_label %}
 
 {%- block label_asterisk -%}
-  {% import 'Layout/Templates/macros.html.twig' as macro %}
-  {{ macro.required }}
+  {% spaceless %}
+    {% import 'Layout/Templates/macros.html.twig' as macro %}
+    {{ macro.required }}
+  {% endspaceless %}
 {%- endblock label_asterisk -%}
 
 {% block form_errors -%}
