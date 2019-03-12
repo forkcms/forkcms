@@ -13,22 +13,16 @@
 
 {% block content %}
   {% if dataGrid %}
-    <div class="row fork-module-content">
-      <div class="col-md-6">
-        <div class="card card-default">
-          <div class="card-heading">
-            <h2 class="card-title">
-              {{ 'lbl.Map'|trans|ucfirst }}
-            </h2>
-          </div>
-          <div class="card-body">
-            {% if items %}
-              <div id="map" style="width: 100%; height: {{ settings.height }}px;"></div>
-            {% endif %}
-          </div>
-        </div>
+    <div class="content-block content-block-pb">
+      <div class="content-title">
+        <h2>{{ 'lbl.Locations'|trans|ucfirst }}</h2>
       </div>
-      <div class="col-md-6">
+      <div class="table-responsive">
+        {{ dataGrid|raw }}
+      </div>
+    </div>
+    <div class="row fork-module-content">
+      <div class="col-12">
         <div class="card card-default">
           <div class="card-heading">
             <h2 class="card-title">
@@ -37,43 +31,53 @@
           </div>
           {% form settings %}
           <div class="card-body">
-            <div class="form-group">
-              <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|ucfirst }}</label>
-              {% form_field zoom_level %} {% form_field_error zoom_level %}
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="zoomLevel" class="control-label">{{ 'lbl.ZoomLevel'|trans|ucfirst }}</label>
+                  {% form_field zoom_level %} {% form_field_error zoom_level %}
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="mapType" class="control-label">{{ 'lbl.MapType'|trans|ucfirst }}</label>
+                  {% form_field map_type %} {% form_field_error map_type %}
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
+                  <label for="width" class="control-label">{{ 'lbl.Width'|trans|ucfirst }}</label>
+                  {% form_field width %} {% form_field_error width %}
+                  <small class="form-text text-muted">{{ 'msg.WidthHelp'|trans|format(300,800)|raw }}</small>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
+                  <label for="height" class="control-label">{{ 'lbl.Height'|trans|ucfirst }}</label>
+                  {% form_field height %} {% form_field_error height %}
+                  <small class="form-text text-muted">{{ 'msg.HeightHelp'|trans|format(150)|raw }}</small>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="mapStyle" class="control-label">{{ 'lbl.MapStyle'|trans|capitalize }}</label>
+                  {% form_field_error map_style %} {% form_field map_style %}
+                </div>
+              </div>
             </div>
-            <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
-              <label for="width" class="control-label">{{ 'lbl.Width'|trans|ucfirst }}</label>
-              <p class="help-block">{{ 'msg.WidthHelp'|trans|format(300,800)|raw }}</p>
-              {% form_field width %} {% form_field_error width %}
-            </div>
-            <div class="form-group"{% if not godUser %} style="display:none;"{% endif %}>
-              <label for="height" class="control-label">{{ 'lbl.Height'|trans|ucfirst }}</label>
-              <p class="help-block">{{ 'msg.HeightHelp'|trans|format(150)|raw }}</p>
-              {% form_field height %} {% form_field_error height %}
-            </div>
-            <div class="form-group">
-              <label for="mapType" class="control-label">{{ 'lbl.MapType'|trans|ucfirst }}</label>
-              {% form_field map_type %} {% form_field_error map_type %}
-            </div>
-            <div class="form-group">
-              <label for="mapStyle" class="control-label">{{ 'lbl.MapStyle'|trans|capitalize }}</label>
-              {% form_field_error map_style %} {% form_field map_style %}
-            </div>
-            <div class="btn-toolbar">
-              <div class="btn-group pull-right" role="group">
+
+            {% if items %}
+              <div id="map" style="width: 100%; height: {{ settings.height }}px;"></div>
+            {% endif %}
+
+            <div class="btn-toolbar d-flex mt-3">
+              <div class="btn-group ml-auto" role="group">
                 <a href="#" id="saveLiveData" class="btn btn-primary">
                   {{ macro.icon('floppy-o') }}{{ 'lbl.Save'|trans|ucfirst }}</a>
               </div>
             </div>
           </div>
           {% endform %}
-        </div>
-      </div>
-    </div>
-    <div class="row fork-module-content">
-      <div class="col-md-12">
-        <div class="table-responsive">
-          {{ dataGrid|raw }}
         </div>
       </div>
     </div>
