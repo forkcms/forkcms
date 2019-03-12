@@ -1506,7 +1506,7 @@ jsBackend.mediaLibraryHelper.templates = {
     }
 
     html += '</div>'
-    html += '<button type="button" class="deleteMediaItem btn btn-default" '
+    html += '<button type="button" class="deleteMediaItem btn btn-danger" '
     html += 'title="' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '">'
     html += '<span>' + utils.string.ucfirst(jsBackend.locale.lbl('MediaDisconnect')) + '</span>'
     html += '</button>'

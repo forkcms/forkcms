@@ -59,13 +59,19 @@
 }
 
 .mediaConnectedItems {
-  float: left;
-  width: 100%;
-  margin-bottom: 0;
-}
+  float: none;
+  padding: 0;
+  margin: 0;
 
-.mediaConnectedItems {
-  padding: 5px 2px 2px 5px;
+  .ui-state-default {
+    border-width: 2px;
+    display: inline-block;
+    overflow: hidden;
+    margin: 0 5px 5px 0;
+    background: $gray-200;
+    width: 140px;
+    vertical-align: top;
+  }
 }
 
 .mediaEditBox {
@@ -109,16 +115,6 @@
       right: 0;
     }
   }
-}
-
-.mediaConnectedItems .ui-state-default {
-  border-width: 2px;
-  display: inline-block;
-  overflow: hidden;
-  margin: 0 5px 5px 0;
-  background: $gray-200;
-  width: 140px;
-  vertical-align: top;
 }
 
 .mediaHolder {
@@ -180,24 +176,12 @@
   height: 90px;
 }
 
-.mediaConnectedItems li.selected {
-  border: 1px solid #000;
-}
-
-.mediaConnectedItems li.selected .mediaHolder {
-  opacity: 0.4;
-}
-
 .editMediaItem,
 .deleteMediaItem {
-  margin-top: 2px;
-  margin-left: -26px;
-  display: none;
-}
-
-.mediaConnectedItems .ui-state-default.hover .editMediaItem,
-.mediaConnectedItems .ui-state-default.hover .deleteMediaItem {
+  border-radius: 0;
   display: block;
+  padding: 4px 0 5px;
+  width: 100%;
 }
 
 /**
@@ -281,12 +265,6 @@
 
   .panel-body {
     padding: 20px;
-  }
-
-  .mediaConnectedItems {
-    float: none;
-    padding: 0;
-    margin: 0;
   }
 }
 

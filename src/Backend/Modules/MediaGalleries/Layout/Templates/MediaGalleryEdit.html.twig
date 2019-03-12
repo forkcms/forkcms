@@ -71,13 +71,13 @@
   <div class="row fork-module-actions">
     <div class="col-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-left" role="group">
+        <div class="btn-group" role="group">
           {% if showMediaGalleriesMediaGalleryDelete %}
             {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', { "id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete" } ) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('MediaGalleryIndex'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'plus-square', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"addButton", "name":"add"} ) }}
         </div>
       </div>
