@@ -2,10 +2,26 @@
 {% import "Layout/Templates/macros.html.twig" as macro %}
 {% block content %}
   {{ form_start(form) }}
-  <div class="row fork-module-content">
-    <div class="col-12">
-      {{ form_rest(form) }}
+  <div class="fork-module-content">
+    {{ form_row(form.title) }}
+
+    <div class="row">
+      <div class="col-lg-8">
+        {{ form_row(form.text) }}
+      </div>
+      <div class="col-lg-4">
+        <div class="card card-default">
+          <div class="card-heading">
+            <h2>{{ 'lbl.Status'|trans|ucfirst }}</h2>
+          </div>
+          <div class="card-body">
+            {{ form_widget(form.isVisible) }}
+          </div>
+        </div>
+      </div>
     </div>
+
+      {{ form_rest(form) }}
   </div>
   <div class="row fork-module-actions">
     <div class="col-12">
@@ -13,7 +29,7 @@
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', {"id":"addButton", "type":"submit", "name":"add"}) }}
         </div>
       </div>

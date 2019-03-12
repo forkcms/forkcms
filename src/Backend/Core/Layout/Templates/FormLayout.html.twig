@@ -347,15 +347,15 @@
 {% endblock %}
 
 {% block editor_row %}
-  <div class="panel form-group panel-default panel-editor{% if (not compound or force_error|default(false)) and not valid %} panel-danger{% endif %}">
-    <div class="panel-heading">
+  <div class="card form-group card-default card-editor{% if (not compound or force_error|default(false)) and not valid %} panel-danger{% endif %}">
+    <div class="card-heading">
       {{- form_label(form) -}}
     </div>
-    <div class="panel-body">
+    <div class="card-body">
       {{- form_widget(form) -}}
     </div>
     {% if (not compound or force_error|default(false)) and not valid %}
-      <div class="panel-footer">
+      <div class="card-footer">
         {{- form_errors(form) -}}
       </div>
     {% endif %}
