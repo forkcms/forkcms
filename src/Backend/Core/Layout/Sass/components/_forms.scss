@@ -131,10 +131,8 @@ select[size="1"] {
     border-bottom-right-radius: 0;
   }
 
-  .input-group-btn .btn {
-    line-height: 2.3em;
-    padding-bottom: 0;
-    padding-top: 0;
+  .input-group-append .btn {
+    padding: 7px 9px 8px;
   }
 }
 

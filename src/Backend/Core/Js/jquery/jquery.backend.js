@@ -1246,10 +1246,10 @@
         '</div>' +
         '<div class="input-group">' +
         '<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
-        '<span class="input-group-btn"><button id="addButton-' + id + '" class="btn btn-primary">' +
+        '<div class="input-group-append"><button id="addButton-' + id + '" class="btn btn-primary">' +
         '<span class="fa fa-plus-square" aria-hidden="true"></span>' +
         '<span' + (options.showIconOnly ? ' class="sr-only"' : '') + '>' + options.addLabel + '</span>' +
-        '</button></span>' +
+        '</button></div>' +
         '</div>' +
         '</div>'
 
@@ -1421,21 +1421,21 @@
           html = '<p class="helpTxt">' + options.emptyMessage + '</p>'
         } else {
           // start html
-          html = '<ul class="list-group">'
+          html = '<div>'
 
           // loop elements
           for (var i in elements) {
-            html += '    <li class="list-group-item"><div class="input-group">' +
+            html += '    <div class="form-group"><div class="input-group">' +
               '        <input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
-              '        <span class="input-group-btn"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+              '        <span class="input-group-append"><button class="btn btn-danger deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
               '           <span class="fa fa-trash" aria-hidden="true"></span>' +
               '            <span>' + options.removeLabel + '</span>' +
               '        </button></span>' +
-              '    </div></li>'
+              '    </div></div>'
           }
 
           // end html
-          html += '</ul>'
+          html += '</div>'
         }
 
         // set html

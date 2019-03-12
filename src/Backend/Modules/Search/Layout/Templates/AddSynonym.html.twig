@@ -18,12 +18,20 @@
       </div>
       <div class="form-group">
         <div class="fakeP">
-          <label for="addValue-synonym" class="control-label">
-            {{ 'lbl.Synonyms'|trans|ucfirst }}
-            {{ macro.required }}
-          </label>
-          <div class="itemAdder">
-            {% form_field synonym %} {% form_field_error synonym %}
+          <div class="card card-default">
+            <div class="card-heading">
+              <h2>
+                <label for="addValue-synonym" class="control-label">
+                  {{ 'lbl.Synonyms'|trans|ucfirst }}
+                  {{ macro.required }}
+                </label>
+              </h2>
+            </div>
+            <div class="card-body">
+              <div class="itemAdder">
+                {% form_field synonym %} {% form_field_error synonym %}
+              </div>
+            </div>
           </div>
         </div>
       </div>
