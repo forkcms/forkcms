@@ -1528,7 +1528,7 @@ jsBackend.forms = {
 
       allTags.initialize()
       $('.js-tags-input').tagsinput({
-        tagClass: 'label label-primary',
+        tagClass: 'badge badge-primary',
         typeaheadjs: {
           name: 'Tags',
           source: allTags.ttAdapter()

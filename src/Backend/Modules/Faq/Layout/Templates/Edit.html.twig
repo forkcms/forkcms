@@ -67,13 +67,14 @@
                   </div>
                   <div class="card-body">
                     <div class="form-group last">
-                      <ul class="list-unstyled">
+                      <div class="form-group">
                         {% for _itr_10 in hidden %}
-                          <li class="radio">
-                            <label for="{{ _itr_10.id }}">{{ _itr_10.rbtHidden | raw }} {{ _itr_10.label }}</label>
-                          </li>
+                          <div class="form-check">
+                            {{ _itr_10.rbtHidden | raw }}
+                            <label for="{{ _itr_10.id }}">{{ _itr_10.label }}</label>
+                          </div>
                         {% endfor %}
-                      </ul>
+                      </div>
                     </div>
                   </div>
                 </div>

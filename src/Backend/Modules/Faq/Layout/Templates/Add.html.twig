@@ -58,13 +58,14 @@
                   </div>
                   <div class="card-body">
                     <div class="form-group last">
-                      <ul class="list-unstyled">
+                      <div class="form-group last">
                         {% for _itr_9 in hidden %}
-                          <li class="radio">
-                            <label for="{{ _itr_9.id }}">{{ _itr_9.rbtHidden|raw }} {{ _itr_9.label }}</label>
-                          </li>
+                          <div class="form-check">
+                            {{ _itr_9.rbtHidden|raw }}
+                            <label class="form-check-label" for="{{ _itr_9.id }}">{{ _itr_9.label }}</label>
+                          </div>
                         {% endfor %}
-                      </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -100,7 +101,7 @@
         <div class="btn-group" role="group">
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'plus-square', 'lbl.Add'|trans|ucfirst, 'btn-primary', { "id":"addButton", "type":"submit", "name":"add" }) }}
         </div>
       </div>
