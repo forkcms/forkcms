@@ -20,16 +20,14 @@ class Model
     const QUERY_DATAGRID_BROWSE =
         'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
          FROM FaqQuestion AS i
-         WHERE i.locale = ? AND i.category_id = ?
-         ORDER BY i.sequence ASC';
+         WHERE i.locale = ? AND i.category_id = ?';
 
     const QUERY_DATAGRID_BROWSE_CATEGORIES =
         'SELECT i.id, i.title, COUNT(p.id) AS num_items, i.sequence
          FROM FaqCategory AS i
          LEFT OUTER JOIN FaqQuestion AS p ON i.id = p.category_id AND p.locale = i.locale
          WHERE i.locale = ?
-         GROUP BY i.id
-         ORDER BY i.sequence ASC';
+         GROUP BY i.id';
 
     /**
      * Delete a question
