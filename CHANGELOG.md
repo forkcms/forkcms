@@ -1,3 +1,36 @@
+5.5.1  (2019-03-13)
+------------------
+
+Fixed:
+* Core: Capitalize action button values in collections [#2742](https://github.com/forkcms/forkcms/pull/2742)
+* Core: Capitalize action buttons in the datagrid [#2740](https://github.com/forkcms/forkcms/pull/2740)
+* Core: Cleanup and minor bugfixes based on scrutinizer [#2731](https://github.com/forkcms/forkcms/pull/2731)
+* Core: Delete space between asterisk and label [#2761](https://github.com/forkcms/forkcms/pull/2761)
+* Core: Dont show empty divs when there is no content [#2756](https://github.com/forkcms/forkcms/pull/2756)
+* Core: Fix BackendModel::getExtrasForData [#2730](https://github.com/forkcms/forkcms/pull/2730)
+* Core: Fix double breadcrumb in backend [#2734](https://github.com/forkcms/forkcms/pull/2734)
+* Core: Fix Form validation : Deprecated .context [#2763](https://github.com/forkcms/forkcms/pull/2763)
+* Core: Fix image link in ckeditor [#2771](https://github.com/forkcms/forkcms/pull/2771)
+* Core: Give a max width to the image thumbnail to respect the quality and ratio [#2754](https://github.com/forkcms/forkcms/pull/2754)
+* Core: Prevent the whole panel from getting focused when clicking on an item within [#2744](https://github.com/forkcms/forkcms/pull/2744)
+* Blog: Fix saving a draft of an existing blog post [#2729](https://github.com/forkcms/forkcms/pull/2729)
+* ContentBlocks: Dont show hidden content blocks [#2755](https://github.com/forkcms/forkcms/pull/2755)
+* FAQ: Fix overview page [#2767](https://github.com/forkcms/forkcms/pull/2767)
+* MediaLibrary: Fix the media url when adding link to file [#2750](https://github.com/forkcms/forkcms/pull/2750)
+* Profiles: Get the display name from the profile array [#2753](https://github.com/forkcms/forkcms/pull/2753)
+* Installer: Fix mod_rewrite check for php-fpm [#2776](https://github.com/forkcms/forkcms/pull/2776)
+
+Changed:
+* Core: Add integrity to yarn.lock [#2775](https://github.com/forkcms/forkcms/pull/2775)
+* Core: Check only for the existence of the Facebook API ID [#2738](https://github.com/forkcms/forkcms/pull/2738)
+* Core: Restyle image upload  [#2757](https://github.com/forkcms/forkcms/pull/2757)
+* Blog: Use the default avatar path as default for gravatar instead of a 404 [#2770](https://github.com/forkcms/forkcms/pull/2770)
+
+Security:
+* Core: Updated composer dependencies
+* Core: Updated composer yarn
+
+
 5.5.0  (2019-01-14)
 ------------------
 
