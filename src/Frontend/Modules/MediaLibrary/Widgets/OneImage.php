@@ -23,7 +23,7 @@ class OneImage extends FrontendMediaWidget
 
     protected function parse(): void
     {
-        /** @var MediaGroupMediaItem $firstConnectedItem */
+        /** @var MediaGroupMediaItem|bool $firstConnectedItem */
         $firstConnectedItem = $this->mediaGroup->getConnectedItems()->first();
 
         if ($firstConnectedItem === false) {

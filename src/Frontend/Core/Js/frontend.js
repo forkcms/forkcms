@@ -479,7 +479,7 @@ jsFrontend.gravatar = {
       // valid gravatar id
       if (gravatarId !== '') {
         // build url
-        var url = 'https://www.gravatar.com/avatar/' + gravatarId + '?r=g&d=404'
+        var url = 'https://www.gravatar.com/avatar/' + gravatarId + '?r=g&d=' + encodeURI(window.location.origin + '/src/Frontend/Core/Layout/images/default_author_avatar.gif')
 
         // add size if set before
         if (size !== '') url += '&s=' + size

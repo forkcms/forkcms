@@ -343,12 +343,6 @@ class Edit extends BackendBaseActionEdit
                     }
                 }
 
-                // get user groups when allowed to edit
-                if ($this->allowUserRights) {
-                    // get selected groups
-                    $groups = $fields['groups']->getChecked();
-                }
-
                 // has the user submitted an avatar?
                 if ($fields['avatar']->isFilled()) {
                     $avatarsPath = FRONTEND_FILES_PATH . '/Users/avatars';
@@ -392,7 +386,7 @@ class Edit extends BackendBaseActionEdit
 
                 // save groups
                 if ($this->allowUserRights) {
-                    BackendGroupsModel::insertMultipleGroups($this->id, $groups);
+                    BackendGroupsModel::insertMultipleGroups($this->id, $fields['groups']->getChecked());
                 }
 
                 // can only edit own profile

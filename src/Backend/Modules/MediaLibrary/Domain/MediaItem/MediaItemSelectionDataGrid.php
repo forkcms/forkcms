@@ -90,7 +90,7 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
 
     private function setExtras(Type $type): void
     {
-        $this->addDataAttributes($type);
+        $this->addDataAttributes();
         $this->setHeaderLabels($this->getColumnHeaderLabels($type));
         $this->setColumnsHidden($this->getColumnsThatNeedToBeHidden($type));
         $this->setSortingColumns(
@@ -152,7 +152,7 @@ class MediaItemSelectionDataGrid extends DataGridDatabase
         );
     }
 
-    private function addDataAttributes(Type $type): void
+    private function addDataAttributes(): void
     {
         // our JS needs to know an id, so we can highlight it
         $attributes = [
