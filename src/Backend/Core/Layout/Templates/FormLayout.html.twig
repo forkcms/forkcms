@@ -5,7 +5,7 @@
   {{ block('help') }}
 {% endblock %}
 
-{% block form_label %}
+{%- block form_label -%}
   {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
     {% if label is not same as(false) %}
       {% if label is empty %}
@@ -22,12 +22,12 @@
       {% endif %}
       {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ " " ~ label_attr_class ~ (required ? ' required' : ' optional') }) %}
       <label{% for attrname,attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-      {{ label }}{% if required %}{{- block('label_asterisk') }}{% endif %}
+      {{ label }}{% if required %}{{- block('label_asterisk') -}}{% endif %}
       </label>
 
     {% endif %}
   {% endif %}
-{% endblock form_label %}
+{%- endblock form_label -%}
 
 {% block checkbox_radio_label %}
   {% if widget is defined %}
@@ -54,8 +54,10 @@
 {% endblock checkbox_radio_label %}
 
 {%- block label_asterisk -%}
-  {% import 'Layout/Templates/macros.html.twig' as macro %}
-  {{ macro.required }}
+  {% spaceless %}
+    {% import 'Layout/Templates/macros.html.twig' as macro %}
+    {{ macro.required }}
+  {% endspaceless %}
 {%- endblock label_asterisk -%}
 
 {% block form_errors -%}
@@ -214,24 +216,26 @@
 
 {% block fork_image_widget %}
   {% spaceless %}
-    <div class="form-group">
-      {{ form_widget(form.file) }}
-      {% if help_text_message %}
-        <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
+    <div class="row">
+      {% set show_preview = show_preview and data is not null and data.fileName is not empty %}
+      {% if show_preview or show_remove_image %}
+        <div class="form-group{% if show_preview and preview_url %} col-md-3 col-lg-2{% endif %}">
+          {% if show_preview and preview_url %}
+            <img class="{% if preview_class is defined and preview_class is not empty %}{{ preview_class }}{% endif %}" src="{{ preview_url }}">
+          {% endif %}
+        </div>
       {% endif %}
-      {{ form_errors(form.file) }}
-    </div>
-    {% set show_preview = show_preview and data is not null and data.fileName is not empty %}
-    {% if show_preview or show_remove_image %}
-      <div class="form-group">
-        {% if show_preview and preview_url %}
-          <img data-fork-cms-role="image-preview" data-id="{{ form.file.vars.id }}" class="{% if preview_class is defined and preview_class is not empty %}{{ preview_class }}{% endif %}" src="{{ preview_url }}">
+      <div class="form-group{% if show_preview and preview_url %} col-md-9 col-lg-10{% endif %}">
+        {{ form_widget(form.file) }}
+        {% if help_text_message %}
+          <div class="help-text">{{ help_text_message|trans|format(help_text_argument) }}</div>
         {% endif %}
+        {{ form_errors(form.file) }}
         {% if show_remove_image %}
           {{ form_widget(form.remove) }}
         {% endif %}
       </div>
-    {% endif %}
+    </div>
   {% endspaceless %}
 {% endblock %}
 
