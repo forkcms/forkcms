@@ -6,7 +6,13 @@
   border: none;
   border-radius: 0;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   max-width: 100%;
   padding: 0;
+}
+
+@media screen and (min-width: $screen-lg) {
+  .img-thumbnail {
+    margin: 0 auto;
+  }
 }
