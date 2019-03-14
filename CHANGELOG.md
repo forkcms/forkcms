@@ -1,3 +1,9 @@
+5.5.2  (2019-03-14)
+------------------
+Fixed:
+* Pages: Remove remove_image on pages add [#2779](https://github.com/forkcms/forkcms/pull/2779)
+
+
 5.5.1  (2019-03-13)
 ------------------
 
