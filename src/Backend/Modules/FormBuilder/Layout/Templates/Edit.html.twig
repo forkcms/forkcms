@@ -135,13 +135,13 @@
                     {# Submit button is always here. Cannot be deleted or moved. #}
                     <div class="form-group field field-submit">
                       <div class="row">
-                        <div class="col-md-5 col-md-offset-3">
-                          <div class="btn-group" role="group">
+                        <div class="col-md-8 d-flex">
+                          <div class="btn-group ml-auto" role="group">
                             {{ btnSubmitField|raw }}
                           </div>
                         </div>
-                        <div class="col-md-4">
-                          <div class="btn-group pull-right" role="group">
+                        <div class="col-md-4 d-flex">
+                          <div class="btn-group ml-auto" role="group">
                             <button class="btn btn-default btn-second btn-icon-only jsFieldEdit" data-field-id="{{ submitId }}">
                               {{ macro.icon('pencil fa-fw') }}
                               <span class="sr-only">{{ 'lbl.Edit'|trans|ucfirst }}</span>
@@ -161,7 +161,7 @@
                     </h2>
                   </div>
                   <div class="card-body">
-                    <div class="list-group first">
+                    <div class="list-group list-group-flush first">
                       <h5>{{ 'lbl.FormElements'|trans|ucfirst }}</h5>
                       <button id="textboxSelector" data-field-id="textboxDialog" class="list-group-item jsFieldDialogTrigger">
                         <img class="icon" src="{{ SITE_URL }}/src/Backend/Modules/FormBuilder/Layout/images/icon-textbox.svg" alt="textbox">{{ 'lbl.Textbox'|trans|ucfirst }}

@@ -43,8 +43,10 @@
     .list-group-item {
       border: 0;
       border-top: 1px solid $gray-200;
-      padding: 11px 0 12px;
       color: $formbuilder-blue;
+      cursor: pointer;
+      padding: 11px 0 12px;
+      text-align: left;
 
       &:hover,
       &:focus {
