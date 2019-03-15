@@ -94,13 +94,12 @@
                   </div>
                   <div class="card-body">
                     <div class="form-group">
-                      <ul class="list-unstyled">
-                        {% for _itr_4 in hidden %}
-                          <li class="radio">
-                            <label for="{{ _itr_4.id }}">{{ _itr_4.rbtHidden|raw }} {{ _itr_4.label }}</label>
-                          </li>
-                        {% endfor %}
-                      </ul>
+                      {% for _itr_4 in hidden %}
+                        <div class="form-check">
+                          {{ _itr_4.rbtHidden|raw }}
+                          <label class="form-check-label" for="{{ _itr_4.id }}">{{ _itr_4.label }}</label>
+                        </div>
+                      {% endfor %}
                     </div>
                     <div class="form-group last">
                       <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|ucfirst }}</label>
@@ -139,11 +138,10 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group last">
-                  <ul class="list-unstyled">
-                    <li class="checkbox">
-                      <label for="allowComments" class="control-label">{% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|ucfirst }}</label>
-                    </li>
-                  </ul>
+                  <div class="form-check">
+                    {% form_field allow_comments %}
+                    <label for="allowComments" class="form-check-label">{{ 'lbl.AllowComments'|trans|ucfirst }}</label>
+                  </div>
                 </div>
               </div>
             </div>

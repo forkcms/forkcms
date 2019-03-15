@@ -78,24 +78,19 @@
                       <h2><label for="image">{{ 'lbl.Image'|trans|ucfirst }}</label></h2>
                     </div>
                     <div class="card-body">
-                      <div class="row">
-                        {% if item.image %}
-                        <div class="col-lg-3">
-                          <img src="{{ FRONTEND_FILES_URL }}/Blog/images/200x200/{{ item.image }}" class="img-thumbnail" width="200" height="200" alt="{{ 'lbl.Image'|trans|ucfirst }}" />
+                      {% if item.image %}
+                        <div>
+                          <img data-fork-cms-role="image-preview" data-id="{{ form_edit.field('image').attributes.id }}" src="{{ FRONTEND_FILES_URL }}/Blog/images/128x128/{{ item.image }}" class="img-thumbnail" width="128" height="128" alt="{{ 'lbl.Image'|trans|ucfirst }}" />
                         </div>
-                        <div class="col-lg-9">
-                          {% endif %}
-                          {% form_field image %} {% form_field_error image %}
-                          {% if item.image %}
-                          <ul class="list-unstyled">
-                            <li class="checkbox">
-                              <label for="deleteImage" class="control-label">{% form_field delete_image %} {{ 'lbl.Delete'|trans|ucfirst }}</label>
-                              {% form_field_error delete_image %}
-                            </li>
-                          </ul>
+                        <div class="form-group">
+                          <div class="form-check">
+                            {% form_field delete_image %}
+                            <label for="deleteImage" class="form-check-label">{{ 'lbl.Delete'|trans|ucfirst }}</label>
+                            {% form_field_error delete_image %}
+                          </div>
                         </div>
-                        {% endif %}
-                      </div>
+                      {% endif %}
+                      {% form_field image %} {% form_field_error image %}
                     </div>
                   </div>
                 {% endif %}
@@ -125,13 +120,14 @@
                   </div>
                   <div class="card-body">
                     <div class="form-group">
-                      <ul class="list-unstyled">
+                      <div class="form-group">
                         {% for rbtn in hidden %}
-                          <li class="radio">
-                            <label for="{{ rbtn.id }}">{{ rbtn.rbtHidden|raw }} {{ rbtn.label }}</label>
-                          </li>
+                          <div class="form-check">
+                            {{ rbtn.rbtHidden|raw }}
+                            <label class="form-check-label" for="{{ rbtn.id }}">{{ rbtn.label }}</label>
+                          </div>
                         {% endfor %}
-                      </ul>
+                      </div>
                     </div>
                     <div class="form-group last">
                       <label for="publishOnDate" class="control-label">{{ 'lbl.PublishOn'|trans|ucfirst }}</label>
@@ -200,11 +196,10 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group last">
-                  <ul class="list-unstyled">
-                    <li class="checkbox">
-                      <label for="allowComments" class="control-label">{% form_field allow_comments %} {{ 'lbl.AllowComments'|trans|ucfirst }}</label>
-                    </li>
-                  </ul>
+                  <div class="form-check">
+                    {% form_field allow_comments %}
+                    <label for="allowComments" class="form-check-label">{{ 'lbl.AllowComments'|trans|ucfirst }}</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -219,13 +214,13 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-left" role="group">
+        <div class="btn-group" role="group">
           {% if showBlogDelete %}
             {{ macro.buttonIcon('', 'trash-o', 'lbl.Delete'|trans|ucfirst, 'btn-danger', {"id":"blog-delete", "data-toggle":"modal", "data-target":"#confirmDelete", "type":"button"} ) }}
           {% endif %}
           {{ macro.buttonIcon(geturl('Index'), 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default') }}
         </div>
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'file-o', 'lbl.SaveDraft'|trans|ucfirst, 'btn-default', {"type":"submit", "name":"saveAsDraft"}) }}
           {{ macro.buttonIcon('', 'check', 'lbl.Publish'|trans|ucfirst, 'btn-primary', {"type":"submit", "name":"publish"}) }}
         </div>
