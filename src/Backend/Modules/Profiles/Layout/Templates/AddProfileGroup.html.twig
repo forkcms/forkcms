@@ -8,32 +8,45 @@
   {% form addProfileGroup %}
   <div class="row fork-module-content">
     <div class="col-md-12">
-      <div class="form-group">
-        <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
-        {% form_field group %} {% form_field_error group %}
-      </div>
-      <div class="form-group">
-        <label for="expirationDate" class="control-label">{{ 'lbl.ExpiresOn'|trans|ucfirst }}:</label>
-        <div class="row">
-          <div class="col-md-6 col-lg-3">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
-                <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
-              </span>
-              {% form_field expiration_date %}
+      <div class="card card-default">
+        <div class="card-heading">
+          <h2>{{ 'lbl.Group'|trans|ucfirst }}</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="group" class="control-label">{{ 'lbl.Group'|trans|ucfirst }}</label>
+                {% form_field group %} {% form_field_error group %}
+              </div>
             </div>
-            {% form_field_error expiration_date %}
           </div>
-          <div class="col-md-6 col-lg-3">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
-                <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
-              </span>
-              {% form_field expiration_time %}
+          <label for="expirationDate" class="control-label">{{ 'lbl.ExpiresOn'|trans|ucfirst }}:</label>
+          <div class="form-row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <span class="fa fa-calendar fa-fw" aria-hidden="true"></span>
+                    <label class="sr-only" for="expirationDate">{{ 'lbl.Date'|trans|ucfirst }}</label>
+                  </span>
+                </div>
+                {% form_field expiration_date %}
+              </div>
+              {% form_field_error expiration_date %}
             </div>
-            {% form_field_error expiration_time %}
+            <div class="col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <span class="fa fa-clock-o fa-fw" aria-hidden="true"></span>
+                    <label class="sr-only" for="expirationTime">{{ 'lbl.Time'|trans|ucfirst }}</label>
+                  </span>
+                </div>
+                {% form_field expiration_time %}
+              </div>
+              {% form_field_error expiration_time %}
+            </div>
           </div>
         </div>
       </div>

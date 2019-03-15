@@ -70,7 +70,19 @@
         <translation language="uk"><![CDATA[Додати групу]]></translation>
         <translation language="lt"><![CDATA[priskirti grupei]]></translation>
         <translation language="el"><![CDATA[Προσθήκη σε μία ομάδα]]></translation>
-		<translation language="pl"><![CDATA[Dodaj do grupy]]></translation>
+		    <translation language="pl"><![CDATA[Dodaj do grupy]]></translation>
+      </item>
+      <item type="label" name="AddProfileGroup">
+        <translation language="nl"><![CDATA[groep toevoegen]]></translation>
+        <translation language="en"><![CDATA[add group]]></translation>
+        <translation language="it"><![CDATA[aggiungi gruppo]]></translation>
+        <translation language="ru"><![CDATA[добавить группу]]></translation>
+        <translation language="de"><![CDATA[Gruppe hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un groupe]]></translation>
+        <translation language="hu"><![CDATA[csoport hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar grupo]]></translation>
+        <translation language="uk"><![CDATA[додати групу]]></translation>
+        <translation language="pl"><![CDATA[dodaj grupę]]></translation>
       </item>
       <item type="label" name="BirthDate">
         <translation language="nl"><![CDATA[geboortedatum]]></translation>
