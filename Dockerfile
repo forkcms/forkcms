@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:7.3-apache
 LABEL maintainer="Fork CMS <info@fork-cms.com>"
 
 # Enable Apache mod_rewrite
@@ -20,7 +20,9 @@ RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mbstring
 
 # Install zip
-RUN docker-php-ext-install zip
+# Note: we need unzip for Composer
+RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev zip unzip && \
+    docker-php-ext-install zip
 
 # Install intl
 RUN apt-get update && apt-get install -y --no-install-recommends \
