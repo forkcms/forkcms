@@ -503,7 +503,7 @@ class Form extends FrontendBaseWidget
                 // loop all fields
                 foreach ($this->item['fields'] as $field) {
                     // skip
-                    if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha'])) {
+                    if (in_array($field['type'], ['submit', 'paragraph', 'heading', 'recaptcha', 'mailmotor'])) {
                         continue;
                     }
 
