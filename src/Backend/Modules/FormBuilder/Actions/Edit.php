@@ -188,7 +188,7 @@ class Edit extends BackendBaseActionEdit
         // mailmotor dialog
         $settings = BackendModel::get('fork.settings');
         $this->form->addText(
-            'mailmotor_apikey',
+            'mailmotor_list_id',
             $settings->get('Mailmotor', 'list_id_' . BL::getWorkingLanguage()) ?? $settings->get('Mailmotor', 'list_id')
         );
         $this->form->addText('mailmotor_label', BL::lbl('MailmotorSubscribeToNewsletter'));
