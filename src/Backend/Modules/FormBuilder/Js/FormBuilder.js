@@ -209,7 +209,7 @@ jsBackend.FormBuilder.Fields = {
             case 'mailmotorDialog':
               jsBackend.FormBuilder.Fields.saveMailmotorbutton()
               break
-            case 'checkboxDialog':
+            case 'checkboxDialogcheckboxDialog':
               jsBackend.FormBuilder.Fields.saveCheckbox()
               break
           }
@@ -606,6 +606,15 @@ jsBackend.FormBuilder.Fields = {
 
                 // show dialog
                 $('#checkboxDialog').modal('show')
+              } else if (data.data.field.type === 'mailmotor') {
+                // mailmotor edit
+                // fill in form
+                $('#mailmotorId').val(data.data.field.id)
+                $('#mailmotorLabel').val(utils.string.htmlDecode(data.data.field.settings.label))
+                $('#mailmotorListId').val(utils.string.htmlDecode(data.data.field.settings.list_id))
+
+                // show dialog
+                $('#mailmotorDialog').modal('show')
               } else if (data.data.field.type === 'heading') {
                 // heading edit
                 // fill in form
