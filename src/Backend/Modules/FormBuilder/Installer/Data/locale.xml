@@ -347,6 +347,16 @@
         <translation language="zh"><![CDATA[订阅通讯]]></translation>
         <translation language="pl"><![CDATA[Zapisz się do newslettera]]></translation>
       </item>
+      <item type="message" name="HelpMailmotor">
+        <translation language="de"><![CDATA[Verwenden Sie diese E-Mail-Adresse, um sich bei mailmotor anzumelden.]]></translation>
+        <translation language="en"><![CDATA[Use this email address to subscribe with mailmotor.]]></translation>
+        <translation language="es"><![CDATA[Utilice esta dirección de correo electrónico para suscribirse con mailmotor.]]></translation>
+        <translation language="fr"><![CDATA[Utilisez cette adresse email pour vous abonner à mailmotor.]]></translation>
+        <translation language="it"><![CDATA[Usa questo indirizzo e-mail per iscriverti con Mailmotor.]]></translation>
+        <translation language="nl"><![CDATA[Gebruik dit e-mailadres om u in te schrijven bij mailmotor.]]></translation>
+        <translation language="ru"><![CDATA[Используйте этот адрес электронной почты для подписки на рассылку с помощью mailmotor.]]></translation>
+        <translation language="pl"><![CDATA[Użyj tego adresu e-mail, aby zapisać się do programu Mailmotor.]]></translation>
+      </item>
       <item type="label" name="MethodEmail">
         <translation language="nl"><![CDATA[email verzenden]]></translation>
         <translation language="en"><![CDATA[send email]]></translation>

@@ -287,6 +287,18 @@
                       </li>
                     </ul>
                   </div>
+                  {% if showMailmotorOption %}
+                    <div class="form-group">
+                      <ul class="list-unstyled">
+                        <li class="checkbox">
+                          <label for="textboxMailmotor" class="control-label">
+                            {% form_field textbox_mailmotor %} {{ 'lbl.Mailmotor'|trans|ucfirst }}
+                            {{ macro.infoTooltip('msg.HelpMailmotor'|trans) }}
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  {% endif %}
                   <div class="form-group">
                     <ul class="list-unstyled">
                       <li class="checkbox">
@@ -326,6 +338,7 @@
                       {% form_field textbox_validation %}
                     </div>
                     <p id="textboxReplyToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                    <p id="textboxMailmotorErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                     <p id="textboxSendConfirmationMailToErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                     <div class="form-group jsValidationParameter" style="display: none;">
                       <label for="textboxValidationParameter" class="control-label">

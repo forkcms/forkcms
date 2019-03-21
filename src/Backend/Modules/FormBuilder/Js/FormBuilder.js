@@ -421,6 +421,11 @@ jsBackend.FormBuilder.Fields = {
                 ) {
                   $('#textboxReplyTo').prop('checked', true)
                 }
+                if (data.data.field.settings.use_to_subscribe_with_mailmotor &&
+                  data.data.field.settings.use_to_subscribe_with_mailmotor === true
+                ) {
+                  $('#textboxMailmotor').prop('checked', true)
+                }
                 if (data.data.field.settings.send_confirmation_mail_to &&
                   data.data.field.settings.send_confirmation_mail_to === true
                 ) {
@@ -1364,6 +1369,9 @@ jsBackend.FormBuilder.Fields = {
             if (typeof data.data.errors.reply_to_error_message !== 'undefined') {
               $('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message)
             }
+            if (typeof data.data.errors.use_to_subscribe_with_mailmotor_error_message !== 'undefined') {
+              $('#textboxMailmotorErrorMessageError').html(data.data.errors.use_to_subscribe_with_mailmotor_error_message)
+            }
 
             // toggle error messages
             jsBackend.FormBuilder.Fields.toggleValidationErrors('textareaDialog')
@@ -1407,6 +1415,7 @@ jsBackend.FormBuilder.Fields = {
     var validationParameter = $('#textboxValidationParameter').val()
     var errorMessage = $('#textboxErrorMessage').val()
     var classname = $('#textboxClassname').val()
+    var mailmotor = $('#textboxMailmotor').is(':checked')
 
     // make the call
     $.ajax({
@@ -1417,6 +1426,7 @@ jsBackend.FormBuilder.Fields = {
         label: label,
         default_values: value,
         reply_to: replyTo,
+        use_to_subscribe_with_mailmotor: mailmotor,
         send_confirmation_mail_to: sendConfirmationMailTo,
         confirmation_mail_subject: confirmationMailSubject,
         required: required,
@@ -1450,6 +1460,9 @@ jsBackend.FormBuilder.Fields = {
             }
             if (typeof data.data.errors.reply_to_error_message !== 'undefined') {
               $('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message)
+            }
+            if (typeof data.data.errors.use_to_subscribe_with_mailmotor_error_message !== 'undefined') {
+              $('#textboxMailmotorErrorMessageError').html(data.data.errors.use_to_subscribe_with_mailmotor_error_message)
             }
             if (typeof data.data.errors.send_confirmation_mail_to_error_message !== 'undefined') {
               $('#textboxSendConfirmationMailToErrorMessageError').html(data.data.errors.send_confirmation_mail_to_error_message)

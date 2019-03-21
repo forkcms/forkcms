@@ -61,6 +61,7 @@ class SaveField extends BackendBaseAJAXAction
 
         // special field for textbox
         $replyTo = $this->getRequest()->request->getBoolean('reply_to');
+        $useToSubscribeWithMailmotor = $this->getRequest()->request->getBoolean('use_to_subscribe_with_mailmotor');
         $sendConfirmationMailTo = $this->getRequest()->request->getBoolean('send_confirmation_mail_to');
         $confirmationMailSubject = trim($this->getRequest()->request->get('confirmation_mail_subject'));
 
@@ -113,6 +114,9 @@ class SaveField extends BackendBaseAJAXAction
             }
             if ($replyTo && $validation !== 'email') {
                 $errors['reply_to_error_message'] = BL::getError('EmailValidationIsRequired');
+            }
+            if ($useToSubscribeWithMailmotor && $validation !== 'email') {
+                $errors['use_to_subscribe_with_mailmotor_error_message'] = BL::getError('ActivateEmailValidationToUseThisOption');
             }
             if ($sendConfirmationMailTo && $validation !== 'email') {
                 $errors['send_confirmation_mail_to_error_message'] = BL::getError(
@@ -263,6 +267,7 @@ class SaveField extends BackendBaseAJAXAction
             $settings['reply_to'] = $replyTo;
             $settings['send_confirmation_mail_to'] = $sendConfirmationMailTo;
             $settings['confirmation_mail_subject'] = $confirmationMailSubject;
+            $settings['use_to_subscribe_with_mailmotor'] = $useToSubscribeWithMailmotor;
         }
 
         if ($type === 'mailmotor') {
