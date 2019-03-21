@@ -184,6 +184,11 @@
                       <button id="recaptchaSelector" class="list-group-item jsRecaptchaTrigger">
                         <i class="fa fa-repeat fa-fw" aria-hidden="true"></i>{{ 'lbl.Recaptcha'|trans|ucfirst }}
                       </button>
+                      {% if showMailmotorOption %}
+                        <button id="mailmotorSelector" data-field-id="mailmotorDialog" class="list-group-item jsFieldDialogTrigger">
+                          <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>{{ 'lbl.Mailmotor'|trans|ucfirst }}
+                        </button>
+                      {% endif %}
                     </div>
                     <div class="list-group">
                       <h5>{{ 'lbl.TextElements'|trans|ucfirst }}</h5>
@@ -886,6 +891,36 @@
       </div>
     </div>
   </div>
+  {% if showMailmotorOption %}
+    {# Dialog for a mailmotor #}
+    <div class="modal fade jsFieldDialog" id="mailmotorDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="mailmotorDialogTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="mailmotorDialogTitle">{{ 'lbl.Mailmotor'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="mailmotor_id" id="mailmotorId" value="" />
+            <div class="form-group">
+              <label for="mailmotorLabel" class="control-label">
+                {{ 'lbl.Label'|trans|ucfirst }}{{ macro.required }}
+              </label>
+              <p id="mailmotorLabelError" class="text-danger jsFieldError" style="display: none;"></p>
+              {% form_field mailmotor_label %}
+            </div>
+            <div class="form-group">
+              <label for="mailmotorApikey" class="control-label">{{ mailmotorMailEngine|ucfirst }}: {{ 'lbl.MailmotorListId'|trans }}</label>
+              {% form_field mailmotor_apikey %} {% form_field_error mailmotor_apikey %}
+            </div>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', 'times', 'lbl.Cancel'|trans|ucfirst, 'btn-default', { "data-dismiss":"modal", "type":"button" } ) }}
+            {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary jsFieldDialogSubmit', { "type":"button", "id":"textboxDialogSubmit"} ) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
 
   {# Dialog for a paragraph #}
   <div class="modal fade jsFieldDialog" id="paragraphDialog" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="paragraphDialogTitle">
