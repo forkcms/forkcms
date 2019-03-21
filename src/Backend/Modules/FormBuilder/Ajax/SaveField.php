@@ -35,6 +35,7 @@ class SaveField extends BackendBaseAJAXAction
                 'textarea',
                 'textbox',
                 'recaptcha',
+                'mailmotor',
             ]
         )) {
             $type = '';
@@ -48,6 +49,7 @@ class SaveField extends BackendBaseAJAXAction
         $defaultValues = trim($this->getRequest()->request->get('default_values', ''));
         $placeholder = trim($this->getRequest()->request->get('placeholder', ''));
         $classname = trim($this->getRequest()->request->get('classname', ''));
+        $listId = trim($this->getRequest()->request->get('list_id', ''));
         $required = $this->getRequest()->request->getBoolean('required');
         $requiredErrorMessage = trim($this->getRequest()->request->get('required_error_message', ''));
         $validation = $this->getRequest()->request->get('validation');
@@ -189,6 +191,15 @@ class SaveField extends BackendBaseAJAXAction
             if ($required && $requiredErrorMessage === '') {
                 $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
             }
+        } elseif ($type === 'mailmotor') {
+            // validate checkbox
+            if ($label === '') {
+                $errors['label'] = BL::getError('LabelIsRequired');
+            }
+            $mailmotorGateway = $this->getContainer()->get('mailmotor.factory.public')->getSubscriberGateway();
+            if ($listId === '' || !$mailmotorGateway->ping($listId)) {
+                $errors['list_id'] = BL::getError('WrongMailEngineCredentials', 'Mailmotor');
+            }
         }
 
         // got errors
@@ -252,6 +263,11 @@ class SaveField extends BackendBaseAJAXAction
             $settings['reply_to'] = $replyTo;
             $settings['send_confirmation_mail_to'] = $sendConfirmationMailTo;
             $settings['confirmation_mail_subject'] = $confirmationMailSubject;
+        }
+
+        if ($type === 'mailmotor') {
+            unset($settings['values']);
+            $settings['list_id'] = $listId;
         }
 
         // only for datetime input
