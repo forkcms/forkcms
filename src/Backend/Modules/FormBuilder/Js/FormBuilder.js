@@ -206,6 +206,9 @@ jsBackend.FormBuilder.Fields = {
             case 'radiobuttonDialog':
               jsBackend.FormBuilder.Fields.saveRadiobutton()
               break
+            case 'mailmotorDialog':
+              jsBackend.FormBuilder.Fields.saveMailmotorbutton()
+              break
             case 'checkboxDialog':
               jsBackend.FormBuilder.Fields.saveCheckbox()
               break
@@ -1141,6 +1144,65 @@ jsBackend.FormBuilder.Fields = {
 
             // close console box
             $('#radiobuttonDialog').modal('hide')
+          }
+        } else {
+          // show error message
+          jsBackend.messages.add('danger', textStatus)
+        }
+
+        // alert the user
+        if (data.code !== 200 && jsBackend.debug) {
+          window.alert(data.message)
+        }
+      }
+    })
+  },
+
+  /**
+   * Handle mailmotorButton save
+   */
+  saveMailmotorbutton: function () {
+    // init vars
+    var fieldId = $('#mailmotorId').val()
+    var type = 'mailmotor'
+    var label = $('#mailmotorLabel').val()
+    var listId = $('#mailmotorListId').val()
+
+    // make the call
+    $.ajax({
+      data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+        form_id: jsBackend.FormBuilder.formId,
+        field_id: fieldId,
+        type: type,
+        label: label,
+        list_id: listId
+      }),
+      success: function (data, textStatus) {
+        // success
+        if (data.code === 200) {
+          // clear errors
+          $('.jsFieldError').html('')
+
+          // form contains errors
+          if (typeof data.data.errors !== 'undefined') {
+            // assign errors
+            if (typeof data.data.errors.label !== 'undefined') {
+              $('#mailmotorLabelError').html(data.data.errors.label)
+            }
+
+            if (typeof data.data.errors.list_id !== 'undefined') {
+              $('#mailmotorListIdError').html(data.data.errors.list_id)
+            }
+
+            // toggle error messages
+            jsBackend.FormBuilder.Fields.toggleValidationErrors('mailmotorDialog')
+          } else {
+            // saved!
+            // append field html
+            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html)
+
+            // close console box
+            $('#mailmotorDialog').modal('hide')
           }
         } else {
           // show error message
