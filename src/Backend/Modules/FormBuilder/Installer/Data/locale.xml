@@ -315,6 +315,38 @@
         <translation language="el"><![CDATA[Αποθήκευση στη Βάση δεδομένων και αποστολή email]]></translation>
         <translation language="pl"><![CDATA[zapisz w bazie danych i wyślij email]]></translation>
       </item>
+      <item type="label" name="MailmotorListId">
+        <translation language="de"><![CDATA[list id]]></translation>
+        <translation language="el"><![CDATA[κατάλογος id]]></translation>
+        <translation language="en"><![CDATA[list id]]></translation>
+        <translation language="es"><![CDATA[ID de la lista]]></translation>
+        <translation language="fr"><![CDATA[list id]]></translation>
+        <translation language="hu"><![CDATA[lista id]]></translation>
+        <translation language="it"><![CDATA[lista id]]></translation>
+        <translation language="lt"><![CDATA[sąrašas ID]]></translation>
+        <translation language="nl"><![CDATA[list id]]></translation>
+        <translation language="ru"><![CDATA[список идентификаторов]]></translation>
+        <translation language="sv"><![CDATA[lista id]]></translation>
+        <translation language="uk"><![CDATA[список ідентифікаторів]]></translation>
+        <translation language="zh"><![CDATA[列表ID]]></translation>
+        <translation language="pl"><![CDATA[ID listy]]></translation>
+      </item>
+      <item type="label" name="MailmotorSubscribeToNewsletter">
+        <translation language="de"><![CDATA[Newsletter abonnieren]]></translation>
+        <translation language="el"><![CDATA[Εγγραφή στο Newsletter]]></translation>
+        <translation language="en"><![CDATA[subscribe to newsletter]]></translation>
+        <translation language="es"><![CDATA[Suscríbete al boletín]]></translation>
+        <translation language="fr"><![CDATA[s'inscrire à la Newsletter]]></translation>
+        <translation language="hu"><![CDATA[Feliratkozás a hírlevélre]]></translation>
+        <translation language="it"><![CDATA[Iscriviti alla Newsletter]]></translation>
+        <translation language="lt"><![CDATA[Prenumeruoti naujienas]]></translation>
+        <translation language="nl"><![CDATA[inschrijven op nieuwsbrief]]></translation>
+        <translation language="ru"><![CDATA[Подписаться на новостную рассылку]]></translation>
+        <translation language="sv"><![CDATA[Prenumerera på nyhetsbrev]]></translation>
+        <translation language="uk"><![CDATA[Підписатися на Розсилку]]></translation>
+        <translation language="zh"><![CDATA[订阅通讯]]></translation>
+        <translation language="pl"><![CDATA[Zapisz się do newslettera]]></translation>
+      </item>
       <item type="label" name="MethodEmail">
         <translation language="nl"><![CDATA[email verzenden]]></translation>
         <translation language="en"><![CDATA[send email]]></translation>
