@@ -12,20 +12,24 @@
     <div class="card-body">
       <div class="change-periode content-block">
         {% form date_range %}
-        <div class="form-inline">
-          <div class="form-group">
-            <label for="startDate" class="control-label">{{ 'lbl.StartDate'|trans|ucfirst }}</label>
-            {% form_field start_date %}
-            {% form_field_error start_date %}
+        <div class="form-row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="startDate" class="control-label">{{ 'lbl.StartDate'|trans|ucfirst }}</label>
+              {% form_field start_date %}
+              {% form_field_error start_date %}
+            </div>
           </div>
-          <div class="form-group">
-            <label for="endDate" class="control-label">{{ 'lbl.EndDate'|trans|ucfirst }}</label>
-            {% form_field end_date %}
-            {% form_field_error end_date %}
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="endDate" class="control-label">{{ 'lbl.EndDate'|trans|ucfirst }}</label>
+              {% form_field end_date %}
+              {% form_field_error end_date %}
+            </div>
           </div>
-          <div class="form-group">
-            <input id="update" class="btn btn-primary" type="submit" name="update" value="{{ 'lbl.ChangePeriod'|trans|ucfirst }}" />
-          </div>
+        </div>
+        <div class="form-group">
+          <input id="update" class="btn btn-primary" type="submit" name="update" value="{{ 'lbl.ChangePeriod'|trans|ucfirst }}" />
         </div>
         {% endform %}
       </div>
