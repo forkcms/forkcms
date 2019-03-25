@@ -2,6 +2,7 @@
 
 namespace Common\Form;
 
+use Common\Core\Model;
 use Common\Doctrine\ValueObject\AbstractFile;
 use stdClass;
 use Symfony\Component\Form\AbstractType;
@@ -256,34 +257,16 @@ class FileType extends AbstractType
         // return the server value if the constraint value is to high
         if (is_numeric($constraintValue) && is_numeric($serverValue)) {
             if ($constraintValue < $serverValue) {
-                return $this->prettyPrintFileSize($constraintValue);
+                return Model::prettyPrintFileSize($constraintValue);
             }
 
-            return $this->prettyPrintFileSize($serverValue);
+            return Model::prettyPrintFileSize($serverValue);
         }
 
         if (is_numeric($constraintValue)) {
-            return $this->prettyPrintFileSize($constraintValue);
+            return Model::prettyPrintFileSize($constraintValue);
         }
 
-        return $this->prettyPrintFileSize($serverValue);
-    }
-
-    private function prettyPrintFileSize(int $fileSize): string
-    {
-        // return the filesize in a human readable format according to the value
-        if ($fileSize > 999999999) {
-            return number_format($fileSize / 1000000000, 2, ',', ' ') . ' GB';
-        }
-
-        if ($fileSize > 999999) {
-            return number_format($fileSize / 1000000, 2, ',', ' ') . ' MB';
-        }
-
-        if ($fileSize > 999) {
-            return number_format($fileSize / 1000, 2, ',', ' ') . ' KB';
-        }
-
-        return $fileSize . ' bytes';
+        return Model::prettyPrintFileSize($serverValue);
     }
 }
