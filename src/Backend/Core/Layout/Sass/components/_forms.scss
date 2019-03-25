@@ -89,17 +89,16 @@ textarea {
   max-width: 100%;
 }
 
+select.form-control[size],
+select.form-control,
 select[size="1"] {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
   background: url('/src/Backend/Core/Layout/images/arrow.svg') no-repeat center right 5px;
   background-size: 10px;
-  display: inline-block;
-  font-size: $font-size-base;
   height: $input-height;
-  padding: 5px 20px 5px 5px;
-  width: 100%;
+  padding: $input-padding-y 1.5rem $input-padding-y $input-padding-x;
 }
 
 .form-group.last {

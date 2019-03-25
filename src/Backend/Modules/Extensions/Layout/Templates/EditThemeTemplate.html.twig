@@ -14,26 +14,24 @@
           <h2 class="card-title">{{ 'lbl.Template'|trans|ucfirst }}</h2>
         </div>
         <div class="card-body">
+          <p><small class="form-text text-muted">{{ 'msg.HelpTemplateLocation'|trans|raw }}</small></p>
+          <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|ucfirst }}</label>
+          <label for="theme" class="d-none">{{ 'lbl.Theme'|trans|ucfirst }}</label>
           <div class="form-inline form-group">
-            <p class="help-block">{{ 'msg.HelpTemplateLocation'|trans|raw }}</p>
-            <label for="file" class="control-label">{{ 'msg.PathToTemplate'|trans|ucfirst }}</label>
-            <label for="theme" class="hide">{{ 'lbl.Theme'|trans|ucfirst }}</label>
             {% form_field theme %}
             {% form_field_error theme %}
-            <small>
-              <code>/Core/Layout/Templates/</code>
-            </small>
+            <code>/Core/Layout/Templates/</code>
             {% form_field file %} {% form_field_error file %}
           </div>
           <div class="form-group">
             <label for="label" class="control-label">{{ 'lbl.Label'|trans|ucfirst }}</label>
             {% form_field label %} {% form_field_error label %}
           </div>
-          <ul class="list-unstyled">
-            <li class="checkbox">
-              <label for="image">{% form_field image %} {% form_field_error image %} {{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
-            </li>
-          </ul>
+          <div class="form-check">
+            {% form_field image %}
+            <label class="form-check-label" for="image">{{ 'msg.ShowImageForm'|trans|ucfirst }}</label>
+          </div>
+          {% form_field_error image %}
         </div>
       </div>
     </div>
@@ -48,35 +46,41 @@
         <div id="positions" class="card-body">
           {% for position in positions %}
             <div class="form-group position jsPosition"{% if not position.i %} style="display: none"{% endif %}>
-              <div class="row">
+              <div class="form-row">
                 {# Title & button to delete this position #}
-                <div class="col-md-2">
+                <div class="col-lg-2">
                   <div class="form-group">
                     <label for="position{{ position.i }}">
                       <span>{{ 'lbl.Position'|trans|ucfirst }}</span>
-                      <button class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|ucfirst }}">
-                        {{ macro.icon('trash-o') }}
-                        <span class="sr-only">{{ 'lbl.DeletePosition'|trans|ucfirst }}</span>
-                      </button>
                     </label>
                   </div>
                 </div>
                 {# Position name #}
-                <div class="col-md-10">
+                <div class="col-10 col-lg-9">
                   <div class="form-group">
                     {{ position.formElements.txtPosition.parse()|raw }}
                   </div>
                 </div>
+                <div class="col-2 col-lg-1">
+                  <button class="btn btn-danger btn-icon-only jsDeletePosition" title="{{ 'lbl.DeletePosition'|trans|ucfirst }}">
+                    {{ macro.icon('trash-o') }}
+                    <span class="sr-only">{{ 'lbl.DeletePosition'|trans|ucfirst }}</span>
+                  </button>
+                </div>
               </div>
-              <div class="row jsBlocks">
+              <div class="form-row jsBlocks">
                 {# Default blocks for this position #}
                 {% if position.blocks %}
                   {% for block in position.blocks %}
-                    <div class="col-md-10 col-md-offset-2 jsBlock">
-                      <div class="form-group">
-                        <div class="form-inline">
-                          {{ block.formElements.ddmType.parse()|raw }}
-                          {{ block.formElements.ddmTypeError }}
+                    <div class="col-md-10 offset-md-2 jsBlock">
+                      <div class="form-row">
+                        <div class="col-10 col-lg-9">
+                          <div class="form-group">
+                            {{ block.formElements.ddmType.parse()|raw }}
+                            {{ block.formElements.ddmTypeError }}
+                          </div>
+                        </div>
+                        <div class="col-2 col-lg-1">
                           {# Button to remove block from this position #}
                           <button class="btn btn-danger btn-icon-only jsDeleteBlock" title="{{ 'lbl.DeleteBlock'|trans|ucfirst }}">
                             {{ macro.icon('trash-o') }}
@@ -87,7 +91,7 @@
                     </div>
                   {% endfor %}
                 {% endif %}
-                <div class="col-md-10 col-md-offset-2">
+                <div class="col-md-10 offset-md-2">
                   <div class="btn-toolbar">
                     <div class="btn-group" role="group">
                       {# Button to add new default block to this position #}
@@ -151,14 +155,14 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="active">{% form_field active %} {% form_field_error active %} {{ 'lbl.Active'|trans|ucfirst }}</label>
-              </li>
-              <li class="checkbox">
-                <label for="default" class="control-label">{% form_field default %} {% form_field_error default %} {{ 'lbl.Default'|trans|ucfirst }}</label>
-              </li>
-            </ul>
+            <div class="form-check">
+              {% form_field active %} {% form_field_error active %}
+              <label for="active" class="form-check-label">{{ 'lbl.Active'|trans|ucfirst }}</label>
+            </div>
+            <div class="form-check">
+              {% form_field default %} {% form_field_error default %}
+              <label for="default" class="form-check-label">{{ 'lbl.Default'|trans|ucfirst }}</label>
+            </div>
           </div>
         </div>
       </div>
@@ -172,12 +176,11 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <p class="help-block">{{ 'msg.HelpOverwrite'|trans|raw }}</p>
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="overwrite" class="control-label">{% form_field overwrite %} {% form_field_error overwrite %} {{ 'lbl.Overwrite'|trans|ucfirst }}</label>
-              </li>
-            </ul>
+            <div class="form-check">
+              {% form_field overwrite %} {% form_field_error overwrite %}
+              <label for="overwrite" class="form-check-label">{{ 'lbl.Overwrite'|trans|ucfirst }}</label>
+            </div>
+            <small class="form-text text-muted">{{ 'msg.HelpOverwrite'|trans|raw }}</small>
           </div>
         </div>
       </div>

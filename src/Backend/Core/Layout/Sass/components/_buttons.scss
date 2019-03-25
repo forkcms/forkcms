@@ -38,10 +38,15 @@
   }
 }
 
-.btn-icon-only .fa {
-  padding-right: 0;
-  margin-left: 0;
-  margin-right: 0;
+.btn-icon-only {
+  font-size: 1rem;
+  padding: 6px 12px 6px;
+
+  .fa {
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .btn-group {

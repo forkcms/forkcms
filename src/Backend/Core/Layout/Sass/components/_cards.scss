@@ -4,6 +4,11 @@
   -moz-box-shadow: none;
   box-shadow: none;
 
+  .card-heading {
+    border-top-left-radius: 0.12rem;
+    border-top-right-radius: 0.12rem;
+  }
+
   .card-body {
     border-spacing: 0;
   }
@@ -133,20 +138,17 @@
 
 .card-primary label,
 .card-default label {
+  margin-bottom: 0;
   width: 100%;
 
   .card-body {
     padding: 20px 15px 13px;
   }
-
-  .card-footer {
-    background-color: $white;
-    border-top: 0;
-  }
 }
 
 .card-primary {
   background-color: $white;
+  border-color: $primary;
 
   .card-heading {
     background-color: $primary;
