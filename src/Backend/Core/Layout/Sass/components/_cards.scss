@@ -7,6 +7,7 @@
   .card-heading {
     border-top-left-radius: 0.12rem;
     border-top-right-radius: 0.12rem;
+    padding: 8px 15px 10px;
   }
 
   .card-body {
@@ -29,7 +30,6 @@
   .card-heading {
     background: $gray-100;
     border-bottom: 1px solid $gray-200;
-    padding: 8px 15px 10px;
 
     label,
     p,
@@ -92,7 +92,8 @@
 }
 
 .card-transparent {
-  border-color: #ddd;
+  background: $gray-100;
+  border: 1px solid #ddd;
 
   .card-heading {
     border-bottom: 1px solid #ddd;
@@ -101,8 +102,8 @@
 }
 
 // Panel caret behavior
-.card.open .fa-caret-right {
-  @extend .fa-caret-down;
+.card .collapsed .fa-caret-down {
+  @extend .fa-caret-right;
 }
 
 .card-group {
@@ -134,6 +135,26 @@
       display: inline-block;
     }
   }
+
+  .card {
+    border-radius: 0;
+
+    + .card {
+      margin-top: 5px;
+    }
+  }
+
+  &.card-group-column {
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    .card {
+
+      + .card {
+        border-left: 1px solid $card-border-color;
+      }
+    }
+  }
 }
 
 .card-primary label,
@@ -163,7 +184,9 @@
   border-bottom: 1px solid $gray-200;
 }
 
-
+.card-collapse table {
+  border: 0;
+}
 
 .fork-dashboard-column .card-default .card-body {
   padding: 20px 15px 13px;

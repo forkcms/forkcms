@@ -12,7 +12,7 @@
       <div>
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item">
-            <a class="nav-link" href="#tabName" aria-controls="tabName" role="tab" data-toggle="tab" aria-selected="true" id="name-tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
+            <a class="nav-link active" href="#tabName" aria-controls="tabName" role="tab" data-toggle="tab" aria-selected="true" id="name-tab">{{ 'lbl.Name'|trans|ucfirst }}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#tabDashboard" aria-controls="tabDashboard" role="tab" data-toggle="tab" aria-selected="false" id="dashboard-tab">{{ 'lbl.Dashboard'|trans|ucfirst }}</a>
@@ -53,16 +53,16 @@
           <div role="tabpanel" class="tab-pane" id="tabPermissions" aria-labelledby="permissions-tab">
             <div class="row">
               <div class="col-md-12">
-                <div class="card-group" id="permissions" role="tablist" aria-multiselectable="true">
+                <div class="card-group card-group-column" id="permissions" role="tablist" aria-multiselectable="true">
                   {% for permission in permissions %}
                     <div class="card card-transparent jsGroupsPermissionsModule">
-                      <div class="card-heading" role="tab" id="permission-heading-{{ permission.id }}">
-                        <div data-toggle="collapse" role="treeitem" data-parent="#permission" data-target="#permission-list-{{ permission.id }}" aria-expanded="false" aria-controls="permission-list-{{ permission.id }}">
-                          <h4 class="card-title">
-                            {{ permission.chk|raw }}
-                            {{ macro.icon('caret-right fa-fw') }} {{ permission.label }}
-                          </h4>
-                        </div>
+                      <div class="card-heading d-flex align-items-center" role="tab" id="permission-heading-{{ permission.id }}">
+                        {{ permission.chk|raw }}
+                        <h4 class="card-title mb-0">
+                          <a class="collapsed" href="#" data-toggle="collapse" data-target="#permission-list-{{ permission.id }}" aria-expanded="false">
+                            {{ macro.icon('caret-down fa-fw') }} {{ permission.label }}
+                          </a>
+                        </h4>
                       </div>
                       <div id="permission-list-{{ permission.id }}" class="card-collapse collapse" role="tabpanel" aria-labelledby="permission-heading-{{ permission.id }}">
                         {{ permission.actions.dataGrid|raw }}
