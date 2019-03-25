@@ -42,17 +42,15 @@
         </div>
         <div class="card-body">
           <div class="form-group last">
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="useSitelinksSearchBox" class="control-label">
+              <div class="form-check">
+                {% form_field_error use_sitelinks_search_box %}
+                <label for="useSitelinksSearchBox" class="form-check-label">
                   {% form_field use_sitelinks_search_box %} {{ 'lbl.UseSitelinksSearchBox'|trans|ucfirst }}
                 </label>
-                {% form_field_error use_sitelinks_search_box %}
-                <div class="help-block">
-                  {{ 'msg.HelpSitelinksSearchBox'|trans|raw }}
-                </div>
-              </li>
-            </ul>
+              </div>
+              <small class="form-text text-muted">
+                {{ 'msg.HelpSitelinksSearchBox'|trans|raw }}
+              </small>
           </div>
         </div>
       </div>
@@ -97,7 +95,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', {"id":"save", "type":"submit", "name":"save"}) }}
         </div>
       </div>

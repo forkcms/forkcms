@@ -239,9 +239,9 @@
         <translation language="pl"><![CDATA[Wyszukane dnia]]></translation>
       </item>
       <item type="label" name="UseSitelinksSearchBox">
-        <translation language="nl"><![CDATA[Schakel Googles Sitelinks Search Box in.]]></translation>
-        <translation language="en"><![CDATA[Enable Googles Sitelinks Search Box.]]></translation>
-        <translation language="pl"><![CDATA[Włącz Google Sitelinks Search Box.]]></translation>
+        <translation language="nl"><![CDATA[Googles Sitelinks Search Box]]></translation>
+        <translation language="en"><![CDATA[Googles Sitelinks Search Box]]></translation>
+        <translation language="pl"><![CDATA[Google Sitelinks Search Box]]></translation>
       </item>
       <item type="error" name="SynonymIsRequired">
         <translation language="nl"><![CDATA[Synoniemen zijn verplicht.]]></translation>

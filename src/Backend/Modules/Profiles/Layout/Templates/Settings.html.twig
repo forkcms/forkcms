@@ -18,25 +18,25 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="sendNewProfileAdminMail" class="control-label">{% form_field send_new_profile_admin_mail %} {{ 'lbl.SendNewProfileAdminMail'|trans|ucfirst }}</label>
-              </li>
-              <li class="checkbox" id="overwriteProfileNotificationEmailBox">
-                <label for="overwriteProfileNotificationEmail" class="control-label">{% form_field overwrite_profile_notification_email %} {{ 'lbl.OverwriteProfileNotificationEmail'|trans|ucfirst }}</label><br />
-                    <span id="profileNotificationEmailBox">
-                      {{ macro.required }} {% form_field profile_notification_email %}
-                      {% form_field_error profile_notification_email %}
-                    </span>
-              </li>
-            </ul>
+            <div class="form-check">
+              {% form_field send_new_profile_admin_mail %}
+              <label for="sendNewProfileAdminMail" class="form-check-label">{{ 'lbl.SendNewProfileAdminMail'|trans|ucfirst }}</label>
+            </div>
+            <div class="form-check" id="overwriteProfileNotificationEmailBox">
+              {% form_field overwrite_profile_notification_email %}
+              <label for="overwriteProfileNotificationEmail" class="form-check-label">{{ 'lbl.OverwriteProfileNotificationEmail'|trans|ucfirst }}</label>
+            </div>
+            <div class="form-group" id="profileNotificationEmailBox">
+              <label for="profileNotificationEmail">{{ 'lbl.Email'|trans|ucfirst }} {{ macro.required }}</label>
+              {% form_field profile_notification_email %}
+              {% form_field_error profile_notification_email %}
+            </div>
           </div>
           <div class="form-group">
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="sendNewProfileMail" class="control-label">{% form_field send_new_profile_mail %} {{ 'lbl.SendNewProfileMail'|trans|ucfirst }}</label>
-              </li>
-            </ul>
+            <div class="form-check">
+              {% form_field send_new_profile_mail %}
+              <label for="sendNewProfileMail" class="form-check-label">{{ 'lbl.SendNewProfileMail'|trans|ucfirst }}</label>
+            </div>
           </div>
         </div>
       </div>
@@ -45,7 +45,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "type":"submit", "id":"save", "name":"save"}) }}
         </div>
       </div>

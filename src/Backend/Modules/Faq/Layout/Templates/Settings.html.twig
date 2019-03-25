@@ -42,13 +42,12 @@
         </div>
         <div class="card-body">
           <div class="form-group last">
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="allowMultipleCategories" class="control-label">
-                  {% form_field allow_multiple_categories %} {{ 'lbl.AllowMultipleCategories'|trans|ucfirst }}
-                </label>
-              </li>
-            </ul>
+            <div class="form-check">
+              {% form_field allow_multiple_categories %}
+              <label for="allowMultipleCategories" class="form-check-label">
+                {{ 'lbl.AllowMultipleCategories'|trans|ucfirst }}
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -64,35 +63,37 @@
         </div>
         <div class="card-body">
           <div class="form-group last">
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="allowFeedback" class="control-label">
-                  {% form_field allow_feedback %} {{ 'lbl.AllowFeedback'|trans|ucfirst }}
-                </label>
-              </li>
-              <li class="checkbox">
-                <label for="allowOwnQuestion" class="control-label">
-                  {% form_field allow_own_question %} {{ 'lbl.AllowOwnQuestion'|trans|ucfirst }}
-                </label>
-              </li>
-              <li class="checkbox">
-                <label for="sendEmailOnNewFeedback" class="control-label">
-                  {% form_field send_email_on_new_feedback %} {{ 'lbl.SendEmailOnNewFeedback'|trans|ucfirst }}
-                </label>
-              </li>
-              <li class="checkbox">
-                <label for="spamfilter" class="control-label">
-                  {% form_field spamfilter %} {{ 'lbl.FilterCommentsForSpam'|trans|ucfirst }}
-                </label>
-                <p class="help-block">
-                  {{ 'msg.HelpSpamFilter'|trans }}
-                  {% if noAkismetKey %}
-                    <br>
-                    {{ 'msg.NoAkismetKey'|trans|format(geturl('index','settings'))|raw }}
-                  {% endif %}
-                </p>
-              </li>
-            </ul>
+            <div class="form-check">
+              {% form_field allow_feedback %}
+              <label for="allowFeedback" class="form-check-label">
+                {{ 'lbl.AllowFeedback'|trans|ucfirst }}
+              </label>
+            </div>
+            <div class="form-check">
+              {% form_field allow_own_question %}
+              <label for="allowOwnQuestion" class="form-check-label">
+                {{ 'lbl.AllowOwnQuestion'|trans|ucfirst }}
+              </label>
+            </div>
+            <div class="form-check">
+              {% form_field send_email_on_new_feedback %}
+              <label for="sendEmailOnNewFeedback" class="form-check-label">
+                {{ 'lbl.SendEmailOnNewFeedback'|trans|ucfirst }}
+              </label>
+            </div>
+            <div class="form-check">
+              {% form_field spamfilter %}
+              <label for="spamfilter" class="form-check-label">
+                {{ 'lbl.FilterCommentsForSpam'|trans|ucfirst }}
+              </label>
+            </div>
+            <small class="form-text text-muted">
+              {{ 'msg.HelpSpamFilter'|trans }}
+              {% if noAkismetKey %}
+                <br>
+                {{ 'msg.NoAkismetKey'|trans|format(geturl('index','settings'))|raw }}
+              {% endif %}
+            </small>
           </div>
         </div>
       </div>
@@ -101,7 +102,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" } ) }}
         </div>
       </div>

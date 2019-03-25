@@ -17,12 +17,11 @@
         </div>
         <div class="card-body">
           <div class="form-group last">
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="metaNavigation" class="control-label">{% form_field meta_navigation %} {{ 'msg.MetaNavigation'|trans|ucfirst }}</label>
-              </li>
-            </ul>
-            <p class="help-block">{{ 'msg.HelpMetaNavigation'|trans }}</p>
+            <div class="form-check">
+              {% form_field meta_navigation %}
+              <label for="metaNavigation" class="form-check-label">{{ 'msg.MetaNavigation'|trans|ucfirst }}</label>
+            </div>
+            <small class="form-text text-muted">{{ 'msg.HelpMetaNavigation'|trans }}</small>
           </div>
         </div>
       </div>
@@ -31,7 +30,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
         </div>
       </div>
