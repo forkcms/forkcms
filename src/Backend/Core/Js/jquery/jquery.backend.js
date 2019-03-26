@@ -151,7 +151,7 @@
 
       // append the button
       $(this).closest('.input-group input').after(
-        '        <span class="input-group-btn"><button data-id="' + id + '" class="generatePasswordButton btn btn-default" type="button"><span>' + options.generateLabel + '</span></button></span>'
+        '        <span class="input-group-append"><button data-id="' + id + '" class="generatePasswordButton btn btn-primary" type="button"><span>' + options.generateLabel + '</span></button></span>'
       )
 
       $('.generatePasswordButton').live('click', generatePassword)
