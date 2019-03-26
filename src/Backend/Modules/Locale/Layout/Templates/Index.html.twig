@@ -38,13 +38,12 @@
               <div class="form-group">
                 <label>{{ 'lbl.Types'|trans|ucfirst }}</label>
                 {% if type %}
-                  <ul class="list-unstyled">
-                    {% for item in type %}
-                      <li class="checkbox">
-                        <label for="{{ item.id }}">{{ item.chkType | raw }} {{ item.label|ucfirst }}</label>
-                      </li>
-                    {% endfor %}
-                  </ul>
+                {% for item in type %}
+                  <div class="form-check mb-1">
+                    {{ item.chkType|raw }}
+                    <label for="{{ item.id }}" class="form-check-label">{{ item.label|ucfirst }}</label>
+                  </div>
+                {% endfor %}
                 {% endif %}
               </div>
             </div>
@@ -52,13 +51,12 @@
               <div class="form-group">
                 <label>{{ 'lbl.Languages'|trans|ucfirst }}</label>
                 {% if language %}
-                  <ul class="list-unstyled">
-                    {% for item in language %}
-                      <li class="checkbox">
-                        <label for="{{ item.id }}">{{ item.chkLanguage | raw }} {{ item.label|ucfirst }}</label>
-                      </li>
-                    {% endfor %}
-                  </ul>
+                  {% for item in language %}
+                    <div class="form-check mb-1">
+                      {{ item.chkLanguage|raw }}
+                      <label for="{{ item.id }}" class="form-check-label">{{ item.label|ucfirst }}</label>
+                    </div>
+                  {% endfor %}
                 {% endif %}
               </div>
             </div>

@@ -34,6 +34,7 @@
   }
 }
 
+label,
 .control-label {
   color: $black;
   font-size: $font-size-base;
@@ -41,15 +42,12 @@
   width: 100%;
 }
 
-.radio {
-  margin-top: 0;
-}
-
-.help-block {
-  font-size: $font-size-sm;
+.form-check-label {
+  font-weight: 400;
 }
 
 .form-inline {
+
   .radio {
     label {
       padding-left: 20px;
@@ -75,10 +73,6 @@
   }
 }
 
-label {
-  font-weight: 600;
-}
-
 abbr[title],
 abbr[data-original-title] {
   border-bottom: none;
@@ -95,7 +89,9 @@ select[size="1"] {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
-  background: url('/src/Backend/Core/Layout/images/arrow.svg') no-repeat center right 5px;
+  background-image: url('/src/Backend/Core/Layout/images/arrow.svg');
+  background-position: center right 5px;
+  background-repeat: no-repeat;
   background-size: 10px;
   height: $input-height;
   padding: $input-padding-y 1.5rem $input-padding-y $input-padding-x;

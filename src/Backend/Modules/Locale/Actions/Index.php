@@ -234,13 +234,13 @@ class Index extends BackendBaseActionIndex
             'language',
             BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod),
             $this->filter['language'],
-            'noFocus'
+            'form-check-input noFocus'
         );
         $this->form->addMultiCheckbox(
             'type',
             BackendLocaleModel::getTypesForMultiCheckbox(),
             $this->filter['type'],
-            'noFocus'
+            'form-check-input noFocus'
         );
         $this->form->addDropdown(
             'module',
