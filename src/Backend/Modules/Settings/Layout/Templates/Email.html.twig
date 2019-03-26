@@ -20,28 +20,30 @@
           <fieldset>
             <legend>
               {{ 'lbl.SendingEmails'|trans|ucfirst }}
-              <p class="help-block">{{ 'msg.HelpSendingEmails'|trans }}</p>
             </legend>
-            <div class="form-inline">
-              <small>
-                <div class="form-group">
+            <div class="form-group">
+              <div class="form-row align-items-center">
+                <div class="col-lg-8">
                   {% form_field mailer_type %} {% form_field_error mailer_type %}
-                  <a id="testEmailConnection" href="#">{{ 'msg.SendTestMail'|trans|ucfirst }}</a>
-                  <span id="testEmailConnectionSpinner" style="display: none; padding-top: 3px;">
-                    {{ macro.icon('spinner fa-pulse fa-lg fa-fw') }}
-                    <span class="sr-only">{{ 'lbl.Loading' }}</span>
-                  </span>
                 </div>
-                <span id="testEmailConnectionError" style="display: none;" class="alert alert-danger">{{ 'err.ErrorWhileSendingEmail'|trans }}</span>
-                <span id="testEmailConnectionSuccess" style="display: none;" class="alert alert-success">{{ 'msg.TestWasSent'|trans }}</span>
-              </small>
+                <div class="col-lg-4">
+                  <a id="testEmailConnection" href="#">{{ 'msg.SendTestMail'|trans|ucfirst }}</a>
+                </div>
+              </div>
+              <small class="form-text text-muted">{{ 'msg.HelpSendingEmails'|trans }}</small>
+              <span id="testEmailConnectionSpinner" style="display: none; padding-top: 3px;">
+                {{ macro.icon('spinner fa-pulse fa-lg fa-fw') }}
+                <span class="sr-only">{{ 'lbl.Loading' }}</span>
+              </span>
             </div>
+            <span id="testEmailConnectionError" style="display: none;" class="alert alert-danger">{{ 'err.ErrorWhileSendingEmail'|trans }}</span>
+            <span id="testEmailConnectionSuccess" style="display: none;" class="alert alert-success">{{ 'msg.TestWasSent'|trans }}</span>
           </fieldset>
           {% endif %}
           <fieldset>
             <legend>
               {{ 'lbl.From'|trans|ucfirst }}
-              <p class="help-block">{{ 'msg.HelpEmailFrom'|trans }}</p>
+              <small class="form-text text-muted">{{ 'msg.HelpEmailFrom'|trans }}</small>
             </legend>
             <div class="form-group">
               <label for="mailerFromName" class="control-label">
@@ -61,7 +63,7 @@
           <fieldset>
             <legend>
               {{ 'lbl.To'|trans|ucfirst }}
-              <p class="help-block">{{ 'msg.HelpEmailTo'|trans }}</p>
+              <small class="form-text text-muted">{{ 'msg.HelpEmailTo'|trans }}</small>
             </legend>
             <div class="form-group">
               <label for="mailerToName" class="control-label">
@@ -113,25 +115,33 @@
           <div class="card-body">
             <div class="form-group">
               <label for="smtpPort" class="control-label">{{ 'lbl.Server'|trans|ucfirst }}&#160;&amp; {{ 'lbl.Port'|trans }}</label>
-              <p class="help-block">{{ 'msg.HelpSMTPServer'|trans }}</p>
               <div class="form-inline">
                 {% form_field smtp_server %}
-                <span>:</span>
+                <span class="mx-1">:</span>
                 {% form_field smtp_port %}
                 {% form_field_error smtp_port %} {% form_field_error smtp_server %}
               </div>
+              <small class="form-text text-muted">{{ 'msg.HelpSMTPServer'|trans }}</small>
             </div>
-            <div class="form-group">
-              <label for="smtpUsername" class="control-label">{{ 'lbl.Username'|trans|ucfirst }}</label>
-              {% form_field smtp_username %} {% form_field_error smtp_username %}
-            </div>
-            <div class="form-group">
-              <label for="smtpPassword" class="control-label">{{ 'lbl.Password'|trans|ucfirst }}</label>
-              {% form_field smtp_password %} {% form_field_error smtp_password %}
-            </div>
-            <div class="form-group last">
-              <label for="smtpSecureLayer" class="control-label">{{ 'lbl.SmtpSecureLayer'|trans|ucfirst }}</label>
-              {% form_field smtp_secure_layer %}
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="smtpUsername" class="control-label">{{ 'lbl.Username'|trans|ucfirst }}</label>
+                  {% form_field smtp_username %} {% form_field_error smtp_username %}
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="smtpPassword" class="control-label">{{ 'lbl.Password'|trans|ucfirst }}</label>
+                  {% form_field smtp_password %} {% form_field_error smtp_password %}
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group last">
+                  <label for="smtpSecureLayer" class="control-label">{{ 'lbl.SmtpSecureLayer'|trans|ucfirst }}</label>
+                  {% form_field smtp_secure_layer %}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -141,7 +151,7 @@
   <div class="row fork-module-actions">
     <div class="col-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
         </div>
       </div>

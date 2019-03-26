@@ -11,8 +11,11 @@
     <div class="row fork-module-messages">
       <div class="col-12">
         <div class="alert alert-warning" role="alert">
-          <p><strong>{{ macro.icon('exclamation-triangle') }}{{ 'msg.ConfigurationError'|trans|ucfirst }}
-            </strong></p>
+          <p>
+            <strong>
+              {{ macro.icon('exclamation-triangle') }}{{ 'msg.ConfigurationError'|trans|ucfirst }}
+            </strong>
+          </p>
           <ul>
             {% for warning in warnings %}
               <li>{{ warning.message|raw }}</li>
@@ -49,12 +52,12 @@
           <div class="form-group">
             <label for="siteHtmlHeader" class="control-label"><code>&lt;head&gt;</code> script(s)</label>
             {% form_field site_html_header %} {% form_field_error site_html_header %}
-            <span class="help-block">{{ 'msg.HelpScriptsHead'|trans }}</span>
+            <small class="form-text text-muted">{{ 'msg.HelpScriptsHead'|trans }}</small>
           </div>
           <div class="form-group last">
             <label for="siteHtmlFooter" class="control-label">End of <code>&lt;body&gt;</code> script(s)</label>
             {% form_field site_html_footer %} {% form_field_error site_html_footer %}
-            <span class="help-block">{{ 'msg.HelpScriptsFoot'|trans }}</span>
+            <small class="form-text text-muted">{{ 'msg.HelpScriptsFoot'|trans }}</small>
           </div>
         </div>
       </div>
@@ -68,28 +71,30 @@
         </div>
         <div class="card-body">
           <div class="form-group">
-            <p>{{ 'msg.HelpLanguages'|trans|ucfirst }}</p>
-            <ul id="activeLanguages" class="list-unstyled">
+            <label>{{ 'msg.HelpLanguages'|trans|ucfirst }}</label>
+            <div id="activeLanguages">
               {% for activeLanguage in activeLanguages %}
-                <li class="checkbox">
-                  <label for="{{ activeLanguage.id }}">
-                    {{ activeLanguage.chkActiveLanguages|raw }} {{ activeLanguage.label }}{% if activeLanguage.default %} ({{ 'lbl.Default'|trans|ucfirst }}){% endif %}
+                <div class="form-check">
+                  {{ activeLanguage.chkActiveLanguages|raw }}
+                  <label for="{{ activeLanguage.id }}" class="form-check-label">
+                    {{ activeLanguage.label }}{% if activeLanguage.default %} ({{ 'lbl.Default'|trans|ucfirst }}){% endif %}
                   </label>
-                </li>
+                </div>
               {% endfor %}
-            </ul>
+            </div>
           </div>
           <div class="form-group last">
-            <p>{{ 'msg.HelpRedirectLanguages'|trans|ucfirst }}</p>
-            <ul id="redirectLanguages" class="list-unstyled">
+            <label>{{ 'msg.HelpRedirectLanguages'|trans|ucfirst }}</label>
+            <div id="redirectLanguages">
               {% for redirectLanguage in redirectLanguages %}
-                <li class="checkbox">
-                  <label for="{{ redirectLanguage.id }}">
-                    {{ redirectLanguage.chkRedirectLanguages|raw }} {{ redirectLanguage.label }}{% if redirectLanguage.default %} ({{ 'lbl.Default'|trans|ucfirst }}){% endif %}
+                <div class="form-check">
+                  {{ redirectLanguage.chkRedirectLanguages|raw }}
+                  <label for="{{ redirectLanguage.id }}" class="form-check-label">
+                    {{ redirectLanguage.label }}{% if redirectLanguage.default %} ({{ 'lbl.Default'|trans|ucfirst }}){% endif %}
                   </label>
-                </li>
+                </div>
               {% endfor %}
-            </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -102,20 +107,28 @@
           <h2 class="card-title">{{ 'lbl.DateAndTime'|trans|ucfirst }}</h2>
         </div>
         <div class="card-body">
-          <div class="form-group">
-            <label for="timeFormat" class="control-label">{{ 'lbl.TimeFormat'|trans|ucfirst }}</label>
-            {% form_field time_format %} {% form_field_error time_format %}
-            <span class="help-block">{{ 'msg.HelpTimeFormat'|trans|ucfirst }}</span>
-          </div>
-          <div class="form-group">
-            <label for="dateFormatShort" class="control-label">{{ 'lbl.ShortDateFormat'|trans|ucfirst }}</label>
-            {% form_field date_format_short %} {% form_field_error date_format_short %}
-            <span class="help-block">{{ 'msg.HelpDateFormatShort'|trans|ucfirst }}</span>
-          </div>
-          <div class="form-group last">
-            <label for="dateFormatLong" class="control-label">{{ 'lbl.LongDateFormat'|trans|ucfirst }}</label>
-            {% form_field date_format_long %} {% form_field_error date_format_long %}
-            <span class="help-block">{{ 'msg.HelpDateFormatLong'|trans|ucfirst }}</span>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+              <label for="timeFormat" class="control-label">{{ 'lbl.TimeFormat'|trans|ucfirst }}</label>
+              {% form_field time_format %} {% form_field_error time_format %}
+              <small class="form-text text-muted">{{ 'msg.HelpTimeFormat'|trans|ucfirst }}</small>
+            </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+              <label for="dateFormatShort" class="control-label">{{ 'lbl.ShortDateFormat'|trans|ucfirst }}</label>
+              {% form_field date_format_short %} {% form_field_error date_format_short %}
+              <small class="form-text text-muted">{{ 'msg.HelpDateFormatShort'|trans|ucfirst }}</small>
+            </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group last">
+              <label for="dateFormatLong" class="control-label">{{ 'lbl.LongDateFormat'|trans|ucfirst }}</label>
+              {% form_field date_format_long %} {% form_field_error date_format_long %}
+              <small class="form-text text-muted">{{ 'msg.HelpDateFormatLong'|trans|ucfirst }}</small>
+            </div>
+            </div>
           </div>
         </div>
       </div>
@@ -131,7 +144,7 @@
           <div class="form-group last">
             <label for="numberFormat" class="control-label">{{ 'lbl.NumberFormat'|trans|ucfirst }}</label>
             {% form_field number_format %} {% form_field_error number_format %}
-            <span class="help-block">{{ 'msg.HelpNumberFormat'|trans|ucfirst }}</span>
+            <small class="form-text text-muted">{{ 'msg.HelpNumberFormat'|trans|ucfirst }}</small>
           </div>
         </div>
       </div>
@@ -143,9 +156,8 @@
         <div class="card-heading">
           <h2 class="card-title">{{ 'lbl.APIKeys'|trans|ucfirst }}</h2>
         </div>
-        <div class="card-body">
-          <p>{{ 'msg.HelpAPIKeys'|trans }}</p>
-          <table class="table table-striped">
+        <div class="card-body p-0">
+          <table class="table table-striped border-0">
             <thead>
               <tr>
                 <th class="title" style="width: 20%;"><span>{{ 'lbl.Name'|trans|ucfirst }}</span></th>
@@ -158,12 +170,12 @@
                 <tr>
                   <th>
                     <label for="googleMapsKey" class="control-label">
-                      Google maps key{{ macro.required }}
+                      {{ 'lbl.GoogleMapsKey'|trans|ucfirst }}{{ macro.required }}
                     </label>
                   </th>
                   <td>{% form_field google_maps_key %} {% form_field_error google_maps_key %}</td>
                   <td>
-                    <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">https://developers.google.com/maps/documentation/javascript/get-api-key</a>
+                    <a href="{{ 'lbl.GoogleMapsApiUrl'|trans }}">{{ 'lbl.GoogleMapsApiUrl'|trans }}</a>
                   </td>
                 </tr>
               {% endif %}
@@ -171,32 +183,32 @@
                 <tr>
                   <th>
                     <label for="googleRecaptchaSiteKey" class="control-label">
-                      reCAPTCHA site key
+                      {{ 'lbl.RecaptchaSiteKey'|trans|ucfirst }}
                     </label>
                   </th>
                   <td>{% form_field google_recaptcha_site_key %} {% form_field_error google_recaptcha_site_key %}</td>
                   <td>
-                    <a href="https://www.google.com/recaptcha/admin">https://www.google.com/recaptcha/admin</a>
+                    <a href="{{ 'lbl.RecaptchaSiteUrl'|trans }}">{{ 'lbl.RecaptchaSiteUrl'|trans }}</a>
                   </td>
                 </tr>
                 <tr>
                   <th>
                     <label for="googleRecaptchaSiteKey" class="control-label">
-                      reCAPTCHA secret key
+                      {{ 'lbl.RecaptchaSectretKey'|trans|ucfirst }}
                     </label>
                   </th>
                   <td>{% form_field google_recaptcha_secret_key %} {% form_field_error google_recaptcha_secret_key %}</td>
                   <td>
-                    <a href="https://www.google.com/recaptcha/admin">https://www.google.com/recaptcha/admin</a>
+                    <a href="{{ 'lbl.RecaptchaSecretUrl'|trans }}">{{ 'lbl.RecaptchaSecretUrl'|trans }}</a>
                   </td>
                 </tr>
               {% endif %}
               {% if needsAkismet %}
                 <tr>
-                  <th><label for="akismetKey" class="control-label">Akismet key</label>
+                  <th><label for="akismetKey" class="control-label">{{ 'lbl.AskimetApiKey'|trans|ucfirst }}</label>
                   </th>
                   <td>{% form_field akismet_key %} {% form_field_error akismet_key %}</td>
-                  <td><a href="http://akismet.com/personal">http://akismet.com/personal</a></td>
+                  <td><a href="{{ 'lbl.AskimetApiKeyUrl'|trans }}">{{ 'lbl.AskimetApiKeyUrl'|trans }}</a></td>
                 </tr>
               {% endif %}
             </tbody>
@@ -212,23 +224,33 @@
           <h2 class="card-title">{{ 'lbl.CkFinder'|trans|ucfirst }}</h2>
         </div>
         <div class="card-body">
-          <div class="form-group">
-            <label for="ckfinderLicenseName" class="control-label">{{ 'lbl.LicenseName'|trans|ucfirst }}</label>
-            {% form_field ckfinder_license_name %} {% form_field_error ckfinder_license_name %}
-          </div>
-          <div class="form-group">
-            <label for="ckfinderLicenseKey" class="control-label">{{ 'lbl.LicenseKey'|trans|ucfirst }}</label>
-            {% form_field ckfinder_license_key %} {% form_field_error ckfinder_license_key %}
-          </div>
-          <div class="form-group">
-            <label for="ckfinderImageMaxWidth" class="control-label">{{ 'lbl.MaximumWidth'|trans|ucfirst }}</label>
-            {% form_field ckfinder_image_max_width %} {% form_field_error ckfinder_image_max_width %}
-            <span class="help-block">{{ 'msg.HelpCkfinderMaximumWidth'|trans|ucfirst }}</span>
-          </div>
-          <div class="form-group last">
-            <label for="ckfinderImageMaxHeight" class="control-label">{{ 'lbl.MaximumHeight'|trans|ucfirst }}</label>
-            {% form_field ckfinder_image_max_height %} {% form_field_error ckfinder_image_max_height %}
-            <span class="help-block">{{ 'msg.HelpCkfinderMaximumHeight'|trans|ucfirst }}</span>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="ckfinderLicenseName" class="control-label">{{ 'lbl.LicenseName'|trans|ucfirst }}</label>
+                {% form_field ckfinder_license_name %} {% form_field_error ckfinder_license_name %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="ckfinderLicenseKey" class="control-label">{{ 'lbl.LicenseKey'|trans|ucfirst }}</label>
+                {% form_field ckfinder_license_key %} {% form_field_error ckfinder_license_key %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group last">
+                <label for="ckfinderImageMaxWidth" class="control-label">{{ 'lbl.MaximumWidth'|trans|ucfirst }}</label>
+                {% form_field ckfinder_image_max_width %} {% form_field_error ckfinder_image_max_width %}
+                <small class="form-text text-muted">{{ 'msg.HelpCkfinderMaximumWidth'|trans|ucfirst }}</small>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group last">
+                <label for="ckfinderImageMaxHeight" class="control-label">{{ 'lbl.MaximumHeight'|trans|ucfirst }}</label>
+                {% form_field ckfinder_image_max_height %} {% form_field_error ckfinder_image_max_height %}
+                <small class="form-text text-muted">{{ 'msg.HelpCkfinderMaximumHeight'|trans|ucfirst }}</small>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -246,15 +268,21 @@
             {% form_field facebook_admin_ids %} {% form_field_error facebook_admin_ids %}
             <span class="help-block">{{ 'msg.HelpFacebookAdminIds'|trans|ucfirst }}</span>
           </div>
-          <div class="form-group">
-            <label for="facebookApplicationId" class="control-label">{{ 'lbl.ApplicationId'|trans|ucfirst }}</label>
-            {% form_field facebook_application_id %} {% form_field_error facebook_application_id %}
-            <span class="help-block">{{ 'msg.HelpFacebookApplicationId'|trans|ucfirst }}</span>
-          </div>
-          <div class="form-group last">
-            <label for="facebookApplicationSecret" class="control-label">{{ 'lbl.ApplicationSecret'|trans|ucfirst }}</label>
-            {% form_field facebook_application_secret %} {% form_field_error facebook_application_secret %}
-            <span class="help-block">{{ 'msg.HelpFacebookApplicationSecret'|trans|ucfirst }}</span>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="facebookApplicationId" class="control-label">{{ 'lbl.ApplicationId'|trans|ucfirst }}</label>
+                {% form_field facebook_application_id %} {% form_field_error facebook_application_id %}
+                <span class="help-block">{{ 'msg.HelpFacebookApplicationId'|trans|ucfirst }}</span>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group last">
+                <label for="facebookApplicationSecret" class="control-label">{{ 'lbl.ApplicationSecret'|trans|ucfirst }}</label>
+                {% form_field facebook_application_secret %} {% form_field_error facebook_application_secret %}
+                <span class="help-block">{{ 'msg.HelpFacebookApplicationSecret'|trans|ucfirst }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -270,7 +298,7 @@
           <div class="form-group last">
             <label for="twitterSiteName" class="control-label">{{ 'lbl.TwitterSiteName'|trans|ucfirst }}</label>
             <div class="input-group">
-              <div class="input-group-addon">@</div>
+              <div class="input-group-prepend"><span class="input-group-text">@</span></div>
               {% form_field twitter_site_name %}
             </div>
             {% form_field_error twitter_site_name %}
@@ -288,11 +316,10 @@
         <div class="card-body">
           <div class="form-group last">
             <p>{{ 'msg.HelpCookies'|trans }}</p>
-            <ul class="list-unstyled">
-              <li class="checkbox">
-                <label for="showCookieBar" class="control-label">{% form_field show_cookie_bar %} {{ 'msg.ShowCookieBar'|trans|ucfirst }}</label>
-              </li>
-            </ul>
+            <div class="form-check">
+              {% form_field show_cookie_bar %}
+              <label for="showCookieBar" class="form-check-label">{{ 'msg.ShowCookieBar'|trans|ucfirst }}</label>
+            </div>
           </div>
         </div>
       </div>
@@ -302,7 +329,7 @@
   <div class="row fork-module-actions">
     <div class="col-md-12">
       <div class="btn-toolbar">
-        <div class="btn-group pull-right" role="group">
+        <div class="btn-group ml-auto" role="group">
           {{ macro.buttonIcon('', 'floppy-o', 'lbl.Save'|trans|ucfirst, 'btn-primary', { "id":"save", "type":"submit", "name":"save" }) }}
         </div>
       </div>

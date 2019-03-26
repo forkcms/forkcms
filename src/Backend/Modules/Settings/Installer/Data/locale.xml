@@ -17,6 +17,36 @@
         <translation language="el"><![CDATA[ID του Διαχειριστή]]></translation>
         <translation language="pl"><![CDATA[ID administratora]]></translation>
       </item>
+      <item type="label" name="NOODP">
+        <translation language="nl"><![CDATA[NOODP]]></translation>
+        <translation language="en"><![CDATA[NOODP]]></translation>
+        <translation language="it"><![CDATA[NOODP]]></translation>
+        <translation language="ru"><![CDATA[NOODP]]></translation>
+        <translation language="zh"><![CDATA[NOODP]]></translation>
+        <translation language="fr"><![CDATA[NOODP]]></translation>
+        <translation language="de"><![CDATA[NOODP]]></translation>
+        <translation language="hu"><![CDATA[NOODP]]></translation>
+        <translation language="es"><![CDATA[NOODP]]></translation>
+        <translation language="uk"><![CDATA[NOODP]]></translation>
+        <translation language="lt"><![CDATA[NOODP]]></translation>
+        <translation language="el"><![CDATA[NOODP]]></translation>
+        <translation language="pl"><![CDATA[NOODP]]></translation>
+      </item>
+      <item type="label" name="NOYDIR">
+        <translation language="nl"><![CDATA[NOYDIR]]></translation>
+        <translation language="en"><![CDATA[NOYDIR]]></translation>
+        <translation language="it"><![CDATA[NOYDIR]]></translation>
+        <translation language="ru"><![CDATA[NOYDIR]]></translation>
+        <translation language="zh"><![CDATA[NOYDIR]]></translation>
+        <translation language="fr"><![CDATA[NOYDIR]]></translation>
+        <translation language="de"><![CDATA[NOYDIR]]></translation>
+        <translation language="hu"><![CDATA[NOYDIR]]></translation>
+        <translation language="es"><![CDATA[NOYDIR]]></translation>
+        <translation language="uk"><![CDATA[NOYDIR]]></translation>
+        <translation language="lt"><![CDATA[NOYDIR]]></translation>
+        <translation language="el"><![CDATA[NOYDIR]]></translation>
+        <translation language="pl"><![CDATA[NOYDIR]]></translation>
+      </item>
       <item type="label" name="ApplicationId">
         <translation language="nl"><![CDATA[toepassings-id]]></translation>
         <translation language="en"><![CDATA[application id]]></translation>
@@ -165,6 +195,78 @@
         <translation language="es"><![CDATA[ckfinder]]></translation>
         <translation language="it"><![CDATA[ckfinder]]></translation>
         <translation language="pl"><![CDATA[ckfinder]]></translation>
+      </item>
+      <item type="label" name="GoogleMapsKey">
+        <translation language="nl"><![CDATA[Google Maps key]]></translation>
+        <translation language="en"><![CDATA[Google Maps key]]></translation>
+        <translation language="de"><![CDATA[Google Maps key]]></translation>
+        <translation language="fr"><![CDATA[Google Maps key]]></translation>
+        <translation language="es"><![CDATA[Google Maps key]]></translation>
+        <translation language="it"><![CDATA[Google Maps key]]></translation>
+        <translation language="pl"><![CDATA[Google Maps key]]></translation>
+      </item>
+      <item type="label" name="RecaptchaSiteKey">
+        <translation language="nl"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="en"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="de"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="fr"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="es"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="it"><![CDATA[reCAPTCHA site key]]></translation>
+        <translation language="pl"><![CDATA[reCAPTCHA site key]]></translation>
+      </item>
+      <item type="label" name="RecaptchaSectretKey">
+        <translation language="nl"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="en"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="de"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="fr"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="es"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="it"><![CDATA[reCAPTCHA secret key]]></translation>
+        <translation language="pl"><![CDATA[reCAPTCHA secret key]]></translation>
+      </item>
+      <item type="label" name="RecaptchaSecretUrl">
+        <translation language="nl"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="en"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="de"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="fr"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="es"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="it"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="pl"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+      </item>
+      <item type="label" name="RecaptchaSiteUrl">
+        <translation language="nl"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="en"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="de"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="fr"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="es"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="it"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+        <translation language="pl"><![CDATA[https://www.google.com/recaptcha/admin]]></translation>
+      </item>
+      <item type="label" name="GoogleMapsApiUrl">
+        <translation language="nl"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="en"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="de"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="fr"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="es"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="it"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+        <translation language="pl"><![CDATA[https://developers.google.com/maps/documentation/javascript/get-api-key]]></translation>
+      </item>
+      <item type="label" name="AskimetApiKey">
+        <translation language="nl"><![CDATA[Askimet Key]]></translation>
+        <translation language="en"><![CDATA[Askimet Key]]></translation>
+        <translation language="de"><![CDATA[Askimet Key]]></translation>
+        <translation language="fr"><![CDATA[Askimet Key]]></translation>
+        <translation language="es"><![CDATA[Askimet Key]]></translation>
+        <translation language="it"><![CDATA[Askimet Key]]></translation>
+        <translation language="pl"><![CDATA[Askimet Key]]></translation>
+      </item>
+      <item type="label" name="AskimetApiKeyUrl">
+        <translation language="nl"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="en"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="de"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="fr"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="es"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="it"><![CDATA[http://akismet.com/personal]]></translation>
+        <translation language="pl"><![CDATA[http://akismet.com/personal]]></translation>
       </item>
       <item type="message" name="ConfigurationError">
         <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
